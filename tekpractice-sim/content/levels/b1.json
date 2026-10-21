@@ -1,0 +1,135 @@
+{
+  "id": "b1",
+  "version": 1,
+  "domain": "radio",
+  "title": "B1 — Radio studio: mic, monitors, ON-AIR",
+  "brief": "Wire a radio studio in two lessons. SIGNAL PATH: the presenter's RE20 into the Axia iQ, the control-room Genelecs off the monitor bus, the playout automation onto the console over AoIP. BROADCAST DISCIPLINE: drive the ON-AIR light from the console GPIO, and mute the control-room monitors while the mic is open. Open the fader — the red light must come on (R5) and the monitors must mute (R6), or you are not safely on air.",
+  "objective": "Presenter on air: signal path complete, tally light lit, no feedback path.",
+  "devices": [
+    {
+      "instanceId": "re20-1",
+      "deviceId": "ev-re20"
+    },
+    {
+      "instanceId": "iq-1",
+      "deviceId": "axia-iq"
+    },
+    {
+      "instanceId": "litt-1",
+      "deviceId": "yellowtec-litt"
+    },
+    {
+      "instanceId": "gen-l",
+      "deviceId": "genelec-8030c"
+    },
+    {
+      "instanceId": "gen-r",
+      "deviceId": "genelec-8030c"
+    },
+    {
+      "instanceId": "playout-1",
+      "deviceId": "playout-pc"
+    },
+    {
+      "instanceId": "mika-1",
+      "deviceId": "yellowtec-mika"
+    }
+  ],
+  "requiredChain": [
+    {
+      "from": {
+        "instance": "re20-1",
+        "port": "out-xlr"
+      },
+      "to": {
+        "instance": "iq-1",
+        "port": "in-mic-1"
+      }
+    },
+    {
+      "from": {
+        "instance": "iq-1",
+        "port": "out-monitor-l"
+      },
+      "to": {
+        "instance": "gen-l",
+        "port": "in-analog"
+      }
+    },
+    {
+      "from": {
+        "instance": "iq-1",
+        "port": "out-monitor-r"
+      },
+      "to": {
+        "instance": "gen-r",
+        "port": "in-analog"
+      }
+    },
+    {
+      "from": {
+        "instance": "iq-1",
+        "port": "gpio"
+      },
+      "to": {
+        "instance": "litt-1",
+        "port": "in-gpio"
+      }
+    },
+    {
+      "from": {
+        "instance": "playout-1",
+        "port": "aoip"
+      },
+      "to": {
+        "instance": "iq-1",
+        "port": "livewire"
+      }
+    }
+  ],
+  "logicChecks": [
+    "R5",
+    "R6"
+  ],
+  "successMessage": "Fader open: the red light is on and the monitors are muted. Signal path plus broadcast discipline — that's a studio ready to go live.",
+  "notes": "Two-lesson build on the REAL catalog. Stage 1 (signal): RE20→console mic 1, console monitor L/R→Genelecs, playout AoIP→console livewire. Stage 2 (discipline, both device-state gated): R5 needs the console GPIO wired to the litt ON-AIR light while the mic fader is open; R6 needs the CR monitors muted while that open mic is live in the room. The fader-in-mic-1 control starts OPEN (a studio goes on-air by default), so both lessons are live from the first cable. B1 is already near the simplified-catalog ceiling — the iQ models one mic input and one pro line input, and the only pro-line source here is the console itself, so no extra required cable is honest to add without new catalog ports (see docs/REVIEW-ME.md §6).",
+  "examSeconds": 300,
+  "environment": "radio",
+  "layout": {
+    "re20-1": [
+      -1.4,
+      0,
+      1
+    ],
+    "mika-1": [
+      -1.7,
+      0,
+      1
+    ],
+    "iq-1": [
+      0,
+      0,
+      -1.4
+    ],
+    "litt-1": [
+      1.6,
+      0,
+      0.6
+    ],
+    "gen-l": [
+      -1.4,
+      0,
+      2.6
+    ],
+    "gen-r": [
+      1.4,
+      0,
+      2.6
+    ],
+    "playout-1": [
+      2.6,
+      0,
+      -0.8
+    ]
+  }
+}

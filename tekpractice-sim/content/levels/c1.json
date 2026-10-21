@@ -1,0 +1,135 @@
+{
+  "id": "c1",
+  "version": 2,
+  "domain": "duplex",
+  "title": "C1 — Remote duplex: reporter on N-1",
+  "brief": "Build a full two-way remote in four stages. FIELD: the reporter's RE50B into the Scoopy+ S. LINK: the two AETA codecs over IP. STUDIO RETURN: the Scoop5 S return into the console. CONTROL ROOM: monitor the duplex on the Genelecs. Then feed the codec send from the N-1 bus — the program MINUS the reporter's own return — or she hears herself.",
+  "objective": "Two-way conversation with no echo in the reporter's ears, and the operator monitoring the exchange.",
+  "devices": [
+    {
+      "instanceId": "re50-1",
+      "deviceId": "ev-re50"
+    },
+    {
+      "instanceId": "scoopy-1",
+      "deviceId": "aeta-scoopy-plus-s"
+    },
+    {
+      "instanceId": "scoop5-1",
+      "deviceId": "aeta-scoop5-s"
+    },
+    {
+      "instanceId": "iq-1",
+      "deviceId": "axia-iq"
+    },
+    {
+      "instanceId": "gen-l",
+      "deviceId": "genelec-8030c"
+    },
+    {
+      "instanceId": "gen-r",
+      "deviceId": "genelec-8030c"
+    }
+  ],
+  "requiredChain": [
+    {
+      "from": {
+        "instance": "re50-1",
+        "port": "out-xlr"
+      },
+      "to": {
+        "instance": "scoopy-1",
+        "port": "in-mic"
+      }
+    },
+    {
+      "from": {
+        "instance": "scoopy-1",
+        "port": "ip"
+      },
+      "to": {
+        "instance": "scoop5-1",
+        "port": "ip"
+      }
+    },
+    {
+      "from": {
+        "instance": "scoop5-1",
+        "port": "out-return"
+      },
+      "to": {
+        "instance": "iq-1",
+        "port": "in-line-1"
+      }
+    },
+    {
+      "from": {
+        "instance": "iq-1",
+        "port": "out-n1"
+      },
+      "to": {
+        "instance": "scoop5-1",
+        "port": "in-send"
+      }
+    },
+    {
+      "from": {
+        "instance": "iq-1",
+        "port": "out-monitor-l"
+      },
+      "to": {
+        "instance": "gen-l",
+        "port": "in-analog"
+      }
+    },
+    {
+      "from": {
+        "instance": "iq-1",
+        "port": "out-monitor-r"
+      },
+      "to": {
+        "instance": "gen-r",
+        "port": "in-analog"
+      }
+    }
+  ],
+  "logicChecks": [
+    "R7"
+  ],
+  "successMessage": "Clean duplex — the reporter hears the studio, not herself, and the control room hears the whole exchange. N-1 understood.",
+  "notes": "Four-stage duplex on the REAL catalog: field capture (RE50B→Scoopy+ mic in), IP link (codec ip↔ip, AoIP), studio return (Scoop5 out-return→console line 1), control-room monitoring (console monitor L/R→Genelecs). R7 is the star: the console pre-routes its own codec return (in-line-1) onto the N-1 bus (control route-in-line-1-to-out-n1 default ON) → the reporter's voice rides her own send → echo. Fix = drop that route (a true mix-minus). The monitor path adds no new logicChecks (R6 belongs to broadcast studios B-side, not this remote console) — it is pure connection depth. Reporter's headphone return (scoopy out-headphone) is her ears, a terminal, not a required cable.",
+  "examSeconds": 300,
+  "environment": "radio",
+  "layout": {
+    "re50-1": [
+      -3.2,
+      0,
+      1.8
+    ],
+    "scoopy-1": [
+      -1.8,
+      0,
+      0.8
+    ],
+    "scoop5-1": [
+      0.2,
+      0,
+      0.6
+    ],
+    "iq-1": [
+      2.2,
+      0,
+      -1.2
+    ],
+    "gen-l": [
+      0.9,
+      0,
+      -2.6
+    ],
+    "gen-r": [
+      3.5,
+      0,
+      -2.6
+    ]
+  }
+}

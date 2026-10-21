@@ -1,0 +1,25 @@
+{
+  "id": "radio",
+  "name": "Studio radio (self-op)",
+  "backdrop": {
+    "clearColor": "#F6F5F3",
+    "floorColor": "#FDFCFA",
+    "floorSize": [
+      16,
+      10
+    ]
+  },
+  "camera": {
+    "alpha": -1.5708,
+    "beta": 0.95,
+    "radius": 4.2,
+    "target": [
+      0,
+      1,
+      0.6
+    ]
+  },
+  "set": {
+    "glb": "radio-booth.glb"
+  }
+}
