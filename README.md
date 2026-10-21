@@ -8,6 +8,7 @@ Working files for **Techonest** — a Paris project for culturally mixed events 
 
 | Path | What it is |
 | --- | --- |
+| `TEKONEST_EVENT_PROJECT.md` | **Start here** — one-page overview of the Tekonest Event Project |
 | `presentation/Techonest_Vision_and_Project_Plan.pptx` | Main deck — 26 slides + 9 appendix, speaker notes with sources |
 | `presentation/Techonest_Vision_and_Project_Plan.pdf` | PDF preview of the deck |
 | `presentation/pptx-source/build.js` | pptxgenjs script that generates the deck |
