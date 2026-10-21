@@ -1,5 +1,7 @@
 # Techonest — Legal Structure Guide (Phase 2–3)
 
+> **Historical status note (added 21 Oct 2026):** this 20 Oct document is partly superseded by the 21 Oct deck and [`event-project/README.md`](../README.md) — notably the licence threshold, the GUSO route and the association-tax wording. See [conflicts C-11](../../brand/04-decisions-and-questions.md#3-conflicts-between-sources-dates-kept). The original text below is unchanged. "Techonest" is the earlier spelling of **Tekonest**.
+
 Oct 20, 2026
 
 ## Summary

@@ -1,0 +1,43 @@
+Cluster,Plateforme,Type,Couvre_BTS_Son,Fonctionnement,IA,Modele_eco,Meilleur_point,Faille,URL
+A - Direct BTS,btsmav.fr (FormaV),Annales/prepa MAV,Partiel (generique 5 options),62 fiches PDF + dossier E4 + simulateur notes + annales + liste ecoles,Non,Payant one-shot ~14 EUR + lead magnet,Ultra-focalise MAV; outils funnel,PDF statiques 0 IA 0 profondeur son,https://btsmav.fr
+A - Direct BTS,reussirsonbts.fr,Prepa BTS generique,Non (generique),Pages info + fiches payantes,Non,Freemium fiches,Contenu reference SEO clair,Pas specialise son,https://reussirsonbts.fr
+A - Direct BTS,cours-bts-revision.fr,Ferme SEO,Non,Annales trompeuses + Pack IA generique,Oui (gadget),Ads + pack,Confirme categorie Pack IA,Faible credibilite,https://cours-bts-revision.fr
+A - Direct BTS,Nomad Education,App revision + orientation,Oui (generique BTS MAV),Mini-cours + quiz + flashcards + annales + Parcoursup,Oui (NOMAD'IA),Freemium ~7.5 EUR/mo,Seul a traiter BTS + orientation,Son superficiel,https://nomadeducation.com
+A - Direct BTS,digiSchool/superBac,Revision Primaire-BTS,Oui (page generique),Cours/exos/fiches/quiz Pass,Peu,Freemium + B2B,Generaliste atteint BTS Qualiopi,BTS superficiel pas option son,https://digischool.fr
+A - Communaute,Audiofanzine,Forum pro audio,Oui (discussions),Forums pairs thread BTS son 104 pages,Non,Gratuit/ads,Savoir pair credible SEO,UX datee pas de prepa,https://fr.audiofanzine.com
+A - Ecoles,INA / ENS Louis-Lumiere,Ecole accreditee,Post-BTS,Diplomes Bac+3 studios pros,-,Frais scolarite,Credibilite equipement reference,Pas produit auto-apprentissage,https://campus.ina.fr
+A - Ecoles,ESRA/ISTS EMC 3iS,Ecole privee accreditee,Bac+3,Theorie + studio + specialisations son,-,Frais scolarite,Reconnu structure,Cher pas outil digital,https://www.esra.edu
+A - Ecoles,SFND/CFA Lesneven,CFA apprentissage,Oui (BTS son),Pages competences Son referentiel,Non,Gratuit apprentissage,Meilleure expli publique referentiel Son,Site recrutement 1 CFA 50pct reussite,https://btsaudiovisuel.fr
+A - Orientation,Superprof,Marketplace tuteurs,Theorique,Match tuteurs prives,Non,Commission/lead-gen,Aide 1:1 a la demande,~0 tuteur MAV-son,https://superprof.fr
+B - Edtech FR,Kartable,Revision CE1-Term,Non,Cours/fiches/quiz + profs live,Oui (Alfa: photo-quiz socratique),Freemium 6.99-13.99 EUR/mo,Meilleur tuteur IA grand public FR,Aucun post-bac,https://kartable.fr
+B - Edtech FR,Maxicours,Revision CP-Term,Non,70k ressources Bordas + profs + podcasts,Non,Freemium + B2B 1800 ecoles,Editeur + podcasts audio-natif,Pas de BTS,https://maxicours.com
+B - Edtech FR,SchoolMouv,Revision CP-Term,Non,Lecons video animees + fiches/quiz,Non,Freemium ~10 EUR+/mo,Format video animee,Pas de BTS,https://schoolmouv.fr
+B - Edtech FR,annabac (Hatier),Revision 3e-Term,Non,Boucle fiche-video-audio-cartes-annales,Non,Freemium 7.49-14.99 EUR/mo,Multi-format boucle apprendre/exercer/suivre,Pas de post-bac,https://annabac.com
+B - Edtech FR,Bordas/Nathan Reviz'Quiz,Revision College-Lycee,Non,Quiz + flashcards + mind maps + micro-video,Non,Freemium des 6.95 EUR/mo,Micro-learning transferable,S'arrete au lycee,https://revizquiz.nathan.fr
+B - Edtech FR,Afterclasse (Editis),Revision 6e-Term,Non,Fiches gamifiees + exos adaptatifs,Difficulte adaptative,Gratuit funnel,Gamification gratuit mode prof,Pas de BTS pas d'IA reelle,https://afterclasse.fr
+B - Orientation,Onisep,Orientation publique,Oui (fiche option son),Fiches diplome/metier + annuaire,Prudent,Gratuit public,Reference officielle a citer,Informatif seulement,https://onisep.fr
+B - Orientation,Diplomeo,Comparateur ecoles,Oui (annuaire),Comparateur 15000+ ecoles avis RDV,Matching IA,Lead-gen,UX moderne avis Parcoursup,0 contenu d'etude,https://diplomeo.com
+B - Tutorat,GoStudent,Tutorat 1:1 abonnement,Pretend post-bac/BTS,Tuteur recurrent matche,Oui (tuteur IA + resumes + quiz auto),Abo + credit impot 50pct,Stack IA complet post-seance,Pool generaliste pas de son,https://gostudent.org
+B - Tutorat,Acadomia,Tutorat premium,Prepa/concours,Conseiller referent + bilans,Non,45-75 EUR/h (-50pct impot),Integration fiscale FR CESU,Cher pas de son,https://acadomia.fr
+C - Tutorat IA,Khan Academy + Khanmigo,Tuteur IA socratique,Non (US K-12+),IA socratique sur corpus aligne + dashboards,Oui (fort),Nonprofit ~4 USD/mo,Scaffolding socratique IA bornee corpus,Hallucination math,https://khanmigo.ai
+C - Tutorat IA,Quizlet,Flashcards + repetition espacee,Non,Magic Notes: upload -> kit d'etude,Oui,Freemium ~36 USD/an,1 upload -> kit d'etude,Paywall contenu superficiel,https://quizlet.com
+C - Tutorat IA,Duolingo + Max,Gamification langues,Non,Micro-lecons adaptatives + Video Call IA,Oui,Freemium Max ~168 USD/an,Meilleure boucle de retention,Profondeur plafonne,https://duolingo.com
+C - Tutorat IA,Studdy,IA socratique whiteboard,Non,Multimodal -> whiteboard enseigne pas-a-pas,Oui,Freemium ~6.99 USD/sem,Teach don't cheat comme produit,Jeune non eprouve,https://studdy.ai
+C - Tutorat IA,Brainly,Q&A communaute + IA,Non,IA fondee sur corpus vetted + Simplify/Expand,Oui,Freemium ~39 USD/an + ads,Profondeur controlee + IA->humain,Image de triche precision inegale,https://brainly.com
+C - Tutorat IA,Chegg,Bibliotheque solutions + Q&A,Non,Solutions verifiees humaines + Q&A,Oui,Abo ~16 USD/mo,Hybride humain+IA (lecon: -99pct capitalisation),Cas d'ecole triche/SEO,https://chegg.com
+C - Tutorat IA,StudySmarter/Vaia,Flashcards + doc-to-content,Non,PDF -> deck + simulateur examen,Oui,Freemium ~8-13 USD/mo,Upload -> flashcards + exam sim,Contenu non verifie OCR,https://vaia.com
+C - Tutorat IA,Knowunity,Notes pairs + IA,Non,Ingestion large (ecriture YouTube PPT PDF),Oui,Freemium ~8 USD/mo,Flywheel communaute + IA,Notes pairs non verifiees,https://knowunity.com
+C - Tutorat IA,Nolej AI,Doc -> courseware,Non,1 upload -> quiz/flashcards/video + revue humaine,Oui,Freemium/B2B ~40 USD/mo,Pipeline concept-objectif-activite + garde-fou,Oriente createur pas apprenant,https://nolej.io
+C - Tutorat IA,CENTURY / Squirrel AI,Adaptatif graphe connaissances,Non,Routage moindre temps vers maitrise,Oui,B2B / tutorat,Micro-lecons + validation academique,UI complexe donnees Chine,https://century.tech
+C - Tutorat IA,Coursera Coach / MagicSchool,RAG + garde-fous,Non,Reponses ancrees catalogue multi-modeles,Oui,Abo/freemium,IA responsable comme feature,Derriere paywall sorties a retravailler,https://magicschool.ai
+C - Tutorat IA,ELSA / Speak,Scoring oral IA,Non,Lecons generees depuis tes erreurs,Oui,Freemium ~80-99 USD/an,Personnalisation par les erreurs,Scoring parfois laxiste/strict,https://speak.com
+D - Audio,Berklee Online / Coursera,Ecole accreditee + MOOC,Non,Critique hebdo mix sur multipistes pros,IA=sujet,Frais + abo,Nouveau mix/semaine sur stems pros + critique,Tier scalable sans feedback expert,https://online.berklee.edu
+D - Audio,SAE Institute,Campus accredite,Non,Studio gerer toute la session,Non,Frais eleves,Scaffolding + workflow complet prise de son,Physique non scalable,https://sae.edu
+D - Audio,Point Blank,Ecole (online fort),Non,Masterclasses live + 1-2-1 + Direct Video Response,Non,Achat cours ~1295 GBP,DVR feedback dans la session DAW de l'eleve,Humain plafonne 5/module,https://pointblankmusicschool.com
+D - Audio,Soundfly,Ecole online + mentorat,Non,Active learning + feedback mentor hebdo,Non,Freemium + mentorat,Cadence feedback hebdo + showcase,Mentorat non scalable,https://soundfly.com
+D - Audio,Produce Like a Pro,Communaute adhesion,Non,200+ multipistes + Feedback Friday public,Non,Adhesion ~99-199 USD/an,Bibliotheque multipistes + rituel feedback,Goulot sur 1 personne,https://producelikeapro.com
+D - Audio,MixWithTheMasters,Video premium + events,Non,Inside the Track vrais tubes + critique 1:1,Outil acoustique IA (periph),Abo 99-649 USD/an + events,Enseigner sur vraies sessions + localise FR,Feedback = events couteux,https://mixwiththemasters.com
+D - Audio,iZotope Learn / Pro Audio Files,Hub fabricant,Non,Contenu enseigne via plugins-assistants IA,Oui (coeur),Gratuit funnel plugin,IA-prof analyser-proposer-expliquer,Vendor-lock pas d'ecole,https://izotope.com
+D - Audio,Waves Learn / StudioVerse,Ecosysteme fabricant,Non,Videos + cours + certifs + charger chaine pro,Oui,Abo + plugins,Certification + dissequer chaine expert,Vendor-lock UX fragmentee,https://www.waves.com/learn
+D - Audio,Puremix,Plateforme abo,Non,Sessions/stems + Mix Tank prompts imposes,Utilitaire LUFS,Abo ~165 USD/an,Stems reels + critique guidee,Depend de tuteurs EN only,https://puremix.com
+D - Audio,Gearspace / r/audioengineering,Communaute forum,Non,Mix-Offs memes stems + Feedback Monday,Non,Gratuit/ads,Apprentissage comparatif source identique,Culture dure pas d'expert verifie,https://gearspace.com

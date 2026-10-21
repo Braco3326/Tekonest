@@ -1,5 +1,7 @@
 # Techonest — Working Project Plan
 
+> **Historical status note (added 21 Oct 2026):** this 20 Oct document is partly superseded by the 21 Oct deck and [`event-project/README.md`](../README.md) — licence and GUSO rules, break-even ≈155, the D−10 go/stop rule and Rebels model labels 1/2/3 changed. See [conflicts C-11–C-13](../../brand/04-decisions-and-questions.md#3-conflicts-between-sources-dates-kept). The original text below is unchanged. "Techonest" is the earlier spelling of **Tekonest**.
+
 Oct 20, 2026
 
 ## At a glance

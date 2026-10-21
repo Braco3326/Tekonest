@@ -1,0 +1,19 @@
+Session,Epreuve,Unite,Option,Type,Statut,Source,Lien
+2025,E3 PTES,U3,Son,Sujet,Officiel PDF,eduscol STI,https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/18320/18320-25mvptess-sujet-1_0.pdf
+2024,E3 PTES,U3,Son,Sujet,Officiel page,eduscol STI,https://sti.eduscol.education.fr/concours_examens/epreuve-e3-bts-mav-metiers-du-son-session-2024
+2023,E3 PTES,U3,Son,Sujet,Officiel PDF,eduscol STI,https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/15926/15926-bts-ma-ms-2023-ptes-sujet.pdf
+2022,E3 PTES,U3,Son,Sujet,Officiel PDF,eduscol STI,https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/14645/14645-bts-ma-ms-2022-ptes-sujet.pdf
+2021,E3 PTES,U3,Son,Sujet,Officiel PDF,eduscol STI,https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/13531/13531-mvptess-2021-sujet.pdf
+2020,E3 PTES,U3,Son,Sujet,Officiel PDF,eduscol STI,https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/12540/12540-epreuve-e3-bts-mav-son-sujet-ptes-sujet.pdf
+2019,E3 PTES,U3,Son,Sujet,Officiel PDF,eduscol STI,https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/11209/11209-epreuve-e3-bts-mav-son-sujet-ptes.pdf
+2017,E3 PTES,U3,Son,Sujet,Officiel page,eduscol STI,https://sti.eduscol.education.fr/concours_examens/epreuve-e3-bts-mav-metiers-du-son-session-2017
+Sujet 0,E3 PTES + toutes options,U3,Toutes,Sujet 0,Officiel page,eduscol STI,https://sti.eduscol.education.fr/concours_examens/bts-mav-sujets-0
+2024,E1 CAA,U1,Commun,Sujet,Officiel PDF,eduscol STI,https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/17184/17184-24mvcaa-sujet.pdf
+2022,E1 CAA,U1,Commun,Corrige,Officiel PDF,eduscol STI,https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/14956/14956-culture-audiovisuelle-et-artistique-2022-elements-de-correction-candidat-non-ccf.pdf
+Sujet 0,E1 CAA,U1,Commun,Sujet 0,Officiel page,eduscol STI,https://sti.eduscol.education.fr/concours_examens/domaine-litteraire-et-artistique-culture-audiovisuelle-et-artistique-sujet-0
+2024,Theme CAA,U1,Commun,Note BO,Officiel,education.gouv,https://www.education.gouv.fr/bo/22/Hebdo33/ESRS2224338N.htm
+2025,Theme CAA,U1,Commun,Note BO,Officiel,education.gouv,https://www.education.gouv.fr/bo/2023/Hebdo30/ESRS2315469N
+2026,Theme CAA,U1,Commun,Note BO,Officiel,education.gouv,https://www.education.gouv.fr/bo/2024/Hebdo27/ESRS2416038N
+2011-2025,E1/E2 (CGE/LV/maths),U1/U2,Commun,Sujets+corriges,3rd-party,btsmav.fr,https://btsmav.fr/annales-sujets-et-corriges
+Multi,Toutes epreuves (par session),Toutes,Toutes,Hub,Officiel,eduscol STI,https://sti.eduscol.education.fr/concours_examens/bts-mav-session-2025
+Multi,Formation (hub),Toutes,Toutes,Hub,Officiel,eduscol STI,https://sti.eduscol.education.fr/formations/bts/bts-metiers-de-laudiovisuel-mav

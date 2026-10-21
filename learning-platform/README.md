@@ -1,3 +1,5 @@
+> **Tekonest note (21 Oct 2026):** this app is the BTS Son learning-platform service of the **Tekonest** umbrella. It was imported with its full history from the former repo `Technest`. Vision and status: [`brand/services/learning-platform.md`](../brand/services/learning-platform.md). Some facts below date from July 2026: the test count is now 57 (54 unit tests pass, 3 live tests need an API key), and the canonical domain was later set to `teknest.fr`. The live URLs have not been re-checked. Run all commands from inside this folder.
+
 # Tech Nest
 
 Plateforme d'apprentissage gratuite pour réussir le **BTS Métiers de l'audiovisuel, option Métiers du Son** — conforme au référentiel officiel (arrêté du 4 juin 2013, RNCP37196).
