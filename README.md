@@ -1,6 +1,6 @@
 # Tekonest
 
-**Tekonest** is a brand and umbrella for several services, founded by Oscar, an audiovisual student in Paris. Some of the services may connect over time; others will stay independent. The vision is still being developed. These documents keep apart what the founder has **decided**, what is **proposed**, what is **built**, and what is still **open**.
+**Tekonest** is a brand and umbrella for several services, founded by Oscar. Some of the services may connect over time; others will stay independent. The vision is still being developed. These documents keep apart what the founder has **decided**, what is **proposed**, what is **built**, and what is still **open**.
 
 > Status, 21 Oct 2026: no legal structure, no signed partner, no paying customers. All money figures are estimates. Nothing here is legal, financial or immigration advice.
 
@@ -15,6 +15,8 @@
 | [Sources & evidence](brand/05-sources-and-evidence.md) | Source inventory, evidence labels, founder briefs, links to the detailed registers |
 
 ## Services
+
+The [status map](brand/03-status-map.md) is the canonical source for status; the column below is a summary.
 
 | Service | Status | Vision | Working folder |
 | --- | --- | --- | --- |
@@ -42,4 +44,4 @@ Each code folder is independent. Run `npm ci` and its other commands from inside
 
 ## Names
 
-The canonical name is **Tekonest**. Older files keep the spellings they were written with (Techonest, Technest, TechNest, Tech Nest, Teknest, TEKNEST, Thechnest) and sub-names (Tekskol, TekPractice, audio-sim), so their history stays traceable.
+The canonical name is **Tekonest**. Older files keep the spellings they were written with (Techonest, Technonest, Technest, TechNest, Tech Nest, Teknest, TEKNEST, Thechnest) and sub-names (Tekskol, TekPractice, audio-sim), so their history stays traceable.

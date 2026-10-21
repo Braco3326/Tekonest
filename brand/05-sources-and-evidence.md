@@ -39,11 +39,12 @@ These are statements the founder made directly in chat on 20–21 Oct 2026. They
 | FB-03 | `event-project/` is a current event and cultural-programming vision | 21 Oct 2026 | [FB] |
 | FB-04 | `learning-platform/` and `tekpractice-sim/` are **current** service visions, under development during the website-creation phase. Do not classify them as abandoned | 21 Oct 2026 | [FB] |
 | FB-05 | `archive/` holds older copies or historical material | 21 Oct 2026 | [FB] |
-| FB-06 | The local folder `C:\Users\iB_K\Documents\Claude\Projects\Thechnest` is historical evidence, not authority over the current vision | 21 Oct 2026 | [FB] |
+| FB-06 | The founder's local `Thechnest` project folder (on his PC) is historical evidence, not authority over the current vision | 21 Oct 2026 | [FB] |
 | FB-07 | The latest direct instructions take priority. Where sources conflict, record the conflict and its dates | 21 Oct 2026 | [FB] |
 | FB-08 | The vision is still being developed. Keep decided, proposed, built and open separate | 21 Oct 2026 | [FB] |
 | FB-09 | "The plan is to make everything about Tekonest in one repo", with each service in its own independent folder | 21 Oct 2026 | [FB] |
 | FB-10 | Founder statements made on 20–21 Oct about the event idea are recorded in [`event-project/docs/05-everything-explained.md`](../event-project/docs/05-everything-explained.md) | 20–21 Oct 2026 | [F] |
+| FB-11 | Oscar (GitHub account Braco3326) is the person developing Tekonest; another person named in some older files is someone else | 21 Oct 2026 | [FB] |
 
 ## Source inventory
 
@@ -59,7 +60,7 @@ These are statements the founder made directly in chat on 20–21 Oct 2026. They
 | `tekpractice-sim/src/**`, `content/**`, assets | 11–19 Jul 2026 | Code, data, 3D models | Skimmed; **164 unit tests, catalogue check and build run 21 Oct**; e2e and 3D visuals not checked |
 | [`archive/teknest/`](../archive/teknest/), [`archive/teknest-simu/`](../archive/teknest-simu/) | 15 Jul 2026 | Snapshot copies of the simulator | Diffed against `tekpractice-sim` history |
 | [`archive/thechnest-local-2026-07/`](../archive/thechnest-local-2026-07/) (22 files) | 7–19 Jul 2026 | July plans, status reports, research, CSV data, PDF renders | Read in full; PDFs checked as text (renders of the .md files) |
-| Git history of all imported repos | 11 Jul – 21 Oct 2026 | Commit messages, dates | Read (155 + 17 original commits; all authored as "Claude Code") |
+| Git history of all imported repos | 11 Jul – 21 Oct 2026 | Commit messages, dates | Read (155 + 17 original commits, plus 2 one-commit snapshot repos; original commits all authored as "Claude Code") |
 | Founder chat, 20–21 Oct 2026 | 20–21 Oct 2026 | Founder briefs | See FB table above |
 
 ## What could not be inspected

@@ -1,5 +1,7 @@
 # Tekonest — status map (as of 21 Oct 2026)
 
+> **Canonical source for status.** Other files (README, service headers, folder READMEs) summarise this table; if they disagree, this file wins and they should be updated.
+
 **Status categories**
 
 | Category | Meaning |
@@ -16,7 +18,7 @@
 | Event & cultural programme | **Proposed** (current vision) | Plan, legal guide, deck (35 slides), financial model that runs | 21 Oct 2026 | No legal organiser, no venue, no Rebels agreement, no date | [event-programme](services/event-programme.md) |
 | Artist & technician network | **Proposed** (current vision) | Concept and 8-step creator pathway in the deck | 21 Oct 2026 | No members list, no process, no tool | [creative-network](services/creative-network.md) |
 | BTS Son learning platform | **Under development** · **Existing** code | Next.js app: full E3 course, annales index, certificates (browser-only), AI tutor code; unit tests pass (re-run 21 Oct) | Code: 16 Jul 2026 | Live site state unknown; 6 courses are stubs; no real accounts; content needs review | [learning-platform](services/learning-platform.md) |
-| TekPractice simulator | **Under development** · **Existing** code | Playable 3D app: 4 levels, 7 rooms, sandbox, exam mode, readiness dashboard; 164 unit tests and build pass (re-run 21 Oct) | Code: 19 Jul 2026 | Live build stale on 17 Jul (fix unconfirmed); 13 founder tips are placeholders; assets need de-branding | [tekpractice](services/tekpractice.md) |
+| TekPractice simulator | **Under development** · **Existing** code | 3D app reported playable in July logs (gameplay not re-run): 4 levels, 7 rooms, sandbox, exam mode, readiness dashboard; 164 unit tests and build pass (re-run 21 Oct) | Code: 19 Jul 2026 | Live build stale on 17 Jul (fix unconfirmed); 13 founder tips are placeholders; assets need de-branding | [tekpractice](services/tekpractice.md) |
 | Production & crew services | **Proposed** | Mentions in event docs only | 21 Oct 2026 | Lawful model, entity, clients | [production-and-crew-services](services/production-and-crew-services.md) |
 | Equipment rental | **Proposed** | Mentions in event docs only | 21 Oct 2026 | Gear, capital, insurance | [equipment-rental](services/equipment-rental.md) |
 | Other ideas (themed series, graduate community, internship finder, AI audio feedback…) | **Proposed** / feature ideas | — | Jul–Oct 2026 | — | [other-ideas](services/other-ideas.md) |
@@ -33,6 +35,6 @@
 | [`archive/teknest-simu/`](../archive/teknest-simu/) | One-commit copy of the simulator, identical to Technest-Sim commit `9a89974` except for its CI file | 15 Jul 2026 |
 | [`archive/teknest/`](../archive/teknest/) | One-commit copy, identical to Technest-Sim commit `4987a0c` except for its CI file | 15 Jul 2026 |
 | [`archive/thechnest-local-2026-07/`](../archive/thechnest-local-2026-07/) | Founder's July planning docs, research, CSV data and PDF renders, copied from his PC | 7–19 Jul 2026 |
-| `event-project/docs/02-meeting-brief.md`, `03-working-project-plan.md`, `presentation/slides-web/` | **Partly superseded** by the 21 Oct deck and README: licence and GUSO rules, break-even ≈155, D−10 rule, model labels 1/2/3 | 20 Oct 2026 |
+| `event-project/docs/01-legal-structure-guide.md`, `02-meeting-brief.md`, `03-working-project-plan.md`, `presentation/slides-web/` | **Partly superseded** by the 21 Oct deck and README: licence and GUSO rules, break-even ≈155, D−10 rule, model labels 1/2/3 | 20 Oct 2026 |
 | Founder PC folders `audio-sim/`, `tech-nest-web_DEAD_DO_NOT_USE/`, `idea-sphere/` (code) | Older local copies. **Not imported**; only docs were copied | Jul 2026 |
-| Former GitHub repos `Technest`, `Technest-Sim`, `teknest`, `teknest-simu` | Fully imported into this repo with history on 21 Oct 2026; still exist on GitHub | Jul 2026 |
+| Former GitHub repos `Technest`, `Technest-Sim`, `teknest`, `teknest-simu` | Fully imported into this repo with history on 21 Oct 2026; they existed on GitHub at import (current state not re-checked) | Jul 2026 |

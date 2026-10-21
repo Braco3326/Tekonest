@@ -36,7 +36,7 @@ Other organisers and the event programme itself **[F]/[Inf]**.
   - storage and transport;
   - maintenance;
   - rental contracts and deposits.
-- **A legal entity** able to invoice. The founder's titre limits apply **[R]** (EV-66).
+- **A legal entity** able to invoice. The founder's personal work-status limits (details in [`event-project/docs/01`](../../event-project/docs/01-legal-structure-guide.md); not verified; not legal advice) apply **[R]** (EV-66).
 
 ## 5. How it might sustain itself
 

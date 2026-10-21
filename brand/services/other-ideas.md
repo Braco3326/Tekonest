@@ -5,7 +5,7 @@ These ideas appear in the sources, but none has enough evidence or definition to
 | Idea | What the sources say | Classification | Evidence |
 | --- | --- | --- | --- |
 | **Own event series / themed year** (Halloween and other themed nights) | Founder activity; docs put it "later", after the pilot | **Part of the [event programme](event-programme.md)**, not a separate service | event register §C |
-| **Oscar's own sound, video, lighting and DJ work** | Founder activity; he "could be hired by Tekonest", but only as salaried work within his 964 h | **Personal work, not a Tekonest service**. It interacts with the event programme | EV-15, event register §C |
+| **Oscar's own sound, video, lighting and DJ work** | Founder activity; he could be hired by [Tekonest], but only as salaried work within his personal work-status limits (EV-15) | **Personal work, not a Tekonest service**. It interacts with the event programme | EV-15, event register §C |
 | **Personal projects** | Founder activity "still being developed"; no content given | **Undefined**: needs founder input | event register §C |
 | **Graduate community and mentors** | Graduates become "community + mentor content"; marked "community later" in July | **Feature idea** of TekPractice and the learning platform. May later merge with the [network](creative-network.md) (open question) | TP-11, LT-24, LT-25 |
 | **Internship/apprenticeship finder** ("chercheur de stages/alternances") | Announced in the learning platform's E6 course stub | **Feature idea** of the learning platform; possible bridge to the network | LP-35, LT-55 |

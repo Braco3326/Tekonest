@@ -57,7 +57,7 @@ Labels: **[F]** founder · **[FB]** founder brief · **[P]** proposal · **[R]**
 | Unit tests | 54 pass, 3 live tests skipped (no key); type-check passes. Re-run on 21 Oct 2026 | LP-38 **[I]** |
 | Production build | Not verified here (Google Fonts fetch blocked in sandbox) | LP-39 **[I]** |
 | Live site | URLs in code (`tech-nest-web-gamma.vercel.app`, `teknest.fr`), **current state unknown** | LP-29, LP-30 |
-| Content accuracy | AI-written from model knowledge; validated by "the project owner" on 15 Jul 2026, yet errors the AI flagged itself remain | LP-12, LP-13, LP-14 **[I]** |
+| Content accuracy | AI-written from model knowledge; recorded as validated by "the project owner" on 15 Jul 2026 **[F, as recorded]**, yet errors the AI flagged itself remain (see C-17) | LP-12, LP-13, LP-14 **[I]** |
 
 ## 6. What it would require
 
@@ -97,7 +97,7 @@ Labels: **[F]** founder · **[FB]** founder brief · **[P]** proposal · **[R]**
 - **Risks.**
   - Unverified technical content.
   - Client-side certificates are easy to forge (LP-44).
-  - Unverified référentiel facts: E3 coefficient 4 and 6 h in this folder, vs coefficient 3 and 3 h in the founder's BTS study-project instructions, kept outside this repo **[I]** (LP conflict 6).
+  - Unverified référentiel facts: E3 coefficient 4 and 6 h in this folder, vs coefficient 3 and 3 h in another description of the E3/TES part; possibly both right if E3 has parts (open conflict C-16) **[I]** (LP conflict 6).
 - **Unknown.**
   - Whether the live tutor ever answered in production.
   - Whether the deployed site is still up.

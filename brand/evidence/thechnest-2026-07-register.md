@@ -68,7 +68,7 @@ Type key: FS = founder statement/decision (as recorded by a doc), FB = founder b
 | LT-23 | Persona: "Nadia. 19, first year BTS Métiers du son in Paris… Terrified of the physics (E3/PTES) and of the practical exam (E4)" | VISION_TekPractice-StudentJourney.md intro | 07-16 | P (fictional persona) |
 | LT-24 | Beat 6: graduates become "community + mentor content"; "partage ta config préférée / laisse un conseil aux prochains" | VISION_TekPractice-StudentJourney.md Beat 6 | 07-16 | P |
 | LT-25 | Beat 6 status: "◻️ design goal; community later" | TEKNEST-FINAL-REPORT.md §4 | 07-18/19 | IF (reported) |
-| LT-26 | People: "started as Ali's vision; **you (Oscar)** are building it on **Windows**." (another person is named here; see open question on ownership) another person's name in the source; recorded verbatim as a historical claim only | STATUS.md "The vision", Note | 07-15 | FS (as recorded) |
+| LT-26 | People: "started as Ali's vision; **you (Oscar)** are building it on **Windows**." This names another person (not the founder); recorded verbatim as a historical claim only. See open question on ownership (C-18) | STATUS.md "The vision", Note | 07-15 | FS (as recorded) |
 | LT-27 | Founder role: "you, the graduate, are the review gate; nothing ships unverified"; "Write the 13 coach tips… the one thing no AI should fake" | StudentJourney "failure modes"; FINAL-REPORT §6 | 07-16 / 07-18 | FS/P |
 | LT-28 | Team for building = AI agents: "designer" (one white design system for site + game) and "developer" (engineering), in `~/.claude/agents/` | TEKNEST-MASTER-BUILD.md "Agents & identities"; FINAL-REPORT §1 | 07-17 | P / IF |
 | LT-29 | GitHub: site = `Braco3326/Technest`, simulator = `Braco3326/Technest-Sim` | STATUS.md window map; FINAL-REPORT §1 | 07-15 / 07-18 | IF (reported) |
@@ -168,7 +168,7 @@ Type key: FS = founder statement/decision (as recorded by a doc), FB = founder b
 11. **Test counts move over time:** 49 (07-15) → 113/130 (repo NIGHT_LOG 07-17) → 164 vitest + 32 e2e (07-18). This is a progression, not a contradiction.
 12. **Brand naming.** These docs use Tech Nest / TECH NEST / Teknest / TEKNEST / Technest (repos). The repo README (10-21) uses **Tekonest** and says older files use "Techonest". The July docs never use "Tekonest" or "Techonest".
 13. **Brand scope.** The July docs define the brand only as an AI exam-success platform for BTS Son, with 2 products. The repo README (10-21) defines Tekonest as "a Paris nest of services around culturally mixed events… and a community that gives artists and technicians fairly paid work", with the learning platform and simulator as services among others. The scope has clearly widened since July.
-14. **Identity.** STATUS.md says it "started as Ali's vision". All other docs address Oscar as the founder. (another person is named here; see open question on ownership) recorded only as a historical claim in the source.
+14. **Identity.** STATUS.md says it "started as Ali's vision". All other docs address Oscar as the founder. This names another person, not the founder; recorded only as a historical claim (see C-18).
 
 ---
 

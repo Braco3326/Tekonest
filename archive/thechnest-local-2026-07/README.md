@@ -1,6 +1,6 @@
 # Thechnest local folder (July 2026) — historical copy
 
-These files were copied on 21 Oct 2026 from the founder's PC (`C:\Users\iB_K\Documents\Claude\Projects\Thechnest`). They are **historical evidence, not authority** over the current vision (FB-06).
+These files were copied on 21 Oct 2026 from the founder's local `Thechnest` project folder on his PC. They are **historical evidence, not authority** over the current vision (FB-06).
 
 - **Dates.** They are last-modified dates on the founder's PC, from 7 to 19 Jul 2026.
 - **Names.** The brand is spelled Tech Nest, TECH NEST, Teknest and TEKNEST here.

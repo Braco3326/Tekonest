@@ -9,7 +9,7 @@
 
 Labels: **[F]** founder · **[P]** proposal · **[R]** research · **[Inf]** inference · **[Rec]** Claude's recommendation.
 
-**Why one document covers two founder activities.** The founder listed two separate activities: "finding and coordinating technicians for other organisers", and filming, editing and marketing among the network's fields **[F]**. The docs found that supplying people for a margin risks illegal worker lending. A genuine production service, with its own know-how, supervision and price, is the form that "may be lawful" **[R]** (EV-76). Both activities are therefore treated here as one possible service, whose legal form is still open.
+**Why one document covers two ideas.** The founder listed "finding and coordinating technicians for other organisers" as an activity **[F]**, and named filming, editing and marketing among the network's fields **[F]**; his 21 Oct brief also mentions "a production service for other organisers" later **[F]** (event register §C). The docs found that supplying people for a margin risks illegal worker lending. A genuine production service, with its own know-how, supervision and price, is the form that "may be lawful" **[R]** (EV-76). Both activities are therefore treated here as one possible service, whose legal form is still open.
 
 ---
 
@@ -39,7 +39,7 @@ Labels: **[F]** founder · **[P]** proposal · **[R]** research · **[Inf]** inf
 
 ## 5. What it would require
 
-- **A legal entity able to invoice.** The docs say an SAS is the usual tool for "a production service". A student titre de séjour limits what the founder can lead or earn **[R]** (EV-66, EV-67).
+- **A legal entity able to invoice.** The docs say an SAS is the usual tool for "a production service". The founder's personal work-status limits restrict what he can lead or earn **[R]** (EV-66, EV-67).
 - **A labour-law check** of the L8241-1 boundary before any offer **[R]** (EV-76). Not legal advice.
 - **Insurance, contracts, and equipment** (see [equipment rental](equipment-rental.md)) **[Inf]**.
 

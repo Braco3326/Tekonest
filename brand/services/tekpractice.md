@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| **Status** | Current vision · **under development** (founder, 21 Oct 2026). Playable code exists locally; last code change 19 Jul 2026 |
+| **Status** | Current vision · **under development** (founder, 21 Oct 2026). Code exists (reported playable in July logs; unit tests and build pass, gameplay not re-run); last code change 19 Jul 2026 |
 | **Folder** | [`tekpractice-sim/`](../../tekpractice-sim/) (Vite + Babylon.js app, imported from repo `Technest-Sim`) · early copies in [`archive/`](../../archive/) |
 | **Names used** | "TekPractice" (product, page title), "audio-sim" (package/repo), "Audio Engineering Simulator", "Audio Sim" (early builds) |
 | **Source dates** | 7 Jul – 19 Jul 2026 · 21 Oct 2026 (founder status) |
@@ -17,7 +17,7 @@ Labels: **[F]** founder · **[FB]** founder brief · **[P]** proposal · **[R]**
 - A browser-based 3D "reactive smart sound simulation". You wire real professional audio gear (mics, consoles, stageboxes, codecs, patchbays), and a rules engine explains each mistake **[FB]** (TP-01, LT-02, LT-12).
 - It covers four domains: live sound, radio/broadcast, remote duplex (N-1) and post-production **[FB]** (TP-01).
 - **How it started.** It began as the founder's personal revision tool: "pas d'auth, pas de paiement" **[FB]** (TP-02, LT-08). His success test: "je dois pouvoir câbler un studio radio self-op et un N-1 correct sans notes" **[FB]** (TP-03).
-- **How it grew.** By 16–17 Jul 2026 it was framed as the flagship and "moat" of the BTS Son offer **[P]** (LT-02, LT-07, TP-05).
+- **How it grew.** It was called "the flagship of Tech Nest" on 10–11 Jul and "the moat" on 15 Jul **[P]/[FB]** (LT-07, LT-02); by 17 Jul its vision targeted all BTS Son students (TP-05).
 - **Status.** The founder states it is a current service vision under development **[FB]** (FB-04).
 
 ## 2. Who it is for, and what it answers
@@ -43,7 +43,7 @@ Labels: **[F]** founder · **[FB]** founder brief · **[P]** proposal · **[R]**
 
 ## 4. Distinct identity and value
 
-- The July research found no competitor offering hands-on practice with real gear for BTS Son **[R]** (LT-49 white space C, LP-09).
+- The July research found that no platform specialises in BTS Son **[R]** (LT-48); the July brief calls the simulator "the whole moat" **[FB]** (LP-09). That no competitor offers hands-on gear practice is the brief's claim, not a researched finding **[Inf]**.
 - Look: calm, "gallery-white", designed to lower exam anxiety **[P]** (LT-18).
 - The founder's own voice is meant as the human trust layer **[P]** (LT-22).
 
@@ -58,7 +58,7 @@ Labels: **[F]** founder · **[FB]** founder brief · **[P]** proposal · **[R]**
 | 13 "Conseils d'Oscar" tips | **All still placeholders** | TP-31 **[I]** |
 | Live deployment (`www.teknest.fr`) | Served a stale build on 17 Jul 2026; fix not confirmed | TP-15, TP-16 **[R]** |
 | Learn mode, Set Editor, patchbay normalling | Not built (spec or proposal only) | TP-39–TP-41 **[P]** |
-| 3D models | Mostly CC-BY downloads still showing brand logos; must be de-branded before commercial use | TP-42–TP-44 **[I]/[R]** |
+| 3D models | 18 of the device models are CC-BY downloads still showing brand logos (others are procedural or own work); must be de-branded before commercial use | TP-42–TP-44 **[I]/[R]** |
 
 ## 6. What it would require
 

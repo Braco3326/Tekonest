@@ -47,7 +47,7 @@ The nights would offer a curated cross-cultural line-up with live music at the c
 | Item | State | Evidence |
 | --- | --- | --- |
 | Founder concept, values, cultural focus | Stated by founder | EV-01…07 **[F]** |
-| Cofounders Ahmad (singer/percussionist) and Gabriel/GrooveBox (house DJ, linked to Rebels) | Agreed in principle; roles and time not agreed | EV-17, EV-19, EV-21 **[F]** |
+| Cofounders Ahmad (singer/percussionist) and Gabriel/GrooveBox (house DJ; link to Rebels partly inferred, see C-15) | Agreed in principle; roles and time not agreed | EV-17, EV-19, EV-21 **[F]** |
 | Agreement with Rebels Collectif | **None.** No registered Rebels entity found publicly | EV-26, EV-27 **[I]**, EV-24 **[R]** |
 | Pilot night: 120–200 people, Feb–Mar 2027, €12–18 tickets, €1,000 cap | Proposal only | EV-33, EV-35 **[P]** |
 | Go/stop rule: D−14 ≥ 50 % of break-even in paid presales, D−3 ≥ 75 % | Proposal only | EV-37 **[P]** |
@@ -92,13 +92,13 @@ The nights would offer a curated cross-cultural line-up with live music at the c
   6. money and fair-pay rules;
   7. artistic direction.
 - **Conflicts to resolve.** The founder's earlier idea of unpaid or percentage pay for technicians conflicts with the docs' "everyone paid" rule and the legal basis behind it **[F] vs [P]/[R]** (EV-53, EV-54, EV-55). See [decisions register](../04-decisions-and-questions.md).
-- **Dependency.** The founder's student titre de séjour limits salaried work to 964 h a year and rules out a micro-entreprise **[R]** (EV-65, EV-66). Any role he takes must fit this. Not legal advice.
+- **Dependency.** Any role the founder takes must fit the founder's personal work-status limits (details in [`event-project/docs/01`](../../event-project/docs/01-legal-structure-guide.md); not verified; not legal advice) **[R]** (EV-65, EV-66).
 - **Main risks.**
   - **[Inf] judgment ratings** (EV-84):
     - too few tickets;
     - no legal organiser;
     - unpaid or percentage pay;
-    - the titre;
+    - the founder's personal work-status limits;
     - injury;
     - Gabriel's double role.
   - Injury is also the founder's own biggest worry **[F]** (EV-77).

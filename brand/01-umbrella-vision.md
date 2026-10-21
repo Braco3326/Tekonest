@@ -25,7 +25,7 @@
 | 20–21 Oct 2026 | **"Techonest" → "Tekonest"**: culturally mixed Paris nights, plus a network giving artists and technicians fairly paid work | EV-01–EV-07 |
 | 21 Oct 2026 | **Tekonest as an umbrella** holding both families and later services | FB-02–FB-04 |
 
-The July documents never mention events, Rebels, a network or equipment. The October event documents never mention the learning products. The two strands were joined by the founder's 21 Oct instruction, not by an earlier plan **[I]** (thechnest register §D; event register §D).
+The July documents never mention cultural events, Rebels, a network or equipment rental ("événementiel" appears only as a BTS job sector and a proposed simulator room). The October event documents never mention the learning products **[I]** (thechnest register §D; event register §D). The two strands appear to have been joined by the founder's 21 Oct instruction rather than by an earlier plan **[Inf]**.
 
 ## 3. Shared purpose (draft)
 
@@ -42,7 +42,7 @@ Each value appears in at least one strand. Whether they apply to the whole brand
 | **Fair pay and real experience** | Event strand: "fairly paid opportunities and useful professional experience" **[F]** (EV-07) |
 | **Diversity creates richness and harmony** | Event strand **[F]** (EV-04) |
 | **Honesty and trust**: "teach, don't cheat", transparency about sources, "readiness, never vanity" | Learning strand **[FB]/[P]** (LT-12, LP-04, TP-09) |
-| **Real skills on real gear** | Learning strand **[FB]** (TP-01, TP-37) |
+| **Real skills on real gear** | Learning strand **[FB]/[P]** (TP-01, TP-37) |
 | **The founder's own voice** ("Conseils d'Oscar") as a trust layer | Learning strand **[P]** (LT-22) |
 
 ## 5. Audiences and relationships
@@ -59,7 +59,7 @@ The two families serve **different audiences** and do not need to be forced toge
 
 ## 6. Brand architecture: options, not yet decided
 
-- **Current evidence [I].** Sub-names already exist: TekPractice, Tekskol, Tech Nest. Their shared "Tek" prefix suggests a family.
+- **Current evidence.** Sub-names already exist: TekPractice, Tekskol, Tech Nest **[I]**. Their shared "Tek" prefix suggests a family **[Inf]**.
 - **Founder decision needed.** The founder has not chosen how the services carry the name.
 
 | Option | What it means | Fits if… |
@@ -75,7 +75,7 @@ The two families serve **different audiences** and do not need to be forced toge
 - **Not a legal entity yet.** No structure has been chosen **[I]** (EV-83).
 - **Not in partnership with Rebels Collectif.** Nothing is agreed **[I]** (EV-27).
 - **Not live with paying customers.** No service has any.
-- **Not a staffing agency.** Supplying people for a margin is legally risky **[R]** (EV-76).
+- **Not set up to supply workers.** The founder listed coordinating technicians for other organisers as an activity **[F]**, but the docs advise against supplying people for a margin, because of the French ban on for-profit worker lending **[R]/[Rec]** (EV-76). Not legal advice.
 
 ## 8. How to use this document
 
