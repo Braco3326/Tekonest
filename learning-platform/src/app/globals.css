@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TECH NEST — Design tokens (single source of truth)
+   Studio-grade, dark, precise. Pro-audio hardware, not a toy.
+   Documented in docs/design-system.md
+   ============================================================ */
+
+:root {
+  /* Surfaces — deep charcoal with a cold blue cast, like a console desk at FOH */
+  --tn-bg: #0b0e13;          /* page background */
+  --tn-surface: #11151c;     /* cards, panels */
+  --tn-raised: #171c25;      /* raised panels, headers */
+  --tn-overlay: #1e242f;     /* hover states, popovers */
+  --tn-line: #232a36;        /* hairline borders */
+  --tn-line-strong: #303948;
+
+  /* Ink */
+  --tn-ink: #e9edf3;         /* primary text */
+  --tn-ink-mute: #9aa4b2;    /* secondary text */
+  --tn-ink-faint: #7e8896;   /* tertiary, captions — ≥4.5:1 on surface (a11y) */
+
+  /* Signal colors — semantics borrowed from metering */
+  --tn-amber: #e8b04b;       /* brand accent — VU needle warm glow */
+  --tn-amber-bright: #f4c56a;
+  --tn-amber-dim: rgba(232, 176, 75, 0.12);
+  --tn-signal: #3ddc97;      /* signal present — success, progress */
+  --tn-signal-dim: rgba(61, 220, 151, 0.12);
+  --tn-clip: #f06a5d;        /* clip — errors, fail */
+  --tn-clip-dim: rgba(240, 106, 93, 0.12);
+  --tn-cue: #5aa9f2;         /* cue/info — links, info notes */
+  --tn-cue-dim: rgba(90, 169, 242, 0.12);
+
+  /* Elevation */
+  --tn-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --tn-shadow-2: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --tn-shadow-glow-amber: 0 0 24px rgba(232, 176, 75, 0.18);
+
+  /* Radii — small, machined, hardware-like */
+  --tn-r-sm: 4px;
+  --tn-r-md: 8px;
+  --tn-r-lg: 12px;
+
+  /* Motion */
+  --tn-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --tn-fast: 120ms;
+  --tn-med: 220ms;
+}
+
+@theme inline {
+  --color-bg: var(--tn-bg);
+  --color-surface: var(--tn-surface);
+  --color-raised: var(--tn-raised);
+  --color-overlay: var(--tn-overlay);
+  --color-line: var(--tn-line);
+  --color-line-strong: var(--tn-line-strong);
+  --color-ink: var(--tn-ink);
+  --color-ink-mute: var(--tn-ink-mute);
+  --color-ink-faint: var(--tn-ink-faint);
+  --color-amber: var(--tn-amber);
+  --color-amber-bright: var(--tn-amber-bright);
+  --color-amber-dim: var(--tn-amber-dim);
+  --color-signal: var(--tn-signal);
+  --color-signal-dim: var(--tn-signal-dim);
+  --color-clip: var(--tn-clip);
+  --color-clip-dim: var(--tn-clip-dim);
+  --color-cue: var(--tn-cue);
+  --color-cue-dim: var(--tn-cue-dim);
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --radius-sm: var(--tn-r-sm);
+  --radius-md: var(--tn-r-md);
+  --radius-lg: var(--tn-r-lg);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--tn-bg);
+  color: var(--tn-ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(232, 176, 75, 0.3);
+}
+
+/* Focus visible — amber ring, hardware LED feel */
+:focus-visible {
+  outline: 2px solid var(--tn-amber);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Subtle scanline texture on hero surfaces */
+.tn-grid-texture {
+  background-image: linear-gradient(var(--tn-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--tn-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Meter bar animation */
+@keyframes tn-meter {
+  0%, 100% { transform: scaleY(0.35); }
+  20% { transform: scaleY(0.9); }
+  45% { transform: scaleY(0.55); }
+  70% { transform: scaleY(1); }
+  85% { transform: scaleY(0.45); }
+}
+
+@media print {
+  body {
+    background: #fff;
+    color: #111;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
