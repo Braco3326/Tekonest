@@ -77,16 +77,16 @@ Each night creates paid slots, credits and footage for the network; the network 
 6. Money rules and a written fair-pay policy
 7. Who leads artistic direction
 
-## 8. Files in this repo
+## 8. Related files (shared, at the repo root)
 
 | File | Content |
 | --- | --- |
-| `presentation/Techonest_Vision_and_Project_Plan.pptx` | Main deck with speaker notes |
-| `docs/01-legal-structure-guide.md` | Legal structures in France, compared |
-| `docs/02-meeting-brief.md` | Pre-read for the cofounders |
-| `docs/03-working-project-plan.md` | Detailed working plan |
-| `docs/04-deck-companion-notes.md` | Change log, assumptions, sources, decisions |
-| `docs/05-everything-explained.md` | Everything the founder explained, with gaps |
-| `model/pilot_model.py` | Financial model for one pilot night |
+| [`presentation/Techonest_Vision_and_Project_Plan.pptx`](../presentation/Techonest_Vision_and_Project_Plan.pptx) | Main deck with speaker notes |
+| [`docs/01-legal-structure-guide.md`](../docs/01-legal-structure-guide.md) | Legal structures in France, compared |
+| [`docs/02-meeting-brief.md`](../docs/02-meeting-brief.md) | Pre-read for the cofounders |
+| [`docs/03-working-project-plan.md`](../docs/03-working-project-plan.md) | Detailed working plan |
+| [`docs/04-deck-companion-notes.md`](../docs/04-deck-companion-notes.md) | Change log, assumptions, sources, decisions |
+| [`docs/05-everything-explained.md`](../docs/05-everything-explained.md) | Everything the founder explained, with gaps |
+| [`model/pilot_model.py`](../model/pilot_model.py) | Financial model for one pilot night |
 
 > Name note: earlier files use "Techonest"; the project name going forward is **Tekonest**.

@@ -4,11 +4,18 @@ Working files for **Techonest** — a Paris project for culturally mixed events 
 
 **Status (21 Oct 2026):** idea stage. No legal structure, no agreement with Rebels Collectif, all figures are estimates until replaced by quotes. Nothing here is legal advice.
 
-## Contents
+## Services
+
+Tekonest is a nest of several services. Each one lives in its own folder.
+
+| Folder | Service |
+| --- | --- |
+| [`event-project/`](event-project/) | **Tekonest Event Project** — culturally mixed nights in Paris, starting with the pilot |
+
+## Shared files
 
 | Path | What it is |
 | --- | --- |
-| `TEKONEST_EVENT_PROJECT.md` | **Start here** — one-page overview of the Tekonest Event Project |
 | `presentation/Techonest_Vision_and_Project_Plan.pptx` | Main deck — 26 slides + 9 appendix, speaker notes with sources |
 | `presentation/Techonest_Vision_and_Project_Plan.pdf` | PDF preview of the deck |
 | `presentation/pptx-source/build.js` | pptxgenjs script that generates the deck |
