@@ -1,8 +1,9 @@
 """Merge learning-resources-candidates/*.json into learning-resources.json and
 generate learning-resources-catalogue.md (A4, run 2).
 
-Stdlib only. Idempotent: entries already present (same id) are replaced by the
-fragment version; duplicate access links are skipped and logged.
+Stdlib only. Idempotent: entries already present (same id) are kept as they are in
+learning-resources.json (the base is the source of truth after the first merge, and it
+carries the link-check fields); duplicate access links are skipped and logged.
     python knowledge-base/tools/merge_resources.py
 """
 import json
@@ -56,8 +57,11 @@ def main():
             if link in links and links[link] != r["id"]:
                 log.append(f"{r['id']}: skipped, same access_link as {links[link]}")
                 continue
-            if r["id"] in by_id and by_id[r["id"]].get("added_by") is None:
-                log.append(f"{r['id']}: id already used by a run-1 entry, kept run-1 entry")
+            if r["id"] in by_id:
+                # Already merged (or a run-1 id): the base file is now the source of truth —
+                # it carries url_status/access_link_status written by check_urls.py.
+                if by_id[r["id"]].get("added_by") is None:
+                    log.append(f"{r['id']}: id already used by a run-1 entry, kept run-1 entry")
                 continue
             by_id[r["id"]] = r
             links[link] = r["id"]
