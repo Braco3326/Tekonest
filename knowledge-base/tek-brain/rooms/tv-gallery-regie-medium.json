@@ -1,0 +1,73 @@
+{
+  "id": "tv-gallery-regie-medium",
+  "name_fr": "Régie de production TV + régie son (moyenne)",
+  "name_en": "Medium TV production gallery with sound control room",
+  "family": "broadcast",
+  "size": "medium",
+  "description": "Régie d'un plateau de télévision : la régie de production (réalisateur, scripte, truquiste, opérateurs) travaille face à un mur d'écrans ; la régie son, accolée et vitrée, accueille l'ingénieur du son et son assistant face à leurs propres écrans et écoutes. Le son gère micros HF, ordres (intercom), retours oreillette, appels téléphoniques et conformité loudness du programme. Les deux pièces sont modélisées côte à côte : régie de production à gauche (−x), régie son à droite (+x), murs d'écrans côté −z.",
+  "dimensions_m": {
+    "length": { "min": 5.5, "typical": 6.5, "max": 8.0 },
+    "width": { "min": 11.0, "typical": 13.5, "max": 16.0 },
+    "height": { "min": 2.7, "typical": 3.0, "max": 3.5 }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    { "surface": "floor", "material": "faux plancher technique dalles 60 × 60 cm, revêtement moquette ou vinyle antistatique", "finish_note": "Câbles sous le plancher jusqu'aux pupitres." },
+    { "surface": "walls", "material": "plâtre + absorbants laine minérale tendus de tissu sombre", "finish_note": "Murs sombres pour ne pas gêner la lecture des écrans ; régie son traitée en salle d'écoute." },
+    { "surface": "ceiling", "material": "faux plafond acoustique avec éclairage encastré gradable", "finish_note": "Bouches de clim basse vitesse (beaucoup de chaleur dégagée par les écrans)." },
+    { "surface": "front-wall", "material": "mur d'écrans (MediaWall) sur structure", "finish_note": "Écrans multiformats et petites enceintes de contrôle intégrées côté production." }
+  ],
+  "rt60_s": {
+    "min": 0.2,
+    "max": 0.4,
+    "band_note": "Cible EBU Tech 3276 pour une régie son de haute qualité (moyenne 200 Hz–4 kHz, Tm = 0,25·(V/100 m³)^(1/3)) ; s'applique à la régie son, pas à la régie de production. Aucune mesure publiée d'une régie TV réelle trouvée.",
+    "source_url": "https://tech.ebu.ch/docs/tech/tech3276.pdf"
+  },
+  "zones": [
+    { "id": "production-gallery", "kind": "gallery", "rect_m": [-2.75, 0, 8.0, 6.4], "floor_y_m": 0 },
+    { "id": "sound-control-room", "kind": "control-room", "rect_m": [4.0, 0, 5.4, 6.4], "floor_y_m": 0 },
+    { "id": "sound-rack", "kind": "machine-room", "rect_m": [6.2, 2.3, 0.9, 1.6], "floor_y_m": 0 }
+  ],
+  "gear_positions": [
+    { "equipment_id": "clear-com-ms-702", "zone": "production-gallery", "position_m": [-2.75, 0.9, -0.4], "rotation_deg": 0, "note": "Poste d'ordres du réalisateur sur le pupitre avant (intercom vers plateau, cadreurs, son)." },
+    { "equipment_id": "genelec-8030c", "zone": "production-gallery", "position_m": [-5.6, 1.7, -2.9], "rotation_deg": 10, "note": "Écoute programme intégrée au mur d'écrans (gauche)." },
+    { "equipment_id": "genelec-8030c", "zone": "production-gallery", "position_m": [0.1, 1.7, -2.9], "rotation_deg": -10, "note": "Écoute programme intégrée au mur d'écrans (droite)." },
+    { "equipment_id": "calrec-brio", "zone": "sound-control-room", "position_m": [4.0, 0.8, -0.4], "rotation_deg": 0, "note": "Console son broadcast (≈ 1,8 m de large) au centre d'un pupitre en L." },
+    { "equipment_id": "neumann-kh-120-ii", "zone": "sound-control-room", "position_m": [3.0, 1.2, -1.9], "rotation_deg": 15, "note": "Écoute gauche ; base 2 m, auditeur à ≈ 1,8 m (géométrie EBU Tech 3276)." },
+    { "equipment_id": "neumann-kh-120-ii", "zone": "sound-control-room", "position_m": [5.0, 1.2, -1.9], "rotation_deg": -15, "note": "Écoute droite." },
+    { "equipment_id": "rtw-touchmonitor-tm7", "zone": "sound-control-room", "position_m": [4.7, 0.95, -0.7], "rotation_deg": -10, "note": "Loudness programme (EBU R128) et vectorscope." },
+    { "equipment_id": "nugen-audio-vislm", "zone": "sound-control-room", "position_m": [3.2, 0.95, -0.7], "rotation_deg": 10, "note": "Logiciel de mesure loudness / journal sur le poste de l'ingé son." },
+    { "equipment_id": "sennheiser-hd-25", "zone": "sound-control-room", "position_m": [4.4, 0.8, 0.0], "rotation_deg": 0, "note": "Casque de contrôle (pré-écoute, ordres)." },
+    { "equipment_id": "shure-axient-digital-ad4d", "zone": "sound-rack", "position_m": [6.2, 1.0, 2.3], "rotation_deg": -90, "note": "Récepteurs HF du plateau, télécommandés depuis la régie." },
+    { "equipment_id": "telos-hx2", "zone": "sound-rack", "position_m": [6.2, 1.5, 2.0], "rotation_deg": -90, "note": "Hybride pour les intervenants au téléphone (N-1 depuis la console)." }
+  ],
+  "power_points": [
+    { "position_m": [-2.75, 0.1, -0.8], "type": "schuko-16a-ondule" },
+    { "position_m": [4.0, 0.1, -0.9], "type": "schuko-16a-ondule" },
+    { "position_m": [6.6, 0.3, 2.3], "type": "schuko-16a-ondule" }
+  ],
+  "patch_points": [
+    { "position_m": [6.6, 1.0, 1.4], "type": "patchbay-tt-2x48", "note": "Panneau de brassage audio (tie lines plateau, codecs, enregistreurs)." },
+    { "position_m": [4.0, 0.1, 0.4], "type": "dante-wall-port", "note": "Prises réseau audio/intercom sous le pupitre." }
+  ],
+  "openings": [
+    { "wall": "rear", "kind": "door", "offset_m": -5.0, "width_m": 0.9, "height_m": 2.1 },
+    { "wall": "rear", "kind": "door", "offset_m": 5.5, "width_m": 0.9, "height_m": 2.1 }
+  ],
+  "lighting": { "mood": "Pénombre maîtrisée, éclairage de pupitre gradable, écrans dominants", "color_temp_k": 4000 },
+  "procedural": {
+    "wall_color": "#202227",
+    "floor_color": "#2c2d31",
+    "ceiling_color": "#3a3b40",
+    "prop_hints": ["mur d'écrans multiformats", "pupitres en ligne sur deux rangs", "pupitre son en L", "vitre entre régie production et régie son", "racks 19\"", "faux plancher technique"]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    { "url": "https://www.tvbeurope.com/?p=107607", "publisher": "TVBEurope (STV Studio 1 / Custom Consoles, 2021)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "trade-press", "covers": ["zones.production-gallery (mur d'écrans 6,3 m de large, pupitre avant 6 opérateurs + pupitre arrière 4)", "zones.sound-control-room (console 1,8 m dans un pupitre en L de 3,5 m)"] },
+    { "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf", "publisher": "EBU (Tech 3276, 1998)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "standard", "covers": ["rt60_s", "zones.sound-control-room (surface ≥ 30 m²)", "gear_positions.neumann-kh-120-ii (base 2–4 m, h ≈ 0,9 b, centre acoustique ≥ 1,2 m)"] }
+  ],
+  "not_found_log": [
+    { "what": "Toutes les dimensions (min/typical/max) sont des estimations : largeur de régie de production déduite du mur d'écrans de 6,3 m (STV) + dégagements, régie son dimensionnée à ≈ 35 m² (≥ 30 m² EBU). Aucune surface de régie TV publiée trouvée.", "searched": "BBC Studioworks TC1/TC3 (galeries nommées sans cotes), TVBEurope STV, recherche régies TV", "review": "needs-oscar-review" }
+  ],
+  "review": "needs-oscar-review"
+}
