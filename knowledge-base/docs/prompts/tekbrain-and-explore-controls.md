@@ -1,4 +1,4 @@
-# MASTER PROMPT — TEK Brain + TekPractice explorable world (autonomous run)
+# MASTER PROMPT v2 — TEK Brain + TekPractice explorable world (fully autonomous run, skills included)
 
 ROLE
 You are a team lead working autonomously for many hours. You combine four skill sets:
@@ -9,14 +9,61 @@ You are a team lead working autonomously for many hours. You combine four skill 
 
 Do not stop to ask questions. Record every open question in a file and keep working. Commit after each validated step. Work until every phase is complete or you run out of time.
 
-Use the available skills where they fit:
-- /superpowers:brainstorming (design before building);
-- /superpowers:writing-plans;
-- /superpowers:dispatching-parallel-agents and /superpowers:subagent-driven-development (parallel research agents);
-- /superpowers:test-driven-development (game code);
-- /superpowers:systematic-debugging;
-- /superpowers:verification-before-completion;
-- /anthropic-skills:deep-scan (gap hunt at the end of each track).
+==================================================================
+0. AUTONOMY CONTRACT (the founder is NOT available during this run)
+==================================================================
+- Nobody will answer questions. Never wait for input, never ask "should I continue?", never stop at a plan for approval.
+- When a skill tells you to ask the user something (for example brainstorming's clarifying questions, or a plan's "approve?" step):
+  1. answer it yourself, using this prompt, the repo docs and the founder decisions in brand/04-decisions-and-questions.md if present;
+  2. pick the safest reasonable default;
+  3. write the question, your answer and your reasoning in OPEN_QUESTIONS.md (Track A) or tekpractice-sim/docs/REVIEW-ME.md (Track B);
+  4. continue.
+- "Needs Oscar's review" is a label you put on content. It never blocks your work.
+- If a skill named below is not installed, do the same work by hand following its intent, log "skill X unavailable" in the run log, and continue.
+- If a tool, site or download fails three times, log it as "not found / blocked", move on, and come back once at the end.
+- Never do anything irreversible outside the repo:
+  - no account creation;
+  - no purchases;
+  - no emails or messages;
+  - no publishing;
+  - no deleting files;
+  - no merges into main.
+- Default answers to the open control questions (use these, and list them for review):
+  - right-drag left/right = strafe;
+  - Q/E = move down/up (crouch/stand height);
+  - mouse wheel = field-of-view zoom.
+- Session hygiene:
+  - keep context lean, using subagents for research and for reading big files;
+  - re-read this prompt at the start of each phase;
+  - checkpoint (commit + run-log entry) at least every 45 minutes.
+
+==================================================================
+0b. SKILLS MAP (invoke each skill with the Skill tool at the step shown)
+==================================================================
+| When | Skill | Why |
+| --- | --- | --- |
+| Very first action | /superpowers:using-superpowers | Load the skill discipline for the whole run |
+| Before Track B code | /superpowers:using-git-worktrees | Two branches in parallel: one worktree per track, no checkout collisions |
+| A1, B1 design | /superpowers:brainstorming | Design before building (self-answered, per §0) |
+| A1, B1 specs | /product-management:write-spec | Write DESIGN.md and ADR-0010 as proper specs |
+| After each design | /superpowers:writing-plans | Turn designs into step-by-step plans with tests and checkpoints |
+| Large research (A2, A3, A4) | /anthropic-skills:deep-research | Thorough multi-source research per domain |
+| Fan-out | /superpowers:dispatching-parallel-agents | One research agent per domain/category, run in parallel |
+| Executing plans | /superpowers:subagent-driven-development | Implement plan tasks via fresh subagents with review between tasks |
+| Reading manuals, standards, books (PDF) | /pdf-reading (or /file-reading) | Extract specs and facts correctly from PDFs |
+| 3D downloads, conversions | No skill: use the gltf-transform CLI (and Blender CLI if installed), as in the existing pipeline | Convert to .glb, Draco/KTX2, check polycount and size |
+| All Track B code | /superpowers:test-driven-development | Write the failing test first, for input layer, movement, collision, inventory |
+| Any failing test or bug | /superpowers:systematic-debugging | Root cause before fix |
+| Inventory, settings, help overlay UI | /frontend-design | Distinctive, coherent UI inside the existing white design system |
+| UI text (FR first) | /design:ux-copy | Clear French control labels, help and errors |
+| Controls and UI | /design:accessibility-review | Keyboard-only, contrast, reduced motion, focus order |
+| Browser QA of the game | /anthropic-skills:qa-web | End-to-end checks of the running app, beyond Playwright specs |
+| Hard design choices (e.g. control mapping conflicts, data model trade-offs) | /anthropic-skills:expert-council (or /anthropic-skills:llm-council) | Get several expert views, then decide and log |
+| End of each phase | /superpowers:verification-before-completion | Run the commands and read output before claiming done |
+| End of each track | /superpowers:requesting-code-review | Independent review by a subagent that did not write the code or data |
+| After review | /superpowers:receiving-code-review | Apply review feedback rigorously |
+| Gap hunt | /anthropic-skills:deep-scan | 4-pass completeness check on TEK Brain and the game |
+| Finishing | /superpowers:finishing-a-development-branch | Wrap up each branch; choose "keep branch + push", never merge |
 
 ==================================================================
 1. PROJECT CONTEXT (read before doing anything)
@@ -86,6 +133,7 @@ Goal: the most complete, sourced, machine-usable "brain" of a polyvalent sound e
 Folder: knowledge-base/tek-brain/ (plus additions to existing KB files).
 
 A1. DESIGN FIRST (/superpowers:brainstorming → knowledge-base/tek-brain/DESIGN.md)
+Skills: /superpowers:brainstorming → /product-management:write-spec → /superpowers:writing-plans.
 Define the data model and the JSON Schemas (knowledge-base/schema/) for these entities. All ids are kebab-case and all records carry sources:
 - **concept**: id, name_fr, name_en, definition, explanation, formulas[] (verified only, with source), units, related_concepts[], bts_mapping (épreuve/bloc, flagged "unverified" unless checked on eduscol), difficulty (1–5).
 - **skill / competency**: what a technician must be able to do; links to concepts; observable success criteria.
@@ -104,6 +152,7 @@ Define the data model and the JSON Schemas (knowledge-base/schema/) for these en
 - **glossary term**: FR ↔ EN, with definition and source.
 
 A2. CONTENT (parallel research agents, one per domain)
+Skills: /superpowers:dispatching-parallel-agents (one agent per domain) + /anthropic-skills:deep-research inside each agent; /pdf-reading for manuals and standards.
 Domains:
 - acoustics and psychoacoustics;
 - electricity and levels;
@@ -126,6 +175,7 @@ Domains:
 Targets: ≥ 300 concepts, ≥ 80 procedures, ≥ 60 rules, ≥ 80 faults, ≥ 40 scenarios, ≥ 600 glossary terms. Accuracy beats volume: a smaller verified set is better than an invented big one.
 
 A3. 3D WORLD LIBRARY: rooms, venues, installations, props
+Skills: /superpowers:dispatching-parallel-agents (one agent per venue family) + /anthropic-skills:deep-research; verify every licence on the model's own page before download.
 Expand knowledge-base/3d-models.json (keep the existing fields and add "kind": device | room | venue | prop | character | material).
 - Target: 400+ catalogued candidates.
 - Download and commit only CC0 / CC-BY files, converted to .glb, into knowledge-base/3d-models/, and update CREDITS.md and downloads.json.
@@ -148,6 +198,7 @@ Expand knowledge-base/3d-models.json (keep the existing fields and add "kind": d
 - Per-asset budgets for TekPractice: ≤ 100k tris per room, ≤ 5 MB glb after Draco/KTX2 (the existing pipeline uses gltf-transform). Record polycount and size.
 
 A4. FREE COURSES AND FREE BOOKS
+Skills: /anthropic-skills:deep-research; /pdf-reading to confirm a book's licence page.
 Expand knowledge-base/learning-resources.json (same schema).
 - Target: 200+ entries, at least 80 genuinely free (legally).
 - Include, after verifying each exists and is legally free:
@@ -165,9 +216,11 @@ Expand knowledge-base/learning-resources.json (same schema).
 - Create knowledge-base/tek-brain/curriculum.md: a learning path (beginner → BTS → pro) linking concepts, procedures, resources and simulator scenarios.
 
 A5. TEK BRAIN FOR AI (retrieval index)
+Skills: /superpowers:test-driven-development for the chunker/index script; /superpowers:verification-before-completion.
 Build knowledge-base/tek-brain/index/: a chunked, citation-preserving corpus built only from your own-words KB content, not copyrighted text. Each chunk has id, text, source ids and concept ids. The simulator coach and the site tutor will cite these chunk ids. Write knowledge-base/tek-brain/AI_USAGE.md explaining how to retrieve, how to cite, and the rule that the coach must never give the answer directly in exam mode.
 
 A6. QA for Track A
+Skills: /superpowers:requesting-code-review (independent spot-check agent) → /superpowers:receiving-code-review → /anthropic-skills:deep-scan → /superpowers:verification-before-completion.
 - Validators: schemas, ids unique, all cross-references resolve.
 - URL check (reuse tools/check_urls.py).
 - Independent spot-check of ≥ 10 % of new records by a separate agent that did not write them.
@@ -180,9 +233,11 @@ A6. QA for Track A
 Goal: TekPractice becomes a game-like 3D world you walk through, open your inventory in, and wire real gear in, driven by TEK Brain data.
 
 B1. DESIGN FIRST (/superpowers:brainstorming → tekpractice-sim/docs/adr/0010-explore-controls.md, plus a plan via /superpowers:writing-plans)
+Skills: /superpowers:using-git-worktrees → /superpowers:brainstorming → /anthropic-skills:expert-council for mapping conflicts → /product-management:write-spec (ADR) → /superpowers:writing-plans.
 Respect ADR-0008 "Focus & Patch": walking the world is new, while focusing a device and clicking ports to patch must keep working. Specify the mode switch: Explore mode ↔ Focus/Patch mode (e.g. click a device or press F to focus; Esc or right-click to leave).
 
 B2. CONTROL SCHEME (founder specification — implement exactly, make every binding remappable)
+Skills: /superpowers:subagent-driven-development + /superpowers:test-driven-development; /frontend-design + /design:ux-copy for help overlay, settings and inventory; /design:accessibility-review before committing UI.
 
 Keyboard + mouse ("game" mode, Minecraft-like):
 
@@ -192,7 +247,7 @@ Keyboard + mouse ("game" mode, Minecraft-like):
 | Space | **Open/close the inventory.** Not jump |
 | Mouse move | Look left/right/up/down |
 | Shift | Walk faster |
-| Q / E | Optional: crouch/lower and stand. Propose; flag as open question |
+| Q / E | Move down / up (crouch / stand height). Default from §0; list for review |
 | Esc | Release pointer / close panels / pause menu |
 
 - Use KeyboardEvent.code (physical key positions), so the same keys work on French AZERTY keyboards (Z Q S D positions). Show the correct labels for the user's layout in the help overlay.
@@ -205,9 +260,9 @@ Mouse only (no keyboard needed):
 | Left button held + drag left/right/up/down | Rotate the view (look around) |
 | Right button held + drag up | Move forward |
 | Right button held + drag down | Move back |
-| Right button held + drag left/right | Turn or strafe (propose which; default = strafe; flag as open question) |
+| Right button held + drag left/right | Strafe left/right (default from §0; list for review) |
 | Left click without dragging (below a small movement threshold) | Select / interact: focus a device, click a port |
-| Mouse wheel | Optional zoom/FOV or move; propose |
+| Mouse wheel | Field-of-view zoom (default from §0) |
 
 - Disable the browser context menu on the canvas.
 - Use a drag threshold so a click is never confused with a rotation.
@@ -225,12 +280,14 @@ Common requirements:
 - Later, not this run: touch/mobile controls and gamepad. Leave a seam (an input-action abstraction: actions like MOVE_FORWARD, LOOK, TOGGLE_INVENTORY, INTERACT; devices map to actions).
 
 B3. WORLD AND DATA PIPELINE
+Skills: /superpowers:subagent-driven-development + /superpowers:test-driven-development; /superpowers:systematic-debugging on any failure.
 - Load rooms from the A3 parametric templates (procedural floor, walls, ceiling, materials, lighting, standard positions), plus licensed glb dressing when available.
 - Write a generator script (tekpractice-sim/tools/) that proposes catalog.json additions from knowledge-base equipment records, as a **separate proposal file** for founder review. Never overwrite catalog.json automatically. catalog.json stays the source of truth.
 - Scenarios from TEK Brain (A1) become level drafts: tekpractice-sim/content/levels/drafts/. Mark them "draft — needs Oscar's review"; do not register them as live levels.
 - The AI coach cites TEK Brain chunk ids. Keep the existing rule: socratic, silent in exam mode.
 
 B4. ENGINEERING QUALITY
+Skills: /anthropic-skills:qa-web on the running dev server; /superpowers:requesting-code-review → /superpowers:receiving-code-review; /anthropic-skills:deep-scan; /superpowers:verification-before-completion.
 - TDD for the input-action layer, movement maths, collision, inventory state, placement.
 - Playwright e2e:
   - walk with WASD;
@@ -256,7 +313,7 @@ B4. ENGINEERING QUALITY
 4. B3 procedural rooms from templates, while A4 courses/books run.
 5. A5 retrieval index, then B3 pipeline (catalog proposals, level drafts, coach citations).
 6. A6 + Track B QA, deep-scan, fixes.
-7. Delivery.
+7. Delivery: /superpowers:finishing-a-development-branch on each branch (keep + push, no merge).
 
 ==================================================================
 6. DELIVERY
