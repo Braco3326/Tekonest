@@ -1,0 +1,133 @@
+{
+ "id": "foley-dubbing-stage-medium",
+ "name_fr": "Auditorium de bruitage (foley) et de postsynchronisation",
+ "name_en": "Foley / ADR stage",
+ "family": "post",
+ "size": "medium",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 8,
+   "typical": 11.7,
+   "max": 13
+  },
+  "width": {
+   "min": 6,
+   "typical": 10,
+   "max": 12.86
+  },
+  "height": {
+   "min": 3.5,
+   "typical": 5,
+   "max": 7.3
+  }
+ },
+ "zones": [
+  {
+   "id": "foley-floor",
+   "kind": "stage",
+   "rect_m": [
+    0,
+    1.6,
+    9.6,
+    7.2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "dirt-pit",
+   "kind": "pit",
+   "rect_m": [
+    -3.2,
+    3.6,
+    2.13,
+    2.74
+   ],
+   "floor_y_m": -0.3
+  },
+  {
+   "id": "gravel-pit",
+   "kind": "pit",
+   "rect_m": [
+    -0.6,
+    3.9,
+    1.5,
+    1.5
+   ],
+   "floor_y_m": -0.2
+  },
+  {
+   "id": "water-tank",
+   "kind": "pit",
+   "rect_m": [
+    2.2,
+    3.9,
+    1.8,
+    1.2
+   ],
+   "floor_y_m": -0.4
+  },
+  {
+   "id": "adr-spot",
+   "kind": "other",
+   "rect_m": [
+    3.3,
+    0.2,
+    2,
+    2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "control-room",
+   "kind": "control-room",
+   "rect_m": [
+    0,
+    -4.35,
+    10,
+    3
+   ],
+   "floor_y_m": 0.3
+  }
+ ],
+ "openings": [
+  {
+   "wall": "front",
+   "kind": "window",
+   "offset_m": 0,
+   "width_m": 3,
+   "height_m": 1.2
+  },
+  {
+   "wall": "right",
+   "kind": "door",
+   "offset_m": 3,
+   "width_m": 2.4,
+   "height_m": 2.8
+  },
+  {
+   "wall": "front",
+   "kind": "door",
+   "offset_m": -4,
+   "width_m": 0.9,
+   "height_m": 2.1
+  }
+ ],
+ "procedural": {
+  "wall_color": "#3b3b3e",
+  "floor_color": "#6b5a48",
+  "ceiling_color": "#2a2a2c",
+  "prop_hints": [
+   "étagères d'accessoires (chaussures, tissus, vaisselle)",
+   "porte factice sur cadre",
+   "écran de projection au-dessus de la vitre",
+   "fosses avec bordures bois",
+   "bac à eau"
+  ]
+ },
+ "lighting": {
+  "mood": "travail, assez lumineux sur le plateau, écran de projection visible",
+  "color_temp_k": 4000
+ },
+ "source_count": 1
+}

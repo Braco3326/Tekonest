@@ -1,0 +1,124 @@
+{
+ "id": "dj-booth-small",
+ "name_fr": "Club en configuration DJ (booth sur scène, petite salle)",
+ "name_en": "Club in DJ configuration (booth on stage, small room)",
+ "family": "live",
+ "size": "small",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 12,
+   "typical": 16.2,
+   "max": 22
+  },
+  "width": {
+   "min": 9,
+   "typical": 9.8,
+   "max": 10
+  },
+  "height": {
+   "min": 3.7,
+   "typical": 4.7,
+   "max": 4.95
+  }
+ },
+ "zones": [
+  {
+   "id": "scene",
+   "kind": "stage",
+   "rect_m": [
+    0,
+    -5.6,
+    9.7,
+    5
+   ],
+   "floor_y_m": 0.8
+  },
+  {
+   "id": "booth-dj",
+   "kind": "booth",
+   "rect_m": [
+    0,
+    -4.4,
+    3,
+    1.4
+   ],
+   "floor_y_m": 0.8
+  },
+  {
+   "id": "piste",
+   "kind": "audience",
+   "rect_m": [
+    0,
+    2.5,
+    9.8,
+    11.2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "regie-facade",
+   "kind": "foh",
+   "rect_m": [
+    0,
+    6.6,
+    3,
+    2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "bar",
+   "kind": "other",
+   "rect_m": [
+    -3.4,
+    6.6,
+    3,
+    3
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "front",
+   "kind": "door",
+   "offset_m": 3,
+   "width_m": 2.5,
+   "height_m": 3.5
+  },
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": 2.5,
+   "width_m": 1.8,
+   "height_m": 2.2
+  },
+  {
+   "wall": "left",
+   "kind": "door",
+   "offset_m": 3,
+   "width_m": 1.4,
+   "height_m": 2.1
+  }
+ ],
+ "procedural": {
+  "wall_color": "#0f0f12",
+  "floor_color": "#1a1a1a",
+  "ceiling_color": "#0a0a0a",
+  "prop_hints": [
+   "table de booth DJ habillée de noir",
+   "lampe de pupitre col de cygne",
+   "bacs à vinyles",
+   "boule à facettes",
+   "machine à fumée",
+   "comptoir de bar",
+   "barrière basse devant le booth"
+  ]
+ },
+ "lighting": {
+  "mood": "nuit club : salle noire, lasers et stroboscopes, booth éclairé en lumière de service tamisée",
+  "color_temp_k": 6500
+ },
+ "source_count": 4
+}

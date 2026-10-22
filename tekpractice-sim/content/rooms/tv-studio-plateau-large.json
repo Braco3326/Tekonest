@@ -1,0 +1,131 @@
+{
+ "id": "tv-studio-plateau-large",
+ "name_fr": "Plateau de télévision (grand)",
+ "name_en": "Large television studio floor",
+ "family": "broadcast",
+ "size": "large",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 30.5,
+   "typical": 32.9,
+   "max": 40
+  },
+  "width": {
+   "min": 24.4,
+   "typical": 30.5,
+   "max": 31
+  },
+  "height": {
+   "min": 11,
+   "typical": 13.4,
+   "max": 15.9
+  }
+ },
+ "zones": [
+  {
+   "id": "set",
+   "kind": "stage",
+   "rect_m": [
+    0,
+    -7,
+    20,
+    12
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "cyclorama",
+   "kind": "other",
+   "rect_m": [
+    0,
+    -14.9,
+    26,
+    2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "camera-floor",
+   "kind": "other",
+   "rect_m": [
+    0,
+    1.5,
+    24,
+    5
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "audience-seating",
+   "kind": "audience",
+   "rect_m": [
+    0,
+    10,
+    24,
+    12
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "sound-floor-store",
+   "kind": "other",
+   "rect_m": [
+    -13.5,
+    -2,
+    2.5,
+    3
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "left",
+   "kind": "door",
+   "offset_m": -8,
+   "width_m": 4.62,
+   "height_m": 5.59
+  },
+  {
+   "wall": "right",
+   "kind": "door",
+   "offset_m": -8,
+   "width_m": 4.24,
+   "height_m": 5.59
+  },
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": 12,
+   "width_m": 1.8,
+   "height_m": 2.1
+  },
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": -12,
+   "width_m": 1.8,
+   "height_m": 2.1
+  }
+ ],
+ "procedural": {
+  "wall_color": "#1d1d1f",
+  "floor_color": "#3c3c3e",
+  "ceiling_color": "#2a2a2c",
+  "prop_hints": [
+   "cyclo blanc ou vert",
+   "gradins rétractables",
+   "caméras sur piédestal et grue",
+   "gril métallique et palans",
+   "lisses bois périphériques",
+   "boîtes murales techniques",
+   "rideaux noirs"
+  ]
+ },
+ "lighting": {
+  "mood": "Décor sur-éclairé, public en lumière plus basse, gril chargé de projecteurs LED",
+  "color_temp_k": 5600
+ },
+ "source_count": 5
+}

@@ -16,13 +16,15 @@ import { recommend } from './ui/readiness'
 
 import { injectTokens } from './design/tokens'
 import { loadCatalog, loadLevel } from './engine/CatalogLoader'
-import { bootGame } from './game'
+import { bootGame, type BootOptions } from './game'
 import { bootGame2D } from './game2d'
 import { decideRenderer, readRenderEnv } from './render/detect'
 import { renderDashboard } from './ui/dashboard'
 import { LocalStorageProgressStore } from './ui/ProgressStore'
 import { epreuveScores, globalReadiness, ruleScores, type ReadinessMap } from './ui/readiness'
 import { GUIDED_BRIEF } from './ui/shelf'
+import roomIndexJson from '../content/rooms/index.json'
+import { RoomFile, RoomIndex, type RoomFileT } from './explore/roomSchema'
 
 injectTokens()
 
@@ -40,7 +42,26 @@ function sandboxGuided(): boolean {
 if (levelParam === 'sandbox') {
   const registry = loadCatalog(catalogJson)
   const guided = sandboxGuided()
-  bootGame(
+  // Procedural rooms (B3): one lazy chunk per room — never in the startup bundle.
+  const roomLoaders = import.meta.glob<{ default: unknown }>('../content/rooms/*.json')
+  const roomParam = new URLSearchParams(location.search).get('room')
+  const loader = roomParam ? roomLoaders[`../content/rooms/${roomParam}.json`] : undefined
+  const roomPromise: Promise<BootOptions['room']> = loader
+    ? Promise.all([loader(), import('./explore/roomLayout'), import('./scene/RoomBuilder')]).then(
+        ([m, { roomLayout }, { buildRoom }]) => {
+          const parsed = RoomFile.safeParse(m.default)
+          if (!parsed.success) {
+            console.warn(`[room] ${roomParam} invalide — studio blanc`, parsed.error.issues[0])
+            return undefined
+          }
+          const file: RoomFileT = parsed.data
+          const layout = roomLayout(file)
+          return { file, layout, build: (scene) => void buildRoom(scene, file, layout) }
+        },
+      )
+    : Promise.resolve(undefined)
+  if (roomParam && !loader) console.warn(`[room] salle inconnue « ${roomParam} » — studio blanc`)
+  void roomPromise.then((room) => bootGame(
     registry,
     {
       id: 'sandbox',
@@ -57,8 +78,8 @@ if (levelParam === 'sandbox') {
       environment: 'studio',
       layout: {},
     },
-    { sandboxGuided: guided },
-  )
+    { sandboxGuided: guided, room, roomIndex: RoomIndex.parse(roomIndexJson).rooms },
+  ))
 } else if (levelParam) {
   const registry = loadCatalog(catalogJson)
   const rawLevel = LEVELS[levelParam] ?? a1Json

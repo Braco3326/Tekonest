@@ -117,7 +117,11 @@ test('from Explore: click a device → focus → patch a cable → Esc back to w
       .waitForFunction(() => window.__audioSim!.view().mode === 'focus', undefined, { timeout: 1000 })
       .then(() => true)
       .catch(() => false)
-    if (!focused) await page.keyboard.press('Escape')
+    if (focused) break
+    // Recover like a learner would: drop an accidental cable pickup — but never
+    // press Esc with nothing held (in Explore that opens the pause menu).
+    if (await page.evaluate(() => window.__audioSim!.view().held !== null)) await page.keyboard.press('Escape')
+    if ((await ex(page)).panels > 0) await page.keyboard.press('Escape')
   }
   expect(focused).toBe(true)
   await page.waitForTimeout(FLY_SETTLE_MS)

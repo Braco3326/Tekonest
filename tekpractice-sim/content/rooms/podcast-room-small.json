@@ -1,0 +1,86 @@
+{
+ "id": "podcast-room-small",
+ "name_fr": "Studio podcast (petit, 4 voix)",
+ "name_en": "Small podcast studio",
+ "family": "studio",
+ "size": "small",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 3.5,
+   "typical": 5.5,
+   "max": 6
+  },
+  "width": {
+   "min": 3,
+   "typical": 4,
+   "max": 5
+  },
+  "height": {
+   "min": 2.4,
+   "typical": 2.6,
+   "max": 2.8
+  }
+ },
+ "zones": [
+  {
+   "id": "table",
+   "kind": "desk",
+   "rect_m": [
+    0,
+    0.2,
+    2.2,
+    1.8
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "producer",
+   "kind": "desk",
+   "rect_m": [
+    1.3,
+    2.25,
+    1.3,
+    0.9
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "camera-line",
+   "kind": "other",
+   "rect_m": [
+    0,
+    -2.2,
+    3.6,
+    0.8
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": -1.2,
+   "width_m": 0.9,
+   "height_m": 2.04
+  }
+ ],
+ "procedural": {
+  "wall_color": "#2c3e50",
+  "floor_color": "#4a4a4a",
+  "ceiling_color": "#2a2a2a",
+  "prop_hints": [
+   "table ronde ou rectangulaire",
+   "panneaux acoustiques colorés",
+   "caméras sur trépied",
+   "panneaux LED",
+   "enseigne lumineuse « on air »"
+  ]
+ },
+ "lighting": {
+  "mood": "lumineux, éclairage vidéo doux (panneaux LED)",
+  "color_temp_k": 5600
+ },
+ "source_count": 3
+}

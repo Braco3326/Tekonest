@@ -1,0 +1,112 @@
+{
+ "id": "studio-live-room-medium",
+ "name_fr": "Salle de prise de son (studio, taille moyenne)",
+ "name_en": "Medium studio live room",
+ "family": "studio",
+ "size": "medium",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 7.5,
+   "typical": 10.5,
+   "max": 13
+  },
+  "width": {
+   "min": 5.5,
+   "typical": 8.1,
+   "max": 10
+  },
+  "height": {
+   "min": 3.5,
+   "typical": 5,
+   "max": 6
+  }
+ },
+ "zones": [
+  {
+   "id": "live-main",
+   "kind": "live-room",
+   "rect_m": [
+    0,
+    1,
+    8,
+    8
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "drum-area",
+   "kind": "live-room",
+   "rect_m": [
+    1.8,
+    -2.4,
+    3.6,
+    3.2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "iso-booth",
+   "kind": "iso-booth",
+   "rect_m": [
+    -3.05,
+    -4.05,
+    1.9,
+    2.3
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "amp-corner",
+   "kind": "live-room",
+   "rect_m": [
+    -2.8,
+    3.6,
+    2.2,
+    2.2
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "front",
+   "kind": "window",
+   "offset_m": 1,
+   "width_m": 2.4,
+   "height_m": 1.2
+  },
+  {
+   "wall": "right",
+   "kind": "door",
+   "offset_m": 3.5,
+   "width_m": 1.4,
+   "height_m": 2.2
+  },
+  {
+   "wall": "front",
+   "kind": "door",
+   "offset_m": -3.05,
+   "width_m": 0.9,
+   "height_m": 2.04
+  }
+ ],
+ "procedural": {
+  "wall_color": "#7a5b3e",
+  "floor_color": "#9b7148",
+  "ceiling_color": "#3b342e",
+  "prop_hints": [
+   "panneaux mobiles (gobos)",
+   "tapis persans sous la batterie",
+   "pieds de micro perche",
+   "câbles XLR au sol",
+   "ampli guitare",
+   "piano à queue"
+  ]
+ },
+ "lighting": {
+  "mood": "chaud, gradable, lampes d'appoint près des musiciens",
+  "color_temp_k": 3000
+ },
+ "source_count": 3
+}

@@ -1,0 +1,114 @@
+{
+ "id": "bar-club-stage-small",
+ "name_fr": "Club / bar-concert avec scène (petite salle, 300–370 debout)",
+ "name_en": "Club / bar venue with stage (small, 300–370 standing)",
+ "family": "live",
+ "size": "small",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 12,
+   "typical": 16.2,
+   "max": 22
+  },
+  "width": {
+   "min": 9,
+   "typical": 9.8,
+   "max": 10
+  },
+  "height": {
+   "min": 3.7,
+   "typical": 4.7,
+   "max": 4.95
+  }
+ },
+ "zones": [
+  {
+   "id": "scene",
+   "kind": "stage",
+   "rect_m": [
+    0,
+    -5.6,
+    9.7,
+    5
+   ],
+   "floor_y_m": 0.8
+  },
+  {
+   "id": "public",
+   "kind": "audience",
+   "rect_m": [
+    0,
+    2.5,
+    9.8,
+    11.2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "regie-facade",
+   "kind": "foh",
+   "rect_m": [
+    0,
+    6.6,
+    3,
+    2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "bar",
+   "kind": "other",
+   "rect_m": [
+    -3.4,
+    6.6,
+    3,
+    3
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "front",
+   "kind": "door",
+   "offset_m": 3,
+   "width_m": 2.5,
+   "height_m": 3.5
+  },
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": 2.5,
+   "width_m": 1.8,
+   "height_m": 2.2
+  },
+  {
+   "wall": "left",
+   "kind": "door",
+   "offset_m": 3,
+   "width_m": 1.4,
+   "height_m": 2.1
+  }
+ ],
+ "procedural": {
+  "wall_color": "#141414",
+  "floor_color": "#1c1c1c",
+  "ceiling_color": "#0e0e0e",
+  "prop_hints": [
+   "praticables 2 × 1 m",
+   "tapis de danse noir",
+   "pendrillons velours noir",
+   "comptoir de bar et tireuses",
+   "barrière légère devant la scène",
+   "gaffer au sol",
+   "pieds de micro perche",
+   "racks 19\" en coulisse"
+  ]
+ },
+ "lighting": {
+  "mood": "salle sombre, plateau en LED colorées et lyres, fumée légère, bar éclairé chaud",
+  "color_temp_k": 3200
+ },
+ "source_count": 4
+}

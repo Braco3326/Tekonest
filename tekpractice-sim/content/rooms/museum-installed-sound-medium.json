@@ -1,0 +1,112 @@
+{
+ "id": "museum-installed-sound-medium",
+ "name_fr": "Salle d'exposition sonorisée (musée)",
+ "name_en": "Museum gallery with installed sound",
+ "family": "installed",
+ "size": "medium",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 12,
+   "typical": 18,
+   "max": 25
+  },
+  "width": {
+   "min": 8,
+   "typical": 12,
+   "max": 15
+  },
+  "height": {
+   "min": 3.5,
+   "typical": 4.5,
+   "max": 6
+  }
+ },
+ "zones": [
+  {
+   "id": "gallery-a",
+   "kind": "other",
+   "rect_m": [
+    0,
+    -4,
+    11,
+    8
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "av-alcove",
+   "kind": "other",
+   "rect_m": [
+    0,
+    6,
+    6,
+    5
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "listening-station",
+   "kind": "other",
+   "rect_m": [
+    -4.5,
+    5.5,
+    2,
+    2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "tech-cupboard",
+   "kind": "machine-room",
+   "rect_m": [
+    5,
+    8,
+    1.6,
+    1.6
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "front",
+   "kind": "door",
+   "offset_m": 0,
+   "width_m": 2.4,
+   "height_m": 3
+  },
+  {
+   "wall": "right",
+   "kind": "door",
+   "offset_m": 6.5,
+   "width_m": 1.8,
+   "height_m": 2.5
+  },
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": 5,
+   "width_m": 0.9,
+   "height_m": 2.04
+  }
+ ],
+ "procedural": {
+  "wall_color": "#2E3A46",
+  "floor_color": "#8B6F4E",
+  "ceiling_color": "#1A1A1A",
+  "prop_hints": [
+   "vitrines",
+   "cimaises",
+   "rails d'éclairage",
+   "bancs dans l'alcôve",
+   "borne d'écoute avec casque",
+   "cartels"
+  ]
+ },
+ "lighting": {
+  "mood": "éclairage muséographique d'accent sur les œuvres, salle tamisée, alcôve dans le noir",
+  "color_temp_k": 3000
+ },
+ "source_count": 3
+}

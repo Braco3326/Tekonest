@@ -1,0 +1,112 @@
+{
+ "id": "classroom-lab-small",
+ "name_fr": "Petite salle de TP son (salle de classe équipée)",
+ "name_en": "Small audio teaching lab / classroom",
+ "family": "education",
+ "size": "small",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 7,
+   "typical": 8,
+   "max": 9
+  },
+  "width": {
+   "min": 6,
+   "typical": 7,
+   "max": 8
+  },
+  "height": {
+   "min": 2.7,
+   "typical": 3,
+   "max": 3.3
+  }
+ },
+ "zones": [
+  {
+   "id": "teacher-desk",
+   "kind": "desk",
+   "rect_m": [
+    0,
+    -3.2,
+    2.4,
+    1
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "student-benches",
+   "kind": "desk",
+   "rect_m": [
+    0,
+    0.6,
+    6,
+    4.6
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "rack-corner",
+   "kind": "machine-room",
+   "rect_m": [
+    -3,
+    3.6,
+    0.8,
+    0.6
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "recording-corner",
+   "kind": "vocal-booth",
+   "rect_m": [
+    2.6,
+    3.4,
+    1.6,
+    1.2
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": -2.5,
+   "width_m": 0.9,
+   "height_m": 2.04
+  },
+  {
+   "wall": "right",
+   "kind": "window",
+   "offset_m": -1.5,
+   "width_m": 1.8,
+   "height_m": 1.5
+  },
+  {
+   "wall": "right",
+   "kind": "window",
+   "offset_m": 1.5,
+   "width_m": 1.8,
+   "height_m": 1.5
+  }
+ ],
+ "procedural": {
+  "wall_color": "#EEEAE0",
+  "floor_color": "#7A8590",
+  "ceiling_color": "#F6F6F4",
+  "prop_hints": [
+   "paillasses élèves avec PC",
+   "tableau blanc",
+   "vidéoprojecteur",
+   "pieds de micro",
+   "paravent acoustique",
+   "armoire à câbles"
+  ]
+ },
+ "lighting": {
+  "mood": "éclairage de classe uniforme, rang de luminaires gradable côté tableau",
+  "color_temp_k": 4000
+ },
+ "source_count": 3
+}

@@ -24,6 +24,9 @@ export class Shelf {
     onSaveRig: (name: string) => void,
     environments: readonly string[] = [],
     currentEnv = '',
+    /** TEK Brain procedural rooms (B3): generated from data, loaded on demand. */
+    roomList: readonly { id: string; name_fr: string }[] = [],
+    currentRoom = '',
   ) {
     const devices = [...registry.deviceById.values()].filter((d) => d.ports.length > 0)
     const pool = guided ? devices.filter((d) => GUIDED_PALETTE.includes(d.id)) : devices
@@ -57,6 +60,12 @@ export class Shelf {
           )
           .join('')}</nav>`
       : ''
+    const roomPicker = roomList.length
+      ? `<label class="shelf-roompick">Salle générée (TEK Brain)
+          <select id="room-pick"><option value="">— choisir —</option>${roomList
+            .map((r) => `<option value="${esc(r.id)}"${r.id === currentRoom ? ' selected' : ''}>${esc(r.name_fr)}</option>`)
+            .join('')}</select></label>`
+      : ''
 
     const saved = loadRigs(window.localStorage)
     const rigList = saved.length
@@ -71,6 +80,7 @@ export class Shelf {
     root.innerHTML = `
       <h2>Étagères${guided ? ' · palette guidée' : ''}</h2>
       ${rooms}
+      ${roomPicker}
       ${guided ? `<p class="shelf-brief">${GUIDED_BRIEF}</p>` : ''}
       <div class="shelf-scroll">${sections}</div>
       ${rigList}
@@ -80,6 +90,11 @@ export class Shelf {
         <span id="rig-saved" hidden>✓ sauvegardé</span>
       </div>`
     root.hidden = false
+
+    root.querySelector<HTMLSelectElement>('#room-pick')?.addEventListener('change', (e) => {
+      const id = (e.target as HTMLSelectElement).value
+      location.href = id ? `?level=sandbox&room=${encodeURIComponent(id)}` : '?level=sandbox'
+    })
 
     root.addEventListener('click', (e) => {
       const item = (e.target as HTMLElement).closest<HTMLButtonElement>('.shelf-item')

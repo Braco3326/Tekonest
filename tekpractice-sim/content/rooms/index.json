@@ -1,0 +1,196 @@
+{
+ "rooms": [
+  {
+   "id": "arena-large",
+   "name_fr": "Grande salle type Zénith / arena (6 000–20 000 places)",
+   "family": "live",
+   "size": "large"
+  },
+  {
+   "id": "auditorium-amphitheatre-medium",
+   "name_fr": "Amphithéâtre universitaire moyen (≈ 150-250 places)",
+   "family": "education",
+   "size": "medium"
+  },
+  {
+   "id": "bar-club-stage-small",
+   "name_fr": "Club / bar-concert avec scène (petite salle, 300–370 debout)",
+   "family": "live",
+   "size": "small"
+  },
+  {
+   "id": "church-worship-medium",
+   "name_fr": "Église de taille moyenne (nef de ~10 000 m³) pour le culte et les concerts",
+   "family": "worship",
+   "size": "medium"
+  },
+  {
+   "id": "classroom-lab-small",
+   "name_fr": "Petite salle de TP son (salle de classe équipée)",
+   "family": "education",
+   "size": "small"
+  },
+  {
+   "id": "concert-hall-medium",
+   "name_fr": "Salle de concert musiques actuelles (moyenne, 1 000–1 350 debout)",
+   "family": "live",
+   "size": "medium"
+  },
+  {
+   "id": "conference-room-small",
+   "name_fr": "Petite salle de réunion",
+   "family": "conference",
+   "size": "small"
+  },
+  {
+   "id": "dj-booth-small",
+   "name_fr": "Club en configuration DJ (booth sur scène, petite salle)",
+   "family": "live",
+   "size": "small"
+  },
+  {
+   "id": "eng-outdoor-reportage",
+   "name_fr": "Reportage extérieur (zone de travail ENG / radio)",
+   "family": "broadcast",
+   "size": "small"
+  },
+  {
+   "id": "festival-open-air-large",
+   "name_fr": "Grande scène de festival en plein air",
+   "family": "outdoor",
+   "size": "large"
+  },
+  {
+   "id": "foley-dubbing-stage-medium",
+   "name_fr": "Auditorium de bruitage (foley) et de postsynchronisation",
+   "family": "post",
+   "size": "medium"
+  },
+  {
+   "id": "hybrid-meeting-room-small",
+   "name_fr": "Petite salle de réunion hybride (visioconférence)",
+   "family": "conference",
+   "size": "small"
+  },
+  {
+   "id": "interpretation-booth-small",
+   "name_fr": "Cabine d'interprétation simultanée (2 interprètes)",
+   "family": "conference",
+   "size": "small"
+  },
+  {
+   "id": "mastering-room-medium",
+   "name_fr": "Studio de mastering",
+   "family": "studio",
+   "size": "medium"
+  },
+  {
+   "id": "museum-installed-sound-medium",
+   "name_fr": "Salle d'exposition sonorisée (musée)",
+   "family": "installed",
+   "size": "medium"
+  },
+  {
+   "id": "ob-van-small",
+   "name_fr": "Car régie son (petit)",
+   "family": "broadcast",
+   "size": "small"
+  },
+  {
+   "id": "opera-house-pit-large",
+   "name_fr": "Maison d'opéra avec fosse d'orchestre (grande salle, ~1 100 places)",
+   "family": "classical",
+   "size": "large"
+  },
+  {
+   "id": "podcast-room-small",
+   "name_fr": "Studio podcast (petit, 4 voix)",
+   "family": "studio",
+   "size": "small"
+  },
+  {
+   "id": "post-atmos-mix-room-medium",
+   "name_fr": "Salle de mixage Dolby Atmos (post-production, home entertainment)",
+   "family": "post",
+   "size": "medium"
+  },
+  {
+   "id": "radio-studio-self-op-small",
+   "name_fr": "Studio radio self-op (petit)",
+   "family": "broadcast",
+   "size": "small"
+  },
+  {
+   "id": "radio-talk-studio-medium",
+   "name_fr": "Studio radio de débat + régie (moyen)",
+   "family": "broadcast",
+   "size": "medium"
+  },
+  {
+   "id": "scoring-stage-large",
+   "name_fr": "Grand studio d'enregistrement orchestral (scoring stage)",
+   "family": "classical",
+   "size": "large"
+  },
+  {
+   "id": "sports-venue-pa-large",
+   "name_fr": "Stade : sonorisation installée (match) et configuration concert",
+   "family": "installed",
+   "size": "large"
+  },
+  {
+   "id": "studio-control-room-large",
+   "name_fr": "Grande régie d'enregistrement (console grand format)",
+   "family": "studio",
+   "size": "large"
+  },
+  {
+   "id": "studio-control-room-small",
+   "name_fr": "Régie de studio (petite, home/project studio)",
+   "family": "studio",
+   "size": "small"
+  },
+  {
+   "id": "studio-live-room-medium",
+   "name_fr": "Salle de prise de son (studio, taille moyenne)",
+   "family": "studio",
+   "size": "medium"
+  },
+  {
+   "id": "studio-vocal-booth-small",
+   "name_fr": "Cabine voix (petite)",
+   "family": "studio",
+   "size": "small"
+  },
+  {
+   "id": "theatre-black-box-small",
+   "name_fr": "Boîte noire (studio de théâtre modulable, 60–100 places)",
+   "family": "theatre",
+   "size": "small"
+  },
+  {
+   "id": "theatre-italian-medium",
+   "name_fr": "Théâtre à l'italienne (salle municipale moyenne, 300–350 places)",
+   "family": "theatre",
+   "size": "medium"
+  },
+  {
+   "id": "tv-gallery-regie-medium",
+   "name_fr": "Régie de production TV + régie son (moyenne)",
+   "family": "broadcast",
+   "size": "medium"
+  },
+  {
+   "id": "tv-studio-plateau-large",
+   "name_fr": "Plateau de télévision (grand)",
+   "family": "broadcast",
+   "size": "large"
+  },
+  {
+   "id": "wedding-event-hall-medium",
+   "name_fr": "Salle des fêtes / salle de réception (mariage, soirée privée, 180–300 personnes)",
+   "family": "live",
+   "size": "medium"
+  }
+ ]
+}
