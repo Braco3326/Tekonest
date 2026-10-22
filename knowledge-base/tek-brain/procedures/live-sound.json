@@ -1,0 +1,742 @@
+{
+  "entity": "procedure",
+  "domain": "live-sound",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "line-check",
+      "name_fr": "Line check",
+      "name_en": "Line check",
+      "domain": "live-sound",
+      "context": "Avant l'arrivée des musiciens (ou pendant un changement de plateau), vérifier chaque ligne de la scène à la console en suivant l'input list.",
+      "duration_min": null,
+      "equipment_ids": [
+        "shure-sm58",
+        "radial-jdi",
+        "behringer-ct200"
+      ],
+      "concept_ids": [
+        "line-check",
+        "stage-plot-input-list",
+        "stage-box"
+      ],
+      "rule_ids": [
+        "input-list-patch-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Système de diffusion installé et vérifié",
+            "Patch scène terminé selon l'input list"
+          ],
+          "action": "Placer une copie de l'input list au boîtier de scène et une à la console ; étiqueter les faders selon la liste.",
+          "expected_result": "Plateau et régie travaillent sur la même numérotation.",
+          "typical_mistakes": [
+            "Travailler sur une ancienne version de l'input list"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Faders et départs retours bas"
+          ],
+          "action": "Pour chaque entrée dans l'ordre, faire parler un assistant dans le micro (ou gratter l'instrument avec l'accord du musicien) ; monter doucement le gain et écouter le canal sur le système ou en solo au casque.",
+          "expected_result": "Le signal arrive sur le canal prévu, propre, sans ronflement ni craquement.",
+          "typical_mistakes": [
+            "Monter gain et fader trop vite et provoquer un larsen",
+            "Tapoter le micro au lieu de parler : on n'entend pas le vrai son"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Une personne au plateau et une à la console, si possible"
+          ],
+          "action": "Tester chaque ligne au moment où elle est branchée ; seul, tout brancher puis couper ou écouter en solo canal par canal pour isoler un bruit.",
+          "expected_result": "Toute panne est localisée immédiatement à une ligne précise.",
+          "typical_mistakes": [
+            "Brancher toute la scène puis découvrir dix problèmes à la fois"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Canal muet ou faux"
+          ],
+          "action": "En cas d'absence de signal : vérifier mauvais canal ou mauvaise entrée du multipaire, canal coupé ou non routé, volume de l'instrument, câble, pile, +48 V pour un statique ou une DI active.",
+          "expected_result": "La cause est trouvée et corrigée, ou la ligne est remplacée.",
+          "typical_mistakes": [
+            "Changer le micro avant d'avoir vérifié le patch et le routage"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Toutes les lignes testées"
+          ],
+          "action": "En festival, écouter en PFL au casque pour ne pas déranger le public ; noter les problèmes et les corrections sur l'input list.",
+          "expected_result": "Toutes les entrées sont validées ; la balance peut commencer.",
+          "typical_mistakes": [
+            "Faire le line check fort sur le système pendant qu'un autre groupe joue"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V (et baisser le niveau) avant de brancher ou débrancher un micro statique",
+        "Faire signaler par les musiciens tout branchement de DI et couper le canal pour éviter les claquements"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
+          "publisher": "ProSoundWeb — B. Bartlett, « The Beginner's Guide To Taking Charge Of The Sound Check » (2015), p. 1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_check",
+          "publisher": "Wikipedia, « Soundcheck »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "context"
+          ]
+        },
+        {
+          "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+          "publisher": "Neumann, U 87 Ai Operating Manual (cité dans fundamentals/05)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "safety_notes"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "soundcheck-band",
+      "name_fr": "Balance d'un groupe",
+      "name_en": "Band soundcheck",
+      "domain": "live-sound",
+      "context": "Après le line check, régler gains, retours, égalisation et mix façade d'un groupe avant l'ouverture des portes.",
+      "duration_min": 90,
+      "equipment_ids": [
+        "shure-sm58",
+        "shure-sm57",
+        "shure-beta-52a",
+        "yamaha-dbr12"
+      ],
+      "concept_ids": [
+        "soundcheck",
+        "foh-mix",
+        "gain-staging",
+        "stage-monitor-mix",
+        "high-pass-filter"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Line check validé",
+            "Micro d'ordre (talkback) testé, renvoyé dans les retours"
+          ],
+          "action": "Annoncer au groupe ce que l'on fait (« je règle les gains, pas encore les retours »).",
+          "expected_result": "Les musiciens savent quoi jouer et quand.",
+          "typical_mistakes": [
+            "Laisser les musiciens jouer tous ensemble sans consigne"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Faders et départs retours bas"
+          ],
+          "action": "Faire jouer chaque source à son niveau le plus fort du concert ; monter le gain jusqu'à l'écrêtage puis redescendre d'environ 10 dB.",
+          "expected_result": "Chaque canal a une marge (headroom) sans saturer.",
+          "typical_mistakes": [
+            "Régler le gain sur un jeu plus doux que le concert",
+            "Laisser le musicien changer son volume après le réglage"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Gains réglés"
+          ],
+          "action": "Faders vers leur position nominale ; pour chaque musicien, monter son départ retour jusqu'à ce qu'il soit à l'aise, puis faire une pré-égalisation (filtre passe-haut vers 100 Hz sur les voix, coupe-bas sur la plupart des sources sauf basse, grosse caisse, synthés).",
+          "expected_result": "Chaque musicien s'entend ; les sources sont propres.",
+          "typical_mistakes": [
+            "Monter les retours sans surveiller le larsen",
+            "Booster l'égalisation au lieu de corriger le placement du micro"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Sources réglées une par une"
+          ],
+          "action": "Faire jouer la batterie et construire le sous-groupe batterie, puis les voix à pleine voix et le sous-groupe voix.",
+          "expected_result": "Les sous-groupes sont équilibrés.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Sous-groupes prêts"
+          ],
+          "action": "Faire jouer un morceau complet puis des passages de styles différents ; construire le mix façade et retoucher les retours selon les demandes.",
+          "expected_result": "Mix façade cohérent ; retours validés par chaque musicien.",
+          "typical_mistakes": [
+            "Oublier que le public changera l'acoustique : prévoir des retouches pendant les premiers titres"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Avancer lentement : un larsen pendant la balance est douloureux et peut abîmer l'audition",
+        "Surveiller le niveau sonore du public pendant le concert (102 dB(A) / 118 dB(C) sur 15 min en France)"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/2/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 2",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 3",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "duration_min"
+          ]
+        },
+        {
+          "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+          "publisher": "ARS Île-de-France, « Les lieux diffusant des sons amplifiés (LDSA) » (cité dans fundamentals/19)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "safety_notes"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "festival-changeover",
+      "name_fr": "Changement de plateau en festival",
+      "name_en": "Festival changeover",
+      "domain": "live-sound",
+      "context": "Entre deux groupes sur une scène de festival, installer le groupe suivant, faire le line check et dégrossir les retours dans le temps imparti.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "yamaha-rio3224-d2",
+        "yamaha-ql1",
+        "yamaha-cl5",
+        "shure-sm58"
+      ],
+      "concept_ids": [
+        "changeover",
+        "festival-patch",
+        "rolling-riser",
+        "console-scene-recall",
+        "stage-manager-role"
+      ],
+      "rule_ids": [
+        "line-check-after-changeover",
+        "input-list-patch-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Input list et plan de scène du groupe reçus à l'avance",
+            "Patch festival connu"
+          ],
+          "action": "Pendant le set précédent, préparer le kit sur praticable roulant hors scène et charger le fichier (scène) du groupe sur les consoles.",
+          "expected_result": "Le groupe suivant est prêt à rouler sur scène.",
+          "typical_mistakes": [
+            "Écraser la scène du groupe en cours en chargeant le fichier suivant"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Fin du set annoncée par le régisseur plateau"
+          ],
+          "action": "Débrancher les sub-snakes, sortir le praticable du groupe sortant, rentrer le suivant ; poser le backline et tirer les câbles d'entrée.",
+          "expected_result": "Backline en place, entrées câblées selon le patch festival.",
+          "typical_mistakes": [
+            "Débrancher un sub-snake sans couper les canaux concernés"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Musiciens sur scène"
+          ],
+          "action": "Vérifier la position des micros voix et des pieds ; établir le nombre de mixes retours et placer les wedges.",
+          "expected_result": "Chaque musicien a son retour au bon endroit.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Retours placés"
+          ],
+          "action": "Tester chaque entrée au niveau de jeu réel ; l'ajouter au retour du musicien jusqu'à ce qu'il soit satisfait, puis aux autres mixes demandés (signes : index levé = plus, poing fermé = stop). La façade fait son line check en parallèle, au casque.",
+          "expected_result": "Toutes les entrées vérifiées, retours dégrossis, tout le monde s'entend.",
+          "typical_mistakes": [
+            "Passer à l'entrée suivante avant la validation du musicien",
+            "Faire le line check façade fort dans le système"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Appel à une minute du régisseur"
+          ],
+          "action": "Confirmer au régisseur que le son est prêt ; couper les micros qui ne servent pas au premier titre.",
+          "expected_result": "Le set démarre à l'heure.",
+          "typical_mistakes": [
+            "Ne pas prévenir le régisseur d'un retard de line check"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Le régisseur plateau coordonne les mouvements de praticables : ne pas rouler un praticable sans son accord",
+        "Rappeler la procédure d'arrêt du spectacle au groupe"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/?p=36647",
+          "publisher": "ProSoundWeb / Live Sound International — D. Dermont, « Max Efficiency: A Simple, Straightforward Process For Quick & Effective Festival Changeovers » (2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+          "publisher": "Ticket Fairy Promoter Blog, « Rapid Festival Changeovers Without Panic » (2025)",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "steps",
+            "duration_min"
+          ]
+        },
+        {
+          "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
+          "publisher": "R. Ames (The Stage Clock, Substack), « What Actually Happens In Between Bands At A Festival »",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "duration_min",
+            "safety_notes"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "read-tech-rider",
+      "name_fr": "Lire et répondre à une fiche technique",
+      "name_en": "Read and answer a technical rider",
+      "domain": "live-sound",
+      "context": "Quelques jours avant la date, le technicien du lieu lit la fiche technique de l'artiste et prépare l'accueil.",
+      "duration_min": 60,
+      "equipment_ids": [
+        "yamaha-ql1",
+        "allen-heath-sq-6"
+      ],
+      "concept_ids": [
+        "technical-rider",
+        "stage-plot-input-list",
+        "backline"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Fiche technique reçue"
+          ],
+          "action": "Vérifier que les cinq parties sont présentes : présentation et contacts, plan de scène, liste du matériel (apporté / manquant), patch list, rider logistique.",
+          "expected_result": "On sait ce qui manque et qui contacter.",
+          "typical_mistakes": [
+            "Lire seulement la patch list et oublier le matériel à fournir"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Patch list lue"
+          ],
+          "action": "Comparer le nombre d'entrées et de mixes retours demandés aux capacités de la console et du boîtier de scène du lieu ; lister micros, DI et pieds nécessaires.",
+          "expected_result": "Liste de matériel à sortir et écarts identifiés.",
+          "typical_mistakes": [
+            "Supposer qu'il y a assez de DI ou de pieds sans compter"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Plan de scène lu"
+          ],
+          "action": "Repérer positions des musiciens, retours et prises secteur ; prévoir les longueurs de câbles et les sub-snakes.",
+          "expected_result": "Plan d'implantation de la scène prêt.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Écarts identifiés"
+          ],
+          "action": "Répondre au contact technique de l'artiste en signalant chaque écart et la solution proposée, avant le jour J.",
+          "expected_result": "Accord écrit sur le matériel ; pas de surprise à l'arrivée.",
+          "typical_mistakes": [
+            "Découvrir l'écart le jour du concert"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
+          "publisher": "Roadie / Live Tonight, guide « La fiche technique » (2021)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.namm.org/festival-101-tech-rider-update",
+          "publisher": "NAMM, « Festival 101: Tech Rider Update » (session description)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "context"
+          ]
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "patch-from-input-list",
+      "name_fr": "Patcher la scène depuis l'input list",
+      "name_en": "Patch the stage from an input list",
+      "domain": "live-sound",
+      "context": "Pendant le montage, câbler micros et DI vers le boîtier de scène selon l'input list, puis affecter les entrées aux canaux de la console.",
+      "duration_min": 45,
+      "equipment_ids": [
+        "yamaha-rio3224-d2",
+        "yamaha-ql1",
+        "allen-heath-dx168",
+        "allen-heath-sq-6",
+        "radial-jdi",
+        "shure-sm57"
+      ],
+      "concept_ids": [
+        "stage-plot-input-list",
+        "stage-box",
+        "sub-snake",
+        "multicore-snake"
+      ],
+      "rule_ids": [
+        "input-list-patch-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Input list à jour",
+            "Boîtier de scène en place"
+          ],
+          "action": "Placer micros et pieds selon le plan de scène ; brancher chaque micro ou DI dans l'entrée du boîtier (ou du sub-snake) indiquée sur la liste.",
+          "expected_result": "Chaque source est sur l'entrée prévue.",
+          "typical_mistakes": [
+            "Brancher dans l'ordre d'arrivée des câbles plutôt que selon la liste"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Câblage physique fini"
+          ],
+          "action": "Étiqueter chaque câble et chaque sub-snake avec son numéro d'entrée.",
+          "expected_result": "On peut retrouver une ligne sans la suivre à la main.",
+          "typical_mistakes": [
+            "Étiquettes illisibles ou différentes de la liste"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Boîtier numérique relié à la console"
+          ],
+          "action": "Dans la console, affecter (patch logique) chaque entrée du boîtier au canal correspondant ; nommer les canaux et activer le +48 V seulement là où l'input list le demande.",
+          "expected_result": "Canal n de la console = ligne n de l'input list.",
+          "typical_mistakes": [
+            "Activer le +48 V sur toute une rangée par habitude"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Patch terminé"
+          ],
+          "action": "Passer au line check pour valider chaque ligne.",
+          "expected_result": "Les écarts éventuels apparaissent au line check, pas pendant le concert.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V avant de brancher ou débrancher un micro statique"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
+          "publisher": "Wikipedia, « Audio multicore cable »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
+          "publisher": "ProSoundWeb — B. Bartlett, « The Beginner's Guide To Taking Charge Of The Sound Check » (2015), p. 1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+          "publisher": "Neumann, U 87 Ai Operating Manual (cité dans fundamentals/05)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "safety_notes"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "load-out-checklist",
+      "name_fr": "Démontage (load-out)",
+      "name_en": "Load-out checklist",
+      "domain": "live-sound",
+      "context": "Après le concert, mettre le système hors tension sans risque puis démonter, ranger et vérifier le matériel.",
+      "duration_min": null,
+      "equipment_ids": [
+        "qsc-k12-2",
+        "yamaha-dbr12",
+        "allen-heath-zed-22fx"
+      ],
+      "concept_ids": [
+        "load-in-load-out",
+        "power-sequencing"
+      ],
+      "rule_ids": [
+        "speakers-last-on-first-off"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Concert terminé, musique de sortie coupée"
+          ],
+          "action": "Baisser les niveaux de sortie de la console ; éteindre d'abord les enceintes principales, puis les caissons, puis les sources (console, instruments).",
+          "expected_result": "Aucun claquement dans les enceintes.",
+          "typical_mistakes": [
+            "Couper la console avant les enceintes amplifiées"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Enceintes éteintes"
+          ],
+          "action": "Baisser le niveau et couper le +48 V avant de débrancher les micros statiques ; débrancher en tirant sur la fiche, pas sur le câble.",
+          "expected_result": "Micros et entrées protégés.",
+          "typical_mistakes": [
+            "Débrancher un statique avec le fantôme actif et le niveau ouvert"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Lignes débranchées"
+          ],
+          "action": "Démonter micros, pieds, câbles et enceintes ; ranger chaque élément.",
+          "expected_result": "Scène vide, matériel rangé.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Matériel rangé"
+          ],
+          "action": "Vérifier le matériel par rapport à la liste de départ (ce que le groupe a apporté, ce que le lieu a fourni).",
+          "expected_result": "Rien ne manque ; les pannes repérées sont notées.",
+          "typical_mistakes": [
+            "Laisser partir du matériel du lieu avec le groupe"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Ne jamais neutraliser la prise de terre d'un appareil",
+        "Respecter l'ordre « enceintes en dernier allumées, en premier éteintes »"
+      ],
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+          "publisher": "QSC, K.2 Series User Manual (TD-000523-01-G)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+          "publisher": "Neumann, U 87 Ai Operating Manual (cité dans fundamentals/05)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
+          "publisher": "Roadie / Live Tonight, guide « La fiche technique » (2021)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "context"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Checklist de démontage (load-out) publiée par un fabricant ou un organisme, au-delà de l'ordre de mise hors tension",
+      "searched": "QSC K.2 manual, Yamaha DBR spec, manuels Yamaha MG10XU (403), Mackie ProFX v3 (PDF chiffré), Soundcraft Signature (erreur certificat), A&H ZED (trop volumineux)"
+    },
+    {
+      "what": "Procédure manufacturer de réglage de gain sur console compacte (PFL / témoin PEAK)",
+      "searched": "Yamaha MG10XU FR (403), Mackie ProFX v3 (chiffré), Soundcraft Signature (TLS), Allen & Heath ZED (>10 Mo)"
+    }
+  ]
+}

@@ -1,0 +1,884 @@
+{
+  "entity": "glossary",
+  "domain": "live-sound",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "technical-rider",
+      "term_fr": "Fiche technique",
+      "term_en": "Technical rider",
+      "domain": "live-sound",
+      "definition": "Document de l'artiste pour les techniciens du lieu : présentation, plan de scène, liste du matériel, patch list et rider.",
+      "see_also": [
+        "technical-rider"
+      ],
+      "sources": [
+        {
+          "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
+          "publisher": "Roadie / Live Tonight, guide « La fiche technique » (2021)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rider",
+      "term_fr": "Rider",
+      "term_en": "Rider",
+      "domain": "live-sound",
+      "definition": "Dans la fiche technique, partie qui regroupe les éléments logistiques non matériels de l'accueil.",
+      "see_also": [
+        "technical-rider"
+      ],
+      "sources": [
+        {
+          "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
+          "publisher": "Roadie / Live Tonight, guide « La fiche technique » (2021)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-plot",
+      "term_fr": "Plan de scène",
+      "term_en": "Stage plot",
+      "domain": "live-sound",
+      "definition": "Schéma de la scène avec dimensions, position des musiciens, du matériel, des retours et des prises.",
+      "see_also": [
+        "stage-plot-input-list"
+      ],
+      "sources": [
+        {
+          "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
+          "publisher": "Roadie / Live Tonight, guide « La fiche technique » (2021)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.namm.org/festival-101-tech-rider-update",
+          "publisher": "NAMM, « Festival 101: Tech Rider Update » (session description)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "input-list",
+      "term_fr": "Input list",
+      "term_en": "Input list",
+      "domain": "live-sound",
+      "definition": "Liste numérotée des entrées de la console avec la source, le micro ou la DI de chacune.",
+      "see_also": [
+        "stage-plot-input-list"
+      ],
+      "sources": [
+        {
+          "url": "https://www.namm.org/festival-101-tech-rider-update",
+          "publisher": "NAMM, « Festival 101: Tech Rider Update » (session description)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
+          "publisher": "ProSoundWeb — B. Bartlett, « The Beginner's Guide To Taking Charge Of The Sound Check » (2015), p. 1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "patch-list",
+      "term_fr": "Patch (liste de patch)",
+      "term_en": "Patch list",
+      "domain": "live-sound",
+      "definition": "Tableau de la fiche technique : numéro de voie, instrument, type de micro, inserts et type de pied.",
+      "see_also": [
+        "stage-plot-input-list"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
+          "publisher": "Roadie / Live Tonight, guide « La fiche technique » (2021)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line-check",
+      "term_fr": "Line check",
+      "term_en": "Line check",
+      "domain": "live-sound",
+      "definition": "Test de chaque entrée avant la balance pour trouver lignes défectueuses ou mal patchées.",
+      "see_also": [
+        "line-check"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_check",
+          "publisher": "Wikipedia, « Soundcheck »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mic-check",
+      "term_fr": "Mic check",
+      "term_en": "Mic check",
+      "domain": "live-sound",
+      "definition": "Vérification limitée aux microphones ; terme parfois utilisé à la place de soundcheck.",
+      "see_also": [
+        "line-check"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_check",
+          "publisher": "Wikipedia, « Soundcheck »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "soundcheck",
+      "term_fr": "Balance",
+      "term_en": "Soundcheck",
+      "domain": "live-sound",
+      "definition": "Réglage du son façade et retours avant l'entrée du public, source par source puis tous ensemble.",
+      "see_also": [
+        "soundcheck"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_check",
+          "publisher": "Wikipedia, « Soundcheck »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "changeover",
+      "term_fr": "Changement de plateau",
+      "term_en": "Changeover",
+      "domain": "live-sound",
+      "definition": "Passage d'un groupe au suivant sur la même scène, suivi d'un nouveau line check.",
+      "see_also": [
+        "changeover"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "front-of-house",
+      "term_fr": "Façade (FOH)",
+      "term_en": "Front of house",
+      "domain": "live-sound",
+      "definition": "Enceintes principales qui couvrent le public, et par extension la zone du public et la régie qui s'y trouve.",
+      "see_also": [
+        "foh-mix",
+        "foh-position"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Front_of_house",
+          "publisher": "Wikipedia, « Front of house »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "foh-engineer",
+      "term_fr": "Mixeur façade",
+      "term_en": "FOH engineer",
+      "domain": "live-sound",
+      "definition": "Technicien qui mixe pour le public depuis la régie façade.",
+      "see_also": [
+        "foh-engineer-role"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Live_sound_mixing",
+          "publisher": "Wikipedia, « Live sound mixing »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-engineer",
+      "term_fr": "Technicien système",
+      "term_en": "System engineer",
+      "domain": "live-sound",
+      "definition": "Technicien qui conçoit et installe le système de diffusion façade.",
+      "see_also": [
+        "system-engineer-role"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Front_of_house",
+          "publisher": "Wikipedia, « Front of house »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "house-engineer",
+      "term_fr": "Technicien son du lieu",
+      "term_en": "House engineer",
+      "domain": "live-sound",
+      "definition": "Technicien employé par la salle qui connaît le système installé et assiste le mixeur de tournée.",
+      "see_also": [
+        "foh-engineer-role"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Front_of_house",
+          "publisher": "Wikipedia, « Front of house »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-manager",
+      "term_fr": "Régisseur plateau",
+      "term_en": "Stage manager",
+      "domain": "live-sound",
+      "definition": "Responsable de la scène qui tient le minutage et annonce les échéances du changement de plateau.",
+      "see_also": [
+        "stage-manager-role"
+      ],
+      "sources": [
+        {
+          "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
+          "publisher": "R. Ames (The Stage Clock, Substack), « What Actually Happens In Between Bands At A Festival »",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+          "publisher": "Ticket Fairy Promoter Blog, « Rapid Festival Changeovers Without Panic » (2025)",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "showcaller",
+      "term_fr": "Showcaller",
+      "term_en": "Showcaller",
+      "domain": "live-sound",
+      "definition": "Personne qui possède la feuille de route minute par minute et donne les tops par radio ou intercom.",
+      "see_also": [
+        "stage-manager-role"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+          "publisher": "Ticket Fairy Promoter Blog, « Rapid Festival Changeovers Without Panic » (2025)",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "backline",
+      "term_fr": "Backline",
+      "term_en": "Backline",
+      "domain": "live-sound",
+      "definition": "Instruments et amplis des musiciens posés sur scène, distincts de la sonorisation.",
+      "see_also": [
+        "backline"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/?p=36647",
+          "publisher": "ProSoundWeb / Live Sound International — D. Dermont, « Max Efficiency: A Simple, Straightforward Process For Quick & Effective Festival Changeovers » (2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+          "publisher": "Ticket Fairy Promoter Blog, « Rapid Festival Changeovers Without Panic » (2025)",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "backline-tech",
+      "term_fr": "Technicien backline",
+      "term_en": "Backline tech",
+      "domain": "live-sound",
+      "definition": "Technicien qui installe, accorde et règle les instruments et amplis d'une scène.",
+      "see_also": [
+        "backline"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+          "publisher": "Ticket Fairy Promoter Blog, « Rapid Festival Changeovers Without Panic » (2025)",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rolling-riser",
+      "term_fr": "Praticable roulant",
+      "term_en": "Rolling riser",
+      "domain": "live-sound",
+      "definition": "Plateau à roulettes sur lequel on prépare un kit hors scène avant de le rouler en place.",
+      "see_also": [
+        "rolling-riser"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+          "publisher": "Ticket Fairy Promoter Blog, « Rapid Festival Changeovers Without Panic » (2025)",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
+          "publisher": "R. Ames (The Stage Clock, Substack), « What Actually Happens In Between Bands At A Festival »",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stage-box",
+      "term_fr": "Boîtier de scène",
+      "term_en": "Stage box",
+      "domain": "live-sound",
+      "definition": "Boîtier de scène où l'on branche micros et retours, relié à la console par un multipaire ou un réseau.",
+      "see_also": [
+        "stage-box"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
+          "publisher": "Wikipedia, « Audio multicore cable »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "multicore",
+      "term_fr": "Multipaire",
+      "term_en": "Multicore / snake",
+      "domain": "live-sound",
+      "definition": "Câble regroupant plusieurs paires audio blindées entre scène et régie.",
+      "see_also": [
+        "multicore-snake"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
+          "publisher": "Wikipedia, « Audio multicore cable »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sub-snake",
+      "term_fr": "Sous-multipaire",
+      "term_en": "Sub-snake",
+      "domain": "live-sound",
+      "definition": "Petit multipaire reliant quelques instruments au multipaire principal.",
+      "see_also": [
+        "sub-snake"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
+          "publisher": "Wikipedia, « Audio multicore cable »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fan-out",
+      "term_fr": "Queue de multipaire",
+      "term_en": "Fan-out / tail",
+      "domain": "live-sound",
+      "definition": "Extrémité d'un multipaire terminée par des connecteurs individuels.",
+      "see_also": [
+        "multicore-snake"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
+          "publisher": "Wikipedia, « Audio multicore cable »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drive-snake",
+      "term_fr": "Multipaire de retours",
+      "term_en": "Drive snake",
+      "domain": "live-sound",
+      "definition": "Multipaire qui ne transporte que des retours de la console vers la scène (enceintes).",
+      "see_also": [
+        "multicore-snake"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
+          "publisher": "Wikipedia, « Audio multicore cable »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "digital-snake",
+      "term_fr": "Multipaire numérique",
+      "term_en": "Digital snake",
+      "domain": "live-sound",
+      "definition": "Boîtier de scène numérique relié à la console par un seul câble, qui fait la conversion analogique-numérique.",
+      "see_also": [
+        "stage-box"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
+          "publisher": "Wikipedia, « Audio multicore cable »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "festival-patch",
+      "term_fr": "Patch festival",
+      "term_en": "Festival patch",
+      "domain": "live-sound",
+      "definition": "Affectation fixe des voies à des sources types, gardée pendant tout le festival.",
+      "see_also": [
+        "festival-patch"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+          "publisher": "Ticket Fairy Promoter Blog, « Rapid Festival Changeovers Without Panic » (2025)",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "festival-file",
+      "term_fr": "Fichier festival",
+      "term_en": "Festival file",
+      "domain": "live-sound",
+      "definition": "Fichier de réglages de console préparé pour un artiste, rappelé au changement de plateau.",
+      "see_also": [
+        "console-scene-recall"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/?p=36647",
+          "publisher": "ProSoundWeb / Live Sound International — D. Dermont, « Max Efficiency: A Simple, Straightforward Process For Quick & Effective Festival Changeovers » (2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "design-center",
+      "term_fr": "Position nominale du fader",
+      "term_en": "Design center",
+      "domain": "live-sound",
+      "definition": "Repère du fader (souvent 0 dB) autour duquel on règle les gains pour une bonne structure de gain.",
+      "see_also": [
+        "gain-staging"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 3",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gain-trim",
+      "term_fr": "Gain d'entrée",
+      "term_en": "Input trim",
+      "domain": "live-sound",
+      "definition": "Réglage de préamplification d'un canal, fixé sur le jeu le plus fort avec une marge sous l'écrêtage.",
+      "see_also": [
+        "gain-staging"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 3",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "in-ear-monitors",
+      "term_fr": "Ears (retours intra-auriculaires)",
+      "term_en": "In-ear monitors (IEM)",
+      "domain": "live-sound",
+      "definition": "Retours portés dans l'oreille, qui réduisent le risque de larsen sur scène.",
+      "see_also": [
+        "in-ear-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "last-on-first-off",
+      "term_fr": "Dernier allumé, premier éteint",
+      "term_en": "Last on, first off",
+      "domain": "live-sound",
+      "definition": "Règle d'allumage : les enceintes amplifiées s'allument en dernier et s'éteignent en premier.",
+      "see_also": [
+        "power-sequencing"
+      ],
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+          "publisher": "QSC, K.2 Series User Manual (TD-000523-01-G)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "load-in",
+      "term_fr": "Montage",
+      "term_en": "Load-in",
+      "domain": "live-sound",
+      "definition": "Installation du système, de la scène et du câblage avant le line check.",
+      "see_also": [
+        "load-in-load-out"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "load-out",
+      "term_fr": "Démontage",
+      "term_en": "Load-out",
+      "domain": "live-sound",
+      "definition": "Mise hors tension, démontage et rangement du matériel après le concert.",
+      "see_also": [
+        "load-in-load-out"
+      ],
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+          "publisher": "QSC, K.2 Series User Manual (TD-000523-01-G)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "support-act",
+      "term_fr": "Première partie",
+      "term_en": "Support act",
+      "domain": "live-sound",
+      "definition": "Groupe qui joue avant la tête d'affiche ; on fait souvent sa balance après celle de la tête d'affiche.",
+      "see_also": [
+        "changeover"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "headliner",
+      "term_fr": "Tête d'affiche",
+      "term_en": "Headliner",
+      "domain": "live-sound",
+      "definition": "Groupe principal de la soirée, installé après la première partie.",
+      "see_also": [
+        "changeover"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "show-stop",
+      "term_fr": "Arrêt du spectacle",
+      "term_en": "Show stop",
+      "domain": "live-sound",
+      "definition": "Interruption prévue d'un concert en cas de danger, rappelée au groupe par le régisseur avant le set.",
+      "see_also": [
+        "show-stop-procedure"
+      ],
+      "sources": [
+        {
+          "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
+          "publisher": "R. Ames (The Stage Clock, Substack), « What Actually Happens In Between Bands At A Festival »",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Terme « rider d'accueil / hospitality rider » sourcé",
+      "searched": "Wikipedia Rider (entertainment) 404 ; guide Roadie ne parle que de rider logistique"
+    }
+  ]
+}

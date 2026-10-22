@@ -1,0 +1,175 @@
+{
+  "entity": "rule",
+  "domain": "live-sound",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "input-list-patch-mismatch",
+      "name_fr": "Patch différent de l'input list",
+      "name_en": "Input list / patch mismatch",
+      "domain": "live-sound",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "graph",
+      "condition": {
+        "all": [
+          {
+            "path": "graph.count(connections where dst.port.channel_number != session.input_list[src.device.id].channel)",
+            "op": "gt",
+            "value": 0
+          }
+        ]
+      },
+      "explanation": "Le line check sert à trouver les entrées mal patchées avant les musiciens. Si une source n'arrive pas sur le canal prévu par l'input list, le canal attendu reste muet et un autre reçoit un signal inattendu (par exemple la grosse caisse sur le canal voix).",
+      "fix": "Comparer chaque connexion au tableau de l'input list, corriger le câble ou le patch logique de la console, puis refaire le line check de la ligne.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.input_list",
+        "port.channel_number"
+      ],
+      "concept_ids": [
+        "stage-plot-input-list",
+        "line-check"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_check",
+          "publisher": "Wikipedia, « Soundcheck »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
+          "publisher": "ProSoundWeb — B. Bartlett, « The Beginner's Guide To Taking Charge Of The Sound Check » (2015), p. 1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "speakers-last-on-first-off",
+      "name_fr": "Enceintes allumées en dernier, éteintes en premier",
+      "name_en": "Speakers last on, first off",
+      "domain": "live-sound",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "any": [
+          {
+            "path": "session.power_on_sequence.speakers_before_sources",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "session.power_off_sequence.sources_before_speakers",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "explanation": "Allumer ou éteindre une source (console, instrument) alors que les enceintes amplifiées sont déjà sous tension produit des claquements et des chocs dans les haut-parleurs. QSC impose la règle « last on, first off » pour les enceintes.",
+      "fix": "Sortie console au minimum, allumer sources puis caissons puis enceintes principales ; à l'extinction, enceintes puis caissons puis sources.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.power_on_sequence",
+        "session.power_off_sequence"
+      ],
+      "concept_ids": [
+        "power-sequencing",
+        "load-in-load-out"
+      ],
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+          "publisher": "QSC, K.2 Series User Manual (TD-000523-01-G)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "line-check-after-changeover",
+      "name_fr": "Line check obligatoire après un changement de plateau",
+      "name_en": "Line check required after a changeover",
+      "domain": "live-sound",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "session",
+      "condition": {
+        "all": [
+          {
+            "path": "session.changeover.done",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "session.changeover.line_check_done",
+            "op": "eq",
+            "value": false
+          }
+        ]
+      },
+      "explanation": "Après le passage de la première partie à la tête d'affiche, des lignes ont pu être débranchées, déplacées ou remplacées. Un rappel de scène sur la console ne vérifie pas le patch physique.",
+      "fix": "Refaire un line check de toutes les entrées du nouveau groupe, au casque si le public est présent.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.changeover"
+      ],
+      "concept_ids": [
+        "changeover",
+        "line-check",
+        "console-scene-recall"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/?p=36647",
+          "publisher": "ProSoundWeb / Live Sound International — D. Dermont, « Max Efficiency: A Simple, Straightforward Process For Quick & Effective Festival Changeovers » (2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Seuil normatif de temps pour un changement de plateau",
+      "searched": "ProSoundWeb (Dermont 2019), Ticket Fairy, The Stage Clock — seulement des exemples, aucune norme"
+    }
+  ]
+}
