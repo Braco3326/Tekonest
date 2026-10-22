@@ -1,0 +1,1104 @@
+{
+  "entity": "glossary",
+  "domain": "installation-conference",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "sti",
+      "term_fr": "STI",
+      "term_en": "Speech Transmission Index",
+      "domain": "installation-conference",
+      "definition": "Indice objectif de 0 à 1 qui prédit l'intelligibilité de la parole à travers un canal (IEC 60268-16).",
+      "see_also": [
+        "speech-transmission-index"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stipa",
+      "term_fr": "STIPA",
+      "term_en": "STIPA",
+      "domain": "installation-conference",
+      "definition": "Méthode simplifiée de mesure du STI pour la sonorisation : 7 bandes d'octave modulées chacune par 2 fréquences.",
+      "see_also": [
+        "stipa"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cis",
+      "term_fr": "Échelle commune d'intelligibilité (CIS)",
+      "term_en": "Common Intelligibility Scale (CIS)",
+      "domain": "installation-conference",
+      "definition": "Autre présentation du STI, définie par CIS = 1 + log(STI).",
+      "see_also": [
+        "speech-transmission-index"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "modulation-transfer-function",
+      "term_fr": "Fonction de transfert de modulation",
+      "term_en": "Modulation transfer function (MTF)",
+      "domain": "installation-conference",
+      "definition": "Mesure de la conservation des modulations d'intensité d'un signal à travers un canal ; base du calcul du STI.",
+      "see_also": [
+        "speech-transmission-index"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "talkbox",
+      "term_fr": "Bouche artificielle (talkbox)",
+      "term_en": "Talkbox",
+      "domain": "installation-conference",
+      "definition": "Haut-parleur de mesure qui reproduit le rayonnement d'une bouche pour injecter le signal STIPA à la place d'un orateur.",
+      "see_also": [
+        "stipa"
+      ],
+      "sources": [
+        {
+          "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iec-60268-16",
+      "term_fr": "IEC 60268-16",
+      "term_en": "IEC 60268-16",
+      "domain": "installation-conference",
+      "definition": "Norme IEC qui définit la mesure objective de l'intelligibilité de la parole par le STI et le STIPA.",
+      "see_also": [
+        "speech-transmission-index"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "constant-voltage-line",
+      "term_fr": "Ligne à tension constante (100 V / 70 V)",
+      "term_en": "Constant-voltage line",
+      "domain": "installation-conference",
+      "definition": "Ligne de haut-parleurs alimentée sous tension élevée, où chaque haut-parleur se raccorde en parallèle via un transformateur.",
+      "see_also": [
+        "distributed-sound-100v"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line-transformer",
+      "term_fr": "Transformateur de ligne",
+      "term_en": "Line transformer",
+      "domain": "installation-conference",
+      "definition": "Transformateur abaisseur placé sur chaque haut-parleur d'une ligne 100 V, avec plusieurs prises de puissance.",
+      "see_also": [
+        "transformer-tap"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transformer-insertion-loss",
+      "term_fr": "Perte d'insertion du transformateur",
+      "term_en": "Transformer insertion loss",
+      "domain": "installation-conference",
+      "definition": "Puissance perdue dans le transformateur ; elle impose une marge d'ampli de l'ordre de 10 à 20 % selon Wikipedia.",
+      "see_also": [
+        "amplifier-power-budget-100v"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transformer-bypass",
+      "term_fr": "Position bypass 8 Ω",
+      "term_en": "Transformer bypass (8 Ω) setting",
+      "domain": "installation-conference",
+      "definition": "Position du sélecteur qui court-circuite le transformateur ; interdite sur une ligne 100 V/70 V.",
+      "see_also": [
+        "transformer-tap"
+      ],
+      "sources": [
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "remote-volume-attenuator",
+      "term_fr": "Atténuateur de volume déporté",
+      "term_en": "Remote volume attenuator",
+      "domain": "installation-conference",
+      "definition": "Réglage de volume installé sur une ligne 100 V ; il se compte à pleine puissance dans le bilan.",
+      "see_also": [
+        "amplifier-power-budget-100v"
+      ],
+      "sources": [
+        {
+          "url": "https://avsl.com/support/100v-line-speakers",
+          "publisher": "AVSL Group (distributeur)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slave-amplifier",
+      "term_fr": "Ampli esclave",
+      "term_en": "Slave amplifier",
+      "domain": "installation-conference",
+      "definition": "Ampli supplémentaire alimenté par la sortie ligne de l'ampli principal pour desservir des haut-parleurs en plus.",
+      "see_also": [
+        "amplifier-power-budget-100v"
+      ],
+      "sources": [
+        {
+          "url": "https://avsl.com/support/100v-line-speakers",
+          "publisher": "AVSL Group (distributeur)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "high-impedance-output",
+      "term_fr": "Sortie haute impédance (100 V)",
+      "term_en": "High-impedance (100 V/70 V) output",
+      "domain": "installation-conference",
+      "definition": "Mode de sortie d'un ampli d'installation prévu pour les lignes 100 V/70 V (ex. 250 W sur 40 Ω pour le Yamaha XMV8280-D).",
+      "see_also": [
+        "distributed-sound-100v"
+      ],
+      "sources": [
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "column-speaker",
+      "term_fr": "Colonne",
+      "term_en": "Column speaker",
+      "domain": "installation-conference",
+      "definition": "Enceinte à haut-parleurs empilés verticalement, à dispersion verticale étroite.",
+      "see_also": [
+        "column-loudspeaker"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_array",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "beam-steering",
+      "term_fr": "Orientation de faisceau",
+      "term_en": "Beam steering",
+      "domain": "installation-conference",
+      "definition": "Orientation électronique du faisceau d'une colonne vers l'auditoire sans l'incliner physiquement.",
+      "see_also": [
+        "steerable-column-array"
+      ],
+      "sources": [
+        {
+          "url": "https://www.renkus-heinz.com/iconyx-gen5",
+          "publisher": "Renkus-Heinz (ICONYX Gen5)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "automixer",
+      "term_fr": "Automixeur",
+      "term_en": "Automixer",
+      "domain": "installation-conference",
+      "definition": "Mélangeur qui baisse automatiquement les micros non utilisés.",
+      "see_also": [
+        "automatic-mixer"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Automixer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gain-sharing",
+      "term_fr": "Partage de gain",
+      "term_en": "Gain sharing",
+      "domain": "installation-conference",
+      "definition": "Principe Dugan : la somme des gains des micros égale celle d'un micro à plein gain, répartie selon qui parle.",
+      "see_also": [
+        "gain-sharing-automixing"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dandugan.com/Assets/manuals/Model-E-1-and-E-1A-User-Guide-v3.3.pdf",
+          "publisher": "Dan Dugan Sound Design (Model E-1/E-1A User Guide v3.3, 2016)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "automix-weight",
+      "term_fr": "Poids d'automix",
+      "term_en": "Automix weight",
+      "domain": "installation-conference",
+      "definition": "Réglage de la sensibilité relative d'une voie dans la chaîne de détection de l'automixeur ; ce n'est pas un seuil de porte.",
+      "see_also": [
+        "gain-sharing-automixing"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dandugan.com/Assets/manuals/Model-E-1-and-E-1A-User-Guide-v3.3.pdf",
+          "publisher": "Dan Dugan Sound Design (Model E-1/E-1A User Guide v3.3, 2016)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nom-attenuation",
+      "term_fr": "Atténuation selon le NOM",
+      "term_en": "NOM attenuation",
+      "domain": "installation-conference",
+      "definition": "Réduction de la sortie générale quand le nombre de micros ouverts augmente (3 dB par doublement sur le Voice-Matic de 1978).",
+      "see_also": [
+        "automatic-mixer",
+        "number-of-open-microphones"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Automixer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "priority-ducking",
+      "term_fr": "Priorité (ducking)",
+      "term_en": "Priority ducking",
+      "domain": "installation-conference",
+      "definition": "Fonction qui baisse les autres micros quand un micro prioritaire (président, annonce) parle.",
+      "see_also": [
+        "automatic-mixer"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Automixer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aec",
+      "term_fr": "AEC",
+      "term_en": "Acoustic echo cancellation",
+      "domain": "installation-conference",
+      "definition": "Annulation d'écho acoustique : retire des micros le son des distants joué par les haut-parleurs.",
+      "see_also": [
+        "acoustic-echo-cancellation"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "far-end",
+      "term_fr": "Côté distant (far-end)",
+      "term_en": "Far end",
+      "domain": "installation-conference",
+      "definition": "Les participants à distance d'une visioconférence, et le signal qui vient d'eux.",
+      "see_also": [
+        "hybrid-meeting-room"
+      ],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Best Practices: Signal Flow)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "near-end",
+      "term_fr": "Côté local (near-end)",
+      "term_en": "Near end",
+      "domain": "installation-conference",
+      "definition": "La salle locale et ses micros, dont le signal part vers les distants.",
+      "see_also": [
+        "hybrid-meeting-room"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aec-reference",
+      "term_fr": "Référence AEC",
+      "term_en": "AEC reference",
+      "domain": "installation-conference",
+      "definition": "Entrée de l'annuleur d'écho qui reçoit le même signal que les haut-parleurs.",
+      "see_also": [
+        "aec-reference-signal"
+      ],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Best Practices: Signal Flow)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "erle",
+      "term_fr": "ERLE",
+      "term_en": "Echo return loss enhancement",
+      "domain": "installation-conference",
+      "definition": "Atténuation d'écho ajoutée par l'annuleur, typiquement 18 à 35 dB.",
+      "see_also": [
+        "echo-return-loss-enhancement"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "residual-echo-suppression",
+      "term_fr": "Suppression d'écho résiduel (RES)",
+      "term_en": "Residual echo suppression",
+      "domain": "installation-conference",
+      "definition": "Traitement qui supprime l'écho restant après annulation ; trop fort, il déforme la voix locale.",
+      "see_also": [
+        "acoustic-echo-cancellation"
+      ],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aec-tail-length",
+      "term_fr": "Longueur de traîne de l'AEC",
+      "term_en": "AEC tail length",
+      "domain": "installation-conference",
+      "definition": "Durée d'écho que l'annuleur peut modéliser (200 ms par défaut dans Q-SYS) ; à augmenter en salle réverbérante.",
+      "see_also": [
+        "acoustic-echo-cancellation"
+      ],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rmlr",
+      "term_fr": "Rapport référence/micro (RMLR)",
+      "term_en": "Reference-to-microphone level ratio",
+      "domain": "installation-conference",
+      "definition": "Indicateur Q-SYS comparant le niveau de référence et la captation du distant par le micro ; à viser vers 0 dB.",
+      "see_also": [
+        "aec-reference-signal"
+      ],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "double-talk",
+      "term_fr": "Double parole",
+      "term_en": "Double talk",
+      "domain": "installation-conference",
+      "definition": "Situation où local et distant parlent en même temps ; une référence trop faible gêne sa détection.",
+      "see_also": [
+        "acoustic-echo-cancellation"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "voice-lift",
+      "term_fr": "Renfort de voix (voice lift)",
+      "term_en": "Voice lift",
+      "domain": "installation-conference",
+      "definition": "Diffusion des micros de la salle dans ses propres haut-parleurs ; utiliser les signaux micro avant AEC, sans les mettre dans la référence.",
+      "see_also": [
+        "aec-reference-signal"
+      ],
+      "sources": [
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "interpretation-booth",
+      "term_fr": "Cabine d'interprétation",
+      "term_en": "Interpreting booth",
+      "domain": "installation-conference",
+      "definition": "Local insonorisé où travaillent les interprètes simultanés (ISO 17651-1 permanente, ISO 17651-2 mobile).",
+      "see_also": [
+        "interpretation-booth"
+      ],
+      "sources": [
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765112024/simultaneous-interpreting-interpreters-working-environment-part-1-requireme/xs142910/356423",
+          "publisher": "AFNOR Boutique (ISO 17651-1:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765122024/simultaneous-interpreting-interpreters-working-environment-part-2-requireme/xs142896/356424",
+          "publisher": "AFNOR Boutique (ISO 17651-2:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mobile-interpretation-booth",
+      "term_fr": "Cabine mobile",
+      "term_en": "Mobile booth",
+      "domain": "installation-conference",
+      "definition": "Cabine d'interprétation démontable, transportable et montée dans la salle (ISO 17651-2:2024).",
+      "see_also": [
+        "interpretation-booth"
+      ],
+      "sources": [
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765122024/simultaneous-interpreting-interpreters-working-environment-part-2-requireme/xs142896/356424",
+          "publisher": "AFNOR Boutique (ISO 17651-2:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iso-20109",
+      "term_fr": "ISO 20109",
+      "term_en": "ISO 20109",
+      "domain": "installation-conference",
+      "definition": "Norme des exigences pour les équipements d'interprétation simultanée (édition 2025).",
+      "see_also": [
+        "interpretation-system"
+      ],
+      "sources": [
+        {
+          "url": "https://connect.snv.ch/en/iso-20109",
+          "publisher": "SNV (Swiss Association for Standardization), ISO 20109",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iso-17651",
+      "term_fr": "ISO 17651",
+      "term_en": "ISO 17651",
+      "domain": "installation-conference",
+      "definition": "Série de normes de 2024 sur l'environnement de travail des interprètes : partie 1 cabines permanentes, partie 2 cabines mobiles.",
+      "see_also": [
+        "interpretation-booth"
+      ],
+      "sources": [
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765112024/simultaneous-interpreting-interpreters-working-environment-part-1-requireme/xs142910/356423",
+          "publisher": "AFNOR Boutique (ISO 17651-1:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765122024/simultaneous-interpreting-interpreters-working-environment-part-2-requireme/xs142896/356424",
+          "publisher": "AFNOR Boutique (ISO 17651-2:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iso-22259",
+      "term_fr": "ISO 22259",
+      "term_en": "ISO 22259",
+      "domain": "installation-conference",
+      "definition": "Norme de 2019 sur les exigences des équipements de systèmes de conférence.",
+      "see_also": [
+        "conference-system"
+      ],
+      "sources": [
+        {
+          "url": "https://aiic.org/site/it/technicalstandards",
+          "publisher": "AIIC (Association internationale des interprètes de conférence)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ir-radiator",
+      "term_fr": "Radiateur infrarouge",
+      "term_en": "IR radiator",
+      "domain": "installation-conference",
+      "definition": "Panneau qui émet les porteuses infrarouges des canaux de langue vers les récepteurs du public.",
+      "see_also": [
+        "infrared-language-distribution"
+      ],
+      "sources": [
+        {
+          "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
+          "publisher": "Taiden (fiche HCS-5100T, hébergée par le distributeur Euro-Trend)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iec-61603-7",
+      "term_fr": "IEC 61603-7",
+      "term_en": "IEC 61603-7",
+      "domain": "installation-conference",
+      "definition": "Norme de transmission audio numérique par infrarouge multi-canal, utilisée pour la distribution de langues.",
+      "see_also": [
+        "infrared-language-distribution"
+      ],
+      "sources": [
+        {
+          "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
+          "publisher": "Taiden (fiche HCS-5100T, hébergée par le distributeur Euro-Trend)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "telecoil",
+      "term_fr": "Bobine T",
+      "term_en": "Telecoil",
+      "domain": "installation-conference",
+      "definition": "Bobine d'une aide auditive qui capte le champ d'une boucle magnétique.",
+      "see_also": [
+        "telecoil"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_induction_loop",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "induction-loop",
+      "term_fr": "Boucle d'induction",
+      "term_en": "Induction loop",
+      "domain": "installation-conference",
+      "definition": "Câble posé autour d'une zone qui rayonne un champ magnétique audio pour les aides auditives.",
+      "see_also": [
+        "hearing-loop"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_induction_loop",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loop-driver",
+      "term_fr": "Ampli de boucle",
+      "term_en": "Loop driver",
+      "domain": "installation-conference",
+      "definition": "Amplificateur qui alimente la boucle, souvent en mode courant, avec contrôle automatique de niveau.",
+      "see_also": [
+        "hearing-loop"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_induction_loop",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+          "publisher": "Ampetronic (W5-2 Handbook)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "field-strength-meter",
+      "term_fr": "Mesureur de champ magnétique",
+      "term_en": "Field strength meter",
+      "domain": "installation-conference",
+      "definition": "Appareil qui mesure le champ d'une boucle, étalonné pour lire 0 dB à 400 mA/m.",
+      "see_also": [
+        "hearing-loop"
+      ],
+      "sources": [
+        {
+          "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+          "publisher": "Ampetronic (W5-2 Handbook)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "metal-loss",
+      "term_fr": "Pertes métalliques",
+      "term_en": "Metal loss",
+      "domain": "installation-conference",
+      "definition": "Atténuation inégale du champ de boucle, surtout dans les aigus, due aux structures métalliques.",
+      "see_also": [
+        "metal-loss-compensation"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_induction_loop",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+          "publisher": "Ampetronic (W5-2 Handbook)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loop-overspill",
+      "term_fr": "Débordement de boucle",
+      "term_en": "Loop overspill",
+      "domain": "installation-conference",
+      "definition": "Champ de boucle qui s'étend hors de la zone prévue, gênant pour les boucles voisines ou la confidentialité.",
+      "see_also": [
+        "hearing-loop"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "magnetic-background-noise",
+      "term_fr": "Bruit magnétique de fond",
+      "term_en": "Magnetic background noise",
+      "domain": "installation-conference",
+      "definition": "Champ parasite présent sans signal ; à −32 dB(A) ou mieux pour une boucle conforme.",
+      "see_also": [
+        "hearing-loop"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "iec-60118-4",
+      "term_fr": "IEC 60118-4",
+      "term_en": "IEC 60118-4",
+      "domain": "installation-conference",
+      "definition": "Norme des performances des boucles d'induction pour aides auditives (édition 2014 + amendement 2017).",
+      "see_also": [
+        "hearing-loop"
+      ],
+      "sources": [
+        {
+          "url": "https://webstore.iec.ch/publication/798",
+          "publisher": "IEC Webstore (IEC 60118-4:2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Terme « floor channel » / « relay » (relais) des systèmes d'interprétation",
+      "searched": "Wikipedia Simultaneous interpretation (non mentionnés)"
+    }
+  ]
+}

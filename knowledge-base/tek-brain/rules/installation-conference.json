@@ -1,0 +1,342 @@
+{
+  "entity": "rule",
+  "domain": "installation-conference",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "100v-line-overload",
+      "name_fr": "Ligne 100 V surchargée",
+      "name_en": "100 V line overload",
+      "domain": "installation-conference",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "device",
+      "condition": {
+        "all": [
+          {
+            "path": "device.controls.output_mode",
+            "op": "eq",
+            "value": "hi-z-100v"
+          },
+          {
+            "path": "device.computed.hiz_load_ratio",
+            "op": "gt",
+            "value": 1.0
+          }
+        ]
+      },
+      "explanation": "La somme des prises des haut-parleurs d'une ligne dépasse la puissance 100 V du canal d'ampli. hiz_load_ratio = somme des prises (W) / puissance nominale 100 V du canal (W). Les fabricants demandent en plus une marge (80 % chez Origin Acoustics, 90 % chez AVSL) ; une version « warning » au-dessus de 0,8 pourrait être ajoutée.",
+      "fix": "Baisser des prises, répartir les haut-parleurs sur un autre canal ou ajouter un ampli esclave.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.specs.rated_power_100v_w",
+        "port.tap_power_w",
+        "device.controls.output_mode",
+        "device.computed.hiz_load_ratio",
+        "port.signal:speaker-level-100v-line"
+      ],
+      "concept_ids": [
+        "amplifier-power-budget-100v",
+        "transformer-tap",
+        "distributed-sound-100v"
+      ],
+      "sources": [
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://avsl.com/support/100v-line-speakers",
+          "publisher": "AVSL Group (distributeur)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "needs_catalog_fields"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "transformer-bypass-on-100v-line",
+      "name_fr": "Haut-parleur en position 8 Ω sur ligne 100 V",
+      "name_en": "Transformer bypass (8 Ω) on a 100 V line",
+      "domain": "installation-conference",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.signal",
+            "op": "eq",
+            "value": "speaker-level-100v-line"
+          },
+          {
+            "path": "dst.device.controls.transformer_tap",
+            "op": "eq",
+            "value": "8-ohm-bypass"
+          }
+        ]
+      },
+      "explanation": "La position 8 Ω court-circuite le transformateur : raccordé à un ampli 70 V/100 V, le haut-parleur peut être détruit (et la ligne présente une charge très basse).",
+      "fix": "Remettre le sélecteur sur une prise 100 V valide avant de raccorder la ligne.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.signal:speaker-level-100v-line",
+        "device.controls.transformer_tap"
+      ],
+      "concept_ids": [
+        "transformer-tap",
+        "distributed-sound-100v"
+      ],
+      "sources": [
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "aec-reference-missing",
+      "name_fr": "Référence AEC absente",
+      "name_en": "AEC reference missing",
+      "domain": "installation-conference",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "graph",
+      "condition": {
+        "all": [
+          {
+            "path": "graph.count(device.flags includes hasAec)",
+            "op": "gt",
+            "value": 0
+          },
+          {
+            "path": "graph.count(port.flags includes isAecReference and port.connected eq true)",
+            "op": "eq",
+            "value": 0
+          }
+        ]
+      },
+      "explanation": "Un annuleur d'écho sans référence ne sait pas quoi retirer : un signal absent de la référence n'est pas annulé, et les distants entendent leur propre voix en écho. La référence doit recevoir tout ce qui part vers les haut-parleurs.",
+      "fix": "Router vers l'entrée de référence de l'AEC le mélange de toutes les sources distantes et du programme, identique à celui des haut-parleurs.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.flags:hasAec",
+        "port.flags:isAecReference",
+        "port.connected"
+      ],
+      "concept_ids": [
+        "aec-reference-signal",
+        "acoustic-echo-cancellation"
+      ],
+      "sources": [
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Best Practices: Signal Flow)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "mic-in-aec-reference",
+      "name_fr": "Micro de la salle dans la référence AEC",
+      "name_en": "Room microphone in AEC reference",
+      "domain": "installation-conference",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "graph",
+      "condition": {
+        "path": "graph.count(path from port.flags includes isMicInput to port.flags includes isAecReference)",
+        "op": "gt",
+        "value": 0
+      },
+      "explanation": "Si un micro de la salle (même via un mix de renfort) atteint la référence de l'AEC, l'annuleur retire la voix locale : les distants entendent un son « sous l'eau ».",
+      "fix": "Retirer les micros de la référence ; pour un renfort de voix, utiliser les signaux micro avant AEC sans les envoyer à la référence.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isAecReference",
+        "graph.path"
+      ],
+      "concept_ids": [
+        "aec-reference-signal",
+        "acoustic-echo-cancellation"
+      ],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Best Practices: Signal Flow)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "loop-amplifier-standard",
+      "name_fr": "Boucle magnétique hors IEC 60118-4",
+      "name_en": "Hearing loop outside IEC 60118-4",
+      "domain": "installation-conference",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "any": [
+          {
+            "path": "session.loop_field_db_re_400mapm",
+            "op": "lt",
+            "value": -3
+          },
+          {
+            "path": "session.loop_field_db_re_400mapm",
+            "op": "gt",
+            "value": 3
+          },
+          {
+            "path": "session.loop_response_100hz_db_re_1khz",
+            "op": "lt",
+            "value": -3
+          },
+          {
+            "path": "session.loop_response_5khz_db_re_1khz",
+            "op": "lt",
+            "value": -3
+          },
+          {
+            "path": "session.loop_background_noise_dba",
+            "op": "gt",
+            "value": -32
+          }
+        ]
+      },
+      "explanation": "Mise en service d'une boucle : champ à 0 dB ±3 dB re 400 mA/m (sinus 1 kHz) à toutes les places, 100 Hz et 5 kHz à ±3 dB du niveau à 1 kHz, bruit magnétique de fond de −32 dB(A) ou mieux (valeurs résumées par Ampetronic d'après l'IEC 60118-4).",
+      "fix": "Régler le courant de sortie, la correction des pertes métalliques et l'AGC ; traiter les sources de bruit magnétique ; refaire les mesures.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.loop_field_db_re_400mapm",
+        "session.loop_response_100hz_db_re_1khz",
+        "session.loop_response_5khz_db_re_1khz",
+        "session.loop_background_noise_dba"
+      ],
+      "concept_ids": [
+        "hearing-loop",
+        "metal-loss-compensation"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+          "publisher": "Ampetronic (W5-2 Handbook)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://webstore.iec.ch/publication/798",
+          "publisher": "IEC Webstore (IEC 60118-4:2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Comportement de protection de l'XMV8280-D en ligne 100 V",
+      "searched": "Manuel Yamaha XMV8280-D (403)"
+    }
+  ]
+}

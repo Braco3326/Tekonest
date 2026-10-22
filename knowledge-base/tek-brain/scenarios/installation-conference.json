@@ -1,0 +1,635 @@
+{
+  "entity": "scenario",
+  "domain": "installation-conference",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "conference-four-speakers-streaming",
+      "name_fr": "Conférence à 4 intervenants avec streaming",
+      "name_en": "4-speaker conference with streaming",
+      "domain": "installation-conference",
+      "brief": "Une table ronde de quatre intervenants dans une petite salle de conférence : sonoriser la salle, gérer les micros avec un automixeur à partage de gain et envoyer un mixage séparé à l'ordinateur de streaming. Vérifier l'intelligibilité au STIPA.",
+      "room_id": "conference-room-small",
+      "required_gear": [
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 4,
+          "role": "micro intervenant"
+        },
+        {
+          "equipment_id": "shure-scm820",
+          "qty": 1,
+          "role": "automixeur"
+        },
+        {
+          "equipment_id": "yamaha-tf5",
+          "qty": 1,
+          "role": "console"
+        },
+        {
+          "equipment_id": "qsc-k12-2",
+          "qty": 2,
+          "role": "diffusion salle"
+        },
+        {
+          "equipment_id": "playout-pc",
+          "qty": 1,
+          "role": "ordinateur de streaming"
+        },
+        {
+          "equipment_id": "nti-audio-xl2",
+          "qty": 1,
+          "role": "mesure STIPA"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic1",
+            "equipment_id": "shure-sm58",
+            "label": "Intervenant 1"
+          },
+          {
+            "id": "mic2",
+            "equipment_id": "shure-sm58",
+            "label": "Intervenant 2"
+          },
+          {
+            "id": "mic3",
+            "equipment_id": "shure-sm58",
+            "label": "Intervenant 3"
+          },
+          {
+            "id": "mic4",
+            "equipment_id": "shure-sm58",
+            "label": "Intervenant 4"
+          },
+          {
+            "id": "automix",
+            "equipment_id": "shure-scm820",
+            "label": "Automixeur"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-tf5",
+            "label": "Console"
+          },
+          {
+            "id": "pa-l",
+            "equipment_id": "qsc-k12-2",
+            "label": "Diffusion gauche"
+          },
+          {
+            "id": "pa-r",
+            "equipment_id": "qsc-k12-2",
+            "label": "Diffusion droite"
+          },
+          {
+            "id": "stream",
+            "equipment_id": "playout-pc",
+            "label": "PC streaming"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic1",
+            "to": "automix",
+            "signal": "mic-level",
+            "connector": "euroblock-phoenix"
+          },
+          {
+            "from": "mic2",
+            "to": "automix",
+            "signal": "mic-level",
+            "connector": "euroblock-phoenix"
+          },
+          {
+            "from": "mic3",
+            "to": "automix",
+            "signal": "mic-level",
+            "connector": "euroblock-phoenix"
+          },
+          {
+            "from": "mic4",
+            "to": "automix",
+            "signal": "mic-level",
+            "connector": "euroblock-phoenix"
+          },
+          {
+            "from": "automix",
+            "to": "desk",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "pa-l",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "pa-r",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "stream",
+            "signal": "usb-audio",
+            "connector": "usb-b"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "setup-conference-four-speakers-streaming",
+        "configure-automixer-gain-sharing"
+      ],
+      "rule_ids": [
+        "feedback-risk-open-mic-same-room"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 60,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une conférence sonorisée (TES/E4 pratique) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/publications/specSheet/en/scm820-spec-sheet.pdf",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear",
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://www.dandugan.com/Assets/manuals/Model-E-1-and-E-1A-User-Guide-v3.3.pdf",
+          "publisher": "Dan Dugan Sound Design (Model E-1/E-1A User Guide v3.3, 2016)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "hybrid-meeting-room-aec",
+      "name_fr": "Salle de réunion hybride",
+      "name_en": "Hybrid meeting room",
+      "domain": "installation-conference",
+      "brief": "Une salle de réunion avec deux micros de table, des haut-parleurs au plafond et un PC de visioconférence relié en Dante. Configurer l'AEC (une voie par micro, référence = tout ce qui va aux haut-parleurs) pour que les distants n'entendent ni écho ni son « sous l'eau ». Le DSP de conférence est générique (aucun modèle avec AEC n'est encore dans la base).",
+      "room_id": "hybrid-meeting-room-small",
+      "required_gear": [
+        {
+          "equipment_id": "shure-beta-91a",
+          "qty": 2,
+          "role": "micro de table (boundary)"
+        },
+        {
+          "equipment_id": "audinate-dante-virtual-soundcard",
+          "qty": 1,
+          "role": "pont audio Dante du PC de visio"
+        },
+        {
+          "equipment_id": "yamaha-xmv8280-d",
+          "qty": 1,
+          "role": "ampli des haut-parleurs (entrée Dante)"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic1",
+            "equipment_id": "shure-beta-91a",
+            "label": "Micro table 1"
+          },
+          {
+            "id": "mic2",
+            "equipment_id": "shure-beta-91a",
+            "label": "Micro table 2"
+          },
+          {
+            "id": "dsp",
+            "label": "DSP de conférence avec AEC (générique)"
+          },
+          {
+            "id": "pc",
+            "equipment_id": "audinate-dante-virtual-soundcard",
+            "label": "PC visio + Dante Virtual Soundcard"
+          },
+          {
+            "id": "amp",
+            "equipment_id": "yamaha-xmv8280-d",
+            "label": "Ampli d'installation"
+          },
+          {
+            "id": "spk",
+            "label": "Haut-parleurs de plafond"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic1",
+            "to": "dsp",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "mic2",
+            "to": "dsp",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "dsp",
+            "to": "pc",
+            "signal": "aoip",
+            "connector": "rj45"
+          },
+          {
+            "from": "pc",
+            "to": "dsp",
+            "signal": "aoip",
+            "connector": "rj45"
+          },
+          {
+            "from": "dsp",
+            "to": "amp",
+            "signal": "aoip",
+            "connector": "rj45"
+          },
+          {
+            "from": "amp",
+            "to": "spk",
+            "signal": "speaker-level",
+            "connector": "euroblock-phoenix"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "configure-aec-hybrid-room"
+      ],
+      "rule_ids": [
+        "aec-reference-missing",
+        "mic-in-aec-reference"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 45,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Visioconférence, salle hybride (TES)  — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Best Practices: Signal Flow)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief",
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "multilingual-conference-interpretation",
+      "name_fr": "Conférence multilingue avec interprétation",
+      "name_en": "Multilingual conference with interpretation",
+      "domain": "installation-conference",
+      "brief": "Une conférence en deux langues avec une cabine d'interprétation : amener le son de salle aux interprètes, récupérer leurs micros et distribuer les canaux de langue au public par infrarouge. Le système IR et les pupitres d'interprète ne sont pas encore dans la base (nœuds génériques).",
+      "room_id": "interpretation-booth-small",
+      "required_gear": [
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 2,
+          "role": "micro orateur"
+        },
+        {
+          "equipment_id": "yamaha-tf5",
+          "qty": 1,
+          "role": "console de salle"
+        },
+        {
+          "equipment_id": "sennheiser-hmd-26",
+          "qty": 2,
+          "role": "casque-micro interprète (substitut)"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "spk1",
+            "equipment_id": "shure-sm58",
+            "label": "Orateur 1"
+          },
+          {
+            "id": "spk2",
+            "equipment_id": "shure-sm58",
+            "label": "Orateur 2"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-tf5",
+            "label": "Console de salle"
+          },
+          {
+            "id": "desk-int",
+            "label": "Pupitres d'interprète (générique)"
+          },
+          {
+            "id": "int",
+            "equipment_id": "sennheiser-hmd-26",
+            "label": "Interprète"
+          },
+          {
+            "id": "irtx",
+            "label": "Émetteur IR IEC 61603-7 (générique)"
+          },
+          {
+            "id": "irrad",
+            "label": "Radiateurs IR"
+          }
+        ],
+        "edges": [
+          {
+            "from": "spk1",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "spk2",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "desk-int",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "irtx",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "int",
+            "to": "desk-int",
+            "signal": "mic-level",
+            "connector": null
+          },
+          {
+            "from": "desk-int",
+            "to": "irtx",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "irtx",
+            "to": "irrad",
+            "signal": null,
+            "connector": "bnc"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "check-interpretation-booth"
+      ],
+      "rule_ids": [],
+      "difficulty": 4,
+      "estimated_time_min": 90,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Conférence multilingue (TES)  — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Simultaneous_interpretation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
+          "publisher": "Taiden (fiche HCS-5100T, hébergée par le distributeur Euro-Trend)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765112024/simultaneous-interpreting-interpreters-working-environment-part-1-requireme/xs142910/356423",
+          "publisher": "AFNOR Boutique (ISO 17651-1:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://connect.snv.ch/en/iso-20109",
+          "publisher": "SNV (Swiss Association for Standardization), ISO 20109",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "museum-installed-sound",
+      "name_fr": "Sonorisation fixe d'un musée",
+      "name_en": "Museum installed sound",
+      "domain": "installation-conference",
+      "brief": "Un musée diffuse des ambiances et des annonces dans plusieurs salles par des haut-parleurs 100 V, avec une boucle magnétique à l'accueil. Faire le bilan de puissance des lignes, régler les prises et mettre la boucle en service.",
+      "room_id": "museum-installed-sound-medium",
+      "required_gear": [
+        {
+          "equipment_id": "yamaha-xmv8280-d",
+          "qty": 1,
+          "role": "ampli 100 V multicanal"
+        },
+        {
+          "equipment_id": "tascam-ss-cdr250n",
+          "qty": 1,
+          "role": "lecteur de contenus"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "player",
+            "equipment_id": "tascam-ss-cdr250n",
+            "label": "Lecteur"
+          },
+          {
+            "id": "amp",
+            "equipment_id": "yamaha-xmv8280-d",
+            "label": "Ampli 100 V"
+          },
+          {
+            "id": "zone1",
+            "label": "Ligne 100 V salle 1"
+          },
+          {
+            "id": "zone2",
+            "label": "Ligne 100 V salle 2"
+          },
+          {
+            "id": "loop",
+            "label": "Ampli de boucle magnétique (générique)"
+          }
+        ],
+        "edges": [
+          {
+            "from": "player",
+            "to": "amp",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "amp",
+            "to": "zone1",
+            "signal": "speaker-level",
+            "connector": "euroblock-phoenix"
+          },
+          {
+            "from": "amp",
+            "to": "zone2",
+            "signal": "speaker-level",
+            "connector": "euroblock-phoenix"
+          },
+          {
+            "from": "player",
+            "to": "loop",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "tap-100v-line-system",
+        "commission-hearing-loop"
+      ],
+      "rule_ids": [
+        "100v-line-overload",
+        "transformer-bypass-on-100v-line",
+        "loop-amplifier-standard"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 90,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Sonorisation fixe (TES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        },
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Équipements de musée (lecteurs synchronisés, déclenchement par capteurs) et DSP de conférence avec AEC dans la base équipements",
+      "searched": "knowledge-base/equipment/*.json (aucun modèle)"
+    }
+  ]
+}

@@ -1,0 +1,1351 @@
+{
+  "entity": "concept",
+  "domain": "installation-conference",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "speech-intelligibility",
+      "name_fr": "Intelligibilité de la parole",
+      "name_en": "Speech intelligibility",
+      "domain": "installation-conference",
+      "definition": "Capacité d'un message parlé à être compris par l'auditeur dans un lieu et à travers une chaîne de diffusion donnés.",
+      "explanation": "L'intelligibilité dépend du niveau de la parole, de la réponse en fréquence de la chaîne, de la distorsion, du bruit de fond, de la réverbération, des échos (réflexions arrivant plus de 100 ms après le son direct) et du masquage. On l'évalue objectivement avec le STI (speech transmission index), qui prédit la compréhension à partir des caractéristiques physiques du canal. NTi Audio rappelle que l'intelligibilité est la meilleure vers 70 à 80 dB SPL : au-delà, la protection naturelle de l'oreille fait baisser le STI. Sur le terrain, monter le niveau dans un hall réverbérant n'aide donc pas : on rapproche les sources des auditeurs (diffusion répartie) ou on utilise des colonnes directives qui excitent moins le champ réverbéré.",
+      "formulas": [],
+      "units": [
+        "STI",
+        "dB SPL"
+      ],
+      "related_concepts": [
+        "speech-transmission-index",
+        "stipa",
+        "reverberation-time-rt60",
+        "masking",
+        "signal-to-noise-ratio",
+        "steerable-column-array"
+      ],
+      "equipment_ids": [
+        "nti-audio-xl2",
+        "afmg-ease-5"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "speech-transmission-index",
+      "name_fr": "Indice de transmission de la parole (STI)",
+      "name_en": "Speech Transmission Index (STI)",
+      "domain": "installation-conference",
+      "definition": "Mesure objective, de 0 (mauvais) à 1 (excellent), de la qualité avec laquelle un canal (salle, sonorisation, ligne) transmet la parole, normalisée par l'IEC 60268-16.",
+      "explanation": "Le STI repose sur la fonction de transfert de modulation (modulation transfer function) : on regarde combien les fluctuations d'intensité caractéristiques de la voix survivent au trajet. Il se mesure directement avec des signaux modulés, ou indirectement à partir de réponses impulsionnelles (méthode qui suppose un canal linéaire). Wikipedia donne une grille de qualification : mauvais 0–0,3 ; médiocre 0,3–0,45 ; moyen 0,45–0,6 ; bon 0,6–0,75 ; excellent 0,75–1, et indique qu'un STI d'au moins 0,5 est souhaitable dans la plupart des applications. L'IEC 60268-16 (4e éd. 2011) utilise aussi une échelle de lettres de U à A+. Le CIS (common intelligibility scale) est une autre présentation du même résultat.",
+      "formulas": [
+        {
+          "expr": "CIS = 1 + log(STI)",
+          "vars": {
+            "STI": "indice de transmission de la parole (0 à 1)",
+            "log": "logarithme (base non précisée par la source)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Speech_transmission_index"
+        }
+      ],
+      "units": [
+        "STI (sans unité)",
+        "CIS"
+      ],
+      "related_concepts": [
+        "speech-intelligibility",
+        "stipa",
+        "reverberation-time-rt60"
+      ],
+      "equipment_ids": [
+        "nti-audio-xl2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "stipa",
+      "name_fr": "STIPA (STI pour sonorisation)",
+      "name_en": "STIPA (STI for public address)",
+      "domain": "installation-conference",
+      "definition": "Version simplifiée du STI, normalisée dans l'IEC 60268-16, conçue pour mesurer rapidement l'intelligibilité des systèmes de sonorisation avec un signal de test modulé.",
+      "explanation": "Le signal STIPA est un bruit rose modulé en bandes d'octave de 125 Hz à 8 kHz, qui imite les variations d'intensité de la voix ; chacune des 7 bandes est modulée par deux fréquences, soit 14 modulations. Selon le système, on injecte le signal par un haut-parleur « bouche artificielle » (talkbox) au niveau d'un orateur type — NTi cite l'IEC 60268-16 : 60 dBA à 1 m —, acoustiquement dans le micro d'annonce pour inclure toute la chaîne, ou électriquement au niveau ligne. On fait plusieurs mesures à différentes places et on moyenne ; le bruit de fond peut être enregistré salle pleine puis pris en compte par calcul. Le sonomètre NTi XL2 dispose d'une option STIPA.",
+      "formulas": [],
+      "units": [
+        "STI"
+      ],
+      "related_concepts": [
+        "speech-transmission-index",
+        "speech-intelligibility"
+      ],
+      "equipment_ids": [
+        "nti-audio-xl2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (durée d'une mesure)",
+          "values": [
+            {
+              "value": "15 à 25 s",
+              "source_url": "https://en.wikipedia.org/wiki/Speech_transmission_index"
+            },
+            {
+              "value": "15 s par mesure",
+              "source_url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti"
+            }
+          ],
+          "note": "Ordres de grandeur compatibles ; la durée exacte dépend de l'appareil."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "distributed-sound-100v",
+      "name_fr": "Diffusion répartie en ligne 100 V",
+      "name_en": "100 V line distributed sound",
+      "domain": "installation-conference",
+      "definition": "Système de diffusion (aussi dit « à tension constante ») où l'ampli envoie le signal sous tension élevée sur une ligne à laquelle de nombreux haut-parleurs sont raccordés en parallèle, chacun via un transformateur abaisseur.",
+      "explanation": "Comme pour le transport d'électricité, une tension plus haute signifie un courant plus faible : le même câble transporte la puissance avec moins de pertes, ou un câble plus fin suffit. Le 100 V est le plus répandu en Europe, le 70,7 V (« 70 V ») en Amérique du Nord. Chaque haut-parleur a un transformateur à prises (taps) qui fixe la puissance qu'il prélève, donc son niveau. Contreparties : pertes d'insertion des transformateurs (plus fortes dans le grave), saturation possible, et impossibilité de retarder individuellement les haut-parleurs d'une même ligne. Exemple d'ampli d'installation : le Yamaha XMV8280-D annonce 250 W × 8 sur 40 Ω en mode ligne 100 V/70 V. Dans beaucoup de pays, ces lignes doivent passer sous conduit.",
+      "formulas": [],
+      "units": [
+        "V",
+        "W",
+        "Ω"
+      ],
+      "related_concepts": [
+        "transformer-tap",
+        "amplifier-power-budget-100v",
+        "electrical-power",
+        "impedance",
+        "ohms-law"
+      ],
+      "equipment_ids": [
+        "yamaha-xmv8280-d"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "transformer-tap",
+      "name_fr": "Prise de transformateur (tap)",
+      "name_en": "Transformer tap",
+      "domain": "installation-conference",
+      "definition": "Point de raccordement d'un transformateur de haut-parleur 100 V/70 V qui détermine la puissance prélevée sur la ligne par ce haut-parleur.",
+      "explanation": "Sur l'exemple Origin Acoustics (gamme Director), un sélecteur rotatif propose en 100 V les prises 2,5 / 5 / 10 / 20 W et en 70 V 1,3 / 2,5 / 5 / 10 / 20 W, plus une position 8 Ω qui court-circuite le transformateur. Cette position 8 Ω ne doit jamais être utilisée sur un ampli 70 V/100 V : elle peut détruire le haut-parleur ; et sur ce modèle la 5e position est interdite en 100 V. Plus la prise est haute, plus le haut-parleur joue fort et fidèlement : le fabricant conseille de fixer le nombre de haut-parleurs puis de mettre les prises le plus haut possible dans la limite de l'ampli. Un distributeur rappelle qu'un haut-parleur « 10 W » peut aussi offrir des prises 5 W ou 2,5 W.",
+      "formulas": [],
+      "units": [
+        "W"
+      ],
+      "related_concepts": [
+        "distributed-sound-100v",
+        "amplifier-power-budget-100v"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://avsl.com/support/100v-line-speakers",
+          "publisher": "AVSL Group (distributeur)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "amplifier-power-budget-100v",
+      "name_fr": "Bilan de puissance d'une ligne 100 V",
+      "name_en": "100 V line power budget",
+      "domain": "installation-conference",
+      "definition": "Calcul qui vérifie que la somme des prises de tous les haut-parleurs d'une ligne reste inférieure à la puissance utilisable de l'ampli, avec une marge.",
+      "explanation": "On additionne les puissances de prise de tous les haut-parleurs raccordés : c'est la charge vue par l'ampli. Origin Acoustics conseille de calculer sur 80 % de la puissance nominale : un ampli de 500 W donne 400 W utiles, soit 40 haut-parleurs réglés sur 10 W. Un distributeur (AVSL) parle plutôt de 90 % et demande de compter les atténuateurs (réglages de volume déportés) comme s'ils étaient au maximum ; au-delà, on ajoute un ampli esclave. Wikipedia explique la marge par la perte d'insertion des transformateurs : l'ampli doit être environ 10 à 20 % plus puissant que la somme des haut-parleurs (un haut-parleur de 10 W tire environ 11,1 W). Suivez toujours la valeur donnée par le fabricant de l'ampli.",
+      "formulas": [
+        {
+          "expr": "P_utile = 0,8 × P_ampli",
+          "vars": {
+            "P_ampli": "puissance nominale de l'ampli en ligne 100 V (W)",
+            "0,8": "marge de 80 % conseillée par Origin Acoustics"
+          },
+          "source_url": "https://docs.originacoustics.com/transformers_manual"
+        },
+        {
+          "expr": "N_max = P_utile / P_prise",
+          "vars": {
+            "P_prise": "prise choisie sur chaque haut-parleur (W)",
+            "N_max": "nombre maximal de haut-parleurs identiques"
+          },
+          "source_url": "https://docs.originacoustics.com/transformers_manual"
+        }
+      ],
+      "units": [
+        "W"
+      ],
+      "related_concepts": [
+        "distributed-sound-100v",
+        "transformer-tap",
+        "electrical-power",
+        "amplifier-power-rating"
+      ],
+      "equipment_ids": [
+        "yamaha-xmv8280-d"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]",
+            "formulas[1]"
+          ]
+        },
+        {
+          "url": "https://avsl.com/support/100v-line-speakers",
+          "publisher": "AVSL Group (distributeur)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (marge de charge)",
+          "values": [
+            {
+              "value": "80 % de la puissance nominale",
+              "source_url": "https://docs.originacoustics.com/transformers_manual"
+            },
+            {
+              "value": "90 % de la puissance nominale",
+              "source_url": "https://avsl.com/support/100v-line-speakers"
+            },
+            {
+              "value": "ampli 10 à 20 % plus puissant que la somme des prises",
+              "source_url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system"
+            }
+          ],
+          "note": "Les trois sources donnent des marges proches mais différentes ; retenir la valeur du fabricant de l'ampli."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "column-loudspeaker",
+      "name_fr": "Enceinte colonne",
+      "name_en": "Column loudspeaker",
+      "domain": "installation-conference",
+      "definition": "Enceinte formée de plusieurs haut-parleurs empilés verticalement, qui resserre la dispersion verticale pour diriger le son vers l'auditoire.",
+      "explanation": "La colonne est l'ancêtre du line array : Harry Olson a utilisé le principe de la source linéaire pour la concevoir. Plus la pile est haute, plus la dispersion verticale est étroite. Les premières lignes, surtout pour la voix, servaient dans les lieux très réverbérants parce qu'un faisceau vertical étroit excite moins le champ réverbéré. Aujourd'hui on trouve aussi des colonnes portables tout-en-un pour la conférence et les petits événements, comme l'EV EVOLVE 50M G2 ou la Bose L1 Pro32.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "line-array",
+        "steerable-column-array",
+        "speech-intelligibility",
+        "coverage-angle"
+      ],
+      "equipment_ids": [
+        "ev-evolve-50m-g2",
+        "bose-l1-pro32"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_array",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "steerable-column-array",
+      "name_fr": "Colonne à directivité orientable (beam steering)",
+      "name_en": "Steerable column array",
+      "domain": "installation-conference",
+      "definition": "Colonne dont le faisceau vertical est formé et orienté par traitement numérique, sans incliner physiquement l'enceinte.",
+      "explanation": "Renkus-Heinz décrit pour son ICONYX Gen5 des faisceaux très étroits verticalement, qu'on oriente vers l'auditoire ; on peut même diriger plusieurs faisceaux vers des niveaux différents (balcons). Diriger le son vers le public plutôt que vers les murs et le plafond réduit fortement la traîne de réverbération et peut supprimer des échos dans les architectures difficiles (églises, halls, gares). Le fabricant recommande pour ce produit une hauteur de montage de 1,6 à 2,5 m entre le sol et le bas de la colonne ; plus haut, il faut orienter le faisceau davantage vers le bas, ce qui le rend moins directif. La source ne détaille pas l'algorithme ; Wikipedia décrit le même principe de mise en forme par retards et égalisation pour des rangées de subwoofers.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "column-loudspeaker",
+        "speech-intelligibility",
+        "reverberation-time-rt60",
+        "line-array"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.renkus-heinz.com/iconyx-gen5",
+          "publisher": "Renkus-Heinz (ICONYX Gen5)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_array",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "conference-system",
+      "name_fr": "Système de conférence",
+      "name_en": "Conference system",
+      "domain": "installation-conference",
+      "definition": "Ensemble d'équipements qui permet à plusieurs participants d'une réunion de prendre la parole et de s'entendre : microphones de délégués, unité centrale, casques, amplification, et éventuellement interprétation et diffusion vers l'extérieur.",
+      "explanation": "La norme ISO 22259:2019 (Conference systems – Equipment requirements), citée par l'AIIC, fixe les exigences pour les systèmes de conférence, leurs composants, les appareils auxiliaires comme les microphones, casques et amplificateurs, et leur environnement d'utilisation. Les fabricants de systèmes de distribution de langues annoncent aussi la conformité à l'IEC 60914 (cité par Taiden). Dans une salle de conseil ou une table ronde, on utilise souvent un mélangeur automatique pour n'ouvrir que les micros utiles : moins de bruit, moins de filtrage en peigne et plus de gain avant larsen. Quand des participants sont à distance, il faut en plus un annuleur d'écho acoustique.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "automatic-mixer",
+        "acoustic-echo-cancellation",
+        "interpretation-system",
+        "gain-before-feedback"
+      ],
+      "equipment_ids": [
+        "shure-scm820"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://aiic.org/site/it/technicalstandards",
+          "publisher": "AIIC (Association internationale des interprètes de conférence)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
+          "publisher": "Taiden (fiche HCS-5100T, hébergée par le distributeur Euro-Trend)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Automixer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "automatic-mixer",
+      "name_fr": "Mélangeur automatique (automixeur)",
+      "name_en": "Automatic microphone mixer (automixer)",
+      "domain": "installation-conference",
+      "definition": "Appareil qui baisse automatiquement les micros qui ne sont pas utilisés, pour garder un nombre équivalent de micros ouverts faible quel que soit le nombre de micros installés.",
+      "explanation": "Chaque micro ouvert ajoute du bruit de salle, du filtrage en peigne et réduit le gain avant larsen. L'automixeur réduit le signal des micros inactifs. Historiquement, le Voice-Matic d'IRP (1978) atténuait la sortie générale de 3 dB à chaque doublement du nombre de micros ouverts (NOM). Il existe des approches par portes (gating) et l'approche par partage de gain de Dan Dugan. Beaucoup d'automixeurs offrent aussi une priorité (ducking) pour qu'un président ou un micro d'annonce passe devant. Exemple : le Shure SCM820, 8 voies, avec modes de gating IntelliMix, réduction de larsen DFR et option Dante.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "number-of-open-microphones",
+        "gain-sharing-automixing",
+        "gain-before-feedback",
+        "comb-filtering",
+        "conference-system"
+      ],
+      "equipment_ids": [
+        "shure-scm820"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Automixer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://content-files.shure.com/publications/specSheet/en/scm820-spec-sheet.pdf",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "gain-sharing-automixing",
+      "name_fr": "Mixage automatique par partage de gain (Dugan)",
+      "name_en": "Gain-sharing automixing (Dugan)",
+      "domain": "installation-conference",
+      "definition": "Méthode d'automixage inventée par Dan Dugan où la somme des gains de tous les micros reste égale à celle d'un seul micro à plein gain, répartie selon qui parle.",
+      "explanation": "Quand une personne parle, son micro monte rapidement et les autres descendent ; quand elle se tait, son micro redescend et les autres remontent, de sorte que la somme des gains égale un micro à plein gain. Si plusieurs personnes parlent, le gain se partage entre les micros actifs, sans variation d'ambiance ni montée de bruit ou de larsen. Le système ne limite ni ne compresse : il « passe le micro » comme un opérateur. Il compare les rapports de niveau entre voies, pas les niveaux absolus ; les réglages de poids (weight) fixent la sensibilité relative de chaque voie et ne sont pas des seuils de porte. On l'insère sur les points d'insertion de chaque voie micro de la console.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "automatic-mixer",
+        "number-of-open-microphones",
+        "insert-point"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dandugan.com/Assets/manuals/Model-E-1-and-E-1A-User-Guide-v3.3.pdf",
+          "publisher": "Dan Dugan Sound Design (Model E-1/E-1A User Guide v3.3, 2016)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Automixer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "acoustic-echo-cancellation",
+      "name_fr": "Annulation d'écho acoustique (AEC)",
+      "name_en": "Acoustic echo cancellation (AEC)",
+      "domain": "installation-conference",
+      "definition": "Traitement qui retire du signal des micros locaux la voix des participants distants reproduite par les haut-parleurs de la salle, pour qu'ils ne s'entendent pas en écho.",
+      "explanation": "L'AEC utilise un filtre adaptatif qui modélise le haut-parleur, le micro et la salle : il prend le signal distant (référence), le filtre et le retarde pour qu'il ressemble à ce que capte le micro, puis le soustrait. Comme la salle et les positions changent, le filtre s'adapte en permanence. Bose demande un AEC par micro, placé avant l'automixeur et avant la dynamique des micros ; les traitements non linéaires (compresseurs, variations de volume, distorsion, automixage) dans le trajet de l'écho gênent l'AEC, alors que gain fixe et égalisation passent bien. Q-SYS propose une suppression d'écho résiduel (RES) et une longueur de traîne (tail length, 200 ms par défaut) à augmenter dans les salles réverbérantes.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "aec-reference-signal",
+        "echo-return-loss-enhancement",
+        "hybrid-meeting-room",
+        "automatic-mixer"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "aec-reference-signal",
+      "name_fr": "Signal de référence de l'AEC",
+      "name_en": "AEC reference signal",
+      "domain": "installation-conference",
+      "definition": "Signal fourni à l'annuleur d'écho qui contient exactement ce que jouent les haut-parleurs de la salle (voix distantes et programme), pour qu'il sache quoi retirer des micros.",
+      "explanation": "Tout ce qui part vers les haut-parleurs doit aussi aller à la référence : toutes les sources distantes et le programme (vidéo, musique). Un signal absent de la référence n'est pas annulé : une intersection de matrice coupée entre un distant et la référence fait entendre l'écho à ce distant seulement, ce qui est difficile à repérer en local. À l'inverse, ne jamais mettre de micros de la salle dans la référence : cela donne un son « sous l'eau » chez les distants. Les réglages de volume de l'utilisateur se placent avant la référence ; si le trajet haut-parleur est compressé ou limité, on prend la référence après ce traitement, en mono. Une référence trop faible gêne la détection de double parole.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "acoustic-echo-cancellation",
+        "hybrid-meeting-room"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Best Practices: Signal Flow)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "hybrid-meeting-room",
+      "name_fr": "Salle de réunion hybride",
+      "name_en": "Hybrid meeting room",
+      "domain": "installation-conference",
+      "definition": "Salle où des participants présents (côté local, near-end) échangent avec des participants distants (far-end) via un système de visioconférence, avec micros et haut-parleurs installés.",
+      "explanation": "La chaîne typique : micros de table ou de plafond, puis AEC par micro, puis automixeur, puis envoi vers le codec ou le PC de visio ; le retour des distants part vers les haut-parleurs et vers la référence de l'AEC. Wikipedia cite justement les salles équipées de haut-parleurs au plafond et de micros sur la table comme source d'écho acoustique. Q-SYS recommande d'utiliser un AEC multicanal avec une seule référence partagée, et de désactiver l'AEC interne du codec quand le DSP s'en charge. Les problèmes se voient surtout chez les distants : ce sont eux qui entendent l'écho ou le son « sous l'eau ».",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "acoustic-echo-cancellation",
+        "aec-reference-signal",
+        "automatic-mixer",
+        "conference-system"
+      ],
+      "equipment_ids": [
+        "audinate-dante-virtual-soundcard"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une salle de réunion (TES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Best Practices: Signal Flow)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "echo-return-loss-enhancement",
+      "name_fr": "ERLE (atténuation d'écho apportée par l'annuleur)",
+      "name_en": "Echo return loss enhancement (ERLE)",
+      "domain": "installation-conference",
+      "definition": "Atténuation supplémentaire du signal d'écho apportée par l'annuleur d'écho, en dB.",
+      "explanation": "Wikipedia indique que la plupart des annuleurs atteignent 18 à 35 dB d'ERLE. L'atténuation totale de l'écho (ACOM) est la somme de l'ERL (atténuation naturelle entre haut-parleur et micro) et de l'ERLE. Un bon placement des micros et des haut-parleurs augmente l'ERL, ce qui laisse moins de travail à l'annuleur.",
+      "formulas": [
+        {
+          "expr": "ACOM = ERL + ERLE",
+          "vars": {
+            "ERL": "atténuation d'écho naturelle du trajet (dB)",
+            "ERLE": "atténuation ajoutée par l'annuleur (dB)",
+            "ACOM": "atténuation totale de l'écho (dB)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation"
+        }
+      ],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "acoustic-echo-cancellation"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "interpretation-system",
+      "name_fr": "Système d'interprétation simultanée",
+      "name_en": "Simultaneous interpretation system",
+      "domain": "installation-conference",
+      "definition": "Chaîne qui amène la voix de l'orateur aux interprètes en cabine et distribue leurs traductions aux auditeurs sur des canaux de langue séparés.",
+      "explanation": "Le principe : le micro de l'orateur part vers l'interprète, en cabine insonorisée, qui écoute au casque et traduit en direct dans son propre micro ; la traduction est envoyée sans fil aux casques des auditeurs. L'ISO 20109 (Simultaneous interpreting – Equipment – Requirements ; édition 2016 remplacée par l'édition 2025) fixe les exigences pour les équipements nécessaires, y compris la qualité du son et de l'image transmis aux interprètes et des interprètes vers le public. L'ISO 20108:2017 traite de la qualité et de la transmission du son et de l'image d'entrée vers les interprètes. La distribution aux auditeurs se fait souvent par infrarouge (IEC 61603-7).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "interpretation-booth",
+        "infrared-language-distribution",
+        "conference-system"
+      ],
+      "equipment_ids": [
+        "sennheiser-hmd-26"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Simultaneous_interpretation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://connect.snv.ch/en/iso-20109",
+          "publisher": "SNV (Swiss Association for Standardization), ISO 20109",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://aiic.org/site/it/technicalstandards",
+          "publisher": "AIIC (Association internationale des interprètes de conférence)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
+          "publisher": "Taiden (fiche HCS-5100T, hébergée par le distributeur Euro-Trend)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (édition ISO 20109)",
+          "values": [
+            {
+              "value": "ISO 20109:2016",
+              "source_url": "https://aiic.org/site/it/technicalstandards"
+            },
+            {
+              "value": "ISO 20109:2025 (édition 2, en vigueur ; 2016 = version précédente)",
+              "source_url": "https://connect.snv.ch/en/iso-20109"
+            }
+          ],
+          "note": "La liste AIIC semble antérieure à la révision de 2025."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "interpretation-booth",
+      "name_fr": "Cabine d'interprétation",
+      "name_en": "Interpreting booth",
+      "domain": "installation-conference",
+      "definition": "Local insonorisé, fixe ou mobile, où travaillent les interprètes simultanés avec vue sur la salle.",
+      "explanation": "Depuis janvier 2024, l'ISO 17651-1 traite des cabines permanentes (elle remplace l'ISO 2603:2016) et l'ISO 17651-2 des cabines mobiles, démontables et transportables (elle remplace l'ISO 4043:2016) ; les deux s'utilisent avec l'ISO 20109 pour l'équipement. Une partie 3, en préparation, vise les cabines sans vue directe sur la salle. Wikipedia distingue les cabines de table, ouvertes à l'arrière et non totalement insonorisées, des cabines complètes avec murs, plancher, plafond, porte et ventilation propre, qui accueillent généralement deux interprètes (jusqu'à quatre pour les grandes). Il faut une vue dégagée sur l'orateur et les présentations, une ventilation silencieuse et une bonne isolation.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "interpretation-system",
+        "infrared-language-distribution"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765112024/simultaneous-interpreting-interpreters-working-environment-part-1-requireme/xs142910/356423",
+          "publisher": "AFNOR Boutique (ISO 17651-1:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765122024/simultaneous-interpreting-interpreters-working-environment-part-2-requireme/xs142896/356424",
+          "publisher": "AFNOR Boutique (ISO 17651-2:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Simultaneous_interpretation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://aiic.org/site/it/technicalstandards",
+          "publisher": "AIIC (Association internationale des interprètes de conférence)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (normes de cabines en vigueur)",
+          "values": [
+            {
+              "value": "ISO 2603:2016 et ISO 4043:2016 listées comme normes de référence",
+              "source_url": "https://aiic.org/site/it/technicalstandards"
+            },
+            {
+              "value": "ISO 2603:2016 et ISO 4043:2016 annulées, remplacées par ISO 17651-1 et -2:2024",
+              "source_url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765112024/simultaneous-interpreting-interpreters-working-environment-part-1-requireme/xs142910/356423"
+            }
+          ],
+          "note": "La page AIIC n'est pas à jour ; AFNOR indique les normes de 2024."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "infrared-language-distribution",
+      "name_fr": "Distribution de langues par infrarouge",
+      "name_en": "Infrared language distribution",
+      "domain": "installation-conference",
+      "definition": "Transmission des canaux de langue (salle et interprétations) vers les récepteurs des auditeurs par rayonnement infrarouge modulé, selon l'IEC 61603-7 pour les systèmes numériques.",
+      "explanation": "Un émetteur central génère des porteuses envoyées par câble coaxial (BNC, 75 Ω) vers des radiateurs IR répartis dans la salle. La fiche Taiden HCS-5100T décrit une modulation DQPSK selon l'IEC 61603-7, des porteuses 0 à 5 entre 2 et 6 MHz et des porteuses 6 et 7 jusqu'à 8 MHz, jusqu'à 32 canaux audio, jusqu'à 30 radiateurs en chaîne par sortie, et une compensation de retard pour les différences de longueur de câble. Le modèle 15 W de cette gamme annonce ±22° de demi-angle et 30 m de portée maximale. Tout appareil conforme à l'IEC 61603-7 est annoncé compatible entre marques.",
+      "formulas": [],
+      "units": [
+        "MHz",
+        "W",
+        "m"
+      ],
+      "related_concepts": [
+        "interpretation-system",
+        "interpretation-booth"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
+          "publisher": "Taiden (fiche HCS-5100T, hébergée par le distributeur Euro-Trend)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "hearing-loop",
+      "name_fr": "Boucle magnétique (boucle d'induction)",
+      "name_en": "Hearing loop (audio induction loop)",
+      "domain": "installation-conference",
+      "definition": "Câble posé autour d'une zone et parcouru par le courant audio, qui crée un champ magnétique capté par la bobine (telecoil) des aides auditives et implants.",
+      "explanation": "La boucle transporte le signal audio en bande de base, sans porteuse. L'IEC 60118-4:2014 (avec l'amendement 1 de 2017) fixe les exigences de champ magnétique pour un rapport signal/bruit suffisant sans saturer l'aide auditive, et une réponse en fréquence minimale pour l'intelligibilité ; l'ampli de boucle relève d'une autre norme (IEC 62489-1). Ampetronic résume les essais de mise en service : 400 mA/m à 1 kHz à ±3 dB sur toute la zone, 100 Hz et 5 kHz à ±3 dB du niveau à 1 kHz, bruit magnétique de fond de −32 dB (pondéré A) ou mieux. Les amplis de boucle travaillent souvent en mode courant pour compenser l'inductance du câble, avec un contrôle automatique de niveau. Les structures métalliques réduisent le champ et surtout les aigus.",
+      "formulas": [],
+      "units": [
+        "mA/m",
+        "dB"
+      ],
+      "related_concepts": [
+        "telecoil",
+        "metal-loss-compensation",
+        "speech-intelligibility"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_induction_loop",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://webstore.iec.ch/publication/798",
+          "publisher": "IEC Webstore (IEC 60118-4:2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (niveau de champ de référence)",
+          "values": [
+            {
+              "value": "intensité de champ moyenne de 100 mA/m comme base des normes de performance",
+              "source_url": "https://en.wikipedia.org/wiki/Audio_induction_loop"
+            },
+            {
+              "value": "400 mA/m sinus à 1 kHz, ±3 dB",
+              "source_url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/"
+            }
+          ],
+          "note": "Les deux chiffres décrivent probablement des grandeurs différentes (moyenne long terme de la parole vs référence sinusoïdale) ; à confirmer dans le texte de l'IEC 60118-4, non consulté."
+        },
+        {
+          "field": "explanation (édition de l'IEC 60118-4)",
+          "values": [
+            {
+              "value": "IEC 60118-4:2014 + AMD1:2017 (remplace l'édition 2006)",
+              "source_url": "https://webstore.iec.ch/publication/798"
+            },
+            {
+              "value": "IEC 60118-4:2006 citée dans le manuel W5-2",
+              "source_url": "https://docs.ampetronic.com/W5-2%20Handbook/"
+            }
+          ],
+          "note": "Le manuel constructeur cite l'édition antérieure."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "telecoil",
+      "name_fr": "Bobine T (telecoil)",
+      "name_en": "Telecoil (T-coil)",
+      "domain": "installation-conference",
+      "definition": "Petite bobine d'induction intégrée à une aide auditive ou un processeur d'implant cochléaire, qui capte le champ magnétique d'une boucle.",
+      "explanation": "Le nom vient des premières bobines utilisées pour capter le champ des combinés téléphoniques. L'utilisateur active la position « T » de son appareil pour écouter la boucle : il reçoit le son de la sonorisation sans la réverbération ni le bruit de la salle. Le pictogramme international représente une oreille stylisée et la lettre T ; Ampetronic recommande de l'afficher à chaque entrée de la zone équipée.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "hearing-loop"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_induction_loop",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "metal-loss-compensation",
+      "name_fr": "Correction des pertes métalliques",
+      "name_en": "Metal loss compensation",
+      "domain": "installation-conference",
+      "definition": "Réglage de l'ampli de boucle qui compense l'atténuation, surtout dans les aigus, causée par les structures métalliques du bâtiment.",
+      "explanation": "L'acier des structures absorbe une partie du champ de façon inégale selon la fréquence, ce qui déforme la réponse. Les remèdes cités : boucles déphasées entre elles, correction en fréquence et augmentation du courant. Sur l'ampli Ampetronic W5-2, le filtre MLC garde le gain à 1 kHz constant et règle une pente de 0 à +3 dB/octave : on tourne le réglage jusqu'à ce que 5 kHz soit au niveau, en gardant 100 Hz pas plus bas que −3 dB.",
+      "formulas": [],
+      "units": [
+        "dB/octave"
+      ],
+      "related_concepts": [
+        "hearing-loop"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Sonorisation fixe / installation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_induction_loop",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+          "publisher": "Ampetronic (W5-2 Handbook)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Seuils réglementaires d'intelligibilité pour l'alarme vocale (EN 54-16/24, NF S 61-936, valeur 0,50 STI)",
+      "searched": "Wikipedia STI, NTi STI page (cite CEN/TS 54-32:2015 et ISO 7240-19:2007 comme normes de rapport, sans seuil) ; recherche web non effectuée (budget)"
+    },
+    {
+      "what": "Formule V²/P de l'impédance d'une ligne 100 V",
+      "searched": "Wikipedia Constant-voltage speaker system (pas de formule), manuel Origin, page AVSL"
+    },
+    {
+      "what": "Fonctionnement des postes délégués (demande de parole, priorité président, nombre max de micros ouverts)",
+      "searched": "Shure MXCW et SCM820 user guides (pages rendues en JavaScript, vides), sites Bosch/Keenfinity (404)"
+    },
+    {
+      "what": "Ponts USB/Dante pour salles hybrides (Dante AVIO USB, Shure ANIUSB)",
+      "searched": "getdante.com product pages (404)"
+    },
+    {
+      "what": "Plages de fréquences de l'IEC 61603-7 dans le texte de la norme",
+      "searched": "scc-ccn.ca (403) ; seule la fiche Taiden a été lue"
+    }
+  ]
+}

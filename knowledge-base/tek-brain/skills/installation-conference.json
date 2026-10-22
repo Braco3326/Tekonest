@@ -1,0 +1,193 @@
+{
+  "entity": "skill",
+  "domain": "installation-conference",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "design-100v-distributed-system",
+      "name_fr": "Concevoir et câbler une diffusion répartie 100 V",
+      "name_en": "Design and wire a 100 V distributed system",
+      "domain": "installation-conference",
+      "description": "Choisir les prises des haut-parleurs, faire le bilan de puissance de chaque ligne et câbler en parallèle sans erreur de position de transformateur.",
+      "level": "bts",
+      "concept_ids": [
+        "distributed-sound-100v",
+        "transformer-tap",
+        "amplifier-power-budget-100v"
+      ],
+      "procedure_ids": [
+        "tap-100v-line-system"
+      ],
+      "success_criteria": [
+        "Le bilan écrit montre une somme des prises inférieure ou égale à 80 % (ou à la marge du fabricant de l'ampli) de la puissance 100 V de chaque canal",
+        "Aucun haut-parleur n'est réglé sur la position 8 Ω (bypass) sur une ligne 100 V",
+        "Les atténuateurs déportés sont comptés à pleine puissance dans le bilan"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Sonorisation fixe, installation (TES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://avsl.com/support/100v-line-speakers",
+          "publisher": "AVSL Group (distributeur)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "run-hybrid-conference-audio",
+      "name_fr": "Exploiter le son d'une conférence avec participants distants",
+      "name_en": "Run hybrid conference audio",
+      "domain": "installation-conference",
+      "description": "Mettre en place automixage et annulation d'écho pour qu'intervenants locaux, public et participants distants s'entendent sans écho ni pompage.",
+      "level": "bts",
+      "concept_ids": [
+        "automatic-mixer",
+        "gain-sharing-automixing",
+        "acoustic-echo-cancellation",
+        "aec-reference-signal",
+        "hybrid-meeting-room"
+      ],
+      "procedure_ids": [
+        "setup-conference-four-speakers-streaming",
+        "configure-automixer-gain-sharing",
+        "configure-aec-hybrid-room"
+      ],
+      "success_criteria": [
+        "Au repos (personne ne parle), les indicateurs de gain d'automix de toutes les voies sont équilibrés",
+        "Le rapport référence/micro (RMLR) de chaque voie AEC est proche de 0 dB",
+        "Les participants distants confirment ne pas entendre d'écho de leur voix ni de son « sous l'eau »",
+        "Aucun micro de la salle n'est routé vers la référence de l'AEC"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre conférence / visioconférence (TES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dandugan.com/Assets/manuals/Model-E-1-and-E-1A-User-Guide-v3.3.pdf",
+          "publisher": "Dan Dugan Sound Design (Model E-1/E-1A User Guide v3.3, 2016)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Best Practices: Signal Flow)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "verify-accessibility-and-interpretation",
+      "name_fr": "Vérifier boucle magnétique et interprétation",
+      "name_en": "Verify hearing loop and interpretation systems",
+      "domain": "installation-conference",
+      "description": "Mettre en service une boucle magnétique selon l'IEC 60118-4 et contrôler la chaîne d'interprétation (cabine, canaux, distribution IR).",
+      "level": "pro",
+      "concept_ids": [
+        "hearing-loop",
+        "metal-loss-compensation",
+        "interpretation-system",
+        "interpretation-booth",
+        "infrared-language-distribution"
+      ],
+      "procedure_ids": [
+        "commission-hearing-loop",
+        "check-interpretation-booth"
+      ],
+      "success_criteria": [
+        "Champ mesuré à 0 dB ±3 dB re 400 mA/m (sinus 1 kHz) à toutes les places prévues",
+        "100 Hz et 5 kHz à ±3 dB du niveau à 1 kHz",
+        "Bruit magnétique de fond de −32 dB(A) ou mieux",
+        "Chaque canal de langue est reçu sans coupure sur un récepteur IR en tout point de la salle"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Installation, accessibilité (TES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+          "publisher": "Ampetronic (W5-2 Handbook)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
+          "publisher": "Taiden (fiche HCS-5100T, hébergée par le distributeur Euro-Trend)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": []
+}
