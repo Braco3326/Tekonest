@@ -1,6 +1,6 @@
 # Catalogue 3D (TekPractice)
 
-Généré par `tools/merge_3d.py` : 966 candidats, dont **44 fichiers .glb redistribuables commités** (CC0 / CC-BY, crédits dans `3d-models/CREDITS.md`). Tous les autres sont des liens seulement.
+Généré par `tools/merge_3d.py` : 983 candidats, dont **64 fichiers .glb redistribuables commités** (CC0 / CC-BY, crédits dans `3d-models/CREDITS.md`). Tous les autres sont des liens seulement.
 
 ⚠️ Les licences Sketchfab des agents du run 2 viennent de l'API de recherche (l'API par modèle était limitée en débit) : à revérifier sur la page du modèle avant tout téléchargement.
 
@@ -56,7 +56,7 @@ Généré par `tools/merge_3d.py` : 966 candidats, dont **44 fichiers .glb redis
 | [Woman wearing headset](https://poly.pizza/m/Qy6esq7e1z) | Poly Pizza | CC0 1.0 | unknown | yes | — |
 | [Wooden Mannequin](https://sketchfab.com/3d-models/wooden-mannequin-2cbc5ee62b144c13a3daa74b833640b3) | Sketchfab | CC Attribution | False | yes | — |
 
-## device (211)
+## device (217)
 
 | Modèle | Source | Licence | Logos | TekPractice | Fichier |
 |---|---|---|---|---|---|
@@ -67,8 +67,17 @@ Généré par `tools/merge_3d.py` : 966 candidats, dont **44 fichiers .glb redis
 | [Guitar Amp](https://sketchfab.com/3d-models/29d45cf5c404465e839c730393f9732a) | Objaverse 1.0 (allenai/objaverse) -> Sketchfab | CC Attribution (Sketchfab API /v3/models/29d45cf5c404465e839c730393f9732a, checked 2026-10-22) | False | with work | 3d-models/objv-battery-guitar-amp-camilote.glb |
 | [Guitar Amp](https://sketchfab.com/3d-models/a24bb621d3cd4ec8890b8e8dca9f2c15) | Objaverse 1.0 (allenai/objaverse) -> Sketchfab | CC Attribution (Sketchfab API /v3/models/a24bb621d3cd4ec8890b8e8dca9f2c15, checked 2026-10-22) | False | yes | 3d-models/objv-guitar-amp-futaba.glb |
 | [Keyboard](https://poly.pizza/m/fP_S-_T1BOZ) | Poly Pizza | CC-BY 3.0 | False | yes | 3d-models/pp-stage-keyboard.glb |
+| [Metal Office Desk](https://polyhaven.com/a/metal_office_desk) | Poly Haven | CC0 | no | yes | 3d-models/polyhaven-metal-office-desk.glb |
 | [Monitor Speaker](https://sketchfab.com/3d-models/a8dd30124e9d4c32a77fc5c4b8c689bd) | Objaverse 1.0 (allenai/objaverse) -> Sketchfab | CC Attribution (Sketchfab API /v3/models/a8dd30124e9d4c32a77fc5c4b8c689bd, checked 2026-10-22) | unknown - tiny yellow badge + rating label on the texture, trivially removable by painting the texture region | yes | 3d-models/objv-stage-monitor-wedge-saandy.glb |
+| [Mounted Fluorescent Lights](https://polyhaven.com/a/mounted_fluorescent_lights) | Poly Haven | CC0 | no | yes | 3d-models/polyhaven-mounted-fluorescent-lights.glb |
 | [Piano](https://poly.pizza/m/7U-93vxPOER) | Poly Pizza | CC-BY 3.0 | False | yes | 3d-models/pp-grand-piano.glb |
+| [polypizza bass speakers](https://poly.pizza/m/c60iEzqbEw) | Poly Pizza | CC-BY 3.0 | False | yes | 3d-models/polypizza-bass-speakers.glb |
+| [polypizza guitar amp](https://poly.pizza/m/3FiWjHDj0Zf) | Poly Pizza | CC-BY 3.0 | False | yes | 3d-models/polypizza-guitar-amp.glb |
+| [polypizza mic](https://poly.pizza/m/yqbacXdPsg) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/polypizza-mic.glb |
+| [polypizza microphone lowpoly](https://poly.pizza/m/bD-LseANe2b) | Poly Pizza | CC-BY 3.0 | False | yes | 3d-models/polypizza-microphone-lowpoly.glb |
+| [polypizza mixing desk](https://poly.pizza/m/4GCowIjU9CG) | Poly Pizza | CC-BY 3.0 | False | yes | 3d-models/polypizza-mixing-desk.glb |
+| [polypizza speaker](https://poly.pizza/m/zOQOThSpuo) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/polypizza-speaker.glb |
+| [Rolling Music Speaker Stand](https://poly.pizza/m/2QYyKRb68QD) | Poly Pizza | Creative Commons Attribution | no | yes | 3d-models/polypizza-rolling-speaker-stand.glb |
 | [Sound system](https://sketchfab.com/3d-models/725273fbdde54a1babaf6ce1c95b96b4) | Objaverse 1.0 (allenai/objaverse) -> Sketchfab | CC Attribution (Sketchfab API /v3/models/725273fbdde54a1babaf6ce1c95b96b4, checked 2026-10-22) | False | with work | 3d-models/objv-hifi-sound-system.glb |
 | [Speaker](https://sketchfab.com/3d-models/071be99aeb3044efa1d098f9c92a3449) | Objaverse 1.0 (allenai/objaverse) -> Sketchfab | CC Attribution (Sketchfab API /v3/models/071be99aeb3044efa1d098f9c92a3449, checked 2026-10-22) | False | with work | 3d-models/objv-speaker-cabinet-rusov.glb |
 | [Stereo Speakers](https://sketchfab.com/3d-models/f7d5399fef1744b28a503f59437db29d) | Objaverse 1.0 (allenai/objaverse) -> Sketchfab | CC Attribution (Sketchfab API /v3/models/f7d5399fef1744b28a503f59437db29d, checked 2026-10-22) | False | with work | 3d-models/objv-home-stereo-speakers.glb |
@@ -171,7 +180,6 @@ Généré par `tools/merge_3d.py` : 966 candidats, dont **44 fichiers .glb redis
 | [Marshall Guitar Amp](https://sketchfab.com/3d-models/cd52e1b5299a40968f44c209899b4597) | Objaverse 1.0 (allenai/objaverse) -> Sketchfab | CC Attribution (Sketchfab API /v3/models/cd52e1b5299a40968f44c209899b4597, checked 2026-10-22) | True | with work | — |
 | [Marshall Guitar Amp](https://sketchfab.com/3d-models/marshall-guitar-amp-cd52e1b5299a40968f44c209899b4597) | Sketchfab | CC Attribution | True | with work | — |
 | [Megaphone 01](https://polyhaven.com/a/Megaphone_01) | Poly Haven | CC0 | no | yes | — |
-| [Metal Office Desk](https://polyhaven.com/a/metal_office_desk) | Poly Haven | CC0 | no | yes | — |
 | [Meyer Sound LINA 3D AutoCAD (+ BIM via BIMobject)](https://docs.meyersound.com/products/en/lina.html) | Manufacturer CAD/BIM portal (Meyer Sound) | meyersound.com/legal: "This web site and its contents are for personal, informational and internal use only." Redistribution, licensing, sale or derivative works only "Unless written consent is first obtained from Meyer Sound." "You may not modify or alter the content of this web site in any way." BIM files: "The files below require a free bimobject.com account to download". | True | no | — |
 | [Meyer Sound LINA on BIMobject](https://www.bimobject.com/en/meyersound/product/meyersound-lina) | Manufacturer CAD/BIM portal (Meyer Sound (via BIMobject)) | BIMobject terms page could not be read (HTTP 403 to scripted fetch); download requires a free BIMobject account. Treated as unclear licence = no redistribution. meyersound.com/legal: "This web site and its contents are for personal, informational and internal use only." Redistribution, licensing, sale or derivative works only "Unless written consent is first obtained from Meyer Sound." "You may not modify or alter the content of this web site in any way." BIM files: "The files below require a free bimobject.com account to download". | True | no | — |
 | [Microphone Stand](https://sketchfab.com/3d-models/microphone-stand-16cfa90113ee43f4812d062d37d26462) | Sketchfab | CC Attribution | no | yes | — |
@@ -184,7 +192,6 @@ Généré par `tools/merge_3d.py` : 966 candidats, dont **44 fichiers .glb redis
 | [MONITOR FLOOR PANGGUNG](https://sketchfab.com/3d-models/monitor-floor-panggung-1ad96e8ec20c4da78e998228b77849be) | Sketchfab | CC Attribution | unknown | yes | — |
 | [Monitor Speaker](https://sketchfab.com/3d-models/monitor-speaker-a8dd30124e9d4c32a77fc5c4b8c689bd) | Sketchfab | CC Attribution | unknown | yes | — |
 | [MOTU M2 Audio Interface](https://sketchfab.com/3d-models/motu-m2-audio-interface-54f8df4246b24c7a9fec2a364b09321e) | Sketchfab | CC Attribution | unknown | with work | — |
-| [Mounted Fluorescent Lights](https://polyhaven.com/a/mounted_fluorescent_lights) | Poly Haven | CC0 | no | yes | — |
 | [New-active-wedge-monitor-speakers-v1-4](https://sketchfab.com/3d-models/new-active-wedge-monitor-speakers-v1-4-0bafd7fad28741739c8017281cc74a01) | Sketchfab | CC Attribution | unknown | yes | — |
 | [NEXO 45°N 12 Monitor 3D CAD Drawings](https://www.nexo-sa.com/systems/45n_monitor/docs-downloads/) | Manufacturer CAD/BIM portal (NEXO) | nexo-sa.com Terms & Conditions s.3: "We grant to you a non-exclusive, non-transferable, limited license only to use the Website"; s.7.b prohibits to "sublicense, share, resell, reproduce, copy, distribute, redistribute, or exploit for any commercial purposes"; s.8.c forbids to "copy, modify, ... sell, assign, sublicense" and "distribute, create a derivative work of" Our Content. | True | no | — |
 | [NEXO GEO M10 3D CAD Drawings](https://www.nexo-sa.com/systems/geo-m/docs-downloads/) | Manufacturer CAD/BIM portal (NEXO) | nexo-sa.com Terms & Conditions s.3: "We grant to you a non-exclusive, non-transferable, limited license only to use the Website"; s.7.b prohibits to "sublicense, share, resell, reproduce, copy, distribute, redistribute, or exploit for any commercial purposes"; s.8.c forbids to "copy, modify, ... sell, assign, sublicense" and "distribute, create a derivative work of" Our Content. | True | no | — |
@@ -212,7 +219,6 @@ Généré par `tools/merge_3d.py` : 966 candidats, dont **44 fichiers .glb redis
 | [Retro Multimeter](https://polyhaven.com/a/retro_multimeter) | Poly Haven | CC0 | False | yes | — |
 | [Rode NT1-A + Arm](https://sketchfab.com/3d-models/rode-nt1-a-arm-7f60562716c64d149021bf05473e7812) | Sketchfab | CC Attribution | unknown | with work | — |
 | [Rodec Mixetta - mixing console](https://sketchfab.com/3d-models/rodec-mixetta-mixing-console-a848812574b141d7bb2b6af2e9bdb5ee) | Sketchfab | CC Attribution-NonCommercial | unknown | no | — |
-| [Rolling Music Speaker Stand](https://poly.pizza/m/2QYyKRb68QD) | Poly Pizza | Creative Commons Attribution | no | yes | — |
 | [Saxophone](https://poly.pizza/m/6A2UAKdCNy7) | Poly Pizza | CC-BY 3.0 | unknown | yes | — |
 | [SENNHEISER ADN D1 délégué](https://sketchfab.com/3d-models/ede24e6264df47078fb625e3073b7db4) | Objaverse 1.0 (allenai/objaverse) -> Sketchfab | CC Attribution (Sketchfab API /v3/models/ede24e6264df47078fb625e3073b7db4, checked 2026-10-22) | True | with work | — |
 | [Sennheiser HD 280](https://sketchfab.com/3d-models/sennheiser-hd-280-11d7fc895b3d43cd943cb1a5f3a758a0) | Sketchfab | CC Attribution-NoDerivs | unknown | no | — |
@@ -365,7 +371,7 @@ Généré par `tools/merge_3d.py` : 966 candidats, dont **44 fichiers .glb redis
 | [Wood Floor 062](https://ambientcg.com/view?id=WoodFloor062) | ambientCG | CC0 (page: "All assets are released under the Creative Commons CC0 license") | False | yes | — |
 | [Wood Floor 070](https://ambientcg.com/view?id=WoodFloor070) | ambientCG | CC0 (page: "All assets are released under the Creative Commons CC0 license") | False | yes | — |
 
-## prop (454)
+## prop (465)
 
 | Modèle | Source | Licence | Logos | TekPractice | Fichier |
 |---|---|---|---|---|---|
@@ -387,6 +393,17 @@ Généré par `tools/merge_3d.py` : 966 candidats, dont **44 fichiers .glb redis
 | [Pallet](https://poly.pizza/m/cUAsYHDqfD) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/pp-quaternius-pallet.glb |
 | [patent model, Page induction coil, US #76654](https://n2t.net/ark:/65665/ng49ca746b1-fe41-704b-e053-15f76fa0b4fa) | Smithsonian Open Access 3D | CC0 (Smithsonian Open Access; 3D media usage.access = "CC0" in the object record) | False | with work | 3d-models/si-page-induction-coil.glb |
 | [Plastic Crate 02](https://polyhaven.com/a/plastic_crate_02) | Poly Haven | CC0 | False | yes | 3d-models/ph-plastic-crate-02.glb |
+| [polyhaven desk lamp arm](https://polyhaven.com/a/desk_lamp_arm_01) | Poly Haven | CC0 | False | yes | 3d-models/polyhaven-desk-lamp-arm.glb |
+| [polyhaven metal stool](https://polyhaven.com/a/metal_stool_01) | Poly Haven | CC0 | False | yes | 3d-models/polyhaven-metal-stool.glb |
+| [polyhaven modern arm chair](https://polyhaven.com/a/modern_arm_chair_01) | Poly Haven | CC0 | False | yes | 3d-models/polyhaven-modern-arm-chair.glb |
+| [polyhaven worn metal rack](https://polyhaven.com/a/worn_metal_rack) | Poly Haven | CC0 | False | yes | 3d-models/polyhaven-worn-metal-rack.glb |
+| [polypizza cable long](https://poly.pizza/m/WNfAG8VSD5) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/polypizza-cable-long.glb |
+| [polypizza headphones](https://poly.pizza/m/PSsWSIAYIL) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/polypizza-headphones.glb |
+| [polypizza laptop](https://poly.pizza/m/GnbwSUiVty) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/polypizza-laptop.glb |
+| [polypizza motorised spotlight](https://poly.pizza/m/BLq0yBWHce) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/polypizza-motorised-spotlight.glb |
+| [polypizza radio](https://poly.pizza/m/ShNRjTDU3i) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/polypizza-radio.glb |
+| [polypizza stage](https://poly.pizza/m/dGRAisemWy) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/polypizza-stage.glb |
+| [polypizza theater spotlight](https://poly.pizza/m/Thhuwj9HCg) | Poly Pizza | CC0 1.0 | False | yes | 3d-models/polypizza-theater-spotlight.glb |
 | [Potted Plant 04](https://polyhaven.com/a/potted_plant_04) | Poly Haven | CC0 | False | yes | 3d-models/ph-potted-plant-04.glb |
 | [School Chair 01](https://polyhaven.com/a/SchoolChair_01) | Poly Haven | CC0 | False | yes | 3d-models/ph-school-chair-01.glb |
 | [School Desk 01](https://polyhaven.com/a/SchoolDesk_01) | Poly Haven | CC0 | False | yes | 3d-models/ph-school-desk-01.glb |

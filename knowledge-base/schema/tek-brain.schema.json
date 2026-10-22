@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-base/schema/tek-brain.schema.json",
+  "title": "TEK Brain entity file (knowledge-base/tek-brain/<entity>/<domain>.json)",
+  "description": "Contract for TEK Brain records (DESIGN.md §5–§6). tools/validate_tekbrain.py enforces it plus cross-references (concept/procedure/rule/room/equipment/signal/connector ids) and uniqueness of ids per entity type.",
+  "type": "object",
+  "required": ["entity", "domain", "generated", "items"],
+  "properties": {
+    "entity": { "enum": ["concept", "skill", "procedure", "rule", "fault", "scenario", "glossary"] },
+    "domain": { "type": "string", "description": "A domains.json id; must equal the file name" },
+    "generated": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "items": { "type": "array" },
+    "not_found_log": { "type": "array", "items": { "type": "object", "properties": { "what": { "type": "string" }, "searched": { "type": "string" } } } }
+  },
+  "allOf": [
+    { "if": { "properties": { "entity": { "const": "concept" } } }, "then": { "properties": { "items": { "items": { "$ref": "#/$defs/concept" } } } } },
+    { "if": { "properties": { "entity": { "const": "skill" } } }, "then": { "properties": { "items": { "items": { "$ref": "#/$defs/skill" } } } } },
+    { "if": { "properties": { "entity": { "const": "procedure" } } }, "then": { "properties": { "items": { "items": { "$ref": "#/$defs/procedure" } } } } },
+    { "if": { "properties": { "entity": { "const": "rule" } } }, "then": { "properties": { "items": { "items": { "$ref": "#/$defs/rule" } } } } },
+    { "if": { "properties": { "entity": { "const": "fault" } } }, "then": { "properties": { "items": { "items": { "$ref": "#/$defs/fault" } } } } },
+    { "if": { "properties": { "entity": { "const": "scenario" } } }, "then": { "properties": { "items": { "items": { "$ref": "#/$defs/scenario" } } } } },
+    { "if": { "properties": { "entity": { "const": "glossary" } } }, "then": { "properties": { "items": { "items": { "$ref": "#/$defs/glossary" } } } } }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "ids": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+    "review": { "enum": ["needs-oscar-review", "ok"] },
+    "source": {
+      "type": "object",
+      "required": ["url", "publisher", "accessed", "confidence", "covers"],
+      "properties": {
+        "url": { "type": "string", "pattern": "^https?://\\S+$" },
+        "publisher": { "type": "string" },
+        "accessed": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "confidence": { "enum": ["verified-primary", "verified-secondary", "unverified"] },
+        "kind": { "enum": ["manufacturer", "standard", "education-official", "university", "trade-press", "retailer", "textbook", "forum", "regulator", "other"] },
+        "covers": { "type": "array", "items": { "type": "string" }, "description": "Field names (or field[index]) this source supports" },
+        "url_status": { "type": "string", "description": "Written by tools/check_urls.py" }
+      }
+    },
+    "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
+    "conflicts": {
+      "type": "array",
+      "items": { "type": "object", "properties": { "field": { "type": "string" }, "values": { "type": "array" }, "note": { "type": "string" } } }
+    },
+    "bts_mapping": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["epreuve", "bloc", "verified"],
+        "properties": {
+          "epreuve": { "enum": ["E1", "E2", "E3", "E4", "E51", "E52", "E6"] },
+          "bloc": { "enum": ["BC01", "BC02", "BC03", "BC04", null] },
+          "note": { "type": "string" },
+          "verified": { "type": "boolean" }
+        }
+      }
+    },
+    "concept": {
+      "type": "object",
+      "required": ["id", "name_fr", "name_en", "domain", "definition", "explanation", "formulas", "units", "related_concepts", "equipment_ids", "bts_mapping", "difficulty", "sources", "conflicts", "review"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "formulas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["expr", "source_url"],
+            "properties": { "expr": { "type": "string" }, "vars": { "type": "object" }, "source_url": { "type": "string", "description": "Must equal one of the record's sources[].url" } }
+          }
+        },
+        "related_concepts": { "$ref": "#/$defs/ids" },
+        "equipment_ids": { "type": "array", "items": { "type": "string" } },
+        "bts_mapping": { "$ref": "#/$defs/bts_mapping" },
+        "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "sources": { "$ref": "#/$defs/sources" },
+        "conflicts": { "$ref": "#/$defs/conflicts" },
+        "review": { "$ref": "#/$defs/review" }
+      }
+    },
+    "skill": {
+      "type": "object",
+      "required": ["id", "name_fr", "name_en", "domain", "description", "level", "concept_ids", "procedure_ids", "success_criteria", "bts_mapping", "sources", "review"],
+      "properties": {
+        "level": { "enum": ["beginner", "bts", "pro"] },
+        "success_criteria": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "sources": { "$ref": "#/$defs/sources" },
+        "review": { "$ref": "#/$defs/review" }
+      }
+    },
+    "procedure": {
+      "type": "object",
+      "required": ["id", "name_fr", "name_en", "domain", "context", "duration_min", "equipment_ids", "concept_ids", "rule_ids", "steps", "safety_notes", "sources", "conflicts", "review"],
+      "properties": {
+        "duration_min": { "type": ["number", "null"] },
+        "steps": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["n", "preconditions", "action", "expected_result", "typical_mistakes"],
+            "properties": { "n": { "type": "integer" }, "preconditions": { "type": "array" }, "action": { "type": "string" }, "expected_result": { "type": "string" }, "typical_mistakes": { "type": "array" } }
+          }
+        },
+        "sources": { "$ref": "#/$defs/sources" },
+        "review": { "$ref": "#/$defs/review" }
+      }
+    },
+    "condition": {
+      "description": "Rule condition DSL (DESIGN.md §6). Leaf: {path, op, value}. `value` may be {\"ref\": \"<path>\"} to compare two fields (e.g. dst.port.signal vs src.port.signal).",
+      "oneOf": [
+        { "type": "object", "required": ["all"], "properties": { "all": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/condition" } } } },
+        { "type": "object", "required": ["any"], "properties": { "any": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/condition" } } } },
+        { "type": "object", "required": ["not"], "properties": { "not": { "$ref": "#/$defs/condition" } } },
+        {
+          "type": "object",
+          "required": ["path", "op"],
+          "properties": {
+            "path": { "type": "string", "pattern": "^(src|dst|device|graph|room|session)\\." },
+            "op": { "enum": ["eq", "ne", "in", "not_in", "includes", "excludes", "gt", "gte", "lt", "lte", "exists"] },
+            "value": {}
+          }
+        }
+      ]
+    },
+    "rule": {
+      "type": "object",
+      "required": ["id", "name_fr", "name_en", "domain", "catalog_rule", "status", "severity", "scope", "condition", "explanation", "fix", "evaluable_now", "needs_catalog_fields", "concept_ids", "sources", "review"],
+      "properties": {
+        "catalog_rule": { "enum": ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", null] },
+        "status": { "enum": ["existing", "proposed"] },
+        "severity": { "enum": ["error", "warning", "info"] },
+        "scope": { "enum": ["connection", "device", "graph", "room", "session"] },
+        "condition": { "$ref": "#/$defs/condition" },
+        "evaluable_now": { "type": "boolean" },
+        "needs_catalog_fields": { "type": "array", "items": { "type": "string" } },
+        "sources": { "$ref": "#/$defs/sources" },
+        "review": { "$ref": "#/$defs/review" }
+      }
+    },
+    "fault": {
+      "type": "object",
+      "required": ["id", "name_fr", "name_en", "domain", "symptom", "contexts", "probable_causes", "checks", "fixes", "rule_ids", "concept_ids", "equipment_ids", "sources", "review"],
+      "properties": {
+        "probable_causes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "object", "required": ["cause", "likelihood"], "properties": { "cause": { "type": "string" }, "likelihood": { "enum": ["high", "medium", "low"] } } }
+        },
+        "checks": { "type": "array", "minItems": 1 },
+        "sources": { "$ref": "#/$defs/sources" },
+        "review": { "$ref": "#/$defs/review" }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "required": ["id", "name_fr", "name_en", "domain", "brief", "room_id", "required_gear", "signal_flow", "procedure_ids", "rule_ids", "difficulty", "estimated_time_min", "bts_mapping", "sources", "review"],
+      "properties": {
+        "room_id": { "type": ["string", "null"], "description": "A tek-brain/rooms/<id>.json id" },
+        "required_gear": { "type": "array", "items": { "type": "object", "required": ["equipment_id"], "properties": { "equipment_id": { "type": "string" }, "qty": { "type": "integer" }, "role": { "type": "string" } } } },
+        "signal_flow": {
+          "type": "object",
+          "required": ["nodes", "edges"],
+          "properties": {
+            "nodes": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["id"], "properties": { "id": { "type": "string" }, "equipment_id": { "type": ["string", "null"] }, "label": { "type": "string" } } } },
+            "edges": { "type": "array", "items": { "type": "object", "required": ["from", "to"], "properties": { "from": { "type": "string" }, "to": { "type": "string" }, "signal": { "type": ["string", "null"], "description": "TekPractice signal id, or null when the source does not say" }, "connector": { "type": ["string", "null"] } } } }
+          }
+        },
+        "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "sources": { "$ref": "#/$defs/sources" },
+        "review": { "$ref": "#/$defs/review" }
+      }
+    },
+    "glossary": {
+      "type": "object",
+      "required": ["id", "term_fr", "term_en", "domain", "definition", "see_also", "sources"],
+      "properties": { "see_also": { "$ref": "#/$defs/ids" }, "sources": { "$ref": "#/$defs/sources" } }
+    }
+  }
+}
