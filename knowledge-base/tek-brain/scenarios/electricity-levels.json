@@ -1,0 +1,345 @@
+{
+  "entity": "scenario",
+  "domain": "electricity-levels",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "dj-laptop-into-live-console",
+      "name_fr": "Ordinateur DJ vers une console live",
+      "name_en": "DJ laptop into a live console",
+      "domain": "electricity-levels",
+      "brief": "Un DJ arrive avec un ordinateur (sortie mini-jack grand public) entre deux sets live. La console de façade est à 25 m. Raccorder la source proprement : DI stéréo active près du DJ, deux XLR vers deux entrées micro du stagebox, fantôme activé, gain réglé sans saturation, pas de ronflette.",
+      "room_id": "bar-club-stage-small",
+      "required_gear": [
+        {
+          "equipment_id": "playout-pc",
+          "qty": 1,
+          "role": "source grand public (ordinateur DJ)"
+        },
+        {
+          "equipment_id": "radial-jpc",
+          "qty": 1,
+          "role": "DI stéréo active pour ordinateur"
+        },
+        {
+          "equipment_id": "yamaha-rio3224-d2",
+          "qty": 1,
+          "role": "stagebox"
+        },
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console de façade"
+        },
+        {
+          "equipment_id": "qsc-k12-2",
+          "qty": 2,
+          "role": "diffusion"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "pc",
+            "equipment_id": "playout-pc",
+            "label": "Ordinateur DJ"
+          },
+          {
+            "id": "di",
+            "equipment_id": "radial-jpc",
+            "label": "DI stéréo JPC"
+          },
+          {
+            "id": "rio",
+            "equipment_id": "yamaha-rio3224-d2",
+            "label": "Stagebox"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console FOH"
+          },
+          {
+            "id": "spkL",
+            "equipment_id": "qsc-k12-2",
+            "label": "Enceinte gauche"
+          },
+          {
+            "id": "spkR",
+            "equipment_id": "qsc-k12-2",
+            "label": "Enceinte droite"
+          }
+        ],
+        "edges": [
+          {
+            "from": "pc",
+            "to": "di",
+            "signal": "line-level-consumer",
+            "connector": "trs-35mm"
+          },
+          {
+            "from": "di",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rio",
+            "to": "desk",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "desk",
+            "to": "spkL",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "spkR",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "connect-consumer-source-to-console",
+        "gain-staging-live-input",
+        "troubleshoot-ground-loop-hum"
+      ],
+      "rule_ids": [
+        "consumer-into-pro-level",
+        "unbalanced-long-run",
+        "ground-loop-risk",
+        "signal-type-mismatch",
+        "connector-mate-mismatch"
+      ],
+      "difficulty": 2,
+      "estimated_time_min": 20,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une source grand public en sonorisation — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.radialeng.com/product/jpc/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear",
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf",
+          "publisher": "Radial Engineering (JPC manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "bass-and-keys-di-small-stage",
+      "name_fr": "Basse et clavier en DI sur une petite scène",
+      "name_en": "Bass and keys through DIs on a small stage",
+      "domain": "electricity-levels",
+      "brief": "Petit groupe dans un bar : basse passive et clavier stéréo à reprendre sur une console analogique compacte. Choisir les DI (active pour la basse passive, passive stéréo pour le clavier), câbler, régler les gains et vérifier l'absence de ronflette.",
+      "room_id": "bar-club-stage-small",
+      "required_gear": [
+        {
+          "equipment_id": "radial-j48",
+          "qty": 1,
+          "role": "DI active pour basse passive"
+        },
+        {
+          "equipment_id": "radial-prod2",
+          "qty": 1,
+          "role": "DI passive stéréo pour clavier"
+        },
+        {
+          "equipment_id": "yamaha-mg10xu",
+          "qty": 1,
+          "role": "console"
+        },
+        {
+          "equipment_id": "qsc-k12-2",
+          "qty": 2,
+          "role": "diffusion"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "bass",
+            "equipment_id": null,
+            "label": "Basse électrique passive"
+          },
+          {
+            "id": "keys",
+            "equipment_id": null,
+            "label": "Clavier stéréo"
+          },
+          {
+            "id": "di1",
+            "equipment_id": "radial-j48",
+            "label": "DI active J48"
+          },
+          {
+            "id": "di2",
+            "equipment_id": "radial-prod2",
+            "label": "DI stéréo ProD2"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-mg10xu",
+            "label": "Console MG10XU"
+          },
+          {
+            "id": "spkL",
+            "equipment_id": "qsc-k12-2",
+            "label": "Enceinte gauche"
+          },
+          {
+            "id": "spkR",
+            "equipment_id": "qsc-k12-2",
+            "label": "Enceinte droite"
+          }
+        ],
+        "edges": [
+          {
+            "from": "bass",
+            "to": "di1",
+            "signal": "instrument-hiz",
+            "connector": "ts-quarter"
+          },
+          {
+            "from": "keys",
+            "to": "di2",
+            "signal": "instrument-hiz",
+            "connector": "ts-quarter"
+          },
+          {
+            "from": "di1",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "di2",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "spkL",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "spkR",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "connect-instrument-via-di",
+        "gain-staging-live-input"
+      ],
+      "rule_ids": [
+        "instrument-into-line-input",
+        "mic-level-into-line-input",
+        "signal-type-mismatch",
+        "connector-mate-mismatch"
+      ],
+      "difficulty": 2,
+      "estimated_time_min": 20,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Câblage de DI et réglage des gains — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.radialeng.com/product/j48/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jdi/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "publisher": "Yamaha Corporation (MG10XU mode d'emploi FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}

@@ -1,0 +1,509 @@
+{
+  "entity": "fault",
+  "domain": "electricity-levels",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "hum-ground-loop",
+      "name_fr": "Ronflette (boucle de masse)",
+      "name_en": "Ground-loop hum",
+      "domain": "electricity-levels",
+      "symptom": "Un ronflement grave et constant, présent même sans signal, qui disparaît quand on débranche une liaison précise.",
+      "contexts": [
+        "live",
+        "studio",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Boucle de masse entre deux appareils alimentés sur des prises différentes et reliés par un blindage",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Liaison asymétrique ou mixte sym/asym (ordinateur, lecteur, clavier)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Appareil avec problème de broche 1 (blindage relié à la masse audio)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Induction par un transformateur ou un câble secteur proche d'un circuit à fort gain",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Couper les canaux un par un à la console pour localiser l'entrée",
+        "Débrancher les liaisons en amont une par une",
+        "Vérifier si la liaison est asymétrique et si les appareils sont sur des distributions différentes",
+        "Éloigner les câbles audio des transformateurs et câbles secteur"
+      ],
+      "fixes": [
+        "Liaison symétrique bien câblée",
+        "Isolateur à transformateur ou DI avec ground lift",
+        "Alimenter les appareils depuis la même distribution",
+        "Ground lift du blindage audio en dernier recours — jamais de suppression de la terre secteur"
+      ],
+      "rule_ids": [
+        "ground-loop-risk",
+        "unbalanced-long-run"
+      ],
+      "concept_ids": [
+        "ground-loop",
+        "mains-hum",
+        "pin-1-problem",
+        "balanced-line"
+      ],
+      "equipment_ids": [
+        "ebtech-hum-eliminator-he-2",
+        "radial-jdi",
+        "radial-jpc"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mains_hum",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note151.html",
+          "publisher": "Rane Corporation (Steve Macatee, RaneNote 151)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "input-clipping-distortion",
+      "name_fr": "Distorsion par écrêtage à l'entrée",
+      "name_en": "Input clipping distortion",
+      "domain": "electricity-levels",
+      "symptom": "Son dur, grésillant sur les attaques ; voyant OL ou crêtemètre en rouge sur le canal, même fader baissé.",
+      "contexts": [
+        "live",
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Gain d'entrée trop élevé pour la source jouant au plus fort",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Source ligne branchée sur une entrée micro sans pad",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Balance faite à un niveau plus faible que le concert",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Marge insuffisante en numérique (crêtes près de 0 dBFS)",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Regarder le voyant OL / crêtemètre pré-fader du canal",
+        "Vérifier le type de source et l'entrée utilisée (micro ou ligne)",
+        "Comparer le niveau de balance au niveau réel du spectacle"
+      ],
+      "fixes": [
+        "Baisser le gain d'entrée (pas le fader)",
+        "Enclencher le pad de l'entrée ou de la DI",
+        "Utiliser une entrée ligne pour une source ligne",
+        "Garder la marge prévue au-dessus du niveau d'alignement"
+      ],
+      "rule_ids": [
+        "line-level-into-mic-input",
+        "signal-type-mismatch"
+      ],
+      "concept_ids": [
+        "gain-staging",
+        "headroom",
+        "crest-factor",
+        "dbfs"
+      ],
+      "equipment_ids": [
+        "yamaha-mg10xu",
+        "radial-jpc"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+          "publisher": "EBU (R 68-2000)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "publisher": "Yamaha Corporation (MG10XU mode d'emploi FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "consumer-source-too-quiet",
+      "name_fr": "Source grand public trop faible",
+      "name_en": "Consumer source too quiet",
+      "domain": "electricity-levels",
+      "symptom": "L'ordinateur ou le lecteur sonne faible à la console ; il faut beaucoup de gain et le souffle augmente.",
+      "contexts": [
+        "live",
+        "broadcast",
+        "dj"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Niveau grand public −10 dBV branché sur une entrée pro +4 dBu (≈ 11,8 dB d'écart)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Volume de l'ordinateur ou de la sortie casque réglé bas",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Pad de la DI enclenché inutilement",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier le volume de la source (système et application)",
+        "Vérifier le type d'entrée et le pad",
+        "Comparer avec un ton connu"
+      ],
+      "fixes": [
+        "Monter le volume de la source près de son maximum non saturé",
+        "Utiliser une DI stéréo dédiée puis régler le gain d'entrée",
+        "Retirer le pad si le gain manque"
+      ],
+      "rule_ids": [
+        "consumer-into-pro-level"
+      ],
+      "concept_ids": [
+        "line-level",
+        "dbv",
+        "dbu",
+        "gain-staging"
+      ],
+      "equipment_ids": [
+        "playout-pc",
+        "radial-jpc"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jpc/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "noisy-mix-poor-gain-structure",
+      "name_fr": "Souffle dû à une structure de gain mal répartie",
+      "name_en": "Hiss from poor gain structure",
+      "domain": "electricity-levels",
+      "symptom": "Un souffle permanent dans la diffusion, qui augmente quand on monte le master ; aucun canal en particulier.",
+      "contexts": [
+        "live",
+        "studio",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Gain d'entrée trop faible compensé par les faders, le master ou les amplis",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Appareil intermédiaire qui atténue puis un autre qui regagne",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Sensibilité des amplis au maximum avec une console à faible niveau",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier les niveaux pré-fader des canaux pendant le spectacle",
+        "Vérifier que les appareils intermédiaires travaillent au gain unité",
+        "Vérifier le réglage de sensibilité des amplis"
+      ],
+      "fixes": [
+        "Reprendre le gain au préampli",
+        "Remettre les processeurs au gain unité",
+        "Recaler la sensibilité des amplis sur le signal maximal du système"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "gain-staging",
+        "signal-to-noise-ratio",
+        "noise-floor"
+      ],
+      "equipment_ids": [
+        "crown-xls-2502",
+        "dbx-driverack-pa2"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "instrument-dull-weak",
+      "name_fr": "Instrument sourd et faible",
+      "name_en": "Instrument sounds dull and weak",
+      "domain": "electricity-levels",
+      "symptom": "La basse ou la guitare manque d'aigus et de niveau à la console.",
+      "contexts": [
+        "live",
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Instrument passif branché sur une entrée ligne ou micro basse impédance",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Câble instrument très long avant la DI (capacité)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "DI à impédance d'entrée trop basse pour un micro passif",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Vérifier l'entrée utilisée (Hi-Z, ligne, micro)",
+        "Mesurer ou estimer la longueur du câble instrument",
+        "Vérifier le type de DI"
+      ],
+      "fixes": [
+        "Utiliser l'entrée instrument Hi-Z ou une DI",
+        "Raccourcir le câble instrument et tirer le long trajet en XLR après la DI",
+        "Choisir une DI active à forte impédance d'entrée pour un micro passif"
+      ],
+      "rule_ids": [
+        "instrument-into-line-input",
+        "unbalanced-long-run"
+      ],
+      "concept_ids": [
+        "instrument-level",
+        "impedance-bridging",
+        "cable-capacitance-hf-loss",
+        "di-box"
+      ],
+      "equipment_ids": [
+        "radial-j48",
+        "radial-jdi",
+        "focusrite-isa-one"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/j48/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "hf-loss-long-unbalanced-run",
+      "name_fr": "Perte d'aigus et parasites sur une longue liaison asymétrique",
+      "name_en": "HF loss and noise on a long unbalanced run",
+      "domain": "electricity-levels",
+      "symptom": "Le signal d'une source asymétrique éloignée est terne, avec des parasites ou de la ronflette.",
+      "contexts": [
+        "live",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Liaison asymétrique bien plus longue que 3 m",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Source à forte impédance de sortie",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Mesurer la longueur de la liaison",
+        "Vérifier le type de connecteur (TS, RCA, mini-jack)"
+      ],
+      "fixes": [
+        "Convertir en symétrique près de la source (DI, isolateur)",
+        "Raccourcir la liaison asymétrique"
+      ],
+      "rule_ids": [
+        "unbalanced-long-run",
+        "ground-loop-risk"
+      ],
+      "concept_ids": [
+        "unbalanced-line",
+        "cable-capacitance-hf-loss",
+        "di-box"
+      ],
+      "equipment_ids": [
+        "radial-jpc",
+        "radial-prod2"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note126.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 126)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Défaut 'un canal absent / niveau −6 dB à cause d'un conducteur coupé dans un câble symétrique'",
+      "searched": "RaneNote 110 et DPA balanced lines : aucune description sourcée du symptôme"
+    },
+    {
+      "what": "Buzz de gradateurs (dimmers SCR) dans l'audio",
+      "searched": "Wikipedia Mains hum (non couvert)"
+    }
+  ]
+}

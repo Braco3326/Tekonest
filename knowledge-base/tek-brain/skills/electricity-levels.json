@@ -1,0 +1,201 @@
+{
+  "entity": "skill",
+  "domain": "electricity-levels",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "gain-stage-a-chain",
+      "name_fr": "Construire une structure de gain propre",
+      "name_en": "Build a clean gain structure",
+      "domain": "electricity-levels",
+      "description": "Régler gains d'entrée, appareils intermédiaires et sensibilités d'amplis pour maximiser le rapport signal/bruit sans écrêtage.",
+      "level": "bts",
+      "concept_ids": [
+        "gain-staging",
+        "headroom",
+        "signal-to-noise-ratio",
+        "crest-factor"
+      ],
+      "procedure_ids": [
+        "gain-staging-live-input",
+        "sound-system-gain-structure"
+      ],
+      "success_criteria": [
+        "Sur la source jouant au plus fort, le voyant OL du préampli ne s'allume qu'occasionnellement",
+        "Aucun appareil intermédiaire n'écrête avec le signal maximal du système",
+        "L'élève explique pourquoi le gain se prend au préampli et non au fader"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "match-levels-and-impedances",
+      "name_fr": "Choisir la bonne entrée selon le niveau et l'impédance",
+      "name_en": "Match levels and impedances",
+      "domain": "electricity-levels",
+      "description": "Identifier le niveau (micro, ligne pro/grand public, instrument, haut-parleur) et l'impédance d'une source et choisir l'entrée ou l'interface adaptée (entrée ligne, pad, DI).",
+      "level": "bts",
+      "concept_ids": [
+        "mic-level",
+        "line-level",
+        "instrument-level",
+        "impedance-bridging",
+        "di-box",
+        "dbu",
+        "dbv"
+      ],
+      "procedure_ids": [
+        "connect-consumer-source-to-console",
+        "connect-instrument-via-di"
+      ],
+      "success_criteria": [
+        "L'élève convertit +4 dBu et −10 dBV en volts et calcule l'écart (≈ 11,8 dB)",
+        "Aucune connexion du patch ne déclenche les règles signal-type-mismatch ou instrument-into-line-input",
+        "Chaque source asymétrique de plus de 3 m passe par une DI ou un isolateur"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "diagnose-hum-and-noise",
+      "name_fr": "Diagnostiquer ronflettes et bruits",
+      "name_en": "Diagnose hum and noise",
+      "domain": "electricity-levels",
+      "description": "Localiser méthodiquement l'origine d'une ronflette, d'un buzz ou d'un souffle et appliquer un remède sûr.",
+      "level": "bts",
+      "concept_ids": [
+        "ground-loop",
+        "mains-hum",
+        "pin-1-problem",
+        "balanced-line",
+        "noise-floor"
+      ],
+      "procedure_ids": [
+        "troubleshoot-ground-loop-hum"
+      ],
+      "success_criteria": [
+        "La liaison fautive est trouvée en coupant les canaux puis les câbles un par un",
+        "Le remède retenu conserve la terre de sécurité de chaque appareil",
+        "L'élève distingue une ronflette de boucle de masse d'un souffle dû à un gain mal réparti"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": []
+}
