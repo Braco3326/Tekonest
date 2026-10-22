@@ -1,0 +1,284 @@
+{
+ "entity": "skill",
+ "domain": "post-immersive",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "conform-and-edit-dialogue",
+   "name_fr": "Conformer et monter les dialogues d'un film",
+   "name_en": "Conform and edit film dialogue",
+   "domain": "post-immersive",
+   "description": "Importer l'AAF du montage, relier les fichiers originaux du tournage, choisir les sources de chaque réplique et livrer une piste dialogues propre, sans effet de phase.",
+   "level": "bts",
+   "concept_ids": [
+    "aaf-omf-interchange",
+    "conform",
+    "bwf-metadata",
+    "dialogue-editing",
+    "dialogue-noise-reduction",
+    "timecode"
+   ],
+   "procedure_ids": [
+    "aaf-import-and-conform"
+   ],
+   "success_criteria": [
+    "Tous les clips de l'AAF sont reliés aux fichiers originaux (aucun média manquant)",
+    "La session audio a la même cadence d'images et le même timecode de départ que la vidéo de référence",
+    "Aucune réplique n'est jouée simultanément par la perche et le HF sans choix volontaire (pas d'effet de filtre en peigne à l'écoute mono)",
+    "Les trous d'ambiance sont comblés par du room tone de la même scène"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+     "publisher": "AMWA (AS-01 AAF Edit Protocol)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "description"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
+     "publisher": "Wikipedia (Dialogue editor)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "description"
+     ]
+    },
+    {
+     "url": "https://www.soundonsound.com/sound-advice/q-what-exactly-comb-filtering",
+     "publisher": "Sound On Sound (Q. What exactly is comb filtering?)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "run-adr-and-foley-session",
+   "name_fr": "Mener une séance de postsynchronisation et de bruitage",
+   "name_en": "Run an ADR and foley session",
+   "domain": "post-immersive",
+   "description": "Préparer les repères, enregistrer comédiens et bruiteurs en synchronisme avec l'image, nommer et ranger les prises pour le montage.",
+   "level": "bts",
+   "concept_ids": [
+    "adr-dubbing",
+    "bande-rythmo",
+    "foley",
+    "timecode",
+    "music-and-effects-me"
+   ],
+   "procedure_ids": [
+    "adr-session",
+    "foley-session"
+   ],
+   "success_criteria": [
+    "Chaque réplique ou boucle enregistrée porte un nom retrouvable (personnage, boucle ou repère, prise)",
+    "Les prises retenues tombent en synchronisme labial à l'image sans recalage visible",
+    "Les pas, vêtements et accessoires sont sur des pistes séparées",
+    "Le niveau ne sature jamais et le bruit de fond de la cabine reste inaudible au mix"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
+     "publisher": "Wikipedia (Dubbing / ADR)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "description"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
+     "publisher": "Wikipedia (Foley (filmmaking))",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "description"
+     ]
+    },
+    {
+     "url": "https://fr.wikipedia.org/wiki/Doublage",
+     "publisher": "Wikipédia (Doublage)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "description"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "deliver-compliant-mix-and-stems",
+   "name_fr": "Livrer un mix et des stems conformes",
+   "name_en": "Deliver a compliant mix and stems",
+   "domain": "post-immersive",
+   "description": "Mesurer la sonie selon EBU R 128 / la fiche du diffuseur, exporter printmaster, stems et version internationale cohérents entre eux.",
+   "level": "bts",
+   "concept_ids": [
+    "stems",
+    "music-and-effects-me",
+    "deliverable-loudness-france",
+    "loudness-to-dialogue-ratio",
+    "loudness-ebu-r128",
+    "true-peak"
+   ],
+   "procedure_ids": [
+    "stems-and-me-export"
+   ],
+   "success_criteria": [
+    "La sonie intégrée du programme est à −23,0 LUFS à ±0,2 LU près au contrôle (sauf fiche diffuseur différente)",
+    "La crête vraie ne dépasse pas −1 dBTP",
+    "La somme des stems à gain unité reproduit le printmaster",
+    "La version internationale écoutée seule ne présente pas de trou de bruitage"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+     "publisher": "EBU (R 128 v5.0, nov. 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+     "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "description"
+     ]
+    },
+    {
+     "url": "https://fr.wikipedia.org/wiki/Doublage",
+     "publisher": "Wikipédia (Doublage)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "set-up-immersive-mix",
+   "name_fr": "Préparer un mix immersif (5.1, Atmos, ambisonie)",
+   "name_en": "Set up an immersive mix",
+   "domain": "post-immersive",
+   "description": "Choisir et vérifier la disposition d'écoute, répartir bed et objets, contrôler les replis et le rendu binaural.",
+   "level": "pro",
+   "concept_ids": [
+    "surround-5-1-layout",
+    "dolby-atmos",
+    "atmos-bed",
+    "object-based-audio",
+    "audio-definition-model",
+    "ambisonics",
+    "ambisonic-formats-ambix-fuma",
+    "binaural"
+   ],
+   "procedure_ids": [
+    "atmos-session-bed-objects"
+   ],
+   "success_criteria": [
+    "Les surround d'un 5.1 sont dans les secteurs 100–120° et pas plus proches que les enceintes avant (ou retardées)",
+    "Le bed ne dépasse pas 7.1.2 et le nombre total d'entrées du renderer reste ≤ 128",
+    "Le master est exporté (ADM BWF) et réécouté sur au moins un repli à canaux et en binaural",
+    "La convention ambisonique (AmbiX ou FuMa) du fichier est identifiée avant décodage"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.775-4-202212-I!!PDF-E.pdf",
+     "publisher": "ITU-R (Recommandation BS.775-4, 12/2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
+     "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
+     "publisher": "Wikipedia (Ambisonic data exchange formats)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": []
+}

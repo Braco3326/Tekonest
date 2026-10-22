@@ -1,0 +1,378 @@
+{
+ "entity": "fault",
+ "domain": "post-immersive",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "sync-drift-frame-rate-mismatch",
+   "name_fr": "Dérive de synchro progressive",
+   "name_en": "Progressive sync drift",
+   "domain": "post-immersive",
+   "symptom": "La synchro est juste au début de la bobine mais le son prend de l'avance ou du retard qui augmente au fil des minutes.",
+   "contexts": [
+    "post-production",
+    "studio"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Pull-up/pull-down oublié ou appliqué deux fois (24 contre 23,976 images/s, facteur 1000/1001)",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Session audio à une autre cadence que le montage (25 contre 23,976, DF contre NDF)",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Interface audio sur horloge interne au lieu de la référence vidéo",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Mesurer le décalage au début, au milieu et à la fin : s'il augmente régulièrement, c'est un problème de vitesse et non de position",
+    "Comparer la cadence et le mode DF/NDF de la session avec ceux de la vidéo et de l'AAF",
+    "Vérifier les réglages de pull-up/pull-down et la source d'horloge du synchroniseur",
+    "Calculer : environ 0,1 % de dérive correspond au facteur 1000/1001"
+   ],
+   "fixes": [
+    "Régler la cadence et le pull-up/pull-down corrects, puis réimporter ou convertir les fichiers concernés",
+    "Caler l'horloge audio sur la référence vidéo"
+   ],
+   "rule_ids": [
+    "timecode-frame-rate-mismatch",
+    "audio-clock-not-referenced-to-video"
+   ],
+   "concept_ids": [
+    "frame-rate-pull-up-pull-down",
+    "timecode",
+    "drop-frame-timecode",
+    "video-reference-sync"
+   ],
+   "equipment_ids": [
+    "avid-protools-sync-x"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Telecine",
+     "publisher": "Wikipedia (Telecine)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "probable_causes",
+      "checks"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+     "publisher": "Wikipedia (SMPTE timecode)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "probable_causes"
+     ]
+    },
+    {
+     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+     "publisher": "Avid (Pro Tools | Sync X Guide)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "checks",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "missing-media-after-aaf-import",
+   "name_fr": "Médias manquants après import AAF",
+   "name_en": "Missing media after AAF import",
+   "domain": "post-immersive",
+   "symptom": "Après l'import de l'AAF, des clips apparaissent vides, grisés ou signalés « offline » dans la session audio.",
+   "contexts": [
+    "post-production"
+   ],
+   "probable_causes": [
+    {
+     "cause": "AAF à médias référencés (Locator) dont les fichiers n'ont pas été fournis ou dont les chemins ont changé",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Fichiers originaux du tournage renommés ou sans métadonnées, impossibles à relier",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Format de fichier non pris en charge par la station à l'import",
+     "likelihood": "low"
+    }
+   ],
+   "checks": [
+    "Lire le rapport d'import pour lister les fichiers manquants",
+    "Demander au montage si l'export était intégré (embedded) ou référencé",
+    "Vérifier que les dossiers de médias sont copiés et accessibles",
+    "Vérifier les formats acceptés par la station (WAV, AIFF, MXF…)"
+   ],
+   "fixes": [
+    "Demander un nouvel export AAF avec médias intégrés, ou fournir les médias référencés",
+    "Relier manuellement les clips aux fichiers BWF originaux par timecode et nom"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "aaf-omf-interchange",
+    "conform",
+    "bwf-metadata"
+   ],
+   "equipment_ids": [
+    "avid-pro-tools"
+   ],
+   "sources": [
+    {
+     "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+     "publisher": "AMWA (AS-01 AAF Edit Protocol)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "probable_causes",
+      "checks"
+     ]
+    },
+    {
+     "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
+     "publisher": "Avid Knowledge Base (Pro Tools audio file type and session support)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "checks"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+     "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "phasey-dialogue-duplicate-tracks",
+   "name_fr": "Dialogue creux / phasé (pistes en double)",
+   "name_en": "Phasey dialogue from duplicate tracks",
+   "domain": "post-immersive",
+   "symptom": "La voix sonne creuse, métallique ou « dans un tube », surtout en écoute mono, alors que chaque piste seule est correcte.",
+   "contexts": [
+    "post-production"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Perche et HF de la même réplique joués en même temps : la même voix arrive avec un léger retard, filtrage en peigne",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Même clip dupliqué sur deux pistes avec un léger décalage après conformation",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Écouter chaque piste en solo puis ensemble, en mono",
+    "Chercher dans la timeline les clips superposés de la même prise",
+    "Mesurer le décalage entre les deux sources"
+   ],
+   "fixes": [
+    "Choisir une seule source par réplique et couper ou baisser l'autre",
+    "Si les deux sont nécessaires, les réaligner dans le temps avant de les mixer",
+    "Supprimer les clips dupliqués"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "dialogue-editing",
+    "comb-filtering",
+    "phase"
+   ],
+   "equipment_ids": [
+    "avid-pro-tools"
+   ],
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/sound-advice/q-what-exactly-comb-filtering",
+     "publisher": "Sound On Sound (Q. What exactly is comb filtering?)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "probable_causes",
+      "symptom"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
+     "publisher": "Wikipedia (Dialogue editor)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "loudness-rejected-at-qc",
+   "name_fr": "Livrable refusé au contrôle qualité (sonie)",
+   "name_en": "Loudness rejection at QC",
+   "domain": "post-immersive",
+   "symptom": "Le diffuseur ou le laboratoire renvoie le programme : sonie intégrée ou crête vraie hors spécification.",
+   "contexts": [
+    "post-production",
+    "broadcast"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Mesure faite sur un extrait ou sur les seuls dialogues au lieu du programme entier",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Limiteur réglé en crête échantillon au lieu de crête vraie, dépassement de −1 dBTP",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Fiche technique du diffuseur non respectée (cible ou limite court terme spécifique)",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Fiction très dynamique (LDR élevé) normalisée sur le programme",
+     "likelihood": "low"
+    }
+   ],
+   "checks": [
+    "Remesurer le fichier livré en entier avec un appareil conforme BS.1770 / Tech 3341",
+    "Comparer les valeurs avec la fiche du diffuseur",
+    "Contrôler la crête vraie",
+    "Pour une fiction, mesurer le dialogue et le LDR"
+   ],
+   "fixes": [
+    "Corriger le gain global ou le mix et réexporter",
+    "Utiliser un limiteur en crête vraie",
+    "Ramener le LDR vers 5 LU si nécessaire, sans compresser un mix déjà dans la limite"
+   ],
+   "rule_ids": [
+    "deliverable-loudness-out-of-spec"
+   ],
+   "concept_ids": [
+    "deliverable-loudness-france",
+    "loudness-to-dialogue-ratio",
+    "loudness-ebu-r128",
+    "true-peak"
+   ],
+   "equipment_ids": [
+    "nugen-audio-vislm",
+    "rtw-touchmonitor-tm7"
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+     "publisher": "EBU (R 128 v5.0, nov. 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "probable_causes",
+      "checks"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+     "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
+     "publisher": "ARPP (fiche « En 2012 la TV change d'intensité sonore », reprend CST-RT-017 v3.0)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "probable_causes"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "ambisonic-image-wrong-convention",
+   "name_fr": "Image ambisonique fausse (convention AmbiX/FuMa)",
+   "name_en": "Wrong ambisonic image (AmbiX/FuMa mix-up)",
+   "domain": "post-immersive",
+   "symptom": "Au décodage, les sons ne sont pas à leur place : gauche-droite ou haut-bas échangés, niveau global ou omni anormal.",
+   "contexts": [
+    "post-production",
+    "vr-360"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Fichier FuMa (W X Y Z, W −3 dB) lu par un décodeur AmbiX (ordre ACN W Y Z X, SN3D) ou l'inverse",
+     "likelihood": "high"
+    },
+    {
+     "cause": "A-format du micro tétraédrique non converti en B-format",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Identifier la convention du fichier et celle attendue par le décodeur ou la plateforme",
+    "Tester avec une source connue (personne qui parle à gauche) et vérifier le canal Y",
+    "Vérifier que le fichier n'est pas encore en A-format"
+   ],
+   "fixes": [
+    "Convertir le fichier dans la bonne convention (réordonner les canaux et corriger le gain de W)",
+    "Convertir l'A-format en B-format avec l'outil du fabricant du micro"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "ambisonic-formats-ambix-fuma",
+    "ambisonics"
+   ],
+   "equipment_ids": [],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
+     "publisher": "Wikipedia (Ambisonic data exchange formats)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Ambisonics",
+     "publisher": "Wikipedia (Ambisonics)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "probable_causes"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": []
+}
