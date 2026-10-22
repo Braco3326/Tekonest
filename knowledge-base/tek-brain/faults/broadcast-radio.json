@@ -1,0 +1,503 @@
+{
+ "entity": "fault",
+ "domain": "broadcast-radio",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "guest-hears-own-echo",
+   "name_fr": "L'invité entend l'écho de sa propre voix",
+   "name_en": "Remote guest hears an echo of themselves",
+   "domain": "broadcast-radio",
+   "symptom": "L'invité au téléphone ou en codec se plaint d'entendre sa voix revenir avec un retard ; il bafouille ou s'arrête de parler.",
+   "contexts": [
+    "radio",
+    "broadcast",
+    "remote"
+   ],
+   "probable_causes": [
+    {
+     "cause": "La tranche de retour de l'invité est affectée au bus qui alimente son envoi (pas de vrai N-1)",
+     "likelihood": "high"
+    },
+    {
+     "cause": "L'envoi du codec ou de l'hybride est câblé sur la sortie programme au lieu d'une sortie N-1",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Un seul N-1 partagé entre deux intervenants distants",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Fuite trans-hybride d'un hybride mal adapté à la ligne (la voix de l'appelant repasse dans l'envoi)",
+     "likelihood": "low"
+    }
+   ],
+   "checks": [
+    "Regarder le vumètre d'envoi (SND) de l'hybride ou du codec quand seul l'invité parle : il doit rester bas",
+    "Vérifier l'affectation de la tranche retour aux bus",
+    "Vérifier le câblage de l'entrée d'envoi (sortie N-1 dédiée ?)",
+    "Vérifier qu'il y a un N-1 par intervenant"
+   ],
+   "fixes": [
+    "Retirer la tranche retour du bus d'envoi ou utiliser le mix-minus automatique de la tranche",
+    "Câbler l'envoi sur une sortie N-1 dédiée (ou boîtier N-1 si la console n'en a pas)",
+    "Créer un N-1 par intervenant"
+   ],
+   "rule_ids": [
+    "mix-minus-n1-echo",
+    "mix-minus-loop",
+    "shared-mix-minus-multiple-remotes"
+   ],
+   "concept_ids": [
+    "mix-minus-n1",
+    "telephone-hybrid",
+    "audio-codec-ip"
+   ],
+   "equipment_ids": [
+    "axia-iq",
+    "telos-hx2",
+    "sonifex-rb-mm1"
+   ],
+   "sources": [
+    {
+     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+     "publisher": "Telos Alliance",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "checks",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.telosalliance.com/broadcast-phone-systems/telos-hx1-hx2-digital-hybrids",
+     "publisher": "Telos Alliance",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes"
+     ]
+    },
+    {
+     "url": "https://sonifex.co.uk/product/rb-mm1/",
+     "publisher": "Sonifex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "no-return-from-codec",
+   "name_fr": "Pas de son en retour du codec",
+   "name_en": "No audio return from the codec",
+   "domain": "broadcast-radio",
+   "symptom": "La liaison codec semble établie mais la régie n'entend pas le reporter, ou le reporter n'entend pas le studio.",
+   "contexts": [
+    "radio",
+    "remote"
+   ],
+   "probable_causes": [
+    {
+     "cause": "La tranche qui reçoit le codec est fermée, mal affectée ou sur la mauvaise source",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Pas d'algorithme commun : les deux codecs ne s'accordent pas lors de la négociation SIP/SDP",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Ports SIP (5060) ou RTP (5004/5005) filtrés par un pare-feu ou une traduction d'adresse (NAT) : audio dans un seul sens",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Envoi du codec non alimenté (pas de N-1 câblé vers son entrée)",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Lire les vumètres d'entrée et de sortie du codec des deux côtés",
+    "Vérifier la tranche retour sur la console (source, On, bus)",
+    "Lire l'algorithme réellement négocié sur l'écran du codec",
+    "Vérifier la configuration réseau et les ports ouverts"
+   ],
+   "fixes": [
+    "Corriger la tranche ou le routage",
+    "Passer en mode EBU 3326/SIP et proposer G.722 en secours",
+    "Ouvrir les ports ou changer de port SIP si le réseau filtre (prévu par Tech 3326), utiliser un serveur SIP ou STUN si le codec le permet",
+    "Câbler le N-1 sur l'entrée du codec"
+   ],
+   "rule_ids": [
+    "mix-minus-n1-echo"
+   ],
+   "concept_ids": [
+    "audio-codec-ip",
+    "acip-ebu-tech-3326",
+    "sip-signalling",
+    "g722-codec"
+   ],
+   "equipment_ids": [
+    "aeta-scoop5-s",
+    "comrex-access-nx",
+    "tieline-via"
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.tieline.com/via/",
+     "publisher": "Tieline",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.comrex.com/products/access-nx/",
+     "publisher": "Comrex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "on-air-light-not-lit",
+   "name_fr": "Le voyant ON-AIR ne s'allume pas",
+   "name_en": "ON-AIR light not lit",
+   "domain": "broadcast-radio",
+   "symptom": "Le micro est ouvert à l'antenne mais le voyant ON-AIR à la porte du studio reste éteint.",
+   "contexts": [
+    "radio",
+    "broadcast"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Sortie GPIO de la console non câblée ou non configurée pour l'état micro ouvert",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Voyant non alimenté en permanence (par exemple branché seulement en USB)",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Commande câblée sur l'entrée d'une autre couleur ou mauvais brochage",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Fil sorti d'une borne",
+     "likelihood": "low"
+    }
+   ],
+   "checks": [
+    "Ouvrir un micro et vérifier l'état de la sortie GPIO dans le logiciel de la console",
+    "Vérifier l'alimentation 9–24 V du voyant",
+    "Vérifier sur quelle entrée couleur arrive la commande",
+    "Contrôler les fils dans le bornier"
+   ],
+   "fixes": [
+    "Configurer et câbler la sortie tally",
+    "Alimenter le voyant par une alimentation permanente",
+    "Recâbler sur l'entrée rouge selon le brochage"
+   ],
+   "rule_ids": [
+    "on-air-tally-light"
+   ],
+   "concept_ids": [
+    "tally-on-air"
+   ],
+   "equipment_ids": [
+    "yellowtec-litt",
+    "axia-iq"
+   ],
+   "sources": [
+    {
+     "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+     "publisher": "Yellowtec",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "checks"
+     ]
+    },
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "programme-too-loud-vs-other-channels",
+   "name_fr": "Programme trop fort par rapport aux autres stations",
+   "name_en": "Programme too loud compared to other channels",
+   "domain": "broadcast-radio",
+   "symptom": "Les auditeurs doivent baisser le volume en arrivant sur la station, ou les écarts de niveau entre émissions, pubs et appels sont gênants.",
+   "contexts": [
+    "radio",
+    "broadcast",
+    "streaming"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Normalisation par les crêtes au lieu de la sonie",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Compression et limitation agressives en diffusion pour compenser un mixage non normalisé",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Niveau de distribution choisi plus haut que −23 LUFS (par exemple −16 LUFS) sans contrôle",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Sources live non nivelées (téléphone, contributions)",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Mesurer la sonie intégrée de la sortie antenne sur une durée représentative",
+    "Comparer chaque élément (émission, pub, jingle) à −23 LUFS",
+    "Relever la crête vraie et le LRA",
+    "Vérifier le niveau de distribution choisi par la station"
+   ],
+   "fixes": [
+    "Normaliser chaque élément à −23 LUFS dès la production",
+    "Réduire la compression du processeur une fois la production normalisée",
+    "Garder un niveau de distribution entre −20 et −16 LUFS si la station en choisit un autre que −23",
+    "Niveler les lignes téléphoniques et contributions non conformes"
+   ],
+   "rule_ids": [
+    "loudness-out-of-tolerance"
+   ],
+   "concept_ids": [
+    "loudness-ebu-r128",
+    "distribution-loudness-level",
+    "on-air-processing"
+   ],
+   "equipment_ids": [
+    "rtw-touchmonitor-tm7",
+    "omnia-11"
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "probable_causes"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "fixes",
+      "probable_causes"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "codec-connection-drops",
+   "name_fr": "La liaison codec décroche",
+   "name_en": "Codec connection drops",
+   "domain": "broadcast-radio",
+   "symptom": "Coupures, trous audio ou déconnexions répétées pendant un duplex IP, surtout en 4G/5G ou Wi-Fi.",
+   "contexts": [
+    "remote",
+    "radio"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Pertes de paquets ou débit insuffisant sur le réseau mobile ou Wi-Fi",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Un seul réseau, sans secours",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Débit de codage trop élevé pour le réseau disponible",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Pas de protection activée (FEC, retransmission, double flux)",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Lire les statistiques de liaison du codec (pertes, débit)",
+    "Tester un autre réseau (Ethernet, autre opérateur)",
+    "Baisser le débit ou changer d'algorithme",
+    "Vérifier les options de protection disponibles des deux côtés"
+   ],
+   "fixes": [
+    "Activer la FEC ou le double flux si les deux codecs le gèrent",
+    "Agréger plusieurs réseaux (par exemple CrossLock chez Comrex)",
+    "Prévoir un réseau de secours (VoLTE / voix HD chez AETA)",
+    "Baisser le débit"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "ip-link-resilience",
+    "audio-codec-ip"
+   ],
+   "equipment_ids": [
+    "comrex-access-nx",
+    "aeta-scoop5-s",
+    "tieline-via"
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.comrex.com/products/access-nx/",
+     "publisher": "Comrex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.aeta-audio.com/products/scoop5s/",
+     "publisher": "AETA Audio Systems",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "dead-air-on-output",
+   "name_fr": "Blanc à l'antenne",
+   "name_en": "Dead air on the on-air output",
+   "domain": "broadcast-radio",
+   "symptom": "Plus aucun son ne sort vers l'émetteur ou le stream : panne de source, playout bloqué, fader fermé ou liaison coupée.",
+   "contexts": [
+    "radio",
+    "broadcast"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Source ou playout en panne sans personne en régie (programme automatisé)",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Liaison studio-émetteur coupée",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Pas de détecteur de silence ni de source de secours",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Écouter la sortie programme de la console puis l'entrée du processeur et de la liaison",
+    "Vérifier l'état du détecteur de silence et de la source de secours",
+    "Vérifier la liaison vers l'émetteur"
+   ],
+   "fixes": [
+    "Installer un détecteur de silence avec bascule automatique sur une source de secours",
+    "Doubler la liaison critique"
+   ],
+   "rule_ids": [
+    "silence-detection-missing"
+   ],
+   "concept_ids": [
+    "silence-detection",
+    "broadcast-redundancy",
+    "studio-transmitter-link"
+   ],
+   "equipment_ids": [
+    "omnia-11"
+   ],
+   "sources": [
+    {
+     "url": "https://sonifex.co.uk/product/rb-sd1/",
+     "publisher": "Sonifex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Studio_transmitter_link",
+     "publisher": "Wikipedia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "probable_causes"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": []
+}
