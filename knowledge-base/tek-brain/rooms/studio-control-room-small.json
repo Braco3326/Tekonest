@@ -1,0 +1,350 @@
+{
+  "id": "studio-control-room-small",
+  "name_fr": "Régie de studio (petite, home/project studio)",
+  "name_en": "Small studio control room",
+  "family": "studio",
+  "size": "small",
+  "description": "Petite régie de production ou de home studio, sous le seuil de 30 m² que l'UER (EBU) fixe pour une régie de haute qualité. Écoutes de proximité (nearfield) en triangle équilatéral, auditeur dans la moitié avant de la pièce, coin d'enregistrement voix/overdub à l'arrière. On y apprend le placement des enceintes, les réflexions de bureau et les modes propres d'une petite pièce.",
+  "dimensions_m": {
+    "length": {
+      "min": 3.51,
+      "typical": 5.0,
+      "max": 6.4
+    },
+    "width": {
+      "min": 3.05,
+      "typical": 4.0,
+      "max": 4.7
+    },
+    "height": {
+      "min": 2.44,
+      "typical": 2.7,
+      "max": 3.0
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "parquet flottant + tapis épais sous la zone d'écoute",
+      "finish_note": "Le tapis limite la réflexion de sol entre enceintes et auditeur."
+    },
+    {
+      "surface": "front-wall",
+      "material": "plâtre + absorbants laine minérale 10 cm, pièges à basses dans les angles",
+      "finish_note": "Absorption derrière les enceintes pour réduire l'interférence de paroi (SBIR)."
+    },
+    {
+      "surface": "walls",
+      "material": "plâtre + panneaux absorbants aux points de première réflexion latéraux",
+      "finish_note": "Traitement symétrique gauche/droite."
+    },
+    {
+      "surface": "rear-wall",
+      "material": "diffuseur bois + bass traps",
+      "finish_note": "Évite l'écho flottant vers la position d'écoute."
+    },
+    {
+      "surface": "ceiling",
+      "material": "nuage absorbant (cloud) au-dessus du bureau",
+      "finish_note": "Capte la première réflexion de plafond."
+    }
+  ],
+  "rt60_s": {
+    "min": 0.2,
+    "max": 0.3,
+    "band_note": "Cible DPA pour une régie, à 500 Hz.",
+    "source_url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/"
+  },
+  "zones": [
+    {
+      "id": "desk",
+      "kind": "desk",
+      "rect_m": [
+        0,
+        -1.0,
+        2.4,
+        1.6
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "listening",
+      "kind": "control-room",
+      "rect_m": [
+        0,
+        -0.3,
+        1.4,
+        1.2
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "rack",
+      "kind": "other",
+      "rect_m": [
+        1.55,
+        -1.0,
+        0.8,
+        0.8
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "overdub-corner",
+      "kind": "vocal-booth",
+      "rect_m": [
+        1.2,
+        1.7,
+        1.4,
+        1.4
+      ],
+      "floor_y_m": 0
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "desk",
+      "position_m": [
+        -0.8,
+        1.2,
+        -1.7
+      ],
+      "rotation_deg": 30,
+      "note": "Enceinte gauche, pincée vers l'auditeur ; triangle de 1,6 m (angle de 60°, Genelec). rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "desk",
+      "position_m": [
+        0.8,
+        1.2,
+        -1.7
+      ],
+      "rotation_deg": -30,
+      "note": "Enceinte droite, symétrique."
+    },
+    {
+      "equipment_id": "ssl-uf8",
+      "zone": "desk",
+      "position_m": [
+        0,
+        0.78,
+        -0.8
+      ],
+      "rotation_deg": 0,
+      "note": "Surface de contrôle DAW devant l'auditeur."
+    },
+    {
+      "equipment_id": "universal-audio-apollo-twin-x-gen2",
+      "zone": "desk",
+      "position_m": [
+        0.55,
+        0.8,
+        -0.95
+      ],
+      "rotation_deg": 0,
+      "note": "Interface audio (préamplis + conversion)."
+    },
+    {
+      "equipment_id": "mackie-big-knob-studio",
+      "zone": "desk",
+      "position_m": [
+        -0.55,
+        0.8,
+        -0.95
+      ],
+      "rotation_deg": 0,
+      "note": "Contrôleur d'écoute : volume, sélection des enceintes, talkback."
+    },
+    {
+      "equipment_id": "universal-audio-1176ln",
+      "zone": "rack",
+      "position_m": [
+        1.55,
+        0.6,
+        -1.0
+      ],
+      "rotation_deg": -90,
+      "note": "Compresseur en rack latéral, face avant vers l'opérateur."
+    },
+    {
+      "equipment_id": "km-210-9",
+      "zone": "overdub-corner",
+      "position_m": [
+        1.2,
+        0,
+        1.7
+      ],
+      "rotation_deg": 180,
+      "note": "Pied de micro du coin voix."
+    },
+    {
+      "equipment_id": "neumann-tlm-103",
+      "zone": "overdub-corner",
+      "position_m": [
+        1.2,
+        1.6,
+        1.6
+      ],
+      "rotation_deg": 180,
+      "note": "Micro statique voix/overdub."
+    },
+    {
+      "equipment_id": "beyerdynamic-dt-770-pro",
+      "zone": "overdub-corner",
+      "position_m": [
+        1.7,
+        1.4,
+        2.2
+      ],
+      "rotation_deg": 180,
+      "note": "Casque fermé pour l'overdub (pas de repisse)."
+    },
+    {
+      "equipment_id": "minidsp-umik-1",
+      "zone": "listening",
+      "position_m": [
+        0,
+        1.2,
+        -0.3
+      ],
+      "rotation_deg": 0,
+      "note": "Micro de mesure à hauteur d'oreille pour REW (modes, réponse)."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        0,
+        0.3,
+        -2.45
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        1.95,
+        0.3,
+        -1.0
+      ],
+      "type": "schuko-16a"
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        1.95,
+        0.4,
+        1.7
+      ],
+      "type": "wall-patch-xlr-4",
+      "note": "Boîtier mural micro + retour casque du coin overdub."
+    },
+    {
+      "position_m": [
+        1.55,
+        1.0,
+        -1.0
+      ],
+      "type": "trs-patchbay-48",
+      "note": "Baie de brassage demi-normalisée dans le rack."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": -1.2,
+      "width_m": 0.9,
+      "height_m": 2.04
+    }
+  ],
+  "lighting": {
+    "mood": "tamisé, indirect, pas de reflet sur les écrans",
+    "color_temp_k": 3000
+  },
+  "procedural": {
+    "wall_color": "#3a3f45",
+    "floor_color": "#8a6b4a",
+    "ceiling_color": "#2e3236",
+    "prop_hints": [
+      "panneaux absorbants tissu gris",
+      "bass traps d'angle",
+      "bureau studio avec étagère rack",
+      "écrans d'ordinateur",
+      "nuage acoustique au plafond"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://www.production-expert.com/production-expert-1/how-to-set-up-a-mix-room-for-dolby-atmos-music-definitive-guide",
+      "publisher": "Production Expert (résumé d'une vidéo Dolby, L. Argilla et B. Pennington)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "trade-press",
+      "covers": [
+        "dimensions_m.length.min",
+        "dimensions_m.width.min",
+        "dimensions_m.height.min"
+      ]
+    },
+    {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+      "publisher": "EBU (Tech 3276, 1998)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "standard",
+      "covers": [
+        "dimensions_m (30 m² = surface minimale d'une régie de haute qualité : la petite régie est sous ce seuil, d'où le max)",
+        "proportions l/h et w/h",
+        "hauteur 1,2 m des enceintes"
+      ]
+    },
+    {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "publisher": "DPA Microphones, Mic University",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "rt60_s"
+      ]
+    },
+    {
+      "url": "https://www.genelec.com/monitor-placement",
+      "publisher": "Genelec",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "gear_positions (angle 60°, hauteur 1,2–1,4 m, auditeur à ≥ 1 m des murs, tiers avant)"
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "field": "dimensions_m.*.typical",
+      "note": "5,0 × 4,0 × 2,7 m (20 m²) : estimation d'ingénieur pour une petite régie de production ; vérifie les rapports EBU (1,1·w/h ≤ l/h ≤ 4,5·w/h − 4). Aucune source ne donne une valeur « typique ».",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "dimensions_m.*.max",
+      "note": "6,4 × 4,7 × 3,0 m : découpage estimé d'une surface de 30 m² (seuil EBU). Seule la surface de 30 m² est sourcée.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "dimensions_m.*.min",
+      "note": "Le minimum vient d'une recommandation Dolby pour une pièce de mixage Atmos à domicile (10 × 11,5 pieds, plafond 8 pieds), réutilisée ici comme minimum pratique d'une régie.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "gear_positions",
+      "note": "L'EBU demande 1 m entre enceintes et murs et 1,5 m entre auditeur et murs latéraux/arrière : impossible dans une petite régie, compromis volontaire.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

@@ -1,0 +1,371 @@
+{
+  "id": "studio-live-room-medium",
+  "name_fr": "Salle de prise de son (studio, taille moyenne)",
+  "name_en": "Medium studio live room",
+  "family": "studio",
+  "size": "medium",
+  "description": "Grande pièce d'enregistrement d'un studio professionnel, assez haute pour un son de batterie ou de cordes naturel, avec une cabine d'isolation, des panneaux mobiles (gobos) et des boîtiers muraux de lignes vers la régie. Surface et hauteur typiques : studio B des Studios Ferber (85 m², 5 m).",
+  "dimensions_m": {
+    "length": {
+      "min": 7.5,
+      "typical": 10.5,
+      "max": 13.0
+    },
+    "width": {
+      "min": 5.5,
+      "typical": 8.1,
+      "max": 10.0
+    },
+    "height": {
+      "min": 3.5,
+      "typical": 5.0,
+      "max": 6.0
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "parquet chêne massif",
+      "finish_note": "Parquet en chêne massif cité par Ferber (studio B) ; tapis amovibles sous la batterie."
+    },
+    {
+      "surface": "walls",
+      "material": "alternance bois réfléchissant / absorbants / diffuseurs",
+      "finish_note": "Permet des zones plus vivantes ou plus mates selon l'instrument."
+    },
+    {
+      "surface": "ceiling",
+      "material": "plafond haut avec absorbants suspendus",
+      "finish_note": "Hauteur élevée = premières réflexions de plafond tardives."
+    },
+    {
+      "surface": "front-wall",
+      "material": "vitrage double vers la régie",
+      "finish_note": "Contact visuel musiciens / ingénieur."
+    }
+  ],
+  "rt60_s": {
+    "min": 0.4,
+    "max": 0.6,
+    "band_note": "Cible DPA pour un studio d'enregistrement, à 500 Hz.",
+    "source_url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/"
+  },
+  "zones": [
+    {
+      "id": "live-main",
+      "kind": "live-room",
+      "rect_m": [
+        0,
+        1.0,
+        8.0,
+        8.0
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "drum-area",
+      "kind": "live-room",
+      "rect_m": [
+        1.8,
+        -2.4,
+        3.6,
+        3.2
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "iso-booth",
+      "kind": "iso-booth",
+      "rect_m": [
+        -3.05,
+        -4.05,
+        1.9,
+        2.3
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "amp-corner",
+      "kind": "live-room",
+      "rect_m": [
+        -2.8,
+        3.6,
+        2.2,
+        2.2
+      ],
+      "floor_y_m": 0
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "akg-d112-mkii",
+      "zone": "drum-area",
+      "position_m": [
+        1.8,
+        0.25,
+        -2.0
+      ],
+      "rotation_deg": 180,
+      "note": "Grosse caisse, micro dans l'évent de la peau de résonance. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+    },
+    {
+      "equipment_id": "shure-sm57",
+      "zone": "drum-area",
+      "position_m": [
+        1.55,
+        0.6,
+        -2.45
+      ],
+      "rotation_deg": 180,
+      "note": "Caisse claire, dessus."
+    },
+    {
+      "equipment_id": "sennheiser-md-421-ii",
+      "zone": "drum-area",
+      "position_m": [
+        2.2,
+        0.75,
+        -2.6
+      ],
+      "rotation_deg": 180,
+      "note": "Toms (un par fût)."
+    },
+    {
+      "equipment_id": "schoeps-cmc-6-mk-4",
+      "zone": "drum-area",
+      "position_m": [
+        1.8,
+        2.0,
+        -2.2
+      ],
+      "rotation_deg": 180,
+      "note": "Paire d'overheads cardioïdes au-dessus de la batterie."
+    },
+    {
+      "equipment_id": "coles-4038",
+      "zone": "live-main",
+      "position_m": [
+        1.8,
+        1.6,
+        0.6
+      ],
+      "rotation_deg": 180,
+      "note": "Micros d'ambiance (room) face à la batterie, à quelques mètres."
+    },
+    {
+      "equipment_id": "royer-r-121",
+      "zone": "amp-corner",
+      "position_m": [
+        -2.8,
+        0.4,
+        3.3
+      ],
+      "rotation_deg": 0,
+      "note": "Ampli guitare, ruban à 15–20 cm du haut-parleur."
+    },
+    {
+      "equipment_id": "neumann-u87-ai",
+      "zone": "iso-booth",
+      "position_m": [
+        -3.05,
+        1.6,
+        -4.0
+      ],
+      "rotation_deg": 0,
+      "note": "Voix témoin ou voix lead dans la cabine d'isolation."
+    },
+    {
+      "equipment_id": "akg-c414-xls",
+      "zone": "live-main",
+      "position_m": [
+        -1.5,
+        1.2,
+        0.5
+      ],
+      "rotation_deg": 0,
+      "note": "Piano / guitare acoustique, au centre de la pièce."
+    },
+    {
+      "equipment_id": "km-210-9",
+      "zone": "live-main",
+      "position_m": [
+        -1.5,
+        0,
+        0.5
+      ],
+      "rotation_deg": 0,
+      "note": "Pieds de micro (perche) — un par source."
+    },
+    {
+      "equipment_id": "behringer-ha400",
+      "zone": "live-main",
+      "position_m": [
+        0,
+        1.0,
+        -0.5
+      ],
+      "rotation_deg": 0,
+      "note": "Distribution casque (cue mix) pour les musiciens."
+    },
+    {
+      "equipment_id": "beyerdynamic-dt-770-pro",
+      "zone": "live-main",
+      "position_m": [
+        0.3,
+        1.0,
+        -0.5
+      ],
+      "rotation_deg": 0,
+      "note": "Casques fermés des musiciens."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        -4.0,
+        0.3,
+        0
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        4.0,
+        0.3,
+        -2.4
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        0,
+        0.3,
+        5.2
+      ],
+      "type": "schuko-16a"
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        4.0,
+        0.4,
+        -1.0
+      ],
+      "type": "wall-patch-xlr-24",
+      "note": "Lignes micro vers la régie, côté batterie."
+    },
+    {
+      "position_m": [
+        -4.0,
+        0.4,
+        2.0
+      ],
+      "type": "wall-patch-xlr-12",
+      "note": "Lignes micro + retours casque, côté amplis."
+    },
+    {
+      "position_m": [
+        -3.05,
+        0.4,
+        -5.2
+      ],
+      "type": "wall-patch-xlr-4",
+      "note": "Boîtier de la cabine d'isolation."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "front",
+      "kind": "window",
+      "offset_m": 1.0,
+      "width_m": 2.4,
+      "height_m": 1.2
+    },
+    {
+      "wall": "right",
+      "kind": "door",
+      "offset_m": 3.5,
+      "width_m": 1.4,
+      "height_m": 2.2
+    },
+    {
+      "wall": "front",
+      "kind": "door",
+      "offset_m": -3.05,
+      "width_m": 0.9,
+      "height_m": 2.04
+    }
+  ],
+  "lighting": {
+    "mood": "chaud, gradable, lampes d'appoint près des musiciens",
+    "color_temp_k": 3000
+  },
+  "procedural": {
+    "wall_color": "#7a5b3e",
+    "floor_color": "#9b7148",
+    "ceiling_color": "#3b342e",
+    "prop_hints": [
+      "panneaux mobiles (gobos)",
+      "tapis persans sous la batterie",
+      "pieds de micro perche",
+      "câbles XLR au sol",
+      "ampli guitare",
+      "piano à queue"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://studios-ferber.com/studio-b/",
+      "publisher": "Studios Ferber (Paris), page Studio B",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m (85 m² × 5 m : surface et hauteur typiques)",
+        "surfaces[0] (parquet chêne massif)",
+        "zones (1 cabine d'isolation, 6 panneaux mobiles)"
+      ]
+    },
+    {
+      "url": "https://studios-ferber.com/studio-a/",
+      "publisher": "Studios Ferber (Paris), page Studio A",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "description (au-delà : 187 m² × 7 m = grande salle, hors catégorie medium)"
+      ]
+    },
+    {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "publisher": "DPA Microphones, Mic University",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "rt60_s"
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "field": "dimensions_m.length/width.typical",
+      "note": "Ferber donne 85 m² ; le découpage 10,5 × 8,1 m est une estimation.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "dimensions_m.*.min/max",
+      "note": "Min 7,5 × 5,5 × 3,5 m et max 13 × 10 × 6 m : bornes estimées pour une salle « medium » (entre une petite salle et le studio A de Ferber, 187 m²).",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "zones.iso-booth",
+      "note": "Taille de la cabine d'isolation (1,9 × 2,3 m) estimée ; Ferber ne la publie pas.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

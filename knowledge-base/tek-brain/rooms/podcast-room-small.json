@@ -1,0 +1,299 @@
+{
+  "id": "podcast-room-small",
+  "name_fr": "Studio podcast (petit, 4 voix)",
+  "name_en": "Small podcast studio",
+  "family": "studio",
+  "size": "small",
+  "description": "Petite pièce traitée pour enregistrer jusqu'à quatre voix autour d'une table : quatre micros dynamiques sur bras articulés, un enregistreur/mélangeur multipiste, un casque par invité, souvent des caméras pour la version vidéo. Équipement type repris de studios réels (4 × SM7B, Rodecaster Pro II, 4 casques).",
+  "dimensions_m": {
+    "length": {
+      "min": 3.5,
+      "typical": 5.5,
+      "max": 6.0
+    },
+    "width": {
+      "min": 3.0,
+      "typical": 4.0,
+      "max": 5.0
+    },
+    "height": {
+      "min": 2.4,
+      "typical": 2.6,
+      "max": 2.8
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "moquette ou tapis épais sous la table",
+      "finish_note": "Limite les bruits de pas et la réflexion de sol."
+    },
+    {
+      "surface": "walls",
+      "material": "plâtre + panneaux absorbants tissu (souvent colorés pour l'image)",
+      "finish_note": "Traitement visible à la caméra."
+    },
+    {
+      "surface": "ceiling",
+      "material": "dalles absorbantes",
+      "finish_note": "Pièce basse : le plafond est la première réflexion."
+    }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    {
+      "id": "table",
+      "kind": "desk",
+      "rect_m": [
+        0,
+        0.2,
+        2.2,
+        1.8
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "producer",
+      "kind": "desk",
+      "rect_m": [
+        1.3,
+        2.25,
+        1.3,
+        0.9
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "camera-line",
+      "kind": "other",
+      "rect_m": [
+        0,
+        -2.2,
+        3.6,
+        0.8
+      ],
+      "floor_y_m": 0
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "shure-sm7b",
+      "zone": "table",
+      "position_m": [
+        -0.5,
+        1.0,
+        -0.35
+      ],
+      "rotation_deg": 0,
+      "note": "Invité 1 ; micro dynamique sur bras, 5–10 cm de la bouche. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+    },
+    {
+      "equipment_id": "shure-sm7b",
+      "zone": "table",
+      "position_m": [
+        0.5,
+        1.0,
+        -0.35
+      ],
+      "rotation_deg": 0,
+      "note": "Invité 2."
+    },
+    {
+      "equipment_id": "shure-sm7b",
+      "zone": "table",
+      "position_m": [
+        -0.5,
+        1.0,
+        0.75
+      ],
+      "rotation_deg": 180,
+      "note": "Invité 3, face aux deux premiers."
+    },
+    {
+      "equipment_id": "shure-sm7b",
+      "zone": "table",
+      "position_m": [
+        0.5,
+        1.0,
+        0.75
+      ],
+      "rotation_deg": 180,
+      "note": "Invité 4."
+    },
+    {
+      "equipment_id": "rode-psa1-plus",
+      "zone": "table",
+      "position_m": [
+        0,
+        0.78,
+        0.2
+      ],
+      "rotation_deg": 0,
+      "note": "Bras articulés (×4) fixés au bord de la table."
+    },
+    {
+      "equipment_id": "tascam-portacapture-x8",
+      "zone": "producer",
+      "position_m": [
+        1.3,
+        0.8,
+        2.2
+      ],
+      "rotation_deg": 180,
+      "note": "Enregistreur multipiste 4 entrées XLR (rôle du Rodecaster cité par les sources, absent du catalogue)."
+    },
+    {
+      "equipment_id": "behringer-ha400",
+      "zone": "producer",
+      "position_m": [
+        1.0,
+        0.8,
+        2.1
+      ],
+      "rotation_deg": 180,
+      "note": "Ampli casque 4 sorties."
+    },
+    {
+      "equipment_id": "audio-technica-ath-m50x",
+      "zone": "table",
+      "position_m": [
+        0,
+        0.8,
+        0.2
+      ],
+      "rotation_deg": 0,
+      "note": "Casques fermés (×4), un par invité."
+    },
+    {
+      "equipment_id": "neumann-kh-120-ii",
+      "zone": "producer",
+      "position_m": [
+        1.3,
+        1.1,
+        2.55
+      ],
+      "rotation_deg": 180,
+      "note": "Paire d'écoutes du producteur (coupées pendant l'enregistrement)."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        0,
+        0.3,
+        -2.7
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        1.95,
+        0.3,
+        2.2
+      ],
+      "type": "schuko-16a"
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        -1.95,
+        0.4,
+        0.2
+      ],
+      "type": "wall-patch-xlr-4",
+      "note": "Lignes micro vers une régie voisine si le studio en a une."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": -1.2,
+      "width_m": 0.9,
+      "height_m": 2.04
+    }
+  ],
+  "lighting": {
+    "mood": "lumineux, éclairage vidéo doux (panneaux LED)",
+    "color_temp_k": 5600
+  },
+  "procedural": {
+    "wall_color": "#2c3e50",
+    "floor_color": "#4a4a4a",
+    "ceiling_color": "#2a2a2a",
+    "prop_hints": [
+      "table ronde ou rectangulaire",
+      "panneaux acoustiques colorés",
+      "caméras sur trépied",
+      "panneaux LED",
+      "enseigne lumineuse « on air »"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://giggster.com/listing/full-equipped-podcast-studio",
+      "publisher": "Giggster (annonce d'un studio podcast, Los Angeles)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m (224 pieds² ≈ 20,8 m² : surface typique)",
+        "gear_positions (4 × SM7B, Rodecaster Pro II, bras Rode PSA+, caméras)"
+      ]
+    },
+    {
+      "url": "https://giggster.com/fr/listing/studio-de-tournage-interview-podcast-facecam-a-re",
+      "publisher": "Giggster (annonce d'un studio podcast/facecam, Paris République)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m.height.typical (260 cm)",
+        "dimensions_m.*.max (30 m², voir conflicts)"
+      ]
+    },
+    {
+      "url": "https://knihovna.phil.muni.cz/en/spaces/podcast-studio",
+      "publisher": "Bibliothèque de la Faculté des lettres, Université Masaryk (Brno)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "university",
+      "covers": [
+        "description (jusqu'à 4 voix)",
+        "gear_positions (4 × SM7B sur bras, Rodecaster Pro II, 4 casques AKG K-240)"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "field": "dimensions_m.*.max",
+      "values": [
+        {
+          "value": "30 m² (texte de l'annonce)",
+          "source_url": "https://giggster.com/fr/listing/studio-de-tournage-interview-podcast-facecam-a-re"
+        },
+        {
+          "value": "323 m² (champ « superficie » de la même annonce)",
+          "source_url": "https://giggster.com/fr/listing/studio-de-tournage-interview-podcast-facecam-a-re"
+        }
+      ],
+      "note": "Annonce incohérente ; 30 m² retenu, cohérent avec un studio en sous-sol de 2,6 m de haut."
+    }
+  ],
+  "not_found_log": [
+    {
+      "field": "dimensions_m",
+      "note": "Découpages estimés : typique 5,5 × 4,0 m (≈ 22 m², proche des 20,8 m² de l'annonce de Los Angeles), max 6 × 5 m (30 m²), min 3,5 × 3,0 × 2,4 m (aucune source).",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "rt60_s",
+      "note": "Non trouvé pour un studio podcast. Estimation d'ingénieur : 0,2–0,3 s à 500 Hz (entre la cabine voix et la régie de la cible DPA).",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

@@ -1,0 +1,398 @@
+{
+  "id": "studio-control-room-large",
+  "name_fr": "Grande régie d'enregistrement (console grand format)",
+  "name_en": "Large studio control room",
+  "family": "studio",
+  "size": "large",
+  "description": "Régie d'un studio d'enregistrement professionnel avec console grand format, écoutes principales encastrées (soffit) et écoutes de proximité sur la console, bureau producteur à l'arrière et baie de racks. Surfaces et hauteurs tirées des régies des Studios Ferber (Paris) ; proportions et acoustique selon l'EBU Tech 3276.",
+  "dimensions_m": {
+    "length": {
+      "min": 6.8,
+      "typical": 7.8,
+      "max": 9.5
+    },
+    "width": {
+      "min": 5.15,
+      "typical": 5.8,
+      "max": 7.0
+    },
+    "height": {
+      "min": 2.5,
+      "typical": 3.5,
+      "max": 4.0
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "parquet sur dalle flottante",
+      "finish_note": "Dalle désolidarisée pour l'isolation ; tapis sous la console."
+    },
+    {
+      "surface": "front-wall",
+      "material": "mur avant rigide avec enceintes encastrées (soffit), vitrage vers le studio",
+      "finish_note": "Le vitrage incliné renvoie les réflexions hors de la zone d'écoute."
+    },
+    {
+      "surface": "walls",
+      "material": "plâtre + absorbants laine minérale et diffuseurs bois",
+      "finish_note": "Symétrie acoustique gauche/droite exigée par l'EBU."
+    },
+    {
+      "surface": "rear-wall",
+      "material": "diffuseurs + pièges à basses profonds",
+      "finish_note": "Champ réverbéré diffus, pas d'écho flottant."
+    },
+    {
+      "surface": "ceiling",
+      "material": "plafond suspendu absorbant + nuage au-dessus de la console",
+      "finish_note": "Le plateau de console est lui-même une source de réflexions précoces (EBU)."
+    }
+  ],
+  "rt60_s": {
+    "min": 0.2,
+    "max": 0.4,
+    "band_note": "Tm = moyenne des tiers d'octave 200 Hz–4 kHz (EBU) ; formule guide Tm = 0,25·(V/100)^(1/3) s ≈ 0,29 s pour le volume typique (158 m³).",
+    "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+  },
+  "zones": [
+    {
+      "id": "console",
+      "kind": "desk",
+      "rect_m": [
+        0,
+        -1.6,
+        3.4,
+        1.6
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "listening",
+      "kind": "control-room",
+      "rect_m": [
+        0,
+        -0.8,
+        1.6,
+        1.6
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "producer-desk",
+      "kind": "desk",
+      "rect_m": [
+        0,
+        2.6,
+        3.6,
+        1.4
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "racks",
+      "kind": "machine-room",
+      "rect_m": [
+        -2.4,
+        -0.4,
+        0.9,
+        2.0
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "front-wall",
+      "kind": "other",
+      "rect_m": [
+        0,
+        -3.65,
+        5.8,
+        0.5
+      ],
+      "floor_y_m": 0
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "genelec-1234a",
+      "zone": "front-wall",
+      "position_m": [
+        -1.6,
+        1.8,
+        -3.65
+      ],
+      "rotation_deg": 15,
+      "note": "Écoute principale gauche encastrée ; base 3,2 m (EBU : 2 à 4 m), inclinaison ≤ 10° vers l'oreille. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+    },
+    {
+      "equipment_id": "genelec-1234a",
+      "zone": "front-wall",
+      "position_m": [
+        1.6,
+        1.8,
+        -3.65
+      ],
+      "rotation_deg": -15,
+      "note": "Écoute principale droite."
+    },
+    {
+      "equipment_id": "genelec-7360a",
+      "zone": "front-wall",
+      "position_m": [
+        0,
+        0.25,
+        -3.5
+      ],
+      "rotation_deg": 0,
+      "note": "Caisson de grave au sol, au centre du mur avant."
+    },
+    {
+      "equipment_id": "ssl-origin",
+      "zone": "console",
+      "position_m": [
+        0,
+        0.85,
+        -1.6
+      ],
+      "rotation_deg": 0,
+      "note": "Console analogique grand format face à la vitre."
+    },
+    {
+      "equipment_id": "focal-trio6",
+      "zone": "console",
+      "position_m": [
+        -0.75,
+        1.25,
+        -2.2
+      ],
+      "rotation_deg": 20,
+      "note": "Écoute de proximité gauche posée sur le pont de console."
+    },
+    {
+      "equipment_id": "focal-trio6",
+      "zone": "console",
+      "position_m": [
+        0.75,
+        1.25,
+        -2.2
+      ],
+      "rotation_deg": -20,
+      "note": "Écoute de proximité droite."
+    },
+    {
+      "equipment_id": "avid-protools-mtrx-studio",
+      "zone": "racks",
+      "position_m": [
+        -2.4,
+        1.0,
+        -0.8
+      ],
+      "rotation_deg": 90,
+      "note": "Interface Pro Tools / routage du monitoring."
+    },
+    {
+      "equipment_id": "bittree-969a-2x48-1-5ru",
+      "zone": "racks",
+      "position_m": [
+        -2.4,
+        0.8,
+        -0.2
+      ],
+      "rotation_deg": 90,
+      "note": "Baie de brassage du studio."
+    },
+    {
+      "equipment_id": "universal-audio-teletronix-la-2a",
+      "zone": "racks",
+      "position_m": [
+        -2.4,
+        1.2,
+        0.0
+      ],
+      "rotation_deg": 90,
+      "note": "Compresseur optique (voix, basse)."
+    },
+    {
+      "equipment_id": "empirical-labs-distressor-el8",
+      "zone": "racks",
+      "position_m": [
+        -2.4,
+        1.0,
+        0.2
+      ],
+      "rotation_deg": 90,
+      "note": "Compresseur polyvalent."
+    },
+    {
+      "equipment_id": "bricasti-design-m7",
+      "zone": "racks",
+      "position_m": [
+        -2.4,
+        0.6,
+        0.2
+      ],
+      "rotation_deg": 90,
+      "note": "Réverbération de mixage."
+    },
+    {
+      "equipment_id": "neumann-kh-120-ii",
+      "zone": "producer-desk",
+      "position_m": [
+        1.2,
+        1.1,
+        2.4
+      ],
+      "rotation_deg": 180,
+      "note": "Écoute de contrôle « grand public » au bureau producteur (vérification)."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        0,
+        0.3,
+        -3.85
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        -2.85,
+        0.3,
+        -0.4
+      ],
+      "type": "schuko-16a-onduleur"
+    },
+    {
+      "position_m": [
+        0,
+        0.3,
+        3.85
+      ],
+      "type": "schuko-16a"
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        -2.4,
+        0.8,
+        -0.2
+      ],
+      "type": "trs-patchbay-96",
+      "note": "Baie TT demi-normalisée (console, périphériques, lignes studio)."
+    },
+    {
+      "position_m": [
+        2.85,
+        0.4,
+        -2.5
+      ],
+      "type": "wall-patch-multipair-db25",
+      "note": "Lignes de liaison vers le studio (tie lines)."
+    },
+    {
+      "position_m": [
+        2.85,
+        0.4,
+        -1.5
+      ],
+      "type": "dante-wall-port",
+      "note": "Réseau audio / horloge."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "front",
+      "kind": "window",
+      "offset_m": 0,
+      "width_m": 2.4,
+      "height_m": 1.2
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 2.0,
+      "width_m": 1.0,
+      "height_m": 2.1
+    }
+  ],
+  "lighting": {
+    "mood": "chaud, gradable, spots sur la console",
+    "color_temp_k": 2700
+  },
+  "procedural": {
+    "wall_color": "#4a3b30",
+    "floor_color": "#6e5136",
+    "ceiling_color": "#2b2622",
+    "prop_hints": [
+      "console grand format",
+      "enceintes encastrées dans un mur en bois",
+      "racks 19\" sur roulettes",
+      "canapé producteur",
+      "vitre inclinée vers le studio"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://studios-ferber.com/studio-d/",
+      "publisher": "Studios Ferber (Paris), page Studio D",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m (45 m² × 3,5 m : surface et hauteur typiques)",
+        "dimensions_m.height.typical",
+        "gear_positions (console SSL 4048E, monitoring 5.1)"
+      ]
+    },
+    {
+      "url": "https://studios-ferber.com/studio-a/",
+      "publisher": "Studios Ferber (Paris), page Studio A",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m (régie 39 m² × 3 m, console Neve 8248)"
+      ]
+    },
+    {
+      "url": "https://studios-ferber.com/studio-b/",
+      "publisher": "Studios Ferber (Paris), page Studio B",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m (35 m² × 2,5 m : surface et hauteur minimales)",
+        "dimensions_m.height.min"
+      ]
+    },
+    {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+      "publisher": "EBU (Tech 3276, 1998)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "standard",
+      "covers": [
+        "rt60_s",
+        "dimensions_m (volume ≤ 300 m³, rapports l/h et w/h)",
+        "gear_positions (base 2–4 m, enceintes ≥ 1,2 m, inclinaison ≤ 10°, auditeur ≥ 1,5 m des murs)"
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "field": "dimensions_m.length/width",
+      "note": "Ferber ne publie que la surface (35, 39, 45 m²) et la hauteur ; le découpage en longueur × largeur (6,8 × 5,15 ; 7,8 × 5,8) est une estimation qui respecte les rapports EBU.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "dimensions_m.*.max",
+      "note": "9,5 × 7,0 × 4,0 m (266 m³) : estimation sous la limite EBU de 300 m³ ; pas de régie réelle publiée à cette taille consultée.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}
