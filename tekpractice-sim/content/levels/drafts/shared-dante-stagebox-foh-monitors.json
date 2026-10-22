@@ -1,0 +1,48 @@
+{
+ "id": "draft-shared-dante-stagebox-foh-monitors",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Stagebox Dante partagée entre console façade et console retours",
+ "brief": "Concert en salle moyenne : une stagebox Dante au plateau alimente une console façade et une console retours, en réseau redondant (double étoile). Les deux consoles reçoivent les mêmes entrées ; il faut décider qui pilote les préamplis, choisir un seul leader d'horloge, créer un multicast pour les entrées partagées et régler la latence. Contrôler la séparation primaire/secondaire et les longueurs de câble.",
+ "devices": [
+  {
+   "instanceId": "mic1",
+   "deviceId": "shure-sm58"
+  },
+  {
+   "instanceId": "rio",
+   "deviceId": "yamaha-rio3224-d2"
+  },
+  {
+   "instanceId": "mon",
+   "deviceId": "yamaha-ql1"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "mic1",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "rio",
+    "port": "in-mic-1"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/audio-networks.json#shared-dante-stagebox-foh-monitors",
+  "room_id": "concert-hall-medium",
+  "difficulty": 4,
+  "unmapped_nodes": [
+   "Switch primaire",
+   "Switch secondaire",
+   "Console façade"
+  ],
+  "unresolved_edges": []
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "generated": "2026-10-22",
+ "drafts": [
+  {
+   "id": "shared-dante-stagebox-foh-monitors",
+   "title": "Stagebox Dante partagée entre console façade et console retours",
+   "connections": 1,
+   "unmapped": 3
+  },
+  {
+   "id": "radio-morning-show-phone-guest",
+   "title": "Matinale radio avec invité au téléphone",
+   "connections": 5,
+   "unmapped": 3
+  },
+  {
+   "id": "club-gig-foh-with-monitors-from-foh",
+   "title": "Concert en club : façade numérique, boîtier de scène et retours depuis la façade",
+   "connections": 7,
+   "unmapped": 0
+  },
+  {
+   "id": "studio-insert-via-patchbay",
+   "title": "Studio : insérer un compresseur matériel via la baie de brassage",
+   "connections": 2,
+   "unmapped": 1
+  },
+  {
+   "id": "post-room-hdx-house-clock",
+   "title": "Salle de post-production : Pro Tools HDX sur horloge maison",
+   "connections": 2,
+   "unmapped": 0
+  },
+  {
+   "id": "club-gig-vocal-and-toms-processing",
+   "title": "Concert en club : dynamique de la voix, portes sur les toms et réverbération partagée",
+   "connections": 3,
+   "unmapped": 1
+  },
+  {
+   "id": "dj-laptop-into-live-console",
+   "title": "Ordinateur DJ vers une console live",
+   "connections": 3,
+   "unmapped": 1
+  },
+  {
+   "id": "festival-stage-changeover",
+   "title": "Changement de plateau sur une grande scène de festival",
+   "connections": 1,
+   "unmapped": 7
+  },
+  {
+   "id": "stereo-recording-acoustic-duo",
+   "title": "Enregistrement stéréo d'un duo acoustique",
+   "connections": 1,
+   "unmapped": 3
+  },
+  {
+   "id": "band-soundcheck-four-wedge-mixes",
+   "title": "Balance d'un groupe avec 4 mixes wedges",
+   "connections": 2,
+   "unmapped": 2
+  },
+  {
+   "id": "control-room-calibration-small-studio",
+   "title": "Calibration de l'écoute d'une petite régie",
+   "connections": 2,
+   "unmapped": 1
+  },
+  {
+   "id": "film-scoring-session",
+   "title": "Séance de musique de film sur scoring stage",
+   "connections": 1,
+   "unmapped": 5
+  },
+  {
+   "id": "post-dub-session-adr-foley",
+   "title": "Séance de postsynchro et bruitage en auditorium",
+   "connections": 1,
+   "unmapped": 5
+  },
+  {
+   "id": "tv-documentary-final-mix",
+   "title": "Mixage final d'un documentaire TV",
+   "connections": 1,
+   "unmapped": 4
+  },
+  {
+   "id": "voice-over-booth-session",
+   "title": "Séance de voix off en cabine",
+   "connections": 4,
+   "unmapped": 2
+  }
+ ]
+}

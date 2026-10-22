@@ -1,0 +1,70 @@
+{
+ "id": "draft-club-gig-vocal-and-toms-processing",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Concert en club : dynamique de la voix, portes sur les toms et réverbération partagée",
+ "brief": "Petit concert rock en club. À la console façade, l'élève compresse la voix lead (et la de-esse), filtre en passe-haut les tranches non graves, gate les deux toms et installe une réverbération externe en départ post-fader / retour stéréo partagée par la voix et la caisse claire.",
+ "devices": [
+  {
+   "instanceId": "vox",
+   "deviceId": "shure-sm58"
+  },
+  {
+   "instanceId": "tom1",
+   "deviceId": "shure-sm57"
+  },
+  {
+   "instanceId": "desk",
+   "deviceId": "yamaha-ql1"
+  },
+  {
+   "instanceId": "pa",
+   "deviceId": "qsc-k12-2"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "vox",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "in-mic-1"
+   }
+  },
+  {
+   "from": {
+    "instance": "tom1",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "in-mic-2"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-main-l"
+   },
+   "to": {
+    "instance": "pa",
+    "port": "in-line-a"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/dynamics-eq-effects.json#club-gig-vocal-and-toms-processing",
+  "room_id": "bar-club-stage-small",
+  "difficulty": 3,
+  "unmapped_nodes": [
+   "Réverbération (aux post-fader → retour)"
+  ],
+  "unresolved_edges": []
+ }
+}

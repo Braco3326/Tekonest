@@ -55,7 +55,7 @@ import { detectLayout } from './input/layoutLabels'
 import type { RoomLayout } from './explore/roomLayout'
 import type { RoomFileT } from './explore/roomSchema'
 import { askCoach, createAiCoach } from './ai'
-import { buildGrounding } from './ai/grounding'
+import { buildGrounding, type KbPack } from './ai/grounding'
 
 declare global {
   interface Window {
@@ -294,8 +294,14 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     return {
       label: 'Pourquoi ?',
       onClick: (toastEl) => {
-        const grounding = buildGrounding(registry, graph.snapshot(), { ruleId, errorCode, subjects })
-        void hud.showCoachReply(toastEl, askCoach(aiCoach, grounding, { examMode }))
+        // TEK Brain fiches (A5) ride along as citable [kb:…] context — a lazy chunk,
+        // fetched only when the learner asks. No pack → the coach works as before.
+        const question = { ruleId, errorCode, subjects }
+        const reply = import('../content/coach/kb-chunks.json')
+          .then((m) => m.default as unknown as KbPack)
+          .catch(() => undefined)
+          .then((kb) => askCoach(aiCoach, buildGrounding(registry, graph.snapshot(), question, undefined, kb), { examMode }))
+        void hud.showCoachReply(toastEl, reply)
       },
     }
   }

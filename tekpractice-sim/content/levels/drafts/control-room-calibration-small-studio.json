@@ -1,0 +1,58 @@
+{
+ "id": "draft-control-room-calibration-small-studio",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Calibration de l'écoute d'une petite régie",
+ "brief": "Dans une petite régie, l'élève place une paire d'enceintes de proximité selon la géométrie EBU, choisit et documente une convention de niveau de référence, puis calibre chaque voie au sonomètre. Il vérifie enfin que l'ouverture du micro talkback coupe bien les écoutes.",
+ "devices": [
+  {
+   "instanceId": "ctl",
+   "deviceId": "grace-m905"
+  },
+  {
+   "instanceId": "spkl",
+   "deviceId": "genelec-8030c"
+  },
+  {
+   "instanceId": "spkr",
+   "deviceId": "genelec-8030c"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "ctl",
+    "port": "out-main-l"
+   },
+   "to": {
+    "instance": "spkl",
+    "port": "in-analog"
+   }
+  },
+  {
+   "from": {
+    "instance": "ctl",
+    "port": "out-main-r"
+   },
+   "to": {
+    "instance": "spkr",
+    "port": "in-analog"
+   }
+  }
+ ],
+ "logicChecks": [
+  "R6"
+ ],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/monitoring.json#control-room-calibration-small-studio",
+  "room_id": "studio-control-room-small",
+  "difficulty": 2,
+  "unmapped_nodes": [
+   "Générateur bruit rose"
+  ],
+  "unresolved_edges": []
+ }
+}

@@ -1,0 +1,124 @@
+{
+ "id": "draft-club-gig-foh-with-monitors-from-foh",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Concert en club : façade numérique, boîtier de scène et retours depuis la façade",
+ "brief": "Un duo voix-guitare joue dans un petit club. Une seule console numérique en façade reçoit les micros par un boîtier de scène Dante. Patcher les entrées, régler les gains en PFL, envoyer la façade et créer deux retours en aux pré-fader. Vérifier qu'un mouvement de fader façade ne change pas les retours.",
+ "devices": [
+  {
+   "instanceId": "vox",
+   "deviceId": "shure-sm58"
+  },
+  {
+   "instanceId": "gtr",
+   "deviceId": "shure-sm57"
+  },
+  {
+   "instanceId": "rio",
+   "deviceId": "yamaha-rio3224-d2"
+  },
+  {
+   "instanceId": "desk",
+   "deviceId": "yamaha-ql1"
+  },
+  {
+   "instanceId": "pa-l",
+   "deviceId": "qsc-k12-2"
+  },
+  {
+   "instanceId": "pa-r",
+   "deviceId": "qsc-k12-2"
+  },
+  {
+   "instanceId": "mon1",
+   "deviceId": "yamaha-dbr12"
+  },
+  {
+   "instanceId": "mon2",
+   "deviceId": "yamaha-dbr12"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "vox",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "rio",
+    "port": "in-mic-1"
+   }
+  },
+  {
+   "from": {
+    "instance": "gtr",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "rio",
+    "port": "in-mic-2"
+   }
+  },
+  {
+   "from": {
+    "instance": "rio",
+    "port": "dante-primary"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "dante-primary"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-main-l"
+   },
+   "to": {
+    "instance": "pa-l",
+    "port": "in-line-a"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-main-r"
+   },
+   "to": {
+    "instance": "pa-r",
+    "port": "in-line-a"
+   }
+  },
+  {
+   "from": {
+    "instance": "rio",
+    "port": "out-line-1"
+   },
+   "to": {
+    "instance": "mon1",
+    "port": "in-line"
+   }
+  },
+  {
+   "from": {
+    "instance": "rio",
+    "port": "out-line-2"
+   },
+   "to": {
+    "instance": "mon2",
+    "port": "in-line"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/consoles-signal-flow.json#club-gig-foh-with-monitors-from-foh",
+  "room_id": "bar-club-stage-small",
+  "difficulty": 3,
+  "unmapped_nodes": [],
+  "unresolved_edges": []
+ }
+}

@@ -28,6 +28,19 @@ export interface Grounding {
   allowedDeviceIds: string[]
   /** Tous les ids du catalog — pour détecter la mention de matériel HORS contexte. */
   knownDeviceIds: string[]
+  /** Fiches TEK Brain (A5) jointes au contexte pour la règle déclenchée. */
+  kbChunks: { id: string; title: string; text: string }[]
+  /** Citations [kb:<id>] autorisées = fiches réellement jointes. */
+  allowedKbIds: string[]
+}
+
+/**
+ * Pack de fiches TEK Brain par règle catalog (content/coach/kb-chunks.json,
+ * généré par tools/build-coach-kb.ts depuis knowledge-base/tek-brain/index).
+ */
+export interface KbPack {
+  byRule: Record<string, string[]>
+  chunks: Record<string, { title: string; text: string; sourceUrls: string[] }>
 }
 
 export function buildGrounding(
@@ -35,6 +48,7 @@ export function buildGrounding(
   snapshot: RigSnapshot,
   q: CoachQuestion,
   readinessLine?: string,
+  kb?: KbPack,
 ): Grounding {
   const rule = q.ruleId ? registry.ruleById.get(q.ruleId) : undefined
 
@@ -58,7 +72,14 @@ export function buildGrounding(
     (c) => `${c.a.instance}:${c.a.port} ↔ ${c.b.instance}:${c.b.port}`,
   )
 
+  const kbIds = (q.ruleId && kb?.byRule[q.ruleId]) || []
+  const kbChunks = kbIds
+    .filter((id) => kb?.chunks[id])
+    .map((id) => ({ id, title: kb!.chunks[id].title, text: kb!.chunks[id].text }))
+
   return {
+    kbChunks,
+    allowedKbIds: kbChunks.map((c) => c.id),
     ruleId: q.ruleId,
     ruleLine: rule ? `${rule.id} — ${rule.title} : ${rule.teach}` : undefined,
     errorCode: q.errorCode,
@@ -84,6 +105,8 @@ export function groundingToContext(g: Grounding): string {
       : 'Câblage actuel : aucun câble.',
   )
   if (g.readinessLine) parts.push(`Progression de l'élève : ${g.readinessLine}`)
+  if (g.kbChunks.length)
+    parts.push(`Fiches TEK Brain (sourcées) :\n${g.kbChunks.map((c) => `- [kb:${c.id}] ${c.title} — ${c.text}`).join('\n')}`)
   return parts.join('\n')
 }
 
@@ -93,6 +116,7 @@ export type ReplyValidation =
 
 const CITE_RULE = /\[(R\d+)\]/g
 const CITE_DEVICE = /\[catalog:([a-z0-9-]+)\]/g
+const CITE_KB = /\[kb:([a-z0-9:#-]+)\]/g
 
 export function validateReply(text: string, g: Grounding): ReplyValidation {
   const citations: string[] = []
@@ -106,6 +130,11 @@ export function validateReply(text: string, g: Grounding): ReplyValidation {
     if (!g.allowedDeviceIds.includes(m[1]))
       return { ok: false, reason: `matériel hors contexte cité : ${m[1]}` }
     citations.push(`[catalog:${m[1]}]`)
+  }
+  for (const m of text.matchAll(CITE_KB)) {
+    if (!g.allowedKbIds.includes(m[1]))
+      return { ok: false, reason: `fiche TEK Brain hors contexte citée : ${m[1]}` }
+    citations.push(`[kb:${m[1]}]`)
   }
   if (citations.length === 0) return { ok: false, reason: 'aucune source citée' }
 

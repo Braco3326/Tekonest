@@ -1,0 +1,52 @@
+{
+ "id": "draft-festival-stage-changeover",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Changement de plateau sur une grande scène de festival",
+ "brief": "Grande scène de festival en plein air : système line array et régie façade fixes gérés par le technicien système, console retours en coulisse, boîtiers de scène Dante partagés sur un réseau commun. Le groupe suivant arrive avec son fichier de console ; sa batterie est déjà montée sur un praticable roulant. Tu disposes du temps annoncé par le régisseur pour faire rouler le praticable, rebrancher les sub-snakes selon le patch festival, faire le line check (façade au casque) et dégrossir les retours ears et wedges. Le système façade ne se touche pas.",
+ "devices": [
+  {
+   "instanceId": "vox",
+   "deviceId": "shure-sm58"
+  },
+  {
+   "instanceId": "rio1",
+   "deviceId": "yamaha-rio3224-d2"
+  },
+  {
+   "instanceId": "mon",
+   "deviceId": "yamaha-ql1"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "vox",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "rio1",
+    "port": "in-mic-1"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/live-sound.json#festival-stage-changeover",
+  "room_id": "festival-open-air-large",
+  "difficulty": 4,
+  "unmapped_nodes": [
+   "Grosse caisse",
+   "Switch Dante",
+   "Console façade",
+   "Contrôleur amplifié",
+   "Line array",
+   "Caissons",
+   "Émetteur ears"
+  ],
+  "unresolved_edges": []
+ }
+}

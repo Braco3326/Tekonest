@@ -1,0 +1,103 @@
+{
+ "id": "draft-radio-morning-show-phone-guest",
+ "version": 1,
+ "domain": "radio",
+ "title": "[BROUILLON] Matinale radio avec invité au téléphone",
+ "brief": "Petit studio en self-op : l'animateur mixe lui-même sa matinale. Un invité appelle sur une ligne téléphonique analogique via un hybride. À réaliser : chaîne micro → console → sortie programme vers le processeur ; ON-AIR commandé par le GPIO ; écoutes régie coupées quand le micro est ouvert ; hybride avec N-1 dédié (bus téléphone vers SEND IN, RCV OUT sur une tranche) ; voix et appelant calés autour de −23 LUFS (0 LU) en court terme.",
+ "devices": [
+  {
+   "instanceId": "mic1",
+   "deviceId": "ev-re20"
+  },
+  {
+   "instanceId": "desk",
+   "deviceId": "axia-iq"
+  },
+  {
+   "instanceId": "litt",
+   "deviceId": "yellowtec-litt"
+  },
+  {
+   "instanceId": "monl",
+   "deviceId": "genelec-8030c"
+  },
+  {
+   "instanceId": "monr",
+   "deviceId": "genelec-8030c"
+  },
+  {
+   "instanceId": "play",
+   "deviceId": "playout-pc"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "mic1",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "in-mic-1"
+   }
+  },
+  {
+   "from": {
+    "instance": "play",
+    "port": "aoip"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "livewire"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "gpio"
+   },
+   "to": {
+    "instance": "litt",
+    "port": "in-gpio"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-monitor-l"
+   },
+   "to": {
+    "instance": "monl",
+    "port": "in-analog"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-monitor-r"
+   },
+   "to": {
+    "instance": "monr",
+    "port": "in-analog"
+   }
+  }
+ ],
+ "logicChecks": [
+  "R5",
+  "R7"
+ ],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/broadcast-radio.json#radio-morning-show-phone-guest",
+  "room_id": "radio-studio-self-op-small",
+  "difficulty": 3,
+  "unmapped_nodes": [
+   "Hybride (SEND IN / RCV OUT)",
+   "Processeur FM",
+   "Sonomètre"
+  ],
+  "unresolved_edges": []
+ }
+}

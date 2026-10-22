@@ -1,0 +1,46 @@
+{
+ "id": "draft-film-scoring-session",
+ "version": 1,
+ "domain": "post",
+ "title": "[BROUILLON] Séance de musique de film sur scoring stage",
+ "brief": "Enregistrer un orchestre de film au click : arbre Decca et outriggers, appoints de pupitre, chaque sortie sur une piste séparée, retour casque avec click pour chaque musicien. Prévoir plusieurs prises et l'enregistrement d'un pupitre en overdub sur le même click.",
+ "devices": [
+  {
+   "instanceId": "io",
+   "deviceId": "avid-hd-io"
+  },
+  {
+   "instanceId": "hdx",
+   "deviceId": "avid-protools-hdx"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "io",
+    "port": "digilink"
+   },
+   "to": {
+    "instance": "hdx",
+    "port": "digilink"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/orchestra-classical.json#film-scoring-session",
+  "room_id": "scoring-stage-large",
+  "difficulty": 5,
+  "unmapped_nodes": [
+   "Arbre centre",
+   "Appoint cuivres",
+   "Console",
+   "Ampli casque",
+   "Casque musicien"
+  ],
+  "unresolved_edges": []
+ }
+}
