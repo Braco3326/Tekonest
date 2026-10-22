@@ -21,8 +21,8 @@
           }
         }
       },
-      "explanation": "Miroir de R1 : les deux connecteurs doivent s'accoupler physiquement (connectorTypes.matesWith). Une XLR mâle se branche dans une XLR femelle ; un jack TS et un jack TRS ne sont pas interchangeables électriquement même s'ils entrent : le TS court-circuite le point froid d'une liaison symétrique. Forcer ou bricoler un adaptateur casse la symétrie ou le connecteur.",
-      "fix": "Utiliser le câble au bon genre et au bon format (xlr3-m ↔ xlr3-f, TRS ↔ TRS) ; pour passer d'un format à l'autre, utiliser une DI ou un adaptateur câblé selon le tableau de Rane.",
+      "explanation": "Miroir de R1 : les deux connecteurs doivent s'accoupler physiquement (connectorTypes.matesWith). Une XLR mâle se branche dans une XLR femelle ; un jack TS et un jack TRS ne sont pas interchangeables même s'ils entrent : Rane rappelle qu'une liaison symétrique n'est pas compatible telle quelle avec une liaison asymétrique. Forcer ou bricoler un adaptateur casse la symétrie ou le connecteur.",
+      "fix": "Utiliser le câble au bon genre et au bon format (xlr3-m ↔ xlr3-f, TRS ↔ TRS) ; pour passer d'un format à l'autre, utiliser une DI ou un câble d'interface symétrique/asymétrique adapté (voir RaneNote 110).",
       "evaluable_now": true,
       "needs_catalog_fields": [],
       "concept_ids": [
@@ -38,21 +38,35 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "review": "ok"
+      "review": "ok",
+      "conflicts": [
+        {
+          "field": "explanation/fix",
+          "values": [
+            {
+              "value": "le TS court-circuite le point froid ; adaptateur câblé selon le tableau de Rane",
+              "source_url": "https://www.ranecommercial.com/legacy/note110.html"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : court-circuit du point froid et tableau de câblage non vérifiables dans le texte de la RaneNote 110 : supprimés ; on garde la phrase vérifiée (« Balanced interconnect is not compatible with unbalanced »)."
+        }
+      ]
     },
     {
       "id": "signal-type-mismatch",
@@ -90,7 +104,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
@@ -100,7 +115,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
@@ -110,7 +126,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -160,7 +177,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/jpc/specifications/",
@@ -170,7 +188,8 @@
           "kind": "manufacturer",
           "covers": [
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
@@ -180,17 +199,19 @@
           "kind": "manufacturer",
           "covers": [
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -239,7 +260,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
@@ -249,17 +271,19 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -307,7 +331,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/jpc/specifications/",
@@ -317,7 +342,8 @@
           "kind": "manufacturer",
           "covers": [
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
@@ -327,7 +353,8 @@
           "kind": "manufacturer",
           "covers": [
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -377,7 +404,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/DI_unit",
@@ -388,7 +416,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/jdi/specifications/",
@@ -398,7 +427,8 @@
           "kind": "manufacturer",
           "covers": [
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -459,12 +489,13 @@
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/DI_unit",
@@ -474,7 +505,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -538,12 +570,13 @@
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
@@ -554,7 +587,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

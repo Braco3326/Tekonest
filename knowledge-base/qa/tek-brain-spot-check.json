@@ -1,0 +1,4682 @@
+{
+ "report": "TEK Brain independent spot-check",
+ "date": "2026-10-22",
+ "status": "complete",
+ "method": {
+  "seed": 20261022,
+  "rng": "python random.seed(20261022); random.sample per group in order concepts,skills,procedures,rules,faults,scenarios,glossary,rooms,learning_resources,3d_downloads; each population sorted by id; n = max(minimum, ceil(10% of population))",
+  "checks": "cited sources re-fetched (urllib cache + WebFetch for blocked pages), numbers/claims grepped in source text, covers vs content, confidence label (manufacturer/standard/regulator = verified-primary; Wikipedia/trade press = verified-secondary)",
+  "verdict_scale": "pass / minor (wording, label, small unsourced add-on) / fail (unsupported or wrong fact, wrong licence) / unreachable"
+ },
+ "sample": {
+  "concepts": {
+   "population": 414,
+   "n": 45,
+   "ids": [
+    "sound-wave",
+    "instrument-level",
+    "proximity-effect",
+    "frequency",
+    "dante-subscription",
+    "antenna-types-wireless",
+    "electrical-power",
+    "dynamic-range",
+    "effects-return",
+    "aaf-omf-interchange",
+    "steerable-column-array",
+    "phantom-power",
+    "condenser-microphone",
+    "audio-definition-model",
+    "diffraction",
+    "dialogue-editing",
+    "headroom",
+    "self-clocking-interfaces",
+    "spot-microphones",
+    "side-fill-monitor",
+    "room-modes",
+    "channel-strip-order",
+    "subgroup",
+    "tdif",
+    "critical-bands",
+    "occlusion-effect",
+    "close-miking",
+    "diversity-reception",
+    "quantization-noise",
+    "microphone-split-foh-monitor",
+    "absorption-coefficient",
+    "qos-dscp",
+    "clock-master",
+    "knee",
+    "control-room-reference-level",
+    "punch-in",
+    "insert-point",
+    "multicore-snake",
+    "audio-codec-ip",
+    "audio-over-ip",
+    "crest-factor",
+    "modulation-effects",
+    "aux-send",
+    "choir-microphone-coverage",
+    "podcast-recording"
+   ]
+  },
+  "skills": {
+   "population": 60,
+   "n": 6,
+   "ids": [
+    "control-vocal-dynamics",
+    "monitor-public-spl-compliance",
+    "verify-accessibility-and-interpretation",
+    "design-dante-network-live",
+    "calibrate-control-room",
+    "set-up-iem-system"
+   ]
+  },
+  "procedures": {
+   "population": 96,
+   "n": 10,
+   "ids": [
+    "compress-lead-vocal",
+    "monitor-mix-soundcheck",
+    "set-up-parallel-compression",
+    "mix-minus-setup-remote-guest",
+    "build-redundant-dante-network",
+    "mix-session-stems-export",
+    "on-air-tally-wiring",
+    "store-recall-scenes-safely",
+    "atmos-session-bed-objects",
+    "check-input-with-pfl"
+   ]
+  },
+  "rules": {
+   "population": 82,
+   "n": 10,
+   "ids": [
+    "multiple-preferred-leaders",
+    "signal-type-mismatch",
+    "headphone-only-balance-judgement",
+    "audio-clock-not-referenced-to-video",
+    "backup-3-2-1-incomplete",
+    "monitor-wall-distance-sbir",
+    "connector-mate-mismatch",
+    "loudness-out-of-tolerance",
+    "session-sample-rate-mismatch",
+    "frequency-outside-authorised-band-fr"
+   ]
+  },
+  "faults": {
+   "population": 101,
+   "n": 12,
+   "ids": [
+    "adat-channels-missing-96k",
+    "condenser-distortion-loud-source",
+    "codec-connection-drops",
+    "missing-channel-at-line-check",
+    "feedback-during-soundcheck",
+    "recording-too-dry",
+    "on-air-light-not-lit",
+    "noisy-take-gain-staging",
+    "shared-stagebox-gain-conflict",
+    "wind-rising-flown-pa",
+    "pitch-speed-wrong-playback",
+    "wireless-interference-noise-bursts"
+   ]
+  },
+  "scenarios": {
+   "population": 41,
+   "n": 6,
+   "ids": [
+    "band-soundcheck-four-wedge-mixes",
+    "opera-with-pit-recording",
+    "auditorium-powered-pa-with-delays",
+    "talk-show-four-guests",
+    "orchestra-recording-concert-hall",
+    "aes50-stagebox-small-club"
+   ]
+  },
+  "glossary": {
+   "population": 780,
+   "n": 78,
+   "ids": [
+    "truncation",
+    "overprotection",
+    "antenne-yagi",
+    "field-strength-meter",
+    "american-seating-term",
+    "walla",
+    "three-to-one-rule",
+    "dbu",
+    "house-engineer",
+    "polarity-switch-sub",
+    "piano-lid",
+    "unity-gain",
+    "polarization",
+    "stagebox",
+    "link-local",
+    "tx-channel",
+    "arraycalc",
+    "hypercardioid-microphone",
+    "octave",
+    "aec",
+    "comb-filter",
+    "anfr",
+    "headroom",
+    "reverb-pre-delay",
+    "rolling-riser",
+    "autorisation-temporaire",
+    "atmos-bed-term",
+    "tweeter",
+    "pickup-angle",
+    "low-cut-filter",
+    "polar-pattern",
+    "gpio",
+    "more-me-syndrome",
+    "afl",
+    "non-normalled",
+    "tsl",
+    "iso-17651",
+    "stagebox-gain-tracking",
+    "drop-frame-df",
+    "swl",
+    "igmp-snooping",
+    "sn3d",
+    "sabine-formula",
+    "punch-out",
+    "sync-state",
+    "stereo-triangle",
+    "plugin-delay-compensation",
+    "transformer-bypass",
+    "power-sequencing",
+    "parallel-compression",
+    "gobo",
+    "video-reference",
+    "stage-manager",
+    "free-field",
+    "main-mix",
+    "pull-up",
+    "recording-metadata",
+    "lcr",
+    "tonalite-pilote",
+    "unbalanced-line",
+    "leader-clock",
+    "dialogue-loudness",
+    "dante",
+    "phon",
+    "dante-controller",
+    "oblique-mode",
+    "polarity",
+    "headphone-console",
+    "no-lead-vocal-mix",
+    "sound-pressure-limiter",
+    "active-crossover",
+    "antiphonal-violins",
+    "smux",
+    "non-drop-frame-ndf",
+    "t20-t30",
+    "reverberant-field",
+    "gain-before-feedback",
+    "stl"
+   ]
+  },
+  "rooms": {
+   "population": 32,
+   "n": 6,
+   "ids": [
+    "museum-installed-sound-medium",
+    "studio-vocal-booth-small",
+    "sports-venue-pa-large",
+    "church-worship-medium",
+    "studio-live-room-medium",
+    "studio-control-room-large"
+   ]
+  },
+  "learning_resources": {
+   "population": 259,
+   "n": 26,
+   "ids": [
+    "wikibooks-digital-signal-processing",
+    "shure-audio-guide-theater",
+    "ebu-tech-3306",
+    "ebu-tech-3344",
+    "inrs-outil23-exposition-quotidienne",
+    "dpa-stereo-recording-techniques",
+    "jos-physical-audio-signal-processing",
+    "openstax-college-physics-2e-ch23-induction-ac",
+    "aeta-scoop5s-manuel-utilisateur",
+    "lessons-in-electric-circuits-kuphaldt",
+    "hyperphysics-sound-intensity",
+    "itu-r-bs-1116",
+    "l-acoustics-aes-audio-networking-requirements",
+    "hal-carpentier-panoramix",
+    "baskind-fundamentals-of-studio-technology",
+    "digico-sd12-getting-started",
+    "hal-vogel-dubois-immersion-sonore",
+    "fun-mooc-physique-preparation-enseignement-superieur",
+    "ranenote-160",
+    "audinate-dante-over-distance-technical-dive",
+    "ehu-cours-acoustique",
+    "yamaha-mg10xu-mode-emploi-fr",
+    "shure-home-recording-podcasting",
+    "circles-sines-signals",
+    "yamaha-pc-d-di-about-dante",
+    "mit-ocw-res-6-007-signals-and-systems"
+   ]
+  },
+  "3d_downloads": {
+   "population": 44,
+   "n": 8,
+   "ids": [
+    "objv-vintage-microphone-klasy.glb",
+    "objv-battery-guitar-amp-camilote.glb",
+    "ph-plastic-crate-02.glb",
+    "ph-steel-frame-shelves-03.glb",
+    "pp-acoustic-guitar.glb",
+    "si-chester-telegraph-relay.glb",
+    "pp-simple-truss.glb",
+    "pp-kenney-lounge-sofa.glb"
+   ]
+  }
+ },
+ "summary": {
+  "n_records": 207,
+  "verdicts": {
+   "pass": 157,
+   "minor": 49,
+   "fail": 1
+  },
+  "pass_rate_pct": 75.8,
+  "no_factual_error_rate_pct (pass+minor)": 99.5,
+  "findings_total": 56,
+  "findings_by_category": {
+   "unsupported-or-wrong-content": 32,
+   "confidence-label": 22,
+   "licence/attribution": 2
+  }
+ },
+ "counts_by_group": {
+  "concepts": {
+   "pass": 30,
+   "minor": 15
+  },
+  "skills": {
+   "minor": 3,
+   "pass": 3
+  },
+  "procedures": {
+   "pass": 7,
+   "minor": 3
+  },
+  "rules": {
+   "pass": 5,
+   "minor": 5
+  },
+  "faults": {
+   "minor": 3,
+   "pass": 9
+  },
+  "scenarios": {
+   "pass": 2,
+   "minor": 3,
+   "fail": 1
+  },
+  "glossary": {
+   "pass": 67,
+   "minor": 11
+  },
+  "rooms": {
+   "minor": 2,
+   "pass": 4
+  },
+  "learning_resources": {
+   "pass": 24,
+   "minor": 2
+  },
+  "3d_downloads": {
+   "minor": 2,
+   "pass": 6
+  }
+ },
+ "fails": [
+  {
+   "group": "scenarios",
+   "id": "talk-show-four-guests",
+   "file": "tek-brain/scenarios/broadcast-radio.json",
+   "severity": "fail",
+   "field": "required_gear[behringer-ha400] vs required_gear[beyerdynamic-dt-770-pro qty 5]",
+   "record_says": "1 x Behringer HA400 \"distribution casque\" for 5 casques (animateur + 4 invités)",
+   "source_says": "HA400 MicroAMP is a 4-channel headphone amp (4 outputs, one stereo input) per the KB's own equipment record (\"4-channel stereo headphone distribution amplifier ... one stereo line input\"); 5 headphones cannot be served",
+   "fix": "Use 2 x HA400, or an 8-output amp (e.g. Behringer HA8000), or the console's own headphone outputs; also note the HA400 gives every guest the same mix"
+  }
+ ],
+ "worrying_patterns": [
+  "Unsourced 'field-practice' sentences appended to otherwise well-sourced explanations/fixes/criteria, with `covers` claiming the source supports the whole field (most of the 32 content findings: concepts, rules, faults, skills, procedures, glossary).",
+  "Scenario required_gear / signal_flow are not checked against equipment specs or any source: the only FAIL (one 4-output HA400 feeding 5 headphones) and a mis-wired DHD RX2 (surface used as I/O) come from there.",
+  "Inconsistent confidence labels: manufacturer/regulator documents (DPA, Rane, TI, Genelec, Yamaha, Ampetronic, ARS) labelled verified-secondary while the same publishers are verified-primary elsewhere; and two supporting blogs labelled unverified. 22 findings, harmless to facts but undermines the label as a trust signal."
+ ],
+ "caveats": [
+  "learning-resources.json has 259 entries with added_by (brief said 260); population = 259.",
+  "PDF text extracted with pypdf (and PyMuPDF for the font-garbled KMR 1176LN manual) from site-packages, run under python -I, not a pure-stdlib parser.",
+  "Pages returning 403 to scripts (tech.ebu.ch publication pages, Focusrite, studios-ferber.com, CISA PDF, n2t.net, hal.science) were verified via WebFetch, the official PDF, or the publisher API (HAL API, Smithsonian Open Access API, Poly Haven API, Sketchfab API).",
+  "The talk-show-four-guests FAIL relies on the HA400 being a 4-output amp (KB equipment.csv row + well-known spec); Behringer/Thomann/Sweetwater pages were 404/403 at check time.",
+  "0 WebSearch calls used."
+ ],
+ "results": {
+  "concepts": [
+   {
+    "id": "sound-wave",
+    "group": "concepts",
+    "file": "tek-brain/concepts/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculator-soundlevel.htm",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "http://www.sengpielaudio.com/calculator-speedsound.htm",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Textbook definition; sengpiel pages support medium/propagation."
+   },
+   {
+    "id": "instrument-level",
+    "group": "concepts",
+    "file": "tek-brain/concepts/electricity-levels.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Line_level",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/DI_unit",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://us.focusrite.com/mic-pres/isa-one/specifications",
+      "http": 200,
+      "method": "WebFetch (urllib 403)"
+     },
+     {
+      "url": "https://www.radialeng.com/product/jdi/specifications/",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.radialeng.com/product/j48/specifications/",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Focusrite 403 via urllib; WebFetch OK: spec table High >1 MΩ / Low >300 kΩ and feature text 2.4 MΩ / 470 kΩ, matching the logged conflict. Wikipedia 47 kΩ to over 1 MΩ, JDI 140 kΩ, J48 220 kΩ verified."
+   },
+   {
+    "id": "proximity-effect",
+    "group": "concepts",
+    "file": "tek-brain/concepts/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/proximity-effect-in-microphones-explained/",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Shure <1 foot and 4 remedies, DPA 1 m / figure-8 / supercardioid, U87 HPF verified."
+   },
+   {
+    "id": "frequency",
+    "group": "concepts",
+    "file": "tek-brain/concepts/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculator-wavelength.htm",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "T=1/f (sengpiel); 20 Hz-20 kHz, speech 100-6000 Hz (INRS) verified."
+   },
+   {
+    "id": "dante-subscription",
+    "group": "concepts",
+    "file": "tek-brain/concepts/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Grey squares on SR mismatch, 4 channels per unicast flow, max flows, tooltip notation verified."
+   },
+   {
+    "id": "antenna-types-wireless",
+    "group": "concepts",
+    "file": "tek-brain/concepts/wireless-rf.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "definition",
+      "record_says": "directionnelles (Yagi, log-périodique, hélice, panneau « paddle »)",
+      "source_says": "Shure (Vear) names Yagi, log-periodic and helical only; no source mentions a \"paddle\"/panel antenna; PSM 1000 guide lists PA805SWB passive directional and HA-8089 helical.",
+      "fix": "Drop « panneau paddle » or add a source that describes paddle/panel antennas."
+     }
+    ],
+    "note": "All numbers verified: Shure up to 10 dB gain vs 1/4 wave, up to 30 dB rejection, 45 deg; Sennheiser ADP 5 dBi, ~100 deg, >14 dB; HA-8089 in PSM1000 guide. GMU-hosted Shure PDF labelled secondary is acceptable (mirror)."
+   },
+   {
+    "id": "electrical-power",
+    "group": "concepts",
+    "file": "tek-brain/concepts/electricity-levels.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/elepow.html",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "P=VI and squared forms (HyperPhysics; V²/R as images); Crown XLS 2502 1200/775/440 W at 2/4/8 Ω verified."
+   },
+   {
+    "id": "dynamic-range",
+    "group": "concepts",
+    "file": "tek-brain/concepts/electricity-levels.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[].confidence (https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf)",
+      "record_says": "verified-secondary with kind=manufacturer (Rane RaneNote 135)",
+      "source_says": "Document is published by the manufacturer itself (own technical note / own site)",
+      "fix": "Set confidence to verified-primary (KB rule: manufacturer = verified-primary), or set kind to other/trade-press if the intent is to mark it as non-authoritative."
+     }
+    ],
+    "note": "+26/-94 dBu, 120 dB, 55-70 dB all in RaneNote 135."
+   },
+   {
+    "id": "effects-return",
+    "group": "concepts",
+    "file": "tek-brain/concepts/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Mackie 51/52 text verified (center detent unity, adjust effect output, To Aux 1/2 for monitor reverb)."
+   },
+   {
+    "id": "aaf-omf-interchange",
+    "group": "concepts",
+    "file": "tek-brain/concepts/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.amwa.tv/aaf",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "AMWA open interoperable; AS-01 EssenceData internal/external; Avid KB OMF import verified."
+   },
+   {
+    "id": "steerable-column-array",
+    "group": "concepts",
+    "file": "tek-brain/concepts/installation-conference.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.renkus-heinz.com/iconyx-gen5",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Line_array",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "peut supprimer des échos dans les architectures difficiles (églises, halls, gares)",
+      "source_says": "Renkus-Heinz: 'drastically reduces long reverberation tail or eliminates echoes in spaces that might have architecturally challenging elements' (examples elsewhere on page: churches, LAX airport, Great Hall); no 'train stations'.",
+      "fix": "Replace « gares » by « aéroports » or remove the example list."
+     }
+    ],
+    "note": "1.6-2.5 m mounting height, multiple levels/beams, narrow vertical beams verified."
+   },
+   {
+    "id": "phantom-power",
+    "group": "concepts",
+    "file": "tek-brain/concepts/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "DPA 48 V ±4, pins, 10 mA max, unbalanced/ribbon warning; Schoeps 6.8 kΩ; Shure no current/current limiting; Neumann shutdown order verified."
+   },
+   {
+    "id": "condenser-microphone",
+    "group": "concepts",
+    "file": "tek-brain/concepts/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "DPA ~50 pF; Shure self-noise, pads, tube external PSU; Neumann troubleshooting phantom verified."
+   },
+   {
+    "id": "audio-definition-model",
+    "group": "concepts",
+    "file": "tek-brain/concepts/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/publications/tech3364",
+      "http": 200,
+      "method": "WebFetch (urllib 403)"
+     },
+     {
+      "url": "https://www.itu.int/rec/R-REC-BS.2076/en",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "EBU page 403 via urllib; WebFetch OK: v2.0 June 2018, \"BS.2076 has effectively superseded the EBU publication\". ITU page: BS.2076-3 (02/2025) in force. Dolby ADM BWF export and Pro Tools ADM BWF import verified."
+   },
+   {
+    "id": "diffraction",
+    "group": "concepts",
+    "file": "tek-brain/concepts/acoustics-psychoacoustics.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "Pour un micro, la taille du corps du micro influe aussi sur sa réponse dans l'aigu.",
+      "source_says": "Neither DPA \"10 important facts\" nor CIDB fiche A4 mentions microphone body size or diffraction; CIDB A4 does not discuss diffraction at all.",
+      "fix": "Remove the sentence or cite a DPA page on microphone body diffraction; drop CIDB A4 from covers[explanation] (it does not support it)."
+     }
+    ],
+    "note": "Screen must be very large to stop low frequencies: DPA verbatim."
+   },
+   {
+    "id": "dialogue-editing",
+    "group": "concepts",
+    "file": "tek-brain/concepts/post-immersive.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.soundonsound.com/sound-advice/q-what-exactly-comb-filtering",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "choisit ... la meilleure source (perche ou HF) ; ... sépare les voix sur des pistes distinctes pour que le mixeur puisse les traiter",
+      "source_says": "Wikipedia Dialogue editor: production tracks, alternates, ADR, ADR editor, walla group, hand-off to re-recording mixer. No mention of boom vs radio mic choice or splitting voices to separate tracks.",
+      "fix": "Remove or source those two practices (e.g. a dialogue-editing guide)."
+     }
+    ],
+    "note": "Comb filtering (SOS) and room tone (iZotope Ambience Match \"room tone\") verified."
+   },
+   {
+    "id": "headroom",
+    "group": "concepts",
+    "file": "tek-brain/concepts/electricity-levels.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[].confidence (https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf)",
+      "record_says": "verified-secondary with kind=manufacturer (Rane RaneNote 135)",
+      "source_says": "Document is published by the manufacturer itself (own technical note / own site)",
+      "fix": "Set confidence to verified-primary (KB rule: manufacturer = verified-primary), or set kind to other/trade-press if the intent is to mark it as non-authoritative."
+     }
+    ],
+    "note": "22 dB example, crest factor 4-10 = 12-20 dB, 12-20 dB headroom (Rane); R68 18 dB, +3 dB, 15 dB above alignment verified."
+   },
+   {
+    "id": "self-clocking-interfaces",
+    "group": "concepts",
+    "file": "tek-brain/concepts/digital-audio-clocking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "RME self-clocking, loop without master, CD players; EBU 3250 biphase-mark clock recovery & polarity insensitivity verified."
+   },
+   {
+    "id": "spot-microphones",
+    "group": "concepts",
+    "file": "tek-brain/concepts/orchestra-classical.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[].confidence (https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/)",
+      "record_says": "verified-secondary with kind=manufacturer (DPA Mic University, E. B. Brixen)",
+      "source_says": "Document is published by the manufacturer itself (own technical note / own site)",
+      "fix": "Set confidence to verified-primary (KB rule: manufacturer = verified-primary), or set kind to other/trade-press if the intent is to mark it as non-authoritative."
+     },
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "Exemple : un appoint sur les cors, mixé trop fort et sans retard, « tire » les cors vers l'avant de l'image.",
+      "source_says": "Not in the DPA article (no horn example).",
+      "fix": "Flag as illustrative example (non sourcé) or remove."
+     }
+    ],
+    "note": "1-1.5 m, 3-4 musicians, -3 dB points, >4 m delay verified."
+   },
+   {
+    "id": "side-fill-monitor",
+    "group": "concepts",
+    "file": "tek-brain/concepts/monitoring.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "definition / explanation",
+      "record_says": "c'est souvent une enceinte de façade standard ; posés de chaque côté (souvent sur un sub) ; mix général vers tout le plateau ; risque de larsen",
+      "source_says": "Wikipedia Foldback only says 'larger cabinets called sidefill cabinets to help the musicians to hear' and historical sidefill use; none of the listed specifics.",
+      "fix": "Keep only what Wikipedia supports or add a source (e.g. a monitor-engineering guide) for placement/mix content."
+     }
+    ],
+    "note": ""
+   },
+   {
+    "id": "room-modes",
+    "group": "concepts",
+    "file": "tek-brain/concepts/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.genelec.com/monitor-placement",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "sengpiel c/2L and -3/-6 dB tangential/oblique; DPA 20-30 dB, 2.5 m -> 68 Hz; Genelec avoid exact centre verified."
+   },
+   {
+    "id": "channel-strip-order",
+    "group": "concepts",
+    "file": "tek-brain/concepts/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Mixing_console",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Wikipedia section list, CL PRE EQ/PRE FADER/POST ON, SD12 EQ/dynamics order button, Mackie insert post-gain pre-EQ verified."
+   },
+   {
+    "id": "subgroup",
+    "group": "concepts",
+    "file": "tek-brain/concepts/consoles-signal-flow.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Mixing_console",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "sur la 1604VLZ4, les sous-groupes n'ont pas d'insert ; il faut passer par les sorties sub out pour insérer un processeur",
+      "source_says": "Mackie manual lists inserts only on channels and describes sub outs as feeds to a multitrack or secondary amps; it does not state the workaround. Absence of group inserts is an inference.",
+      "fix": "Rephrase as inference (« le manuel ne prévoit pas d'insert de groupe ») and drop or source the sub-out workaround."
+     }
+    ],
+    "note": "Seven-channel drum example, un-assign L-R, subgroup 1-2, sub outs to multitrack verified."
+   },
+   {
+    "id": "tdif",
+    "group": "concepts",
+    "file": "tek-brain/concepts/digital-audio-clocking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Tascam_Digital_Interface",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Wikipedia 25-pin, 8 ch, unbalanced, DA-88 without word clock, v2.0 double/quad verified."
+   },
+   {
+    "id": "critical-bands",
+    "group": "concepts",
+    "file": "tek-brain/concepts/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "BS.1387 Table 5: 24 bands, 100 Hz ... 15 500 Hz verified."
+   },
+   {
+    "id": "occlusion-effect",
+    "group": "concepts",
+    "file": "tek-brain/concepts/monitoring.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Shure <500 Hz hollow, beyond second bend, under-singing verified."
+   },
+   {
+    "id": "close-miking",
+    "group": "concepts",
+    "file": "tek-brain/concepts/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Shure Close Pickup <2 feet, 3-to-1 verified."
+   },
+   {
+    "id": "diversity-reception",
+    "group": "concepts",
+    "file": "tek-brain/concepts/wireless-rf.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Shure 1/4 wave ~10 cm UHF, up to one wavelength, ratio combining +3 dB, budget, 45 deg; Sennheiser true diversity / antenna switching diversity verified."
+   },
+   {
+    "id": "quantization-noise",
+    "group": "concepts",
+    "file": "tek-brain/concepts/digital-audio-clocking.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.dsprelated.com/freebooks/mdft/Round_Off_Error_Variance.html",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.ti.com/lit/an/slaa013/slaa013.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[].confidence (https://www.ti.com/lit/an/slaa013/slaa013.pdf)",
+      "record_says": "verified-secondary with kind=manufacturer (Texas Instruments SLAA013)",
+      "source_says": "Document is published by the manufacturer itself (own technical note / own site)",
+      "fix": "Set confidence to verified-primary (KB rule: manufacturer = verified-primary), or set kind to other/trade-press if the intent is to mark it as non-authoritative."
+     },
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "environ 98 dB en 16 bits et 146 dB en 24 bits",
+      "source_says": "TI gives SNR = 6.02n + 1.76 dB only; 98/146 dB are computed, not quoted.",
+      "fix": "Mark as calculated: « (calcul : 6,02×16+1,76 ≈ 98 dB ; ×24 ≈ 146 dB) »."
+     }
+    ],
+    "note": "q^2/12 derivation (CCRMA/dsprelated, formula rendered as images) and 6.02n+1.76 (TI) verified."
+   },
+   {
+    "id": "microphone-split-foh-monitor",
+    "group": "concepts",
+    "file": "tek-brain/concepts/monitoring.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "un splitter à transformateur isolé ... les câbles en Y fonctionnent mais sont fragiles",
+      "source_says": "Wikipedia Foldback: 'split snake cable or Y-cable' and 'microphone splitter'; no transformer isolation, no fragility statement. Shure PSM guide's Y-cable mention is about monitor outputs, not mic split.",
+      "fix": "Source transformer-isolated splitters (e.g. Radial/Whirlwind) or remove; drop « fragiles »."
+     }
+    ],
+    "note": "SD12 gain tracking verified."
+   },
+   {
+    "id": "absorption-coefficient",
+    "group": "concepts",
+    "file": "tek-brain/concepts/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculator-RT60Coeff.htm",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.genelec.com/improving-room-acoustics",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "sengpiel brick 0.03/0.04/0.07, carpet 0.02/0.37/0.65, 18 oz curtain 0.14/0.72/0.65, 2in fiberglass rolls 0.17/0.90/0.80; DPA 25-30 cm -> 100 Hz; CIDB 0.1; Genelec thin porous verified."
+   },
+   {
+    "id": "qos-dscp",
+    "group": "concepts",
+    "file": "tek-brain/concepts/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
+      "http": 200,
+      "method": "WebFetch (urllib 403)"
+     },
+     {
+      "url": "https://service.shure.com/articles/en_US/Knowledge/QOS-In-Depth",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://docs.symetrix.co/hardware/networking/dante/dante-technology.html",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Focusrite 403 via urllib; WebFetch OK: CS7 High / EF Medium / CS1 Low (reserved) / Best effort, 4 queues, strict priority, trust DSCP. Decimal values 56/46/34 and Dante 4.x AF41 from Shure KB; RAVENNA CS6 + EF/AF41; Audinate CS7 vs EF default verified. Secondary label for Focusrite/Shure/Symetrix acceptable (relaying Audinate)."
+   },
+   {
+    "id": "clock-master",
+    "group": "concepts",
+    "file": "tek-brain/concepts/digital-audio-clocking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "RME one master/AutoSync, Antelope 10 WC BNC + AES + S/PDIF, Audient default back to internal verified."
+   },
+   {
+    "id": "knee",
+    "group": "concepts",
+    "file": "tek-brain/concepts/dynamics-eq-effects.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "dbx half-way threshold, \"smoothest\" OverEasy+AUTO, \"aggressive\" hard knee fast; Wikipedia soft knee less audible at high ratios verified."
+   },
+   {
+    "id": "control-room-reference-level",
+    "group": "concepts",
+    "file": "tek-brain/concepts/monitoring.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=3",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "EBU 3276 85 - 10 log n dB(A), -18 dBFS, 1 dB; SOS -20 dBFS/85 dB, revised 83 dB C slow, room table 83..74 dB verified; 79 dB gap honestly logged."
+   },
+   {
+    "id": "punch-in",
+    "group": "concepts",
+    "file": "tek-brain/concepts/studio-recording.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "REAPER non-destructive takes, destructive mode, pre-roll default two measures, tape-auto monitoring verified."
+   },
+   {
+    "id": "insert-point",
+    "group": "concepts",
+    "file": "tek-brain/concepts/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Mixing_console",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Mackie TRS tip send/ring return, post-gain pre-low-cut pre-EQ; CL positions; SD12 insert A/B verified."
+   },
+   {
+    "id": "multicore-snake",
+    "group": "concepts",
+    "file": "tek-brain/concepts/live-sound.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
+      "http": 200,
+      "method": "urllib html text grep"
+     },
+     {
+      "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Wikipedia 4-64, sends/returns, drive snake, tail/fanout, core identification, noise verified."
+   },
+   {
+    "id": "audio-codec-ip",
+    "group": "concepts",
+    "file": "tek-brain/concepts/broadcast-radio.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.aeta-audio.com/products/scoop5s/",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "Le retour envoyé au codec doit toujours être un N-1.",
+      "source_says": "Neither EBU Tech 3326 nor the AETA page mentions N-1 / mix-minus / clean feed.",
+      "fix": "Add a source for N-1 or move it to a rule record with its own source."
+     }
+    ],
+    "note": "Three contribution types, RTP/UDP/SIP mandatory, AETA codecs and \"Anciens produits\" listing verified."
+   },
+   {
+    "id": "audio-over-ip",
+    "group": "concepts",
+    "file": "tek-brain/concepts/audio-networks.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "technologies de couche 3 (IP routable : Dante, RAVENNA, Livewire, Q-LAN) ... un switch mal réglé produit des clics",
+      "source_says": "Cited sources list Dante, Q-LAN, AES67, RAVENNA, Milan/AVB (gPTP at Layer 2 per Kaltheuner et al.); Livewire and the layer-3 grouping and the \"clicks\" claim are not in any cited source.",
+      "fix": "Remove Livewire or add a source; mark layer-3 grouping and the clicks remark as unsourced or cite."
+     }
+    ],
+    "note": "PTP/IEEE 1588, AVB/Milan, AES67 interop verified."
+   },
+   {
+    "id": "crest-factor",
+    "group": "concepts",
+    "file": "tek-brain/concepts/electricity-levels.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[].confidence (https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf)",
+      "record_says": "verified-secondary with kind=manufacturer (Rane RaneNote 135)",
+      "source_says": "Document is published by the manufacturer itself (own technical note / own site)",
+      "fix": "Set confidence to verified-primary (KB rule: manufacturer = verified-primary), or set kind to other/trade-press if the intent is to mark it as non-authoritative."
+     }
+    ],
+    "note": "1.414/3 dB, 4-10 -> 12-20 dB verified in Rane."
+   },
+   {
+    "id": "modulation-effects",
+    "group": "concepts",
+    "file": "tek-brain/concepts/dynamics-eq-effects.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     }
+    ],
+    "findings": [],
+    "note": "PCM96 Chorus/Flange text verified nearly verbatim."
+   },
+   {
+    "id": "aux-send",
+    "group": "concepts",
+    "file": "tek-brain/concepts/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Mixing_console",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Mackie effects/monitors, separate recording mixes and mix-minuses; CL VARI/FIXED odd/even pairs verified."
+   },
+   {
+    "id": "choir-microphone-coverage",
+    "group": "concepts",
+    "file": "tek-brain/concepts/orchestra-classical.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[].confidence (https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/)",
+      "record_says": "verified-secondary with kind=manufacturer (DPA Mic University)",
+      "source_says": "Document is published by the manufacturer itself (own technical note / own site)",
+      "fix": "Set confidence to verified-primary (KB rule: manufacturer = verified-primary), or set kind to other/trade-press if the intent is to mark it as non-authoritative."
+     }
+    ],
+    "note": "17 dB / 22.5 dB / 25.5 dB, 30 cm 45 deg, 3:1 and 4.5:1, recording-without-feedback verified; internal DPA inconsistency honestly logged in conflicts."
+   },
+   {
+    "id": "podcast-recording",
+    "group": "concepts",
+    "file": "tek-brain/concepts/studio-recording.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+      "http": 200,
+      "method": "urllib+pypdf text grep"
+     },
+     {
+      "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
+      "http": 200,
+      "method": "urllib html text grep"
+     }
+    ],
+    "findings": [],
+    "note": "Shure 3:1, consistent level; Shure web 3-6 in, closed-back, 30-second test verified."
+   }
+  ],
+  "skills": [
+   {
+    "id": "control-vocal-dynamics",
+    "group": "skills",
+    "file": "tek-brain/skills/dynamics-eq-effects.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "success_criteria[3] / description",
+      "record_says": "de-esser ... Les sifflantes ne dépassent plus sans que les voyelles changent de timbre",
+      "source_says": "Neither cited source (dbx 166xs manual, UA 1176LN manual) covers de-essing; criterion is uncited though sources[].covers claims success_criteria",
+      "fix": "Add a de-esser source (e.g. a manufacturer de-esser manual) or limit covers to criteria 1-3."
+     }
+    ],
+    "note": "Criterion 1 (6-10 dB GR, dbx starting point) verbatim in dbx manual; bypass level match is generic practice."
+   },
+   {
+    "id": "monitor-public-spl-compliance",
+    "group": "skills",
+    "file": "tek-brain/skills/safety.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "ARS Grand Est PDF and ARS IdF page: \"Ne dépasser, à aucun moment et en aucun endroit accessible au public ... 102 dB(A) sur 15 minutes et 118 dB(C) sur 15 minutes\". Labels verified-secondary for ARS summaries of décret 2017-1244 are acceptable (not the decree text itself)."
+   },
+   {
+    "id": "verify-accessibility-and-interpretation",
+    "group": "skills",
+    "file": "tek-brain/skills/installation-conference.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[0].confidence",
+      "record_says": "verified-secondary (kind: manufacturer, Ampetronic commissioning page)",
+      "source_says": "Manufacturer content; policy = verified-primary",
+      "fix": "Relabel verified-primary for consistency with sources[1] (same manufacturer, labelled primary)."
+     }
+    ],
+    "note": "Ampetronic commissioning page: \"-32dB or better (A-weighted)\", \"400mA/m sine wave @ 1kHz, ± 3dB\", \"100Hz - 5kHz ± 3dB ref. level @ 1kHz\"; W5-2 handbook: \"0dB +/-3dB re. 400mA/m in all intended listening positions\", 100 Hz and 5 kHz within ±3 dB of 1 kHz. HCS-5100 datasheet: IR radiator up to 32 channels. Supported."
+   },
+   {
+    "id": "design-dante-network-live",
+    "group": "skills",
+    "file": "tek-brain/skills/audio-networks.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Ethernet_over_twisted_pair",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "success_criteria[2]",
+      "record_says": "Tous les appareils Dante ont une adresse dans le même sous-réseau (169.254.x.x ou plan DHCP)",
+      "source_says": "Audinate: devices self-assign 169.254.*.* on primary and 172.31.*.* on the secondary network; same-subnet on two interfaces is an error",
+      "fix": "Say \"toutes les interfaces primaires dans le même sous-réseau (169.254.x.x ou DHCP) et les secondaires en 172.31.x.x (ou DHCP du secondaire)\" - otherwise contradicts criterion 1 and procedure build-redundant-dante-network."
+     }
+    ],
+    "note": "Separate networks (\"Secondary interfaces cannot communicate with primary interfaces\") and 100 m copper (Wikipedia Ethernet over twisted pair) supported."
+   },
+   {
+    "id": "calibrate-control-room",
+    "group": "skills",
+    "file": "tek-brain/skills/monitoring.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "EBU Tech 3276: base angle 60°, \"optimal listening distance h ≈ 0.9 b\"; \"difference between the levels of any two channels should not exceed 1 dB\" (record says \"inférieur à 1 dB\" - trivially stricter). SOS: C-weighting, slow averaging - supports documented convention criterion."
+   },
+   {
+    "id": "set-up-iem-system",
+    "group": "skills",
+    "file": "tek-brain/skills/monitoring.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "Shure PSM user guide: Scan and Sync assigns group/channel; red clip LED = inputs overdriven; earphone volume to lowest setting before adjusting. Shure personal monitor guide: \"The use of an onboard limiter is strongly recommended\", \"Walk around the performance area with each individual system while all systems are on to verify no audible interference or dropouts\", frequency compatibility with other systems."
+   }
+  ],
+  "procedures": [
+   {
+    "id": "compress-lead-vocal",
+    "group": "procedures",
+    "file": "tek-brain/procedures/dynamics-eq-effects.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+      "http": 200,
+      "method": "downloaded, PyMuPDF text (pypdf output garbled)"
+     },
+     {
+      "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "dbx 166xs: \"low to medium compression RATIO (e.g., 4:1)\", medium attack/fairly slow release, AUTO for vocals, \"6dB to 10dB of gain reduction\", CONTOUR if voice too thin - all verbatim. UA 1176LN: Input/Output ~24 (12 o'clock) unity, Attack/Release ~\"4\", 4:1 moderate, 20:1 hard limiting, engineers quoted using 4:1 on vocals. LA-2A Peak Reduction control present. NB pypdf text of the 1176 PDF is font-garbled; re-extracted with PyMuPDF."
+   },
+   {
+    "id": "monitor-mix-soundcheck",
+    "group": "procedures",
+    "file": "tek-brain/procedures/monitoring.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "Shure personal monitor guide: lead singer mix, guitar/keys mix with their vocals, drum mix, \"the bass player can drop in ... often on the drummer's mix\"; mixes from aux sends. Wikipedia Foldback supports separate mixes per performer. Pre-fader/talkback/scene steps are generic practice consistent with sources."
+   },
+   {
+    "id": "set-up-parallel-compression",
+    "group": "procedures",
+    "file": "tek-brain/procedures/dynamics-eq-effects.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "SSL Bus+ guide: MIX cross-fades by default (Classic); Parallel setting keeps dry at 100%; \"turning MIX control fully CW will enable Audition mode (dry 0%, wet 100%)\". Matches steps 1-2."
+   },
+   {
+    "id": "mix-minus-setup-remote-guest",
+    "group": "procedures",
+    "file": "tek-brain/procedures/broadcast-radio.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://sonifex.co.uk/product/rb-mm1/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "Telos Hx QSG: mix-minus definition, SEND IN from phone bus, RCV OUT to caller channel, dial tone only on RCV meter, SND shows only studio audio. Axia iQ: automatic mix-minus per fader, talkback to backfeed. Sonifex RB-MM1 mix-minus generator. EBU Tech 3401: -23 LUFS (0 LU) and \"adjust ... mix-minus or return signal levels accordingly\"."
+   },
+   {
+    "id": "build-redundant-dante-network",
+    "group": "procedures",
+    "file": "tek-brain/procedures/audio-networks.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[2].confidence",
+      "record_says": "verified-secondary (kind: manufacturer, Yamaha PC-D/DI manual)",
+      "source_says": "Yamaha is the manufacturer; per labelling policy manufacturer docs = verified-primary",
+      "fix": "Set confidence to verified-primary (or change kind if it was deliberately downgraded because it documents another product, and say so in a note)."
+     }
+    ],
+    "note": "Audinate DC guide: secondary interfaces on a second separate network, cannot communicate with primary; both interfaces must use the same link speed; secondary self-assigned addresses 172.31.*.*; error \"Different interfaces on the same device using the same IP address subnet\"; troubleshooting page: \"Connecting the secondary interface ... to the primary network\" is a misconfiguration. All steps supported."
+   },
+   {
+    "id": "mix-session-stems-export",
+    "group": "procedures",
+    "file": "tek-brain/procedures/studio-recording.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "steps[4].action (example file name)",
+      "record_says": "Nommer chaque fichier selon la convention (ex. AI_Titre_Drums_MI_01_48k24.wav)",
+      "source_says": "P&E Wing example: \"AI_SongTitle_MI01_Master_96k24.wav\" - fields in order ArtistInitials_SongTitle_MixerInitials+number_Version/Stem_SampleRateBitDepth",
+      "fix": "Use the P&E order, e.g. \"AI_Titre_MI01_Drums_48k24.wav\" (mixer initials + version number before the stem name, no underscore inside MI01)."
+     }
+    ],
+    "note": "Versions Master/Vocal Up/No Lead Vocal/Instrumental, stems not part of standard delivery and must be budgeted, key-mix to 2-bus compressor sidechain, mute all but stem group + effect returns, same start time: all verbatim in P&E Delivery Recommendations 2017-10-10."
+   },
+   {
+    "id": "on-air-tally-wiring",
+    "group": "procedures",
+    "file": "tek-brain/procedures/broadcast-radio.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://www.yellowtec.com/fileadmin/downloads/Litt_installation_Briefing.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "Yellowtec litt page: 8-pin terminal block + mini-USB (configuration via Lighthouse), permanent supply 9-24 V, individual control inputs per colour 2.4-24 VDC; briefing PDF: \"We recommend to use our color coded litt System Cable (YT9601)\", \"integrated spring of each input locks the wires\". Axia iQ: GPIO routing. Note: the same Yellowtec page also lists \"Red (GPI for red Color Segment): +3V...24V\" - source is internally inconsistent with 2.4 V; record follows the headline spec."
+   },
+   {
+    "id": "store-recall-scenes-safely",
+    "group": "procedures",
+    "file": "tek-brain/procedures/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "Yamaha CL V5 reference manual: title max 16 characters, comment, Protect symbol, CH JOB > RECALL SAFE steps incl. SAFE / LEVEL/ON / ALL for DCA, \"Channel Link and bus settings are not subject to Recall Safe; they will always be reproduced\", Focus per-scene vs Recall Safe global, E symbol = edited, store to keep. (Manual adds that Recall Safe can be applied globally to channel links via the global parameter - nuance not in record.)"
+   },
+   {
+    "id": "atmos-session-bed-objects",
+    "group": "procedures",
+    "file": "tek-brain/procedures/post-immersive.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "steps[2].action / typical_mistakes",
+      "record_says": "le LFE ne se trouve que dans le bed ... Envoyer un objet vers le LFE (impossible)",
+      "source_says": "None of the 4 cited pages (Dolby Atmos content creation, Renderer product page, 7.1.4 setup guide, Wikipedia) mention LFE or bed-only LFE. Claim is technically correct but unsourced.",
+      "fix": "Cite the Dolby Atmos Renderer guide (section on beds/objects: objects carry no LFE) or drop \"(impossible)\"."
+     },
+     {
+      "severity": "minor",
+      "field": "steps[3].action",
+      "record_says": "contrôler en écoute sur les replis (7.1, 5.1, stéréo)",
+      "source_says": "Renderer page only says it renders \"to standard channel-based layouts\"; specific re-render list not given",
+      "fix": "Acceptable; optionally cite the Renderer guide for the re-render formats."
+     }
+    ],
+    "note": "Supported: 7.1.2 bed routed with objects and metadata to the Renderer; up to 128 inputs (beds + objects); X/Y/Z object metadata; ADM BWF export; binaural settings; 10 bed channels (Wikipedia \"118 dynamic objects and 10 beds\"); 7.1.4 speaker list (Dolby setup guide)."
+   },
+   {
+    "id": "check-input-with-pfl",
+    "group": "procedures",
+    "file": "tek-brain/procedures/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "Mackie 1604VLZ4 OM: press solo, engage mode -> green level set light; adjust gain until meter stays around 0 dB (\"level set\") and never above \"+7\"; disengage solo; repeat; faders to U; slowly raise main; OL LED during show -> turn gain down; AFL vs level-set (PFL); rude solo light. Verbatim."
+   }
+  ],
+  "rules": [
+   {
+    "id": "multiple-preferred-leaders",
+    "group": "rules",
+    "file": "tek-brain/rules/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "Audinate: \"If more than one device has Preferred Leader set, the device with the lowest MAC address will be chosen\"; device with Sync To External + other device Preferred Leader -> \"will lose sync ... and will eventually be muted\". Verbatim."
+   },
+   {
+    "id": "signal-type-mismatch",
+    "group": "rules",
+    "file": "tek-brain/rules/electricity-levels.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Line_level",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "SM58 spec sheet: -54.5 dBV/Pa (1.85 mV). Sengpielaudio: +4 dBu = 1.228 V, -10 dBV = -7.78 dBu -> 11.78 dB (11.8 OK). 20log(1.228/0.00185) = 56.4 dB (OK, at 94 dB SPL). Wikipedia Line level: dBV consumer / dBu pro."
+   },
+   {
+    "id": "headphone-only-balance-judgement",
+    "group": "rules",
+    "file": "tek-brain/rules/orchestra-classical.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[0].confidence",
+      "record_says": "verified-secondary (kind: manufacturer, DPA Mic University)",
+      "source_says": "DPA is a manufacturer; policy: manufacturer = verified-primary",
+      "fix": "Set verified-primary (or document why manufacturer educational content is downgraded, and apply consistently)."
+     }
+    ],
+    "note": "DPA choir page: assess direct/diffuse balance \"by using loudspeakers ... Headphones deliver neither the same perceived spatial impression nor the correct timbral balance.\" Content supported."
+   },
+   {
+    "id": "audio-clock-not-referenced-to-video",
+    "group": "rules",
+    "file": "tek-brain/rules/post-immersive.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "sinon son et image peuvent avancer à des vitesses légèrement différentes même avec un timecode de départ juste",
+      "source_says": "Sync X guide documents VIDEO REF IN (tri-level / black burst) for clock reference and \"Connecting a Video Reference Source - To resolve Pro Tools | Sync X to external video reference\"; it does not state the drift consequence explicitly",
+      "fix": "Keep (technically correct) but mark as editorial explanation, or add a source that states the drift consequence."
+     }
+    ],
+    "note": "Fix supported: VIDEO REF IN accepts tri-level or black burst; Video Reference is a clock reference source selected in Session Setup."
+   },
+   {
+    "id": "backup-3-2-1-incomplete",
+    "group": "rules",
+    "file": "tek-brain/rules/studio-recording.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.cisa.gov/sites/default/files/publications/data_backup_options.pdf",
+      "http": "403 to urllib; 200 via WebFetch",
+      "method": "WebFetch binary saved, pypdf"
+     },
+     {
+      "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "CISA/US-CERT \"Data Backup Options\" (Ruggiero & Heckathorn): \"3 - Keep 3 copies of any important file: 1 primary and 2 backups. 2 - ... 2 different media types ... 1 - Store 1 copy offsite\". urllib got 403; fetched via WebFetch, PDF text extracted with pypdf. P&E doc supports backup media/offsite practice for fix."
+   },
+   {
+    "id": "monitor-wall-distance-sbir",
+    "group": "rules",
+    "file": "tek-brain/rules/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.genelec.com/improving-room-acoustics",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "Genelec: front-to-wall distance \"preferably less than 0.6 metres\", table 0.70 m -> 123 Hz, 1.00 m -> 86 Hz, \"Equalisation of the monitor does not help here\", flush mounting. 0.6 m -> 343/(4x0.6)=143 Hz consistent. EBU Tech 3276: non-flush-mounted loudspeakers at least 1 m from surrounding walls."
+   },
+   {
+    "id": "connector-mate-mismatch",
+    "group": "rules",
+    "file": "tek-brain/rules/electricity-levels.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/XLR_connector",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://www.ranecommercial.com/legacy/note110.html",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "un jack TS et un jack TRS ne sont pas interchangeables ... le TS court-circuite le point froid d'une liaison symétrique ; ... adaptateur câblé selon le tableau de Rane",
+      "source_says": "Extractable text of RaneNote 110 says \"Balanced interconnect is not compatible with unbalanced\" and covers balanced/unbalanced interfacing, but the TS-shorts-cold statement and wiring table are not in the HTML text (likely in figure images); not verifiable from text",
+      "fix": "Point to the specific RaneNote 110 figure (e.g. the interconnection chart) that shows TS/TRS wiring, or cite a source stating the ring-to-sleeve short explicitly."
+     },
+     {
+      "severity": "minor",
+      "field": "sources[1].confidence",
+      "record_says": "verified-secondary (kind: manufacturer, Rane)",
+      "source_says": "Rane is a manufacturer; policy manufacturer = verified-primary",
+      "fix": "Relabel verified-primary."
+     }
+    ],
+    "note": "XLR male/female mating supported by Wikipedia."
+   },
+   {
+    "id": "loudness-out-of-tolerance",
+    "group": "rules",
+    "file": "tek-brain/rules/broadcast-radio.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "condition",
+      "record_says": "fires only when integrated loudness < -24.0 or > -22.0 LUFS for every programme",
+      "source_says": "EBU R 128 h): target -23.0 LUFS; ±1.0 LU tolerance only \"where attaining the Target Level is not achievable practically (for example, live programmes)\"; i) ±0.2 LU in QC for measurement error",
+      "fix": "Make the band depend on session.is_live: ±1.0 LU for live, ±0.2 LU otherwise (explanation already says this; condition does not implement it)."
+     }
+    ],
+    "note": "Numbers (-23.0 LUFS, ±1.0 LU, ±0.2 LU, -1 dBTP in production) all verbatim in R 128."
+   },
+   {
+    "id": "session-sample-rate-mismatch",
+    "group": "rules",
+    "file": "tek-brain/rules/studio-recording.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Sample-rate_conversion",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [],
+    "note": "Wikipedia SRC: \"Sample-rate conversion prevents changes in speed and pitch that would otherwise occur\". REAPER guide covers project sample rate and resample modes (fix). Note: REAPER resamples on playback by default, so the \"plays too fast\" symptom is DAW-dependent; wording is generic so acceptable."
+   },
+   {
+    "id": "frequency-outside-authorised-band-fr",
+    "group": "rules",
+    "file": "tek-brain/rules/wireless-rf.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     },
+     {
+      "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
+      "http": 200,
+      "method": "cache (urllib + pypdf/html strip, regex grep)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "explanation",
+      "record_says": "par exemple une variante C ou D d'un ew G4, ou P51 en ULX-D",
+      "source_says": "Neither ARCEP page nor decision 2015-0830 mentions any product band variants (manufacturer data needed). The example is plausible (G4 C/D and ULX-D P51 lie in the 700/800 MHz region) but unsourced",
+      "fix": "Cite Sennheiser ew G4 and Shure ULX-D frequency-range tables, or remove the product examples."
+     }
+    ],
+    "note": "ARCEP page (updated 9 July 2026): table 174-223, 470-694, 823-832, 1785-1805 MHz; \"librement\" without individual authorisation, limited to professional users; 694-790 MHz usable only until 1 July 2019; temporary authorisations issued by ARCEP, requests sent to ANFR. 2015-0830 covers 470-789/823-832/1785-1805. All supported."
+   }
+  ],
+  "faults": [
+   {
+    "id": "adat-channels-missing-96k",
+    "group": "faults",
+    "file": "tek-brain/faults/digital-audio-clocking.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "fixes[0]",
+      "record_says": "Travailler à 44,1/48 kHz, ou ajouter un second port ADAT, ou passer en MADI",
+      "source_says": "RME 10.2/17.4/27.4 and Audient p.17 confirm 4 ch at 88.2/96 kHz (S/MUX) and 2 ch at 176.4/192 kHz (S/MUX4); neither cited source mentions a second ADAT port or MADI as a remedy (both cited interfaces have a single optical input)",
+      "fix": "Keep \"travailler à 44,1/48 kHz\"; either drop \"second port ADAT / MADI\" or mark it as general advice not covered by the cited sources"
+     }
+    ],
+    "note": "All numbers (8->4->2 channels, 88.2/96 and 176.4/192 kHz) and the red/amber clock indicator verified in sources."
+   },
+   {
+    "id": "condenser-distortion-loud-source",
+    "group": "faults",
+    "file": "tek-brain/faults/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "Shure: \"first make sure that the mixer input itself is not being overloaded. If not, switch in the attenuator in the mic, move the mic farther away, or use a mic that can handle a higher level\" - matches causes/checks/fixes."
+   },
+   {
+    "id": "codec-connection-drops",
+    "group": "faults",
+    "file": "tek-brain/faults/broadcast-radio.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.comrex.com/products/access-nx/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.aeta-audio.com/products/scoop5s/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "FEC (Tech 3326 2.2.6), CrossLock multi-network bonding (Comrex), VoLTE/voix HD as backup (AETA) all verified. probable_causes/checks are not covered by any source (generic reasoning, no numbers)."
+   },
+   {
+    "id": "missing-channel-at-line-check",
+    "group": "faults",
+    "file": "tek-brain/faults/live-sound.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "Bartlett \"No Signal\" list matches all five causes and the checks/fixes."
+   },
+   {
+    "id": "feedback-during-soundcheck",
+    "group": "faults",
+    "file": "tek-brain/faults/live-sound.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-with-handheld-mics-on-stage/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "PSW p3 (knob turned too quickly / unmute with gain up), p4 (turn down master monitor send; roll off lows in monitors), Shure NOM -3 dB per doubling, DPA rejection angles. DPA source labelled verified-primary here (inconsistent with other records labelling DPA secondary)."
+   },
+   {
+    "id": "recording-too-dry",
+    "group": "faults",
+    "file": "tek-brain/faults/orchestra-classical.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "fixes[2]",
+      "record_says": "Utiliser un cône ou un couple plus large pour plus d'ambiance",
+      "source_says": "DPA AB article: Nose Cone adds ambience; spacing is increased \"with the size of the orchestra\" and \"to improve channel separation in more reverberant rooms\" - not to add ambience",
+      "fix": "Keep the Nose Cone fix; replace \"couple plus large\" with \"reculer/monter le couple\" (DPA: distance and height set the amount of ambience)"
+     },
+     {
+      "severity": "minor",
+      "field": "sources[*].confidence",
+      "record_says": "confidence \"verified-secondary\" with kind \"manufacturer\" (DPA Mic University)",
+      "source_says": "Page is published by DPA Microphones itself (manufacturer); project rule: manufacturer = verified-primary",
+      "fix": "Set confidence to \"verified-primary\" (or change kind to \"trade-press/educational\" if secondary is intended, and document that convention)"
+     }
+    ],
+    "note": "1.8-2.2 s at 500 Hz for classical concert hall verified (DPA table). Back-wall aiming verified."
+   },
+   {
+    "id": "on-air-light-not-lit",
+    "group": "faults",
+    "file": "tek-brain/faults/broadcast-radio.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "Litt: permanent supply 9-24 V, per-colour control inputs, USB for configuration; Axia iQ GPIO. Note: Axia brochure is on a \"telosalliance-uat\" (staging) S3 bucket - fragile URL, prefer the telosalliance.com copy."
+   },
+   {
+    "id": "noisy-take-gain-staging",
+    "group": "faults",
+    "file": "tek-brain/faults/studio-recording.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://tech.ebu.ch/publications/r068",
+      "http": 403,
+      "method": "urllib 403; substituted https://tech.ebu.ch/docs/r/r068.pdf (200, pypdf)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "probable_causes[0] / fixes[0] (sources[*].covers)",
+      "record_says": "Cause (high): \"Gain de préampli trop faible puis remonté en numérique\"; fix: \"régler le gain pour une marge raisonnable\"; Shure covers causes/checks/fixes, R68 covers fixes",
+      "source_says": "Shure booklet covers room noise, sample recordings, avoiding fans/AC, mic closer = less background noise; it does not discuss low preamp gain/digital make-up gain. EBU R68 only defines alignment level (sine) relative to max digital level; it says nothing about noise or recording margin",
+      "fix": "Cite a gain-staging source for cause[0]/fix[0] (e.g. Shure/Audient gain-structure doc) or remove R68 and narrow Shure covers to causes[1-2], checks[2], fixes[1-2]"
+     }
+    ],
+    "note": "Technically correct content; provenance over-claimed."
+   },
+   {
+    "id": "shared-stagebox-gain-conflict",
+    "group": "faults",
+    "file": "tek-brain/faults/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "DiGiCo: one Master console controls gains, slave uses Gain Tracking, Receive Only state; Yamaha CL: Gain Compensation. Yamaha manual hosted by a reseller (ccisolutions) - acceptable but not the manufacturer URL."
+   },
+   {
+    "id": "wind-rising-flown-pa",
+    "group": "faults",
+    "file": "tek-brain/faults/safety.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "d&b V-Series 1.3.1: >6 bft overhead flying not recommended; >8 bft clear vicinity, lower and secure array. Exact."
+   },
+   {
+    "id": "pitch-speed-wrong-playback",
+    "group": "faults",
+    "file": "tek-brain/faults/digital-audio-clocking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "RME 8.2 Pitch (+/-5%, master mode only); Audient \"change the sample rate to match that of the external ADAT device and session\"."
+   },
+   {
+    "id": "wireless-interference-noise-bursts",
+    "group": "faults",
+    "file": "tek-brain/faults/wireless-rf.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "Vear (Shure) guide: non-broadcast sources (digital devices, computers, AC power equipment), IMD from other systems, change frequency/relocate, squelch set just above RF noise. GMU mirror honestly labelled secondary."
+   }
+  ],
+  "scenarios": [
+   {
+    "id": "band-soundcheck-four-wedge-mixes",
+    "group": "scenarios",
+    "file": "tek-brain/scenarios/monitoring.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "Pre-fader aux sends for monitors (Shure), ring-out procedure (PSW), wedge/drum-fill (Wikipedia). Gear plausible (dual-channel dbx 231s for 2 mixes each)."
+   },
+   {
+    "id": "opera-with-pit-recording",
+    "group": "scenarios",
+    "file": "tek-brain/scenarios/orchestra-classical.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Orchestra_pit",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[1..2].confidence",
+      "record_says": "confidence \"verified-secondary\" with kind \"manufacturer\" (DPA Mic University)",
+      "source_says": "Page is published by DPA Microphones itself (manufacturer); project rule: manufacturer = verified-primary",
+      "fix": "Set confidence to \"verified-primary\" (or change kind to \"trade-press/educational\" if secondary is intended, and document that convention)"
+     }
+    ],
+    "note": "Wikipedia confirms lack of space and bleed between instruments in the pit; DPA piano article covers pit piano with neighbouring sources. Gear patterns correct (C414 XLS omni available, CMC 6 MK 41 supercardioid)."
+   },
+   {
+    "id": "auditorium-powered-pa-with-delays",
+    "group": "scenarios",
+    "file": "tek-brain/scenarios/loudspeakers-system-tuning.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Speed_of_sound",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://dbxpro.com/en/products/driverack-pa2",
+      "http": 200,
+      "method": "extra check (not cited by record)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "required_gear[dbx-driverack-pa2].role / signal_flow",
+      "record_says": "DriveRack PA2 = \"processeur de diffusion (retards, égalisation)\" feeding 2 mains + 2 mid-hall delays on separate outputs",
+      "source_says": "No cited source covers the gear. dbx product page lists output processing as crossover (full range/2-way/3-way), PEQ, limiter and \"Driver Alignment Delays\", plus one input delay \"for delaying the FOH system to the backline\"; no documented independent delay-zone output mode for mid-hall fills",
+      "fix": "Cite the PA2 manual showing an output configuration and delay range that support delay fills, or use the QL1 output/matrix delay (or a processor with per-output delay) for the fills"
+     }
+    ],
+    "note": "Meyer LINA doc only marginally relevant to \"brief\" (mentions fill use, delay offsets)."
+   },
+   {
+    "id": "talk-show-four-guests",
+    "group": "scenarios",
+    "file": "tek-brain/scenarios/broadcast-radio.json",
+    "verdict": "fail",
+    "sources_checked": [
+     {
+      "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "knowledge-base/equipment.csv (behringer-ha400 row)",
+      "http": null,
+      "method": "repo cross-check; behringer.com/thomann/sweetwater pages 404/403"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "fail",
+      "field": "required_gear[behringer-ha400] vs required_gear[beyerdynamic-dt-770-pro qty 5]",
+      "record_says": "1 x Behringer HA400 \"distribution casque\" for 5 casques (animateur + 4 invités)",
+      "source_says": "HA400 MicroAMP is a 4-channel headphone amp (4 outputs, one stereo input) per the KB's own equipment record (\"4-channel stereo headphone distribution amplifier ... one stereo line input\"); 5 headphones cannot be served",
+      "fix": "Use 2 x HA400, or an 8-output amp (e.g. Behringer HA8000), or the console's own headphone outputs; also note the HA400 gives every guest the same mix"
+     },
+     {
+      "severity": "minor",
+      "field": "signal_flow.edges (m1..m5 -> desk)",
+      "record_says": "Mics wired XLR directly into \"dhd-rx2\" console",
+      "source_says": "DHD RX2 page describes a modular control surface (6 to 60 faders); mic inputs live on the DHD core/I-O modules, not the surface (brief itself says to check mic input count)",
+      "fix": "Add a DHD core/IO node between mics and surface, or label the node \"RX2 + core\""
+     }
+    ],
+    "note": "Automixer on Axia iQ, automatic mix-minus, Hx2 mix-minus setup, Tech 3401 short-term loudness (+/-2 LU) all verified."
+   },
+   {
+    "id": "orchestra-recording-concert-hall",
+    "group": "scenarios",
+    "file": "tek-brain/scenarios/orchestra-classical.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Decca_tree",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[1],sources[3].confidence",
+      "record_says": "confidence \"verified-secondary\" with kind \"manufacturer\" (DPA Mic University)",
+      "source_says": "Page is published by DPA Microphones itself (manufacturer); project rule: manufacturer = verified-primary",
+      "fix": "Set confidence to \"verified-primary\" (or change kind to \"trade-press/educational\" if secondary is intended, and document that convention)"
+     }
+    ],
+    "note": "Decca tree 3 omni + 2 outriggers (Wikipedia), German seating antiphonal (SSO), ~2 s hall (DPA 1.8-2.2 s). Unsourced: CL5 -> Pyramix over \"aoip/rj45\" - Pyramix is RAVENNA/AES67-native, Dante link needs AES67 mode or DVS; worth a note."
+   },
+   {
+    "id": "aes50-stagebox-small-club",
+    "group": "scenarios",
+    "file": "tek-brain/scenarios/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.midasconsoles.com/en/products/0606-ACJ",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     },
+     {
+      "url": "https://en.wikipedia.org/wiki/AES50",
+      "http": 200,
+      "method": "python urllib + pypdf/html text, grep"
+     }
+    ],
+    "findings": [],
+    "note": "DL16: 16 preamps, dual AES50, single shielded (STP) CAT5; Wikipedia infobox: AES50 switchable No / routable No - supports \"not through the bar switch\"."
+   }
+  ],
+  "glossary": [
+   {
+    "id": "truncation",
+    "group": "glossary",
+    "file": "tek-brain/glossary/digital-audio-clocking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "overprotection",
+    "group": "glossary",
+    "file": "tek-brain/glossary/safety.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "antenne-yagi",
+    "group": "glossary",
+    "file": "tek-brain/glossary/wireless-rf.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[0].confidence",
+      "record_says": "verified-secondary (kind: manufacturer, Shure Educational Publication)",
+      "source_says": "Document is a Shure (manufacturer) educational publication; text confirms Yagi = dipole + reflector + directors, excellent directivity, fairly narrow bandwidth",
+      "fix": "Set confidence to verified-primary (manufacturer), or keep secondary but note the reason (third-party GMU-hosted copy)"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "field-strength-meter",
+    "group": "glossary",
+    "file": "tek-brain/glossary/installation-conference.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[1].confidence",
+      "record_says": "verified-secondary (Ampetronic Learning zone, kind manufacturer)",
+      "source_says": "Ampetronic is the manufacturer; page states 400 mA/m @1 kHz +/-3 dB and FSM use",
+      "fix": "Set to verified-primary"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "american-seating-term",
+    "group": "glossary",
+    "file": "tek-brain/glossary/orchestra-classical.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.berliner-philharmoniker.de/en/stories/who-decides-the-seating-arrangement-of-the-musicians-on-stage/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "walla",
+    "group": "glossary",
+    "file": "tek-brain/glossary/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "three-to-one-rule",
+    "group": "glossary",
+    "file": "tek-brain/glossary/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Shure: distance between mics at least 3x mic-to-source distance confirmed in both docs."
+   },
+   {
+    "id": "dbu",
+    "group": "glossary",
+    "file": "tek-brain/glossary/electricity-levels.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "0.775 V confirmed."
+   },
+   {
+    "id": "house-engineer",
+    "group": "glossary",
+    "file": "tek-brain/glossary/live-sound.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Front_of_house",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "polarity-switch-sub",
+    "group": "glossary",
+    "file": "tek-brain/glossary/loudspeakers-system-tuning.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Subwoofer",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "piano-lid",
+    "group": "glossary",
+    "file": "tek-brain/glossary/orchestra-classical.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[0].confidence",
+      "record_says": "verified-secondary (DPA Microphones, kind manufacturer)",
+      "source_says": "DPA Mic University is manufacturer content; supports lid angle/shorter stick directing reflections to audience or mics",
+      "fix": "Set to verified-primary"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "unity-gain",
+    "group": "glossary",
+    "file": "tek-brain/glossary/electricity-levels.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.ranecommercial.com/legacy/note124.html",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[0..1].confidence",
+      "record_says": "verified-secondary (Rane RaneNotes, kind manufacturer)",
+      "source_says": "RaneNotes are manufacturer application notes; content supports definition",
+      "fix": "Set to verified-primary"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "polarization",
+    "group": "glossary",
+    "file": "tek-brain/glossary/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "stagebox",
+    "group": "glossary",
+    "file": "tek-brain/glossary/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "link-local",
+    "group": "glossary",
+    "file": "tek-brain/glossary/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Audinate: 169.254.*.* primary, 172.31.*.* secondary confirmed."
+   },
+   {
+    "id": "tx-channel",
+    "group": "glossary",
+    "file": "tek-brain/glossary/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "arraycalc",
+    "group": "glossary",
+    "file": "tek-brain/glossary/loudspeakers-system-tuning.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.dbaudio.com/global/en/arraycalc/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "hypercardioid-microphone",
+    "group": "glossary",
+    "file": "tek-brain/glossary/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Shure: 105 deg pickup, least sensitive 110 deg; DPA: deaf at ~±115 deg. All numbers confirmed."
+   },
+   {
+    "id": "octave",
+    "group": "glossary",
+    "file": "tek-brain/glossary/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculator-harmonics.htm",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "aec",
+    "group": "glossary",
+    "file": "tek-brain/glossary/installation-conference.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "comb-filter",
+    "group": "glossary",
+    "file": "tek-brain/glossary/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Comb_filter",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "anfr",
+    "group": "glossary",
+    "file": "tek-brain/glossary/wireless-rf.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://www.anfr.fr/fileadmin/mediatheque/documents/Communiques_Presse/CP_ouverture_PMSE.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "ARCEP page + ANFR 2017 press release confirm both claims."
+   },
+   {
+    "id": "headroom",
+    "group": "glossary",
+    "file": "tek-brain/glossary/electricity-levels.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "reverb-pre-delay",
+    "group": "glossary",
+    "file": "tek-brain/glossary/dynamics-eq-effects.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.bricasti.com/images/M7.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Bricasti M7 manual: Reverb Pre Delay 0-500 ms confirmed."
+   },
+   {
+    "id": "rolling-riser",
+    "group": "glossary",
+    "file": "tek-brain/glossary/live-sound.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[0..1].confidence",
+      "record_says": "unverified (Ticket Fairy blog, Substack)",
+      "source_says": "Both pages do support the definition (rolling risers used to pre-stage kit offstage; wheeled drum platform)",
+      "fix": "Set to verified-secondary (blog/trade press that supports the claim) rather than unverified"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "autorisation-temporaire",
+    "group": "glossary",
+    "file": "tek-brain/glossary/wireless-rf.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "ARCEP: validity max two months, requests to ANFR which instructs for ARCEP confirmed."
+   },
+   {
+    "id": "atmos-bed-term",
+    "group": "glossary",
+    "file": "tek-brain/glossary/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Dolby: 7.1.2 bed confirmed."
+   },
+   {
+    "id": "tweeter",
+    "group": "glossary",
+    "file": "tek-brain/glossary/loudspeakers-system-tuning.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Loudspeaker",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "pickup-angle",
+    "group": "glossary",
+    "file": "tek-brain/glossary/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "low-cut-filter",
+    "group": "glossary",
+    "file": "tek-brain/glossary/dynamics-eq-effects.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "polar-pattern",
+    "group": "glossary",
+    "file": "tek-brain/glossary/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "gpio",
+    "group": "glossary",
+    "file": "tek-brain/glossary/broadcast-radio.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Brochure only mentions GPIO routing/events on the Axia iQ, no definition; generic definition acceptable. Source URL is a telosalliance-uat (staging) S3 bucket: fragile link, prefer the production telosalliance.com URL."
+   },
+   {
+    "id": "more-me-syndrome",
+    "group": "glossary",
+    "file": "tek-brain/glossary/monitoring.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "afl",
+    "group": "glossary",
+    "file": "tek-brain/glossary/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "non-normalled",
+    "group": "glossary",
+    "file": "tek-brain/glossary/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "tsl",
+    "group": "glossary",
+    "file": "tek-brain/glossary/broadcast-radio.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Studio_transmitter_link",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "iso-17651",
+    "group": "glossary",
+    "file": "tek-brain/glossary/installation-conference.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765112024/simultaneous-interpreting-interpreters-working-environment-part-1-requireme/xs142910/356423",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765122024/simultaneous-interpreting-interpreters-working-environment-part-2-requireme/xs142896/356424",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "definition",
+      "record_says": "Série de normes de 2024 ... partie 1 cabines permanentes, partie 2 cabines mobiles",
+      "source_says": "AFNOR pages confirm ISO 17651-1:2024 (permanent booths) and 17651-2:2024 (mobile booths); the series also has a Part 3 (interpreting hubs, 2022, from QA background knowledge, not on cited pages), so \"série de 2024\" is slightly inexact",
+      "fix": "Reword to 'Parties 1 et 2 (2024) de la série ISO 17651 ...'"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "stagebox-gain-tracking",
+    "group": "glossary",
+    "file": "tek-brain/glossary/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "drop-frame-df",
+    "group": "glossary",
+    "file": "tek-brain/glossary/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Wikipedia: frames 0 and 1 skipped each minute except multiples of ten, HH;MM;SS;FF confirmed."
+   },
+   {
+    "id": "swl",
+    "group": "glossary",
+    "file": "tek-brain/glossary/safety.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "d&b V-Series rigging manual: Z5380 flying frame 860 kg SWL confirmed."
+   },
+   {
+    "id": "igmp-snooping",
+    "group": "glossary",
+    "file": "tek-brain/glossary/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "sn3d",
+    "group": "glossary",
+    "file": "tek-brain/glossary/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "sabine-formula",
+    "group": "glossary",
+    "file": "tek-brain/glossary/acoustics-psychoacoustics.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculator-RT60.htm",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "definition",
+      "record_says": "« estimation valable surtout pour les salles assez réverbérantes »",
+      "source_says": "sengpielaudio RT60 page gives RT60 = 0.161 V/A (metres) but says nothing about validity being limited to reverberant rooms (no Eyring/diffuse-field caveat on the cited page)",
+      "fix": "Either cite a source for the validity caveat (e.g. a text discussing Sabine vs Eyring) or drop the qualifier"
+     }
+    ],
+    "note": "0.161 V/A confirmed; qualifier unsupported."
+   },
+   {
+    "id": "punch-out",
+    "group": "glossary",
+    "file": "tek-brain/glossary/studio-recording.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "sync-state",
+    "group": "glossary",
+    "file": "tek-brain/glossary/digital-audio-clocking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "stereo-triangle",
+    "group": "glossary",
+    "file": "tek-brain/glossary/monitoring.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "EBU Tech 3276: optimal base angle 60 deg confirmed."
+   },
+   {
+    "id": "plugin-delay-compensation",
+    "group": "glossary",
+    "file": "tek-brain/glossary/digital-audio-clocking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://puremix.com/blog/understanding-plug-in-delay-compensation",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "transformer-bypass",
+    "group": "glossary",
+    "file": "tek-brain/glossary/installation-conference.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://docs.originacoustics.com/transformers_manual",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "power-sequencing",
+    "group": "glossary",
+    "file": "tek-brain/glossary/safety.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.prosoundweb.com/tech-tip-of-the-day-proper-pa-power-sequencing/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "parallel-compression",
+    "group": "glossary",
+    "file": "tek-brain/glossary/dynamics-eq-effects.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "gobo",
+    "group": "glossary",
+    "file": "tek-brain/glossary/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "video-reference",
+    "group": "glossary",
+    "file": "tek-brain/glossary/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "stage-manager",
+    "group": "glossary",
+    "file": "tek-brain/glossary/live-sound.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[0..1].confidence",
+      "record_says": "unverified (Substack, Ticket Fairy blog)",
+      "source_says": "Both pages support: stage manager keeps the clock and signals remaining time during changeovers",
+      "fix": "Set to verified-secondary"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "free-field",
+    "group": "glossary",
+    "file": "tek-brain/glossary/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculator-distance.htm",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "main-mix",
+    "group": "glossary",
+    "file": "tek-brain/glossary/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "pull-up",
+    "group": "glossary",
+    "file": "tek-brain/glossary/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "recording-metadata",
+    "group": "glossary",
+    "file": "tek-brain/glossary/studio-recording.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "lcr",
+    "group": "glossary",
+    "file": "tek-brain/glossary/consoles-signal-flow.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "tonalite-pilote",
+    "group": "glossary",
+    "file": "tek-brain/glossary/wireless-rf.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     },
+     {
+      "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Shure: supra- or sub-audible tone-key; Sennheiser spec: pilot tone squelch confirmed."
+   },
+   {
+    "id": "unbalanced-line",
+    "group": "glossary",
+    "file": "tek-brain/glossary/electricity-levels.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[0].confidence",
+      "record_says": "verified-secondary (DPA, kind manufacturer)",
+      "source_says": "DPA article (E. B. Brixen): in the unbalanced connection the cable shield is part of the circuit",
+      "fix": "Set to verified-primary"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "leader-clock",
+    "group": "glossary",
+    "file": "tek-brain/glossary/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "dialogue-loudness",
+    "group": "glossary",
+    "file": "tek-brain/glossary/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "dante",
+    "group": "glossary",
+    "file": "tek-brain/glossary/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "phon",
+    "group": "glossary",
+    "file": "tek-brain/glossary/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculatorSonephon.htm",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "sengpielaudio: loudness level of 1 kHz pure tone at n dB SPL confirmed."
+   },
+   {
+    "id": "dante-controller",
+    "group": "glossary",
+    "file": "tek-brain/glossary/audio-networks.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "oblique-mode",
+    "group": "glossary",
+    "file": "tek-brain/glossary/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "sengpielaudio: oblique modes ~1/4 energy of axial (= -6 dB) confirmed."
+   },
+   {
+    "id": "polarity",
+    "group": "glossary",
+    "file": "tek-brain/glossary/microphones-miking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Shure PGA181 spec: positive pressure -> positive voltage pin 2 vs pin 3 confirmed."
+   },
+   {
+    "id": "headphone-console",
+    "group": "glossary",
+    "file": "tek-brain/glossary/orchestra-classical.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://cinemontage.org/?p=7926",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "definition",
+      "record_says": "Poste dédié aux mixages casque des musiciens lors d'une séance de musique de film.",
+      "source_says": "CineMontage only names the role ('at the headphone console, Christine Sirois') in a scoring-session article; it gives no definition",
+      "fix": "Plausible inference, but mark as editorial/inferred or add a source that describes the headphone console function"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "no-lead-vocal-mix",
+    "group": "glossary",
+    "file": "tek-brain/glossary/studio-recording.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "sound-pressure-limiter",
+    "group": "glossary",
+    "file": "tek-brain/glossary/safety.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[0].confidence",
+      "record_says": "verified-secondary (kind: regulator, ARS Ile-de-France)",
+      "source_says": "ARS is the state regional health agency; page states LPA must be installed and set by a professional (certificate) and EINS may prescribe it",
+      "fix": "Set to verified-primary (regulator), consistent with the label rule"
+     }
+    ],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "active-crossover",
+    "group": "glossary",
+    "file": "tek-brain/glossary/loudspeakers-system-tuning.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Audio_crossover",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "antiphonal-violins",
+    "group": "glossary",
+    "file": "tek-brain/glossary/orchestra-classical.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "smux",
+    "group": "glossary",
+    "file": "tek-brain/glossary/digital-audio-clocking.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "non-drop-frame-ndf",
+    "group": "glossary",
+    "file": "tek-brain/glossary/post-immersive.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "t20-t30",
+    "group": "glossary",
+    "file": "tek-brain/glossary/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Reverberation",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Wikipedia: 20 dB x3 / 30 dB x2 confirmed."
+   },
+   {
+    "id": "reverberant-field",
+    "group": "glossary",
+    "file": "tek-brain/glossary/acoustics-psychoacoustics.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "EBU Tech 3276: reflections after early reflections (>~15 ms) confirmed."
+   },
+   {
+    "id": "gain-before-feedback",
+    "group": "glossary",
+    "file": "tek-brain/glossary/monitoring.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   },
+   {
+    "id": "stl",
+    "group": "glossary",
+    "file": "tek-brain/glossary/broadcast-radio.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikipedia.org/wiki/Studio_transmitter_link",
+      "http": 200,
+      "method": "urllib fetch + text grep (pypdf for PDFs)"
+     }
+    ],
+    "findings": [],
+    "note": "Definition supported by cited source text (paraphrase)."
+   }
+  ],
+  "rooms": [
+   {
+    "id": "museum-installed-sound-medium",
+    "group": "rooms",
+    "file": "tek-brain/rooms/museum-installed-sound-medium.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.genelec.com/museums-and-attractions",
+      "http": 200,
+      "method": "urllib+text extraction"
+     },
+     {
+      "url": "https://www.genelec.com/-/reference/genelec-smart-ip-brings-music-history-to-life",
+      "http": 200,
+      "method": "urllib+text extraction"
+     },
+     {
+      "url": "https://www.genelec.com/-/reference/genelec-loudspeakers-help-transform-finland-s-historic-parkano-bank-into-interactive-museum",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "sources[1].confidence, sources[2].confidence",
+      "record_says": "verified-secondary (kind: manufacturer)",
+      "source_says": "Genelec reference/case-study pages published by the manufacturer itself",
+      "fix": "Set confidence to verified-primary (manufacturer), or change kind to trade/case-study if secondary is intended; be consistent with sources[0]."
+     }
+    ],
+    "note": "All description facts verified: ~30,000 sq ft on two floors, 23x4430A + 13x4040A + 7370A + 7350A, gallery-level control balanced with headphone guide; Parkano 7.1.4 screening, foyer/vault zones, one-button start/stop, panels behind curtains, 4Business. Dimensions and RT60 honestly logged as estimates/not found."
+   },
+   {
+    "id": "studio-vocal-booth-small",
+    "group": "rooms",
+    "file": "tek-brain/rooms/studio-vocal-booth-small.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://whisperroom.com/products/voice-over-basic",
+      "http": 200,
+      "method": "urllib+text extraction"
+     },
+     {
+      "url": "https://whisperroom.com/products/practice-basic",
+      "http": 200,
+      "method": "urllib+text extraction"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Interior 3'10\"x3'10\"x6'8\" = 1.17x1.17x2.03 m and 5'10\"x5'10\"x6'8\" = 1.78x1.78x2.03 m confirmed; door window 16\"x30\" confirmed; DPA table 'Vocal booth 0.1-0.2 s at 500 Hz' confirmed. Max dims and door logged as estimates."
+   },
+   {
+    "id": "sports-venue-pa-large",
+    "group": "rooms",
+    "file": "tek-brain/rooms/sports-venue-pa-large.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://fr.wikipedia.org/wiki/Stade_de_France",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "80 698 (football/rugby), 100 080 concert record, 119 x 75 m, roof 46 m above pitch, 36 blocs de 5 enceintes in the roof all confirmed. Bowl dimensions, min height, RT60, gear brands logged as estimates/not found."
+   },
+   {
+    "id": "church-worship-medium",
+    "group": "rooms",
+    "file": "tek-brain/rooms/church-worship-medium.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://pages.up.pt/~up209614/ICSV2012carvalho.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     },
+     {
+      "url": "https://pages.up.pt/~up209614/fa2011chapels.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     },
+     {
+      "url": "https://www.czasopisma.pan.pl//Content/107542/PDF/70.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "rt60_s.band_note",
+      "record_says": "11 églises portugaises de 8 470 à 14 207 m³ (XIVe–XXe s.)",
+      "source_says": "ICSV2012 comparison table lists 11 churches with volume, RT 500-1k Hz and RASTI only; no construction dates/centuries are given (the two case-study churches are described as mid-20th-century).",
+      "fix": "Remove '(XIVe–XXe s.)' or cite a source for the construction dates."
+     }
+    ],
+    "note": "Santo Tirso 9855 m3, 38.1 x 27.2 x 16.0 m; Conception (Porto) 49.0 m long, 17.0 m high; RT 1.8 (S. Francisco) to 11.0 s (Santo Tirso), most 2.7-7.8 s; >3 s inappropriate for Catholic worship; Fatima chapel 3+4 35 x 19 x 4.8 m, 3190 m3; Bose/Crown/BSS/AKG; cushioned pews (2010 paper) all confirmed."
+   },
+   {
+    "id": "studio-live-room-medium",
+    "group": "rooms",
+    "file": "tek-brain/rooms/studio-live-room-medium.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://studios-ferber.com/studio-b/",
+      "http": 200,
+      "method": "WebFetch (urllib 403)"
+     },
+     {
+      "url": "https://studios-ferber.com/studio-a/",
+      "http": 200,
+      "method": "WebFetch (urllib 403)"
+     },
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Ferber B '85m² X 5m', 'Parquet en Chêne Massif', '1 Cabine d'Isolation', '6 Panneaux Mobiles'; Ferber A '187m² X 7m'; DPA 'Recording studios 0.4-0.6 s'. L x W split (10.5 x 8.1 = 85 m²) honestly logged as estimate."
+   },
+   {
+    "id": "studio-control-room-large",
+    "group": "rooms",
+    "file": "tek-brain/rooms/studio-control-room-large.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://studios-ferber.com/studio-d/",
+      "http": 200,
+      "method": "WebFetch (urllib 403)"
+     },
+     {
+      "url": "https://studios-ferber.com/studio-a/",
+      "http": 200,
+      "method": "WebFetch"
+     },
+     {
+      "url": "https://studios-ferber.com/studio-b/",
+      "http": 200,
+      "method": "WebFetch"
+     },
+     {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [],
+    "note": "Ferber D '45m² X 3.5m', SSL 4048E, Dynaudio 5.1; A régie '39m² X 3m' Neve 8248; B cabine '35m² X 2.5m'. EBU 3276: 0.2<Tm<0.4 s (200 Hz-4 kHz), Tm=0.25(V/100)^(1/3), V<=300 m3, 1.1w/h<=l/h<=4.5w/h-4, base 2-4 m, centre >=1.2 m, inclination <=10°, listeners >=1.5 m from walls all confirmed; 0.29 s for 158 m3 recomputed correct; all three L/W/H sets satisfy EBU ratio limits. L x W splits logged as estimates."
+   }
+  ],
+  "learning_resources": [
+   {
+    "id": "wikibooks-digital-signal-processing",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://en.wikibooks.org/wiki/Digital_Signal_Processing",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Page states very early stage, category Partly developed books (=25%), text under CC Attribution-ShareAlike."
+   },
+   {
+    "id": "shure-audio-guide-theater",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://content-files.shure.com/Pubs/audio-systems-guide-for-theater-performances/theater_guide_ea.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [],
+    "note": "Crispin Tapia author; latest copyright line ©2008 Shure Incorporated; official Shure CDN."
+   },
+   {
+    "id": "ebu-tech-3306",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3306.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [],
+    "note": "PDF title page 'TECH 3306 RF64 ... VERSION 2 (final) Geneva June 2018'. Cited publication page 403 to scripted fetch but the official PDF confirms all covered fields."
+   },
+   {
+    "id": "ebu-tech-3344",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3344.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [],
+    "note": "PDF 'VERSION 2.1', 'July 2016' confirmed."
+   },
+   {
+    "id": "inrs-outil23-exposition-quotidienne",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.inrs.fr/media.html?refINRS=outil23",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Media page shows outil23, 05/2013; zip downloads (application/zip, contains Calculette-Exposition-sonore-version_mai2013.xls); mentions légales: reproduction needs INRS permission, links allowed."
+   },
+   {
+    "id": "dpa-stereo-recording-techniques",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Title confirmed, free page."
+   },
+   {
+    "id": "jos-physical-audio-signal-processing",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://ccrma.stanford.edu/~jos/pasp/",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Page: 'W3K Publishing, 2010, ISBN 978-0-9745607-2-4', Copyright Julius O. Smith III."
+   },
+   {
+    "id": "openstax-college-physics-2e-ch23-induction-ac",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://openstax.org/books/college-physics-2e/pages/23-introduction-to-electromagnetic-induction-ac-circuits-and-electrical-technologies",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Urone/Hinrichs, Jul 13 2022, CC BY-NC-SA 4.0 confirmed."
+   },
+   {
+    "id": "aeta-scoop5s-manuel-utilisateur",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [],
+    "note": "French 'Manuel utilisateur', 'juillet 2018' confirmed."
+   },
+   {
+    "id": "lessons-in-electric-circuits-kuphaldt",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.ibiblio.org/kuphaldt/electricCircuits/",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Editions 5th/6th/5th; minor revision 2023; DC appendix 3 = CC Attribution 4.0."
+   },
+   {
+    "id": "hyperphysics-sound-intensity",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/index.html",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Nave; copyright retained, mirror only under licence."
+   },
+   {
+    "id": "itu-r-bs-1116",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.itu.int/rec/R-REC-BS.1116-3-201502-I/en",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "ITU page 02/2015, 'Free' download."
+   },
+   {
+    "id": "l-acoustics-aes-audio-networking-requirements",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "author_or_publisher",
+      "record_says": "L-Acoustics authors / AES",
+      "source_says": "Henning Kaltheuner (consultant for d&b audiotechnik), Genio Kronauer and Etienne Corteel (L-Acoustics), Morten Lave (consultant for Adamson); AES conference paper, Le Mans, 23-26 Jan 2024",
+      "fix": "author_or_publisher: 'Henning Kaltheuner, Genio Kronauer, Morten Lave, Etienne Corteel - AES (PDF hosted by L-Acoustics)'"
+     }
+    ],
+    "note": "Title, year, Le Mans, AES reproduction-without-permission notice confirmed; hosting by co-author employer looks legitimate."
+   },
+   {
+    "id": "hal-carpentier-panoramix",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-01300314",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "HAL API: Carpentier & Cornuau, JIM, 2016, licence hal-authorisation-v1, open access. (hal.science page behind Anubis bot wall, API used.)"
+   },
+   {
+    "id": "baskind-fundamentals-of-studio-technology",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://alexisbaskind.net/fundamentals-of-studio-technology-for-sound-engineers-music-producers/",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Author page: 'some of these courses ... CC BY-NC-SA 4.0'."
+   },
+   {
+    "id": "digico-sd12-getting-started",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [],
+    "note": "Issue A, December 2016 confirmed."
+   },
+   {
+    "id": "hal-vogel-dubois-immersion-sonore",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-04710399",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "HAL API: Vogel & Dubois, Cahier Louis-Lumière, 2022, CC BY-NC-ND 4.0."
+   },
+   {
+    "id": "fun-mooc-physique-preparation-enseignement-superieur",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.fun-mooc.fr/fr/cours/physique-preparation-a-lentree-dans-lenseignement-superieur/",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "'accès libre', Bondareff/Granier/Jorssen, ref 03009, licence Attribution - Pas d'Utilisation Commerciale - Pas de Modification."
+   },
+   {
+    "id": "ranenote-160",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.ranecommercial.com/legacy/note160.html",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Title confirmed. Page footer shows '© 2005 Rane' (year left 'not found': conservative, acceptable)."
+   },
+   {
+    "id": "audinate-dante-over-distance-technical-dive",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://www.getdante.com/resources/catalog/technical-guides/dante-over-distance-technical-dive/",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "type",
+      "record_says": "white-paper",
+      "source_says": "The file is a slide deck (case-study slides: Sydney Trains, Blue Note...) catalogued by Audinate under technical-guides",
+      "fix": "type: 'presentation' (or 'manufacturer-guide'); optionally note it is slides."
+     }
+    ],
+    "note": "Title confirmed; PDF CreationDate 2025-05-07 supports year 2025; official Audinate URL, free."
+   },
+   {
+    "id": "ehu-cours-acoustique",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://www.ehu.eus/acustica/francais/cours/francais.html",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "'Copyright 2003. Tous les droits réservés'."
+   },
+   {
+    "id": "yamaha-mg10xu-mode-emploi-fr",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [],
+    "note": "'Mode d'emploi', '© 2021 Yamaha Corporation'."
+   },
+   {
+    "id": "shure-home-recording-podcasting",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+      "http": 200,
+      "method": "urllib+pypdf"
+     }
+    ],
+    "findings": [],
+    "note": "Chris Lyons; latest line '©2014 Shure Incorporated AL1596A 9/14'. Listing on shure.com educational-publications page not verifiable (JS page)."
+   },
+   {
+    "id": "circles-sines-signals",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://jackschaedler.github.io/circles-sines-signals/",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Page reachable, free; no licence on intro page (record says so honestly)."
+   },
+   {
+    "id": "yamaha-pc-d-di-about-dante",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "'About Dante', PC-D, © Yamaha Corporation."
+   },
+   {
+    "id": "mit-ocw-res-6-007-signals-and-systems",
+    "group": "learning_resources",
+    "file": "learning-resources.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://ocw.mit.edu/courses/res-6-007-signals-and-systems-spring-2011/",
+      "http": 200,
+      "method": "urllib+text extraction"
+     }
+    ],
+    "findings": [],
+    "note": "Oppenheim, Spring 2011, originally 1987; OCW Creative Commons licence (BY-NC-SA 4.0 is the OCW standard; version not printed in page text)."
+   }
+  ],
+  "3d_downloads": [
+   {
+    "id": "objv-vintage-microphone-klasy.glb",
+    "group": "3d_downloads",
+    "file": "3d-models/candidates/models-open-access-cad.downloads.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://sketchfab.com/i/models/a5986b39102f47c5b32b212365dd7276",
+      "http": 200,
+      "method": "urllib Sketchfab public API"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "attribution_text",
+      "record_says": "« Vintage Microphone » par Klasy (https://sketchfab.com/3d-models/a5986...) — Creative Commons Attribution",
+      "source_says": "Sketchfab: license CC Attribution, url creativecommons.org/licenses/by/4.0/",
+      "fix": "End the attribution with 'CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)' so the credit itself names the version and links the licence."
+     }
+    ],
+    "note": "Name Vintage Microphone, author Klasy, CC BY 4.0 confirmed."
+   },
+   {
+    "id": "objv-battery-guitar-amp-camilote.glb",
+    "group": "3d_downloads",
+    "file": "3d-models/candidates/models-open-access-cad.downloads.json",
+    "verdict": "minor",
+    "sources_checked": [
+     {
+      "url": "https://sketchfab.com/i/models/29d45cf5c404465e839c730393f9732a",
+      "http": 200,
+      "method": "urllib Sketchfab public API"
+     }
+    ],
+    "findings": [
+     {
+      "severity": "minor",
+      "field": "attribution_text",
+      "record_says": "« Guitar Amp » par Gustavo Camilote (...) — Creative Commons Attribution",
+      "source_says": "Sketchfab: license CC Attribution 4.0 (creativecommons.org/licenses/by/4.0/)",
+      "fix": "Append 'CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)'."
+     }
+    ],
+    "note": "Name Guitar Amp, author Gustavo Camilote (camilote), CC BY 4.0 confirmed."
+   },
+   {
+    "id": "ph-plastic-crate-02.glb",
+    "group": "3d_downloads",
+    "file": "3d-models/candidates/models-cc0-libraries.downloads.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://api.polyhaven.com/info/plastic_crate_02",
+      "http": 200,
+      "method": "urllib API"
+     }
+    ],
+    "findings": [],
+    "note": "Name Plastic Crate 02, author Fabi_G; Poly Haven assets are CC0 site-wide."
+   },
+   {
+    "id": "ph-steel-frame-shelves-03.glb",
+    "group": "3d_downloads",
+    "file": "3d-models/candidates/models-cc0-libraries.downloads.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://api.polyhaven.com/info/steel_frame_shelves_03",
+      "http": 200,
+      "method": "urllib API"
+     }
+    ],
+    "findings": [],
+    "note": "Name Steel Frame Shelves 03, author Ulan Cabanilla; CC0 site-wide."
+   },
+   {
+    "id": "pp-acoustic-guitar.glb",
+    "group": "3d_downloads",
+    "file": "3d-models/candidates/models-cc0-libraries.downloads.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://poly.pizza/m/afr6GCpce_I",
+      "http": 200,
+      "method": "urllib raw page JSON"
+     }
+    ],
+    "findings": [],
+    "note": "Page: by jeremy, 'Licence':'CC-BY 3.0', link creativecommons.org/licenses/by/3.0."
+   },
+   {
+    "id": "si-chester-telegraph-relay.glb",
+    "group": "3d_downloads",
+    "file": "3d-models/candidates/models-open-access-cad.downloads.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://n2t.net/ark:/65665/ng49ca746a5-3a3a-704b-e053-15f76fa0b4fa",
+      "http": 403,
+      "method": "urllib 403; WebFetch redirect chain -> americanhistory.si.edu nmah_712417 (403)"
+     },
+     {
+      "url": "https://api.si.edu/openaccess/api/v1.0/content/edanmdm:nmah_712417",
+      "http": 200,
+      "method": "Smithsonian Open Access API"
+     }
+    ],
+    "findings": [],
+    "note": "API: title 'Chester telegraph relay', NMAH, guid = the recorded ark, 3d_voyager media usage access 'CC0'."
+   },
+   {
+    "id": "pp-simple-truss.glb",
+    "group": "3d_downloads",
+    "file": "3d-models/candidates/models-cc0-libraries.downloads.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://poly.pizza/m/8x8z_A617L6",
+      "http": 200,
+      "method": "urllib raw page JSON"
+     }
+    ],
+    "findings": [],
+    "note": "By Rellik 66, 'Licence':'CC-BY 3.0'."
+   },
+   {
+    "id": "pp-kenney-lounge-sofa.glb",
+    "group": "3d_downloads",
+    "file": "3d-models/candidates/models-cc0-libraries.downloads.json",
+    "verdict": "pass",
+    "sources_checked": [
+     {
+      "url": "https://poly.pizza/m/jMu2iCmGxU",
+      "http": 200,
+      "method": "urllib raw page JSON"
+     }
+    ],
+    "findings": [],
+    "note": "By Kenney, 'Licence':'CC0 1.0'."
+   }
+  ]
+ }
+}

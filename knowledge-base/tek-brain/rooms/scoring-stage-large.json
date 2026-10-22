@@ -353,7 +353,8 @@
         "dimensions_m.height",
         "description (540 m², 130 musiciens)",
         "gear_positions (arbre Decca)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.synchronstage.com/facility",
@@ -363,7 +364,8 @@
       "kind": "other",
       "covers": [
         "description (bruit de fond 16 dB(A))"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://en.wikipedia.org/wiki/Synchron_Stage_Vienna",
@@ -373,7 +375,8 @@
       "kind": "other",
       "covers": [
         "surfaces (boîte dans la boîte, écart entre parois)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.abbeyroad.com/studio-one",
@@ -384,7 +387,8 @@
       "covers": [
         "description (4 844 sq ft, orchestre 100 + chœur 100)",
         "zones.choeur"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://en.wikipedia.org/wiki/Decca_tree",
@@ -394,7 +398,8 @@
       "kind": "other",
       "covers": [
         "gear_positions (géométrie de l'arbre Decca)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

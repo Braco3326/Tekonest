@@ -410,7 +410,8 @@
         "surfaces.floor",
         "surfaces.ceiling",
         "description (80 698 places, record concert 100 080, 36 blocs de 5 enceintes dans le toit)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

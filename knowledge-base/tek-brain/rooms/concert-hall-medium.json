@@ -418,7 +418,8 @@
         "patch_points.stage-patch-60xlr-harting",
         "openings[0]",
         "gear_positions (choix du matériel : DM7 façade et retours, Rio3224-D2, AD4D, Beta 91A, SM58, e906)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://lembarcadere.aubervilliers.fr/wp-content/uploads/2026/10/FT-auber-maj-02102026.pdf",
@@ -432,17 +433,19 @@
         "surfaces",
         "description (441 assis à 1 069 debout, limite 105 dB)",
         "gear_positions (choix du matériel : Kara, SB18, X15, LA8/LA4, AD4Q, DL251)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
       "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
       "accessed": "2026-10-22",
-      "confidence": "verified-secondary",
+      "confidence": "verified-primary",
       "kind": "manufacturer",
       "covers": [
         "rt60_s"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

@@ -1,212 +1,221 @@
 {
- "entity": "skill",
- "domain": "broadcast-radio",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "run-remote-duplex-n1",
-   "name_fr": "Exploiter un duplex avec N-1",
-   "name_en": "Run a remote duplex with mix-minus",
-   "domain": "broadcast-radio",
-   "description": "Mettre à l'antenne un invité distant (téléphone ou codec IP) avec un retour N-1 correct, un talkback hors antenne et une liaison stable.",
-   "level": "bts",
-   "concept_ids": [
-    "mix-minus-n1",
-    "telephone-hybrid",
-    "audio-codec-ip",
-    "talkback-ifb",
-    "acip-ebu-tech-3326"
-   ],
-   "procedure_ids": [
-    "mix-minus-setup-remote-guest",
-    "ip-codec-remote-connection",
-    "phone-in-hybrid-setup"
-   ],
-   "success_criteria": [
-    "Le vumètre d'envoi de l'hybride ou du codec ne montre que le son du studio, jamais la voix de l'intervenant",
-    "L'intervenant confirme qu'il entend le studio sans écho de sa propre voix",
-    "Chaque intervenant distant a son propre N-1",
-    "Le talkback vers l'intervenant fonctionne hors antenne avant la prise d'antenne"
-   ],
-   "bts_mapping": [
+  "entity": "skill",
+  "domain": "broadcast-radio",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
-     "verified": false
+      "id": "run-remote-duplex-n1",
+      "name_fr": "Exploiter un duplex avec N-1",
+      "name_en": "Run a remote duplex with mix-minus",
+      "domain": "broadcast-radio",
+      "description": "Mettre à l'antenne un invité distant (téléphone ou codec IP) avec un retour N-1 correct, un talkback hors antenne et une liaison stable.",
+      "level": "bts",
+      "concept_ids": [
+        "mix-minus-n1",
+        "telephone-hybrid",
+        "audio-codec-ip",
+        "talkback-ifb",
+        "acip-ebu-tech-3326"
+      ],
+      "procedure_ids": [
+        "mix-minus-setup-remote-guest",
+        "ip-codec-remote-connection",
+        "phone-in-hybrid-setup"
+      ],
+      "success_criteria": [
+        "Le vumètre d'envoi de l'hybride ou du codec ne montre que le son du studio, jamais la voix de l'intervenant",
+        "L'intervenant confirme qu'il entend le studio sans écho de sa propre voix",
+        "Chaque intervenant distant a son propre N-1",
+        "Le talkback vers l'intervenant fonctionne hors antenne avant la prise d'antenne"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "description"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "deliver-r128-compliant-programme",
+      "name_fr": "Livrer un programme conforme EBU R 128",
+      "name_en": "Deliver an EBU R 128 compliant programme",
+      "domain": "broadcast-radio",
+      "description": "Mesurer et corriger la sonie d'un programme radio pour respecter −23 LUFS et −1 dBTP en production.",
+      "level": "bts",
+      "concept_ids": [
+        "loudness-ebu-r128",
+        "loudness-metering-ebu-mode",
+        "true-peak",
+        "loudness-range-lra",
+        "distribution-loudness-level"
+      ],
+      "procedure_ids": [
+        "programme-loudness-measurement"
+      ],
+      "success_criteria": [
+        "Sonie intégrée du programme entre −24,0 et −22,0 LUFS pour un direct (−23,0 LUFS ±1,0 LU)",
+        "Crête vraie maximale ≤ −1 dBTP",
+        "Sonomètre réglé en échelle relative EBU +9 et remis à zéro au début du programme",
+        "L'élève sait distinguer sonie de production (−23 LUFS) et niveau de distribution de la station"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC01",
+          "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "success_criteria"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "success_criteria"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "success_criteria"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "operate-self-op-on-air-safely",
+      "name_fr": "Animer en self-op en sécurité",
+      "name_en": "Operate a self-op studio safely",
+      "domain": "broadcast-radio",
+      "description": "Préparer et tenir une antenne en auto-commande : vérification de la chaîne, voyant ON-AIR, coupure des écoutes, niveau de voix stable.",
+      "level": "beginner",
+      "concept_ids": [
+        "self-op-studio",
+        "on-air-console",
+        "tally-on-air",
+        "on-air-chain",
+        "silence-detection"
+      ],
+      "procedure_ids": [
+        "on-air-chain-check",
+        "on-air-tally-wiring"
+      ],
+      "success_criteria": [
+        "Le voyant ON-AIR s'allume à chaque ouverture d'un micro et s'éteint quand tous sont fermés",
+        "Les écoutes de la régie se coupent dès que le micro est ouvert",
+        "La voix reste dans la zone ±2 LU autour de 0 LU en sonie court terme",
+        "La chaîne est vérifiée (source de test, playout, micro, liaisons, secours) avant le direct"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "success_criteria"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+          "publisher": "Yellowtec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     }
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "success_criteria"
-     ]
-    },
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "description"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "description"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "deliver-r128-compliant-programme",
-   "name_fr": "Livrer un programme conforme EBU R 128",
-   "name_en": "Deliver an EBU R 128 compliant programme",
-   "domain": "broadcast-radio",
-   "description": "Mesurer et corriger la sonie d'un programme radio pour respecter −23 LUFS et −1 dBTP en production.",
-   "level": "bts",
-   "concept_ids": [
-    "loudness-ebu-r128",
-    "loudness-metering-ebu-mode",
-    "true-peak",
-    "loudness-range-lra",
-    "distribution-loudness-level"
-   ],
-   "procedure_ids": [
-    "programme-loudness-measurement"
-   ],
-   "success_criteria": [
-    "Sonie intégrée du programme entre −24,0 et −22,0 LUFS pour un direct (−23,0 LUFS ±1,0 LU)",
-    "Crête vraie maximale ≤ −1 dBTP",
-    "Sonomètre réglé en échelle relative EBU +9 et remis à zéro au début du programme",
-    "L'élève sait distinguer sonie de production (−23 LUFS) et niveau de distribution de la station"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": "BC01",
-     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
-     "verified": false
-    }
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "success_criteria"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "success_criteria"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "success_criteria"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "operate-self-op-on-air-safely",
-   "name_fr": "Animer en self-op en sécurité",
-   "name_en": "Operate a self-op studio safely",
-   "domain": "broadcast-radio",
-   "description": "Préparer et tenir une antenne en auto-commande : vérification de la chaîne, voyant ON-AIR, coupure des écoutes, niveau de voix stable.",
-   "level": "beginner",
-   "concept_ids": [
-    "self-op-studio",
-    "on-air-console",
-    "tally-on-air",
-    "on-air-chain",
-    "silence-detection"
-   ],
-   "procedure_ids": [
-    "on-air-chain-check",
-    "on-air-tally-wiring"
-   ],
-   "success_criteria": [
-    "Le voyant ON-AIR s'allume à chaque ouverture d'un micro et s'éteint quand tous sont fermés",
-    "Les écoutes de la régie se coupent dès que le micro est ouvert",
-    "La voix reste dans la zone ±2 LU autour de 0 LU en sonie court terme",
-    "La chaîne est vérifiée (source de test, playout, micro, liaisons, secours) avant le direct"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
-     "verified": false
-    }
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "success_criteria"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "success_criteria"
-     ]
-    },
-    {
-     "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
-     "publisher": "Yellowtec",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "success_criteria"
-     ]
-    }
-   ],
-   "review": "ok"
-  }
- ],
- "not_found_log": []
+  ],
+  "not_found_log": []
 }

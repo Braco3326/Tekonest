@@ -1,355 +1,375 @@
 {
- "entity": "rule",
- "domain": "wireless-rf",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "frequency-outside-authorised-band-fr",
-   "name_fr": "Fréquence hors bande PMSE autorisée en France",
-   "name_en": "Frequency outside authorised French PMSE band",
-   "domain": "wireless-rf",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "error",
-   "scope": "device",
-   "condition": {
-    "all": [
-     {
-      "path": "device.rf.tx_frequency_mhz",
-      "op": "exists"
-     },
-     {
-      "not": {
-       "any": [
-        {
-         "all": [
+  "entity": "rule",
+  "domain": "wireless-rf",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "frequency-outside-authorised-band-fr",
+      "name_fr": "Fréquence hors bande PMSE autorisée en France",
+      "name_en": "Frequency outside authorised French PMSE band",
+      "domain": "wireless-rf",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "device",
+      "condition": {
+        "all": [
           {
-           "path": "device.rf.tx_frequency_mhz",
-           "op": "gte",
-           "value": 174
+            "path": "device.rf.tx_frequency_mhz",
+            "op": "exists"
           },
           {
-           "path": "device.rf.tx_frequency_mhz",
-           "op": "lte",
-           "value": 223
+            "not": {
+              "any": [
+                {
+                  "all": [
+                    {
+                      "path": "device.rf.tx_frequency_mhz",
+                      "op": "gte",
+                      "value": 174
+                    },
+                    {
+                      "path": "device.rf.tx_frequency_mhz",
+                      "op": "lte",
+                      "value": 223
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "path": "device.rf.tx_frequency_mhz",
+                      "op": "gte",
+                      "value": 470
+                    },
+                    {
+                      "path": "device.rf.tx_frequency_mhz",
+                      "op": "lte",
+                      "value": 694
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "path": "device.rf.tx_frequency_mhz",
+                      "op": "gte",
+                      "value": 823
+                    },
+                    {
+                      "path": "device.rf.tx_frequency_mhz",
+                      "op": "lte",
+                      "value": 832
+                    }
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "path": "device.rf.tx_frequency_mhz",
+                      "op": "gte",
+                      "value": 1785
+                    },
+                    {
+                      "path": "device.rf.tx_frequency_mhz",
+                      "op": "lte",
+                      "value": 1805
+                    }
+                  ]
+                }
+              ]
+            }
           }
-         ]
+        ]
+      },
+      "explanation": "Les équipements PMSE ne peuvent fonctionner librement en France que dans les bandes listées par l'ARCEP : 174–223, 470–694, 823–832 et 1785–1805 MHz, pour un usage professionnel et dans les limites techniques. La bande 694–790 MHz est fermée au PMSE depuis le 1er juillet 2019. Un émetteur réglé hors de ces bandes est hors cadre, même si l'appareil fonctionne.",
+      "fix": "Régler l'émetteur et le récepteur sur une fréquence de 470–694 MHz (ou d'une autre bande listée), changer de variante de bande, ou demander une autorisation temporaire à l'ARCEP via l'ANFR. La bande 863–865 MHz n'est pas couverte par cette règle (régime non vérifié).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.rf.tx_frequency_mhz",
+        "device.rf.tuning_band"
+      ],
+      "concept_ids": [
+        "pmse-regulation-france",
+        "pmse-700mhz-band-clearance"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "condition",
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
         },
         {
-         "all": [
-          {
-           "path": "device.rf.tx_frequency_mhz",
-           "op": "gte",
-           "value": 470
-          },
-          {
-           "path": "device.rf.tx_frequency_mhz",
-           "op": "lte",
-           "value": 694
-          }
-         ]
-        },
-        {
-         "all": [
-          {
-           "path": "device.rf.tx_frequency_mhz",
-           "op": "gte",
-           "value": 823
-          },
-          {
-           "path": "device.rf.tx_frequency_mhz",
-           "op": "lte",
-           "value": 832
-          }
-         ]
-        },
-        {
-         "all": [
-          {
-           "path": "device.rf.tx_frequency_mhz",
-           "op": "gte",
-           "value": 1785
-          },
-          {
-           "path": "device.rf.tx_frequency_mhz",
-           "op": "lte",
-           "value": 1805
-          }
-         ]
+          "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
+          "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "condition",
+            "explanation"
+          ],
+          "url_status": "ok"
         }
-       ]
-      }
-     }
-    ]
-   },
-   "explanation": "Les équipements PMSE ne peuvent fonctionner librement en France que dans les bandes listées par l'ARCEP : 174–223, 470–694, 823–832 et 1785–1805 MHz, pour un usage professionnel et dans les limites techniques. La bande 694–790 MHz est fermée au PMSE depuis le 1er juillet 2019. Un émetteur réglé hors de ces bandes (par exemple une variante C ou D d'un ew G4, ou P51 en ULX-D) est hors cadre, même si l'appareil fonctionne.",
-   "fix": "Régler l'émetteur et le récepteur sur une fréquence de 470–694 MHz (ou d'une autre bande listée), changer de variante de bande, ou demander une autorisation temporaire à l'ARCEP via l'ANFR. La bande 863–865 MHz n'est pas couverte par cette règle (régime non vérifié).",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "device.rf.tx_frequency_mhz",
-    "device.rf.tuning_band"
-   ],
-   "concept_ids": [
-    "pmse-regulation-france",
-    "pmse-700mhz-band-clearance"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "condition",
-      "explanation",
-      "fix"
-     ]
+      ],
+      "review": "needs-oscar-review",
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "par exemple une variante C ou D d'un ew G4, ou P51 en ULX-D",
+              "source_url": null
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : exemples de variantes produit absents des pages ARCEP citées : supprimés."
+        }
+      ]
     },
     {
-     "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
-     "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "condition",
-      "explanation"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "intermod-conflict",
-   "name_fr": "Conflit d'intermodulation ou écart insuffisant",
-   "name_en": "Intermodulation conflict or insufficient spacing",
-   "domain": "wireless-rf",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "session",
-   "condition": {
-    "any": [
-     {
-      "path": "session.rf.min_im3_to_carrier_margin_khz",
-      "op": "lt",
-      "value": 250
-     },
-     {
-      "path": "session.rf.min_carrier_spacing_khz",
-      "op": "lt",
-      "value": 400
-     }
-    ]
-   },
-   "explanation": "Avec plusieurs émetteurs actifs, les produits d'IM du 3e ordre (2f1 − f2, 2f2 − f1, f1 + f2 − f3…) peuvent tomber sur la fréquence d'un autre système. Shure indique que la plupart des fabricants recommandent au moins 250 kHz entre un produit d'IM du 3e ordre et une porteuse, et au moins 400 kHz entre deux systèmes (valeurs génériques ; certains systèmes numériques annoncent des grilles plus serrées).",
-   "fix": "Recalculer le plan de fréquences avec un logiciel de coordination ou les groupes/canaux du fabricant, éloigner les émetteurs les uns des autres et réduire leur puissance.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "device.rf.tx_frequency_mhz",
-    "device.rf.tuning_band",
-    "device.rf.min_channel_spacing_khz"
-   ],
-   "concept_ids": [
-    "intermodulation",
-    "channel-spacing-wireless",
-    "rf-frequency-coordination"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "condition",
-      "explanation"
-     ]
+      "id": "intermod-conflict",
+      "name_fr": "Conflit d'intermodulation ou écart insuffisant",
+      "name_en": "Intermodulation conflict or insufficient spacing",
+      "domain": "wireless-rf",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "any": [
+          {
+            "path": "session.rf.min_im3_to_carrier_margin_khz",
+            "op": "lt",
+            "value": 250
+          },
+          {
+            "path": "session.rf.min_carrier_spacing_khz",
+            "op": "lt",
+            "value": 400
+          }
+        ]
+      },
+      "explanation": "Avec plusieurs émetteurs actifs, les produits d'IM du 3e ordre (2f1 − f2, 2f2 − f1, f1 + f2 − f3…) peuvent tomber sur la fréquence d'un autre système. Shure indique que la plupart des fabricants recommandent au moins 250 kHz entre un produit d'IM du 3e ordre et une porteuse, et au moins 400 kHz entre deux systèmes (valeurs génériques ; certains systèmes numériques annoncent des grilles plus serrées).",
+      "fix": "Recalculer le plan de fréquences avec un logiciel de coordination ou les groupes/canaux du fabricant, éloigner les émetteurs les uns des autres et réduire leur puissance.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.rf.tx_frequency_mhz",
+        "device.rf.tuning_band",
+        "device.rf.min_channel_spacing_khz"
+      ],
+      "concept_ids": [
+        "intermodulation",
+        "channel-spacing-wireless",
+        "rf-frequency-coordination"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+          "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
-     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "condition",
-      "explanation",
-      "fix"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "antenna-distance",
-   "name_fr": "Distances émetteur-antenne et émetteur-émetteur",
-   "name_en": "Transmitter-to-antenna and transmitter-to-transmitter distance",
-   "domain": "wireless-rf",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "session",
-   "condition": {
-    "any": [
-     {
-      "path": "session.rf.min_tx_to_rx_antenna_distance_m",
-      "op": "lt",
-      "value": 5
-     },
-     {
-      "path": "session.rf.min_tx_to_tx_distance_m",
-      "op": "lt",
-      "value": 1
-     }
-    ]
-   },
-   "explanation": "Shure recommande au moins 5 m entre les émetteurs et les antennes de réception pour éviter l'intermodulation dans l'étage d'entrée du récepteur, et au moins 1 m entre émetteurs si possible. Des émetteurs serrés en coulisse ou un comédien qui passe devant le rack d'antennes peuvent générer souffle et interférences.",
-   "fix": "Monter les antennes en hauteur et à distance de l'aire de jeu, demander aux artistes de ne pas stocker les émetteurs allumés en tas, éteindre les émetteurs inutilisés.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "session.rf.tx_positions_m",
-    "room.rf.rx_antenna_positions_m"
-   ],
-   "concept_ids": [
-    "line-of-sight-rf",
-    "intermodulation"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "condition",
-      "explanation",
-      "fix"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "passive-split-too-many-receivers",
-   "name_fr": "Répartition passive vers trop de récepteurs",
-   "name_en": "Passive antenna split feeding too many receivers",
-   "domain": "wireless-rf",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "device",
-   "condition": {
-    "all": [
-     {
-      "path": "device.rf.splitter_type",
-      "op": "eq",
-      "value": "passive"
-     },
-     {
-      "path": "device.rf.connected_receivers",
-      "op": "gt",
-      "value": 2
-     }
-    ]
-   },
-   "explanation": "Une division passive coûte environ 3 dB par division ; plusieurs divisions passives successives perdent trop de signal. Shure admet un répartiteur passif pour deux récepteurs et recommande fortement un répartiteur actif à partir de trois.",
-   "fix": "Utiliser un répartiteur actif (par exemple UA845UWB ou EW-D ASA) couvrant la bande des récepteurs.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "device.rf.splitter_type",
-    "device.rf.connected_receivers"
-   ],
-   "concept_ids": [
-    "antenna-distribution",
-    "antenna-cable-loss"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "condition",
-      "explanation",
-      "fix"
-     ]
+      "id": "antenna-distance",
+      "name_fr": "Distances émetteur-antenne et émetteur-émetteur",
+      "name_en": "Transmitter-to-antenna and transmitter-to-transmitter distance",
+      "domain": "wireless-rf",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "any": [
+          {
+            "path": "session.rf.min_tx_to_rx_antenna_distance_m",
+            "op": "lt",
+            "value": 5
+          },
+          {
+            "path": "session.rf.min_tx_to_tx_distance_m",
+            "op": "lt",
+            "value": 1
+          }
+        ]
+      },
+      "explanation": "Shure recommande au moins 5 m entre les émetteurs et les antennes de réception pour éviter l'intermodulation dans l'étage d'entrée du récepteur, et au moins 1 m entre émetteurs si possible. Des émetteurs serrés en coulisse ou un comédien qui passe devant le rack d'antennes peuvent générer souffle et interférences.",
+      "fix": "Monter les antennes en hauteur et à distance de l'aire de jeu, demander aux artistes de ne pas stocker les émetteurs allumés en tas, éteindre les émetteurs inutilisés.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.rf.tx_positions_m",
+        "room.rf.rx_antenna_positions_m"
+      ],
+      "concept_ids": [
+        "line-of-sight-rf",
+        "intermodulation"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
-     "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "fix"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "iem-tx-near-mic-receivers",
-   "name_fr": "Émetteurs d'ear monitors trop près des récepteurs micros",
-   "name_en": "IEM transmitters too close to mic receivers",
-   "domain": "wireless-rf",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "room",
-   "condition": {
-    "any": [
-     {
-      "path": "room.rf.iem_tx_in_same_rack_as_mic_rx",
-      "op": "eq",
-      "value": true
-     },
-     {
-      "path": "room.rf.iem_tx_antenna_to_mic_rx_antenna_m",
-      "op": "lt",
-      "value": 5
-     }
-    ]
-   },
-   "explanation": "Shure recommande fortement de placer les émetteurs d'ear monitors ou d'intercom dans un autre rack que les récepteurs micros et d'éloigner suffisamment leurs antennes des antennes de réception. Le seuil de 5 m reprend la distance minimale émetteur-antenne de réception conseillée par Shure ; il est appliqué ici par analogie.",
-   "fix": "Séparer les racks, déporter l'antenne d'émission IEM (hélice, panneau) loin des antennes de réception, coordonner micros et IEM ensemble.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "room.rf.rack_assignments",
-    "room.rf.antenna_positions_m",
-    "device.rf.is_transmitter"
-   ],
-   "concept_ids": [
-    "iem-transmitter-rf",
-    "intermodulation",
-    "antenna-combiner"
-   ],
-   "sources": [
+      "id": "passive-split-too-many-receivers",
+      "name_fr": "Répartition passive vers trop de récepteurs",
+      "name_en": "Passive antenna split feeding too many receivers",
+      "domain": "wireless-rf",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "device",
+      "condition": {
+        "all": [
+          {
+            "path": "device.rf.splitter_type",
+            "op": "eq",
+            "value": "passive"
+          },
+          {
+            "path": "device.rf.connected_receivers",
+            "op": "gt",
+            "value": 2
+          }
+        ]
+      },
+      "explanation": "Une division passive coûte environ 3 dB par division ; plusieurs divisions passives successives perdent trop de signal. Shure admet un répartiteur passif pour deux récepteurs et recommande fortement un répartiteur actif à partir de trois.",
+      "fix": "Utiliser un répartiteur actif (par exemple UA845UWB ou EW-D ASA) couvrant la bande des récepteurs.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.rf.splitter_type",
+        "device.rf.connected_receivers"
+      ],
+      "concept_ids": [
+        "antenna-distribution",
+        "antenna-cable-loss"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
+          "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
+    },
     {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "condition",
-      "explanation",
-      "fix"
-     ]
+      "id": "iem-tx-near-mic-receivers",
+      "name_fr": "Émetteurs d'ear monitors trop près des récepteurs micros",
+      "name_en": "IEM transmitters too close to mic receivers",
+      "domain": "wireless-rf",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "room",
+      "condition": {
+        "any": [
+          {
+            "path": "room.rf.iem_tx_in_same_rack_as_mic_rx",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "room.rf.iem_tx_antenna_to_mic_rx_antenna_m",
+            "op": "lt",
+            "value": 5
+          }
+        ]
+      },
+      "explanation": "Shure recommande fortement de placer les émetteurs d'ear monitors ou d'intercom dans un autre rack que les récepteurs micros et d'éloigner suffisamment leurs antennes des antennes de réception. Le seuil de 5 m reprend la distance minimale émetteur-antenne de réception conseillée par Shure ; il est appliqué ici par analogie.",
+      "fix": "Séparer les racks, déporter l'antenne d'émission IEM (hélice, panneau) loin des antennes de réception, coordonner micros et IEM ensemble.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "room.rf.rack_assignments",
+        "room.rf.antenna_positions_m",
+        "device.rf.is_transmitter"
+      ],
+      "concept_ids": [
+        "iem-transmitter-rf",
+        "intermodulation",
+        "antenna-combiner"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     }
-   ],
-   "review": "ok"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Seuil normatif de distance entre antenne d'émission IEM et antennes de réception",
-   "searched": "Guide Vear (« distance suffisante » sans valeur), guide PSM 1000 ; seuil de 5 m appliqué par analogie"
-  }
- ]
+  ],
+  "not_found_log": [
+    {
+      "what": "Seuil normatif de distance entre antenne d'émission IEM et antennes de réception",
+      "searched": "Guide Vear (« distance suffisante » sans valeur), guide PSM 1000 ; seuil de 5 m appliqué par analogie"
+    }
+  ]
 }

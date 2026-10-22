@@ -69,7 +69,8 @@
             "probable_causes",
             "checks",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
@@ -80,7 +81,8 @@
           "covers": [
             "probable_causes",
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -132,7 +134,8 @@
             "probable_causes",
             "checks",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
@@ -142,7 +145,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -208,7 +212,8 @@
           "kind": "other",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
@@ -220,7 +225,8 @@
             "probable_causes",
             "checks",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.renkus-heinz.com/iconyx-gen5",
@@ -230,7 +236,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Line_array",
@@ -240,7 +247,8 @@
           "kind": "other",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -308,7 +316,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://avsl.com/support/100v-line-speakers",
@@ -318,7 +327,8 @@
           "kind": "retailer",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system",
@@ -328,7 +338,8 @@
           "kind": "other",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -384,7 +395,8 @@
           "kind": "other",
           "covers": [
             "symptom"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://connect.snv.ch/en/iso-20109",
@@ -394,7 +406,8 @@
           "kind": "standard",
           "covers": [
             "symptom"
-          ]
+          ],
+          "url_status": "http-302"
         },
         {
           "url": "https://www.dandugan.com/Assets/manuals/Model-E-1-and-E-1A-User-Guide-v3.3.pdf",
@@ -404,7 +417,8 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -470,17 +484,19 @@
             "probable_causes",
             "checks",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
           "publisher": "Ampetronic (Learning zone: Commissioning)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Audio_induction_loop",
@@ -490,7 +506,8 @@
           "kind": "other",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

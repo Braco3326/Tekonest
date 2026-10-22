@@ -1,273 +1,280 @@
 {
- "entity": "scenario",
- "domain": "digital-audio-clocking",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "studio-interface-adat-preamp-master-clock",
-   "name_fr": "Studio : interface, préampli ADAT et horloge maître",
-   "name_en": "Studio with interface, ADAT preamp and master clock",
-   "domain": "digital-audio-clocking",
-   "brief": "Un studio enregistre une batterie : 4 micros sur l'interface, 8 micros sur un préampli 8 canaux relié en ADAT. Une horloge maître distribue le word clock à l'interface et au préampli. L'élève doit choisir la fréquence (48 kHz pour garder 8 canaux ADAT), câbler et terminer le word clock, régler les sources d'horloge et vérifier que tout est en sync avant la prise.",
-   "room_id": "studio-control-room-small",
-   "required_gear": [
+  "entity": "scenario",
+  "domain": "digital-audio-clocking",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "equipment_id": "antelope-ocx-hd",
-     "qty": 1,
-     "role": "horloge maître"
+      "id": "studio-interface-adat-preamp-master-clock",
+      "name_fr": "Studio : interface, préampli ADAT et horloge maître",
+      "name_en": "Studio with interface, ADAT preamp and master clock",
+      "domain": "digital-audio-clocking",
+      "brief": "Un studio enregistre une batterie : 4 micros sur l'interface, 8 micros sur un préampli 8 canaux relié en ADAT. Une horloge maître distribue le word clock à l'interface et au préampli. L'élève doit choisir la fréquence (48 kHz pour garder 8 canaux ADAT), câbler et terminer le word clock, régler les sources d'horloge et vérifier que tout est en sync avant la prise.",
+      "room_id": "studio-control-room-small",
+      "required_gear": [
+        {
+          "equipment_id": "antelope-ocx-hd",
+          "qty": 1,
+          "role": "horloge maître"
+        },
+        {
+          "equipment_id": "rme-fireface-ufx-iii",
+          "qty": 1,
+          "role": "interface audio (esclave word clock, entrée ADAT)"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "clock",
+            "equipment_id": "antelope-ocx-hd",
+            "label": "Horloge maître"
+          },
+          {
+            "id": "iface",
+            "equipment_id": "rme-fireface-ufx-iii",
+            "label": "Interface"
+          },
+          {
+            "id": "pre",
+            "equipment_id": null,
+            "label": "Préampli 8 canaux à sortie ADAT (générique, absent du catalogue)"
+          },
+          {
+            "id": "daw",
+            "equipment_id": null,
+            "label": "Ordinateur / DAW"
+          }
+        ],
+        "edges": [
+          {
+            "from": "clock",
+            "to": "iface",
+            "signal": "wordclock",
+            "connector": "bnc"
+          },
+          {
+            "from": "clock",
+            "to": "pre",
+            "signal": "wordclock",
+            "connector": "bnc"
+          },
+          {
+            "from": "pre",
+            "to": "iface",
+            "signal": "adat",
+            "connector": "toslink"
+          },
+          {
+            "from": "iface",
+            "to": "daw",
+            "signal": "usb-audio",
+            "connector": "usb-c"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "word-clock-distribution-studio",
+        "adat-expansion-setup",
+        "buffer-size-tracking-vs-mixing"
+      ],
+      "rule_ids": [
+        "wordclock-sync",
+        "two-clock-masters",
+        "adat-smux-channel-loss",
+        "sample-rate-mismatch"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 45,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
+          "publisher": "Antelope Audio, OCX HD user manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME, Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear",
+            "signal_flow"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     },
     {
-     "equipment_id": "rme-fireface-ufx-iii",
-     "qty": 1,
-     "role": "interface audio (esclave word clock, entrée ADAT)"
+      "id": "post-room-hdx-house-clock",
+      "name_fr": "Salle de post-production : Pro Tools HDX sur horloge maison",
+      "name_en": "Post room: Pro Tools HDX on house clock",
+      "domain": "digital-audio-clocking",
+      "brief": "Dans une salle de post-production, l'interface HD I/O reçoit le word clock de l'horloge maître OCX HD ; le contrôleur d'écoute est alimenté en AES3 depuis l'interface (il se cale sur le flux AES3, auto-synchronisant). L'élève vérifie que la session, l'horloge et l'interface sont à 48 kHz, branche le word clock et explique pourquoi le contrôleur n'a pas besoin de câble word clock.",
+      "room_id": "post-atmos-mix-room-medium",
+      "required_gear": [
+        {
+          "equipment_id": "antelope-ocx-hd",
+          "qty": 1,
+          "role": "horloge maître"
+        },
+        {
+          "equipment_id": "avid-hd-io",
+          "qty": 1,
+          "role": "interface (esclave word clock)"
+        },
+        {
+          "equipment_id": "avid-protools-hdx",
+          "qty": 1,
+          "role": "station DAW"
+        },
+        {
+          "equipment_id": "grace-m905",
+          "qty": 1,
+          "role": "contrôleur d'écoute (entrée AES3)"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "clock",
+            "equipment_id": "antelope-ocx-hd",
+            "label": "OCX HD"
+          },
+          {
+            "id": "hdio",
+            "equipment_id": "avid-hd-io",
+            "label": "HD I/O"
+          },
+          {
+            "id": "hdx",
+            "equipment_id": "avid-protools-hdx",
+            "label": "Pro Tools HDX"
+          },
+          {
+            "id": "mon",
+            "equipment_id": "grace-m905",
+            "label": "Contrôleur d'écoute"
+          }
+        ],
+        "edges": [
+          {
+            "from": "clock",
+            "to": "hdio",
+            "signal": "wordclock",
+            "connector": "bnc"
+          },
+          {
+            "from": "hdx",
+            "to": "hdio",
+            "signal": "usb-audio",
+            "connector": "digilink"
+          },
+          {
+            "from": "hdio",
+            "to": "mon",
+            "signal": "aes3",
+            "connector": "dsub25"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "word-clock-distribution-studio",
+        "diagnose-digital-clicks"
+      ],
+      "rule_ids": [
+        "wordclock-sync",
+        "sample-rate-mismatch"
+      ],
+      "difficulty": 2,
+      "estimated_time_min": 30,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
+          "publisher": "Antelope Audio, OCX HD user manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+          "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     }
-   ],
-   "signal_flow": {
-    "nodes": [
-     {
-      "id": "clock",
-      "equipment_id": "antelope-ocx-hd",
-      "label": "Horloge maître"
-     },
-     {
-      "id": "iface",
-      "equipment_id": "rme-fireface-ufx-iii",
-      "label": "Interface"
-     },
-     {
-      "id": "pre",
-      "equipment_id": null,
-      "label": "Préampli 8 canaux à sortie ADAT (générique, absent du catalogue)"
-     },
-     {
-      "id": "daw",
-      "equipment_id": null,
-      "label": "Ordinateur / DAW"
-     }
-    ],
-    "edges": [
-     {
-      "from": "clock",
-      "to": "iface",
-      "signal": "wordclock",
-      "connector": "bnc"
-     },
-     {
-      "from": "clock",
-      "to": "pre",
-      "signal": "wordclock",
-      "connector": "bnc"
-     },
-     {
-      "from": "pre",
-      "to": "iface",
-      "signal": "adat",
-      "connector": "toslink"
-     },
-     {
-      "from": "iface",
-      "to": "daw",
-      "signal": "usb-audio",
-      "connector": "usb-c"
-     }
-    ]
-   },
-   "procedure_ids": [
-    "word-clock-distribution-studio",
-    "adat-expansion-setup",
-    "buffer-size-tracking-vs-mixing"
-   ],
-   "rule_ids": [
-    "wordclock-sync",
-    "two-clock-masters",
-    "adat-smux-channel-loss",
-    "sample-rate-mismatch"
-   ],
-   "difficulty": 3,
-   "estimated_time_min": 45,
-   "bts_mapping": [
+  ],
+  "not_found_log": [
     {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
-     "verified": false
+      "what": "Préampli 8 canaux à sortie ADAT dans le KB équipement",
+      "searched": "Grep equipment/*.json (octopre, ada8200, asp800…) : aucun ; nœud laissé sans equipment_id"
     }
-   ],
-   "sources": [
-    {
-     "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
-     "publisher": "Antelope Audio, OCX HD user manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "required_gear"
-     ]
-    },
-    {
-     "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
-     "publisher": "RME, Fireface UFX III User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "required_gear",
-      "signal_flow"
-     ]
-    },
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "brief"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "post-room-hdx-house-clock",
-   "name_fr": "Salle de post-production : Pro Tools HDX sur horloge maison",
-   "name_en": "Post room: Pro Tools HDX on house clock",
-   "domain": "digital-audio-clocking",
-   "brief": "Dans une salle de post-production, l'interface HD I/O reçoit le word clock de l'horloge maître OCX HD ; le contrôleur d'écoute est alimenté en AES3 depuis l'interface (il se cale sur le flux AES3, auto-synchronisant). L'élève vérifie que la session, l'horloge et l'interface sont à 48 kHz, branche le word clock et explique pourquoi le contrôleur n'a pas besoin de câble word clock.",
-   "room_id": "post-atmos-mix-room-medium",
-   "required_gear": [
-    {
-     "equipment_id": "antelope-ocx-hd",
-     "qty": 1,
-     "role": "horloge maître"
-    },
-    {
-     "equipment_id": "avid-hd-io",
-     "qty": 1,
-     "role": "interface (esclave word clock)"
-    },
-    {
-     "equipment_id": "avid-protools-hdx",
-     "qty": 1,
-     "role": "station DAW"
-    },
-    {
-     "equipment_id": "grace-m905",
-     "qty": 1,
-     "role": "contrôleur d'écoute (entrée AES3)"
-    }
-   ],
-   "signal_flow": {
-    "nodes": [
-     {
-      "id": "clock",
-      "equipment_id": "antelope-ocx-hd",
-      "label": "OCX HD"
-     },
-     {
-      "id": "hdio",
-      "equipment_id": "avid-hd-io",
-      "label": "HD I/O"
-     },
-     {
-      "id": "hdx",
-      "equipment_id": "avid-protools-hdx",
-      "label": "Pro Tools HDX"
-     },
-     {
-      "id": "mon",
-      "equipment_id": "grace-m905",
-      "label": "Contrôleur d'écoute"
-     }
-    ],
-    "edges": [
-     {
-      "from": "clock",
-      "to": "hdio",
-      "signal": "wordclock",
-      "connector": "bnc"
-     },
-     {
-      "from": "hdx",
-      "to": "hdio",
-      "signal": "usb-audio",
-      "connector": "digilink"
-     },
-     {
-      "from": "hdio",
-      "to": "mon",
-      "signal": "aes3",
-      "connector": "dsub25"
-     }
-    ]
-   },
-   "procedure_ids": [
-    "word-clock-distribution-studio",
-    "diagnose-digital-clicks"
-   ],
-   "rule_ids": [
-    "wordclock-sync",
-    "sample-rate-mismatch"
-   ],
-   "difficulty": 2,
-   "estimated_time_min": 30,
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
-     "verified": false
-    }
-   ],
-   "sources": [
-    {
-     "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
-     "publisher": "Antelope Audio, OCX HD user manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "required_gear"
-     ]
-    },
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
-     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "brief"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Préampli 8 canaux à sortie ADAT dans le KB équipement",
-   "searched": "Grep equipment/*.json (octopre, ada8200, asp800…) : aucun ; nœud laissé sans equipment_id"
-  }
- ]
+  ]
 }

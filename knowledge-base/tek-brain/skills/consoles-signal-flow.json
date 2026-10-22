@@ -50,7 +50,8 @@
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
@@ -60,7 +61,8 @@
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -105,7 +107,8 @@
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -115,7 +118,8 @@
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Mixing_console",
@@ -125,7 +129,8 @@
           "kind": "other",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -169,7 +174,8 @@
           "covers": [
             "description",
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -212,7 +218,8 @@
           "covers": [
             "description",
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
@@ -222,7 +229,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

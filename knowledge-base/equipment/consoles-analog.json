@@ -252,7 +252,7 @@
             "key_specs.weight",
             "status"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://usa.yamaha.com/products/proaudio/mixers/",
@@ -418,7 +418,7 @@
             "connectors",
             "status"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://fast-images.static-thomann.de/pics/atg/atgdata/document/manual/243148_1204usb_x1204usb_p0794_oi_eu.pdf",
@@ -661,7 +661,7 @@
             "key_specs.weight",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Dimensions and weight match between Mackie and Thomann. Mic count (7) is from Thomann and agrees with the Mackie manual's layout (mono channels 1-4 plus hybrid channels 5/6-9/10). Thomann lists it as available since November 2019 (retailer date). A ProFX12v3+ variant is also listed by Mackie.",
@@ -1433,7 +1433,7 @@
             "key_specs.phantom_power",
             "key_specs.weight"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Spec sheet copyright 2013 (Rev. A 08/13); Thomann lists it as available since September 2013 (retailer date), but no source states a launch year, so year_introduced is 'not found'. Mackie's VLZ4 series page still lists the 1604VLZ4. The Mackie spec sheet labels 433 mm as 'Height' and 129 mm as 'Depth' (copied as printed). Main outputs are described in the manual as 1/4 in jacks; the manual appendix also describes balanced XLR output wiring generically, so an XLR main output is not listed here.",

@@ -1,604 +1,621 @@
 {
- "entity": "procedure",
- "domain": "safety",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "spl-monitoring-setup-decree-2017-1244",
-   "name_fr": "Mettre en place la surveillance des niveaux sonores d'un concert (décret 2017-1244)",
-   "name_en": "Set up sound level monitoring for a concert (décret 2017-1244)",
-   "domain": "safety",
-   "context": "Avant l'ouverture des portes d'un concert avec sons amplifiés, installer la mesure, l'affichage et l'enregistrement exigés selon la catégorie du lieu, puis surveiller pendant le show.",
-   "duration_min": null,
-   "equipment_ids": [
-    "nti-audio-xl2",
-    "nti-audio-xl3",
-    "rion-nl-53"
-   ],
-   "concept_ids": [
-    "sound-exposure-limits-france",
-    "sound-level-logging-display",
-    "hearing-rest-zone",
-    "a-and-c-weighting"
-   ],
-   "rule_ids": [
-    "spl-exposure-limit",
-    "spl-exposure-limit-children"
-   ],
-   "steps": [
+  "entity": "procedure",
+  "domain": "safety",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "n": 1,
-     "preconditions": [
-      "Fiche technique du lieu et étude d'impact (EINS) disponibles"
-     ],
-     "action": "Identifier la catégorie du lieu et les obligations qui s'y appliquent (enregistrement, affichage, information du public, protections, zone de repos), ainsi que la limite applicable : 102 dB(A) / 118 dB(C) sur 15 min, ou 94 dB(A) / 104 dB(C) si l'activité est destinée aux enfants jusqu'à 6 ans.",
-     "expected_result": "La liste des obligations du lieu est connue et la limite retenue est écrite sur la feuille de régie.",
-     "typical_mistakes": [
-      "Appliquer les seuils travailleurs (80/85 dB(A)) au public, ou l'inverse",
-      "Oublier la limite en dB(C)"
-     ]
+      "id": "spl-monitoring-setup-decree-2017-1244",
+      "name_fr": "Mettre en place la surveillance des niveaux sonores d'un concert (décret 2017-1244)",
+      "name_en": "Set up sound level monitoring for a concert (décret 2017-1244)",
+      "domain": "safety",
+      "context": "Avant l'ouverture des portes d'un concert avec sons amplifiés, installer la mesure, l'affichage et l'enregistrement exigés selon la catégorie du lieu, puis surveiller pendant le show.",
+      "duration_min": null,
+      "equipment_ids": [
+        "nti-audio-xl2",
+        "nti-audio-xl3",
+        "rion-nl-53"
+      ],
+      "concept_ids": [
+        "sound-exposure-limits-france",
+        "sound-level-logging-display",
+        "hearing-rest-zone",
+        "a-and-c-weighting"
+      ],
+      "rule_ids": [
+        "spl-exposure-limit",
+        "spl-exposure-limit-children"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Fiche technique du lieu et étude d'impact (EINS) disponibles"
+          ],
+          "action": "Identifier la catégorie du lieu et les obligations qui s'y appliquent (enregistrement, affichage, information du public, protections, zone de repos), ainsi que la limite applicable : 102 dB(A) / 118 dB(C) sur 15 min, ou 94 dB(A) / 104 dB(C) si l'activité est destinée aux enfants jusqu'à 6 ans.",
+          "expected_result": "La liste des obligations du lieu est connue et la limite retenue est écrite sur la feuille de régie.",
+          "typical_mistakes": [
+            "Appliquer les seuils travailleurs (80/85 dB(A)) au public, ou l'inverse",
+            "Oublier la limite en dB(C)"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Sonomètre adapté (classe 1 recommandée) et vérifié"
+          ],
+          "action": "Installer l'appareil de mesure et son micro à l'endroit choisi pour représenter l'exposition du public (en pratique souvent à la régie, avec un écart connu par rapport au point le plus exposé), et le configurer pour afficher LAeq et LCeq sur 15 minutes.",
+          "expected_result": "Les deux valeurs glissantes sur 15 min s'affichent en continu près de la régie.",
+          "typical_mistakes": [
+            "Ne mesurer qu'en dB(A)",
+            "Placer le micro derrière la console ou contre une surface"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Lancer l'enregistrement continu des niveaux dB(A) et dB(C) pour toute la durée de diffusion et prévoir la conservation des fichiers (au moins 6 mois d'après l'ARS Île-de-France).",
+          "expected_result": "Un fichier horodaté du concert existe et sera archivé.",
+          "typical_mistakes": [
+            "Démarrer l'enregistrement après la première partie",
+            "Écraser les fichiers à la date suivante"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Vérifier que le public est informé des risques auditifs, que des protections auditives gratuites et adaptées sont disponibles en quantité suffisante et que la zone ou les périodes de repos auditif sont prévues.",
+          "expected_result": "Distributeurs de bouchons visibles et approvisionnés ; zone de repos repérée, distincte des toilettes et zones fumeurs.",
+          "typical_mistakes": [
+            "Bouchons rangés au bar, invisibles du public"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Pendant le concert, surveiller la valeur sur 15 min et anticiper : baisser le master ou les sources dominantes (souvent les graves pour le dB(C)) avant d'atteindre la limite.",
+          "expected_result": "Aucune valeur sur 15 min ne dépasse la limite sur l'enregistrement.",
+          "typical_mistakes": [
+            "Réagir seulement quand la limite est déjà dépassée",
+            "Monter le niveau en fin de set pour « finir fort »"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Les limites du décret protègent le public ; l'équipe reste soumise au Code du travail (80/85/87 dB(A)) et doit se protéger.",
+        "Le tableau officiel associant chaque catégorie de lieu à chaque obligation n'a pas été lu en texte : vérifier sur Légifrance avant d'affirmer qu'un lieu donné doit enregistrer."
+      ],
+      "sources": [
+        {
+          "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+          "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+          "publisher": "ARS Île-de-France",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.nti-audio.com/en/products/sound-level-meters/xl2-audio-acoustic-analyzer",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "equipment_ids"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "n": 2,
-     "preconditions": [
-      "Sonomètre adapté (classe 1 recommandée) et vérifié"
-     ],
-     "action": "Installer l'appareil de mesure et son micro à l'endroit choisi pour représenter l'exposition du public (en pratique souvent à la régie, avec un écart connu par rapport au point le plus exposé), et le configurer pour afficher LAeq et LCeq sur 15 minutes.",
-     "expected_result": "Les deux valeurs glissantes sur 15 min s'affichent en continu près de la régie.",
-     "typical_mistakes": [
-      "Ne mesurer qu'en dB(A)",
-      "Placer le micro derrière la console ou contre une surface"
-     ]
+      "id": "audio-system-power-sequencing",
+      "name_fr": "Mettre sous tension et hors tension un système de sonorisation",
+      "name_en": "Power up and power down an audio system",
+      "domain": "safety",
+      "context": "Au début et à la fin d'une installation, allumer et éteindre les appareils dans un ordre qui protège les haut-parleurs.",
+      "duration_min": 5,
+      "equipment_ids": [],
+      "concept_ids": [
+        "power-sequencing",
+        "electrical-safety-earthing"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Distribution électrique vérifiée (procédure power-distro-safety-check)"
+          ],
+          "action": "Faire tous les branchements (micros, console, effets, sorties) avec tous les appareils éteints.",
+          "expected_result": "Tout est câblé, rien n'est sous tension.",
+          "typical_mistakes": [
+            "Brancher un câble de modulation sur un ampli allumé"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Allumer les effets et périphériques, puis la console, puis les processeurs d'enceintes ou d'amplis.",
+          "expected_result": "Les appareils amont sont démarrés et stabilisés.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Masters de la console baissés"
+          ],
+          "action": "Allumer en dernier les amplificateurs ou les enceintes actives.",
+          "expected_result": "Aucun « thump » dans les enceintes.",
+          "typical_mistakes": [
+            "Allumer les amplis avant la console"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "À l'arrêt, couper d'abord les amplificateurs ou enceintes actives, attendre un court instant qu'ils se déchargent, puis couper processeurs, console et périphériques, et débrancher les câbles en dernier.",
+          "expected_result": "Extinction sans bruit parasite dans les haut-parleurs.",
+          "typical_mistakes": [
+            "Couper la console alors que les amplis sont encore allumés",
+            "Couper tout le système d'un coup au disjoncteur"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Certains processeurs exigent dans leur notice que les amplis soient coupés avant de les redémarrer : lire la notice du matériel."
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/tech-tip-of-the-day-proper-pa-power-sequencing/",
+          "publisher": "ProSoundWeb (tip from Sweetwater, 2010)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 3,
-     "preconditions": [],
-     "action": "Lancer l'enregistrement continu des niveaux dB(A) et dB(C) pour toute la durée de diffusion et prévoir la conservation des fichiers (au moins 6 mois d'après l'ARS Île-de-France).",
-     "expected_result": "Un fichier horodaté du concert existe et sera archivé.",
-     "typical_mistakes": [
-      "Démarrer l'enregistrement après la première partie",
-      "Écraser les fichiers à la date suivante"
-     ]
+      "id": "power-distro-safety-check",
+      "name_fr": "Contrôler une distribution électrique avant de brancher la sono",
+      "name_en": "Check a power distribution before connecting the audio system",
+      "domain": "safety",
+      "context": "À l'arrivée sur un lieu ou un festival, avant de brancher amplis, consoles et backline sur une distribution temporaire.",
+      "duration_min": 15,
+      "equipment_ids": [],
+      "concept_ids": [
+        "electrical-safety-earthing",
+        "residual-current-device",
+        "habilitation-electrique",
+        "three-phase-distribution",
+        "cable-management-safety"
+      ],
+      "rule_ids": [
+        "mains-earth-lifted"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Repérer la coupure d'urgence et vérifier qu'elle reste facilement accessible.",
+          "expected_result": "Toute l'équipe sait où couper en cas de danger.",
+          "typical_mistakes": [
+            "Coupure cachée derrière des flight-cases"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Inspecter visuellement les câbles, prolongateurs, fiches et prises (gaine, fiche, carcasse) ; écarter tout matériel abîmé ou bricolé.",
+          "expected_result": "Seul du matériel en bon état et normalisé est utilisé.",
+          "typical_mistakes": [
+            "Réparer une fiche au ruban adhésif",
+            "Garder un câble écrasé « parce qu'il marche »"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Accord du responsable de l'installation électrique"
+          ],
+          "action": "Vérifier que les départs qui alimenteront le son sont protégés par un dispositif différentiel et que les prises ont leur contact de terre ; utiliser son bouton test si l'on est autorisé à le faire.",
+          "expected_result": "Les départs sont protégés et la terre est présente sur chaque prise utilisée.",
+          "typical_mistakes": [
+            "Utiliser un adaptateur sans terre",
+            "Supposer qu'un coffret de chantier est forcément protégé"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Ne jamais ouvrir un coffret ou une armoire, ni réarmer une protection, sans habilitation et autorisation de l'employeur ; signaler toute anomalie (odeur de brûlé, grésillement, étincelles, échauffement) au responsable.",
+          "expected_result": "Les interventions sur l'installation restent faites par une personne habilitée.",
+          "typical_mistakes": [
+            "Réarmer soi-même un disjoncteur qui a déclenché sans chercher la cause"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Pour une alimentation triphasée, faire répartir les charges sur les phases par la personne habilitée et ne raccorder les appareils 230 V qu'à des départs monophasés identifiés.",
+          "expected_result": "Les départs utilisés par le son sont identifiés (phase) et repérés.",
+          "typical_mistakes": [
+            "Brancher un appareil 230 V entre deux phases"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Protéger l'eau et la pluie : mettre les distributions et connexions à l'abri ; faire courir les câbles hors des passages ou sous passe-câbles.",
+          "expected_result": "Aucun câble sous tension dans l'eau, aucun câble en travers d'un passage non protégé.",
+          "typical_mistakes": [
+            "Laisser une prolongation sous tension sans rien de branché"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "40 mA peuvent tuer ; toute tension au-delà de 50 V est potentiellement mortelle (INRS).",
+        "Ne pas affirmer qu'un 30 mA est obligatoire pour toute installation temporaire de spectacle : la NF C 15-100-7-711 n'a pas été lue."
+      ],
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+          "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/electriques/habilitation-electrique.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Courant_triphasé",
+          "publisher": "Wikipédia (FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/nf-c151007711/lowvoltage-electrical-installations-part-7711-special-requirements-for-temp/fa197917/423396",
+          "publisher": "AFNOR Boutique",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "n": 4,
-     "preconditions": [],
-     "action": "Vérifier que le public est informé des risques auditifs, que des protections auditives gratuites et adaptées sont disponibles en quantité suffisante et que la zone ou les périodes de repos auditif sont prévues.",
-     "expected_result": "Distributeurs de bouchons visibles et approvisionnés ; zone de repos repérée, distincte des toilettes et zones fumeurs.",
-     "typical_mistakes": [
-      "Bouchons rangés au bar, invisibles du public"
-     ]
+      "id": "flying-small-pa-safely",
+      "name_fr": "Accrocher un petit système de diffusion",
+      "name_en": "Fly a small PA safely",
+      "domain": "safety",
+      "context": "Suspendre un petit line array ou un cluster à des palans, en suivant le manuel d'accroche du fabricant (exemple : d&b série V).",
+      "duration_min": null,
+      "equipment_ids": [
+        "db-audiotechnik-v8",
+        "db-audiotechnik-arraycalc"
+      ],
+      "concept_ids": [
+        "rigging-safety",
+        "working-load-limit-cmu",
+        "secondary-safety",
+        "working-at-height"
+      ],
+      "rule_ids": [
+        "rigging-without-safety"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Manuel d'accroche du système à jour"
+          ],
+          "action": "Calculer la configuration (nombre d'enceintes, angles, point d'accroche) dans le logiciel du fabricant et vérifier que la charge reste dans les limites du cadre et des accessoires.",
+          "expected_result": "Une configuration validée et imprimée, avec le poids total.",
+          "typical_mistakes": [
+            "Reprendre des angles d'un autre spectacle sans recalculer",
+            "Additionner les CMU de deux élingues sans tenir compte de l'angle"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Vérifier que les points d'accroche du lieu conviennent pour la charge prévue (c'est la responsabilité de l'installateur) et que le personnel est qualifié et autorisé.",
+          "expected_result": "Points d'accroche validés par le lieu ; équipe d'accroche désignée.",
+          "typical_mistakes": [
+            "Accrocher à une structure sans connaître sa charge admissible"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Faire une inspection visuelle et fonctionnelle de chaque pièce (cadre, goupilles, manilles) ; retirer immédiatement toute pièce douteuse.",
+          "expected_result": "Seules des pièces en bon état sont utilisées.",
+          "typical_mistakes": [
+            "Remplacer une goupille d'origine par une goupille quelconque"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Assembler à deux, en portant des équipements de protection, en faisant attention aux risques d'écrasement.",
+          "expected_result": "Array assemblé selon la configuration.",
+          "typical_mistakes": [
+            "Monter seul"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Pendant le levage aux palans, dégager la zone : personne directement sous la charge ni à proximité ; ne jamais grimper sur l'array.",
+          "expected_result": "Levage sans personne sous la charge.",
+          "typical_mistakes": [
+            "Laisser l'équipe lumière travailler sous le système en cours de levage"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Installer la sécurité secondaire sur les points prévus, indépendante de l'accroche principale et capable de porter tout le poids, montée de façon à retenir l'array sans chute ni balancement.",
+          "expected_result": "Chaque point suspendu a sa sécurité secondaire.",
+          "typical_mistakes": [
+            "Passer l'élingue de sécurité sur le même point que l'accroche principale",
+            "Laisser du mou qui permet une chute"
+          ]
+        },
+        {
+          "n": 7,
+          "preconditions": [],
+          "action": "En extérieur, surveiller le vent : au-delà de 6 Beaufort, l'accroche au-dessus du public n'est pas recommandée ; au-delà de 8 Beaufort, éloigner tout le monde, descendre et sécuriser le système.",
+          "expected_result": "Un plan vent est connu de l'équipe.",
+          "typical_mistakes": [
+            "Attendre la fin du set pour descendre le système par vent fort"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Les valeurs de charge et de vent ci-dessus sont celles de d&b série V : pour un autre système, utiliser uniquement son propre manuel.",
+        "Le travail en hauteur exige des protections collectives en priorité (INRS)."
+      ],
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+          "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://inrs.fr/dam/jcr:907c237a-be6c-4c82-8b40-cc2623460c40/ed6278.pdf",
+          "publisher": "INRS (ED 6278, chapitre élingage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/chutes-hauteur/reglementation-travail-hauteur.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "n": 5,
-     "preconditions": [],
-     "action": "Pendant le concert, surveiller la valeur sur 15 min et anticiper : baisser le master ou les sources dominantes (souvent les graves pour le dB(C)) avant d'atteindre la limite.",
-     "expected_result": "Aucune valeur sur 15 min ne dépasse la limite sur l'enregistrement.",
-     "typical_mistakes": [
-      "Réagir seulement quand la limite est déjà dépassée",
-      "Monter le niveau en fin de set pour « finir fort »"
-     ]
+      "id": "crew-hearing-protection-plan",
+      "name_fr": "Construire un plan de protection auditive pour une équipe technique",
+      "name_en": "Build a hearing-protection plan for a crew",
+      "domain": "safety",
+      "context": "En préparation d'une tournée ou d'un festival, organiser la prévention du bruit pour les techniciens (façade, retours, plateau, backline).",
+      "duration_min": null,
+      "equipment_ids": [
+        "nti-audio-xl2"
+      ],
+      "concept_ids": [
+        "worker-noise-exposure-values",
+        "daily-noise-exposure-lex8h",
+        "equal-energy-principle",
+        "hearing-protection-devices",
+        "flat-attenuation-earplugs",
+        "noise-induced-hearing-loss"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Estimer l'exposition de chaque poste en tenant compte des niveaux et des durées (balances, concert), par mesure ou exposimétrie.",
+          "expected_result": "Chaque poste est classé par rapport à 80, 85 et 87 dB(A) et 135/137/140 dB(C) crête.",
+          "typical_mistakes": [
+            "Ne tenir compte que du concert et oublier les balances"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Réduire d'abord l'exposition à la source et collectivement (niveaux de retours, éloignement, organisation du temps), avant les protections individuelles.",
+          "expected_result": "Mesures collectives décidées et notées.",
+          "typical_mistakes": [
+            "Distribuer des bouchons et considérer le problème réglé"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Choisir les protecteurs : niveau résiduel visé entre 65 et 80 dB(A) sous le protecteur ; bouchons à atténuation uniforme ou moulés quand la perception du son compte (mixage, communication).",
+          "expected_result": "Chaque poste a un protecteur adapté, sans surprotection.",
+          "typical_mistakes": [
+            "Donner le protecteur le plus atténuant à un ingé façade, qui l'enlève pour mixer"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Mettre les protecteurs à disposition dès 80 dB(A), informer et former ; au-delà de 85 dB(A), signaler les zones et contrôler le port effectif.",
+          "expected_result": "Protecteurs disponibles et portés pendant toute l'exposition.",
+          "typical_mistakes": [
+            "Retirer les bouchons « juste une minute » régulièrement (perte de protection importante)"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Prévoir le suivi : examen audiométrique préventif proposé, signalement de toute fatigue auditive ou acouphène après un show.",
+          "expected_result": "Les symptômes sont signalés et suivis.",
+          "typical_mistakes": [
+            "Banaliser les sifflements d'oreille après un concert"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Pour 8 h à 100 dB(A), un PICB de 30 dB(A) retiré pendant 1 minute perd 5 dB(A) de protection (INRS).",
+        "Les ears (IEM) exposent aussi l'oreille : garder un limiteur actif."
+      ],
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/bruit/demarche-prevention.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+          "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure (G. Sigismondi, Personal Monitor Systems)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     }
-   ],
-   "safety_notes": [
-    "Les limites du décret protègent le public ; l'équipe reste soumise au Code du travail (80/85/87 dB(A)) et doit se protéger.",
-    "Le tableau officiel associant chaque catégorie de lieu à chaque obligation n'a pas été lu en texte : vérifier sur Légifrance avant d'affirmer qu'un lieu donné doit enregistrer."
-   ],
-   "sources": [
+  ],
+  "not_found_log": [
     {
-     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
-     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "steps"
-     ]
+      "what": "Ordre de mise sous tension tiré d'un manuel constructeur d'ampli (source primaire)",
+      "searched": "Seule source lue : ProSoundWeb/Sweetwater (trade press). Manuels Crown/QSC non ouverts (budget de recherche)."
     },
     {
-     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
-     "publisher": "ARS Île-de-France",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "steps",
-      "safety_notes"
-     ]
+      "what": "Emplacement réglementaire du point de mesure pour le décret 2017-1244",
+      "searched": "ARS Île-de-France et ARS Grand Est ne le précisent pas ; arrêté d'application non lu."
     },
     {
-     "url": "https://www.nti-audio.com/en/products/sound-level-meters/xl2-audio-acoustic-analyzer",
-     "publisher": "NTi Audio",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "equipment_ids"
-     ]
+      "what": "Guide INRS spécifique à l'accroche dans le spectacle vivant",
+      "searched": "Non trouvé ; consignes d'accroche reprises du manuel d&b série V et INRS ED 6278 (élingage)."
     }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "audio-system-power-sequencing",
-   "name_fr": "Mettre sous tension et hors tension un système de sonorisation",
-   "name_en": "Power up and power down an audio system",
-   "domain": "safety",
-   "context": "Au début et à la fin d'une installation, allumer et éteindre les appareils dans un ordre qui protège les haut-parleurs.",
-   "duration_min": 5,
-   "equipment_ids": [],
-   "concept_ids": [
-    "power-sequencing",
-    "electrical-safety-earthing"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Distribution électrique vérifiée (procédure power-distro-safety-check)"
-     ],
-     "action": "Faire tous les branchements (micros, console, effets, sorties) avec tous les appareils éteints.",
-     "expected_result": "Tout est câblé, rien n'est sous tension.",
-     "typical_mistakes": [
-      "Brancher un câble de modulation sur un ampli allumé"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Allumer les effets et périphériques, puis la console, puis les processeurs d'enceintes ou d'amplis.",
-     "expected_result": "Les appareils amont sont démarrés et stabilisés.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 3,
-     "preconditions": [
-      "Masters de la console baissés"
-     ],
-     "action": "Allumer en dernier les amplificateurs ou les enceintes actives.",
-     "expected_result": "Aucun « thump » dans les enceintes.",
-     "typical_mistakes": [
-      "Allumer les amplis avant la console"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "À l'arrêt, couper d'abord les amplificateurs ou enceintes actives, attendre un court instant qu'ils se déchargent, puis couper processeurs, console et périphériques, et débrancher les câbles en dernier.",
-     "expected_result": "Extinction sans bruit parasite dans les haut-parleurs.",
-     "typical_mistakes": [
-      "Couper la console alors que les amplis sont encore allumés",
-      "Couper tout le système d'un coup au disjoncteur"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Certains processeurs exigent dans leur notice que les amplis soient coupés avant de les redémarrer : lire la notice du matériel."
-   ],
-   "sources": [
-    {
-     "url": "https://www.prosoundweb.com/tech-tip-of-the-day-proper-pa-power-sequencing/",
-     "publisher": "ProSoundWeb (tip from Sweetwater, 2010)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "steps",
-      "safety_notes"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "power-distro-safety-check",
-   "name_fr": "Contrôler une distribution électrique avant de brancher la sono",
-   "name_en": "Check a power distribution before connecting the audio system",
-   "domain": "safety",
-   "context": "À l'arrivée sur un lieu ou un festival, avant de brancher amplis, consoles et backline sur une distribution temporaire.",
-   "duration_min": 15,
-   "equipment_ids": [],
-   "concept_ids": [
-    "electrical-safety-earthing",
-    "residual-current-device",
-    "habilitation-electrique",
-    "three-phase-distribution",
-    "cable-management-safety"
-   ],
-   "rule_ids": [
-    "mains-earth-lifted"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Repérer la coupure d'urgence et vérifier qu'elle reste facilement accessible.",
-     "expected_result": "Toute l'équipe sait où couper en cas de danger.",
-     "typical_mistakes": [
-      "Coupure cachée derrière des flight-cases"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Inspecter visuellement les câbles, prolongateurs, fiches et prises (gaine, fiche, carcasse) ; écarter tout matériel abîmé ou bricolé.",
-     "expected_result": "Seul du matériel en bon état et normalisé est utilisé.",
-     "typical_mistakes": [
-      "Réparer une fiche au ruban adhésif",
-      "Garder un câble écrasé « parce qu'il marche »"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [
-      "Accord du responsable de l'installation électrique"
-     ],
-     "action": "Vérifier que les départs qui alimenteront le son sont protégés par un dispositif différentiel et que les prises ont leur contact de terre ; utiliser son bouton test si l'on est autorisé à le faire.",
-     "expected_result": "Les départs sont protégés et la terre est présente sur chaque prise utilisée.",
-     "typical_mistakes": [
-      "Utiliser un adaptateur sans terre",
-      "Supposer qu'un coffret de chantier est forcément protégé"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Ne jamais ouvrir un coffret ou une armoire, ni réarmer une protection, sans habilitation et autorisation de l'employeur ; signaler toute anomalie (odeur de brûlé, grésillement, étincelles, échauffement) au responsable.",
-     "expected_result": "Les interventions sur l'installation restent faites par une personne habilitée.",
-     "typical_mistakes": [
-      "Réarmer soi-même un disjoncteur qui a déclenché sans chercher la cause"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Pour une alimentation triphasée, faire répartir les charges sur les phases par la personne habilitée et ne raccorder les appareils 230 V qu'à des départs monophasés identifiés.",
-     "expected_result": "Les départs utilisés par le son sont identifiés (phase) et repérés.",
-     "typical_mistakes": [
-      "Brancher un appareil 230 V entre deux phases"
-     ]
-    },
-    {
-     "n": 6,
-     "preconditions": [],
-     "action": "Protéger l'eau et la pluie : mettre les distributions et connexions à l'abri ; faire courir les câbles hors des passages ou sous passe-câbles.",
-     "expected_result": "Aucun câble sous tension dans l'eau, aucun câble en travers d'un passage non protégé.",
-     "typical_mistakes": [
-      "Laisser une prolongation sous tension sans rien de branché"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "40 mA peuvent tuer ; toute tension au-delà de 50 V est potentiellement mortelle (INRS).",
-    "Ne pas affirmer qu'un 30 mA est obligatoire pour toute installation temporaire de spectacle : la NF C 15-100-7-711 n'a pas été lue."
-   ],
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
-     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "steps",
-      "safety_notes"
-     ]
-    },
-    {
-     "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.inrs.fr/risques/electriques/habilitation-electrique.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://fr.wikipedia.org/wiki/Courant_triphasé",
-     "publisher": "Wikipédia (FR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.boutique.afnor.org/en-gb/standard/nf-c151007711/lowvoltage-electrical-installations-part-7711-special-requirements-for-temp/fa197917/423396",
-     "publisher": "AFNOR Boutique",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "safety_notes"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "flying-small-pa-safely",
-   "name_fr": "Accrocher un petit système de diffusion",
-   "name_en": "Fly a small PA safely",
-   "domain": "safety",
-   "context": "Suspendre un petit line array ou un cluster à des palans, en suivant le manuel d'accroche du fabricant (exemple : d&b série V).",
-   "duration_min": null,
-   "equipment_ids": [
-    "db-audiotechnik-v8",
-    "db-audiotechnik-arraycalc"
-   ],
-   "concept_ids": [
-    "rigging-safety",
-    "working-load-limit-cmu",
-    "secondary-safety",
-    "working-at-height"
-   ],
-   "rule_ids": [
-    "rigging-without-safety"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Manuel d'accroche du système à jour"
-     ],
-     "action": "Calculer la configuration (nombre d'enceintes, angles, point d'accroche) dans le logiciel du fabricant et vérifier que la charge reste dans les limites du cadre et des accessoires.",
-     "expected_result": "Une configuration validée et imprimée, avec le poids total.",
-     "typical_mistakes": [
-      "Reprendre des angles d'un autre spectacle sans recalculer",
-      "Additionner les CMU de deux élingues sans tenir compte de l'angle"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Vérifier que les points d'accroche du lieu conviennent pour la charge prévue (c'est la responsabilité de l'installateur) et que le personnel est qualifié et autorisé.",
-     "expected_result": "Points d'accroche validés par le lieu ; équipe d'accroche désignée.",
-     "typical_mistakes": [
-      "Accrocher à une structure sans connaître sa charge admissible"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Faire une inspection visuelle et fonctionnelle de chaque pièce (cadre, goupilles, manilles) ; retirer immédiatement toute pièce douteuse.",
-     "expected_result": "Seules des pièces en bon état sont utilisées.",
-     "typical_mistakes": [
-      "Remplacer une goupille d'origine par une goupille quelconque"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Assembler à deux, en portant des équipements de protection, en faisant attention aux risques d'écrasement.",
-     "expected_result": "Array assemblé selon la configuration.",
-     "typical_mistakes": [
-      "Monter seul"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Pendant le levage aux palans, dégager la zone : personne directement sous la charge ni à proximité ; ne jamais grimper sur l'array.",
-     "expected_result": "Levage sans personne sous la charge.",
-     "typical_mistakes": [
-      "Laisser l'équipe lumière travailler sous le système en cours de levage"
-     ]
-    },
-    {
-     "n": 6,
-     "preconditions": [],
-     "action": "Installer la sécurité secondaire sur les points prévus, indépendante de l'accroche principale et capable de porter tout le poids, montée de façon à retenir l'array sans chute ni balancement.",
-     "expected_result": "Chaque point suspendu a sa sécurité secondaire.",
-     "typical_mistakes": [
-      "Passer l'élingue de sécurité sur le même point que l'accroche principale",
-      "Laisser du mou qui permet une chute"
-     ]
-    },
-    {
-     "n": 7,
-     "preconditions": [],
-     "action": "En extérieur, surveiller le vent : au-delà de 6 Beaufort, l'accroche au-dessus du public n'est pas recommandée ; au-delà de 8 Beaufort, éloigner tout le monde, descendre et sécuriser le système.",
-     "expected_result": "Un plan vent est connu de l'équipe.",
-     "typical_mistakes": [
-      "Attendre la fin du set pour descendre le système par vent fort"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Les valeurs de charge et de vent ci-dessus sont celles de d&b série V : pour un autre système, utiliser uniquement son propre manuel.",
-    "Le travail en hauteur exige des protections collectives en priorité (INRS)."
-   ],
-   "sources": [
-    {
-     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
-     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps",
-      "safety_notes"
-     ]
-    },
-    {
-     "url": "https://inrs.fr/dam/jcr:907c237a-be6c-4c82-8b40-cc2623460c40/ed6278.pdf",
-     "publisher": "INRS (ED 6278, chapitre élingage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.inrs.fr/risques/chutes-hauteur/reglementation-travail-hauteur.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "safety_notes"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "crew-hearing-protection-plan",
-   "name_fr": "Construire un plan de protection auditive pour une équipe technique",
-   "name_en": "Build a hearing-protection plan for a crew",
-   "domain": "safety",
-   "context": "En préparation d'une tournée ou d'un festival, organiser la prévention du bruit pour les techniciens (façade, retours, plateau, backline).",
-   "duration_min": null,
-   "equipment_ids": [
-    "nti-audio-xl2"
-   ],
-   "concept_ids": [
-    "worker-noise-exposure-values",
-    "daily-noise-exposure-lex8h",
-    "equal-energy-principle",
-    "hearing-protection-devices",
-    "flat-attenuation-earplugs",
-    "noise-induced-hearing-loss"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Estimer l'exposition de chaque poste en tenant compte des niveaux et des durées (balances, concert), par mesure ou exposimétrie.",
-     "expected_result": "Chaque poste est classé par rapport à 80, 85 et 87 dB(A) et 135/137/140 dB(C) crête.",
-     "typical_mistakes": [
-      "Ne tenir compte que du concert et oublier les balances"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Réduire d'abord l'exposition à la source et collectivement (niveaux de retours, éloignement, organisation du temps), avant les protections individuelles.",
-     "expected_result": "Mesures collectives décidées et notées.",
-     "typical_mistakes": [
-      "Distribuer des bouchons et considérer le problème réglé"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Choisir les protecteurs : niveau résiduel visé entre 65 et 80 dB(A) sous le protecteur ; bouchons à atténuation uniforme ou moulés quand la perception du son compte (mixage, communication).",
-     "expected_result": "Chaque poste a un protecteur adapté, sans surprotection.",
-     "typical_mistakes": [
-      "Donner le protecteur le plus atténuant à un ingé façade, qui l'enlève pour mixer"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Mettre les protecteurs à disposition dès 80 dB(A), informer et former ; au-delà de 85 dB(A), signaler les zones et contrôler le port effectif.",
-     "expected_result": "Protecteurs disponibles et portés pendant toute l'exposition.",
-     "typical_mistakes": [
-      "Retirer les bouchons « juste une minute » régulièrement (perte de protection importante)"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Prévoir le suivi : examen audiométrique préventif proposé, signalement de toute fatigue auditive ou acouphène après un show.",
-     "expected_result": "Les symptômes sont signalés et suivis.",
-     "typical_mistakes": [
-      "Banaliser les sifflements d'oreille après un concert"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Pour 8 h à 100 dB(A), un PICB de 30 dB(A) retiré pendant 1 minute perd 5 dB(A) de protection (INRS).",
-    "Les ears (IEM) exposent aussi l'oreille : garder un limiteur actif."
-   ],
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.inrs.fr/risques/bruit/demarche-prevention.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "steps",
-      "safety_notes"
-     ]
-    },
-    {
-     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
-     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
-     "publisher": "Shure (G. Sigismondi, Personal Monitor Systems)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "safety_notes"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Ordre de mise sous tension tiré d'un manuel constructeur d'ampli (source primaire)",
-   "searched": "Seule source lue : ProSoundWeb/Sweetwater (trade press). Manuels Crown/QSC non ouverts (budget de recherche)."
-  },
-  {
-   "what": "Emplacement réglementaire du point de mesure pour le décret 2017-1244",
-   "searched": "ARS Île-de-France et ARS Grand Est ne le précisent pas ; arrêté d'application non lu."
-  },
-  {
-   "what": "Guide INRS spécifique à l'accroche dans le spectacle vivant",
-   "searched": "Non trouvé ; consignes d'accroche reprises du manuel d&b série V et INRS ED 6278 (élingage)."
-  }
- ]
+  ]
 }

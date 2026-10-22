@@ -319,30 +319,33 @@
         "description",
         "surfaces"
       ],
-      "note": "Enceintes installation actives (pas d'ampli externe) et Smart IP (audio, alimentation et gestion sur un câble CAT), montage mural/plafond."
+      "note": "Enceintes installation actives (pas d'ampli externe) et Smart IP (audio, alimentation et gestion sur un câble CAT), montage mural/plafond.",
+      "url_status": "ok"
     },
     {
       "url": "https://www.genelec.com/-/reference/genelec-smart-ip-brings-music-history-to-life",
       "publisher": "Genelec — référence Bob Dylan Center (Tulsa)",
       "accessed": "2026-10-22",
-      "confidence": "verified-secondary",
+      "confidence": "verified-primary",
       "kind": "manufacturer",
       "covers": [
         "description"
       ],
-      "note": "23 × 4430A, 13 × 4040A, 7370A + 7350A ; niveaux par galerie ; ambiance équilibrée avec guide au casque."
+      "note": "23 × 4430A, 13 × 4040A, 7370A + 7350A ; niveaux par galerie ; ambiance équilibrée avec guide au casque.",
+      "url_status": "ok"
     },
     {
       "url": "https://www.genelec.com/-/reference/genelec-loudspeakers-help-transform-finland-s-historic-parkano-bank-into-interactive-museum",
       "publisher": "Genelec — référence musée de la banque de Parkano (Finlande)",
       "accessed": "2026-10-22",
-      "confidence": "verified-secondary",
+      "confidence": "verified-primary",
       "kind": "manufacturer",
       "covers": [
         "description",
         "surfaces"
       ],
-      "note": "Salle de projection 7.1.4, ambiance hall/coffre, contrôle par bouton unique, panneaux acoustiques derrière rideaux, intégrateur 4Business."
+      "note": "Salle de projection 7.1.4, ambiance hall/coffre, contrôle par bouton unique, panneaux acoustiques derrière rideaux, intégrateur 4Business.",
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

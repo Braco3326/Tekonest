@@ -356,7 +356,8 @@
         "rt60_s",
         "zones.control-room (surface mini 30 m² pour une régie haute qualité)",
         "gear_positions.genelec-8030c (base stéréo 2–4 m, centre acoustique ≥ 1,2 m)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://ducks.fr/en/projet/studios-radio-france-2/",
@@ -366,7 +367,8 @@
       "kind": "other",
       "covers": [
         "dimensions_m.length.typical (ordre de grandeur : 6 studios/régies ≈ 400 m², soit ≈ 65 m² par ensemble)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

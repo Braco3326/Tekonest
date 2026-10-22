@@ -135,7 +135,8 @@
           "covers": [
             "required_gear",
             "signal_flow"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf",
@@ -145,7 +146,8 @@
           "kind": "manufacturer",
           "covers": [
             "signal_flow"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Line_level",
@@ -155,17 +157,19 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -305,7 +309,8 @@
           "kind": "manufacturer",
           "covers": [
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/DI_unit",
@@ -315,7 +320,8 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/jdi/specifications/",
@@ -325,7 +331,8 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
@@ -335,7 +342,8 @@
           "kind": "manufacturer",
           "covers": [
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

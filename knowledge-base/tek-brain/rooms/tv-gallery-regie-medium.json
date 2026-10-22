@@ -301,7 +301,8 @@
       "covers": [
         "zones.production-gallery (mur d'écrans 6,3 m de large, pupitre avant 6 opérateurs + pupitre arrière 4)",
         "zones.sound-control-room (console 1,8 m dans un pupitre en L de 3,5 m)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
@@ -313,7 +314,8 @@
         "rt60_s",
         "zones.sound-control-room (surface ≥ 30 m²)",
         "gear_positions.neumann-kh-120-ii (base 2–4 m, h ≈ 0,9 b, centre acoustique ≥ 1,2 m)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

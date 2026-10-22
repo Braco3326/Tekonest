@@ -51,7 +51,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://avsl.com/support/100v-line-speakers",
@@ -62,7 +63,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
@@ -72,7 +74,8 @@
           "kind": "manufacturer",
           "covers": [
             "needs_catalog_fields"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -121,7 +124,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -170,7 +174,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
@@ -181,7 +186,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -220,7 +226,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
@@ -230,7 +237,8 @@
           "kind": "manufacturer",
           "covers": [
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
@@ -240,7 +248,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -301,12 +310,13 @@
           "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
           "publisher": "Ampetronic (Learning zone: Commissioning)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "condition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
@@ -317,7 +327,8 @@
           "covers": [
             "condition",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://webstore.iec.ch/publication/798",
@@ -327,7 +338,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

@@ -1,1057 +1,1106 @@
 {
- "entity": "glossary",
- "domain": "digital-audio-clocking",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "sampling",
-   "term_fr": "Échantillonnage",
-   "term_en": "Sampling",
-   "domain": "digital-audio-clocking",
-   "definition": "Mesure d'un signal à intervalles réguliers (1/fe).",
-   "see_also": [
-    "sampling"
-   ],
-   "sources": [
+  "entity": "glossary",
+  "domain": "digital-audio-clocking",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html",
-     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Sampling Theorem",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "university",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "sample-rate",
-   "term_fr": "Fréquence d'échantillonnage",
-   "term_en": "Sample rate",
-   "domain": "digital-audio-clocking",
-   "definition": "Nombre d'échantillons par seconde, en Hz (44,1, 48, 96 kHz…).",
-   "see_also": [
-    "sample-rate"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "nyquist-frequency",
-   "term_fr": "Fréquence de Nyquist",
-   "term_en": "Nyquist frequency",
-   "domain": "digital-audio-clocking",
-   "definition": "Moitié de la fréquence d'échantillonnage ; limite haute de la bande transmissible.",
-   "see_also": [
-    "nyquist-theorem"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html",
-     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Sampling Theorem",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "university",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "aliasing",
-   "term_fr": "Repliement de spectre",
-   "term_en": "Aliasing",
-   "domain": "digital-audio-clocking",
-   "definition": "Apparition, sous fe/2, d'une fréquence miroir d'une composante située au-dessus de fe/2.",
-   "see_also": [
-    "aliasing"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dsprelated.com/freebooks/mdft/Aliasing_Sampled_Signals.html",
-     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Aliasing of Sampled Signals",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "university",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "anti-aliasing-filter",
-   "term_fr": "Filtre anti-repliement",
-   "term_en": "Anti-aliasing filter",
-   "domain": "digital-audio-clocking",
-   "definition": "Passe-bas qui supprime l'énergie au-dessus de fe/2 avant la conversion A/N.",
-   "see_also": [
-    "anti-aliasing-filter"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html",
-     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Sampling Theorem",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "university",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "oversampling",
-   "term_fr": "Suréchantillonnage",
-   "term_en": "Oversampling",
-   "domain": "digital-audio-clocking",
-   "definition": "Fonctionnement interne d'un convertisseur à une fréquence multiple (64 ou 128 fois) de fe, suivi d'un filtrage numérique.",
-   "see_also": [
-    "anti-aliasing-filter",
-    "converter-latency"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "quantization",
-   "term_fr": "Quantification",
-   "term_en": "Quantization",
-   "domain": "digital-audio-clocking",
-   "definition": "Arrondi de chaque échantillon au palier d'amplitude le plus proche.",
-   "see_also": [
-    "quantization-noise"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dsprelated.com/freebooks/mdft/Round_Off_Error_Variance.html",
-     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Round-Off Error Variance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "university",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "quantization-noise",
-   "term_fr": "Bruit de quantification",
-   "term_en": "Quantization noise",
-   "domain": "digital-audio-clocking",
-   "definition": "Erreur d'arrondi traitée comme un bruit de puissance q²/12.",
-   "see_also": [
-    "quantization-noise"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dsprelated.com/freebooks/mdft/Round_Off_Error_Variance.html",
-     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Round-Off Error Variance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "university",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "bit-depth",
-   "term_fr": "Résolution",
-   "term_en": "Bit depth",
-   "domain": "digital-audio-clocking",
-   "definition": "Nombre de bits par échantillon ; environ 6 dB de dynamique par bit.",
-   "see_also": [
-    "bit-depth"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dsprelated.com/freebooks/mdft/How_Many_Bits_Enough.html",
-     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), How Many Bits are Enough for Digital Audio?",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "university",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "lsb",
-   "term_fr": "Bit de poids faible (LSB)",
-   "term_en": "Least significant bit",
-   "domain": "digital-audio-clocking",
-   "definition": "Plus petit pas de quantification d'un convertisseur ; une erreur de linéarité se chiffre en fractions de LSB.",
-   "see_also": [
-    "bit-depth"
-   ],
-   "sources": [
-    {
-     "url": "https://www.ti.com/lit/an/slaa013/slaa013.pdf",
-     "publisher": "Texas Instruments, Application Report SLAA013",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dither",
-   "term_fr": "Dither",
-   "term_en": "Dither",
-   "domain": "digital-audio-clocking",
-   "definition": "Bruit faible ajouté avant une réduction de résolution pour éviter la distorsion de troncature.",
-   "see_also": [
-    "dither"
-   ],
-   "sources": [
-    {
-     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
-     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "truncation",
-   "term_fr": "Troncature",
-   "term_en": "Truncation",
-   "domain": "digital-audio-clocking",
-   "definition": "Suppression des bits de poids faible sans dither ; produit de la distorsion sur les signaux faibles.",
-   "see_also": [
-    "dither"
-   ],
-   "sources": [
-    {
-     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
-     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "noise-shaping",
-   "term_fr": "Mise en forme du bruit",
-   "term_en": "Noise shaping",
-   "domain": "digital-audio-clocking",
-   "definition": "Filtrage qui déplace le bruit vers des fréquences moins audibles.",
-   "see_also": [
-    "noise-shaping"
-   ],
-   "sources": [
-    {
-     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
-     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "tpdf-dither",
-   "term_fr": "Dither TPDF",
-   "term_en": "TPDF dither",
-   "domain": "digital-audio-clocking",
-   "definition": "Dither à densité de probabilité triangulaire, sans mise en forme ; généralement suffisant en 24 bits.",
-   "see_also": [
-    "dither"
-   ],
-   "sources": [
-    {
-     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
-     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "floating-point",
-   "term_fr": "Virgule flottante (32 bits)",
-   "term_en": "Floating point",
-   "domain": "digital-audio-clocking",
-   "definition": "Format de calcul des DAW qui offre une très grande marge interne au-dessus de 0 dBFS.",
-   "see_also": [
-    "floating-point-processing"
-   ],
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/node/4908184",
-     "publisher": "Sound On Sound, M. Thornton, Headroom & Master Fader (2010)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition"
-     ]
+      "id": "sampling",
+      "term_fr": "Échantillonnage",
+      "term_en": "Sampling",
+      "domain": "digital-audio-clocking",
+      "definition": "Mesure d'un signal à intervalles réguliers (1/fe).",
+      "see_also": [
+        "sampling"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html",
+          "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Sampling Theorem",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
-     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "latency",
-   "term_fr": "Latence",
-   "term_en": "Latency",
-   "domain": "digital-audio-clocking",
-   "definition": "Retard entre entrée et sortie d'un système audio.",
-   "see_also": [
-    "latency"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "buffer-size",
-   "term_fr": "Taille de tampon",
-   "term_en": "Buffer size",
-   "domain": "digital-audio-clocking",
-   "definition": "Nombre d'échantillons traités par bloc par le pilote ; latence = N/fe.",
-   "see_also": [
-    "buffer-size"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "safety-buffer",
-   "term_fr": "Tampon de sécurité",
-   "term_en": "Safety buffer",
-   "domain": "digital-audio-clocking",
-   "definition": "Petit tampon fixe ajouté par le pilote côté lecture pour éviter les décrochages (32 échantillons sur la Babyface Pro).",
-   "see_also": [
-    "buffer-size",
-    "latency"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "asio",
-   "term_fr": "ASIO",
-   "term_en": "ASIO",
-   "domain": "digital-audio-clocking",
-   "definition": "Pilote audio Windows à faible latence ; contrairement à WDM, il ne fait pas de conversion de fréquence en temps réel.",
-   "see_also": [
-    "latency"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "zero-latency-monitoring",
-   "term_fr": "Écoute sans latence",
-   "term_en": "Zero Latency Monitoring",
-   "domain": "digital-audio-clocking",
-   "definition": "Renvoi de l'entrée vers la sortie dans l'interface, sans passer par l'ordinateur (quelques échantillons de retard).",
-   "see_also": [
-    "direct-monitoring"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "plugin-delay-compensation",
-   "term_fr": "Compensation de latence des plug-ins",
-   "term_en": "Plug-in delay compensation",
-   "domain": "digital-audio-clocking",
-   "definition": "Retard appliqué aux pistes rapides pour réaligner les pistes traitées (ADC dans Pro Tools).",
-   "see_also": [
-    "plugin-delay-compensation"
-   ],
-   "sources": [
-    {
-     "url": "https://puremix.com/blog/understanding-plug-in-delay-compensation",
-     "publisher": "Puremix, A. Rizzo Schettino, Understanding Plug-In Delay Compensation (2018)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "word-clock",
-   "term_fr": "Word clock",
-   "term_en": "Word clock",
-   "domain": "digital-audio-clocking",
-   "definition": "Signal carré à fe sur BNC 75 Ω, référence d'horloge commune.",
-   "see_also": [
-    "word-clock"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "clock-master",
-   "term_fr": "Maître (horloge)",
-   "term_en": "Clock master",
-   "domain": "digital-audio-clocking",
-   "definition": "Appareil qui fournit l'horloge du système (internal).",
-   "see_also": [
-    "clock-master"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "clock-slave",
-   "term_fr": "Esclave (horloge)",
-   "term_en": "Clock slave",
-   "domain": "digital-audio-clocking",
-   "definition": "Appareil qui se cale sur une horloge externe (word clock ou flux numérique).",
-   "see_also": [
-    "clock-master"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "autosync",
-   "term_fr": "AutoSync",
-   "term_en": "AutoSync",
-   "domain": "digital-audio-clocking",
-   "definition": "Mode RME : l'appareil suit une entrée valide et repasse en Master si la référence disparaît.",
-   "see_also": [
-    "clock-master"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "lock",
-   "term_fr": "Verrouillage (lock)",
-   "term_en": "Lock",
-   "domain": "digital-audio-clocking",
-   "definition": "État d'un récepteur dont la PLL a trouvé la fréquence du signal entrant.",
-   "see_also": [
-    "lock-vs-sync"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "sync-state",
-   "term_fr": "Synchronisme (sync)",
-   "term_en": "Sync",
-   "domain": "digital-audio-clocking",
-   "definition": "État d'une entrée parfaitement synchrone avec l'horloge de lecture ; seul garant de l'absence de clics.",
-   "see_also": [
-    "lock-vs-sync"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pll",
-   "term_fr": "PLL",
-   "term_en": "Phase-locked loop",
-   "domain": "digital-audio-clocking",
-   "definition": "Circuit qui asservit un oscillateur sur la fréquence d'un signal entrant.",
-   "see_also": [
-    "pll"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "jitter",
-   "term_fr": "Gigue",
-   "term_en": "Jitter",
-   "domain": "digital-audio-clocking",
-   "definition": "Variation temporelle des fronts d'horloge autour de leur position idéale.",
-   "see_also": [
-    "jitter"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "unit-interval",
-   "term_fr": "Intervalle unitaire (UI)",
-   "term_en": "Unit interval",
-   "domain": "digital-audio-clocking",
-   "definition": "Unité de mesure de la gigue AES3, égale au plus court intervalle nominal du codage ; gigue intrinsèque < 0,025 UI crête.",
-   "see_also": [
-    "jitter",
-    "aes3"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
-     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "termination-75-ohm",
-   "term_fr": "Terminaison 75 Ω",
-   "term_en": "75 ohm termination",
-   "domain": "digital-audio-clocking",
-   "definition": "Résistance de fin de ligne word clock ; une seule par ligne.",
-   "see_also": [
-    "word-clock-termination"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "bnc",
-   "term_fr": "BNC",
-   "term_en": "BNC connector",
-   "domain": "digital-audio-clocking",
-   "definition": "Connecteur coaxial à baïonnette utilisé en 75 Ω pour le word clock et la MADI coaxiale.",
-   "see_also": [
-    "word-clock",
-    "madi"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "superclock",
-   "term_fr": "Super Clock (word clock ×256)",
-   "term_en": "Super Clock",
-   "domain": "digital-audio-clocking",
-   "definition": "Horloge à 256 fois fe acceptée par certains appareils (MUTEC MC-3+).",
-   "see_also": [
-    "word-clock"
-   ],
-   "sources": [
-    {
-     "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
-     "publisher": "MUTEC, MC-3+ Smart Clock manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "master-clock-generator",
-   "term_fr": "Horloge maître dédiée",
-   "term_en": "Master clock generator",
-   "domain": "digital-audio-clocking",
-   "definition": "Appareil dont le rôle est de générer et distribuer l'horloge (ex. OCX HD : 10 sorties word clock, sorties AES et S/PDIF).",
-   "see_also": [
-    "clock-master"
-   ],
-   "sources": [
-    {
-     "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
-     "publisher": "Antelope Audio, OCX HD user manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "src",
-   "term_fr": "Convertisseur de fréquence (SRC)",
-   "term_en": "Sample-rate converter",
-   "domain": "digital-audio-clocking",
-   "definition": "Circuit ou logiciel qui recalcule un flux d'une fréquence d'échantillonnage vers une autre ; asynchrone s'il accepte des horloges indépendantes.",
-   "see_also": [
-    "sample-rate-conversion"
-   ],
-   "sources": [
-    {
-     "url": "https://www.ti.com/product/SRC4392",
-     "publisher": "Texas Instruments, SRC4392 product page",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "aes3",
-   "term_fr": "AES3 (AES/EBU)",
-   "term_en": "AES3",
-   "domain": "digital-audio-clocking",
-   "definition": "Liaison numérique pro 2 canaux, 110 Ω symétrique, XLR, 2–7 V crête à crête.",
-   "see_also": [
-    "aes3"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
-     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "biphase-mark",
-   "term_fr": "Codage biphase-mark",
-   "term_en": "Biphase-mark code",
-   "domain": "digital-audio-clocking",
-   "definition": "Codage de l'AES3 sans composante continue, qui porte l'horloge et rend la liaison insensible à la polarité.",
-   "see_also": [
-    "aes3",
-    "self-clocking-interfaces"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
-     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "channel-status",
-   "term_fr": "État de canal",
-   "term_en": "Channel status",
-   "domain": "digital-audio-clocking",
-   "definition": "Métadonnées AES3/S/PDIF ; le bit 0 distingue usage pro et grand public.",
-   "see_also": [
-    "channel-status"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
-     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "spdif",
-   "term_fr": "S/PDIF",
-   "term_en": "S/PDIF",
-   "domain": "digital-audio-clocking",
-   "definition": "Version grand public (IEC 60958) de l'AES3, sur RCA 75 Ω ou optique.",
-   "see_also": [
-    "spdif"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
-     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "sample-rate",
+      "term_fr": "Fréquence d'échantillonnage",
+      "term_en": "Sample rate",
+      "domain": "digital-audio-clocking",
+      "definition": "Nombre d'échantillons par seconde, en Hz (44,1, 48, 96 kHz…).",
+      "see_also": [
+        "sample-rate"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
-     "publisher": "MUTEC, MC-3+ Smart Clock manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "toslink",
-   "term_fr": "TOSLINK",
-   "term_en": "TOSLINK",
-   "domain": "digital-audio-clocking",
-   "definition": "Connecteur optique utilisé pour l'ADAT et le S/PDIF optique.",
-   "see_also": [
-    "adat",
-    "spdif"
-   ],
-   "sources": [
-    {
-     "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
-     "publisher": "MUTEC, MC-3+ Smart Clock manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "nyquist-frequency",
+      "term_fr": "Fréquence de Nyquist",
+      "term_en": "Nyquist frequency",
+      "domain": "digital-audio-clocking",
+      "definition": "Moitié de la fréquence d'échantillonnage ; limite haute de la bande transmissible.",
+      "see_also": [
+        "nyquist-theorem"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html",
+          "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Sampling Theorem",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "adat",
-   "term_fr": "ADAT optique",
-   "term_en": "ADAT Lightpipe",
-   "domain": "digital-audio-clocking",
-   "definition": "8 canaux à 48 kHz sur TOSLINK ; 4 à 96 kHz et 2 à 192 kHz en S/MUX.",
-   "see_also": [
-    "adat"
-   ],
-   "sources": [
+      "id": "aliasing",
+      "term_fr": "Repliement de spectre",
+      "term_en": "Aliasing",
+      "domain": "digital-audio-clocking",
+      "definition": "Apparition, sous fe/2, d'une fréquence miroir d'une composante située au-dessus de fe/2.",
+      "see_also": [
+        "aliasing"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dsprelated.com/freebooks/mdft/Aliasing_Sampled_Signals.html",
+          "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Aliasing of Sampled Signals",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "smux",
-   "term_fr": "S/MUX",
-   "term_en": "S/MUX",
-   "domain": "digital-audio-clocking",
-   "definition": "Multiplexage d'échantillons : un canal haute fréquence réparti sur 2 ou 4 canaux.",
-   "see_also": [
-    "smux"
-   ],
-   "sources": [
+      "id": "anti-aliasing-filter",
+      "term_fr": "Filtre anti-repliement",
+      "term_en": "Anti-aliasing filter",
+      "domain": "digital-audio-clocking",
+      "definition": "Passe-bas qui supprime l'énergie au-dessus de fe/2 avant la conversion A/N.",
+      "see_also": [
+        "anti-aliasing-filter"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html",
+          "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Sampling Theorem",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "double-wire",
-   "term_fr": "Double Wire",
-   "term_en": "Double Wire",
-   "domain": "digital-audio-clocking",
-   "definition": "Transport d'un canal à 88,2/96 kHz sur une liaison AES (échantillons pairs/impairs sur les deux sous-trames).",
-   "see_also": [
-    "smux",
-    "aes3"
-   ],
-   "sources": [
+      "id": "oversampling",
+      "term_fr": "Suréchantillonnage",
+      "term_en": "Oversampling",
+      "domain": "digital-audio-clocking",
+      "definition": "Fonctionnement interne d'un convertisseur à une fréquence multiple (64 ou 128 fois) de fe, suivi d'un filtrage numérique.",
+      "see_also": [
+        "anti-aliasing-filter",
+        "converter-latency"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "madi",
-   "term_fr": "MADI (AES10)",
-   "term_en": "MADI",
-   "domain": "digital-audio-clocking",
-   "definition": "Liaison multicanal : 64 canaux à 48 kHz, 32 à 96 kHz, coaxial 75 Ω ou fibre.",
-   "see_also": [
-    "madi"
-   ],
-   "sources": [
+      "id": "quantization",
+      "term_fr": "Quantification",
+      "term_en": "Quantization",
+      "domain": "digital-audio-clocking",
+      "definition": "Arrondi de chaque échantillon au palier d'amplitude le plus proche.",
+      "see_also": [
+        "quantization-noise"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dsprelated.com/freebooks/mdft/Round_Off_Error_Variance.html",
+          "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Round-Off Error Variance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "tdif",
-   "term_fr": "TDIF",
-   "term_en": "TDIF",
-   "domain": "digital-audio-clocking",
-   "definition": "Format Tascam 8 canaux bidirectionnel sur D-sub 25.",
-   "see_also": [
-    "tdif"
-   ],
-   "sources": [
+      "id": "quantization-noise",
+      "term_fr": "Bruit de quantification",
+      "term_en": "Quantization noise",
+      "domain": "digital-audio-clocking",
+      "definition": "Erreur d'arrondi traitée comme un bruit de puissance q²/12.",
+      "see_also": [
+        "quantization-noise"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dsprelated.com/freebooks/mdft/Round_Off_Error_Variance.html",
+          "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Round-Off Error Variance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://en.wikipedia.org/wiki/Tascam_Digital_Interface",
-     "publisher": "Wikipedia, Tascam Digital Interface",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "emphasis",
-   "term_fr": "Emphase",
-   "term_en": "Emphasis",
-   "domain": "digital-audio-clocking",
-   "definition": "Pré-accentuation des aigus signalée dans l'état de canal AES3 (ex. 50/15 µs).",
-   "see_also": [
-    "channel-status"
-   ],
-   "sources": [
+      "id": "bit-depth",
+      "term_fr": "Résolution",
+      "term_en": "Bit depth",
+      "domain": "digital-audio-clocking",
+      "definition": "Nombre de bits par échantillon ; environ 6 dB de dynamique par bit.",
+      "see_also": [
+        "bit-depth"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dsprelated.com/freebooks/mdft/How_Many_Bits_Enough.html",
+          "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), How Many Bits are Enough for Digital Audio?",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
-     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "lsb",
+      "term_fr": "Bit de poids faible (LSB)",
+      "term_en": "Least significant bit",
+      "domain": "digital-audio-clocking",
+      "definition": "Plus petit pas de quantification d'un convertisseur ; une erreur de linéarité se chiffre en fractions de LSB.",
+      "see_also": [
+        "bit-depth"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ti.com/lit/an/slaa013/slaa013.pdf",
+          "publisher": "Texas Instruments, Application Report SLAA013",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "dither",
+      "term_fr": "Dither",
+      "term_en": "Dither",
+      "domain": "digital-audio-clocking",
+      "definition": "Bruit faible ajouté avant une réduction de résolution pour éviter la distorsion de troncature.",
+      "see_also": [
+        "dither"
+      ],
+      "sources": [
+        {
+          "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+          "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "truncation",
+      "term_fr": "Troncature",
+      "term_en": "Truncation",
+      "domain": "digital-audio-clocking",
+      "definition": "Suppression des bits de poids faible sans dither ; produit de la distorsion sur les signaux faibles.",
+      "see_also": [
+        "dither"
+      ],
+      "sources": [
+        {
+          "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+          "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "noise-shaping",
+      "term_fr": "Mise en forme du bruit",
+      "term_en": "Noise shaping",
+      "domain": "digital-audio-clocking",
+      "definition": "Filtrage qui déplace le bruit vers des fréquences moins audibles.",
+      "see_also": [
+        "noise-shaping"
+      ],
+      "sources": [
+        {
+          "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+          "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "tpdf-dither",
+      "term_fr": "Dither TPDF",
+      "term_en": "TPDF dither",
+      "domain": "digital-audio-clocking",
+      "definition": "Dither à densité de probabilité triangulaire, sans mise en forme ; généralement suffisant en 24 bits.",
+      "see_also": [
+        "dither"
+      ],
+      "sources": [
+        {
+          "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+          "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "floating-point",
+      "term_fr": "Virgule flottante (32 bits)",
+      "term_en": "Floating point",
+      "domain": "digital-audio-clocking",
+      "definition": "Format de calcul des DAW qui offre une très grande marge interne au-dessus de 0 dBFS.",
+      "see_also": [
+        "floating-point-processing"
+      ],
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/node/4908184",
+          "publisher": "Sound On Sound, M. Thornton, Headroom & Master Fader (2010)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+          "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "latency",
+      "term_fr": "Latence",
+      "term_en": "Latency",
+      "domain": "digital-audio-clocking",
+      "definition": "Retard entre entrée et sortie d'un système audio.",
+      "see_also": [
+        "latency"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "buffer-size",
+      "term_fr": "Taille de tampon",
+      "term_en": "Buffer size",
+      "domain": "digital-audio-clocking",
+      "definition": "Nombre d'échantillons traités par bloc par le pilote ; latence = N/fe.",
+      "see_also": [
+        "buffer-size"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "safety-buffer",
+      "term_fr": "Tampon de sécurité",
+      "term_en": "Safety buffer",
+      "domain": "digital-audio-clocking",
+      "definition": "Petit tampon fixe ajouté par le pilote côté lecture pour éviter les décrochages (32 échantillons sur la Babyface Pro).",
+      "see_also": [
+        "buffer-size",
+        "latency"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "asio",
+      "term_fr": "ASIO",
+      "term_en": "ASIO",
+      "domain": "digital-audio-clocking",
+      "definition": "Pilote audio Windows à faible latence ; contrairement à WDM, il ne fait pas de conversion de fréquence en temps réel.",
+      "see_also": [
+        "latency"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "zero-latency-monitoring",
+      "term_fr": "Écoute sans latence",
+      "term_en": "Zero Latency Monitoring",
+      "domain": "digital-audio-clocking",
+      "definition": "Renvoi de l'entrée vers la sortie dans l'interface, sans passer par l'ordinateur (quelques échantillons de retard).",
+      "see_also": [
+        "direct-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "plugin-delay-compensation",
+      "term_fr": "Compensation de latence des plug-ins",
+      "term_en": "Plug-in delay compensation",
+      "domain": "digital-audio-clocking",
+      "definition": "Retard appliqué aux pistes rapides pour réaligner les pistes traitées (ADC dans Pro Tools).",
+      "see_also": [
+        "plugin-delay-compensation"
+      ],
+      "sources": [
+        {
+          "url": "https://puremix.com/blog/understanding-plug-in-delay-compensation",
+          "publisher": "Puremix, A. Rizzo Schettino, Understanding Plug-In Delay Compensation (2018)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "word-clock",
+      "term_fr": "Word clock",
+      "term_en": "Word clock",
+      "domain": "digital-audio-clocking",
+      "definition": "Signal carré à fe sur BNC 75 Ω, référence d'horloge commune.",
+      "see_also": [
+        "word-clock"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "clock-master",
+      "term_fr": "Maître (horloge)",
+      "term_en": "Clock master",
+      "domain": "digital-audio-clocking",
+      "definition": "Appareil qui fournit l'horloge du système (internal).",
+      "see_also": [
+        "clock-master"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "clock-slave",
+      "term_fr": "Esclave (horloge)",
+      "term_en": "Clock slave",
+      "domain": "digital-audio-clocking",
+      "definition": "Appareil qui se cale sur une horloge externe (word clock ou flux numérique).",
+      "see_also": [
+        "clock-master"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "autosync",
+      "term_fr": "AutoSync",
+      "term_en": "AutoSync",
+      "domain": "digital-audio-clocking",
+      "definition": "Mode RME : l'appareil suit une entrée valide et repasse en Master si la référence disparaît.",
+      "see_also": [
+        "clock-master"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "lock",
+      "term_fr": "Verrouillage (lock)",
+      "term_en": "Lock",
+      "domain": "digital-audio-clocking",
+      "definition": "État d'un récepteur dont la PLL a trouvé la fréquence du signal entrant.",
+      "see_also": [
+        "lock-vs-sync"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "sync-state",
+      "term_fr": "Synchronisme (sync)",
+      "term_en": "Sync",
+      "domain": "digital-audio-clocking",
+      "definition": "État d'une entrée parfaitement synchrone avec l'horloge de lecture ; seul garant de l'absence de clics.",
+      "see_also": [
+        "lock-vs-sync"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "pll",
+      "term_fr": "PLL",
+      "term_en": "Phase-locked loop",
+      "domain": "digital-audio-clocking",
+      "definition": "Circuit qui asservit un oscillateur sur la fréquence d'un signal entrant.",
+      "see_also": [
+        "pll"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "jitter",
+      "term_fr": "Gigue",
+      "term_en": "Jitter",
+      "domain": "digital-audio-clocking",
+      "definition": "Variation temporelle des fronts d'horloge autour de leur position idéale.",
+      "see_also": [
+        "jitter"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "unit-interval",
+      "term_fr": "Intervalle unitaire (UI)",
+      "term_en": "Unit interval",
+      "domain": "digital-audio-clocking",
+      "definition": "Unité de mesure de la gigue AES3, égale au plus court intervalle nominal du codage ; gigue intrinsèque < 0,025 UI crête.",
+      "see_also": [
+        "jitter",
+        "aes3"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+          "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "termination-75-ohm",
+      "term_fr": "Terminaison 75 Ω",
+      "term_en": "75 ohm termination",
+      "domain": "digital-audio-clocking",
+      "definition": "Résistance de fin de ligne word clock ; une seule par ligne.",
+      "see_also": [
+        "word-clock-termination"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "bnc",
+      "term_fr": "BNC",
+      "term_en": "BNC connector",
+      "domain": "digital-audio-clocking",
+      "definition": "Connecteur coaxial à baïonnette utilisé en 75 Ω pour le word clock et la MADI coaxiale.",
+      "see_also": [
+        "word-clock",
+        "madi"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "superclock",
+      "term_fr": "Super Clock (word clock ×256)",
+      "term_en": "Super Clock",
+      "domain": "digital-audio-clocking",
+      "definition": "Horloge à 256 fois fe acceptée par certains appareils (MUTEC MC-3+).",
+      "see_also": [
+        "word-clock"
+      ],
+      "sources": [
+        {
+          "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+          "publisher": "MUTEC, MC-3+ Smart Clock manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "master-clock-generator",
+      "term_fr": "Horloge maître dédiée",
+      "term_en": "Master clock generator",
+      "domain": "digital-audio-clocking",
+      "definition": "Appareil dont le rôle est de générer et distribuer l'horloge (ex. OCX HD : 10 sorties word clock, sorties AES et S/PDIF).",
+      "see_also": [
+        "clock-master"
+      ],
+      "sources": [
+        {
+          "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
+          "publisher": "Antelope Audio, OCX HD user manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "src",
+      "term_fr": "Convertisseur de fréquence (SRC)",
+      "term_en": "Sample-rate converter",
+      "domain": "digital-audio-clocking",
+      "definition": "Circuit ou logiciel qui recalcule un flux d'une fréquence d'échantillonnage vers une autre ; asynchrone s'il accepte des horloges indépendantes.",
+      "see_also": [
+        "sample-rate-conversion"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ti.com/product/SRC4392",
+          "publisher": "Texas Instruments, SRC4392 product page",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "aes3",
+      "term_fr": "AES3 (AES/EBU)",
+      "term_en": "AES3",
+      "domain": "digital-audio-clocking",
+      "definition": "Liaison numérique pro 2 canaux, 110 Ω symétrique, XLR, 2–7 V crête à crête.",
+      "see_also": [
+        "aes3"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+          "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "biphase-mark",
+      "term_fr": "Codage biphase-mark",
+      "term_en": "Biphase-mark code",
+      "domain": "digital-audio-clocking",
+      "definition": "Codage de l'AES3 sans composante continue, qui porte l'horloge et rend la liaison insensible à la polarité.",
+      "see_also": [
+        "aes3",
+        "self-clocking-interfaces"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+          "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "channel-status",
+      "term_fr": "État de canal",
+      "term_en": "Channel status",
+      "domain": "digital-audio-clocking",
+      "definition": "Métadonnées AES3/S/PDIF ; le bit 0 distingue usage pro et grand public.",
+      "see_also": [
+        "channel-status"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+          "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "spdif",
+      "term_fr": "S/PDIF",
+      "term_en": "S/PDIF",
+      "domain": "digital-audio-clocking",
+      "definition": "Version grand public (IEC 60958) de l'AES3, sur RCA 75 Ω ou optique.",
+      "see_also": [
+        "spdif"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+          "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+          "publisher": "MUTEC, MC-3+ Smart Clock manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "toslink",
+      "term_fr": "TOSLINK",
+      "term_en": "TOSLINK",
+      "domain": "digital-audio-clocking",
+      "definition": "Connecteur optique utilisé pour l'ADAT et le S/PDIF optique.",
+      "see_also": [
+        "adat",
+        "spdif"
+      ],
+      "sources": [
+        {
+          "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+          "publisher": "MUTEC, MC-3+ Smart Clock manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "adat",
+      "term_fr": "ADAT optique",
+      "term_en": "ADAT Lightpipe",
+      "domain": "digital-audio-clocking",
+      "definition": "8 canaux à 48 kHz sur TOSLINK ; 4 à 96 kHz et 2 à 192 kHz en S/MUX.",
+      "see_also": [
+        "adat"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "smux",
+      "term_fr": "S/MUX",
+      "term_en": "S/MUX",
+      "domain": "digital-audio-clocking",
+      "definition": "Multiplexage d'échantillons : un canal haute fréquence réparti sur 2 ou 4 canaux.",
+      "see_also": [
+        "smux"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "double-wire",
+      "term_fr": "Double Wire",
+      "term_en": "Double Wire",
+      "domain": "digital-audio-clocking",
+      "definition": "Transport d'un canal à 88,2/96 kHz sur une liaison AES (échantillons pairs/impairs sur les deux sous-trames).",
+      "see_also": [
+        "smux",
+        "aes3"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "madi",
+      "term_fr": "MADI (AES10)",
+      "term_en": "MADI",
+      "domain": "digital-audio-clocking",
+      "definition": "Liaison multicanal : 64 canaux à 48 kHz, 32 à 96 kHz, coaxial 75 Ω ou fibre.",
+      "see_also": [
+        "madi"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "tdif",
+      "term_fr": "TDIF",
+      "term_en": "TDIF",
+      "domain": "digital-audio-clocking",
+      "definition": "Format Tascam 8 canaux bidirectionnel sur D-sub 25.",
+      "see_also": [
+        "tdif"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Tascam_Digital_Interface",
+          "publisher": "Wikipedia, Tascam Digital Interface",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "emphasis",
+      "term_fr": "Emphase",
+      "term_en": "Emphasis",
+      "domain": "digital-audio-clocking",
+      "definition": "Pré-accentuation des aigus signalée dans l'état de canal AES3 (ex. 50/15 µs).",
+      "see_also": [
+        "channel-status"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+          "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     }
-   ]
-  }
- ],
- "not_found_log": []
+  ],
+  "not_found_log": []
 }

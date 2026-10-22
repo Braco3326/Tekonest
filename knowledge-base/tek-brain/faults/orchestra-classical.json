@@ -60,12 +60,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
@@ -75,17 +76,19 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -137,32 +140,35 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
           "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -199,7 +205,7 @@
       "fixes": [
         "Baisser les appoints, le couple doit dominer",
         "Reculer ou monter le couple, ou l'orienter vers le mur du fond",
-        "Utiliser un cône ou un couple plus large pour plus d'ambiance"
+        "Monter des cônes (DPA Nose Cone) sur le couple pour capter plus d'ambiance"
       ],
       "rule_ids": [],
       "concept_ids": [
@@ -213,34 +219,49 @@
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
           "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "review": "ok"
+      "review": "ok",
+      "conflicts": [
+        {
+          "field": "fixes[2]",
+          "values": [
+            {
+              "value": "Utiliser un cône ou un couple plus large pour plus d'ambiance",
+              "source_url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : DPA élargit l'espacement selon la taille de l'orchestre et la séparation, pas pour l'ambiance ; on garde le cône, et « reculer/monter le couple » est déjà le fix 2."
+        }
+      ]
     },
     {
       "id": "spot-mics-pull-image",
@@ -291,12 +312,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
@@ -306,7 +328,8 @@
           "kind": "other",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -360,11 +383,12 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Shock_mount",
@@ -375,7 +399,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

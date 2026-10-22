@@ -355,7 +355,8 @@
         "dimensions_m (45 m² × 3,5 m : surface et hauteur typiques)",
         "dimensions_m.height.typical",
         "gear_positions (console SSL 4048E, monitoring 5.1)"
-      ]
+      ],
+      "url_status": "blocked"
     },
     {
       "url": "https://studios-ferber.com/studio-a/",
@@ -365,7 +366,8 @@
       "kind": "other",
       "covers": [
         "dimensions_m (régie 39 m² × 3 m, console Neve 8248)"
-      ]
+      ],
+      "url_status": "blocked"
     },
     {
       "url": "https://studios-ferber.com/studio-b/",
@@ -376,7 +378,8 @@
       "covers": [
         "dimensions_m (35 m² × 2,5 m : surface et hauteur minimales)",
         "dimensions_m.height.min"
-      ]
+      ],
+      "url_status": "blocked"
     },
     {
       "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -388,7 +391,8 @@
         "rt60_s",
         "dimensions_m (volume ≤ 300 m³, rapports l/h et w/h)",
         "gear_positions (base 2–4 m, enceintes ≥ 1,2 m, inclinaison ≤ 10°, auditeur ≥ 1,5 m des murs)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

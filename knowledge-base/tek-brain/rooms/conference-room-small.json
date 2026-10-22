@@ -304,7 +304,8 @@
         "dimensions_m.length.max",
         "description"
       ],
-      "note": "Catégories de taille utilisées dans la liste des appareils Teams Rooms on Android certifiés : Huddle 3 m × 3 m, Small 4,5 m × 4,5 m, Medium 4,5 m × 6 m, Large 4,5 m × 8,5 m."
+      "note": "Catégories de taille utilisées dans la liste des appareils Teams Rooms on Android certifiés : Huddle 3 m × 3 m, Small 4,5 m × 4,5 m, Medium 4,5 m × 6 m, Large 4,5 m × 8,5 m.",
+      "url_status": "ok"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoftteams/rooms/room-planning-guidance",
@@ -315,7 +316,8 @@
       "covers": [
         "surfaces"
       ],
-      "note": "Au moins deux murs traités, sol moquetté ou traité, occultation des fenêtres."
+      "note": "Au moins deux murs traités, sol moquetté ou traité, occultation des fenêtres.",
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

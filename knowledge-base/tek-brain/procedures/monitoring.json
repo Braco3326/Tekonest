@@ -103,7 +103,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://support.qscaudio.com/en_US/sound-advice/sound-advice-%7C-how-to-ring-out-a-room-mains-and-monitors-to-eliminate-feedback",
@@ -113,7 +114,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
@@ -124,7 +126,8 @@
           "covers": [
             "steps",
             "context"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note158.html",
@@ -134,7 +137,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
@@ -144,7 +148,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -252,7 +257,8 @@
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
@@ -262,7 +268,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -272,7 +279,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -365,7 +373,8 @@
           "kind": "standard",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2",
@@ -375,7 +384,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=3",
@@ -385,7 +395,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -493,7 +504,8 @@
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
@@ -503,7 +515,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -594,7 +607,8 @@
           "covers": [
             "steps",
             "context"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
@@ -604,7 +618,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -614,7 +629,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

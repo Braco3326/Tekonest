@@ -48,7 +48,7 @@
   "rt60_s": {
     "min": 1.8,
     "max": 11.0,
-    "band_note": "Moyenne 500 Hz–1 kHz mesurée église vide sur 11 églises portugaises de 8 470 à 14 207 m³ (XIVe–XXe s.) : de 1,8 s (S. Francisco, Porto) à 11,0 s (Santo Tirso) ; la plupart entre 2,7 et 7,8 s. Les auteurs jugent inappropriée pour le culte catholique une moyenne au-dessus de 3 s.",
+    "band_note": "Moyenne 500 Hz–1 kHz mesurée église vide sur 11 églises portugaises de 8 470 à 14 207 m³ : de 1,8 s (S. Francisco, Porto) à 11,0 s (Santo Tirso) ; la plupart entre 2,7 et 7,8 s. Les auteurs jugent inappropriée pour le culte catholique une moyenne au-dessus de 3 s.",
     "source_url": "https://pages.up.pt/~up209614/ICSV2012carvalho.pdf"
   },
   "zones": [
@@ -395,7 +395,8 @@
         "rt60_s",
         "surfaces.ceiling",
         "description (RASTI peu amélioré par la sonorisation)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://pages.up.pt/~up209614/fa2011chapels.pdf",
@@ -409,7 +410,8 @@
         "dimensions_m.height.min",
         "gear_positions (choix du type de système : enceintes latérales, amplis Crown, micros AKG)",
         "description (objectifs : TR ≈ 1 s parole, 2–4 s musique)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.czasopisma.pan.pl//Content/107542/PDF/70.pdf",
@@ -419,7 +421,8 @@
       "kind": "university",
       "covers": [
         "surfaces.floor (bancs à coussins testés acoustiquement)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

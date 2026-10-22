@@ -1736,7 +1736,7 @@
             "key_specs.weight",
             "key_specs.dimensions"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Mic connects to the N 149 A PSU via an 8-pin DIN connection (Neumann: matching connector 'DIN 8 F'; Thomann: '8-core cable'); no TekPractice id exists for it, so it is proposed rather than listed in connectors[]. The PSU is mains-powered (230 V / 117 V variants, power cable included) but its inlet connector type was not stated in the sources, so it is not listed. The URL slug says 'm-149-v-set' but the page names the product 'M 149 Tube'. A 1997 TEC Award is mentioned, but no introduction year.",
@@ -2462,7 +2462,7 @@
             "key_specs.weight",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Product manual link on rode.com is a quick start guide PDF. Thomann lists it since February 2023, which is a listing date, not an introduction year. Weight and dimensions differ slightly at Thomann (see conflicts).",

@@ -21,7 +21,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -43,7 +44,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -65,7 +67,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -87,7 +90,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -109,7 +113,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -131,7 +136,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -153,7 +159,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -175,7 +182,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -197,7 +205,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -219,7 +228,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -241,7 +251,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -263,7 +274,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -285,7 +297,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -307,7 +320,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -329,7 +343,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -352,7 +367,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -375,7 +391,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -397,7 +414,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -419,7 +437,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -441,7 +460,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -463,7 +483,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -472,7 +493,7 @@
       "term_fr": "Formule de Sabine",
       "term_en": "Sabine formula",
       "domain": "acoustics-psychoacoustics",
-      "definition": "RT60 = 0,161·V/A (V en m³, A en m²) ; estimation valable surtout pour les salles assez réverbérantes.",
+      "definition": "RT60 = 0,161·V/A (V en m³, A en m²) ; elle surestime le TR des petites salles très absorbantes (où l'on préfère la formule d'Eyring) et coïncide avec Eyring pour les salles très réverbérantes.",
       "see_also": [
         "reverberation-time-rt60"
       ],
@@ -485,7 +506,31 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Reverberation",
+          "publisher": "Wikipedia — Reverberation (Sabine / Eyring)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition (validité : « tends to over-predict reverberation time for small rooms with high amounts of absorption » ; formules identiques pour les salles très réverbérantes)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "definition",
+          "values": [
+            {
+              "value": "RT60 = 0,161·V/A (V en m³, A en m²) ; estimation valable surtout pour les salles assez réverbérantes.",
+              "source_url": "https://en.wikipedia.org/wiki/Reverberation"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : réserve de validité désormais sourcée par Wikipédia Reverberation (relue le 2026-10-22)."
         }
       ]
     },
@@ -507,7 +552,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -530,7 +576,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -552,7 +599,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-RT60Coeff.htm",
@@ -562,7 +610,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -584,7 +633,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -607,7 +657,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -629,7 +680,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -639,7 +691,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -661,7 +714,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -683,7 +737,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -705,7 +760,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -727,7 +783,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -749,7 +806,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -771,7 +829,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -793,7 +852,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -815,7 +875,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -837,7 +898,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -859,7 +921,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -881,7 +944,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -903,7 +967,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -925,7 +990,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -948,7 +1014,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculatorSonephon.htm",
@@ -958,7 +1025,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -980,7 +1048,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -1002,7 +1071,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -1024,7 +1094,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -1046,7 +1117,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -1068,7 +1140,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -1090,7 +1163,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -1112,7 +1186,8 @@
           "kind": "regulator",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -1134,7 +1209,8 @@
           "kind": "regulator",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -1156,7 +1232,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     },
@@ -1178,7 +1255,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ]
     }

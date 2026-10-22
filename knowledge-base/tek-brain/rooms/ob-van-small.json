@@ -266,7 +266,8 @@
         "dimensions_m.*.max (bornés par l'extérieur du véhicule : 7600 × 2300 × 3450 mm, IVECO Daily 7,49 t)",
         "surfaces.walls (isolation acoustique avec contrainte de poids)",
         "power_points[1] (onduleur 90 min)"
-      ]
+      ],
+      "url_status": "dead"
     },
     {
       "url": "https://www.gravitymedia.com/wp-content/uploads/2025/06/NOVA-00-Series-1.pdf",
@@ -279,7 +280,8 @@
         "power_points[0] (63 A monophasé CEE)",
         "patch_points (tailboards audio/vidéo/secteur à l'arrière côté trottoir)",
         "gear_positions.riedel-bolero (intercom Bolero)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

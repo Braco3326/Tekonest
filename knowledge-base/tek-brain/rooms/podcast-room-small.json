@@ -250,7 +250,8 @@
       "covers": [
         "dimensions_m (224 pieds² ≈ 20,8 m² : surface typique)",
         "gear_positions (4 × SM7B, Rodecaster Pro II, bras Rode PSA+, caméras)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://giggster.com/fr/listing/studio-de-tournage-interview-podcast-facecam-a-re",
@@ -261,7 +262,8 @@
       "covers": [
         "dimensions_m.height.typical (260 cm)",
         "dimensions_m.*.max (30 m², voir conflicts)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://knihovna.phil.muni.cz/en/spaces/podcast-studio",
@@ -272,7 +274,8 @@
       "covers": [
         "description (jusqu'à 4 voix)",
         "gear_positions (4 × SM7B sur bras, Rodecaster Pro II, 4 casques AKG K-240)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "conflicts": [

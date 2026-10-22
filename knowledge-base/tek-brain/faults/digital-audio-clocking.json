@@ -1,440 +1,464 @@
 {
- "entity": "fault",
- "domain": "digital-audio-clocking",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "clicks-pops-clock",
-   "name_fr": "Clics et craquements réguliers (horloge)",
-   "name_en": "Clicks and pops from clocking",
-   "domain": "digital-audio-clocking",
-   "symptom": "Petits clics ou craquements, réguliers ou aléatoires, sur des signaux venant d'une liaison numérique, alors que les niveaux sont corrects.",
-   "contexts": [
-    "studio",
-    "live",
-    "broadcast"
-   ],
-   "probable_causes": [
+  "entity": "fault",
+  "domain": "digital-audio-clocking",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "cause": "Deux appareils en horloge interne : l'entrée est en lock mais pas en sync",
-     "likelihood": "high"
+      "id": "clicks-pops-clock",
+      "name_fr": "Clics et craquements réguliers (horloge)",
+      "name_en": "Clicks and pops from clocking",
+      "domain": "digital-audio-clocking",
+      "symptom": "Petits clics ou craquements, réguliers ou aléatoires, sur des signaux venant d'une liaison numérique, alors que les niveaux sont corrects.",
+      "contexts": [
+        "studio",
+        "live",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Deux appareils en horloge interne : l'entrée est en lock mais pas en sync",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Esclave sans référence (word clock débranché, mauvaise source choisie)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Câblage en boucle sans maître dans la boucle",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Tampon trop petit : l'ordinateur perd des paquets (cause non liée à l'horloge)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Câble optique ou coaxial défectueux",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Lire l'état No Lock / Lock / Sync de chaque entrée",
+        "Compter les appareils en horloge interne",
+        "Vérifier la source d'horloge de chaque esclave",
+        "Regarder les erreurs de transmission affichées par le pilote",
+        "Changer de câble"
+      ],
+      "fixes": [
+        "Un seul maître, tous les autres en esclave",
+        "Rompre la boucle en mettant un appareil en Master",
+        "Augmenter le tampon si le problème vient de l'ordinateur"
+      ],
+      "rule_ids": [
+        "wordclock-sync",
+        "two-clock-masters"
+      ],
+      "concept_ids": [
+        "lock-vs-sync",
+        "clock-master",
+        "word-clock",
+        "buffer-size"
+      ],
+      "equipment_ids": [
+        "rme-babyface-pro-fs",
+        "rme-hdspe-madi-fx"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "cause": "Esclave sans référence (word clock débranché, mauvaise source choisie)",
-     "likelihood": "high"
+      "id": "pitch-speed-wrong-playback",
+      "name_fr": "Lecture trop rapide/aiguë ou trop lente/grave",
+      "name_en": "Playback at wrong speed and pitch",
+      "domain": "digital-audio-clocking",
+      "symptom": "Un fichier ou une source numérique est lu un peu trop vite et trop aigu (ou l'inverse), ou se décale progressivement par rapport à l'image ou aux autres pistes.",
+      "contexts": [
+        "studio",
+        "post",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Le fichier est lu à une horloge différente de sa fréquence d'origine (session ou interface mal réglée)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Fonction Pitch / varispeed de l'interface activée (change vitesse et hauteur)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Appareil en horloge interne non synchronisé avec le reste du système",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Comparer la fréquence du fichier, de la session et de l'interface",
+        "Vérifier que la fonction Pitch/varispeed est à zéro",
+        "Vérifier la source d'horloge de chaque appareil"
+      ],
+      "fixes": [
+        "Régler session et interface sur la fréquence du fichier ou convertir le fichier (SRC) avant import",
+        "Réinitialiser le Pitch",
+        "Synchroniser tous les appareils sur un maître"
+      ],
+      "rule_ids": [
+        "sample-rate-mismatch"
+      ],
+      "concept_ids": [
+        "sample-rate",
+        "sample-rate-conversion",
+        "clock-master"
+      ],
+      "equipment_ids": [
+        "rme-babyface-pro-fs"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+          "publisher": "Audient, iD14 MKII manual v1.3",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "checks"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "cause": "Câblage en boucle sans maître dans la boucle",
-     "likelihood": "medium"
+      "id": "headphone-latency-tracking",
+      "name_fr": "Retard dans le casque pendant la prise",
+      "name_en": "Latency in headphones while tracking",
+      "domain": "digital-audio-clocking",
+      "symptom": "Le musicien entend sa voix ou son instrument en retard dans le casque et décale son jeu.",
+      "contexts": [
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Retour casque passant par le DAW avec un tampon trop grand",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Plug-in à forte latence (limiteur à anticipation) actif, compensation de latence appliquée",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Convertisseurs et tampons de sécurité qui s'additionnent",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Lire la taille du tampon et calculer N/fe",
+        "Vérifier les plug-ins du bus master et des pistes armées",
+        "Vérifier si l'écoute directe de l'interface est utilisée"
+      ],
+      "fixes": [
+        "Utiliser l'écoute directe de l'interface",
+        "Réduire le tampon pendant la prise",
+        "Retirer les plug-ins à forte latence ou activer le mode basse latence du DAW"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "latency",
+        "buffer-size",
+        "direct-monitoring",
+        "plugin-delay-compensation"
+      ],
+      "equipment_ids": [
+        "rme-babyface-pro-fs"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://puremix.com/blog/understanding-plug-in-delay-compensation",
+          "publisher": "Puremix, A. Rizzo Schettino, Understanding Plug-In Delay Compensation (2018)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "cause": "Tampon trop petit : l'ordinateur perd des paquets (cause non liée à l'horloge)",
-     "likelihood": "medium"
+      "id": "adat-channels-missing-96k",
+      "name_fr": "Canaux ADAT manquants à 96 kHz",
+      "name_en": "ADAT channels missing at 96 kHz",
+      "domain": "digital-audio-clocking",
+      "symptom": "Avec un préampli 8 canaux en ADAT, seuls 4 canaux (ou 2) arrivent dans le DAW, ou aucun ADAT n'apparaît.",
+      "contexts": [
+        "studio",
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Session à 88,2/96 kHz : S/MUX, 4 canaux par port (2 à 176,4/192 kHz)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Port optique réglé en S/PDIF au lieu d'ADAT (2 canaux)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Fréquences différentes entre préampli et interface : pas de sync",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Lire la fréquence de la session",
+        "Vérifier le format du port optique (ADAT/S/PDIF)",
+        "Lire le voyant d'horloge (vert / ambre / rouge)"
+      ],
+      "fixes": [
+        "Travailler à 44,1/48 kHz si les 8 canaux ADAT sont nécessaires",
+        "Régler le port en ADAT",
+        "Aligner les fréquences et choisir un seul maître"
+      ],
+      "rule_ids": [
+        "adat-smux-channel-loss"
+      ],
+      "concept_ids": [
+        "adat",
+        "smux",
+        "sample-rate"
+      ],
+      "equipment_ids": [
+        "audient-id14-mkii",
+        "rme-babyface-pro-fs"
+      ],
+      "sources": [
+        {
+          "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+          "publisher": "Audient, iD14 MKII manual v1.3",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok",
+      "conflicts": [
+        {
+          "field": "fixes[0]",
+          "values": [
+            {
+              "value": "Travailler à 44,1/48 kHz, ou ajouter un second port ADAT, ou passer en MADI",
+              "source_url": null
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : « second port ADAT » et « MADI » non couverts par les manuels RME/Audient cités : supprimés."
+        }
+      ]
     },
     {
-     "cause": "Câble optique ou coaxial défectueux",
-     "likelihood": "low"
+      "id": "wordclock-weak-double-termination",
+      "name_fr": "Word clock instable par double terminaison",
+      "name_en": "Unstable word clock from double termination",
+      "domain": "digital-audio-clocking",
+      "symptom": "Des esclaves en bout de guirlande perdent le verrouillage par moments ; le signal word clock est faible.",
+      "contexts": [
+        "studio",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Deux terminaisons 75 Ω sur la même ligne (37,5 Ω de charge)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Composants 50 Ω (informatique) au lieu de 75 Ω",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Sortie word clock faible qui s'effondre sous la charge",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Lister les terminaisons internes activées sur la ligne",
+        "Vérifier l'impédance des câbles, T et bouchons",
+        "Essayer une sortie dédiée du maître pour l'appareil fautif"
+      ],
+      "fixes": [
+        "Une seule terminaison 75 Ω en bout de chaîne",
+        "Distributeur word clock (une sortie par appareil) dans les grands studios"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "word-clock-termination",
+        "word-clock"
+      ],
+      "equipment_ids": [
+        "rme-hdspe-madi-fx",
+        "antelope-ocx-hd"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "aes-to-consumer-no-lock",
+      "name_fr": "Un appareil grand public ne reconnaît pas la sortie AES",
+      "name_en": "Consumer device does not accept the AES output",
+      "domain": "digital-audio-clocking",
+      "symptom": "Un appareil à entrée S/PDIF (RCA) reste muet ou instable lorsqu'il est alimenté par la sortie AES d'une interface pro via un adaptateur.",
+      "contexts": [
+        "studio",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "État de canal « professional » non accepté par un récepteur « consumer »",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Niveau et impédance différents (AES3 110 Ω 2–7 V, S/PDIF coaxial 75 Ω 0,5 V)",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Lire le réglage d'état de canal de la sortie AES",
+        "Vérifier l'adaptateur XLR/RCA (broches 2 et 3 vers la RCA, blindage sur la broche 1 seulement)"
+      ],
+      "fixes": [
+        "Passer la sortie AES en mode Consumer",
+        "Utiliser un convertisseur de format AES3/S/PDIF"
+      ],
+      "rule_ids": [
+        "aes3-into-spdif-level"
+      ],
+      "concept_ids": [
+        "channel-status",
+        "aes3",
+        "spdif"
+      ],
+      "equipment_ids": [
+        "rme-fireface-802-fs",
+        "mutec-mc-3-plus"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_802fs_e.pdf",
+          "publisher": "RME, Fireface 802 FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+          "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "probable_causes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+          "publisher": "MUTEC, MC-3+ Smart Clock manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     }
-   ],
-   "checks": [
-    "Lire l'état No Lock / Lock / Sync de chaque entrée",
-    "Compter les appareils en horloge interne",
-    "Vérifier la source d'horloge de chaque esclave",
-    "Regarder les erreurs de transmission affichées par le pilote",
-    "Changer de câble"
-   ],
-   "fixes": [
-    "Un seul maître, tous les autres en esclave",
-    "Rompre la boucle en mettant un appareil en Master",
-    "Augmenter le tampon si le problème vient de l'ordinateur"
-   ],
-   "rule_ids": [
-    "wordclock-sync",
-    "two-clock-masters"
-   ],
-   "concept_ids": [
-    "lock-vs-sync",
-    "clock-master",
-    "word-clock",
-    "buffer-size"
-   ],
-   "equipment_ids": [
-    "rme-babyface-pro-fs",
-    "rme-hdspe-madi-fx"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "probable_causes",
-      "checks",
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "probable_causes"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "pitch-speed-wrong-playback",
-   "name_fr": "Lecture trop rapide/aiguë ou trop lente/grave",
-   "name_en": "Playback at wrong speed and pitch",
-   "domain": "digital-audio-clocking",
-   "symptom": "Un fichier ou une source numérique est lu un peu trop vite et trop aigu (ou l'inverse), ou se décale progressivement par rapport à l'image ou aux autres pistes.",
-   "contexts": [
-    "studio",
-    "post",
-    "broadcast"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Le fichier est lu à une horloge différente de sa fréquence d'origine (session ou interface mal réglée)",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Fonction Pitch / varispeed de l'interface activée (change vitesse et hauteur)",
-     "likelihood": "medium"
-    },
-    {
-     "cause": "Appareil en horloge interne non synchronisé avec le reste du système",
-     "likelihood": "medium"
-    }
-   ],
-   "checks": [
-    "Comparer la fréquence du fichier, de la session et de l'interface",
-    "Vérifier que la fonction Pitch/varispeed est à zéro",
-    "Vérifier la source d'horloge de chaque appareil"
-   ],
-   "fixes": [
-    "Régler session et interface sur la fréquence du fichier ou convertir le fichier (SRC) avant import",
-    "Réinitialiser le Pitch",
-    "Synchroniser tous les appareils sur un maître"
-   ],
-   "rule_ids": [
-    "sample-rate-mismatch"
-   ],
-   "concept_ids": [
-    "sample-rate",
-    "sample-rate-conversion",
-    "clock-master"
-   ],
-   "equipment_ids": [
-    "rme-babyface-pro-fs"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
-     "publisher": "Audient, iD14 MKII manual v1.3",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "checks"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "headphone-latency-tracking",
-   "name_fr": "Retard dans le casque pendant la prise",
-   "name_en": "Latency in headphones while tracking",
-   "domain": "digital-audio-clocking",
-   "symptom": "Le musicien entend sa voix ou son instrument en retard dans le casque et décale son jeu.",
-   "contexts": [
-    "studio"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Retour casque passant par le DAW avec un tampon trop grand",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Plug-in à forte latence (limiteur à anticipation) actif, compensation de latence appliquée",
-     "likelihood": "medium"
-    },
-    {
-     "cause": "Convertisseurs et tampons de sécurité qui s'additionnent",
-     "likelihood": "low"
-    }
-   ],
-   "checks": [
-    "Lire la taille du tampon et calculer N/fe",
-    "Vérifier les plug-ins du bus master et des pistes armées",
-    "Vérifier si l'écoute directe de l'interface est utilisée"
-   ],
-   "fixes": [
-    "Utiliser l'écoute directe de l'interface",
-    "Réduire le tampon pendant la prise",
-    "Retirer les plug-ins à forte latence ou activer le mode basse latence du DAW"
-   ],
-   "rule_ids": [],
-   "concept_ids": [
-    "latency",
-    "buffer-size",
-    "direct-monitoring",
-    "plugin-delay-compensation"
-   ],
-   "equipment_ids": [
-    "rme-babyface-pro-fs"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://puremix.com/blog/understanding-plug-in-delay-compensation",
-     "publisher": "Puremix, A. Rizzo Schettino, Understanding Plug-In Delay Compensation (2018)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "adat-channels-missing-96k",
-   "name_fr": "Canaux ADAT manquants à 96 kHz",
-   "name_en": "ADAT channels missing at 96 kHz",
-   "domain": "digital-audio-clocking",
-   "symptom": "Avec un préampli 8 canaux en ADAT, seuls 4 canaux (ou 2) arrivent dans le DAW, ou aucun ADAT n'apparaît.",
-   "contexts": [
-    "studio",
-    "live"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Session à 88,2/96 kHz : S/MUX, 4 canaux par port (2 à 176,4/192 kHz)",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Port optique réglé en S/PDIF au lieu d'ADAT (2 canaux)",
-     "likelihood": "medium"
-    },
-    {
-     "cause": "Fréquences différentes entre préampli et interface : pas de sync",
-     "likelihood": "medium"
-    }
-   ],
-   "checks": [
-    "Lire la fréquence de la session",
-    "Vérifier le format du port optique (ADAT/S/PDIF)",
-    "Lire le voyant d'horloge (vert / ambre / rouge)"
-   ],
-   "fixes": [
-    "Travailler à 44,1/48 kHz, ou ajouter un second port ADAT, ou passer en MADI",
-    "Régler le port en ADAT",
-    "Aligner les fréquences et choisir un seul maître"
-   ],
-   "rule_ids": [
-    "adat-smux-channel-loss"
-   ],
-   "concept_ids": [
-    "adat",
-    "smux",
-    "sample-rate"
-   ],
-   "equipment_ids": [
-    "audient-id14-mkii",
-    "rme-babyface-pro-fs"
-   ],
-   "sources": [
-    {
-     "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
-     "publisher": "Audient, iD14 MKII manual v1.3",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "probable_causes",
-      "checks"
-     ]
-    },
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "wordclock-weak-double-termination",
-   "name_fr": "Word clock instable par double terminaison",
-   "name_en": "Unstable word clock from double termination",
-   "domain": "digital-audio-clocking",
-   "symptom": "Des esclaves en bout de guirlande perdent le verrouillage par moments ; le signal word clock est faible.",
-   "contexts": [
-    "studio",
-    "broadcast"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Deux terminaisons 75 Ω sur la même ligne (37,5 Ω de charge)",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Composants 50 Ω (informatique) au lieu de 75 Ω",
-     "likelihood": "medium"
-    },
-    {
-     "cause": "Sortie word clock faible qui s'effondre sous la charge",
-     "likelihood": "medium"
-    }
-   ],
-   "checks": [
-    "Lister les terminaisons internes activées sur la ligne",
-    "Vérifier l'impédance des câbles, T et bouchons",
-    "Essayer une sortie dédiée du maître pour l'appareil fautif"
-   ],
-   "fixes": [
-    "Une seule terminaison 75 Ω en bout de chaîne",
-    "Distributeur word clock (une sortie par appareil) dans les grands studios"
-   ],
-   "rule_ids": [],
-   "concept_ids": [
-    "word-clock-termination",
-    "word-clock"
-   ],
-   "equipment_ids": [
-    "rme-hdspe-madi-fx",
-    "antelope-ocx-hd"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "probable_causes",
-      "checks",
-      "fixes"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "aes-to-consumer-no-lock",
-   "name_fr": "Un appareil grand public ne reconnaît pas la sortie AES",
-   "name_en": "Consumer device does not accept the AES output",
-   "domain": "digital-audio-clocking",
-   "symptom": "Un appareil à entrée S/PDIF (RCA) reste muet ou instable lorsqu'il est alimenté par la sortie AES d'une interface pro via un adaptateur.",
-   "contexts": [
-    "studio",
-    "installation"
-   ],
-   "probable_causes": [
-    {
-     "cause": "État de canal « professional » non accepté par un récepteur « consumer »",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Niveau et impédance différents (AES3 110 Ω 2–7 V, S/PDIF coaxial 75 Ω 0,5 V)",
-     "likelihood": "medium"
-    }
-   ],
-   "checks": [
-    "Lire le réglage d'état de canal de la sortie AES",
-    "Vérifier l'adaptateur XLR/RCA (broches 2 et 3 vers la RCA, blindage sur la broche 1 seulement)"
-   ],
-   "fixes": [
-    "Passer la sortie AES en mode Consumer",
-    "Utiliser un convertisseur de format AES3/S/PDIF"
-   ],
-   "rule_ids": [
-    "aes3-into-spdif-level"
-   ],
-   "concept_ids": [
-    "channel-status",
-    "aes3",
-    "spdif"
-   ],
-   "equipment_ids": [
-    "rme-fireface-802-fs",
-    "mutec-mc-3-plus"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/fface_802fs_e.pdf",
-     "publisher": "RME, Fireface 802 FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "probable_causes",
-      "checks",
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
-     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "probable_causes"
-     ]
-    },
-    {
-     "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
-     "publisher": "MUTEC, MC-3+ Smart Clock manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    }
-   ],
-   "review": "ok"
-  }
- ],
- "not_found_log": []
+  ],
+  "not_found_log": []
 }

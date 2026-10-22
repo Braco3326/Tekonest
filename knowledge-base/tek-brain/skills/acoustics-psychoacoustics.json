@@ -44,7 +44,8 @@
           "kind": "university",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-distance.htm",
@@ -54,7 +55,8 @@
           "kind": "university",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-RT60.htm",
@@ -64,7 +66,8 @@
           "kind": "university",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
@@ -74,7 +77,8 @@
           "kind": "university",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -121,7 +125,8 @@
           "kind": "standard",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/monitor-placement",
@@ -131,7 +136,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/improving-room-acoustics",
@@ -141,7 +147,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -190,7 +197,8 @@
           "kind": "standard",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Precedence_effect",
@@ -200,7 +208,8 @@
           "kind": "other",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
@@ -210,7 +219,8 @@
           "kind": "standard",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

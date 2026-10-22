@@ -1,1066 +1,1118 @@
 {
- "entity": "glossary",
- "domain": "microphones-miking",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "transducer",
-   "term_fr": "Transducteur",
-   "term_en": "Transducer",
-   "domain": "microphones-miking",
-   "definition": "Dispositif qui convertit une forme d'énergie en une autre ; la capsule d'un micro convertit l'énergie acoustique en signal électrique.",
-   "see_also": [
-    "dynamic-microphone",
-    "condenser-microphone"
-   ],
-   "sources": [
+  "entity": "glossary",
+  "domain": "microphones-miking",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "diaphragm",
-   "term_fr": "Diaphragme (membrane)",
-   "term_en": "Diaphragm",
-   "domain": "microphones-miking",
-   "definition": "Membrane mince du micro qui se met en mouvement sous l'effet des ondes sonores.",
-   "see_also": [
-    "condenser-microphone"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "backplate",
-   "term_fr": "Contre-électrode",
-   "term_en": "Backplate",
-   "domain": "microphones-miking",
-   "definition": "Disque conducteur fixe qui forme, avec le diaphragme, le condensateur d'une capsule statique.",
-   "see_also": [
-    "condenser-microphone"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "voice-coil",
-   "term_fr": "Bobine mobile",
-   "term_en": "Voice coil",
-   "domain": "microphones-miking",
-   "definition": "Petite bobine de fil solidaire du diaphragme d'un micro dynamique, qui se déplace dans le champ d'un aimant.",
-   "see_also": [
-    "dynamic-microphone"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dynamic-microphone",
-   "term_fr": "Micro dynamique",
-   "term_en": "Dynamic microphone",
-   "domain": "microphones-miking",
-   "definition": "Micro qui produit un signal quand le son fait vibrer un conducteur dans un champ magnétique (bobine mobile ou ruban).",
-   "see_also": [
-    "dynamic-microphone",
-    "ribbon-microphone"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "condenser-microphone",
-   "term_fr": "Micro à condensateur (statique)",
-   "term_en": "Condenser microphone",
-   "domain": "microphones-miking",
-   "definition": "Micro qui produit un signal quand le son fait varier l'écart entre deux surfaces chargées, le diaphragme et la contre-électrode.",
-   "see_also": [
-    "condenser-microphone"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ribbon-microphone",
-   "term_fr": "Micro à ruban",
-   "term_en": "Ribbon microphone",
-   "domain": "microphones-miking",
-   "definition": "Micro dynamique dont le diaphragme est lui-même le conducteur : un ruban métallique mince dans un champ magnétique.",
-   "see_also": [
-    "ribbon-microphone"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "electret",
-   "term_fr": "Électret",
-   "term_en": "Electret",
-   "domain": "microphones-miking",
-   "definition": "Matériau (par exemple du Teflon) qui conserve une charge électrique permanente, utilisé pour polariser une capsule statique.",
-   "see_also": [
-    "electret-microphone"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "polarization",
-   "term_fr": "Polarisation",
-   "term_en": "Polarization",
-   "domain": "microphones-miking",
-   "definition": "Charge ou tension appliquée à l'élément d'un micro à condensateur.",
-   "see_also": [
-    "condenser-microphone",
-    "phantom-power"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "omnidirectional-microphone",
-   "term_fr": "Micro omnidirectionnel",
-   "term_en": "Omnidirectional microphone",
-   "domain": "microphones-miking",
-   "definition": "Micro qui capte le son de la même façon dans toutes les directions ; il ne présente pas d'effet de proximité.",
-   "see_also": [
-    "polar-pattern"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "cardioid-microphone",
-   "term_fr": "Micro cardioïde",
-   "term_en": "Cardioid microphone",
-   "domain": "microphones-miking",
-   "definition": "Micro unidirectionnel à captation frontale assez large (131° selon Shure) dont le rejet maximal est à 180°, directement à l'arrière.",
-   "see_also": [
-    "polar-pattern",
-    "null-angle"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "supercardioid-microphone",
-   "term_fr": "Micro supercardioïde",
-   "term_en": "Supercardioid microphone",
-   "domain": "microphones-miking",
-   "definition": "Micro unidirectionnel à captation plus serrée qu'un cardioïde (115° selon Shure) avec un petit lobe arrière ; angle de rejet maximal donné entre ≈ 115° et 135° selon les sources.",
-   "see_also": [
-    "polar-pattern",
-    "null-angle"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "transducer",
+      "term_fr": "Transducteur",
+      "term_en": "Transducer",
+      "domain": "microphones-miking",
+      "definition": "Dispositif qui convertit une forme d'énergie en une autre ; la capsule d'un micro convertit l'énergie acoustique en signal électrique.",
+      "see_also": [
+        "dynamic-microphone",
+        "condenser-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
-     "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "hypercardioid-microphone",
-   "term_fr": "Micro hypercardioïde",
-   "term_en": "Hypercardioid microphone",
-   "domain": "microphones-miking",
-   "definition": "Micro unidirectionnel encore plus serré à l'avant (105° selon Shure) mais avec un lobe arrière plus important ; rejet maximal vers 110° (Shure) à 115° (DPA).",
-   "see_also": [
-    "polar-pattern",
-    "null-angle"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "diaphragm",
+      "term_fr": "Diaphragme (membrane)",
+      "term_en": "Diaphragm",
+      "domain": "microphones-miking",
+      "definition": "Membrane mince du micro qui se met en mouvement sous l'effet des ondes sonores.",
+      "see_also": [
+        "condenser-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
-     "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "bidirectional-microphone",
-   "term_fr": "Micro bidirectionnel (figure en 8)",
-   "term_en": "Bidirectional (figure-8) microphone",
-   "domain": "microphones-miking",
-   "definition": "Micro qui capte autant à l'avant qu'à l'arrière (arrière en polarité inversée) ; rejet maximal à 90°, sur les côtés.",
-   "see_also": [
-    "polar-pattern",
-    "stereo-blumlein",
-    "stereo-ms"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "backplate",
+      "term_fr": "Contre-électrode",
+      "term_en": "Backplate",
+      "domain": "microphones-miking",
+      "definition": "Disque conducteur fixe qui forme, avec le diaphragme, le condensateur d'une capsule statique.",
+      "see_also": [
+        "condenser-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
-     "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "rear-lobe",
-   "term_fr": "Lobe arrière",
-   "term_en": "Rear lobe",
-   "domain": "microphones-miking",
-   "definition": "Zone de captation à l'arrière d'un super- ou hypercardioïde ; chez la figure en 8, elle est égale au lobe avant.",
-   "see_also": [
-    "polar-pattern"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pickup-angle",
-   "term_fr": "Angle de captation",
-   "term_en": "Pickup / coverage angle",
-   "domain": "microphones-miking",
-   "definition": "Arc de captation utile d'un micro, en général limité par les points à −3 dB de sa directivité.",
-   "see_also": [
-    "polar-pattern"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "polar-pattern",
-   "term_fr": "Diagramme polaire",
-   "term_en": "Polar pattern",
-   "domain": "microphones-miking",
-   "definition": "Graphique de la sensibilité d'un micro en fonction de l'angle d'arrivée du son, à une fréquence donnée.",
-   "see_also": [
-    "polar-pattern"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "proximity-effect",
-   "term_fr": "Effet de proximité",
-   "term_en": "Proximity effect",
-   "domain": "microphones-miking",
-   "definition": "Augmentation des graves de la plupart des micros unidirectionnels placés près d'une source (moins de 30 cm environ) ; absente chez l'omni.",
-   "see_also": [
-    "proximity-effect"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "microphone-sensitivity",
-   "term_fr": "Sensibilité",
-   "term_en": "Sensitivity",
-   "domain": "microphones-miking",
-   "definition": "Tension de sortie d'un micro pour un niveau de pression donné, souvent 94 dB SPL (1 Pa) ; ajouter 20 dB à une valeur mesurée à 74 dB SPL pour comparer.",
-   "see_also": [
-    "microphone-sensitivity"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "self-noise",
-   "term_fr": "Bruit propre",
-   "term_en": "Self-noise",
-   "domain": "microphones-miking",
-   "definition": "Bruit résiduel (en dB SPL) généré par l'électronique d'un micro à condensateur.",
-   "see_also": [
-    "microphone-self-noise"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "max-spl",
-   "term_fr": "SPL maximal",
-   "term_en": "Maximum SPL",
-   "domain": "microphones-miking",
-   "definition": "Niveau de pression acoustique maximal qu'un micro accepte avant écrêtage ou avant un taux de distorsion donné.",
-   "see_also": [
-    "max-spl-microphone"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "voice-coil",
+      "term_fr": "Bobine mobile",
+      "term_en": "Voice coil",
+      "domain": "microphones-miking",
+      "definition": "Petite bobine de fil solidaire du diaphragme d'un micro dynamique, qui se déplace dans le champ d'un aimant.",
+      "see_also": [
+        "dynamic-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/",
-     "publisher": "DPA Microphones, Mic University: How to read microphone specifications",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "microphone-pad",
-   "term_fr": "Atténuateur (pad) de micro",
-   "term_en": "Microphone pad",
-   "domain": "microphones-miking",
-   "definition": "Atténuateur commutable qui réduit le niveau avant l'électronique du micro ou à l'entrée du préampli.",
-   "see_also": [
-    "microphone-pad"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "phantom-power",
-   "term_fr": "Alimentation fantôme",
-   "term_en": "Phantom power",
-   "domain": "microphones-miking",
-   "definition": "Tension continue envoyée par le câble micro, égale sur les broches 2 et 3 par rapport à la broche 1, pour alimenter l'électronique d'un micro (IEC 61938, P48 = 48 V).",
-   "see_also": [
-    "phantom-power"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "dynamic-microphone",
+      "term_fr": "Micro dynamique",
+      "term_en": "Dynamic microphone",
+      "domain": "microphones-miking",
+      "definition": "Micro qui produit un signal quand le son fait vibrer un conducteur dans un champ magnétique (bobine mobile ou ruban).",
+      "see_also": [
+        "dynamic-microphone",
+        "ribbon-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
-     "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "polarity",
-   "term_fr": "Polarité",
-   "term_en": "Polarity",
-   "domain": "microphones-miking",
-   "definition": "Sens du signal électrique par rapport à la pression : pour un micro standard, une surpression donne une tension positive sur la broche 2 par rapport à la broche 3.",
-   "see_also": [
-    "microphone-polarity"
-   ],
-   "sources": [
-    {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "phase-reverse",
-   "term_fr": "Inversion de polarité (Ø)",
-   "term_en": "Polarity (phase) reverse",
-   "domain": "microphones-miking",
-   "definition": "Retournement du signal de 180° par un inverseur de console ou un adaptateur, utilisé par exemple sur le micro dessous d'une caisse claire.",
-   "see_also": [
-    "microphone-polarity"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "comb-filtering",
-   "term_fr": "Filtrage en peigne",
-   "term_en": "Comb filtering",
-   "domain": "microphones-miking",
-   "definition": "Interférence qui creuse des encoches régulières dans la réponse en fréquence, quand un même son arrive décalé dans le temps (deux micros, ou un micro et une réflexion).",
-   "see_also": [
-    "comb-filtering",
-    "three-to-one-rule"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "leakage",
-   "term_fr": "Diaphonie acoustique (repisse)",
-   "term_en": "Leakage / bleed",
-   "domain": "microphones-miking",
-   "definition": "Captation d'un instrument par un micro destiné à un autre instrument.",
-   "see_also": [
-    "three-to-one-rule",
-    "close-miking"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "three-to-one-rule",
-   "term_fr": "Règle des 3 pour 1",
-   "term_en": "3-to-1 rule",
-   "domain": "microphones-miking",
-   "definition": "En multi-micro, espacer les micros d'au moins trois fois leur distance à leur source.",
-   "see_also": [
-    "three-to-one-rule"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "condenser-microphone",
+      "term_fr": "Micro à condensateur (statique)",
+      "term_en": "Condenser microphone",
+      "domain": "microphones-miking",
+      "definition": "Micro qui produit un signal quand le son fait varier l'écart entre deux surfaces chargées, le diaphragme et la contre-électrode.",
+      "see_also": [
+        "condenser-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "close-pickup",
-   "term_fr": "Prise rapprochée",
-   "term_en": "Close pickup",
-   "domain": "microphones-miking",
-   "definition": "Placement d'un micro à moins de 2 pieds (≈ 60 cm) de la source.",
-   "see_also": [
-    "close-miking"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "distant-pickup",
-   "term_fr": "Prise éloignée",
-   "term_en": "Distant pickup",
-   "domain": "microphones-miking",
-   "definition": "Placement d'un micro à plus de 2 pieds (≈ 60 cm) de la source.",
-   "see_also": [
-    "close-miking",
-    "distance-factor"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "distance-factor",
-   "term_fr": "Facteur de distance",
-   "term_en": "Distance factor",
-   "domain": "microphones-miking",
-   "definition": "Distance de travail équivalente d'un micro directif par rapport à un omni pour le même rapport direct/réverbéré.",
-   "see_also": [
-    "distance-factor"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pop",
-   "term_fr": "Plosive (pop)",
-   "term_en": "Pop",
-   "domain": "microphones-miking",
-   "definition": "Bruit sourd causé par une bouffée d'air de la bouche frappant le diaphragme, surtout sur « p », « t », « b ».",
-   "see_also": [
-    "plosive-pop"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pop-filter",
-   "term_fr": "Anti-pop",
-   "term_en": "Pop filter",
-   "domain": "microphones-miking",
-   "definition": "Écran acoustiquement transparent placé devant ou autour de la capsule pour réduire les plosives (grille, mousse ou tissu).",
-   "see_also": [
-    "plosive-pop"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "shock-mount",
-   "term_fr": "Suspension élastique",
-   "term_en": "Shock mount",
-   "domain": "microphones-miking",
-   "definition": "Support qui découple mécaniquement le micro de son pied pour limiter la transmission des vibrations et des bruits de manipulation.",
-   "see_also": [
-    "handling-noise"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
-     "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "coincident-pair",
-   "term_fr": "Couple coïncident",
-   "term_en": "Coincident pair",
-   "domain": "microphones-miking",
-   "definition": "Couple de micros dont les capsules sont au même point ; l'image repose sur les seules différences de niveau (XY, MS, Blumlein).",
-   "see_also": [
-    "stereo-xy",
-    "stereo-ms",
-    "stereo-blumlein"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "ribbon-microphone",
+      "term_fr": "Micro à ruban",
+      "term_en": "Ribbon microphone",
+      "domain": "microphones-miking",
+      "definition": "Micro dynamique dont le diaphragme est lui-même le conducteur : un ruban métallique mince dans un champ magnétique.",
+      "see_also": [
+        "ribbon-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "near-coincident-pair",
-   "term_fr": "Couple quasi coïncident",
-   "term_en": "Near-coincident pair",
-   "domain": "microphones-miking",
-   "definition": "Couple de micros directifs légèrement espacés et angulés, combinant différences de niveau et de temps (ORTF, NOS, DIN).",
-   "see_also": [
-    "stereo-ortf",
-    "stereo-nos"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "spaced-pair",
-   "term_fr": "Couple espacé (AB)",
-   "term_en": "Spaced pair",
-   "domain": "microphones-miking",
-   "definition": "Couple de micros, souvent omnis, espacés et parallèles ; l'image repose surtout sur les différences de temps.",
-   "see_also": [
-    "stereo-ab"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "electret",
+      "term_fr": "Électret",
+      "term_en": "Electret",
+      "domain": "microphones-miking",
+      "definition": "Matériau (par exemple du Teflon) qui conserve une charge électrique permanente, utilisé pour polariser une capsule statique.",
+      "see_also": [
+        "electret-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "recording-angle",
-   "term_fr": "Angle de prise",
-   "term_en": "Recording angle",
-   "domain": "microphones-miking",
-   "definition": "Angle sous lequel le couple « voit » la source et qui sera réparti entre les deux haut-parleurs (ex. ± 70° = 140°).",
-   "see_also": [
-    "stereo-ab",
-    "stereo-xy"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ms-matrix",
-   "term_fr": "Matrice MS",
-   "term_en": "M-S matrix",
-   "domain": "microphones-miking",
-   "definition": "Calcul somme/différence qui transforme les signaux Mid et Side en gauche/droite : G = M + S, D = M − S (souvent à −3 dB).",
-   "see_also": [
-    "stereo-ms"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "mono-compatibility",
-   "term_fr": "Compatibilité mono",
-   "term_en": "Mono compatibility",
-   "domain": "microphones-miking",
-   "definition": "Aptitude d'un enregistrement stéréo à être sommé en mono sans perte de fréquences ; excellente en coïncident et MS, faible en couple espacé.",
-   "see_also": [
-    "stereo-xy",
-    "stereo-ms",
-    "stereo-ab"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "polarization",
+      "term_fr": "Polarisation",
+      "term_en": "Polarization",
+      "domain": "microphones-miking",
+      "definition": "Charge ou tension appliquée à l'élément d'un micro à condensateur.",
+      "see_also": [
+        "condenser-microphone",
+        "phantom-power"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "outriggers",
-   "term_fr": "Micros d'élargissement (outriggers)",
-   "term_en": "Outriggers",
-   "domain": "microphones-miking",
-   "definition": "Paire de micros latéraux optionnels ajoutés à un arbre Decca, placés vers les deux tiers de la largeur de scène.",
-   "see_also": [
-    "decca-tree"
-   ],
-   "sources": [
+      "id": "omnidirectional-microphone",
+      "term_fr": "Micro omnidirectionnel",
+      "term_en": "Omnidirectional microphone",
+      "domain": "microphones-miking",
+      "definition": "Micro qui capte le son de la même façon dans toutes les directions ; il ne présente pas d'effet de proximité.",
+      "see_also": [
+        "polar-pattern"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://en.wikipedia.org/wiki/Decca_tree",
-     "publisher": "Wikipedia, Decca tree",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "presence-peak",
-   "term_fr": "Bosse de présence",
-   "term_en": "Presence peak",
-   "domain": "microphones-miking",
-   "definition": "Augmentation de la réponse d'un micro entre 2 et 10 kHz qui accroît clarté et impression de proximité.",
-   "see_also": [
-    "polar-pattern"
-   ],
-   "sources": [
+      "id": "cardioid-microphone",
+      "term_fr": "Micro cardioïde",
+      "term_en": "Cardioid microphone",
+      "domain": "microphones-miking",
+      "definition": "Micro unidirectionnel à captation frontale assez large (131° selon Shure) dont le rejet maximal est à 180°, directement à l'arrière.",
+      "see_also": [
+        "polar-pattern",
+        "null-angle"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "gobo",
-   "term_fr": "Panneau d'isolation (gobo)",
-   "term_en": "Gobo",
-   "domain": "microphones-miking",
-   "definition": "Panneau mobile utilisé en studio pour réduire le son réfléchi et la diaphonie.",
-   "see_also": [
-    "close-miking"
-   ],
-   "sources": [
+      "id": "supercardioid-microphone",
+      "term_fr": "Micro supercardioïde",
+      "term_en": "Supercardioid microphone",
+      "domain": "microphones-miking",
+      "definition": "Micro unidirectionnel à captation plus serrée qu'un cardioïde (115° selon Shure) avec un petit lobe arrière ; angle de rejet maximal donné entre ≈ 115° et 135° selon les sources.",
+      "see_also": [
+        "polar-pattern",
+        "null-angle"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+          "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "definition"
-     ]
+      "id": "hypercardioid-microphone",
+      "term_fr": "Micro hypercardioïde",
+      "term_en": "Hypercardioid microphone",
+      "domain": "microphones-miking",
+      "definition": "Micro unidirectionnel encore plus serré à l'avant (105° selon Shure) mais avec un lobe arrière plus important ; rejet maximal vers 110° (Shure) à 115° (DPA).",
+      "see_also": [
+        "polar-pattern",
+        "null-angle"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+          "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "bidirectional-microphone",
+      "term_fr": "Micro bidirectionnel (figure en 8)",
+      "term_en": "Bidirectional (figure-8) microphone",
+      "domain": "microphones-miking",
+      "definition": "Micro qui capte autant à l'avant qu'à l'arrière (arrière en polarité inversée) ; rejet maximal à 90°, sur les côtés.",
+      "see_also": [
+        "polar-pattern",
+        "stereo-blumlein",
+        "stereo-ms"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+          "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "rear-lobe",
+      "term_fr": "Lobe arrière",
+      "term_en": "Rear lobe",
+      "domain": "microphones-miking",
+      "definition": "Zone de captation à l'arrière d'un super- ou hypercardioïde ; chez la figure en 8, elle est égale au lobe avant.",
+      "see_also": [
+        "polar-pattern"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "pickup-angle",
+      "term_fr": "Angle de captation",
+      "term_en": "Pickup / coverage angle",
+      "domain": "microphones-miking",
+      "definition": "Arc de captation utile d'un micro, en général limité par les points à −3 dB de sa directivité.",
+      "see_also": [
+        "polar-pattern"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "polar-pattern",
+      "term_fr": "Diagramme polaire",
+      "term_en": "Polar pattern",
+      "domain": "microphones-miking",
+      "definition": "Graphique de la sensibilité d'un micro en fonction de l'angle d'arrivée du son, à une fréquence donnée.",
+      "see_also": [
+        "polar-pattern"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "proximity-effect",
+      "term_fr": "Effet de proximité",
+      "term_en": "Proximity effect",
+      "domain": "microphones-miking",
+      "definition": "Augmentation des graves de la plupart des micros unidirectionnels placés près d'une source (moins de 30 cm environ) ; absente chez l'omni.",
+      "see_also": [
+        "proximity-effect"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "microphone-sensitivity",
+      "term_fr": "Sensibilité",
+      "term_en": "Sensitivity",
+      "domain": "microphones-miking",
+      "definition": "Tension de sortie d'un micro pour un niveau de pression donné, souvent 94 dB SPL (1 Pa) ; ajouter 20 dB à une valeur mesurée à 74 dB SPL pour comparer.",
+      "see_also": [
+        "microphone-sensitivity"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "self-noise",
+      "term_fr": "Bruit propre",
+      "term_en": "Self-noise",
+      "domain": "microphones-miking",
+      "definition": "Bruit résiduel (en dB SPL) généré par l'électronique d'un micro à condensateur.",
+      "see_also": [
+        "microphone-self-noise"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "max-spl",
+      "term_fr": "SPL maximal",
+      "term_en": "Maximum SPL",
+      "domain": "microphones-miking",
+      "definition": "Niveau de pression acoustique maximal qu'un micro accepte avant écrêtage ou avant un taux de distorsion donné.",
+      "see_also": [
+        "max-spl-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/",
+          "publisher": "DPA Microphones, Mic University: How to read microphone specifications",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "microphone-pad",
+      "term_fr": "Atténuateur (pad) de micro",
+      "term_en": "Microphone pad",
+      "domain": "microphones-miking",
+      "definition": "Atténuateur commutable qui réduit le niveau avant l'électronique du micro ou à l'entrée du préampli.",
+      "see_also": [
+        "microphone-pad"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "phantom-power",
+      "term_fr": "Alimentation fantôme",
+      "term_en": "Phantom power",
+      "domain": "microphones-miking",
+      "definition": "Tension continue envoyée par le câble micro, égale sur les broches 2 et 3 par rapport à la broche 1, pour alimenter l'électronique d'un micro (IEC 61938, P48 = 48 V).",
+      "see_also": [
+        "phantom-power"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+          "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "polarity",
+      "term_fr": "Polarité",
+      "term_en": "Polarity",
+      "domain": "microphones-miking",
+      "definition": "Sens du signal électrique par rapport à la pression : pour un micro standard, une surpression donne une tension positive sur la broche 2 par rapport à la broche 3.",
+      "see_also": [
+        "microphone-polarity"
+      ],
+      "sources": [
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "phase-reverse",
+      "term_fr": "Inversion de polarité (Ø)",
+      "term_en": "Polarity (phase) reverse",
+      "domain": "microphones-miking",
+      "definition": "Retournement du signal de 180° par un inverseur de console ou un adaptateur, utilisé par exemple sur le micro dessous d'une caisse claire.",
+      "see_also": [
+        "microphone-polarity"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "comb-filtering",
+      "term_fr": "Filtrage en peigne",
+      "term_en": "Comb filtering",
+      "domain": "microphones-miking",
+      "definition": "Interférence qui creuse des encoches régulières dans la réponse en fréquence, quand un même son arrive décalé dans le temps (deux micros, ou un micro et une réflexion).",
+      "see_also": [
+        "comb-filtering",
+        "three-to-one-rule"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "leakage",
+      "term_fr": "Diaphonie acoustique (repisse)",
+      "term_en": "Leakage / bleed",
+      "domain": "microphones-miking",
+      "definition": "Captation d'un instrument par un micro destiné à un autre instrument.",
+      "see_also": [
+        "three-to-one-rule",
+        "close-miking"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "three-to-one-rule",
+      "term_fr": "Règle des 3 pour 1",
+      "term_en": "3-to-1 rule",
+      "domain": "microphones-miking",
+      "definition": "En multi-micro, espacer les micros d'au moins trois fois leur distance à leur source.",
+      "see_also": [
+        "three-to-one-rule"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "close-pickup",
+      "term_fr": "Prise rapprochée",
+      "term_en": "Close pickup",
+      "domain": "microphones-miking",
+      "definition": "Placement d'un micro à moins de 2 pieds (≈ 60 cm) de la source.",
+      "see_also": [
+        "close-miking"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "distant-pickup",
+      "term_fr": "Prise éloignée",
+      "term_en": "Distant pickup",
+      "domain": "microphones-miking",
+      "definition": "Placement d'un micro à plus de 2 pieds (≈ 60 cm) de la source.",
+      "see_also": [
+        "close-miking",
+        "distance-factor"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "distance-factor",
+      "term_fr": "Facteur de distance",
+      "term_en": "Distance factor",
+      "domain": "microphones-miking",
+      "definition": "Distance de travail équivalente d'un micro directif par rapport à un omni pour le même rapport direct/réverbéré.",
+      "see_also": [
+        "distance-factor"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "pop",
+      "term_fr": "Plosive (pop)",
+      "term_en": "Pop",
+      "domain": "microphones-miking",
+      "definition": "Bruit sourd causé par une bouffée d'air de la bouche frappant le diaphragme, surtout sur « p », « t », « b ».",
+      "see_also": [
+        "plosive-pop"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "pop-filter",
+      "term_fr": "Anti-pop",
+      "term_en": "Pop filter",
+      "domain": "microphones-miking",
+      "definition": "Écran acoustiquement transparent placé devant ou autour de la capsule pour réduire les plosives (grille, mousse ou tissu).",
+      "see_also": [
+        "plosive-pop"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "shock-mount",
+      "term_fr": "Suspension élastique",
+      "term_en": "Shock mount",
+      "domain": "microphones-miking",
+      "definition": "Support qui découple mécaniquement le micro de son pied pour limiter la transmission des vibrations et des bruits de manipulation.",
+      "see_also": [
+        "handling-noise"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
+          "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "coincident-pair",
+      "term_fr": "Couple coïncident",
+      "term_en": "Coincident pair",
+      "domain": "microphones-miking",
+      "definition": "Couple de micros dont les capsules sont au même point ; l'image repose sur les seules différences de niveau (XY, MS, Blumlein).",
+      "see_also": [
+        "stereo-xy",
+        "stereo-ms",
+        "stereo-blumlein"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "near-coincident-pair",
+      "term_fr": "Couple quasi coïncident",
+      "term_en": "Near-coincident pair",
+      "domain": "microphones-miking",
+      "definition": "Couple de micros directifs légèrement espacés et angulés, combinant différences de niveau et de temps (ORTF, NOS, DIN).",
+      "see_also": [
+        "stereo-ortf",
+        "stereo-nos"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "spaced-pair",
+      "term_fr": "Couple espacé (AB)",
+      "term_en": "Spaced pair",
+      "domain": "microphones-miking",
+      "definition": "Couple de micros, souvent omnis, espacés et parallèles ; l'image repose surtout sur les différences de temps.",
+      "see_also": [
+        "stereo-ab"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "recording-angle",
+      "term_fr": "Angle de prise",
+      "term_en": "Recording angle",
+      "domain": "microphones-miking",
+      "definition": "Angle sous lequel le couple « voit » la source et qui sera réparti entre les deux haut-parleurs (ex. ± 70° = 140°).",
+      "see_also": [
+        "stereo-ab",
+        "stereo-xy"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "ms-matrix",
+      "term_fr": "Matrice MS",
+      "term_en": "M-S matrix",
+      "domain": "microphones-miking",
+      "definition": "Calcul somme/différence qui transforme les signaux Mid et Side en gauche/droite : G = M + S, D = M − S (souvent à −3 dB).",
+      "see_also": [
+        "stereo-ms"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "mono-compatibility",
+      "term_fr": "Compatibilité mono",
+      "term_en": "Mono compatibility",
+      "domain": "microphones-miking",
+      "definition": "Aptitude d'un enregistrement stéréo à être sommé en mono sans perte de fréquences ; excellente en coïncident et MS, faible en couple espacé.",
+      "see_also": [
+        "stereo-xy",
+        "stereo-ms",
+        "stereo-ab"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "outriggers",
+      "term_fr": "Micros d'élargissement (outriggers)",
+      "term_en": "Outriggers",
+      "domain": "microphones-miking",
+      "definition": "Paire de micros latéraux optionnels ajoutés à un arbre Decca, placés vers les deux tiers de la largeur de scène.",
+      "see_also": [
+        "decca-tree"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Decca_tree",
+          "publisher": "Wikipedia, Decca tree",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "presence-peak",
+      "term_fr": "Bosse de présence",
+      "term_en": "Presence peak",
+      "domain": "microphones-miking",
+      "definition": "Augmentation de la réponse d'un micro entre 2 et 10 kHz qui accroît clarté et impression de proximité.",
+      "see_also": [
+        "polar-pattern"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "gobo",
+      "term_fr": "Panneau d'isolation (gobo)",
+      "term_en": "Gobo",
+      "domain": "microphones-miking",
+      "definition": "Panneau mobile utilisé en studio pour réduire le son réfléchi et la diaphonie.",
+      "see_also": [
+        "close-miking"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     }
-   ]
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Définition normalisée IEC 60050 des termes micro",
-   "searched": "Electropedia non consultée (budget)"
-  }
- ]
+  ],
+  "not_found_log": [
+    {
+      "what": "Définition normalisée IEC 60050 des termes micro",
+      "searched": "Electropedia non consultée (budget)"
+    }
+  ]
 }

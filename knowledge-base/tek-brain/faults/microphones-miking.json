@@ -1,527 +1,543 @@
 {
- "entity": "fault",
- "domain": "microphones-miking",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "condenser-no-signal",
-   "name_fr": "Micro statique muet",
-   "name_en": "No signal from a condenser mic",
-   "domain": "microphones-miking",
-   "symptom": "Le vumètre de la voie ne bouge pas quand on parle devant un micro à condensateur, alors qu'un dynamique fonctionne sur la même ligne.",
-   "contexts": [
-    "studio",
-    "live",
-    "broadcast"
-   ],
-   "probable_causes": [
+  "entity": "fault",
+  "domain": "microphones-miking",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "cause": "+48 V non activé sur la voie ou le groupe",
-     "likelihood": "high"
+      "id": "condenser-no-signal",
+      "name_fr": "Micro statique muet",
+      "name_en": "No signal from a condenser mic",
+      "domain": "microphones-miking",
+      "symptom": "Le vumètre de la voie ne bouge pas quand on parle devant un micro à condensateur, alors qu'un dynamique fonctionne sur la même ligne.",
+      "contexts": [
+        "studio",
+        "live",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "+48 V non activé sur la voie ou le groupe",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Câble ou adaptateur asymétrique qui ne transporte pas le fantôme",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Micro à lampe sans son alimentation externe",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Câble XLR défectueux",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier le témoin +48 V de la voie",
+        "Remplacer le câble par un XLR symétrique connu",
+        "Vérifier si le micro demande une alimentation dédiée (lampe)",
+        "Tester le micro sur une autre entrée fantôme"
+      ],
+      "fixes": [
+        "Activer le +48 V niveau baissé",
+        "Utiliser une liaison XLR symétrique",
+        "Brancher l'alimentation externe fournie avec le micro"
+      ],
+      "rule_ids": [
+        "phantom-power-required",
+        "phantom-into-unbalanced-link"
+      ],
+      "concept_ids": [
+        "phantom-power",
+        "condenser-microphone"
+      ],
+      "equipment_ids": [
+        "neumann-u87-ai",
+        "focusrite-isa-one"
+      ],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+          "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "cause": "Câble ou adaptateur asymétrique qui ne transporte pas le fantôme",
-     "likelihood": "medium"
+      "id": "thin-sound-polarity",
+      "name_fr": "Son maigre, sans grave, avec deux micros",
+      "name_en": "Thin sound from an out-of-polarity mic pair",
+      "domain": "microphones-miking",
+      "symptom": "Chaque micro sonne bien seul, mais ensemble le grave disparaît et le son devient creux ; en stéréo, image floue « dans la tête ».",
+      "contexts": [
+        "studio",
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Un des deux micros est en polarité inversée (câble 2-3 permuté, inverseur engagé par erreur)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Micros captant la même source à l'opposé (dessus/dessous de caisse claire, avant/arrière d'ampli) sans inversion compensatrice",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Écart de distance entre micros créant du filtrage en peigne",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Écouter la somme en mono",
+        "Basculer l'inverseur Ø d'une voie et comparer",
+        "Tester les câbles au testeur (broches 2 et 3)",
+        "Mesurer les distances des micros à la source commune"
+      ],
+      "fixes": [
+        "Corriger la polarité (inverseur ou câble)",
+        "Égaliser les distances (overheads équidistants de la caisse claire)",
+        "Respecter la règle des 3 pour 1"
+      ],
+      "rule_ids": [
+        "polarity-inversion-same-source",
+        "three-to-one-spacing"
+      ],
+      "concept_ids": [
+        "microphone-polarity",
+        "comb-filtering",
+        "three-to-one-rule"
+      ],
+      "equipment_ids": [
+        "shure-sm57",
+        "behringer-ct200"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-drum-kit/",
+          "publisher": "DPA Microphones, Mic University: How to mic a drum kit",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "checks"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "cause": "Micro à lampe sans son alimentation externe",
-     "likelihood": "medium"
+      "id": "vocal-plosive-pops",
+      "name_fr": "Plosives sur la voix",
+      "name_en": "Plosive pops on vocals",
+      "domain": "microphones-miking",
+      "symptom": "Coups sourds et graves sur les « p », « b », « t », « d » d'une voix enregistrée de près.",
+      "contexts": [
+        "studio",
+        "broadcast",
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Pas d'anti-pop en prise rapprochée",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Micro directif dans l'axe de la bouche, trop près",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Effet de proximité qui accentue le grave",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier la présence et la position de l'anti-pop",
+        "Mesurer la distance bouche-micro",
+        "Essayer un léger décalage hors axe"
+      ],
+      "fixes": [
+        "Ajouter un anti-pop externe",
+        "Viser entre nez et bouche, attaquer par-dessus ou par-dessous",
+        "Reculer un peu le micro ou essayer un placement au-dessus de la tête",
+        "Coupe-bas sur la voie"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "plosive-pop",
+        "proximity-effect"
+      ],
+      "equipment_ids": [
+        "stedman-proscreen-xl",
+        "neumann-u87-ai"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/",
+          "publisher": "DPA Microphones, Mic University: How to mic vocals in the recording studio",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "fixes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "cause": "Câble XLR défectueux",
-     "likelihood": "medium"
+      "id": "handling-rumble-noise",
+      "name_fr": "Grondements et bruits de manipulation",
+      "name_en": "Handling noise and stand rumble",
+      "domain": "microphones-miking",
+      "symptom": "Chocs, frottements et grondement grave quand le micro est tenu, touché, ou quand la scène vibre.",
+      "contexts": [
+        "live",
+        "studio",
+        "eng"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Micro tenu et manipulé (main qui glisse, grille couverte)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Vibrations transmises par le pied ou le sol sans suspension",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Câble tendu qui transmet les chocs",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Écouter si le bruit suit les gestes de l'utilisateur",
+        "Taper légèrement sur le pied en écoutant",
+        "Vérifier la suspension et le câble"
+      ],
+      "fixes": [
+        "Suspension élastique, câble détendu",
+        "Coupe-bas",
+        "Consignes : ne pas couvrir la grille, limiter les manipulations"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "handling-noise",
+        "high-pass-filter"
+      ],
+      "equipment_ids": [
+        "neumann-ea-87",
+        "shure-sm58"
+      ],
+      "sources": [
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
+          "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "phasey-stereo-image",
+      "name_fr": "Image stéréo floue ou « phasy », mauvaise en mono",
+      "name_en": "Phasey stereo image, poor mono compatibility",
+      "domain": "microphones-miking",
+      "symptom": "En stéréo l'image est vague ou trouée au centre ; en mono, des fréquences « sautent » ou disparaissent.",
+      "contexts": [
+        "studio",
+        "broadcast",
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Couple AB espacé sommé en mono (filtrage en peigne par écarts de temps)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Paire en polarité inversée",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Espacement inadapté : trop serré (peigne) ou trop large (trou au centre)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Gains différents entre les deux micros",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Passer l'écoute en mono et comparer",
+        "Vérifier la polarité des deux voies",
+        "Mesurer espacement et angle par rapport à la technique visée"
+      ],
+      "fixes": [
+        "Pour un usage mono/broadcast, préférer XY ou MS",
+        "Corriger la polarité",
+        "Ajuster l'espacement ; en AB, n'utiliser qu'un canal si le mono est requis (DPA)"
+      ],
+      "rule_ids": [
+        "polarity-inversion-same-source"
+      ],
+      "concept_ids": [
+        "stereo-ab",
+        "stereo-xy",
+        "stereo-ms",
+        "comb-filtering"
+      ],
+      "equipment_ids": [
+        "dpa-4011",
+        "neumann-km-184"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes",
+            "checks"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+          "publisher": "DPA Microphones, Mic University: How to mic a piano",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "condenser-distortion-loud-source",
+      "name_fr": "Distorsion sur une source forte",
+      "name_en": "Distortion on a loud source",
+      "domain": "microphones-miking",
+      "symptom": "Son saturé sur une grosse caisse, un ampli ou une voix criée, même avec le gain baissé.",
+      "contexts": [
+        "studio",
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Entrée console/préampli saturée",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Électronique du micro saturée (SPL max dépassé)",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier le témoin de crête du préampli",
+        "Engager le pad de la console : si la distorsion persiste, c'est le micro",
+        "Comparer au SPL max de la fiche"
+      ],
+      "fixes": [
+        "Pad d'entrée",
+        "Pad du micro",
+        "Éloigner le micro",
+        "Choisir un micro plus tolérant (souvent un dynamique)"
+      ],
+      "rule_ids": [
+        "mic-max-spl-exceeded"
+      ],
+      "concept_ids": [
+        "max-spl-microphone",
+        "microphone-pad",
+        "gain-staging"
+      ],
+      "equipment_ids": [
+        "akg-c414-xls",
+        "shure-beta-52a"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "ribbon-dead-after-phantom",
+      "name_fr": "Ruban muet ou distordu après un branchement",
+      "name_en": "Ribbon mic dead or distorted after patching",
+      "domain": "microphones-miking",
+      "symptom": "Un micro à ruban ne donne plus qu'un signal faible, distordu ou plus rien après avoir été branché ou brassé.",
+      "contexts": [
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Impulsion de courant due au fantôme sur une liaison défectueuse ou en patchbay",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Souffle ou choc mécanique sur le ruban",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier si le +48 V était actif lors du branchement ou du brassage",
+        "Essayer un autre câble et une autre entrée sans fantôme",
+        "Faire examiner le micro par le fabricant"
+      ],
+      "fixes": [
+        "Retour SAV / changement du ruban",
+        "Procédure : fantôme coupé, liaison directe, pas de patchbay"
+      ],
+      "rule_ids": [
+        "phantom-on-ribbon"
+      ],
+      "concept_ids": [
+        "ribbon-microphone",
+        "phantom-power"
+      ],
+      "equipment_ids": [
+        "royer-r-121",
+        "coles-4038"
+      ],
+      "sources": [
+        {
+          "url": "https://royerlabs.com/pdf/manuals/R-121manual.pdf",
+          "publisher": "Royer Labs, R-121 Operation Instructions",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://coleselectroacoustics.com/ribbon-microphone-care-tips/",
+          "publisher": "Coles Electroacoustics, Ribbon microphone care tips",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "probable_causes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     }
-   ],
-   "checks": [
-    "Vérifier le témoin +48 V de la voie",
-    "Remplacer le câble par un XLR symétrique connu",
-    "Vérifier si le micro demande une alimentation dédiée (lampe)",
-    "Tester le micro sur une autre entrée fantôme"
-   ],
-   "fixes": [
-    "Activer le +48 V niveau baissé",
-    "Utiliser une liaison XLR symétrique",
-    "Brancher l'alimentation externe fournie avec le micro"
-   ],
-   "rule_ids": [
-    "phantom-power-required",
-    "phantom-into-unbalanced-link"
-   ],
-   "concept_ids": [
-    "phantom-power",
-    "condenser-microphone"
-   ],
-   "equipment_ids": [
-    "neumann-u87-ai",
-    "focusrite-isa-one"
-   ],
-   "sources": [
-    {
-     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
-     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes"
-     ]
-    },
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "thin-sound-polarity",
-   "name_fr": "Son maigre, sans grave, avec deux micros",
-   "name_en": "Thin sound from an out-of-polarity mic pair",
-   "domain": "microphones-miking",
-   "symptom": "Chaque micro sonne bien seul, mais ensemble le grave disparaît et le son devient creux ; en stéréo, image floue « dans la tête ».",
-   "contexts": [
-    "studio",
-    "live"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Un des deux micros est en polarité inversée (câble 2-3 permuté, inverseur engagé par erreur)",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Micros captant la même source à l'opposé (dessus/dessous de caisse claire, avant/arrière d'ampli) sans inversion compensatrice",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Écart de distance entre micros créant du filtrage en peigne",
-     "likelihood": "medium"
-    }
-   ],
-   "checks": [
-    "Écouter la somme en mono",
-    "Basculer l'inverseur Ø d'une voie et comparer",
-    "Tester les câbles au testeur (broches 2 et 3)",
-    "Mesurer les distances des micros à la source commune"
-   ],
-   "fixes": [
-    "Corriger la polarité (inverseur ou câble)",
-    "Égaliser les distances (overheads équidistants de la caisse claire)",
-    "Respecter la règle des 3 pour 1"
-   ],
-   "rule_ids": [
-    "polarity-inversion-same-source",
-    "three-to-one-spacing"
-   ],
-   "concept_ids": [
-    "microphone-polarity",
-    "comb-filtering",
-    "three-to-one-rule"
-   ],
-   "equipment_ids": [
-    "shure-sm57",
-    "behringer-ct200"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-drum-kit/",
-     "publisher": "DPA Microphones, Mic University: How to mic a drum kit",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "checks"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "vocal-plosive-pops",
-   "name_fr": "Plosives sur la voix",
-   "name_en": "Plosive pops on vocals",
-   "domain": "microphones-miking",
-   "symptom": "Coups sourds et graves sur les « p », « b », « t », « d » d'une voix enregistrée de près.",
-   "contexts": [
-    "studio",
-    "broadcast",
-    "live"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Pas d'anti-pop en prise rapprochée",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Micro directif dans l'axe de la bouche, trop près",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Effet de proximité qui accentue le grave",
-     "likelihood": "medium"
-    }
-   ],
-   "checks": [
-    "Vérifier la présence et la position de l'anti-pop",
-    "Mesurer la distance bouche-micro",
-    "Essayer un léger décalage hors axe"
-   ],
-   "fixes": [
-    "Ajouter un anti-pop externe",
-    "Viser entre nez et bouche, attaquer par-dessus ou par-dessous",
-    "Reculer un peu le micro ou essayer un placement au-dessus de la tête",
-    "Coupe-bas sur la voie"
-   ],
-   "rule_ids": [],
-   "concept_ids": [
-    "plosive-pop",
-    "proximity-effect"
-   ],
-   "equipment_ids": [
-    "stedman-proscreen-xl",
-    "neumann-u87-ai"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/",
-     "publisher": "DPA Microphones, Mic University: How to mic vocals in the recording studio",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "fixes"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "handling-rumble-noise",
-   "name_fr": "Grondements et bruits de manipulation",
-   "name_en": "Handling noise and stand rumble",
-   "domain": "microphones-miking",
-   "symptom": "Chocs, frottements et grondement grave quand le micro est tenu, touché, ou quand la scène vibre.",
-   "contexts": [
-    "live",
-    "studio",
-    "eng"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Micro tenu et manipulé (main qui glisse, grille couverte)",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Vibrations transmises par le pied ou le sol sans suspension",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Câble tendu qui transmet les chocs",
-     "likelihood": "medium"
-    }
-   ],
-   "checks": [
-    "Écouter si le bruit suit les gestes de l'utilisateur",
-    "Taper légèrement sur le pied en écoutant",
-    "Vérifier la suspension et le câble"
-   ],
-   "fixes": [
-    "Suspension élastique, câble détendu",
-    "Coupe-bas",
-    "Consignes : ne pas couvrir la grille, limiter les manipulations"
-   ],
-   "rule_ids": [],
-   "concept_ids": [
-    "handling-noise",
-    "high-pass-filter"
-   ],
-   "equipment_ids": [
-    "neumann-ea-87",
-    "shure-sm58"
-   ],
-   "sources": [
-    {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
-     "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "phasey-stereo-image",
-   "name_fr": "Image stéréo floue ou « phasy », mauvaise en mono",
-   "name_en": "Phasey stereo image, poor mono compatibility",
-   "domain": "microphones-miking",
-   "symptom": "En stéréo l'image est vague ou trouée au centre ; en mono, des fréquences « sautent » ou disparaissent.",
-   "contexts": [
-    "studio",
-    "broadcast",
-    "live"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Couple AB espacé sommé en mono (filtrage en peigne par écarts de temps)",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Paire en polarité inversée",
-     "likelihood": "medium"
-    },
-    {
-     "cause": "Espacement inadapté : trop serré (peigne) ou trop large (trou au centre)",
-     "likelihood": "medium"
-    },
-    {
-     "cause": "Gains différents entre les deux micros",
-     "likelihood": "low"
-    }
-   ],
-   "checks": [
-    "Passer l'écoute en mono et comparer",
-    "Vérifier la polarité des deux voies",
-    "Mesurer espacement et angle par rapport à la technique visée"
-   ],
-   "fixes": [
-    "Pour un usage mono/broadcast, préférer XY ou MS",
-    "Corriger la polarité",
-    "Ajuster l'espacement ; en AB, n'utiliser qu'un canal si le mono est requis (DPA)"
-   ],
-   "rule_ids": [
-    "polarity-inversion-same-source"
-   ],
-   "concept_ids": [
-    "stereo-ab",
-    "stereo-xy",
-    "stereo-ms",
-    "comb-filtering"
-   ],
-   "equipment_ids": [
-    "dpa-4011",
-    "neumann-km-184"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes",
-      "checks"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
-     "publisher": "DPA Microphones, Mic University: How to mic a piano",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "condenser-distortion-loud-source",
-   "name_fr": "Distorsion sur une source forte",
-   "name_en": "Distortion on a loud source",
-   "domain": "microphones-miking",
-   "symptom": "Son saturé sur une grosse caisse, un ampli ou une voix criée, même avec le gain baissé.",
-   "contexts": [
-    "studio",
-    "live"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Entrée console/préampli saturée",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Électronique du micro saturée (SPL max dépassé)",
-     "likelihood": "medium"
-    }
-   ],
-   "checks": [
-    "Vérifier le témoin de crête du préampli",
-    "Engager le pad de la console : si la distorsion persiste, c'est le micro",
-    "Comparer au SPL max de la fiche"
-   ],
-   "fixes": [
-    "Pad d'entrée",
-    "Pad du micro",
-    "Éloigner le micro",
-    "Choisir un micro plus tolérant (souvent un dynamique)"
-   ],
-   "rule_ids": [
-    "mic-max-spl-exceeded"
-   ],
-   "concept_ids": [
-    "max-spl-microphone",
-    "microphone-pad",
-    "gain-staging"
-   ],
-   "equipment_ids": [
-    "akg-c414-xls",
-    "shure-beta-52a"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes",
-      "checks",
-      "fixes"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "ribbon-dead-after-phantom",
-   "name_fr": "Ruban muet ou distordu après un branchement",
-   "name_en": "Ribbon mic dead or distorted after patching",
-   "domain": "microphones-miking",
-   "symptom": "Un micro à ruban ne donne plus qu'un signal faible, distordu ou plus rien après avoir été branché ou brassé.",
-   "contexts": [
-    "studio"
-   ],
-   "probable_causes": [
-    {
-     "cause": "Impulsion de courant due au fantôme sur une liaison défectueuse ou en patchbay",
-     "likelihood": "high"
-    },
-    {
-     "cause": "Souffle ou choc mécanique sur le ruban",
-     "likelihood": "medium"
-    }
-   ],
-   "checks": [
-    "Vérifier si le +48 V était actif lors du branchement ou du brassage",
-    "Essayer un autre câble et une autre entrée sans fantôme",
-    "Faire examiner le micro par le fabricant"
-   ],
-   "fixes": [
-    "Retour SAV / changement du ruban",
-    "Procédure : fantôme coupé, liaison directe, pas de patchbay"
-   ],
-   "rule_ids": [
-    "phantom-on-ribbon"
-   ],
-   "concept_ids": [
-    "ribbon-microphone",
-    "phantom-power"
-   ],
-   "equipment_ids": [
-    "royer-r-121",
-    "coles-4038"
-   ],
-   "sources": [
-    {
-     "url": "https://royerlabs.com/pdf/manuals/R-121manual.pdf",
-     "publisher": "Royer Labs, R-121 Operation Instructions",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes",
-      "fixes"
-     ]
-    },
-    {
-     "url": "https://coleselectroacoustics.com/ribbon-microphone-care-tips/",
-     "publisher": "Coles Electroacoustics, Ribbon microphone care tips",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "probable_causes"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": []
+  ],
+  "not_found_log": []
 }

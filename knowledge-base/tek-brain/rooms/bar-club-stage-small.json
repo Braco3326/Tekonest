@@ -377,7 +377,8 @@
         "surfaces.floor",
         "openings[0]",
         "gear_positions (choix du matériel : CL5, Rio, KARA, X8, SB28, LA8, X15 HiQ, SM57/58, Beta 52, DN100)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://paloma-nimes.fr/wp-content/uploads/2025/09/ft-club-paloma-2025.pdf",
@@ -391,7 +392,8 @@
         "surfaces.stage-floor (hauteur 1,20 m)",
         "description (jauge 372, limitation 102 dB(A) / 118 dB(C) Leq 15 min)",
         "gear_positions (choix du matériel : DM7, Rio3224, Beta 52, SM58, e906)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://thouars-communaute.fr/Fichiers/Culture%20Sports/Conservatoire%20Tyndo/Fiche_technique_salle_JACQUES_BA.pdf",
@@ -405,17 +407,19 @@
         "surfaces.stage-floor (hauteur 0,40 m, tapis de danse)",
         "surfaces.walls (pendrillons)",
         "description (300 debout)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
       "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
       "accessed": "2026-10-22",
-      "confidence": "verified-secondary",
+      "confidence": "verified-primary",
       "kind": "manufacturer",
       "covers": [
         "rt60_s"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

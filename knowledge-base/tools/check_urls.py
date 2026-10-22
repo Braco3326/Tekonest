@@ -81,6 +81,8 @@ def main():
     ap.add_argument("--no-write", action="store_true")
     a = ap.parse_args()
     json_files = sorted((KB / "equipment").glob("*.json")) + [p for p in [KB / "learning-resources.json", KB / "3d-models.json", KB / "taxonomy.json"] if p.exists()]
+    # Run 2: TEK Brain records and room templates.
+    json_files += sorted((KB / "tek-brain").glob("*/*.json")) if (KB / "tek-brain").exists() else []
     md_files = sorted((KB / "fundamentals").glob("*.md")) if (KB / "fundamentals").exists() else []
     urls = set()
     loaded = {}

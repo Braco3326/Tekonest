@@ -48,7 +48,8 @@
           "kind": "university",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-speedsound.htm",
@@ -58,7 +59,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -116,7 +118,8 @@
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/TableOfSoundPressureLevels.htm",
@@ -126,7 +129,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -178,7 +182,8 @@
           "covers": [
             "definition",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.inrs.fr/risques/bruit/definitions.html",
@@ -188,7 +193,8 @@
           "kind": "regulator",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -244,7 +250,8 @@
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -254,7 +261,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -316,7 +324,8 @@
             "formulas[0]",
             "formulas[1]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -326,7 +335,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -394,7 +404,8 @@
             "formulas[0]",
             "formulas[1]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -481,7 +492,8 @@
             "definition",
             "formulas[0]",
             "formulas[1]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Reverberation",
@@ -492,7 +504,8 @@
           "covers": [
             "formulas[2]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -503,7 +516,8 @@
           "covers": [
             "formulas[3]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -513,7 +527,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -609,7 +624,8 @@
             "definition",
             "formulas[0]",
             "formulas[1]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-RT60.htm",
@@ -619,7 +635,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
@@ -629,7 +646,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -700,7 +718,8 @@
             "formulas[0]",
             "formulas[1]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -710,7 +729,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/monitor-placement",
@@ -720,7 +740,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -783,7 +804,8 @@
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/8030c",
@@ -793,7 +815,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -803,7 +826,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -813,7 +837,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -866,7 +891,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/Acoustics226-2003.pdf",
@@ -876,7 +902,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/Fletcher-MunsonIsNotRobinson-Dadson.pdf",
@@ -886,7 +913,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculatorSonephon.htm",
@@ -897,7 +925,8 @@
           "covers": [
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -940,7 +969,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -990,7 +1020,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1057,7 +1088,8 @@
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1117,7 +1149,8 @@
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Comb_filter",
@@ -1127,7 +1160,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1179,7 +1213,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/8030c",
@@ -1189,7 +1224,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/improving-room-acoustics",
@@ -1199,7 +1235,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1241,7 +1278,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -1252,7 +1290,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
@@ -1262,7 +1301,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/improving-room-acoustics",
@@ -1272,7 +1312,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1320,7 +1361,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -1330,7 +1372,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1384,7 +1427,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -1394,7 +1438,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/8030c",
@@ -1404,7 +1449,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1470,7 +1516,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1513,7 +1560,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/TableOfSoundPressureLevels.htm",
@@ -1523,7 +1571,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/",
@@ -1533,7 +1582,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1574,7 +1624,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1626,7 +1677,8 @@
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-dba-spl.htm",
@@ -1636,7 +1688,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1682,7 +1735,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/improving-room-acoustics",
@@ -1692,7 +1746,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1704,7 +1759,7 @@
       "name_en": "Diffraction",
       "domain": "acoustics-psychoacoustics",
       "definition": "Propriété d'une onde de contourner un obstacle petit devant sa longueur d'onde.",
-      "explanation": "Un écran ou un panneau n'arrête que les fréquences dont la longueur d'onde est petite devant sa taille : le grave passe autour. C'est pourquoi un écran acoustique doit être très grand pour agir dans le grave, et pourquoi, dans une salle, l'énergie réfléchie par les parois contourne un écran. Pour un micro, la taille du corps du micro influe aussi sur sa réponse dans l'aigu.",
+      "explanation": "Un écran ou un panneau n'arrête que les fréquences dont la longueur d'onde est petite devant sa taille : le grave passe autour. C'est pourquoi un écran acoustique doit être très grand pour agir dans le grave, et pourquoi, dans une salle, l'énergie réfléchie par les parois contourne un écran.",
       "formulas": [],
       "units": [
         "m"
@@ -1732,20 +1787,22 @@
           "covers": [
             "definition",
             "explanation"
-          ]
-        },
-        {
-          "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
-          "publisher": "CIDB (Centre d'information sur le bruit), fiche A4",
-          "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
-          "kind": "other",
-          "covers": [
-            "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "conflicts": [],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Pour un micro, la taille du corps du micro influe aussi sur sa réponse dans l'aigu.",
+              "source_url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : phrase non sourcée supprimée ; la fiche CIDB A4 (qui ne traite pas de la diffraction) a été retirée des sources."
+        }
+      ],
       "review": "ok"
     }
   ],

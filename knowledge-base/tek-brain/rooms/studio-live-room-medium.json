@@ -344,7 +344,8 @@
         "dimensions_m (85 m² × 5 m : surface et hauteur typiques)",
         "surfaces[0] (parquet chêne massif)",
         "zones (1 cabine d'isolation, 6 panneaux mobiles)"
-      ]
+      ],
+      "url_status": "blocked"
     },
     {
       "url": "https://studios-ferber.com/studio-a/",
@@ -354,7 +355,8 @@
       "kind": "other",
       "covers": [
         "description (au-delà : 187 m² × 7 m = grande salle, hors catégorie medium)"
-      ]
+      ],
+      "url_status": "blocked"
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -364,7 +366,8 @@
       "kind": "manufacturer",
       "covers": [
         "rt60_s"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

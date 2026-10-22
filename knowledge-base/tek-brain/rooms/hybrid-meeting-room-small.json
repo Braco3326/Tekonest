@@ -302,7 +302,8 @@
         "zones",
         "openings"
       ],
-      "note": "Signature Teams Room : 25 ft × 14 ft, 6-8 personnes, table 76 cm, écran ±15° de la ligne des yeux, au moins deux murs traités, sol moquetté, stores."
+      "note": "Signature Teams Room : 25 ft × 14 ft, 6-8 personnes, table 76 cm, écran ±15° de la ligne des yeux, au moins deux murs traités, sol moquetté, stores.",
+      "url_status": "ok"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoftteams/devices/certified-hardware-android",
@@ -316,7 +317,8 @@
         "dimensions_m.width.typical",
         "dimensions_m.width.max"
       ],
-      "note": "Catégories Teams : Small 4,5 m × 4,5 m, Medium 4,5 m × 6 m."
+      "note": "Catégories Teams : Small 4,5 m × 4,5 m, Medium 4,5 m × 6 m.",
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

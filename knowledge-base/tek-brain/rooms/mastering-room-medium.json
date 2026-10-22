@@ -285,7 +285,8 @@
         "dimensions_m (≤ 300 m³, rapports l/h et w/h)",
         "rt60_s",
         "gear_positions (enceintes ≥ 1 m des murs, base 2–4 m, auditeur ≥ 1,5 m des murs)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1116-3-201502-I!!PDF-E.pdf",
@@ -297,7 +298,8 @@
         "dimensions_m.*.max (20–60 m² en stéréo)",
         "rapports de dimensions",
         "rt60_s (formule Tm)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

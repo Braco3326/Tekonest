@@ -24,7 +24,7 @@
       "success_criteria": [
         "Le synoptique montre deux réseaux primaire et secondaire sans aucun lien entre eux",
         "Aucun segment cuivre ne dépasse 100 m",
-        "Tous les appareils Dante ont une adresse dans le même sous-réseau (169.254.x.x ou plan DHCP) visible dans Device Info"
+        "Toutes les interfaces primaires sont dans le même sous-réseau (169.254.x.x ou DHCP du primaire) et toutes les secondaires en 172.31.x.x (ou DHCP du secondaire), visible dans Device Info"
       ],
       "bts_mapping": [
         {
@@ -43,7 +43,8 @@
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
@@ -53,7 +54,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Ethernet_over_twisted_pair",
@@ -63,10 +65,23 @@
           "kind": "other",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "review": "ok"
+      "review": "ok",
+      "conflicts": [
+        {
+          "field": "success_criteria[2]",
+          "values": [
+            {
+              "value": "Tous les appareils Dante ont une adresse dans le même sous-réseau (169.254.x.x ou plan DHCP) visible dans Device Info",
+              "source_url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : contradiction avec le critère 1 et la procédure build-redundant-dante-network : Audinate attribue 169.254.x.x au primaire et 172.31.x.x au secondaire."
+        }
+      ]
     },
     {
       "id": "configure-switch-for-aoip",
@@ -107,17 +122,19 @@
           "covers": [
             "description",
             "success_criteria"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
           "publisher": "Yamaha, PC-D/DI series manual: About Dante",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
@@ -127,7 +144,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -173,7 +191,8 @@
           "covers": [
             "description",
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
@@ -183,7 +202,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -228,7 +248,8 @@
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
@@ -238,7 +259,8 @@
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

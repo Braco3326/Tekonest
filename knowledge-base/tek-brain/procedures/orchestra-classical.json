@@ -98,7 +98,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/en/products/stereo/sets/decca-tree-set.html",
@@ -108,7 +109,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://abbeyroadinstitute.co.uk/blog/the-decca-tree-the-secrets-behind-the-legendary-recording-technique/",
@@ -118,7 +120,8 @@
           "kind": "university",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -233,21 +236,23 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps[4]"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -344,11 +349,12 @@
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
@@ -358,7 +364,8 @@
           "kind": "other",
           "covers": [
             "steps[2]"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -443,11 +450,12 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-violin/",
@@ -457,17 +465,19 @@
           "kind": "manufacturer",
           "covers": [
             "steps[3]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps[4]"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -551,11 +561,12 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
@@ -565,7 +576,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps[0]"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

@@ -40,7 +40,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://avsl.com/support/100v-line-speakers",
@@ -50,7 +51,8 @@
           "kind": "retailer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -97,7 +99,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
@@ -107,7 +110,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
@@ -117,7 +121,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -159,11 +164,12 @@
           "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
           "publisher": "Ampetronic (Learning zone: Commissioning)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
@@ -173,7 +179,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
@@ -183,7 +190,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
