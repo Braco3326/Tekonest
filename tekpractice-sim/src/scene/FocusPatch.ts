@@ -139,6 +139,19 @@ export class FocusPatch {
     this.apply(reduce(this.state, { type: 'DEVICE_DOUBLE_CLICK', instanceId }))
   }
 
+  /**
+   * A device is about to disappear (pick-up): drop a cable held from it and
+   * leave its focus first, through the same ESC transitions a learner uses.
+   */
+  releaseInstance(instanceId: string): void {
+    if (this.state.held?.instance === instanceId) this.apply(reduce(this.state, { type: 'ESC' }))
+    if (this.state.focused === instanceId) {
+      if (this.state.held) this.apply(reduce(this.state, { type: 'ESC' }))
+      this.apply(reduce(this.state, { type: 'ESC' }))
+    }
+    if (this.state.selected === instanceId) this.state = { ...this.state, selected: null }
+  }
+
   /** Instance whose body is under the given screen point (Explore aim / pick-up). */
   deviceAt(x: number, y: number): string | null {
     return this.deviceUnder(x, y)

@@ -145,6 +145,86 @@ test('from Explore: click a device → focus → patch a cable → Esc back to w
   expect(Math.hypot(walked.position.x - after.position.x, walked.position.z - after.position.z)).toBeGreaterThan(0.2)
 })
 
+test('Space opens the inventory (grouped, searchable, sheet with official manual); Space/Esc close it', async ({ page }) => {
+  await boot(page, '?level=a1')
+  await page.keyboard.press('Space')
+  const panel = page.locator('.ex-panel[data-panel="inventory"]')
+  await expect(panel).toBeVisible()
+  expect((await ex(page)).panels).toBe(1)
+  await expect(panel.locator('.ex-inv-groups h3').first()).toBeVisible()
+  await panel.locator('input[type="search"]').fill('sm58')
+  await expect(panel.locator('.ex-item')).toHaveCount(1)
+  await panel.locator('.ex-item').click()
+  await expect(panel.locator('.ex-inv-sheet a')).toHaveAttribute('href', /^https:\/\//)
+  await expect(panel.locator('.ex-inv-sheet')).toContainText('Sandbox') // no placement inside a level
+  await page.keyboard.press('Escape')
+  await expect(panel).toHaveCount(0)
+  expect((await ex(page)).panels).toBe(0)
+})
+
+test('H opens the French controls help with AZERTY-aware labels', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  await page.keyboard.press('h')
+  const help = page.locator('.ex-panel[data-panel="help"]')
+  await expect(help).toContainText('Avancer')
+  await expect(help).toContainText('Clic droit maintenu + glisser vers le haut')
+  await page.keyboard.press('Escape')
+  await expect(help).toHaveCount(0)
+})
+
+test('Esc in Explore with nothing open shows the pause menu', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  await page.keyboard.press('Escape')
+  await expect(page.locator('.ex-panel[data-panel="pause"]')).toBeVisible()
+  await page.locator('.ex-panel[data-panel="pause"] [data-act="resume"]').click()
+  await expect(page.locator('.ex-panel')).toHaveCount(0)
+})
+
+test('sandbox: place a device from the inventory, then pick it up (X) and undo', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  await page.keyboard.press('Space')
+  const panel = page.locator('.ex-panel[data-panel="inventory"]')
+  await panel.locator('input[type="search"]').fill('sm58')
+  await panel.locator('.ex-item').click()
+  await panel.locator('[data-place]').click()
+  await expect(panel).toHaveCount(0)
+  expect((await ex(page)).placing).toBe(true)
+  await page.keyboard.press('r') // rotate the ghost 90°
+  const size = page.viewportSize()!
+  await page.mouse.click(size.width / 2, size.height / 2 + 150) // aim at the floor ahead, click = place
+  await expect.poll(async () => page.evaluate(() => window.__audioSim!.assets().length)).toBe(1)
+  expect((await ex(page)).placing).toBe(false)
+  const placedId = await page.evaluate(() => window.__audioSim!.assets()[0].instanceId)
+  expect(placedId).toMatch(/^shure-sm58-s\d+$/)
+
+  // Pick it back up: aim at it with the cursor and press X.
+  await page.waitForTimeout(300)
+  const pos = await page.evaluate((id) => window.__audioSim!.deviceScreen(id), placedId)
+  await page.mouse.move(pos!.x, pos!.y)
+  await page.keyboard.press('x')
+  await expect.poll(async () => page.evaluate(() => window.__audioSim!.assets().length)).toBe(0)
+  await page.locator('.toast-info .toast-action', { hasText: 'Annuler' }).click()
+  await expect.poll(async () => page.evaluate(() => window.__audioSim!.assets().length)).toBe(1)
+})
+
+test('settings: remap "Avancer" to another key and walk with it', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  await page.locator('#explore-toolbar [data-act="settings"]').click()
+  const panel = page.locator('.ex-panel[data-panel="settings"]')
+  await panel.locator('[data-bind="MOVE_FORWARD"]').click()
+  await page.keyboard.press('i')
+  await expect(panel.locator('tr', { hasText: 'Avancer' }).locator('kbd')).toHaveText('I')
+  await page.keyboard.press('Escape')
+  const start = await ex(page)
+  await page.keyboard.down('i')
+  await page.waitForTimeout(700)
+  await page.keyboard.up('i')
+  const end = await ex(page)
+  expect(Math.hypot(end.position.x - start.position.x, end.position.z - start.position.z)).toBeGreaterThan(0.3)
+  const saved = await page.evaluate(() => JSON.parse(window.localStorage.getItem('audio-sim/explore-settings')!))
+  expect(saved.settings.bindings.MOVE_FORWARD).toEqual(['KeyI'])
+})
+
 test('walls stop the walker (collision)', async ({ page }) => {
   await boot(page, '?level=sandbox')
   await page.keyboard.down('s') // walk backwards into the rear wall for 6 s
