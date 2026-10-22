@@ -1,0 +1,614 @@
+{
+  "entity": "procedure",
+  "domain": "acoustics-psychoacoustics",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "measure-rt60",
+      "name_fr": "Mesurer le temps de réverbération",
+      "name_en": "Measure reverberation time (RT60)",
+      "domain": "acoustics-psychoacoustics",
+      "context": "Caractériser une régie, un studio ou une salle avant traitement ou pour vérifier une cible (EBU : 0,2 < Tm < 0,4 s pour une régie).",
+      "duration_min": 45,
+      "equipment_ids": [
+        "earthworks-m23",
+        "rew-room-eq-wizard",
+        "nti-audio-xl2",
+        "focusrite-scarlett-2i2-4th-gen"
+      ],
+      "concept_ids": [
+        "reverberation-time-rt60",
+        "critical-distance"
+      ],
+      "rule_ids": [
+        "control-room-rt60-out-of-range"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Salle vide de bruits parasites (ventilation, portes fermées)"
+          ],
+          "action": "Placer le micro de mesure omnidirectionnel au point d'écoute, à hauteur d'oreille (environ 1,2 m), loin des parois.",
+          "expected_result": "Micro stable, orienté selon la notice, gain réglé sans saturation.",
+          "typical_mistakes": [
+            "Mesurer contre un mur ou sur la table"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Exciter la salle : bruit rose ou blanc coupé brusquement (bruit interrompu), balayage sinusoïdal, ou impulsion (ballon, claquoir) à un niveau bien au-dessus du bruit de fond.",
+          "expected_result": "Décroissance enregistrée avec au moins 35-45 dB de marge au-dessus du bruit de fond pour un T30.",
+          "typical_mistakes": [
+            "Niveau d'excitation trop faible : la pente se perd dans le bruit de fond"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Lire la décroissance par tiers d'octave ; mesurer T20 (décroissance de 20 dB ×3) ou T30 (30 dB ×2), ou de −5 à au moins −25 dB selon l'EBU.",
+          "expected_result": "Un TR par bande de fréquence, cohérent entre bandes voisines.",
+          "typical_mistakes": [
+            "Donner un seul chiffre sans bande de fréquence"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Répéter à plusieurs positions de micro et de source, puis moyenner. Pour une régie, calculer Tm = moyenne des tiers d'octave de 200 Hz à 4 kHz.",
+          "expected_result": "Tm comparé à la plage 0,2-0,4 s et à 0,25·(V/100)^(1/3) s.",
+          "typical_mistakes": [
+            "Une seule position de mesure"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Le bruit d'excitation peut dépasser 100 dB SPL : protections auditives pour l'opérateur, prévenir les personnes présentes."
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Reverberation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "context",
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "steps[2]",
+          "values": [
+            {
+              "value": "Plage −5 à −25 dB minimum",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+            },
+            {
+              "value": "T20 / T30",
+              "source_url": "https://en.wikipedia.org/wiki/Reverberation"
+            }
+          ],
+          "note": "Deux conventions de lecture de la pente."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "calculate-rt60-sabine",
+      "name_fr": "Estimer un TR par le calcul (Sabine / Eyring)",
+      "name_en": "Estimate RT60 by calculation (Sabine / Eyring)",
+      "domain": "acoustics-psychoacoustics",
+      "context": "Exercice type E3 ou avant-projet de traitement : prévoir le TR d'une salle et la quantité d'absorbant à ajouter.",
+      "duration_min": 20,
+      "equipment_ids": [],
+      "concept_ids": [
+        "reverberation-time-rt60",
+        "absorption-coefficient"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Plan coté de la salle"
+          ],
+          "action": "Calculer le volume V (m³) et la surface de chaque matériau Si (m²).",
+          "expected_result": "Tableau surfaces / matériaux complet (sol, plafond, murs, portes, vitrages).",
+          "typical_mistakes": [
+            "Oublier le plafond ou les vitrages"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Relever le coefficient αi de chaque matériau dans la bande voulue (125 Hz, 500 Hz, 1 kHz…) et calculer A = Σ αi·Si.",
+          "expected_result": "A en m² Sabine pour chaque bande.",
+          "typical_mistakes": [
+            "Mélanger les bandes de fréquence"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Appliquer RT60 = 0,161·V/A. Si la salle est petite et très absorbante, comparer avec Eyring : T60 ≈ −0,161·V/(S·ln(1 − a)).",
+          "expected_result": "TR par bande ; Eyring donne une valeur plus courte quand l'absorption moyenne est forte.",
+          "typical_mistakes": [
+            "Prendre 0,161 avec des pieds au lieu de mètres"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Pour atteindre un TR cible T, calculer l'aire nécessaire A = 0,16·V/T puis l'absorbant à ajouter A − A0.",
+          "expected_result": "Surface d'absorbant à poser, par bande.",
+          "typical_mistakes": [
+            "Ne traiter que l'aigu avec de la mousse mince"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-RT60.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Reverberation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
+          "publisher": "CIDB (Centre d'information sur le bruit), fiche A4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-RT60Coeff.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "identify-room-modes",
+      "name_fr": "Identifier les modes propres d'une pièce",
+      "name_en": "Identify room modes",
+      "domain": "acoustics-psychoacoustics",
+      "context": "Avant de placer le point d'écoute ou un micro dans une petite pièce, prévoir puis vérifier les fréquences où le grave sera renforcé ou creusé.",
+      "duration_min": 40,
+      "equipment_ids": [
+        "earthworks-m23",
+        "rew-room-eq-wizard",
+        "focusrite-scarlett-2i2-4th-gen"
+      ],
+      "concept_ids": [
+        "room-modes",
+        "wavelength"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Dimensions L, B, H mesurées"
+          ],
+          "action": "Calculer les modes axiaux de chaque dimension : f = k·c/(2L), k = 1, 2, 3… (c = 343 m/s).",
+          "expected_result": "Liste des modes axiaux sous environ 300 Hz ; repérer les fréquences qui se superposent entre dimensions.",
+          "typical_mistakes": [
+            "Oublier la hauteur"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Mesurer la réponse en fréquence au point d'écoute (balayage) et comparer aux modes calculés.",
+          "expected_result": "Bosses et creux dans le grave alignés sur les modes calculés, de 20 à 30 dB selon la position.",
+          "typical_mistakes": [
+            "Lisser fortement la courbe et masquer les modes"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Déplacer le micro par pas de 10-20 cm le long de l'axe de la pièce et refaire la mesure.",
+          "expected_result": "Les creux et bosses changent avec la position : confirmation d'un problème modal.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Choisir un point d'écoute hors du centre exact de la pièce et à au moins 1 m des murs, puis prévoir un traitement grave (absorbants épais décollés, membranes).",
+          "expected_result": "Réponse grave plus régulière au point retenu.",
+          "typical_mistakes": [
+            "Corriger un creux modal par EQ (inefficace)"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/monitor-placement",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "position-studio-monitors",
+      "name_fr": "Placer des enceintes de contrôle",
+      "name_en": "Position studio monitors",
+      "domain": "acoustics-psychoacoustics",
+      "context": "Installation ou contrôle d'une régie stéréo : obtenir une image stable et limiter SBIR, réflexions et modes.",
+      "duration_min": 60,
+      "equipment_ids": [
+        "genelec-8030c",
+        "neumann-kh-120-ii",
+        "earthworks-m23",
+        "rew-room-eq-wizard"
+      ],
+      "concept_ids": [
+        "sbir-boundary-interference",
+        "early-reflections",
+        "room-modes",
+        "comb-filtering"
+      ],
+      "rule_ids": [
+        "listening-position-too-close-to-walls",
+        "monitor-wall-distance-sbir"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Axe de symétrie gauche-droite de la pièce repéré"
+          ],
+          "action": "Placer le point d'écoute sur l'axe de symétrie, hors du centre exact de la pièce, à au moins 1 m des murs (Genelec) ; l'EBU demande 1,5 m des murs latéraux et arrière.",
+          "expected_result": "Point d'écoute symétrique, éloigné des parois.",
+          "typical_mistakes": [
+            "Écoute collée au mur arrière"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Former un triangle équilatéral : enceintes à ±30° (60° entre elles), à égale distance de l'auditeur.",
+          "expected_result": "Image fantôme centrale stable.",
+          "typical_mistakes": [
+            "Écartement trop large ou distances inégales"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Régler la hauteur : axe acoustique vers l'oreille (environ 1,2 m, Genelec 1,2-1,4 m) ; inclinaison limitée (≤ 10° EBU, ≤ 15° Genelec). Éviter une hauteur à mi-hauteur de la pièce.",
+          "expected_result": "Axes des deux enceintes croisés à hauteur d'oreille.",
+          "typical_mistakes": [
+            "Enceintes posées à plat sur le bureau, visant la poitrine"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Choisir la distance au mur arrière selon la stratégie : très près (< 0,6 m, Genelec) ou loin (≥ 1 m, EBU), à distances égales pour les deux enceintes ; puis régler les filtres de pièce (bass tilt, desktop) de l'enceinte.",
+          "expected_result": "Creux SBIR repoussé hors de la zone critique ou réduit ; renfort de paroi compensé.",
+          "typical_mistakes": [
+            "Laisser 0,7-1 m au mur sans traitement : creux vers 86-123 Hz"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Mesurer au point d'écoute et vérifier symétrie gauche/droite et absence de creux majeur.",
+          "expected_result": "Réponses gauche et droite similaires.",
+          "typical_mistakes": [
+            "Corriger un creux d'annulation à l'EQ"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/monitor-placement",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/8030c",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "steps[0]",
+          "values": [
+            {
+              "value": "Point d'écoute à au moins 1 m des murs",
+              "source_url": "https://www.genelec.com/monitor-placement"
+            },
+            {
+              "value": "Positions d'écoute à au moins 1,5 m des murs latéraux et arrière",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+            }
+          ],
+          "note": "L'EBU vise des salles d'évaluation ; Genelec des régies courantes."
+        },
+        {
+          "field": "steps[3]",
+          "values": [
+            {
+              "value": "Mur arrière < 0,6 m",
+              "source_url": "https://www.genelec.com/improving-room-acoustics"
+            },
+            {
+              "value": "Au moins 1 m des parois (enceinte non encastrée)",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+            }
+          ],
+          "note": "Deux stratégies opposées contre le SBIR."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "find-first-reflection-points",
+      "name_fr": "Repérer les points de première réflexion",
+      "name_en": "Find first reflection points",
+      "domain": "acoustics-psychoacoustics",
+      "context": "Traiter une régie : trouver où poser absorbants ou diffuseurs sur murs latéraux, plafond et console.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "genelec-8030c"
+      ],
+      "concept_ids": [
+        "early-reflections",
+        "comb-filtering",
+        "diffusion"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Enceintes et point d'écoute déjà placés"
+          ],
+          "action": "Assis au point d'écoute, faire glisser un miroir le long du mur latéral (un assistant le tient) : là où l'on voit l'enceinte dans le miroir se trouve le point de première réflexion.",
+          "expected_result": "Un point par enceinte et par mur latéral, plus plafond.",
+          "typical_mistakes": [
+            "Chercher sans être assis à hauteur d'oreille"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Poser à ces points un absorbant large bande ou un diffuseur.",
+          "expected_result": "Réflexion latérale atténuée ; l'image stéréo se resserre.",
+          "typical_mistakes": [
+            "Mousse mince seulement : l'aigu disparaît, le médium reste"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Contrôler le plateau de la console : surélever ou incliner les enceintes pour que la réflexion sur la table n'arrive pas à l'oreille.",
+          "expected_result": "Moins de creux en peigne dans la mesure au point d'écoute.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "context",
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/8030c",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "check-mix-at-several-levels",
+      "name_fr": "Contrôler un mix à plusieurs niveaux d'écoute",
+      "name_en": "Check a mix at several listening levels",
+      "domain": "acoustics-psychoacoustics",
+      "context": "Fin de mixage : tenir compte des courbes isosoniques pour que l'équilibre tienne à bas et à fort niveau.",
+      "duration_min": 15,
+      "equipment_ids": [],
+      "concept_ids": [
+        "equal-loudness-contours",
+        "masking"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Écouter le mix à un niveau de travail modéré et noter l'équilibre grave / médium / aigu.",
+          "expected_result": "Référence d'équilibre notée.",
+          "typical_mistakes": [
+            "Mixer longtemps à fort niveau (fatigue auditive)"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Baisser nettement le niveau d'écoute et réécouter.",
+          "expected_result": "Le grave paraît plus faible : c'est l'effet des courbes isosoniques, pas forcément un défaut du mix.",
+          "typical_mistakes": [
+            "Rajouter du grave sans revenir au niveau de référence"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Vérifier que les éléments importants (voix) restent audibles et non masqués à bas niveau.",
+          "expected_result": "Voix intelligible à tous les niveaux.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Limiter la durée d'écoute à fort niveau ; voir les seuils du domaine sécurité."
+      ],
+      "sources": [
+        {
+          "url": "https://www.evs.ee/et/iso-226-2023",
+          "publisher": "EVS (fiche de la norme ISO 226:2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/Acoustics226-2003.pdf",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.1387-2, section 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Position d'écoute à 38 % de la longueur de la pièce",
+      "searched": "genelec.com/improving-room-acoustics et /monitor-placement : non mentionné, donc omis"
+    }
+  ]
+}

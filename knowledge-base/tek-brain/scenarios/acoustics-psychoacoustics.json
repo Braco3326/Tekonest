@@ -1,0 +1,158 @@
+{
+  "entity": "scenario",
+  "domain": "acoustics-psychoacoustics",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "control-room-acoustic-check",
+      "name_fr": "Contrôle acoustique d'une petite régie",
+      "name_en": "Acoustic check of a small control room",
+      "domain": "acoustics-psychoacoustics",
+      "brief": "Une petite régie vient d'être aménagée. Avec un micro de mesure, une interface USB et REW, mesurer le TR et la réponse au point d'écoute, identifier modes propres, SBIR et réflexion sur la console, puis replacer les enceintes et proposer un traitement. Comparer aux exigences EBU Tech 3276 (Tm 0,2-0,4 s, réflexions précoces ≥ 10 dB sous le direct).",
+      "room_id": "studio-control-room-small",
+      "required_gear": [
+        {
+          "equipment_id": "earthworks-m23",
+          "qty": 1,
+          "role": "micro de mesure"
+        },
+        {
+          "equipment_id": "focusrite-scarlett-2i2-4th-gen",
+          "qty": 1,
+          "role": "interface de mesure"
+        },
+        {
+          "equipment_id": "rew-room-eq-wizard",
+          "qty": 1,
+          "role": "logiciel de mesure"
+        },
+        {
+          "equipment_id": "genelec-8030c",
+          "qty": 2,
+          "role": "enceintes de contrôle"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic",
+            "equipment_id": "earthworks-m23",
+            "label": "Micro de mesure au point d'écoute (+48 V)"
+          },
+          {
+            "id": "iface",
+            "equipment_id": "focusrite-scarlett-2i2-4th-gen",
+            "label": "Interface USB"
+          },
+          {
+            "id": "rew",
+            "equipment_id": "rew-room-eq-wizard",
+            "label": "REW sur ordinateur"
+          },
+          {
+            "id": "monL",
+            "equipment_id": "genelec-8030c",
+            "label": "Enceinte gauche"
+          },
+          {
+            "id": "monR",
+            "equipment_id": "genelec-8030c",
+            "label": "Enceinte droite"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic",
+            "to": "iface",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "iface",
+            "to": "rew",
+            "signal": "usb-audio",
+            "connector": "usb-c"
+          },
+          {
+            "from": "iface",
+            "to": "monL",
+            "signal": "line-level-pro",
+            "connector": "trs-quarter"
+          },
+          {
+            "from": "iface",
+            "to": "monR",
+            "signal": "line-level-pro",
+            "connector": "trs-quarter"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "measure-rt60",
+        "identify-room-modes",
+        "position-studio-monitors",
+        "find-first-reflection-points"
+      ],
+      "rule_ids": [
+        "control-room-rt60-out-of-range",
+        "listening-position-too-close-to-walls",
+        "monitor-wall-distance-sbir"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 120,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mesure et correction d'une régie — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Mesure et correction d'une régie — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/monitor-placement",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "procedure_ids"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Second scénario (rappel de diffusion / effet Haas en salle)",
+      "searched": "Non créé : relève surtout de loudspeakers-system-tuning ; un seul scénario acoustique pertinent"
+    }
+  ]
+}

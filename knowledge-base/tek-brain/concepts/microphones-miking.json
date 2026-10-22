@@ -1,0 +1,1932 @@
+{
+ "entity": "concept",
+ "domain": "microphones-miking",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "dynamic-microphone",
+   "name_fr": "Microphone dynamique (à bobine mobile)",
+   "name_en": "Dynamic (moving-coil) microphone",
+   "domain": "microphones-miking",
+   "definition": "Microphone électrodynamique dont une bobine solidaire du diaphragme se déplace dans le champ d'un aimant : la tension produite est proportionnelle à la vitesse de la bobine. Il ne demande aucune alimentation.",
+   "explanation": "Le son fait bouger le diaphragme, la bobine (voice coil) coupe les lignes de champ et une tension apparaît par induction. La résonance mécanique de l'ensemble, située dans le médium, doit être amortie par construction. Robuste et peu sensible, il encaisse de forts niveaux : Shure note qu'un dynamique supporte en général mieux les SPL élevés qu'un condensateur, d'où son usage courant sur caisse claire ou ampli guitare. Exemple : le Shure SM58 sort environ 1,85 mV/Pa (−54,5 dBV/Pa) sous 150 Ω nominal. Le +48 V ne le gêne pas s'il est symétrique et correctement câblé, car aucune tension n'apparaît entre les broches 2 et 3.",
+   "formulas": [],
+   "units": [
+    "mV/Pa",
+    "dBV/Pa",
+    "Ω"
+   ],
+   "related_concepts": [
+    "ribbon-microphone",
+    "condenser-microphone",
+    "microphone-sensitivity",
+    "phantom-power"
+   ],
+   "equipment_ids": [
+    "shure-sm58",
+    "shure-sm57",
+    "sennheiser-md-421-ii",
+    "ev-re20",
+    "shure-beta-52a"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/",
+     "publisher": "DPA Microphones, Mic University: Microphone technology – the essentials",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+     "publisher": "Shure, SM58 Product Specifications (hosted by College of San Mateo)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "condenser-microphone",
+   "name_fr": "Microphone à condensateur (statique)",
+   "name_en": "Condenser (capacitor) microphone",
+   "domain": "microphones-miking",
+   "definition": "Microphone dont le diaphragme chargé forme un condensateur avec une contre-électrode (backplate) ; la variation de capacité est convertie en tension par un amplificateur intégré, qui doit être alimenté (fantôme, alimentation externe ou pile).",
+   "explanation": "La capacité de la capsule est très faible (de l'ordre de 50 pF selon DPA), d'où un préamplificateur placé juste derrière la capsule. Ce circuit fixe à la fois le bruit propre (self-noise, entendu comme un souffle à fort gain) et le niveau maximal avant distorsion ; certains modèles ont un atténuateur (pad) entre capsule et électronique. Les micros à lampe demandent en général une alimentation externe dédiée, le fantôme 48 V ne suffisant pas (Shure). Sans alimentation, un condensateur est muet : c'est la première cause de panne citée par Neumann pour le U 87 Ai, et l'objet de la règle TekPractice R4.",
+   "formulas": [],
+   "units": [
+    "pF",
+    "mA",
+    "V"
+   ],
+   "related_concepts": [
+    "electret-microphone",
+    "phantom-power",
+    "microphone-self-noise",
+    "microphone-pad",
+    "max-spl-microphone"
+   ],
+   "equipment_ids": [
+    "neumann-u87-ai",
+    "neumann-km-184",
+    "akg-c414-xls",
+    "schoeps-cmc-6-mk-4",
+    "neumann-m-149-tube"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/",
+     "publisher": "DPA Microphones, Mic University: Microphone technology – the essentials",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "ribbon-microphone",
+   "name_fr": "Microphone à ruban",
+   "name_en": "Ribbon microphone",
+   "domain": "microphones-miking",
+   "definition": "Microphone électrodynamique dont le conducteur est un ruban métallique très mince suspendu dans un champ magnétique ; ouvert des deux côtés, il est naturellement bidirectionnel (figure en 8).",
+   "explanation": "Le ruban joue à la fois le rôle de diaphragme et de conducteur (Shure). Très léger, il a une résonance basse et une bonne réponse transitoire, mais craint les chocs, le vent et les souffles : ne jamais souffler dedans pour le tester (Coles). La face arrière sort en polarité inversée (Royer R-121). Un ruban passif correctement câblé tolère le fantôme, mais si un câble, une fiche ou une patchbay crée un déséquilibre pendant que le +48 V est actif, un courant traverse le ruban et peut le détruire : Royer interdit de brasser un R-121 dans les lignes micro d'une patchbay fantôme actif.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "dynamic-microphone",
+    "polar-pattern",
+    "phantom-power",
+    "stereo-blumlein"
+   ],
+   "equipment_ids": [
+    "royer-r-121",
+    "coles-4038",
+    "aea-r84",
+    "beyerdynamic-m-160"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/",
+     "publisher": "DPA Microphones, Mic University: Microphone technology – the essentials",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://royerlabs.com/pdf/manuals/R-121manual.pdf",
+     "publisher": "Royer Labs, R-121 Operation Instructions",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://coleselectroacoustics.com/ribbon-microphone-care-tips/",
+     "publisher": "Coles Electroacoustics, Ribbon microphone care tips",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "electret-microphone",
+   "name_fr": "Microphone électret",
+   "name_en": "Electret (pre-polarized) condenser microphone",
+   "domain": "microphones-miking",
+   "definition": "Microphone à condensateur dont la charge de polarisation est stockée de façon permanente dans un matériau (électret) ; l'amplificateur intégré reste à alimenter.",
+   "explanation": "Shure définit l'électret comme un matériau (par exemple du Teflon) capable de garder une charge électrique permanente. On évite ainsi la tension de polarisation externe, mais pas l'alimentation de l'électronique : le Shure PGA181, électret cardioïde, demande un fantôme 48 V (4 mA) et ne fonctionne qu'avec un câble symétrique. Beaucoup de micros cravate électret se contentent d'une faible tension fournie par l'émetteur ou l'enregistreur (plug-in power), qu'il ne faut pas confondre avec le fantôme.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "condenser-microphone",
+    "phantom-power"
+   ],
+   "equipment_ids": [
+    "sanken-cos-11d",
+    "dpa-4060",
+    "rode-lavalier-ii",
+    "shure-beta-91a"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/",
+     "publisher": "DPA Microphones, Mic University: Microphone technology – the essentials",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "pressure-gradient-transducer",
+   "name_fr": "Capteur de pression et capteur à gradient de pression",
+   "name_en": "Pressure vs pressure-gradient transducer",
+   "domain": "microphones-miking",
+   "definition": "Un capteur de pression (capsule fermée à l'arrière) est omnidirectionnel ; un capteur à gradient de pression (ouvert des deux faces) réagit à la différence de pression entre l'avant et l'arrière et donne une figure en 8, nulle sur les côtés.",
+   "explanation": "En combinant les deux principes, on obtient les directivités cardioïde, supercardioïde et hypercardioïde (DPA). Le gradient pur a une réponse brute qui monte de 6 dB par octave, compensée par conception. Conséquence pratique : tous les micros à gradient présentent un effet de proximité, absent chez l'omni. C'est la clé pour comprendre pourquoi un cardioïde « gonfle » les graves en voix rapprochée et pourquoi un omni ne le fait pas.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "polar-pattern",
+    "proximity-effect"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/",
+     "publisher": "DPA Microphones, Mic University: Microphone technology – the essentials",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/proximity-effect-in-microphones-explained/",
+     "publisher": "DPA Microphones, Mic University: Proximity effect in microphones explained",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "polar-pattern",
+   "name_fr": "Directivité (diagramme polaire)",
+   "name_en": "Polar pattern",
+   "domain": "microphones-miking",
+   "definition": "Graphique montrant comment la sensibilité d'un micro varie avec l'angle d'arrivée du son, à une fréquence donnée (omnidirectionnel, cardioïde, supercardioïde, hypercardioïde, bidirectionnel).",
+   "explanation": "Shure donne des angles de captation (pickup angle, à −3 dB) : environ 131° pour le cardioïde, 115° pour le supercardioïde, 105° pour l'hypercardioïde, environ 90° à l'avant (et à l'arrière) pour la figure en 8. Le cardioïde capte environ un tiers du son ambiant d'un omni. Super- et hypercardioïde rejettent mieux l'ambiance mais ont un lobe arrière : rejet arrière d'environ −12 dB pour le super et −6 dB seulement pour l'hyper (Shure). DPA fournit les angles −3/−6 dB (cardioïde −3 dB à 66°, −6 dB à 90°). Les diagrammes réels changent avec la fréquence : un omni devient directif dans l'aigu, d'autant plus que la capsule est grosse.",
+   "formulas": [],
+   "units": [
+    "°",
+    "dB"
+   ],
+   "related_concepts": [
+    "null-angle",
+    "pressure-gradient-transducer",
+    "off-axis-coloration",
+    "distance-factor",
+    "proximity-effect"
+   ],
+   "equipment_ids": [
+    "neumann-u87-ai",
+    "akg-c414-xls"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Directivité des transducteurs — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Choix du micro selon la source — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+     "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/directional-vs-omnidirectional-microphones/",
+     "publisher": "DPA Microphones, Mic University: Directional vs. omnidirectional microphones",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "null-angle",
+   "name_fr": "Angle de rejet maximal (nul)",
+   "name_en": "Null angle (angle of best rejection)",
+   "domain": "microphones-miking",
+   "definition": "Angle, mesuré depuis l'axe avant, où un micro directif est le moins sensible : 180° pour le cardioïde, 90° pour la figure en 8, et un angle intermédiaire (de part et d'autre de l'arrière) pour le super- et l'hypercardioïde.",
+   "explanation": "On oriente les nuls vers les sources indésirables (retours de scène, enceintes de régie, cymbales). Shure propose, pour un chanteur en régie, de pointer l'arrière d'un supercardioïde entre les deux enceintes, celles-ci tombant sur les nuls. Pour le super- et l'hypercardioïde, les sources ne donnent pas toutes le même angle : il faut enseigner une plage (environ 110–135°) et renvoyer à la fiche du modèle, plutôt qu'une valeur « exacte ». Les angles théoriques du premier ordre ne sont pas cités ici faute de source lue.",
+   "formulas": [],
+   "units": [
+    "°"
+   ],
+   "related_concepts": [
+    "polar-pattern"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation",
+      "conflicts"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+     "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "conflicts"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/",
+     "publisher": "DPA Microphones, Mic University: Microphone technology – the essentials",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "conflicts"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "field": "null angle supercardioid",
+     "values": [
+      {
+       "value": "126° depuis l'avant, soit 54° depuis l'arrière (glossaire Shure, p. 36)",
+       "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf"
+      },
+      {
+       "value": "125° (Shure, même brochure, p. 26)",
+       "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf"
+      },
+      {
+       "value": "environ 65° de part et d'autre de l'axe arrière, soit ≈ 115° (Shure, même brochure, p. 5)",
+       "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf"
+      },
+      {
+       "value": "quasi-nul vers ± 135° (DPA, Listen to your polar pattern, via fundamentals/04)",
+       "source_url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/"
+      },
+      {
+       "value": "vers 120° (DPA, Microphone technology – the essentials, via fundamentals/04)",
+       "source_url": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/"
+      }
+     ],
+     "note": "OPEN_QUESTIONS #11. Même Shure se contredit d'une page à l'autre. La plateforme (e3-u3) utilise ≈ 126° : cohérent avec le glossaire Shure."
+    },
+    {
+     "field": "null angle hypercardioid",
+     "values": [
+      {
+       "value": "environ 110° depuis l'avant (Shure, p. 26 et glossaire p. 35)",
+       "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf"
+      },
+      {
+       "value": "quasi-nul vers ± 115° (DPA)",
+       "source_url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/"
+      }
+     ],
+     "note": "OPEN_QUESTIONS #11. Écart de 5° : présenter une plage."
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "proximity-effect",
+   "name_fr": "Effet de proximité",
+   "name_en": "Proximity effect",
+   "domain": "microphones-miking",
+   "definition": "Renforcement des basses fréquences quand un micro à gradient de pression (cardioïde, super/hyper, figure en 8) est placé près d'une source ; l'omnidirectionnel n'en présente pas.",
+   "explanation": "Shure le situe en dessous d'environ 30 cm (1 foot) de la source. DPA précise qu'il croît quand on se rapproche du diagramme en 8, qu'il est maximal dans l'axe et qu'il devient négligeable au-delà d'environ 1 m ou sur une source plane. Les supercardioïdes en ont plus que les cardioïdes (DPA). Remèdes cités par Shure : couper le grave à la console, choisir un micro conçu pour le limiter, utiliser le filtre coupe-bas du micro (le U 87 Ai en a un), ou prendre un omni. On peut aussi s'en servir : en drums, le coupe-bas qui compense la proximité atténue aussi les sources graves lointaines.",
+   "formulas": [],
+   "units": [
+    "m",
+    "dB"
+   ],
+   "related_concepts": [
+    "pressure-gradient-transducer",
+    "polar-pattern",
+    "high-pass-filter"
+   ],
+   "equipment_ids": [
+    "shure-sm57",
+    "neumann-u87-ai"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs : effet de proximité — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Placement voix/instrument — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/proximity-effect-in-microphones-explained/",
+     "publisher": "DPA Microphones, Mic University: Proximity effect in microphones explained",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
+     "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "microphone-sensitivity",
+   "name_fr": "Sensibilité d'un microphone",
+   "name_en": "Microphone sensitivity",
+   "domain": "microphones-miking",
+   "definition": "Tension de sortie produite par le micro pour une pression acoustique donnée, en général 1 Pa (94 dB SPL) à 1 kHz, exprimée en mV/Pa ou en dB re 1 V/Pa (dBV/Pa).",
+   "explanation": "Un condensateur est beaucoup plus sensible qu'un dynamique : U 87 Ai 20 à 28 mV/Pa selon la directivité, Shure PGA181 −38 dBV/Pa (12,7 mV), SM58 −54,5 dBV/Pa (1,85 mV/Pa). Attention aux fiches mesurées à 74 dB SPL : pour comparer avec une mesure à 94 dB SPL, Shure indique d'ajouter 20 au chiffre en dBV. Plus la sensibilité est élevée, moins il faut de gain au préampli, mais plus vite l'entrée sature sur une source forte (d'où le pad).",
+   "formulas": [
+    {
+     "expr": "S_dB = 20·log10(S / 1 V/Pa)",
+     "vars": {
+      "S": "sensibilité (V/Pa)",
+      "S_dB": "sensibilité (dBV/Pa)"
+     },
+     "source_url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/"
+    },
+    {
+     "expr": "U = S · p, avec p = 20 µPa · 10^(L/20)",
+     "vars": {
+      "U": "tension de sortie (V)",
+      "S": "sensibilité (V/Pa)",
+      "p": "pression (Pa)",
+      "L": "niveau (dB SPL)"
+     },
+     "source_url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/"
+    },
+    {
+     "expr": "S(réf. 94 dB SPL) = S(réf. 74 dB SPL) + 20 dB",
+     "vars": {
+      "S": "sensibilité (dBV)"
+     },
+     "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf"
+    }
+   ],
+   "units": [
+    "mV/Pa",
+    "dBV/Pa",
+    "Pa",
+    "dB SPL"
+   ],
+   "related_concepts": [
+    "dbv",
+    "gain-staging",
+    "microphone-pad",
+    "max-spl-microphone"
+   ],
+   "equipment_ids": [
+    "neumann-u87-ai",
+    "shure-sm58"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Calcul de tension de sortie / sensibilité — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/",
+     "publisher": "DPA Microphones, Mic University: How to read microphone specifications",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "formulas[0]",
+      "formulas[1]"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation",
+      "formulas[2]"
+     ]
+    },
+    {
+     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+     "publisher": "Shure, SM58 Product Specifications (hosted by College of San Mateo)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "microphone-self-noise",
+   "name_fr": "Bruit propre d'un microphone",
+   "name_en": "Microphone self-noise (equivalent noise level)",
+   "domain": "microphones-miking",
+   "definition": "Niveau de pression acoustique (en dB SPL, pondéré A ou CCIR/ITU-R BS.468) qui produirait la même tension que le bruit électrique généré par le micro lui-même.",
+   "explanation": "Le bruit propre vient surtout de l'électronique des condensateurs ; il s'entend comme un souffle (hiss) quand on enregistre une source très douce avec beaucoup de gain (Shure). Le U 87 Ai annonce 15/12/14 dB-A selon la directivité. Les micros à lampe ont en général un bruit propre plus élevé (Shure). Pour comparer deux fiches, vérifier la pondération : un chiffre CCIR est plus élevé qu'un chiffre A pour le même micro.",
+   "formulas": [],
+   "units": [
+    "dB(A)",
+    "dB SPL"
+   ],
+   "related_concepts": [
+    "condenser-microphone",
+    "signal-to-noise-ratio",
+    "microphone-sensitivity"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/",
+     "publisher": "DPA Microphones, Mic University: How to read microphone specifications",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "max-spl-microphone",
+   "name_fr": "Niveau de pression maximal admissible (SPL max)",
+   "name_en": "Maximum SPL of a microphone",
+   "domain": "microphones-miking",
+   "definition": "Niveau de pression acoustique maximal que le micro accepte avant un taux de distorsion donné (ou avant écrêtage de son électronique).",
+   "explanation": "Le chiffre n'a de sens qu'avec son critère : Neumann le donne à 0,5 % de THD, Shure (PGA181) à 1 % de THD, DPA à 10 % ; on ne compare pas ces valeurs telles quelles. Shure recommande au moins 130 dB SPL pour un condensateur en proximité sur batterie, et DPA rappelle qu'une voix très proche peut dépasser 150 dB SPL. En cas de distorsion, Shure conseille de vérifier d'abord que l'entrée de la console ne sature pas, puis d'engager le pad du micro, d'éloigner le micro ou d'en changer ; l'excès de niveau n'endommage pas le micro.",
+   "formulas": [],
+   "units": [
+    "dB SPL",
+    "%"
+   ],
+   "related_concepts": [
+    "microphone-pad",
+    "headroom",
+    "condenser-microphone"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/",
+     "publisher": "DPA Microphones, Mic University: How to read microphone specifications",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "conflicts"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "conflicts"
+     ]
+    },
+    {
+     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "conflicts"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
+     "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "field": "max SPL distortion reference",
+     "values": [
+      {
+       "value": "0,5 % THD (Neumann U 87 Ai)",
+       "source_url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf"
+      },
+      {
+       "value": "1 % THD, charge 1 kΩ (Shure PGA181 : 138 dB SPL)",
+       "source_url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf"
+      },
+      {
+       "value": "10 % THD (convention DPA)",
+       "source_url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/"
+      }
+     ],
+     "note": "Pas un désaccord factuel mais des critères différents : à normaliser avant toute comparaison."
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "microphone-pad",
+   "name_fr": "Atténuateur (pad) de microphone",
+   "name_en": "Microphone pad (attenuator)",
+   "domain": "microphones-miking",
+   "definition": "Atténuateur commutable qui réduit le niveau du signal, soit dans le micro (entre la capsule et l'électronique d'un condensateur), soit à l'entrée du préampli, pour éviter la saturation sur une source forte.",
+   "explanation": "Sur un condensateur, l'électronique interne a un niveau maximal ; le pad placé avant elle permet d'encaisser des niveaux plus élevés (Shure). Un pad d'entrée de console protège le préampli mais pas l'électronique du micro : si c'est le micro qui sature, seul son propre pad (ou l'éloignement) aide. Méthode Shure : vérifier d'abord la saturation de l'entrée console, puis le pad du micro, puis la distance.",
+   "formulas": [],
+   "units": [
+    "dB"
+   ],
+   "related_concepts": [
+    "max-spl-microphone",
+    "gain-staging",
+    "microphone-sensitivity"
+   ],
+   "equipment_ids": [
+    "neumann-u87-ai",
+    "akg-c414-xls"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "phantom-power",
+   "name_fr": "Alimentation fantôme (P48)",
+   "name_en": "Phantom power (P48)",
+   "domain": "microphones-miking",
+   "definition": "Tension continue appliquée de façon égale sur les broches 2 et 3 d'une liaison XLR symétrique, référencée à la broche 1, pour alimenter l'électronique d'un micro ; la norme est l'IEC 61938, la variante courante est le P48 (48 V ± 4 V).",
+   "explanation": "La tension étant identique sur 2 et 3, une entrée différentielle ne la voit pas et un micro dynamique symétrique n'est pas affecté : aucun courant ne circule faute de différence de tension, et les alimentations limitent le courant (Shure). En P48, chaque conducteur passe par une résistance de 6,8 kΩ (Schoeps) ; DPA donne 10 mA maximum. Les condensateurs non électret peuvent aussi tirer leur tension de polarisation du fantôme. Le danger vient des liaisons défectueuses ou asymétriques : DPA déconseille de brancher micros ou câbles asymétriques sur une entrée fantôme, et un ruban peut être détruit. Bonne pratique Neumann : baisser le niveau avant de couper le fantôme et de débrancher.",
+   "formulas": [],
+   "units": [
+    "V",
+    "mA",
+    "kΩ"
+   ],
+   "related_concepts": [
+    "condenser-microphone",
+    "balanced-line",
+    "ribbon-microphone",
+    "electret-microphone"
+   ],
+   "equipment_ids": [
+    "neumann-u87-ai",
+    "focusrite-isa-one",
+    "yamaha-ql1",
+    "royer-r-121"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Électricité : alimentation fantôme — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre du +48 V — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+     "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+     "publisher": "SCHOEPS GmbH, Colette Series CMC/MK user manual (EN), section Phantom Powering (DIN EN 61938)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "microphone-polarity",
+   "name_fr": "Polarité d'un microphone",
+   "name_en": "Microphone polarity",
+   "domain": "microphones-miking",
+   "definition": "Convention reliant le sens de la pression acoustique au signe de la tension de sortie : pour un micro standard, une surpression sur le diaphragme donne une tension positive sur la broche 2 par rapport à la broche 3 de la XLR.",
+   "explanation": "Inverser la polarité (permuter les broches 2 et 3, ou presser l'inverseur Ø de la console) retourne le signal de 180° à toutes les fréquences ; ce n'est pas la même chose qu'un retard (déphasage dépendant de la fréquence). Deux micros captant la même source en polarités opposées s'annulent en partie au mélange : son maigre, perte de grave. Inversement, Shure explique qu'en caisse claire dessus/dessous, inverser un des deux micros fait sommer des fréquences qui s'annulaient. DPA utilise la même astuce pour fabriquer une figure en 8 à partir de deux cardioïdes dos à dos, l'arrière inversé (broches 2 et 3 permutées). Le lobe arrière d'une figure en 8 est lui-même en polarité inversée.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "phase",
+    "comb-filtering",
+    "balanced-line"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Phase et polarité — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Contrôle de phase en prise multi-micro — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+     "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "distance-factor",
+   "name_fr": "Facteur de distance",
+   "name_en": "Distance factor",
+   "domain": "microphones-miking",
+   "definition": "Distance de travail équivalente d'un micro directif par rapport à un omnidirectionnel pour obtenir le même rapport son direct / son réverbéré.",
+   "explanation": "Comme un directif capte moins d'ambiance, il peut être placé plus loin pour le même équilibre. Shure résume : un omni doit être placé à environ la moitié de la distance d'un unidirectionnel. DPA donne un exemple : un cardioïde à 17 cm donne le même rapport direct/réverbéré qu'un omni à 10 cm.",
+   "formulas": [],
+   "units": [
+    "m"
+   ],
+   "related_concepts": [
+    "polar-pattern",
+    "critical-distance"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/directional-vs-omnidirectional-microphones/",
+     "publisher": "DPA Microphones, Mic University: Directional vs. omnidirectional microphones",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "off-axis-coloration",
+   "name_fr": "Coloration hors axe",
+   "name_en": "Off-axis coloration",
+   "domain": "microphones-miking",
+   "definition": "Modification de la réponse en fréquence d'un micro pour les sons qui n'arrivent pas dans l'axe, surtout dans l'aigu.",
+   "explanation": "Un micro peut être plat dans l'axe et coloré sur les côtés (Shure). C'est critique pour la diaphonie (bleed) en multi-micro : le son des cymbales capté par un micro de tom ou l'ambiance captée par un micro voix seront colorés. DPA insiste pour les placements voix décalés (au-dessus de la tête, angle jusqu'à 90°) : ils exigent un micro à réponse hors axe très propre.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "polar-pattern"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/directional-vs-omnidirectional-microphones/",
+     "publisher": "DPA Microphones, Mic University: Directional vs. omnidirectional microphones",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/",
+     "publisher": "DPA Microphones, Mic University: How to mic vocals in the recording studio",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "three-to-one-rule",
+   "name_fr": "Règle des 3 pour 1",
+   "name_en": "3-to-1 rule",
+   "domain": "microphones-miking",
+   "definition": "En prise multi-micro, la distance entre deux micros doit être au moins trois fois la distance de chaque micro à sa source.",
+   "explanation": "But : que chaque source arrive beaucoup plus faiblement dans le micro voisin, pour limiter le filtrage en peigne (comb filtering) au mélange. Exemple Shure pour une chorale : premier micro à 3 pieds (≈ 0,9 m) des choristes, le suivant à 9 pieds (≈ 2,7 m) du premier. Shure complète par deux principes : ne pas capter la même source avec plusieurs micros, et utiliser le minimum de micros. C'est une règle empirique de placement, pas une loi physique : elle suppose des sources et des micros comparables.",
+   "formulas": [],
+   "units": [
+    "m"
+   ],
+   "related_concepts": [
+    "comb-filtering",
+    "inverse-square-law",
+    "spot-microphones"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Placement multi-micro — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Interférences / filtrage en peigne — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-ASIA/insights/of-mics-and-monitors-live-sound-reinforcement-tips-for-choirs",
+     "publisher": "Shure Asia (J. Wasem, 2016), Of Mics and Monitors: Live Sound Reinforcement Tips for Choirs",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "stereo-xy",
+   "name_fr": "Couple XY (coïncident)",
+   "name_en": "XY coincident pair",
+   "domain": "microphones-miking",
+   "definition": "Couple de deux micros directifs dont les capsules sont superposées (coïncidentes) et orientées avec un angle ; la stéréo repose uniquement sur les différences de niveau.",
+   "explanation": "Forme la plus courante selon DPA : deux cardioïdes à 90° (± 45°), qui couvrent une source de ± 90°. Shure parle d'angles de 90 à 135° selon la taille de la source. Comme le son arrive au même instant dans les deux capsules, la somme mono ne crée pas de filtrage en peigne : compatibilité mono excellente. En contrepartie, l'impression d'espace et de réverbération est un peu plus faible qu'en AB (DPA).",
+   "formulas": [],
+   "units": [
+    "°"
+   ],
+   "related_concepts": [
+    "stereo-ab",
+    "stereo-ms",
+    "stereo-blumlein",
+    "stereo-ortf"
+   ],
+   "equipment_ids": [
+    "rode-nt4",
+    "neumann-km-184"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Couples stéréophoniques — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en place d'un couple — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "stereo-ortf",
+   "name_fr": "Couple ORTF",
+   "name_en": "ORTF near-coincident pair",
+   "domain": "microphones-miking",
+   "definition": "Couple quasi coïncident de deux cardioïdes espacés de 17 cm et ouverts de 110° entre leurs axes, défini par l'Office de radiodiffusion-télévision française.",
+   "explanation": "L'espacement évoque la distance entre les oreilles et l'angle l'effet d'ombre de la tête (DPA) : l'image combine différences de niveau et de temps. C'est une technique de référence française ; Schoeps la fige dans un seul corps (MSTC 74, sortie XLR 5 broches, deux voies alimentées). La compatibilité mono est correcte sans être parfaite, puisqu'un petit écart de temps existe (Shure : « fair » pour le quasi-coïncident). DPA cite l'ORTF à environ 30 cm au-dessus des cordes, à mi-cadre, pour un piano.",
+   "formulas": [],
+   "units": [
+    "cm",
+    "°"
+   ],
+   "related_concepts": [
+    "stereo-xy",
+    "stereo-nos",
+    "stereo-ab"
+   ],
+   "equipment_ids": [
+    "schoeps-mstc-74",
+    "neumann-km-184",
+    "schoeps-cmc-6-mk-4"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Couples stéréophoniques — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en place d'un couple — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/dict/ortf/",
+     "publisher": "DPA Microphones, Mic Dictionary: ORTF",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+     "publisher": "DPA Microphones, Mic University: How to mic a piano",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
+     "publisher": "SCHOEPS GmbH, MSTC 74 product page (as cited in knowledge-base/equipment/microphones-specialty.json)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "stereo-nos",
+   "name_fr": "Couple NOS",
+   "name_en": "NOS near-coincident pair",
+   "domain": "microphones-miking",
+   "definition": "Couple quasi coïncident de deux cardioïdes espacés de 30 cm et ouverts de 90°, défini par la radiodiffusion néerlandaise (NOS).",
+   "explanation": "Comme l'ORTF, il mélange différences de niveau et de temps, avec un espacement plus grand. DPA l'utilise par exemple en overheads de batterie, environ 50 cm au-dessus des cymbales. DPA cite aussi le couple DIN (20 cm, 90°).",
+   "formulas": [],
+   "units": [
+    "cm",
+    "°"
+   ],
+   "related_concepts": [
+    "stereo-ortf",
+    "stereo-ab"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "stereo-ab",
+   "name_fr": "Couple AB (micros espacés)",
+   "name_en": "AB spaced pair",
+   "domain": "microphones-miking",
+   "definition": "Couple de deux micros, en général omnidirectionnels, espacés et parallèles ; la stéréo repose surtout sur les différences de temps d'arrivée.",
+   "explanation": "DPA rappelle qu'environ 1,1 ms d'écart (ou environ 15 dB d'écart de niveau) place une source à 30° sur un système stéréo ; il en déduit, pour un angle de prise de ± 70°, un espacement de 40 cm. Pour un piano, DPA propose une paire d'omnis espacés de 30 cm. Shure, qui inclut les cardioïdes, cite des espacements de 3 à 10 pieds selon la taille de la source. Son point faible est la somme mono : les écarts de temps créent du filtrage en peigne ; DPA conseille, si le mono est requis, de n'utiliser qu'un canal. Trop serrés, les micros donnent du peigne ; trop écartés, un « trou » au centre (DPA, piano).",
+   "formulas": [],
+   "units": [
+    "cm",
+    "ms"
+   ],
+   "related_concepts": [
+    "stereo-xy",
+    "decca-tree",
+    "comb-filtering",
+    "haas-precedence-effect"
+   ],
+   "equipment_ids": [
+    "dpa-4011",
+    "schoeps-cmc-6-mk-4"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Couples stéréophoniques — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en place d'un couple — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation",
+      "conflicts"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation",
+      "conflicts"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+     "publisher": "DPA Microphones, Mic University: How to mic a piano",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "field": "spacing",
+     "values": [
+      {
+       "value": "40 cm pour un angle de prise de ± 70° (exemple de calcul DPA) ; 30 cm sur piano",
+       "source_url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/"
+      },
+      {
+       "value": "3 à 10 pieds (≈ 0,9 à 3 m), selon la taille de la source",
+       "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf"
+      }
+     ],
+     "note": "Les deux sources ne parlent pas du même usage : DPA dimensionne un couple de prise principale, Shure décrit des paires larges sur ensemble. Enseigner que l'espacement dépend de l'angle de prise et de la taille de la source."
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "stereo-ms",
+   "name_fr": "Couple MS (Mid/Side)",
+   "name_en": "MS (Mid/Side) stereo",
+   "domain": "microphones-miking",
+   "definition": "Couple coïncident formé d'un micro « Mid » (souvent cardioïde) pointé vers la source et d'un micro « Side » en figure en 8 orienté latéralement ; gauche et droite s'obtiennent par somme et différence (matriçage).",
+   "explanation": "Inventé par l'ingénieur du son danois Holger Lauridsen (DPA). La face en phase du 8 est tournée vers la gauche. Décodage : G = M + S et D = M − S, généralement divisés par √2 (soit −3 dB). La largeur se règle après coup via le rapport M/S, sans bouger le micro (Shure). En mono, S s'annule et il ne reste que M : compatibilité mono complète, d'où l'usage en broadcast et au cinéma. En pratique sur console : M sur une voie au centre, S sur deux voies panoramiquées à gauche et à droite, la seconde en polarité inversée.",
+   "formulas": [
+    {
+     "expr": "L = (M + S)/√2",
+     "vars": {
+      "M": "signal Mid",
+      "S": "signal Side",
+      "L": "canal gauche"
+     },
+     "source_url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/"
+    },
+    {
+     "expr": "R = (M − S)/√2",
+     "vars": {
+      "R": "canal droit"
+     },
+     "source_url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/"
+    }
+   ],
+   "units": [],
+   "related_concepts": [
+    "stereo-xy",
+    "microphone-polarity",
+    "polar-pattern"
+   ],
+   "equipment_ids": [
+    "neumann-usm-69-i",
+    "sennheiser-mkh-418-s"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Matriçage MS — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Décodage MS sur console — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation",
+      "formulas[0]",
+      "formulas[1]"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "stereo-blumlein",
+   "name_fr": "Couple Blumlein",
+   "name_en": "Blumlein pair",
+   "domain": "microphones-miking",
+   "definition": "Couple coïncident de deux micros bidirectionnels (figure en 8) croisés à 90° (± 45°), du nom d'Alan Dower Blumlein.",
+   "explanation": "Selon DPA, il couvre une scène de ± 35° (70°) : il faut donc le placer plus loin, ou accepter une scène étroite. Comme les 8 ont un lobe arrière actif (en polarité inversée), il capte beaucoup d'ambiance : la salle doit être bonne. Les rubans, naturellement en 8, sont un choix historique pour cette technique.",
+   "formulas": [],
+   "units": [
+    "°"
+   ],
+   "related_concepts": [
+    "stereo-xy",
+    "ribbon-microphone",
+    "polar-pattern"
+   ],
+   "equipment_ids": [
+    "royer-r-121",
+    "coles-4038"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+     "publisher": "DPA Microphones, Mic University: Listen to your polar pattern",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "decca-tree",
+   "name_fr": "Arbre Decca",
+   "name_en": "Decca tree",
+   "domain": "microphones-miking",
+   "definition": "Système de prise principale à trois omnidirectionnels disposés en T (triangle), le micro central avancé, mélangé avec la paire latérale ; développé chez Decca au début des années 1950.",
+   "explanation": "Wikipedia attribue la première utilisation commerciale (1954) à Arthur Haddy et Roy Wallace, puis le perfectionnement à Kenneth Wilkinson. Traditionnellement monté avec des Neumann M 50, l'arbre est placé haut au-dessus de la scène, près du chef (environ 3 à 3,6 m). Des micros d'appoint latéraux (outriggers) peuvent élargir l'image. Les dimensions publiées varient beaucoup selon les auteurs : à présenter comme des ordres de grandeur.",
+   "formulas": [],
+   "units": [
+    "m"
+   ],
+   "related_concepts": [
+    "stereo-ab",
+    "main-microphone-array",
+    "spot-microphones"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Prise de son orchestre (systèmes principaux) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Decca_tree",
+     "publisher": "Wikipedia, Decca tree",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation",
+      "conflicts"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "field": "dimensions",
+     "values": [
+      {
+       "value": "0,6 à 1,2 m entre les deux micros arrière",
+       "source_url": "https://en.wikipedia.org/wiki/Decca_tree"
+      },
+      {
+       "value": "au moins 1,5 m entre micros ; exemple 2 m de large et 1,5 m de profondeur (Schoeps, cité par Wikipedia)",
+       "source_url": "https://en.wikipedia.org/wiki/Decca_tree"
+      }
+     ],
+     "note": "Les deux valeurs viennent de la même page Wikipedia qui cite des auteurs différents ; la source Schoeps n'a pas été ouverte."
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "plosive-pop",
+   "name_fr": "Plosives (pops)",
+   "name_en": "Plosives / pop noise",
+   "domain": "microphones-miking",
+   "definition": "Bruit sourd et grave produit quand le souffle d'une consonne explosive (« p », « b », « t », « d ») frappe directement le diaphragme du micro.",
+   "explanation": "Les micros directifs y sont plus sensibles, et d'autant plus que la prise est rapprochée. Remèdes cités par Shure : décaler légèrement le micro hors de l'axe de la bouche, viser entre le nez et la bouche, attaquer par-dessus ou par-dessous, et ajouter un filtre anti-pop externe, qui sert aussi de repère de distance. DPA demande d'utiliser toujours un anti-pop en prise de voix rapprochée et propose des placements alternatifs (au-dessus de la tête, sur la poitrine) pour les chanteurs qui « popent » beaucoup.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "proximity-effect",
+    "high-pass-filter"
+   ],
+   "equipment_ids": [
+    "stedman-proscreen-xl"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Prise de voix — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/",
+     "publisher": "DPA Microphones, Mic University: How to mic vocals in the recording studio",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
+     "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "handling-noise",
+   "name_fr": "Bruits de manipulation et vibrations",
+   "name_en": "Handling and mechanical noise",
+   "domain": "microphones-miking",
+   "definition": "Bruits d'origine mécanique (main sur le corps du micro, chocs sur le pied, vibrations du sol) transmis au diaphragme et entendus surtout dans le grave.",
+   "explanation": "Shure recommande d'éviter de manipuler excessivement le micro. DPA note que les vibrations de scène transmises par la pince et le pied ajoutent un grondement grave (low end rumble), et qu'un bon micro voix doit y être très peu sensible. Remèdes : suspension élastique (shock mount), coupe-bas, câble détendu, pied sur support découplé. Shure remarque aussi qu'en studio on surélève la batterie pour limiter la transmission des graves par le sol. Ne pas couvrir la grille avec la main : cela dégrade le son et augmente le risque de larsen.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "high-pass-filter"
+   ],
+   "equipment_ids": [
+    "neumann-ea-87",
+    "rycote-invision-usm"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des micros — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
+     "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "close-miking",
+   "name_fr": "Prise de proximité (close miking)",
+   "name_en": "Close miking",
+   "domain": "microphones-miking",
+   "definition": "Placement d'un micro près d'une source (moins de 60 cm environ selon Shure) pour maximiser le son direct, l'isolation et la marge avant larsen, au détriment de l'ambiance.",
+   "explanation": "Shure distingue la prise rapprochée (close pickup, à moins de 2 pieds) de la prise distante. En live, on rapproche presque tout pour le rapport direct/ambiance et contre le larsen ; en studio, on peut combiner un micro proche et un micro distant pour doser présence et ambiance. Effets à gérer : proximité, plosives, diaphonie entre micros voisins (règle des 3 pour 1), niveaux élevés (SPL max).",
+   "formulas": [],
+   "units": [
+    "m"
+   ],
+   "related_concepts": [
+    "three-to-one-rule",
+    "proximity-effect",
+    "max-spl-microphone",
+    "spot-microphones"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Choix et placement des micros — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Angles théoriques des nuls super/hypercardioïde du premier ordre (≈ 126°/109,5°) dans une source primaire",
+   "searched": "Shure Microphone Techniques for Recording, DPA polar pattern pages ; pas de formule ouverte"
+  },
+  {
+   "what": "Dimensions officielles de l'arbre Decca chez Decca/Universal ou Schoeps",
+   "searched": "Wikipedia seulement ; page Schoeps non ouverte"
+  },
+  {
+   "what": "Définition officielle NOS par la NOS elle-même",
+   "searched": "Seulement DPA Mic University"
+  },
+  {
+   "what": "Page DPA 'how to mic vocals' (404) et pages Shure Insights (redirection vers bannière)",
+   "searched": "dpamicrophones.com, shure.com/insights"
+  }
+ ]
+}

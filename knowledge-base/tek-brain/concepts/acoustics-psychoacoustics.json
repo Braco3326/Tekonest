@@ -1,0 +1,1766 @@
+{
+  "entity": "concept",
+  "domain": "acoustics-psychoacoustics",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "sound-wave",
+      "name_fr": "Onde sonore",
+      "name_en": "Sound wave",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Perturbation de pression qui se propage de proche en proche dans un milieu matériel (l'air le plus souvent), sans transport de matière.",
+      "explanation": "Le son n'existe pas dans le vide : il faut un milieu (air, eau, solide). Une source (membrane de haut-parleur, corde vocale) comprime puis détend l'air ; ces variations de pression, très petites devant la pression atmosphérique, se propagent à la vitesse du son. Une onde se décrit par sa fréquence, sa longueur d'onde et son amplitude (la pression acoustique). Dans une salle, l'onde directe se mélange aux réflexions sur les parois. Sur le terrain, cela explique pourquoi un micro capte à la fois la source et la pièce.",
+      "formulas": [],
+      "units": [
+        "Pa",
+        "Hz",
+        "m",
+        "m/s"
+      ],
+      "related_concepts": [
+        "sound-pressure",
+        "frequency",
+        "wavelength",
+        "speed-of-sound"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-soundlevel.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-speedsound.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "sound-pressure",
+      "name_fr": "Pression acoustique",
+      "name_en": "Sound pressure",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Petite variation de pression autour de la pression atmosphérique due au passage d'une onde sonore, mesurée en pascals (Pa) et exprimée en niveau en dB SPL par rapport à p0 = 20 µPa.",
+      "explanation": "La pression acoustique est ce que mesurent un micro et un sonomètre. Comme l'oreille couvre un rapport de pression énorme, on utilise une échelle logarithmique : le niveau de pression Lp en dB SPL. 1 Pa correspond à environ 94 dB SPL, d'où l'usage d'un calibreur à 94 dB. Le seuil d'audition à 1 kHz est vers 0 dB SPL et la douleur apparaît vers 130-140 dB SPL selon le spectre et l'auditeur. Ne pas confondre pression (varie en 1/r) et intensité (varie en 1/r²) : les deux donnent la même chute en dB.",
+      "formulas": [
+        {
+          "expr": "Lp = 20·log10(p / p0)",
+          "vars": {
+            "Lp": "niveau de pression (dB SPL)",
+            "p": "pression efficace (Pa)",
+            "p0": "20 µPa"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-soundlevel.htm"
+        }
+      ],
+      "units": [
+        "Pa",
+        "dB SPL"
+      ],
+      "related_concepts": [
+        "sound-wave",
+        "inverse-square-law",
+        "db-spl",
+        "hearing-range"
+      ],
+      "equipment_ids": [
+        "earthworks-m23",
+        "nti-audio-xl2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-soundlevel.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/TableOfSoundPressureLevels.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "frequency",
+      "name_fr": "Fréquence",
+      "name_en": "Frequency",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Nombre de cycles d'une onde par seconde, en hertz (Hz) ; la période T est l'inverse de la fréquence.",
+      "explanation": "Plus la fréquence est élevée, plus le son est perçu aigu. L'oreille humaine entend en gros de 20 Hz à 20 kHz ; en dessous on parle d'infrasons, au-dessus d'ultrasons. La parole se situe environ entre 100 et 6 000 Hz. En sonorisation, on raisonne souvent par octaves (doublement de fréquence) ou tiers d'octave, par exemple pour lire un analyseur ou régler un égaliseur graphique.",
+      "formulas": [
+        {
+          "expr": "T = 1 / f",
+          "vars": {
+            "T": "période (s)",
+            "f": "fréquence (Hz)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-wavelength.htm"
+        }
+      ],
+      "units": [
+        "Hz",
+        "s"
+      ],
+      "related_concepts": [
+        "wavelength",
+        "harmonics",
+        "hearing-range"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-wavelength.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "wavelength",
+      "name_fr": "Longueur d'onde",
+      "name_en": "Wavelength",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Distance parcourue par l'onde pendant une période : λ = c / f.",
+      "explanation": "La longueur d'onde relie une fréquence à une taille physique, ce qui explique comment le son interagit avec les murs, les absorbants et les micros. Avec c = 343 m/s, 20 Hz donne environ 17 m, 1 kHz environ 34 cm et 20 kHz environ 1,7 cm. Un panneau mince ou un petit écran n'a presque aucun effet dans le grave, où λ fait plusieurs mètres ; un obstacle petit devant λ est contourné (diffraction). Les modes propres d'une pièce et les annulations près des murs se calculent aussi à partir de λ.",
+      "formulas": [
+        {
+          "expr": "λ = c / f",
+          "vars": {
+            "λ": "longueur d'onde (m)",
+            "c": "vitesse du son (m/s)",
+            "f": "fréquence (Hz)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-wavelength.htm"
+        }
+      ],
+      "units": [
+        "m",
+        "Hz",
+        "m/s"
+      ],
+      "related_concepts": [
+        "frequency",
+        "speed-of-sound",
+        "room-modes",
+        "diffraction"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-wavelength.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "speed-of-sound",
+      "name_fr": "Vitesse du son (célérité)",
+      "name_en": "Speed of sound",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Vitesse de propagation du son dans un milieu ; dans l'air elle dépend presque uniquement de la température : environ 331 m/s à 0 °C et 343 m/s à 20 °C.",
+      "explanation": "La pression atmosphérique n'intervient pas et l'humidité a un effet négligeable : c'est la température qui compte, environ +0,6 m/s par degré. On retient souvent 340 m/s pour les calculs rapides, soit à peu près 1 m tous les 3 ms. Sur le terrain, cela sert à caler un délai entre une façade et une tour de délai, ou à estimer le retard d'une réflexion. En plein air, une variation de température au cours d'un concert modifie légèrement les alignements temporels.",
+      "formulas": [
+        {
+          "expr": "c = 331,3·√(1 + θ/273,15)",
+          "vars": {
+            "c": "vitesse (m/s)",
+            "θ": "température (°C)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-speedsound.htm"
+        },
+        {
+          "expr": "c ≈ 331,3 + 0,6·θ (entre −35 et +35 °C)",
+          "vars": {
+            "c": "m/s",
+            "θ": "°C"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-speedsound.htm"
+        }
+      ],
+      "units": [
+        "m/s",
+        "°C"
+      ],
+      "related_concepts": [
+        "wavelength",
+        "haas-precedence-effect",
+        "speaker-delay-alignment"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-speedsound.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "inverse-square-law",
+      "name_fr": "Loi de l'inverse du carré",
+      "name_en": "Inverse square law",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "En champ libre, l'intensité d'une source ponctuelle décroît comme le carré de la distance : le niveau baisse d'environ 6 dB à chaque doublement de distance.",
+      "explanation": "Exemple : 100 dB SPL à 1 m donnent environ 94 dB à 2 m et 88 dB à 4 m. La loi n'est exacte qu'en champ libre et pour une source ponctuelle. Une source linéaire (line array dans sa zone de champ proche) perd environ 3 dB par doublement. Dans une salle, au-delà de la distance critique, le champ réverbéré domine et le niveau baisse beaucoup moins vite. En prise de son, rapprocher un micro de moitié gagne environ 6 dB de son direct par rapport à la pièce.",
+      "formulas": [
+        {
+          "expr": "L2 = L1 − 20·log10(r2 / r1)",
+          "vars": {
+            "L": "niveau (dB SPL)",
+            "r": "distance (m)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-distance.htm"
+        },
+        {
+          "expr": "L2 = L1 − 10·log10(r2 / r1) (source linéaire, onde cylindrique)",
+          "vars": {
+            "L": "dB",
+            "r": "m"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-distance.htm"
+        }
+      ],
+      "units": [
+        "dB",
+        "m"
+      ],
+      "related_concepts": [
+        "sound-pressure",
+        "critical-distance",
+        "line-array"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-distance.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "reverberation-time-rt60",
+      "name_fr": "Temps de réverbération (TR60, RT60)",
+      "name_en": "Reverberation time (RT60)",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Temps nécessaire pour que le niveau sonore décroisse de 60 dB après l'arrêt de la source ; il dépend de la fréquence.",
+      "explanation": "On ne mesure presque jamais 60 dB de décroissance : on mesure une partie de la pente (20 ou 30 dB, ou de −5 à au moins −25 dB selon l'EBU) puis on extrapole (T20 ×3, T30 ×2). Sabine estime le TR à partir du volume et de l'aire d'absorption équivalente ; il surestime le TR des petites salles très absorbantes, où l'on préfère Eyring. Ordres de grandeur DPA à 500 Hz : cabine voix 0,1-0,2 s, régie 0,2-0,3 s, studio 0,4-0,6 s, salle de concert classique 1,8-2,2 s. L'EBU demande pour une régie un Tm (moyenne des tiers d'octave 200 Hz-4 kHz) entre 0,2 et 0,4 s. Toujours donner la bande de fréquence avec une valeur de TR.",
+      "formulas": [
+        {
+          "expr": "RT60 = 0,161 · V / A",
+          "vars": {
+            "V": "volume (m³)",
+            "A": "aire d'absorption équivalente (m²)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-RT60.htm"
+        },
+        {
+          "expr": "A = Σ αi · Si",
+          "vars": {
+            "αi": "coefficient d'absorption",
+            "Si": "surface (m²)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-RT60.htm"
+        },
+        {
+          "expr": "T60 ≈ −0,161 · V / (S · ln(1 − a))  (Eyring)",
+          "vars": {
+            "S": "surface totale (m²)",
+            "a": "coefficient d'absorption moyen"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Reverberation"
+        },
+        {
+          "expr": "Tm = 0,25 · (V / V0)^(1/3) s, V0 = 100 m³, avec 0,2 < Tm < 0,4 s",
+          "vars": {
+            "V": "volume de la régie (m³)"
+          },
+          "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+        }
+      ],
+      "units": [
+        "s",
+        "m³",
+        "m²"
+      ],
+      "related_concepts": [
+        "absorption-coefficient",
+        "critical-distance",
+        "room-modes",
+        "flutter-echo"
+      ],
+      "equipment_ids": [
+        "rew-room-eq-wizard",
+        "nti-audio-xl2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-RT60.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Reverberation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "formulas[2]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "formulas[3]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (plage de mesure de la décroissance)",
+          "values": [
+            {
+              "value": "Mesure de −5 dB à au moins −25 dB sous le niveau initial",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+            },
+            {
+              "value": "T20 ou T30 : 20 ou 30 dB de décroissance, multipliés par 3 ou 2",
+              "source_url": "https://en.wikipedia.org/wiki/Reverberation"
+            }
+          ],
+          "note": "Les deux méthodes extrapolent une décroissance partielle ; elles ne donnent pas exactement le même chiffre si la décroissance n'est pas linéaire."
+        },
+        {
+          "field": "explanation (TR cible d'une régie)",
+          "values": [
+            {
+              "value": "0,2-0,3 s à 500 Hz",
+              "source_url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/"
+            },
+            {
+              "value": "0,2 < Tm < 0,4 s (moyenne 200 Hz-4 kHz), croissant avec le volume",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+            }
+          ],
+          "note": "Plages compatibles mais définies différemment (une bande contre une moyenne)."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "critical-distance",
+      "name_fr": "Distance critique",
+      "name_en": "Critical distance",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Distance à la source à laquelle le niveau du son direct est égal à celui du champ réverbéré.",
+      "explanation": "Près de la source, le son direct domine et suit la loi de l'inverse du carré ; au-delà de la distance critique, le champ réverbéré domine et le niveau ne baisse presque plus. Elle augmente avec le volume de la salle et la directivité de la source, et diminue quand le TR augmente. Pour un micro, se placer bien en deçà de la distance critique donne un son direct et intelligible ; au-delà, on capte surtout la pièce. Ajouter de l'absorption n'agit que sur le champ réverbéré : près de la source, cela ne change presque rien.",
+      "formulas": [
+        {
+          "expr": "dc ≈ 0,057 · √(γ · V / RT60)",
+          "vars": {
+            "dc": "distance critique (m)",
+            "γ": "directivité de la source (1 = omni)",
+            "V": "volume (m³)",
+            "RT60": "s"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Critical_distance"
+        },
+        {
+          "expr": "dc = (1/4) · √(γ · A / π)",
+          "vars": {
+            "A": "aire d'absorption équivalente (m²)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Critical_distance"
+        }
+      ],
+      "units": [
+        "m"
+      ],
+      "related_concepts": [
+        "inverse-square-law",
+        "reverberation-time-rt60",
+        "speech-intelligibility"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Critical_distance",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-RT60.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
+          "publisher": "CIDB (Centre d'information sur le bruit), fiche A4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "room-modes",
+      "name_fr": "Modes propres de la salle",
+      "name_en": "Room modes",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Ondes stationnaires qui s'établissent dans le grave entre les parois d'une pièce, à des fréquences fixées par ses dimensions.",
+      "explanation": "Les modes axiaux (entre deux parois parallèles) sont les plus forts ; les tangentiels (quatre parois) sont environ 3 dB plus faibles et les obliques (six parois) environ 6 dB plus faibles. Selon la position d'écoute ou du micro, une fréquence peut être 20 à 30 dB plus faible qu'ailleurs. Exemple DPA : deux murs à 2,5 m donnent une première onde stationnaire vers 68 Hz. Les modes rendent une petite régie « boomy » à certains endroits et creuse à d'autres ; on évite le centre exact de la pièce et on traite avec des absorbants épais ou des membranes.",
+      "formulas": [
+        {
+          "expr": "f = k · c / (2L)  (mode axial d'ordre k)",
+          "vars": {
+            "L": "distance entre parois (m)",
+            "c": "343 m/s à 20 °C",
+            "k": "entier ≥ 1"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-roommodes.htm"
+        },
+        {
+          "expr": "f = (c/2) · √((nx/L)² + (ny/B)² + (nz/H)²)",
+          "vars": {
+            "L, B, H": "longueur, largeur, hauteur (m)",
+            "nx, ny, nz": "entiers"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-roommodes.htm"
+        }
+      ],
+      "units": [
+        "Hz",
+        "m"
+      ],
+      "related_concepts": [
+        "wavelength",
+        "absorption-coefficient",
+        "sbir-boundary-interference"
+      ],
+      "equipment_ids": [
+        "rew-room-eq-wizard"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/monitor-placement",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "comb-filtering",
+      "name_fr": "Filtrage en peigne",
+      "name_en": "Comb filtering",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Suite de creux et de bosses régulièrement espacés dans la réponse en fréquence, créée quand un signal s'additionne à une copie retardée de lui-même.",
+      "explanation": "Acoustiquement, cela arrive quand une réflexion (table de mixage, pupitre, mur proche) rejoint le son direct, quand deux enceintes diffusent le même signal à des distances différentes, ou quand on mélange en mono deux micros à des distances différentes d'une source. Avec deux copies de même niveau, le premier creux tombe à 1/(2τ) puis les creux se répètent tous les 1/τ (τ = retard). Exemple : 1 ms de retard donne des creux à 500 Hz, 1,5 kHz, 2,5 kHz… Un égaliseur ne corrige pas un creux d'annulation ; il faut supprimer la réflexion, changer les distances ou appliquer la règle des 3:1 entre micros.",
+      "formulas": [
+        {
+          "expr": "y[n] = x[n] + α·x[n − K] ; creux à f = fs/(2K), 3fs/(2K), 5fs/(2K)… (α > 0)",
+          "vars": {
+            "K": "retard en échantillons",
+            "fs": "fréquence d'échantillonnage (Hz)",
+            "α": "gain de la copie retardée"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Comb_filter"
+        }
+      ],
+      "units": [
+        "Hz",
+        "ms"
+      ],
+      "related_concepts": [
+        "phase",
+        "early-reflections",
+        "sbir-boundary-interference",
+        "three-to-one-rule"
+      ],
+      "equipment_ids": [
+        "genelec-8030c"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Comb_filter",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/8030c",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "equal-loudness-contours",
+      "name_fr": "Courbes isosoniques",
+      "name_en": "Equal-loudness contours",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Courbes reliant les niveaux de sons purs, à différentes fréquences, perçus avec la même sonie ; la référence actuelle est ISO 226:2023.",
+      "explanation": "ISO 226:2023 donne ces courbes de 20 Hz à 12 500 Hz, en champ libre, source de face, écoute binaurale, pour des auditeurs otologiquement normaux de 18 à 25 ans. À bas niveau, il faut beaucoup plus de niveau dans le grave pour la même sonie : un mix équilibré fort paraît pauvre en graves quand on baisse le volume. On contrôle donc un mix à plusieurs niveaux d'écoute. Les courbes de Fletcher et Munson (1933, au casque) et de Robinson et Dadson (1956) sont historiques ; mieux vaut dire « courbes isosoniques ». La pondération A suit à peu près l'inverse de l'isosonique 40 phones.",
+      "formulas": [
+        {
+          "expr": "LN = 40 + 10·log2(N)",
+          "vars": {
+            "LN": "niveau d'isosonie (phones)",
+            "N": "sonie (sones)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculatorSonephon.htm"
+        }
+      ],
+      "units": [
+        "phone",
+        "sone",
+        "dB SPL"
+      ],
+      "related_concepts": [
+        "hearing-range",
+        "loudness-phon-sone",
+        "masking"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.evs.ee/et/iso-226-2023",
+          "publisher": "EVS (fiche de la norme ISO 226:2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/Acoustics226-2003.pdf",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/Fletcher-MunsonIsNotRobinson-Dadson.pdf",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculatorSonephon.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "formulas[0]",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "masking",
+      "name_fr": "Effet de masque",
+      "name_en": "Masking",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Phénomène par lequel un son audible seul devient inaudible (ou moins audible) en présence d'un autre son.",
+      "explanation": "Le masquage simultané est le plus fort autour de la fréquence du son masquant mais remonte aussi le seuil au-dessus et en dessous ; selon l'ITU-R, un bruit masque un son pur environ 5 dB plus faible que lui. Il existe aussi un masquage temporel : après un son fort, le seuil redescend en 5 ms à plus de 150 ms, et un son fort peut même masquer un son faible qui le précède. En mixage, deux instruments dans la même zone de fréquence se masquent : on joue sur l'égalisation, le panoramique ou l'arrangement. Les codecs perceptifs (MP3, AAC) exploitent ce phénomène pour réduire le débit.",
+      "formulas": [],
+      "units": [
+        "dB",
+        "Hz",
+        "ms"
+      ],
+      "related_concepts": [
+        "critical-bands",
+        "equal-loudness-contours"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.1387-2, section 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "haas-precedence-effect",
+      "name_fr": "Effet de précédence (effet Haas)",
+      "name_en": "Precedence (Haas) effect",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Quand deux versions d'un même son arrivent à l'auditeur à quelques millisecondes d'écart, on n'entend qu'un seul événement, localisé principalement du côté du son arrivé en premier.",
+      "explanation": "Sous environ 2 ms, l'image se place entre les deux sources (localisation sommée) ; de 2 à 5 ms, le premier son impose la direction. La fusion tient jusqu'à environ 50 ms pour la parole et jusqu'à environ 100 ms pour la musique ; au-delà, on entend un écho. Haas a montré qu'un son retardé peut être jusqu'à 10 dB plus fort que le premier sans être perçu comme un écho distinct. En sonorisation, on retarde une enceinte de rappel (délai) de la distance de propagation plus environ 10 à 20 ms, pour que le public localise toujours la scène.",
+      "formulas": [],
+      "units": [
+        "ms",
+        "dB"
+      ],
+      "related_concepts": [
+        "speed-of-sound",
+        "sound-localization-itd-ild",
+        "speaker-delay-alignment",
+        "early-reflections"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Precedence_effect",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (fenêtre de l'effet Haas)",
+          "values": [
+            {
+              "value": "Réflexion à 5-30 ms tolérée jusqu'à +10 dB",
+              "source_url": "https://en.wikipedia.org/wiki/Precedence_effect"
+            },
+            {
+              "value": "Effet Haas valable de 10 à 30 ms",
+              "source_url": "https://en.wikipedia.org/wiki/Precedence_effect"
+            }
+          ],
+          "note": "La même page donne deux plages ; les valeurs dépendent du signal (clics, parole, musique)."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "harmonics",
+      "name_fr": "Harmoniques et timbre",
+      "name_en": "Harmonics and timbre",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Composantes d'un son périodique dont les fréquences sont des multiples entiers de la fondamentale ; leur répartition en niveau donne le timbre.",
+      "explanation": "La fondamentale est la 1re harmonique ; la 2e harmonique (2·f0) est le 1er partiel supérieur (overtone) et sonne à l'octave. Les harmoniques 2, 4 et 8 donnent les trois premières octaves. Une clarinette dans le grave a des harmoniques impaires fortes et des paires faibles, ce qui la distingue d'un hautbois à hauteur égale. Cloches et percussions ont des partiels inharmoniques (non entiers). En égalisation, on agit souvent sur les harmoniques plutôt que sur la fondamentale pour rendre un instrument plus présent.",
+      "formulas": [
+        {
+          "expr": "fn = n · f0",
+          "vars": {
+            "fn": "fréquence de l'harmonique n (Hz)",
+            "f0": "fondamentale (Hz)",
+            "n": "entier ≥ 1"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-harmonics.htm"
+        }
+      ],
+      "units": [
+        "Hz"
+      ],
+      "related_concepts": [
+        "frequency",
+        "masking"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-harmonics.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "phase",
+      "name_fr": "Phase",
+      "name_en": "Phase",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Position dans le cycle d'une onde, exprimée en degrés ; en pratique on parle toujours d'une différence de phase entre deux signaux de même fréquence.",
+      "explanation": "Un retard Δt produit un décalage de phase qui croît avec la fréquence : φ = 360·f·Δt. Un même retard de 1 ms vaut donc 180° à 500 Hz mais 360° (en phase) à 1 kHz : c'est l'origine du filtrage en peigne. Il ne faut pas confondre déphasage (lié au temps, dépendant de la fréquence) et inversion de polarité (signe inversé, identique à toutes les fréquences). Sur le terrain : aligner un sub et un satellite, vérifier deux micros sur une caisse claire, ou corriger un retard entre façade et rappel.",
+      "formulas": [
+        {
+          "expr": "φ = 360 · f · Δt",
+          "vars": {
+            "φ": "déphasage (°)",
+            "f": "fréquence (Hz)",
+            "Δt": "retard (s)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-timedelayphase.htm"
+        }
+      ],
+      "units": [
+        "°",
+        "s",
+        "Hz"
+      ],
+      "related_concepts": [
+        "comb-filtering",
+        "subwoofer-alignment"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-timedelayphase.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Comb_filter",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "early-reflections",
+      "name_fr": "Réflexions précoces",
+      "name_en": "Early reflections",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Réflexions sur les parois ou les objets d'une salle qui arrivent au point d'écoute dans les 15 premières ms après le son direct (définition EBU).",
+      "explanation": "Au-delà d'environ 15 ms, les réflexions forment le champ réverbéré. Pour une régie, l'EBU demande que les réflexions précoces soient au moins 10 dB sous le son direct entre 1 et 8 kHz. Le plateau de la console est une source importante de réflexions précoces ; Genelec rappelle que la réflexion de premier ordre sur le plan de travail crée un filtrage en peigne. On les traite par absorption ou diffusion aux points de première réflexion (murs latéraux, plafond) et en surélevant ou inclinant les enceintes.",
+      "formulas": [],
+      "units": [
+        "ms",
+        "dB"
+      ],
+      "related_concepts": [
+        "comb-filtering",
+        "haas-precedence-effect",
+        "diffusion",
+        "absorption-coefficient"
+      ],
+      "equipment_ids": [
+        "genelec-8030c"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/8030c",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "absorption-coefficient",
+      "name_fr": "Coefficient d'absorption",
+      "name_en": "Absorption coefficient",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Fraction de l'énergie incidente qu'une surface ne renvoie pas, de 0 (réflexion totale) à 1 (absorption totale), fonction de la fréquence.",
+      "explanation": "À 125 Hz / 1 kHz / 4 kHz : brique non vitrifiée 0,03 / 0,04 / 0,07 ; moquette sur béton 0,02 / 0,37 / 0,65 ; rideau lourd 0,14 / 0,72 / 0,65 ; laine de verre 5 cm environ 0,17 / 0,90 / 0,80. Les absorbants poreux sont efficaces dans l'aigu, et jusqu'à environ 100 Hz s'ils sont décollés de 25 à 30 cm d'une paroi ; les résonateurs travaillent surtout dans le médium et les membranes dans le grave. Une mousse mince ne traite que l'aigu : une salle trop mate dans l'aigu et boomy dans le grave est un résultat classique. Pour un local nu, le CIDB propose une valeur moyenne de 0,1.",
+      "formulas": [],
+      "units": [
+        "sans unité",
+        "m²"
+      ],
+      "related_concepts": [
+        "reverberation-time-rt60",
+        "diffusion",
+        "room-modes"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-RT60Coeff.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
+          "publisher": "CIDB (Centre d'information sur le bruit), fiche A4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "diffusion",
+      "name_fr": "Diffusion acoustique",
+      "name_en": "Acoustic diffusion",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Traitement qui répartit l'énergie réfléchie dans de nombreuses directions au lieu de l'absorber.",
+      "explanation": "Les diffuseurs gardent de la vie dans la pièce tout en cassant les réflexions gênantes et les échos flottants. Ils agissent dans le médium et l'aigu ; ils sont peu efficaces dans le grave (Genelec). DPA conseille, pour une régie, des diffuseurs efficaces au-dessus d'environ 600 à 800 Hz. Dans une petite pièce (moins de 25-30 m² au sol), Genelec indique que l'absorption est en général le premier besoin ; la diffusion s'ajoute sur le mur arrière si la pièce est assez grande.",
+      "formulas": [],
+      "units": [
+        "Hz"
+      ],
+      "related_concepts": [
+        "absorption-coefficient",
+        "flutter-echo",
+        "early-reflections"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "sbir-boundary-interference",
+      "name_fr": "Interférence enceinte-paroi (SBIR)",
+      "name_en": "Speaker boundary interference response (SBIR)",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Creux dans le grave et le bas médium causé par l'annulation entre le son direct d'une enceinte et sa réflexion sur une paroi proche (mur arrière, sol, plafond).",
+      "explanation": "Genelec donne la plus basse fréquence annulée selon la distance au mur arrière : 0,20 m → 429 Hz ; 0,40 m → 214 Hz ; 0,70 m → 123 Hz ; 1 m → 86 Hz ; 2 m → 43 Hz (la réflexion fait l'aller-retour, d'où un creux quand la distance vaut un quart de longueur d'onde). Égaliser l'enceinte n'aide pas : on ne remplit pas une annulation. Genelec recommande une distance au mur arrière de préférence inférieure à 0,6 m (avec au moins 50 mm de dégagement pour un évent arrière) ; l'EBU, pour les enceintes non encastrées, demande au contraire au moins 1 m de toutes les parois. Près des parois, le grave est aussi renforcé : +6 dB contre un mur, jusqu'à +12 dB dans un angle et +18 dB dans un coin à trois parois, ce que les réglages de pièce (bass tilt, desktop) compensent.",
+      "formulas": [],
+      "units": [
+        "m",
+        "Hz",
+        "dB"
+      ],
+      "related_concepts": [
+        "comb-filtering",
+        "wavelength",
+        "room-modes"
+      ],
+      "equipment_ids": [
+        "genelec-8030c",
+        "genelec-8341a",
+        "neumann-kh-120-ii"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/8030c",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (distance enceinte-mur)",
+          "values": [
+            {
+              "value": "Distance au mur arrière de préférence < 0,6 m pour éliminer l'annulation grave",
+              "source_url": "https://www.genelec.com/improving-room-acoustics"
+            },
+            {
+              "value": "Enceintes non encastrées : centre acoustique à au moins 1 m des parois",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+            }
+          ],
+          "note": "Deux stratégies : coller l'enceinte au mur (annulation repoussée haut, compensée par réglage) ou l'éloigner (annulation plus grave, traitée par absorption). L'encastrement supprime le problème."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "sound-localization-itd-ild",
+      "name_fr": "Localisation auditive (ITD, ILD)",
+      "name_en": "Sound localization (ITD, ILD)",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Capacité à situer une source grâce aux différences entre les deux oreilles : différence de temps d'arrivée (ITD) et différence de niveau (ILD), complétées par le filtrage du pavillon.",
+      "explanation": "C'est la théorie duplex de Lord Rayleigh (1907). L'ITD sert surtout sous environ 1 000 Hz et l'ILD au-dessus d'environ 1 500 Hz, avec une zone de transition entre les deux. Pour un écart entre oreilles de 21,5 cm, l'ITD maximale vaut environ 626 µs ; l'oreille distingue des ITD de 10 µs ou moins. ITD et ILD ne distinguent pas l'avant de l'arrière ni la hauteur : le pavillon et les mouvements de tête s'en chargent, et la hauteur n'est bien localisée que pour des sons complexes avec de l'énergie au-dessus de 7 kHz. La précision est d'environ 1° devant et 15° sur les côtés. Le panoramique d'intensité d'une console joue sur l'ILD, les couples stéréo espacés (AB) sur l'ITD.",
+      "formulas": [],
+      "units": [
+        "µs",
+        "dB",
+        "°"
+      ],
+      "related_concepts": [
+        "haas-precedence-effect",
+        "stereo-ab",
+        "stereo-xy",
+        "binaural"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_localization",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "hearing-range",
+      "name_fr": "Champ auditif",
+      "name_en": "Hearing range",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Domaine de fréquences (environ 20 Hz à 20 kHz) et de niveaux (du seuil d'audition au seuil de douleur) que l'oreille humaine perçoit.",
+      "explanation": "En dessous de 20 Hz on parle d'infrasons, au-dessus de 20 kHz d'ultrasons. Le seuil d'audition est vers 0 dB SPL à 1 kHz ; le seuil de douleur se situe vers 130-140 dB SPL selon le spectre et l'auditeur, et l'INRS associe 120 dB(A) à une sensation douloureuse. La sensibilité n'est pas la même à toutes les fréquences (voir courbes isosoniques). La bande autour de 2 kHz est la plus importante pour l'intelligibilité de la parole.",
+      "formulas": [],
+      "units": [
+        "Hz",
+        "dB SPL"
+      ],
+      "related_concepts": [
+        "frequency",
+        "equal-loudness-contours",
+        "noise-induced-hearing-loss"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/TableOfSoundPressureLevels.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "critical-bands",
+      "name_fr": "Bandes critiques",
+      "name_en": "Critical bands",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Découpage du spectre par l'oreille en bandes de fréquence à l'intérieur desquelles les sons interagissent fortement (masquage) ; l'échelle de Bark en compte 24.",
+      "explanation": "Selon l'ITU-R BS.1387, la 1re bande critique monte à 100 Hz et la 24e à 15 500 Hz. Deux sons dans la même bande critique se masquent beaucoup plus que deux sons éloignés. C'est la base des modèles psychoacoustiques des codecs et des mesures objectives de qualité audio. En mixage, cela explique pourquoi séparer les instruments en fréquence améliore la clarté.",
+      "formulas": [],
+      "units": [
+        "Hz",
+        "Bark"
+      ],
+      "related_concepts": [
+        "masking"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.1387-2, section 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "loudness-phon-sone",
+      "name_fr": "Sonie : phone et sone",
+      "name_en": "Loudness: phon and sone",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Grandeurs de la force sonore perçue : le phone (niveau d'isosonie, égal aux dB SPL à 1 kHz) et le sone (sonie, 1 sone = 40 phones, doublée à chaque +10 phones).",
+      "explanation": "Un son de 60 phones est perçu aussi fort qu'un son pur de 1 kHz à 60 dB SPL, quelle que soit sa fréquence. +10 phones correspondent environ à un doublement de la sonie perçue. Le dB(A) est une pondération, pas une unité de sonie ; à fort niveau, il sous-estime la perception du grave. C'est pourquoi la réglementation française des sons amplifiés impose aussi une limite en dB(C).",
+      "formulas": [
+        {
+          "expr": "LN = 40 + 10·log2(N)",
+          "vars": {
+            "LN": "phones",
+            "N": "sones"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculatorSonephon.htm"
+        }
+      ],
+      "units": [
+        "phone",
+        "sone"
+      ],
+      "related_concepts": [
+        "equal-loudness-contours",
+        "db-spl"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculatorSonephon.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-dba-spl.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "flutter-echo",
+      "name_fr": "Écho flottant",
+      "name_en": "Flutter echo",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Succession rapide de réflexions qui se répètent entre deux surfaces réfléchissantes parallèles, entendue comme un « ronronnement » métallique après un claquement.",
+      "explanation": "L'EBU demande que le champ réverbéré d'une salle d'écoute soit assez diffus pour éviter les effets perceptibles comme les échos flottants, et que les absorbants et surfaces réfléchissantes soient placés pour les éviter. Le test classique est le claquement de mains entre deux murs nus. On le traite en rendant une des deux surfaces absorbante ou diffusante, ou en cassant le parallélisme.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "diffusion",
+        "absorption-coefficient",
+        "reverberation-time-rt60"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "diffraction",
+      "name_fr": "Diffraction",
+      "name_en": "Diffraction",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Propriété d'une onde de contourner un obstacle petit devant sa longueur d'onde.",
+      "explanation": "Un écran ou un panneau n'arrête que les fréquences dont la longueur d'onde est petite devant sa taille : le grave passe autour. C'est pourquoi un écran acoustique doit être très grand pour agir dans le grave, et pourquoi, dans une salle, l'énergie réfléchie par les parois contourne un écran. Pour un micro, la taille du corps du micro influe aussi sur sa réponse dans l'aigu.",
+      "formulas": [],
+      "units": [
+        "m"
+      ],
+      "related_concepts": [
+        "wavelength"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique / psychoacoustique (PTES) — jugement pédagogique, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
+          "publisher": "CIDB (Centre d'information sur le bruit), fiche A4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Valeur ou norme de mesure du TR (ISO 3382) et définition de l'EDT",
+      "searched": "Wikipedia Reverberation (EDT absent) ; norme non ouverte, donc non citée"
+    },
+    {
+      "what": "Page Genelec dédiée au SBIR (genelec.com/sbir)",
+      "searched": "WebFetch 404 ; recherche web n'a renvoyé que forums et vendeurs ; remplacée par genelec.com/improving-room-acoustics"
+    },
+    {
+      "what": "Formule de distance critique en texte chez sengpielaudio",
+      "searched": "calculator-RT60.htm (formule en image seulement) ; calculator-criticaldistance.htm 404 ; Wikipedia utilisée"
+    }
+  ]
+}
