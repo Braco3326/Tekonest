@@ -1,0 +1,171 @@
+{
+ "entity": "skill",
+ "domain": "wireless-rf",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "coordinate-multichannel-wireless",
+   "name_fr": "Établir un plan de fréquences multi-HF légal",
+   "name_en": "Build a legal multichannel frequency plan",
+   "domain": "wireless-rf",
+   "description": "Choisir et programmer un jeu de fréquences compatibles pour 8 à 16 émetteurs dans les bandes PMSE françaises.",
+   "level": "bts",
+   "concept_ids": [
+    "rf-frequency-coordination",
+    "intermodulation",
+    "pmse-regulation-france",
+    "channel-spacing-wireless",
+    "rf-scanning"
+   ],
+   "procedure_ids": [
+    "frequency-coordination-theatre-show"
+   ],
+   "success_criteria": [
+    "Toutes les fréquences sont dans une bande listée par l'ARCEP (470–694 MHz pour un parc UHF courant)",
+    "Aucune porteuse à moins de 250 kHz d'un produit d'IM du 3e ordre calculé (2f1 − f2, 2f2 − f1, f1 + f2 − f3)",
+    "Le plan est documenté (rôle, émetteur, fréquence) et un scan sur site a été fait avant programmation",
+    "Avec tout le parc allumé, aucune interférence audible sur aucun canal"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Préparation d'une exploitation multi-HF — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "deploy-receiver-antennas",
+   "name_fr": "Déployer antennes et distribution HF",
+   "name_en": "Deploy receiver antennas and distribution",
+   "domain": "wireless-rf",
+   "description": "Installer antennes, câbles et répartiteurs pour une réception fiable sur toute l'aire de jeu.",
+   "level": "bts",
+   "concept_ids": [
+    "antenna-types-wireless",
+    "antenna-distribution",
+    "antenna-cable-loss",
+    "line-of-sight-rf",
+    "diversity-reception"
+   ],
+   "procedure_ids": [
+    "receiver-antenna-setup"
+   ],
+   "success_criteria": [
+    "Antennes en visibilité directe de la scène et à au moins 5 m des émetteurs",
+    "Répartiteur actif utilisé dès trois récepteurs, entrées A/B correctement câblées",
+    "Antennes de diversité espacées d'au moins 10 cm (quart d'onde UHF)",
+    "Test de marche sans décrochage sur toute l'aire de jeu"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Installation d'un système HF — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "run-wireless-show-check",
+   "name_fr": "Conduire le contrôle et l'exploitation HF d'un spectacle",
+   "name_en": "Run wireless checks and show operation",
+   "domain": "wireless-rf",
+   "description": "Préparer les émetteurs, contrôler le parc avant le spectacle et l'exploiter sans incident.",
+   "level": "bts",
+   "concept_ids": [
+    "transmitter-battery-management",
+    "squelch",
+    "fm-deviation",
+    "multipath-dropout",
+    "body-absorption-rf"
+   ],
+   "procedure_ids": [
+    "wireless-preshow-check",
+    "bodypack-transmitter-setup",
+    "squelch-adjustment-threshold"
+   ],
+   "success_criteria": [
+    "Piles ou batteries neuves/pleines dans 100 % des émetteurs avant chaque représentation",
+    "Indicateur de crête de chaque émetteur allumé seulement brièvement au niveau le plus fort de l'artiste",
+    "Aucune tranche de récepteur ouverte sans émetteur actif pendant le spectacle",
+    "Test de marche réalisé avec tout le parc allumé"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Exploitation son en spectacle — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E6",
+     "bloc": null,
+     "note": "Situation en milieu professionnel — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": []
+}
