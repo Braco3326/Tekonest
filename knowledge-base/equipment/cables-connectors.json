@@ -1,0 +1,2274 @@
+{
+  "file": "cables-connectors.json",
+  "category": "cables-connectors",
+  "generated": "2026-10-22",
+  "selection_rationale": "Neutrik connectors are the de-facto reference in European stage, studio and broadcast rigs and Neutrik publishes full per-part data sheets, so the connector families (XLR3/XLR5, TRS/TS, speakON NL4/NL8, powerCON TRUE1, etherCON, opticalCON, 75 ohm BNC) are taken from Neutrik, with HARTING Han for multipins. Cables come from Sommer cable (German, widely sold in France), Canare and Mogami, picking one clear reference per sub_type (twisted-pair and star-quad mic, 2.5 mm² speaker, 8-pair multicore, 110 ohm AES and 75 ohm coax, Cat.7 PUR, OS2 fibre, DB25 fan-out). Discontinued candidates (NL4FX, NE8MC, NAC3FX-W-TOP) were replaced by their Neutrik-named successors; Belden, Switchcraft and LEMO sites blocked fetches.",
+  "not_found_log": [
+    {
+      "device_id": "belden-1800f",
+      "what": "product page / datasheet (AES/EBU 110 ohm)",
+      "searched": "belden.com and belden.com/products/cable/audio-cable return HTTP 403; search budget exhausted. Replaced by mogami-w3080."
+    },
+    {
+      "device_id": "belden-1694a",
+      "what": "product page / datasheet (75 ohm RG-6)",
+      "searched": "belden.com HTTP 403; search budget exhausted. Replaced by canare-l-5cfb."
+    },
+    {
+      "device_id": "switchcraft-ta4f",
+      "what": "mini-XLR TA4F product page / datasheet",
+      "searched": "switchcraft.com product pages return empty (Incapsula bot protection); sitemap.xml read, no TA4F entry; search budget exhausted"
+    },
+    {
+      "device_id": "switchcraft-tt-bantam-plug",
+      "what": "Bantam/TT plug or patchcord (e.g. TT2BKX) specs",
+      "searched": "switchcraft.com sitemap lists bantam-tt-patchcord pages but they are blocked by Incapsula; neutrik.com/en/product/np3tt-1 returned 404"
+    },
+    {
+      "device_id": "lemo-b-series",
+      "what": "LEMO B series product page / catalogue",
+      "searched": "lemo.com and lemo.com/en/products/b-series returned HTTP 503"
+    },
+    {
+      "device_id": "harting-han-e-24 / han-dd",
+      "what": "higher-pin-count Han insert typically used for audio multicores",
+      "searched": "harting.com series and rectangular list pages (only Han E 06 visible); search budget exhausted"
+    },
+    {
+      "device_id": "neutrik-opticalcon-duo-cable",
+      "what": "opticalCON DUO cable connector page",
+      "searched": "neutrik opticalCON category URL 404; used chassis NO2-4FDW-A instead"
+    },
+    {
+      "device_id": "neutrik-nc3mxx",
+      "what": "AES14 / IEC 60268-12 primary text for XLR pin 2 hot",
+      "searched": "aes.org/publications/standards returned 403; Shure Audio Systems Guide PDF has no pin-2 statement; Neutrik assembly sheet has none; used Wikipedia (EIA RS-297-A)"
+    },
+    {
+      "device_id": "all",
+      "what": "French-language manuals / datasheets",
+      "searched": "Neutrik, Sommer, Canare and Mogami pages fetched offer English documents only"
+    }
+  ],
+  "devices": [
+    {
+      "id": "neutrik-nc3mxx",
+      "brand": "Neutrik",
+      "model": "NC3MXX (XLR 3-pole male cable connector, XX series)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "XLR male 3-pole cable connector with solder contacts and latch lock, compliant with IEC 61076-2-103 (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The XX series is Neutrik's general-purpose XLR cable connector, the plug found on most mic and line leads. The 3-pole XLR is the standard balanced mic/line connector (pin 1 shield, pin 2 hot, pin 3 cold per EIA RS-297-A as reported by Wikipedia).",
+      "typical_uses": [
+        "microphone cables",
+        "balanced line cables",
+        "AES3 digital cables",
+        "phantom-powered mic links"
+      ],
+      "key_specs": {
+        "poles": "3",
+        "rated_current": "16 A per contact",
+        "rated_voltage": "< 50 V",
+        "contact_resistance": "≤ 3 mΩ",
+        "capacitance_between_contacts": "≤ 4 pF",
+        "cable_od": "3.5 – 8.0 mm",
+        "wire_size": "max. 2.5 mm² / max. 14 AWG",
+        "wiring": "Solder contacts",
+        "locking": "Latch lock",
+        "lifetime": "> 1000 mating cycles",
+        "protection_class": "IP 40",
+        "standard": "IEC 61076-2-103",
+        "temperature_range": "-30 °C to +80 °C",
+        "pin_assignment_balanced_audio": "Pin 1: chassis ground (cable shield); pin 2: positive polarity (hot); pin 3: negative polarity (cold) (EIA RS-297-A, as reported by Wikipedia)",
+        "phantom_power": "Pins 2 and 3 both carry +48 V ±4 V DC relative to pin 1 (DPA, citing IEC 61938:2018)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "XLR3 male cable end",
+          "dir": "n/a",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "aes3",
+        "phantom-48v"
+      ],
+      "manual_url": "https://www.neutrik.com/media/8050/download/xlr-xx-series.pdf?v=1",
+      "datasheet_url": "https://www.neutrik.com/en/product/nc3mxx.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/nc3mxx",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/media/8050/download/xlr-xx-series.pdf?v=1",
+          "title": "Assembly instruction NC*FXX & NC*MXX XLR cable connector (BDA 158)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "12.03.2008",
+          "official": true,
+          "kind": "other"
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nc3mxx.pdf",
+          "title": "NC3MXX data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        },
+        {
+          "url": "https://www.neutrik.com/media/10098/download/01%20NEUTRIK%20Section%20XLR%20Connectors%20PG%20EN%20202202-V23_opt.pdf?v=7",
+          "title": "Neutrik Section XLR Connectors catalogue (EN)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "202202-V23",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/nc3mxx",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors",
+            "technology"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nc3mxx.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.rated_current",
+            "key_specs.rated_voltage",
+            "key_specs.cable_od",
+            "key_specs.wire_size",
+            "key_specs.locking",
+            "key_specs.lifetime",
+            "key_specs.contact_resistance"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/XLR_connector",
+          "publisher": "Wikipedia (XLR connector)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "key_specs.pin_assignment_balanced_audio"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/know-the-basics-about-phantom-power",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.phantom_power"
+          ]
+        }
+      ],
+      "notes": "Pin assignment comes from Wikipedia, which cites EIA RS-297-A; the AES14 and IEC 60268-12 texts could not be reached (aes.org returned 403). Wikipedia also notes that some older US equipment used pin 3 hot. Neutrik's pages give no introduction year.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "The basic XLR3 connector: gender, pin 2 hot, and phantom on pins 2/3 are core wiring lessons."
+      }
+    },
+    {
+      "id": "neutrik-nc3fxx",
+      "brand": "Neutrik",
+      "model": "NC3FXX (XLR 3-pole female cable connector, XX series)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "XLR female 3-pole cable connector with solder contacts and latch lock, compliant with IEC 61076-2-103 (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The XX series is Neutrik's general-purpose XLR cable connector, the plug found on most mic and line leads. The 3-pole XLR is the standard balanced mic/line connector (pin 1 shield, pin 2 hot, pin 3 cold per EIA RS-297-A as reported by Wikipedia).",
+      "typical_uses": [
+        "microphone cables",
+        "balanced line cables",
+        "AES3 digital cables",
+        "phantom-powered mic links"
+      ],
+      "key_specs": {
+        "poles": "3",
+        "rated_current": "16 A per contact",
+        "rated_voltage": "< 50 V",
+        "contact_resistance": "≤ 3 mΩ",
+        "capacitance_between_contacts": "≤ 4 pF",
+        "cable_od": "3.5 – 8.0 mm",
+        "wire_size": "max. 2.5 mm² / max. 14 AWG",
+        "wiring": "Solder contacts",
+        "locking": "Latch lock",
+        "lifetime": "> 1000 mating cycles",
+        "protection_class": "IP 40",
+        "standard": "IEC 61076-2-103",
+        "temperature_range": "-30 °C to +80 °C",
+        "pin_assignment_balanced_audio": "Pin 1: chassis ground (cable shield); pin 2: positive polarity (hot); pin 3: negative polarity (cold) (EIA RS-297-A, as reported by Wikipedia)",
+        "phantom_power": "Pins 2 and 3 both carry +48 V ±4 V DC relative to pin 1 (DPA, citing IEC 61938:2018)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "XLR3 female cable end",
+          "dir": "n/a",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "aes3",
+        "phantom-48v"
+      ],
+      "manual_url": "https://www.neutrik.com/media/8050/download/xlr-xx-series.pdf?v=1",
+      "datasheet_url": "https://www.neutrik.com/en/product/nc3fxx.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/nc3fxx",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/media/8050/download/xlr-xx-series.pdf?v=1",
+          "title": "Assembly instruction NC*FXX & NC*MXX XLR cable connector (BDA 158)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "12.03.2008",
+          "official": true,
+          "kind": "other"
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nc3fxx.pdf",
+          "title": "NC3FXX data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        },
+        {
+          "url": "https://www.neutrik.com/media/10098/download/01%20NEUTRIK%20Section%20XLR%20Connectors%20PG%20EN%20202202-V23_opt.pdf?v=7",
+          "title": "Neutrik Section XLR Connectors catalogue (EN)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "202202-V23",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/nc3fxx",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors",
+            "technology"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nc3fxx.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.rated_current",
+            "key_specs.rated_voltage",
+            "key_specs.cable_od",
+            "key_specs.wire_size",
+            "key_specs.locking",
+            "key_specs.lifetime",
+            "key_specs.contact_resistance"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/XLR_connector",
+          "publisher": "Wikipedia (XLR connector)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "key_specs.pin_assignment_balanced_audio"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/know-the-basics-about-phantom-power",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.phantom_power"
+          ]
+        }
+      ],
+      "notes": "Pin assignment comes from Wikipedia, which cites EIA RS-297-A; the AES14 and IEC 60268-12 texts could not be reached (aes.org returned 403). Wikipedia also notes that some older US equipment used pin 3 hot. Neutrik's pages give no introduction year.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "The basic XLR3 connector: gender, pin 2 hot, and phantom on pins 2/3 are core wiring lessons."
+      }
+    },
+    {
+      "id": "neutrik-nc5mxx",
+      "brand": "Neutrik",
+      "model": "NC5MXX (XLR 5-pole male cable connector, XX series)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "XLR male 5-pole cable connector with solder contacts and latch lock, IEC 61076-2-103 (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The 5-pole XLR is the standard DMX512 lighting connector, and it is also used for stereo microphones (two balanced signals with a common ground), according to Wikipedia.",
+      "typical_uses": [
+        "DMX512 lighting control",
+        "stereo microphone cables",
+        "intercom / multi-signal links"
+      ],
+      "key_specs": {
+        "poles": "5",
+        "rated_current": "7.5 A per contact",
+        "rated_voltage": "< 50 V",
+        "contact_resistance": "≤ 3 mΩ",
+        "capacitance_between_contacts": "≤ 7 pF",
+        "cable_od": "3.5 to 8.0 mm",
+        "wire_size": "max. 1.0 mm² / max. 18 AWG",
+        "locking": "latch lock",
+        "lifetime": "> 1,000 mating cycles",
+        "protection_class": "IP 40",
+        "standard": "IEC 61076-2-103",
+        "temperature_range": "-30 °C to +80 °C"
+      },
+      "connectors": [
+        {
+          "connector": "xlr5-m",
+          "role": "XLR5 male cable end",
+          "dir": "n/a",
+          "signal": "dmx512",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "dmx512",
+        "mic-level"
+      ],
+      "manual_url": "https://www.neutrik.com/media/8050/download/xlr-xx-series.pdf?v=1",
+      "datasheet_url": "https://www.neutrik.com/en/product/nc5mxx.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/nc5mxx",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/media/8050/download/xlr-xx-series.pdf?v=1",
+          "title": "Assembly instruction NC*FXX & NC*MXX XLR cable connector (BDA 158)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "12.03.2008",
+          "official": true,
+          "kind": "other"
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nc5mxx.pdf",
+          "title": "NC5MXX data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/nc5mxx",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nc5mxx.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.rated_current",
+            "key_specs.cable_od",
+            "key_specs.wire_size",
+            "key_specs.locking",
+            "key_specs.lifetime"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/XLR_connector",
+          "publisher": "Wikipedia (XLR connector)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "typical_uses"
+          ]
+        }
+      ],
+      "notes": "Rated current per contact (7.5 A) is lower than the 3-pole version (16 A) and the max wire size is smaller (1.0 mm²).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Shows XLR5 vs XLR3 (DMX on XLR5) and the risk of confusing audio and DMX cables."
+      }
+    },
+    {
+      "id": "neutrik-np3x",
+      "brand": "Neutrik",
+      "model": "NP3X (6.35 mm / 1/4\" 3-pole professional phone plug)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "3-pole 1/4\" professional phone plug (jack), solder contacts, IEC 60603-11 / EIA RS-453 (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neutrik's basic 3-pole 6.35 mm plug; the 1/4\" phone plug is used on almost every type of audio gear according to Shure's guide. Typical use: balanced mono line, insert or headphone (TRS).",
+      "typical_uses": [
+        "balanced mono line, insert or headphone (TRS)",
+        "patch cables",
+        "headphone extensions"
+      ],
+      "key_specs": {
+        "poles": "3",
+        "rated_current": "depends on mating connector",
+        "rated_voltage": "< 50 V",
+        "contact_resistance": "depends on mating connector",
+        "dielectric_strength": "1 kVdc",
+        "cable_od": "4 - 7 mm",
+        "wire_size": "1 mm² / 18 AWG",
+        "wiring": "Solder contacts",
+        "lifetime": "> 1000 mating cycles",
+        "standard": "IEC 60603-11 / EIA RS-453",
+        "temperature_range": "-20 °C to +65 °C",
+        "locking": "none stated (friction-held phone plug)",
+        "usage_note": "TRS (tip-ring-sleeve) can carry a balanced mono signal or an unbalanced stereo signal (Shure Audio Systems Guide)"
+      },
+      "connectors": [
+        {
+          "connector": "trs-quarter",
+          "role": "6.35 mm TRS plug",
+          "dir": "n/a",
+          "signal": "line-level-pro",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "headphone-level",
+        "insert-send-return"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.neutrik.com/en/product/np3x.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/np3x",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/en/product/np3x.pdf",
+          "title": "NP3X data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/np3x",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/np3x.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.cable_od",
+            "key_specs.wire_size",
+            "key_specs.lifetime",
+            "key_specs.rated_voltage"
+          ]
+        },
+        {
+          "url": "https://content-files.shure.com/Pubs/audio-systems-guide-for-video-and-film-production/audio-systems-guide-for-video-and-film-production-english.pdf",
+          "publisher": "Shure (Audio Systems Guide for Video and Film Production)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.usage_note"
+          ]
+        }
+      ],
+      "notes": "Neutrik gives rated current and contact resistance as 'depends on mating connector'. No separate assembly manual was found on the product page. 'insert-send-return' is a proposed signal id.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "insert-send-return"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "TRS vs TS is a key balanced/unbalanced lesson (inserts, instruments, headphones)."
+      }
+    },
+    {
+      "id": "neutrik-np2x",
+      "brand": "Neutrik",
+      "model": "NP2X (6.35 mm / 1/4\" 2-pole professional phone plug)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "2-pole 1/4\" professional phone plug (jack), solder contacts, IEC 60603-11 / EIA RS-453 (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neutrik's basic 2-pole 6.35 mm plug; the 1/4\" phone plug is used on almost every type of audio gear according to Shure's guide. Typical use: unbalanced instrument / line (TS).",
+      "typical_uses": [
+        "unbalanced instrument / line (TS)",
+        "patch cables",
+        "instrument / keyboard leads"
+      ],
+      "key_specs": {
+        "poles": "2",
+        "rated_current": "depends on mating connector",
+        "rated_voltage": "< 50 V",
+        "contact_resistance": "depends on mating connector",
+        "dielectric_strength": "1 kVdc",
+        "cable_od": "4 - 7 mm",
+        "wire_size": "1 mm² / 18 AWG",
+        "wiring": "Solder contacts",
+        "lifetime": "> 1000 mating cycles",
+        "standard": "IEC 60603-11 / EIA RS-453",
+        "temperature_range": "-20 °C to +65 °C",
+        "locking": "none stated (friction-held phone plug)",
+        "usage_note": "TS (tip-sleeve) two-segment plugs are used for unbalanced mono connections (Shure Audio Systems Guide)"
+      },
+      "connectors": [
+        {
+          "connector": "ts-quarter",
+          "role": "6.35 mm TS plug",
+          "dir": "n/a",
+          "signal": "instrument-hiz",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "instrument-hiz",
+        "line-level-consumer"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.neutrik.com/en/product/np2x.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/np2x",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/en/product/np2x.pdf",
+          "title": "NP2X data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/np2x",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/np2x.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.cable_od",
+            "key_specs.wire_size",
+            "key_specs.lifetime",
+            "key_specs.rated_voltage"
+          ]
+        },
+        {
+          "url": "https://content-files.shure.com/Pubs/audio-systems-guide-for-video-and-film-production/audio-systems-guide-for-video-and-film-production-english.pdf",
+          "publisher": "Shure (Audio Systems Guide for Video and Film Production)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.usage_note"
+          ]
+        }
+      ],
+      "notes": "Neutrik gives rated current and contact resistance as 'depends on mating connector'. No separate assembly manual was found on the product page.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "TRS vs TS is a key balanced/unbalanced lesson (inserts, instruments, headphones)."
+      }
+    },
+    {
+      "id": "neutrik-nl4fxx-w-s",
+      "brand": "Neutrik",
+      "model": "NL4FXX-W-S (speakON 4-pole cable connector)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "speakON 4-pole female cable connector with twist lock and screw terminals (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "speakON is Neutrik's loudspeaker connector family; NL4FXX-W-S is the listed successor of the discontinued NL4FX, the long-standing 4-pole speaker cable plug.",
+      "typical_uses": [
+        "amplifier to passive loudspeaker",
+        "bi-amp links (2 channels on 4 poles)",
+        "monitor wedges"
+      ],
+      "key_specs": {
+        "poles": "4",
+        "rated_current": "Up to 37 A rms (IEC 61984); 35 A (UL1977); 24 A (CSA C22.2 No.182.3)",
+        "rated_voltage": "250 V AC",
+        "contact_resistance": "≤ 2 mΩ",
+        "dielectric_strength": "2.8 kVac",
+        "cable_od": "6 – 12 mm",
+        "wire_size": "1.5 – 4 mm² (17 – 11 AWG)",
+        "locking": "Twist lock",
+        "termination": "screw type terminals",
+        "lifetime": "typically 5000 mating cycles",
+        "protection_class": "IP20",
+        "temperature_range": "-33 °C to +80 °C",
+        "warning": "Not intended for use as an AC mains or power supply connector; not for interrupting current (per Neutrik)"
+      },
+      "connectors": [
+        {
+          "connector": "speakon-nl4",
+          "role": "speakON 4-pole cable end",
+          "dir": "n/a",
+          "signal": "speaker-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "speaker-level"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.neutrik.com/en/product/nl4fxx-w-s.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/nl4fxx-w-s",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/en/product/nl4fxx-w-s.pdf",
+          "title": "NL4FXX-W-S data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/nl4fxx-w-s",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nl4fxx-w-s.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.contact_resistance",
+            "key_specs.cable_od",
+            "key_specs.wire_size",
+            "key_specs.locking",
+            "key_specs.lifetime"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nl4fx",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "notes"
+          ]
+        }
+      ],
+      "notes": "The older NL4FX (40 A rms continuous, Quick Lock latch, cable OD 7–14.5 mm) is marked discontinued on neutrik.com, which lists NL4FXX-W-S (6–12 mm) and NL4FXX-W-L (10–16 mm) as successors. No pin assignment (1+/1-/2+/2-) was found on the pages read.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Speaker-level vs line-level and the 'never mains on speakON' rule."
+      }
+    },
+    {
+      "id": "neutrik-nl8fc",
+      "brand": "Neutrik",
+      "model": "NL8FC (speakON 8-pole cable connector)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "speakON 8-pole female cable connector, Quick Lock latch, screw terminals (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "The 8-pole speakON carries up to four 2-wire speaker circuits in one connector, used for multi-way amplifier links.",
+      "typical_uses": [
+        "multi-way (tri/quad-amped) loudspeaker links",
+        "amp rack to speaker multicore"
+      ],
+      "key_specs": {
+        "poles": "8",
+        "rated_current": "30 A rms continuous per contact; 40 A audio signal at 50% duty cycle",
+        "rated_voltage": "250 V ac",
+        "contact_resistance": "≤ 3 mΩ (after lifetime)",
+        "dielectric_strength": "4 kVdc (peak)",
+        "cable_od": "8 - 20 mm",
+        "cable_retention": "≥ 220 N",
+        "wire_size": "4 mm² / 12 AWG",
+        "locking": "Quick Lock (latch)",
+        "lifetime": "> 5000 mating cycles",
+        "temperature_range": "-30 °C to +80 °C",
+        "warning": "speakON is NOT to be used as an AC mains or power supply connector (per Neutrik)"
+      },
+      "connectors": [
+        {
+          "connector": "speakon-nl8",
+          "role": "speakON 8-pole cable end",
+          "dir": "n/a",
+          "signal": "speaker-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "speaker-level"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.neutrik.com/en/product/nl8fc.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/nl8fc",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/en/product/nl8fc.pdf",
+          "title": "NL8FC data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/nl8fc",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nl8fc.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.rated_current",
+            "key_specs.rated_voltage",
+            "key_specs.cable_od",
+            "key_specs.wire_size",
+            "key_specs.locking",
+            "key_specs.lifetime"
+          ]
+        }
+      ],
+      "notes": "Status set to 'not found' because the product page states no lifecycle status and lists no successor. 'speakon-nl8' is a proposed connector id.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "speakon-nl8"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Multi-way amp links; teaches that one 8-pole cable carries 4 speaker circuits."
+      }
+    },
+    {
+      "id": "neutrik-nac3f-true1-s",
+      "brand": "Neutrik",
+      "model": "NAC3F-TRUE1-S (powerCON TRUE1 cable connector)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "powerCON TRUE1 lockable single-phase mains cable connector (2 + PE) with twist lock and circuit breaking capability (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "powerCON TRUE1 is Neutrik's lockable mains connector that can be connected or disconnected under load; it is the listed successor of the phased-out NAC3FX-W-TOP (TRUE1 TOP) cable connector.",
+      "typical_uses": [
+        "mains feed to powered loudspeakers",
+        "mains daisy-chaining (link)",
+        "stage equipment power"
+      ],
+      "key_specs": {
+        "poles": "2 + PE",
+        "rated_current": "16 A (Europe, EN IEC 60320-1); 20 A (America, UL/CSA)",
+        "rated_voltage": "250 V AC",
+        "breaking_capacity": "Yes (CBC), can be connected or disconnected under load or live",
+        "contact_resistance": "≤ 2 mΩ",
+        "dielectric_strength": "4 kVdc / 2.8 kVac",
+        "protection_class": "IP65 / IP67 (mated or with closed caps)",
+        "cable_od": "6 – 12 mm",
+        "wire_size": "1.5 – 2.5 mm² (14 AWG)",
+        "locking": "twist-lock system with locking bushing",
+        "lifetime": "> 5000 mating cycles",
+        "standards": "EN IEC 60320-1 (ENEC, VDE), UL 60320-1, CSA C22.2 No. 60320-1, UL 498"
+      },
+      "connectors": [
+        {
+          "connector": "powercon-true1",
+          "role": "mains cable connector (female)",
+          "dir": "n/a",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.neutrik.com/en/product/nac3f-true1-s.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/nac3f-true1-s",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/en/product/nac3f-true1-s.pdf",
+          "title": "NAC3F-TRUE1-S data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/nac3f-true1-s",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nac3f-true1-s.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.contact_resistance",
+            "key_specs.cable_od",
+            "key_specs.wire_size",
+            "key_specs.lifetime",
+            "key_specs.dielectric_strength"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nac3fx-w-top",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "notes",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "The requested candidate NAC3FX-W-TOP (powerCON TRUE1 TOP) is marked phased out on neutrik.com with NAC3F-TRUE1-S named as replacement (TOP version: 16 A EU / 20 A US, 250 V AC, IP65 only with SCNAC-FX cover). Status of NAC3F-TRUE1-S is not stated on its page.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Mains link on powered speakers; breaking capacity vs classic blue/grey powerCON."
+      }
+    },
+    {
+      "id": "neutrik-ne8mx",
+      "brand": "Neutrik",
+      "model": "NE8MX (etherCON RJ45 cable connector carrier)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "etherCON male cable connector carrier that locks a user-supplied pre-assembled RJ45 plug (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "etherCON adds a robust XLR-style locking shell to RJ45 for stage networks (Dante, AES50, etc.); NE8MX is the named successor of the discontinued NE8MC.",
+      "typical_uses": [
+        "stagebox to console network links",
+        "Dante / AoIP stage cabling",
+        "rugged Ethernet patching"
+      ],
+      "key_specs": {
+        "type": "carrier for pre-assembled RJ45 plugs (plug not included)",
+        "gender": "male",
+        "cable_od": "4.5 mm - 8 mm",
+        "insertion_force": "≤ 20 N",
+        "withdrawal_force": "≤ 20 N",
+        "lifetime": "> 1000 mating cycles",
+        "locking": "lockable",
+        "temperature_range": "-30 °C to +80 °C",
+        "compatibility_note": "Does not mate with CAT6 chassis connectors NE8FDY-C6 / NE8FDY-C6-B (per Neutrik)"
+      },
+      "connectors": [
+        {
+          "connector": "ethercon",
+          "role": "etherCON RJ45 cable end",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "aoip",
+        "dante",
+        "aes50"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.neutrik.com/en/product/ne8mx.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/ne8mx",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/en/product/ne8mx.pdf",
+          "title": "NE8MX data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/ne8mx",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/ne8mx.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.cable_od",
+            "key_specs.lifetime",
+            "key_specs.insertion_force"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/ne8mc",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "notes"
+          ]
+        }
+      ],
+      "notes": "Requested candidate NE8MC is marked discontinued on neutrik.com (successor NE8MX). Neutrik's page lists no Cat rating, shielding or data rate for NE8MX; these depend on the RJ45 plug and cable used. Signal ids 'dante' and 'aes50' are proposed ids.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante",
+          "aes50"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "etherCON vs plain RJ45 and the Cat6 chassis non-intermating trap."
+      }
+    },
+    {
+      "id": "neutrik-no2-4fdw-a",
+      "brand": "Neutrik",
+      "model": "NO2-4FDW-A (opticalCON DUO ADVANCED chassis connector)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "Rugged fibre-optic chassis connector with LC-Duplex feedthrough and 4 solder contacts, push-pull locking (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "opticalCON is Neutrik's ruggedised fibre connector family for stage and broadcast; the DUO version wraps a standard LC-Duplex link in a locking metal housing.",
+      "typical_uses": [
+        "fibre links between stageboxes and consoles",
+        "broadcast OB fibre",
+        "long-distance network backbones"
+      ],
+      "key_specs": {
+        "optical_connector": "LC-Duplex Feedthrough",
+        "insertion_loss": "< 0.4 dB / connection",
+        "colour_coding": "multimode black, single-mode PC blue, single-mode APC green (ANSI/TIA-568.3-D)",
+        "rated_current_electrical_contacts": "6 A per contact",
+        "rated_voltage": "< 50 V",
+        "contact_resistance": "< 7 mΩ",
+        "locking": "Push-Pull",
+        "locking_force": "1000 N",
+        "lifetime": "5000 mating cycles (typ.)",
+        "protection_class": "IP65 when mated with SCDP-* sealing gaskets",
+        "temperature_range": "-40 °C to +75 °C"
+      },
+      "connectors": [
+        {
+          "connector": "opticalcon",
+          "role": "opticalCON DUO chassis (LC-Duplex)",
+          "dir": "bidir",
+          "signal": "fibre-optical-transport",
+          "count": 1
+        },
+        {
+          "connector": "lc-fibre",
+          "role": "rear LC-Duplex feedthrough",
+          "dir": "bidir",
+          "signal": "fibre-optical-transport",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "fibre-optical-transport",
+        "aoip"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.neutrik.com/en/product/no2-4fdw-a.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/no2-4fdw-a",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/en/product/no2-4fdw-a.pdf",
+          "title": "NO2-4FDW-A data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/no2-4fdw-a",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/no2-4fdw-a.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.insertion_loss",
+            "key_specs.locking",
+            "key_specs.lifetime",
+            "key_specs.rated_current_electrical_contacts"
+          ]
+        }
+      ],
+      "notes": "Chosen as the opticalCON DUO representative because the cable-connector page could not be reached without search. Neutrik also lists an NAOBO breakout adapter kit and NAO2*-SFP-LC transceiver adapter as accessories. 'opticalcon', 'lc-fibre' and 'fibre-optical-transport' are proposed ids.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "opticalcon",
+          "lc-fibre"
+        ],
+        "proposed_new_signals": [
+          "fibre-optical-transport"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Introduces fibre (no electrical noise, long runs) and rugged vs bare LC connectors."
+      }
+    },
+    {
+      "id": "neutrik-nbnc75blp7",
+      "brand": "Neutrik",
+      "model": "NBNC75BLP7 (rearTWIST HD BNC 75 Ω cable connector)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "75 Ω male BNC crimp cable connector with bayonet lock, rated to 3 GHz VSWR (per Neutrik).",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "The 75 Ω BNC is the connector for word clock, AES-3id, MADI coax and SDI video; this model crimps onto Belden 8241 / Canare LV-61S / RG59B/U type coax.",
+      "typical_uses": [
+        "word clock distribution",
+        "MADI coaxial",
+        "AES-3id (AES3 on 75 Ω)",
+        "HD-SDI video"
+      ],
+      "key_specs": {
+        "impedance": "75 Ω",
+        "vswr_return_loss": "≤1.050/>32 dB up to 1 GHz; ≤1.065/>30 dB up to 2 GHz; ≤1.100/>26 dB up to 3 GHz",
+        "contact_resistance": "≤ 3 mΩ (inner), ≤ 2 mΩ (outer)",
+        "rated_voltage": "<50 V",
+        "cable_od": "6.3 mm",
+        "suitable_cables": "Belden 8241, Canare LV-61S, CommScope 5563, RG59B/U and others",
+        "termination": "crimp (pin 1.6 mm square, shield 6.47 mm hex, IEC 60803)",
+        "locking": "bayonet",
+        "lifetime": "> 1000 mating cycles",
+        "temperature_range": "-30 °C to +85 °C"
+      },
+      "connectors": [
+        {
+          "connector": "bnc",
+          "role": "75 Ω BNC male cable end",
+          "dir": "n/a",
+          "signal": "wordclock",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "wordclock",
+        "madi",
+        "aes3-id-75ohm",
+        "sdi-embedded-audio"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.neutrik.com/en/product/nbnc75blp7.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/nbnc75blp7",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neutrik.com/en/product/nbnc75blp7.pdf",
+          "title": "NBNC75BLP7 data sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neutrik.com/en/product/nbnc75blp7",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.neutrik.com/en/product/nbnc75blp7.pdf",
+          "publisher": "Neutrik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.impedance",
+            "key_specs.vswr_return_loss",
+            "key_specs.cable_od",
+            "key_specs.locking",
+            "key_specs.lifetime"
+          ]
+        }
+      ],
+      "notes": "Neutrik markets it for HD video; its use for word clock / MADI / AES-3id follows from the 75 Ω BNC interface, not from a Neutrik statement.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "aes3-id-75ohm",
+          "sdi-embedded-audio"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Word clock / MADI on BNC; 75 Ω vs 50 Ω RF BNC confusion."
+      }
+    },
+    {
+      "id": "harting-han-e-06-f",
+      "brand": "HARTING",
+      "model": "Han E 06 Pos. F insert, screw (09 33 006 2701)",
+      "category": "cables-connectors",
+      "sub_type": "connector",
+      "technology": "Han E rectangular industrial connector insert, female, 6 contacts + PE, screw termination, size 6 B (per HARTING).",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "HARTING Han rectangular connectors are the 'Harting' multipins used on stage multicores; Sommer cable sells multicores and hybrid systems terminated with HARTING Han connectors.",
+      "typical_uses": [
+        "stage multicore multipin termination",
+        "hybrid power/data stage cabling"
+      ],
+      "key_specs": {
+        "contacts": "6 + PE",
+        "rated_current": "16 A",
+        "rated_voltage": "500 V",
+        "rated_voltage_ul_csa": "600 V",
+        "rated_impulse_voltage": "6 kV",
+        "pollution_degree": "3",
+        "contact_resistance": "≤ 1 mΩ",
+        "termination": "Screw termination",
+        "conductor_cross_section": "0.75 to 2.5 mm² (AWG 18 to AWG 14)",
+        "mating_cycles": "≥ 500",
+        "limiting_temperature": "-40 to +125 °C",
+        "size": "6 B",
+        "standards": "IEC 60664-1, IEC 61984; UL 1977, UL 2237, CSA-C22.2 No. 182.3"
+      },
+      "connectors": [
+        {
+          "connector": "multipin-harting",
+          "role": "Han E female insert (needs Han B hood/housing)",
+          "dir": "n/a",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mains-power",
+        "line-level-pro"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.harting.com/en-GB/p/Han-E-06-Pos-F-Insert-Screw-BigPack-300-09330062701XL",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.harting.com/en-GB/p/Han-E-06-Pos-F-Insert-Screw-BigPack-300-09330062701XL",
+          "publisher": "HARTING",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors",
+            "technology"
+          ]
+        },
+        {
+          "url": "https://www.harting.com/en-GB/c/Industrial-connectors-Han-57904/Rectangular-connectors-57905/list",
+          "publisher": "HARTING",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.rated_current",
+            "key_specs.conductor_cross_section"
+          ]
+        },
+        {
+          "url": "https://www.sommercable.com/en-gb/Products/Distribution-Systems/Stage-Multicores/",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "Only the 6-pole Han E insert was reachable; audio multicores usually use higher-pin-count Han inserts (e.g. Han E 24 / Han DD), which could not be located without search. The insert needs a separate hood/housing (not listed on the page). No datasheet PDF link appeared in the fetched page.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "multipin-harting"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Introduces multipin multicore terminations; 'multipin-harting' is a proposed id."
+      }
+    },
+    {
+      "id": "sommer-sc-primus",
+      "brand": "Sommer cable",
+      "model": "SC-Primus 200-0151 (2 x 0,50 mm²)",
+      "category": "cables-connectors",
+      "sub_type": "microphone-cable",
+      "technology": "Balanced 2-conductor microphone cable, copper spiral shield + metallic fleece, PVC jacket (per Sommer cable).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A heavy-gauge (AWG 20) German mic/line cable from Sommer cable, a supplier common in European stage and broadcast; Sommer lists stage/live, studio/broadcast and installation uses.",
+      "typical_uses": [
+        "microphone cables",
+        "balanced line",
+        "stage / live",
+        "studio / broadcast"
+      ],
+      "key_specs": {
+        "construction": "(2LI2Y0,50mm²)(ST)DY",
+        "conductors": "2",
+        "cross_section": "0,50 mm²",
+        "awg": "20",
+        "strands": "28 x 0,15 mm",
+        "shield": "Copper spiral sleeve tin-plated + metalic fleece",
+        "shield_coverage": "100 %",
+        "outer_diameter": "6,70 mm",
+        "capacitance_core_core": "80 pF/m",
+        "capacitance_core_shield": "150 pF/m",
+        "conductor_resistance": "39,9 Ω/km",
+        "shield_resistance": "25 Ω/km",
+        "jacket": "PVC",
+        "temperature_range": "-25 °C to 80 °C"
+      },
+      "connectors": [],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/fb/ed/9e/1752679358/Datasheet_200-0151_pm_4448.pdf?ts=1791974806",
+      "product_page_url": "https://www.sommercable.com/en-gb/Microphone-Cable-SC-Primus-2-x-0-50-mm2-PVC-OE-6-70-mm-black/200-0151",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/fb/ed/9e/1752679358/Datasheet_200-0151_pm_4448.pdf?ts=1791974806",
+          "title": "Datasheet 200-0151",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "14.10.2026",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.sommercable.com/en-gb/Microphone-Cable-SC-Primus-2-x-0-50-mm2-PVC-OE-6-70-mm-black/200-0151",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs"
+          ]
+        },
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/fb/ed/9e/1752679358/Datasheet_200-0151_pm_4448.pdf?ts=1791974806",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.awg",
+            "key_specs.shield",
+            "key_specs.capacitance_core_core",
+            "key_specs.capacitance_core_shield",
+            "key_specs.outer_diameter"
+          ]
+        }
+      ],
+      "notes": "Sold as bulk cable; connectors are fitted by the user (typically XLR3). No max length is stated.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Generic twisted-pair mic cable; contrasts with star-quad."
+      }
+    },
+    {
+      "id": "canare-l-4e6s",
+      "brand": "Canare",
+      "model": "L-4E6S (Star Quad microphone cable)",
+      "category": "cables-connectors",
+      "sub_type": "microphone-cable",
+      "technology": "4-conductor star-quad balanced cable with high-density braided copper shield (per Canare).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Canare's 4-conductor star-quad cable is a reference alternative to 2-conductor mic cable, with a 94% braided copper shield.",
+      "typical_uses": [
+        "microphone cables",
+        "studio / broadcast mic lines",
+        "long balanced runs"
+      ],
+      "key_specs": {
+        "conductors": "4",
+        "awg": "24",
+        "twist_pitch": "20 mm",
+        "shield": "Braided copper, 94% coverage",
+        "outer_diameter": "6.0 mm",
+        "conductor_dcr": "9.8 Ω/100 m",
+        "shield_dcr": "3.0 Ω/100 m",
+        "capacitance": "150 pF/m (*) / 185 pF/m (**)",
+        "weight": "4.8 kg/100 m"
+      },
+      "connectors": [],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.canare.com/analogaudiocable",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.canare.com/analogaudiocable",
+          "publisher": "Canare",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "technology"
+          ]
+        }
+      ],
+      "notes": "Canare lists two capacitance values with footnotes (*) and (**) whose meaning was not shown in the fetched page (probably conductor-conductor vs conductor-shield; not confirmed). Spec sheet at canare.com/productspecsanddrawings was not opened.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Star-quad wiring (pairs of conductors per XLR pin) is a useful advanced lesson."
+      }
+    },
+    {
+      "id": "mogami-w2534",
+      "brand": "Mogami",
+      "model": "W2534 (Neglex Quad microphone cable)",
+      "category": "cables-connectors",
+      "sub_type": "microphone-cable",
+      "technology": "4-conductor quad microphone cable, OFC conductors, served (spiral) bare copper shield, PVC jacket (per Mogami).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Mogami's quad mic cable; Mogami claims it improves signal-to-noise by 10–20 dB compared with equivalent twisted-pair cables.",
+      "typical_uses": [
+        "studio microphone cables",
+        "low-noise mic lines"
+      ],
+      "key_specs": {
+        "conductors": "4 (quad)",
+        "conductor": "20/0.12 OFC, 0.226 mm² (#24 AWG)",
+        "insulation": "XLPE, 1.6 mm OD",
+        "shield": "Served (spiral) bare copper, approx. 64/0.18A",
+        "outer_diameter": "6.0 mm",
+        "conductor_resistance": "0.083 Ω/m",
+        "shield_resistance": "0.012 Ω/m",
+        "capacitance_conductor_conductor": "97 pF/m (balanced quad)",
+        "capacitance_conductor_shield": "110 pF/m",
+        "inductance": "0.4 µH/m",
+        "electromagnetic_noise": "0.15 mV max.",
+        "flex_life": "11,000 cycles",
+        "temperature_range": "-20°C to +70°C"
+      },
+      "connectors": [],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://mogamicable.com/category/bulk/microphone/quad/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://mogamicable.com/pdf/Mogami_Tech_cat2019.pdf",
+          "title": "Mogami Tech Catalog 2019",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2019",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://mogamicable.com/category/bulk/microphone/quad/",
+          "publisher": "Mogami",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "The page writes the insulation as 'XLCPE' in the table and 'XLPE' in the text. Noise figures are measured with Mogami's own test methods. Tech catalogue PDF listed but not read.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Same lesson as other quad cable; bulk cable only."
+      }
+    },
+    {
+      "id": "sommer-meridian-mobile-sp225",
+      "brand": "Sommer cable",
+      "model": "Meridian Mobile SP225 425-0051 (2 x 2,50 mm²)",
+      "category": "cables-connectors",
+      "sub_type": "speaker-cable",
+      "technology": "Unshielded 2-conductor loudspeaker cable, OFC, PVC jacket (per Sommer cable).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A standard 2 x 2.5 mm² mobile PA speaker cable; Sommer lists PA systems, 100 V (ELA) lines, stage/live and studio uses.",
+      "typical_uses": [
+        "amplifier to passive speaker",
+        "100 V line (ELA)",
+        "touring PA",
+        "monitor wedges"
+      ],
+      "key_specs": {
+        "construction": "(2LIY2,5mm²)Y",
+        "conductors": "2",
+        "cross_section": "2,50 mm²",
+        "awg": "13",
+        "strands": "140 x 0,15 mm",
+        "outer_diameter": "7,80 mm",
+        "conductor_resistance": "7,5 Ω/km",
+        "capacitance": "136 pF/m (conductor/conductor)",
+        "shield": "none listed",
+        "jacket": "PVC",
+        "temperature_range": "-30 °C to 70 °C"
+      },
+      "connectors": [],
+      "signal_types": [
+        "speaker-level"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/5c/cb/db/1752685392/Datasheet_425-0051_pm_4791.pdf?ts=1752685392",
+      "product_page_url": "https://www.sommercable.com/en-gb/Speaker-Cable-Meridian-Mobile-SP225-2-x-2-50-mm2-PVC-OE-7-80-mm-black/425-0051",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/5c/cb/db/1752685392/Datasheet_425-0051_pm_4791.pdf?ts=1752685392",
+          "title": "Datasheet 425-0051",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "12.06.2023",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.sommercable.com/en-gb/Speaker-Cable-Meridian-Mobile-SP225-2-x-2-50-mm2-PVC-OE-7-80-mm-black/425-0051",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "typical_uses"
+          ]
+        },
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/5c/cb/db/1752685392/Datasheet_425-0051_pm_4791.pdf?ts=1752685392",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.cross_section",
+            "key_specs.awg",
+            "key_specs.conductor_resistance",
+            "key_specs.outer_diameter"
+          ]
+        }
+      ],
+      "notes": "Conductor resistance (7,5 Ω/km per conductor) is the figure to use for loss calculations; no maximum length is stated.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Gauge/length vs loss and damping factor; fits speakON NL4 terminations."
+      }
+    },
+    {
+      "id": "sommer-sc-mistral-mcf08",
+      "brand": "Sommer cable",
+      "model": "SC-Mistral MCF08 FRNC 100-0101-08F (8 pairs)",
+      "category": "cables-connectors",
+      "sub_type": "multicore-cable",
+      "technology": "Multipair cable, 8 individually foil-shielded pairs plus overall foil shield, FRNC jacket (per Sommer cable).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A compact multipair for 8-channel balanced looms and multicores; Sommer states 110 Ω impedance, so it also suits AES/EBU.",
+      "typical_uses": [
+        "8-channel analog looms",
+        "studio wiring",
+        "AES/EBU multichannel"
+      ],
+      "key_specs": {
+        "pairs": "8",
+        "construction": "[08(2LI2Y0,22mm²)(ST)Y]F(ST)Y",
+        "cross_section": "0,22 mm²",
+        "awg": "24",
+        "shield_per_pair": "AL/PT foil, 100 %",
+        "overall_shield": "AL/PT foil + total foil shielding + filler strand",
+        "outer_diameter": "15,00 mm",
+        "capacitance_core_core": "46 pF/m",
+        "capacitance_core_shield": "85 pF/m",
+        "impedance": "110 Ω",
+        "conductor_resistance": "80 Ω/km",
+        "shield_resistance": "75 Ω/km",
+        "jacket": "FRNC",
+        "temperature_range": "-30 °C to 70 °C"
+      },
+      "connectors": [],
+      "signal_types": [
+        "line-level-pro",
+        "mic-level",
+        "aes3"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/ca/8f/b1/1752678636/Datasheet_100-0101-08F_pm_5164.pdf?ts=1752678636",
+      "product_page_url": "https://www.sommercable.com/en-gb/Multipair-SC-Mistral-MCF-black-2-x-0-22-mm2-x-number-of-pairs/100-0101-08F",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/ca/8f/b1/1752678636/Datasheet_100-0101-08F_pm_5164.pdf?ts=1752678636",
+          "title": "Datasheet 100-0101-08F",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "07.12.2023",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.sommercable.com/en-gb/Multipair-SC-Mistral-MCF-black-2-x-0-22-mm2-x-number-of-pairs/100-0101-08F",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs"
+          ]
+        },
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/ca/8f/b1/1752678636/Datasheet_100-0101-08F_pm_5164.pdf?ts=1752678636",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.construction",
+            "key_specs.outer_diameter",
+            "key_specs.pairs"
+          ]
+        }
+      ],
+      "notes": "The datasheet PDF repeats only construction, diameter and channel count; electrical values come from the product page only.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Each pair is an independent balanced line; links to DB25 / multipin looms."
+      }
+    },
+    {
+      "id": "mogami-w3080",
+      "brand": "Mogami",
+      "model": "W3080 (AES/EBU 110 Ω digital audio cable)",
+      "category": "cables-connectors",
+      "sub_type": "digital-audio-cable",
+      "technology": "110 Ω 2-conductor shielded digital audio cable with drain wire and served shield (per Mogami).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A purpose-built 110 Ω AES/EBU cable; Mogami states AES/EBU needs controlled 110 Ω impedance to avoid reflections over longer runs.",
+      "typical_uses": [
+        "AES3 / AES/EBU links",
+        "digital console and converter interconnects"
+      ],
+      "key_specs": {
+        "impedance": "110Ω ±5%",
+        "conductors": "2",
+        "conductor": "7/0.18A (7×#33 AWG), 0.178mm² (#25)",
+        "drain_wire": "7/0.18A (#25)",
+        "shield": "Approx. 60/0.12A served (#37)",
+        "insulation": "XLPE, 1.36mm OD",
+        "capacitance": "46 pF/m (1kHz, between inner twin)",
+        "outer_diameter": "5.0 ±0.3mm",
+        "attenuation": "0.069 dB/m (6 MHz)",
+        "max_suggested_length": "150m (492 ft) without equalizer; up to 1.5 x with equalizer (per Mogami)"
+      },
+      "connectors": [],
+      "signal_types": [
+        "aes3"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://mogamicable.com/category/bulk/dig_interface/aes_ebu/",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://mogamicable.com/category/bulk/dig_interface/aes_ebu/",
+          "publisher": "Mogami",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs"
+          ]
+        },
+        {
+          "url": "https://mogamicable.com/pdf/MogamiCatalog.pdf",
+          "publisher": "Mogami (catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "Replaces the requested Belden 1800F: belden.com returned HTTP 403 for every page. A ferrite-core variant W3080-FC is listed.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "110 Ω AES3 vs ordinary mic cable on XLR: same connector, different cable impedance."
+      }
+    },
+    {
+      "id": "canare-l-5cfb",
+      "brand": "Canare",
+      "model": "L-5CFB (75 Ω low-loss coax)",
+      "category": "cables-connectors",
+      "sub_type": "digital-audio-cable",
+      "technology": "Low-loss coax, solid copper centre conductor, foam PE dielectric, tinned copper braid + 100% foil (per Canare, listed under 75 Ω coax).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Canare's L-5CFB is listed for HD serial digital video (SMPTE 259M/292M/424M); 75 Ω coax of this kind also carries word clock, MADI and AES-3id.",
+      "typical_uses": [
+        "HD-SDI video",
+        "word clock",
+        "MADI coax",
+        "AES-3id"
+      ],
+      "key_specs": {
+        "impedance": "75 Ω (category heading)",
+        "awg": "18",
+        "centre_conductor": "Solid copper, 1.05 mm",
+        "dielectric": "Foam PE, 5.0 mm",
+        "shield": "Tinned copper braid + 100% foil, 0.14TA / 7 / 24 (93%)",
+        "outer_diameter": "7.7 mm",
+        "capacitance": "55 pF/m",
+        "attenuation": "17.7 dB/100m at 3 MHz",
+        "inner_conductor_resistance": "2.1 Ω/100m"
+      },
+      "connectors": [],
+      "signal_types": [
+        "wordclock",
+        "madi",
+        "aes3-id-75ohm",
+        "sdi-embedded-audio"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.canare.com/75ohmcoaxcable",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.canare.com/75ohmcoaxcable",
+          "publisher": "Canare",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "typical_uses"
+          ]
+        }
+      ],
+      "notes": "Replaces the requested Belden 1694A (belden.com blocked, HTTP 403). The impedance is stated by the page's 75 Ω category heading, not per model. Word clock/MADI/AES-3id use is inferred from the 75 Ω coax type, not a Canare statement.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "aes3-id-75ohm",
+          "sdi-embedded-audio"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "75 Ω coax on BNC for word clock/MADI."
+      }
+    },
+    {
+      "id": "sommer-sc-mercator-cat7-pur",
+      "brand": "Sommer cable",
+      "model": "SC-Mercator CAT.7 PUR 581-0071",
+      "category": "cables-connectors",
+      "sub_type": "network-cable",
+      "technology": "SFTP 4x2x0,14 mm² Cat.7 600 MHz flexible network cable with PUR jacket (per Sommer cable).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A flexible, PUR-jacketed Cat.7 cable aimed at mobile/OB and stage network use; Sommer states it suits all Cat.5e, Cat.6, Cat.6a and Cat.7 transmissions.",
+      "typical_uses": [
+        "Dante / AoIP stage runs",
+        "OB van and outdoor network",
+        "etherCON stage cables"
+      ],
+      "key_specs": {
+        "construction": "SFTP 4x2x0,14 mm²/600 MHz",
+        "awg": "26",
+        "shield": "Tinned copper braid + AL/PT foil (page); PimF, copper braiding tin-plated (datasheet)",
+        "shield_coverage": "100 %",
+        "impedance": "100 Ω",
+        "outer_diameter": "6.40 mm",
+        "capacitance": "44 pF/m wire-to-wire",
+        "loop_resistance": "290 Ω/km",
+        "velocity_factor": "0.75",
+        "jacket": "PUR, halogen-free / LSZH",
+        "temperature_range": "-20 °C to 60 °C",
+        "length_note": "Sommer recommends the CAT.7 PUR XL for Ethernet runs over 85 m and EtherSound over 100 m"
+      },
+      "connectors": [],
+      "signal_types": [
+        "aoip",
+        "dante"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/a3/69/fa/1752685267/Datasheet_581-0071_pm_5028.pdf",
+      "product_page_url": "https://www.sommercable.com/en-gb/Cat.7-SC-Mercator-CAT.7-PUR-PUR-black-OE-6-40-mm/581-0071",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/a3/69/fa/1752685267/Datasheet_581-0071_pm_5028.pdf",
+          "title": "Datasheet 581-0071",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "26.06.2025",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.sommercable.com/en-gb/Cat.7-SC-Mercator-CAT.7-PUR-PUR-black-OE-6-40-mm/581-0071",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "typical_uses"
+          ]
+        },
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/a3/69/fa/1752685267/Datasheet_581-0071_pm_5028.pdf",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.construction",
+            "key_specs.impedance",
+            "key_specs.awg",
+            "key_specs.outer_diameter",
+            "key_specs.capacitance"
+          ]
+        }
+      ],
+      "notes": "No 'tactical' Cat cable was listed in the Sommer category fetched; SC-Mercator CAT.7 PUR is Sommer's mobile network cable. The page also lists 'Digital 110 Ω AES/EBU' as a property beside 100 Ω.",
+      "conflicts": [
+        {
+          "field": "key_specs.outer_diameter",
+          "values": [
+            {
+              "value": "6.40 mm",
+              "source_url": "https://www.sommercable.com/en-gb/Cat.7-SC-Mercator-CAT.7-PUR-PUR-black-OE-6-40-mm/581-0071"
+            },
+            {
+              "value": "6,50 mm",
+              "source_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/a3/69/fa/1752685267/Datasheet_581-0071_pm_5028.pdf"
+            }
+          ],
+          "note": "Product page vs datasheet (26.06.2025)"
+        },
+        {
+          "field": "key_specs.capacitance",
+          "values": [
+            {
+              "value": "44 pF/m",
+              "source_url": "https://www.sommercable.com/en-gb/Cat.7-SC-Mercator-CAT.7-PUR-PUR-black-OE-6-40-mm/581-0071"
+            },
+            {
+              "value": "45 pF (per 1 m)",
+              "source_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/a3/69/fa/1752685267/Datasheet_581-0071_pm_5028.pdf"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "field": "key_specs.max_delay_skew",
+          "values": [
+            {
+              "value": "25 ns @ 100 MHz/100 m",
+              "source_url": "https://www.sommercable.com/en-gb/Cat.7-SC-Mercator-CAT.7-PUR-PUR-black-OE-6-40-mm/581-0071"
+            },
+            {
+              "value": "10 ns @ 100 MHz/100 m",
+              "source_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/a3/69/fa/1752685267/Datasheet_581-0071_pm_5028.pdf"
+            }
+          ],
+          "note": "Not used in key_specs because sources disagree"
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Rugged Cat cable for AoIP; pairs with etherCON."
+      }
+    },
+    {
+      "id": "sommer-sc-octopus-g-4-os2",
+      "brand": "Sommer cable",
+      "model": "SC-Octopus-G 590-0321-04 (4 x 9/125 µm OS2)",
+      "category": "cables-connectors",
+      "sub_type": "fibre",
+      "technology": "4-fibre single-mode OS2 (9/125 µm) breakout-style fibre cable, metal-free with glass-fibre armouring, PUR-FRNC jacket (per Sommer cable).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A rugged, rodent-protected single-mode fibre cable for long indoor/outdoor links in broadcast and installation.",
+      "typical_uses": [
+        "long-distance stage/console fibre links",
+        "broadcast and OB links",
+        "network backbones"
+      ],
+      "key_specs": {
+        "fibres": "4",
+        "fibre_type": "9/125 µm single-mode OS2",
+        "construction": "A-V(ZN)11Y",
+        "outer_diameter": "5.50 mm",
+        "jacket": "PUR-FRNC",
+        "max_tensile_force": "1 kN",
+        "temperature_range": "−40 °C to +70 °C",
+        "weight": "24 g/m"
+      },
+      "connectors": [],
+      "signal_types": [
+        "fibre-optical-transport"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/5f/8b/7d/1752680737/Datasheet_590-0321-04_pm_4813.pdf?ts=1753704065",
+      "product_page_url": "https://www.sommercable.com/en-gb/Optical-fiber-SC-Octopus-G-4-x-9-125-m-OS2-PUR-FRNC-OE-5-50-mm-black/590-0321-04",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/5f/8b/7d/1752680737/Datasheet_590-0321-04_pm_4813.pdf?ts=1753704065",
+          "title": "Datasheet 590-0321-04",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "09.11.2020",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.sommercable.com/en-gb/Optical-fiber-SC-Octopus-G-4-x-9-125-m-OS2-PUR-FRNC-OE-5-50-mm-black/590-0321-04",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "technology"
+          ]
+        },
+        {
+          "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/5f/8b/7d/1752680737/Datasheet_590-0321-04_pm_4813.pdf?ts=1753704065",
+          "publisher": "Sommer cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.fibres",
+            "key_specs.fibre_type",
+            "key_specs.outer_diameter"
+          ]
+        }
+      ],
+      "notes": "Neither page nor datasheet gives attenuation per km or bend radius. Terminate with LC/opticalCON connectors (assembled by Sommer or a fibre specialist).",
+      "conflicts": [
+        {
+          "field": "key_specs.temperature_range",
+          "values": [
+            {
+              "value": "−40 °C to +70 °C",
+              "source_url": "https://www.sommercable.com/en-gb/Optical-fiber-SC-Octopus-G-4-x-9-125-m-OS2-PUR-FRNC-OE-5-50-mm-black/590-0321-04"
+            },
+            {
+              "value": "-40 to 85 °C",
+              "source_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/5f/8b/7d/1752680737/Datasheet_590-0321-04_pm_4813.pdf?ts=1753704065"
+            }
+          ],
+          "note": "Product page vs datasheet dated 09.11.2020"
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "fibre-optical-transport"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Fibre (galvanic isolation, km runs) vs copper Cat."
+      }
+    },
+    {
+      "id": "mogami-gold-db25-xlrm",
+      "brand": "Mogami",
+      "model": "Gold DB25-XLRM (8-channel analog DB25 to XLR male fan-out)",
+      "category": "cables-connectors",
+      "sub_type": "breakout-adapter",
+      "technology": "8-channel analog fan-out: DB25 D-sub to 8 gold-pin XLR male, metal D-sub shell with thumb screws (per Mogami).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "DB25 fan-outs are the standard way to connect 8-channel DB25 interfaces (Avid, converters, patchbays) to XLR gear; Mogami's Gold version is wired with the 'industry standard analog pin-out'.",
+      "typical_uses": [
+        "interface DB25 outputs to XLR inputs",
+        "patchbay to console",
+        "converter looms"
+      ],
+      "key_specs": {
+        "channels": "Eight channels, analog in or out",
+        "connectors": "DB25 to gold pin XLR male",
+        "pinout": "industry standard analog pin-out (standard not named by Mogami)",
+        "lengths": "5, 10, 15, 20, 25, 30, 40 or 50 ft",
+        "shell": "all metal D-sub shells with metal thumb screws"
+      },
+      "connectors": [
+        {
+          "connector": "dsub25",
+          "role": "DB25 (8 balanced channels)",
+          "dir": "n/a",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "channel XLR male",
+          "dir": "n/a",
+          "signal": "line-level-pro",
+          "count": 8
+        }
+      ],
+      "signal_types": [
+        "line-level-pro"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://mogamicable.com/products/gold-DB25-XLRM.php",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://mogamicable.com/pdf/MogamiCatalog.pdf",
+          "title": "Mogami catalogue",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://mogamicable.com/products/gold-DB25-XLRM.php",
+          "publisher": "Mogami",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "model",
+            "status"
+          ]
+        },
+        {
+          "url": "https://mogamicable.com/category/recording_interface/analog/",
+          "publisher": "Mogami",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.pinout",
+            "key_specs.lengths"
+          ]
+        },
+        {
+          "url": "https://mogamicable.com/pdf/MogamiCatalog.pdf",
+          "publisher": "Mogami (catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.lengths",
+            "key_specs.shell",
+            "key_specs.pinout"
+          ]
+        }
+      ],
+      "notes": "Mogami does not name the pinout standard; the catalogue distinguishes 'Tascam' and 'Yamaha' AES formats only for its digital DB25 cables. The XLR male end makes this an output-side loom (DB25 out to XLR inputs). Analog vs AES (digital) DB25 looms are not interchangeable.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "mogami-gold-db25-xlrm",
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Already in catalog; DB25 pinout and channel-to-XLR mapping lesson."
+      }
+    }
+  ]
+}
