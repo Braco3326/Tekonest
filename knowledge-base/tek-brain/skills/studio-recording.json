@@ -1,0 +1,240 @@
+{
+  "entity": "skill",
+  "domain": "studio-recording",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "run-tracking-session",
+      "name_fr": "Conduire une session de prise",
+      "name_en": "Run a tracking session",
+      "domain": "studio-recording",
+      "description": "Préparer la session (format, nommage, fiche de pistes), installer les mixes casque et l'ordre, enregistrer les prises sans écrêtage ni latence gênante.",
+      "level": "bts",
+      "concept_ids": [
+        "recording-session",
+        "cue-mix",
+        "talkback",
+        "monitoring-latency",
+        "session-sample-rate-choice",
+        "track-sheet"
+      ],
+      "procedure_ids": [
+        "recording-session-setup",
+        "cue-mix-setup"
+      ],
+      "success_criteria": [
+        "La fréquence et la résolution de session sont notées sur la fiche avant la première prise et identiques sur tous les appareils",
+        "Aucune prise n'atteint 0 dBFS pendant la session",
+        "Chaque musicien confirme entendre son mix casque et l'ordre avant la première prise",
+        "Le retour casque ne présente pas d'écho perceptible (écoute directe ou tampon réduit)"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "description"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/publications/r068",
+          "publisher": "EBU — R 68 Alignment level in digital audio production equipment and recorders",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "comp-and-punch-vocal",
+      "name_fr": "Enregistrer et compiler une voix en overdub",
+      "name_en": "Record and comp an overdubbed vocal",
+      "domain": "studio-recording",
+      "description": "Mener un overdub de voix avec punch-in et pré-roll, enregistrer plusieurs prises, puis construire et consolider une comp.",
+      "level": "bts",
+      "concept_ids": [
+        "overdub",
+        "punch-in",
+        "take",
+        "comping",
+        "consolidation"
+      ],
+      "procedure_ids": [
+        "vocal-overdub-session"
+      ],
+      "success_criteria": [
+        "Les punchs ne laissent ni clic ni coupure audible aux points d'entrée et de sortie",
+        "Les prises sont numérotées et annotées sur la feuille de prises",
+        "La comp finale est consolidée en un seul fichier qui démarre au début du morceau"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "deliver-and-archive-session",
+      "name_fr": "Livrer et archiver une session",
+      "name_en": "Deliver and archive a session",
+      "domain": "studio-recording",
+      "description": "Imprimer le mix et ses versions, exporter les stems, nommer les fichiers selon une convention, documenter et sauvegarder la session selon la règle 3-2-1.",
+      "level": "pro",
+      "concept_ids": [
+        "mixdown",
+        "mix-stem-delivery",
+        "session-file-naming",
+        "session-backup-321",
+        "recording-metadata"
+      ],
+      "procedure_ids": [
+        "mix-session-stems-export",
+        "session-backup-archive"
+      ],
+      "success_criteria": [
+        "Tous les stems d'un titre ont le même point de départ et la même durée",
+        "Les noms de fichiers ne contiennent ni espace ni accent et indiquent fréquence et résolution (ex. 48k24)",
+        "Trois copies existent, sur deux types de supports, dont une hors site, et chaque copie a été vérifiée"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.cisa.gov/sites/default/files/publications/data_backup_options.pdf",
+          "publisher": "US-CERT / CISA (Carnegie Mellon University, 2012) — Data Backup Options",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "record-multi-mic-podcast",
+      "name_fr": "Enregistrer un podcast à plusieurs micros",
+      "name_en": "Record a multi-mic podcast",
+      "domain": "studio-recording",
+      "description": "Installer un micro et une piste par intervenant, régler les niveaux, distribuer le casque et enregistrer une émission propre.",
+      "level": "beginner",
+      "concept_ids": [
+        "podcast-recording",
+        "three-to-one-rule",
+        "gain-staging"
+      ],
+      "procedure_ids": [
+        "podcast-multi-mic-setup"
+      ],
+      "success_criteria": [
+        "Chaque voix est sur sa propre piste",
+        "Les micros respectent la règle 3:1 par rapport aux distances bouche-micro",
+        "Un test de 30 secondes a été écouté avant l'émission et aucune piste n'écrête"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
+          "publisher": "Shure — How to Start a Podcast: Recording an Episode",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}

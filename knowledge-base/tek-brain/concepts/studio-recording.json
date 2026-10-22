@@ -1,0 +1,1108 @@
+{
+  "entity": "concept",
+  "domain": "studio-recording",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "recording-session",
+      "name_fr": "Session d'enregistrement",
+      "name_en": "Recording session",
+      "domain": "studio-recording",
+      "definition": "Période de travail organisée en studio pendant laquelle on capte des sources sur des pistes séparées, de la préparation (fiche de pistes, format de session) à l'archivage des fichiers.",
+      "explanation": "Une session se prépare avant l'arrivée des musiciens : liste des pistes (track sheet), fréquence d'échantillonnage et résolution, nommage, mixes casque. Shure conseille d'enregistrer chaque voix et chaque instrument sur sa propre piste pour pouvoir régler niveau et timbre séparément au mixage, et d'utiliser aussi peu de micros que nécessaire. Le Producers & Engineers Wing de la Recording Academy rappelle que tout ce qui est capté (prises ratées, discussions, versions incomplètes) fait partie du « master » et ne doit pas être effacé sans accord préalable avec le label. Exemple : pour un groupe de quatre musiciens, on enregistre la batterie, la basse et la guitare ensemble, puis la voix définitive en re-recording (overdub).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "overdub",
+        "cue-mix",
+        "talkback",
+        "track-sheet",
+        "session-sample-rate-choice",
+        "session-file-naming"
+      ],
+      "equipment_ids": [
+        "rme-fireface-ufx-iii",
+        "avid-pro-tools",
+        "cockos-reaper"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "overdub",
+      "name_fr": "Re-recording (overdub)",
+      "name_en": "Overdub",
+      "domain": "studio-recording",
+      "definition": "Enregistrement d'une nouvelle partie sur une piste libre pendant que le musicien écoute, en général au casque, les pistes déjà enregistrées.",
+      "explanation": "L'overdub permet de construire un morceau couche par couche : un ou deux musiciens peuvent ainsi sonner comme un ensemble. Le musicien joue avec ce qu'il entend au casque ; des enceintes seraient captées par le micro (repisse, bleed) et pourraient provoquer un larsen. Pour jouer en place, l'écoute doit être quasi sans latence : Shure indique que plus de 10 ms gênent nettement le rythme. Exemple : la chanteuse refait sa voix lead en cabine sur la base batterie-basse-guitare enregistrée le matin.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "recording-session",
+        "punch-in",
+        "cue-mix",
+        "monitoring-latency",
+        "comping"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Overdubbing",
+          "publisher": "Wikipedia — Overdubbing",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "talkback",
+      "name_fr": "Ordre (talkback)",
+      "name_en": "Talkback",
+      "domain": "studio-recording",
+      "definition": "Liaison d'intercom du studio : un micro en régie permet à l'ingénieur de parler aux musiciens en cabine, en général dans leur casque.",
+      "explanation": "Dans l'autre sens, la régie entend les musiciens par les micros du studio. Sur une interface RME avec TotalMix FX, le bouton Talkback atténue (dim) les signaux envoyés aux sorties casque d'une valeur réglée dans les préférences et y envoie le micro de la régie ; la fonction Listenback fait l'inverse vers l'écoute principale. On annonce aussi par l'ordre les numéros de prise et les décomptes, à la manière d'un clap. Bon réflexe : relâcher l'ordre dès qu'on a parlé, sinon les commentaires de la régie arrivent dans le casque pendant la prise.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "cue-mix",
+        "recording-session"
+      ],
+      "equipment_ids": [
+        "rme-fireface-ufx-iii"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Talkback_(recording)",
+          "publisher": "Wikipedia — Talkback (recording)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME — Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "cue-mix",
+      "name_fr": "Mix casque (cue mix)",
+      "name_en": "Cue mix",
+      "domain": "studio-recording",
+      "definition": "Mélange envoyé au casque d'un ou plusieurs musiciens pendant la prise, indépendant du mix d'écoute de la régie.",
+      "explanation": "On le construit avec des départs auxiliaires pré-fader : ainsi les mouvements de faders de la régie ne changent pas ce qu'entend le musicien, et chacun peut avoir un dosage différent. Dans une interface comme la Fireface UFX III, le mixeur TotalMix FX fabrique ces sous-mixes sans délai (jusqu'à 47 sous-mixes stéréo indépendants selon RME). Dans une STAN (DAW) comme REAPER, on crée une piste « Headphone Mix » qui reçoit des envois des pistes et sort sur une paire de sorties dédiée, sans passer par le master. Exemple : le batteur veut plus de basse et de clic, la chanteuse plus de voix et de réverbération.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "aux-send",
+        "pre-post-fader",
+        "direct-monitoring",
+        "monitoring-latency",
+        "talkback"
+      ],
+      "equipment_ids": [
+        "rme-fireface-ufx-iii",
+        "behringer-ha400",
+        "presonus-hp4",
+        "beyerdynamic-dt-770-pro"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Aux-send",
+          "publisher": "Wikipedia — Aux-send",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME — Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "comping",
+      "name_fr": "Compilation de prises (comping)",
+      "name_en": "Comping",
+      "domain": "studio-recording",
+      "definition": "Montage d'une prise composite (comp) à partir des meilleurs passages de plusieurs prises d'une même partie.",
+      "explanation": "On enregistre plusieurs prises (takes) sur la même zone, puis on choisit passage par passage la meilleure. Dans REAPER, les prises se rangent comme takes d'un même objet ou dans des couloirs (media item lanes) ; on peut sauvegarder plusieurs « comp sets » pour les comparer. Le manuel conseille de finir les retouches des prises sources avant de commencer le comping. Une fois la comp validée, on la consolide en un fichier continu pour le mixage et la livraison. Exemple : une voix lead composée de la prise 3 pour les couplets et de la prise 5 pour les refrains.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "take",
+        "punch-in",
+        "consolidation",
+        "overdub"
+      ],
+      "equipment_ids": [
+        "cockos-reaper",
+        "avid-pro-tools",
+        "apple-logic-pro"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "mixdown",
+      "name_fr": "Mixage final (mixdown)",
+      "name_en": "Mixdown",
+      "domain": "studio-recording",
+      "definition": "Étape où l'on combine les pistes en un mix master (mono, stéréo ou multicanal) approuvé par l'artiste, le producteur et l'ingénieur, puis où l'on imprime ses versions.",
+      "explanation": "Le P&E Wing définit le mix master comme le mix qui contient tous les éléments voulus de la production, et une version de mix comme une variante où la perspective d'un élément change (par exemple « Vocal Up »). La livraison minimale standard comprend Master, Vocal Up, Instrumental et No Lead Vocal. On laisse de la marge (headroom) sur le mix pour éviter la distorsion avant le mastering. Exemple : on imprime Master, VocUp, InstOnly et NoLdVoc à la même fréquence et résolution que la session.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "mastering",
+        "mix-stem-delivery",
+        "session-file-naming",
+        "headroom"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_mastering",
+          "publisher": "Wikipedia — Audio mastering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "mastering",
+      "name_fr": "Mastering",
+      "name_en": "Mastering",
+      "domain": "studio-recording",
+      "definition": "Préparation finale d'un mix approuvé et transfert vers le support ou le format de distribution, d'où sont tirées toutes les copies.",
+      "explanation": "Le mastering ordonne les titres, règle les silences, applique les traitements adaptés au support (égalisation, compression, limitation crête, dither) et vérifie la cohérence entre titres. Il prépare aussi des formats différents : le P&E Wing prévoit des dossiers Hi Res (96 kHz 24 bits ou plus si la session l'est), CD (44,1 kHz 16 bits / DDP), Vinyl et Video (par exemple 48 kHz 24 bits). Pour le streaming, Spotify normalise à −14 LUFS intégrés (mesure ITU 1770) et recommande des crêtes vraies sous −1 dBTP, ou sous −2 dBTP si le master est plus fort que −14 LUFS. En diffusion, la cible EBU R 128 est −23 LUFS. On vérifie toujours la fiche technique du destinataire.",
+      "formulas": [],
+      "units": [
+        "LUFS",
+        "dBTP"
+      ],
+      "related_concepts": [
+        "loudness-normalization-streaming",
+        "loudness-ebu-r128",
+        "true-peak",
+        "dither",
+        "mixdown"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_mastering",
+          "publisher": "Wikipedia — Audio mastering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://support.spotify.com/us/artists/article/loudness-normalization/",
+          "publisher": "Spotify for Artists (Spotify)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU — R 128 Loudness normalisation and permitted maximum level of audio signals (v5.0, 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Streaming (Spotify) : normalisation à −14 LUFS intégrés",
+              "source_url": "https://support.spotify.com/us/artists/article/loudness-normalization/"
+            },
+            {
+              "value": "Diffusion (EBU R 128) : −23,0 LUFS",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf"
+            }
+          ],
+          "note": "Pas un désaccord mais deux cibles pour deux usages : le livrable dépend du destinataire."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "track-sheet",
+      "name_fr": "Fiche de pistes et documentation de session",
+      "name_en": "Track sheet and session documentation",
+      "domain": "studio-recording",
+      "definition": "Document qui liste les pistes, les micros, les préamplis et les réglages d'une session, et qui accompagne les fichiers jusqu'à l'archivage.",
+      "explanation": "Le P&E Wing recommande de ranger toute la documentation dans un dossier de métadonnées du disque projet : feuilles de pistes (tracking sheets), notes de l'ingénieur, notes de mise en place, croquis de placement des micros. Une « Recording Map » suit les sources, transferts et copies de sécurité tout au long du projet. Le papier doit être scanné et rangé avec le reste. Exemple : photo de chaque placement de micro et liste « piste 1 grosse caisse Beta 52A → préampli 1 » jointe au dossier Documentation.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "recording-session",
+        "recording-metadata",
+        "session-file-naming"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "session-file-naming",
+      "name_fr": "Nommage des fichiers et des dossiers",
+      "name_en": "Session file naming",
+      "domain": "studio-recording",
+      "definition": "Convention qui fait tenir dans le nom de fichier l'artiste, le titre, la version ou le stem, le mixeur, la révision, la fréquence et la résolution.",
+      "explanation": "Exemple du P&E Wing : AI_SongTitle_MI01_Master_96k24.wav (initiales de l'artiste, titre sans espaces ni accents, initiales du mixeur et numéro de révision, nom de version, puis 96k24 pour 96 kHz 24 bits). Les champs sont séparés par des tirets bas ; un seul point, juste avant l'extension ; dates au format ISO (AAAAMMJJ accepté). Il faut éviter espaces, accents et caractères comme / \\ ? : ; | * # % & $ ! @ =, et rester sous 255 caractères. Le guide propose aussi une arborescence Client / Artiste / Projet / Multitracks / Mixes / Mastered Mixes / Documentation.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "track-sheet",
+        "mix-stem-delivery",
+        "recording-metadata"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "session-sample-rate-choice",
+      "name_fr": "Choix de la fréquence et de la résolution de session",
+      "name_en": "Session sample rate and bit depth choice",
+      "domain": "studio-recording",
+      "definition": "Décision prise avant la première prise : fréquence d'échantillonnage et résolution du projet, qui doivent rester les mêmes pour tous les fichiers et tous les appareils de la session.",
+      "explanation": "Le guide REAPER indique qu'on enregistre de préférence en 24 bits et qu'on rend en 16 bits pour le CD ; 44,1 kHz vise le CD, 48 kHz la vidéo/DVD ; monter en fréquence alourdit les fichiers et le traitement. Le P&E Wing (rév. 2017) recommande pour les copies de sécurité et la conversion A/N des fréquences de 88,2 kHz ou plus et 24 bits ou plus, et ne conseille pas de suréchantillonner un master pour faire une copie. Au niveau d'alignement, l'EBU R 68 place la référence 18 dB sous la pleine échelle, ce qui laisse de la marge en 24 bits. Le choix dépend donc du livrable : musique pour l'image → 48 kHz ; projet haute résolution → 96 kHz.",
+      "formulas": [],
+      "units": [
+        "kHz",
+        "bit"
+      ],
+      "related_concepts": [
+        "bit-depth",
+        "sampling",
+        "sample-rate-conversion",
+        "dither",
+        "recording-session"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/publications/r068",
+          "publisher": "EBU — R 68 Alignment level in digital audio production equipment and recorders",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "44,1 kHz (CD) ou 48 kHz (DVD/vidéo) comme fréquences de projet usuelles",
+              "source_url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf"
+            },
+            {
+              "value": "88,2 kHz et plus recommandés pour la conversion A/N et les copies de sécurité",
+              "source_url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf"
+            }
+          ],
+          "note": "Recommandation d'archivage (P&E) plus exigeante que l'usage courant décrit par REAPER ; le livrable et le client tranchent."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "punch-in",
+      "name_fr": "Punch-in / punch-out",
+      "name_en": "Punch-in / punch-out",
+      "domain": "studio-recording",
+      "definition": "Enregistrement qui démarre et s'arrête automatiquement à des points choisis d'une piste existante, pour corriger une phrase ou quelques notes.",
+      "explanation": "Le musicien entend la piste existante, qui se coupe au point d'entrée (punch-in) puis revient au point de sortie (punch-out). Dans REAPER, le mode par défaut est non destructif : le passage repris devient une nouvelle prise et l'original reste disponible ; un mode « tape » destructif rogne l'existant et doit être utilisé avec prudence. Un pré-roll de quelques mesures (deux par défaut avec le métronome de REAPER) aide le musicien à se caler. Avec l'option d'écoute des pistes pendant l'enregistrement, le mode « tape auto » fait entendre seulement la piste existante jusqu'au punch, puis l'existant et l'entrée pendant le punch.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "overdub",
+        "take",
+        "comping",
+        "direct-monitoring"
+      ],
+      "equipment_ids": [
+        "cockos-reaper"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "take",
+      "name_fr": "Prise (take)",
+      "name_en": "Take",
+      "domain": "studio-recording",
+      "definition": "Un enregistrement d'une partie sur une zone donnée ; plusieurs prises d'un même passage se superposent sur une piste pour être comparées.",
+      "explanation": "Dans REAPER, un enregistrement qui recouvre un objet existant le découpe et ajoute une prise (comportement par défaut) ; on peut afficher toutes les prises ou seulement l'active. Les couloirs (fixed item lanes) affichent les prises les unes sous les autres et permettent un comping à la souris. On numérote et annote chaque prise (par l'ordre et sur la feuille de prises) pour retrouver vite la bonne. Exemple : « voix lead, prise 4, refrain 2 juste ».",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "comping",
+        "punch-in",
+        "track-sheet"
+      ],
+      "equipment_ids": [
+        "cockos-reaper"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Talkback_(recording)",
+          "publisher": "Wikipedia — Talkback (recording)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "monitoring-latency",
+      "name_fr": "Latence d'écoute en prise",
+      "name_en": "Monitoring latency during tracking",
+      "domain": "studio-recording",
+      "definition": "Retard entre le son produit par le musicien et son retour au casque quand l'écoute passe par l'ordinateur.",
+      "explanation": "Le retour logiciel traverse la conversion A/N, le tampon d'entrée, le tampon de sortie et la conversion N/A. Un tampon de N échantillons ajoute N/fe secondes : 64 échantillons à 44,1 kHz font environ 1,5 ms (RME). Shure indique que quelques millisecondes ne sont pas critiques, mais qu'au-delà de 10 ms le rythme et la mise en place sont nettement affectés. REAPER signale qu'un écho dans le casque vient d'une latence trop élevée et conseille de descendre la taille de bloc à 256 ou 128, avec le risque de clics sur une carte grand public.",
+      "formulas": [
+        {
+          "expr": "t = N / fe",
+          "vars": {
+            "t": "latence d'un tampon (s)",
+            "N": "taille du tampon (échantillons)",
+            "fe": "fréquence d'échantillonnage (Hz)"
+          },
+          "source_url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf"
+        }
+      ],
+      "units": [
+        "ms",
+        "samples"
+      ],
+      "related_concepts": [
+        "latency",
+        "buffer-size",
+        "direct-monitoring",
+        "cue-mix"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME — HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "consolidation",
+      "name_fr": "Consolidation des pistes",
+      "name_en": "Consolidation",
+      "domain": "studio-recording",
+      "definition": "Fusion des régions éditées d'une piste en un seul fichier audio continu, aligné sur le même point de départ que les autres pistes.",
+      "explanation": "Le P&E Wing recommande, pour la livraison préférée, de consolider chaque piste de chaque titre en fichier Broadcast Wave : un seul fichier par piste, même départ pour toutes (y compris les pistes partielles comme un solo), copie bit à bit si possible. Sans référence temporelle, le départ conseillé est l'équivalent de 01:00:00:00. Un fichier « aplati » (flattened) intègre en plus montage, automation et traitements ; il peut être livré à côté de la version non traitée si label et producteur le décident. Exemple : la comp de voix devient un seul fichier qui commence au début du morceau.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "comping",
+        "broadcast-wave-metadata",
+        "session-backup-321",
+        "timecode"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "broadcast-wave-metadata",
+      "name_fr": "Fichier BWF et métadonnées bext",
+      "name_en": "Broadcast Wave file and bext metadata",
+      "domain": "studio-recording",
+      "definition": "Format WAV enrichi d'un chunk « bext » qui porte description, auteur, date, heure et une référence temporelle en échantillons depuis minuit.",
+      "explanation": "Le BWF est spécifié par l'EBU (Tech 3285) ; sa version 2 ajoute des champs de sonie. Le P&E Wing demande d'inscrire la position d'origine (time code) dans le champ TimeReference du bext, entier 64 bits égal au nombre d'échantillons depuis minuit. Le guide note que l'AIFF ne gère pas d'horodatage, et ne recommande pas encore les BWF multicanaux entrelacés (rév. 2017). Un fichier bien renseigné se replace seul au bon endroit quand on l'importe dans une autre STAN.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "consolidation",
+        "timecode",
+        "recording-metadata"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU — Tech 3285 v2 Specification of the Broadcast Wave Format",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "session-backup-321",
+      "name_fr": "Sauvegarde 3-2-1 d'une session",
+      "name_en": "3-2-1 session backup",
+      "domain": "studio-recording",
+      "definition": "Règle de sauvegarde : 3 copies de chaque fichier important (1 principale, 2 sauvegardes), sur 2 types de supports différents, dont 1 copie hors site.",
+      "explanation": "Le document US-CERT sur les options de sauvegarde formule cette règle 3-2-1. Le P&E Wing va dans le même sens pour la musique : la livraison minimale comprend le master et deux copies de sécurité (safeties) sur deux supports différents ; la vérification de chaque archive est indispensable, des sommes de contrôle (checksums) garantissent l'intégrité bit à bit, et il faut migrer périodiquement les supports. Exemple en fin de journée : disque de session, copie sur un second disque, copie sur un stockage distant (cloud ou disque gardé ailleurs).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "consolidation",
+        "recording-metadata",
+        "session-file-naming"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.cisa.gov/sites/default/files/publications/data_backup_options.pdf",
+          "publisher": "US-CERT / CISA (Carnegie Mellon University, 2012) — Data Backup Options",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "mix-stem-delivery",
+      "name_fr": "Stems de mix (livraison musique)",
+      "name_en": "Mix stem delivery",
+      "domain": "studio-recording",
+      "definition": "Sous-mixes imprimés depuis le mix master, chacun contenant un groupe d'éléments avec tous ses traitements, panoramiques et effets.",
+      "explanation": "Le P&E Wing propose un jeu de stems de base : voix lead avec effets, chœurs avec effets, batterie, percussions additionnelles, basse, guitares électriques, guitares acoustiques, claviers. Tous les stems d'un titre doivent avoir le même point de départ et de fin pour rester en phase à l'import. La somme des stems n'est pas forcément identique au mix master : le compresseur de bus réagit plus fort au mix complet qu'à un stem seul. Le guide propose de déclencher son sidechain par un « key mix » (le mix imprimé sans traitement de bus). Exemple d'usage : playback en concert, remix, jeu vidéo, film.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "stems",
+        "mixdown",
+        "sidechain",
+        "compressor",
+        "session-file-naming"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "recording-metadata",
+      "name_fr": "Métadonnées d'enregistrement",
+      "name_en": "Recording metadata",
+      "domain": "studio-recording",
+      "definition": "Informations sur le projet enregistré : interprètes et rôles, producteurs, ingénieurs, auteurs, matériel, supports, codes (ISRC, ISNI, UPC).",
+      "explanation": "Selon le P&E Wing, c'est au producteur, avec l'artiste, de fixer les crédits et de les transmettre au label. Ces données sont rangées dans le dossier Documentation du projet. Le guide cite le standard DDEX RIN (Recording Information Notification, octobre 2016), un message XML qui décrit les personnes et outils impliqués dans un enregistrement. Côté fichier, le chunk bext du BWF porte une partie de ces informations. Exemple : noter dès la prise le nom du musicien, l'instrument et le micro dans la feuille de session.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "broadcast-wave-metadata",
+        "track-sheet"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU — Tech 3285 v2 Specification of the Broadcast Wave Format",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "loudness-normalization-streaming",
+      "name_fr": "Normalisation de sonie en streaming",
+      "name_en": "Loudness normalization for streaming",
+      "domain": "studio-recording",
+      "definition": "Ajustement automatique du volume de lecture par la plateforme pour que les titres sonnent à une sonie de référence.",
+      "explanation": "Spotify mesure la sonie selon ITU 1770 et normalise par défaut à −14 LUFS ; en Premium l'utilisateur peut choisir Loud (−11 LUFS), Normal (−14) ou Quiet (−19). Spotify recommande de garder la crête vraie sous −1 dBTP, et sous −2 dBTP si le master dépasse −14 LUFS intégrés. Conséquence : un master très compressé pour « sonner fort » sera baissé à la lecture et perd sa dynamique sans gain de volume. L'EBU publie un supplément R 128 s2 pour le streaming, dont les valeurs ne sont pas reprises ici.",
+      "formulas": [],
+      "units": [
+        "LUFS",
+        "dBTP"
+      ],
+      "related_concepts": [
+        "mastering",
+        "loudness-ebu-r128",
+        "true-peak"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://support.spotify.com/us/artists/article/loudness-normalization/",
+          "publisher": "Spotify for Artists (Spotify)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.itu.int/rec/R-REC-BS.1770",
+          "publisher": "ITU-R — Recommendation BS.1770",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "podcast-recording",
+      "name_fr": "Enregistrement de podcast",
+      "name_en": "Podcast recording",
+      "domain": "studio-recording",
+      "definition": "Prise de voix parlée à plusieurs intervenants, chacun sur son micro et sa piste, en visant un niveau constant et une pièce calme.",
+      "explanation": "Shure conseille un micro par voix enregistré sur une piste séparée, le moins de micros possible, et la règle 3:1 : la distance entre micros doit faire au moins trois fois la distance micro-bouche. Le niveau doit rester constant : les mouvements par rapport au micro changent le niveau et se rattrapent mal ensuite. Pour un micro dynamique, Shure recommande de parler à 3–6 pouces (environ 8–15 cm), de choisir un casque fermé, une pièce calme avec des surfaces absorbantes, et de faire un test de 30 secondes avant d'enregistrer. Les compresseurs agissent sur toute la piste : deux voix sur une même piste se compriment l'une l'autre.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "three-to-one-rule",
+        "dynamic-microphone",
+        "proximity-effect",
+        "gain-staging"
+      ],
+      "equipment_ids": [
+        "shure-sm7b",
+        "shure-mv7-plus",
+        "sound-devices-mixpre-6-ii"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une prise de son studio (TES/E4) — jugement, non vérifié sur eduscol (BC02 vu sur RNCP37196 par la fiche 16)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
+          "publisher": "Shure — How to Start a Podcast: Recording an Episode",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Pages Apple Logic Pro (comping, take folders, punch) : contenu non rendu par WebFetch (table des matières seulement)",
+      "searched": "support.apple.com/guide/logicpro (comping overview, flatten and merge, punch recording)"
+    },
+    {
+      "what": "Valeurs numériques de l'EBU R 128 s2 (streaming) et AES TD1008",
+      "searched": "aes.org documentDownloads (403) ; R 128 s2 non relu"
+    },
+    {
+      "what": "Édition 2025 des P&E Delivery Recommendations (seule la rév. 2017 a été lue, via une copie hébergée par un tiers)",
+      "searched": "barryrudolph.com pe_guidebook_241016.pdf (ECONNRESET), producersandengineers.com"
+    }
+  ]
+}

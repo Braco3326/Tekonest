@@ -1,0 +1,1007 @@
+{
+  "entity": "glossary",
+  "domain": "studio-recording",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "recording-session",
+      "term_fr": "Session d'enregistrement",
+      "term_en": "Recording session",
+      "domain": "studio-recording",
+      "definition": "Période de travail en studio consacrée à la captation de sources sur pistes séparées.",
+      "see_also": [
+        "recording-session"
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "track-sheet",
+      "term_fr": "Feuille de pistes",
+      "term_en": "Track sheet",
+      "domain": "studio-recording",
+      "definition": "Document listant pistes, sources, micros et réglages d'une session ; il est rangé avec la documentation du projet.",
+      "see_also": [
+        "track-sheet"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recording-map",
+      "term_fr": "Carte d'enregistrement",
+      "term_en": "Recording map",
+      "domain": "studio-recording",
+      "definition": "Document suivi pendant tout le projet qui décrit les sources d'origine, les transferts et les copies de sécurité.",
+      "see_also": [
+        "track-sheet"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "take",
+      "term_fr": "Prise",
+      "term_en": "Take",
+      "domain": "studio-recording",
+      "definition": "Un enregistrement d'une partie sur une zone donnée ; plusieurs prises d'un passage peuvent coexister sur une piste.",
+      "see_also": [
+        "take"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "overdub",
+      "term_fr": "Re-recording",
+      "term_en": "Overdub",
+      "domain": "studio-recording",
+      "definition": "Enregistrement d'une partie nouvelle en écoutant les pistes déjà enregistrées.",
+      "see_also": [
+        "overdub"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Overdubbing",
+          "publisher": "Wikipedia — Overdubbing",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "punch-in",
+      "term_fr": "Punch-in",
+      "term_en": "Punch-in",
+      "domain": "studio-recording",
+      "definition": "Point où l'enregistrement démarre automatiquement sur une piste existante.",
+      "see_also": [
+        "punch-in"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "punch-out",
+      "term_fr": "Punch-out",
+      "term_en": "Punch-out",
+      "domain": "studio-recording",
+      "definition": "Point où l'enregistrement s'arrête et où la piste existante revient.",
+      "see_also": [
+        "punch-in"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pre-roll",
+      "term_fr": "Pré-roll",
+      "term_en": "Pre-roll",
+      "domain": "studio-recording",
+      "definition": "Lecture de quelques mesures avant le point d'enregistrement pour que le musicien se cale (deux mesures par défaut dans REAPER).",
+      "see_also": [
+        "punch-in"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "comp",
+      "term_fr": "Comp (prise composite)",
+      "term_en": "Comp",
+      "domain": "studio-recording",
+      "definition": "Prise reconstituée à partir des meilleurs passages de plusieurs prises.",
+      "see_also": [
+        "comping"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "take-lanes",
+      "term_fr": "Couloirs de prises",
+      "term_en": "Take lanes (media item lanes)",
+      "domain": "studio-recording",
+      "definition": "Affichage des prises les unes sous les autres sur une même piste, pour comparer et compiler.",
+      "see_also": [
+        "comping",
+        "take"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "destructive-punch",
+      "term_fr": "Punch destructif (mode bande)",
+      "term_en": "Destructive punch (tape mode)",
+      "domain": "studio-recording",
+      "definition": "Mode où la nouvelle prise remplace et efface la partie existante, au lieu de créer une prise supplémentaire.",
+      "see_also": [
+        "punch-in"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tape-auto-monitoring",
+      "term_fr": "Écoute « tape auto »",
+      "term_en": "Tape auto-style monitoring",
+      "domain": "studio-recording",
+      "definition": "Mode d'écoute qui fait entendre l'entrée seulement à l'arrêt ou en enregistrement ; en lecture on n'entend que les pistes.",
+      "see_also": [
+        "direct-monitoring",
+        "punch-in"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "talkback",
+      "term_fr": "Ordre",
+      "term_en": "Talkback",
+      "domain": "studio-recording",
+      "definition": "Intercom du studio : micro de régie envoyé aux casques ou au haut-parleur de la cabine.",
+      "see_also": [
+        "talkback"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Talkback_(recording)",
+          "publisher": "Wikipedia — Talkback (recording)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listenback",
+      "term_fr": "Écoute retour (listenback)",
+      "term_en": "Listenback",
+      "domain": "studio-recording",
+      "definition": "Fonction qui envoie un micro du studio vers l'écoute principale de la régie (TotalMix FX).",
+      "see_also": [
+        "talkback"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME — Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dim",
+      "term_fr": "Atténuation (dim)",
+      "term_en": "Dim",
+      "domain": "studio-recording",
+      "definition": "Baisse d'un nombre de dB réglable appliquée à une écoute, par exemple aux casques pendant l'ordre.",
+      "see_also": [
+        "talkback",
+        "cue-mix"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME — Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cue-mix",
+      "term_fr": "Mix casque",
+      "term_en": "Cue mix",
+      "domain": "studio-recording",
+      "definition": "Mélange de retour envoyé au casque d'un musicien, indépendant du mix régie.",
+      "see_also": [
+        "cue-mix"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pre-fader-send",
+      "term_fr": "Envoi pré-fader",
+      "term_en": "Pre-fader send",
+      "domain": "studio-recording",
+      "definition": "Départ auxiliaire non affecté par le fader de la voie, utilisé pour les retours.",
+      "see_also": [
+        "pre-post-fader",
+        "cue-mix"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Aux-send",
+          "publisher": "Wikipedia — Aux-send",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post-fader-send",
+      "term_fr": "Envoi post-fader",
+      "term_en": "Post-fader send",
+      "domain": "studio-recording",
+      "definition": "Départ auxiliaire qui suit le fader de la voie, utilisé pour les effets.",
+      "see_also": [
+        "pre-post-fader"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Aux-send",
+          "publisher": "Wikipedia — Aux-send",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "submix",
+      "term_fr": "Sous-mix",
+      "term_en": "Submix",
+      "domain": "studio-recording",
+      "definition": "Mélange indépendant d'entrées et de lectures envoyé à une sortie ; la Fireface UFX III en propose jusqu'à 47 en stéréo.",
+      "see_also": [
+        "cue-mix"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME — Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "direct-monitoring",
+      "term_fr": "Écoute directe",
+      "term_en": "Direct monitoring",
+      "domain": "studio-recording",
+      "definition": "Écoute de l'entrée prélevée avant la conversion vers l'ordinateur, sans latence logicielle.",
+      "see_also": [
+        "direct-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "input-monitoring",
+      "term_fr": "Écoute d'entrée",
+      "term_en": "Input monitoring",
+      "domain": "studio-recording",
+      "definition": "Écoute de l'entrée d'une piste armée à travers la STAN ; à couper si l'interface fait l'écoute directe.",
+      "see_also": [
+        "direct-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bleed",
+      "term_fr": "Repisse",
+      "term_en": "Bleed",
+      "domain": "studio-recording",
+      "definition": "Son d'une autre source capté par un micro, par exemple les enceintes captées pendant un overdub.",
+      "see_also": [
+        "overdub",
+        "cue-mix"
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "consolidate",
+      "term_fr": "Consolider",
+      "term_en": "Consolidate",
+      "domain": "studio-recording",
+      "definition": "Combiner les régions éditées d'une piste en un seul fichier audio continu.",
+      "see_also": [
+        "consolidation"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flattened-audio-file",
+      "term_fr": "Fichier aplati",
+      "term_en": "Flattened audio file",
+      "domain": "studio-recording",
+      "definition": "Fichier rendu qui intègre montage, automation et traitements.",
+      "see_also": [
+        "consolidation"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "broadcast-wave-file",
+      "term_fr": "Fichier Broadcast Wave (BWF)",
+      "term_en": "Broadcast Wave File",
+      "domain": "studio-recording",
+      "definition": "Fichier WAV avec métadonnées supplémentaires, dont un identifiant et une référence temporelle précise.",
+      "see_also": [
+        "broadcast-wave-metadata"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bext-chunk",
+      "term_fr": "Chunk bext",
+      "term_en": "Bext chunk",
+      "domain": "studio-recording",
+      "definition": "Bloc d'extension du BWF qui porte description, auteur, date, heure et référence temporelle.",
+      "see_also": [
+        "broadcast-wave-metadata"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU — Tech 3285 v2 Specification of the Broadcast Wave Format",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "time-reference",
+      "term_fr": "Référence temporelle (TimeReference)",
+      "term_en": "Time reference",
+      "domain": "studio-recording",
+      "definition": "Champ du bext : nombre d'échantillons depuis minuit au début du fichier, sur 64 bits.",
+      "see_also": [
+        "broadcast-wave-metadata",
+        "timecode"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mix-master",
+      "term_fr": "Mix master",
+      "term_en": "Mix master",
+      "domain": "studio-recording",
+      "definition": "Mix contenant tous les éléments voulus de la production, approuvé pour la sortie.",
+      "see_also": [
+        "mixdown"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mix-version",
+      "term_fr": "Version de mix",
+      "term_en": "Mix version",
+      "domain": "studio-recording",
+      "definition": "Variante du mix master où la place d'un élément change, par exemple Vocal Up.",
+      "see_also": [
+        "mixdown"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mix-stem",
+      "term_fr": "Stem de mix",
+      "term_en": "Mix stem",
+      "domain": "studio-recording",
+      "definition": "Version du mix qui ne contient qu'un groupe d'éléments, avec tous ses traitements et effets.",
+      "see_also": [
+        "mix-stem-delivery",
+        "stems"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "instrumental-mix",
+      "term_fr": "Instrumental",
+      "term_en": "Instrumental track",
+      "domain": "studio-recording",
+      "definition": "Réplique du mix master sans aucune voix.",
+      "see_also": [
+        "mixdown"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "no-lead-vocal-mix",
+      "term_fr": "Mix sans voix lead (TV track)",
+      "term_en": "No lead vocal (TV track)",
+      "domain": "studio-recording",
+      "definition": "Réplique du mix master avec les chœurs mais sans la voix lead.",
+      "see_also": [
+        "mixdown"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "key-mix",
+      "term_fr": "Key mix",
+      "term_en": "Key mix",
+      "domain": "studio-recording",
+      "definition": "Mix imprimé sans les traitements du bus stéréo, utilisé pour déclencher le sidechain du compresseur de bus lors de l'impression des stems.",
+      "see_also": [
+        "mix-stem-delivery",
+        "sidechain"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "approved-mixes",
+      "term_fr": "Mix approuvés",
+      "term_en": "Approved mixes",
+      "domain": "studio-recording",
+      "definition": "Mix validés par le client pour le mastering ou la sortie, rangés à part pour l'ingénieur mastering.",
+      "see_also": [
+        "mixdown",
+        "mastering"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reference-mix",
+      "term_fr": "Mix de référence",
+      "term_en": "Reference mix",
+      "domain": "studio-recording",
+      "definition": "Mix provisoire envoyé à l'artiste ou au client pour écoute et commentaires.",
+      "see_also": [
+        "mixdown"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "safety-copy",
+      "term_fr": "Copie de sécurité",
+      "term_en": "Backup / safety master",
+      "domain": "studio-recording",
+      "definition": "Copie du master sur un autre support, à la même fréquence et résolution que l'original.",
+      "see_also": [
+        "session-backup-321"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule-3-2-1",
+      "term_fr": "Règle 3-2-1",
+      "term_en": "3-2-1 backup rule",
+      "domain": "studio-recording",
+      "definition": "3 copies, sur 2 types de supports, dont 1 hors site.",
+      "see_also": [
+        "session-backup-321"
+      ],
+      "sources": [
+        {
+          "url": "https://www.cisa.gov/sites/default/files/publications/data_backup_options.pdf",
+          "publisher": "US-CERT / CISA (Carnegie Mellon University, 2012) — Data Backup Options",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "checksum",
+      "term_fr": "Somme de contrôle",
+      "term_en": "Checksum",
+      "domain": "studio-recording",
+      "definition": "Empreinte calculée sur un fichier pour vérifier qu'une copie est identique bit à bit.",
+      "see_also": [
+        "session-backup-321"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lto",
+      "term_fr": "LTO",
+      "term_en": "Linear Tape Open",
+      "domain": "studio-recording",
+      "definition": "Format de bande magnétique informatique utilisé pour l'archivage à long terme.",
+      "see_also": [
+        "session-backup-321"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recording-metadata",
+      "term_fr": "Métadonnées d'enregistrement",
+      "term_en": "Recording metadata",
+      "domain": "studio-recording",
+      "definition": "Informations sur le projet : interprètes, rôles, producteurs, ingénieurs, auteurs, matériel, supports.",
+      "see_also": [
+        "recording-metadata"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ddex-rin",
+      "term_fr": "DDEX RIN",
+      "term_en": "DDEX Recording Information Notification",
+      "domain": "studio-recording",
+      "definition": "Message XML standardisé par DDEX (2016) qui décrit les personnes et les outils d'un enregistrement.",
+      "see_also": [
+        "recording-metadata"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aiff",
+      "term_fr": "AIFF",
+      "term_en": "Audio Interchange File Format",
+      "domain": "studio-recording",
+      "definition": "Format de fichier audio ; il ne gère pas l'horodatage.",
+      "see_also": [
+        "broadcast-wave-metadata"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flac",
+      "term_fr": "FLAC",
+      "term_en": "Free Lossless Audio Codec",
+      "domain": "studio-recording",
+      "definition": "Format de compression sans perte, libre de droits, qui réduit la taille d'environ 50 à 60 %.",
+      "see_also": [
+        "mastering"
+      ],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastering",
+      "term_fr": "Mastering",
+      "term_en": "Mastering",
+      "domain": "studio-recording",
+      "definition": "Préparation finale d'un mix et transfert vers le format d'où sont tirées toutes les copies.",
+      "see_also": [
+        "mastering"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_mastering",
+          "publisher": "Wikipedia — Audio mastering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loudness-normalization",
+      "term_fr": "Normalisation de sonie",
+      "term_en": "Loudness normalization",
+      "domain": "studio-recording",
+      "definition": "Ajustement du volume de lecture par la plateforme vers une sonie de référence (−14 LUFS par défaut chez Spotify).",
+      "see_also": [
+        "loudness-normalization-streaming"
+      ],
+      "sources": [
+        {
+          "url": "https://support.spotify.com/us/artists/article/loudness-normalization/",
+          "publisher": "Spotify for Artists (Spotify)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_found_log": []
+}

@@ -1,0 +1,689 @@
+{
+  "entity": "scenario",
+  "domain": "studio-recording",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "band-tracking-four-musicians",
+      "name_fr": "Séance de prise d'un groupe de 4 musiciens",
+      "name_en": "Band recording session, 4 musicians",
+      "domain": "studio-recording",
+      "brief": "Batterie, basse, guitare et chant témoin enregistrés ensemble dans la salle de prise, la voix définitive viendra en overdub. Préparer la session (48 kHz / 24 bits, pistes nommées), câbler 7 sources, fabriquer deux mixes casque (batteur sur la sortie casque 1, les trois autres via un ampli de distribution sur la sortie 2), installer l'ordre et enregistrer sans écrêtage ni écho dans les casques. La Fireface UFX III a 4 préamplis micro en façade : les 3 autres sources passent par des préamplis externes vers les entrées ligne.",
+      "room_id": "studio-live-room-medium",
+      "required_gear": [
+        {
+          "equipment_id": "rme-fireface-ufx-iii",
+          "qty": 1,
+          "role": "interface et mixeur casque (TotalMix FX)"
+        },
+        {
+          "equipment_id": "cockos-reaper",
+          "qty": 1,
+          "role": "STAN"
+        },
+        {
+          "equipment_id": "shure-beta-52a",
+          "qty": 1,
+          "role": "grosse caisse"
+        },
+        {
+          "equipment_id": "shure-sm57",
+          "qty": 2,
+          "role": "caisse claire, ampli guitare"
+        },
+        {
+          "equipment_id": "akg-c414-xls",
+          "qty": 2,
+          "role": "overheads"
+        },
+        {
+          "equipment_id": "radial-jdi",
+          "qty": 1,
+          "role": "DI basse"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 1,
+          "role": "chant témoin"
+        },
+        {
+          "equipment_id": "ams-neve-1073spx",
+          "qty": 1,
+          "role": "préampli guitare"
+        },
+        {
+          "equipment_id": "api-512c",
+          "qty": 1,
+          "role": "préampli chant témoin"
+        },
+        {
+          "equipment_id": "focusrite-isa-one",
+          "qty": 1,
+          "role": "préampli basse (après DI)"
+        },
+        {
+          "equipment_id": "behringer-ha400",
+          "qty": 1,
+          "role": "distribution du mix casque 2"
+        },
+        {
+          "equipment_id": "beyerdynamic-dt-770-pro",
+          "qty": 4,
+          "role": "casques musiciens"
+        },
+        {
+          "equipment_id": "genelec-8030c",
+          "qty": 2,
+          "role": "écoutes régie (studio-control-room-small)"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "kick",
+            "equipment_id": "shure-beta-52a",
+            "label": "Grosse caisse"
+          },
+          {
+            "id": "snare",
+            "equipment_id": "shure-sm57",
+            "label": "Caisse claire"
+          },
+          {
+            "id": "ohl",
+            "equipment_id": "akg-c414-xls",
+            "label": "Overhead G"
+          },
+          {
+            "id": "ohr",
+            "equipment_id": "akg-c414-xls",
+            "label": "Overhead D"
+          },
+          {
+            "id": "gtr",
+            "equipment_id": "shure-sm57",
+            "label": "Ampli guitare"
+          },
+          {
+            "id": "di",
+            "equipment_id": "radial-jdi",
+            "label": "DI basse"
+          },
+          {
+            "id": "vox",
+            "equipment_id": "shure-sm58",
+            "label": "Chant témoin"
+          },
+          {
+            "id": "pre-gtr",
+            "equipment_id": "ams-neve-1073spx",
+            "label": "Préampli guitare"
+          },
+          {
+            "id": "pre-bass",
+            "equipment_id": "focusrite-isa-one",
+            "label": "Préampli basse"
+          },
+          {
+            "id": "pre-vox",
+            "equipment_id": "api-512c",
+            "label": "Préampli chant"
+          },
+          {
+            "id": "ufx",
+            "equipment_id": "rme-fireface-ufx-iii",
+            "label": "Interface"
+          },
+          {
+            "id": "daw",
+            "equipment_id": "cockos-reaper",
+            "label": "STAN"
+          },
+          {
+            "id": "ha",
+            "equipment_id": "behringer-ha400",
+            "label": "Ampli casque"
+          },
+          {
+            "id": "hp-drums",
+            "equipment_id": "beyerdynamic-dt-770-pro",
+            "label": "Casque batteur"
+          },
+          {
+            "id": "hp-band",
+            "equipment_id": "beyerdynamic-dt-770-pro",
+            "label": "Casques basse/guitare/chant"
+          },
+          {
+            "id": "mon",
+            "equipment_id": "genelec-8030c",
+            "label": "Écoutes régie"
+          }
+        ],
+        "edges": [
+          {
+            "from": "kick",
+            "to": "ufx",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "snare",
+            "to": "ufx",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "ohl",
+            "to": "ufx",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "ohr",
+            "to": "ufx",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "gtr",
+            "to": "pre-gtr",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "di",
+            "to": "pre-bass",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "vox",
+            "to": "pre-vox",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "pre-gtr",
+            "to": "ufx",
+            "signal": "line-level-pro",
+            "connector": "trs-quarter"
+          },
+          {
+            "from": "pre-bass",
+            "to": "ufx",
+            "signal": "line-level-pro",
+            "connector": "trs-quarter"
+          },
+          {
+            "from": "pre-vox",
+            "to": "ufx",
+            "signal": "line-level-pro",
+            "connector": "trs-quarter"
+          },
+          {
+            "from": "ufx",
+            "to": "daw",
+            "signal": "usb-audio",
+            "connector": "usb-c"
+          },
+          {
+            "from": "ufx",
+            "to": "hp-drums",
+            "signal": "headphone-level",
+            "connector": "trs-quarter"
+          },
+          {
+            "from": "ufx",
+            "to": "ha",
+            "signal": "headphone-level",
+            "connector": "trs-quarter"
+          },
+          {
+            "from": "ha",
+            "to": "hp-band",
+            "signal": "headphone-level",
+            "connector": "trs-quarter"
+          },
+          {
+            "from": "ufx",
+            "to": "mon",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "recording-session-setup",
+        "cue-mix-setup",
+        "session-backup-archive"
+      ],
+      "rule_ids": [
+        "cue-send-post-fader",
+        "monitoring-latency-excessive",
+        "record-peak-clipping",
+        "session-sample-rate-mismatch"
+      ],
+      "difficulty": 4,
+      "estimated_time_min": 180,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Prise multipiste en studio (E4 pratique) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME — Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear",
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "podcast-host-three-guests",
+      "name_fr": "Podcast avec un animateur et 3 invités",
+      "name_en": "Podcast with 3 guests",
+      "domain": "studio-recording",
+      "brief": "Quatre voix autour d'une table dans une petite pièce traitée. Un SM7B par personne, chacun sur sa piste ISO de l'enregistreur, règle 3:1 entre micros, casque fermé pour tous via un ampli 4 canaux. Test de 30 s, enregistrement sans écrêtage, sauvegarde 3-2-1 en fin d'émission.",
+      "room_id": "podcast-room-small",
+      "required_gear": [
+        {
+          "equipment_id": "shure-sm7b",
+          "qty": 4,
+          "role": "micros voix"
+        },
+        {
+          "equipment_id": "sound-devices-mixpre-6-ii",
+          "qty": 1,
+          "role": "enregistreur multipiste (4 entrées micro, pistes ISO)"
+        },
+        {
+          "equipment_id": "presonus-hp4",
+          "qty": 1,
+          "role": "ampli casque 4 canaux"
+        },
+        {
+          "equipment_id": "beyerdynamic-dt-770-pro",
+          "qty": 4,
+          "role": "casques fermés"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "m1",
+            "equipment_id": "shure-sm7b",
+            "label": "Animateur"
+          },
+          {
+            "id": "m2",
+            "equipment_id": "shure-sm7b",
+            "label": "Invité 1"
+          },
+          {
+            "id": "m3",
+            "equipment_id": "shure-sm7b",
+            "label": "Invité 2"
+          },
+          {
+            "id": "m4",
+            "equipment_id": "shure-sm7b",
+            "label": "Invité 3"
+          },
+          {
+            "id": "rec",
+            "equipment_id": "sound-devices-mixpre-6-ii",
+            "label": "Enregistreur"
+          },
+          {
+            "id": "hpa",
+            "equipment_id": "presonus-hp4",
+            "label": "Ampli casque"
+          },
+          {
+            "id": "hp",
+            "equipment_id": "beyerdynamic-dt-770-pro",
+            "label": "Casques (x4)"
+          }
+        ],
+        "edges": [
+          {
+            "from": "m1",
+            "to": "rec",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "m2",
+            "to": "rec",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "m3",
+            "to": "rec",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "m4",
+            "to": "rec",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rec",
+            "to": "hpa",
+            "signal": "headphone-level",
+            "connector": "trs-35mm"
+          },
+          {
+            "from": "hpa",
+            "to": "hp",
+            "signal": "headphone-level",
+            "connector": "trs-quarter"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "podcast-multi-mic-setup",
+        "session-backup-archive"
+      ],
+      "rule_ids": [
+        "record-peak-clipping",
+        "backup-3-2-1-incomplete"
+      ],
+      "difficulty": 2,
+      "estimated_time_min": 60,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Prise de parole multi-micros — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
+          "publisher": "Shure — How to Start a Podcast: Recording an Episode",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.cisa.gov/sites/default/files/publications/data_backup_options.pdf",
+          "publisher": "US-CERT / CISA (Carnegie Mellon University, 2012) — Data Backup Options",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "voice-over-booth-session",
+      "name_fr": "Séance de voix off en cabine",
+      "name_en": "Voice-over session",
+      "domain": "studio-recording",
+      "brief": "Un comédien enregistre une voix off en cabine pour un film (session 48 kHz / 24 bits). U 87 Ai en frontal rapproché avec anti-pop, préampli ISA One, interface Pro Tools HD I/O sous horloge OCX HD, écoute régie Grace m905 + Genelec, retour casque du comédien par un ampli casque, ordre pour diriger. Punch-in sur les phrases à reprendre, puis export de fichiers BWF bien nommés.",
+      "room_id": "studio-vocal-booth-small",
+      "required_gear": [
+        {
+          "equipment_id": "neumann-u87-ai",
+          "qty": 1,
+          "role": "micro voix"
+        },
+        {
+          "equipment_id": "stedman-proscreen-xl",
+          "qty": 1,
+          "role": "anti-pop"
+        },
+        {
+          "equipment_id": "focusrite-isa-one",
+          "qty": 1,
+          "role": "préampli"
+        },
+        {
+          "equipment_id": "avid-hd-io",
+          "qty": 1,
+          "role": "convertisseurs"
+        },
+        {
+          "equipment_id": "avid-protools-hdx",
+          "qty": 1,
+          "role": "moteur Pro Tools"
+        },
+        {
+          "equipment_id": "mogami-gold-db25-xlrm",
+          "qty": 2,
+          "role": "câbles DB25 vers XLR (entrées et sorties HD I/O)"
+        },
+        {
+          "equipment_id": "antelope-ocx-hd",
+          "qty": 1,
+          "role": "horloge maître"
+        },
+        {
+          "equipment_id": "grace-m905",
+          "qty": 1,
+          "role": "contrôleur d'écoute"
+        },
+        {
+          "equipment_id": "genelec-8030c",
+          "qty": 2,
+          "role": "écoutes régie"
+        },
+        {
+          "equipment_id": "presonus-hp4",
+          "qty": 1,
+          "role": "ampli casque cabine"
+        },
+        {
+          "equipment_id": "beyerdynamic-dt-770-pro",
+          "qty": 1,
+          "role": "casque comédien"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic",
+            "equipment_id": "neumann-u87-ai",
+            "label": "U 87 Ai cabine"
+          },
+          {
+            "id": "pre",
+            "equipment_id": "focusrite-isa-one",
+            "label": "ISA One"
+          },
+          {
+            "id": "io",
+            "equipment_id": "avid-hd-io",
+            "label": "HD I/O"
+          },
+          {
+            "id": "hdx",
+            "equipment_id": "avid-protools-hdx",
+            "label": "Pro Tools HDX"
+          },
+          {
+            "id": "clk",
+            "equipment_id": "antelope-ocx-hd",
+            "label": "Horloge OCX HD"
+          },
+          {
+            "id": "mon",
+            "equipment_id": "grace-m905",
+            "label": "Grace m905"
+          },
+          {
+            "id": "spk",
+            "equipment_id": "genelec-8030c",
+            "label": "Genelec"
+          },
+          {
+            "id": "hpa",
+            "equipment_id": "presonus-hp4",
+            "label": "Ampli casque"
+          },
+          {
+            "id": "hp",
+            "equipment_id": "beyerdynamic-dt-770-pro",
+            "label": "Casque comédien"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic",
+            "to": "pre",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "pre",
+            "to": "io",
+            "signal": "line-level-pro",
+            "connector": "dsub25"
+          },
+          {
+            "from": "clk",
+            "to": "io",
+            "signal": "wordclock",
+            "connector": "bnc"
+          },
+          {
+            "from": "io",
+            "to": "hdx",
+            "signal": "usb-audio",
+            "connector": "digilink"
+          },
+          {
+            "from": "io",
+            "to": "mon",
+            "signal": "line-level-pro",
+            "connector": "dsub25"
+          },
+          {
+            "from": "mon",
+            "to": "spk",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "io",
+            "to": "hpa",
+            "signal": "line-level-pro",
+            "connector": "dsub25"
+          },
+          {
+            "from": "hpa",
+            "to": "hp",
+            "signal": "headphone-level",
+            "connector": "trs-quarter"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "vocal-overdub-session",
+        "cue-mix-setup",
+        "session-backup-archive"
+      ],
+      "rule_ids": [
+        "record-peak-clipping",
+        "session-sample-rate-mismatch",
+        "monitoring-latency-excessive"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 90,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Voix off / post-production (E4) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/",
+          "publisher": "DPA Microphones — How to mic vocals in the recording studio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU — Tech 3285 v2 Specification of the Broadcast Wave Format",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}
