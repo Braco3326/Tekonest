@@ -1,0 +1,505 @@
+{
+  "entity": "fault",
+  "domain": "installation-conference",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "remote-participants-hear-echo",
+      "name_fr": "Les participants distants entendent leur écho",
+      "name_en": "Remote participants hear their own echo",
+      "domain": "installation-conference",
+      "symptom": "Pendant une visioconférence, les distants entendent leur propre voix revenir avec un retard ; en salle, on n'entend rien d'anormal.",
+      "contexts": [
+        "hybrid",
+        "conference"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Une source distante n'est pas dans la référence de l'AEC (point de matrice coupé)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Rapport référence/micro déséquilibré : les micros captent le haut-parleur plus fort que la référence",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Traitement non linéaire dans le trajet de l'écho (limiteur après la prise de référence, automixeur avant l'AEC)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Le signal reçu des distants est renvoyé vers l'émission (boucle de routage)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Longueur de traîne de l'AEC trop courte pour une salle réverbérante",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Vérifier les points de matrice entre chaque source distante et la référence",
+        "Vérifier que le signal reçu n'est pas routé vers l'envoi",
+        "Lire le RMLR de chaque voie AEC pendant que le distant parle (viser ~0 dB)",
+        "Vérifier l'ordre : AEC avant automixeur et dynamique ; référence prise après le limiteur du trajet haut-parleur",
+        "Vérifier la longueur de traîne"
+      ],
+      "fixes": [
+        "Ouvrir le point de matrice manquant",
+        "Baisser le gain des micros (captation du distant 3 à 6 dB sous la référence) ou remonter la référence",
+        "Replacer l'AEC avant l'automixeur",
+        "Augmenter la tail length (au prix de plus de DSP)",
+        "Ajuster la suppression d'écho résiduel avec modération"
+      ],
+      "rule_ids": [
+        "aec-reference-missing"
+      ],
+      "concept_ids": [
+        "acoustic-echo-cancellation",
+        "aec-reference-signal",
+        "hybrid-meeting-room"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "remote-participants-hear-underwater-sound",
+      "name_fr": "Son « sous l'eau » chez les distants",
+      "name_en": "Remote participants hear an underwater sound",
+      "domain": "installation-conference",
+      "symptom": "Les distants décrivent la voix des participants en salle comme métallique, « sous l'eau », qui varie.",
+      "contexts": [
+        "hybrid",
+        "conference"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Un ou plusieurs micros de la salle sont envoyés dans la référence de l'AEC",
+          "likelihood": "high"
+        },
+        {
+          "cause": "AEC du codec actif en plus de celui du DSP, ou codec en mode renforcement",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Contrôler tout ce qui est mélangé vers l'entrée de référence",
+        "Contrôler les réglages audio du codec (AEC, mode renforcement, entrée programme)"
+      ],
+      "fixes": [
+        "Retirer les micros de la référence",
+        "Désactiver l'AEC du codec et le mode renforcement"
+      ],
+      "rule_ids": [
+        "mic-in-aec-reference"
+      ],
+      "concept_ids": [
+        "aec-reference-signal",
+        "acoustic-echo-cancellation"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "low-intelligibility-reverberant-room",
+      "name_fr": "Parole peu intelligible en salle réverbérante",
+      "name_en": "Low speech intelligibility in a reverberant room",
+      "domain": "installation-conference",
+      "symptom": "Le public entend la voix assez fort mais ne comprend pas bien les mots, surtout loin des enceintes.",
+      "contexts": [
+        "installation",
+        "conference",
+        "worship"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Les enceintes, peu directives ou loin de l'auditoire, excitent le champ réverbéré",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Niveau trop élevé : au-delà d'environ 80 dB SPL le STI baisse",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Bruit de fond élevé",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Échos (réflexions retardées de plus de 100 ms)",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Mesurer le STIPA à plusieurs places",
+        "Mesurer le bruit de fond salle occupée",
+        "Comparer avec le temps de réverbération mesuré",
+        "Écouter si des échos distincts arrivent d'une paroi"
+      ],
+      "fixes": [
+        "Utiliser des colonnes directives ou orientables dirigées vers le public (ex. ICONYX : montage recommandé de 1,6 à 2,5 m)",
+        "Rapprocher les sources des auditeurs (diffusion répartie)",
+        "Baisser le niveau vers 70–80 dB SPL",
+        "Traiter acoustiquement la salle si possible"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "speech-intelligibility",
+        "speech-transmission-index",
+        "steerable-column-array",
+        "column-loudspeaker",
+        "reverberation-time-rt60"
+      ],
+      "equipment_ids": [
+        "nti-audio-xl2"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.renkus-heinz.com/iconyx-gen5",
+          "publisher": "Renkus-Heinz (ICONYX Gen5)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_array",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "amp-100v-in-protection",
+      "name_fr": "Ampli 100 V en protection",
+      "name_en": "100 V amplifier in protection",
+      "domain": "installation-conference",
+      "symptom": "Une zone de diffusion 100 V se coupe ou l'ampli passe en protection dès que le niveau monte.",
+      "contexts": [
+        "installation",
+        "museum",
+        "retail"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Somme des prises supérieure à la puissance 100 V du canal",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Un haut-parleur réglé sur la position 8 Ω (transformateur court-circuité)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Fuite ou court-circuit partiel sur la ligne (humidité dans un conduit, câble abîmé)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Saturation des transformateurs par beaucoup de grave",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Déconnecter la ligne et vérifier si l'ampli revient à la normale",
+        "Refaire le bilan des prises (atténuateurs comptés à fond)",
+        "Contrôler le sélecteur de chaque haut-parleur",
+        "Isoler la ligne tronçon par tronçon pour trouver une fuite"
+      ],
+      "fixes": [
+        "Baisser des prises ou répartir sur un autre canal",
+        "Corriger toute position 8 Ω",
+        "Réparer le tronçon défectueux, assécher le conduit",
+        "Filtrer le grave inutile sur la ligne"
+      ],
+      "rule_ids": [
+        "100v-line-overload",
+        "transformer-bypass-on-100v-line"
+      ],
+      "concept_ids": [
+        "distributed-sound-100v",
+        "amplifier-power-budget-100v",
+        "transformer-tap"
+      ],
+      "equipment_ids": [
+        "yamaha-xmv8280-d"
+      ],
+      "sources": [
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://avsl.com/support/100v-line-speakers",
+          "publisher": "AVSL Group (distributeur)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "checks"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "interpreters-floor-too-low",
+      "name_fr": "Son de salle trop faible chez les interprètes",
+      "name_en": "Interpreters hear the floor too low",
+      "domain": "installation-conference",
+      "symptom": "Les interprètes signalent qu'ils entendent mal l'orateur dans leur casque.",
+      "contexts": [
+        "conference",
+        "interpretation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Envoi du son de salle (floor) vers le système d'interprétation trop faible ou pris au mauvais endroit",
+          "likelihood": "high"
+        },
+        {
+          "cause": "L'orateur parle hors micro ou son micro est atténué par l'automixeur au profit d'un autre",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Réglage de casque du pupitre interprète trop bas",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Écouter le canal floor au casque d'un pupitre",
+        "Observer les indicateurs d'automix pendant que l'orateur parle",
+        "Vérifier le niveau de sortie de l'envoi floor"
+      ],
+      "fixes": [
+        "Remonter et stabiliser l'envoi floor",
+        "Repositionner le micro de l'orateur, vérifier les poids de l'automixeur",
+        "Rappeler aux orateurs de parler dans le micro"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "interpretation-system",
+        "gain-sharing-automixing"
+      ],
+      "equipment_ids": [
+        "sennheiser-hmd-26"
+      ],
+      "sources": [
+        {
+          "url": "https://aiic.org/site/it/technicalstandards",
+          "publisher": "AIIC (Association internationale des interprètes de conférence)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "symptom"
+          ]
+        },
+        {
+          "url": "https://connect.snv.ch/en/iso-20109",
+          "publisher": "SNV (Swiss Association for Standardization), ISO 20109",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "symptom"
+          ]
+        },
+        {
+          "url": "https://www.dandugan.com/Assets/manuals/Model-E-1-and-E-1A-User-Guide-v3.3.pdf",
+          "publisher": "Dan Dugan Sound Design (Model E-1/E-1A User Guide v3.3, 2016)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "hearing-loop-weak-or-dull",
+      "name_fr": "Boucle magnétique faible ou sourde",
+      "name_en": "Hearing loop weak or dull",
+      "domain": "installation-conference",
+      "symptom": "Des utilisateurs en position T trouvent le son faible, irrégulier selon la place, ou sans aigus.",
+      "contexts": [
+        "installation",
+        "museum",
+        "conference"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Courant de boucle trop faible : champ sous 400 mA/m −3 dB",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Pertes métalliques non compensées (aigus atténués)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Niveau d'entrée trop faible pour l'AGC",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Ampli en atténuation thermique (jusqu'à −4 dB à 90 °C sur le W5-2)",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Mesurer le champ avec un sinus 1 kHz à plusieurs places",
+        "Mesurer 100 Hz et 5 kHz par rapport à 1 kHz",
+        "Vérifier les LED d'AGC et de courant de sortie",
+        "Vérifier la ventilation de l'ampli"
+      ],
+      "fixes": [
+        "Remonter le courant de sortie",
+        "Augmenter la correction des pertes métalliques",
+        "Corriger le niveau d'entrée",
+        "Ventiler l'ampli"
+      ],
+      "rule_ids": [
+        "loop-amplifier-standard"
+      ],
+      "concept_ids": [
+        "hearing-loop",
+        "metal-loss-compensation",
+        "telecoil"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+          "publisher": "Ampetronic (W5-2 Handbook)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "checks"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_induction_loop",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Causes documentées d'un son de salle trop faible chez les interprètes (ISO 20108 non consultée)",
+      "searched": "AIIC technical standards page (titres seulement)"
+    }
+  ]
+}

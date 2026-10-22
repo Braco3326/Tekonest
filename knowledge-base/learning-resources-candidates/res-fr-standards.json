@@ -1,0 +1,3393 @@
+{
+ "agent": "res-fr-standards",
+ "generated": "2026-10-22",
+ "resources": [
+  {
+   "id": "ebu-tech-3344",
+   "type": "standard",
+   "title": "EBU Tech 3344 - Guidelines for distribution and reproduction in accordance with R 128",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2016,
+   "edition": "version 2.1 (July 2016)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "loudness",
+    "distribution",
+    "true peak",
+    "diffusion",
+    "R 128"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3344.pdf",
+   "why_recommended": "Le complément de R 128 côté diffusion et reproduction : niveaux de distribution, marge de true peak, chaîne de transmission. Utile pour comprendre pourquoi un programme conforme peut encore saturer en sortie d'émetteur.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/tech3344",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "loudness-ebu-r128",
+    "true-peak",
+    "distribution-loudness-level"
+   ],
+   "note": "PDF ouvert le 2026-10-22 : page de titre 'TECH 3344 ... VERSION 2.1, Geneva, July 2016' confirmée."
+  },
+  {
+   "id": "ebu-tech-3276",
+   "type": "standard",
+   "title": "EBU Tech 3276 - Listening Conditions for the Assessment of Mono & Stereo Sound",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 1998,
+   "edition": "not found (page dated 28 May 1998)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "conditions d'écoute",
+    "cabine",
+    "monitoring",
+    "géométrie stéréo"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+   "why_recommended": "Décrit la salle d'écoute de référence : géométrie stéréo, temps de réverbération, niveau d'écoute. C'est la base pour installer correctement une régie ou juger une écoute.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/tech3276",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "stereo-listening-geometry",
+    "control-room-reference-level",
+    "reverberation-time-rt60",
+    "early-reflections"
+   ],
+   "note": "Titre de la page : 'Listening Conditions for the Assessment of Mono & Stereo Sound'. La page signale que les instructions de mesure liées au loudness renvoient à Tech 3343 §8.2."
+  },
+  {
+   "id": "ebu-r-068",
+   "type": "standard",
+   "title": "EBU R 68 - Alignment level in digital audio production equipment and recorders",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2000,
+   "edition": "not found (page dated 28 Dec 2000)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "niveau d'alignement",
+    "dBFS",
+    "headroom",
+    "calage"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+   "why_recommended": "Fixe le niveau d'alignement en numérique (le fameux -18 dBFS européen) : indispensable pour caler une chaîne analogique/numérique et comprendre la marge.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/r068",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "alignment-level",
+    "dbfs",
+    "headroom",
+    "gain-staging",
+    "dbu"
+   ]
+  },
+  {
+   "id": "ebu-tech-3326",
+   "type": "standard",
+   "title": "EBU Tech 3326 - Audio Contribution over IP - Requirements for Interoperability",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2014,
+   "edition": "Rev. 4 (Nov. 2014)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "ACIP",
+    "codec IP",
+    "SIP",
+    "radio",
+    "contribution"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3326.pdf",
+   "why_recommended": "Le document N/ACIP : codecs, signalisation SIP et transport pour qu'un codec radio d'une marque parle avec un autre. Référence des duplex et reportages en radio.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/tech3326",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "acip-ebu-tech-3326",
+    "audio-codec-ip",
+    "sip-signalling",
+    "opus-codec",
+    "g722-codec"
+   ]
+  },
+  {
+   "id": "ebu-tech-3285",
+   "type": "standard",
+   "title": "EBU Tech 3285 - BWF - A format for audio data files in broadcasting",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2011,
+   "edition": "version 2 (May 2011)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "Broadcast Wave",
+    "BWF",
+    "métadonnées",
+    "fichiers audio",
+    "loudness metadata"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+   "why_recommended": "La spécification du fichier .wav broadcast (chunk bext, horodatage, métadonnées loudness). Tout ce qui est livré en post-production ou en radio passe par ce format.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/tech3285",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "bwf-metadata",
+    "broadcast-wave-metadata",
+    "recording-metadata",
+    "timecode"
+   ]
+  },
+  {
+   "id": "ebu-tech-3364",
+   "type": "standard",
+   "title": "EBU Tech 3364 - Audio Definition Model Ver. 2.0",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2018,
+   "edition": "version 2.0 (final, June 2018)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "ADM",
+    "audio orienté objet",
+    "immersif",
+    "métadonnées"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3364v2_0.pdf",
+   "why_recommended": "Le modèle de métadonnées qui décrit l'audio immersif (lits, objets, ambisonie) ; c'est la base des fichiers ADM BWF utilisés pour Dolby Atmos et la livraison NGA.",
+   "bts_relevance": "E3 PTES (numérique), general",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/tech3364",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "audio-definition-model",
+    "object-based-audio",
+    "atmos-bed",
+    "dolby-atmos"
+   ]
+  },
+  {
+   "id": "ebu-r-128-s1",
+   "type": "standard",
+   "title": "EBU R 128 S1 - Loudness Parameters for short-form Content",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2020,
+   "edition": "version 3.0 (Aug. 2020)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "loudness",
+    "publicité",
+    "contenus courts",
+    "short-term loudness"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s1.pdf",
+   "why_recommended": "Règles de loudness propres aux contenus courts (pubs, bandes-annonces, jingles) : la R 128 seule ne suffit pas pour un spot de 30 s.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/r128s1",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "loudness-ebu-r128",
+    "loudness-metering-ebu-mode",
+    "true-peak"
+   ]
+  },
+  {
+   "id": "ebu-tech-3306",
+   "type": "standard",
+   "title": "EBU Tech 3306 - RF64: An Extended File Format for Audio",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2018,
+   "edition": "version 2.0 (final, June 2018)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "RF64",
+    "BW64",
+    "fichiers > 4 Go",
+    "multicanal"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3306.pdf",
+   "why_recommended": "Explique pourquoi un .wav classique s'arrête à 4 Go et comment RF64 dépasse cette limite : utile pour les enregistrements multipistes longs.",
+   "bts_relevance": "E3 PTES (numérique)",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/tech3306",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "bwf-metadata",
+    "broadcast-wave-metadata"
+   ]
+  },
+  {
+   "id": "ebu-tech-3388",
+   "type": "standard",
+   "title": "EBU Tech 3388 - ADM Renderer Version 2 (final)",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2020,
+   "edition": "version 2 (final, Jan. 2020)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "rendu ADM",
+    "audio orienté objet",
+    "immersif"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3388.pdf",
+   "why_recommended": "Décrit comment les objets ADM sont rendus sur un système de haut-parleurs donné. Pour aller plus loin que l'utilisation d'un renderer Atmos.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/tech3388",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "audio-definition-model",
+    "object-based-audio"
+   ]
+  },
+  {
+   "id": "ebu-tech-3253",
+   "type": "standard",
+   "title": "EBU Tech 3253 - Users' Handbook for the EBU SQAM CD",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2008,
+   "edition": "not found (page dated 18 Sep 2008)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "écoute critique",
+    "signaux de test",
+    "évaluation subjective"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3253.pdf",
+   "why_recommended": "Le livret qui décrit chaque plage du disque SQAM (instruments, voix, signaux de test) : utile pour organiser des séances d'écoute critique.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/tech3253",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "harmonics",
+    "masking"
+   ]
+  },
+  {
+   "id": "ebu-tech-3250",
+   "type": "standard",
+   "title": "EBU Tech 3250 - Specification of the Digital Audio Interface (the AES/EBU Interface)",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2005,
+   "edition": "third edition (Dec. 2005)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "AES3",
+    "AES/EBU",
+    "interface numérique",
+    "channel status"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3250.pdf",
+   "why_recommended": "La spécification de l'interface AES/EBU (AES3) : structure de trame, channel status, électrique. Référence directe pour le cours de PTES sur les liaisons numériques.",
+   "bts_relevance": "E3 PTES",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/tech3250",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en téléchargement libre et gratuit sur tech.ebu.ch ; © EBU, aucune licence ouverte déclarée (droits réservés)",
+   "concept_ids": [
+    "aes3",
+    "channel-status",
+    "spdif",
+    "word-clock"
+   ]
+  },
+  {
+   "id": "ebu-sqam-recordings",
+   "type": "test-material",
+   "title": "Sound Quality Assessment Material recordings for subjective tests (EBU SQAM CD)",
+   "author_or_publisher": "European Broadcasting Union (EBU)",
+   "year": 2008,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "écoute critique",
+    "fichiers FLAC",
+    "évaluation subjective",
+    "codecs"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://qc.ebu.io/testmaterial/523/",
+   "why_recommended": "Les enregistrements de référence (FLAC sans perte) pour entraîner l'oreille et comparer codecs, enceintes ou traitements ; à utiliser avec le livret Tech 3253.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/publications/sqamcd",
+     "publisher": "EBU Technology & Innovation (publication page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "access_link",
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit ; usage non commercial uniquement, sauf comme outil de R&D (conditions EBU affichées sur la page ; texte complet des EBU Terms of Use non lu)",
+   "concept_ids": [
+    "masking",
+    "harmonics"
+   ]
+  },
+  {
+   "id": "itu-r-bs-1116",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.1116-3 - Methods for the subjective assessment of small impairments in audio systems",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2015,
+   "edition": "BS.1116-3 (02/2015)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "tests d'écoute",
+    "évaluation subjective",
+    "conditions d'écoute",
+    "double aveugle"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.1116-3-201502-I/en",
+   "why_recommended": "La méthode de référence pour les tests d'écoute en double aveugle et les conditions de salle exigées. Elle explique comment comparer objectivement deux traitements à l'oreille.",
+   "bts_relevance": "E3 PTES, general",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1116/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1116-3-201502-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "stereo-listening-geometry",
+    "control-room-reference-level",
+    "reverberation-time-rt60"
+   ]
+  },
+  {
+   "id": "itu-r-bs-2051",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.2051-3 - Advanced sound system for programme production",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2022,
+   "edition": "BS.2051-3 (05/2022)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "immersif",
+    "configurations haut-parleurs",
+    "4+5+0",
+    "9+10+3"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.2051-3-202205-I/en",
+   "why_recommended": "Définit les configurations de haut-parleurs immersives (notation 4+5+0, 9+10+3...) utilisées en production. Prolonge BS.775 pour le son 3D.",
+   "bts_relevance": "E3 PTES, general",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2051/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2051-3-202205-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "surround-5-1-layout",
+    "dolby-atmos",
+    "object-based-audio"
+   ]
+  },
+  {
+   "id": "itu-r-bs-2076",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.2076-3 - Audio Definition Model",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2025,
+   "edition": "BS.2076-3 (02/2025)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "ADM",
+    "métadonnées",
+    "audio orienté objet"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.2076-3-202502-I/en",
+   "why_recommended": "La version normalisée mondiale de l'ADM (issue de l'EBU Tech 3364), tenue à jour par l'UIT.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2076/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2076-3-202502-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "audio-definition-model",
+    "object-based-audio",
+    "atmos-bed"
+   ]
+  },
+  {
+   "id": "itu-r-bs-1534",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.1534-3 - Method for the subjective assessment of intermediate quality level of audio systems",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2015,
+   "edition": "BS.1534-3 (10/2015)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "MUSHRA",
+    "codecs",
+    "tests d'écoute"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.1534-3-201510-I/en",
+   "why_recommended": "La méthode MUSHRA, utilisée pour comparer des codecs (MP3, AAC, Opus) à qualité moyenne. Utile pour comprendre d'où viennent les notes de qualité audio.",
+   "bts_relevance": "E3 PTES (numérique), general",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1534/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1534-3-201510-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "opus-codec",
+    "masking"
+   ]
+  },
+  {
+   "id": "itu-r-bs-1771",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.1771-1 - Requirements for loudness and true-peak indicating meters",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2012,
+   "edition": "BS.1771-1 (01/2012)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "loudness-mètre",
+    "true peak",
+    "métrologie"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.1771-1-201201-I/en",
+   "why_recommended": "Ce qu'un loudness-mètre et un indicateur de true peak doivent afficher pour être conformes. Complète BS.1770 côté appareil de mesure.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1771/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1771-1-201201-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "true-peak",
+    "loudness-metering-ebu-mode",
+    "loudness-ebu-r128"
+   ]
+  },
+  {
+   "id": "itu-r-bs-2088",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.2088-2 - Long-form file format for the international exchange of audio programme materials with metadata",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2025,
+   "edition": "BS.2088-2 (11/2025)",
+   "isbn": "not applicable",
+   "language": "en (également disponible en français)",
+   "level": "advanced",
+   "topics": [
+    "BW64",
+    "fichiers longs",
+    "ADM BWF"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.2088-2-202511-I/en",
+   "why_recommended": "Le format BW64, successeur du BWF/RF64 pour les fichiers longs et les métadonnées ADM. C'est le conteneur des masters immersifs.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2088/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2088-2-202511-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link",
+      "language"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "bwf-metadata",
+    "audio-definition-model"
+   ]
+  },
+  {
+   "id": "itu-r-bs-1864",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.1864-1 - Operational practices for loudness in the international exchange of digital television programmes",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2023,
+   "edition": "BS.1864-1 (11/2023)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "loudness",
+    "échange international",
+    "télévision"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.1864-1-202311-I/en",
+   "why_recommended": "Les pratiques de loudness pour échanger des programmes TV entre pays : la version mondiale de ce que la R 128 fait en Europe.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1864/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1864-1-202311-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "loudness-ebu-r128",
+    "distribution-loudness-level",
+    "deliverable-loudness-france"
+   ]
+  },
+  {
+   "id": "itu-r-bs-2127",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.2127-1 - Audio Definition Model renderer for advanced sound systems",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2023,
+   "edition": "BS.2127-1 (11/2023)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "rendu ADM",
+    "immersif"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.2127-1-202311-I/en",
+   "why_recommended": "Le renderer de référence de l'UIT pour l'ADM (version normalisée du travail EBU Tech 3388).",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2127/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2127-1-202311-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "audio-definition-model",
+    "object-based-audio"
+   ]
+  },
+  {
+   "id": "itu-r-bs-1284",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.1284-2 - General methods for the subjective assessment of sound quality",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2019,
+   "edition": "BS.1284-2 (01/2019)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "évaluation subjective",
+    "écoute critique",
+    "vocabulaire"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.1284-2-201901-I/en",
+   "why_recommended": "Méthodes générales d'évaluation de la qualité sonore et vocabulaire d'écoute : bon point d'entrée avant BS.1116 et BS.1534.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1284/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1284-2-201901-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "stereo-listening-geometry",
+    "equal-loudness-contours"
+   ]
+  },
+  {
+   "id": "itu-r-bs-645",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.645-2 - Test signals and metering to be used on international sound programme connections",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 1992,
+   "edition": "BS.645-2 (03/1992)",
+   "isbn": "not applicable",
+   "language": "en (également disponible en français)",
+   "level": "intermediate",
+   "topics": [
+    "signaux de test",
+    "niveau d'alignement",
+    "PPM",
+    "lignes de modulation"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.645-2-199203-I/en",
+   "why_recommended": "Signaux de test et métrologie des liaisons de programme internationales : origine des niveaux d'alignement et des crêtemètres encore utilisés en radio.",
+   "bts_relevance": "E3 PTES",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.645/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.645-2-199203-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link",
+      "language"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "alignment-level",
+    "dbu",
+    "level-detection-peak-rms"
+   ]
+  },
+  {
+   "id": "itu-r-bs-1352",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.1352-4 - File format for the exchange of audio programme materials with metadata on information technology media",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2023,
+   "edition": "BS.1352-4 (05/2023)",
+   "isbn": "not applicable",
+   "language": "en (également disponible en français)",
+   "level": "intermediate",
+   "topics": [
+    "BWF",
+    "fichiers",
+    "métadonnées"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.1352-4-202305-I/en",
+   "why_recommended": "La version UIT du Broadcast Wave Format (équivalent de l'EBU Tech 3285), disponible aussi en français.",
+   "bts_relevance": "E3 PTES (numérique)",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1352/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1352-4-202305-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link",
+      "language"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "bwf-metadata",
+    "broadcast-wave-metadata"
+   ]
+  },
+  {
+   "id": "itu-r-bs-1387",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.1387-2 - Method for objective measurements of perceived audio quality",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2023,
+   "edition": "BS.1387-2 (05/2023)",
+   "isbn": "not applicable",
+   "language": "en (également disponible en français)",
+   "level": "advanced",
+   "topics": [
+    "PEAQ",
+    "qualité perçue",
+    "codecs",
+    "psychoacoustique"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.1387-2-202305-I/en",
+   "why_recommended": "La méthode PEAQ de mesure objective de la qualité perçue : montre comment la psychoacoustique (masquage, bandes critiques) sert à évaluer un codec.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1387/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.1387-2-202305-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link",
+      "language"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "masking",
+    "critical-bands"
+   ]
+  },
+  {
+   "id": "itu-r-bs-2125",
+   "type": "standard",
+   "title": "Recommendation ITU-R BS.2125-1 - A serial representation of the Audio Definition Model",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2022,
+   "edition": "BS.2125-1 (05/2022)",
+   "isbn": "not applicable",
+   "language": "en (également disponible en français)",
+   "level": "advanced",
+   "topics": [
+    "S-ADM",
+    "métadonnées temps réel",
+    "diffusion"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/rec/R-REC-BS.2125-1-202205-I/en",
+   "why_recommended": "L'ADM en flux série (S-ADM) pour le direct et la diffusion : la suite logique de BS.2076.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2125/en",
+     "publisher": "ITU-R Recommendations (version list page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/rec/R-REC-BS.2125-1-202205-I/en",
+     "publisher": "ITU-R (recommendation page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link",
+      "language"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "audio-definition-model",
+    "smpte-st-2110-30"
+   ]
+  },
+  {
+   "id": "itu-r-report-bs-2159",
+   "type": "technical-document",
+   "title": "Report ITU-R BS.2159 - Multichannel sound technology in home and broadcasting applications",
+   "author_or_publisher": "International Telecommunication Union, Radiocommunication Sector (ITU-R)",
+   "year": 2022,
+   "edition": "BS.2159-9 (03/2022)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "multicanal",
+    "5.1",
+    "immersif",
+    "diffusion"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.itu.int/en/publications/ITU-R/Pages/publications.aspx?lang=en&parent=R-REP-BS.2159-9-2022",
+   "why_recommended": "Un état de l'art des technologies multicanal (5.1, 22.2, immersif, codecs) en diffusion et à la maison : une vue d'ensemble lisible.",
+   "bts_relevance": "E3 PTES, general",
+   "sources": [
+    {
+     "url": "https://www.itu.int/pub/R-REP-BS.2159",
+     "publisher": "ITU-R Reports (report page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.itu.int/en/publications/ITU-R/Pages/publications.aspx?lang=en&parent=R-REP-BS.2159-9-2022",
+     "publisher": "ITU publications",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "free_or_paid",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Free Download » indiqué par l'UIT (ITU-R) ; © ITU, droits réservés (pas de licence ouverte)",
+   "concept_ids": [
+    "surround-5-1-layout",
+    "dolby-atmos",
+    "object-based-audio"
+   ]
+  },
+  {
+   "id": "decret-2017-1244-sons-amplifies",
+   "type": "regulation",
+   "title": "Décret n° 2017-1244 du 7 août 2017 relatif à la prévention des risques liés aux bruits et aux sons amplifiés",
+   "author_or_publisher": "République française - Journal officiel (Légifrance)",
+   "year": 2017,
+   "edition": "JORF n° 0185 du 9 août 2017, texte n° 22 ; NOR SSAP1700132D",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "sons amplifiés",
+    "102 dB(A)",
+    "118 dB(C)",
+    "réglementation",
+    "santé auditive"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.legifrance.gouv.fr/eli/decret/2017/8/7/SSAP1700132D/jo/texte",
+   "why_recommended": "Le texte qui fixe les limites en concert et en club (102 dB(A) et 118 dB(C) sur 15 min, enregistrement des niveaux, protections et zones de repos). Tout technicien de sonorisation doit le connaître.",
+   "bts_relevance": "E4, E3 PTES",
+   "sources": [
+    {
+     "url": "https://www.legifrance.gouv.fr/eli/decret/2017/8/7/SSAP1700132D/jo/texte",
+     "publisher": "Légifrance",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.bruit.fr/droits-demarches/bruits-de-voisinage-lies-aux-activites/lieux-diffusant-des-sons-amplifies",
+     "publisher": "CidB (bruit.fr)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "covers": [
+      "topics"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Texte réglementaire officiel, consultation libre et gratuite sur Légifrance",
+   "concept_ids": [
+    "sound-exposure-limits-france",
+    "sound-level-logging-display",
+    "hearing-rest-zone",
+    "noise-impact-study-limiter",
+    "a-and-c-weighting",
+    "equal-energy-principle"
+   ]
+  },
+  {
+   "id": "note-dgs-dgpr-2023-188-sons-amplifies",
+   "type": "regulation",
+   "title": "Note d'information interministérielle n° DGS/EA2/DGPR/2023/188 du 5 décembre 2023 relative à la réglementation sur la prévention des risques liés aux bruits et aux sons amplifiés",
+   "author_or_publisher": "Ministère de la santé et de la prévention (DGS) ; Ministère de la transition écologique et de la cohésion des territoires (DGPR)",
+   "year": 2023,
+   "edition": "4 pages + 6 annexes (40 pages)",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "sons amplifiés",
+    "décret 2017-1244",
+    "règle d'égale énergie",
+    "contrôles",
+    "sanctions"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.bruit.fr/images/collectivites/sons-amplifies/note_d_information_sons_amplifies_2023_18839.pdf",
+   "why_recommended": "L'explication officielle de la mise en oeuvre du décret 2017-1244 ; l'annexe 2 (règle d'égale énergie à 80 dB(A) sur 8 h) et l'annexe 6 (logigramme des obligations) sont très pédagogiques.",
+   "bts_relevance": "E4, E3 PTES",
+   "sources": [
+    {
+     "url": "https://www.bruit.fr/images/collectivites/sons-amplifies/note_d_information_sons_amplifies_2023_18839.pdf",
+     "publisher": "CidB (bruit.fr), copie du PDF ministériel",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "edition"
+     ],
+     "url_status": "ok",
+     "note": "Texte extrait du PDF le 2026-10-22 (page 1)."
+    }
+   ],
+   "licence": "Document administratif public, PDF en libre accès (hébergé par le CidB) ; aucune licence déclarée",
+   "concept_ids": [
+    "sound-exposure-limits-france",
+    "equal-energy-principle",
+    "sound-level-logging-display",
+    "noise-impact-study-limiter"
+   ]
+  },
+  {
+   "id": "cidb-guide-sons-amplifies",
+   "type": "official-guide",
+   "title": "Bruits et sons amplifiés : guide d'accompagnement de la réglementation",
+   "author_or_publisher": "Centre d'information sur le bruit (CidB), pilotage DGS et DGPR",
+   "year": 2020,
+   "edition": "coordonné en 2020, « régulièrement mis à jour » (pas de numéro de version)",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "sons amplifiés",
+    "EINS",
+    "limiteur",
+    "concerts plein air",
+    "salles polyvalentes"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://guide-sons-amplifies.bruit.fr/",
+   "why_recommended": "Le guide pratique du décret « son » : obligations par type de lieu (bar, plein air, salle polyvalente), étude d'impact, retours d'expérience. Le plus concret pour un futur technicien de sonorisation.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://guide-sons-amplifies.bruit.fr/",
+     "publisher": "CidB",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.bruit.fr/nos-actions/nos-guides-et-fiches",
+     "publisher": "CidB (bruit.fr)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Libre accès en ligne et PDF téléchargeable ; « Copyright © 2026 Guide Sons amplifiés - Tous droits réservés »",
+   "concept_ids": [
+    "sound-exposure-limits-france",
+    "noise-impact-study-limiter",
+    "sound-level-logging-display",
+    "hearing-rest-zone",
+    "hearing-protection-devices"
+   ]
+  },
+  {
+   "id": "cidb-lieux-diffusant-sons-amplifies",
+   "type": "website",
+   "title": "Lieux diffusant des sons amplifiés",
+   "author_or_publisher": "Centre d'information sur le bruit (CidB) - bruit.fr",
+   "year": "not found",
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "sons amplifiés",
+    "émergence",
+    "EINS",
+    "réglementation"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.bruit.fr/droits-demarches/bruits-de-voisinage-lies-aux-activites/lieux-diffusant-des-sons-amplifies",
+   "why_recommended": "Une synthèse d'une page des règles (102 dB(A)/118 dB(C), 94/104 pour les enfants, enregistrement au-delà de 300 personnes, émergence de 3 dB) avec les liens Légifrance.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.bruit.fr/droits-demarches/bruits-de-voisinage-lies-aux-activites/lieux-diffusant-des-sons-amplifies",
+     "publisher": "CidB",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "topics",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Libre accès en ligne ; aucune licence déclarée sur la page (droits réservés)",
+   "concept_ids": [
+    "sound-exposure-limits-france",
+    "sound-level-logging-display",
+    "noise-impact-study-limiter",
+    "a-and-c-weighting"
+   ]
+  },
+  {
+   "id": "anfr-coordination-pmse-audio",
+   "type": "tool",
+   "title": "Coordination PMSE audio : un portail en accès libre",
+   "author_or_publisher": "Agence nationale des fréquences (ANFR)",
+   "year": "not found",
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "PMSE",
+    "coordination de fréquences",
+    "micros HF",
+    "événements"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://blockchainfrequences.anfr.fr",
+   "why_recommended": "L'outil officiel et gratuit de l'ANFR pour réserver et coordonner les fréquences des micros et ears HF sur un événement, en « premier arrivé, premier servi ».",
+   "bts_relevance": "E4, E3 PTES",
+   "sources": [
+    {
+     "url": "https://www.anfr.fr/controler/grands-evenements/coordination-pmse-audio-un-portail-en-acces-libre",
+     "publisher": "ANFR",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "access_link",
+      "free_or_paid"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "« Portail gratuit, en accès libre pour tous » (ANFR) ; conditions d'utilisation du portail non lues",
+   "concept_ids": [
+    "pmse-regulation-france",
+    "rf-frequency-coordination",
+    "uhf-wireless-system",
+    "iem-transmitter-rf"
+   ],
+   "note": "Le portail lui-même (blockchainfrequences.anfr.fr) n'a pas été ouvert ; l'URL vient de la page ANFR."
+  },
+  {
+   "id": "anfr-tnrbf",
+   "type": "regulation",
+   "title": "Tableau national de répartition des bandes de fréquences (TNRBF)",
+   "author_or_publisher": "Premier ministre / Agence nationale des fréquences (ANFR)",
+   "year": 2026,
+   "edition": "version du 26 mai 2026 (PDF consolidé corrigé le 14 août 2026)",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "spectre",
+    "bandes de fréquences",
+    "PMSE",
+    "réglementation radio"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.anfr.fr/fileadmin/mediatheque/documents/tnrbf/TNRBF_2026-05-26c.pdf",
+   "why_recommended": "Le texte de référence qui dit qui a le droit d'utiliser quelle bande en France ; à consulter pour comprendre où peuvent fonctionner les liaisons HF.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://www.anfr.fr/gestion-des-frequences-sites/tnrbf",
+     "publisher": "ANFR",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "PDF en libre accès sur anfr.fr ; aucune licence déclarée",
+   "concept_ids": [
+    "pmse-regulation-france",
+    "pmse-700mhz-band-clearance",
+    "band-863-865-mhz"
+   ]
+  },
+  {
+   "id": "cst-rt-041-acoustique-salles-cinema",
+   "type": "standard",
+   "title": "CST-RT-041 - Recommandation technique sur les caractéristiques acoustiques des salles de cinéma",
+   "author_or_publisher": "Commission supérieure technique de l'image et du son (CST), département Son",
+   "year": 2021,
+   "edition": "CST-RT-041-2021, validée le 30 septembre 2021, publiée le 4 octobre 2021",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "acoustique des salles",
+    "cinéma",
+    "temps de réverbération",
+    "bruit de fond"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://cst.fr/download/33/recommandations-techniques/1018/cst-rt-041.pdf",
+   "why_recommended": "La recommandation française sur l'acoustique des salles de cinéma : une application concrète des notions de TR, bruit de fond et réflexions vues en PTES.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://cst.fr/download/33/recommandations-techniques/1018/cst-rt-041.pdf",
+     "publisher": "CST",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Texte de la page 1 extrait du PDF le 2026-10-22."
+    }
+   ],
+   "licence": "PDF téléchargeable sans connexion sur cst.fr (la CST indique qu'une recommandation technique est « un document public ») ; aucune licence ouverte déclarée",
+   "concept_ids": [
+    "reverberation-time-rt60",
+    "concert-hall-acoustics",
+    "absorption-coefficient",
+    "mechanical-and-hvac-rumble"
+   ]
+  },
+  {
+   "id": "arpp-cst-rt017-publicites-loudness",
+   "type": "official-guide",
+   "title": "A partir du 1er janvier 2012, les films publicitaires TV doivent respecter la recommandation technique CST-RT017 v3.0 (« En 2012 la TV change d'intensité sonore »)",
+   "author_or_publisher": "ARPP (Autorité de régulation professionnelle de la publicité), avec CST, Ficam et HDForum",
+   "year": "not found",
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "loudness",
+    "publicité",
+    "CST-RT-017",
+    "LUFS",
+    "télévision française"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
+   "why_recommended": "Un dépliant de 4 pages qui explique simplement le passage au loudness en France pour les pubs : -23 LUFS intégré, short-term limité à -20 LUFS pour les programmes de moins de 2 min.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
+     "publisher": "ARPP",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "topics"
+     ],
+     "url_status": "ok",
+     "note": "Texte extrait du PDF le 2026-10-22. Le texte de la CST-RT-017 elle-même n'a pas été trouvé."
+    }
+   ],
+   "licence": "PDF en libre accès sur arpp.org ; mentions « copyright IMD » et « copyright CST » dans le document (droits réservés)",
+   "concept_ids": [
+    "loudness-ebu-r128",
+    "deliverable-loudness-france",
+    "loudness-metering-ebu-mode"
+   ]
+  },
+  {
+   "id": "inrs-ed-6035-mesurer-exposition-bruit",
+   "type": "official-guide",
+   "title": "Evaluer et mesurer l'exposition professionnelle au bruit (INRS ED 6035)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2013,
+   "edition": "03/2013, 76 pages",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "exposition au bruit",
+    "LEX,8h",
+    "sonomètre",
+    "dosimètre",
+    "ISO 9612"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6035.pdf",
+   "why_recommended": "Le guide méthodologique pour mesurer une exposition sonore : stratégies de mesure, LEX,8h, crête, incertitudes. Idéal pour relier la théorie des dB aux mesures réelles.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=ED%206035",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "daily-noise-exposure-lex8h",
+    "peak-sound-pressure-lcpeak",
+    "worker-noise-exposure-values",
+    "a-and-c-weighting",
+    "equal-energy-principle"
+   ]
+  },
+  {
+   "id": "inrs-tj-16-bruit-milieu-travail",
+   "type": "official-guide",
+   "title": "Le bruit en milieu de travail (aide-mémoire juridique) (INRS TJ 16)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2019,
+   "edition": "04/2019, 20 pages",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "Code du travail",
+    "80/85/87 dB(A)",
+    "135/137/140 dB(C)",
+    "réglementation"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-TJ-16.pdf",
+   "why_recommended": "Les seuils réglementaires d'exposition au bruit des salariés (80, 85, 87 dB(A) ; 135, 137, 140 dB(C)) expliqués en 20 pages : le technicien son est d'abord un salarié exposé.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=TJ%2016",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "worker-noise-exposure-values",
+    "daily-noise-exposure-lex8h",
+    "peak-sound-pressure-lcpeak",
+    "noise-induced-hearing-loss"
+   ]
+  },
+  {
+   "id": "inrs-ed-133-valeurs-limites-protecteurs",
+   "type": "official-guide",
+   "title": "Valeurs limites d'exposition au bruit et port de protecteurs individuels - Préconisations de l'INRS (INRS ED 133)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2021,
+   "edition": "11/2021, 4 pages",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "protections auditives",
+    "atténuation réelle",
+    "valeurs limites"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-133.pdf",
+   "why_recommended": "Fiche de 4 pages sur la façon d'estimer l'atténuation réelle d'un bouchon ou d'un casque, par rapport à la valeur annoncée par le fabricant.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=ED%20133",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "hearing-protection-devices",
+    "worker-noise-exposure-values",
+    "flat-attenuation-earplugs"
+   ]
+  },
+  {
+   "id": "inrs-ed-6510-protections-auditives",
+   "type": "official-guide",
+   "title": "Les protections auditives - Guide de choix (INRS ED 6510)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2023,
+   "edition": "09/2023, 32 pages",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "protections auditives",
+    "bouchons moulés",
+    "choix des PICB"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+   "why_recommended": "Comment choisir et porter ses protections auditives (bouchons moulés, filtres) : utile pour soi et pour conseiller musiciens et public.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=ED%206510",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "hearing-protection-devices",
+    "flat-attenuation-earplugs",
+    "noise-induced-hearing-loss"
+   ]
+  },
+  {
+   "id": "inrs-ed-6103-traitement-acoustique-locaux",
+   "type": "official-guide",
+   "title": "Traitement acoustique des locaux de travail (INRS ED 6103)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2026,
+   "edition": "05/2026, 16 pages",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "traitement acoustique",
+    "absorption",
+    "réverbération"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6103.pdf",
+   "why_recommended": "Une introduction courte et illustrée au rôle du local dans l'exposition au bruit (absorption, réverbération) : une bonne entrée en acoustique des salles.",
+   "bts_relevance": "E3 PTES",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=ED%206103",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "absorption-coefficient",
+    "reverberation-time-rt60",
+    "critical-distance"
+   ]
+  },
+  {
+   "id": "inrs-ed-962-reduction-bruit",
+   "type": "official-guide",
+   "title": "Techniques de réduction du bruit en entreprise - Quelles solutions, comment choisir (INRS ED 962)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2019,
+   "edition": "03/2019, 124 pages",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "réduction du bruit",
+    "isolation",
+    "encoffrement",
+    "absorption"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-962.pdf",
+   "why_recommended": "Le panorama des solutions techniques contre le bruit (isolation, absorption, encoffrement) : de quoi comprendre les principes physiques derrière l'isolation d'un studio.",
+   "bts_relevance": "E3 PTES",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=ED%20962",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "absorption-coefficient",
+    "reverberation-time-rt60",
+    "inverse-square-law"
+   ]
+  },
+  {
+   "id": "inrs-ed-6020-moins-fort-le-bruit",
+   "type": "official-guide",
+   "title": "Moins fort le bruit (dépliant) (INRS ED 6020)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2022,
+   "edition": "09/2022, dépliant 3 volets, 15 x 21",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "sensibilisation",
+    "surdité",
+    "prévention"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6020.pdf",
+   "why_recommended": "Un dépliant de sensibilisation très court sur les effets du bruit, à lire en première semaine de formation.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=ED%206020",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "noise-induced-hearing-loss",
+    "tinnitus-auditory-fatigue",
+    "hearing-protection-devices"
+   ]
+  },
+  {
+   "id": "inrs-ed-6127-habilitation-electrique",
+   "type": "official-guide",
+   "title": "L'habilitation électrique (INRS ED 6127)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2021,
+   "edition": "01/2021, 48 pages",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "habilitation électrique",
+    "NF C 18-510",
+    "sécurité électrique"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6127.pdf",
+   "why_recommended": "Ce que recouvrent les niveaux d'habilitation électrique (B0, BR, BS...) : indispensable avant de brancher une distribution électrique sur un plateau.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=ED%206127",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "habilitation-electrique",
+    "electrical-safety-earthing",
+    "electric-shock-effects"
+   ]
+  },
+  {
+   "id": "inrs-ed-6187-prevention-risque-electrique",
+   "type": "official-guide",
+   "title": "La prévention du risque électrique - Textes règlementaires relevant du Code du travail (INRS ED 6187)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2015,
+   "edition": "03/2015, 124 pages",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "Code du travail",
+    "risque électrique",
+    "réglementation"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6187.pdf",
+   "why_recommended": "Le recueil des textes réglementaires sur le risque électrique. À consulter quand on veut la règle exacte plutôt qu'un résumé.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=ED%206187",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "electrical-safety-earthing",
+    "residual-current-device",
+    "habilitation-electrique"
+   ]
+  },
+  {
+   "id": "inrs-ed-6344-electricite-10-regles",
+   "type": "official-guide",
+   "title": "Electricité : 10 règles élémentaires de sécurité (INRS ED 6344)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2019,
+   "edition": "12/2019, 16 pages",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "sécurité électrique",
+    "terre",
+    "différentiel"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+   "why_recommended": "Dix règles simples de sécurité électrique en 16 pages : un bon mémo avant de toucher à une distribution ou à un multiprise de scène.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=ED%206344",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "electrical-safety-earthing",
+    "residual-current-device",
+    "electric-shock-effects",
+    "cable-management-safety"
+   ]
+  },
+  {
+   "id": "inrs-outil23-exposition-quotidienne",
+   "type": "tool",
+   "title": "Bruit : estimation de l'exposition quotidienne (calculateur Excel) (INRS outil23)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2013,
+   "edition": "05/2013",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "LEX,8h",
+    "calcul d'exposition",
+    "addition de niveaux"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CatalogueOutil/TI-outil23.zip",
+   "why_recommended": "Un tableur gratuit qui calcule l'exposition quotidienne à partir de plusieurs phases (balance, concert, démontage) : parfait pour s'exercer à additionner des niveaux en dB.",
+   "bts_relevance": "E3 PTES, E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=outil23",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "daily-noise-exposure-lex8h",
+    "equal-energy-principle",
+    "decibel"
+   ]
+  },
+  {
+   "id": "inrs-outil24-calculette-iso-9612",
+   "type": "tool",
+   "title": "Bruit : calculette ISO 9612 (calculateur Excel) (INRS outil24)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2009,
+   "edition": "01/2009",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "ISO 9612",
+    "stratégies de mesure",
+    "incertitude"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/dam/inrs/CatalogueOutil/TI-outil24.zip",
+   "why_recommended": "Le calculateur des trois stratégies de mesure de la norme NF EN ISO 9612:2009 (par tâche, par fonction, journée entière).",
+   "bts_relevance": "E3 PTES",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=outil24",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "daily-noise-exposure-lex8h",
+    "worker-noise-exposure-values"
+   ]
+  },
+  {
+   "id": "inrs-anim-050-tout-comprendre-bruit",
+   "type": "video",
+   "title": "Tout comprendre sur... le bruit (vidéo, 2 min 20 s) (INRS Anim-050)",
+   "author_or_publisher": "INRS (Institut national de recherche et de sécurité)",
+   "year": 2012,
+   "edition": "01/2012",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "sensibilisation",
+    "bruit au travail",
+    "vidéo"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.inrs.fr/media.html?refINRS=Anim-050",
+   "why_recommended": "Une animation de 2 minutes sur les risques du bruit et leur prévention, utile pour démarrer un cours de sécurité.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/media.html?refINRS=Anim-050",
+     "publisher": "INRS (catalogue page)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "year",
+      "edition",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://www.inrs.fr/footer/mentions-legales.html",
+     "publisher": "INRS (mentions légales)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit sur inrs.fr ; © INRS, droits réservés : reproduction interdite hors usage privé, liens autorisés (mentions légales INRS)",
+   "concept_ids": [
+    "noise-induced-hearing-loss",
+    "worker-noise-exposure-values"
+   ]
+  },
+  {
+   "id": "hal-katz-nicol-binaural-spatial-reproduction",
+   "type": "book-chapter",
+   "title": "Binaural Spatial Reproduction",
+   "author_or_publisher": "Brian F. G. Katz, Rozenn Nicol - chapitre dans « Sensory Evaluation of Sound »",
+   "year": 2019,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "binaural",
+    "HRTF",
+    "évaluation"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/hal-02001590v1",
+   "why_recommended": "Un chapitre de synthèse sur la reproduction binaurale (HRTF, casque, évaluation) par deux chercheurs français de référence.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-02001590",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY-NC-ND 4.0",
+   "concept_ids": [
+    "binaural",
+    "hrtf",
+    "sound-localization-itd-ild"
+   ]
+  },
+  {
+   "id": "hal-bauer-binaural-headphone-monitoring",
+   "type": "book-chapter",
+   "title": "Binaural Headphone Monitoring to Enhance Musicians' Immersion in Performance",
+   "author_or_publisher": "Valentin Bauer, Dimitri Soudoplatoff, Leonard Menon, Amandine Pras - chapitre dans « Advances in Fundamental and Applied Research on Spatial Audio », IntechOpen",
+   "year": 2022,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "binaural",
+    "retours casque",
+    "musiciens",
+    "studio"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://universite-paris-saclay.hal.science/hal-04447847v1",
+   "why_recommended": "Étude sur le retour casque binaural pour les musiciens en studio et sur scène : fait le lien entre psychoacoustique et cue mix.",
+   "bts_relevance": "E4, general",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-04447847",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY 4.0",
+   "concept_ids": [
+    "binaural",
+    "cue-mix",
+    "in-ear-monitoring"
+   ]
+  },
+  {
+   "id": "hal-anaglyph-binaural-engine",
+   "type": "academic-paper",
+   "title": "The Anaglyph binaural audio engine",
+   "author_or_publisher": "David Poirier-Quinot, Brian F. G. Katz - Audio Engineering Society Convention 144",
+   "year": 2018,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "binaural",
+    "moteur de rendu",
+    "HRTF"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/hal-01924292v1",
+   "why_recommended": "Présentation d'un moteur de rendu binaural de recherche : utile pour comprendre ce que fait un plug-in binaural.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-01924292",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY 4.0",
+   "concept_ids": [
+    "binaural",
+    "hrtf"
+   ]
+  },
+  {
+   "id": "hal-weber-axoa-2024",
+   "type": "academic-paper",
+   "title": "Outil de spatialisation sonore pour la scène. Axoa, alternative au mixage objet",
+   "author_or_publisher": "François Weber - Journées d'informatique théâtrale",
+   "year": 2024,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "spatialisation",
+    "spectacle vivant",
+    "mixage objet"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/hal-05138754v1",
+   "why_recommended": "Un outil de spatialisation pensé pour le théâtre et le spectacle vivant, présenté comme alternative au mixage objet ; concret pour les futurs régisseurs son.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-05138754",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY 4.0",
+   "concept_ids": [
+    "object-based-audio",
+    "ambisonics"
+   ]
+  },
+  {
+   "id": "hal-weber-axoa-2022",
+   "type": "academic-paper",
+   "title": "Axoa, un outil de spatialisation sonore pour le spectacle vivant",
+   "author_or_publisher": "François Weber - JIT 2022 - Journées d'Informatique Théâtrale",
+   "year": 2022,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "spatialisation",
+    "spectacle vivant",
+    "ambisonie"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://inria.hal.science/hal-04153545v1",
+   "why_recommended": "Première présentation d'Axoa, outil de spatialisation pour la scène : complète l'article de 2024.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-04153545",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY 4.0",
+   "concept_ids": [
+    "ambisonics",
+    "object-based-audio"
+   ]
+  },
+  {
+   "id": "hal-palacino-these-spatialisation-mobile",
+   "type": "thesis",
+   "title": "Outils de spatialisation sonore pour terminaux mobiles",
+   "author_or_publisher": "Julian Palacino",
+   "year": 2014,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "spatialisation",
+    "microphone 3D",
+    "binaural"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/tel-01139066v1",
+   "why_recommended": "Thèse en français sur la captation et la restitution spatialisées sur mobile (microphone 3D) ; bon exemple de recherche appliquée au son 3D.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:tel-01139066",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY 4.0",
+   "concept_ids": [
+    "ambisonics",
+    "binaural",
+    "hrtf"
+   ]
+  },
+  {
+   "id": "hal-guillot-these-representation-espace",
+   "type": "thesis",
+   "title": "La représentation intermédiaire et abstraite de l'espace comme outil de spatialisation du son",
+   "author_or_publisher": "Pierre Guillot",
+   "year": 2017,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "spatialisation",
+    "ambisonie",
+    "outils logiciels"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/tel-01903017v1",
+   "why_recommended": "Thèse en français sur les outils de spatialisation, par le développeur de Partiels à l'Ircam.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:tel-01903017",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY 4.0",
+   "concept_ids": [
+    "ambisonics",
+    "object-based-audio"
+   ]
+  },
+  {
+   "id": "dumas-racine-microphones-numeriques",
+   "type": "thesis",
+   "title": "Les microphones numériques et la prise de son à l'image",
+   "author_or_publisher": "Dorian Racine - mémoire (DUMAS)",
+   "year": 2016,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "microphones numériques",
+    "AES42",
+    "tournage",
+    "prise de son"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://dumas.ccsd.cnrs.fr/dumas-01379230v1",
+   "why_recommended": "Mémoire d'étudiant sur les microphones numériques en tournage : un sujet proche du BTS, écrit à un niveau accessible.",
+   "bts_relevance": "E4, E3 PTES",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:dumas-01379230",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "Copyright (hal.science/licences/copyright) : libre accès en lecture sur DUMAS, droits réservés à l'auteur",
+   "concept_ids": [
+    "condenser-microphone",
+    "microphone-sensitivity",
+    "aes3"
+   ]
+  },
+  {
+   "id": "hal-fedosov-these-hoa-appoints",
+   "type": "thesis",
+   "title": "Assistance automatique au mixage de microphones d'appoint dans une prise de son HOA",
+   "author_or_publisher": "Andrey Fedosov",
+   "year": 2017,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "HOA",
+    "ambisonie",
+    "appoints",
+    "mixage"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://theses.hal.science/tel-01578394v1",
+   "why_recommended": "Thèse sur le mélange d'un couple ambisonique d'ordre élevé et de micros d'appoint (alignement temporel) : prolonge le cours sur les appoints en orchestre.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:tel-01578394",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "Autorisation de diffusion HAL (hal-authorisation-v1) : libre accès en lecture, droits réservés à l'auteur, pas de licence ouverte",
+   "concept_ids": [
+    "ambisonics",
+    "spot-microphones",
+    "spot-microphone-delay-compensation"
+   ]
+  },
+  {
+   "id": "hal-hendrickx-stereoscopie-mixage-surround",
+   "type": "academic-paper",
+   "title": "Influence de la stéréoscopie sur le mixage des ambiances \"surround\" au cinéma",
+   "author_or_publisher": "Etienne Hendrickx, Mathieu Paquier, Vincent Koehl - 12e Congrès Français d'Acoustique",
+   "year": 2014,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "mixage cinéma",
+    "surround",
+    "ambiances",
+    "3D relief"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://univ-brest.hal.science/hal-00986896v1",
+   "why_recommended": "Article court en français sur l'effet de l'image en relief sur le mixage des ambiances surround : relie mixage cinéma et perception.",
+   "bts_relevance": "E4, E2 culture audiovisuelle et artistique",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-00986896",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "Autorisation de diffusion HAL (hal-authorisation-v1) : libre accès en lecture, droits réservés à l'auteur, pas de licence ouverte",
+   "concept_ids": [
+    "surround-5-1-layout",
+    "stems"
+   ]
+  },
+  {
+   "id": "hal-molla-indicateurs-sonie",
+   "type": "academic-paper",
+   "title": "Calcul des indicateurs de sonie: revue des algorithmes et implémentation",
+   "author_or_publisher": "Stéphane Molla, Isabelle Boullet, Sabine Meunier, Guy Rabau, Benoît Gauduin, Patrick Boussard - 10ème Congrès Français d'Acoustique",
+   "year": 2010,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "sonie",
+    "sones",
+    "algorithmes",
+    "psychoacoustique"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/hal-00550540v1",
+   "why_recommended": "Revue en français des algorithmes de calcul de la sonie (sones, phones) : le fond théorique derrière les mesures de loudness.",
+   "bts_relevance": "E3 PTES, general",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-00550540",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "Autorisation de diffusion HAL (hal-authorisation-v1) : libre accès en lecture, droits réservés à l'auteur, pas de licence ouverte",
+   "concept_ids": [
+    "loudness-phon-sone",
+    "critical-bands",
+    "equal-loudness-contours"
+   ]
+  },
+  {
+   "id": "hal-berthomieu-these-position-niveau-percu",
+   "type": "thesis",
+   "title": "Influence de la position d'une source sur le niveau sonore perçu",
+   "author_or_publisher": "Gauthier Berthomieu",
+   "year": 2019,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "sonie directionnelle",
+    "perception",
+    "localisation"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://theses.hal.science/tel-02469434v2",
+   "why_recommended": "Thèse en français sur la sonie selon la direction de la source : un approfondissement des notions de localisation et de sonie.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:tel-02469434",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "Autorisation de diffusion HAL (hal-authorisation-v1) : libre accès en lecture, droits réservés à l'auteur, pas de licence ouverte",
+   "concept_ids": [
+    "loudness-phon-sone",
+    "sound-localization-itd-ild"
+   ]
+  },
+  {
+   "id": "hal-boullet-these-sonie-impulsionnels",
+   "type": "thesis",
+   "title": "La sonie des sons impulsionnels : perception, mesures et modèles",
+   "author_or_publisher": "Isabelle Boullet",
+   "year": 2005,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "sonie",
+    "sons impulsionnels",
+    "mesure"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://theses.hal.science/tel-00009870v1",
+   "why_recommended": "Thèse en français sur la perception du niveau des sons brefs (impacts, percussions) : explique pourquoi un crêtemètre et une mesure de sonie ne disent pas la même chose.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:tel-00009870",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "Autorisation de diffusion HAL (hal-authorisation-v1) : libre accès en lecture, droits réservés à l'auteur, pas de licence ouverte",
+   "concept_ids": [
+    "loudness-phon-sone",
+    "crest-factor",
+    "level-detection-peak-rms"
+   ]
+  },
+  {
+   "id": "hal-vogel-lambinet-perception-son-spatialise",
+   "type": "journal-issue",
+   "title": "La perception du son spatialisé",
+   "author_or_publisher": "Corsin Vogel, Sylvain Lambinet - Cahier Louis-Lumière",
+   "year": 2022,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "son spatialisé",
+    "perception",
+    "immersion"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/hal-04717437v1",
+   "why_recommended": "Numéro des Cahiers Louis-Lumière (école nationale supérieure) consacré à la perception du son spatialisé ; en français et en libre accès.",
+   "bts_relevance": "E3 PTES, general",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-04717437",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY-NC-ND 4.0",
+   "concept_ids": [
+    "sound-localization-itd-ild",
+    "binaural",
+    "ambisonics"
+   ]
+  },
+  {
+   "id": "hal-vogel-dubois-immersion-sonore",
+   "type": "academic-paper",
+   "title": "L'immersion sonore : réalités physique et virtuelle, réalités psychologiques et culturelles",
+   "author_or_publisher": "Corsin Vogel, Danièle Dubois - Cahier Louis-Lumière",
+   "year": 2022,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "immersion",
+    "perception",
+    "son 3D"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/hal-04710399v1",
+   "why_recommended": "Article des Cahiers Louis-Lumière qui interroge la notion d'immersion sonore au-delà de la technique.",
+   "bts_relevance": "E2 culture audiovisuelle et artistique, general",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-04710399",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY-NC-ND 4.0",
+   "concept_ids": [
+    "binaural",
+    "ambisonics"
+   ]
+  },
+  {
+   "id": "hal-carpentier-panoramix",
+   "type": "academic-paper",
+   "title": "panoramix: station de mixage et post-production 3D",
+   "author_or_publisher": "Thibaut Carpentier, Clément Cornuau - Journées d'Informatique Musicale",
+   "year": 2016,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "advanced",
+   "topics": [
+    "mixage 3D",
+    "Ircam",
+    "post-production",
+    "spatialisation"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/hal-01300314v1",
+   "why_recommended": "Présentation par l'Ircam d'une station de mixage 3D (prises de son multi-micros, ambisonie, binaural) : montre l'organisation d'un mixage immersif.",
+   "bts_relevance": "general (post-BTS)",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-01300314",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "Autorisation de diffusion HAL (hal-authorisation-v1) : libre accès en lecture, droits réservés à l'auteur, pas de licence ouverte",
+   "concept_ids": [
+    "ambisonics",
+    "binaural",
+    "object-based-audio",
+    "spot-microphones"
+   ]
+  },
+  {
+   "id": "dumas-dussault-podcasts-spatialisation",
+   "type": "thesis",
+   "title": "Podcasts et spatialisation sonore : une réalité augmentée ?",
+   "author_or_publisher": "Maëva Dussault - mémoire (DUMAS)",
+   "year": 2023,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "podcast",
+    "binaural",
+    "spatialisation"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://dumas.ccsd.cnrs.fr/dumas-04390805v1",
+   "why_recommended": "Mémoire en français sur l'usage de la spatialisation (binaural) dans le podcast : un sujet proche des pratiques radio actuelles.",
+   "bts_relevance": "E4, E2 culture audiovisuelle et artistique",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:dumas-04390805",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "Copyright (hal.science/licences/copyright) : libre accès en lecture sur DUMAS, droits réservés à l'auteur",
+   "concept_ids": [
+    "podcast-recording",
+    "binaural"
+   ]
+  },
+  {
+   "id": "hal-feron-fabriques-son-numerique",
+   "type": "academic-paper",
+   "title": "Fabriques du son numérique : La French Touch des années 1970",
+   "author_or_publisher": "François-Xavier Féron, Vincent Tiffon, Jean-Louis Giavitto, Waël Hindo, Corsin Vogel, Arthur Canac - Journées d'Informatique Musicale",
+   "year": 2026,
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "histoire de l'audionumérique",
+    "Ircam",
+    "GRM",
+    "France"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://hal.science/hal-05663372v1",
+   "why_recommended": "Histoire des débuts de l'audionumérique en France dans les années 1970 : culture technique utile pour l'épreuve de culture audiovisuelle.",
+   "bts_relevance": "E2 culture audiovisuelle et artistique",
+   "sources": [
+    {
+     "url": "https://api.archives-ouvertes.fr/search/?q=halId_s:hal-05663372",
+     "publisher": "HAL (API archives-ouvertes.fr, notice)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "year",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok",
+     "note": "Notice lue via l'API HAL (requête par halId, champs licence_s / openAccess_bool / fileMain_s) le 2026-10-22."
+    }
+   ],
+   "licence": "CC BY-SA 4.0",
+   "concept_ids": [
+    "sampling",
+    "bit-depth"
+   ]
+  },
+  {
+   "id": "fun-mooc-bases-acoustique-voix",
+   "type": "online-course",
+   "title": "Les bases de l'acoustique : la voix dans tous ses états",
+   "author_or_publisher": "Le Mans Université (Le Mans Acoustique) - J.-P. Dalmont, C. Ayrault, J. Bordais - FUN MOOC",
+   "year": "not found",
+   "edition": "environ 10 h sur 5 semaines, à son rythme",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "acoustique",
+    "ondes",
+    "voix",
+    "son numérique"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.fun-mooc.fr/fr/cours/les-bases-de-lacoustique-la-voix-dans-tous-ses-etats/",
+   "why_recommended": "Un MOOC français d'acoustique de base (ondes, fréquence, numérisation) conçu par l'université du Mans : parfait pour combler les lacunes de physique en début de BTS.",
+   "bts_relevance": "E3 PTES",
+   "sources": [
+    {
+     "url": "https://www.fun-mooc.fr/fr/cours/les-bases-de-lacoustique-la-voix-dans-tous-ses-etats/",
+     "publisher": "FUN MOOC",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "edition",
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Contenus du cours sous CC BY-NC-ND 4.0 (contenus des participants : tous droits réservés) ; prix non indiqué sur la page",
+   "concept_ids": [
+    "sound-wave",
+    "frequency",
+    "wavelength",
+    "harmonics",
+    "sampling"
+   ],
+   "note": "Aucune date de session affichée ; inscription à vérifier sur la page."
+  },
+  {
+   "id": "ircam-partiels",
+   "type": "software",
+   "title": "Partiels",
+   "author_or_publisher": "Ircam (département IMR) - Pierre Guillot et contributeurs",
+   "year": "not found",
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "intermediate",
+   "topics": [
+    "analyse audio",
+    "spectrogramme",
+    "descripteurs",
+    "logiciel libre"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://github.com/Ircam-Partiels/Partiels",
+   "why_recommended": "Une application gratuite et libre de l'Ircam pour analyser et visualiser un son (spectrogramme, hauteur, descripteurs) : très utile pour illustrer le cours sur les harmoniques.",
+   "bts_relevance": "E3 PTES",
+   "sources": [
+    {
+     "url": "https://github.com/Ircam-Partiels/Partiels",
+     "publisher": "GitHub (Ircam-Partiels)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "licence",
+      "access_link"
+     ],
+     "url_status": "ok"
+    },
+    {
+     "url": "https://forum.ircam.fr/projects/detail/partiels/",
+     "publisher": "Ircam Forum",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "GPL-3.0",
+   "concept_ids": [
+    "harmonics",
+    "frequency",
+    "masking"
+   ],
+   "note": "Plateformes : macOS 10.13+, Windows 10/11, Linux (README GitHub)."
+  },
+  {
+   "id": "ircam-ressources-pole-documentaire",
+   "type": "website",
+   "title": "Ircam - Pôle documentaire (ressources.ircam.fr)",
+   "author_or_publisher": "Ircam",
+   "year": "not found",
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "médiathèque",
+    "archives audiovisuelles",
+    "musique électroacoustique",
+    "compositeurs"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://ressources.ircam.fr",
+   "why_recommended": "Accès aux bases de l'Ircam (archives de concerts et conférences, analyses d'oeuvres, base de compositeurs) : une mine pour la culture musicale et électroacoustique.",
+   "bts_relevance": "E2 culture audiovisuelle et artistique",
+   "sources": [
+    {
+     "url": "https://ressources.ircam.fr",
+     "publisher": "Ircam",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "topics",
+      "licence"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Consultation « ouverte à tout le monde » (emprunt sur abonnement) ; conditions d'accès en ligne des bases non précisées ; page « Copyright et mentions légales » non lue",
+   "concept_ids": []
+  },
+  {
+   "id": "agi-son-fiches-reperes-plein-air",
+   "type": "official-guide",
+   "title": "Fiches repères : gestion sonore en plein air",
+   "author_or_publisher": "AGI-SON",
+   "year": "not found",
+   "edition": "not applicable",
+   "isbn": "not applicable",
+   "language": "fr",
+   "level": "beginner",
+   "topics": [
+    "festivals",
+    "gestion sonore",
+    "plein air",
+    "médiation",
+    "formation"
+   ],
+   "free_or_paid": "free",
+   "access_link": "https://www.agi-son.org/expertise-et-concertation/fiches-reperes-gestion-sonore-en-plein-air-2",
+   "why_recommended": "Fiches tirées de l'observation de six festivals (2024-2025) : comment gérer le niveau sonore en plein air, côté équipe et côté public.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.agi-son.org/expertise-et-concertation/fiches-reperes-gestion-sonore-en-plein-air-2",
+     "publisher": "AGI-SON",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "access_link"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Téléchargement gratuit (dossier Google Drive lié depuis la page) ; aucune licence déclarée",
+   "concept_ids": [
+    "sound-exposure-limits-france",
+    "sound-level-logging-display",
+    "hearing-rest-zone"
+   ]
+  },
+  {
+   "id": "agi-son-guide-gestion-sonore",
+   "type": "book",
+   "title": "Guide de la gestion sonore des lieux de diffusion et de pratique de musiques amplifiées",
+   "author_or_publisher": "AGI-SON (dir.) - Éditions du Centre national de la musique (CNM)",
+   "year": "not found",
+   "edition": "not found",
+   "isbn": "not found",
+   "language": "fr",
+   "level": "intermediate",
+   "topics": [
+    "gestion sonore",
+    "musiques amplifiées",
+    "décret son",
+    "salles de concert"
+   ],
+   "free_or_paid": "paid",
+   "access_link": "https://www.agi-son.org/expertise-et-concertation/guide-la-gestion-sonore-2",
+   "why_recommended": "Le guide professionnel de la gestion sonore en salle de musiques actuelles, écrit par le réseau AGI-SON.",
+   "bts_relevance": "E4",
+   "sources": [
+    {
+     "url": "https://www.agi-son.org/expertise-et-concertation/guide-la-gestion-sonore-2",
+     "publisher": "AGI-SON",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "author_or_publisher",
+      "free_or_paid"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Ouvrage payant (bouton « Acheter » vers les éditions CNM), droits réservés",
+   "concept_ids": [
+    "sound-exposure-limits-france",
+    "sound-level-logging-display",
+    "noise-impact-study-limiter"
+   ]
+  },
+  {
+   "id": "iec-61672-1-sound-level-meters",
+   "type": "standard",
+   "title": "IEC 61672-1:2013 - Electroacoustics - Sound level meters - Part 1: Specifications",
+   "author_or_publisher": "International Electrotechnical Commission (IEC)",
+   "year": 2013,
+   "edition": "2.0 (2013-09-30)",
+   "isbn": "not applicable",
+   "language": "en",
+   "level": "advanced",
+   "topics": [
+    "sonomètre",
+    "classes 1 et 2",
+    "pondérations A/C",
+    "métrologie"
+   ],
+   "free_or_paid": "paid",
+   "access_link": "https://webstore.iec.ch/en/publication/5708",
+   "why_recommended": "La norme qui définit le sonomètre (classes, pondérations A et C, constantes de temps). Il suffit en général de connaître son existence et ses classes : les fiches INRS la résument.",
+   "bts_relevance": "E3 PTES",
+   "sources": [
+    {
+     "url": "https://webstore.iec.ch/en/publication/5708",
+     "publisher": "IEC Webstore",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "covers": [
+      "title",
+      "edition",
+      "year",
+      "free_or_paid"
+     ],
+     "url_status": "ok"
+    }
+   ],
+   "licence": "Norme payante (CHF 335 sur IEC Webstore), © IEC ; aucun aperçu gratuit affiché sur la page",
+   "concept_ids": [
+    "a-and-c-weighting",
+    "db-spl",
+    "peak-sound-pressure-lcpeak"
+   ]
+  }
+ ],
+ "not_found_log": [
+  {
+   "item": "eduscol (référentiel BTS MAV, sujets E3)",
+   "searched": "https://eduscol.education.fr/ -> ECONNRESET le 2026-10-22 ; https://www.sup.adc.education.fr/btslst/ -> ENOTFOUND. Non inclus."
+  },
+  {
+   "item": "CST-RT-017 (loudness TV, v3.0)",
+   "searched": "Page https://cst.fr/recommandations-techniques-cst : liste des RT non rendue (contenu dynamique) ; https://cst.fr/download/33/recommandations-techniques -> 404. Seul le dépliant ARPP qui la résume a été trouvé et inclus. Texte de la RT non vérifié."
+  },
+  {
+   "item": "AES open-access papers / AES technical documents (ex. TD1004 streaming loudness)",
+   "searched": "https://www.aes.org/technical/documentDownloads.cfm?docID=731 -> HTTP 403. Non inclus."
+  },
+  {
+   "item": "ISO 226 (courbes isosoniques) et autres normes ISO",
+   "searched": "https://www.iso.org/standard/83117.html -> HTTP 403. Non inclus."
+  },
+  {
+   "item": "Délibération CSA n° 2011-29 du 19 juillet 2011 (intensité sonore TV)",
+   "searched": "WebSearch : seules des sources secondaires (questions parlementaires, ARPP) ; texte Légifrance non ouvert. Non inclus."
+  },
+  {
+   "item": "Arrêté du 17 avril 2023 (sons amplifiés)",
+   "searched": "Mentionné par Banque des Territoires ; URL Légifrance non trouvée/ouverte. Non inclus."
+  },
+  {
+   "item": "Décret n° 2006-892 (bruit au travail) sur Légifrance",
+   "searched": "URL ELI devinée (SOCT0611177D) -> renvoie la page d'accueil Légifrance, donc non vérifiée. Non incluse ; le TJ 16 de l'INRS couvre ces seuils."
+  },
+  {
+   "item": "Report ITU-R BS.2217 (compliance material BS.1770)",
+   "searched": "https://www.itu.int/pub/R-REP-BS.2217 : accès gratuit non confirmé (lien boutique). Non inclus."
+  },
+  {
+   "item": "Recommandation ITU-T G.722 / P.800",
+   "searched": "G.722 : page indique « Freely available items » mais téléchargement derrière connexion ; P.800 : accès non vérifié. Non incluses."
+  },
+  {
+   "item": "ATSC A/85 (loudness US)",
+   "searched": "https://www.atsc.org/atsc-documents/type/3-0-standards/ : A/85 absent de cette liste (documents 3.0). Non inclus."
+  },
+  {
+   "item": "INA - la revue des médias (pages pédagogiques son)",
+   "searched": "https://larevuedesmedias.ina.fr/ : aucune rubrique son/radio/loudness ; www.larevuedesmedias.ina.fr -> ENOTFOUND. Non inclus."
+  },
+  {
+   "item": "CNC - ressources techniques son",
+   "searched": "https://www.cnc.fr/ : aucun lien « son » ; seulement éducation à l'image et aides. Non inclus."
+  },
+  {
+   "item": "Radio France / France Télévisions guides techniques (PAD, loudness)",
+   "searched": "https://www.radiofrance.com/ : aucun guide technique public trouvé. France Télévisions non vérifié. Non inclus."
+  },
+  {
+   "item": "Ressources UNIT / Canal-U (cours d'acoustique, Synthe Sons)",
+   "searched": "Notices enseignementsup-recherche.gouv.fr/ressources-pedagogiques -> HTTP 403. Non incluses."
+  },
+  {
+   "item": "FUN MOOC (autres cours acoustique / traitement du signal)",
+   "searched": "https://www.fun-mooc.fr/fr/cours/?q=acoustique : catalogue non rendu (page de navigation). Un seul cours inclus ; mooc-list.com -> 403."
+  },
+  {
+   "item": "CEPT ERC Recommendation 25-10 / 70-03 (PMSE, SRD)",
+   "searched": "https://docdb.cept.org/... -> erreur de certificat TLS. Non incluses."
+  },
+  {
+   "item": "Cahier Louis-Lumière : Messonnier, Lyzwa, Ling, « Méthodes de prise de son en multicanal / Objets » (2022)",
+   "searched": "Notice HAL hal-04621916 : pas de texte intégral (openAccess false), licence non indiquée. Non inclus."
+  },
+  {
+   "item": "Ircam Forum - logiciels (licence de Partiels sur le Forum)",
+   "searched": "https://forum.ircam.fr/projects/detail/partiels/ : licence non indiquée ; licence GPL-3.0 vérifiée sur GitHub."
+  }
+ ]
+}

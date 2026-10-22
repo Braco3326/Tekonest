@@ -1,0 +1,1857 @@
+{
+  "entity": "concept",
+  "domain": "loudspeakers-system-tuning",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "loudspeaker-sensitivity",
+      "name_fr": "Sensibilité d'une enceinte",
+      "name_en": "Loudspeaker sensitivity",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Niveau de pression acoustique produit par une enceinte à 1 m dans l'axe pour une puissance électrique de 1 W (souvent 2,83 V sur 8 Ω), exprimé en dB SPL.",
+      "explanation": "La sensibilité dit combien de décibels une enceinte « rend » pour 1 W. Exemple constructeur : la NEXO GEO M10 annonce 100 dB SPL nominal (1 W / 1 m). Comme doubler la puissance n'ajoute que 3 dB, une enceinte plus sensible de 3 dB demande deux fois moins de puissance d'ampli pour le même niveau. Pour estimer un niveau au public, on combine la sensibilité, la puissance en dB (10·log10 P) et la perte avec la distance (−6 dB par doublement pour une source ponctuelle en champ libre). Ce calcul ignore la compression thermique, la salle et le couplage entre enceintes : il donne un ordre de grandeur, pas un niveau garanti.",
+      "formulas": [
+        {
+          "expr": "L_P = 10·log10(P / P0)",
+          "vars": {
+            "P": "puissance (W)",
+            "P0": "puissance de référence (1 W ici)",
+            "L_P": "gain de niveau (dB)"
+          },
+          "source_url": "https://www.sengpielaudio.com/calculator-db.htm"
+        },
+        {
+          "expr": "L2 = L1 − 20·log10(r2 / r1)",
+          "vars": {
+            "L": "niveau (dB SPL)",
+            "r": "distance (m)"
+          },
+          "source_url": "https://www.sengpielaudio.com/calculator-distance.htm"
+        }
+      ],
+      "units": [
+        "dB SPL",
+        "W",
+        "m",
+        "V"
+      ],
+      "related_concepts": [
+        "max-spl-loudspeaker",
+        "amplifier-power-rating",
+        "inverse-square-law",
+        "decibel"
+      ],
+      "equipment_ids": [
+        "nexo-geo-m10"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Calcul de niveau à partir de la sensibilité (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Choix d'enceinte (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Loudspeaker",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.sengpielaudio.com/calculator-db.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://www.sengpielaudio.com/calculator-distance.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "formulas[1]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "max-spl-loudspeaker",
+      "name_fr": "Niveau maximal (SPL max) d'une enceinte",
+      "name_en": "Loudspeaker maximum SPL",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Niveau de pression acoustique crête le plus élevé qu'une enceinte peut produire à 1 m en champ libre, avec un signal de test précisé par le constructeur et souvent pour un amplificateur donné.",
+      "explanation": "Le SPL max n'a de sens qu'avec ses conditions de mesure. d&b donne pour la V8 142 dB crête à 1 m, champ libre, bruit rose de facteur de crête 4, avec D40/D80. Pour la Y10P, la même enceinte passe de 131 à 136 dB selon l'amplificateur d&b utilisé : le SPL max dépend donc aussi de l'ampli. NEXO annonce 136 dB crête à 1 m pour la GEO M10. Comparer deux fiches sans vérifier le signal de test et la valeur crête ou efficace mène à des erreurs.",
+      "formulas": [],
+      "units": [
+        "dB SPL"
+      ],
+      "related_concepts": [
+        "loudspeaker-sensitivity",
+        "amplifier-power-rating"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v8",
+        "db-audiotechnik-y10p",
+        "nexo-geo-m10"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-y/y10p/",
+          "publisher": "d&b audiotechnik, page produit Y10P",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "loudspeaker-driver-types",
+      "name_fr": "Types de haut-parleurs (transducteurs)",
+      "name_en": "Loudspeaker driver types",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Famille de transducteurs spécialisés par bande de fréquences : subwoofer (extrême grave), woofer (grave), médium, tweeter ou moteur à chambre de compression (aigu), et haut-parleur large bande.",
+      "explanation": "Aucun haut-parleur ne reproduit seul tout le spectre avec un fort niveau. Le subwoofer couvre l'extrême grave (typiquement sous 80 à 200 Hz selon l'usage), le woofer le grave, le médium environ 1 à 6 kHz, et l'aigu est confié à un tweeter ou à un moteur à chambre de compression chargé par un pavillon. Exemple : la GEO M10 associe un 10 pouces et un moteur 1,4 pouce ; la V8 de d&b utilise deux 10 pouces, un 8 pouces et deux moteurs 1,4 pouce. Le filtre (crossover) répartit le signal entre ces transducteurs.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "crossover",
+        "loudspeaker-enclosure-types"
+      ],
+      "equipment_ids": [
+        "nexo-geo-m10",
+        "db-audiotechnik-v8"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Loudspeaker",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "loudspeaker-enclosure-types",
+      "name_fr": "Types d'enceintes (charges acoustiques)",
+      "name_en": "Loudspeaker enclosure types",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Manière dont le coffret traite l'onde arrière du haut-parleur : clos (sealed), bass-reflex (évent), pavillon (horn), passe-bande, ligne de transmission, radiateur passif.",
+      "explanation": "Le coffret clos enferme l'onde arrière dans une boîte étanche. Le bass-reflex ajoute un évent qui remet l'énergie arrière en phase vers l'avant dans le grave et prolonge la réponse ; un caisson à évent peut atteindre un rendement théorique supérieur d'environ 2,9 dB au clos. Le pavillon augmente directivité et rendement, au prix de la taille. Le d&b V-SUB combine un 18 pouces en bass-reflex vers l'avant et un 12 pouces en passe-bande à deux chambres vers l'arrière pour obtenir une directivité cardioïde.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "loudspeaker-driver-types",
+        "cardioid-subwoofer"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v-sub"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Loudspeaker",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Subwoofer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "crossover",
+      "name_fr": "Filtre séparateur (crossover)",
+      "name_en": "Crossover",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Réseau de filtres qui divise le signal en bandes de fréquences et envoie chaque bande au haut-parleur ou au système adapté (voies d'une enceinte, système principal et subwoofers).",
+      "explanation": "Un crossover passif est placé après l'amplificateur, entre ampli et haut-parleurs, et n'utilise que des composants passifs (bobines, condensateurs, résistances). Un crossover actif agit avant l'amplification, au niveau ligne, et demande un canal d'ampli par voie ; il permet de régler pente, type et niveau de chaque bande. Chaque ordre de filtre ajoute environ 6 dB/octave. Exemples : la GEO M10 a un filtre passif à 1,3 kHz entre grave et aigu, mais son processeur NEXO règle le passe-haut entre 63 et 120 Hz pour la jonction avec les subs. Aujourd'hui, la plupart des filtres actifs sont numériques (IIR ou FIR).",
+      "formulas": [],
+      "units": [
+        "Hz",
+        "dB/octave"
+      ],
+      "related_concepts": [
+        "linkwitz-riley-crossover",
+        "passive-active-loudspeaker",
+        "subwoofer-alignment",
+        "high-pass-filter"
+      ],
+      "equipment_ids": [
+        "nexo-geo-m10",
+        "dbx-driverack-pa2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Filtrage (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Réglage processeur de diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_crossover",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "linkwitz-riley-crossover",
+      "name_fr": "Filtre de Linkwitz-Riley",
+      "name_en": "Linkwitz-Riley crossover",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Alignement de crossover obtenu en mettant en cascade deux filtres de Butterworth identiques ; chaque sortie est à −6 dB à la fréquence de coupure et la somme est plate.",
+      "explanation": "Deux Butterworth d'ordre N en série donnent un Linkwitz-Riley d'ordre 2N : LR-2 (12 dB/oct), LR-4 (24 dB/oct), LR-8 (48 dB/oct). Chaque Butterworth est à −3 dB à la coupure, d'où −6 dB pour le LR ; les deux voies s'additionnent sans bosse, alors qu'un crossover Butterworth produit +3 dB au point de croisement. En LR-4, les sorties grave et aigu sont en phase à toutes les fréquences ; en LR-2, elles sont à 180° à la coupure et il faut inverser la polarité d'une voie. Le LR-4 est décrit par Rane comme le standard de fait des crossovers actifs professionnels.",
+      "formulas": [
+        {
+          "expr": "LR d'ordre 2N = Butterworth d'ordre N × Butterworth d'ordre N (pente = 6 dB/octave par ordre)",
+          "vars": {
+            "N": "ordre du filtre de Butterworth"
+          },
+          "source_url": "https://www.ranecommercial.com/legacy/note160.html"
+        }
+      ],
+      "units": [
+        "dB/octave",
+        "Hz"
+      ],
+      "related_concepts": [
+        "crossover",
+        "loudspeaker-polarity"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Filtres, phase (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note160.html",
+          "publisher": "Rane (Dennis Bohn), RaneNote 160 Linkwitz-Riley Crossovers: A Primer",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_crossover",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "passive-active-loudspeaker",
+      "name_fr": "Enceinte passive, enceinte active, enceinte amplifiée par contrôleur dédié",
+      "name_en": "Passive vs active loudspeaker",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Une enceinte passive reçoit un niveau haut-parleur d'un amplificateur externe ; une enceinte active (amplifiée) intègre amplification et traitement et reçoit un niveau ligne.",
+      "explanation": "Une enceinte active comme la QSC K12.2 prend un niveau ligne sur XLR et le secteur sur IEC : jamais de sortie haut-parleur dessus. Les enceintes passives professionnelles ne sont pas « libres » pour autant : d&b précise que ses enceintes ne doivent être alimentées que par des amplificateurs d&b correctement configurés, sinon les composants risquent d'être endommagés ; NEXO impose un processeur NEXO pour l'égalisation, l'alignement de phase, le filtrage et la protection en excursion et en température de la GEO M10. Le preset de l'ampli fait donc partie de l'enceinte. Certaines enceintes sont même actives et autoalimentées sur le réseau électrique, comme la Meyer LINA (ampli classe D 3 canaux intégré).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "crossover",
+        "amplifier-power-rating",
+        "speaker-impedance-load"
+      ],
+      "equipment_ids": [
+        "qsc-k12-2",
+        "db-audiotechnik-y10p",
+        "nexo-geo-m10",
+        "meyer-sound-lina",
+        "db-audiotechnik-d80",
+        "nexo-nxamp4x4mk2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_crossover",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "coverage-angle",
+      "name_fr": "Angle de couverture (dispersion)",
+      "name_en": "Coverage angle",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Angle nominal, horizontal et vertical, dans lequel une enceinte diffuse de façon utile ; les constructeurs le documentent par des courbes isobares (−6 dB, −12 dB par rapport à l'axe) qui varient avec la fréquence.",
+      "explanation": "Les constructeurs donnent un angle nominal (ex. V8 : 80° horizontal, V12 : 120°) et des courbes isobares à −6 dB et −12 dB en fonction de la fréquence. d&b indique pour la V8 que la dispersion nominale tient au-dessus de 600 Hz et que le contrôle horizontal reste assuré jusqu'à 250 Hz : en dessous, l'enceinte devient de plus en plus omnidirectionnelle. La GEO M10 passe de 80° à 120° en horizontal avec des flasques magnétiques et existe en 12° ou 25° vertical. Choisir l'angle, c'est couvrir le public sans arroser murs et scène.",
+      "formulas": [],
+      "units": [
+        "°",
+        "Hz"
+      ],
+      "related_concepts": [
+        "line-array",
+        "point-source",
+        "splay-angle"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v8",
+        "nexo-geo-m10"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "point-source",
+      "name_fr": "Source ponctuelle",
+      "name_en": "Point source",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Enceinte (ou groupe compact) qui rayonne comme depuis un point : le front d'onde est sphérique et le niveau baisse d'environ 6 dB à chaque doublement de distance en champ libre.",
+      "explanation": "La plupart des enceintes isolées (12 pouces actives, wedges, enceintes de proximité) se comportent en source ponctuelle. Elles sont simples à installer, mais le public proche entend beaucoup plus fort que le public éloigné : 100 dB à 1 m donnent environ 94 dB à 2 m et 80 dB à 10 m. Pour un public profond, on complète par des rappels retardés ou on passe à un line array. Empiler deux sources ponctuelles identiques qui couvrent la même zone crée du filtrage en peigne.",
+      "formulas": [
+        {
+          "expr": "L2 = L1 − 20·log10(r2 / r1)",
+          "vars": {
+            "L": "niveau (dB SPL)",
+            "r": "distance (m)"
+          },
+          "source_url": "https://www.sengpielaudio.com/calculator-distance.htm"
+        }
+      ],
+      "units": [
+        "dB",
+        "m"
+      ],
+      "related_concepts": [
+        "inverse-square-law",
+        "line-array",
+        "comb-filtering"
+      ],
+      "equipment_ids": [
+        "qsc-k12-2",
+        "db-audiotechnik-y10p"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Décroissance avec la distance (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.sengpielaudio.com/calculator-distance.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_array",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "line-array",
+      "name_fr": "Ligne source (line array)",
+      "name_en": "Line array",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Colonne d'éléments couplés mécaniquement et acoustiquement dont les fronts d'onde s'additionnent en une onde cohérente ; dans sa zone de couplage, le niveau baisse d'environ 3 dB par doublement de distance au lieu de 6 dB.",
+      "explanation": "Une ligne idéale rayonne une onde cylindrique, d'où une perte de 3 dB par doublement de distance, mais une ligne réelle n'a qu'une longueur finie : ce comportement ne vaut que sur une certaine distance et une certaine bande de fréquences. Plus la ligne est longue, plus elle contrôle la directivité vers le grave ; une ligne de moins de 3 m redevient presque omnidirectionnelle sous 100 Hz environ. La couverture verticale se règle avec les angles entre éléments (splay angles), la partie droite du haut portant loin et la partie courbée du bas couvrant les premiers rangs (forme en J). d&b suspend jusqu'à 24 V8, avec une dispersion horizontale constante de 80°. La conception se fait obligatoirement dans le logiciel du constructeur.",
+      "formulas": [],
+      "units": [
+        "dB",
+        "m",
+        "°"
+      ],
+      "related_concepts": [
+        "point-source",
+        "splay-angle",
+        "array-frequency-compensation",
+        "prediction-software",
+        "coverage-angle"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v8",
+        "l-acoustics-k2",
+        "l-acoustics-kara-ii",
+        "nexo-geo-m10",
+        "meyer-sound-lina"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Propagation (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'un système line array (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_array",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Ligne idéale : −3 dB par doublement de distance (onde cylindrique)",
+              "source_url": "https://en.wikipedia.org/wiki/Line_array"
+            },
+            {
+              "value": "Comportement de ligne seulement sur une distance limitée et environ 100–400 Hz pour une ligne réelle",
+              "source_url": "https://en.wikipedia.org/wiki/Line_array"
+            }
+          ],
+          "note": "Même source : le −3 dB est un cas idéal ; ne pas l'appliquer à toute distance ni à toute fréquence."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "splay-angle",
+      "name_fr": "Angle de couplage (splay angle)",
+      "name_en": "Splay angle",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Angle mécanique réglé entre deux éléments adjacents d'un line array ; la succession des angles fixe la couverture verticale de la ligne.",
+      "explanation": "Chaque système a sa plage : 0° à 14° par pas de 1° pour la série V de d&b, 0°, 0,5° puis 1° à 11° par pas de 1° pour la Meyer LINA. Une ligne « en J » garde des angles faibles en haut (portée longue) et plus ouverts en bas (premiers rangs) ; une ligne « spirale » augmente progressivement, d'environ 1° en haut jusqu'à 6 à 10° en bas. d&b distingue même des presets « Line » (au moins trois angles consécutifs de 0°, 1° ou 2°) et « Arc » selon la courbure. On ne choisit pas les angles au jugé : on les calcule dans ArrayCalc, Soundvision ou MAPP.",
+      "formulas": [],
+      "units": [
+        "°"
+      ],
+      "related_concepts": [
+        "line-array",
+        "prediction-software",
+        "coverage-angle"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v8",
+        "meyer-sound-lina"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_array",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "array-frequency-compensation",
+      "name_fr": "Corrections de couplage et d'absorption de l'air (CPL, HFC)",
+      "name_en": "Array coupling and air-absorption compensation",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Égalisations de preset qui compensent l'excès de grave dû au couplage des éléments d'une ligne (CPL chez d&b) et la perte d'aigu due à l'absorption de l'air à grande distance (HFC).",
+      "explanation": "Plus une ligne compte d'éléments, plus le grave s'additionne : le CPL de d&b atténue progressivement à partir de 2 kHz, au maximum sous 100 Hz, réglable de 0 à −9 dB (et jusqu'à +5 dB de renfort). Tous les éléments d'une même ligne doivent avoir le même réglage CPL. Le HFC compense l'absorption de l'air : HFC1 au-delà de 30 m, HFC2 au-delà de 60 m, valeurs calculées pour 40 % d'humidité ; si l'air est plus sec, l'absorption augmente et les distances de correction raccourcissent. NEXO propose une fonction équivalente pour le bas du spectre (ArrayEQ).",
+      "formulas": [],
+      "units": [
+        "dB",
+        "m",
+        "Hz"
+      ],
+      "related_concepts": [
+        "line-array",
+        "system-tuning"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v8",
+        "nexo-geo-m10"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "subwoofer-alignment",
+      "name_fr": "Alignement subwoofers / système principal",
+      "name_en": "Subwoofer alignment",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Réglage du retard et de la polarité des subwoofers par rapport au système principal pour que les deux s'additionnent en phase autour de la fréquence de croisement, en un point de référence choisi.",
+      "explanation": "Main et subs se recouvrent autour du croisement (souvent dans l'octave de 63 Hz, typiquement 50–80 Hz). S'ils arrivent avec un décalage d'une demi-période, ils s'annulent : pour un croisement à 52 Hz (période 19 ms), l'opposition se produit à 9,5 ms. On retarde donc le système le plus proche du point de mesure et on vérifie la polarité. L'alignement n'est exact qu'à ce point : sur les côtés d'un grand parterre, l'écart peut atteindre 20 à 30 ms. Le « phase » d'un ampli de sub n'est souvent qu'un inverseur de polarité (0° ou 180°). ArrayCalc calcule l'alignement temporel et la phase des subs en un point de référence.",
+      "formulas": [
+        {
+          "expr": "Δt_opposition = T / 2 = 1 / (2·f_c)",
+          "vars": {
+            "f_c": "fréquence de croisement (Hz)",
+            "T": "période (s)"
+          },
+          "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf"
+        }
+      ],
+      "units": [
+        "ms",
+        "Hz",
+        "°"
+      ],
+      "related_concepts": [
+        "crossover",
+        "cardioid-subwoofer",
+        "speaker-delay-alignment",
+        "loudspeaker-polarity",
+        "phase"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v-sub",
+        "l-acoustics-ks28",
+        "db-audiotechnik-arraycalc",
+        "rational-acoustics-smaart-suite-v9"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Phase et retards (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Calage sub / main (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf",
+          "publisher": "L-Acoustics (Mouterde, Moulin, Epain, Corteel), AES 2024",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Subwoofer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/global/en/arraycalc/",
+          "publisher": "d&b audiotechnik, ArrayCalc",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "cardioid-subwoofer",
+      "name_fr": "Subwoofer cardioïde",
+      "name_en": "Cardioid subwoofer",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Caisson ou groupe de caissons dont une partie rayonne vers l'arrière avec retard et inversion de polarité adaptés, pour annuler le grave derrière le système tout en gardant le niveau vers l'avant.",
+      "explanation": "Le grave est naturellement omnidirectionnel : sans traitement, la scène reçoit autant de basses que le public. En plaçant une source arrière, retardée et inversée, on crée une annulation derrière. Le d&b V-SUB le fait dans une seule enceinte (18 pouces avant, 12 pouces arrière, un seul canal d'ampli) et demande au moins 60 cm d'espace latéral entre caissons ou avec un mur. NEXO propose ses MSUB15 en mode CARDIO avec un caisson tourné vers l'arrière pour deux vers l'avant. EAW déconseille les effectifs avant/arrière inégaux : le caisson arrière, poussé de 3 à 6 dB, sature plus tôt et la directivité se dégrade justement à fort niveau. Bénéfices : moins de champ réverbéré grave, moins de grave sur scène.",
+      "formulas": [],
+      "units": [
+        "dB",
+        "ms",
+        "m"
+      ],
+      "related_concepts": [
+        "end-fire-subwoofer-array",
+        "subwoofer-alignment",
+        "loudspeaker-polarity"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v-sub",
+        "l-acoustics-ks28"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf",
+          "publisher": "EAW, Directional Subwoofer Arrays: A Practical Approach",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Subwoofer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Effectifs avant/arrière différents déconseillés (rear sub boosté = sature plus tôt)",
+              "source_url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf"
+            },
+            {
+              "value": "Configuration constructeur MSUB15 CARDIO : 1 caisson arrière pour 2 avant",
+              "source_url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf"
+            }
+          ],
+          "note": "NEXO traite le déséquilibre dans son preset ; EAW parle d'arrays génériques. Les deux sont valides dans leur contexte."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "end-fire-subwoofer-array",
+      "name_fr": "Array de subwoofers end-fire (et gradient)",
+      "name_en": "End-fire subwoofer array",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Rangées de subwoofers placées l'une derrière l'autre, espacées d'environ un quart de longueur d'onde de la fréquence visée et retardées progressivement, pour concentrer le grave vers l'avant.",
+      "explanation": "Dans l'end-fire, chaque rangée est retardée de quelques millisecondes de plus que la précédente : tout s'additionne vers le public, les côtés et l'arrière s'annulent partiellement. EAW décrit une variante à deux caissons avec inversion de polarité et retard sur le caisson arrière, qui garde presque tout le niveau avant et annule environ 20 dB à l'arrière, de façon large bande ; un simple retard sans inversion donne une annulation étroite autour d'une seule fréquence. Pour plus de deux rangées, EAW applique un déphasage de 360° divisé par le nombre de rangées, en plus du retard d'alignement. Toutes les annulations avec inversion perdent environ 6 dB/octave vers le très grave. Attention : le vocabulaire varie selon les sources (end-fire, gradient, cardioïde).",
+      "formulas": [
+        {
+          "expr": "d = λ / 4 (espacement des rangées, λ à la fréquence visée)",
+          "vars": {
+            "d": "espacement (m)",
+            "λ": "longueur d'onde (m)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Subwoofer"
+        },
+        {
+          "expr": "Δt_arrière = d / c",
+          "vars": {
+            "d": "espacement (m)",
+            "c": "vitesse du son (m/s)"
+          },
+          "source_url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf"
+        },
+        {
+          "expr": "déphasage par rangée = 360° / n",
+          "vars": {
+            "n": "nombre de rangées de subwoofers"
+          },
+          "source_url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf"
+        }
+      ],
+      "units": [
+        "m",
+        "ms",
+        "°",
+        "Hz"
+      ],
+      "related_concepts": [
+        "cardioid-subwoofer",
+        "wavelength",
+        "subwoofer-alignment",
+        "speed-of-sound"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 5,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Subwoofer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf",
+          "publisher": "EAW, Directional Subwoofer Arrays: A Practical Approach",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "formulas[1]",
+            "formulas[2]"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "definition",
+          "values": [
+            {
+              "value": "End-fire = rangées retardées progressivement (sans mention d'inversion)",
+              "source_url": "https://en.wikipedia.org/wiki/Subwoofer"
+            },
+            {
+              "value": "End-fire « vrai » = retard + inversion de polarité sur l'arrière ; retard seul = « quasi-end-fire »",
+              "source_url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf"
+            }
+          ],
+          "note": "Terminologie non unifiée : préciser toujours retard, polarité et espacement."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "speaker-delay-alignment",
+      "name_fr": "Alignement temporel des rappels (délais)",
+      "name_en": "Delay speaker alignment",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Retard électronique appliqué à une enceinte de rappel (délai, front-fill, out-fill) pour que son son arrive au public en même temps ou juste après celui du système principal.",
+      "explanation": "Le son met environ 2,9 ms par mètre à 20 °C (c ≈ 343 m/s). Un rappel placé 10 m devant le système principal doit donc être retardé d'environ 29 ms pour que les deux fronts d'onde coïncident à son niveau. On retarde souvent un peu plus que le calcul pour que l'effet de précédence garde l'image sonore sur la scène. Le calcul Δd/c donne un point de départ ; on affine à la mesure (réponse impulsionnelle, fonction de transfert). MAPP détermine les retards des enceintes de rappel ; ArrayCalc et Soundvision proposent aussi un calcul de retard.",
+      "formulas": [
+        {
+          "expr": "Δt = Δd / c",
+          "vars": {
+            "Δt": "retard (s)",
+            "Δd": "différence de distance (m)",
+            "c": "vitesse du son (m/s)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Speed_of_sound"
+        },
+        {
+          "expr": "c ≈ 331,3 + 0,606·θ",
+          "vars": {
+            "c": "vitesse du son (m/s)",
+            "θ": "température (°C)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Speed_of_sound"
+        }
+      ],
+      "units": [
+        "ms",
+        "m",
+        "m/s"
+      ],
+      "related_concepts": [
+        "haas-precedence-effect",
+        "speed-of-sound",
+        "comb-filtering",
+        "system-tuning",
+        "prediction-software"
+      ],
+      "equipment_ids": [
+        "meyer-sound-lina",
+        "l-acoustics-soundvision",
+        "db-audiotechnik-arraycalc"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Calcul de retard (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Calage des rappels (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speed_of_sound",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "formulas[0]",
+            "formulas[1]"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
+          "publisher": "L-Acoustics (Moulin, Corteel), AES 152nd Convention 2022",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/products/soundvision/",
+          "publisher": "L-Acoustics, Soundvision",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "system-tuning",
+      "name_fr": "Calage d'un système de diffusion",
+      "name_en": "System tuning",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Ensemble des mesures et réglages (polarité, retards, niveaux, égalisation, filtres) qui font fonctionner les sous-systèmes d'une diffusion comme un tout cohérent dans la zone d'écoute.",
+      "explanation": "Le calage suit la conception : on vérifie d'abord le câblage et la polarité, puis on mesure chaque sous-système séparément avant de les combiner. Les outils bicanal (Smaart, SIM de Meyer) comparent le signal envoyé et le signal capté par un micro de mesure : on lit amplitude et phase en fonction de la fréquence, et la réponse impulsionnelle pour les retards. Meyer cite parmi les usages de SIM la mesure des délais de propagation entre sous-systèmes pour choisir polarités et retards, et l'optimisation de l'intégration des subs. En basse fréquence, L-Acoustics recommande de multiplier les balayages (8 en extérieur, 4 en intérieur) plutôt que de les allonger, car le bruit de fond varie beaucoup dehors.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "transfer-function-measurement",
+        "subwoofer-alignment",
+        "speaker-delay-alignment",
+        "loudspeaker-polarity",
+        "equalizer-parametric"
+      ],
+      "equipment_ids": [
+        "rational-acoustics-smaart-suite-v9",
+        "minidsp-umik-1",
+        "nti-audio-xl2",
+        "dbx-driverack-pa2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Calage d'un système (TES / pratique) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.rationalacoustics.com/products/smaart-suite-v9-perpetual",
+          "publisher": "Rational Acoustics, Smaart Suite v9",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/white_papers/WP-HOW_TO_IMPROVE_MEASUREMENT_QUALITY_AT_LOW_FREQUENCIES.pdf",
+          "publisher": "L-Acoustics, How to improve measurement quality at low frequencies? (white paper)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "transfer-function-measurement",
+      "name_fr": "Mesure de fonction de transfert",
+      "name_en": "Transfer function measurement",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Mesure bicanal qui compare le signal de référence (entrée du système) au signal capté par le micro de mesure (sortie acoustique) pour obtenir l'amplitude, la phase, la cohérence et la réponse impulsionnelle du système.",
+      "explanation": "Un analyseur de spectre (RTA) ne regarde que le micro ; la fonction de transfert compare ce que l'on envoie et ce que l'on reçoit, ce qui isole le comportement du système. Il faut une interface avec au moins deux entrées : une pour la référence (sortie console ou processeur), une pour le micro de mesure. Smaart affiche en temps réel magnitude, cohérence, phase et réponse impulsionnelle ; SIM de Meyer affiche amplitude et phase en fonction de la fréquence avec une résolution de 48 points par octave, et l'amplitude en fonction du temps (réponse impulsionnelle). La réponse impulsionnelle sert à lire les délais de propagation entre sous-systèmes.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "system-tuning",
+        "phase"
+      ],
+      "equipment_ids": [
+        "rational-acoustics-smaart-suite-v9",
+        "rew-room-eq-wizard",
+        "minidsp-umik-1"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mesure acoustique (pratique) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Phase, réponse en fréquence (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.rationalacoustics.com/products/smaart-suite-v9-perpetual",
+          "publisher": "Rational Acoustics, Smaart Suite v9",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "amplifier-power-rating",
+      "name_fr": "Puissance d'ampli et tenue en puissance de l'enceinte",
+      "name_en": "Amplifier power rating",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Puissance qu'un amplificateur fournit sur une charge donnée (8, 4, 2 Ω), à comparer à la tenue en puissance (efficace et crête) de l'enceinte annoncée par son constructeur.",
+      "explanation": "La puissance d'un ampli dépend de la charge : le Crown XLS 2502 donne 440 W par canal sous 8 Ω, 775 W sous 4 Ω et 1200 W sous 2 Ω (0,5 % THD, 1 kHz). Côté enceinte, d&b annonce par exemple 500 W efficaces / 2000 W crête (10 ms) pour la V8 ; NEXO recommande 750 W d'amplification par GEO M10. EAW recommande un ampli de puissance double de la tenue de l'enceinte quand on a besoin de toute sa capacité, à condition que l'exploitation soit maîtrisée (limiteurs). EAW précise qu'il n'existe pas de norme universelle de mesure et qu'un ampli sous-dimensionné ne protège pas : un ampli qui écrête peut détruire une enceinte même de puissance supérieure.",
+      "formulas": [],
+      "units": [
+        "W",
+        "Ω"
+      ],
+      "related_concepts": [
+        "speaker-impedance-load",
+        "loudspeaker-sensitivity",
+        "electrical-power",
+        "limiter",
+        "bridge-mode-amplifier"
+      ],
+      "equipment_ids": [
+        "crown-xls-2502",
+        "db-audiotechnik-d80",
+        "nexo-nxamp4x4mk2",
+        "db-audiotechnik-v8",
+        "nexo-geo-m10"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Puissance électrique (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Choix ampli / enceintes (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
+          "publisher": "Crown (HARMAN), XLS DriveCore 2 Series data sheet",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://design.eaw.com/en/knowledge/how-much-amplifier-power-do-i-need",
+          "publisher": "EAW, How much amplifier power do I need?",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "speaker-impedance-load",
+      "name_fr": "Charge d'impédance sur un canal d'ampli",
+      "name_en": "Speaker impedance load",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Impédance totale vue par un canal d'amplificateur, résultant des enceintes branchées (en parallèle le plus souvent) ; elle ne doit pas descendre sous le minimum spécifié par le fabricant de l'ampli.",
+      "explanation": "Brancher deux enceintes 8 Ω en parallèle sur un canal donne 4 Ω ; quatre donnent 2 Ω. L'impédance nominale est une valeur moyenne : l'impédance réelle varie avec la fréquence. Les fabricants fixent des limites : d&b prévoit 2 V8, 2 Y10P ou 2 V-SUB par canal (et recommande un seul V-SUB par canal de D40 quand il faut toute la puissance) ; NEXO autorise de 1 à 4 GEO M10 par canal selon le modèle de NXAMP. QSC indique qu'en mode ponté, 4 Ω est la charge minimale, et qu'une charge de 4 Ω ou moins en surcharge prolongée peut faire muter l'ampli quelques secondes et déclencher le disjoncteur.",
+      "formulas": [
+        {
+          "expr": "1/Z = 1/Z1 + 1/Z2 + … (résistances pures en parallèle)",
+          "vars": {
+            "Z": "impédance totale (Ω)",
+            "Zi": "impédance de chaque enceinte (Ω)"
+          },
+          "source_url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html"
+        }
+      ],
+      "units": [
+        "Ω"
+      ],
+      "related_concepts": [
+        "impedance",
+        "ohms-law",
+        "amplifier-power-rating",
+        "bridge-mode-amplifier"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v-sub",
+        "db-audiotechnik-v8",
+        "nexo-geo-m10",
+        "nexo-nxamp4x4mk2",
+        "qsc-rmx-850",
+        "crown-xls-2502"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Lois des circuits (PTES) (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Câblage ampli / enceintes (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html",
+          "publisher": "HyperPhysics, Georgia State University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Loudspeaker",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
+          "publisher": "QSC, RMX Series 2RU User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "bridge-mode-amplifier",
+      "name_fr": "Mode ponté (bridge) d'un amplificateur",
+      "name_en": "Bridged amplifier mode",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Mode où les deux canaux d'un ampli attaquent une seule enceinte en opposition, pour obtenir une tension de sortie double ; la charge minimale admise augmente.",
+      "explanation": "QSC résume : en ponté mono, tension doublée, puissance crête multipliée par quatre et puissance soutenue environ triplée par rapport à un canal ; seule l'entrée du canal 1 est utilisée. La charge minimale est de 4 Ω (QSC RMX et Crown XLS). Sur le Crown XLS, la sortie speakON du canal 1 porte les deux canaux : en ponté, le + de l'enceinte va sur la broche 1+ et le − sur la broche 2+. C'est un cas où un câble speakON « normal » câblé en 1+/1− ne convient pas.",
+      "formulas": [],
+      "units": [
+        "Ω",
+        "V",
+        "W"
+      ],
+      "related_concepts": [
+        "speaker-impedance-load",
+        "amplifier-power-rating",
+        "speakon-pinout"
+      ],
+      "equipment_ids": [
+        "crown-xls-2502",
+        "qsc-rmx-850",
+        "qsc-rmx-1450"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
+          "publisher": "QSC, RMX Series 2RU User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "publisher": "Crown (HARMAN), XLS DriveCore 2 Series Operation Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "speakon-pinout",
+      "name_fr": "Brochage speakON (1± / 2±)",
+      "name_en": "speakON pinout",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Convention de raccordement des connecteurs Neutrik speakON : contacts +1/−1 et +2/−2 sur un NL4, chaque paire pouvant porter un canal d'ampli distinct (bi-amplification, sub et top dans le même câble).",
+      "explanation": "Le speakON existe en 2, 4 et 8 pôles et ne sert qu'aux liaisons haut-parleur, ce qui évite d'y brancher par erreur un câble micro. Une fiche 2 pôles insérée dans une embase 4 pôles se connecte sur 1+/1−, l'inverse ne fonctionne pas. L'attribution des paires dépend du fabricant : chez d&b, les tops V8 utilisent 1+/1− et le V-SUB 2+/2− (les points 2± sont « destinés aux Sub-Bass actifs ») ; la GEO M10 de NEXO utilise 2+/2− et laisse 1+/1− en traversée ; le canal 1 du Crown XLS porte les deux canaux sur un seul connecteur. Conséquence : un sub câblé sur un canal qui ne délivre que 1± reste muet.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "passive-active-loudspeaker",
+        "bridge-mode-amplifier",
+        "loudspeaker-polarity"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v8",
+        "db-audiotechnik-v-sub",
+        "nexo-geo-m10",
+        "nexo-45n12",
+        "crown-xls-2502"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speakon_connector",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "publisher": "Crown (HARMAN), XLS DriveCore 2 Series Operation Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "d&b V8 et Y10P sur 1+/1−, V-SUB sur 2+/2−",
+              "source_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf"
+            },
+            {
+              "value": "NEXO GEO M10 sur 2+/2−, 1+/1− en traversée",
+              "source_url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf"
+            }
+          ],
+          "note": "Pas de convention universelle : toujours lire le manuel de l'enceinte."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "loudspeaker-polarity",
+      "name_fr": "Polarité d'une enceinte",
+      "name_en": "Loudspeaker polarity",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Sens du mouvement de la membrane pour une tension positive : par convention, une tension positive sur le contact + pousse l'air vers l'avant.",
+      "explanation": "Si une enceinte est câblée à l'envers (+ et − inversés), elle aspire quand les autres poussent : dans les zones où deux enceintes se recouvrent, le grave s'annule. C'est particulièrement sensible entre sub et top, ou entre deux subs. Une inversion volontaire existe aussi : sur un crossover LR-2, il faut inverser une voie ; dans un array cardioïde ou end-fire, l'inversion de la source arrière fait partie du réglage. Le bouton « phase » de nombreux amplis de sub n'est qu'un inverseur de polarité (0° ou 180°), ce qui n'est pas un vrai réglage de phase.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "phase",
+        "subwoofer-alignment",
+        "linkwitz-riley-crossover",
+        "cardioid-subwoofer"
+      ],
+      "equipment_ids": [
+        "galaxy-audio-cricket-cpts"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speakon_connector",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Subwoofer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note160.html",
+          "publisher": "Rane (Dennis Bohn), RaneNote 160 Linkwitz-Riley Crossovers: A Primer",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf",
+          "publisher": "EAW, Directional Subwoofer Arrays: A Practical Approach",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "prediction-software",
+      "name_fr": "Logiciel de prédiction acoustique",
+      "name_en": "Acoustic prediction software",
+      "domain": "loudspeakers-system-tuning",
+      "definition": "Logiciel constructeur qui simule en 3D la couverture et le niveau d'un système d'enceintes (et souvent les charges d'accroche) avant l'installation : d&b ArrayCalc, L-Acoustics Soundvision, Meyer MAPP.",
+      "explanation": "ArrayCalc calcule la distribution de niveau en 3D par sommation complexe des données de directivité mesurées, ainsi que l'alignement temporel et la phase des subs en un point de référence ; d&b exige son usage pour concevoir ses line arrays. Soundvision cartographie le SPL en temps réel (dBA, dBC, non pondéré), propose un mode retard, l'optimisation automatique des angles (Autosplay) et une vue mécanique (poids, charges). Meyer demande de concevoir les systèmes LINA dans MAPP, qui prédit SPL et couverture et aide à fixer les retards des rappels. Le calage sur place reste indispensable : la simulation ne connaît pas la salle réelle.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "line-array",
+        "splay-angle",
+        "speaker-delay-alignment",
+        "system-tuning"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-arraycalc",
+        "l-acoustics-soundvision",
+        "afmg-ease-focus-3"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/global/en/arraycalc/",
+          "publisher": "d&b audiotechnik, ArrayCalc",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/products/soundvision/",
+          "publisher": "L-Acoustics, Soundvision",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "L-Acoustics technical bulletin 'Cardioid configurations' (rear rejection figures, distance to wall)",
+      "searched": "WebSearch found l-acoustics.com/documentation/GLOBAL/EN/Subwoofer Configuration TB/Cardioid_configurations_TB_EN.pdf but WebFetch returned the L-Acoustics homepage; not cited"
+    },
+    {
+      "what": "Gradient sub array as a distinct manufacturer-documented configuration",
+      "searched": "Wikipedia Subwoofer (first 100k chars), EAW Directional Subwoofer Arrays; only trade-press snippets (FOH) seen in search, not opened"
+    },
+    {
+      "what": "'Power alley' between left/right sub stacks",
+      "searched": "Wikipedia Subwoofer (partial read), EAW paper; no sourced statement found"
+    },
+    {
+      "what": "Primary standard text for speakON pin naming (Neutrik document)",
+      "searched": "Wikipedia Speakon connector only; neutrik.com pages already read by the equipment KB give no pin assignment"
+    },
+    {
+      "what": "Near-field/far-field transition distance formula for line arrays",
+      "searched": "Wikipedia Line array (no formula given); not invented"
+    }
+  ]
+}

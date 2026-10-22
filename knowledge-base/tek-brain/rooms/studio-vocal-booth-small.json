@@ -1,0 +1,219 @@
+{
+  "id": "studio-vocal-booth-small",
+  "name_fr": "Cabine voix (petite)",
+  "name_en": "Small vocal booth",
+  "family": "studio",
+  "size": "small",
+  "description": "Cabine de prise de voix très mate, juste assez grande pour un chanteur ou un comédien, un pied de micro et un retour casque. Dimensions de cabines modulaires réelles (WhisperRoom). On y apprend la distance au micro, l'anti-pop et pourquoi une petite pièce trop proche des murs colore la voix.",
+  "dimensions_m": {
+    "length": {
+      "min": 1.17,
+      "typical": 1.78,
+      "max": 2.4
+    },
+    "width": {
+      "min": 1.17,
+      "typical": 1.78,
+      "max": 2.2
+    },
+    "height": {
+      "min": 2.03,
+      "typical": 2.03,
+      "max": 2.7
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "plancher de cabine sur plots + moquette",
+      "finish_note": "Désolidarisé du sol du bâtiment."
+    },
+    {
+      "surface": "walls",
+      "material": "double paroi + mousse / laine absorbante sur toutes les faces",
+      "finish_note": "Très mat ; risque de son « en boîte » dans le bas-médium si la cabine est trop petite."
+    },
+    {
+      "surface": "ceiling",
+      "material": "absorbant",
+      "finish_note": "Ventilation silencieuse intégrée (WhisperRoom)."
+    }
+  ],
+  "rt60_s": {
+    "min": 0.1,
+    "max": 0.2,
+    "band_note": "Cible DPA pour une cabine voix, à 500 Hz.",
+    "source_url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/"
+  },
+  "zones": [
+    {
+      "id": "booth",
+      "kind": "vocal-booth",
+      "rect_m": [
+        0,
+        0,
+        1.78,
+        1.78
+      ],
+      "floor_y_m": 0
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "km-210-9",
+      "zone": "booth",
+      "position_m": [
+        0,
+        0,
+        -0.25
+      ],
+      "rotation_deg": 0,
+      "note": "Pied perche ; la base reste hors des pieds du chanteur. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+    },
+    {
+      "equipment_id": "neumann-u87-ai",
+      "zone": "booth",
+      "position_m": [
+        0,
+        1.6,
+        -0.25
+      ],
+      "rotation_deg": 0,
+      "note": "Micro statique cardioïde, face au chanteur (côté +z)."
+    },
+    {
+      "equipment_id": "stedman-proscreen-xl",
+      "zone": "booth",
+      "position_m": [
+        0,
+        1.6,
+        -0.08
+      ],
+      "rotation_deg": 0,
+      "note": "Anti-pop entre la bouche et le micro."
+    },
+    {
+      "equipment_id": "beyerdynamic-dt-770-pro",
+      "zone": "booth",
+      "position_m": [
+        0.7,
+        1.5,
+        0.6
+      ],
+      "rotation_deg": 180,
+      "note": "Casque fermé accroché au mur."
+    },
+    {
+      "equipment_id": "behringer-ha400",
+      "zone": "booth",
+      "position_m": [
+        -0.75,
+        1.1,
+        0.0
+      ],
+      "rotation_deg": 90,
+      "note": "Ampli casque sur tablette murale (réglage du retour)."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        -0.85,
+        0.3,
+        0.6
+      ],
+      "type": "schuko-16a"
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        -0.85,
+        0.5,
+        -0.6
+      ],
+      "type": "wall-patch-xlr-4",
+      "note": "Passe-cloison : 2 XLR micro + 2 jacks casque vers la régie."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 0,
+      "width_m": 0.7,
+      "height_m": 1.9
+    },
+    {
+      "wall": "rear",
+      "kind": "window",
+      "offset_m": 0,
+      "width_m": 0.41,
+      "height_m": 0.76
+    }
+  ],
+  "lighting": {
+    "mood": "doux, chaud, pas de néon (pas de bourdonnement)",
+    "color_temp_k": 2700
+  },
+  "procedural": {
+    "wall_color": "#2f3236",
+    "floor_color": "#3d3d3d",
+    "ceiling_color": "#2a2c2f",
+    "prop_hints": [
+      "mousse acoustique pyramidale",
+      "tablette pour texte / pupitre",
+      "hublot de porte",
+      "patère casque"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://whisperroom.com/products/voice-over-basic",
+      "publisher": "WhisperRoom (MDL 4848 S)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "dimensions_m.*.min (intérieur 3'10\" × 3'10\" × 6'8\")",
+        "dimensions_m.height.min"
+      ]
+    },
+    {
+      "url": "https://whisperroom.com/products/practice-basic",
+      "publisher": "WhisperRoom (MDL 7272 S)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "dimensions_m.*.typical (intérieur 5'10\" × 5'10\" × 6'8\")",
+        "openings[1] (hublot 16\" × 30\")"
+      ]
+    },
+    {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "publisher": "DPA Microphones, Mic University",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "rt60_s"
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "field": "dimensions_m.*.max",
+      "note": "2,4 × 2,2 × 2,7 m : estimation pour une cabine maçonnée de studio ; non sourcée.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "openings[0]",
+      "note": "Largeur et hauteur de porte estimées ; WhisperRoom ne publie que le hublot.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

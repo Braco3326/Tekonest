@@ -1,0 +1,634 @@
+{
+  "entity": "procedure",
+  "domain": "monitoring",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "ringing-out-monitors",
+      "name_fr": "Accorder (ring out) les retours de scène",
+      "name_en": "Ringing out stage monitors",
+      "domain": "monitoring",
+      "context": "Avant la balance, chaque mix wedge est stabilisé micro par micro pour gagner du gain avant larsen.",
+      "duration_min": 30,
+      "equipment_ids": [
+        "yamaha-ql1",
+        "shure-sm58",
+        "yamaha-dbr12",
+        "dbx-231s",
+        "nti-audio-xl2"
+      ],
+      "concept_ids": [
+        "ringing-out",
+        "acoustic-feedback",
+        "gain-before-feedback",
+        "monitor-graphic-eq",
+        "mic-polar-pattern-wedge-placement"
+      ],
+      "rule_ids": [
+        "feedback-risk-open-mic-same-room"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Wedges posés selon le plan de scène",
+            "Micros sur pied à leur position de jeu"
+          ],
+          "action": "Placer chaque wedge dans l'angle de rejet du micro qu'il sert (derrière un cardioïde ; en V pour un supercardioïde) et remettre l'égaliseur de sortie à plat.",
+          "expected_result": "Géométrie optimale avant toute égalisation.",
+          "typical_mistakes": [
+            "Égaliser avant d'avoir corrigé le placement",
+            "Wedge pile derrière un supercardioïde"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Gains d'entrée réglés"
+          ],
+          "action": "Ouvrir les micros qui seront actifs dans ce mix, à des niveaux relatifs égaux dans l'auxiliaire.",
+          "expected_result": "Situation représentative du concert.",
+          "typical_mistakes": [
+            "Ne tester qu'un seul micro alors que quatre seront ouverts (le NOM réduit la marge)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Monter lentement le master de l'auxiliaire, une main sur le fader, jusqu'à ce qu'une fréquence commence à sonner.",
+          "expected_result": "Une seule fréquence accroche.",
+          "typical_mistakes": [
+            "Monter trop vite et laisser le larsen s'installer : risque pour les haut-parleurs et les oreilles"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Identifier la fréquence (oreille, RTA) et l'atténuer sur l'égaliseur de la sortie, par une coupe modérée.",
+          "expected_result": "Le larsen cesse ; on peut monter un peu plus haut.",
+          "typical_mistakes": [
+            "Coupes très profondes et étroites en cascade",
+            "Couper la mauvaise bande (le larsen tombe entre deux bandes)"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Remonter le master et répéter. S'arrêter après 5 à 7 tours, ou quand plus de trois fréquences accrochent en même temps.",
+          "expected_result": "Mix stable avec une marge sur le fader (QSC vise environ 6 à 10 dB).",
+          "typical_mistakes": [
+            "Vouloir supprimer tout larsen même micro pointé dans le wedge : le son est détruit"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Redescendre à un niveau d'utilisation normal, écouter le wedge avec de la voix ou de la musique et retoucher l'égaliseur pour le timbre. Noter ou mémoriser les réglages.",
+          "expected_result": "Wedge stable et naturel.",
+          "typical_mistakes": [
+            "Laisser un retour creux et dur à force de coupes"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Garder la main sur le fader pendant les accrochages : le larsen peut endommager les haut-parleurs et l'audition",
+        "Prévenir le plateau avant de provoquer du larsen"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
+          "publisher": "ProSoundWeb (PSW Staff, from Sweetwater) — Tech Tip: EQing Stage Monitors, 2010",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://support.qscaudio.com/en_US/sound-advice/sound-advice-%7C-how-to-ring-out-a-room-mains-and-monitors-to-eliminate-feedback",
+          "publisher": "QSC — Sound Advice: How to ring out a room (mains and monitors)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "context"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note158.html",
+          "publisher": "Rane — RaneNote 158, Understanding Acoustic Feedback & Suppressors",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+          "publisher": "DPA Microphones — Listen to your polar pattern",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "building-iem-mix",
+      "name_fr": "Construire un mix d'ears",
+      "name_en": "Building an IEM mix",
+      "domain": "monitoring",
+      "context": "Mise en place d'un système d'ears HF pour un musicien, du choix stéréo/double mono à l'écoute finale.",
+      "duration_min": 25,
+      "equipment_ids": [
+        "shure-psm-900",
+        "shure-se215",
+        "digico-sd12"
+      ],
+      "concept_ids": [
+        "in-ear-monitoring",
+        "iem-stereo-dual-mono",
+        "iem-receiver-limiter",
+        "ambient-microphones-iem",
+        "iem-mpx-stereo-limits"
+      ],
+      "rule_ids": [
+        "iem-without-limiter",
+        "monitor-mix-post-fader-send"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Fréquence de l'émetteur coordonnée"
+          ],
+          "action": "Décider stéréo ou double mono selon le nombre d'auxiliaires disponibles ; régler les départs en pré-fader et les relier aux entrées de l'émetteur.",
+          "expected_result": "Auxiliaires correctement affectés (2 par mix stéréo, 1 par mix mono).",
+          "typical_mistakes": [
+            "Départs post-fader : le mix bouge avec la façade",
+            "Récepteur en stéréo alors que l'émetteur porte deux mixes mono"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Régler le niveau d'entrée de l'émetteur : les deux LED jaunes du haut clignotent, la LED rouge ne s'allume pas (PSM 900).",
+          "expected_result": "Modulation correcte sans écrêtage.",
+          "typical_mistakes": [
+            "Entrées saturées (LED clip)",
+            "Mauvaise sensibilité (+4 dBu / −10 dBV)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Récepteur allumé, volume au minimum"
+          ],
+          "action": "Synchroniser le récepteur, vérifier le limiteur, insérer les écouteurs, puis monter lentement le volume.",
+          "expected_result": "Signal reçu (LED RF) à un niveau confortable.",
+          "typical_mistakes": [
+            "Brancher les écouteurs volume ouvert",
+            "Désactiver le limiteur"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Partir d'un mix vide : faire jouer le musicien et n'ajouter qu'une source à la fois, en commençant par ce qu'il n'entend pas acoustiquement (souvent la voix).",
+          "expected_result": "Mix lisible, au niveau le plus bas possible.",
+          "typical_mistakes": [
+            "Tout mettre dans le mix dès le départ",
+            "Ajouter ce qui s'entend déjà acoustiquement"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "En stéréo, panoramiquer modérément (vers 10 h / 14 h) et éviter les boosts au-delà de 15 kHz ; ajouter si besoin des micros d'ambiance.",
+          "expected_result": "Image stable, pas de distorsion ni de coupure liée au pilote 19 kHz.",
+          "typical_mistakes": [
+            "Panoramiques extrêmes et aigus boostés : image instable, coupures"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Contrôler le mix dans ses propres ears (bus solo ou CueMode) et faire un tour de scène pour vérifier l'absence de décrochage.",
+          "expected_result": "Mix identique à celui de l'artiste, réception stable partout.",
+          "typical_mistakes": [
+            "Juger un mix d'ears sur un wedge"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Ne jamais désactiver le limiteur du récepteur",
+        "Volume du récepteur au minimum avant d'insérer les écouteurs",
+        "Les deux écouteurs en place : un seul écouteur oblige à écouter plus fort"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "calibrating-control-room-monitors",
+      "name_fr": "Calibrer les écoutes d'une régie",
+      "name_en": "Calibrating control-room monitors",
+      "domain": "monitoring",
+      "context": "Régler le niveau d'écoute de référence d'une régie stéréo avec un bruit rose et un sonomètre.",
+      "duration_min": 40,
+      "equipment_ids": [
+        "genelec-8030c",
+        "grace-m905",
+        "nti-audio-xl2",
+        "nti-audio-minirator-mr-pro"
+      ],
+      "concept_ids": [
+        "control-room-reference-level",
+        "stereo-listening-geometry"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Enceintes installées"
+          ],
+          "action": "Vérifier la géométrie : triangle à 60°, h ≈ 0,9 × b, tweeters à hauteur d'oreille, symétrie gauche/droite.",
+          "expected_result": "Point d'écoute défini.",
+          "typical_mistakes": [
+            "Calibrer avant d'avoir fixé la position d'écoute"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Choisir la convention et la noter : EBU (bruit rose −18 dBFS par voie, cible 85 − 10·log n dB(A)) ou une référence par volume de pièce (bruit rose −20 dBFS RMS, pondération C).",
+          "expected_result": "Référence explicite et documentée.",
+          "typical_mistakes": [
+            "Mélanger les conventions (−18/−20 dBFS, A/C, par voie/total)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Placer le contrôleur d'écoute sur sa position de référence (cran, repère « 0 »).",
+          "expected_result": "Position reproductible du volume.",
+          "typical_mistakes": [
+            "Calibrer avec le volume sur une position quelconque"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Sonomètre au point d'écoute, en pondération choisie et constante lente, micro orienté comme le prévoit le fabricant (SOS : vers le plafond), rien entre le micro et l'enceinte.",
+          "expected_result": "Mesure stable.",
+          "typical_mistakes": [
+            "Mesurer en tenant le sonomètre devant soi",
+            "Constante rapide"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Envoyer le bruit rose sur une seule enceinte et régler son gain jusqu'à la cible ; recommencer pour l'autre voie.",
+          "expected_result": "Les voies sont à la cible, écart inférieur à 1 dB (EBU).",
+          "typical_mistakes": [
+            "Mesurer les deux enceintes en même temps alors que la cible est par voie"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Repérer et verrouiller les réglages (gains des enceintes, position du contrôleur).",
+          "expected_result": "Écoute reproductible d'une séance à l'autre.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Monter le bruit rose progressivement ; tenir compte de la durée d'exposition"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+          "publisher": "EBU — Tech 3276, Listening conditions for the assessment of sound programme material (1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2",
+          "publisher": "Sound On Sound — H. Robjohns, Establishing Project Studio Reference Monitoring Levels (May 2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=3",
+          "publisher": "Sound On Sound — H. Robjohns, Establishing Project Studio Reference Monitoring Levels (May 2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "steps",
+          "values": [
+            {
+              "value": "bruit rose −18 dBFS, dB(A)",
+              "source_url": "https://tech.ebu.ch/docs/tech/tech3276.pdf"
+            },
+            {
+              "value": "bruit rose −20 dBFS RMS, dB(C)",
+              "source_url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2"
+            }
+          ],
+          "note": "Deux conventions coexistent ; voir le concept control-room-reference-level."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "iem-rf-setup",
+      "name_fr": "Mettre en service la liaison HF d'un système d'ears",
+      "name_en": "Setting up the RF link of an IEM system",
+      "domain": "monitoring",
+      "context": "Installation d'un ou plusieurs émetteurs d'ears HF sur un plateau qui comporte aussi des micros HF.",
+      "duration_min": 30,
+      "equipment_ids": [
+        "shure-psm-900",
+        "shure-psm-1000",
+        "sennheiser-ew-iem-g4"
+      ],
+      "concept_ids": [
+        "iem-rf-dropouts",
+        "rf-frequency-coordination",
+        "intermodulation",
+        "antenna-distribution"
+      ],
+      "rule_ids": [
+        "iem-transmitter-next-to-mic-receiver"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Brancher l'alimentation, visser les antennes à la main, relier l'audio, vérifier que le commutateur RF est sur OFF, puis allumer l'émetteur.",
+          "expected_result": "Émetteur sous tension sans émettre.",
+          "typical_mistakes": [
+            "Émettre pendant les réglages et perturber les autres systèmes"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Autres systèmes HF et appareils numériques allumés"
+          ],
+          "action": "Lancer un scan (émetteurs d'ears en RF OFF) pour trouver un groupe de fréquences compatibles ; vérifier la compatibilité avec micros HF et intercoms.",
+          "expected_result": "Fréquences libres et compatibles entre elles.",
+          "typical_mistakes": [
+            "Choisir des fréquences au hasard",
+            "Oublier les micros HF et les intercoms dans la coordination"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Combiner les émetteurs (combineur au-delà de deux émetteurs, jamais d'actifs en cascade), éloigner les émetteurs d'ears de quelques pieds des récepteurs de micros, garder la ligne de vue et environ 3 m mini entre antennes d'émission et récepteurs.",
+          "expected_result": "Moins d'intermodulation et de désensibilisation.",
+          "typical_mistakes": [
+            "Ferme d'antennes collées",
+            "Émetteur d'ears posé sur le rack des récepteurs micros"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Synchroniser chaque récepteur, mettre des piles neuves du bon type, puis passer RF sur ON en dernier.",
+          "expected_result": "LED RF allumée sur chaque récepteur.",
+          "typical_mistakes": [
+            "Piles rechargeables faibles",
+            "Récepteur non synchronisé"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Faire un test de déambulation sur toute la zone de jeu, tous systèmes allumés.",
+          "expected_result": "Aucune coupure ni interférence audible.",
+          "typical_mistakes": [
+            "Tester seulement près du rack"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Garder au moins 20 cm entre l'antenne de l'émetteur et toute personne (PSM 900)",
+        "Volume des récepteurs au minimum avant de régler le squelch"
+      ],
+      "sources": [
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "monitor-mix-soundcheck",
+      "name_fr": "Faire la balance des retours d'un groupe",
+      "name_en": "Monitor soundcheck for a band",
+      "domain": "monitoring",
+      "context": "Balance retours après le line check : un mix par musicien ou par groupe de musiciens.",
+      "duration_min": 45,
+      "equipment_ids": [
+        "yamaha-ql1",
+        "yamaha-dbr12",
+        "shure-sm58"
+      ],
+      "concept_ids": [
+        "stage-monitor-mix",
+        "monitor-engineer-role",
+        "monitor-cue-solo-bus",
+        "number-of-open-microphones",
+        "talkback"
+      ],
+      "rule_ids": [
+        "monitor-mix-post-fader-send",
+        "feedback-risk-open-mic-same-room"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Retours accordés (ring out)",
+            "Line check fait"
+          ],
+          "action": "Définir les mixes avec le groupe : par exemple voix lead, guitare/clavier avec leurs voix, batterie (le bassiste rejoint souvent le mix batteur).",
+          "expected_result": "Plan de mixes adapté au nombre d'auxiliaires.",
+          "typical_mistakes": [
+            "Promettre plus de mixes que d'auxiliaires disponibles"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Vérifier que tous les départs retours sont en pré-fader et nommer les sorties.",
+          "expected_result": "Les retours ne suivent pas les mouvements de façade.",
+          "typical_mistakes": [
+            "Départs post-fader"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Musicien par musicien, ajouter d'abord ce qu'il n'entend pas acoustiquement, en communiquant par le talkback et en écoutant chaque mix en solo.",
+          "expected_result": "Chaque musicien s'entend sans surenchère.",
+          "typical_mistakes": [
+            "Monter tous les mixes à la fois",
+            "Ne pas écouter le mix demandé"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Faire jouer un morceau complet, corriger, puis couper les micros non utilisés.",
+          "expected_result": "Mixes stables au niveau le plus bas possible.",
+          "typical_mistakes": [
+            "Laisser ouverts des micros inutiles (perte de gain avant larsen)"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Mémoriser la scène (console numérique) et noter les demandes particulières.",
+          "expected_result": "Mixes rappelables au concert.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Contrôler le niveau sur scène : les retours contribuent à l'exposition sonore des musiciens et des techniciens"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "context"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Profondeur et largeur de coupe recommandées pour l'accordage des retours (en dB, Q)",
+      "searched": "QSC, ProSoundWeb : non précisées ; Rane : « quelques dB » qualitatif ; Sweetwater 403"
+    },
+    {
+      "what": "Procédure talkback / shout du poste retours détaillée",
+      "searched": "DiGiCo SD12 Getting Started : mentionne seulement un canal talkback ; non détaillé"
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+ "entity": "rule",
+ "domain": "safety",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "spl-exposure-limit",
+   "name_fr": "Dépassement des limites sonores du public",
+   "name_en": "Public SPL exposure limit exceeded",
+   "domain": "safety",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "error",
+   "scope": "session",
+   "condition": {
+    "any": [
+     {
+      "path": "session.spl_dba_leq15",
+      "op": "gt",
+      "value": 102
+     },
+     {
+      "path": "session.spl_dbc_leq15",
+      "op": "gt",
+      "value": 118
+     }
+    ]
+   },
+   "explanation": "Le décret 2017-1244 (CSP art. R. 1336-1) interdit de dépasser 102 dB(A) et 118 dB(C) en niveau équivalent sur 15 minutes, à aucun moment et en aucun endroit accessible au public.",
+   "fix": "Baisser le niveau général ou les sources dominantes (souvent les graves pour le dB(C)) et surveiller la valeur glissante sur 15 min.",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "session.spl_dba_leq15",
+    "session.spl_dbc_leq15"
+   ],
+   "concept_ids": [
+    "sound-exposure-limits-france",
+    "a-and-c-weighting",
+    "sound-level-logging-display"
+   ],
+   "sources": [
+    {
+     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "condition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+     "publisher": "ARS Île-de-France",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "spl-exposure-limit-children",
+   "name_fr": "Dépassement des limites sonores pour un public d'enfants de moins de 6 ans",
+   "name_en": "SPL limit exceeded for an under-6 audience",
+   "domain": "safety",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "error",
+   "scope": "session",
+   "condition": {
+    "all": [
+     {
+      "path": "session.audience_under_6",
+      "op": "eq",
+      "value": true
+     },
+     {
+      "any": [
+       {
+        "path": "session.spl_dba_leq15",
+        "op": "gt",
+        "value": 94
+       },
+       {
+        "path": "session.spl_dbc_leq15",
+        "op": "gt",
+        "value": 104
+       }
+      ]
+     }
+    ]
+   },
+   "explanation": "Pour les activités spécifiquement destinées aux enfants jusqu'à 6 ans révolus, les limites sont 94 dB(A) et 104 dB(C) sur 15 minutes.",
+   "fix": "Réduire le niveau de diffusion pour rester sous 94 dB(A) et 104 dB(C) sur 15 min.",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "session.audience_under_6",
+    "session.spl_dba_leq15",
+    "session.spl_dbc_leq15"
+   ],
+   "concept_ids": [
+    "sound-exposure-limits-france"
+   ],
+   "sources": [
+    {
+     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "condition",
+      "explanation"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "mains-earth-lifted",
+   "name_fr": "Terre secteur supprimée sur un appareil de classe I",
+   "name_en": "Mains protective earth lifted",
+   "domain": "safety",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "error",
+   "scope": "connection",
+   "condition": {
+    "all": [
+     {
+      "path": "src.port.signal",
+      "op": "eq",
+      "value": "mains-power"
+     },
+     {
+      "any": [
+       {
+        "path": "src.port.flags",
+        "op": "includes",
+        "value": "earthLifted"
+       },
+       {
+        "path": "dst.port.flags",
+        "op": "includes",
+        "value": "earthLifted"
+       }
+      ]
+     },
+     {
+      "path": "dst.device.protection_class",
+      "op": "ne",
+      "value": "II"
+     }
+    ]
+   },
+   "explanation": "La protection contre les contacts indirects d'un appareil de classe I repose sur la mise à la terre de ses masses avec coupure automatique. Une liaison secteur sans conducteur de terre (adaptateur sans terre, broche de terre coupée, prise non reliée) supprime cette protection : un défaut d'isolement met le châssis sous tension sans coupure. Ce n'est jamais un remède au ronflement.",
+   "fix": "Rétablir une liaison secteur avec terre ; traiter le ronflement côté audio (liaison symétrique, DI avec ground lift audio, même distribution électrique).",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "port.flags:earthLifted",
+    "device.protection_class"
+   ],
+   "concept_ids": [
+    "electrical-safety-earthing",
+    "electric-shock-effects",
+    "ground-loop"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.ranecommercial.com/legacy/note110.html",
+     "publisher": "Rane (RaneNote 110, Sound System Interconnection)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "fix"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "rigging-without-safety",
+   "name_fr": "Charge suspendue sans sécurité secondaire",
+   "name_en": "Flown load without secondary safety",
+   "domain": "safety",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "error",
+   "scope": "room",
+   "condition": {
+    "path": "room.flown_loads_without_secondary_safety",
+    "op": "gt",
+    "value": 0
+   },
+   "explanation": "Une enceinte ou un array suspendu doit avoir une sécurité secondaire indépendante de l'accroche principale, capable de porter tout le poids et de retenir le système sans chute ni balancement.",
+   "fix": "Installer une élingue ou chaîne de sécurité sur les points prévus par le fabricant, indépendante des points principaux et dimensionnée pour le poids total.",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "room.flown_loads[].secondary_safety",
+    "room.flown_loads_without_secondary_safety"
+   ],
+   "concept_ids": [
+    "rigging-safety",
+    "secondary-safety"
+   ],
+   "sources": [
+    {
+     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation",
+      "fix"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "powercon-hot-unplug",
+   "name_fr": "powerCON sans pouvoir de coupure débranché sous charge",
+   "name_en": "Non-TRUE1 powerCON unplugged under load",
+   "domain": "safety",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "warning",
+   "scope": "connection",
+   "condition": {
+    "all": [
+     {
+      "path": "src.port.connector",
+      "op": "eq",
+      "value": "powercon-blue"
+     },
+     {
+      "path": "session.action",
+      "op": "eq",
+      "value": "disconnect-live"
+     }
+    ]
+   },
+   "explanation": "Le powerCON bleu classique n'a pas de pouvoir de coupure : Neutrik indique qu'il ne doit pas être connecté ni déconnecté sous charge ou sous tension. Le powerCON TRUE1 a, lui, un pouvoir de coupure.",
+   "fix": "Couper l'alimentation avant de (dé)brancher un powerCON bleu, ou utiliser des connecteurs powerCON TRUE1.",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "session.action"
+   ],
+   "concept_ids": [
+    "electrical-safety-earthing"
+   ],
+   "sources": [
+    {
+     "url": "https://www.neutrik.com/en/product/nac3fca",
+     "publisher": "Neutrik",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.neutrik.com/en/product/nac3f-true1-s",
+     "publisher": "Neutrik",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Champ catalogue pour la classe de protection (I/II) des appareils et pour une liaison sans terre",
+   "searched": "catalog.json : seuls flags isClockMaster, isMonitorOut, isClockSlave, isMicInput, isOnAirTally, requiresPhantom, providesPhantom, isDantePrimary ; d'où needs_catalog_fields."
+  }
+ ]
+}

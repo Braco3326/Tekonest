@@ -1,0 +1,212 @@
+{
+  "entity": "rule",
+  "domain": "orchestra-classical",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "spot-mic-delay-missing",
+      "name_fr": "Appoint éloigné sans retard",
+      "name_en": "Distant spot mic without delay",
+      "domain": "orchestra-classical",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "all": [
+          {
+            "path": "session.spot_to_main_distance_m",
+            "op": "gt",
+            "value": 4
+          },
+          {
+            "path": "session.spot_delay_ms",
+            "op": "eq",
+            "value": 0
+          }
+        ]
+      },
+      "explanation": "Un micro d'appoint à plus de 4 m du système principal reçoit le son nettement plus tôt : mélangé sans retard, il crée un filtre en peigne et attire la source vers l'avant de l'image. DPA conseille de considérer un retard au-delà de 4 m.",
+      "fix": "Calculer Δt = a / c (≈ 2,9 ms/m), puis régler un retard environ 25 % plus long que la première arrivée au couple (méthode DPA / Danmarks Radio) et vérifier à l'écoute.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.spot_to_main_distance_m",
+        "session.spot_delay_ms",
+        "device.controls.delay_ms"
+      ],
+      "concept_ids": [
+        "spot-microphone-delay-compensation",
+        "comb-filtering"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
+          "publisher": "sengpielaudio — « Comb filter calculator »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "wide-spaced-pair-without-centre",
+      "name_fr": "Couple espacé large sans micro central",
+      "name_en": "Wide spaced pair without centre mic",
+      "domain": "orchestra-classical",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "all": [
+          {
+            "path": "session.main_pair_spacing_m",
+            "op": "gte",
+            "value": 1
+          },
+          {
+            "path": "session.main_centre_mic",
+            "op": "eq",
+            "value": false
+          }
+        ]
+      },
+      "explanation": "Avec un AB écarté de 1 à 2,5 m ou plus, DPA indique qu'un trou apparaît au milieu de l'image stéréo ; il faut un troisième micro central (principe de l'arbre Decca).",
+      "fix": "Réduire l'écartement (40 à 60 cm de base) ou ajouter un micro central mélangé au couple.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.main_pair_spacing_m",
+        "session.main_centre_mic"
+      ],
+      "concept_ids": [
+        "centre-image-hole",
+        "main-pair-height-and-position",
+        "decca-tree"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "choir-mic-spacing-three-to-one",
+      "name_fr": "Espacement des micros de chœur (3:1)",
+      "name_en": "Choir mic spacing (3:1)",
+      "domain": "orchestra-classical",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "all": [
+          {
+            "path": "session.choir_mic_spacing_ratio",
+            "op": "lt",
+            "value": 3
+          }
+        ]
+      },
+      "explanation": "Entre micros de chœur voisins, DPA recommande au moins la règle 3:1 (4,5:1 en théorie pour plus de deux micros en ligne) : la distance au micro voisin doit être au moins 3 fois la distance au micro principal de la source.",
+      "fix": "Écarter les micros (ex. dernier rang à 1,4 m → micros espacés d'au moins 4,2 m) ou réduire leur nombre.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.choir_mic_spacing_ratio"
+      ],
+      "concept_ids": [
+        "choir-microphone-coverage",
+        "three-to-one-rule"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "headphone-only-balance-judgement",
+      "name_fr": "Équilibre classique jugé au casque seul",
+      "name_en": "Classical balance judged on headphones only",
+      "domain": "orchestra-classical",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "session",
+      "condition": {
+        "all": [
+          {
+            "path": "session.monitoring",
+            "op": "eq",
+            "value": "headphones-only"
+          }
+        ]
+      },
+      "explanation": "Pour équilibrer son direct et son diffus d'un enregistrement de chœur ou d'ensemble, DPA rappelle que le casque ne donne ni la même impression spatiale ni le bon équilibre tonal que des enceintes.",
+      "fix": "Installer une écoute sur enceintes (même compacte) pour valider le placement ; garder le casque pour la surveillance.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.monitoring"
+      ],
+      "concept_ids": [
+        "choir-microphone-coverage",
+        "main-microphone-array"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Seuil sourcé de niveau du click casque",
+      "searched": "WebSearch scoring click bleed"
+    }
+  ]
+}

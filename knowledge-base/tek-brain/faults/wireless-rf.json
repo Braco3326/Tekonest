@@ -1,0 +1,430 @@
+{
+ "entity": "fault",
+ "domain": "wireless-rf",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "wireless-dropout",
+   "name_fr": "Décrochages HF",
+   "name_en": "Wireless dropouts",
+   "domain": "wireless-rf",
+   "symptom": "Le son d'un micro HF disparaît brièvement à certains endroits de la scène, avec ou sans souffle, puis revient.",
+   "contexts": [
+    "live",
+    "theatre",
+    "tv"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Trajets multiples (annulation de l'onde directe et réfléchie) avec un récepteur sans diversité ou des antennes mal espacées",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Obstacle ou corps entre l'émetteur et les antennes (perte de visibilité directe)",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Pile faible de l'émetteur",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Squelch réglé trop haut",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Câble d'antenne trop long ou inadapté",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Vérifier l'indicateur de pile de l'émetteur",
+    "Observer les indicateurs HF et de diversité A/B pendant un test de marche",
+    "Contrôler l'espacement et la position des antennes (hauteur, visibilité directe)",
+    "Vérifier le réglage du squelch",
+    "Contrôler la longueur et le type du câble d'antenne"
+   ],
+   "fixes": [
+    "Changer la pile",
+    "Utiliser un récepteur en diversité et espacer les antennes",
+    "Remonter et rapprocher les antennes de l'aire de jeu",
+    "Baisser le squelch",
+    "Câble faible perte plus court ou booster"
+   ],
+   "rule_ids": [
+    "antenna-distance"
+   ],
+   "concept_ids": [
+    "multipath-dropout",
+    "diversity-reception",
+    "line-of-sight-rf",
+    "squelch"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4"
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "checks",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "wireless-interference-noise-bursts",
+   "name_fr": "Bruits, salves et interférences sur un HF",
+   "name_en": "Wireless interference and noise bursts",
+   "domain": "wireless-rf",
+   "symptom": "Souffle, craquements ou bribes d'autres signaux sur un canal HF, parfois même émetteur éteint.",
+   "contexts": [
+    "live",
+    "theatre"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Interférence radio externe (TNT, autre production, appareil numérique proche)",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Produit d'intermodulation des autres émetteurs du parc tombant sur la fréquence",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Récepteur près d'une source de bruit (ordinateur, gradateur, alimentation)",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Squelch trop bas sur un récepteur sans émetteur actif",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Éteindre l'émetteur et regarder l'activité HF du récepteur",
+    "Scanner la bande pour identifier la source",
+    "Éteindre les autres émetteurs un par un pour repérer une intermodulation",
+    "Vérifier l'environnement du rack de réception"
+   ],
+   "fixes": [
+    "Changer de fréquence en recalculant le plan",
+    "Éloigner le récepteur et les antennes des sources de bruit",
+    "Monter le squelch ou fermer les tranches sans émetteur actif"
+   ],
+   "rule_ids": [
+    "intermod-conflict"
+   ],
+   "concept_ids": [
+    "rf-scanning",
+    "intermodulation",
+    "squelch"
+   ],
+   "equipment_ids": [],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "checks",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "wireless-short-range",
+   "name_fr": "Portée HF trop courte",
+   "name_en": "Short wireless range",
+   "domain": "wireless-rf",
+   "symptom": "La liaison n'est fiable que près du récepteur ; au-delà de quelques mètres le signal devient intermittent.",
+   "contexts": [
+    "live",
+    "theatre",
+    "eng"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Antennes à l'intérieur d'un rack métallique ou sans visibilité directe",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Pertes excessives dans le câble d'antenne ou trop de divisions passives",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Antenne de l'émetteur repliée, couverte par la main ou collée au corps",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Antenne ou répartiteur accordé sur une autre plage de fréquences",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Squelch trop haut ou puissance d'émission réglée au minimum",
+     "likelihood": "low"
+    }
+   ],
+   "checks": [
+    "Vérifier position et visibilité des antennes",
+    "Mesurer ou estimer la longueur et le type de câble, compter les divisions",
+    "Vérifier la plage des antennes et du répartiteur",
+    "Contrôler l'antenne de l'émetteur et son port",
+    "Vérifier squelch et puissance d'émission"
+   ],
+   "fixes": [
+    "Sortir et remonter les antennes",
+    "Raccourcir le câble, utiliser un répartiteur actif ou un booster",
+    "Antennes de la bonne plage, directionnelles si besoin",
+    "Déployer correctement l'antenne de l'émetteur"
+   ],
+   "rule_ids": [
+    "passive-split-too-many-receivers"
+   ],
+   "concept_ids": [
+    "wireless-range",
+    "antenna-cable-loss",
+    "body-absorption-rf",
+    "antenna-distribution"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-d-asa",
+    "sennheiser-adp-uhf"
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "checks",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "intermod-hiss-new-transmitter",
+   "name_fr": "Souffle ou interférence en ajoutant un émetteur",
+   "name_en": "Intermod noise when adding a transmitter",
+   "domain": "wireless-rf",
+   "symptom": "Quand on allume un émetteur supplémentaire (nouveau micro, ear monitor), un autre canal se met à souffler ou à recevoir de la distorsion.",
+   "contexts": [
+    "live",
+    "theatre"
+   ],
+   "probable_causes": [
+    {
+     "cause": "La nouvelle fréquence crée avec une autre porteuse un produit d'IM du 3e ordre sur un canal existant",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Émetteurs trop proches les uns des autres (coulisses) ou trop proches des antennes de réception",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Émetteur IEM dans le même rack ou trop près des antennes de réception",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Calculer 2f1 − f2, 2f2 − f1 et f1 + f2 − f3 avec la nouvelle fréquence",
+    "Écarter physiquement les émetteurs et observer l'effet",
+    "Vérifier la distance entre émetteurs IEM et antennes de réception"
+   ],
+   "fixes": [
+    "Choisir une nouvelle fréquence compatible avec le plan",
+    "Augmenter les distances émetteur-émetteur et émetteur-antenne",
+    "Réduire la puissance des émetteurs",
+    "Séparer les racks IEM et réception"
+   ],
+   "rule_ids": [
+    "intermod-conflict",
+    "antenna-distance",
+    "iem-tx-near-mic-receivers"
+   ],
+   "concept_ids": [
+    "intermodulation",
+    "channel-spacing-wireless",
+    "iem-transmitter-rf"
+   ],
+   "equipment_ids": [
+    "shure-psm-1000"
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "checks",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "one-transmitter-two-receivers",
+   "name_fr": "Un émetteur active deux récepteurs",
+   "name_en": "One transmitter activates two receivers",
+   "domain": "wireless-rf",
+   "symptom": "En allumant un seul émetteur, deux récepteurs affichent du signal.",
+   "contexts": [
+    "live",
+    "theatre"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Fréquences identiques ou trop proches",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Émetteur sur la fréquence image ou un produit parasite de l'autre récepteur",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Intermodulation avec une source inconnue",
+     "likelihood": "low"
+    }
+   ],
+   "checks": [
+    "Comparer les fréquences programmées",
+    "Allumer le second émetteur et vérifier si les deux systèmes fonctionnent normalement"
+   ],
+   "fixes": [
+    "Si les deux systèmes fonctionnent avec tous les émetteurs allumés, ignorer et n'ouvrir une tranche que si son émetteur est actif",
+    "Sinon changer de fréquence ou réajuster le squelch"
+   ],
+   "rule_ids": [
+    "intermod-conflict"
+   ],
+   "concept_ids": [
+    "receiver-internal-frequencies",
+    "channel-spacing-wireless",
+    "squelch"
+   ],
+   "equipment_ids": [],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "checks",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "wireless-distortion-transmitter",
+   "name_fr": "Distorsion sur un micro HF",
+   "name_en": "Wireless audio distortion",
+   "domain": "wireless-rf",
+   "symptom": "Le son d'un HF sature ou grésille alors que le niveau HF est normal.",
+   "contexts": [
+    "live",
+    "theatre"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Sensibilité d'entrée de l'émetteur trop élevée (surmodulation), indicateur de crête allumé",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Niveau de sortie du récepteur trop fort pour l'entrée de la console",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Pile faible de l'émetteur (sans indication de crête)",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Deux émetteurs sur la même fréquence",
+     "likelihood": "low"
+    }
+   ],
+   "checks": [
+    "Regarder l'indicateur de crête audio du récepteur",
+    "Vérifier le niveau de sortie du récepteur et le gain console",
+    "Vérifier la pile",
+    "Vérifier qu'aucun autre émetteur n'est sur la même fréquence"
+   ],
+   "fixes": [
+    "Baisser la sensibilité de l'émetteur",
+    "Baisser la sortie du récepteur ou passer en niveau micro/ligne adapté",
+    "Changer la pile",
+    "Changer de fréquence"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "fm-deviation",
+    "gain-staging",
+    "transmitter-battery-management"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4",
+    "shure-slx-d"
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "checks",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": []
+}

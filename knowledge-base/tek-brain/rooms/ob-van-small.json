@@ -1,0 +1,66 @@
+{
+  "id": "ob-van-small",
+  "name_fr": "Car régie son (petit)",
+  "name_en": "Small sound OB van",
+  "family": "broadcast",
+  "size": "small",
+  "description": "Petit car de reportage / car son (classe 7,5 t ou fourgon) garé sur le lieu de l'événement : une baie technique côté cabine (codecs, routeur MADI/IP, intercom, onduleur), puis une petite régie audio avec un pupitre le long d'une paroi pour l'ingénieur du son, un technicien et un monteur. On y entre par l'arrière ; le panneau de raccordement (tailboard) audio, vidéo et secteur est à l'arrière côté trottoir. La pièce modélisée est la cellule intérieure, pas le véhicule.",
+  "dimensions_m": {
+    "length": { "min": 2.6, "typical": 5.0, "max": 5.6 },
+    "width": { "min": 1.6, "typical": 2.1, "max": 2.2 },
+    "height": { "min": 1.4, "typical": 2.05, "max": 2.2 }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    { "surface": "floor", "material": "plancher contreplaqué + revêtement vinyle antidérapant", "finish_note": "Trappes d'accès aux chemins de câbles et aux vérins de stabilisation." },
+    { "surface": "walls", "material": "caisse isolée (sandwich) + panneaux absorbants minces tendus de tissu", "finish_note": "L'isolation acoustique est le défi principal d'une caisse légère (poids < 7,5 t équipé)." },
+    { "surface": "ceiling", "material": "plafond bas isolé avec bouches de clim", "finish_note": "Éclairage LED encastré, faible hauteur." }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    { "id": "equipment-bay", "kind": "machine-room", "rect_m": [0, -1.95, 2.0, 1.1], "floor_y_m": 0 },
+    { "id": "audio-control", "kind": "control-room", "rect_m": [0, 0.6, 2.0, 3.8], "floor_y_m": 0 },
+    { "id": "sound-desk", "kind": "desk", "rect_m": [-0.65, 0.4, 0.7, 3.0], "floor_y_m": 0 }
+  ],
+  "gear_positions": [
+    { "equipment_id": "lawo-ruby", "zone": "sound-desk", "position_m": [-0.7, 0.75, 0.4], "rotation_deg": 90, "note": "Console le long de la paroi gauche, tournée vers l'opérateur (+x) ; l'ingé son regarde la paroi (−x)." },
+    { "equipment_id": "genelec-8030c", "zone": "sound-desk", "position_m": [-0.85, 1.3, -0.3], "rotation_deg": 90, "note": "Écoute gauche en très proche champ (base ≈ 1,4 m, impossible de respecter 2 m dans un car)." },
+    { "equipment_id": "genelec-8030c", "zone": "sound-desk", "position_m": [-0.85, 1.3, 1.1], "rotation_deg": 90, "note": "Écoute droite." },
+    { "equipment_id": "rtw-touchmonitor-tm7", "zone": "sound-desk", "position_m": [-0.75, 1.0, 1.5], "rotation_deg": 90, "note": "Mesure loudness / crête du programme envoyé." },
+    { "equipment_id": "sennheiser-hd-25", "zone": "sound-desk", "position_m": [-0.5, 0.78, 0.7], "rotation_deg": 90, "note": "Casque : souvent la vraie référence d'écoute dans un car." },
+    { "equipment_id": "sound-devices-888", "zone": "sound-desk", "position_m": [-0.7, 0.8, -0.8], "rotation_deg": 90, "note": "Enregistreur de secours multipiste au poste technicien." },
+    { "equipment_id": "tieline-gateway", "zone": "equipment-bay", "position_m": [0.5, 1.2, -1.95], "rotation_deg": 180, "note": "Codec IP en baie vers la station (liaison programme + retour)." },
+    { "equipment_id": "directout-prodigy-mc", "zone": "equipment-bay", "position_m": [0.5, 0.9, -1.95], "rotation_deg": 180, "note": "Convertisseur / routeur MADI-IP entre tailboard, console et codecs." },
+    { "equipment_id": "riedel-bolero", "zone": "audio-control", "position_m": [0.7, 1.0, 2.2], "rotation_deg": 180, "note": "Beltpack intercom HF prêt pour le régisseur sur site." }
+  ],
+  "power_points": [
+    { "position_m": [0.9, 0.6, 2.5], "type": "cee-63a-1ph" },
+    { "position_m": [0.6, 0.4, -1.95], "type": "ups-90min-internal" }
+  ],
+  "patch_points": [
+    { "position_m": [0.9, 0.9, 2.5], "type": "tailboard-audio-xlr-madi", "note": "Tailboard arrière côté trottoir : XLR, MADI/fibre, intercom, réseau." },
+    { "position_m": [0.9, 1.3, 2.5], "type": "tailboard-video-bnc", "note": "Retours vidéo / référence de synchro." }
+  ],
+  "openings": [
+    { "wall": "rear", "kind": "door", "offset_m": 0.0, "width_m": 1.4, "height_m": 1.8 },
+    { "wall": "right", "kind": "door", "offset_m": -0.6, "width_m": 0.8, "height_m": 1.8 }
+  ],
+  "lighting": { "mood": "Cellule exiguë, LED blanches gradables au plafond, lampes de pupitre", "color_temp_k": 4000 },
+  "procedural": {
+    "wall_color": "#2e3035",
+    "floor_color": "#3b3b3b",
+    "ceiling_color": "#d0d0cc",
+    "prop_hints": ["baie 19\" côté cabine", "pupitre continu le long d'une paroi", "sièges pivotants fixés au sol", "tailboard arrière", "touret de câble", "climatisation de toit"]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    { "url": "https://broadcast-solutions.de/en/broadcast-technology/news/article/broadcast-solutions-and-wdr-build-two-new-radio-ob-vans/", "publisher": "Broadcast Solutions (cars radio WDR)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["description (régie audio + local technique, 3 postes : ingé son, technicien, monteur)", "dimensions_m.*.max (bornés par l'extérieur du véhicule : 7600 × 2300 × 3450 mm, IVECO Daily 7,49 t)", "surfaces.walls (isolation acoustique avec contrainte de poids)", "power_points[1] (onduleur 90 min)"] },
+    { "url": "https://www.gravitymedia.com/wp-content/uploads/2025/06/NOVA-00-Series-1.pdf", "publisher": "Gravity Media (fiche NOVA 00 Series)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "other", "covers": ["dimensions_m.*.min (bornés par le véhicule : 4,8 × 1,8 × 2,0 m, emplacement 5 × 2,5 m)", "power_points[0] (63 A monophasé CEE)", "patch_points (tailboards audio/vidéo/secteur à l'arrière côté trottoir)", "gear_positions.riedel-bolero (intercom Bolero)"] }
+  ],
+  "not_found_log": [
+    { "what": "Dimensions intérieures de la cellule : aucune fiche ne donne la régie audio en mètres. Les valeurs typical/max sont des estimations à partir de l'extérieur WDR (7,6 × 2,3 × 3,45 m, moins cabine, parois et plancher) ; les min sont estimés à partir du très petit fourgon NOVA 00 (4,8 × 1,8 × 2,0 m hors tout).", "searched": "Broadcast Solutions WDR, Gravity Media NOVA 00", "review": "needs-oscar-review" },
+    { "what": "Console : WDR utilise une Lawo mc²56 et NOVA une Lawo mc² MKII, absentes de la base ; lawo-ruby (console radio Lawo) mise à la place comme choix pédagogique.", "searched": "knowledge-base/equipment ids", "review": "needs-oscar-review" },
+    { "what": "RT60 d'une cellule de car : non publié.", "searched": "fiches constructeurs", "review": "needs-oscar-review" }
+  ],
+  "review": "needs-oscar-review"
+}

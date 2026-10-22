@@ -1,0 +1,719 @@
+{
+  "entity": "scenario",
+  "domain": "live-sound",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "small-acoustic-gig-bar",
+      "name_fr": "Petit concert acoustique dans un bar",
+      "name_en": "Small acoustic gig in a bar",
+      "domain": "live-sound",
+      "brief": "Un duo voix + guitares acoustiques joue dans un bar. Tu installes seul une petite sono : console analogique compacte, deux enceintes amplifiées en façade sur pieds, un wedge au sol alimenté par un départ auxiliaire. Les guitares passent par des DI. Tu dois patcher, faire le line check, régler gains et retour, respecter l'ordre de mise sous tension et démonter proprement. Modèle inspiré de la configuration « small acoustic band » du guide d'application QSC (façade en preset Live, wedge en preset Stage Monitor), adaptée au matériel de la base. Attention : les entrées micro des enceintes K.2 ne fournissent pas de +48 V, d'où l'intérêt de passer par la console.",
+      "room_id": "bar-club-stage-small",
+      "required_gear": [
+        {
+          "equipment_id": "allen-heath-zed-22fx",
+          "qty": 1,
+          "role": "console façade + retour (aux)"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 2,
+          "role": "micros voix"
+        },
+        {
+          "equipment_id": "radial-jdi",
+          "qty": 2,
+          "role": "DI guitares acoustiques"
+        },
+        {
+          "equipment_id": "qsc-k12-2",
+          "qty": 2,
+          "role": "façade amplifiée"
+        },
+        {
+          "equipment_id": "yamaha-dbr12",
+          "qty": 1,
+          "role": "wedge (D-CONTOUR MONITOR, angle sol 50°)"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "vox1",
+            "equipment_id": "shure-sm58",
+            "label": "Voix 1"
+          },
+          {
+            "id": "vox2",
+            "equipment_id": "shure-sm58",
+            "label": "Voix 2"
+          },
+          {
+            "id": "di1",
+            "equipment_id": "radial-jdi",
+            "label": "DI guitare 1"
+          },
+          {
+            "id": "di2",
+            "equipment_id": "radial-jdi",
+            "label": "DI guitare 2"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "allen-heath-zed-22fx",
+            "label": "Console"
+          },
+          {
+            "id": "mainL",
+            "equipment_id": "qsc-k12-2",
+            "label": "Façade gauche"
+          },
+          {
+            "id": "mainR",
+            "equipment_id": "qsc-k12-2",
+            "label": "Façade droite"
+          },
+          {
+            "id": "wedge",
+            "equipment_id": "yamaha-dbr12",
+            "label": "Wedge duo"
+          }
+        ],
+        "edges": [
+          {
+            "from": "vox1",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "vox2",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "di1",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "di2",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "mainL",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "mainR",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "wedge",
+            "signal": "line-level-pro",
+            "connector": "trs-quarter"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "patch-from-input-list",
+        "line-check",
+        "soundcheck-band",
+        "load-out-checklist"
+      ],
+      "rule_ids": [
+        "speakers-last-on-first-off",
+        "input-list-patch-mismatch"
+      ],
+      "difficulty": 2,
+      "estimated_time_min": 90,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Installation et exploitation d'une petite sonorisation (E4 pratique) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k.2_appguide_livebands.pdf",
+          "publisher": "QSC, K.2 Series Application Guide — Live Bands (Rev B, 2025)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief",
+            "required_gear"
+          ]
+        },
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+          "publisher": "QSC, K.2 Series User Manual (TD-000523-01-G)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief",
+            "rule_ids"
+          ]
+        },
+        {
+          "url": "https://data.yamaha.com/download/files/2082568",
+          "publisher": "Yamaha, DBR15/DBR12/DBR10 Technical Specifications (2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
+          "publisher": "ProSoundWeb — B. Bartlett, « The Beginner's Guide To Taking Charge Of The Sound Check » (2015), p. 1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "procedure_ids"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "festival-stage-changeover",
+      "name_fr": "Changement de plateau sur une grande scène de festival",
+      "name_en": "Festival stage changeover",
+      "domain": "live-sound",
+      "brief": "Grande scène de festival en plein air : système line array et régie façade fixes gérés par le technicien système, console retours en coulisse, boîtiers de scène Dante partagés sur un réseau commun. Le groupe suivant arrive avec son fichier de console ; sa batterie est déjà montée sur un praticable roulant. Tu disposes du temps annoncé par le régisseur pour faire rouler le praticable, rebrancher les sub-snakes selon le patch festival, faire le line check (façade au casque) et dégrossir les retours ears et wedges. Le système façade ne se touche pas.",
+      "room_id": "festival-open-air-large",
+      "required_gear": [
+        {
+          "equipment_id": "yamaha-cl5",
+          "qty": 1,
+          "role": "console façade"
+        },
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console retours"
+        },
+        {
+          "equipment_id": "yamaha-rio3224-d2",
+          "qty": 2,
+          "role": "boîtiers de scène Dante"
+        },
+        {
+          "equipment_id": "luminex-gigacore-16t",
+          "qty": 1,
+          "role": "switch réseau audio"
+        },
+        {
+          "equipment_id": "l-acoustics-la12x",
+          "qty": 2,
+          "role": "contrôleurs amplifiés"
+        },
+        {
+          "equipment_id": "l-acoustics-kara-ii",
+          "qty": 12,
+          "role": "line array façade"
+        },
+        {
+          "equipment_id": "l-acoustics-ks28",
+          "qty": 4,
+          "role": "caissons de basse"
+        },
+        {
+          "equipment_id": "shure-beta-52a",
+          "qty": 1,
+          "role": "grosse caisse"
+        },
+        {
+          "equipment_id": "shure-sm57",
+          "qty": 2,
+          "role": "caisse claire, ampli guitare"
+        },
+        {
+          "equipment_id": "sennheiser-e-906",
+          "qty": 1,
+          "role": "ampli guitare"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 3,
+          "role": "voix"
+        },
+        {
+          "equipment_id": "radial-jdi",
+          "qty": 2,
+          "role": "DI basse, clavier"
+        },
+        {
+          "equipment_id": "shure-psm-900",
+          "qty": 1,
+          "role": "ears chanteur"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "kick",
+            "equipment_id": "shure-beta-52a",
+            "label": "Grosse caisse"
+          },
+          {
+            "id": "vox",
+            "equipment_id": "shure-sm58",
+            "label": "Voix lead"
+          },
+          {
+            "id": "rio1",
+            "equipment_id": "yamaha-rio3224-d2",
+            "label": "Rack scène 1"
+          },
+          {
+            "id": "sw",
+            "equipment_id": "luminex-gigacore-16t",
+            "label": "Switch Dante"
+          },
+          {
+            "id": "foh",
+            "equipment_id": "yamaha-cl5",
+            "label": "Console façade"
+          },
+          {
+            "id": "mon",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console retours"
+          },
+          {
+            "id": "amp",
+            "equipment_id": "l-acoustics-la12x",
+            "label": "Contrôleur amplifié"
+          },
+          {
+            "id": "arr",
+            "equipment_id": "l-acoustics-kara-ii",
+            "label": "Line array"
+          },
+          {
+            "id": "sub",
+            "equipment_id": "l-acoustics-ks28",
+            "label": "Caissons"
+          },
+          {
+            "id": "iem",
+            "equipment_id": "shure-psm-900",
+            "label": "Émetteur ears"
+          }
+        ],
+        "edges": [
+          {
+            "from": "kick",
+            "to": "rio1",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "vox",
+            "to": "rio1",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rio1",
+            "to": "sw",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "sw",
+            "to": "foh",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "sw",
+            "to": "mon",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "foh",
+            "to": "amp",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "amp",
+            "to": "arr",
+            "signal": "speaker-level",
+            "connector": "speakon-nl4"
+          },
+          {
+            "from": "amp",
+            "to": "sub",
+            "signal": "speaker-level",
+            "connector": "speakon-nl4"
+          },
+          {
+            "from": "mon",
+            "to": "iem",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "festival-changeover",
+        "line-check",
+        "patch-from-input-list"
+      ],
+      "rule_ids": [
+        "line-check-after-changeover",
+        "input-list-patch-mismatch"
+      ],
+      "difficulty": 4,
+      "estimated_time_min": 30,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Organisation d'un plateau multi-groupes (E4 / E6 milieu professionnel) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E6",
+          "bloc": null,
+          "note": "Situation typique de stage en festival — jugement",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/?p=36647",
+          "publisher": "ProSoundWeb / Live Sound International — D. Dermont, « Max Efficiency: A Simple, Straightforward Process For Quick & Effective Festival Changeovers » (2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "brief",
+            "procedure_ids"
+          ]
+        },
+        {
+          "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
+          "publisher": "Ticket Fairy Promoter Blog, « Rapid Festival Changeovers Without Panic » (2025)",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "brief",
+            "rule_ids"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Front_of_house",
+          "publisher": "Wikipedia, « Front of house »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
+          "publisher": "Wikipedia, « Audio multicore cable »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "signal_flow"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "rock-band-medium-venue",
+      "name_fr": "Groupe de rock dans une salle moyenne",
+      "name_en": "Rock band in a medium venue",
+      "domain": "live-sound",
+      "brief": "Un quatuor rock (guitare-chant, basse, batterie entièrement repiquée, clavier-chœurs) joue dans une salle de taille moyenne. Une seule console numérique fait la façade et les retours par ses bus, avec deux boîtiers de scène en cascade. Les wedges sont alimentés depuis les sorties ligne des boîtiers. Tu lis la fiche technique, patches 24 entrées environ, mènes line check et balance (gains, retours par musicien, sous-groupes batterie et voix, mix complet) puis assures le concert en coupant les micros inutiles.",
+      "room_id": "concert-hall-medium",
+      "required_gear": [
+        {
+          "equipment_id": "allen-heath-sq-6",
+          "qty": 1,
+          "role": "console façade + retours"
+        },
+        {
+          "equipment_id": "allen-heath-dx168",
+          "qty": 2,
+          "role": "boîtiers de scène (cascade)"
+        },
+        {
+          "equipment_id": "db-audiotechnik-d80",
+          "qty": 1,
+          "role": "amplificateur façade"
+        },
+        {
+          "equipment_id": "db-audiotechnik-v8",
+          "qty": 4,
+          "role": "façade"
+        },
+        {
+          "equipment_id": "db-audiotechnik-v-sub",
+          "qty": 2,
+          "role": "caissons"
+        },
+        {
+          "equipment_id": "yamaha-dbr12",
+          "qty": 4,
+          "role": "wedges"
+        },
+        {
+          "equipment_id": "shure-beta-52a",
+          "qty": 1,
+          "role": "grosse caisse"
+        },
+        {
+          "equipment_id": "shure-sm57",
+          "qty": 3,
+          "role": "caisse claire, toms"
+        },
+        {
+          "equipment_id": "akg-c451-b",
+          "qty": 2,
+          "role": "overheads"
+        },
+        {
+          "equipment_id": "sennheiser-e-906",
+          "qty": 1,
+          "role": "ampli guitare"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 3,
+          "role": "voix"
+        },
+        {
+          "equipment_id": "radial-jdi",
+          "qty": 3,
+          "role": "basse, clavier stéréo"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "kick",
+            "equipment_id": "shure-beta-52a",
+            "label": "Grosse caisse"
+          },
+          {
+            "id": "oh",
+            "equipment_id": "akg-c451-b",
+            "label": "Overhead"
+          },
+          {
+            "id": "vox",
+            "equipment_id": "shure-sm58",
+            "label": "Voix lead"
+          },
+          {
+            "id": "dx1",
+            "equipment_id": "allen-heath-dx168",
+            "label": "Boîtier scène 1"
+          },
+          {
+            "id": "dx2",
+            "equipment_id": "allen-heath-dx168",
+            "label": "Boîtier scène 2"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "allen-heath-sq-6",
+            "label": "Console"
+          },
+          {
+            "id": "amp",
+            "equipment_id": "db-audiotechnik-d80",
+            "label": "Ampli"
+          },
+          {
+            "id": "top",
+            "equipment_id": "db-audiotechnik-v8",
+            "label": "Façade"
+          },
+          {
+            "id": "sub",
+            "equipment_id": "db-audiotechnik-v-sub",
+            "label": "Caissons"
+          },
+          {
+            "id": "wedge",
+            "equipment_id": "yamaha-dbr12",
+            "label": "Wedge chant"
+          }
+        ],
+        "edges": [
+          {
+            "from": "kick",
+            "to": "dx1",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "oh",
+            "to": "dx1",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "vox",
+            "to": "dx2",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "dx2",
+            "to": "dx1",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "dx1",
+            "to": "desk",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "desk",
+            "to": "amp",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "amp",
+            "to": "top",
+            "signal": "speaker-level",
+            "connector": "speakon-nl4"
+          },
+          {
+            "from": "amp",
+            "to": "sub",
+            "signal": "speaker-level",
+            "connector": "speakon-nl4"
+          },
+          {
+            "from": "dx1",
+            "to": "wedge",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "read-tech-rider",
+        "patch-from-input-list",
+        "line-check",
+        "soundcheck-band"
+      ],
+      "rule_ids": [
+        "input-list-patch-mismatch"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 120,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Sonorisation d'un concert complet (E4 pratique) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k.2_appguide_livebands.pdf",
+          "publisher": "QSC, K.2 Series Application Guide — Live Bands (Rev B, 2025)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 3",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "brief",
+            "procedure_ids"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Sonorisation",
+          "publisher": "Wikipédia, « Sonorisation »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Live_sound_mixing",
+          "publisher": "Wikipedia, « Live sound mixing »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Scénario « DJ set + MC » (dj-booth-small)",
+      "searched": "knowledge-base/equipment/*.json : aucune table de mixage DJ ni platine / lecteur DJ (Pioneer DJM/CDJ, Allen & Heath Xone…) dans la base ; scénario non créé"
+    }
+  ]
+}

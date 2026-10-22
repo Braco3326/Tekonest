@@ -114,3 +114,7 @@ En deuxième année, ajoutez [L'audio-vision](https://www.eyrolles.com/Audiovisu
 - [gratuit] [Webinaires L-Acoustics](https://www.youtube.com/c/LAthebestsound), intermédiaire
 
 *Aucune chaîne YouTube francophone n'a pu être vérifiée pendant cette recherche, donc aucune n'est listée. Dante (Audinate), l'AES, Avid, Allen & Heath et Yamaha bloquaient les accès automatiques : voir `not_found_log` dans le JSON.*
+
+## 8. Catalogue étendu (run 2, 2026-10-22)
+
+Le run 2 a ajouté 260 ressources vérifiées (normes EBU/ITU gratuites, textes et guides officiels français, publications INRS, thèses HAL avec leur licence exacte, manuels libres OpenStax/LibreTexts/Wikibooks, MOOC gratuits FUN, guides gratuits Shure/Rane/EAW/Genelec, certification Dante gratuite…). Total : 315 ressources, dont 260 gratuites légalement. La liste complète, classée par type, est dans [`learning-resources-catalogue.md`](learning-resources-catalogue.md). Chaque entrée de `learning-resources.json` porte maintenant `licence` (conditions exactes) et `concept_ids` (liens vers les concepts TEK Brain).

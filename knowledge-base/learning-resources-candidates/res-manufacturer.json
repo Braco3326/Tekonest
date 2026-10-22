@@ -1,0 +1,5046 @@
+{
+  "agent": "res-manufacturer",
+  "generated": "2026-10-22",
+  "resources": [
+    {
+      "id": "shure-microphone-techniques-for-recording",
+      "type": "manufacturer-guide",
+      "title": "Microphone Techniques for Recording (A Shure Educational Publication)",
+      "author_or_publisher": "Shure Incorporated",
+      "year": 2014,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "microphone placement",
+        "vocals",
+        "instruments",
+        "stereo techniques",
+        "polar patterns"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+      "why_recommended": "40-page free booklet that goes instrument by instrument (voice, strings, woodwinds, brass, drums, piano) with placement diagrams. A fast way to prepare a studio session plan.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "close-miking",
+        "polar-pattern",
+        "proximity-effect",
+        "stereo-xy",
+        "stereo-ortf",
+        "stereo-ab",
+        "three-to-one-rule"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-microphone-techniques-live-sound",
+      "type": "manufacturer-guide",
+      "title": "Microphone Techniques for Live Sound Reinforcement (A Shure Educational Publication)",
+      "author_or_publisher": "Shure Incorporated",
+      "year": 2014,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "live sound",
+        "microphone placement",
+        "feedback",
+        "polar patterns"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/microphone-techniques-for-live-sound-reinforcement/microphone_techniques_for_live_sound_reinforcement_english.pdf",
+      "why_recommended": "Live-sound companion to the recording booklet: mic characteristics, instrument characteristics and stage placement with feedback and leakage in mind.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/microphone-techniques-for-live-sound-reinforcement/microphone_techniques_for_live_sound_reinforcement_english.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "close-miking",
+        "gain-before-feedback",
+        "acoustic-feedback",
+        "polar-pattern",
+        "null-angle",
+        "mic-polar-pattern-wedge-placement"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-microphone-techniques-drums",
+      "type": "manufacturer-guide",
+      "title": "Microphone Techniques for Drums (A Shure Educational Publication)",
+      "author_or_publisher": "Shure Incorporated",
+      "year": 2014,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "drums",
+        "microphone placement",
+        "overheads"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/microphone-techniques-for-drums/microphone_techniques_for_drums_english.pdf",
+      "why_recommended": "Short 12-page guide to miking a kit: general rules, then each position (kick, snare, toms, overheads). Handy as a checklist before a drum session.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/microphone-techniques-for-drums/microphone_techniques_for_drums_english.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "close-miking",
+        "phase",
+        "comb-filtering",
+        "three-to-one-rule"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-wireless-selection-operation",
+      "type": "manufacturer-guide",
+      "title": "Selection and Operation of Wireless Microphone Systems (A Shure Educational Publication, updated for digital wireless)",
+      "author_or_publisher": "Tim Vear - Shure Incorporated",
+      "year": 2014,
+      "edition": "updated for digital wireless (as printed on the cover)",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "wireless",
+        "RF",
+        "intermodulation",
+        "diversity",
+        "antennas",
+        "frequency coordination"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/selection-and-operation-of-wireless-microphone-systems/selection_and_operation_of_wireless_microphone_systems_english.pdf",
+      "why_recommended": "The classic 67-page explanation of how wireless systems work (radio principles, diversity, companding, intermodulation) and how to deploy them. Very close to the HF part of the E3 syllabus.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/selection-and-operation-of-wireless-microphone-systems/selection_and_operation_of_wireless_microphone_systems_english.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "uhf-wireless-system",
+        "diversity-reception",
+        "intermodulation",
+        "rf-frequency-coordination",
+        "fm-companding",
+        "squelch",
+        "antenna-types-wireless",
+        "analog-vs-digital-wireless"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-wireless-antenna-setup",
+      "type": "manufacturer-guide",
+      "title": "Wireless Systems Guide for Antenna Setup (A Shure Educational Publication)",
+      "author_or_publisher": "Gino Sigismondi and Crispin Tapia - Shure Incorporated",
+      "year": 2016,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "antennas",
+        "RF",
+        "antenna distribution",
+        "coaxial cable loss"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/wireless-antenna-setup-guide/us_pro_antenna_setup_ea.pdf",
+      "why_recommended": "19 pages focused only on antennas: types, placement, distribution and cable loss. Fills the gap most textbooks leave on the practical side of RF.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/wireless-antenna-setup-guide/us_pro_antenna_setup_ea.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "antenna-types-wireless",
+        "antenna-distribution",
+        "antenna-cable-loss",
+        "antenna-combiner",
+        "line-of-sight-rf",
+        "wireless-range"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-personal-monitor-systems",
+      "type": "manufacturer-guide",
+      "title": "Selection and Operation of Personal Monitor Systems (A Shure Educational Publication)",
+      "author_or_publisher": "Gino Sigismondi - Shure Incorporated",
+      "year": 2009,
+      "edition": "Third Edition",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "in-ear monitoring",
+        "stage monitoring",
+        "hearing protection",
+        "wireless IEM"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+      "why_recommended": "Explains why and how musicians move from wedges to in-ears: gain before feedback, hearing health, stereo vs mono mixes, wireless IEM setup.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download",
+            "edition (Third Edition, PDF title metadata)"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "in-ear-monitoring",
+        "stage-monitor-mix",
+        "personal-monitor-mixer",
+        "ambient-microphones-iem",
+        "iem-stereo-dual-mono",
+        "occlusion-effect",
+        "floor-wedge-monitor"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-audio-signal-processors",
+      "type": "manufacturer-guide",
+      "title": "Selection and Operation of Audio Signal Processors (A Shure Educational Publication)",
+      "author_or_publisher": "Gino Sigismondi - Shure Incorporated",
+      "year": 2016,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "EQ",
+        "dynamics",
+        "feedback control",
+        "automatic mixers",
+        "delay"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/asp-selection-and-operation-of-audio-signal-processors/us_pro_audiosignalprocessor_ea.pdf",
+      "why_recommended": "Problem-oriented tour of processors: which tool (EQ, compressor, gate, feedback reducer, delay, automixer) solves which sound-system problem.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/asp-selection-and-operation-of-audio-signal-processors/us_pro_audiosignalprocessor_ea.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "equalizer-parametric",
+        "graphic-equalizer",
+        "compressor",
+        "noise-gate",
+        "limiter",
+        "acoustic-feedback",
+        "speaker-delay-alignment"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-intro-recording-sound-reinforcement",
+      "type": "manufacturer-guide",
+      "title": "Introduction to Recording and Sound Reinforcement (A Shure Educational Publication)",
+      "author_or_publisher": "Gino Sigismondi - Shure Incorporated",
+      "year": 2008,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "signal chain",
+        "recording basics",
+        "live sound basics"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/recording-and-sound-reinforcement/us_pro_al1568_recordingsound.pdf",
+      "why_recommended": "A gentle 32-page overview of a recording chain and a PA chain. Good first read in BTS year 1.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/recording-and-sound-reinforcement/us_pro_al1568_recordingsound.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "signal-flow",
+        "gain-staging",
+        "input-channel",
+        "aux-send"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-home-recording-podcasting",
+      "type": "manufacturer-guide",
+      "title": "Introduction to Home Recording and Podcasting (A Shure Educational Publication)",
+      "author_or_publisher": "Chris Lyons - Shure Incorporated",
+      "year": 2014,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "home studio",
+        "podcast",
+        "microphones",
+        "interfaces"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+      "why_recommended": "Covers basic equipment, acoustics of a small room and microphone choice for voice. Useful for podcast and self-op projects.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "podcast-recording",
+        "self-op-studio",
+        "close-miking",
+        "plosive-pop"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-audio-guide-video-film",
+      "type": "manufacturer-guide",
+      "title": "Audio Systems Guide for Video and Film Production (A Shure Educational Publication)",
+      "author_or_publisher": "Chris Lyons - Shure Incorporated",
+      "year": 2014,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "location sound",
+        "boom",
+        "lavalier",
+        "wireless",
+        "camera audio"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/audio-systems-guide-for-video-and-film-production/audio-systems-guide-for-video-and-film-production-english.pdf",
+      "why_recommended": "48 pages on microphones for picture: shotgun and boom, lavaliers, wireless and camera connections. Directly relevant to tournage work in the BTS.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/audio-systems-guide-for-video-and-film-production/audio-systems-guide-for-video-and-film-production-english.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "polar-pattern",
+        "handling-noise",
+        "uhf-wireless-system",
+        "mic-level",
+        "line-level"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-audio-guide-theater",
+      "type": "manufacturer-guide",
+      "title": "Audio Systems Guide for Theater Performances (A Shure Educational Publication)",
+      "author_or_publisher": "Crispin Tapia - Shure Incorporated",
+      "year": 2008,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "theatre",
+        "lavalier placement",
+        "wireless",
+        "area miking"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/audio-systems-guide-for-theater-performances/theater_guide_ea.pdf",
+      "why_recommended": "Theatre-specific: body-mic placement on actors, area miking of a stage and wireless management for a show.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/audio-systems-guide-for-theater-performances/theater_guide_ea.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "body-absorption-rf",
+        "transmitter-battery-management",
+        "number-of-open-microphones",
+        "uhf-wireless-system"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-audio-guide-meetings-conferences",
+      "type": "manufacturer-guide",
+      "title": "Audio Systems Guide for Meetings and Conferences (A Shure Educational Publication)",
+      "author_or_publisher": "Crispin Tapia and Chris Lyons - Shure Incorporated",
+      "year": 2016,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "speech reinforcement",
+        "conference systems",
+        "intelligibility",
+        "automatic mixing"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/publications/educationalPublications/en/audio-systems-guide-for-meetings-and-conferences.pdf",
+      "why_recommended": "Speech reinforcement from the ground up: sound system elements, mic choice, number of open mics and intelligibility in meeting rooms.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/publications/educationalPublications/en/audio-systems-guide-for-meetings-and-conferences.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "number-of-open-microphones",
+        "open-mic-count-nom",
+        "gain-before-feedback",
+        "critical-distance"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-audio-guide-music-educators",
+      "type": "manufacturer-guide",
+      "title": "Audio Systems Guide for Music Educators (A Shure Educational Publication)",
+      "author_or_publisher": "Gino Sigismondi - Shure Incorporated",
+      "year": 2016,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "ensemble recording",
+        "choir",
+        "school concerts",
+        "live sound"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://content-files.shure.com/Pubs/education-audio-systems-for-music-educators/us_pro_audiomusiceducators_ea.pdf",
+      "why_recommended": "Recording and amplifying school ensembles and choirs with simple setups; good for small classical and choir gigs.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/education-audio-systems-for-music-educators/us_pro_audiomusiceducators_ea.pdf",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year (latest copyright line printed in the PDF)",
+            "free download"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-us/support/educational-publications",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among Shure educational publications",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "choir-microphone-coverage",
+        "main-microphone-array",
+        "stereo-xy",
+        "spot-microphones"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-insights-wireless-intermodulation",
+      "type": "article",
+      "title": "All About Wireless: Intermodulation Distortion",
+      "author_or_publisher": "Shure Incorporated",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "wireless",
+        "intermodulation",
+        "frequency coordination"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+      "why_recommended": "Ninth part of Shure's 'All About Wireless' series: how IM products are generated and why compatible frequency sets matter.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "series",
+            "topic",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "intermodulation",
+        "rf-frequency-coordination",
+        "receiver-internal-frequencies"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-insights-analogue-vs-digital-wireless",
+      "type": "article",
+      "title": "Analogue vs. Digital Wireless Microphones",
+      "author_or_publisher": "Shure Incorporated",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "wireless",
+        "digital wireless",
+        "latency",
+        "companding"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.shure.com/en-EU/insights/analogue-vs-digital-wireless-microphones",
+      "why_recommended": "Short balanced comparison of analogue FM and digital wireless (sound, latency, spectral efficiency).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.shure.com/en-EU/insights/analogue-vs-digital-wireless-microphones",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "analog-vs-digital-wireless",
+        "fm-companding",
+        "latency"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "shure-qos-in-depth",
+      "type": "article",
+      "title": "QOS In Depth (Shure knowledge base)",
+      "author_or_publisher": "Shure Incorporated",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "networking",
+        "QoS",
+        "DSCP",
+        "Dante"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://service.shure.com/articles/en_US/Knowledge/QOS-In-Depth",
+      "why_recommended": "Support article explaining DSCP/QoS queues for audio networks; useful once Dante basics are understood.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://service.shure.com/articles/en_US/Knowledge/QOS-In-Depth",
+          "publisher": "Shure Incorporated",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "qos-dscp",
+        "ptp-clock",
+        "network-switch-requirements"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ranenote-110",
+      "type": "application-note",
+      "title": "RaneNote 110: Sound System Interconnection",
+      "author_or_publisher": "Rane Corporation",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "balanced lines",
+        "unbalanced lines",
+        "ground loops",
+        "wiring"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ranecommercial.com/legacy/note110.html",
+      "why_recommended": "The reference note on connecting balanced and unbalanced gear and preventing hum from ground loops, with wiring diagrams for every case.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (RaneNotes, legacy archive on ranecommercial.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free web page / PDF, no login; Rane copyright",
+      "concept_ids": [
+        "balanced-line",
+        "unbalanced-line",
+        "ground-loop",
+        "mains-hum",
+        "pin-1-problem"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ranenote-124",
+      "type": "application-note",
+      "title": "RaneNote 124: Unity Gain and Impedance Matching: Strange Bedfellows",
+      "author_or_publisher": "Rane Corporation",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "unity gain",
+        "impedance",
+        "gain structure"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ranecommercial.com/legacy/note124.html",
+      "why_recommended": "Clears up the confusion between unity gain and impedance matching, which comes up in E3 questions on levels and impedances.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note124.html",
+          "publisher": "Rane Corporation (RaneNotes, legacy archive on ranecommercial.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free web page / PDF, no login; Rane copyright",
+      "concept_ids": [
+        "impedance-bridging",
+        "impedance",
+        "gain-staging",
+        "line-level"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ranenote-126",
+      "type": "application-note",
+      "title": "RaneNote 126: Practical Line-Driving Current Requirements",
+      "author_or_publisher": "Rane Corporation",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "line drivers",
+        "cable capacitance",
+        "current"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ranecommercial.com/legacy/note126.html",
+      "why_recommended": "Shows why long cables load line outputs (capacitance, slew rate) and gives practical limits.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note126.html",
+          "publisher": "Rane Corporation (RaneNotes, legacy archive on ranecommercial.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free web page / PDF, no login; Rane copyright",
+      "concept_ids": [
+        "cable-capacitance-hf-loss",
+        "impedance",
+        "line-level"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ranenote-151",
+      "type": "application-note",
+      "title": "RaneNote 151: Grounding and Shielding Audio Devices",
+      "author_or_publisher": "Rane Corporation",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "grounding",
+        "shielding",
+        "pin 1"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ranecommercial.com/legacy/note151.html",
+      "why_recommended": "Explains the 'pin 1 problem' and correct chassis/shield grounding. Pairs with RaneNote 110.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note151.html",
+          "publisher": "Rane Corporation (RaneNotes, legacy archive on ranecommercial.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free web page / PDF, no login; Rane copyright",
+      "concept_ids": [
+        "pin-1-problem",
+        "ground-loop",
+        "electrical-safety-earthing",
+        "balanced-line"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ranenote-158",
+      "type": "application-note",
+      "title": "RaneNote 158: Understanding Acoustic Feedback & Suppressors",
+      "author_or_publisher": "Rane Corporation",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "feedback",
+        "feedback suppressors",
+        "gain before feedback"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ranecommercial.com/legacy/note158.html",
+      "why_recommended": "Clear explanation of why feedback happens and what notch-based suppressors can and cannot do.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note158.html",
+          "publisher": "Rane Corporation (RaneNotes, legacy archive on ranecommercial.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free web page / PDF, no login; Rane copyright",
+      "concept_ids": [
+        "acoustic-feedback",
+        "gain-before-feedback",
+        "ringing-out",
+        "equalizer-parametric"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ranenote-160",
+      "type": "application-note",
+      "title": "RaneNote 160: Linkwitz-Riley Crossovers: A Primer",
+      "author_or_publisher": "Rane Corporation",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "crossovers",
+        "filter slopes",
+        "Linkwitz-Riley",
+        "Butterworth"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ranecommercial.com/legacy/note160.html",
+      "why_recommended": "The standard short primer on Linkwitz-Riley vs Butterworth alignments, with summed responses explained.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note160.html",
+          "publisher": "Rane Corporation (RaneNotes, legacy archive on ranecommercial.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free web page / PDF, no login; Rane copyright",
+      "concept_ids": [
+        "linkwitz-riley-crossover",
+        "crossover",
+        "filter-slope",
+        "phase"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ranenote-setting-sound-system-level-controls",
+      "type": "application-note",
+      "title": "RaneNote: Setting Sound System Level Controls",
+      "author_or_publisher": "Dennis Bohn - Rane Corporation",
+      "year": 2006,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "gain structure",
+        "headroom",
+        "dynamic range",
+        "amplifier sensitivity"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+      "why_recommended": "Step-by-step method for setting gain from mic preamp to amplifier sensitivity, with decibel and headroom refreshers. A must for gain-staging questions.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (RaneNotes, legacy archive on ranecommercial.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher (PDF metadata)",
+            "year (PDF creation date 2006)",
+            "contents"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; Rane copyright",
+      "concept_ids": [
+        "gain-staging",
+        "headroom",
+        "dynamic-range",
+        "decibel",
+        "amplifier-power-rating"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "db-arraycalc",
+      "type": "software",
+      "title": "d&b ArrayCalc simulation software",
+      "author_or_publisher": "d&b audiotechnik GmbH & Co. KG",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "line array",
+        "system design",
+        "prediction software",
+        "rigging"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dbaudio.com/global/en/arraycalc/",
+      "why_recommended": "Manufacturer prediction software used to design and rig d&b systems; seeing a real prediction workflow helps understand coverage, splay and SPL mapping.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/global/en/arraycalc/",
+          "publisher": "d&b audiotechnik GmbH & Co. KG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "features",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free software download from manufacturer (licence terms on download not verified)",
+      "concept_ids": [
+        "prediction-software",
+        "line-array",
+        "splay-angle",
+        "coverage-angle",
+        "rigging-safety"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "db-manual-v8-v12-fr",
+      "type": "manual",
+      "title": "Manuel V8/V12 (version 1.8 fr)",
+      "author_or_publisher": "d&b audiotechnik GmbH & Co. KG",
+      "year": 2022,
+      "edition": "1.8 fr",
+      "isbn": "not applicable",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "line array",
+        "loudspeaker specifications",
+        "safety"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+      "why_recommended": "Short French manual of a touring line-array cabinet: real specifications (sensitivity, max SPL, dispersion) to practise reading datasheets in French.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik GmbH & Co. KG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (Version 1.8 fr, 12/2022)",
+            "year",
+            "language",
+            "copyright"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "line-array",
+        "loudspeaker-sensitivity",
+        "max-spl-loudspeaker",
+        "coverage-angle",
+        "speaker-impedance-load"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "db-manual-v-sub-fr",
+      "type": "manual",
+      "title": "Manuel V-SUB (version 1.5 fr)",
+      "author_or_publisher": "d&b audiotechnik GmbH & Co. KG",
+      "year": 2023,
+      "edition": "1.5 fr",
+      "isbn": "not applicable",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "subwoofers",
+        "cardioid subwoofer",
+        "loudspeaker specifications"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+      "why_recommended": "French manual of a cardioid subwoofer; good concrete example of how a cardioid low-frequency cabinet is specified.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik GmbH & Co. KG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (Version 1.5 fr, 01/2023)",
+            "year",
+            "language",
+            "copyright"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "cardioid-subwoofer",
+        "subwoofer-alignment",
+        "max-spl-loudspeaker"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "db-v-series-rigging-manual",
+      "type": "manual",
+      "title": "V-Series Rigging manual (1.12 en)",
+      "author_or_publisher": "d&b audiotechnik GmbH & Co. KG",
+      "year": 2023,
+      "edition": "1.12 en",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "rigging",
+        "line array",
+        "flying",
+        "safety"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+      "why_recommended": "Real flying-frame and rigging procedures with safety warnings; shows what a system tech must check before flying a PA.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+          "publisher": "d&b audiotechnik GmbH & Co. KG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (Version 1.12 en, 10/2023)",
+            "year",
+            "copyright"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "rigging-safety",
+        "working-load-limit-cmu",
+        "line-array",
+        "working-at-height"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "db-education-seminars",
+      "type": "manufacturer-academy",
+      "title": "d&b Seminars (Electroacoustics; Sound system optimisation)",
+      "author_or_publisher": "d&b audiotechnik GmbH & Co. KG",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "electroacoustics",
+        "system optimisation",
+        "measurement"
+      ],
+      "free_or_paid": "not found",
+      "access_link": "https://www.dbaudio.com/global/en/education/seminars/",
+      "why_recommended": "d&b's seminar track starts with an electroacoustics seminar ('need to know vitals and principles') then system optimisation. Open to anyone; price and schedule shown per session.",
+      "bts_relevance": "E3 PTES, general (post-BTS)",
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/global/en/education/seminars/",
+          "publisher": "d&b audiotechnik GmbH & Co. KG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "seminar names",
+            "audience ('Anybody who enthuses over good sound can book a seminar')"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "instructor-led seminars; price not stated on overview page",
+      "concept_ids": [
+        "system-tuning",
+        "transfer-function-measurement",
+        "inverse-square-law",
+        "comb-filtering"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "db-video-tutorials-by-topic",
+      "type": "video-channel",
+      "title": "d&b Video Tutorials by topic",
+      "author_or_publisher": "d&b audiotechnik GmbH & Co. KG",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "system design",
+        "ArrayCalc",
+        "amplifiers",
+        "networking"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dbaudio.com/global/en/education/tutorials/by-topic/",
+      "why_recommended": "Free short video tutorials grouped by topic, mostly on ArrayCalc and system setup workflow.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/global/en/education/tutorials/by-topic/",
+          "publisher": "d&b audiotechnik GmbH & Co. KG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "format (video tutorials)",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free streaming videos, manufacturer copyright",
+      "concept_ids": [
+        "prediction-software",
+        "system-tuning",
+        "line-array"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "l-acoustics-soundvision",
+      "type": "software",
+      "title": "Soundvision 3D sound design software",
+      "author_or_publisher": "L-Acoustics",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "prediction software",
+        "3D modelling",
+        "SPL mapping",
+        "line array"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.l-acoustics.com/products/soundvision/",
+      "why_recommended": "L-Acoustics' 3D acoustic and mechanical simulation software; widely used on French touring productions, so worth opening once.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.l-acoustics.com/products/soundvision/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "description",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free software download from manufacturer (licence terms not verified)",
+      "concept_ids": [
+        "prediction-software",
+        "line-array",
+        "splay-angle",
+        "coverage-angle"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "l-acoustics-wp-lf-measurement-quality",
+      "type": "white-paper",
+      "title": "How to Improve Measurement Quality at Low Frequencies? (white paper)",
+      "author_or_publisher": "L-Acoustics",
+      "year": 2020,
+      "edition": "WP 1.0",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "measurement",
+        "low frequencies",
+        "transfer function",
+        "coherence"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/white_papers/WP-HOW_TO_IMPROVE_MEASUREMENT_QUALITY_AT_LOW_FREQUENCIES.pdf",
+      "why_recommended": "Four pages on why LF measurements are noisy and how averaging and test-signal settings fix it. Very practical for Smaart-style tuning.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/white_papers/WP-HOW_TO_IMPROVE_MEASUREMENT_QUALITY_AT_LOW_FREQUENCIES.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "year (WP 1.0/03-20, PDF creation 2020)",
+            "copyright"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.l-acoustics.com/education/scientific-resources/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "white papers are part of L-Acoustics scientific resources"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "transfer-function-measurement",
+        "system-tuning",
+        "subwoofer-alignment",
+        "noise-floor"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "l-acoustics-aes-comb-filtering-perception",
+      "type": "white-paper",
+      "title": "Spectral and spatial perceptions of comb-filtering for sound reinforcement applications (AES Convention Paper 10551)",
+      "author_or_publisher": "Samuel Moulin, Etienne Corteel - L-Acoustics / AES",
+      "year": 2022,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "comb filtering",
+        "perception",
+        "time alignment"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
+      "why_recommended": "Peer-reviewed AES paper, freely hosted by L-Acoustics, on how audible comb filtering is in PA systems. For students going further than the textbook definition.",
+      "bts_relevance": "E3 PTES, general (poursuite d'etudes)",
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "authors",
+            "year (AES 152nd Convention, May 2022)",
+            "copyright notice"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF hosted by L-Acoustics; AES copyright, reproduction not permitted without AES permission",
+      "concept_ids": [
+        "comb-filtering",
+        "speaker-delay-alignment",
+        "haas-precedence-effect"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "l-acoustics-aes-sub-time-alignment-perception",
+      "type": "white-paper",
+      "title": "On the perception of time-alignment between full-range speakers and subwoofers for sound reinforcement (AES Conference Paper 8)",
+      "author_or_publisher": "L-Acoustics authors / AES",
+      "year": 2024,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "subwoofer alignment",
+        "time alignment",
+        "perception"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf",
+      "why_recommended": "Presented at the AES Acoustics & Sound Reinforcement conference in Le Mans (2024): how much main/sub misalignment listeners actually hear.",
+      "bts_relevance": "E3 PTES, general (poursuite d'etudes)",
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "year (AES conference, Le Mans, January 2024)",
+            "copyright notice"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF hosted by L-Acoustics; AES copyright, reproduction not permitted without AES permission",
+      "concept_ids": [
+        "subwoofer-alignment",
+        "speaker-delay-alignment",
+        "crossover"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "l-acoustics-aes-audio-networking-requirements",
+      "type": "white-paper",
+      "title": "Requirements and Solutions for Audio Networking in Sound Reinforcement Systems (AES conference paper)",
+      "author_or_publisher": "L-Acoustics authors / AES",
+      "year": 2024,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "audio networking",
+        "Milan",
+        "AVB",
+        "redundancy"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+      "why_recommended": "Why PA systems need deterministic, redundant networks and how AVB/Milan answers that. Good context for Dante vs Milan questions.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "year (AES conference, Le Mans, January 2024)",
+            "copyright notice"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF hosted by L-Acoustics; AES copyright, reproduction not permitted without AES permission",
+      "concept_ids": [
+        "avb-milan",
+        "audio-over-ip",
+        "network-redundancy",
+        "ptp-clock",
+        "latency"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "l-acoustics-course-soundvision",
+      "type": "official-training",
+      "title": "L-Acoustics Soundvision course (certification)",
+      "author_or_publisher": "L-Acoustics",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "prediction software",
+        "system design"
+      ],
+      "free_or_paid": "not found",
+      "access_link": "https://www.l-acoustics.com/our-course/soundvision/",
+      "why_recommended": "Certifying course (7 h onsite, or 2 x 2h30 online classes) with a test and 3.5 AVIXA RUs. Requires the System & Workflow certification first: a post-BTS goal.",
+      "bts_relevance": "general (post-BTS)",
+      "sources": [
+        {
+          "url": "https://www.l-acoustics.com/our-course/soundvision/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "format",
+            "duration",
+            "prerequisites",
+            "certification",
+            "language (local language, material in technical English)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "paid or by enquiry (price not stated); booked via training calendar",
+      "concept_ids": [
+        "prediction-software",
+        "line-array"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "l-acoustics-course-loudspeaker-system-calibration",
+      "type": "official-training",
+      "title": "L-Acoustics Loudspeaker System Calibration course",
+      "author_or_publisher": "L-Acoustics",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "calibration",
+        "measurement",
+        "system tuning"
+      ],
+      "free_or_paid": "not found",
+      "access_link": "https://www.l-acoustics.com/our-course/loudspeaker-system-calibration/",
+      "why_recommended": "Manufacturer course on measuring and calibrating a deployed system; shows the professional tuning workflow behind the E3 notions.",
+      "bts_relevance": "general (post-BTS)",
+      "sources": [
+        {
+          "url": "https://www.l-acoustics.com/our-course/loudspeaker-system-calibration/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "instructor-led course; price not stated",
+      "concept_ids": [
+        "system-tuning",
+        "transfer-function-measurement",
+        "subwoofer-alignment"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "l-acoustics-course-sub-low-frequencies",
+      "type": "official-training",
+      "title": "L-Acoustics Sub Low Frequencies course",
+      "author_or_publisher": "L-Acoustics",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "subwoofers",
+        "cardioid arrays",
+        "end-fire",
+        "low frequencies"
+      ],
+      "free_or_paid": "not found",
+      "access_link": "https://www.l-acoustics.com/our-course/sub-low-frequencies/",
+      "why_recommended": "Course dedicated to sub-low reinforcement, from loudspeaker technology to array configurations.",
+      "bts_relevance": "general (post-BTS)",
+      "sources": [
+        {
+          "url": "https://www.l-acoustics.com/our-course/sub-low-frequencies/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic",
+            "access link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "instructor-led course; price not stated",
+      "concept_ids": [
+        "cardioid-subwoofer",
+        "end-fire-subwoofer-array",
+        "subwoofer-alignment"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "meyer-lina-operating-instructions",
+      "type": "manual",
+      "title": "LINA Operating Instructions",
+      "author_or_publisher": "Meyer Sound Laboratories",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "line array",
+        "self-powered loudspeakers",
+        "rigging"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+      "why_recommended": "Online manual of a compact self-powered line array; useful to compare with passive systems (d&b, NEXO).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "line-array",
+        "passive-active-loudspeaker",
+        "rigging-safety"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "nexo-geo-m10-user-manual",
+      "type": "manual",
+      "title": "GEO M10 (GEOM1012 - GEOM1025) User manual, Rev 03b",
+      "author_or_publisher": "NEXO S.A.",
+      "year": 2024,
+      "edition": "Rev 03b",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "line array",
+        "presets",
+        "rigging"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+      "why_recommended": "NEXO is a French manufacturer; this 22-page manual of a small line array covers presets, rigging and specifications.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (DP2657-03b)",
+            "year (2024-02-29 on cover)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "line-array",
+        "splay-angle",
+        "rigging-safety"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "yamaha-mg10xu-mode-emploi-fr",
+      "type": "manual",
+      "title": "MG10XU / MG10 Mode d'emploi (FR)",
+      "author_or_publisher": "Yamaha Corporation",
+      "year": 2021,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "analogue mixer",
+        "gain",
+        "signal flow",
+        "effects"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+      "why_recommended": "French manual of a small analogue mixer found in many schools: a simple way to revise gain, aux sends and signal flow in French.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "language",
+            "copyright year (© 2021 Yamaha Corporation)",
+            "contents"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "signal-flow",
+        "gain-staging",
+        "aux-send",
+        "input-channel",
+        "phantom-power"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "yamaha-pc-d-di-about-dante",
+      "type": "manual",
+      "title": "PC-D/DI series power amplifiers - About Dante (online manual)",
+      "author_or_publisher": "Yamaha Corporation",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "Dante",
+        "networked amplifiers"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+      "why_recommended": "Short manual chapter showing how Dante is configured on a networked power amplifier.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "dante",
+        "dante-redundant-switched-mode",
+        "dante-subscription"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "digico-sd12-getting-started",
+      "type": "manual",
+      "title": "SD12 Operation Manual - Getting Started (Issue A)",
+      "author_or_publisher": "DiGiCo UK Ltd",
+      "year": 2016,
+      "edition": "Issue A",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "digital console",
+        "routing"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+      "why_recommended": "Getting-started manual of a widely used touring console: layout and routing. Good preparation before a DiGiCo training session.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (Issue A, December 2016)",
+            "copyright"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "console-scene-recall",
+        "input-patching",
+        "vca-dca",
+        "matrix-output"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "avid-pro-tools-sync-x-guide",
+      "type": "manual",
+      "title": "Pro Tools | Sync X Guide",
+      "author_or_publisher": "Avid Technology, Inc.",
+      "year": 2024,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "synchronisation",
+        "timecode",
+        "word clock",
+        "video reference"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+      "why_recommended": "Free Avid guide to a sync peripheral: timecode, video reference, word clock. A concrete document for post-production sync questions.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+          "publisher": "Avid",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "copyright year (© 2024)",
+            "licence notice"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download; Avid copyright, may not be duplicated without written consent",
+      "concept_ids": [
+        "timecode",
+        "video-reference-sync",
+        "word-clock",
+        "clock-master",
+        "lock-vs-sync"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "genelec-monitor-setup-guide",
+      "type": "manufacturer-guide",
+      "title": "Monitor Setup Guide",
+      "author_or_publisher": "Genelec Oy",
+      "year": 2025,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "studio monitoring",
+        "monitor placement",
+        "room acoustics",
+        "subwoofer",
+        "calibration"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.genelec.com/monitor-setup-guide",
+      "why_recommended": "27-page guide (also readable online in five chapters): choosing monitors, room acoustics, listening position and acoustic axis, subwoofer placement and level calibration.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.genelec.com/monitor-setup-guide",
+          "publisher": "Genelec Oy",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "chapters",
+            "PDF link"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://gene.lc/msg",
+          "publisher": "Genelec Oy",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "year (Copyright Genelec Oy 11.2025, document BBAGE252)",
+            "page count"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free online guide and PDF; Genelec copyright",
+      "concept_ids": [
+        "stereo-listening-geometry",
+        "room-modes",
+        "control-room-reference-level",
+        "subwoofer-alignment"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "genelec-academy",
+      "type": "manufacturer-academy",
+      "title": "Genelec Academy",
+      "author_or_publisher": "Genelec Oy",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "monitoring",
+        "immersive audio",
+        "acoustics"
+      ],
+      "free_or_paid": "not found",
+      "access_link": "https://www.genelec.com/academy",
+      "why_recommended": "Hub for Genelec setup guides, educational videos, webinars and immersive-audio material.",
+      "bts_relevance": "E4, general",
+      "sources": [
+        {
+          "url": "https://www.genelec.com/academy",
+          "publisher": "Genelec Oy",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "formats (guides, videos, webinars)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free web content (cost not stated on page)",
+      "concept_ids": [
+        "control-room-reference-level",
+        "surround-5-1-layout",
+        "dolby-atmos"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "neumann-microphone-glossary",
+      "type": "website",
+      "title": "Microphone Glossary - Microphone Terms Explained",
+      "author_or_publisher": "Georg Neumann GmbH",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "microphones",
+        "polar patterns",
+        "specifications",
+        "terminology"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.neumann.com/en-gb/knowledge-base/glossary/glossary-microphones",
+      "why_recommended": "Clear manufacturer definitions of microphone terms (patterns, sensitivity, self-noise...). Good revision sheet before E3.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-gb/knowledge-base/glossary/glossary-microphones",
+          "publisher": "Georg Neumann GmbH",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "microphone-sensitivity",
+        "microphone-self-noise",
+        "polar-pattern",
+        "max-spl-microphone",
+        "condenser-microphone"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "neumann-homestudio-academy",
+      "type": "manufacturer-academy",
+      "title": "Neumann Homestudio Academy",
+      "author_or_publisher": "Georg Neumann GmbH",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "home studio",
+        "monitoring",
+        "classical instrument recording",
+        "streaming"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.neumann.com/en-gb/knowledge-base/neumann-im-homestudio/homestudio-academy",
+      "why_recommended": "Video episodes on recording strings, brass, woodwinds, harp, timpani and piano, plus a 'Monitor Monday' series on monitoring.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-gb/knowledge-base/neumann-im-homestudio/homestudio-academy",
+          "publisher": "Georg Neumann GmbH",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "episode list",
+            "topics"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to view online (no paywall or login observed); manufacturer copyright",
+      "concept_ids": [
+        "main-microphone-array",
+        "spot-microphones",
+        "piano-recital-miking",
+        "room-modes"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "neumann-how-to-room-align-monitors",
+      "type": "article",
+      "title": "How to Room-Align Studio Monitors",
+      "author_or_publisher": "Georg Neumann GmbH",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "monitoring",
+        "room acoustics",
+        "room alignment"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.neumann.com/en-gb/knowledge-base/neumann-im-homestudio/homestudio-academy/how-to-room-align-studio-monitors",
+      "why_recommended": "Explains why room modes and boundaries make monitor correction necessary and how automatic alignment works.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-gb/knowledge-base/neumann-im-homestudio/homestudio-academy/how-to-room-align-studio-monitors",
+          "publisher": "Georg Neumann GmbH",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "room-modes",
+        "sbir-boundary-interference",
+        "control-room-reference-level"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "neumann-u87ai-operating-manual",
+      "type": "manual",
+      "title": "U 87 Ai Operating Manual (multilingual incl. French)",
+      "author_or_publisher": "Georg Neumann GmbH",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "condenser microphone",
+        "polar patterns",
+        "pad",
+        "phantom power"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+      "why_recommended": "Manual of the most famous studio condenser (multilingual, French section included): switchable patterns, pad, low-cut and powering.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+          "publisher": "Georg Neumann GmbH",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "languages (EN, DE, 'Mode d'emploi' FR...)",
+            "publication code 'Publ. 06/10'"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "condenser-microphone",
+        "polar-pattern",
+        "microphone-pad",
+        "phantom-power"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "rme-fireface-ufx3-users-guide",
+      "type": "manual",
+      "title": "User's Guide Fireface UFX III",
+      "author_or_publisher": "RME Audio (Matthias Carstens)",
+      "year": 2026,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "audio interface",
+        "MADI",
+        "ADAT",
+        "clocking",
+        "TotalMix"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+      "why_recommended": "RME manuals are known for their technical depth: clocking (SteadyClock, SyncCheck), MADI/ADAT/AES and latency explained in a 130-page guide.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author (PDF metadata)",
+            "year (PDF date 2026)",
+            "copyright"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "madi",
+        "adat",
+        "aes3",
+        "word-clock",
+        "jitter",
+        "buffer-size",
+        "direct-monitoring"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "rme-hdspe-madi-fx-users-guide",
+      "type": "manual",
+      "title": "User's Guide HDSPe MADI FX (Rev 2.0)",
+      "author_or_publisher": "RME Audio (Matthias Carstens)",
+      "year": 2026,
+      "edition": "Rev 2.0",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "MADI",
+        "AES/EBU",
+        "routing",
+        "clock"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+      "why_recommended": "The clearest freely available explanation of MADI in practice (channel counts, 48k/96k frames, sync).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (Rev 2.0)",
+            "year (PDF date 2026)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "madi",
+        "aes3",
+        "word-clock",
+        "sample-rate"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "rme-babyface-pro-fs-users-guide",
+      "type": "manual",
+      "title": "User's Guide Babyface Pro FS",
+      "author_or_publisher": "RME Audio (Matthias Carstens)",
+      "year": 2021,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "audio interface",
+        "latency",
+        "TotalMix",
+        "monitoring"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+      "why_recommended": "Compact interface manual with good sections on latency, buffer sizes and direct monitoring with TotalMix.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "year (PDF date 2021)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "buffer-size",
+        "converter-latency",
+        "direct-monitoring",
+        "cue-mix"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "focusrite-rednet-system-user-guide",
+      "type": "manual",
+      "title": "RedNet System User Guide (FA0458-04)",
+      "author_or_publisher": "Focusrite Audio Engineering",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "Dante",
+        "networked audio",
+        "studio interfaces"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+      "why_recommended": "System-level guide to a Dante studio installation: network setup, clocking, Dante Controller usage.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "document code FA0458-04"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "dante",
+        "dante-controller",
+        "clock-master",
+        "network-topology"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "focusrite-configuring-switch-for-dante",
+      "type": "article",
+      "title": "Configuring A Switch For Dante",
+      "author_or_publisher": "Focusrite Audio Engineering",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "Dante",
+        "network switches",
+        "QoS",
+        "EEE"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
+      "why_recommended": "Practical switch checklist (QoS, disabling EEE, IGMP) for Dante networks.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
+          "publisher": "Focusrite",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "network-switch-requirements",
+        "qos-dscp",
+        "energy-efficient-ethernet",
+        "igmp-snooping"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "audinate-dante-certification-program",
+      "type": "certification",
+      "title": "Dante Certification Program (Levels 1, 2, 3 and Dante Domain Manager Administrator)",
+      "author_or_publisher": "Audinate Pty Ltd",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "Dante",
+        "AoIP",
+        "networking",
+        "certification"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.getdante.com/resources/training/dante-certification-program/",
+      "why_recommended": "Free online certification path: Level 1 (5.5 RUs, aimed at newcomers to networked AV), Level 2, Level 3, then Dante Domain Manager. Level 1-2 are a realistic CV item during the BTS.",
+      "bts_relevance": "E3 PTES, general",
+      "sources": [
+        {
+          "url": "https://www.getdante.com/resources/training/dante-certification-program/",
+          "publisher": "Audinate Pty Ltd",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "levels",
+            "credits",
+            "edition of Levels 1-2 ('3rd Edition')",
+            "'Enroll Free Today'"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.getdante.com/resources/training/",
+          "publisher": "Audinate Pty Ltd",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "free ('The free Dante Certification program')"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.getdante.com/fr/resources/training/dante-certification-program/",
+          "publisher": "Audinate Pty Ltd",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "French version of the page exists"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free online training and certificates (enrolment on Audinate's learning platform)",
+      "concept_ids": [
+        "dante",
+        "dante-controller",
+        "dante-subscription",
+        "dante-ip-addressing",
+        "dante-domain-manager",
+        "ptp-clock",
+        "audio-over-ip"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "audinate-dante-controller-user-guide",
+      "type": "manual",
+      "title": "Dante Controller User Guide (v4.18.x)",
+      "author_or_publisher": "Audinate Pty Ltd",
+      "year": 2026,
+      "edition": "v1.0 for Dante Controller 4.18.x",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "Dante Controller",
+        "routing",
+        "clocking",
+        "troubleshooting"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+      "why_recommended": "Official 154-page guide to the tool every Dante user opens: subscriptions, clock status, latency, device config and troubleshooting.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate Pty Ltd",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (AUD-MAN-DanteController-4.18.x-v1.0)",
+            "year (published 6 May 2026)",
+            "copyright"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "dante-controller",
+        "dante-subscription",
+        "dante-device-latency",
+        "ptp-leader-election",
+        "dante-ip-addressing"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "audinate-dante-aes67-st2110-webhelp",
+      "type": "manual",
+      "title": "AES67 and SMPTE ST 2110-30 Audio (Dante Controller online help)",
+      "author_or_publisher": "Audinate Pty Ltd",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "AES67",
+        "ST 2110-30",
+        "interoperability"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/aes67_and_smpte_st2110-30_audio.htm",
+      "why_recommended": "Explains how a Dante device exposes AES67/ST 2110-30 streams, which is the practical side of interoperability questions.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/aes67_and_smpte_st2110-30_audio.htm",
+          "publisher": "Audinate Pty Ltd",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "aes67",
+        "smpte-st-2110-30",
+        "dante",
+        "multicast-unicast"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "audinate-dante-ptp-technical-dive",
+      "type": "white-paper",
+      "title": "Dante & Precision Time Protocol (PTP) Technical Dive",
+      "author_or_publisher": "Audinate Pty Ltd",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "PTP",
+        "clocking",
+        "leader election"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.getdante.com/resources/catalog/technical-guides/dante-and-precision-time-protocol-ptp-technical-dive/",
+      "why_recommended": "61-slide PDF deck on how PTP keeps Dante devices in sync (leader/follower election, PTPv1/v2).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.getdante.com/resources/catalog/technical-guides/dante-and-precision-time-protocol-ptp-technical-dive/",
+          "publisher": "Audinate Pty Ltd",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "format (PDF slide deck, 61 pages)",
+            "free download"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "ptp-clock",
+        "ptp-leader-election",
+        "clock-master",
+        "jitter"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "audinate-dante-interoperability-technical-dive",
+      "type": "white-paper",
+      "title": "Dante Interoperability AES67/ST2110 Technical Dive",
+      "author_or_publisher": "Audinate Pty Ltd",
+      "year": 2025,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "AES67",
+        "ST 2110",
+        "interoperability"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.getdante.com/resources/catalog/technical-guides/dante-interoperability-aes67-st2110-technical-dive/",
+      "why_recommended": "Slide-deck PDF explaining interoperability between Dante, AES67 and ST 2110 with clear analogies.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.getdante.com/resources/catalog/technical-guides/dante-interoperability-aes67-st2110-technical-dive/",
+          "publisher": "Audinate Pty Ltd",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "year (PDF creation 2025-05-09)",
+            "free download"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "aes67",
+        "smpte-st-2110-30",
+        "ravenna",
+        "ptp-clock"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "audinate-dante-over-distance-technical-dive",
+      "type": "white-paper",
+      "title": "Dante Over Distance Technical Dive",
+      "author_or_publisher": "Audinate Pty Ltd",
+      "year": 2025,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "Dante",
+        "WAN",
+        "latency",
+        "layer 3"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.getdante.com/resources/catalog/technical-guides/dante-over-distance-technical-dive/",
+      "why_recommended": "Case studies of Dante across sites (Layer 3, fibre, MPLS) with latency figures.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.getdante.com/resources/catalog/technical-guides/dante-over-distance-technical-dive/",
+          "publisher": "Audinate Pty Ltd",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "year (PDF creation 2025-05-07)",
+            "free download"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "dante",
+        "latency",
+        "audio-over-ip",
+        "network-topology"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "audinate-tips-for-live-sound",
+      "type": "article",
+      "title": "Tips for Live Sound (Dante technical guide)",
+      "author_or_publisher": "Audinate Pty Ltd",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "Dante",
+        "live sound",
+        "networking"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.getdante.com/resources/catalog/technical-guides/tips-for-live-sound/",
+      "why_recommended": "Audinate's technical guide page with practical tips for Dante on live shows.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.getdante.com/resources/catalog/technical-guides/tips-for-live-sound/",
+          "publisher": "Audinate Pty Ltd",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "dante",
+        "network-redundancy",
+        "dante-redundant-switched-mode"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ravenna-aes67-in-a-nutshell",
+      "type": "white-paper",
+      "title": "AES67 and RAVENNA in a Nutshell",
+      "author_or_publisher": "ALC NetworX GmbH (RAVENNA)",
+      "year": 2023,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "AES67",
+        "RAVENNA",
+        "AoIP"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
+      "why_recommended": "Five pages explaining what AES67 is, why it matters, and how RAVENNA profiles relate to it.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
+          "publisher": "RAVENNA",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "year (PDF creation 2023)",
+            "contents"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "aes67",
+        "ravenna",
+        "audio-over-ip",
+        "ptp-clock"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ravenna-network-requirements",
+      "type": "white-paper",
+      "title": "RAVENNA - Network Requirements (Version 1.4)",
+      "author_or_publisher": "ALC NetworX GmbH (RAVENNA)",
+      "year": 2023,
+      "edition": "Version 1.4",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "network requirements",
+        "switches",
+        "QoS",
+        "PTP"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+      "why_recommended": "Vendor-neutral-ish list of what an AoIP network must provide (bandwidth, QoS, multicast, PTP).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+          "publisher": "RAVENNA",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (V1.4)",
+            "last revision 2023-01-16"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "network-switch-requirements",
+        "qos-dscp",
+        "igmp-snooping",
+        "ptp-clock"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ravenna-aes67-st2110-comparison",
+      "type": "white-paper",
+      "title": "RAVENNA / AES67 / ST 2110 comparison table (V03)",
+      "author_or_publisher": "ALC NetworX GmbH (RAVENNA)",
+      "year": 2024,
+      "edition": "V03",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "AES67",
+        "ST 2110",
+        "RAVENNA",
+        "comparison"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
+      "why_recommended": "Two-page side-by-side table (sample rates, packet time, channels per stream, PTP profiles). Ideal revision card.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
+          "publisher": "RAVENNA",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "year (PDF creation 2024)",
+            "contents"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "aes67",
+        "ravenna",
+        "smpte-st-2110-30",
+        "ptp-clock"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "qsys-help-dante-audio",
+      "type": "manual",
+      "title": "Q-SYS Help: Dante Audio",
+      "author_or_publisher": "QSC, LLC (Q-SYS)",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "Dante",
+        "DSP platform"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://help.qsys.com/q-sys_10.3/Content/Networking/Dante_Audio.htm",
+      "why_recommended": "Online help page showing how Dante integrates in a DSP/AV platform.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_10.3/Content/Networking/Dante_Audio.htm",
+          "publisher": "QSC",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "dante",
+        "audio-over-ip"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "symetrix-dante-network-audio-technology",
+      "type": "manual",
+      "title": "Dante Network Audio Technology (Symetrix documentation)",
+      "author_or_publisher": "Symetrix",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "Dante",
+        "networking"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://docs.symetrix.co/hardware/networking/dante/dante-technology.html",
+      "why_recommended": "Concise manufacturer explanation of Dante concepts (flows, latency, clocking) for installed sound.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://docs.symetrix.co/hardware/networking/dante/dante-technology.html",
+          "publisher": "Symetrix",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "dante",
+        "dante-device-latency",
+        "multicast-unicast"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dolby-atmos-for-content-creators",
+      "type": "website",
+      "title": "Dolby Atmos for Content Creators",
+      "author_or_publisher": "Dolby Laboratories",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "Dolby Atmos",
+        "immersive audio",
+        "mixing"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://professional.dolby.com/content-creation/dolby-atmos/",
+      "why_recommended": "Dolby's hub for Atmos creation (tools, renderer, learning links). Starting point for immersive post-production.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+          "publisher": "Dolby Laboratories",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "description",
+            "link to learning.dolby.com"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "dolby-atmos",
+        "atmos-bed",
+        "object-based-audio"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dolby-learning-lms",
+      "type": "manufacturer-academy",
+      "title": "Dolby Learning (Dolby Institute LMS): Dolby Atmos Music - Pro Tools / Logic Pro, Mix Room Design",
+      "author_or_publisher": "Dolby Laboratories",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "Dolby Atmos",
+        "music mixing",
+        "room design"
+      ],
+      "free_or_paid": "not found",
+      "access_link": "https://learning.dolby.com/",
+      "why_recommended": "Official Dolby course series on Atmos music in Pro Tools and Logic Pro and on Atmos mix room design. Some advanced courses need a login.",
+      "bts_relevance": "E4, general (post-BTS)",
+      "sources": [
+        {
+          "url": "https://learning.dolby.com/",
+          "publisher": "Dolby Laboratories",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "course names",
+            "login note ('More / Advanced courses ... Please Log In')"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "online courses; cost not stated, advanced courses require login",
+      "concept_ids": [
+        "dolby-atmos",
+        "atmos-bed",
+        "object-based-audio",
+        "binaural"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dolby-7-1-4-overhead-speaker-setup",
+      "type": "manufacturer-guide",
+      "title": "7.1.4 Overhead Speaker Setup guide",
+      "author_or_publisher": "Dolby Laboratories",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "speaker layout",
+        "Dolby Atmos",
+        "7.1.4"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
+      "why_recommended": "Diagrams of speaker angles for a 7.1.4 layout; quick visual reference for immersive layouts.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
+          "publisher": "Dolby Laboratories",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "dolby-atmos",
+        "surround-5-1-layout"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "eaw-directional-subwoofer-arrays",
+      "type": "application-note",
+      "title": "Directional Subwoofer Arrays: A Practical Approach",
+      "author_or_publisher": "Eastern Acoustic Works (EAW)",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "subwoofer arrays",
+        "cardioid",
+        "end-fire"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf",
+      "why_recommended": "20-page free guide to cardioid and end-fire sub arrays with polar plots. One of the best free documents on the topic.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf",
+          "publisher": "EAW",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "contents"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "cardioid-subwoofer",
+        "end-fire-subwoofer-array",
+        "wavelength",
+        "subwoofer-alignment"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "eaw-how-much-amplifier-power",
+      "type": "article",
+      "title": "How Much Amplifier Power Do I Need?",
+      "author_or_publisher": "Eastern Acoustic Works (EAW)",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "amplifier power",
+        "loudspeaker ratings",
+        "headroom"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://design.eaw.com/en/knowledge/how-much-amplifier-power-do-i-need",
+      "why_recommended": "Explains how to match amplifier power to loudspeaker ratings with headroom in mind.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://design.eaw.com/en/knowledge/how-much-amplifier-power-do-i-need",
+          "publisher": "EAW",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "free access"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "amplifier-power-rating",
+        "headroom",
+        "crest-factor",
+        "speaker-impedance-load"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "qsc-k2-application-guide-live-bands",
+      "type": "application-note",
+      "title": "K.2 Series Loudspeakers Application Guide - Live Bands (Rev B)",
+      "author_or_publisher": "QSC, LLC",
+      "year": 2025,
+      "edition": "Rev B",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "small PA",
+        "monitor wedges",
+        "band setups"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k.2_appguide_livebands.pdf",
+      "why_recommended": "Example PA and wedge layouts for small bands with powered speakers; good for a first gig design.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k.2_appguide_livebands.pdf",
+          "publisher": "QSC",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (Rev B April 2025)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "floor-wedge-monitor",
+        "passive-active-loudspeaker",
+        "stage-monitor-mix"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "qsc-sound-advice-ring-out-room",
+      "type": "article",
+      "title": "Sound Advice | How to ring out a room (mains and monitors) to eliminate feedback",
+      "author_or_publisher": "QSC, LLC",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "feedback",
+        "ringing out",
+        "EQ"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://support.qscaudio.com/en_US/sound-advice/sound-advice-%7C-how-to-ring-out-a-room-mains-and-monitors-to-eliminate-feedback",
+      "why_recommended": "Step-by-step ringing-out procedure for mains and monitors.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://support.qscaudio.com/en_US/sound-advice/sound-advice-%7C-how-to-ring-out-a-room-mains-and-monitors-to-eliminate-feedback",
+          "publisher": "QSC",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "ringing-out",
+        "acoustic-feedback",
+        "monitor-graphic-eq",
+        "gain-before-feedback"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "qsc-training-portal",
+      "type": "manufacturer-academy",
+      "title": "QSC Training (Q-SYS Level Zero/One, TouchMix, K.2, Sound Advice)",
+      "author_or_publisher": "QSC, LLC",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "Q-SYS",
+        "DSP",
+        "live mixing",
+        "AVIXA credits"
+      ],
+      "free_or_paid": "not found",
+      "access_link": "https://training.qsc.com/",
+      "why_recommended": "On-demand and live courses (Q-SYS Level One on demand in several languages and live, TouchMix certified operator; site interface available in French). Worth AVIXA credits.",
+      "bts_relevance": "general (post-BTS)",
+      "sources": [
+        {
+          "url": "https://training.qsc.com/",
+          "publisher": "QSC",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "course list",
+            "formats",
+            "AVIXA credits",
+            "login/register"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "online LMS with log-in/registration; price not stated on home page",
+      "concept_ids": [
+        "audio-over-ip",
+        "dante"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "crown-xls-drivecore2-manual",
+      "type": "manual",
+      "title": "XLS DriveCore 2 Series Operation Manual",
+      "author_or_publisher": "Crown International / HARMAN",
+      "year": 2015,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "power amplifiers",
+        "bridge mode",
+        "crossover",
+        "load impedance"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+      "why_recommended": "Amplifier manual covering bridge mono, load impedance and built-in crossover; good concrete support for amplifier questions.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "publisher": "Crown / HARMAN",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "copyright year (©2015 HARMAN)",
+            "contents"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "bridge-mode-amplifier",
+        "speaker-impedance-load",
+        "amplifier-power-rating",
+        "crossover"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "axia-iq-quick-start-guide",
+      "type": "manual",
+      "title": "Quick-Start Installation Guide: Axia iQ IP-Audio Console",
+      "author_or_publisher": "Telos Alliance",
+      "year": 2021,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "radio console",
+        "AoIP",
+        "Livewire"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+      "why_recommended": "Shows how an IP radio console is set up (surface, engine, network): concrete link with on-air chain lessons.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "copyright year (© 2021 Telos Alliance)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "on-air-console",
+        "audio-over-ip",
+        "on-air-chain"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "telos-hx1-hx2-quick-start-guide",
+      "type": "manual",
+      "title": "Quick-Start Installation Guide: Telos Hx1 / Hx2 Digital Hybrid Telephone Interface",
+      "author_or_publisher": "Telos Alliance",
+      "year": 2021,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "telephone hybrid",
+        "radio",
+        "mix-minus"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+      "why_recommended": "Setup of a telephone hybrid, the device behind call-in radio shows; helps understand mix-minus.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "copyright year (© 2021 Telos Alliance)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "telephone-hybrid",
+        "mix-minus-n1"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "telos-omnia-11-processor",
+      "type": "website",
+      "title": "Omnia.11 Broadcast Audio Processor (product page)",
+      "author_or_publisher": "Telos Alliance",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "FM processing",
+        "on-air processing",
+        "loudness"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
+      "why_recommended": "Product page of a reference FM/HD processor; illustrates multiband processing in the on-air chain.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "description"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "on-air-processing",
+        "multiband-compression",
+        "on-air-chain"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "tieline-ebook-ip-codecs-radio-remotes",
+      "type": "manufacturer-guide",
+      "title": "How IP Codecs are Transforming Radio Remotes (eBook)",
+      "author_or_publisher": "Tieline Technology",
+      "year": 2018,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "IP codecs",
+        "remote broadcast",
+        "radio"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://tieline.com/ebooks/how-ip-codecs-are-transforming-radio-remotes/",
+      "why_recommended": "Free Tieline eBook (EN, ES, PT and French versions linked) on IP audio codecs for outside broadcasts.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://tieline.com/ebooks/how-ip-codecs-are-transforming-radio-remotes/",
+          "publisher": "Tieline",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "date (page dated 28 November 2018)",
+            "languages incl. French"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tieline.com/tieline-ebooks/",
+          "publisher": "Tieline",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "listed among free Tieline eBooks"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free eBook, read online via Yumpu links on the page; Tieline copyright",
+      "concept_ids": [
+        "audio-codec-ip",
+        "opus-codec",
+        "ip-link-resilience"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "tieline-via-codec",
+      "type": "website",
+      "title": "ViA Audio Codec (product page)",
+      "author_or_publisher": "Tieline Technology",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "IP codec",
+        "remote broadcast"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.tieline.com/via/",
+      "why_recommended": "Reference portable IP codec; product page useful to see what a reporter codec does (bonding, Opus, SIP).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.tieline.com/via/",
+          "publisher": "Tieline",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "description"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "audio-codec-ip",
+        "sip-signalling",
+        "opus-codec"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "comrex-access-nx",
+      "type": "website",
+      "title": "ACCESS NX (product page)",
+      "author_or_publisher": "Comrex Corporation",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "IP codec",
+        "remote broadcast"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.comrex.com/products/access-nx/",
+      "why_recommended": "Portable IP codec page; complements the Tieline and AETA examples.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.comrex.com/products/access-nx/",
+          "publisher": "Comrex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "description"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "audio-codec-ip",
+        "ip-link-resilience"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "aeta-scoop5s-manuel-utilisateur",
+      "type": "manual",
+      "title": "Scoop5 S - Codec audio stéréo pour transmission audio temps réel - Manuel utilisateur",
+      "author_or_publisher": "AETA Audio Systems",
+      "year": 2018,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "codec IP",
+        "RNIS",
+        "SIP",
+        "radio"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf",
+      "why_recommended": "Manuel complet en français (156 p.) d'un codec de fabrication française très présent dans les radios: algorithmes (G.722, AAC, Opus), SIP, réseaux IP/4G.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "language",
+            "date (juillet 2018 on last page)"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/products/scoop5s/",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "product page in French",
+            "manual link"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "audio-codec-ip",
+        "sip-signalling",
+        "g722-codec",
+        "opus-codec",
+        "acip-ebu-tech-3326"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "aeta-an119-rtp-direct",
+      "type": "application-note",
+      "title": "AN119fr - RTP Direct - Instructions de mise en oeuvre (Ed. A)",
+      "author_or_publisher": "AETA Audio Systems",
+      "year": "not found",
+      "edition": "Ed. A",
+      "isbn": "not applicable",
+      "language": "fr",
+      "level": "advanced",
+      "topics": [
+        "SIP",
+        "RTP",
+        "AoIP"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.aeta-audio.com/downloads/doc/appnotes/AN119fr%20-%20RTP%20direct.pdf",
+      "why_recommended": "Note d'application de 3 pages qui explique clairement la différence SIP / RTP direct (avec renvoi à l'UER Tech 3326).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/appnotes/AN119fr%20-%20RTP%20direct.pdf",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (Ed. A)",
+            "language",
+            "contents"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "sip-signalling",
+        "acip-ebu-tech-3326",
+        "audio-codec-ip"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "schoeps-colette-cmc-mk-user-guide",
+      "type": "manual",
+      "title": "Colette Modular System: CMC Microphone Amplifiers / MK Capsules User Guide",
+      "author_or_publisher": "SCHOEPS GmbH",
+      "year": 2015,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "condenser microphones",
+        "capsules",
+        "polar patterns",
+        "phantom powering"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+      "why_recommended": "24-page guide with a remarkably clear chapter on transducer principles (pressure vs pressure gradient) and capsule choice by application.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+          "publisher": "SCHOEPS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "year (PDF date 2015)",
+            "contents"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "pressure-gradient-transducer",
+        "polar-pattern",
+        "phantom-power",
+        "condenser-microphone",
+        "diffuse-field-response-main-mics"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "reaper-user-guide",
+      "type": "manual",
+      "title": "Up and Running: A REAPER User Guide v 7.81",
+      "author_or_publisher": "Geoffrey Francis (for Cockos REAPER)",
+      "year": 2026,
+      "edition": "v 7.81",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "DAW",
+        "recording",
+        "editing",
+        "mixing"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+      "why_recommended": "Free 464-page DAW manual for a low-cost DAW many students use at home; teaches routing, editing and mixing concepts that transfer to Pro Tools.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos / reaper.fm",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (Version 7.81, September 2026)",
+            "copyright"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF from reaper.fm; © Geoffrey Francis, all rights reserved (printed copy sold on Lulu)",
+      "concept_ids": [
+        "signal-flow",
+        "punch-in",
+        "comping",
+        "plugin-delay-compensation",
+        "buffer-size"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ti-understanding-data-converters-slaa013",
+      "type": "application-note",
+      "title": "Understanding Data Converters (Application Report SLAA013)",
+      "author_or_publisher": "Texas Instruments",
+      "year": 1995,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "ADC",
+        "DAC",
+        "sampling",
+        "quantization"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ti.com/lit/an/slaa013/slaa013.pdf",
+      "why_recommended": "Classic semiconductor-maker tutorial on sampling, quantization noise and converter specs. For students who want the 'why' behind Nyquist and bit depth.",
+      "bts_relevance": "E3 PTES (numerique)",
+      "sources": [
+        {
+          "url": "https://www.ti.com/lit/an/slaa013/slaa013.pdf",
+          "publisher": "Texas Instruments",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "report number",
+            "year (1995 on cover; copyright 1999 notice)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "nyquist-theorem",
+        "quantization-noise",
+        "aliasing",
+        "anti-aliasing-filter",
+        "bit-depth",
+        "sampling"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "switchcraft-ez-norm-patchbay-guide",
+      "type": "manual",
+      "title": "StudioPatch Series patchbays with EZ Norm - selection guide",
+      "author_or_publisher": "Switchcraft",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "patchbay",
+        "normalling"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf",
+      "why_recommended": "Shows full-normal, half-normal and non-normal patchbay wiring on a real product.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf",
+          "publisher": "Switchcraft",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "contents"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "patchbay-normalling",
+        "signal-flow"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "mutec-mc3plus-operating-manual",
+      "type": "manual",
+      "title": "MC-3+ Smart Clock USB Operating Manual",
+      "author_or_publisher": "MUTEC GmbH",
+      "year": 2013,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "word clock",
+        "master clock",
+        "jitter",
+        "reclocking"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+      "why_recommended": "Manual of a studio master clock: word clock distribution, termination and jitter reduction.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+          "publisher": "MUTEC",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "copyright year (© MUTEC GmbH 2013)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "word-clock",
+        "clock-master",
+        "jitter",
+        "word-clock-termination"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "radial-jpc-user-guide",
+      "type": "manual",
+      "title": "JPC Stereo PC Direct Box User Guide (MK3, v3.4)",
+      "author_or_publisher": "Radial Engineering Ltd.",
+      "year": 2026,
+      "edition": "v3.4",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "DI box",
+        "ground isolation",
+        "computer audio"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf",
+      "why_recommended": "Short DI manual explaining level conversion, isolation and ground lift for laptops on stage.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf",
+          "publisher": "Radial",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (v3.4, 07-2026)",
+            "year"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "di-box",
+        "ground-loop",
+        "balanced-line",
+        "impedance-bridging"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ssl-bus-plus-user-guide",
+      "type": "manual",
+      "title": "THE BUS+ User Guide (Revision 1.1)",
+      "author_or_publisher": "Solid State Logic",
+      "year": 2022,
+      "edition": "Revision 1.1",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "bus compressor",
+        "dynamics",
+        "mix bus"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+      "why_recommended": "Manual of the classic SSL bus compressor: threshold, ratio, attack/release and sidechain on the mix bus.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "publisher": "SSL",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition (Revision 1.1 - April 2022)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free PDF download, no login; manufacturer copyright, all rights reserved",
+      "concept_ids": [
+        "compressor",
+        "threshold-ratio",
+        "attack-release",
+        "sidechain",
+        "main-mix-bus"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "izotope-what-is-dithering",
+      "type": "article",
+      "title": "What Is Dithering in Audio?",
+      "author_or_publisher": "iZotope",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "dither",
+        "bit depth",
+        "noise shaping"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+      "why_recommended": "Plain-language explanation of why we dither when reducing bit depth.",
+      "bts_relevance": "E3 PTES (numerique), E4",
+      "sources": [
+        {
+          "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+          "publisher": "iZotope",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "dither",
+        "bit-depth",
+        "quantization-noise",
+        "noise-shaping"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "fabfilter-pro-q-processing-mode",
+      "type": "manual",
+      "title": "FabFilter Pro-Q 4 Help - Processing mode (zero latency, natural phase, linear phase)",
+      "author_or_publisher": "FabFilter",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "EQ",
+        "linear phase",
+        "latency"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.fabfilter.com/help/pro-q/using/processingmode",
+      "why_recommended": "Shows concretely the trade-offs between minimum-phase and linear-phase EQ (pre-ringing, latency).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.fabfilter.com/help/pro-q/using/processingmode",
+          "publisher": "FabFilter",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "linear-phase-eq",
+        "equalizer-parametric",
+        "latency",
+        "phase"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ableton-learning-music",
+      "type": "course",
+      "title": "Learning Music (interactive)",
+      "author_or_publisher": "Ableton AG",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "rhythm",
+        "melody",
+        "harmony",
+        "song structure"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://learningmusic.ableton.com/fr/",
+      "why_recommended": "Interactive browser course (French version available) on beats, melody, harmony and structure. Helps sound students talk with musicians.",
+      "bts_relevance": "E2 culture audiovisuelle et artistique",
+      "sources": [
+        {
+          "url": "https://learningmusic.ableton.com/fr/",
+          "publisher": "Ableton AG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "language (French version)",
+            "description"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://learningmusic.ableton.com/",
+          "publisher": "Ableton AG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "English version"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free interactive website, no login",
+      "concept_ids": [],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ableton-learning-synths",
+      "type": "course",
+      "title": "Learning Synths (Apprendre à utiliser les synthétiseurs)",
+      "author_or_publisher": "Ableton AG",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "synthesis",
+        "oscillators",
+        "filters",
+        "envelopes"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://learningsynths.ableton.com/fr/",
+      "why_recommended": "Interactive French-language site where you play a synth in the browser and discover its building blocks; a good intuitive bridge to harmonics and filter theory.",
+      "bts_relevance": "E3 PTES, E2",
+      "sources": [
+        {
+          "url": "https://learningsynths.ableton.com/fr/",
+          "publisher": "Ableton AG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "language",
+            "description"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free interactive website, no login",
+      "concept_ids": [
+        "harmonics",
+        "high-pass-filter",
+        "filter-slope",
+        "attack-release"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "ableton-live-12-manuel-fr",
+      "type": "manual",
+      "title": "Manuel d'Ableton Live 12 pour Windows et Mac (manuel de référence)",
+      "author_or_publisher": "Ableton AG (traduction française Thierry Fisch)",
+      "year": 2026,
+      "edition": "Live 12",
+      "isbn": "not applicable",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "DAW",
+        "MIDI",
+        "audio editing",
+        "effects"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.ableton.com/fr/manual/welcome-to-live/",
+      "why_recommended": "Full 1,032-page reference manual in French, online and as PDF. Also a free glossary-like reference for effects, routing and MIDI vocabulary in French.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.ableton.com/fr/manual/welcome-to-live/",
+          "publisher": "Ableton AG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title (online)",
+            "language"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://cdn-resources.ableton.com/resources/pdfs/live-manual/12/2026-10-01/live12-manual-fr.pdf",
+          "publisher": "Ableton AG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "PDF",
+            "authors and translator",
+            "date in URL (2026-10-01)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free online and PDF; Ableton copyright",
+      "concept_ids": [
+        "signal-flow",
+        "insert-vs-send-effects",
+        "sidechain",
+        "buffer-size"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "sennheiser-tutorials-and-guides",
+      "type": "video-channel",
+      "title": "Sennheiser Tutorials & Guides for Professionals",
+      "author_or_publisher": "Sennheiser electronic SE & Co. KG",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "microphones",
+        "drum miking",
+        "vocal miking",
+        "wireless"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.sennheiser.com/en-us/learn/tutorials-and-guides",
+      "why_recommended": "Short product-based tutorials (e 904/e 906/e 914 on drums and amps, e 835/e 845 on vocals) that show placement in practice.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.sennheiser.com/en-us/learn/tutorials-and-guides",
+          "publisher": "Sennheiser electronic SE & Co. KG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "tutorial list"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free online videos/articles; manufacturer copyright",
+      "concept_ids": [
+        "close-miking",
+        "polar-pattern",
+        "proximity-effect"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "sennheiser-seminar-rf-coordination-soundbase",
+      "type": "video-channel",
+      "title": "RF Coordination with Sennheiser and SoundBase (recorded seminar)",
+      "author_or_publisher": "Sennheiser electronic SE & Co. KG",
+      "year": 2025,
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "RF coordination",
+        "wireless planning",
+        "software"
+      ],
+      "free_or_paid": "not found",
+      "access_link": "https://www.sennheiser.com/en-us/learn/seminars/rf-coordination-with-sennheiser-and-soundbase",
+      "why_recommended": "Seminar on RF coordination software (SoundBase SE/Pro) for data gathering and system commissioning.",
+      "bts_relevance": "E3 PTES, general (post-BTS)",
+      "sources": [
+        {
+          "url": "https://www.sennheiser.com/en-us/learn/seminars/rf-coordination-with-sennheiser-and-soundbase",
+          "publisher": "Sennheiser electronic SE & Co. KG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "dates (26-28 August 2025)",
+            "topics"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "listed under recorded seminars; Zoom registration link, cost not stated",
+      "concept_ids": [
+        "rf-frequency-coordination",
+        "rf-scanning",
+        "intermodulation"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-stereo-recording-techniques",
+      "type": "article",
+      "title": "Stereo recording techniques and setups",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "stereo",
+        "AB",
+        "XY",
+        "ORTF",
+        "NOS"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+      "why_recommended": "One page comparing AB, XY, near-coincident, ORTF, DIN and NOS with spacing and angles. Perfect E3 revision.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "stereo-ab",
+        "stereo-xy",
+        "stereo-ortf",
+        "stereo-nos",
+        "near-coincident-main-pair",
+        "stereo-ms",
+        "stereo-blumlein"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-multimiking-classical-orchestra",
+      "type": "article",
+      "title": "Multimiking a classical orchestra",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "orchestra",
+        "main pair",
+        "spot mics"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+      "why_recommended": "Guidelines for main system plus spots on a symphony orchestra.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "main-microphone-array",
+        "spot-microphones",
+        "outrigger-microphones",
+        "decca-tree",
+        "spot-microphone-delay-compensation"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-how-to-mic-a-choir",
+      "type": "article",
+      "title": "How to mic a choir",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "choir",
+        "coverage"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+      "why_recommended": "Number of mics, placement and pattern choice for choirs.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "choir-microphone-coverage",
+        "three-to-one-rule"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-how-to-mic-a-drum-kit",
+      "type": "article",
+      "title": "How to mic a drum kit",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "drums",
+        "close miking",
+        "overheads"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-drum-kit/",
+      "why_recommended": "Element-by-element drum miking guidelines.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-drum-kit/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "close-miking",
+        "phase",
+        "comb-filtering"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-how-to-mic-a-piano",
+      "type": "article",
+      "title": "How to mic a piano",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "piano",
+        "grand",
+        "upright"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+      "why_recommended": "Piano miking options for grand and upright.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "piano-recital-miking",
+        "stereo-ab"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-how-to-read-microphone-specifications",
+      "type": "article",
+      "title": "How to read microphone specifications",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "specifications",
+        "sensitivity",
+        "self-noise",
+        "max SPL"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/",
+      "why_recommended": "Walks through each line of a mic datasheet; directly useful for E3 datasheet questions.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "microphone-sensitivity",
+        "microphone-self-noise",
+        "max-spl-microphone",
+        "dynamic-range",
+        "impedance"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-phantom-power-basics",
+      "type": "article",
+      "title": "Know the basics about phantom power",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "phantom power",
+        "P48"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+      "why_recommended": "FAQ-style answers to the most common phantom power questions.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "phantom-power",
+        "condenser-microphone"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-balanced-and-unbalanced-lines",
+      "type": "article",
+      "title": "About balanced and unbalanced lines",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "balanced lines",
+        "impedance balancing"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+      "why_recommended": "Distinguishes signal-balanced from impedance-balanced lines, a subtle point often asked.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "balanced-line",
+        "unbalanced-line",
+        "cmrr"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-facts-about-speech-intelligibility",
+      "type": "article",
+      "title": "Facts about speech intelligibility",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "intelligibility",
+        "speech",
+        "consonants"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/",
+      "why_recommended": "Which frequency bands carry intelligibility and how mic choice affects it.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "masking",
+        "critical-distance",
+        "reverberation-time-rt60"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-7-points-sound-film-industry",
+      "type": "article",
+      "title": "7 points about working with sound in the film industry",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "location sound",
+        "film crew"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/background-knowledge/7-points-about-working-with-sound-in-the-film-industry/",
+      "why_recommended": "Truths and myths about a film sound crew, by sound professional Antoin Cox. Good career context for tournage.",
+      "bts_relevance": "E4, general",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/7-points-about-working-with-sound-in-the-film-industry/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description incl. author Antoin Cox)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "dialogue-editing",
+        "recording-metadata"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-10-facts-acoustics-for-mic-users",
+      "type": "article",
+      "title": "10 important facts about acoustics for microphone users",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "acoustics",
+        "inverse square law",
+        "reflections"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "why_recommended": "Ten acoustic facts every mic user should know (distance, reflections, room).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "inverse-square-law",
+        "critical-distance",
+        "early-reflections",
+        "comb-filtering",
+        "wavelength"
+      ],
+      "access_link_status": "ok"
+    },
+    {
+      "id": "dpa-microphone-technology-essentials",
+      "type": "article",
+      "title": "Microphone technology - the essentials",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "edition": "not found",
+      "isbn": "not applicable",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "transducers",
+        "condenser",
+        "dynamic",
+        "polar patterns"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/",
+      "why_recommended": "Overview of transducer types and how they convert acoustic energy to electrical signals.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/microphone-technology-the-essentials/",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "topic (page meta description)",
+            "free access"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "part of DPA Mic University (existing entry dpa-mic-university)"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "licence": "free to read online, no login; manufacturer copyright",
+      "concept_ids": [
+        "condenser-microphone",
+        "dynamic-microphone",
+        "pressure-gradient-transducer",
+        "polar-pattern",
+        "electret-microphone"
+      ],
+      "access_link_status": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "item": "Audinate training/certification pages on audinate.com",
+      "searched": "https://www.audinate.com/learning/training-certification returned HTTP 403; learning.audinate.com does not resolve. Used getdante.com (Audinate's current site) and dev.audinate.com instead."
+    },
+    {
+      "item": "Allen & Heath academy / training",
+      "searched": "https://www.allen-heath.com/academy/ returned HTTP 403; not included"
+    },
+    {
+      "item": "Yamaha Pro Audio training page",
+      "searched": "https://usa.yamaha.com/products/proaudio/training/index.html returned 200 to PowerShell but 403 to WebFetch; no course details readable; not included (Yamaha manuals on manual.yamaha.com and ca.yamaha.com are reachable)"
+    },
+    {
+      "item": "AES student / education resources",
+      "searched": "https://www.aes.org/students/ returned HTTP 403; not included"
+    },
+    {
+      "item": "Avid Learning / Pro Tools Reference Guide PDF",
+      "searched": "avid.com training pages 403 (see main log); the Pro Tools Reference Guide PDF URL could not be found without guessing; only the Pro Tools Sync X Guide (resources.avid.com) was verified"
+    },
+    {
+      "item": "Sennheiser Sound Academy / French Sennheiser learn pages",
+      "searched": "https://www.sennheiser.com/en-de/sound-academy and https://www.sennheiser.com/fr-fr/learn: connection closed by server; en-us learn pages worked"
+    },
+    {
+      "item": "Rational Acoustics Smaart user guide / documentation",
+      "searched": "https://www.rationalacoustics.com/pages/support: connection closed by server; Smaart training is already in the main list"
+    },
+    {
+      "item": "Shure French-language insights pages",
+      "searched": "https://www.shure.com/fr-FR/insights/... returned HTTP 308 then a redirect loop (WebFetch 'too many redirects'); not included"
+    },
+    {
+      "item": "NEXO training page",
+      "searched": "https://www.nexo-sa.com/training/ returned 200 but the content was image data only; no course details readable"
+    },
+    {
+      "item": "RME tech info pages",
+      "searched": "https://www.rme-audio.de/rme-tech-info.html returned 404; RME manuals used instead"
+    },
+    {
+      "item": "Sound Devices and Zoom field-recorder manuals (incl. Zoom French manual)",
+      "searched": "sounddevices.com product page 403; guessed zoomcorp.com FR URL returned 404; not included"
+    },
+    {
+      "item": "Telos/Axia Livewire+ AES67 primer",
+      "searched": "https://www.telosalliance.com/axia/livewire-plus-aes67: connection closed; only the Axia iQ / Telos Hx quick-start PDFs verified"
+    },
+    {
+      "item": "Comrex technical eBooks / IP primer",
+      "searched": "https://www.comrex.com/news/ebooks/ lists no downloadable items in static HTML; not included"
+    },
+    {
+      "item": "Meyer Sound Design Reference / Meyer white papers",
+      "searched": "meyersound.com/education page has no document links in static HTML; not verified"
+    },
+    {
+      "item": "Crown amplifier application guides (generic)",
+      "searched": "no URL found within search budget; only the XLS DriveCore 2 manual verified"
+    },
+    {
+      "item": "Neumann French glossary",
+      "searched": "https://www.neumann.com/fr-fr/knowledge-base/glossary/glossary-microphones returned 404; English glossary used"
+    },
+    {
+      "item": "Shure 'Audio Systems Guide for Houses of Worship'",
+      "searched": "Shure index links to an online guide (pubs.shure.com) and a gated email-signup page (p.shure.com); a PDF copy exists only on a third-party site, so not included"
+    },
+    {
+      "item": "Exact year of DPA / Shure / Rane web articles",
+      "searched": "no date printed on the pages; year left 'not found'"
+    },
+    {
+      "item": "Free/paid status of QSC Training, Genelec Academy, d&b seminars, Dolby Learning, L-Acoustics courses",
+      "searched": "pages do not state prices; free_or_paid left 'not found'"
+    }
+  ]
+}

@@ -1,0 +1,334 @@
+{
+ "entity": "rule",
+ "domain": "digital-audio-clocking",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "wordclock-sync",
+   "name_fr": "Esclave word clock non verrouillé",
+   "name_en": "Unlocked word clock slave",
+   "domain": "digital-audio-clocking",
+   "catalog_rule": "R8",
+   "status": "existing",
+   "severity": "error",
+   "scope": "device",
+   "condition": {
+    "all": [
+     {
+      "path": "device.ports.flags",
+      "op": "includes",
+      "value": "isClockSlave"
+     },
+     {
+      "path": "device.connected_ports.signal",
+      "op": "in",
+      "value": [
+       "aes3",
+       "spdif",
+       "madi",
+       "aoip",
+       "usb-audio"
+      ]
+     },
+     {
+      "not": {
+       "path": "device.ports[flags includes isClockSlave].connected",
+       "op": "eq",
+       "value": true
+      }
+     }
+    ]
+   },
+   "explanation": "Miroir de R8 (logic/clock, partie esclave non verrouillé) : un appareil qui transporte de l'audio numérique et possède une entrée word clock esclave doit avoir cette entrée reliée au maître. Sans horloge commune, les appareils lisent les échantillons au mauvais moment : clics, craquements, décrochages. Le catalogue énonce aussi « deux maîtres ou aucun maître = erreur » ; la détection de deux maîtres reste à faire (voir two-clock-masters).",
+   "fix": "Relier l'entrée word clock (BNC 75 Ω) à une sortie du maître (OCX HD ou interface) et régler l'appareil sur la source Word Clock.",
+   "evaluable_now": true,
+   "needs_catalog_fields": [],
+   "concept_ids": [
+    "word-clock",
+    "clock-master",
+    "lock-vs-sync"
+   ],
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "sample-rate-mismatch",
+   "name_fr": "Fréquences d'échantillonnage différentes sur un lien",
+   "name_en": "Sample-rate mismatch on a link",
+   "domain": "digital-audio-clocking",
+   "catalog_rule": "R8",
+   "status": "existing",
+   "severity": "error",
+   "scope": "connection",
+   "condition": {
+    "all": [
+     {
+      "path": "src.port.signal",
+      "op": "in",
+      "value": [
+       "aes3",
+       "spdif",
+       "madi",
+       "aoip",
+       "usb-audio"
+      ]
+     },
+     {
+      "path": "src.device.controls.sample-rate",
+      "op": "exists"
+     },
+     {
+      "path": "dst.device.controls.sample-rate",
+      "op": "exists"
+     },
+     {
+      "path": "src.device.controls.sample-rate",
+      "op": "ne",
+      "value": "$dst.device.controls.sample-rate"
+     }
+    ]
+   },
+   "explanation": "Miroir de la partie fréquence de R8 (évaluée aujourd'hui dans logic/clock sous l'id R8) : deux appareils d'un même lien numérique réglés sur des fréquences différentes (44,1 et 48 kHz). Le récepteur ne passe pas en sync (Audient : voyant ambre, horloge détectée à une autre fréquence) ; une source lue à une autre horloge change de vitesse et de hauteur. Note : la valeur \"$dst...\" désigne la valeur de l'autre extrémité.",
+   "fix": "Régler la même fréquence sur la session, l'interface et chaque appareil, ou insérer un convertisseur de fréquence asynchrone (SRC) si l'une des sources ne peut pas changer.",
+   "evaluable_now": true,
+   "needs_catalog_fields": [],
+   "concept_ids": [
+    "sample-rate",
+    "sample-rate-conversion",
+    "lock-vs-sync"
+   ],
+   "sources": [
+    {
+     "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+     "publisher": "Audient, iD14 MKII manual v1.3",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation",
+      "fix"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "two-clock-masters",
+   "name_fr": "Deux horloges maîtres dans un même système",
+   "name_en": "Two clock masters in one system",
+   "domain": "digital-audio-clocking",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "error",
+   "scope": "graph",
+   "condition": {
+    "path": "graph.count(devices in one digital island where device.controls.clock-source == 'internal')",
+    "op": "gt",
+    "value": 1
+   },
+   "explanation": "Un système numérique ne peut avoir qu'un seul maître (RME). Exemple RME : une interface en Master reçoit l'ADAT d'une console elle aussi en Master ; l'entrée affiche lock mais les deux horloges diffèrent légèrement, d'où des erreurs de lecture régulières (clics, décrochages). Le catalogue R8 cite déjà ce cas mais clock.ts ne peut pas l'exprimer : il manque une commande de source d'horloge par appareil et un moyen de regrouper les appareils reliés.",
+   "fix": "Garder un seul appareil en horloge interne ; régler tous les autres sur une source externe (word clock, AES, ADAT, MADI) venant du maître.",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "device.controls:clock-source (enum internal|wordclock|aes3|adat|madi)",
+    "graph: digital island grouping (devices linked by digital audio or wordclock)"
+   ],
+   "concept_ids": [
+    "clock-master",
+    "lock-vs-sync"
+   ],
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "adat-smux-channel-loss",
+   "name_fr": "ADAT au-delà de 48 kHz : perte de canaux (S/MUX)",
+   "name_en": "ADAT above 48 kHz loses channels (S/MUX)",
+   "domain": "digital-audio-clocking",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "warning",
+   "scope": "connection",
+   "condition": {
+    "all": [
+     {
+      "path": "src.port.signal",
+      "op": "eq",
+      "value": "adat"
+     },
+     {
+      "path": "src.device.controls.sample-rate",
+      "op": "in",
+      "value": [
+       "88200",
+       "96000",
+       "176400",
+       "192000"
+      ]
+     }
+    ]
+   },
+   "explanation": "Le matériel ADAT ne dépasse pas 48 kHz. En Double Speed (88,2/96 kHz) les interfaces passent en S/MUX : 4 canaux par port au lieu de 8 ; en Quad Speed (176,4/192 kHz), S/MUX4 : 2 canaux. Un préampli 8 canaux ne livre donc que 4 canaux à 96 kHz.",
+   "fix": "Rester à 44,1/48 kHz pour garder 8 canaux, ou utiliser un deuxième port ADAT (S/MUX) ou un autre format (MADI : 32 canaux à 96 kHz).",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "signalTypes:adat (proposed signal id)",
+    "port.channels (channel count per port at 48 kHz)"
+   ],
+   "concept_ids": [
+    "adat",
+    "smux",
+    "sample-rate"
+   ],
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+     "publisher": "Audient, iD14 MKII manual v1.3",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "fix"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "aes3-into-spdif-level",
+   "name_fr": "Sortie AES3 vers une entrée S/PDIF grand public",
+   "name_en": "AES3 output into a consumer S/PDIF input",
+   "domain": "digital-audio-clocking",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "warning",
+   "scope": "connection",
+   "condition": {
+    "all": [
+     {
+      "path": "src.port.signal",
+      "op": "eq",
+      "value": "aes3"
+     },
+     {
+      "path": "dst.port.signal",
+      "op": "eq",
+      "value": "spdif"
+     }
+    ]
+   },
+   "explanation": "AES3 et S/PDIF ont la même structure de trame mais pas la même électrique ni le même état de canal : AES3 sort 2 à 7 V crête à crête sur 110 Ω symétrique, alors qu'une sortie coaxiale S/PDIF fait 0,5 V crête à crête sur 75 Ω (spécification MUTEC). L'UER prévient qu'un émetteur « professional » vers un récepteur « consumer » peut fonctionner de façon imprévisible, et RME note que la plupart des entrées grand public n'acceptent que l'état « consumer ». Dans le simulateur actuel, R2 bloque déjà ce lien (signaux différents) ; cette règle fournit l'explication et le remède.",
+   "fix": "Passer la sortie AES de l'interface en mode Consumer (qui baisse aussi la tension), avec un adaptateur XLR/RCA, ou utiliser un convertisseur de format (ex. MUTEC MC-3+).",
+   "evaluable_now": true,
+   "needs_catalog_fields": [],
+   "concept_ids": [
+    "aes3",
+    "spdif",
+    "channel-status"
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+     "publisher": "MUTEC, MC-3+ Smart Clock manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation",
+      "fix"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/fface_802fs_e.pdf",
+     "publisher": "RME, Fireface 802 FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation",
+      "fix"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Règle de double terminaison word clock (champ catalogue de terminaison absent)",
+   "searched": "Source RME trouvée mais aucun champ catalogue ; traité en fault seulement"
+  }
+ ]
+}

@@ -1,0 +1,1363 @@
+{
+ "entity": "glossary",
+ "domain": "dynamics-eq-effects",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "compression-threshold",
+   "term_fr": "Seuil (de compression)",
+   "term_en": "Threshold",
+   "domain": "dynamics-eq-effects",
+   "definition": "Niveau au-delà duquel un compresseur commence à réduire le gain ; sur le dbx 166xs, de −40 à +20 dBu.",
+   "see_also": [
+    "threshold-ratio"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "compression-ratio",
+   "term_fr": "Taux de compression",
+   "term_en": "Ratio",
+   "domain": "dynamics-eq-effects",
+   "definition": "Nombre de dB que l'entrée doit gagner au-dessus du seuil pour que la sortie gagne 1 dB (2:1, 4:1… ∞:1).",
+   "see_also": [
+    "threshold-ratio"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gain-reduction",
+   "term_fr": "Réduction de gain",
+   "term_en": "Gain reduction (GR)",
+   "domain": "dynamics-eq-effects",
+   "definition": "Atténuation appliquée à un instant donné par un compresseur ou une porte, affichée en dB sur un vumètre GR.",
+   "see_also": [
+    "compressor"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hard-knee",
+   "term_fr": "Coude dur",
+   "term_en": "Hard knee",
+   "domain": "dynamics-eq-effects",
+   "definition": "Courbe où la compression démarre net au seuil.",
+   "see_also": [
+    "knee"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "soft-knee",
+   "term_fr": "Coude doux (OverEasy)",
+   "term_en": "Soft knee",
+   "domain": "dynamics-eq-effects",
+   "definition": "Courbe où la compression commence progressivement avant le seuil et n'atteint le ratio réglé qu'au-dessus ; OverEasy est le nom dbx.",
+   "see_also": [
+    "knee"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "attack-time",
+   "term_fr": "Temps d'attaque",
+   "term_en": "Attack time",
+   "domain": "dynamics-eq-effects",
+   "definition": "Temps que met un processeur de dynamique à agir après le franchissement du seuil.",
+   "see_also": [
+    "attack-release"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "release-time",
+   "term_fr": "Temps de rétablissement (release)",
+   "term_en": "Release time",
+   "domain": "dynamics-eq-effects",
+   "definition": "Temps que met le gain à revenir à sa valeur initiale quand le signal repasse sous le seuil ; « temps de rétablissement » dans le manuel français dbx.",
+   "see_also": [
+    "attack-release"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
+     "publisher": "dbx Professional Products (Harman) — 166xs mode d'emploi (FR)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "program-dependent-release",
+   "term_fr": "Rétablissement dépendant du programme",
+   "term_en": "Program-dependent release",
+   "domain": "dynamics-eq-effects",
+   "definition": "Temps de rétablissement qui varie selon le signal et la réduction précédente (mode AUTO dbx, cellule optique T4 de l'LA-2A, AUTO à deux étages du SSL Bus).",
+   "see_also": [
+    "attack-release"
+   ],
+   "sources": [
+    {
+     "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+     "publisher": "Universal Audio — Teletronix LA-2A manual (PDF hébergé par Adorama)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "makeup-gain",
+   "term_fr": "Gain de compensation",
+   "term_en": "Makeup gain",
+   "domain": "dynamics-eq-effects",
+   "definition": "Gain fixe ajouté en sortie de compresseur pour rattraper la réduction de niveau.",
+   "see_also": [
+    "makeup-gain"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "all-buttons-mode",
+   "term_fr": "Mode « All-Button »",
+   "term_en": "All-buttons mode",
+   "domain": "dynamics-eq-effects",
+   "definition": "Sur le 1176LN, les quatre boutons de ratio enfoncés ensemble : compression extrême avec forte distorsion, utilisée sur batterie ou micros d'ambiance.",
+   "see_also": [
+    "compressor"
+   ],
+   "sources": [
+    {
+     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "brickwall-limiter",
+   "term_fr": "Limiteur brickwall",
+   "term_en": "Brickwall limiter",
+   "domain": "dynamics-eq-effects",
+   "definition": "Limiteur à ratio 20:1 à ∞:1 et attaque très rapide, qui vise à ne jamais laisser passer le seuil ; surtout un dispositif de sécurité.",
+   "see_also": [
+    "true-peak-limiting",
+    "limiter"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "inter-sample-peak",
+   "term_fr": "Crête inter-échantillons",
+   "term_en": "Inter-sample peak",
+   "domain": "dynamics-eq-effects",
+   "definition": "Crête de la forme d'onde reconstruite située entre deux échantillons et plus haute qu'eux ; elle peut écrêter au convertisseur N/A ou après encodage MP3.",
+   "see_also": [
+    "true-peak-limiting",
+    "true-peak"
+   ],
+   "sources": [
+    {
+     "url": "https://www.fabfilter.com/help/pro-l/using/truepeaklimiting",
+     "publisher": "FabFilter — Pro-L 2 help: True peak limiting",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lookahead",
+   "term_fr": "Anticipation (lookahead)",
+   "term_en": "Lookahead",
+   "domain": "dynamics-eq-effects",
+   "definition": "Retard du signal audio permettant au détecteur de voir arriver les crêtes et de réduire le gain à temps ; ajoute de la latence.",
+   "see_also": [
+    "true-peak-limiting"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.fabfilter.com/help/pro-l/using/advancedsettings",
+     "publisher": "FabFilter — Pro-L 2 help: Advanced settings",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rms-detection",
+   "term_fr": "Détection RMS",
+   "term_en": "RMS detection",
+   "domain": "dynamics-eq-effects",
+   "definition": "Mesure du niveau par sa valeur efficace (énergie), plus proche de la sonie perçue que la détection crête.",
+   "see_also": [
+    "level-detection-peak-rms"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gate-hold",
+   "term_fr": "Maintien (hold)",
+   "term_en": "Hold",
+   "domain": "dynamics-eq-effects",
+   "definition": "Durée pendant laquelle une porte reste ouverte après le passage du signal sous le seuil (2 ms à 2 s sur le Drawmer DS201).",
+   "see_also": [
+    "noise-gate"
+   ],
+   "sources": [
+    {
+     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gate-range",
+   "term_fr": "Plage d'atténuation (range)",
+   "term_en": "Range",
+   "domain": "dynamics-eq-effects",
+   "definition": "Atténuation appliquée quand la porte est fermée (0 à 90 dB sur le DS201) ; une valeur partielle atténue sans couper.",
+   "see_also": [
+    "noise-gate"
+   ],
+   "sources": [
+    {
+     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gate-decay",
+   "term_fr": "Décroissance (decay)",
+   "term_en": "Decay",
+   "domain": "dynamics-eq-effects",
+   "definition": "Vitesse de fermeture d'une porte après le temps de hold (2 ms à 4 s sur le DS201) ; équivalent du release.",
+   "see_also": [
+    "noise-gate"
+   ],
+   "sources": [
+    {
+     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gate-hysteresis",
+   "term_fr": "Hystérésis",
+   "term_en": "Hysteresis",
+   "domain": "dynamics-eq-effects",
+   "definition": "Écart entre seuil d'ouverture et seuil de fermeture d'une porte (fermeture quelques dB plus bas), pour éviter le battement.",
+   "see_also": [
+    "noise-gate"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Noise_gate",
+     "publisher": "Wikipedia — Noise gate",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gate-chattering",
+   "term_fr": "Battement de porte (chattering)",
+   "term_en": "Chattering",
+   "domain": "dynamics-eq-effects",
+   "definition": "Ouvertures et fermetures très rapides d'une porte sur un signal proche du seuil ou un son grave tenu.",
+   "see_also": [
+    "noise-gate"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Noise_gate",
+     "publisher": "Wikipedia — Noise gate",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "key-input",
+   "term_fr": "Entrée de clé (key)",
+   "term_en": "Key input",
+   "domain": "dynamics-eq-effects",
+   "definition": "Entrée externe qui pilote une porte ou un compresseur avec un autre signal que celui traité.",
+   "see_also": [
+    "sidechain"
+   ],
+   "sources": [
+    {
+     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Noise_gate",
+     "publisher": "Wikipedia — Noise gate",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "key-filters",
+   "term_fr": "Filtres de clé",
+   "term_en": "Key filters",
+   "domain": "dynamics-eq-effects",
+   "definition": "Filtres passe-haut et passe-bas placés dans la détection d'une porte pour qu'elle ne réagisse qu'à une bande de fréquences (DS201 : 25 Hz–4 kHz et 250 Hz–35 kHz).",
+   "see_also": [
+    "sidechain",
+    "noise-gate"
+   ],
+   "sources": [
+    {
+     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "key-listen",
+   "term_fr": "Écoute de clé (Key Listen)",
+   "term_en": "Key listen",
+   "domain": "dynamics-eq-effects",
+   "definition": "Position qui envoie en sortie le signal de clé filtré pour régler les filtres de clé à l'oreille.",
+   "see_also": [
+    "sidechain"
+   ],
+   "sources": [
+    {
+     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sidechain-insert",
+   "term_fr": "Insert de side-chain",
+   "term_en": "Sidechain insert",
+   "domain": "dynamics-eq-effects",
+   "definition": "Point d'insertion dans le chemin de détection (dbx 166xs : jack TRS, bague = départ, pointe = retour).",
+   "see_also": [
+    "sidechain"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ducking",
+   "term_fr": "Ducking",
+   "term_en": "Ducking",
+   "domain": "dynamics-eq-effects",
+   "definition": "Baisse automatique d'un signal (musique) pilotée par un autre (voix) via le side-chain.",
+   "see_also": [
+    "ducking",
+    "sidechain"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "expander",
+   "term_fr": "Expandeur",
+   "term_en": "Expander",
+   "domain": "dynamics-eq-effects",
+   "definition": "Processeur qui accroît l'écart de niveau sous le seuil ; le 166xs a un expandeur/porte à ratio fixe d'environ 10:1.",
+   "see_also": [
+    "downward-expander"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "de-esser",
+   "term_fr": "De-esser",
+   "term_en": "De-esser",
+   "domain": "dynamics-eq-effects",
+   "definition": "Compresseur rendu sensible à la bande des sifflantes, souvent par un égaliseur dans le side-chain.",
+   "see_also": [
+    "de-esser"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sibilance",
+   "term_fr": "Sifflantes",
+   "term_en": "Sibilance",
+   "domain": "dynamics-eq-effects",
+   "definition": "Consonnes à forte énergie aiguë (« s », « ch ») ; dbx les situe généralement entre 4 et 6 kHz.",
+   "see_also": [
+    "de-esser"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
+     "publisher": "dbx Professional Products (Harman) — 166xs mode d'emploi (FR)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "parallel-compression",
+   "term_fr": "Compression parallèle (New York)",
+   "term_en": "Parallel compression",
+   "domain": "dynamics-eq-effects",
+   "definition": "Mélange d'un signal fortement compressé avec le signal sec.",
+   "see_also": [
+    "parallel-compression"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "multiband-compressor",
+   "term_fr": "Compresseur multibande",
+   "term_en": "Multiband compressor",
+   "domain": "dynamics-eq-effects",
+   "definition": "Compresseur qui traite séparément plusieurs bandes de fréquences puis les recombine.",
+   "see_also": [
+    "multiband-compression"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pumping",
+   "term_fr": "Pompage",
+   "term_en": "Pumping",
+   "domain": "dynamics-eq-effects",
+   "definition": "Variation audible du niveau du mix ou du bruit de fond au rythme des crêtes qui déclenchent la compression.",
+   "see_also": [
+    "attack-release"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
+     "publisher": "dbx Professional Products (Harman) — 166xs mode d'emploi (FR)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "bell-filter",
+   "term_fr": "Filtre en cloche",
+   "term_en": "Bell (peaking) filter",
+   "domain": "dynamics-eq-effects",
+   "definition": "Bande d'égaliseur qui crée une bosse ou un creux symétrique autour d'une fréquence centrale.",
+   "see_also": [
+    "equalizer-parametric"
+   ],
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "shelf-filter",
+   "term_fr": "Filtre en plateau",
+   "term_en": "Shelving filter",
+   "domain": "dynamics-eq-effects",
+   "definition": "Bande qui décale d'un gain fixe tout le spectre au-dessus ou au-dessous d'une fréquence de transition.",
+   "see_also": [
+    "shelving-equalizer"
+   ],
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "proportional-q",
+   "term_fr": "Q proportionnel",
+   "term_en": "Proportional Q",
+   "domain": "dynamics-eq-effects",
+   "definition": "Comportement où la bande d'un égaliseur se rétrécit quand le gain augmente (API 550A).",
+   "see_also": [
+    "equalizer-parametric",
+    "q-factor-bandwidth"
+   ],
+   "sources": [
+    {
+     "url": "https://apiaudio.com/docs/brochures/br550a.pdf",
+     "publisher": "Automated Processes Inc. (API) — 550A brochure",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q-factor",
+   "term_fr": "Facteur Q",
+   "term_en": "Q factor",
+   "domain": "dynamics-eq-effects",
+   "definition": "Rapport fréquence centrale / largeur de bande ; Q élevé = bande étroite (1 octave ≈ Q 1,41).",
+   "see_also": [
+    "q-factor-bandwidth"
+   ],
+   "sources": [
+    {
+     "url": "http://www.sengpielaudio.com/calculator-bandwidth.htm",
+     "publisher": "sengpielaudio (E. Sengpiel) — Bandwidth / Q factor calculator",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "university",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "third-octave",
+   "term_fr": "Tiers d'octave",
+   "term_en": "One-third octave",
+   "domain": "dynamics-eq-effects",
+   "definition": "Espacement des bandes d'un égaliseur graphique 31 bandes, sur les fréquences normalisées ISO.",
+   "see_also": [
+    "graphic-equalizer"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx215s_131s_231s_ownersmanualpdf--3",
+     "publisher": "dbx Professional Products (Harman) — 2-Series Graphic Equalizers (215s/131s/231s) manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "low-cut-filter",
+   "term_fr": "Coupe-bas",
+   "term_en": "Low cut",
+   "domain": "dynamics-eq-effects",
+   "definition": "Autre nom du filtre passe-haut.",
+   "see_also": [
+    "high-pass-filter"
+   ],
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
+     "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "low-pass-filter",
+   "term_fr": "Filtre passe-bas (coupe-haut)",
+   "term_en": "Low-pass filter (high cut)",
+   "domain": "dynamics-eq-effects",
+   "definition": "Filtre qui laisse passer le grave et atténue au-dessus d'une fréquence de coupure.",
+   "see_also": [
+    "filter-slope"
+   ],
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
+     "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rumble-filter",
+   "term_fr": "Filtre anti-grondement",
+   "term_en": "Rumble filter",
+   "domain": "dynamics-eq-effects",
+   "definition": "Passe-haut raide (12 ou 18 dB/oct) coupant sous 100 Hz (40, 60 ou 80 Hz) contre les vibrations et bruits subsoniques.",
+   "see_also": [
+    "high-pass-filter"
+   ],
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/sound-advice/q-will-mics-high-pass-filter-counter-proximity-effect",
+     "publisher": "Sound On Sound — H. Robjohns, « Q. Will a mic's high-pass filter counter the proximity effect? » (2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "filter-slope",
+   "term_fr": "Pente (dB/octave)",
+   "term_en": "Slope",
+   "domain": "dynamics-eq-effects",
+   "definition": "Atténuation par octave d'un filtre au-delà de sa coupure, multiple de 6 dB/oct.",
+   "see_also": [
+    "filter-slope"
+   ],
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
+     "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "linear-phase",
+   "term_fr": "Phase linéaire",
+   "term_en": "Linear phase",
+   "domain": "dynamics-eq-effects",
+   "definition": "Traitement qui modifie l'amplitude sans modifier la phase, au prix d'une latence et d'un possible pré-écho.",
+   "see_also": [
+    "linear-phase-eq"
+   ],
+   "sources": [
+    {
+     "url": "https://www.fabfilter.com/help/pro-q/using/processingmode",
+     "publisher": "FabFilter — Pro-Q help: Processing mode",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pre-ringing",
+   "term_fr": "Pré-écho (pre-ring)",
+   "term_en": "Pre-ringing",
+   "domain": "dynamics-eq-effects",
+   "definition": "Énergie qui apparaît avant une transitoire avec un filtre à phase linéaire, pouvant adoucir l'attaque d'une grosse caisse.",
+   "see_also": [
+    "linear-phase-eq"
+   ],
+   "sources": [
+    {
+     "url": "https://www.fabfilter.com/help/pro-q/using/processingmode",
+     "publisher": "FabFilter — Pro-Q help: Processing mode",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "reverb-pre-delay",
+   "term_fr": "Pré-délai",
+   "term_en": "Pre-delay",
+   "domain": "dynamics-eq-effects",
+   "definition": "Temps entre le signal d'entrée et le début de la réverbération (0–500 ms sur le Bricasti M7) ; sépare la réverbération du son sec.",
+   "see_also": [
+    "reverb"
+   ],
+   "sources": [
+    {
+     "url": "http://www.bricasti.com/images/M7.pdf",
+     "publisher": "Bricasti Design — M7 Stereo Reverb Processor manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "reverb-decay-time",
+   "term_fr": "Temps de réverbération (réglage)",
+   "term_en": "Reverb time / decay",
+   "domain": "dynamics-eq-effects",
+   "definition": "Durée de la queue de réverbération réglée sur un processeur (M7 : 0,1–30 s pour les médiums ; MidRT chez Lexicon).",
+   "see_also": [
+    "reverb",
+    "reverberation-time-rt60"
+   ],
+   "sources": [
+    {
+     "url": "http://www.bricasti.com/images/M7.pdf",
+     "publisher": "Bricasti Design — M7 Stereo Reverb Processor manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "early-reflections-reverb",
+   "term_fr": "Réflexions précoces",
+   "term_en": "Early reflections",
+   "domain": "dynamics-eq-effects",
+   "definition": "Premières réflexions après le son direct (dans les 15 ms selon l'EBU) ; les réverbérations en dosent l'équilibre avec la queue.",
+   "see_also": [
+    "reverb"
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+     "publisher": "EBU — Tech 3276 (cité dans knowledge-base/fundamentals/13)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "http://www.bricasti.com/images/M7.pdf",
+     "publisher": "Bricasti Design — M7 Stereo Reverb Processor manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "reverb-diffusion",
+   "term_fr": "Diffusion",
+   "term_en": "Diffusion",
+   "domain": "dynamics-eq-effects",
+   "definition": "Étalement (lissage) initial du signal entrant dans une réverbération ou un délai, qui adoucit les transitoires.",
+   "see_also": [
+    "reverb"
+   ],
+   "sources": [
+    {
+     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "wet-dry-mix",
+   "term_fr": "Mélange effet/sec (wet/dry)",
+   "term_en": "Wet/dry mix",
+   "domain": "dynamics-eq-effects",
+   "definition": "Proportion de signal traité et non traité en sortie d'un effet ; 100 % effet en départ/retour.",
+   "see_also": [
+    "insert-vs-send-effects"
+   ],
+   "sources": [
+    {
+     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
+     "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "delay-feedback",
+   "term_fr": "Réinjection (feedback)",
+   "term_en": "Feedback",
+   "domain": "dynamics-eq-effects",
+   "definition": "Part de la sortie d'un délai renvoyée à son entrée pour créer des répétitions.",
+   "see_also": [
+    "delay-effect"
+   ],
+   "sources": [
+    {
+     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tap-tempo",
+   "term_fr": "Tap tempo",
+   "term_en": "Tap tempo",
+   "domain": "dynamics-eq-effects",
+   "definition": "Bouton frappé au moins deux fois en rythme pour fixer le tempo des délais et effets modulés.",
+   "see_also": [
+    "delay-effect"
+   ],
+   "sources": [
+    {
+     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "chorus",
+   "term_fr": "Chorus",
+   "term_en": "Chorus",
+   "domain": "dynamics-eq-effects",
+   "definition": "Effet de voix retardées modulées indépendamment qui épaissit le son.",
+   "see_also": [
+    "modulation-effects"
+   ],
+   "sources": [
+    {
+     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "flanger",
+   "term_fr": "Flanger",
+   "term_en": "Flanger",
+   "domain": "dynamics-eq-effects",
+   "definition": "Effet de voix retardées appariées à intervalles proches dont le mouvement produit un filtrage en peigne.",
+   "see_also": [
+    "modulation-effects",
+    "comb-filtering"
+   ],
+   "sources": [
+    {
+     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "effect-return",
+   "term_fr": "Retour d'effet",
+   "term_en": "Effect return",
+   "domain": "dynamics-eq-effects",
+   "definition": "Entrée de console qui récupère la sortie d'un effet alimenté par un départ, panoramiquée gauche/droite en stéréo.",
+   "see_also": [
+    "insert-vs-send-effects",
+    "aux-send"
+   ],
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
+     "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Définitions Rane Pro Audio Reference",
+   "searched": "URL legacy ranecommercial 404"
+  }
+ ]
+}

@@ -1,0 +1,685 @@
+{
+  "entity": "procedure",
+  "domain": "studio-recording",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "recording-session-setup",
+      "name_fr": "Préparer une session d'enregistrement",
+      "name_en": "Recording session setup",
+      "domain": "studio-recording",
+      "context": "Avant l'arrivée des musiciens : créer la session dans la STAN, fixer le format, nommer les pistes et vérifier la chaîne micro → préampli → interface.",
+      "duration_min": 60,
+      "equipment_ids": [
+        "rme-fireface-ufx-iii",
+        "cockos-reaper",
+        "focusrite-isa-one",
+        "neumann-u87-ai"
+      ],
+      "concept_ids": [
+        "recording-session",
+        "session-sample-rate-choice",
+        "session-file-naming",
+        "track-sheet",
+        "gain-staging"
+      ],
+      "rule_ids": [
+        "session-sample-rate-mismatch",
+        "record-peak-clipping"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Livrable connu (client, label, image)"
+          ],
+          "action": "Choisir la fréquence et la résolution selon le livrable (48 kHz pour l'image, 44,1 ou plus pour la musique, 24 bits) et les noter sur la fiche de pistes.",
+          "expected_result": "Format décidé et écrit avant toute prise.",
+          "typical_mistakes": [
+            "Laisser le format par défaut de la STAN sans vérifier le livrable"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Créer la session dans un dossier dédié avec l'option de copie de tous les médias dans le dossier du projet, et un nom conforme à la convention (Artiste_Titre_…_48k24_AAAAMMJJ).",
+          "expected_result": "Un dossier projet unique contient session et audio.",
+          "typical_mistakes": [
+            "Session enregistrée sur le bureau, médias éparpillés"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Câblage numérique terminé"
+          ],
+          "action": "Régler l'interface et toutes les machines numériques à la même fréquence, avec une seule horloge maître.",
+          "expected_result": "Aucun voyant de synchronisation en défaut, pas de clics.",
+          "typical_mistakes": [
+            "Interface à 44,1 kHz alors que la session est à 48 kHz"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Créer et nommer les pistes selon la fiche (une source par piste), affecter les entrées.",
+          "expected_result": "Chaque piste porte le nom de la source et reçoit la bonne entrée.",
+          "typical_mistakes": [
+            "Pistes « Audio 1, Audio 2 » qui donneront des fichiers anonymes"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Musicien installé"
+          ],
+          "action": "Faire jouer chaque source au plus fort de la partie et régler le gain du préampli pour garder une marge sous 0 dBFS (référence d'alignement EBU R 68 à −18 dBFS).",
+          "expected_result": "Crêtes nettement sous 0 dBFS, bruit de fond faible.",
+          "typical_mistakes": [
+            "Régler le gain sur un couplet calme puis écrêter au refrain"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Enregistrer une prise test, la réécouter et vérifier la présence du fichier dans le dossier du projet.",
+          "expected_result": "Fichier lisible, bien nommé, au bon format.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V avant de brancher ou débrancher un micro statique",
+        "Baisser les casques avant d'ouvrir les envois"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/publications/r068",
+          "publisher": "EBU — R 68 Alignment level in digital audio production equipment and recorders",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME — Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "cue-mix-setup",
+      "name_fr": "Installer les mixes casque",
+      "name_en": "Setting up cue mixes",
+      "domain": "studio-recording",
+      "context": "Fournir à chaque musicien un retour casque indépendant du mix régie, sans latence gênante, avec l'ordre.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "rme-fireface-ufx-iii",
+        "behringer-ha400",
+        "presonus-hp4",
+        "beyerdynamic-dt-770-pro"
+      ],
+      "concept_ids": [
+        "cue-mix",
+        "direct-monitoring",
+        "monitoring-latency",
+        "talkback",
+        "pre-post-fader"
+      ],
+      "rule_ids": [
+        "cue-send-post-fader",
+        "monitoring-latency-excessive"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Décider le chemin d'écoute : mixeur DSP de l'interface (écoute directe) ou envois de la STAN avec un petit tampon.",
+          "expected_result": "Chemin choisi ; si écoute directe, l'écoute d'entrée de la STAN est coupée.",
+          "typical_mistakes": [
+            "Écoute directe et écoute logicielle actives en même temps : le musicien s'entend deux fois"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Sorties casque ou ampli casque câblés"
+          ],
+          "action": "Créer un sous-mix par casque (dans TotalMix FX, ou une piste « Headphone Mix » qui reçoit des envois et sort sur une paire de sorties dédiée, sans envoi au master).",
+          "expected_result": "Chaque sortie casque a son mix.",
+          "typical_mistakes": [
+            "Envoyer le master régie au casque : chaque mouvement de fader change le retour du musicien"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Régler les envois en pré-fader.",
+          "expected_result": "Le retour ne bouge pas quand l'ingénieur touche aux faders.",
+          "typical_mistakes": [
+            "Envois post-fader hérités d'un preset d'effets"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Configurer l'ordre : choisir l'entrée du micro de régie et le dim appliqué aux casques, puis tester.",
+          "expected_result": "Le musicien entend l'ingénieur clairement, le mix baisse pendant l'ordre.",
+          "typical_mistakes": [
+            "Ordre resté enclenché pendant la prise"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Monter les niveaux avec le musicien à volume modéré et ajuster selon ses demandes (plus de clic, plus de voix…).",
+          "expected_result": "Le musicien valide son mix ; pas d'écho dans le casque.",
+          "typical_mistakes": [
+            "Tampon trop grand en écoute logicielle : écho au-delà d'environ 10 ms"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Démarrer avec les volumes casque baissés pour protéger l'audition"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME — Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Aux-send",
+          "publisher": "Wikipedia — Aux-send",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "vocal-overdub-session",
+      "name_fr": "Session d'overdub voix",
+      "name_en": "Vocal overdub session",
+      "domain": "studio-recording",
+      "context": "Le chanteur enregistre sa voix en cabine sur des pistes déjà enregistrées ; on punch les phrases à reprendre puis on compile.",
+      "duration_min": 120,
+      "equipment_ids": [
+        "neumann-u87-ai",
+        "focusrite-isa-one",
+        "avid-hd-io",
+        "avid-pro-tools",
+        "beyerdynamic-dt-770-pro",
+        "stedman-proscreen-xl"
+      ],
+      "concept_ids": [
+        "overdub",
+        "punch-in",
+        "take",
+        "comping",
+        "consolidation",
+        "proximity-effect"
+      ],
+      "rule_ids": [
+        "record-peak-clipping",
+        "monitoring-latency-excessive"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Cabine prête, casque en place"
+          ],
+          "action": "Placer le micro en frontal rapproché à environ 10 cm avec un filtre anti-pop, puis ajuster entre 5 et 15 cm pendant le filage.",
+          "expected_result": "Voix proche, plosives maîtrisées, grave contrôlé (effet de proximité).",
+          "typical_mistakes": [
+            "Pas d'anti-pop en placement rapproché"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Régler le gain sur la phrase la plus forte et vérifier le mix casque et l'ordre.",
+          "expected_result": "Crêtes sous 0 dBFS avec marge ; le chanteur entend bien sa voix.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Enregistrer plusieurs prises complètes ; annoncer et noter chaque numéro de prise.",
+          "expected_result": "Plusieurs prises superposées, annotées.",
+          "typical_mistakes": [
+            "Écraser une prise en mode destructif"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Points d'entrée et sortie posés entre deux phrases"
+          ],
+          "action": "Pour corriger une phrase, régler les points de punch-in/out et un pré-roll (par exemple deux mesures), en mode non destructif.",
+          "expected_result": "La phrase est reprise ; l'original reste disponible comme prise.",
+          "typical_mistakes": [
+            "Point de punch posé au milieu d'un mot"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Retouches des prises sources terminées"
+          ],
+          "action": "Construire la comp passage par passage, poser des fondus aux raccords, sauvegarder la comp.",
+          "expected_result": "Comp fluide, sans clic aux raccords.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Consolider la comp en un fichier continu partant du début du morceau et le nommer.",
+          "expected_result": "Un seul fichier « LdVoc_Comp » prêt pour le mixage.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Volume casque modéré : le chanteur l'écoute longtemps à faible distance"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/",
+          "publisher": "DPA Microphones — How to mic vocals in the recording studio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "podcast-multi-mic-setup",
+      "name_fr": "Installer un podcast à plusieurs micros",
+      "name_en": "Multi-mic podcast setup",
+      "domain": "studio-recording",
+      "context": "Un animateur et des invités autour d'une table : un micro dynamique et une piste par voix, un casque par personne.",
+      "duration_min": 40,
+      "equipment_ids": [
+        "shure-sm7b",
+        "sound-devices-mixpre-6-ii",
+        "presonus-hp4",
+        "beyerdynamic-dt-770-pro"
+      ],
+      "concept_ids": [
+        "podcast-recording",
+        "three-to-one-rule",
+        "dynamic-microphone",
+        "gain-staging"
+      ],
+      "rule_ids": [
+        "record-peak-clipping"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Choisir la pièce la plus calme, avec des surfaces souples, et orienter les micros loin des bruits (ventilation, fenêtre).",
+          "expected_result": "Bruit de fond faible à l'écoute d'un enregistrement d'essai.",
+          "typical_mistakes": [
+            "Table nue et murs durs : réflexions"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Installer un micro par personne, à 3–6 pouces (≈ 8–15 cm) de la bouche pour un dynamique, et espacer les micros d'au moins trois fois cette distance.",
+          "expected_result": "Chaque voix domine nettement son micro.",
+          "typical_mistakes": [
+            "Micros trop rapprochés : repisse et filtrage en peigne"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Affecter chaque micro à une piste séparée (ISO) de l'enregistreur.",
+          "expected_result": "Une piste par intervenant.",
+          "typical_mistakes": [
+            "Tout enregistrer sur une piste stéréo mixée"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Distribuer le casque fermé à chacun et régler le volume.",
+          "expected_result": "Chacun s'entend sans larsen.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Régler les gains de façon prudente sur la voix la plus forte de chacun, demander de garder la même distance au micro.",
+          "expected_result": "Niveaux homogènes sans écrêtage.",
+          "typical_mistakes": [
+            "Intervenant qui recule et avance : niveau instable"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Enregistrer 30 secondes de test, réécouter, puis lancer l'émission.",
+          "expected_result": "Test validé.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Volumes casque bas au départ"
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
+          "publisher": "Shure — How to Start a Podcast: Recording an Episode",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "mix-session-stems-export",
+      "name_fr": "Préparer la livraison du mix et des stems",
+      "name_en": "Preparing mix and stems export",
+      "domain": "studio-recording",
+      "context": "Fin de mixage : imprimer le mix master, ses versions et le jeu de stems demandé par le label.",
+      "duration_min": 90,
+      "equipment_ids": [
+        "avid-pro-tools",
+        "cockos-reaper",
+        "steinberg-nuendo"
+      ],
+      "concept_ids": [
+        "mixdown",
+        "mix-stem-delivery",
+        "session-file-naming",
+        "sidechain"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Vérifier la liste des livrables avec le client (versions et stems).",
+          "expected_result": "Liste écrite et validée.",
+          "typical_mistakes": [
+            "Supposer qu'un jeu de stems est inclus sans l'avoir budgété"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Mix approuvé"
+          ],
+          "action": "Imprimer le mix master puis les versions standard : Vocal Up, Instrumental, No Lead Vocal.",
+          "expected_result": "Quatre fichiers de mix.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Si un compresseur de bus est utilisé : imprimer un « key mix » sans traitement de bus et l'envoyer au sidechain du compresseur, sans l'assigner à la sortie stéréo.",
+          "expected_result": "Le compresseur de bus réagit pareil pour chaque stem.",
+          "typical_mistakes": [
+            "Stems dont la somme ne ressemble pas au mix"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Imprimer chaque stem (muter tout sauf le groupe et ses retours d'effets), même début et même fin pour tous.",
+          "expected_result": "Stems alignés qui retombent en phase à l'import.",
+          "typical_mistakes": [
+            "Stems coupés au premier son, impossibles à réaligner"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Nommer chaque fichier selon la convention (ex. AI_Titre_Drums_MI_01_48k24.wav) et ranger dans Mixes / Stems.",
+          "expected_result": "Noms uniques, sans espaces, avec fréquence et résolution.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "session-backup-archive",
+      "name_fr": "Sauvegarder et archiver une session",
+      "name_en": "Session backup and archive",
+      "domain": "studio-recording",
+      "context": "En fin de journée puis en fin de projet : rassembler les médias, documenter, faire trois copies vérifiées.",
+      "duration_min": 45,
+      "equipment_ids": [
+        "cockos-reaper",
+        "avid-pro-tools"
+      ],
+      "concept_ids": [
+        "session-backup-321",
+        "consolidation",
+        "recording-metadata",
+        "broadcast-wave-metadata"
+      ],
+      "rule_ids": [
+        "backup-3-2-1-incomplete"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Rassembler tous les médias dans le dossier du projet (copie de tous les médias / « save copy »), y compris les fichiers importés.",
+          "expected_result": "La session s'ouvre sur une autre machine sans fichier manquant.",
+          "typical_mistakes": [
+            "Fichiers d'échantillons restés dans une bibliothèque externe"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Ranger la documentation (fiches de pistes, notes, photos de micros, crédits) dans le dossier Documentation.",
+          "expected_result": "Dossier Documentation complet.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Projet terminé"
+          ],
+          "action": "En fin de projet, consolider chaque piste en BWF avec le même départ.",
+          "expected_result": "Un fichier par piste, alignés.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Faire deux copies de sécurité sur deux types de supports différents, dont une conservée hors site.",
+          "expected_result": "Trois exemplaires au total (règle 3-2-1).",
+          "typical_mistakes": [
+            "Deux copies sur le même disque interne"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Vérifier chaque copie (ouverture, sommes de contrôle) et étiqueter les supports.",
+          "expected_result": "Archives vérifiées et identifiées.",
+          "typical_mistakes": [
+            "Archive jamais relue"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.cisa.gov/sites/default/files/publications/data_backup_options.pdf",
+          "publisher": "US-CERT / CISA (Carnegie Mellon University, 2012) — Data Backup Options",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Procédure officielle Pro Tools « Save Copy In » et conversion de fréquence à l'import (manuel Avid)",
+      "searched": "avid.com / kb.avid.com : seuls des fils de forum DUC trouvés, non utilisés"
+    },
+    {
+      "what": "Steinberg Cubase/Nuendo : Control Room, talkback, Back up Project",
+      "searched": "steinberg.help redirige vers un PDF de plusieurs centaines de pages, non ouvert"
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "entity": "rule",
+  "domain": "acoustics-psychoacoustics",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "control-room-rt60-out-of-range",
+      "name_fr": "TR de régie hors plage EBU",
+      "name_en": "Control room RT60 out of EBU range",
+      "domain": "acoustics-psychoacoustics",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "room",
+      "condition": {
+        "all": [
+          {
+            "path": "room.zones.kind",
+            "op": "includes",
+            "value": "control-room"
+          },
+          {
+            "any": [
+              {
+                "path": "room.rt60_tm_s",
+                "op": "lt",
+                "value": 0.2
+              },
+              {
+                "path": "room.rt60_tm_s",
+                "op": "gt",
+                "value": 0.4
+              }
+            ]
+          }
+        ]
+      },
+      "explanation": "L'EBU Tech 3276 demande pour une salle d'écoute un TR nominal Tm (moyenne des tiers d'octave 200 Hz-4 kHz) compris entre 0,2 et 0,4 s.",
+      "fix": "Ajouter ou retirer de l'absorption (calcul de Sabine/Eyring) puis remesurer.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "room.rt60_tm_s"
+      ],
+      "concept_ids": [
+        "reverberation-time-rt60"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "listening-position-too-close-to-walls",
+      "name_fr": "Point d'écoute trop près des murs",
+      "name_en": "Listening position too close to walls",
+      "domain": "acoustics-psychoacoustics",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "room",
+      "condition": {
+        "path": "room.listening_position_min_wall_distance_m",
+        "op": "lt",
+        "value": 1.0
+      },
+      "explanation": "Genelec recommande un point d'écoute à au moins 1 m des murs pour éviter les colorations ; l'EBU demande 1,5 m des murs latéraux et arrière.",
+      "fix": "Avancer le point d'écoute dans la pièce, sur l'axe de symétrie, hors du centre exact.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "room.listening_position_min_wall_distance_m"
+      ],
+      "concept_ids": [
+        "room-modes",
+        "sbir-boundary-interference"
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/monitor-placement",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "monitor-wall-distance-sbir",
+      "name_fr": "Enceinte dans la zone d'annulation SBIR",
+      "name_en": "Monitor in SBIR cancellation zone",
+      "domain": "acoustics-psychoacoustics",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "room",
+      "condition": {
+        "all": [
+          {
+            "path": "room.monitor_rear_wall_distance_m",
+            "op": "gte",
+            "value": 0.6
+          },
+          {
+            "path": "room.monitor_rear_wall_distance_m",
+            "op": "lt",
+            "value": 1.0
+          }
+        ]
+      },
+      "explanation": "Entre 0,6 et 1 m du mur arrière, le creux d'annulation tombe environ entre 86 et 143 Hz (Genelec : 0,7 m → 123 Hz ; 1 m → 86 Hz), en plein dans le grave utile, et l'EQ ne le corrige pas. Genelec conseille < 0,6 m ; l'EBU ≥ 1 m pour une enceinte non encastrée.",
+      "fix": "Rapprocher l'enceinte du mur (< 0,6 m) avec réglage de pièce, ou l'éloigner et traiter le mur arrière, ou encastrer.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "room.monitor_rear_wall_distance_m"
+      ],
+      "concept_ids": [
+        "sbir-boundary-interference",
+        "comb-filtering"
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Aucune règle de connexion vérifiable pour ce domaine",
+      "searched": "Les règles d'acoustique portent sur la salle ; elles demandent des champs room.* absents des templates (rt60_tm_s, distances aux murs)"
+    }
+  ]
+}

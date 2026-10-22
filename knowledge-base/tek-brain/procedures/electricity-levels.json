@@ -1,0 +1,674 @@
+{
+  "entity": "procedure",
+  "domain": "electricity-levels",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "gain-staging-live-input",
+      "name_fr": "Régler le gain d'une entrée en live",
+      "name_en": "Gain-stage a live input",
+      "domain": "electricity-levels",
+      "context": "Pendant la balance, régler le gain d'entrée d'un canal (micro ou DI) pour un rapport signal/bruit maximal sans écrêtage.",
+      "duration_min": 5,
+      "equipment_ids": [
+        "yamaha-ql1",
+        "yamaha-mg10xu",
+        "shure-sm58"
+      ],
+      "concept_ids": [
+        "gain-staging",
+        "headroom",
+        "signal-to-noise-ratio",
+        "mic-level"
+      ],
+      "rule_ids": [
+        "line-level-into-mic-input",
+        "signal-type-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Ligne vérifiée (line check)",
+            "Fader du canal baissé, EQ et dynamique neutres"
+          ],
+          "action": "Mettre le gain d'entrée au minimum, le pad désenclenché sauf source très forte.",
+          "expected_result": "Le canal est prêt sans risque de choc en façade.",
+          "typical_mistakes": [
+            "Régler le gain avec le fader déjà ouvert dans la diffusion"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Musicien en place"
+          ],
+          "action": "Faire jouer ou chanter la source aussi fort que pendant le spectacle (pas un « un, deux » timide).",
+          "expected_result": "Le signal mesuré représente le niveau maximal réel.",
+          "typical_mistakes": [
+            "Caler sur un niveau de test plus faible que le concert, puis saturer au premier refrain"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Monter le gain en écoutant au PFL et en regardant le crêtemètre, jusqu'à ce que le voyant OL s'allume à peine de temps en temps, puis redescendre légèrement pour garder de la marge.",
+          "expected_result": "Le gain est maximal sans écrêtage durable ; tout le gain nécessaire est pris au préampli.",
+          "typical_mistakes": [
+            "Laisser le gain trop bas et compenser au fader ou au master (bruit)",
+            "Ignorer que les voyants OL ne sont pas normalisés"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Gain réglé"
+          ],
+          "action": "Si le gain est au minimum et que l'OL reste allumé, enclencher le pad ou passer sur une entrée ligne.",
+          "expected_result": "Le préampli n'est plus saturé.",
+          "typical_mistakes": [
+            "Baisser le fader pour corriger une saturation d'entrée"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Ouvrir ensuite le fader pour le mix, sans retoucher le gain sauf changement de source.",
+          "expected_result": "Mix au fader, gain stable.",
+          "typical_mistakes": [
+            "Régler le gain d'après la position du fader"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V avant de brancher ou débrancher une source",
+        "Baisser le master avant tout essai à fort niveau"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "publisher": "Yamaha Corporation (MG10XU mode d'emploi FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "sound-system-gain-structure",
+      "name_fr": "Caler la structure de gain d'un système de diffusion",
+      "name_en": "Set a sound system gain structure",
+      "domain": "electricity-levels",
+      "context": "Installation ou montage d'un système console → processeurs → amplis → enceintes passives : régler chaque commande de niveau pour que le signal maximal du système traverse tout sans écrêter.",
+      "duration_min": 45,
+      "equipment_ids": [
+        "yamaha-ql1",
+        "dbx-driverack-pa2",
+        "crown-xls-2502"
+      ],
+      "concept_ids": [
+        "gain-staging",
+        "headroom",
+        "electrical-power",
+        "dbu"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Câblage terminé"
+          ],
+          "action": "Envoyer un signal à travers tout le système avant tout réglage et vérifier l'absence de ronflette ou de buzz.",
+          "expected_result": "Système silencieux et câblage correct.",
+          "typical_mistakes": [
+            "Régler les gains alors qu'une boucle de masse est présente"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Baisser les sensibilités des amplis et éteindre les amplis ; mettre toutes les commandes de niveau au minimum ; neutraliser compresseurs, gates et égaliseurs.",
+          "expected_result": "Point de départ sûr.",
+          "typical_mistakes": [
+            "Laisser un limiteur actif qui fausse le calage"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Générateur ou source connue"
+          ],
+          "action": "Régler la console pour obtenir le signal maximal du système en sortie, sans écrêter l'étage de sortie (voyant OL, oscilloscope ou voltmètre : par exemple +20 dBu ≈ 7,75 V eff.).",
+          "expected_result": "La sortie console délivre son niveau maximal propre ; avec +4 dBu nominal, il reste 16 dB de marge.",
+          "typical_mistakes": [
+            "Se fier aveuglément aux voyants OL, qui ne sont pas normalisés"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Régler chaque appareil intermédiaire pour qu'il laisse passer ce signal maximal sans écrêter, au gain unité si possible (entrée d'abord, puis sortie).",
+          "expected_result": "Aucun étage intermédiaire ne sature ni n'ajoute de gain inutile.",
+          "typical_mistakes": [
+            "Régler la sortie avant l'entrée sur un appareil à deux commandes"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Enceintes fragiles débranchées ou public prévenu",
+            "Protections auditives"
+          ],
+          "action": "Allumer un ampli, puis tourner sa sensibilité jusqu'au début d'écrêtage et s'arrêter : l'ampli atteint sa pleine puissance avec le signal maximal du système. Répéter pour chaque ampli.",
+          "expected_result": "L'ampli ne peut pas écrêter tant que le signal ne dépasse pas le maximum du système.",
+          "typical_mistakes": [
+            "Croire que la commande de l'ampli règle sa puissance : c'est une sensibilité d'entrée"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Signaux de test très forts : protections auditives et prévenir toute l'équipe",
+        "Les sinus et le bruit rose à pleine puissance peuvent détruire des haut-parleurs"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "connect-consumer-source-to-console",
+      "name_fr": "Raccorder une source grand public à une console",
+      "name_en": "Connect a consumer source to a console",
+      "domain": "electricity-levels",
+      "context": "Un ordinateur, un lecteur ou une table DJ à sorties mini-jack ou RCA (−10 dBV, asymétriques) doit alimenter une console de sonorisation.",
+      "duration_min": 10,
+      "equipment_ids": [
+        "playout-pc",
+        "radial-jpc",
+        "radial-prod2",
+        "yamaha-ql1",
+        "yamaha-mg10xu"
+      ],
+      "concept_ids": [
+        "line-level",
+        "dbv",
+        "unbalanced-line",
+        "di-box",
+        "ground-loop"
+      ],
+      "rule_ids": [
+        "consumer-into-pro-level",
+        "line-level-into-mic-input",
+        "ground-loop-risk",
+        "unbalanced-long-run"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Repérer les sorties de la source (mini-jack, RCA, jack)"
+          ],
+          "action": "Identifier le niveau et le type de sortie : grand public asymétrique (−10 dBV ≈ 0,316 V).",
+          "expected_result": "On sait qu'il faudra symétriser et que le niveau est environ 11,8 dB sous +4 dBu.",
+          "typical_mistakes": [
+            "Prendre la sortie casque comme une sortie ligne fixe sans régler son volume"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Si la console est loin (plus de 3 m) ou sur scène, placer une DI stéréo (JPC, ProD2) près de la source et tirer deux liaisons XLR symétriques vers des entrées micro.",
+          "expected_result": "Liaisons longues symétriques, peu sensibles aux parasites.",
+          "typical_mistakes": [
+            "Tirer 20 m de câble RCA jusqu'à la régie"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "DI active type JPC"
+          ],
+          "action": "Activer le +48 V sur les deux entrées qui reçoivent la DI active ; vérifier le ground lift.",
+          "expected_result": "La DI fonctionne ; la masse est isolée.",
+          "typical_mistakes": [
+            "Oublier que la JPC demande le fantôme sur chaque canal"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Mettre la source à un volume fixe proche de son maximum non saturé, puis régler le gain d'entrée console comme pour un micro (pad de la DI si l'OL s'allume gain au minimum).",
+          "expected_result": "Niveau propre, sans saturation ni bruit excessif.",
+          "typical_mistakes": [
+            "Laisser le volume de l'ordinateur bas et monter fortement le gain console"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Écouter au PFL sans signal : vérifier l'absence de ronflette. En cas de ronflette, essayer le ground lift de la DI.",
+          "expected_result": "Pas de ronflette.",
+          "typical_mistakes": [
+            "Supprimer la terre du cordon secteur de l'ordinateur"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Ne jamais supprimer la terre de sécurité d'un appareil pour chasser une ronflette"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jpc/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf",
+          "publisher": "Radial Engineering (JPC manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "connect-instrument-via-di",
+      "name_fr": "Raccorder un instrument par une DI",
+      "name_en": "Connect an instrument through a DI",
+      "domain": "electricity-levels",
+      "context": "Une basse, une guitare électro-acoustique ou un clavier doit être repris à la console depuis la scène.",
+      "duration_min": 5,
+      "equipment_ids": [
+        "radial-jdi",
+        "radial-j48",
+        "behringer-di100",
+        "yamaha-ql1"
+      ],
+      "concept_ids": [
+        "di-box",
+        "instrument-level",
+        "impedance-bridging",
+        "balanced-line"
+      ],
+      "rule_ids": [
+        "instrument-into-line-input",
+        "mic-level-into-line-input"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Instrument et DI sur scène"
+          ],
+          "action": "Choisir la DI : passive (JDI) pour les sources actives et fortes (clavier, basse active), active (J48) pour les micros passifs qui bénéficient d'une entrée très haute impédance.",
+          "expected_result": "DI adaptée à la source.",
+          "typical_mistakes": [
+            "Brancher une basse passive directement dans une entrée ligne 10 kΩ"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Relier l'instrument à l'entrée jack de la DI avec un câble court ; si besoin, renvoyer la sortie THRU vers l'ampli de l'instrument.",
+          "expected_result": "Le musicien garde son ampli ; la console reçoit une copie.",
+          "typical_mistakes": [
+            "Utiliser un câble instrument très long avant la DI (perte d'aigus)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Relier la sortie XLR de la DI à une entrée micro du stagebox ; activer le +48 V si la DI est active.",
+          "expected_result": "Signal symétrique basse impédance au niveau micro.",
+          "typical_mistakes": [
+            "Brancher la sortie de DI sur une entrée ligne (niveau micro)"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Régler le gain d'entrée ; si saturation gain au minimum, enclencher le pad de la DI. En cas de ronflette, essayer le ground lift.",
+          "expected_result": "Signal propre, sans ronflette.",
+          "typical_mistakes": [
+            "Lever la masse par défaut sans raison"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V avant de (dé)brancher la DI active"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jdi/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/j48/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "troubleshoot-ground-loop-hum",
+      "name_fr": "Diagnostiquer une ronflette de boucle de masse",
+      "name_en": "Troubleshoot ground-loop hum",
+      "domain": "electricity-levels",
+      "context": "Une ronflette ou un buzz permanent apparaît dans la diffusion ou l'enregistrement, même sans signal.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "ebtech-hum-eliminator-he-2",
+        "radial-jdi",
+        "radial-js2"
+      ],
+      "concept_ids": [
+        "ground-loop",
+        "mains-hum",
+        "pin-1-problem",
+        "balanced-line",
+        "unbalanced-line"
+      ],
+      "rule_ids": [
+        "ground-loop-risk",
+        "unbalanced-long-run"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Système allumé, sources muettes"
+          ],
+          "action": "Écouter et repérer : le bruit est-il présent sur un seul canal ou partout ? Couper les canaux un par un à la console.",
+          "expected_result": "Le canal ou le groupe d'appareils fautif est isolé.",
+          "typical_mistakes": [
+            "Monter l'EQ ou une porte de bruit pour masquer la ronflette avant de trouver la cause"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Canal fautif identifié"
+          ],
+          "action": "Débrancher les liaisons en amont une par une (hors tension pour les essais de lift) jusqu'à la disparition du bruit.",
+          "expected_result": "La liaison qui ferme la boucle est trouvée.",
+          "typical_mistakes": [
+            "Débrancher sous tension avec l'ampli ouvert"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Vérifier si cette liaison est asymétrique ou mixte (sym ↔ asym) et si les appareils sont alimentés depuis des prises différentes.",
+          "expected_result": "Cause probable confirmée.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Corriger : liaison symétrique bien câblée, isolateur à transformateur ou DI, alimentation depuis la même distribution ; en dernier recours ground lift sur le blindage audio côté récepteur.",
+          "expected_result": "Ronflette supprimée.",
+          "typical_mistakes": [
+            "Couper la terre du cordon secteur ou utiliser un adaptateur sans terre"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Si le bruit persiste sur une entrée précise malgré une liaison symétrique, suspecter un problème de broche 1 de l'appareil et l'isoler par transformateur.",
+          "expected_result": "Appareil fautif documenté.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Les moyens de mise à la terre d'origine doivent rester intacts : ne jamais supprimer la terre de sécurité",
+        "Faire les essais de ground lift hors tension"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note151.html",
+          "publisher": "Rane Corporation (Steve Macatee, RaneNote 151)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
+          "publisher": "Ebtech / Morley (Hum Eliminator manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "alignment-tone-check",
+      "name_fr": "Vérifier l'alignement d'une chaîne avec un ton de référence",
+      "name_en": "Check chain alignment with a reference tone",
+      "domain": "electricity-levels",
+      "context": "Avant un enregistrement ou une liaison broadcast, vérifier qu'un ton d'alignement garde le même niveau d'un bout à l'autre de la chaîne analogique/numérique.",
+      "duration_min": 15,
+      "equipment_ids": [
+        "avid-hd-io",
+        "yamaha-ql1",
+        "rtw-touchmonitor-tm7"
+      ],
+      "concept_ids": [
+        "alignment-level",
+        "dbfs",
+        "dbu",
+        "headroom"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Connaître la norme maison (EBU, SMPTE…)"
+          ],
+          "action": "Générer un sinus à 1 kHz au niveau d'alignement de la norme retenue (en contexte EBU : −18 dBFS en numérique, 0 dBu en analogique).",
+          "expected_result": "Un ton de référence stable est disponible.",
+          "typical_mistakes": [
+            "Supposer que toutes les maisons utilisent la même correspondance dBu/dBFS"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Mesurer le ton à chaque point de la chaîne (sortie console, entrée convertisseur, enregistreur, liaison).",
+          "expected_result": "Le ton lit la même valeur d'alignement partout.",
+          "typical_mistakes": [
+            "Lire un vumètre et un crêtemètre comme s'ils avaient la même échelle"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Écart constaté"
+          ],
+          "action": "Corriger le calibrage de l'appareil fautif (réglage de référence du convertisseur, gain de sortie).",
+          "expected_result": "Chaîne alignée ; la marge prévue au-dessus de l'alignement est disponible partout.",
+          "typical_mistakes": [
+            "Corriger au fader de mix au lieu du calibrage"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+          "publisher": "EBU (R 68-2000)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.645-2-199203-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.645-2)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DBFS",
+          "publisher": "Wikipedia (cites AES17, IEC 61606, EBU R68)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "conflicts"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "steps[0].action",
+          "values": [
+            {
+              "value": "EBU : alignement −18 dBFS (≈ 0 dBu)",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+            },
+            {
+              "value": "SMPTE / post US : −20 dBFS = +4 dBu",
+              "source_url": "https://en.wikipedia.org/wiki/DBFS"
+            }
+          ],
+          "note": "Voir concept alignment-level."
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Procédure fabricant pas à pas pour le gain d'une console numérique (Yamaha/Allen & Heath) au lieu de Rane",
+      "searched": "WebSearch 'Shure insights gain structure' sans résultat fabricant"
+    }
+  ]
+}

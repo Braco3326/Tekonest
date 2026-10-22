@@ -1,0 +1,298 @@
+{
+  "entity": "rule",
+  "domain": "consoles-signal-flow",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "signal-direction-out-to-in",
+      "name_fr": "Sens du signal : une sortie alimente une entrée",
+      "name_en": "Signal direction: output feeds input",
+      "domain": "consoles-signal-flow",
+      "catalog_rule": "R3",
+      "status": "existing",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "any": [
+          {
+            "all": [
+              {
+                "path": "src.port.dir",
+                "op": "eq",
+                "value": "out"
+              },
+              {
+                "path": "dst.port.dir",
+                "op": "eq",
+                "value": "out"
+              }
+            ]
+          },
+          {
+            "all": [
+              {
+                "path": "src.port.dir",
+                "op": "eq",
+                "value": "in"
+              },
+              {
+                "path": "dst.port.dir",
+                "op": "eq",
+                "value": "in"
+              }
+            ]
+          }
+        ]
+      },
+      "explanation": "Miroir de la règle R3 du simulateur : une liaison doit aller d'une sortie vers une entrée ; sortie vers sortie et entrée vers entrée sont refusées, les ports bidirectionnels acceptent les deux. Mackie le dit simplement : les départs sont des sorties, les retours sont des entrées. Relier deux sorties ne transporte pas de signal utile et peut endommager le matériel.",
+      "fix": "Repartir de la source : relier sa sortie à l'entrée de l'appareil suivant (envoi d'insert vers entrée du processeur, sortie du processeur vers retour d'insert).",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "signal-flow",
+        "insert-point"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "insert-send-return-reversed",
+      "name_fr": "Envoi et retour d'insert inversés",
+      "name_en": "Insert send/return reversed",
+      "domain": "consoles-signal-flow",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "any": [
+          {
+            "all": [
+              {
+                "path": "src.port.flags",
+                "op": "includes",
+                "value": "isInsertSend"
+              },
+              {
+                "path": "dst.port.dir",
+                "op": "eq",
+                "value": "out"
+              }
+            ]
+          },
+          {
+            "all": [
+              {
+                "path": "dst.port.flags",
+                "op": "includes",
+                "value": "isInsertReturn"
+              },
+              {
+                "path": "src.port.dir",
+                "op": "eq",
+                "value": "in"
+              }
+            ]
+          }
+        ]
+      },
+      "explanation": "Cas particulier pédagogique de R3 pour les inserts : l'envoi d'insert (pointe du jack TRS chez Mackie, jack du haut d'une baie) est une sortie qui doit aller à l'entrée du processeur ; le retour (bague, jack du bas) est une entrée qui reçoit la sortie du processeur. Les inverser relie deux sorties et deux entrées : la tranche se tait ou le processeur n'est pas dans le chemin.",
+      "fix": "Envoi d'insert vers l'entrée du processeur, sortie du processeur vers le retour d'insert.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isInsertSend",
+        "port.flags:isInsertReturn",
+        "signal:insert-send-return"
+      ],
+      "concept_ids": [
+        "insert-point",
+        "signal-flow"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+          "publisher": "Samson Technologies — S patch plus Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "aux-monitor-send-post-fader",
+      "name_fr": "Retour de scène alimenté en post-fader",
+      "name_en": "Monitor mix fed post-fader",
+      "domain": "consoles-signal-flow",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "device",
+      "condition": {
+        "all": [
+          {
+            "path": "device.controls.monitorBusSendPoint",
+            "op": "eq",
+            "value": "post"
+          }
+        ]
+      },
+      "explanation": "Un bus auxiliaire qui alimente une sortie de retour (port isMonitorOut) devrait être prélevé en pré-fader : en post-fader, chaque mouvement de fader de la façade (et, sur la plupart des consoles à VCA, chaque mouvement de VCA) change le mélange du musicien. Mackie réserve le post aux départs d'effets et le pré aux retours de scène.",
+      "fix": "Passer le bus de retour en pré-fader (ou pré-mute si le retour doit rester actif quand la façade mute la tranche).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.controls:monitorBusSendPoint",
+        "port.flags:isMonitorOut (lien bus aux → port de sortie)"
+      ],
+      "concept_ids": [
+        "pre-post-fader",
+        "aux-send",
+        "vca-dca"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "patchbay-full-normal-split-break",
+      "name_fr": "Prélèvement sur une voie de baie en normalisé complet",
+      "name_en": "Tapping a fully normalled patchbay point",
+      "domain": "consoles-signal-flow",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "device",
+      "condition": {
+        "all": [
+          {
+            "path": "device.normals.mode",
+            "op": "eq",
+            "value": "full"
+          },
+          {
+            "path": "device.normals.topTapOccupied",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "device.normals.bottomTapOccupied",
+            "op": "eq",
+            "value": false
+          }
+        ]
+      },
+      "explanation": "En mode normalisé, une fiche dans le jack du haut casse la normale : la sortie part dans le cordon et n'arrive plus à l'entrée du bas. Si l'on voulait seulement prélever une copie (par exemple l'envoi d'insert vers un enregistreur), l'entrée devient muette. Le mode semi-normalisé laisse la liaison intacte quand on se branche en haut et c'est le mode conseillé pour les inserts de console.",
+      "fix": "Mettre la voie en semi-normalisé (half-normalled), ou compléter le patch en ramenant un signal dans le jack du bas.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.normals (ADR-0002 : mode full|half par paire)",
+        "device.normals.topTapOccupied (dérivé du graphe)",
+        "device.normals.bottomTapOccupied (dérivé du graphe)"
+      ],
+      "concept_ids": [
+        "patchbay-normalling",
+        "insert-point"
+      ],
+      "sources": [
+        {
+          "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+          "publisher": "Samson Technologies — S patch plus Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://samsontech.com/blog/the-ins-and-outs-of-a-patchbay/",
+          "publisher": "Samson Technologies — The Ins and Outs of a Patchbay (blog)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Règle « insert engagé sans retour = tranche muette » sur console numérique",
+      "searched": "CL V5 RM et SD12 Getting Started : aucun énoncé explicite trouvé ; règle non créée."
+    },
+    {
+      "what": "Règle machine « sortie directe renvoyée dans une tranche routée au master » (double routage)",
+      "searched": "Nécessiterait un modèle de routage interne des consoles absent du catalogue ; non proposée."
+    }
+  ]
+}

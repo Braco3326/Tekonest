@@ -1,0 +1,1187 @@
+{
+  "entity": "glossary",
+  "domain": "acoustics-psychoacoustics",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "sound-pressure-level",
+      "term_fr": "Niveau de pression acoustique",
+      "term_en": "Sound pressure level (SPL)",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Niveau en dB d'une pression acoustique par rapport à 20 µPa : Lp = 20·log10(p/p0).",
+      "see_also": [
+        "sound-pressure"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-soundlevel.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pascal",
+      "term_fr": "Pascal",
+      "term_en": "Pascal (Pa)",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Unité de pression ; 1 Pa de pression acoustique correspond à environ 94 dB SPL.",
+      "see_also": [
+        "sound-pressure"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-soundlevel.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reference-pressure",
+      "term_fr": "Pression de référence",
+      "term_en": "Reference sound pressure",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "p0 = 20 µPa, référence du dB SPL, voisine du seuil d'audition à 1 kHz.",
+      "see_also": [
+        "sound-pressure"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-soundlevel.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hertz",
+      "term_fr": "Hertz",
+      "term_en": "Hertz (Hz)",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Unité de fréquence : un cycle par seconde.",
+      "see_also": [
+        "frequency"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-wavelength.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "period",
+      "term_fr": "Période",
+      "term_en": "Period",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Durée d'un cycle : T = 1/f.",
+      "see_also": [
+        "frequency"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-wavelength.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wavelength",
+      "term_fr": "Longueur d'onde",
+      "term_en": "Wavelength",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Distance parcourue pendant une période, λ = c/f ; environ 34 cm à 1 kHz dans l'air à 20 °C.",
+      "see_also": [
+        "wavelength"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-wavelength.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "celerity",
+      "term_fr": "Célérité",
+      "term_en": "Speed of sound",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Vitesse de propagation du son ; environ 343 m/s dans l'air à 20 °C, fonction de la température.",
+      "see_also": [
+        "speed-of-sound"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-speedsound.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "octave",
+      "term_fr": "Octave",
+      "term_en": "Octave",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Intervalle entre deux fréquences dans un rapport 2 ; les harmoniques 2, 4 et 8 donnent les trois premières octaves.",
+      "see_also": [
+        "harmonics"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-harmonics.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fundamental",
+      "term_fr": "Fondamentale",
+      "term_en": "Fundamental",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Fréquence la plus basse d'un son périodique, 1re harmonique.",
+      "see_also": [
+        "harmonics"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-harmonics.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "overtone",
+      "term_fr": "Partiel supérieur",
+      "term_en": "Overtone",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Composante au-dessus de la fondamentale ; la 2e harmonique est le 1er partiel supérieur.",
+      "see_also": [
+        "harmonics"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-harmonics.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "inharmonic-partial",
+      "term_fr": "Partiel inharmonique",
+      "term_en": "Inharmonic partial",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Partiel dont la fréquence n'est pas un multiple entier de la fondamentale (cloches, percussions).",
+      "see_also": [
+        "harmonics"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-harmonics.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "timbre",
+      "term_fr": "Timbre",
+      "term_en": "Timbre",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Qualité qui distingue deux sons de même hauteur et même niveau, liée aux harmoniques présentes et à leurs niveaux.",
+      "see_also": [
+        "harmonics"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-harmonics.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "free-field",
+      "term_fr": "Champ libre",
+      "term_en": "Free field",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Espace sans réflexions (chambre anéchoïque, plein air dégagé) où la loi de l'inverse du carré s'applique.",
+      "see_also": [
+        "inverse-square-law"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-distance.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "point-source",
+      "term_fr": "Source ponctuelle",
+      "term_en": "Point source",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Source rayonnant une onde sphérique : −6 dB par doublement de distance en champ libre.",
+      "see_also": [
+        "inverse-square-law"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-distance.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line-source",
+      "term_fr": "Source linéaire",
+      "term_en": "Line source",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Source rayonnant une onde cylindrique : environ −3 dB par doublement de distance.",
+      "see_also": [
+        "inverse-square-law"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-distance.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "direct-sound",
+      "term_fr": "Son direct",
+      "term_en": "Direct sound",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Son qui arrive de la source à l'auditeur sans réflexion ; ce qu'on mesurerait en conditions anéchoïques.",
+      "see_also": [
+        "critical-distance",
+        "early-reflections"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverberant-field",
+      "term_fr": "Champ réverbéré",
+      "term_en": "Reverberant field",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Ensemble des réflexions multiples arrivant après les réflexions précoces (au-delà d'environ 15 ms).",
+      "see_also": [
+        "reverberation-time-rt60",
+        "critical-distance"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "early-reflections",
+      "term_fr": "Réflexions précoces",
+      "term_en": "Early reflections",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Réflexions arrivant dans les 15 ms qui suivent le son direct (EBU).",
+      "see_also": [
+        "early-reflections"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rt60",
+      "term_fr": "TR60",
+      "term_en": "RT60",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Temps de décroissance de 60 dB du niveau après l'arrêt de la source.",
+      "see_also": [
+        "reverberation-time-rt60"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Reverberation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "t20-t30",
+      "term_fr": "T20 / T30",
+      "term_en": "T20 / T30",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "TR extrapolé à partir d'une décroissance de 20 dB (×3) ou de 30 dB (×2).",
+      "see_also": [
+        "reverberation-time-rt60"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Reverberation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "interrupted-noise-method",
+      "term_fr": "Méthode du bruit interrompu",
+      "term_en": "Interrupted noise method",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Mesure du TR en coupant brusquement un bruit rose ou blanc et en enregistrant la décroissance.",
+      "see_also": [
+        "reverberation-time-rt60"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Reverberation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sabine-formula",
+      "term_fr": "Formule de Sabine",
+      "term_en": "Sabine formula",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "RT60 = 0,161·V/A (V en m³, A en m²) ; estimation valable surtout pour les salles assez réverbérantes.",
+      "see_also": [
+        "reverberation-time-rt60"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-RT60.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eyring-formula",
+      "term_fr": "Formule d'Eyring",
+      "term_en": "Eyring formula",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "T60 ≈ −0,161·V/(S·ln(1 − a)) ; préférée pour les petites salles très absorbantes, où Sabine surestime le TR.",
+      "see_also": [
+        "reverberation-time-rt60"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Reverberation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "equivalent-absorption-area",
+      "term_fr": "Aire d'absorption équivalente",
+      "term_en": "Equivalent absorption area",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "A = Σ αi·Si, en m² (Sabine).",
+      "see_also": [
+        "reverberation-time-rt60",
+        "absorption-coefficient"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-RT60.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "absorption-coefficient",
+      "term_fr": "Coefficient d'absorption",
+      "term_en": "Absorption coefficient",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Part de l'énergie absorbée par une surface, de 0 à 1, variable avec la fréquence.",
+      "see_also": [
+        "absorption-coefficient"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-RT60Coeff.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "porous-absorber",
+      "term_fr": "Absorbant poreux",
+      "term_en": "Porous absorber",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Matériau (laine minérale, mousse) efficace dans l'aigu, et plus bas s'il est épais ou décollé de la paroi.",
+      "see_also": [
+        "absorption-coefficient"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "membrane-absorber",
+      "term_fr": "Absorbant à membrane",
+      "term_en": "Membrane absorber",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Panneau résonant qui absorbe surtout le grave autour de sa fréquence de résonance.",
+      "see_also": [
+        "absorption-coefficient",
+        "room-modes"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "diffuser",
+      "term_fr": "Diffuseur",
+      "term_en": "Diffuser",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Élément qui répartit l'énergie réfléchie dans de nombreuses directions ; efficace dans le médium et l'aigu.",
+      "see_also": [
+        "diffusion"
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "standing-wave",
+      "term_fr": "Onde stationnaire",
+      "term_en": "Standing wave",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Onde qui se renforce et s'annule à des endroits fixes entre deux parois parallèles.",
+      "see_also": [
+        "room-modes"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "axial-mode",
+      "term_fr": "Mode axial",
+      "term_en": "Axial mode",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Mode propre entre deux parois parallèles, f = c/(2L) ; le plus fort des modes.",
+      "see_also": [
+        "room-modes"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tangential-mode",
+      "term_fr": "Mode tangentiel",
+      "term_en": "Tangential mode",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Mode impliquant quatre parois, environ 3 dB plus faible qu'un mode axial.",
+      "see_also": [
+        "room-modes"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oblique-mode",
+      "term_fr": "Mode oblique",
+      "term_en": "Oblique mode",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Mode impliquant les six parois, environ 6 dB plus faible qu'un mode axial.",
+      "see_also": [
+        "room-modes"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flutter-echo",
+      "term_fr": "Écho flottant",
+      "term_en": "Flutter echo",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Réflexions répétées rapidement entre surfaces parallèles réfléchissantes, à éviter en salle d'écoute.",
+      "see_also": [
+        "flutter-echo"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "comb-filter",
+      "term_fr": "Filtre en peigne",
+      "term_en": "Comb filter",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Filtre obtenu en ajoutant à un signal une copie retardée de lui-même : creux et bosses régulièrement espacés.",
+      "see_also": [
+        "comb-filtering"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Comb_filter",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sbir",
+      "term_fr": "SBIR",
+      "term_en": "Speaker boundary interference response",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Creux de réponse causé par la réflexion d'une enceinte sur une paroi proche.",
+      "see_also": [
+        "sbir-boundary-interference"
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boundary-gain",
+      "term_fr": "Gain de paroi",
+      "term_en": "Boundary gain",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Renfort du grave près des parois : +6 dB contre un mur, jusqu'à +12 dB dans un angle, +18 dB dans un coin.",
+      "see_also": [
+        "sbir-boundary-interference"
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-shift",
+      "term_fr": "Déphasage",
+      "term_en": "Phase shift",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Décalage angulaire entre deux signaux de même fréquence ; φ = 360·f·Δt pour un retard Δt.",
+      "see_also": [
+        "phase"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-timedelayphase.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "critical-distance",
+      "term_fr": "Distance critique",
+      "term_en": "Critical distance",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Distance où son direct et champ réverbéré ont le même niveau.",
+      "see_also": [
+        "critical-distance"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Critical_distance",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "isophon",
+      "term_fr": "Courbe isosonique",
+      "term_en": "Equal-loudness contour",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Courbe de niveaux de sons purs perçus avec la même sonie (ISO 226:2023).",
+      "see_also": [
+        "equal-loudness-contours"
+      ],
+      "sources": [
+        {
+          "url": "https://www.evs.ee/et/iso-226-2023",
+          "publisher": "EVS (fiche de la norme ISO 226:2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phon",
+      "term_fr": "Phone",
+      "term_en": "Phon",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Unité de niveau d'isosonie : n phones = sonie d'un son pur de 1 kHz à n dB SPL.",
+      "see_also": [
+        "loudness-phon-sone"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculatorSonephon.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sone",
+      "term_fr": "Sone",
+      "term_en": "Sone",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Unité de sonie : 1 sone = 40 phones ; +10 phones double le nombre de sones.",
+      "see_also": [
+        "loudness-phon-sone"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculatorSonephon.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a-weighting",
+      "term_fr": "Pondération A",
+      "term_en": "A-weighting",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Filtre qui suit à peu près l'inverse de l'isosonique 40 phones ; sous-estime la perception du grave à fort niveau.",
+      "see_also": [
+        "loudness-phon-sone",
+        "equal-loudness-contours"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-dba-spl.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculatorSonephon.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "simultaneous-masking",
+      "term_fr": "Masquage simultané",
+      "term_en": "Simultaneous masking",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Un son rend inaudible un autre son présent en même temps, surtout dans la même bande critique.",
+      "see_also": [
+        "masking"
+      ],
+      "sources": [
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.1387-2, section 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "temporal-masking",
+      "term_fr": "Masquage temporel",
+      "term_en": "Temporal masking",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Masquage d'un son faible juste après (ou juste avant) un son fort ; de 5 ms à plus de 150 ms.",
+      "see_also": [
+        "masking"
+      ],
+      "sources": [
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.1387-2, section 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bark-scale",
+      "term_fr": "Échelle de Bark",
+      "term_en": "Bark scale",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Échelle de 24 bandes critiques, de 0 à 15 500 Hz.",
+      "see_also": [
+        "critical-bands"
+      ],
+      "sources": [
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.1387-2, section 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "precedence-effect",
+      "term_fr": "Effet de précédence",
+      "term_en": "Precedence effect",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Loi du premier front d'onde : on localise un son d'après sa première arrivée.",
+      "see_also": [
+        "haas-precedence-effect"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Precedence_effect",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "itd",
+      "term_fr": "Différence interaurale de temps",
+      "term_en": "Interaural time difference (ITD)",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Écart de temps d'arrivée entre les deux oreilles ; indice de localisation surtout sous 1 kHz.",
+      "see_also": [
+        "sound-localization-itd-ild"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_localization",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ild",
+      "term_fr": "Différence interaurale de niveau",
+      "term_en": "Interaural level difference (ILD)",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Écart de niveau entre les deux oreilles dû à l'ombre de la tête ; indice surtout au-dessus de 1,5 kHz.",
+      "see_also": [
+        "sound-localization-itd-ild"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_localization",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "infrasound",
+      "term_fr": "Infrasons",
+      "term_en": "Infrasound",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Sons de fréquence inférieure à 20 Hz.",
+      "see_also": [
+        "hearing-range"
+      ],
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ultrasound",
+      "term_fr": "Ultrasons",
+      "term_en": "Ultrasound",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Sons de fréquence supérieure à 20 kHz.",
+      "see_also": [
+        "hearing-range"
+      ],
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "diffraction",
+      "term_fr": "Diffraction",
+      "term_en": "Diffraction",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Contournement d'un obstacle par une onde de longueur d'onde grande devant cet obstacle.",
+      "see_also": [
+        "diffraction"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "noise-rating-curve",
+      "term_fr": "Courbe NR",
+      "term_en": "Noise rating (NR) curve",
+      "domain": "acoustics-psychoacoustics",
+      "definition": "Courbe de référence du bruit de fond par bande d'octave ; l'EBU demande de préférence NR 10, jamais au-dessus de NR 15, en salle d'écoute.",
+      "see_also": [
+        "reverberation-time-rt60"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_found_log": []
+}

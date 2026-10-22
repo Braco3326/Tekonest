@@ -1,0 +1,202 @@
+{
+ "entity": "rule",
+ "domain": "post-immersive",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "timecode-frame-rate-mismatch",
+   "name_fr": "Cadence de timecode différente de l'image",
+   "name_en": "Timecode frame rate mismatch",
+   "domain": "post-immersive",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "error",
+   "scope": "session",
+   "condition": {
+    "all": [
+     {
+      "path": "session.picture_frame_rate",
+      "op": "exists"
+     },
+     {
+      "path": "session.timecode_rate_matches_picture",
+      "op": "eq",
+      "value": false
+     }
+    ]
+   },
+   "explanation": "Si la session audio n'a pas la même cadence (ex. 25 contre 23,976, ou DF contre NDF) que le montage image, l'AAF s'importe mal et le timecode affiché ne correspond plus aux images ; un pull-up/pull-down manquant fait dériver la synchro au fil du film.",
+   "fix": "Régler la session audio sur la cadence et le mode (DF/NDF) du montage, et appliquer le pull-up/pull-down adapté si l'image a changé de vitesse.",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "session.picture_frame_rate",
+    "session.daw_timecode_rate",
+    "session.timecode_rate_matches_picture"
+   ],
+   "concept_ids": [
+    "timecode",
+    "drop-frame-timecode",
+    "frame-rate-pull-up-pull-down"
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+     "publisher": "Wikipedia (SMPTE timecode)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Telecine",
+     "publisher": "Wikipedia (Telecine)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+     "publisher": "Avid (Pro Tools | Sync X Guide)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "fix"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "deliverable-loudness-out-of-spec",
+   "name_fr": "Sonie du livrable hors spécification",
+   "name_en": "Deliverable loudness out of spec",
+   "domain": "post-immersive",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "error",
+   "scope": "session",
+   "condition": {
+    "any": [
+     {
+      "path": "session.programme_loudness_lufs",
+      "op": "gt",
+      "value": -22.8
+     },
+     {
+      "path": "session.programme_loudness_lufs",
+      "op": "lt",
+      "value": -23.2
+     },
+     {
+      "path": "session.max_true_peak_dbtp",
+      "op": "gt",
+      "value": -1.0
+     }
+    ]
+   },
+   "explanation": "EBU R 128 demande de normaliser le programme à −23,0 LUFS ; en contrôle qualité, ±0,2 LU couvre les erreurs de mesure, et la crête vraie ne doit pas dépasser −1 dBTP. Un livrable hors de ces bornes est refusé au contrôle. Les seuils sont ceux de R 128 ; la fiche du diffuseur (CST-RT-017 en France, plateformes) peut être différente et prime.",
+   "fix": "Corriger le gain global ou le mix (pas de compression systématique), puis remesurer le programme entier avec un appareil conforme BS.1770 / Tech 3341 avant réexport.",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "session.programme_loudness_lufs",
+    "session.max_true_peak_dbtp",
+    "session.delivery_spec"
+   ],
+   "concept_ids": [
+    "deliverable-loudness-france",
+    "loudness-ebu-r128",
+    "true-peak",
+    "loudness-to-dialogue-ratio"
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+     "publisher": "EBU (R 128 v5.0, nov. 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "condition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
+     "publisher": "ARPP (fiche « En 2012 la TV change d'intensité sonore », reprend CST-RT-017 v3.0)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "audio-clock-not-referenced-to-video",
+   "name_fr": "Horloge audio non calée sur la référence vidéo",
+   "name_en": "Audio clock not referenced to video",
+   "domain": "post-immersive",
+   "catalog_rule": null,
+   "status": "proposed",
+   "severity": "warning",
+   "scope": "session",
+   "condition": {
+    "all": [
+     {
+      "path": "session.has_picture",
+      "op": "eq",
+      "value": true
+     },
+     {
+      "path": "session.daw_clock_source",
+      "op": "not_in",
+      "value": [
+       "video-reference",
+       "word-clock-from-video-locked-master"
+      ]
+     }
+    ]
+   },
+   "explanation": "En post-production à l'image, l'interface audio doit suivre la même référence (black burst ou tri-level) que la vidéo ; sinon son et image peuvent avancer à des vitesses légèrement différentes même avec un timecode de départ juste.",
+   "fix": "Brancher la référence vidéo sur le synchroniseur (VIDEO REF IN) et choisir Video Reference comme source d'horloge dans la configuration de session.",
+   "evaluable_now": false,
+   "needs_catalog_fields": [
+    "session.has_picture",
+    "session.daw_clock_source"
+   ],
+   "concept_ids": [
+    "video-reference-sync",
+    "word-clock",
+    "clock-master"
+   ],
+   "sources": [
+    {
+     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+     "publisher": "Avid (Pro Tools | Sync X Guide)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation",
+      "fix"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Seuils CST-RT-017 pour programmes longs à mettre dans deliverable-loudness-out-of-spec",
+   "searched": "cst.fr ; seuls les seuils R 128 sont utilisés"
+  }
+ ]
+}

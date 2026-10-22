@@ -1,0 +1,754 @@
+{
+  "entity": "procedure",
+  "domain": "installation-conference",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "setup-conference-four-speakers-streaming",
+      "name_fr": "Sonoriser une table ronde de 4 intervenants avec diffusion en streaming",
+      "name_en": "Set up a 4-speaker panel with streaming",
+      "domain": "installation-conference",
+      "context": "Table ronde de quatre intervenants sonorisée pour le public de la salle, avec un mixage envoyé vers un ordinateur de streaming.",
+      "duration_min": 60,
+      "equipment_ids": [
+        "shure-sm58",
+        "shure-scm820",
+        "yamaha-tf5",
+        "qsc-k12-2",
+        "nti-audio-xl2"
+      ],
+      "concept_ids": [
+        "automatic-mixer",
+        "gain-sharing-automixing",
+        "speech-intelligibility",
+        "stipa",
+        "number-of-open-microphones"
+      ],
+      "rule_ids": [
+        "feedback-risk-open-mic-same-room"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Plan de table et liste des entrées prêts"
+          ],
+          "action": "Raccorder chaque micro d'intervenant à sa propre voie d'automixeur (ou insérer l'automixeur sur le point d'insertion de chaque voie micro de la console).",
+          "expected_result": "Chaque intervenant arrive sur une voie distincte, vue par l'automixeur.",
+          "typical_mistakes": [
+            "Insérer l'automixeur sur un groupe ou le master au lieu de chaque voie"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Régler le gain de chaque voie avec la voix réelle de chaque intervenant.",
+          "expected_result": "Niveaux de voix comparables d'une voie à l'autre, sans écrêtage.",
+          "typical_mistakes": [
+            "Régler les gains avec un seul intervenant pour tous"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Personne ne parlant, équilibrer les réglages de poids (weight) pour que les indicateurs de gain d'automix soient égaux.",
+          "expected_result": "Aucune voie ne domine au repos ; la somme équivaut à un micro ouvert.",
+          "typical_mistakes": [
+            "Utiliser le poids comme un seuil de porte"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Faire parler un intervenant, puis deux en même temps, puis observer le silence.",
+          "expected_result": "Le micro de celui qui parle monte, les autres baissent ; à deux, le gain se partage ; l'ambiance ne change pas.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Régler le niveau de la sonorisation salle pour un confort d'écoute, en restant raisonnable.",
+          "expected_result": "La parole est claire partout ; NTi situe la meilleure intelligibilité vers 70–80 dB SPL.",
+          "typical_mistakes": [
+            "Monter le niveau pour compenser une salle réverbérante"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Envoyer vers l'ordinateur de streaming un mixage séparé (par exemple la 2e sortie Mix B de l'automixeur SCM820, ou une sortie dédiée de la console).",
+          "expected_result": "Le flux reçoit les voix sans dépendre des réglages de la sonorisation salle.",
+          "typical_mistakes": [
+            "Envoyer au streaming la même sortie que la salle"
+          ]
+        },
+        {
+          "n": 7,
+          "preconditions": [
+            "Option STIPA disponible sur l'analyseur"
+          ],
+          "action": "Mesurer le STIPA à plusieurs places du public avec le XL2 et la talkbox devant un micro d'intervenant.",
+          "expected_result": "Résultats notés par place ; un STI d'au moins 0,5 est souhaitable dans la plupart des applications.",
+          "typical_mistakes": [
+            "Une seule mesure au centre de la salle"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V avant de (dé)brancher un micro alimenté"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dandugan.com/Assets/manuals/Model-E-1-and-E-1A-User-Guide-v3.3.pdf",
+          "publisher": "Dan Dugan Sound Design (Model E-1/E-1A User Guide v3.3, 2016)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://content-files.shure.com/publications/specSheet/en/scm820-spec-sheet.pdf",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Automixer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "context"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "configure-automixer-gain-sharing",
+      "name_fr": "Configurer un automixeur à partage de gain",
+      "name_en": "Configure a gain-sharing automixer",
+      "domain": "installation-conference",
+      "context": "Insertion et réglage d'un automixeur de type Dugan sur les voies micro d'une console pour une conférence ou un débat.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "shure-scm820"
+      ],
+      "concept_ids": [
+        "gain-sharing-automixing",
+        "automatic-mixer",
+        "insert-point"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Vérifier le câblage des inserts de la console"
+          ],
+          "action": "Analogique : relier l'automixeur aux inserts de chaque voie micro (sur le Dugan E-1A, pointe = entrée, bague = sortie du câble d'insert TRS). Numérique : insérer les entrées/sorties ADAT sur chaque voie micro, après fader.",
+          "expected_result": "Chaque voie micro passe par l'automixeur.",
+          "typical_mistakes": [
+            "Câble d'insert inversé (envoi et retour croisés)"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Régler normalement le gain des préamplis de la console.",
+          "expected_result": "Gain correct sur chaque voie.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Sans personne qui parle, équilibrer les poids pour que les indicateurs de gain d'automix soient égaux ; si un préampli a été baissé, monter le poids de cette voie, et inversement.",
+          "expected_result": "Chaque micro a la même chance de prendre la main.",
+          "typical_mistakes": [
+            "Confondre poids et niveau de la voie dans le mixage"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Faire parler une personne, puis deux.",
+          "expected_result": "Celle qui parle obtient le gain d'automix ; à deux, le gain se partage.",
+          "typical_mistakes": [
+            "Monter un poids pour « favoriser » quelqu'un : cela rend plus difficile la prise de parole des autres"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Pendant que les gens parlent, régler les niveaux relatifs aux faders ; laisser les faders ouverts quand les micros ne servent pas.",
+          "expected_result": "Mixage stable sans manipulation des faders à chaque prise de parole.",
+          "typical_mistakes": [
+            "Fermer les faders à la main par habitude"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.dandugan.com/Assets/manuals/Model-E-1-and-E-1A-User-Guide-v3.3.pdf",
+          "publisher": "Dan Dugan Sound Design (Model E-1/E-1A User Guide v3.3, 2016)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Automixer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "context"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "configure-aec-hybrid-room",
+      "name_fr": "Configurer l'annulation d'écho d'une salle hybride",
+      "name_en": "Configure AEC in a hybrid meeting room",
+      "domain": "installation-conference",
+      "context": "Salle équipée de micros, de haut-parleurs et d'un DSP de conférence relié à un codec ou un PC de visioconférence.",
+      "duration_min": 45,
+      "equipment_ids": [
+        "audinate-dante-virtual-soundcard"
+      ],
+      "concept_ids": [
+        "acoustic-echo-cancellation",
+        "aec-reference-signal",
+        "hybrid-meeting-room",
+        "automatic-mixer"
+      ],
+      "rule_ids": [
+        "aec-reference-missing",
+        "mic-in-aec-reference"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Affecter une voie d'AEC à chaque micro (AEC multicanal à référence unique), placée avant l'automixeur et avant toute dynamique.",
+          "expected_result": "Chaque micro passe par son AEC avant le reste du traitement.",
+          "typical_mistakes": [
+            "AEC unique placé après l'automixeur"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Construire la référence avec tout ce qui va aux haut-parleurs : toutes les sources distantes et le programme. Placer les volumes utilisateur avant la référence ; si le trajet haut-parleur est limité, prendre la référence après le limiteur, en mono.",
+          "expected_result": "La référence est identique au signal des haut-parleurs.",
+          "typical_mistakes": [
+            "Oublier le programme vidéo",
+            "Volume utilisateur placé après la référence"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Vérifier qu'aucun micro de la salle n'est routé vers la référence.",
+          "expected_result": "Aucun son « sous l'eau » chez les distants.",
+          "typical_mistakes": [
+            "Envoyer le mix micros à la référence pour une voix de renfort"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Codec ou PC de visio connecté"
+          ],
+          "action": "Désactiver l'AEC du codec et vérifier qu'il n'est pas en mode renforcement.",
+          "expected_result": "Un seul AEC actif dans la chaîne.",
+          "typical_mistakes": [
+            "Deux AEC en série"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Distant en train de parler, lire le rapport référence/micro (RMLR) de chaque voie ; viser environ 0 dB, sinon baisser le gain micro pour que la captation du distant soit 3 à 6 dB sous la référence, ou remonter la référence.",
+          "expected_result": "RMLR proche de 0 dB sur toutes les voies.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Vérifier chaque point de matrice entre chaque source distante et la référence.",
+          "expected_result": "Aucun point coupé : un point coupé fait entendre l'écho à ce distant seulement.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 7,
+          "preconditions": [],
+          "action": "Test réel avec les distants ; si un écho résiduel persiste, ajuster la suppression d'écho résiduel (RES) ; en salle réverbérante, augmenter la longueur de traîne (200 ms par défaut).",
+          "expected_result": "Les distants n'entendent ni écho ni dégradation.",
+          "typical_mistakes": [
+            "Pousser la RES au maximum (elle déforme la voix locale)"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Signal_Flow.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Best Practices: Signal Flow)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
+          "publisher": "QSC / Q-SYS Help (AEC Troubleshooting)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
+          "publisher": "Bose Professional (KA-01180, AEC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "tap-100v-line-system",
+      "name_fr": "Régler les prises d'une ligne 100 V",
+      "name_en": "Tap a 100 V line system",
+      "domain": "installation-conference",
+      "context": "Installation de haut-parleurs encastrés ou muraux sur une ligne 100 V alimentée par un ampli d'installation.",
+      "duration_min": 60,
+      "equipment_ids": [
+        "yamaha-xmv8280-d"
+      ],
+      "concept_ids": [
+        "distributed-sound-100v",
+        "transformer-tap",
+        "amplifier-power-budget-100v"
+      ],
+      "rule_ids": [
+        "100v-line-overload",
+        "transformer-bypass-on-100v-line"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Ampli configuré en sortie haute impédance"
+          ],
+          "action": "Relever la puissance de l'ampli en ligne 100 V pour chaque canal (exemple : XMV8280-D, 250 W par canal sur 40 Ω en 100 V/70 V).",
+          "expected_result": "Puissance de référence connue pour chaque ligne.",
+          "typical_mistakes": [
+            "Prendre la puissance basse impédance (4/8 Ω)"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Calculer la puissance utilisable : 80 % de la nominale selon Origin Acoustics (90 % selon AVSL), ou la valeur du fabricant de l'ampli.",
+          "expected_result": "Budget de puissance écrit pour la ligne.",
+          "typical_mistakes": [
+            "Calculer sur 100 %"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Choisir la prise des haut-parleurs : la plus haute possible dans le budget (ex. 100 V : 2,5 / 5 / 10 / 20 W).",
+          "expected_result": "Prises choisies et notées sur le plan.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Régler la prise sur chaque haut-parleur avant de poser la grille ; ne jamais utiliser la position 8 Ω (bypass) sur une ligne 100 V ; respecter les positions interdites indiquées par le fabricant.",
+          "expected_result": "Tous les sélecteurs sur une prise 100 V valide.",
+          "typical_mistakes": [
+            "Laisser un haut-parleur sur 8 Ω",
+            "Utiliser une prise prévue pour 70 V seulement"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Raccorder les primaires des transformateurs en parallèle sur la ligne, en gardant le même conducteur pour le + d'un bout à l'autre.",
+          "expected_result": "Ligne câblée en parallèle, polarité cohérente.",
+          "typical_mistakes": [
+            "Inverser + et − sur certains haut-parleurs"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Additionner les prises (atténuateurs comptés à fond) et comparer au budget ; si c'est dépassé, baisser des prises, répartir sur un autre canal ou ajouter un ampli esclave.",
+          "expected_result": "Somme des prises inférieure ou égale au budget.",
+          "typical_mistakes": [
+            "Oublier les haut-parleurs ajoutés après coup"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Une ligne 100 V présente une tension élevée : intervenir ampli coupé",
+        "Respecter les règles locales de pose (conduit exigé dans de nombreux pays selon Wikipedia)"
+      ],
+      "sources": [
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://docs.originacoustics.com/transformers_manual",
+          "publisher": "Origin Acoustics (Director Transformer Collection installation manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://avsl.com/support/100v-line-speakers",
+          "publisher": "AVSL Group (distributeur)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "steps[1] (marge)",
+          "values": [
+            {
+              "value": "80 %",
+              "source_url": "https://docs.originacoustics.com/transformers_manual"
+            },
+            {
+              "value": "90 %",
+              "source_url": "https://avsl.com/support/100v-line-speakers"
+            }
+          ],
+          "note": "Voir le concept amplifier-power-budget-100v."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "check-interpretation-booth",
+      "name_fr": "Contrôler une cabine et une chaîne d'interprétation",
+      "name_en": "Check an interpretation booth and chain",
+      "domain": "installation-conference",
+      "context": "Avant une conférence multilingue, vérifier la cabine, l'arrivée du son de salle chez les interprètes et la distribution des langues au public.",
+      "duration_min": 45,
+      "equipment_ids": [
+        "sennheiser-hmd-26"
+      ],
+      "concept_ids": [
+        "interpretation-booth",
+        "interpretation-system",
+        "infrared-language-distribution"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Identifier le type de cabine : permanente (ISO 17651-1:2024) ou mobile (ISO 17651-2:2024), avec un équipement relevant de l'ISO 20109.",
+          "expected_result": "Référentiel applicable connu.",
+          "typical_mistakes": [
+            "Citer les normes annulées ISO 2603 ou ISO 4043 comme en vigueur"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Vérifier la vue dégagée des interprètes sur l'orateur et les écrans de présentation.",
+          "expected_result": "Vue directe sur l'orateur et les écrans.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Vérifier que la ventilation de la cabine est silencieuse et que la porte ferme bien.",
+          "expected_result": "Pas de bruit de ventilation dans les micros des interprètes.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Écouter au casque de chaque pupitre interprète le son de salle (floor) pendant un essai d'orateur.",
+          "expected_result": "Son de salle clair et à niveau suffisant chez chaque interprète (l'ISO 20108 traite de la qualité du son d'entrée des interprètes).",
+          "typical_mistakes": [
+            "Tester avec un seul micro de salle"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Vérifier la distribution IR : radiateurs reliés aux sorties BNC de l'émetteur, nombre de radiateurs en chaîne dans la limite du fabricant (30 par sortie sur la gamme Taiden HCS-5100T), compensation de retard réglée selon les longueurs de câble.",
+          "expected_result": "Tous les radiateurs signalent un fonctionnement normal.",
+          "typical_mistakes": [
+            "Oublier la compensation de retard entre radiateurs à longueurs de câble différentes"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Parcourir la salle avec un récepteur sur chaque canal de langue.",
+          "expected_result": "Chaque canal est reçu sans coupure à toutes les places.",
+          "typical_mistakes": [
+            "Ne tester que près des radiateurs"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765112024/simultaneous-interpreting-interpreters-working-environment-part-1-requireme/xs142910/356423",
+          "publisher": "AFNOR Boutique (ISO 17651-1:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765122024/simultaneous-interpreting-interpreters-working-environment-part-2-requireme/xs142896/356424",
+          "publisher": "AFNOR Boutique (ISO 17651-2:2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://connect.snv.ch/en/iso-20109",
+          "publisher": "SNV (Swiss Association for Standardization), ISO 20109",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://aiic.org/site/it/technicalstandards",
+          "publisher": "AIIC (Association internationale des interprètes de conférence)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Simultaneous_interpretation",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
+          "publisher": "Taiden (fiche HCS-5100T, hébergée par le distributeur Euro-Trend)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "commission-hearing-loop",
+      "name_fr": "Mettre en service une boucle magnétique",
+      "name_en": "Commission a hearing loop",
+      "domain": "installation-conference",
+      "context": "Mise en service et contrôle d'une boucle d'induction dans une salle de conférence, un guichet ou un musée.",
+      "duration_min": 60,
+      "equipment_ids": [],
+      "concept_ids": [
+        "hearing-loop",
+        "telecoil",
+        "metal-loss-compensation"
+      ],
+      "rule_ids": [
+        "loop-amplifier-standard"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Définir la zone d'utilisation et le public ; prévoir des mesures assis et debout si les deux sont probables.",
+          "expected_result": "Plan des points de mesure.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Mesureur de champ (FSM) étalonné"
+          ],
+          "action": "Signal coupé, mesurer le bruit magnétique de fond avec un mesureur de champ.",
+          "expected_result": "−32 dB(A) ou mieux.",
+          "typical_mistakes": [
+            "Oublier les transformateurs et câbles secteur proches"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Avec un sinus 1 kHz, régler le courant de sortie de l'ampli de boucle.",
+          "expected_result": "0 dB ±3 dB re 400 mA/m à toutes les places prévues.",
+          "typical_mistakes": [
+            "Mesurer à un seul endroit"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Avec du bruit rose ou des sinus 100 Hz / 1 kHz / 5 kHz, vérifier la réponse ; si 5 kHz est trop bas, augmenter la correction des pertes métalliques (MLC) en gardant 100 Hz au-dessus de −3 dB.",
+          "expected_result": "100 Hz et 5 kHz à ±3 dB du niveau à 1 kHz.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Régler chaque entrée pour que la LED d'AGC s'allume juste au niveau le plus faible prévu.",
+          "expected_result": "Niveau stable quel que soit l'orateur.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Mesurer le débordement (overspill) si d'autres boucles sont proches ou si la confidentialité compte, et le noter sur le plan.",
+          "expected_result": "Débordement documenté.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 7,
+          "preconditions": [],
+          "action": "Remplir le certificat d'essai, poser la signalétique (de préférence à chaque entrée) et remettre des récepteurs de contrôle au client.",
+          "expected_result": "Installation documentée et signalée.",
+          "typical_mistakes": [
+            "Pas de signalétique : l'usager ne devrait pas avoir à demander"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Un ampli de boucle se coupe en surintensité ou surchauffe : vérifier la ventilation du rack"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
+          "publisher": "Ampetronic (Learning zone: Commissioning)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
+          "publisher": "Ampetronic (W5-2 Handbook)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Mode d'emploi détaillé du SCM820 (IntelliMix, off-attenuation, last mic lock-on)",
+      "searched": "shure.com/en-US/docs/guide/SCM820 et pubs.shure.com (redirection vers page JavaScript vide)"
+    },
+    {
+      "what": "Procédure constructeur de mise en service d'un système IR (contrôle des radiateurs, mesure de couverture)",
+      "searched": "Bosch Integrus datasheet (fichier > 10 Mo, non lisible), Keenfinity (404)"
+    }
+  ]
+}

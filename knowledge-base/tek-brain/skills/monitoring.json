@@ -1,0 +1,251 @@
+{
+  "entity": "skill",
+  "domain": "monitoring",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "ring-out-stage-monitors",
+      "name_fr": "Accorder des retours de scène",
+      "name_en": "Ring out stage monitors",
+      "domain": "monitoring",
+      "description": "Placer les wedges par rapport aux micros et égaliser chaque mix pour obtenir un gain avant larsen suffisant sans dégrader le timbre.",
+      "level": "bts",
+      "concept_ids": [
+        "ringing-out",
+        "acoustic-feedback",
+        "gain-before-feedback",
+        "mic-polar-pattern-wedge-placement",
+        "monitor-graphic-eq"
+      ],
+      "procedure_ids": [
+        "ringing-out-monitors"
+      ],
+      "success_criteria": [
+        "Chaque wedge est placé dans l'angle de rejet du micro qu'il sert",
+        "Le mix reste stable avec tous les micros prévus ouverts",
+        "Le processus s'arrête au plus tard après 7 tours ou dès que plus de trois fréquences accrochent ensemble",
+        "Les réglages d'égaliseur sont notés ou mémorisés"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Geste pratique de sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
+          "publisher": "ProSoundWeb (PSW Staff, from Sweetwater) — Tech Tip: EQing Stage Monitors, 2010",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+          "publisher": "DPA Microphones — Listen to your polar pattern",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "set-up-iem-system",
+      "name_fr": "Mettre en œuvre un système d'ears",
+      "name_en": "Set up an in-ear monitor system",
+      "domain": "monitoring",
+      "description": "Configurer liaison HF, mode stéréo ou double mono, niveaux et limiteur, puis construire un mix d'ears sûr et lisible.",
+      "level": "bts",
+      "concept_ids": [
+        "in-ear-monitoring",
+        "iem-stereo-dual-mono",
+        "iem-receiver-limiter",
+        "iem-rf-dropouts",
+        "iem-mpx-stereo-limits"
+      ],
+      "procedure_ids": [
+        "iem-rf-setup",
+        "building-iem-mix"
+      ],
+      "success_criteria": [
+        "Fréquences issues d'un scan, compatibles avec les autres systèmes HF du plateau",
+        "LED clip de l'émetteur jamais allumée en jeu",
+        "Limiteur du récepteur actif et volume monté depuis le minimum",
+        "Test de déambulation sans coupure sur toute la zone de jeu"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre HF et retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "calibrate-control-room",
+      "name_fr": "Calibrer une écoute de régie",
+      "name_en": "Calibrate control-room monitoring",
+      "domain": "monitoring",
+      "description": "Placer les enceintes selon une géométrie normalisée et régler un niveau de référence documenté au point d'écoute.",
+      "level": "bts",
+      "concept_ids": [
+        "control-room-reference-level",
+        "stereo-listening-geometry"
+      ],
+      "procedure_ids": [
+        "calibrating-control-room-monitors"
+      ],
+      "success_criteria": [
+        "Angle de base de 60° et distance d'écoute proche de 0,9 × l'écartement",
+        "Écart de niveau entre voies inférieur à 1 dB au point d'écoute",
+        "Convention écrite : niveau du bruit rose, pondération, constante, par voie"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Conditions d'écoute — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Installation d'une régie — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+          "publisher": "EBU — Tech 3276, Listening conditions for the assessment of sound programme material (1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2",
+          "publisher": "Sound On Sound — H. Robjohns, Establishing Project Studio Reference Monitoring Levels (May 2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "run-monitor-world",
+      "name_fr": "Tenir une console retours",
+      "name_en": "Run monitor world",
+      "domain": "monitoring",
+      "description": "Organiser les mixes d'un groupe, communiquer avec les musiciens et contrôler chaque mix en écoute solo pendant la balance et le concert.",
+      "level": "pro",
+      "concept_ids": [
+        "monitor-engineer-role",
+        "stage-monitor-mix",
+        "monitor-cue-solo-bus",
+        "microphone-split-foh-monitor"
+      ],
+      "procedure_ids": [
+        "monitor-mix-soundcheck"
+      ],
+      "success_criteria": [
+        "Tous les départs retours sont en pré-fader ou pré-mute",
+        "Chaque mix demandé est vérifié en solo avant réponse à l'artiste",
+        "Les micros non utilisés sont coupés entre les morceaux",
+        "La scène est mémorisée en fin de balance"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E6",
+          "bloc": null,
+          "note": "Situation professionnelle en live — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "description"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}

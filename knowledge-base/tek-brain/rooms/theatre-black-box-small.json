@@ -1,0 +1,82 @@
+{
+  "id": "theatre-black-box-small",
+  "name_fr": "Boîte noire (studio de théâtre modulable, 60–100 places)",
+  "name_en": "Black box studio theatre, small (60–100 seats)",
+  "family": "theatre",
+  "size": "small",
+  "description": "Salle à géométrie variable entièrement noire, sans cadre de scène ni cage : un volume d'environ 11,5 × 13,5 m sous une grille d'accrochage fixe à 4 à 5 m, un plancher noir, un habillage en velours noir sur rails et un petit gradin (60 à 100 places). Le modèle reprend le Studio Jean-Valcourt du Conservatoire de Montréal (boîte noire de 60 à 100 fauteuils) et le Théâtre Alchimic de Carouge (100 places en gradin, régie en haut du gradin). Pour le son, tout est proche et simple : petite console analogique, deux enceintes accrochées à la grille, un lecteur de sons et un ou deux micros. Convention des ouvertures : « front » = mur derrière l'aire de jeu (−z), « rear » = mur derrière le gradin (+z).",
+  "dimensions_m": {
+    "length": { "min": 12, "typical": 13.5, "max": 16 },
+    "width": { "min": 11.5, "typical": 11.5, "max": 11.9 },
+    "height": { "min": 4.1, "typical": 5.2, "max": 5.2 }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    { "surface": "stage-floor", "material": "plancher résilient en contreplaqué, fini linoléum noir (Valcourt) ou panneaux 3 plis 27 mm peints en noir (Alchimic)", "finish_note": "Pas de pente ; on visse et on scotche directement au sol." },
+    { "surface": "walls", "material": "habillage à l'allemande en velours noir sur rail, sur trois côtés", "finish_note": "Le velours absorbe les aigus et rend la salle sèche ; les murs derrière peuvent être en béton peint noir." },
+    { "surface": "ceiling", "material": "grille d'accrochage fixe en tubes, maille 2 × 2 m, plafond technique peint noir", "finish_note": "Hauteur libre 5,2 m à Valcourt ; 4,13 m sous plafond et 3,98 m sous perches à l'Alchimic." },
+    { "surface": "floor", "material": "gradin démontable avec fauteuils tissu", "finish_note": "71 fauteuils en configuration de base à Valcourt." }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    { "id": "aire-de-jeu", "kind": "stage", "rect_m": [0, -2.5, 11.5, 8.5], "floor_y_m": 0 },
+    { "id": "gradin", "kind": "audience", "rect_m": [-1.5, 4.25, 8.5, 5.0], "floor_y_m": 0 },
+    { "id": "regie", "kind": "foh", "rect_m": [4.25, 5.75, 3, 2], "floor_y_m": 1.6 }
+  ],
+  "gear_positions": [
+    { "equipment_id": "mackie-1604vlz4", "zone": "regie", "position_m": [4.25, 2.5, 5.9], "rotation_deg": 180, "note": "Petite console analogique en haut du gradin ; Valcourt liste une Mackie 1642VLZ3, l'Alchimic une Allen & Heath 14:4:2." },
+    { "equipment_id": "tascam-ss-cdr250n", "zone": "regie", "position_m": [5.2, 2.4, 6.2], "rotation_deg": 180, "note": "Lecteur/enregistreur de sons pour les effets ; les deux fiches listent des lecteurs CD avec auto-pause." },
+    { "equipment_id": "yamaha-dbr12", "zone": "aire-de-jeu", "position_m": [-4.5, 4.6, 1.5], "rotation_deg": 0, "note": "Enceinte de face accrochée à la grille (Valcourt : 2 × d&b Ci-80 ; Alchimic : 4 × Kling & Freitag CA 1001)." },
+    { "equipment_id": "yamaha-dbr12", "zone": "aire-de-jeu", "position_m": [4.5, 4.6, 1.5], "rotation_deg": 0, "note": "Enceinte de face, côté droit." },
+    { "equipment_id": "shure-sm58", "zone": "aire-de-jeu", "position_m": [0, 1.5, -1.0], "rotation_deg": 0, "note": "Micro main (présent dans les deux fiches)." },
+    { "equipment_id": "sennheiser-ew-100-g4", "zone": "regie", "position_m": [3.4, 2.4, 6.2], "rotation_deg": 180, "note": "Liaison HF pour un comédien, souvent louée en plus du parc de la salle." },
+    { "equipment_id": "dpa-4060", "zone": "aire-de-jeu", "position_m": [1.0, 1.6, -3.0], "rotation_deg": 0, "note": "Micro miniature porté sur la liaison HF." },
+    { "equipment_id": "radial-jdi", "zone": "aire-de-jeu", "position_m": [-5.0, 0.1, -6.0], "rotation_deg": 0, "note": "DI passive pour un clavier ou un ordinateur de musique de scène." }
+  ],
+  "power_points": [
+    { "position_m": [-5.5, 0.5, -6.5], "type": "p17-32a-3ph" },
+    { "position_m": [5.5, 0.5, -6.5], "type": "p17-32a-3ph" },
+    { "position_m": [5.6, 2.0, 6.6], "type": "schuko-16a" }
+  ],
+  "patch_points": [
+    { "position_m": [-5.6, 0.4, -4.0], "type": "wall-patch-xlr-12", "note": "Boîte murale de lignes vers la régie (implantation typique, non sourcée)." },
+    { "position_m": [5.6, 2.0, 6.0], "type": "wall-patch-xlr-12", "note": "Arrivée des lignes en régie." }
+  ],
+  "openings": [
+    { "wall": "right", "kind": "door", "offset_m": -5.5, "width_m": 0.9, "height_m": 2.1 },
+    { "wall": "right", "kind": "door", "offset_m": -3.5, "width_m": 0.9, "height_m": 2.1 },
+    { "wall": "rear", "kind": "door", "offset_m": -4.5, "width_m": 0.65, "height_m": 2.65 }
+  ],
+  "lighting": { "mood": "noir total, service en lumière bleue, plateau en découpes et PAR halogènes/LED", "color_temp_k": 3200 },
+  "procedural": {
+    "wall_color": "#111111",
+    "floor_color": "#141414",
+    "ceiling_color": "#0d0d0d",
+    "prop_hints": ["grille d'accrochage 2 × 2 m", "rideaux velours noir sur rails", "gradin démontable", "cubes noirs et chaises noires", "praticables 2 × 1 m", "projecteurs Source Four sur la grille"]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://www.conservatoire.gouv.qc.ca/media/dsdh2xtw/devis_studio_jean-valcourt_août-2025.pdf",
+      "publisher": "Conservatoire de musique et d'art dramatique du Québec — Devis technique du Studio Jean-Valcourt (août 2025)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "education-official",
+      "covers": ["dimensions_m.length.typical", "dimensions_m.width.typical", "dimensions_m.height.typical", "zones.aire-de-jeu (11,5 × 8,5 m)", "surfaces", "gear_positions (choix du matériel : petite console, 2 enceintes, SM58, lecteur)"]
+    },
+    {
+      "url": "https://artos-net.ch/system/files/documents/strucutres/alchimic%2520-%2520Fiche_Technique2010.pdf",
+      "publisher": "Théâtre Alchimic (Carouge) — Fiche technique (octobre 2010), via artos-net.ch",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": ["dimensions_m.width.max", "dimensions_m.height.min", "zones.regie (en haut et à cour du gradin)", "zones.gradin (100 places)", "power_points (2 prises CEE 32 A tri)", "openings[0]", "openings[1]", "openings[2] (entrée public 0,65 × 2,65 m)"]
+    }
+  ],
+  "review": "needs-oscar-review",
+  "not_found_log": [
+    { "what": "dimensions_m.length min 12 m et max 16 m : estimations ; seule la valeur typique 13,5 m (Valcourt) est sourcée. L'Alchimic ne donne que la profondeur du plateau (10,10 m), pas celle de la salle avec gradin.", "searched": "Fiches Valcourt et Alchimic ; la fiche du Théâtre du Cube (Aix-Marseille Université) était en 404", "review": "needs-oscar-review" },
+    { "what": "RT60 d'une boîte noire habillée de velours : aucune mesure ni valeur recommandée trouvée.", "searched": "Fiches techniques, page DPA (qui ne donne que « théâtre » 1,1–1,4 s, non applicable à une petite salle sèche)", "review": "needs-oscar-review" },
+    { "what": "Positions des portes, des prises et des boîtes de patch : implantation estimée (l'Alchimic indique seulement 2 portes d'accès plateau au lointain cour).", "searched": "Fiches Valcourt, Alchimic", "review": "needs-oscar-review" }
+  ]
+}

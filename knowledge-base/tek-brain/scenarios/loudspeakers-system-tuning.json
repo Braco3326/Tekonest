@@ -1,0 +1,339 @@
+{
+  "entity": "scenario",
+  "domain": "loudspeakers-system-tuning",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "auditorium-powered-pa-with-delays",
+      "name_fr": "Amphithéâtre : diffusion amplifiée avec rappels retardés",
+      "name_en": "Auditorium powered PA with delay speakers",
+      "domain": "loudspeakers-system-tuning",
+      "brief": "Conférence dans un amphithéâtre profond. Deux enceintes actives de façade ne suffisent pas pour le fond : on ajoute une paire de rappels à mi-salle via un processeur de diffusion. Objectifs : câbler en niveau ligne (aucune sortie haut-parleur), calculer puis mesurer le retard des rappels, régler leur niveau pour que l'image reste sur l'orateur.",
+      "room_id": "auditorium-amphitheatre-medium",
+      "required_gear": [
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console"
+        },
+        {
+          "equipment_id": "dbx-driverack-pa2",
+          "qty": 1,
+          "role": "processeur de diffusion (retards, égalisation)"
+        },
+        {
+          "equipment_id": "qsc-k12-2",
+          "qty": 4,
+          "role": "2 façades + 2 rappels"
+        },
+        {
+          "equipment_id": "rational-acoustics-smaart-suite-v9",
+          "qty": 1,
+          "role": "mesure"
+        },
+        {
+          "equipment_id": "minidsp-umik-1",
+          "qty": 1,
+          "role": "micro de mesure"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console"
+          },
+          {
+            "id": "proc",
+            "equipment_id": "dbx-driverack-pa2",
+            "label": "Processeur"
+          },
+          {
+            "id": "mainL",
+            "equipment_id": "qsc-k12-2",
+            "label": "Façade gauche"
+          },
+          {
+            "id": "mainR",
+            "equipment_id": "qsc-k12-2",
+            "label": "Façade droite"
+          },
+          {
+            "id": "delL",
+            "equipment_id": "qsc-k12-2",
+            "label": "Rappel gauche"
+          },
+          {
+            "id": "delR",
+            "equipment_id": "qsc-k12-2",
+            "label": "Rappel droit"
+          }
+        ],
+        "edges": [
+          {
+            "from": "desk",
+            "to": "proc",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "proc",
+            "to": "mainL",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "proc",
+            "to": "mainR",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "proc",
+            "to": "delL",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "proc",
+            "to": "delR",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "basic-pa-system-check",
+        "set-delay-speaker-alignment"
+      ],
+      "rule_ids": [],
+      "difficulty": 2,
+      "estimated_time_min": 60,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Installation et calage d'une diffusion de conférence (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Calcul de retard Δd/c (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speed_of_sound",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
+          "publisher": "L-Acoustics (Moulin, Corteel), AES 152nd Convention 2022",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "concert-hall-line-array-and-cardioid-subs",
+      "name_fr": "Salle de concert : line array passif et subs cardioïdes",
+      "name_en": "Concert hall passive line array with cardioid subs",
+      "domain": "loudspeakers-system-tuning",
+      "brief": "Deux lignes de V8 accrochées et des V-SUB au sol, alimentés par des D80. Piège pédagogique : les V8 utilisent les broches speakON 1± et les V-SUB 2± ; un sub raccordé sur une sortie qui ne porte que 1± reste muet. Objectifs : respecter 2 enceintes par canal, charger les bons presets (CPL identique sur toute la ligne), câbler les paires correctes, puis aligner subs et ligne au point de référence.",
+      "room_id": "concert-hall-medium",
+      "required_gear": [
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console"
+        },
+        {
+          "equipment_id": "db-audiotechnik-d80",
+          "qty": 2,
+          "role": "amplificateurs / contrôleurs"
+        },
+        {
+          "equipment_id": "db-audiotechnik-v8",
+          "qty": 8,
+          "role": "2 lignes de 4 éléments"
+        },
+        {
+          "equipment_id": "db-audiotechnik-v-sub",
+          "qty": 4,
+          "role": "subs cardioïdes au sol"
+        },
+        {
+          "equipment_id": "db-audiotechnik-arraycalc",
+          "qty": 1,
+          "role": "prédiction et angles"
+        },
+        {
+          "equipment_id": "rational-acoustics-smaart-suite-v9",
+          "qty": 1,
+          "role": "mesure"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console"
+          },
+          {
+            "id": "ampL",
+            "equipment_id": "db-audiotechnik-d80",
+            "label": "D80 côté gauche"
+          },
+          {
+            "id": "v8a",
+            "equipment_id": "db-audiotechnik-v8",
+            "label": "V8 haut (1±)"
+          },
+          {
+            "id": "v8b",
+            "equipment_id": "db-audiotechnik-v8",
+            "label": "V8 chaînée (1±)"
+          },
+          {
+            "id": "sub1",
+            "equipment_id": "db-audiotechnik-v-sub",
+            "label": "V-SUB (2±)"
+          },
+          {
+            "id": "sub2",
+            "equipment_id": "db-audiotechnik-v-sub",
+            "label": "V-SUB chaîné (2±)"
+          }
+        ],
+        "edges": [
+          {
+            "from": "desk",
+            "to": "ampL",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "ampL",
+            "to": "v8a",
+            "signal": "speaker-level",
+            "connector": "speakon-nl4"
+          },
+          {
+            "from": "v8a",
+            "to": "v8b",
+            "signal": "speaker-level",
+            "connector": "speakon-nl4"
+          },
+          {
+            "from": "ampL",
+            "to": "sub1",
+            "signal": "speaker-level",
+            "connector": "speakon-nl4"
+          },
+          {
+            "from": "sub1",
+            "to": "sub2",
+            "signal": "speaker-level",
+            "connector": "speakon-nl4"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "connect-passive-speaker-chain-to-amp",
+        "build-cardioid-sub-stack",
+        "align-subwoofers-to-main-system",
+        "basic-pa-system-check"
+      ],
+      "rule_ids": [
+        "speakon-pin-mismatch-sub",
+        "amp-load-impedance-too-low",
+        "sub-top-polarity-misalignment"
+      ],
+      "difficulty": 4,
+      "estimated_time_min": 120,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'un système line array avec subs (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Impédances, phase et retards (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/global/en/arraycalc/",
+          "publisher": "d&b audiotechnik, ArrayCalc",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf",
+          "publisher": "L-Acoustics (Mouterde, Moulin, Epain, Corteel), AES 2024",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": []
+}

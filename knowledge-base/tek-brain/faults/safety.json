@@ -1,0 +1,411 @@
+{
+ "entity": "fault",
+ "domain": "safety",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "tingling-shock-from-equipment",
+   "name_fr": "Picotement ou choc en touchant un micro ou un instrument",
+   "name_en": "Tingling or shock from equipment",
+   "domain": "safety",
+   "symptom": "Un musicien ou un technicien sent un picotement, voire une secousse, en touchant un micro, un pied de micro, une guitare ou le châssis d'un appareil.",
+   "contexts": [
+    "live",
+    "studio",
+    "installation"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Défaut d'isolement sur un appareil dont la terre a été supprimée (adaptateur sans terre, prise sans terre) : le châssis est sous tension et rien ne coupe",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Câble ou fiche secteur abîmé ou bricolé",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Matériel mouillé (pluie, boisson renversée)",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Ne plus toucher l'équipement ; couper l'alimentation à la coupure d'urgence ou au départ concerné",
+    "Faire vérifier par une personne habilitée la présence de la terre sur les prises et rallonges utilisées",
+    "Inspecter câbles, fiches et appareils (gaine, carcasse, humidité)",
+    "Chercher tout adaptateur sans terre ou ground lift secteur dans la chaîne"
+   ],
+   "fixes": [
+    "Rétablir une alimentation avec terre et différentiel",
+    "Retirer du service l'appareil ou le câble défectueux et le faire réparer par un professionnel",
+    "Traiter un éventuel ronflement côté audio, jamais en supprimant la terre"
+   ],
+   "rule_ids": [
+    "mains-earth-lifted"
+   ],
+   "concept_ids": [
+    "electrical-safety-earthing",
+    "electric-shock-effects",
+    "residual-current-device"
+   ],
+   "equipment_ids": [],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "symptom",
+      "checks",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "probable_causes"
+     ]
+    },
+    {
+     "url": "https://www.ranecommercial.com/legacy/note110.html",
+     "publisher": "Rane (RaneNote 110, Sound System Interconnection)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "rcd-trips-at-power-up",
+   "name_fr": "Le différentiel déclenche à la mise sous tension",
+   "name_en": "RCD trips at power-up",
+   "domain": "safety",
+   "symptom": "Le dispositif différentiel coupe le départ au moment où l'on allume les amplis ou le système.",
+   "contexts": [
+    "live",
+    "installation"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Fuite réelle vers la terre (défaut d'isolement d'un appareil ou d'un câble)",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Impulsions parasites à l'enclenchement de transformateurs ou d'alimentations à découpage, surtout si tout est allumé en même temps",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Type de différentiel peu adapté (le type F ajoute une immunité contre les déclenchements intempestifs)",
+     "likelihood": "low"
+    }
+   ],
+   "checks": [
+    "Ne pas réarmer sans être autorisé et sans chercher la cause",
+    "Rallumer les appareils un par un, dans l'ordre normal, pour isoler celui qui fait déclencher",
+    "Inspecter l'appareil et les câbles suspects (humidité, gaine)",
+    "Demander à la personne habilitée de vérifier le type et le calibre du différentiel"
+   ],
+   "fixes": [
+    "Retirer et faire réparer l'appareil ou le câble en défaut",
+    "Échelonner la mise sous tension au lieu de tout allumer d'un coup",
+    "Faire adapter la distribution par une personne habilitée si le déclenchement est intempestif"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "residual-current-device",
+    "power-sequencing",
+    "habilitation-electrique"
+   ],
+   "equipment_ids": [],
+   "sources": [
+    {
+     "url": "https://fr.wikipedia.org/wiki/Disjoncteur_différentiel",
+     "publisher": "Wikipédia (FR)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "probable_causes"
+     ]
+    },
+    {
+     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "checks"
+     ]
+    },
+    {
+     "url": "https://www.prosoundweb.com/tech-tip-of-the-day-proper-pa-power-sequencing/",
+     "publisher": "ProSoundWeb (tip from Sweetwater, 2010)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "spl-limit-exceeded-during-show",
+   "name_fr": "Dépassement des limites sonores pendant le concert",
+   "name_en": "SPL limits exceeded during a show",
+   "domain": "safety",
+   "symptom": "L'afficheur de la régie indique une valeur sur 15 minutes au-dessus de 102 dB(A) ou de 118 dB(C).",
+   "contexts": [
+    "live"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Niveau général monté au fil du concert",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Graves (subwoofers) trop forts : dépassement en dB(C) alors que le dB(A) reste correct",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Point de mesure non représentatif ou écart régie/premier rang non pris en compte",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Regarder laquelle des deux valeurs dépasse (dB(A) ou dB(C))",
+    "Vérifier l'évolution sur l'enregistrement pour voir depuis quand le niveau monte",
+    "Vérifier la position du micro de mesure"
+   ],
+   "fixes": [
+    "Baisser le master ou les sources dominantes ; baisser les subs si c'est le dB(C) qui dépasse",
+    "Garder une marge sous la limite pour la fin du set",
+    "Corriger l'écart entre le point de mesure et la zone du public la plus exposée"
+   ],
+   "rule_ids": [
+    "spl-exposure-limit"
+   ],
+   "concept_ids": [
+    "sound-exposure-limits-france",
+    "a-and-c-weighting",
+    "sound-level-logging-display"
+   ],
+   "equipment_ids": [
+    "nti-audio-xl2"
+   ],
+   "sources": [
+    {
+     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "symptom",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "probable_causes"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "speaker-thump-at-power",
+   "name_fr": "Gros « boum » dans les enceintes à l'allumage ou à l'extinction",
+   "name_en": "Speaker thump at power-up or power-down",
+   "domain": "safety",
+   "symptom": "Un choc sourd sort des enceintes quand on allume ou éteint la console ou un processeur.",
+   "contexts": [
+    "live",
+    "studio",
+    "installation"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Amplificateurs ou enceintes actives allumés avant la console ou les processeurs (ou éteints après)",
+     "likelihood": "high"
+    }
+   ],
+   "checks": [
+    "Vérifier l'ordre de mise sous tension utilisé",
+    "Vérifier si une multiprise commune allume tout en même temps"
+   ],
+   "fixes": [
+    "Allumer les amplis en dernier et les couper en premier",
+    "Séparer l'alimentation des amplis de celle de la régie pour pouvoir les commander séparément"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "power-sequencing"
+   ],
+   "equipment_ids": [],
+   "sources": [
+    {
+     "url": "https://www.prosoundweb.com/tech-tip-of-the-day-proper-pa-power-sequencing/",
+     "publisher": "ProSoundWeb (tip from Sweetwater, 2010)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "ringing-ears-after-show",
+   "name_fr": "Oreilles qui sifflent après le concert",
+   "name_en": "Ringing ears after a show",
+   "domain": "safety",
+   "symptom": "Après une balance ou un concert, un technicien entend un sifflement ou un bourdonnement et a l'impression d'entendre moins bien.",
+   "contexts": [
+    "live",
+    "studio"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Fatigue auditive due à une exposition trop forte ou trop longue sans protection",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Protecteurs retirés une partie du temps",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Niveau trop élevé dans les ears ou au casque",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Évaluer l'exposition du poste (niveau et durée)",
+    "Vérifier le port effectif des protecteurs",
+    "Vérifier le niveau et le limiteur des ears"
+   ],
+   "fixes": [
+    "Arrêter l'exposition : la fatigue auditive disparaît si l'exposition cesse",
+    "Consulter la médecine du travail si les symptômes persistent",
+    "Revoir le plan de protection auditive de l'équipe"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "tinnitus-auditory-fatigue",
+    "noise-induced-hearing-loss",
+    "hearing-protection-devices"
+   ],
+   "equipment_ids": [
+    "shure-psm-1000"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "symptom",
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.inrs.fr/risques/bruit/demarche-prevention.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "probable_causes"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+     "publisher": "Shure (G. Sigismondi, Personal Monitor Systems)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "checks"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "wind-rising-flown-pa",
+   "name_fr": "Vent qui se lève sur un système accroché en extérieur",
+   "name_en": "Rising wind on an outdoor flown PA",
+   "domain": "safety",
+   "symptom": "En plein air, le vent forcit et l'array suspendu commence à bouger.",
+   "contexts": [
+    "live",
+    "festival"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Conditions météo dépassant les limites du fabricant pour l'accroche",
+     "likelihood": "high"
+    }
+   ],
+   "checks": [
+    "Mesurer ou estimer la force du vent (échelle de Beaufort)",
+    "Comparer aux limites du manuel d'accroche du système"
+   ],
+   "fixes": [
+    "Au-delà de la limite du fabricant (6 Beaufort pour d&b série V), ne pas accrocher au-dessus du public",
+    "Au-delà de 8 Beaufort (d&b série V), faire évacuer la zone, descendre et sécuriser le système"
+   ],
+   "rule_ids": [
+    "rigging-without-safety"
+   ],
+   "concept_ids": [
+    "rigging-safety"
+   ],
+   "equipment_ids": [
+    "db-audiotechnik-v8"
+   ],
+   "sources": [
+    {
+     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "symptom",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Courants de fuite cumulés de nombreux appareils sur un même différentiel comme cause de déclenchement",
+   "searched": "Wikipédia DDR et INRS ne le disent pas ; cause non retenue."
+  }
+ ]
+}

@@ -1,0 +1,654 @@
+{
+  "entity": "procedure",
+  "domain": "audio-networks",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "setup-dante-stagebox-console",
+      "name_fr": "Mettre en service une stagebox Dante avec une console",
+      "name_en": "Set up a Dante stagebox with a console",
+      "domain": "audio-networks",
+      "context": "Installation façade-plateau : une stagebox Dante (ex. Yamaha Rio3224-D2) au plateau, une console (ex. Yamaha QL1/CL5) en régie, reliées par un switch Gigabit.",
+      "duration_min": 45,
+      "equipment_ids": [
+        "yamaha-rio3224-d2",
+        "yamaha-ql1",
+        "luminex-gigacore-16t"
+      ],
+      "concept_ids": [
+        "dante",
+        "dante-ip-addressing",
+        "ptp-leader-election",
+        "dante-subscription",
+        "ethernet-cable-length-limit"
+      ],
+      "rule_ids": [
+        "ethernet-copper-run-over-100m",
+        "multiple-preferred-leaders"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Plan de câblage et input list disponibles"
+          ],
+          "action": "Tirer le câble réseau (Cat 5e/Cat 6, de préférence Cat 6 blindé avec etherCON) entre le plateau et la régie, en vérifiant que chaque segment cuivre fait moins de 100 m.",
+          "expected_result": "Liaison posée, longueur notée sur le plan de câblage.",
+          "typical_mistakes": [
+            "Un seul touret de 150 m sans switch intermédiaire",
+            "Câble non blindé ou RJ45 plastique en extérieur"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Brancher le port primaire de la stagebox et celui de la console sur le switch (ou en direct). Laisser les appareils en adressage automatique.",
+          "expected_result": "Les LED de lien sont allumées ; les appareils prennent une adresse 169.254.x.x (ou DHCP).",
+          "typical_mistakes": [
+            "Brancher le port secondaire sur le même switch que le primaire"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Brancher l'ordinateur de Dante Controller sur le même réseau, interface en adressage automatique, et choisir cette interface dans Dante Controller.",
+          "expected_result": "Tous les appareils apparaissent, aucun nom en rouge.",
+          "typical_mistakes": [
+            "Wi-Fi et Ethernet de l'ordinateur dans le même sous-réseau",
+            "Mauvaise interface sélectionnée"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Régler la même fréquence d'échantillonnage sur tous les appareils et désigner un seul Preferred Leader (souvent la console).",
+          "expected_result": "Clock Status : un seul leader, tous les autres en follower et verrouillés.",
+          "typical_mistakes": [
+            "Plusieurs Preferred Leader",
+            "Un appareil en sync externe word clock alors qu'un autre est Preferred Leader"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Abonner les entrées de la console aux canaux de la stagebox (matrice de routage) et, dans l'autre sens, les sorties de la console aux sorties de la stagebox.",
+          "expected_result": "Coches vertes sur chaque intersection utilisée ; les signaux des micros arrivent sur les bonnes voies.",
+          "typical_mistakes": [
+            "Décalage d'un canal dans la matrice",
+            "Fréquences différentes : canaux grisés non routables"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Faire un line check depuis la console (gain des préamplis distants) et contrôler l'onglet Latency et l'état d'horloge.",
+          "expected_result": "Toutes les lignes passent ; aucun paquet hors latence.",
+          "typical_mistakes": [
+            "Oublier de sauvegarder la configuration (preset Dante / scène console)"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V à la console avant de (dé)brancher un micro sur la stagebox",
+        "Ranger le câble réseau hors des passages ou sous passe-câbles"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ethernet_over_twisted_pair",
+          "publisher": "Wikipedia, Ethernet over twisted pair",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+          "publisher": "Yamaha, R series (Rio3224-D2) specifications",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "context"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "configure-switch-for-dante",
+      "name_fr": "Configurer un switch administrable pour Dante (QoS, EEE, IGMP)",
+      "name_en": "Configure a managed switch for Dante",
+      "domain": "audio-networks",
+      "context": "Préparation d'un switch Gigabit administrable avant intégration dans un réseau Dante (ou Dante + AES67).",
+      "duration_min": 30,
+      "equipment_ids": [
+        "netgear-m4250-10g2xf-poe-plus",
+        "luminex-gigacore-16t"
+      ],
+      "concept_ids": [
+        "qos-dscp",
+        "energy-efficient-ethernet",
+        "igmp-snooping",
+        "network-switch-requirements"
+      ],
+      "rule_ids": [
+        "eee-enabled-switch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Switch isolé du réseau de production"
+          ],
+          "action": "Se connecter à l'interface d'administration du switch (adresse par défaut indiquée dans sa notice, ordinateur réglé dans le même sous-réseau).",
+          "expected_result": "Page d'administration accessible.",
+          "typical_mistakes": [
+            "Laisser l'ordinateur en link-local alors que le switch a une adresse fixe dans un autre plan"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Si le switch propose un profil Dante intégré, l'appliquer, puis vérifier chaque réglage ci-dessous.",
+          "expected_result": "Profil appliqué.",
+          "typical_mistakes": [
+            "Se fier au profil sans contrôler"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Activer la QoS, régler le trust mode sur DSCP, priorité stricte, et mapper CS7 (56) sur la file la plus haute, EF (46) sur la suivante, CS1 (8) sur une file basse, le reste en best effort. En réseau mixte AES67, prévoir aussi AF41 (34).",
+          "expected_result": "Table DSCP conforme au tableau Audinate.",
+          "typical_mistakes": [
+            "Laisser le mapping par défaut du constructeur, qui peut inverser CS7 et EF",
+            "Oublier d'enregistrer puis redémarrer"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Désactiver l'EEE (Green Ethernet, 802.3az) sur tous les ports Dante.",
+          "expected_result": "EEE : off sur chaque port utilisé.",
+          "typical_mistakes": [
+            "Désactiver l'EEE sur un seul port de test"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Si des flux multicast sont prévus, activer l'IGMP snooping et s'assurer qu'un querier IGMP est actif sur le réseau.",
+          "expected_result": "Le multicast n'est transmis qu'aux ports abonnés.",
+          "typical_mistakes": [
+            "Snooping actif sans querier",
+            "Activer le snooping pour rien sur un petit réseau 100 % unicast puis s'étonner d'un comportement différent"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Sauvegarder la configuration, étiqueter le switch (primaire ou secondaire) et exporter un fichier de sauvegarde.",
+          "expected_result": "Configuration persistante et documentée.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
+          "publisher": "Focusrite, Configuring a switch for Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://service.shure.com/articles/en_US/Knowledge/QOS-In-Depth",
+          "publisher": "Shure, QoS In Depth (knowledge base)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+          "publisher": "ALC NetworX, RAVENNA Network Requirements V1.4b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "patch-dante-flows-controller",
+      "name_fr": "Patcher des flux dans Dante Controller",
+      "name_en": "Patch flows in Dante Controller",
+      "domain": "audio-networks",
+      "context": "Routage des canaux entre appareils Dante (stagebox, consoles, enregistreur) depuis la matrice de Dante Controller.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "yamaha-rio3224-d2",
+        "yamaha-cl5",
+        "rme-digiface-dante"
+      ],
+      "concept_ids": [
+        "dante-controller",
+        "dante-subscription",
+        "multicast-unicast"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Tous les appareils visibles et à la même fréquence d'échantillonnage"
+          ],
+          "action": "Ouvrir la vue Routing ; déplier les émetteurs (Dante Transmitters, en colonnes) et les récepteurs (Dante Receivers, en lignes).",
+          "expected_result": "Les canaux de chaque appareil sont visibles.",
+          "typical_mistakes": [
+            "Chercher les entrées dans les lignes : les émetteurs sont en colonnes"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Cliquer à l'intersection d'un canal Tx et d'un canal Rx pour créer l'abonnement (canal@appareil).",
+          "expected_result": "Coche verte ; le statut Rx passe à OK.",
+          "typical_mistakes": [
+            "Abonner un canal grisé (format incompatible)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Si plusieurs récepteurs prennent les mêmes canaux (façade, retours, enregistrement), créer un flux multicast sur l'émetteur.",
+          "expected_result": "Les récepteurs basculent automatiquement du unicast vers le multicast.",
+          "typical_mistakes": [
+            "Créer du multicast sans IGMP snooping alors qu'un point d'accès Wi-Fi est sur le réseau"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Vérifier dans Network Status la bande passante et le nombre de flux, et dans Device Info les éventuelles erreurs.",
+          "expected_result": "Pas d'erreur de flux ni de dépassement.",
+          "typical_mistakes": [
+            "Dépasser le nombre de flux unicast de l'émetteur"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Enregistrer un preset Dante Controller de la configuration.",
+          "expected_result": "Fichier de preset sauvegardé.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Baisser l'écoute avant de router un canal inconnu vers une sortie de diffusion"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "set-dante-latency-from-latency-tab",
+      "name_fr": "Régler la latence Dante à l'aide de l'onglet Latency",
+      "name_en": "Set Dante latency using the Latency tab",
+      "domain": "audio-networks",
+      "context": "Ajuster la latence de réception d'un appareil pour éliminer les clics sans pénaliser le retour des musiciens.",
+      "duration_min": 15,
+      "equipment_ids": [
+        "yamaha-rio3224-d2",
+        "yamaha-ql1"
+      ],
+      "concept_ids": [
+        "dante-device-latency",
+        "network-topology",
+        "dante-controller"
+      ],
+      "rule_ids": [
+        "dante-latency-too-low-100mbps"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Compter les sauts (switches) entre émetteur et récepteur et vérifier la vitesse des liens (Gigabit ou 100 Mbit/s).",
+          "expected_result": "Topologie connue.",
+          "typical_mistakes": [
+            "Oublier un switch caché (boîtier mural, régie)"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Ouvrir le récepteur dans Device View, onglet Latency, et lire l'histogramme d'arrivée des paquets par émetteur.",
+          "expected_result": "Barres vertes = paquets dans la fenêtre ; ambre = proches de la limite ; rouge = paquets perdus.",
+          "typical_mistakes": [
+            "Lire l'histogramme multicast, toujours à 1 ms, au lieu de l'histogramme unicast"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Si des barres ambre ou rouges apparaissent, augmenter la latence dans Device Config (ou corriger le réseau).",
+          "expected_result": "Plus aucune barre rouge.",
+          "typical_mistakes": [
+            "Changer la latence en plein concert : l'audio est interrompu pendant le rétablissement des flux"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Sur un lien 100 Mbit/s, ne pas descendre sous 1 ms.",
+          "expected_result": "Pas d'erreur « Tx Scheduler Failure ».",
+          "typical_mistakes": [
+            "Mettre 0,25 ms sur un appareil branché en 100 Mbit/s"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Laisser Dante Controller tourner pendant une répétition pour confirmer la stabilité.",
+          "expected_result": "Histogramme stable.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/processor/dme7/en/12_dante_en.html",
+          "publisher": "Yamaha, DME7 reference manual: Dante Settings",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "build-redundant-dante-network",
+      "name_fr": "Câbler un réseau Dante redondant (double étoile)",
+      "name_en": "Build a redundant Dante network",
+      "domain": "audio-networks",
+      "context": "Spectacle ou installation où une coupure audio est inacceptable : deux switches indépendants, primaire et secondaire.",
+      "duration_min": 40,
+      "equipment_ids": [
+        "yamaha-rio3224-d2",
+        "yamaha-cl5",
+        "luminex-gigacore-16t"
+      ],
+      "concept_ids": [
+        "network-redundancy",
+        "dante-redundant-switched-mode",
+        "dante-ip-addressing"
+      ],
+      "rule_ids": [
+        "primary-secondary-same-switch",
+        "dante-redundancy-crossed"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Repérer les switches et câbles par couleur : par exemple primaire = un code couleur, secondaire = un autre.",
+          "expected_result": "Deux infrastructures clairement identifiées.",
+          "typical_mistakes": [
+            "Câbles indifférenciés"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Mettre chaque appareil redondant en mode Redundant (Dante Controller, onglet Network Config, ou menu de l'appareil) et redémarrer si demandé.",
+          "expected_result": "Mode redondant actif.",
+          "typical_mistakes": [
+            "Appareil resté en Switched : il ponte les deux réseaux"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Relier tous les ports primaires au switch primaire et tous les ports secondaires au switch secondaire, à la même vitesse de lien.",
+          "expected_result": "Les deux réseaux portent les mêmes flux.",
+          "typical_mistakes": [
+            "Un câble secondaire dans le switch primaire",
+            "Primaire en Gigabit, secondaire en 100 Mbit/s"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Brancher les appareils non redondants uniquement sur le primaire. Ne jamais relier les deux switches.",
+          "expected_result": "Aucun lien entre réseaux.",
+          "typical_mistakes": [
+            "Relier les switches « pour que l'ordinateur voie tout »"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Vérifier dans Device Info que les adresses secondaires sont toutes dans 172.31.x.x (link-local) ou dans le plan DHCP du secondaire, puis tester en débranchant le primaire.",
+          "expected_result": "L'audio continue sans coupure audible sur le secondaire.",
+          "typical_mistakes": [
+            "Même sous-réseau sur les deux interfaces d'un appareil"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Faire le test de bascule hors public ou à volume réduit"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "connect-aes50-stagebox",
+      "name_fr": "Raccorder une stagebox AES50 à une console",
+      "name_en": "Connect an AES50 stagebox to a console",
+      "domain": "audio-networks",
+      "context": "Petit club : stagebox Midas DL16 reliée à une console Behringer X32 / Midas M32 par un câble Cat5 blindé.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "midas-dl16",
+        "behringer-x32"
+      ],
+      "concept_ids": [
+        "aes50",
+        "network-topology"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Utiliser un câble Cat5 blindé (STP) avec connecteurs etherCON/RJ45 entre le port AES50 de la console et le port A de la DL16.",
+          "expected_result": "Lien établi (voyants de synchro).",
+          "typical_mistakes": [
+            "Faire passer la liaison AES50 par un switch Ethernet : AES50 n'est pas routable"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Pour plus d'entrées, chaîner une deuxième ou troisième DL16 par le port B (jusqu'à trois unités).",
+          "expected_result": "Jusqu'à 48 entrées et 24 sorties au plateau.",
+          "typical_mistakes": [
+            "Dépasser trois DL16 sur une chaîne"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Dans la console, affecter les entrées AES50 aux voies et vérifier que l'horloge est bien fournie par la console.",
+          "expected_result": "Signaux présents sans clic.",
+          "typical_mistakes": [
+            "Deux maîtres d'horloge"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V avant de (dé)brancher un micro"
+      ],
+      "sources": [
+        {
+          "url": "https://www.midasconsoles.com/en/products/0606-ACJ",
+          "publisher": "Midas, DL16 product page",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/AES50",
+          "publisher": "Wikipedia, AES50",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Fonction Yamaha de compensation de gain (Gain Compensation) pour partager les préamplis entre deux consoles",
+      "searched": "Manuels Yamaha CL/QL non ouverts (Yamaha PDF 403) ; non utilisé dans les étapes"
+    }
+  ]
+}

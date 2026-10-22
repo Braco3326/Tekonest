@@ -1,0 +1,307 @@
+{
+  "id": "mastering-room-medium",
+  "name_fr": "Studio de mastering",
+  "name_en": "Mastering room",
+  "family": "studio",
+  "size": "medium",
+  "description": "Salle d'écoute de référence pour le mastering : grandes enceintes posées au sol, loin des murs, bureau bas pour ne pas créer de réflexion, matériel de traitement stéréo en racks latéraux. Elle suit les exigences d'une salle d'écoute de référence (EBU Tech 3276 : ≥ 40 m², ≤ 300 m³ ; ITU-R BS.1116 : 20–60 m² en stéréo).",
+  "dimensions_m": {
+    "length": {
+      "min": 7.3,
+      "typical": 8.1,
+      "max": 8.9
+    },
+    "width": {
+      "min": 5.5,
+      "typical": 6.2,
+      "max": 6.75
+    },
+    "height": {
+      "min": 3.0,
+      "typical": 3.3,
+      "max": 3.6
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "parquet sur dalle flottante, tapis entre enceintes et auditeur",
+      "finish_note": "Pas de surface réfléchissante entre enceintes et point d'écoute."
+    },
+    {
+      "surface": "walls",
+      "material": "absorbants large bande + diffuseurs, symétrie stricte",
+      "finish_note": "Réponse de salle dans le gabarit EBU (tolérances de TR par tiers d'octave)."
+    },
+    {
+      "surface": "rear-wall",
+      "material": "diffuseurs + pièges à basses profonds",
+      "finish_note": "Champ diffus derrière l'auditeur."
+    },
+    {
+      "surface": "ceiling",
+      "material": "nuage absorbant au-dessus de la zone d'écoute",
+      "finish_note": "Supprime la réflexion de plafond."
+    }
+  ],
+  "rt60_s": {
+    "min": 0.2,
+    "max": 0.4,
+    "band_note": "Tm (200 Hz–4 kHz) selon l'EBU ; formule guide 0,25·(V/100)^(1/3) ≈ 0,30 s pour le volume typique (166 m³).",
+    "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+  },
+  "zones": [
+    {
+      "id": "listening",
+      "kind": "control-room",
+      "rect_m": [
+        0,
+        -0.4,
+        1.6,
+        1.6
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "desk",
+      "kind": "desk",
+      "rect_m": [
+        0,
+        -0.9,
+        2.4,
+        1.0
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "speakers",
+      "kind": "other",
+      "rect_m": [
+        0,
+        -2.95,
+        4.2,
+        1.2
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "racks",
+      "kind": "machine-room",
+      "rect_m": [
+        2.4,
+        -0.4,
+        1.0,
+        1.6
+      ],
+      "floor_y_m": 0
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "neumann-kh-420",
+      "zone": "speakers",
+      "position_m": [
+        -1.4,
+        1.2,
+        -2.85
+      ],
+      "rotation_deg": 30,
+      "note": "Écoute principale gauche sur pied, ≥ 1 m des murs (EBU) ; base 2,8 m. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+    },
+    {
+      "equipment_id": "neumann-kh-420",
+      "zone": "speakers",
+      "position_m": [
+        1.4,
+        1.2,
+        -2.85
+      ],
+      "rotation_deg": -30,
+      "note": "Écoute principale droite."
+    },
+    {
+      "equipment_id": "neumann-kh-750-dsp",
+      "zone": "speakers",
+      "position_m": [
+        0,
+        0.25,
+        -3.3
+      ],
+      "rotation_deg": 0,
+      "note": "Caisson de grave central."
+    },
+    {
+      "equipment_id": "grace-m905",
+      "zone": "desk",
+      "position_m": [
+        0,
+        0.75,
+        -0.9
+      ],
+      "rotation_deg": 0,
+      "note": "Contrôleur d'écoute (volume calibré, sources, mono)."
+    },
+    {
+      "equipment_id": "rtw-touchmonitor-tm7",
+      "zone": "desk",
+      "position_m": [
+        0.5,
+        0.85,
+        -1.0
+      ],
+      "rotation_deg": 0,
+      "note": "Mesure de loudness et true peak."
+    },
+    {
+      "equipment_id": "manley-variable-mu",
+      "zone": "racks",
+      "position_m": [
+        2.4,
+        1.0,
+        -0.8
+      ],
+      "rotation_deg": -90,
+      "note": "Compresseur stéréo à tubes."
+    },
+    {
+      "equipment_id": "ssl-the-bus-plus",
+      "zone": "racks",
+      "position_m": [
+        2.4,
+        0.8,
+        -0.4
+      ],
+      "rotation_deg": -90,
+      "note": "Compresseur de bus stéréo."
+    },
+    {
+      "equipment_id": "lynx-aurora-n",
+      "zone": "racks",
+      "position_m": [
+        2.4,
+        0.6,
+        0.0
+      ],
+      "rotation_deg": -90,
+      "note": "Conversion AN/NA haute qualité."
+    },
+    {
+      "equipment_id": "antelope-ocx-hd",
+      "zone": "racks",
+      "position_m": [
+        2.4,
+        0.4,
+        0.0
+      ],
+      "rotation_deg": -90,
+      "note": "Horloge maître (word clock)."
+    },
+    {
+      "equipment_id": "nti-audio-xl2",
+      "zone": "listening",
+      "position_m": [
+        0,
+        1.2,
+        -0.4
+      ],
+      "rotation_deg": 0,
+      "note": "Sonomètre pour calibrer le niveau d'écoute au point de référence."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        0,
+        0.3,
+        -4.0
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        3.05,
+        0.3,
+        -0.4
+      ],
+      "type": "schuko-16a-onduleur"
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        2.4,
+        1.2,
+        0.2
+      ],
+      "type": "xlr-patchbay-24",
+      "note": "Patch symétrique XLR de la chaîne de mastering (pas de TT pour garder le chemin court)."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 2.2,
+      "width_m": 1.0,
+      "height_m": 2.1
+    }
+  ],
+  "lighting": {
+    "mood": "calme, indirect, chaud",
+    "color_temp_k": 3000
+  },
+  "procedural": {
+    "wall_color": "#5a5550",
+    "floor_color": "#7b5e43",
+    "ceiling_color": "#3a3734",
+    "prop_hints": [
+      "grandes enceintes sur pieds",
+      "bureau bas en verre ou bois",
+      "racks latéraux",
+      "diffuseurs QRD",
+      "aucun objet entre enceintes et auditeur"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+      "publisher": "EBU (Tech 3276, 1998)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "standard",
+      "covers": [
+        "dimensions_m.*.min (≥ 40 m² pour une salle d'écoute de référence)",
+        "dimensions_m (≤ 300 m³, rapports l/h et w/h)",
+        "rt60_s",
+        "gear_positions (enceintes ≥ 1 m des murs, base 2–4 m, auditeur ≥ 1,5 m des murs)"
+      ]
+    },
+    {
+      "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1116-3-201502-I!!PDF-E.pdf",
+      "publisher": "ITU-R (Rec. BS.1116-3, 2015)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "standard",
+      "covers": [
+        "dimensions_m.*.max (20–60 m² en stéréo)",
+        "rapports de dimensions",
+        "rt60_s (formule Tm)"
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "field": "dimensions_m",
+      "note": "Les surfaces min (40 m², EBU) et max (60 m², BS.1116) sont sourcées ; le découpage en longueur × largeur × hauteur et la valeur typique (50 m², 3,3 m) sont estimés en respectant les rapports EBU/ITU. Aucune page de studio de mastering avec dimensions n'a été ouverte.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "description",
+      "note": "Le mastering n'est pas nommé dans l'EBU : on applique ici les exigences de la « salle d'écoute de référence », choix pédagogique.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

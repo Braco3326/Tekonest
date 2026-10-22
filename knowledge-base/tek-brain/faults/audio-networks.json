@@ -1,0 +1,420 @@
+{
+  "entity": "fault",
+  "domain": "audio-networks",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "dante-device-not-visible",
+      "name_fr": "Appareil Dante absent ou en rouge dans Dante Controller",
+      "name_en": "Dante device not visible in Dante Controller",
+      "domain": "audio-networks",
+      "symptom": "Dante Controller n'affiche pas un appareil (ou aucun), ou affiche son nom en rouge ; ses canaux ne sont pas routables.",
+      "contexts": [
+        "live",
+        "studio",
+        "installation",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Ordinateur sur la mauvaise interface réseau ou dans un autre sous-réseau que les appareils",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Appareil en IP statique hors du sous-réseau (« misplaced »)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Deux serveurs DHCP, ou mélange DHCP / link-local",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Câble secondaire branché sur le réseau primaire, ou réseaux joints",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Fréquence d'échantillonnage différente (appareil visible mais canaux grisés)",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Vérifier l'interface choisie dans la barre d'outils de Dante Controller",
+        "Lire l'adresse IP de l'ordinateur : 169.254.x.x sans DHCP, ou plan du serveur DHCP",
+        "Double-cliquer sur un nom en rouge pour lire le détail de l'erreur",
+        "Comparer les adresses dans Device Info (primaires entre elles, secondaires entre elles)",
+        "Suivre physiquement les câbles secondaires"
+      ],
+      "fixes": [
+        "Mettre l'ordinateur en adressage automatique sur l'interface reliée au réseau Dante",
+        "Remettre l'appareil en adressage automatique, ou placer temporairement l'ordinateur dans son sous-réseau pour le corriger",
+        "Supprimer le serveur DHCP en trop",
+        "Séparer primaire et secondaire"
+      ],
+      "rule_ids": [
+        "primary-secondary-same-switch"
+      ],
+      "concept_ids": [
+        "dante-ip-addressing",
+        "dante-controller"
+      ],
+      "equipment_ids": [
+        "yamaha-rio3224-d2"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "dante-clicks-clock-instability",
+      "name_fr": "Clics et mises en sourdine dus à l'horloge sur un réseau mixte",
+      "name_en": "Clicks from clock instability on a mixed network",
+      "domain": "audio-networks",
+      "symptom": "Clics réguliers, petits trous ou coupures de quelques secondes ; Clock Status Monitor en orange ou rouge, appareils « Clock Sync Unlocked ».",
+      "contexts": [
+        "live",
+        "studio",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Appareil en sync externe word clock alors qu'un autre est Preferred Leader sur une autre horloge",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Horloge word clock externe imprécise utilisée comme référence du leader",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Réseau mixte PTPv1 / PTPv2 (AES67, ST 2110) sans appareil faisant le pont, ou domaines PTP différents",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Liens surchargés, switch mal configuré ou lien 100 Mbit/s là où il faut du Gigabit",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Lire le leader dans Clock Status : un seul attendu",
+        "Vérifier quels appareils ont Preferred Leader et Enable Sync To External",
+        "Activer la surveillance active et lire l'histogramme d'offset de l'appareil suspect (dispersion = instabilité, ambre/rouge = proche de la plage de rattrapage)",
+        "Pour AES67/ST 2110 : vérifier PTPv1 Multicast et le numéro de domaine PTPv2"
+      ],
+      "fixes": [
+        "Un seul leader ; si une horloge externe est requise, rendre leader l'appareil qui la reçoit",
+        "Remplacer ou recaler l'horloge externe",
+        "Garder un appareil PTPv1+PTPv2 comme pont ou unifier le domaine PTP",
+        "Corriger QoS, vitesse de lien et charge du réseau"
+      ],
+      "rule_ids": [
+        "multiple-preferred-leaders"
+      ],
+      "concept_ids": [
+        "ptp-clock",
+        "ptp-leader-election",
+        "word-clock"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "dante-dropouts-eee",
+      "name_fr": "Coupures audio causées par l'EEE d'un switch",
+      "name_en": "Audio dropouts caused by EEE",
+      "domain": "audio-networks",
+      "symptom": "Coupures aléatoires et pertes de synchro, souvent après l'ajout d'un switch « bureautique » ou d'un switch neuf.",
+      "contexts": [
+        "live",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Energy Efficient Ethernet (Green Ethernet, IEEE 802.3az) actif ou mal implémenté sur le switch",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Switch non administrable avec EEE impossible à couper",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Identifier les switches sur le chemin des appareils qui perdent la synchro",
+        "Consulter l'état EEE de chaque port dans l'administration du switch",
+        "Lire l'histogramme d'offset d'horloge dans Dante Controller"
+      ],
+      "fixes": [
+        "Désactiver l'EEE sur tous les ports Dante",
+        "Remplacer un switch non administrable EEE par un modèle administrable"
+      ],
+      "rule_ids": [
+        "eee-enabled-switch"
+      ],
+      "concept_ids": [
+        "energy-efficient-ethernet",
+        "network-switch-requirements"
+      ],
+      "equipment_ids": [
+        "netgear-m4250-10g2xf-poe-plus"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes",
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "dante-latency-too-low",
+      "name_fr": "Latence Dante trop basse : paquets perdus",
+      "name_en": "Dante latency set too low",
+      "domain": "audio-networks",
+      "symptom": "Clics ou craquements sur certains canaux seulement ; voyant rouge dans la colonne de latence de Network Status, ou abonnement en erreur « Tx Scheduler Failure ».",
+      "contexts": [
+        "live",
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Latence du récepteur trop faible pour le nombre de sauts du réseau",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Appareil sur un lien 100 Mbit/s réglé sous 1 ms",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Chaîne daisy-chain trop longue pour la latence choisie",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Lire l'histogramme de l'onglet Latency du récepteur",
+        "Vérifier la vitesse de lien de l'appareil",
+        "Compter les sauts et les appareils en chaîne"
+      ],
+      "fixes": [
+        "Augmenter la latence (hors spectacle : l'audio se coupe pendant le changement)",
+        "Passer le lien en Gigabit",
+        "Remplacer la chaîne par un switch Gigabit"
+      ],
+      "rule_ids": [
+        "dante-latency-too-low-100mbps"
+      ],
+      "concept_ids": [
+        "dante-device-latency",
+        "dante-redundant-switched-mode"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "dante-redundancy-lost",
+      "name_fr": "Redondance inopérante : coupure malgré le secondaire",
+      "name_en": "Redundancy not working",
+      "domain": "audio-networks",
+      "symptom": "Le débranchement du switch primaire coupe l'audio alors qu'un réseau secondaire est câblé, ou des conflits d'adresses apparaissent.",
+      "contexts": [
+        "live",
+        "installation",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Primaire et secondaire reliés (même switch, ou switches interconnectés)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Un appareil en mode Switched qui ponte les deux réseaux",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Vitesses de lien différentes entre primaire et secondaire",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Suivre chaque câble secondaire jusqu'à son switch",
+        "Vérifier le mode (Redundant / Switched) de chaque appareil dans Network Config",
+        "Comparer les adresses secondaires dans Device Info"
+      ],
+      "fixes": [
+        "Séparer physiquement les deux réseaux",
+        "Remettre les appareils en mode Redundant",
+        "Aligner les vitesses de lien"
+      ],
+      "rule_ids": [
+        "primary-secondary-same-switch",
+        "dante-redundancy-crossed"
+      ],
+      "concept_ids": [
+        "network-redundancy",
+        "dante-redundant-switched-mode"
+      ],
+      "equipment_ids": [
+        "luminex-gigacore-16t"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "multicast-flooding-wifi",
+      "name_fr": "Multicast qui sature le Wi-Fi ou un ordinateur",
+      "name_en": "Multicast flooding a Wi-Fi link",
+      "domain": "audio-networks",
+      "symptom": "La tablette ou l'ordinateur de contrôle en Wi-Fi devient lent ou se déconnecte dès que des flux multicast sont créés.",
+      "contexts": [
+        "live",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Flux multicast inondés sur tous les ports faute d'IGMP snooping, y compris vers le point d'accès",
+          "likelihood": "high"
+        }
+      ],
+      "checks": [
+        "Lister les flux multicast dans Dante Controller",
+        "Vérifier l'IGMP snooping et le querier sur le switch"
+      ],
+      "fixes": [
+        "Activer l'IGMP snooping (avec querier)",
+        "Brancher le point d'accès sur un port de contrôle qui ne passe pas le multicast",
+        "Remplacer les flux multicast inutiles par de l'unicast"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "multicast-unicast",
+        "igmp-snooping"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+          "publisher": "ALC NetworX, RAVENNA Network Requirements V1.4b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}

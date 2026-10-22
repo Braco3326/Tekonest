@@ -1,0 +1,232 @@
+{
+  "entity": "skill",
+  "domain": "consoles-signal-flow",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "trace-console-signal-path",
+      "name_fr": "Suivre et dépanner le chemin du signal d'une console",
+      "name_en": "Trace and troubleshoot a console signal path",
+      "domain": "consoles-signal-flow",
+      "description": "Lire le synoptique d'une console analogique ou numérique, suivre une source de l'entrée à la sortie (patch, tranche, bus, sortie) et localiser l'étage où le signal disparaît.",
+      "level": "bts",
+      "concept_ids": [
+        "signal-flow",
+        "input-channel",
+        "channel-strip-order",
+        "main-mix-bus",
+        "input-patching",
+        "pfl-afl-solo"
+      ],
+      "procedure_ids": [
+        "check-input-with-pfl",
+        "patch-stagebox-to-digital-console"
+      ],
+      "success_criteria": [
+        "Pour une panne « pas de son au master », l'élève vérifie dans l'ordre : PFL, affectation, mutes et groupes, faders, patch de sortie",
+        "L'élève nomme pour chaque étage s'il est avant ou après le fader",
+        "Aucune liaison sortie-vers-sortie ou entrée-vers-entrée dans son câblage"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Dépannage d'une chaîne son — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "build-monitor-mixes-from-foh",
+      "name_fr": "Construire des retours depuis la façade",
+      "name_en": "Build monitor mixes from FOH",
+      "domain": "consoles-signal-flow",
+      "description": "Créer des mélanges de retour avec des auxiliaires, choisir le bon point de prélèvement (pré-fader, pré-mute) et vérifier qu'ils restent indépendants du mix façade et des VCA.",
+      "level": "bts",
+      "concept_ids": [
+        "aux-send",
+        "pre-post-fader",
+        "pre-mute-send",
+        "vca-dca",
+        "effects-return"
+      ],
+      "procedure_ids": [
+        "monitor-mixes-from-foh",
+        "build-vca-dca-groups"
+      ],
+      "success_criteria": [
+        "Un mouvement de fader ou de DCA en façade ne modifie pas le niveau du retour écouté en cue",
+        "L'élève justifie le choix pré-fader ou pré-mute pour chaque retour",
+        "Les départs d'effets restent en post-fader"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Sonorisation : retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "description"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "manage-digital-console-scenes",
+      "name_fr": "Gérer les scènes d'une console numérique",
+      "name_en": "Manage digital console scenes",
+      "domain": "consoles-signal-flow",
+      "description": "Enregistrer, protéger et rappeler des scènes en sachant ce qu'elles contiennent, et utiliser Recall Safe et Focus pour éviter les mauvaises surprises.",
+      "level": "bts",
+      "concept_ids": [
+        "scene-memory",
+        "recall-safe-focus",
+        "vca-dca",
+        "input-patching"
+      ],
+      "procedure_ids": [
+        "store-recall-scenes-safely"
+      ],
+      "success_criteria": [
+        "L'élève cite au moins cinq familles de paramètres contenues dans une scène (dont patch et préamplis)",
+        "Un rappel de scène ne modifie pas la tranche placée en Recall Safe",
+        "L'élève explique la différence entre Focus (par scène) et Recall Safe (global)"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Exploitation console numérique — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "patch-with-a-patchbay",
+      "name_fr": "Brasser avec une baie de brassage et des inserts",
+      "name_en": "Patch with a patchbay and inserts",
+      "domain": "consoles-signal-flow",
+      "description": "Choisir le mode de normalisation d'une voie, insérer un traitement en série et prélever un signal sans couper la liaison.",
+      "level": "bts",
+      "concept_ids": [
+        "patchbay-normalling",
+        "insert-point",
+        "serial-parallel-processing"
+      ],
+      "procedure_ids": [
+        "patch-outboard-on-insert"
+      ],
+      "success_criteria": [
+        "L'élève prédit si la voie devient muette quand on insère une fiche en haut, selon le mode normalisé, semi-normalisé ou non normalisé",
+        "Envoi d'insert vers entrée du processeur et sortie du processeur vers retour, sans inversion",
+        "L'élève choisit insert (série) ou aux (parallèle) selon le traitement"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Câblage studio — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+          "publisher": "Samson Technologies — S patch plus Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": []
+}

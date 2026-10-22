@@ -1,0 +1,112 @@
+{
+  "id": "dj-booth-small",
+  "name_fr": "Club en configuration DJ (booth sur scène, petite salle)",
+  "name_en": "Club in DJ configuration (booth on stage, small room)",
+  "family": "live",
+  "size": "small",
+  "description": "La même petite salle de musiques actuelles que le gabarit bar-club, en soirée « club » : un booth DJ (table avec platines, lecteurs et table de mixage DJ) posé au centre du nez de scène, deux retours de booth orientés vers le DJ, un micro pour le MC, et la sortie stéréo de la table DJ envoyée vers la console façade par une DI stéréo ou des lignes symétriques. Nouveau Monde (Fribourg, salle 16,20 × 9,80 m) liste dans sa fiche technique un équipement DJ (table Pioneer DJM 800, deux CDJ 350, deux platines Technics MK II) à côté du système L-Acoustics de la salle. Le point clé pour un technicien : le niveau grave d'une soirée électro reste sous les limites réglementaires (Paloma affiche 102 dB(A) et 118 dB(C) en Leq 15 min), et le retour de booth ne doit pas repartir dans les micros. Convention des ouvertures : le mur « front » est derrière la scène (−z), « rear » le fond de salle (+z).",
+  "dimensions_m": {
+    "length": { "min": 12, "typical": 16.2, "max": 22 },
+    "width": { "min": 9, "typical": 9.8, "max": 10 },
+    "height": { "min": 3.7, "typical": 4.7, "max": 4.95 }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    { "surface": "floor", "material": "plancher bois peint noir (piste de danse)", "finish_note": "Nouveau Monde : « sol en bois noir »." },
+    { "surface": "stage-floor", "material": "praticables recouverts de tapis noir, booth DJ sur praticable dédié", "finish_note": "Scène à 0,80 m (Nouveau Monde) ; hauteur du booth estimée." },
+    { "surface": "walls", "material": "murs peints noir mat", "finish_note": "Estimation (non décrit dans les fiches)." },
+    { "surface": "ceiling", "material": "plafond technique noir avec gril", "finish_note": "Hauteur sous gril 4,70 m (Paloma Club) à 4,95 m sous perches (Nouveau Monde)." }
+  ],
+  "rt60_s": {
+    "min": 0.6,
+    "max": 1.6,
+    "band_note": "Valeur préférée à 500 Hz pour les petites salles rock selon DPA ; recommandation générale, pas une mesure.",
+    "source_url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/"
+  },
+  "zones": [
+    { "id": "scene", "kind": "stage", "rect_m": [0, -5.6, 9.7, 5], "floor_y_m": 0.8 },
+    { "id": "booth-dj", "kind": "booth", "rect_m": [0, -4.4, 3, 1.4], "floor_y_m": 0.8 },
+    { "id": "piste", "kind": "audience", "rect_m": [0, 2.5, 9.8, 11.2], "floor_y_m": 0 },
+    { "id": "regie-facade", "kind": "foh", "rect_m": [0, 6.6, 3, 2], "floor_y_m": 0 },
+    { "id": "bar", "kind": "other", "rect_m": [-3.4, 6.6, 3, 3], "floor_y_m": 0 }
+  ],
+  "gear_positions": [
+    { "equipment_id": "sennheiser-hd-25", "zone": "booth-dj", "position_m": [0, 1.85, -4.6], "rotation_deg": 0, "note": "Casque DJ fermé pour le calage (pré-écoute) ; la table et les lecteurs DJ ne sont pas encore au catalogue." },
+    { "equipment_id": "l-acoustics-x15-hiq", "zone": "booth-dj", "position_m": [-1.4, 0.8, -4.2], "rotation_deg": 135, "note": "Retour de booth gauche tourné vers le DJ (Nouveau Monde : X15 HiQ en retours)." },
+    { "equipment_id": "l-acoustics-x15-hiq", "zone": "booth-dj", "position_m": [1.4, 0.8, -4.2], "rotation_deg": 225, "note": "Retour de booth droit." },
+    { "equipment_id": "radial-prod2", "zone": "booth-dj", "position_m": [0.9, 0.8, -5.0], "rotation_deg": 0, "note": "DI stéréo passive sur la sortie master de la table DJ (Nouveau Monde : 2 Radial Pro D2)." },
+    { "equipment_id": "shure-sm58", "zone": "booth-dj", "position_m": [-0.9, 1.9, -4.5], "rotation_deg": 0, "note": "Micro MC filaire." },
+    { "equipment_id": "shure-slx-d", "zone": "regie-facade", "position_m": [1, 1.0, 6.9], "rotation_deg": 180, "note": "Micro HF de secours pour le MC." },
+    { "equipment_id": "yamaha-rio3224-d2", "zone": "scene", "position_m": [4.2, 0.8, -7.6], "rotation_deg": 180, "note": "Stagebox : reçoit la DI stéréo et le micro MC." },
+    { "equipment_id": "yamaha-cl5", "zone": "regie-facade", "position_m": [0, 0.9, 6.6], "rotation_deg": 180, "note": "Console façade (Nouveau Monde : CL5) : le DJ arrive sur deux tranches stéréo." },
+    { "equipment_id": "nti-audio-xl2", "zone": "regie-facade", "position_m": [-1.2, 1.6, 6.6], "rotation_deg": 180, "note": "Sonomètre pour suivre les Leq dB(A) et dB(C) réglementaires." },
+    { "equipment_id": "l-acoustics-kara-ii", "zone": "scene", "position_m": [-4.3, 4.2, -3.3], "rotation_deg": 0, "note": "Ligne gauche (Nouveau Monde : 10 KARA)." },
+    { "equipment_id": "l-acoustics-kara-ii", "zone": "scene", "position_m": [4.3, 4.2, -3.3], "rotation_deg": 0, "note": "Ligne droite." },
+    { "equipment_id": "l-acoustics-ks28", "zone": "scene", "position_m": [-3.6, 0, -3.6], "rotation_deg": 0, "note": "Sub (Nouveau Monde : SB28 ; KS28 = modèle de la même famille au catalogue)." },
+    { "equipment_id": "l-acoustics-ks28", "zone": "scene", "position_m": [3.6, 0, -3.6], "rotation_deg": 0, "note": "Sub droit." },
+    { "equipment_id": "l-acoustics-la12x", "zone": "scene", "position_m": [-4.2, 0.8, -7.6], "rotation_deg": 180, "note": "Amplification (Nouveau Monde : LA8)." }
+  ],
+  "power_points": [
+    { "position_m": [0, 0.8, -5.2], "type": "schuko-16a" },
+    { "position_m": [4.6, 0.8, -7.9], "type": "p17-32a-3ph" },
+    { "position_m": [0, 0, 7.6], "type": "schuko-16a" }
+  ],
+  "patch_points": [
+    { "position_m": [0.9, 0.8, -5.0], "type": "booth-patch-xlr-4", "note": "Départs XLR du booth : master G/D, micro MC, retour booth." },
+    { "position_m": [4.2, 0.8, -7.6], "type": "stage-box-32ch-dante", "note": "Rio3224-D2." }
+  ],
+  "openings": [
+    { "wall": "front", "kind": "door", "offset_m": 3.0, "width_m": 2.5, "height_m": 3.5, "note": "Accès arrière-scène (Nouveau Monde : 2,5 × 3,5 m)." },
+    { "wall": "rear", "kind": "door", "offset_m": 2.5, "width_m": 1.8, "height_m": 2.2, "note": "Entrée public (estimée)." },
+    { "wall": "left", "kind": "door", "offset_m": 3.0, "width_m": 1.4, "height_m": 2.1, "note": "Issue de secours (estimée)." }
+  ],
+  "lighting": { "mood": "nuit club : salle noire, lasers et stroboscopes, booth éclairé en lumière de service tamisée", "color_temp_k": 6500 },
+  "procedural": {
+    "wall_color": "#0f0f12",
+    "floor_color": "#1a1a1a",
+    "ceiling_color": "#0a0a0a",
+    "prop_hints": ["table de booth DJ habillée de noir", "lampe de pupitre col de cygne", "bacs à vinyles", "boule à facettes", "machine à fumée", "comptoir de bar", "barrière basse devant le booth"]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://2019.belluard.ch/media/filer-content/public/2018/11/19/fiche_technique_nm_012018.pdf",
+      "publisher": "Nouveau Monde (Fribourg) — Fiche technique 01/2018",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": ["dimensions_m.length.typical (16,20 m)", "dimensions_m.width.typical (9,80 m)", "dimensions_m.height.max (4,95 m)", "zones.scene", "surfaces.floor", "openings[0]", "description (équipement DJ : DJM 800, 2 CDJ 350, 2 Technics MK II)", "gear_positions (choix du matériel : CL5, Rio, KARA, SB28, LA8, X15 HiQ, Radial Pro D2)"]
+    },
+    {
+      "url": "https://paloma-nimes.fr/wp-content/uploads/2025/09/ft-club-paloma-2025.pdf",
+      "publisher": "Paloma SMAC Nîmes — Fiche technique du Club (saison 2025-2026)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": ["dimensions_m.height.typical (4,70 m)", "dimensions_m.width.max (10 m mur à mur)", "description (102 dB(A) / 118 dB(C) Leq 15 min)"]
+    },
+    {
+      "url": "https://thouars-communaute.fr/Fichiers/Culture%20Sports/Conservatoire%20Tyndo/Fiche_technique_salle_JACQUES_BA.pdf",
+      "publisher": "Thouars Communauté — Fiche technique salle Jacques Barathon",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": ["dimensions_m.height.min (3,70 m)", "dimensions_m.width.min (scène 9 m mur à mur)"]
+    },
+    {
+      "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+      "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "manufacturer",
+      "covers": ["rt60_s"]
+    }
+  ],
+  "review": "needs-oscar-review",
+  "not_found_log": [
+    { "what": "Dimensions du booth DJ (3 × 1,4 m) et hauteur de table : estimations ; aucune source ouverte ne donne de cotes de booth.", "searched": "Fiches Nouveau Monde, Paloma Club ; Stageco « Band & DJ roofs » (aucune cote)", "review": "needs-oscar-review" },
+    { "what": "Matériel DJ (table de mixage DJ, lecteurs CDJ, platines vinyle) absent de knowledge-base/equipment et du catalogue TekPractice : proposition de catalogue (ex. Pioneer DJM, CDJ, Technics SL-1200).", "searched": "Grep \"id\": sur equipment/*.json et catalog.json", "review": "needs-oscar-review" },
+    { "what": "Longueur min/max et largeur min/max : mêmes estimations et hypothèses que bar-club-stage-small.", "searched": "Fiches Nouveau Monde, Paloma Club, Barathon", "review": "needs-oscar-review" },
+    { "what": "Position du booth, de la régie, du bar et des prises : implantation estimée.", "searched": "Fiches des salles", "review": "needs-oscar-review" }
+  ]
+}

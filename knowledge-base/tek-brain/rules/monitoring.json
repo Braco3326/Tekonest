@@ -1,0 +1,313 @@
+{
+  "entity": "rule",
+  "domain": "monitoring",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "monitor-mute-open-mic",
+      "name_fr": "Couper les écoutes quand un micro est ouvert",
+      "name_en": "Monitor mute on open mic",
+      "domain": "monitoring",
+      "catalog_rule": "R6",
+      "status": "existing",
+      "severity": "error",
+      "scope": "device",
+      "condition": {
+        "all": [
+          {
+            "path": "device.controls.fader-<isMicInput port>",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "device.ports[flags includes isMicInput].connected",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "device.ports[flags includes isMonitorOut].connected",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "device.controls.monitor-mute",
+            "op": "ne",
+            "value": true
+          }
+        ]
+      },
+      "explanation": "Mirror de R6 (logic/gpio) : ouvrir un micro dans la pièce où des sorties d'écoute (isMonitorOut) sont actives, sans couper ces écoutes, crée une boucle de larsen. Les consoles radio coupent automatiquement les haut-parleurs de la régie quand le micro de la pièce est ouvert (Axia iQ). La v1 du simulateur suppose une seule pièce.",
+      "fix": "Activer la coupure des écoutes (monitor-mute) ou fermer le fader micro ; écouter au casque micro ouvert.",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "monitor-mute-on-open-mic",
+        "acoustic-feedback"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+          "publisher": "Telos Alliance / Axia — Axia iQ Quick Start Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "feedback-risk-open-mic-same-room",
+      "name_fr": "Risque de larsen : micro ouvert renvoyé dans un haut-parleur de la même zone",
+      "name_en": "Feedback risk: open mic routed to a loudspeaker in the same zone",
+      "domain": "monitoring",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "graph",
+      "condition": {
+        "all": [
+          {
+            "path": "graph.count(mic isMicInput open AND routed via aux/mix to output feeding a loudspeaker AND loudspeaker.zone == mic.zone)",
+            "op": "gt",
+            "value": 0
+          },
+          {
+            "path": "session.monitor_mute_or_iem",
+            "op": "ne",
+            "value": true
+          }
+        ]
+      },
+      "explanation": "R6 ne couvre que les sorties isMonitorOut d'une console broadcast munie d'une commande monitor-mute. Sur une scène, le cas courant est un micro dont le canal est envoyé (aux) dans un wedge ou un side-fill de la même zone : c'est le chemin de larsen le plus court et le plus probable. Le risque augmente avec le nombre de micros ouverts (−3 dB de gain avant larsen par doublement) et quand le haut-parleur est dans l'axe du micro.",
+      "fix": "Vérifier le placement du wedge dans le zéro du micro, accorder le retour (ring out), couper les micros inutilisés, ou passer aux ears.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.zone",
+        "device.controls.aux-send-<inputPort>-<outputPort>",
+        "device.category:loudspeaker"
+      ],
+      "concept_ids": [
+        "acoustic-feedback",
+        "gain-before-feedback",
+        "number-of-open-microphones",
+        "mic-polar-pattern-wedge-placement"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "iem-without-limiter",
+      "name_fr": "Récepteur d'ears sans limiteur actif",
+      "name_en": "IEM receiver without active limiter",
+      "domain": "monitoring",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "device",
+      "condition": {
+        "all": [
+          {
+            "path": "device.category",
+            "op": "eq",
+            "value": "wireless-iem-receiver"
+          },
+          {
+            "path": "device.controls.limiter",
+            "op": "ne",
+            "value": true
+          }
+        ]
+      },
+      "explanation": "Un débranchement de micro alimenté ou une bouffée de bruit HF peut produire dans les ears des crêtes au-delà de 130 dB SPL. Shure demande de n'utiliser que des récepteurs avec limiteur et de ne jamais le désactiver ; un limiteur avant l'émetteur ne protège pas contre les artefacts après la liaison HF.",
+      "fix": "Activer le limiteur du récepteur et baisser le volume s'il agit souvent.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.category:wireless-iem-receiver",
+        "device.controls.limiter"
+      ],
+      "concept_ids": [
+        "iem-receiver-limiter",
+        "in-ear-monitoring",
+        "noise-induced-hearing-loss"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/ew-iem-g4_bedienungsanleitung_05_2026_de.pdf/facce9cce7b611f08a557aeaa9c3764a?attachment=true",
+          "publisher": "Sennheiser — ew IEM G4 Bedienungsanleitung (05/2026, DE)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "monitor-mix-post-fader-send",
+      "name_fr": "Mix retour alimenté en post-fader",
+      "name_en": "Monitor mix fed post-fader",
+      "domain": "monitoring",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "device",
+      "condition": {
+        "all": [
+          {
+            "path": "device.ports[flags includes isMonitorOut].connected",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "device.controls.aux-mode-<isMonitorOut port>",
+            "op": "eq",
+            "value": "post-fader"
+          }
+        ]
+      },
+      "explanation": "Un départ post-fader suit les faders de la façade : le musicien entend son mix bouger à chaque geste de l'ingénieur. Les retours se font en pré-fader (ou pré-mute si le retour doit rester actif quand la façade coupe la voie).",
+      "fix": "Passer le départ en pré-fader (ou pré-mute).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.controls.aux-mode-<portId> (enum post-fader|pre-fader|pre-mute)"
+      ],
+      "concept_ids": [
+        "stage-monitor-mix",
+        "pre-post-fader",
+        "aux-send"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "iem-transmitter-next-to-mic-receiver",
+      "name_fr": "Émetteur d'ears collé à un récepteur de micro HF",
+      "name_en": "IEM transmitter next to a wireless mic receiver",
+      "domain": "monitoring",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "room",
+      "condition": {
+        "all": [
+          {
+            "path": "room.distance_m(device.category == wireless-iem-transmitter, device.category == wireless-mic-receiver)",
+            "op": "lt",
+            "value": 1
+          }
+        ]
+      },
+      "explanation": "Un émetteur d'ears relativement puissant placé à côté d'un récepteur de micro HF sensible peut le désensibiliser ; Shure conseille de les séparer de « quelques pieds ». Le seuil de 1 m est une valeur de travail du simulateur, pas une valeur de source.",
+      "fix": "Éloigner l'émetteur d'ears (ou ses antennes) des récepteurs micros et combiner les antennes d'émission.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.category:wireless-iem-transmitter",
+        "device.category:wireless-mic-receiver",
+        "room.gear_positions"
+      ],
+      "concept_ids": [
+        "iem-rf-dropouts",
+        "intermodulation"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Seuil de distance chiffré entre émetteur d'ears et récepteur micro",
+      "searched": "Shure : « a few feet » seulement ; le seuil 1 m du simulateur est une valeur de travail"
+    }
+  ]
+}

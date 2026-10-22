@@ -1,0 +1,1125 @@
+{
+  "entity": "glossary",
+  "domain": "audio-networks",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "aoip",
+      "term_fr": "Audio sur IP",
+      "term_en": "Audio over IP (AoIP)",
+      "domain": "audio-networks",
+      "definition": "Transport d'audio numérique multicanal en paquets sur un réseau Ethernet/IP.",
+      "see_also": [
+        "audio-over-ip"
+      ],
+      "sources": [
+        {
+          "url": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
+          "publisher": "ALC NetworX (A. Hildebrand), AES67 and RAVENNA in a Nutshell",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dante",
+      "term_fr": "Dante",
+      "term_en": "Dante",
+      "domain": "audio-networks",
+      "definition": "Technologie d'audio sur IP d'Audinate, routée avec Dante Controller et synchronisée en PTP.",
+      "see_also": [
+        "dante"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dante-controller",
+      "term_fr": "Dante Controller",
+      "term_en": "Dante Controller",
+      "domain": "audio-networks",
+      "definition": "Logiciel Audinate de découverte, de routage et de surveillance des appareils Dante.",
+      "see_also": [
+        "dante-controller"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dante-virtual-soundcard",
+      "term_fr": "Dante Virtual Soundcard",
+      "term_en": "Dante Virtual Soundcard (DVS)",
+      "domain": "audio-networks",
+      "definition": "Logiciel qui fait d'un ordinateur un appareil Dante ; il impose une latence plus élevée que le matériel.",
+      "see_also": [
+        "dante"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subscription",
+      "term_fr": "Abonnement",
+      "term_en": "Subscription",
+      "domain": "audio-networks",
+      "definition": "Association d'un canal de réception Dante à un canal d'émission d'un autre appareil.",
+      "see_also": [
+        "dante-subscription"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tx-channel",
+      "term_fr": "Canal d'émission (Tx)",
+      "term_en": "Transmit channel",
+      "domain": "audio-networks",
+      "definition": "Canal qui envoie un signal d'un appareil vers le réseau.",
+      "see_also": [
+        "dante-subscription"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rx-channel",
+      "term_fr": "Canal de réception (Rx)",
+      "term_en": "Receive channel",
+      "domain": "audio-networks",
+      "definition": "Canal qui reçoit un signal du réseau et l'envoie vers le matériel de l'appareil.",
+      "see_also": [
+        "dante-subscription"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flow",
+      "term_fr": "Flux",
+      "term_en": "Flow",
+      "domain": "audio-networks",
+      "definition": "Ensemble de canaux transportés ensemble d'un émetteur vers un ou plusieurs récepteurs.",
+      "see_also": [
+        "dante-subscription",
+        "multicast-unicast"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unicast",
+      "term_fr": "Unicast",
+      "term_en": "Unicast",
+      "domain": "audio-networks",
+      "definition": "Flux point à point d'un émetteur vers un seul récepteur ; mode par défaut de Dante.",
+      "see_also": [
+        "multicast-unicast"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "multicast",
+      "term_fr": "Multicast",
+      "term_en": "Multicast",
+      "domain": "audio-networks",
+      "definition": "Flux unique reçu par plusieurs récepteurs ; il occupe la bande passante même sans récepteur.",
+      "see_also": [
+        "multicast-unicast"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "device-latency",
+      "term_fr": "Latence de l'appareil",
+      "term_en": "Device latency",
+      "domain": "audio-networks",
+      "definition": "Délai de réception réglé sur un récepteur Dante pour absorber le temps de traversée du réseau.",
+      "see_also": [
+        "dante-device-latency"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "preferred-leader",
+      "term_fr": "Leader préféré",
+      "term_en": "Preferred Leader",
+      "domain": "audio-networks",
+      "definition": "Option Dante qui force un appareil à devenir l'horloge leader PTP.",
+      "see_also": [
+        "ptp-leader-election"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "leader-clock",
+      "term_fr": "Horloge leader",
+      "term_en": "Leader clock",
+      "domain": "audio-networks",
+      "definition": "Appareil unique dont l'horloge sert de référence à tout le réseau PTP.",
+      "see_also": [
+        "ptp-clock",
+        "ptp-leader-election"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "follower-clock",
+      "term_fr": "Horloge suiveuse",
+      "term_en": "Follower clock",
+      "domain": "audio-networks",
+      "definition": "Appareil qui cale son horloge sur l'horloge leader.",
+      "see_also": [
+        "ptp-clock"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sync-to-external",
+      "term_fr": "Synchro externe",
+      "term_en": "Enable Sync To External",
+      "domain": "audio-networks",
+      "definition": "Option Dante qui cale l'horloge de l'appareil sur un word clock externe fourni par l'équipement hôte.",
+      "see_also": [
+        "ptp-leader-election",
+        "word-clock"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ptp",
+      "term_fr": "PTP",
+      "term_en": "Precision Time Protocol",
+      "domain": "audio-networks",
+      "definition": "Protocole IEEE 1588 de synchronisation d'horloges par messages horodatés.",
+      "see_also": [
+        "ptp-clock"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ptpv2-domain",
+      "term_fr": "Domaine PTPv2",
+      "term_en": "PTPv2 domain number",
+      "domain": "audio-networks",
+      "definition": "Numéro qui sépare des groupes d'horloges PTPv2 indépendants ; fixé à 0 pour AES67 dans Dante Controller.",
+      "see_also": [
+        "ptp-clock"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boundary-clock",
+      "term_fr": "Horloge boundary",
+      "term_en": "Boundary clock",
+      "domain": "audio-networks",
+      "definition": "Horloge qui relaie la synchronisation PTP d'un segment ou d'un sous-réseau à un autre.",
+      "see_also": [
+        "ptp-clock",
+        "dante-domain-manager"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bmca",
+      "term_fr": "Algorithme BMCA",
+      "term_en": "Best Master Clock Algorithm",
+      "domain": "audio-networks",
+      "definition": "Algorithme PTP d'élection automatique de l'horloge maître.",
+      "see_also": [
+        "ptp-leader-election"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
+          "publisher": "RAVENNA (Lawo), RAVENNA, AES67 & SMPTE ST 2110 - Standards Comparison V03",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clock-offset",
+      "term_fr": "Offset d'horloge",
+      "term_en": "Clock offset",
+      "domain": "audio-networks",
+      "definition": "Écart de fréquence, en ppm, qu'un suiveur applique pour suivre le leader ; au-delà de sa plage de rattrapage il perd la synchro.",
+      "see_also": [
+        "ptp-clock"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "redundant-mode",
+      "term_fr": "Mode redondant",
+      "term_en": "Redundant mode",
+      "domain": "audio-networks",
+      "definition": "Mode où l'appareil Dante envoie les mêmes flux sur ses ports primaire et secondaire vers deux réseaux séparés.",
+      "see_also": [
+        "network-redundancy"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "switched-mode",
+      "term_fr": "Mode commuté",
+      "term_en": "Switched mode",
+      "domain": "audio-networks",
+      "definition": "Mode où le port secondaire Dante devient un port de switch permettant le chaînage.",
+      "see_also": [
+        "dante-redundant-switched-mode"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "daisy-chain",
+      "term_fr": "Chaînage",
+      "term_en": "Daisy chain",
+      "domain": "audio-networks",
+      "definition": "Raccordement des appareils les uns à la suite des autres sans switch ; une coupure isole la suite.",
+      "see_also": [
+        "network-topology"
+      ],
+      "sources": [
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "primary-network",
+      "term_fr": "Réseau primaire",
+      "term_en": "Primary network",
+      "domain": "audio-networks",
+      "definition": "Réseau principal Dante, sur lequel se branchent tous les appareils.",
+      "see_also": [
+        "network-redundancy"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "secondary-network",
+      "term_fr": "Réseau secondaire",
+      "term_en": "Secondary network",
+      "domain": "audio-networks",
+      "definition": "Réseau Dante indépendant qui porte la copie redondante des flux.",
+      "see_also": [
+        "network-redundancy"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "link-local",
+      "term_fr": "Adresse link-local",
+      "term_en": "Link-local address",
+      "domain": "audio-networks",
+      "definition": "Adresse auto-attribuée sans DHCP : 169.254.x.x sur le primaire Dante, 172.31.x.x sur le secondaire.",
+      "see_also": [
+        "dante-ip-addressing"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dhcp",
+      "term_fr": "DHCP",
+      "term_en": "Dynamic Host Configuration Protocol",
+      "domain": "audio-networks",
+      "definition": "Service qui attribue automatiquement les adresses IP ; il ne doit y en avoir qu'un par réseau Dante.",
+      "see_also": [
+        "dante-ip-addressing"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subnet",
+      "term_fr": "Sous-réseau",
+      "term_en": "Subnet",
+      "domain": "audio-networks",
+      "definition": "Plage d'adresses IP dans laquelle les appareils se voient directement ; Dante Controller ne découvre en général que son sous-réseau.",
+      "see_also": [
+        "dante-ip-addressing"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ddm",
+      "term_fr": "Dante Domain Manager",
+      "term_en": "Dante Domain Manager (DDM)",
+      "domain": "audio-networks",
+      "definition": "Serveur Audinate de gestion des domaines Dante, des droits et du multi-sous-réseau.",
+      "see_also": [
+        "dante-domain-manager"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aes67",
+      "term_fr": "AES67",
+      "term_en": "AES67",
+      "domain": "audio-networks",
+      "definition": "Norme d'interopérabilité AoIP (PTPv2, RTP, 48 kHz, paquets de 1 ms).",
+      "see_also": [
+        "aes67"
+      ],
+      "sources": [
+        {
+          "url": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
+          "publisher": "ALC NetworX (A. Hildebrand), AES67 and RAVENNA in a Nutshell",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "st-2110-30",
+      "term_fr": "ST 2110-30",
+      "term_en": "SMPTE ST 2110-30",
+      "domain": "audio-networks",
+      "definition": "Partie audio de la norme SMPTE ST 2110, fondée sur AES67.",
+      "see_also": [
+        "smpte-st-2110-30"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
+          "publisher": "RAVENNA (Lawo), RAVENNA, AES67 & SMPTE ST 2110 - Standards Comparison V03",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "st-2022-7",
+      "term_fr": "ST 2022-7",
+      "term_en": "SMPTE ST 2022-7",
+      "domain": "audio-networks",
+      "definition": "Protection sans coupure par double réseau portant les mêmes flux.",
+      "see_also": [
+        "network-redundancy"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+          "publisher": "ALC NetworX, RAVENNA Network Requirements V1.4b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sdp",
+      "term_fr": "SDP",
+      "term_en": "Session Description Protocol",
+      "domain": "audio-networks",
+      "definition": "Description texte d'un flux RTP (adresse, format) échangée pour s'abonner à un flux AES67.",
+      "see_also": [
+        "aes67"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/aes67_and_smpte_st2110-30_audio.htm",
+          "publisher": "Audinate, Dante Controller help: AES67 and SMPTE ST 2110-30 Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
+          "publisher": "RAVENNA (Lawo), RAVENNA, AES67 & SMPTE ST 2110 - Standards Comparison V03",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rtp",
+      "term_fr": "RTP",
+      "term_en": "Real-time Transport Protocol",
+      "domain": "audio-networks",
+      "definition": "Protocole de transport des paquets audio AES67/RAVENNA sur UDP.",
+      "see_also": [
+        "aes67",
+        "ravenna"
+      ],
+      "sources": [
+        {
+          "url": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
+          "publisher": "ALC NetworX (A. Hildebrand), AES67 and RAVENNA in a Nutshell",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "avb",
+      "term_fr": "AVB",
+      "term_en": "Audio Video Bridging",
+      "domain": "audio-networks",
+      "definition": "Suite IEEE 802.1 de couche 2 : gPTP, mise en forme du trafic et réservation de bande passante.",
+      "see_also": [
+        "avb-milan"
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+          "publisher": "H. Kaltheuner, G. Kronauer, M. Lave, E. Corteel, AES Int. Acoustics & Sound Reinforcement Conf., Le Mans 2024 (hosted by L-Acoustics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "milan",
+      "term_fr": "Milan",
+      "term_en": "Milan",
+      "domain": "audio-networks",
+      "definition": "Profil d'interopérabilité AVB pour l'audio professionnel, sous l'égide de l'Avnu Alliance.",
+      "see_also": [
+        "avb-milan"
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+          "publisher": "H. Kaltheuner, G. Kronauer, M. Lave, E. Corteel, AES Int. Acoustics & Sound Reinforcement Conf., Le Mans 2024 (hosted by L-Acoustics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gptp",
+      "term_fr": "gPTP",
+      "term_en": "gPTP (IEEE 802.1AS)",
+      "domain": "audio-networks",
+      "definition": "Profil PTP de l'AVB, où les switches participent à la synchronisation.",
+      "see_also": [
+        "avb-milan",
+        "ptp-clock"
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+          "publisher": "H. Kaltheuner, G. Kronauer, M. Lave, E. Corteel, AES Int. Acoustics & Sound Reinforcement Conf., Le Mans 2024 (hosted by L-Acoustics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dscp",
+      "term_fr": "DSCP",
+      "term_en": "Differentiated Services Code Point",
+      "domain": "audio-networks",
+      "definition": "Champ de l'en-tête IP qui indique la classe de priorité d'un paquet.",
+      "see_also": [
+        "qos-dscp"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
+          "publisher": "Focusrite, Configuring a switch for Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "strict-priority",
+      "term_fr": "Priorité stricte",
+      "term_en": "Strict priority",
+      "domain": "audio-networks",
+      "definition": "Ordonnancement où la file la plus prioritaire est toujours vidée en premier.",
+      "see_also": [
+        "qos-dscp"
+      ],
+      "sources": [
+        {
+          "url": "https://service.shure.com/articles/en_US/Knowledge/QOS-In-Depth",
+          "publisher": "Shure, QoS In Depth (knowledge base)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "igmp-snooping",
+      "term_fr": "IGMP snooping",
+      "term_en": "IGMP snooping",
+      "domain": "audio-networks",
+      "definition": "Fonction de switch qui limite le multicast aux ports abonnés.",
+      "see_also": [
+        "igmp-snooping"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "igmp-querier",
+      "term_fr": "Querier IGMP",
+      "term_en": "IGMP querier",
+      "domain": "audio-networks",
+      "definition": "Équipement qui interroge le réseau sur les abonnements multicast ; nécessaire au snooping.",
+      "see_also": [
+        "igmp-snooping"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+          "publisher": "ALC NetworX, RAVENNA Network Requirements V1.4b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eee",
+      "term_fr": "EEE (Green Ethernet)",
+      "term_en": "Energy Efficient Ethernet",
+      "domain": "audio-networks",
+      "definition": "Économie d'énergie IEEE 802.3az des switches, à désactiver sur un réseau Dante.",
+      "see_also": [
+        "energy-efficient-ethernet"
+      ],
+      "sources": [
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "managed-switch",
+      "term_fr": "Switch administrable",
+      "term_en": "Managed switch",
+      "domain": "audio-networks",
+      "definition": "Switch configurable (QoS, EEE, IGMP, VLAN) qui donne accès aux compteurs et vitesses de lien.",
+      "see_also": [
+        "network-switch-requirements"
+      ],
+      "sources": [
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aes50",
+      "term_fr": "AES50",
+      "term_en": "AES50",
+      "domain": "audio-networks",
+      "definition": "Liaison point à point 48 canaux à 48 kHz avec horloge sur câble Cat5, non routable.",
+      "see_also": [
+        "aes50"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/AES50",
+          "publisher": "Wikipedia, AES50",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hypermac",
+      "term_fr": "HyperMAC",
+      "term_en": "HyperMAC",
+      "domain": "audio-networks",
+      "definition": "Version haut débit d'AES50 développée par Klark Teknik, sur Cat 5e ou fibre.",
+      "see_also": [
+        "aes50"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/AES50",
+          "publisher": "Wikipedia, AES50",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ethercon",
+      "term_fr": "etherCON",
+      "term_en": "etherCON",
+      "domain": "audio-networks",
+      "definition": "Connecteur réseau de terrain compatible RJ45, recommandé par Focusrite (comme les RJ45 à blindage métallique) pour le câblage Dante ; c'est aussi le connecteur AES50 de la Midas DL16.",
+      "see_also": [
+        "ethernet-cable-length-limit"
+      ],
+      "sources": [
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stp-cable",
+      "term_fr": "Câble blindé STP",
+      "term_en": "Shielded twisted pair",
+      "domain": "audio-networks",
+      "definition": "Câble à paires torsadées blindé, préféré (Cat 6 STP) pour les réseaux audio.",
+      "see_also": [
+        "ethernet-cable-length-limit"
+      ],
+      "sources": [
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tx-scheduler-failure",
+      "term_fr": "Erreur Tx Scheduler Failure",
+      "term_en": "Tx Scheduler Failure",
+      "domain": "audio-networks",
+      "definition": "Erreur Dante d'abonnement quand la latence est réglée sous 1 ms sur un lien 100 Mbit/s.",
+      "see_also": [
+        "dante-device-latency"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Pages FAQ Audinate (audinate.com/faq, support.getdante.com, my.audinate.com) sur DSCP, EEE, switches",
+      "searched": "WebFetch : 403 / 522 ; valeurs DSCP reprises via Focusrite et Shure, guide Dante Controller (PDF Audinate) lu en entier"
+    }
+  ]
+}

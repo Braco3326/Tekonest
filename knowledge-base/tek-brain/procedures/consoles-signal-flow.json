@@ -1,0 +1,691 @@
+{
+  "entity": "procedure",
+  "domain": "consoles-signal-flow",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "patch-stagebox-to-digital-console",
+      "name_fr": "Patcher un boîtier de scène sur une console numérique",
+      "name_en": "Patch a stagebox to a digital console",
+      "domain": "consoles-signal-flow",
+      "context": "Mise en place d'une console numérique Yamaha (CL/QL) avec un boîtier de scène Dante type Rio : entrées scène vers tranches, bus vers sorties scène.",
+      "duration_min": 30,
+      "equipment_ids": [
+        "yamaha-cl5",
+        "yamaha-ql1",
+        "yamaha-rio3224-d2"
+      ],
+      "concept_ids": [
+        "input-patching",
+        "gain-sharing",
+        "input-channel",
+        "signal-flow"
+      ],
+      "rule_ids": [
+        "signal-direction-out-to-in"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Boîtier de scène et console reliés au même réseau Dante (port primaire)"
+          ],
+          "action": "Ouvrir la fenêtre DANTE INPUT PATCH et choisir, parmi les canaux du réseau, ceux du boîtier de scène à recevoir (64 canaux maximum sur une CL, choisis parmi 512).",
+          "expected_result": "Les canaux du boîtier apparaissent sur les ports DANTE 1-64 de la console.",
+          "typical_mistakes": [
+            "Chercher le boîtier dans le patch des tranches avant de l'avoir sélectionné dans le patch Dante"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Étape 1 terminée",
+            "Input list disponible"
+          ],
+          "action": "Dans GAIN/PATCH (ou PATCH/NAME depuis l'OVERVIEW), affecter chaque port DANTE à la tranche prévue par l'input list ; par défaut DANTE 1-64 vont aux tranches 1-64.",
+          "expected_result": "Chaque tranche affiche le bon port et le nom de la source.",
+          "typical_mistakes": [
+            "Décaler tout le patch d'une voie",
+            "Oublier qu'une entrée de tranche n'accepte qu'une source : un nouveau choix remplace l'ancien"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Patch d'entrée vérifié"
+          ],
+          "action": "Régler depuis la console les paramètres du préampli distant (HA) : gain analogique, +48 V et phase, en pré-écoute PFL.",
+          "expected_result": "Les vumètres HA montrent un niveau sain sans saturation.",
+          "typical_mistakes": [
+            "Monter le gain numérique pour compenser un gain analogique trop bas"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Bus de mix définis"
+          ],
+          "action": "Dans OUTPUT PORT, affecter les bus aux canaux Dante (par défaut MIX 1-24 vers DANTE 1-24, MATRIX 1-8 vers DANTE 25-32, STEREO L/R vers DANTE 33/34, MONO vers DANTE 35), puis dans OUTPUT PATCH du rack, envoyer ces canaux vers les sorties XLR du boîtier.",
+          "expected_result": "Chaque bus sort sur la prise XLR prévue du boîtier de scène.",
+          "typical_mistakes": [
+            "Faire seulement la moitié du chemin (bus vers Dante) sans patcher la sortie physique du rack"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Une deuxième console (retours) partage le boîtier"
+          ],
+          "action": "Activer la Gain Compensation sur la console qui pilote les gains, pour que ses changements de gain analogique ne modifient pas le niveau reçu par l'autre console.",
+          "expected_result": "Un changement de gain en façade ne fait pas varier le niveau aux retours.",
+          "typical_mistakes": [
+            "Laisser la compensation active alors qu'une entrée sature : il faut la couper, corriger le gain, puis la réactiver"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [
+            "Tout est patché"
+          ],
+          "action": "Faire un line check source par source en suivant le chemin jusqu'aux sorties et enregistrer le tout dans une scène.",
+          "expected_result": "Chaque source arrive sur sa tranche, chaque bus sur sa sortie ; la scène contient le patch.",
+          "typical_mistakes": [
+            "Ne pas enregistrer la scène : le patch fait partie de la scène et sera perdu au prochain rappel"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Les réglages de préampli (dont le +48 V) sont télécommandés : convenir de quelle console les contrôle avant de les modifier.",
+        "Baisser le master et l'écoute régie avant de brancher ou repatcher des sorties."
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "safety_notes",
+            "steps"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "safety_notes"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "monitor-mixes-from-foh",
+      "name_fr": "Faire les retours depuis la console façade (aux pré-fader)",
+      "name_en": "Set up monitor mixes from FOH (pre-fader auxes)",
+      "domain": "consoles-signal-flow",
+      "context": "Petite salle sans console retours : l'ingénieur façade crée un mélange par retour de scène avec des départs auxiliaires.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "yamaha-ql1",
+        "mackie-1604vlz4",
+        "yamaha-dbr12"
+      ],
+      "concept_ids": [
+        "aux-send",
+        "pre-post-fader",
+        "pre-mute-send",
+        "effects-return"
+      ],
+      "rule_ids": [
+        "aux-monitor-send-post-fader"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Console et retours installés"
+          ],
+          "action": "Choisir un bus auxiliaire (bus MIX de type VARI sur Yamaha) par retour, lui affecter une sortie physique et y brancher le retour de scène.",
+          "expected_result": "Chaque retour est alimenté par son propre bus.",
+          "typical_mistakes": [
+            "Utiliser un bus FIXED, dont le niveau d'envoi ne se règle pas par tranche"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Bus choisis"
+          ],
+          "action": "Régler le point de prélèvement en pré-fader pour toutes les tranches (touche ALL PRE sur Yamaha, touche Pre sur Mackie). Décider s'il faut du pré-mute pour que le retour reste actif quand la façade mute la tranche.",
+          "expected_result": "Bouger un fader de façade ne change pas le retour.",
+          "typical_mistakes": [
+            "Laisser les retours en post-fader",
+            "Croire que pré-fader est forcément pré-mute"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Point de prélèvement réglé"
+          ],
+          "action": "Activer les envois et doser le niveau de chaque tranche vers chaque retour, en commençant par la demande principale du musicien (souvent sa propre voix).",
+          "expected_result": "Le musicien s'entend sans que le retour accroche.",
+          "typical_mistakes": [
+            "Monter tout le mix d'un coup au lieu d'ajouter les sources une par une"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Mélange en place"
+          ],
+          "action": "Contrôler le mélange envoyé au retour en cue sur le bus (CUE du bus MIX sur Yamaha, aux sends solo sur Mackie, qui est une écoute après le master aux).",
+          "expected_result": "On entend exactement ce qui part vers le retour.",
+          "typical_mistakes": [
+            "Écouter la tranche en PFL au lieu du bus de retour"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Mélange contrôlé"
+          ],
+          "action": "Régler le niveau global du retour avec le master aux et, si besoin, ajouter de la réverbération dans le retour via le retour d'effet envoyé vers l'aux (To Aux sur Mackie).",
+          "expected_result": "Niveau global ajusté sans retoucher chaque tranche.",
+          "typical_mistakes": [
+            "Envoyer la réverbération en pré-fader sur le bus d'effet de la façade"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [
+            "Concert en cours"
+          ],
+          "action": "Vérifier qu'un DCA ou un fader de façade baissé ne change rien aux retours.",
+          "expected_result": "Retours stables pendant tout le spectacle.",
+          "typical_mistakes": [
+            "Oublier que, sur beaucoup de consoles, les départs post-fader suivent aussi les VCA"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Baisser le master et l'écoute régie avant de brancher les retours, comme le recommande Mackie."
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "build-vca-dca-groups",
+      "name_fr": "Créer des groupes VCA / DCA",
+      "name_en": "Build VCA / DCA groups",
+      "domain": "consoles-signal-flow",
+      "context": "Organiser un mix live en confiant plusieurs tranches (batterie, chœurs, cuivres) à un seul fader de commande.",
+      "duration_min": 15,
+      "equipment_ids": [
+        "yamaha-cl5",
+        "digico-sd12"
+      ],
+      "concept_ids": [
+        "vca-dca",
+        "mute-group",
+        "subgroup",
+        "scene-memory"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Tranches nommées"
+          ],
+          "action": "Définir les familles à piloter (batterie, chœurs…) et choisir pour chacune un DCA ou un sous-groupe : sous-groupe s'il faut traiter l'ensemble (compresseur), DCA s'il suffit de piloter les niveaux.",
+          "expected_result": "Chaque famille a un type de groupe justifié.",
+          "typical_mistakes": [
+            "Prévoir un compresseur de groupe sur un DCA, qui ne transporte pas d'audio"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Familles définies"
+          ],
+          "action": "Sur Yamaha CL : CH JOB > DCA GROUP, choisir le DCA puis presser les touches [SEL] des tranches. Sur DiGiCo SD12 : touche JOIN CG (ou JOIN/LEAVE à l'écran), choisir le groupe puis les tranches.",
+          "expected_result": "La liste des membres s'affiche au-dessus du groupe.",
+          "typical_mistakes": [
+            "Oublier de relâcher le mode d'affectation et ajouter des tranches par erreur"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Membres affectés"
+          ],
+          "action": "Tester : monter le fader DCA de quelques dB et vérifier que chaque membre bouge du même nombre de dB en gardant ses écarts.",
+          "expected_result": "Les écarts entre tranches sont conservés.",
+          "typical_mistakes": [
+            "Confondre la position du fader DCA avec le niveau réel des tranches"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Groupes testés"
+          ],
+          "action": "Vérifier les tranches membres de plusieurs groupes (sur Yamaha, les niveaux des DCA s'additionnent ; sur DiGiCo, un seul groupe muté suffit à couper la tranche).",
+          "expected_result": "Aucun effet de double commande inattendu.",
+          "typical_mistakes": [
+            "Mettre une tranche dans deux DCA sans le savoir"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Groupes validés"
+          ],
+          "action": "Enregistrer la scène, les affectations DCA étant stockées dans la scène sur Yamaha CL.",
+          "expected_result": "Les groupes sont retrouvés au rappel de la scène.",
+          "typical_mistakes": [
+            "Rappeler une ancienne scène qui écrase les nouveaux groupes"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "store-recall-scenes-safely",
+      "name_fr": "Enregistrer et rappeler des scènes sans risque",
+      "name_en": "Store and recall scenes safely",
+      "domain": "consoles-signal-flow",
+      "context": "Console numérique utilisée sur un spectacle à plusieurs tableaux ou une émission avec invités : garder des réglages stables à chaque rappel.",
+      "duration_min": 15,
+      "equipment_ids": [
+        "yamaha-cl5",
+        "yamaha-ql1"
+      ],
+      "concept_ids": [
+        "scene-memory",
+        "recall-safe-focus"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Mix réglé"
+          ],
+          "action": "Choisir le numéro de destination avec SCENE MEMORY [INC]/[DEC], presser [STORE], donner un titre (16 caractères maximum) et un commentaire, puis confirmer.",
+          "expected_result": "La scène apparaît dans la liste avec son titre.",
+          "typical_mistakes": [
+            "Écraser une scène existante en se trompant de numéro"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Scènes importantes terminées"
+          ],
+          "action": "Protéger les scènes de référence (symbole Protect) pour empêcher qu'on les réécrive.",
+          "expected_result": "On ne peut plus enregistrer sur ces numéros.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Paramètres qui ne doivent jamais changer identifiés (micro d'annonce, gains d'un invité…)"
+          ],
+          "action": "CH JOB > RECALL SAFE : sélectionner la tranche ou le DCA, choisir les paramètres puis activer le bouton SAFE (ou LEVEL/ON / ALL pour un DCA).",
+          "expected_result": "Ces paramètres restent tels quels à chaque rappel, pour toutes les scènes.",
+          "typical_mistakes": [
+            "Sélectionner le paramètre sans activer SAFE",
+            "Croire que les liens de tranches et les réglages de bus sont protégés : ils sont toujours rappelés"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Une scène ne doit modifier qu'une partie de la console"
+          ],
+          "action": "Régler le Focus Recall de cette scène pour limiter ce qu'elle rappelle (par exemple, seulement les tranches d'entrée).",
+          "expected_result": "La scène indique FOCUS dans la liste et ne touche qu'aux éléments choisis.",
+          "typical_mistakes": [
+            "Confondre Focus (par scène) et Recall Safe (global)"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Pendant l'exploitation"
+          ],
+          "action": "Surveiller le symbole E : il indique que la scène chargée a été modifiée et qu'il faut l'enregistrer pour garder les changements.",
+          "expected_result": "Aucun réglage perdu par oubli d'enregistrement.",
+          "typical_mistakes": [
+            "Rappeler la scène suivante en perdant les corrections faites en répétition"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "patch-outboard-on-insert",
+      "name_fr": "Insérer un processeur externe sur une tranche",
+      "name_en": "Patch an outboard processor on a channel insert",
+      "domain": "consoles-signal-flow",
+      "context": "Ajouter un compresseur matériel sur une voix, en direct sur la console ou via une baie de brassage semi-normalisée.",
+      "duration_min": 10,
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "switchcraft-studiopatch-9625",
+        "universal-audio-1176ln",
+        "dbx-160a"
+      ],
+      "concept_ids": [
+        "insert-point",
+        "serial-parallel-processing",
+        "patchbay-normalling"
+      ],
+      "rule_ids": [
+        "insert-send-return-reversed",
+        "patchbay-full-normal-split-break",
+        "signal-direction-out-to-in"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Écoute et master baissés"
+          ],
+          "action": "Repérer l'insert de la tranche : sur une console analogique type Mackie, jack TRS unique (pointe = envoi, bague = retour, corps = masse) ; via une baie, rangée du haut = envoi d'insert (sortie), rangée du bas = retour d'insert (entrée).",
+          "expected_result": "Envoi et retour identifiés sans ambiguïté.",
+          "typical_mistakes": [
+            "Prendre le retour pour l'envoi"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Câble en Y TRS vers 2 jacks, ou deux cordons de baie"
+          ],
+          "action": "Relier l'envoi d'insert à l'entrée du processeur et la sortie du processeur au retour d'insert.",
+          "expected_result": "Le signal de la tranche passe entièrement par le processeur.",
+          "typical_mistakes": [
+            "Relier sortie à sortie (envoi d'insert vers sortie du processeur)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Baie de brassage utilisée"
+          ],
+          "action": "Vérifier le mode de la voie : en semi-normalisé, une fiche dans le jack du haut prélève le signal sans couper la liaison ; c'est le mode conseillé pour les inserts de console.",
+          "expected_result": "La tranche ne devient pas muette quand on prélève l'envoi seul.",
+          "typical_mistakes": [
+            "Voie en mode normalisé complet : brancher seulement l'envoi coupe le retour et la tranche devient muette"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Processeur en place"
+          ],
+          "action": "Engager l'insert (bouton insert sur console numérique) et contrôler en PFL que le niveau de retour est cohérent avec le niveau d'envoi.",
+          "expected_result": "Le traitement s'entend, sans chute ni saut de niveau.",
+          "typical_mistakes": [
+            "Oublier d'engager l'insert sur une console numérique et croire le processeur en panne"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Baisser le master et le bouton control room/phones avant de brancher, comme le recommande Mackie."
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+          "publisher": "Samson Technologies — S patch plus Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://samsontech.com/blog/the-ins-and-outs-of-a-patchbay/",
+          "publisher": "Samson Technologies — The Ins and Outs of a Patchbay (blog)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "check-input-with-pfl",
+      "name_fr": "Régler un gain d'entrée en PFL",
+      "name_en": "Set an input gain using PFL",
+      "domain": "consoles-signal-flow",
+      "context": "Réglage des gains avant un mix (studio ou live) avec l'écoute PFL et les vumètres.",
+      "duration_min": 10,
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5"
+      ],
+      "concept_ids": [
+        "pfl-afl-solo",
+        "monitor-source-selection",
+        "input-channel"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Casque branché, bouton control room/phones légèrement ouvert"
+          ],
+          "action": "Presser le solo d'une seule tranche et passer la section solo en mode PFL (level set) ; sur Mackie, le voyant vert « level set » s'allume.",
+          "expected_result": "Le vumètre affiche le niveau de cette tranche avant fader.",
+          "typical_mistakes": [
+            "Régler en mode AFL : le vumètre dépend alors du fader"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Source qui joue à son niveau réel"
+          ],
+          "action": "Ajuster le gain jusqu'à ce que le vumètre reste autour de la marque « level set » (0) sans dépasser +7 sur la Mackie 1604VLZ4.",
+          "expected_result": "Niveau de travail correct avec de la marge.",
+          "typical_mistakes": [
+            "Régler le gain sur un essai trop doux du musicien"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Gain réglé"
+          ],
+          "action": "Relâcher le solo, puis passer à la tranche suivante.",
+          "expected_result": "Plus aucun solo actif (voyant rude solo éteint).",
+          "typical_mistakes": [
+            "Laisser un solo engagé et croire que la console est en panne"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Toutes les tranches réglées"
+          ],
+          "action": "Monter les faders à U, puis le master progressivement ; pendant le spectacle, si le voyant OL s'allume, baisser doucement le gain.",
+          "expected_result": "Mix démarré sur des gains sains.",
+          "typical_mistakes": [
+            "Compenser un gain trop faible avec le fader"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Le PFL ignore la position du fader : une tranche baissée peut sortir très fort au casque. Garder le niveau solo et l'écoute modérés."
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Procédure DiGiCo de sauvegarde de snapshots et de « recall safe » équivalent",
+      "searched": "SD12 Getting Started (Issue A) : seules les mentions « Snapshot Control » et « Matrix Snapshot / Safe » apparaissent ; détail renvoyé au SD Software Reference Manual non ouvert."
+    }
+  ]
+}

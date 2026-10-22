@@ -1,0 +1,113 @@
+{
+  "id": "wedding-event-hall-medium",
+  "name_fr": "Salle des fêtes / salle de réception (mariage, soirée privée, 180–300 personnes)",
+  "name_en": "Function / wedding reception hall (medium, 180–300 guests)",
+  "family": "live",
+  "size": "medium",
+  "description": "Salle municipale ou privée louée pour mariages, banquets et soirées : volume rectangulaire bas de plafond (3,5 à 3,9 m), sol dur, estrade ou petite scène de 8 m × 4 à 5 m, piste de danse devant, tables rondes ou rectangulaires, bar et office traiteur. La sonorisation installée est souvent minimale (petite console, deux enceintes amplifiées, un ou deux micros HF pour les discours) ; le DJ ou le groupe apporte le reste. Le modèle s'appuie sur des fiches réelles : salle Pierre Satge (Colomiers, 276 m² + 62 m² de scène, 300 debout / 180 assis à table), salle des fêtes du Casino de Montbenon (Lausanne, 300 personnes, 220 en banquet, scène 8 × 4 m), salle des fêtes de Belley (230 m², 190 personnes, estrade mobile de 28 m²), salle Proudhon (Besançon, 15,65 × 9,04 m) et salle Dumesnil (Ambérieu-en-Bugey, 14,35 × 8,47 × 3,50 m). Pour le son, le défi est un plafond bas et des surfaces dures : réverbération courte mais réflexions fortes, et un public qui parle pendant le repas. Convention : le mur « front » est derrière l'estrade (−z), « rear » le fond de salle (+z) ; jardin = −x, cour = +x.",
+  "dimensions_m": {
+    "length": { "min": 14.35, "typical": 20, "max": 24 },
+    "width": { "min": 8.47, "typical": 13.8, "max": 16 },
+    "height": { "min": 3.5, "typical": 3.85, "max": 6 }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    { "surface": "floor", "material": "béton (Satge) ou parquet / carrelage", "finish_note": "Satge : sol béton ; Dumesnil : moquette foncée au sol et aux murs (salle plus « auditorium »)." },
+    { "surface": "stage-floor", "material": "estrade en praticables 2 × 1 m, moquette grise ou bois verni", "finish_note": "Belley : 14 modules 2 × 1 m, hauteur 40 cm ; Satge : moquette grise ; Lausanne : bois verni, avant-scène de 20 m² + 10 praticables." },
+    { "surface": "walls", "material": "murs peints ou boiseries, rideau de fond de scène", "finish_note": "Rideau de fond de scène cité à Satge ; finition des murs estimée." },
+    { "surface": "ceiling", "material": "plafond plâtre ou dalles, lustres", "finish_note": "Hauteur 3,85 m dans la salle Satge (3,10 m au-dessus de la scène) ; lustre à 2,90 m à Proudhon." }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    { "id": "estrade", "kind": "stage", "rect_m": [0, -7.65, 8.2, 4.7], "floor_y_m": 0.4 },
+    { "id": "regie-sono", "kind": "desk", "rect_m": [-5.4, -8.5, 2.4, 3], "floor_y_m": 0.4 },
+    { "id": "piste-de-danse", "kind": "other", "rect_m": [0, -2.3, 8, 6], "floor_y_m": 0 },
+    { "id": "tables", "kind": "audience", "rect_m": [0, 4.5, 13.8, 11], "floor_y_m": 0 },
+    { "id": "bar", "kind": "other", "rect_m": [5.4, 8, 2.4, 4], "floor_y_m": 0 }
+  ],
+  "gear_positions": [
+    { "equipment_id": "allen-heath-sq-6", "zone": "regie-sono", "position_m": [-5.4, 1.3, -8.5], "rotation_deg": 90, "note": "Petite console numérique côté jardin, sur l'estrade (Satge : régie sur scène côté jardin ; Lausanne : Allen & Heath QU-24, même marque)." },
+    { "equipment_id": "shure-qlx-d", "zone": "regie-sono", "position_m": [-5.8, 1.3, -9.4], "rotation_deg": 90, "note": "Récepteur HF pour les discours (Lausanne : 2 micros main HF + 1 cravate)." },
+    { "equipment_id": "radial-prod2", "zone": "regie-sono", "position_m": [-5.0, 0.4, -9.4], "rotation_deg": 90, "note": "DI stéréo pour l'ordinateur ou la sortie du DJ invité." },
+    { "equipment_id": "yamaha-dbr12", "zone": "estrade", "position_m": [-3.9, 2.2, -5.5], "rotation_deg": 0, "note": "Enceinte amplifiée sur pied, gauche (Proudhon : 4 Yamaha DXR12 mkII ; Lausanne : 2 EV EKX-12P suspendues)." },
+    { "equipment_id": "yamaha-dbr12", "zone": "estrade", "position_m": [3.9, 2.2, -5.5], "rotation_deg": 0, "note": "Enceinte amplifiée sur pied, droite." },
+    { "equipment_id": "qsc-k12-2", "zone": "estrade", "position_m": [-1.5, 0.4, -6.2], "rotation_deg": 180, "note": "Retour pour le groupe du bal (couché en wedge)." },
+    { "equipment_id": "qsc-k12-2", "zone": "estrade", "position_m": [1.5, 0.4, -6.2], "rotation_deg": 180, "note": "Second retour." },
+    { "equipment_id": "shure-sm58", "zone": "estrade", "position_m": [0, 2.0, -6.0], "rotation_deg": 0, "note": "Micro filaire sur pied pour le chant ou les discours (Lausanne : 4 micros filaires)." },
+    { "equipment_id": "shure-sm57", "zone": "estrade", "position_m": [2.5, 0.7, -8.8], "rotation_deg": 180, "note": "Micro d'ampli guitare du groupe." },
+    { "equipment_id": "bose-l1-pro32", "zone": "tables", "position_m": [-5.8, 0, 8.5], "rotation_deg": 45, "note": "Colonne portable pour la cérémonie laïque ou le cocktail dans un coin de salle." }
+  ],
+  "power_points": [
+    { "position_m": [-6.4, 0.4, -9.6], "type": "schuko-16a" },
+    { "position_m": [3.8, 0.4, -9.6], "type": "schuko-16a" },
+    { "position_m": [6.5, 0, 9.5], "type": "p17-32a-3ph" }
+  ],
+  "patch_points": [
+    { "position_m": [-4.2, 0.4, -9.6], "type": "wall-patch-xlr-4", "note": "Boîtier XLR mural (Dumesnil : multipaire avec 4 XLR en éclaté côté scène)." },
+    { "position_m": [3.5, 0.4, -9.6], "type": "wall-patch-hdmi-vga", "note": "Boîtier HDMI/VGA pour le vidéoprojecteur (Dumesnil, Proudhon)." }
+  ],
+  "openings": [
+    { "wall": "rear", "kind": "door", "offset_m": -3, "width_m": 1.8, "height_m": 2.2, "note": "Entrée invités (estimée)." },
+    { "wall": "right", "kind": "door", "offset_m": 7, "width_m": 1.2, "height_m": 2.1, "note": "Accès office traiteur près du bar (estimé ; Belley : office de 34 m²)." },
+    { "wall": "front", "kind": "door", "offset_m": 5.5, "width_m": 2.8, "height_m": 2.0, "note": "Entrée technique / matériel (Lausanne : 2,80 × 2 m)." },
+    { "wall": "left", "kind": "window", "offset_m": 2, "width_m": 3, "height_m": 1.8, "note": "Grandes fenêtres (estimées)." },
+    { "wall": "right", "kind": "window", "offset_m": -2, "width_m": 3, "height_m": 1.8, "note": "Fenêtres (estimées)." }
+  ],
+  "lighting": { "mood": "salle de banquet chaleureuse : lustres et guirlandes, piste en LED colorées, estrade en face chaude", "color_temp_k": 2700 },
+  "procedural": {
+    "wall_color": "#e6dccb",
+    "floor_color": "#8a7a66",
+    "ceiling_color": "#f2efe8",
+    "prop_hints": ["tables rondes nappées", "chaises housses", "estrade en praticables 2 × 1 m", "piste de danse", "comptoir de bar", "lustres", "écran de projection 4 × 3 m", "table DJ habillée"]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://www.associations-colomiers.fr/fileadmin/Associations/Demarches/SALLE_SATGE_-_FICHE_PRESENTATION.pdf",
+      "publisher": "Mairie de Colomiers — Fiche de présentation de la salle Pierre Satge",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": ["dimensions_m.height.typical (3,85 m)", "zones.estrade (cadre 8,20 m, profondeur 4,70 m, 3,10 m sous plafond)", "zones.regie-sono (sonorisation sur scène côté jardin)", "surfaces.floor (béton)", "surfaces.stage-floor (moquette grise)", "description (276 m² + 62 m², 300 debout / 200 assis / 180 à table)"]
+    },
+    {
+      "url": "https://www.lausanne.ch/dam/jcr:43073598-2aac-49a3-9f0c-6ae0a415c4b4/Casino-SDF.pdf",
+      "publisher": "Ville de Lausanne — Casino de Montbenon, La Salle des fêtes, caractéristiques techniques",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": ["zones.estrade (scène 8 × 4 m, avant-scène 20 m²)", "surfaces.stage-floor (bois verni)", "openings[2] (entrée technique 2,80 × 2 m)", "gear_positions (choix du matériel : Allen & Heath QU-24, 2 HF main + 1 cravate, 4 filaires, EV EKX-12P)", "description (300 personnes, 270 en théâtre, 220 en banquet)"]
+    },
+    {
+      "url": "https://www.belley.fr/wp-content/uploads/2025/07/Fiche-location_salledesfetes.pdf",
+      "publisher": "Ville de Belley — Fiche de location de la salle des fêtes",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": ["surfaces.stage-floor (estrade 28 m², 14 modules 2 × 1 m, hauteur 40 cm)", "zones.estrade (floor_y 0,4 m)", "description (230 m², 190 personnes, office 34 m²)"]
+    },
+    {
+      "url": "https://patrimoine.bourgognefranchecomte.fr/documents/Fiche-technique_Proudhon_2021.pdf",
+      "publisher": "Kursaal de Besançon — Fiche technique de la salle Proudhon (mise à jour octobre 2019)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": ["surfaces.ceiling (lustre à 2,90 m)", "description (15,65 × 9,04 m, 130 assis / 250 debout)", "gear_positions (choix du matériel : 4 Yamaha DXR12 mkII, console Soundcraft Ui12)"]
+    },
+    {
+      "url": "https://ville-amberieuenbugey.fr/wp-content/uploads/2017/04/Fiche-technique-Dumesnil.pdf",
+      "publisher": "Ville d'Ambérieu-en-Bugey — Dossier technique salle Dumesnil (Espace 1500)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": ["dimensions_m.length.min (14,35 m)", "dimensions_m.width.min (8,47 m)", "dimensions_m.height.min (3,50 m)", "surfaces.floor (moquette)", "patch_points"]
+    }
+  ],
+  "review": "needs-oscar-review",
+  "not_found_log": [
+    { "what": "Longueur typique 20 m et largeur typique 13,8 m : découpage estimé de la surface publiée de la salle Satge (276 m²) ; max 24 × 16 m et hauteur max 6 m : estimations.", "searched": "Fiches Satge, Lausanne (pas de cotes de salle), Belley (230 m² seulement), Proudhon, Dumesnil", "review": "needs-oscar-review" },
+    { "what": "RT60 d'une salle des fêtes : non trouvé (aucune fiche ne donne de mesure).", "searched": "Fiches des cinq salles", "review": "needs-oscar-review" },
+    { "what": "Position du bar, des portes (sauf l'entrée technique de Lausanne), des fenêtres et des prises : implantation estimée.", "searched": "Fiches des cinq salles", "review": "needs-oscar-review" },
+    { "what": "Matériel de groupe (wedges K12.2, SM57) et colonne Bose : choix pédagogiques, pas tirés d'une fiche.", "searched": "—", "review": "needs-oscar-review" }
+  ]
+}

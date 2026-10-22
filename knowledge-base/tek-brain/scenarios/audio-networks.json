@@ -1,0 +1,297 @@
+{
+  "entity": "scenario",
+  "domain": "audio-networks",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "shared-dante-stagebox-foh-monitors",
+      "name_fr": "Stagebox Dante partagée entre console façade et console retours",
+      "name_en": "Dante stagebox shared by FOH and monitor consoles",
+      "domain": "audio-networks",
+      "brief": "Concert en salle moyenne : une stagebox Dante au plateau alimente une console façade et une console retours, en réseau redondant (double étoile). Les deux consoles reçoivent les mêmes entrées ; il faut décider qui pilote les préamplis, choisir un seul leader d'horloge, créer un multicast pour les entrées partagées et régler la latence. Contrôler la séparation primaire/secondaire et les longueurs de câble.",
+      "room_id": "concert-hall-medium",
+      "required_gear": [
+        {
+          "equipment_id": "yamaha-rio3224-d2",
+          "qty": 1,
+          "role": "stagebox"
+        },
+        {
+          "equipment_id": "yamaha-cl5",
+          "qty": 1,
+          "role": "console façade"
+        },
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console retours"
+        },
+        {
+          "equipment_id": "luminex-gigacore-16t",
+          "qty": 2,
+          "role": "switch primaire / switch secondaire"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 4,
+          "role": "micros voix"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic1",
+            "equipment_id": "shure-sm58",
+            "label": "Micro chant"
+          },
+          {
+            "id": "rio",
+            "equipment_id": "yamaha-rio3224-d2",
+            "label": "Stagebox Dante"
+          },
+          {
+            "id": "swp",
+            "equipment_id": "luminex-gigacore-16t",
+            "label": "Switch primaire"
+          },
+          {
+            "id": "sws",
+            "equipment_id": "luminex-gigacore-16t",
+            "label": "Switch secondaire"
+          },
+          {
+            "id": "foh",
+            "equipment_id": "yamaha-cl5",
+            "label": "Console façade"
+          },
+          {
+            "id": "mon",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console retours"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic1",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rio",
+            "to": "swp",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "rio",
+            "to": "sws",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "swp",
+            "to": "foh",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "sws",
+            "to": "foh",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "swp",
+            "to": "mon",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "sws",
+            "to": "mon",
+            "signal": "aoip",
+            "connector": "ethercon"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "build-redundant-dante-network",
+        "configure-switch-for-dante",
+        "setup-dante-stagebox-console",
+        "patch-dante-flows-controller",
+        "set-dante-latency-from-latency-tab"
+      ],
+      "rule_ids": [
+        "primary-secondary-same-switch",
+        "dante-redundancy-crossed",
+        "eee-enabled-switch",
+        "multiple-preferred-leaders",
+        "ethernet-copper-run-over-100m"
+      ],
+      "difficulty": 4,
+      "estimated_time_min": 90,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief",
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+          "publisher": "Yamaha, R series (Rio3224-D2) specifications",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        },
+        {
+          "url": "https://www.luminex.be/products/gigacore/gigacore-16t/",
+          "publisher": "Luminex, GigaCore 16t product page",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "aes50-stagebox-small-club",
+      "name_fr": "Stagebox AES50 dans un petit club",
+      "name_en": "AES50 stagebox in a small club",
+      "domain": "audio-networks",
+      "brief": "Un groupe de quatre musiciens dans un bar-concert : une console Behringer X32 en régie reçoit une stagebox Midas DL16 au plateau par un câble Cat5 blindé. Raccorder, affecter les entrées AES50, vérifier l'horloge, et expliquer pourquoi on ne peut pas faire passer ce lien dans le switch du bar.",
+      "room_id": "bar-club-stage-small",
+      "required_gear": [
+        {
+          "equipment_id": "behringer-x32",
+          "qty": 1,
+          "role": "console"
+        },
+        {
+          "equipment_id": "midas-dl16",
+          "qty": 1,
+          "role": "stagebox AES50"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 3,
+          "role": "micros voix"
+        },
+        {
+          "equipment_id": "shure-sm57",
+          "qty": 2,
+          "role": "micros instruments"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic1",
+            "equipment_id": "shure-sm58",
+            "label": "Micro chant"
+          },
+          {
+            "id": "mic2",
+            "equipment_id": "shure-sm57",
+            "label": "Micro caisse claire"
+          },
+          {
+            "id": "dl16",
+            "equipment_id": "midas-dl16",
+            "label": "Stagebox DL16"
+          },
+          {
+            "id": "x32",
+            "equipment_id": "behringer-x32",
+            "label": "Console X32"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic1",
+            "to": "dl16",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "mic2",
+            "to": "dl16",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "dl16",
+            "to": "x32",
+            "signal": "aes50",
+            "connector": "ethercon"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "connect-aes50-stagebox"
+      ],
+      "rule_ids": [],
+      "difficulty": 2,
+      "estimated_time_min": 30,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.midasconsoles.com/en/products/0606-ACJ",
+          "publisher": "Midas, DL16 product page",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief",
+            "required_gear",
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/AES50",
+          "publisher": "Wikipedia, AES50",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Procédure officielle Yamaha de partage de stagebox Rio entre CL5 et QL1",
+      "searched": "PDF Yamaha 403 ; le scénario reste générique (qui pilote les préamplis est une décision à prendre)"
+    }
+  ]
+}

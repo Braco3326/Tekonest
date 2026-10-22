@@ -1,0 +1,446 @@
+{
+  "id": "post-atmos-mix-room-medium",
+  "name_fr": "Salle de mixage Dolby Atmos (post-production, home entertainment)",
+  "name_en": "Dolby Atmos mix room (medium)",
+  "family": "post",
+  "size": "medium",
+  "description": "Salle de mixage immersif 7.1.4 : sept enceintes à hauteur d'oreille, quatre enceintes au plafond, un caisson, console de post-production. Dimensions typiques : la pièce « optimale » présentée par Dolby (18 × 21 pieds, plafond 10 pieds). On y apprend les angles (30°, 110°, 135–150°), l'élévation des enceintes hautes et le calibrage à 79 dB C.",
+  "dimensions_m": {
+    "length": {
+      "min": 3.51,
+      "typical": 6.4,
+      "max": 9.0
+    },
+    "width": {
+      "min": 3.05,
+      "typical": 5.49,
+      "max": 7.5
+    },
+    "height": {
+      "min": 2.44,
+      "typical": 3.05,
+      "max": 3.6
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "moquette sur dalle",
+      "finish_note": "Réduit la réflexion de sol vers la position de mixage."
+    },
+    {
+      "surface": "front-wall",
+      "material": "écran micro-perforé ou mur absorbant derrière L/C/R",
+      "finish_note": "Enceintes frontales derrière l'écran en post image."
+    },
+    {
+      "surface": "walls",
+      "material": "absorbants + diffuseurs entre les enceintes surround",
+      "finish_note": "Symétrie gauche/droite."
+    },
+    {
+      "surface": "ceiling",
+      "material": "plafond absorbant avec quatre enceintes hautes",
+      "finish_note": "Enceintes hautes orientées vers la position de mixage."
+    }
+  ],
+  "rt60_s": {
+    "min": 0.16,
+    "max": 0.34,
+    "band_note": "Calculé avec la formule ITU-R BS.1116 Tm = 0,25·(V/100)^(1/3) s (200 Hz–4 kHz) : 0,16 s pour le volume min (26 m³), 0,26 s pour le typique (107 m³), 0,34 s pour le max (243 m³). Dolby ne donne pas de TR sur la page consultée.",
+    "source_url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1116-3-201502-I!!PDF-E.pdf"
+  },
+  "zones": [
+    {
+      "id": "mix-position",
+      "kind": "control-room",
+      "rect_m": [
+        0,
+        0.6,
+        1.6,
+        1.4
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "desk",
+      "kind": "desk",
+      "rect_m": [
+        0,
+        -0.25,
+        2.6,
+        1.0
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "front-lcr",
+      "kind": "other",
+      "rect_m": [
+        0,
+        -2.1,
+        3.4,
+        0.9
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "surrounds",
+      "kind": "other",
+      "rect_m": [
+        0,
+        2.0,
+        5.2,
+        2.2
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "rack",
+      "kind": "machine-room",
+      "rect_m": [
+        2.2,
+        -2.8,
+        0.9,
+        0.7
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "overheads",
+      "kind": "other",
+      "rect_m": [
+        0,
+        0.6,
+        3.2,
+        3.6
+      ],
+      "floor_y_m": 2.9
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "front-lcr",
+      "position_m": [
+        -1.4,
+        1.2,
+        -1.83
+      ],
+      "rotation_deg": 30,
+      "note": "L à 30° de l'axe, 2,8 m de la position de mixage (Focal : < 4 m). rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+    },
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "front-lcr",
+      "position_m": [
+        0,
+        1.2,
+        -2.2
+      ],
+      "rotation_deg": 0,
+      "note": "C, droit devant."
+    },
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "front-lcr",
+      "position_m": [
+        1.4,
+        1.2,
+        -1.83
+      ],
+      "rotation_deg": -30,
+      "note": "R à 30°."
+    },
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "surrounds",
+      "position_m": [
+        -2.25,
+        1.2,
+        1.42
+      ],
+      "rotation_deg": 110,
+      "note": "Ls à 110° (Dolby) ; distance plus courte compensée par retard."
+    },
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "surrounds",
+      "position_m": [
+        2.25,
+        1.2,
+        1.42
+      ],
+      "rotation_deg": -110,
+      "note": "Rs à 110°."
+    },
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "surrounds",
+      "position_m": [
+        -1.2,
+        1.2,
+        2.68
+      ],
+      "rotation_deg": 150,
+      "note": "Lrs (surround arrière) vers 150°."
+    },
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "surrounds",
+      "position_m": [
+        1.2,
+        1.2,
+        2.68
+      ],
+      "rotation_deg": -150,
+      "note": "Rrs vers 150°."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "overheads",
+      "position_m": [
+        -1.4,
+        2.9,
+        -1.0
+      ],
+      "rotation_deg": 0,
+      "note": "Ltf (haut avant gauche) au plafond ; élévation ≈ 39° (Dolby : 30–55°) ; séparation avant/arrière des hautes ≈ moitié de la longueur."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "overheads",
+      "position_m": [
+        1.4,
+        2.9,
+        -1.0
+      ],
+      "rotation_deg": 0,
+      "note": "Rtf."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "overheads",
+      "position_m": [
+        -1.4,
+        2.9,
+        2.2
+      ],
+      "rotation_deg": 180,
+      "note": "Ltr (haut arrière gauche)."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "overheads",
+      "position_m": [
+        1.4,
+        2.9,
+        2.2
+      ],
+      "rotation_deg": 180,
+      "note": "Rtr."
+    },
+    {
+      "equipment_id": "genelec-7360a",
+      "zone": "front-lcr",
+      "position_m": [
+        0.9,
+        0.25,
+        -2.3
+      ],
+      "rotation_deg": 0,
+      "note": "Caisson (LFE + bass management) ; LFE calé +10 dB par bande 20–80 Hz (Dolby)."
+    },
+    {
+      "equipment_id": "avid-s6",
+      "zone": "desk",
+      "position_m": [
+        0,
+        0.8,
+        -0.25
+      ],
+      "rotation_deg": 0,
+      "note": "Console de post-production devant la position de mixage."
+    },
+    {
+      "equipment_id": "avid-protools-mtrx-studio",
+      "zone": "rack",
+      "position_m": [
+        2.2,
+        0.8,
+        -2.8
+      ],
+      "rotation_deg": 0,
+      "note": "Interface et gestion du monitoring 7.1.4."
+    },
+    {
+      "equipment_id": "nti-audio-xl2",
+      "zone": "mix-position",
+      "position_m": [
+        0,
+        1.2,
+        0.6
+      ],
+      "rotation_deg": 0,
+      "note": "Calibrage : bruit rose 79 dB C lent par canal (Dolby)."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        0,
+        0.3,
+        -3.15
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        2.7,
+        0.3,
+        -2.8
+      ],
+      "type": "schuko-16a-onduleur"
+    },
+    {
+      "position_m": [
+        0,
+        0.3,
+        3.15
+      ],
+      "type": "schuko-16a"
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        2.7,
+        0.4,
+        -2.0
+      ],
+      "type": "dante-wall-port",
+      "note": "Liaison réseau vers la machine Dolby Atmos Renderer / salle machine."
+    },
+    {
+      "position_m": [
+        -2.7,
+        0.4,
+        -2.0
+      ],
+      "type": "wall-patch-xlr-12",
+      "note": "Lignes enceintes / retours."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": -1.8,
+      "width_m": 1.0,
+      "height_m": 2.1
+    }
+  ],
+  "lighting": {
+    "mood": "sombre, bias light derrière l'écran",
+    "color_temp_k": 6500
+  },
+  "procedural": {
+    "wall_color": "#25272b",
+    "floor_color": "#303236",
+    "ceiling_color": "#1e2023",
+    "prop_hints": [
+      "écran de projection ou grand moniteur",
+      "enceintes au plafond sur supports orientables",
+      "rideaux noirs",
+      "fauteuil de mixage"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://www.production-expert.com/production-expert-1/how-to-set-up-a-mix-room-for-dolby-atmos-music-definitive-guide",
+      "publisher": "Production Expert (résumé d'une vidéo Dolby, L. Argilla et B. Pennington)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "trade-press",
+      "covers": [
+        "dimensions_m.*.typical (18 × 21 pieds, 10 pieds)",
+        "dimensions_m.*.min (10 × 11,5 pieds, 8 pieds)"
+      ]
+    },
+    {
+      "url": "https://professional.dolby.com/en-in/gaming/tutorial/atmos-design-studio/",
+      "publisher": "Dolby Laboratories (Atmos studio guidelines, jeux)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "gear_positions (5.1.4 minimum, 7.1.4 référence, L/R 30°, surround 110°, hautes 30–55°, séparation des hautes = moitié de la longueur)",
+        "calibrage 79 dB C, LFE +10 dB"
+      ]
+    },
+    {
+      "url": "https://www.focal.com/en/pro/dolby-atmos",
+      "publisher": "Focal (guide d'installation Dolby Atmos)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "manufacturer",
+      "covers": [
+        "volume ≥ 50 m³ (voir conflicts)",
+        "distance enceintes < 4 m (max 5 m)",
+        "enceintes à 1,2 m, hautes ≥ 2,4 m"
+      ]
+    },
+    {
+      "url": "https://www.genelec.com/monitor-placement",
+      "publisher": "Genelec",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "gear_positions (surround arrière 130–150°)"
+      ]
+    },
+    {
+      "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1116-3-201502-I!!PDF-E.pdf",
+      "publisher": "ITU-R (Rec. BS.1116-3, 2015)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "standard",
+      "covers": [
+        "rt60_s (formule Tm)",
+        "dimensions_m.*.max (30–70 m² en multicanal)"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "field": "dimensions_m.*.min",
+      "values": [
+        {
+          "value": "3,05 × 3,51 × 2,44 m (≈ 26 m³), minimum pour une pièce Atmos à domicile",
+          "source_url": "https://www.production-expert.com/production-expert-1/how-to-set-up-a-mix-room-for-dolby-atmos-music-definitive-guide"
+        },
+        {
+          "value": "volume minimal 50 m³ pour une installation Dolby Atmos",
+          "source_url": "https://www.focal.com/en/pro/dolby-atmos"
+        }
+      ],
+      "note": "Le minimum présenté par Dolby (vidéo) donne un volume deux fois plus petit que le minimum indiqué par Focal."
+    }
+  ],
+  "not_found_log": [
+    {
+      "field": "dimensions_m.*.max",
+      "note": "9,0 × 7,5 × 3,6 m (67,5 m²) : estimation sous la borne BS.1116 de 70 m² en multicanal.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "dimensions_m",
+      "note": "Les dimensions Dolby viennent d'un article de presse qui résume une vidéo Dolby, pas du guide technique Dolby Home Entertainment (non ouvert).",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

@@ -49,3 +49,21 @@ Times are local (Europe/Paris). Run started 2026-10-22.
 - **Push not done.** `git push -u origin research/sound-equipment-database` failed with "could not read Username for 'https://github.com': terminal prompts disabled". The PC has no stored GitHub credentials, and the run deliberately did not open an interactive login. All commits are local on the branch in `C:\Users\brro\dev\Tekonest`. Oscar needs to push once (see the morning summary).
 
 - Process note: the brainstorming skill normally asks for approval before implementation. Oscar asked for an unattended run, so the decisions are recorded in `docs/DESIGN.md` and the open points in `OPEN_QUESTIONS.md`.
+
+---
+
+# Run 2: TEK Brain (Track A, branch `research/tekbrain`)
+
+Master prompt: `knowledge-base/docs/prompts/tekbrain-and-explore-controls.md` (v2). Track B (explore controls) is logged in `tekpractice-sim/docs/NIGHT_LOG.md` on branch `feature/tekpractice-explore-controls`.
+
+## 2026-10-22 09:40 setup
+- Oscar pushed `research/sound-equipment-database` (remote at `9d9d021`, two commits ahead with the master prompt). All three checkouts were fast-forwarded to it.
+- Worktrees (outside the repo, so no `.gitignore` change): `C:\Users\brro\dev\Tekonest-wt\tekbrain` (Track A) and `C:\Users\brro\dev\Tekonest-wt\explore` (Track B). The main checkout stays on `research/sound-equipment-database`.
+- Skills loaded: using-superpowers, using-git-worktrees, brainstorming. **Unavailable** in this install, done by hand following their intent: `product-management:write-spec` (specs written as DESIGN.md / ADR), `pdf-reading` (the `anthropic-skills:pdf` skill or a stdlib extractor is used instead), `frontend-design`, `design:ux-copy`, `design:accessibility-review` (Track B does these checks by hand).
+- Baseline in Track B worktree: `npm ci` ok, vitest 164/164 pass.
+
+## A1 design (09:45)
+- `tek-brain/DESIGN.md`: data model for concept, skill, procedure, rule (JSON condition DSL), fault, scenario, glossary, room template; layout `tek-brain/<entity>/<domain>.json`; 17 frozen domains in `tek-brain/domains.json` with seed concepts and 32 planned room ids.
+- `tools/validate_tekbrain.py` (stdlib): envelopes, required fields, enums, ids, sources, formula→source link, condition DSL, room geometry, cross-references (warnings, errors with `--strict`). Smoke-tested on a good and a bad record (14 expected errors caught).
+- `tek-brain/AGENT_BRIEF.md`: rules, search budget (≤ 6 WebSearch per agent), examples for every entity.
+- Self-answered design questions logged as OPEN_QUESTIONS #17–22.

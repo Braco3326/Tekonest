@@ -1,0 +1,390 @@
+{
+  "entity": "rule",
+  "domain": "loudspeakers-system-tuning",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "amp-load-impedance-too-low",
+      "name_fr": "Charge trop basse sur un canal d'ampli",
+      "name_en": "Amplifier load impedance too low",
+      "domain": "loudspeakers-system-tuning",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "graph",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.signal",
+            "op": "eq",
+            "value": "speaker-level"
+          },
+          {
+            "path": "src.port.computed_load_ohms",
+            "op": "lt",
+            "value": {
+              "ref": "src.device.min_load_ohms"
+            }
+          }
+        ]
+      },
+      "explanation": "La charge vue par une sortie d'ampli est la combinaison en parallèle de toutes les enceintes raccordées (1/Z = Σ 1/Zi). Sous le minimum du fabricant, l'ampli chauffe, écrête, se met en protection ou fait déclencher son disjoncteur (QSC : pas de charge de 2 Ω en ponté, 4 Ω minimum). Les constructeurs d'enceintes limitent aussi le nombre de caissons par canal (d&b : 2 par canal).",
+      "fix": "Retirer des enceintes du canal, les répartir sur d'autres canaux, ou utiliser un ampli spécifié pour cette charge ; respecter la table enceintes/canal du constructeur.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.nominal_impedance_ohms (enceintes)",
+        "device.min_load_ohms (amplis, par mode stéréo/ponté)",
+        "port.computed_load_ohms (calcul moteur : parallèle de toutes les enceintes chaînées sur la sortie)",
+        "device.max_cabinets_per_channel"
+      ],
+      "concept_ids": [
+        "speaker-impedance-load",
+        "bridge-mode-amplifier"
+      ],
+      "sources": [
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html",
+          "publisher": "HyperPhysics, Georgia State University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "condition"
+          ]
+        },
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
+          "publisher": "QSC, RMX Series 2RU User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "publisher": "Crown (HARMAN), XLS DriveCore 2 Series Operation Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "amplifier-power-mismatch",
+      "name_fr": "Puissance d'ampli inadaptée à l'enceinte",
+      "name_en": "Amplifier power mismatch",
+      "domain": "loudspeakers-system-tuning",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "dst.port.signal",
+            "op": "eq",
+            "value": "speaker-level"
+          },
+          {
+            "path": "src.port.power_w_at_load_over_dst_rating",
+            "op": "gt",
+            "value": 2
+          }
+        ]
+      },
+      "explanation": "EAW recommande un ampli d'environ deux fois la tenue en puissance de l'enceinte quand toute sa capacité est nécessaire, sous réserve d'une exploitation maîtrisée. Au-delà, l'enceinte dépend entièrement des limiteurs. EAW rappelle aussi qu'un ampli trop petit n'est pas une protection : l'écrêtage peut détruire une enceinte même avec un ampli sous-dimensionné. Il n'existe pas de norme universelle de mesure de puissance, donc le rapport n'est qu'un indicateur.",
+      "fix": "Choisir l'ampli et le preset recommandés par le constructeur (ex. NEXO : 750 W par GEO M10), activer les limiteurs, éviter l'écrêtage dans toute la chaîne.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.power_w_by_load (amplis : puissance à 8/4/2 Ω)",
+        "port.power_handling_w_rms (enceintes)",
+        "port.power_handling_w_peak (enceintes)",
+        "src.port.power_w_at_load_over_dst_rating (calcul moteur)"
+      ],
+      "concept_ids": [
+        "amplifier-power-rating",
+        "speaker-impedance-load"
+      ],
+      "sources": [
+        {
+          "url": "https://design.eaw.com/en/knowledge/how-much-amplifier-power-do-i-need",
+          "publisher": "EAW, How much amplifier power do I need?",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
+          "publisher": "Crown (HARMAN), XLS DriveCore 2 Series data sheet",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "speakon-pin-mismatch-sub",
+      "name_fr": "Subwoofer sur une paire speakON non alimentée",
+      "name_en": "speakON pin mismatch on subwoofer",
+      "domain": "loudspeakers-system-tuning",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.connector",
+            "op": "eq",
+            "value": "speakon-nl4"
+          },
+          {
+            "path": "dst.port.connector",
+            "op": "eq",
+            "value": "speakon-nl4"
+          },
+          {
+            "path": "dst.port.speakon_pairs_used",
+            "op": "includes",
+            "value": "2"
+          },
+          {
+            "path": "src.port.speakon_pairs_driven",
+            "op": "excludes",
+            "value": "2"
+          }
+        ]
+      },
+      "explanation": "Un NL4 a deux paires (1± et 2±). Chez d&b, les tops V8 utilisent 1± et le V-SUB 2± ; la NEXO GEO M10 utilise 2± avec 1± en traversée. Si la sortie d'ampli (ou le câble) ne porte que 1±, l'enceinte câblée sur 2± ne reçoit rien : sub muet alors que tout semble branché.",
+      "fix": "Alimenter le sub depuis une sortie qui délivre 2± (canal configuré en conséquence, câble NL4 4 conducteurs), ou utiliser l'adaptateur/le câblage prévu par le constructeur.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.speakon_pairs_used (enceintes : ['1'], ['2'] ou ['1','2'])",
+        "port.speakon_pairs_driven (sorties d'ampli et câbles)"
+      ],
+      "concept_ids": [
+        "speakon-pinout"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Speakon_connector",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "sub-top-polarity-misalignment",
+      "name_fr": "Subs et tops en opposition au croisement",
+      "name_en": "Sub/top polarity or delay misalignment",
+      "domain": "loudspeakers-system-tuning",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "any": [
+          {
+            "path": "session.sub_top_phase_offset_at_crossover_deg",
+            "op": "gt",
+            "value": 90
+          },
+          {
+            "path": "session.sub_top_relative_polarity_inverted",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "explanation": "Autour du croisement, subs et tops reproduisent les mêmes fréquences. Une polarité inversée ou un retard proche d'une demi-période (9,5 ms pour un croisement à 52 Hz) les fait s'annuler : grave creux au croisement. L'alignement n'est valable qu'au point de référence choisi.",
+      "fix": "Mesurer en fonction de transfert au point de référence, corriger polarité puis retard jusqu'à superposer les phases au croisement.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.controls.polarity (sorties processeur/ampli)",
+        "device.controls.delay_ms",
+        "port.crossover_hz",
+        "session.sub_top_phase_offset_at_crossover_deg (simulation)",
+        "session.sub_top_relative_polarity_inverted"
+      ],
+      "concept_ids": [
+        "subwoofer-alignment",
+        "loudspeaker-polarity"
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf",
+          "publisher": "L-Acoustics (Mouterde, Moulin, Epain, Corteel), AES 2024",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Subwoofer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "bridge-mode-load-too-low",
+      "name_fr": "Charge inférieure à 4 Ω en mode ponté",
+      "name_en": "Bridged mode load below 4 ohms",
+      "domain": "loudspeakers-system-tuning",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.device.controls.amp_mode",
+            "op": "eq",
+            "value": "bridge"
+          },
+          {
+            "path": "src.port.computed_load_ohms",
+            "op": "lt",
+            "value": 4
+          }
+        ]
+      },
+      "explanation": "En mode ponté, l'impédance de sortie de l'ampli double : QSC (RMX) et Crown (XLS) fixent la charge minimale à 4 Ω. En dessous, l'ampli se met en protection ou coupe, et le disjoncteur peut déclencher. Le câblage change aussi : sur le Crown XLS, + sur 1+ et − sur 2+ du speakON du canal 1.",
+      "fix": "Ne mettre qu'une enceinte de 8 Ω ou 4 Ω sur la sortie pontée, ou revenir en mode stéréo.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.controls.amp_mode (stereo|parallel|bridge)",
+        "port.computed_load_ohms"
+      ],
+      "concept_ids": [
+        "bridge-mode-amplifier",
+        "speaker-impedance-load"
+      ],
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
+          "publisher": "QSC, RMX Series 2RU User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "publisher": "Crown (HARMAN), XLS DriveCore 2 Series Operation Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Universal threshold for amplifier underpowering",
+      "searched": "EAW 'How much amplifier power do I need?' says underpowering is not safe but gives no threshold; only the 2x recommendation is encoded"
+    },
+    {
+      "what": "IEC 60268-5 / AES2 power test text",
+      "searched": "WebSearch snippets (Yamaha micro-tutorial 403, B&C, Harman) only; not opened, not cited"
+    }
+  ]
+}

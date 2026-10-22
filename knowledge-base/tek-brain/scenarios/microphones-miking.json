@@ -1,0 +1,398 @@
+{
+ "entity": "scenario",
+ "domain": "microphones-miking",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "stereo-recording-acoustic-duo",
+   "name_fr": "Enregistrement stéréo d'un duo acoustique",
+   "name_en": "Stereo recording of an acoustic duo",
+   "domain": "microphones-miking",
+   "brief": "Un duo guitare acoustique et voix vient enregistrer en prise live dans une salle de prise moyenne. Installer un couple ORTF de cardioïdes devant le duo pour l'image et l'ambiance, plus deux micros d'appoint (voix et guitare) pour le contrôle de l'équilibre. Alimenter tous les condensateurs en +48 V, régler les gains, contrôler la compatibilité mono et la polarité, respecter la règle des 3 pour 1 entre les appoints.",
+   "room_id": "studio-live-room-medium",
+   "required_gear": [
+    {
+     "equipment_id": "neumann-km-184",
+     "qty": 3,
+     "role": "couple ORTF (2) + appoint guitare (1)"
+    },
+    {
+     "equipment_id": "neumann-u87-ai",
+     "qty": 1,
+     "role": "appoint voix"
+    },
+    {
+     "equipment_id": "focusrite-isa-one",
+     "qty": 4,
+     "role": "préamplis micro avec +48 V"
+    },
+    {
+     "equipment_id": "avid-hd-io",
+     "qty": 1,
+     "role": "conversion A/N vers la station"
+    },
+    {
+     "equipment_id": "stedman-proscreen-xl",
+     "qty": 1,
+     "role": "anti-pop voix"
+    }
+   ],
+   "signal_flow": {
+    "nodes": [
+     {
+      "id": "ortf-l",
+      "equipment_id": "neumann-km-184",
+      "label": "ORTF gauche"
+     },
+     {
+      "id": "ortf-r",
+      "equipment_id": "neumann-km-184",
+      "label": "ORTF droite"
+     },
+     {
+      "id": "spot-gtr",
+      "equipment_id": "neumann-km-184",
+      "label": "Appoint guitare"
+     },
+     {
+      "id": "spot-vox",
+      "equipment_id": "neumann-u87-ai",
+      "label": "Appoint voix"
+     },
+     {
+      "id": "pre1",
+      "equipment_id": "focusrite-isa-one",
+      "label": "Préampli 1"
+     },
+     {
+      "id": "pre2",
+      "equipment_id": "focusrite-isa-one",
+      "label": "Préampli 2"
+     },
+     {
+      "id": "pre3",
+      "equipment_id": "focusrite-isa-one",
+      "label": "Préampli 3"
+     },
+     {
+      "id": "pre4",
+      "equipment_id": "focusrite-isa-one",
+      "label": "Préampli 4"
+     },
+     {
+      "id": "adc",
+      "equipment_id": "avid-hd-io",
+      "label": "Interface"
+     }
+    ],
+    "edges": [
+     {
+      "from": "ortf-l",
+      "to": "pre1",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "ortf-r",
+      "to": "pre2",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "spot-gtr",
+      "to": "pre3",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "spot-vox",
+      "to": "pre4",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "pre1",
+      "to": "adc",
+      "signal": "line-level-pro",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "pre2",
+      "to": "adc",
+      "signal": "line-level-pro",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "pre3",
+      "to": "adc",
+      "signal": "line-level-pro",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "pre4",
+      "to": "adc",
+      "signal": "line-level-pro",
+      "connector": "xlr3-m"
+     }
+    ]
+   },
+   "procedure_ids": [
+    "setup-ortf-pair",
+    "connect-condenser-with-phantom",
+    "close-mic-vocal-studio"
+   ],
+   "rule_ids": [
+    "phantom-power-required",
+    "polarity-inversion-same-source",
+    "three-to-one-spacing"
+   ],
+   "difficulty": 3,
+   "estimated_time_min": 60,
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Prise de son musicale stéréo en situation — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/dict/ortf/",
+     "publisher": "DPA Microphones, Mic Dictionary: ORTF",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "required_gear"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "drum-kit-multitrack-session",
+   "name_fr": "Prise de batterie en multi-micro",
+   "name_en": "Multitrack drum kit session",
+   "domain": "microphones-miking",
+   "brief": "Enregistrer une batterie rock (grosse caisse, caisse claire dessus/dessous, deux toms, charleston, overheads) sur une console analogique en studio. Choisir dynamiques et condensateurs selon les niveaux, placer les micros, activer le +48 V uniquement là où il faut, inverser la polarité du micro dessous de caisse claire et vérifier la cohérence du kit en mono.",
+   "room_id": "studio-live-room-medium",
+   "required_gear": [
+    {
+     "equipment_id": "shure-beta-52a",
+     "qty": 1,
+     "role": "grosse caisse"
+    },
+    {
+     "equipment_id": "shure-sm57",
+     "qty": 2,
+     "role": "caisse claire dessus/dessous"
+    },
+    {
+     "equipment_id": "sennheiser-md-421-ii",
+     "qty": 2,
+     "role": "toms"
+    },
+    {
+     "equipment_id": "akg-c451-b",
+     "qty": 1,
+     "role": "charleston"
+    },
+    {
+     "equipment_id": "neumann-km-184",
+     "qty": 2,
+     "role": "overheads (NOS)"
+    },
+    {
+     "equipment_id": "audient-asp8024-he",
+     "qty": 1,
+     "role": "console d'enregistrement"
+    }
+   ],
+   "signal_flow": {
+    "nodes": [
+     {
+      "id": "kick",
+      "equipment_id": "shure-beta-52a",
+      "label": "Grosse caisse"
+     },
+     {
+      "id": "sn-top",
+      "equipment_id": "shure-sm57",
+      "label": "Caisse claire dessus"
+     },
+     {
+      "id": "sn-bot",
+      "equipment_id": "shure-sm57",
+      "label": "Caisse claire dessous (Ø inversé)"
+     },
+     {
+      "id": "tom1",
+      "equipment_id": "sennheiser-md-421-ii",
+      "label": "Tom 1"
+     },
+     {
+      "id": "tom2",
+      "equipment_id": "sennheiser-md-421-ii",
+      "label": "Tom basse"
+     },
+     {
+      "id": "hh",
+      "equipment_id": "akg-c451-b",
+      "label": "Charleston (+48 V)"
+     },
+     {
+      "id": "oh-l",
+      "equipment_id": "neumann-km-184",
+      "label": "Overhead gauche (+48 V)"
+     },
+     {
+      "id": "oh-r",
+      "equipment_id": "neumann-km-184",
+      "label": "Overhead droite (+48 V)"
+     },
+     {
+      "id": "desk",
+      "equipment_id": "audient-asp8024-he",
+      "label": "Console"
+     }
+    ],
+    "edges": [
+     {
+      "from": "kick",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "sn-top",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "sn-bot",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "tom1",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "tom2",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "hh",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "oh-l",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "oh-r",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     }
+    ]
+   },
+   "procedure_ids": [
+    "mic-drum-kit-multitrack",
+    "connect-condenser-with-phantom"
+   ],
+   "rule_ids": [
+    "polarity-inversion-same-source",
+    "phantom-power-required",
+    "mic-max-spl-exceeded",
+    "three-to-one-spacing"
+   ],
+   "difficulty": 4,
+   "estimated_time_min": 90,
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Prise de son multi-micro en studio — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "brief",
+      "required_gear"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-drum-kit/",
+     "publisher": "DPA Microphones, Mic University: How to mic a drum kit",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "brief"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": []
+}
