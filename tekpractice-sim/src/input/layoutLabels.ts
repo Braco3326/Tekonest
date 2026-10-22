@@ -1,0 +1,46 @@
+/**
+ * Display labels for physical key codes (help overlay, settings). Bindings stay
+ * on KeyboardEvent.code; only the LABEL follows the user's layout. The browser
+ * layout map (navigator.keyboard.getLayoutMap, Chromium) wins when available;
+ * otherwise a French (France/Belgium) locale implies AZERTY.
+ */
+export type Layout = 'azerty' | 'qwerty'
+
+const AZERTY_LETTERS: Record<string, string> = { KeyW: 'Z', KeyA: 'Q', KeyQ: 'A', KeyZ: 'W', Semicolon: 'M' }
+
+const SPECIAL: Record<string, string> = {
+  Space: 'Espace',
+  ShiftLeft: 'Maj',
+  ShiftRight: 'Maj',
+  ControlLeft: 'Ctrl',
+  ControlRight: 'Ctrl',
+  AltLeft: 'Alt',
+  Escape: 'Échap',
+  Enter: 'Entrée',
+  Tab: 'Tab',
+  Backspace: 'Retour arrière',
+  Delete: 'Suppr',
+  ArrowLeft: '←',
+  ArrowRight: '→',
+  ArrowUp: '↑',
+  ArrowDown: '↓',
+  PageUp: 'Page ↑',
+  PageDown: 'Page ↓',
+}
+
+export function labelFor(code: string, layout: Layout, layoutMap?: ReadonlyMap<string, string>): string {
+  if (SPECIAL[code]) return SPECIAL[code]
+  const fromMap = layoutMap?.get(code)
+  if (fromMap) return fromMap.toUpperCase()
+  if (layout === 'azerty' && AZERTY_LETTERS[code]) return AZERTY_LETTERS[code]
+  if (code.startsWith('Key')) return code.slice(3)
+  if (code.startsWith('Digit')) return code.slice(5)
+  return code
+}
+
+/** fr-FR, fr-BE, fr-LU, fr-MC… are AZERTY; fr-CA and fr-CH are QWERTY/QWERTZ (labels = code). */
+export function detectLayout(locale: string): Layout {
+  const l = locale.toLowerCase()
+  if (!l.startsWith('fr')) return 'qwerty'
+  return l === 'fr' || /^fr-(fr|be|lu|mc)/.test(l) ? 'azerty' : 'qwerty'
+}

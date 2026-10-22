@@ -1,0 +1,39 @@
+/**
+ * Input actions (ADR-0010 Décision 2) — the seam between devices and gameplay.
+ * Keyboard, mouse (and later touch / gamepad) only ever produce these actions;
+ * movement and UI react to actions, never to raw keys.
+ */
+export const ACTIONS = [
+  'MOVE_FORWARD',
+  'MOVE_BACK',
+  'STRAFE_LEFT',
+  'STRAFE_RIGHT',
+  'MOVE_DOWN',
+  'MOVE_UP',
+  'RUN',
+  'TURN_LEFT',
+  'TURN_RIGHT',
+  'LOOK_UP',
+  'LOOK_DOWN',
+  'TOGGLE_INVENTORY',
+  'TOGGLE_HELP',
+  'TOGGLE_VIEW',
+  'FOCUS',
+  'PICK_UP',
+  'ROTATE_PLACEMENT',
+  'CANCEL',
+] as const
+
+export type Action = (typeof ACTIONS)[number]
+
+/** Actions that move the player — their use flips the "keyboard player" flag (pointer lock auto). */
+export const MOVEMENT_ACTIONS: readonly Action[] = [
+  'MOVE_FORWARD',
+  'MOVE_BACK',
+  'STRAFE_LEFT',
+  'STRAFE_RIGHT',
+  'MOVE_DOWN',
+  'MOVE_UP',
+]
+
+export const isAction = (v: unknown): v is Action => (ACTIONS as readonly unknown[]).includes(v)
