@@ -1,0 +1,2735 @@
+{
+  "file": "studio-monitors.json",
+  "category": "studio-monitors",
+  "generated": "2026-10-22",
+  "selection_rationale": "Reference monitors common in French and international studios, broadcast and schools: Genelec (8030C from the TekPractice catalog, 8341A coaxial SAM, 1234A main, 7360A sub), Neumann (KH 120 II, KH 420 midfield, KH 750 DSP sub), French-made Focal (Shape 65, Trio6, Utopia Main 112), ADAM (A7V, S3H midfield) and Yamaha HS8. Monitor controllers span a high-end digital hub (Grace m905, in catalog), an analog controller (Drawmer MC2.1) and an entry-level controller/USB interface (Mackie Big Knob Studio). Models were chosen for distinctive wiring lessons: AES3 thru daisy-chains, S/PDIF on RCA, AES3 on BNC, separate amplifier racks on Speakon NL4/NL8, bass-management subwoofers and talkback/cue paths.",
+  "not_found_log": [
+    {
+      "device_id": "yamaha-ns-10m",
+      "what": "Device dropped: no manufacturer spec sheet or manual reachable for NS-10M / NS-10M Studio; only a Sound On Sound history article (1978 launch of NS10) was read",
+      "searched": "soundonsound.com 'yamaha-ns10-story'; Yamaha sites; search budget exhausted"
+    },
+    {
+      "device_id": "auratone-5c",
+      "what": "Device dropped: auratone.com did not resolve (DNS failure)",
+      "searched": "auratone.com, www.auratone.com; search budget exhausted"
+    },
+    {
+      "device_id": "yamaha-hs8",
+      "what": "Owner's manual PDF URL (listed on downloads page but rendered by script); French manual",
+      "searched": "usa.yamaha.com HS series downloads page, fr.yamaha.com downloads page; search budget exhausted"
+    },
+    {
+      "device_id": "yamaha-hs8",
+      "what": "Second-source cross-check of specs",
+      "searched": "Thomann pages rate-limited (HTTP 429); search budget exhausted"
+    },
+    {
+      "device_id": "neumann-kh-120-ii",
+      "what": "French manual (only EN/DE listed)",
+      "searched": "neumann.com KH 120 II product page"
+    },
+    {
+      "device_id": "neumann-kh-420",
+      "what": "Operating manual / datasheet PDF",
+      "searched": "neumann.com product page and file finder (script-rendered, no links captured); search budget exhausted"
+    },
+    {
+      "device_id": "neumann-kh-750-dsp",
+      "what": "Operating manual / datasheet PDF",
+      "searched": "neumann.com product page and file finder (script-rendered); search budget exhausted"
+    },
+    {
+      "device_id": "genelec-8030c",
+      "what": "French manual / launch year",
+      "searched": "genelec.com/8030c documents list (EN/FI, ZH only)"
+    },
+    {
+      "device_id": "genelec-8341a",
+      "what": "Launch year",
+      "searched": "genelec.com/8341a (reviews 2017 only)"
+    },
+    {
+      "device_id": "grace-m905",
+      "what": "French manual, release year",
+      "searched": "gracedesign.com m905 product page"
+    },
+    {
+      "device_id": "neumann-kh-310",
+      "what": "Not included: KH 310 A page is marked historical (succeeded by KH 310 II, which Neumann classes as nearfield); dropped to keep scope",
+      "searched": "neumann.com KH 310 A and KH 310 II pages"
+    },
+    {
+      "device_id": "focal-trio11-be",
+      "what": "Not listed on current focal.com monitoring pages; replaced in this file by Focal Trio6",
+      "searched": "focal.com monitoring-speakers catalog, ST6 / SM6 / Shape / Alpha Evo lines"
+    },
+    {
+      "device_id": "all",
+      "what": "year_introduced for every device",
+      "searched": "manufacturer product pages; search budget exhausted before secondary sources could be searched"
+    }
+  ],
+  "devices": [
+    {
+      "id": "genelec-8030c",
+      "brand": "Genelec",
+      "model": "8030C",
+      "category": "studio-monitors",
+      "sub_type": "nearfield",
+      "technology": "Active two-way bi-amplified near-field monitor: two 50 W Class D amplifiers (bass, treble), die-cast aluminium MDE enclosure with reflex port, analog room-response DIP switches (desktop, treble tilt, bass roll-off, bass tilt).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Compact Genelec two-way that is part of the TekPractice catalog and a common reference small monitor in broadcast and edit rooms. Its rear DIP switches (bass tilt, desktop, treble tilt) make it a good teaching example of manual room compensation.",
+      "typical_uses": [
+        "near-field mixing",
+        "broadcast / radio monitoring",
+        "video editing suites",
+        "OB vans"
+      ],
+      "key_specs": {
+        "frequency_response": "54 Hz - 20 kHz (±2 dB)",
+        "lower_cutoff_-6db": "< 47 Hz",
+        "upper_cutoff_-6db": "> 25 kHz",
+        "max_spl_short_term_sine": "> 104 dB SPL @ 1 m (half space, 100 Hz - 3 kHz)",
+        "max_spl_long_term": "> 96 dB SPL @ 1 m (IEC weighted noise)",
+        "max_spl_peak_pair": "110 dB or more per pair at 1 m, with music",
+        "amplification": "Bass amplifier 50 W, treble amplifier 50 W (Class D per product page)",
+        "drivers": "Bass 130 mm (5 in) cone, treble 19 mm metal dome",
+        "crossover": "3.0 kHz",
+        "input": "1 x XLR female, balanced analog, 10 kΩ",
+        "input_sensitivity": "-6 dBu for 100 dB SPL at 1 m",
+        "room_compensation": "DIP switches: Desktop -4 dB @ 160 Hz; Treble Tilt 0 to -2 dB @ 15 kHz; Bass Roll-Off -4 dB @ 55 Hz; Bass Tilt 0 to -6 dB @ 100 Hz in -2 dB steps",
+        "self_noise": "< 5 dB (A-weighted)",
+        "mains": "100-240 V AC 50-60 Hz",
+        "dimensions": "Height 299 mm with Iso-Pod (285 mm without) x width 189 mm x depth 178 mm",
+        "weight": "5.0 kg (11 lb)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced analog input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "https://assets.ctfassets.net/4zjnzn055a4v/1my4dzvqUoe4oKYwS6KsUu/a8f964c3ce07eb802b88b8d861799a07/8030c_opman_gb_fi.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.genelec.com/8030c",
+      "manual_languages": [
+        "en",
+        "fi"
+      ],
+      "manuals": [
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/1my4dzvqUoe4oKYwS6KsUu/a8f964c3ce07eb802b88b8d861799a07/8030c_opman_gb_fi.pdf",
+          "title": "8030C operating manual (English / Finnish)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/4DNbhkxQhq6sIAwAwkioAQ/64700e9d95a5217f4ff3e373a9d57b7e/8030c_qsg.pdf",
+          "title": "8030C Quick Setup Guide",
+          "language": "not shown",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/8030c",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.max_spl_peak_pair",
+            "key_specs.max_spl_short_term_sine",
+            "key_specs.max_spl_long_term",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.input",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "status"
+          ]
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/1my4dzvqUoe4oKYwS6KsUu/a8f964c3ce07eb802b88b8d861799a07/8030c_opman_gb_fi.pdf",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.lower_cutoff_-6db",
+            "key_specs.upper_cutoff_-6db",
+            "key_specs.max_spl_short_term_sine",
+            "key_specs.max_spl_long_term",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.crossover",
+            "key_specs.input_sensitivity",
+            "key_specs.room_compensation",
+            "key_specs.self_noise",
+            "key_specs.mains",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        }
+      ],
+      "notes": "Cross-checked between the product page and the official operating manual (same values). No French manual found on the product page. Mains inlet type taken as IEC (connector type not explicitly named in the sources read).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "genelec-8030c",
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Single balanced XLR input: good basic active-monitor wiring lesson, already in catalog."
+      }
+    },
+    {
+      "id": "genelec-8341a",
+      "brand": "Genelec",
+      "model": "8341A (The Ones, SAM)",
+      "category": "studio-monitors",
+      "sub_type": "nearfield",
+      "technology": "Active three-way coaxial Smart Active Monitor (SAM): Minimum Diffraction Coaxial mid/treble driver with two racetrack woofers, three Class D amplifiers, DSP room correction via GLM software over a proprietary RJ45 GLM network.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Genelec's coaxial 'The Ones' range is a point-source design the manufacturer markets for precision monitoring; it combines analog and AES/EBU inputs with GLM automatic room calibration, making it a modern reference for networked, calibrated control rooms.",
+      "typical_uses": [
+        "near-field mixing",
+        "immersive / multichannel monitoring",
+        "mastering",
+        "post-production"
+      ],
+      "key_specs": {
+        "frequency_response": "45 Hz - 20 kHz (±1.5 dB)",
+        "lower_cutoff_-6db": "< 38 Hz",
+        "upper_cutoff_-6db": "> 37 kHz",
+        "max_spl_short_term_sine": "≥ 110 dB SPL (100 Hz - 3 kHz, 1 m)",
+        "max_spl_long_term": "101 dB SPL (IEC weighted noise, 1 m)",
+        "max_spl_peak_pair": "118 dB (per pair, music, 1 m)",
+        "amplification": "Class D: bass 250 W, midrange 150 W, treble 150 W (short term)",
+        "drivers": "Bass 2 x 170 x 90 mm racetrack; midrange 90 mm coaxial cone; treble 19 mm coaxial metal dome",
+        "inputs": "1 x XLR analog balanced 10 kΩ; 1 x XLR AES/EBU input 110 Ω; 1 x XLR AES/EBU output (thru) 110 Ω",
+        "digital_input_format": "AES/EBU single wire, 16 - 24 bits, 32 - 192 kHz",
+        "control_network": "2 x RJ45 (CAT5) GLM network (not Ethernet LAN compatible)",
+        "dsp_room_eq": "GLM automatic room calibration (SAM); DIP switches for setup without GLM",
+        "analog_input_max": "+25 dBu",
+        "self_noise": "≤ 3 dB (A-weighted)",
+        "dimensions": "H 370 (351 without Iso-Pod) x W 237 x D 243 mm",
+        "weight": "9.8 kg (21.6 lb)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES/EBU digital input",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU digital thru output",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "GLM control network (proprietary, daisy-chain)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 2
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "mains-power"
+      ],
+      "manual_url": "https://assets.ctfassets.net/4zjnzn055a4v/5xkPs5nt1SciISoam8Y04e/72681ed704a7400eecee42787094628d/8341_operating_manual.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.genelec.com/8341a",
+      "manual_languages": [
+        "en",
+        "zh",
+        "ja"
+      ],
+      "manuals": [
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/5xkPs5nt1SciISoam8Y04e/72681ed704a7400eecee42787094628d/8341_operating_manual.pdf",
+          "title": "Operating Manual 8341A",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/2dlhyAAfkphCsZAZU3SJEr/ba8a0afded8d2ea7ac9b6c3a83f8b77d/GENELEC______-8341a-__________________.pdf",
+          "title": "8341A user manual (Chinese)",
+          "language": "zh",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.genelec.jp/documents/op-manual/theones/8341A/8341_operating_manual_jpn.pdf",
+          "title": "8341 operating manual (Japanese)",
+          "language": "ja",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/8341a",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.max_spl_short_term_sine",
+            "key_specs.max_spl_long_term",
+            "key_specs.max_spl_peak_pair",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.inputs",
+            "key_specs.control_network",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "status"
+          ]
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/5xkPs5nt1SciISoam8Y04e/72681ed704a7400eecee42787094628d/8341_operating_manual.pdf",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.lower_cutoff_-6db",
+            "key_specs.upper_cutoff_-6db",
+            "key_specs.max_spl_short_term_sine",
+            "key_specs.max_spl_long_term",
+            "key_specs.max_spl_peak_pair",
+            "key_specs.amplification",
+            "key_specs.digital_input_format",
+            "key_specs.control_network",
+            "key_specs.analog_input_max",
+            "key_specs.self_noise",
+            "key_specs.weight",
+            "key_specs.dsp_room_eq"
+          ]
+        }
+      ],
+      "notes": "Analog input is used when no AES/EBU signal is present; AES/EBU is selected automatically when valid. GLM RJ45 ports carry Genelec's proprietary control network; no matching TekPractice signal id exists, gpio-tally used as the closest control-signal id. AES output connector gender assumed male per the manual's 'DIGITAL OUT male XLR' wording. Japanese manual hosted on Genelec Japan's site.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "glm-control-network"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Analog vs AES3 auto-select, AES thru daisy-chain and separate RJ45 control network that is NOT Ethernet: rich wiring lessons."
+      }
+    },
+    {
+      "id": "genelec-1234a",
+      "brand": "Genelec",
+      "model": "1234A SAM",
+      "category": "studio-monitors",
+      "sub_type": "farfield-main",
+      "technology": "Active three-way main monitor with external RAM-XL 19\" 3U rack amplifier (DSP + Class D amplification), connected to the enclosure by two 4-pole Speakon cables; GLM-controlled SAM room calibration.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Genelec lists the 1234A among its Main Monitors for major recording studios, post-production facilities and mastering suites. It illustrates the large-room soffit-mounted main monitor with a separate amplifier rack.",
+      "typical_uses": [
+        "main monitors in large control rooms",
+        "soffit / flush mounting",
+        "mastering",
+        "post-production"
+      ],
+      "key_specs": {
+        "frequency_response": "34 Hz - 20 kHz ±2 dB",
+        "cutoff_-6db": "29 Hz and 21 kHz",
+        "max_spl_short_term_sine": "≥125 dB (sine, at 1 m)",
+        "max_spl_long_term": "120 dB SPL (IEC weighted noise, 1 m)",
+        "max_spl_peak_pair": "≥130 dB (per pair, music, at 2 m)",
+        "amplification": "RAM-XL external amplifier, Class D: bass 2 x 750 W, midrange 400 W, treble 250 W (short term)",
+        "drivers": "Bass 2 x Ø305 mm cone; midrange Ø125 mm cone; treble Ø25 mm metal dome",
+        "inputs": "1 x XLR analog balanced 10 kΩ; 1 x XLR AES/EBU input 110 Ω; 1 x XLR AES/EBU output/thru 110 Ω (on RAM-XL)",
+        "digital_input_mode": "AES/EBU single wire or dual wire",
+        "control_network": "2 x RJ45 (CAT5) GLM",
+        "speaker_link": "Two 4-pole Speakon cables from RAM-XL to enclosure (woofer; midrange/tweeter)",
+        "dimensions": "H 700 x W 890 x D 383 mm",
+        "weight": "73 kg (160.9 lb) enclosure; amplifier 11.2 kg (25 lb)",
+        "amplifier_format": "19 in 3U rack mount"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog input (RAM-XL)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES/EBU input (RAM-XL)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU thru output (RAM-XL)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "RAM-XL to enclosure: Woofer and Midrange/Tweeter outputs",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "GLM control network",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 2
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (RAM-XL)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "speaker-level",
+        "mains-power"
+      ],
+      "manual_url": "https://assets.ctfassets.net/4zjnzn055a4v/3ZHZEMEfj2Q0e8UUqGo6kg/c129ca89cc304254895d8af895f0ccf9/1234a_op-man.pdf",
+      "datasheet_url": "https://assets.ctfassets.net/4zjnzn055a4v/6zgEqEBM6k6cWe2UIcIOAi/37aa8787e6301f81d305d6879501510f/genelec_1234sam_brochure_revb.pdf",
+      "product_page_url": "https://www.genelec.com/1234a",
+      "manual_languages": [
+        "en",
+        "zh"
+      ],
+      "manuals": [
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/3ZHZEMEfj2Q0e8UUqGo6kg/c129ca89cc304254895d8af895f0ccf9/1234a_op-man.pdf",
+          "title": "Operating Manual 1234A",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/4BHFiZKCTjzHTh5Sk1Ru9N/305a321122258df41360aaa2e8e523bb/1234A_Operating_Manual__Chinese_.pdf",
+          "title": "Operating Manual 1234A (Chinese)",
+          "language": "zh",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/6zgEqEBM6k6cWe2UIcIOAi/37aa8787e6301f81d305d6879501510f/genelec_1234sam_brochure_revb.pdf",
+          "title": "Brochure 1234A",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "rev B",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/1234a",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.cutoff_-6db",
+            "key_specs.max_spl_short_term_sine",
+            "key_specs.max_spl_long_term",
+            "key_specs.max_spl_peak_pair",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.inputs",
+            "key_specs.control_network",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "sub_type",
+            "status"
+          ]
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/3ZHZEMEfj2Q0e8UUqGo6kg/c129ca89cc304254895d8af895f0ccf9/1234a_op-man.pdf",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.max_spl_short_term_sine",
+            "key_specs.max_spl_long_term",
+            "key_specs.amplification",
+            "key_specs.digital_input_mode",
+            "key_specs.speaker_link",
+            "key_specs.weight",
+            "key_specs.amplifier_format",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Genelec calls it a 'main monitor'; the term far-field is not used by the source. Each RAM-XL is individually calibrated to its enclosure (same serial number) and must not be swapped. Mains inlet type on the RAM-XL not named in the sources read (IEC assumed).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "glm-control-network"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Separate amplifier rack feeding the enclosure via Speakon NL4: line-level vs speaker-level lesson inside a studio monitor system."
+      }
+    },
+    {
+      "id": "genelec-7360a",
+      "brand": "Genelec",
+      "model": "7360A SAM",
+      "category": "studio-monitors",
+      "sub_type": "studio-subwoofer",
+      "technology": "Active Smart Active Subwoofer: 250 mm driver, 300 W Class D amplifier, reflex enclosure, onboard 7.1 bass management (analog and AES/EBU), GLM network control.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Its 7.1 analog pass-through with built-in 85 Hz crossover, LFE +10 dB switch and 85 Hz phase test tone make it a textbook example of bass management and LFE handling in surround control rooms.",
+      "typical_uses": [
+        "bass management for stereo / 5.1 / 7.1 monitoring",
+        "LFE reproduction in post-production",
+        "music mixing rooms"
+      ],
+      "key_specs": {
+        "frequency_response": "19 Hz - 150 Hz (-6 dB)",
+        "frequency_response_tolerance": "±3 dB (19 Hz - 100 Hz)",
+        "upper_cutoff": "100 Hz / 150 Hz (main channel / LFE), -6 dB",
+        "max_spl_short_term": "≥ 109 dB SPL (30 - 85 Hz, half space, 1 m)",
+        "max_spl_peak": "≥ 114 dB SPL (pink noise, half space, 1 m)",
+        "amplification": "300 W short term, Class D",
+        "driver": "250 mm bass cone, reflex port",
+        "analog_inputs": "7 x XLR (7.1 channels, balanced, 10 kΩ) + 1 x XLR LFE input",
+        "analog_outputs": "7 x XLR (7.1 channels) + 1 x XLR LFE output",
+        "digital": "1 x XLR AES/EBU input, 1 x XLR AES/EBU output (thru)",
+        "control": "2 x RJ45 GLM network; Link In / Link Out",
+        "bass_management": "Centralized: subwoofer low pass 85 Hz, outputs high pass 85 Hz; distributed (GLM only): low pass 50-100 Hz; LFE cutoff 150 Hz; LFE +10 dB switch; 85 Hz phase test tone",
+        "self_noise": "≤ 5 dB SPL",
+        "dimensions": "H 527 x W 462 x D 363 mm",
+        "weight": "27 kg (59.5 lb)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog main channel inputs (7.1)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 7
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "LFE input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog main channel outputs (high-passed) to monitors",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 7
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "LFE output (daisy-chain)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES/EBU input",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU output (thru)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "GLM control network",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 2
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "mains-power"
+      ],
+      "manual_url": "https://assets.ctfassets.net/4zjnzn055a4v/2xfj0AkjCUMkM4msUE0Aiw/abf7c0a2fe9860608d89b063fe51254c/7360_and_7370_op-man_a_0.pdf",
+      "datasheet_url": "https://assets.ctfassets.net/4zjnzn055a4v/3cu5M2bhDacssGOWWYU40c/a3bf2e36541a09063d86bd8bb2d0e428/genelec_8340-8350-7360-7370_sam_systems_brochure.pdf",
+      "product_page_url": "https://www.genelec.com/7360a",
+      "manual_languages": [
+        "en",
+        "zh"
+      ],
+      "manuals": [
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/2xfj0AkjCUMkM4msUE0Aiw/abf7c0a2fe9860608d89b063fe51254c/7360_and_7370_op-man_a_0.pdf",
+          "title": "Operating Manual 7360A / 7370A",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/4zJ2QDZvEhRoweum2iw3lt/fe2f2be626b1eaa72124033eec58ac6d/7360A_and_7370A_Operating_Manual__Chinese_.pdf",
+          "title": "7360A & 7370A Operating Manual (Chinese)",
+          "language": "zh",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/6Jog1JhoLm0MgQiggmQ8ko/c2f230f0f5e1a49a2e92e6c1d30b0470/genelec_bass_management_-_centralized_vs_distributed_-_application_note_-_april_2016.pdf",
+          "title": "Bass Management application note (centralized vs distributed)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "April 2016",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/7360a",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.frequency_response_tolerance",
+            "key_specs.max_spl_short_term",
+            "key_specs.max_spl_peak",
+            "key_specs.amplification",
+            "key_specs.driver",
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.digital",
+            "key_specs.control",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "status"
+          ]
+        },
+        {
+          "url": "https://assets.ctfassets.net/4zjnzn055a4v/2xfj0AkjCUMkM4msUE0Aiw/abf7c0a2fe9860608d89b063fe51254c/7360_and_7370_op-man_a_0.pdf",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response_tolerance",
+            "key_specs.upper_cutoff",
+            "key_specs.max_spl_short_term",
+            "key_specs.max_spl_peak",
+            "key_specs.amplification",
+            "key_specs.bass_management",
+            "key_specs.weight",
+            "key_specs.self_noise"
+          ]
+        }
+      ],
+      "notes": "Output connector gender for the 7.1 outputs not stated in the sources read; XLR male assumed (standard for outputs). Link In/Link Out connectors are part of the analog daisy-chain per the manual.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "glm-control-network"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Insert-in-path bass management (inputs → sub → monitors), separate LFE in/out and AES thru: strong surround wiring lesson."
+      }
+    },
+    {
+      "id": "neumann-kh-120-ii",
+      "brand": "Neumann",
+      "model": "KH 120 II",
+      "category": "studio-monitors",
+      "sub_type": "nearfield",
+      "technology": "Active two-way DSP near-field monitor with Class D amplification, Mathematically Modeled Dispersion (MMD) waveguide, front bass-reflex ports, analog XLR and S/PDIF (RCA) digital I/O, MA 1 automatic room alignment.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Successor to the KH 120 A (released 2010 according to Neumann), a widespread compact reference in broadcast and music studios. The II adds DSP, digital input and MA 1 automatic room alignment.",
+      "typical_uses": [
+        "near-field mixing",
+        "broadcast / radio studios",
+        "post-production",
+        "immersive arrays"
+      ],
+      "key_specs": {
+        "frequency_response": "44 Hz - 21 kHz (free-field, ±3 dB)",
+        "frequency_response_6db": "41 Hz - 21.4 kHz (free-field, ±6 dB)",
+        "pass_band": "48 Hz - 20.5 kHz, ±1.25 dB",
+        "max_spl": "116.8 dB SPL (half space, 3% THD, 100 Hz - 6 kHz average, 1 m)",
+        "max_spl_short_term_iec": "108 dB(C)",
+        "amplification": "Class D; woofer 145 W (10% THD+N) / 120 W (0.1%); tweeter 100 W (10% THD+N) / 80 W (0.1%)",
+        "drivers": "Woofer 130 mm (5.25\"), tweeter 25 mm (1\")",
+        "crossover": "1700 Hz, 48 dB/octave",
+        "analog_input": "XLR, electronically balanced, 24 kΩ; max input +24 dBu (94 dB setting)",
+        "digital_io": "S/PDIF in and out on RCA (75 Ω), 24-bit, 32 - 200 kHz; AES3id/AES3 accepted on the RCA input via adapter",
+        "dsp_room_eq": "MA 1 automatic room alignment (sold separately) via RJ45; backplate bass, low-mid and treble EQ; output level 94/100/108/114 dB SPL",
+        "power_consumption": "0.3 W standby / 15 W idle / 320 W full load",
+        "dimensions": "287 x 182 x 227 mm (H x W x D)",
+        "weight": "5.4 kg"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "rca",
+          "role": "digital S/PDIF input",
+          "dir": "in",
+          "signal": "spdif",
+          "count": 1
+        },
+        {
+          "connector": "rca",
+          "role": "digital S/PDIF output (daisy-chain)",
+          "dir": "out",
+          "signal": "spdif",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "network control (MA 1 / Neumann.Control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "spdif",
+        "mains-power"
+      ],
+      "manual_url": "https://assets.sennheiser.com/download/assets/KH120II_KH150_Manual_06_2022_EN.pdf/1607691ae7ad11f0aa98ea55b5d2fb86",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+      "manual_languages": [
+        "en",
+        "de"
+      ],
+      "manuals": [
+        {
+          "url": "https://assets.sennheiser.com/download/assets/KH120II_KH150_Manual_06_2022_EN.pdf/1607691ae7ad11f0aa98ea55b5d2fb86",
+          "title": "KH 120 II / KH 150 Instruction Manual (EN)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "06/2022",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/KH120II_KH150_Manual_06_2022_DE.pdf/1333b64ee7ad11f0ae307aeaa9c3764a",
+          "title": "KH 120 II / KH 150 Bedienungsanleitung (DE)",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "06/2022",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/",
+          "publisher": "Neumann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.frequency_response_6db",
+            "key_specs.pass_band",
+            "key_specs.max_spl",
+            "key_specs.max_spl_short_term_iec",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.crossover",
+            "key_specs.analog_input",
+            "key_specs.digital_io",
+            "key_specs.dsp_room_eq",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ]
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/KH120II_KH150_Manual_06_2022_EN.pdf/1607691ae7ad11f0aa98ea55b5d2fb86",
+          "publisher": "Neumann / Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.drivers",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.digital_io",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Product page text mentions 17 W idle while the datasheet table and manual give 15 W (see conflicts). An AES67 variant with redundant network ports exists (AES67/ST 2110/RAVENNA). The RJ45 control port signal is mapped to aoip as the nearest network id; it is used for control, not audio, on the standard model. No French manual on the product page.",
+      "conflicts": [
+        {
+          "field": "key_specs.power_consumption",
+          "values": [
+            {
+              "value": "15 W idle",
+              "source_url": "https://assets.sennheiser.com/download/assets/KH120II_KH150_Manual_06_2022_EN.pdf/1607691ae7ad11f0aa98ea55b5d2fb86"
+            },
+            {
+              "value": "17 W at idle (body text)",
+              "source_url": "https://www.neumann.com/en-en/products/monitors/kh-120-ii/"
+            }
+          ],
+          "note": "Product page body text vs datasheet/manual table."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Analog XLR plus S/PDIF RCA in/out daisy-chain with L/R channel select: clear digital-vs-analog monitor wiring lesson."
+      }
+    },
+    {
+      "id": "yamaha-hs8",
+      "brand": "Yamaha",
+      "model": "HS8",
+      "category": "studio-monitors",
+      "sub_type": "nearfield",
+      "technology": "Active two-way bi-amp powered studio monitor, bass-reflex MDF cabinet, 8\" cone woofer and 1\" dome tweeter, analog XLR and balanced 6.35 mm phone inputs, ROOM CONTROL and HIGH TRIM switches.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Yamaha's HS series continues the white-cone look of the NS-10M lineage and is a very common affordable near-field in project studios and schools. Simple analog switches make it a good first monitor for teaching room-compensation basics.",
+      "typical_uses": [
+        "project / home studio mixing",
+        "school studios",
+        "production rooms"
+      ],
+      "key_specs": {
+        "frequency_range_-10db": "38Hz - 30kHz",
+        "frequency_response_-3db": "47Hz - 24kHz (HS8I variant column)",
+        "crossover": "2kHz",
+        "amplification": "120W (LF:75W, HF:45W), bi-amp",
+        "drivers": "LF 8\" cone, HF 1\" dome",
+        "inputs": "XLR3-31 type (balanced), PHONE (balanced)",
+        "controls": "LEVEL control (+4dB/center click); HIGH TRIM switch (+/- 2dB at HF); ROOM CONTROL switch (0/-2/-4 dB under 500Hz)",
+        "power_consumption": "60W",
+        "enclosure": "Bass-reflex type, MDF",
+        "dimensions": "W 250mm x H 390mm x D 334mm",
+        "weight": "10.2kg (22.5 lbs.)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced analog input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "balanced analog input (PHONE)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "https://usa.yamaha.com/files/download/brochure/7/330967/HSseries_brochure_en.pdf",
+      "product_page_url": "https://usa.yamaha.com/products/proaudio/speakers/hs_series/specs.html",
+      "manual_languages": [],
+      "manuals": [
+        {
+          "url": "https://usa.yamaha.com/files/download/brochure/7/330967/HSseries_brochure_en.pdf",
+          "title": "HS series brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/speakers/hs_series/specs.html",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_range_-10db",
+            "key_specs.frequency_response_-3db",
+            "key_specs.crossover",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.inputs",
+            "key_specs.controls",
+            "key_specs.power_consumption",
+            "key_specs.enclosure",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "status"
+          ]
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/speakers/hs_series/downloads.html",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ]
+        }
+      ],
+      "notes": "Yamaha's spec table gives a -10 dB frequency range for HS8; the -3 dB figure (47Hz - 24kHz) appears only in the HS8I column, so it is recorded with that caveat. The downloads page lists an 'HS8/HS7/HS5/HS8I/HS7I/HS5I/HS8S Owner's Manual' (English) but its PDF link is rendered by script and could not be captured; French Yamaha pages returned no document list. Amplifier class not stated by Yamaha. Mains inlet type not stated (IEC assumed). No second-source cross-check (search budget exhausted, retailer pages rate-limited).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Combo of XLR and balanced TRS inputs on a monitor: shows that both carry the same balanced line signal."
+      }
+    },
+    {
+      "id": "adam-audio-a7v",
+      "brand": "ADAM Audio",
+      "model": "A7V",
+      "category": "studio-monitors",
+      "sub_type": "nearfield",
+      "technology": "Active two-way DSP near-field monitor: PWM woofer amplifier and Class A/B tweeter amplifier, X-ART folded-ribbon tweeter with rotatable HPS waveguide, 7\" MLM woofer, XLR + RCA analog inputs, RJ45 Ethernet for A Control software and Sonarworks SoundID integration.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Successor in ADAM's A Series, whose X-ART air-motion tweeter is the brand signature. The A7V adds network control and in-speaker Sonarworks calibration, a modern take on room correction for nearfields.",
+      "typical_uses": [
+        "near-field mixing",
+        "home / project studios",
+        "immersive arrays"
+      ],
+      "key_specs": {
+        "frequency_response": "44 Hz - 41 kHz (-3 dB); 40 Hz - 45 kHz (-6 dB)",
+        "max_spl_sine": "105 dB SPL (sine bursts, per speaker at 1 m)",
+        "max_spl_iec_noise": "113 dB SPL (IEC-weighted noise)",
+        "amplification": "Woofer: PWM, 110 W peak (10% THD) / 90 W RMS (1% THD); Tweeter: Class A/B, 20 W peak / 15 W RMS",
+        "drivers": "7-inch Multi-Layer Mineral (MLM) woofer; X-ART tweeter with HPS waveguide (120° x 70°)",
+        "crossover": "2.8 kHz",
+        "inputs": "XLR (balanced) and RCA (unbalanced); 9 kΩ / 3.3 kΩ; max input +19 dBu",
+        "network": "RJ45 Ethernet (OCA protocol over IP) for A Control",
+        "dsp_room_eq": "24-bit AD, 96 kHz internal; backplate Bass/Desk/Presence/Treble; 6 PEQ bands, level, delay 0-10 ms via A Control; Sonarworks SoundID Reference integration",
+        "dimensions": "337 x 200 x 280 mm (H x W x D)",
+        "weight": "8.7 kg (19 lb 3 oz)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced analog input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "rca",
+          "role": "unbalanced analog input",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet control (A Control, firmware update)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "mains-power"
+      ],
+      "manual_url": "https://www.adam-audio.com/content/uploads/2022/05/adam-audio-a-series-user-manual-french.pdf",
+      "datasheet_url": "https://www.adam-audio.com/content/uploads/2024/04/adam-audio-a-series-a7v-studio-monitor-measurement-report-v4-english.pdf",
+      "product_page_url": "https://www.adam-audio.com/en/a-series/a7v/",
+      "manual_languages": [
+        "fr",
+        "en",
+        "de",
+        "es",
+        "it",
+        "ja",
+        "ko",
+        "zh"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2022/05/adam-audio-a-series-user-manual-french.pdf",
+          "title": "A Series user manual (French)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2022/05/adam-audio-a-series-user-manual-english.pdf",
+          "title": "A Series user manual (English)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2022/04/adam-audio-a-series-quick-start-guide-english-german-spanish-french-simplified-chinese-japanese.pdf",
+          "title": "A Series quick start guide (EN/DE/ES/FR/ZH/JA)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start"
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2024/04/adam-audio-a-series-a7v-studio-monitor-measurement-report-v4-english.pdf",
+          "title": "A7V measurement report",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v4",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.adam-audio.com/en/a-series/a7v/",
+          "publisher": "ADAM Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.max_spl_sine",
+            "key_specs.max_spl_iec_noise",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.crossover",
+            "key_specs.inputs",
+            "key_specs.network",
+            "key_specs.dsp_room_eq",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "sub_type",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2022/05/adam-audio-a-series-user-manual-english.pdf",
+          "publisher": "ADAM Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "connectors",
+            "key_specs.inputs",
+            "key_specs.network"
+          ]
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2022/04/adam-audio-a7v-studio-monitor-review-sound-on-sound-03-23.pdf",
+          "publisher": "Sound On Sound (03/2023, hosted by ADAM Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.amplification",
+            "key_specs.crossover",
+            "key_specs.inputs",
+            "key_specs.network"
+          ]
+        }
+      ],
+      "notes": "Frequency response, crossover (2.8 kHz), 90 W RMS PWM / 15 W RMS Class A/B and XLR+RCA+Ethernet cross-checked against the Sound On Sound review. RJ45 mapped to aoip as nearest network id; it carries control (OCA), not audio.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "XLR balanced vs RCA unbalanced input select on the same monitor, plus Ethernet control port."
+      }
+    },
+    {
+      "id": "adam-audio-s3h",
+      "brand": "ADAM Audio",
+      "model": "S3H",
+      "category": "studio-monitors",
+      "sub_type": "midfield",
+      "technology": "Active three-way horizontal midfield monitor: two 7\" HexaCone woofers (2 x 500 W Class D), 4\" DCH dome/cone midrange (300 W Class D), S-ART tweeter (50 W Class A/B), custom DSP with EQ/presets, analog XLR and AES3 digital inputs.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "ADAM's product sheet presents it as a midfield monitor building on the S3A and S3X-H, and its DSP includes a 'Classic' preset emulating the S3A. It is a reference example of a horizontal console-top midfield.",
+      "typical_uses": [
+        "midfield monitoring",
+        "console meter-bridge placement",
+        "mixing and mastering"
+      ],
+      "key_specs": {
+        "frequency_response": "30 Hz - 50 kHz (-20 dB) (product page); '30 Hz - 50 kHz' (product sheet)",
+        "max_spl": "≥126 dB (per pair at 1 m)",
+        "thd": "≤0.4% above 100 Hz",
+        "crossover": "250 Hz and 3 kHz",
+        "amplification": "Woofers 2 x 500 W RMS (PWM / Class D); midrange 300 W RMS (PWM / Class D); tweeter 50 W RMS Class A/B; total 1350 W RMS",
+        "drivers": "2 x 7\" HexaCone woofers; 4\" DCH dome/cone hybrid midrange; S-ART tweeter with HPS waveguide",
+        "inputs": "Analog XLR (48 kΩ, max +24 dBu); AES3 digital in and AES3 thru out",
+        "other_io": "USB port for updates and computer control",
+        "dsp_room_eq": "6 parametric EQs, room-compensation low and high shelves, 5 presets (incl. S3A 'Classic'), delay 0-5 ms",
+        "dimensions": "280 x 585 x 380 mm (H x W x D)",
+        "weight": "26.6 kg (58.6 lb)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES3 digital input",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES3 thru output (daisy-chain)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB for firmware / remote DSP control",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "mains-power"
+      ],
+      "manual_url": "https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-user-manual-french.pdf",
+      "datasheet_url": "https://www.adam-audio.com/content/uploads/2021/03/ADAM_Audio_S3H_Product_Sheet.pdf",
+      "product_page_url": "https://www.adam-audio.com/en/s-series/s3h/",
+      "manual_languages": [
+        "fr",
+        "en",
+        "de",
+        "es",
+        "ja",
+        "ru",
+        "zh"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-user-manual-french.pdf",
+          "title": "S Series user manual (French)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-user-manual-english.pdf",
+          "title": "S Series manual (English)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2018",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2021/03/ADAM_Audio_S3H_Product_Sheet.pdf",
+          "title": "S3H Product Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V01/21",
+          "official": true,
+          "kind": "spec-sheet"
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2017/01/adam-audio-s-series-quick-start-guide-english.pdf",
+          "title": "S Series Quick Start Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.adam-audio.com/en/s-series/s3h/",
+          "publisher": "ADAM Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.max_spl",
+            "key_specs.thd",
+            "key_specs.crossover",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.inputs",
+            "key_specs.other_io",
+            "key_specs.dsp_room_eq",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "sub_type",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2021/03/ADAM_Audio_S3H_Product_Sheet.pdf",
+          "publisher": "ADAM Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "sub_type",
+            "key_specs.frequency_response",
+            "key_specs.max_spl",
+            "key_specs.amplification",
+            "key_specs.crossover",
+            "key_specs.drivers",
+            "key_specs.inputs"
+          ]
+        },
+        {
+          "url": "https://www.adam-audio.com/content/uploads/2018/03/adam-audio-s-series-user-manual-english.pdf",
+          "publisher": "ADAM Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "connectors",
+            "key_specs.inputs",
+            "key_specs.other_io",
+            "key_specs.dsp_room_eq"
+          ]
+        }
+      ],
+      "notes": "Amplifier power and class cross-checked between product page and product sheet (page table says PWM, text and sheet say Class D). AES3 In + Thru and USB confirmed in the S Series manual. USB connector type not stated: usb-b assumed; signal usb-audio used as nearest id although the port carries control/firmware, not audio.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "AES3 in/thru daisy-chain with AES L / AES R channel selection per speaker: digital monitor wiring lesson."
+      }
+    },
+    {
+      "id": "focal-shape-65",
+      "brand": "Focal",
+      "model": "Shape 65",
+      "category": "studio-monitors",
+      "sub_type": "nearfield",
+      "technology": "Active two-way near-field monitor with two Class AB amplifiers, 6.5\" flax sandwich woofer, 1\" M-shaped Al/Mg inverted dome tweeter, double passive radiator (no port), XLR and RCA inputs.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "French-made Focal monitor; Focal's product sheet calls it the reference of the Shape line, dedicated to nearfield monitoring. Its portless passive-radiator design (allowing placement near a wall, per Focal) is a useful contrast with reflex designs.",
+      "typical_uses": [
+        "near-field mixing",
+        "home / project studios",
+        "post-production"
+      ],
+      "key_specs": {
+        "frequency_response": "40 Hz - 35 kHz (±3 dB)",
+        "max_spl": "109 dB SPL (peak @ 1 m)",
+        "amplification": "Two Class AB amplifiers: mid/low frequency 80 W; high frequency 35 W (product page) or 25 W (product sheet)",
+        "drivers": "6.5\" (16.5 cm) flax sandwich cone woofer; 1\" (25 mm) 'M' profile aluminium-magnesium inverted dome tweeter; 6.5\" double passive radiator",
+        "inputs": "XLR balanced 10 kΩ; RCA unbalanced 10 kΩ with sensitivity compensation",
+        "controls": "High-pass filter full-range / 45 / 60 / 90 Hz; Bass (0-250 Hz) ±6 dB; LMF (160 Hz, Q=1) ±3 dB; High (4.5-35 kHz) ±3 dB; auto standby",
+        "standby_consumption": "< 0.5W",
+        "dimensions": "355 x 218 x 285 mm (H x W x D, with rubber feet)",
+        "weight": "8.5 kg (18.7 lbs)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced analog input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "rca",
+          "role": "unbalanced analog input",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (detachable power cord)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "mains-power"
+      ],
+      "manual_url": "https://dam.focal-naim.com/m/64d848e21b707124/original/Notice_Shape_Web-pdf.pdf",
+      "datasheet_url": "https://dam.focal-naim.com/m/67981cda5d4149b/original/FP_Shape65_EN-pdf.pdf",
+      "product_page_url": "https://www.focal.com/products/shape-65",
+      "manual_languages": [
+        "fr",
+        "en",
+        "es",
+        "multi"
+      ],
+      "manuals": [
+        {
+          "url": "https://dam.focal-naim.com/m/64d848e21b707124/original/Notice_Shape_Web-pdf.pdf",
+          "title": "Shape Manuel d'utilisation / User Manual (multilingual, French p.3, English p.12)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/67981cda5d4149b/original/FP_Shape65_EN-pdf.pdf",
+          "title": "Shape 65 Product Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v2 - 17/03/2025",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.focal.com/products/shape-65",
+          "publisher": "Focal",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.max_spl",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.inputs",
+            "key_specs.controls",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ]
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/67981cda5d4149b/original/FP_Shape65_EN-pdf.pdf",
+          "publisher": "Focal",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.max_spl",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.inputs",
+            "key_specs.controls",
+            "key_specs.standby_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "sub_type"
+          ]
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/64d848e21b707124/original/Notice_Shape_Web-pdf.pdf",
+          "publisher": "Focal",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "sub_type",
+            "manual_languages"
+          ]
+        }
+      ],
+      "notes": "Single multilingual manual with a French section ('enceinte professionnelle de contrôle de proximité 2 voies active'). Product page gives weight as '8.5 kg / 28.2 lb' (lb value inconsistent); product sheet gives 18.7 lbs (8.5 kg). Bass shelf range: page '±6 dB above 250 Hz' wording vs sheet 'Bass (0-250Hz) ±6dB'; the sheet wording is used.",
+      "conflicts": [
+        {
+          "field": "key_specs.amplification",
+          "values": [
+            {
+              "value": "High frequency 35 W, Class AB",
+              "source_url": "https://www.focal.com/products/shape-65"
+            },
+            {
+              "value": "High frequency amplifier 25W, Class AB",
+              "source_url": "https://dam.focal-naim.com/m/67981cda5d4149b/original/FP_Shape65_EN-pdf.pdf"
+            }
+          ],
+          "note": "Product page vs product sheet v2 (2025)."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "XLR balanced and RCA unbalanced inputs with level compensation: pro vs consumer level lesson."
+      }
+    },
+    {
+      "id": "focal-trio6",
+      "brand": "Focal",
+      "model": "Trio6 (ST6 series)",
+      "category": "studio-monitors",
+      "sub_type": "nearfield",
+      "technology": "Active three-way near-field monitor with Focus mode: 8\" W-membrane subwoofer driver and 5\" W woofer on Class G amplifiers, 1\" beryllium inverted dome tweeter on Class AB, rotatable mid/tweeter plate, balanced XLR input.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Focal's French-made flagship near-field of the ST6 range; Focal describes it as three monitors in one, combining SM9-style Focus mode with ST6. The Focus mode (switching to 1-way or 2-way) is a distinctive tool for checking mixes on limited-bandwidth playback.",
+      "typical_uses": [
+        "near-field / console-top mixing",
+        "mix translation checks (Focus mode)",
+        "mastering"
+      ],
+      "key_specs": {
+        "frequency_response": "35 Hz - 40 kHz (±3 dB, 3-way)",
+        "frequency_response_focus1": "100 Hz - 15 kHz (Focus mode 1, 1-way)",
+        "frequency_response_focus2": "80 Hz - 40 kHz (product sheet / manual) vs 80 Hz - 20 kHz (product page), Focus mode 2, 2-way",
+        "max_spl": "115 dB (average CEA2034 50-10 kHz free field @ 1 m) / 115 dB peak at 1 m (product page)",
+        "amplification": "Bass 100 W RMS class G; midrange 100 W RMS class G; treble 50 W RMS class AB",
+        "drivers": "8\" W membrane subwoofer; 5\" W membrane woofer; 1\" beryllium inverted dome tweeter",
+        "input": "Balanced XLR 10 kΩ",
+        "controls": "Sensitivity; LF shelf; LMF @ 160 Hz ±3 dB; HF shelf; high-pass full range / 45 / 60 / 90 Hz; auto standby; Focus mode (footswitch)",
+        "dimensions": "53.7 x 29.2 x 36.9 cm",
+        "weight": "25 kg (55.12 lbs)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced analog input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "https://dam.focal-naim.com/m/39e0775ad421e658/original/Notice_ST6-pdf.pdf",
+      "datasheet_url": "https://dam.focal-naim.com/m/6816e176498df9d9/original/FP_Trio_6_Black_EN-pdf.pdf",
+      "product_page_url": "https://www.focal.com/products/trio6",
+      "manual_languages": [
+        "fr",
+        "en",
+        "de",
+        "it",
+        "es",
+        "pt",
+        "nl",
+        "pl",
+        "multi"
+      ],
+      "manuals": [
+        {
+          "url": "https://dam.focal-naim.com/m/39e0775ad421e658/original/Notice_ST6-pdf.pdf",
+          "title": "Solo6 / Twin6 / Trio6 / Sub12 Manuel d'utilisation / User Manual (multilingual)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/1c1d98bbaed67134/original/QS_ST6_web-pdf.pdf",
+          "title": "ST6 Quick Start",
+          "language": "not shown",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start"
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/6816e176498df9d9/original/FP_Trio_6_Black_EN-pdf.pdf",
+          "title": "Trio6 Product Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.focal.com/products/trio6",
+          "publisher": "Focal",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.frequency_response_focus1",
+            "key_specs.frequency_response_focus2",
+            "key_specs.max_spl",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.input",
+            "key_specs.controls",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ]
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/6816e176498df9d9/original/FP_Trio_6_Black_EN-pdf.pdf",
+          "publisher": "Focal",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.frequency_response_focus1",
+            "key_specs.frequency_response_focus2",
+            "key_specs.max_spl",
+            "key_specs.amplification",
+            "key_specs.input",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/39e0775ad421e658/original/Notice_ST6-pdf.pdf",
+          "publisher": "Focal",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "sub_type",
+            "key_specs.frequency_response_focus1",
+            "key_specs.frequency_response_focus2",
+            "key_specs.drivers"
+          ]
+        }
+      ],
+      "notes": "The French manual section describes the Trio6 as an 'enceinte professionnelle de contrôle de proximité 3 voies active' for 1 to 3 m listening distance, hence nearfield. Mid/tweeter plate rotates 360° in 90° steps. Replaces the older Focal Trio11 Be in the current range (Trio11 Be no longer listed on focal.com monitoring pages).",
+      "conflicts": [
+        {
+          "field": "key_specs.frequency_response_focus2",
+          "values": [
+            {
+              "value": "80 Hz - 20 kHz",
+              "source_url": "https://www.focal.com/products/trio6"
+            },
+            {
+              "value": "80Hz - 40kHz",
+              "source_url": "https://dam.focal-naim.com/m/6816e176498df9d9/original/FP_Trio_6_Black_EN-pdf.pdf"
+            }
+          ],
+          "note": "The manual (FR section) agrees with the product sheet: 80 Hz à 40 kHz in FOCUS 2."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Single XLR input; interest is acoustic (3-way, Focus mode), not wiring."
+      }
+    },
+    {
+      "id": "neumann-kh-420",
+      "brand": "Neumann",
+      "model": "KH 420",
+      "category": "studio-monitors",
+      "sub_type": "midfield",
+      "technology": "Active three-way midfield monitor, Class AB amplification, 10\" woofer, fabric-dome midrange and tweeter in MMD waveguide, analog XLR input, optional DIM 1 digital input module (AES3/S/PDIF).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neumann's own page calls the KH 420 'the gold standard in the midfield range', designed for 1.5 to 3 m. The optional DIM 1 digital module shows how a monitor can be retrofitted for AES3 input.",
+      "typical_uses": [
+        "midfield monitoring in mid-size control rooms",
+        "mastering",
+        "broadcast control rooms"
+      ],
+      "key_specs": {
+        "frequency_response": "26 Hz - 22 kHz (free field ±3 dB)",
+        "frequency_response_6db": "25 Hz - 22 kHz (free field ±6 dB)",
+        "pass_band": "28 Hz - 20 kHz (±2 dB)",
+        "max_spl": "122.4 dB SPL (half space, 3% THD, 1 m, 100 Hz - 6 kHz average)",
+        "amplification": "Class AB, thermally protected; woofer 330 W, tweeter 140 W (text also cites two 140 W amplifiers)",
+        "drivers": "Woofer 265 mm (10\"); neodymium fabric-dome midrange; tweeter 25 mm (1\") alloy fabric dome",
+        "crossover": "570 Hz and 2.0 kHz",
+        "analog_input": "XLR, electronically balanced, >14 kΩ, max +24 dBu",
+        "digital_option": "DIM 1 module: digital XLR input, BNC input, BNC output (AES3 / S/P-DIF, 192 kHz/24-bit), 0-400 ms delay",
+        "room_controls": "4-position bass, low-mid, treble; bypassable parametric EQ; input gain 0 to -15 dB; output level 94/100/108/114 dB SPL; MA 1 alignment optional",
+        "dimensions": "645 x 330 x 444 mm",
+        "weight": "35.0 kg (77 lbs 3 oz)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "digital input (DIM 1 option)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "digital input 75 Ω (DIM 1 option)",
+          "dir": "in",
+          "signal": "aes3-id-75ohm",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "digital output 75 Ω (DIM 1 option)",
+          "dir": "out",
+          "signal": "aes3-id-75ohm",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aes3-id-75ohm",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-en/products/monitors/kh-420/",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-en/products/monitors/kh-420/",
+          "publisher": "Neumann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "sub_type",
+            "key_specs.frequency_response",
+            "key_specs.frequency_response_6db",
+            "key_specs.pass_band",
+            "key_specs.max_spl",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.crossover",
+            "key_specs.analog_input",
+            "key_specs.digital_option",
+            "key_specs.room_controls",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ]
+        }
+      ],
+      "notes": "Neumann's download centre (file finder) is script-rendered; the manual PDF link could not be captured. DIM 1 is an optional retrofittable module; digital connectors only exist with it. Mains inlet type not stated (IEC assumed). Single source only.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Option module adds AES3 on XLR and on 75 Ω BNC: 110 Ω vs 75 Ω digital lesson."
+      }
+    },
+    {
+      "id": "neumann-kh-750-dsp",
+      "brand": "Neumann",
+      "model": "KH 750 DSP",
+      "category": "studio-monitors",
+      "sub_type": "studio-subwoofer",
+      "technology": "Active sealed DSP subwoofer, 10\" long-throw woofer, 2.0/0.1 bass management with fixed 80 Hz crossover, analog XLR I/O, AES3/S/PDIF digital on BNC, network port for MA 1 alignment.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Matching DSP subwoofer for Neumann's KH monitors with MA 1 automatic alignment; its four routing modes (stereo bass management, external bass management, LFE to 120 Hz, LFE full range) make it a clear example of sub routing choices.",
+      "typical_uses": [
+        "stereo 2.1 bass extension",
+        "LFE in small post rooms",
+        "pairing with KH 120 II / KH 150 / KH 310"
+      ],
+      "key_specs": {
+        "frequency_response": "18 - 750 Hz (free-field ±3 dB)",
+        "frequency_response_6db": "16 - 800 Hz (free-field ±6 dB)",
+        "max_spl": "105.0 dB SPL (3% THD, half space, 50-100 Hz average, 1 m)",
+        "max_spl_dardt": "113 dB (Dolby DARDT, bass managed)",
+        "amplification": "Woofer amplifier 256 W (THD+N 10%, limiter off); class not stated",
+        "driver": "265 mm (10\") long-throw woofer, ELFF, sealed cabinet",
+        "analog_io": "2 x XLR balanced inputs, 2 x XLR balanced outputs, plus daisy-chain output; >13 kΩ; max +24 dBu",
+        "digital_io": "BNC (75 Ω) input AES3 or S/P-DIF up to 192 kHz/24-bit; BNC AES3 output",
+        "network": "Standard IP connector (MA 1 / remote control)",
+        "bass_management": "2.0/0.1; fixed 80 Hz crossover, 4th order (24 dB/oct), bypassable; modes: stereo 80 Hz, external bass management, LFE up to 120 Hz, LFE full range",
+        "power_consumption": "410 W full / 18 W idle / <300 mW standby",
+        "dimensions": "383 x 330 x 383 mm",
+        "weight": "19.5 kg (43 lbs)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog inputs L/R",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog outputs L/R (high-passed) to monitors",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "bnc",
+          "role": "digital input AES3 / S/P-DIF 75 Ω",
+          "dir": "in",
+          "signal": "aes3-id-75ohm",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "digital AES3 output 75 Ω",
+          "dir": "out",
+          "signal": "aes3-id-75ohm",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "network (MA 1 control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3-id-75ohm",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-en/products/monitors/kh-750-dsp/",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-en/products/monitors/kh-750-dsp/",
+          "publisher": "Neumann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.frequency_response_6db",
+            "key_specs.max_spl",
+            "key_specs.max_spl_dardt",
+            "key_specs.amplification",
+            "key_specs.driver",
+            "key_specs.analog_io",
+            "key_specs.digital_io",
+            "key_specs.network",
+            "key_specs.bass_management",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ]
+        }
+      ],
+      "notes": "No dedicated LFE input listed; LFE handled by routing modes. The daisy-chain output is counted within the analog outputs description and not separately itemised in connectors. 'Standard IP connector' assumed RJ45. Output connector genders not stated (XLR male assumed). Neumann file finder is script-rendered, manual link not captured. Single source only.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Sub inserted between source and monitors (XLR in → sub → XLR out) plus AES3 on BNC: bass-management routing lesson."
+      }
+    },
+    {
+      "id": "grace-m905",
+      "brand": "Grace Design",
+      "model": "m905",
+      "category": "studio-monitors",
+      "sub_type": "monitor-controller",
+      "technology": "Stereo monitor controller with built-in DAC: 2U Audio Control Unit (ACU) plus Remote Control Unit (RCU) linked by DB15 RS422/RS485 serial cable; analog XLR/RCA inputs, AES3/S/PDIF/TOSLINK/ADAT/USB digital inputs, 3 speaker outputs, sub/DAC/meter output, talkback, cue and headphone amps.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Part of the TekPractice catalog; Grace describes it as a second-generation stereo monitor controller. It concentrates every monitor-control function (source select, speaker switching, talkback, cue, SPL meter) in one unit, which makes it ideal for teaching control-room monitoring paths.",
+      "typical_uses": [
+        "control-room monitor switching and level",
+        "mastering",
+        "talkback to live room",
+        "cue feed to headphone system"
+      ],
+      "key_specs": {
+        "analog_inputs": "Balanced stereo XLR; unbalanced stereo RCA (optional RIAA phono); balanced XLR CUE input; external talkback mic input (+7 to +70 dB, 48 V switchable)",
+        "digital_inputs": "2 x AES3 (XLR, single or dual-wire), 1 x S/PDIF (RCA), 1 x TOSLINK, ADAT (4 pairs / 2 pairs S/MUX), USB Asynchronous Class 2 up to 24-bit/192 kHz; DSD64/DSD128 via DoP",
+        "word_clock": "BNC word clock input, 75 Ω / 1 MΩ switchable, 44.1-192 kHz",
+        "outputs": "Speaker 1/2/3 balanced stereo XLR (male); CUE output XLR; SUB/DAC/METER output XLR; digital loop-thru AES3 (XLR) and S/PDIF (RCA); 2 headphone 1/4\" TRS (ACU and RCU, parallel)",
+        "frequency_response": "Balanced inputs ±3 dB, 3 Hz to 1.25 MHz; unbalanced ±3 dB, 3 Hz to 275 kHz",
+        "thd_n": "<0.0008% at +20 dBu out (1 kHz, 22 Hz-22 kHz)",
+        "dynamic_range": "Analog 118 dB (20-22 kHz), 121 dB A-weighted; DAC 117 dB (AES17), 119 dB A-weighted",
+        "max_levels": "Input +29 dBu balanced / +21 dBu unbalanced; output +26 dBu",
+        "gain_range": "-104 dB to +13 dB; channel tracking ±0.1 dB",
+        "remote": "RCU via DB15 cable (RS422 serial data, DC power and headphone signals), 25 ft cable supplied; optional IR remote",
+        "power": "100-240 VAC, 50-60 Hz, 60 W",
+        "dimensions": "2U rack, 3.5\" x 10.5\" x 17\"; RCU 8.9\" x 5.1\" x 2.2\"",
+        "weight": "7.8 lb; RCU 2.2 lb"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced analog stereo input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "unbalanced analog stereo input (phono option)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "CUE input stereo",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "external talkback mic input (48 V available)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES3 digital inputs 1 & 2",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "S/PDIF input",
+          "dir": "in",
+          "signal": "spdif",
+          "count": 1
+        },
+        {
+          "connector": "toslink",
+          "role": "TOSLINK input",
+          "dir": "in",
+          "signal": "spdif",
+          "count": 1
+        },
+        {
+          "connector": "toslink",
+          "role": "ADAT lightpipe input",
+          "dir": "in",
+          "signal": "adat",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB audio input (Class 2)",
+          "dir": "in",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "word clock input",
+          "dir": "in",
+          "signal": "wordclock",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Speaker outputs 1/2/3 (stereo each)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 6
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "CUE output stereo",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "SUB / DAC / METER output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES3 digital loop-thru output",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "rca",
+          "role": "S/PDIF digital loop-thru output",
+          "dir": "out",
+          "signal": "spdif",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone output (ACU front; second on RCU)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "remote talkback switch input",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "dsub25",
+          "role": "DB15 remote connector to RCU (RS422 data, DC, headphone)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC mains input",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "mic-level",
+        "phantom-48v",
+        "aes3",
+        "spdif",
+        "adat",
+        "usb-audio",
+        "wordclock",
+        "headphone-level",
+        "mains-power"
+      ],
+      "manual_url": "https://gracedesign.com/wp-content/uploads/2018/06/m905_owners_manual_reve.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://gracedesign.com/products/monitor-controllers/m905/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://gracedesign.com/wp-content/uploads/2018/06/m905_owners_manual_reve.pdf",
+          "title": "m905 Owner's Manual Rev E",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Rev E (revision history entry 12/10/2014)",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://gracedesign.com/products/monitor-controllers/m905/",
+          "publisher": "Grace Design",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.analog_inputs",
+            "key_specs.digital_inputs",
+            "key_specs.word_clock",
+            "key_specs.frequency_response",
+            "key_specs.thd_n",
+            "key_specs.dynamic_range",
+            "key_specs.max_levels",
+            "key_specs.gain_range",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ]
+        },
+        {
+          "url": "https://gracedesign.com/wp-content/uploads/2018/06/m905_owners_manual_reve.pdf",
+          "publisher": "Grace Design",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "connectors",
+            "key_specs.digital_inputs",
+            "key_specs.outputs",
+            "key_specs.remote",
+            "key_specs.analog_inputs",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        }
+      ],
+      "notes": "Connector types taken from the owner's manual (product page does not name them). The RCU link is a DB15 (15-pin D-sub) connector; no TekPractice id exists, dsub25 used as closest D-sub id (proposed db15). The manual mentions RS422 in one place and RS485 in the cable diagram. Talkback mic input connector inferred from pin 1/2/3 wiring description (XLR). USB connector type not named (usb-b assumed). Analog-only variant (m905 Analog) has no DAC.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "grace-m905",
+        "proposed_new_connectors": [
+          "db15"
+        ],
+        "proposed_new_signals": [
+          "adat"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Hub of the control-room monitor path: many sources (analog/AES/S/PDIF/ADAT/USB), three speaker sets, cue, talkback with phantom, word clock."
+      }
+    },
+    {
+      "id": "focal-utopia-main-112",
+      "brand": "Focal",
+      "model": "Utopia Main 112",
+      "category": "studio-monitors",
+      "sub_type": "farfield-main",
+      "technology": "Three-way main monitor with external rack amplifier (Class D bass, Class H current-mode mid and treble), 13\" W subwoofer driver, 5\" M-shaped W midrange, 1.5\" M-shaped beryllium tweeter; amplifier linked to enclosure by one 8-pole and one 4-pole Speakon cable.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Focal (France) presents the Utopia Main range as its step into main monitoring. Its separate amplifier with Speakon NL8 + NL4 links and soffit / port compensation filters makes it a clear example of a modern French-made main monitor system.",
+      "typical_uses": [
+        "main monitors in large control rooms",
+        "soffit mounting",
+        "mastering",
+        "immersive / post-production main systems"
+      ],
+      "key_specs": {
+        "frequency_response": "28 Hz - 40 kHz (±3 dB)",
+        "max_spl": "120 dB (CEA2034 50-10 kHz free-field @ 1 m) / 120 dB peak at 1 m (product page)",
+        "amplification": "External amplifier: bass 500 W RMS class D; midrange 180 W RMS class H current mode; treble 90 W RMS class H current mode",
+        "drivers": "13\" (33 cm) W cone woofer/subwoofer; 5\" (12.7 cm) 'M'-shaped 'W' cone midrange; 1.5\" (38 mm) 'M'-shaped beryllium tweeter",
+        "crossover": "330Hz/2.7kHz",
+        "input": "Balanced XLR 10 kΩ (on the amplifier)",
+        "amplifier_link": "1 x 8-point Speakon + 1 x 4-point Speakon, max 3 m between amplifier and speaker",
+        "tuning": "Amplifier feature board: 2 PEQs, per-driver trims, low/high shelf, soffit compensation, port compensation (sealed / ported)",
+        "power_consumption": "500W nominal; standby <0.5W",
+        "dimensions": "Speaker 94 x 53 x 46 cm (H x W x D); amplifier 7 3/8\" x 19\" x 17 1/2\"",
+        "weight": "Speaker 77.6 kg (171 lb); amplifier 23.4 kg (51.6 lbs) per product sheet"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "audio signal input (amplifier)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "speakon-nl8",
+          "role": "amplifier output to speaker: woofer + midrange",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 1
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "amplifier output to speaker: tweeter + front LED",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (fuse holder / mains socket on amplifier)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "speaker-level",
+        "mains-power"
+      ],
+      "manual_url": "https://dam.focal-naim.com/m/27c4af926a885e37/original/Notice_Utopia_Main-pdf.pdf",
+      "datasheet_url": "https://dam.focal-naim.com/m/24844dbdbb6a4612/original/FP_Utopia_Main_112_EN-pdf.pdf",
+      "product_page_url": "https://www.focal.com/products/utopia-main-112",
+      "manual_languages": [
+        "fr",
+        "en",
+        "multi"
+      ],
+      "manuals": [
+        {
+          "url": "https://dam.focal-naim.com/m/27c4af926a885e37/original/Notice_Utopia_Main-pdf.pdf",
+          "title": "Utopia Main manuel d'utilisation / user manual (multilingual, French first)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/1e8b37a182e611ef/original/QS_Main_Utopia_web-pdf.pdf",
+          "title": "Utopia Main Quick Start",
+          "language": "not shown",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start"
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/24844dbdbb6a4612/original/FP_Utopia_Main_112_EN-pdf.pdf",
+          "title": "Utopia Main 112 Product Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v3 - 10/01/2025",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.focal.com/products/utopia-main-112",
+          "publisher": "Focal",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.max_spl",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.input",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "sub_type",
+            "status"
+          ]
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/24844dbdbb6a4612/original/FP_Utopia_Main_112_EN-pdf.pdf",
+          "publisher": "Focal",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.max_spl",
+            "key_specs.amplification",
+            "key_specs.drivers",
+            "key_specs.crossover",
+            "key_specs.input",
+            "key_specs.tuning",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://dam.focal-naim.com/m/27c4af926a885e37/original/Notice_Utopia_Main-pdf.pdf",
+          "publisher": "Focal",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "connectors",
+            "key_specs.amplifier_link",
+            "manual_languages"
+          ]
+        }
+      ],
+      "notes": "Speakon 8-point wiring per manual: 1+/- woofer, 3+/- midrange (112); 4-point: 1+/- tweeter, 2+/- front LED. Larger sibling Utopia Main 212 has 2 x 500 W Class D bass. Focal says 'main monitoring'; far-field is not used by the source. Mains inlet type described only as 'fuse holder / mains socket' (IEC assumed).",
+      "conflicts": [
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "Amplifier 29.35 kg",
+              "source_url": "https://www.focal.com/products/utopia-main-112"
+            },
+            {
+              "value": "Amplifier 51,6lbs (23,4kg)",
+              "source_url": "https://dam.focal-naim.com/m/24844dbdbb6a4612/original/FP_Utopia_Main_112_EN-pdf.pdf"
+            }
+          ],
+          "note": "Product page figure may be the packed weight; not stated."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "speakon-nl8"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Remote amplifier to speaker via Speakon NL8 + NL4 with documented pin assignment: multi-way speaker-level wiring lesson."
+      }
+    },
+    {
+      "id": "drawmer-mc2-1",
+      "brand": "Drawmer",
+      "model": "MC2.1",
+      "category": "studio-monitors",
+      "sub_type": "monitor-controller",
+      "technology": "Active analog desktop monitor controller: 4 stereo inputs (XLR, XLR/jack combo, shared RCA / 3.5 mm aux), 3 stereo balanced speaker outputs + mono sub output on XLR with underside trims, 2 headphone amps, built-in electret talkback mic with rear talkback output, linear power supply.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A widely used analog monitor controller format: source select, speaker A/B/C switching with calibration trims, mono / dim / mute / phase / L-R cut and talkback. Drawmer's manual includes a step-by-step pink-noise calibration procedure, useful for teaching.",
+      "typical_uses": [
+        "project and professional studio monitor switching",
+        "monitor level calibration",
+        "talkback and headphone feeds"
+      ],
+      "key_specs": {
+        "inputs": "I/P1 balanced Neutrik XLR; I/P2 balanced Neutrik XLR/jack combi; AUX shared stereo RCA and 3.5 mm stereo jack",
+        "outputs": "3 stereo balanced speaker outputs + mono speaker/sub-woofer output, Neutrik 3-pin XLR, individual L/R/mono trims",
+        "headphones": "2 x 1/4\" TRS with individual level",
+        "talkback": "Built-in electret microphone, level control, 1/4\" mono talkback output jack, auto dim -20 dB",
+        "max_input_level": "21 dBu",
+        "max_output_level": "26 dBu",
+        "frequency_response": "20Hz-20kHz +/- 0.2dB",
+        "thd_n": "0.0014% (unity gain, 0 dBu input)",
+        "dynamic_range": "118 dB (unity gain)",
+        "crosstalk": "L/R @ 1 kHz >85 dB; adjacent input >95 dB",
+        "power": "115V or 230V at 50-60Hz, 20VA (internal voltage switch)",
+        "dimensions": "272 mm (D) x 215 mm (W) x 81 mm (H)",
+        "weight": "2.5 kg"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "I/P1 balanced stereo input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "I/P2 balanced stereo input (XLR/jack combi)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "AUX stereo input (shared with 3.5 mm)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "AUX stereo input (shared with RCA)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "speaker outputs A/B/C (stereo)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 6
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "mono speaker / sub-woofer output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone outputs",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "talkback mono output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "headphone-level",
+        "mains-power"
+      ],
+      "manual_url": "https://www.drawmer.com/uploads/manuals/mc21_operators_manual.pdf",
+      "datasheet_url": "https://www.drawmer.com/uploads/lit/mc21_monitor_controller_lit.pdf",
+      "product_page_url": "https://www.drawmer.com/products/monitor_controller/mc21_monitor_controller.php",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.drawmer.com/uploads/manuals/mc21_operators_manual.pdf",
+          "title": "MC2.1 operator's manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.drawmer.com/uploads/connection/mc21_hookup.pdf",
+          "title": "MC2.1 connection diagram",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "other"
+        },
+        {
+          "url": "https://www.drawmer.com/uploads/lit/mc21_monitor_controller_lit.pdf",
+          "title": "MC2.1 literature",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.drawmer.com/products/monitor_controller/mc21_monitor_controller.php",
+          "publisher": "Drawmer",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.max_input_level",
+            "key_specs.max_output_level",
+            "key_specs.frequency_response",
+            "key_specs.thd_n",
+            "key_specs.dynamic_range",
+            "key_specs.crosstalk",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.drawmer.com/uploads/manuals/mc21_operators_manual.pdf",
+          "publisher": "Drawmer",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.headphones",
+            "key_specs.talkback",
+            "key_specs.frequency_response",
+            "key_specs.crosstalk",
+            "key_specs.power",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Connector types from the operator's manual. Mains inlet type not named (IEC assumed). The connection-diagram and literature PDF URLs were derived from relative links on the product page and not opened. Status inferred from presence in Drawmer's current monitor-controller catalogue (not explicitly stated).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Pure analog monitor path with XLR, combo, RCA and 3.5 mm inputs, three speaker sets plus sub and talkback out: clear source → controller → monitors lesson."
+      }
+    },
+    {
+      "id": "mackie-big-knob-studio",
+      "brand": "Mackie",
+      "model": "Big Knob Studio",
+      "category": "studio-monitors",
+      "sub_type": "monitor-controller",
+      "technology": "Desktop monitor controller with built-in 2x2 USB audio interface (192 kHz / 24-bit): 2 Onyx mic preamps on XLR/TRS combo with phantom, 3 sources, 2 monitor pairs on 1/4\" outputs, 2-track outputs, 2 headphone outputs, internal talkback mic; external universal power supply.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Mackie's own manual calls the Big Knob 'the world's bestselling monitor controller' (manufacturer claim). The Studio version merges monitor control and a USB interface, a common setup in home and school studios.",
+      "typical_uses": [
+        "home / project studio monitor switching",
+        "USB recording interface",
+        "podcast / voice-over"
+      ],
+      "key_specs": {
+        "sources_monitors": "3 sources x 2 monitor pairs",
+        "mic_inputs": "2 x XLR and 1/4\" TRS combo, Onyx preamps, phantom power",
+        "line_inputs": "1 pair 1/4\" source inputs (rear); 1/8\" (3.5 mm) stereo input (front) which defeats the 1/4\" inputs",
+        "usb": "2x2 USB audio interface, 192 kHz / 24-bit (class compliant on Mac; ASIO driver on PC)",
+        "outputs": "1/4\" monitor outputs (balanced); 1/4\" 2-track outputs switchable +4 dBu / -10 dBV; 2 headphone outputs with independent level",
+        "talkback": "Internal talkback mic (top panel)",
+        "functions": "Mono, mute, dim (-20 dB), independent trims on sources and monitor outputs, 16-segment input metering",
+        "frequency_response": "±0.5 dB, 20 Hz - 20 kHz (unity gain, +4 dBu input, all inputs)",
+        "power": "External universal power supply 100 VAC to 240 VAC",
+        "dimensions": "Height 3.2 in / 81 mm, width 9.9 in / 251 mm, depth 6.4 in / 163 mm",
+        "weight": "3.5 lb / 1.6 kg"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "mic input 1/2 (combo XLR part)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "line input 1/2 (combo TRS part)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "source input pair (rear)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "front stereo source input",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB audio in/out",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "monitor outputs A/B (L/R)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "2-track outputs L/R",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone outputs",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 2
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "external power supply input",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "line-level-pro",
+        "line-level-consumer",
+        "usb-audio",
+        "headphone-level",
+        "dc-power"
+      ],
+      "manual_url": "https://mackie.com/img/file_resources/Big_Knob_Series_OM.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://mackie.com/en/products/studio-monitoring/big-knob-series/big_knob_studio.html",
+      "manual_languages": [
+        "en",
+        "de"
+      ],
+      "manuals": [
+        {
+          "url": "https://mackie.com/img/file_resources/Big_Knob_Series_OM.pdf",
+          "title": "Big Knob Studio & Studio+ Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/BIG_KNOB_SERIES_GERMAN_OM[16].pdf",
+          "title": "Big Knob Series Owner's Manual (German)",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/en/products/studio-monitoring/big-knob-series/big_knob_studio.html",
+          "publisher": "Mackie",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.sources_monitors",
+            "key_specs.mic_inputs",
+            "key_specs.usb",
+            "key_specs.talkback",
+            "key_specs.functions",
+            "status"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/Big_Knob_Series_OM.pdf",
+          "publisher": "Mackie",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mic_inputs",
+            "key_specs.line_inputs",
+            "key_specs.usb",
+            "key_specs.outputs",
+            "key_specs.frequency_response",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "PDF links on the product page are relative to the page's <base href=\"https://mackie.com/\">; the English manual was opened at that resolved URL, the German one was not opened. Product page status showed 'On Backorder' (treated as current). Studio outputs, talkback XLR input and footswitch exist only on the Big Knob Studio+. USB connector type and power connector type not named in the parts read (usb-b and dc-barrel assumed).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Monitor controller + USB interface on TRS outputs: shows monitor-out vs 2-track vs headphone paths at low cost."
+      }
+    }
+  ]
+}

@@ -1,0 +1,448 @@
+{
+  "file": "processors-effects.json",
+  "category": "processors-outboard",
+  "generated": "2026-10-22",
+  "selection_rationale": "Reverb/effects: the reference hardware reverbs a student meets in studios and live racks (Bricasti M7, Lexicon PCM96/PCM92, Yamaha SPX2000, Eventide H9000) plus one historic studio standard (Lexicon 480L) that teaches legacy digital I/O (PCM-1610 on DE9) and remote control. Feedback suppressor / automixer: dbx AFS2 (classic live anti-larsen in a 1U rack) and Shure SCM820 (IntelliMix automixer with Dante and DFR, common in conference/broadcast speech installs). Several requested candidates (TC Electronic M350/M3000, Yamaha REV7, EMT 140, Dugan, Sabine FBX, Eventide H3000) were dropped because their official sources could not be reached this session (see not_found_log).",
+  "not_found_log": [
+    { "device_id": "bricasti-design-m7", "what": "year_introduced; French manual", "searched": "bricasti.com pro pages and downloads page (only English M7 User Guide); search budget exhausted for year" },
+    { "device_id": "lexicon-pcm96", "what": "French manual", "searched": "lexiconpro.com/fr/products/pcm96 lists English owner's manual only" },
+    { "device_id": "lexicon-pcm92", "what": "year_introduced", "searched": "lexiconpro.com news page 'Lexicon Introduces PCM92...' has no visible date/body text; search budget exhausted" },
+    { "device_id": "lexicon-480l", "what": "year_introduced; French manual; second spec source", "searched": "lexiconpro.com/en/products/m480l documents list (English only); search budget exhausted" },
+    { "device_id": "yamaha-spx2000", "what": "owner's manual PDF (FR/EN); year_introduced", "searched": "fr.yamaha.com SPX2000 resources page (downloads rendered by JavaScript, no PDF link in HTML); search budget exhausted" },
+    { "device_id": "eventide-h9000", "what": "manufacturer product page, manual, detailed connector specs, year", "searched": "eventideaudio.com returned HTTP 503 (Retry-After 3600) for every request; only Sweetwater retailer page readable; search budget exhausted" },
+    { "device_id": "shure-scm820", "what": "French user guide; year_introduced", "searched": "pubs.shure.com/guide/SCM820/fr-FR.pdf redirects to English online guide at shure.com/en-US/docs/guide/SCM820; search budget exhausted" },
+    { "device_id": "dbx-afs2", "what": "French manual", "searched": "dbxpro.com/fr/products/afs2 lists English manual only" },
+    { "device_id": "tc-electronic-m350", "what": "whole device (status, specs, manual)", "searched": "tcelectronic.com product URLs returned 404 / JavaScript-only pages; search budget exhausted" },
+    { "device_id": "dugan-model-e-3a", "what": "whole device", "searched": "dugan.com (no content) and dandugan.com (no connection); search budget exhausted" },
+    { "device_id": "yamaha-rev7", "what": "whole device (historic)", "searched": "Yamaha manual library is JavaScript-rendered; search budget exhausted" },
+    { "device_id": "emt-140", "what": "whole device (historic plate)", "searched": "no reputable source reachable without web search; search budget exhausted" },
+    { "device_id": "eventide-h3000", "what": "whole device (historic)", "searched": "eventideaudio.com HTTP 503" },
+    { "device_id": "sabine-fbx", "what": "whole device", "searched": "search budget exhausted" },
+    { "device_id": "lexicon-mx400", "what": "manuals/specs", "searched": "lexiconpro.com/en/products/mx400 is marked Discontinued with no documents listed" }
+  ],
+  "devices": [
+    {
+      "id": "bricasti-design-m7",
+      "brand": "Bricasti Design",
+      "model": "M7 (Model 7) Stereo Reverb Processor",
+      "category": "processors-outboard",
+      "sub_type": "effects-reverb",
+      "technology": "Digital algorithmic reverb: the manual calls it a 'real-time synthesized algorithmic reverb processor' (not sampled/convolution), multiple DSPs with a separate fully differential analog section and linear analog power supply.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A high-end stereo hardware reverb often found in mixing and mastering rooms; Bricasti itself presents the M7 as 'the most advanced digital reverb processor available' (manufacturer claim). Useful to teach analog vs AES3 insertion of a reverb.",
+      "typical_uses": ["studio mixing reverb (send/return)", "orchestral and acoustic music", "post-production ambience", "live FOH reverb"],
+      "key_specs": {
+        "analog_io": "2 balanced XLR inputs, 2 balanced XLR outputs (pin 2 hot)",
+        "digital_io": "AES/EBU 24 bit Single Wire on XLR, 'AES single wire 192k supported'",
+        "sample_rates": "44.1 kHz, 48 kHz, 88 kHz, 96 kHz, 192 kHz (manual); 'Self-clocking to incoming sample rates 44.1k to 192k' (web specs)",
+        "ad_conversion": "24 bit 96 kHz",
+        "analog_input_impedance": "100 k ohm",
+        "max_input_level": "+24 dbm",
+        "analog_output_impedance": "40 ohm",
+        "max_output_level": "+24 dbm (balanced)",
+        "thd_n": "< .001%",
+        "cmrr": "> 100dB @ 1 kHz",
+        "rack_units": "1U ('Although the M7 is a 1U high product...')",
+        "dimensions": "19\" x 1.75 \"x 11\"",
+        "weight": "9 lbs",
+        "power": "100-240 VAC, 50 Hz – 60 Hz Selectable; less than 40W",
+        "control": "MIDI In/Out (no function in V1 per manual); RS-422 remote port + loop thru for M10 remote"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "analog input L/R", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-m", "role": "analog output L/R", "dir": "out", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-f", "role": "AES IN", "dir": "in", "signal": "aes3", "count": 1 },
+        { "connector": "xlr3-m", "role": "AES OUT", "dir": "out", "signal": "aes3", "count": 1 },
+        { "connector": "midi-din5", "role": "MIDI in / out", "dir": "bidir", "signal": "midi", "count": 2 },
+        { "connector": "iec-c14", "role": "AC power inlet with fuse", "dir": "in", "signal": "mains-power", "count": 1 }
+      ],
+      "signal_types": ["line-level-pro", "aes3", "midi", "mains-power"],
+      "manual_url": "http://www.bricasti.com/images/M7.pdf",
+      "datasheet_url": "https://www.bricasti.com/en/pro/m7_specs.php",
+      "product_page_url": "https://www.bricasti.com/en/pro/m7.php",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "http://www.bricasti.com/images/M7.pdf", "title": "M7 User Guide", "language": "en", "file_type": "pdf", "version_or_date": "Copyright 2007 (PDF created 2008)", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "http://www.bricasti.com/images/M7.pdf", "publisher": "Bricasti Design", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "connectors", "key_specs.analog_io", "key_specs.digital_io", "key_specs.sample_rates", "key_specs.ad_conversion", "key_specs.analog_input_impedance", "key_specs.max_input_level", "key_specs.analog_output_impedance", "key_specs.max_output_level", "key_specs.thd_n", "key_specs.cmrr", "key_specs.rack_units", "key_specs.dimensions", "key_specs.weight", "key_specs.power", "key_specs.control", "why_it_is_a_classic"] },
+        { "url": "https://www.bricasti.com/en/pro/m7_specs.php", "publisher": "Bricasti Design", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.analog_io", "key_specs.digital_io", "key_specs.sample_rates", "key_specs.max_input_level", "key_specs.cmrr", "key_specs.thd_n"] },
+        { "url": "https://www.bricasti.com/en/pro/m7.php", "publisher": "Bricasti Design", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "technology"] },
+        { "url": "https://www.bricasti.com/en/pro/home.php", "publisher": "Bricasti Design", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+      ],
+      "notes": "Status 'current' because the M7 is listed among products on the Bricasti pro site. The remote port uses RS-422 for the dedicated M10 remote; its physical connector is not named in the pages read, so it is left out of connectors[] (remote + loop-thru ports, up to 4 M7 per remote). The manual says MIDI has no function in V1 (later firmware not checked). The manual also states the unit can be mounted in 1U but recommends ventilation space making the installation a minimum of 2U.",
+      "conflicts": [
+        { "field": "key_specs.dynamic_range", "values": [ { "value": ">117dB A-Weighted", "source_url": "http://www.bricasti.com/images/M7.pdf" }, { "value": "Dynamic Range >116 db, A-Weighted", "source_url": "https://www.bricasti.com/en/pro/m7_specs.php" } ], "note": "manual (2007/2008) vs current web spec page" },
+        { "field": "key_specs.frequency_response", "values": [ { "value": "10 hz- 20 kHz -.002 dB", "source_url": "http://www.bricasti.com/images/M7.pdf" }, { "value": "Frequency Response: 10 Hz - 20 kHz ± < 0.05 dB", "source_url": "https://www.bricasti.com/en/pro/m7_specs.php" } ], "note": "" },
+        { "field": "key_specs.dimensions", "values": [ { "value": "19\" x 1.75 \"x 11\" (spec table)", "source_url": "http://www.bricasti.com/images/M7.pdf" }, { "value": "19\" wide by 1 3/4\" high by 10\" deep (mounting section)", "source_url": "http://www.bricasti.com/images/M7.pdf" } ], "note": "the same manual gives two depths" }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["midi-din5"], "proposed_new_signals": ["midi"], "sim_value": "medium", "sim_value_reason": "Clean stereo send/return reverb with both XLR analog and AES3 on XLR: good lesson on analog vs AES3 insertion and clock (self-clocking to input)." }
+    },
+    {
+      "id": "lexicon-pcm96",
+      "brand": "Lexicon",
+      "model": "PCM96",
+      "category": "processors-outboard",
+      "sub_type": "effects-reverb",
+      "technology": "Digital algorithmic reverb/effects, 32-bit floating point processing; 28 reverb, delay and modulation algorithms including a Room algorithm presented as 'a more flexible alternative to convolution type reverbs'.",
+      "year_introduced": 2007,
+      "status": "current",
+      "why_it_is_a_classic": "Lexicon's flagship stereo hardware reverb, introduced at the 123rd AES Convention (2007); its launch PR and later SOS Award news call it a 'Studio Standard' reverb (manufacturer wording).",
+      "typical_uses": ["studio reverb and effects (send/return)", "hardware plug-in over FireWire with a DAW", "live FOH reverb"],
+      "key_specs": {
+        "analog_inputs": "Two, Female XLR; 20K Ohm, balanced; +4dBu mode: +20dBu / –10dBV mode: 8.2dBu for 0 dBFS",
+        "analog_outputs": "Two, Male XLR; 30 Ohm, electronically balanced; +20dBu at 0 dBFS",
+        "digital_io": "One Male XLR Output, One Female XLR Input, AES/EBU, 24 bits",
+        "sample_rates": "44.1kHz/48kHz/88.2kHz/96kHz (internal and external)",
+        "sync": "TTL Word Clock Input, 75 Ohm, BNC",
+        "ad_da_conversion": "24 bits; >112 dB unweighted, 115dB A-weighted",
+        "thd": "<.002% 20 → 20kHz @ +4dBu",
+        "processing": "32-bit floating point processing",
+        "other_interfaces": "MIDI In/Out/Thru; FireWire 400 ports; Ethernet connections (datasheet)",
+        "rack_units": "1U",
+        "dimensions": "19.0” W x 1.75” H x 12.5” D (483mm x 44.5mm x 317.5mm)",
+        "weight": "8.65 lbs",
+        "power": "100-120 / 220-240 VAC 50-60Hz, 20W max; 3-pin IEC"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "analog input L/R", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-m", "role": "analog output L/R", "dir": "out", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-f", "role": "AES/EBU input", "dir": "in", "signal": "aes3", "count": 1 },
+        { "connector": "xlr3-m", "role": "AES/EBU output", "dir": "out", "signal": "aes3", "count": 1 },
+        { "connector": "bnc", "role": "word clock input", "dir": "in", "signal": "wordclock", "count": 1 },
+        { "connector": "midi-din5", "role": "MIDI in, thru and out", "dir": "bidir", "signal": "midi", "count": 3 },
+        { "connector": "ieee-firewire", "role": "FireWire 400 ports (audio streaming / control)", "dir": "bidir", "signal": "usb-audio", "count": "not stated" },
+        { "connector": "rj45", "role": "Ethernet connections", "dir": "bidir", "signal": "aoip", "count": "not stated" },
+        { "connector": "iec-c14", "role": "mains in (3-pin IEC)", "dir": "in", "signal": "mains-power", "count": 1 }
+      ],
+      "signal_types": ["line-level-pro", "aes3", "wordclock", "midi", "mains-power"],
+      "manual_url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+      "datasheet_url": "https://lexiconpro.com/en/product_documents/pcm96_datasheetpdf",
+      "product_page_url": "https://lexiconpro.com/en/products/pcm96",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf", "title": "PCM96 Owner's Manual-English", "language": "en", "file_type": "pdf", "version_or_date": "5047785-B (file served as PCM96_Manual_5047785-B_original.pdf)", "official": true, "kind": "user-manual" },
+        { "url": "https://lexiconpro.com/en/product_documents/pcm96_datasheetpdf", "title": "PCM96 Cut Sheet-English", "language": "en", "file_type": "pdf", "version_or_date": "©2008", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.digital_io", "key_specs.sample_rates", "key_specs.sync", "key_specs.ad_da_conversion", "key_specs.thd", "key_specs.rack_units", "key_specs.dimensions", "key_specs.weight", "key_specs.power", "connectors"] },
+        { "url": "https://lexiconpro.com/en/product_documents/pcm96_datasheetpdf", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.other_interfaces", "connectors"] },
+        { "url": "https://lexiconpro.com/en/products/pcm96", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "technology", "key_specs.processing", "key_specs.sample_rates", "key_specs.digital_io"] },
+        { "url": "https://lexiconpro.com/en/news/lexicon-introduces-pcm96-stereo-reverb-effects-processor", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["year_introduced", "why_it_is_a_classic", "key_specs.other_interfaces"] },
+        { "url": "https://lexiconpro.com/en/discontinued_products", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+      ],
+      "notes": "Status 'current': the product page shows a Buy It Now link and is not marked Discontinued, and PCM96 is absent from Lexicon's discontinued list (the 480L, MX400 and PCM91 pages are explicitly marked Discontinued). FireWire uses the proposed ieee-firewire id; usb-audio is only the closest existing signal id for computer audio streaming. Ethernet is for control (System Architect/PCM software), not audio networking; aoip used as closest id. lexiconpro.com fails strict TLS validation (issuer certificate) so pages were read with certificate checks relaxed.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["midi-din5", "ieee-firewire"], "proposed_new_signals": ["midi"], "sim_value": "high", "sim_value_reason": "Has XLR analog, AES3 on XLR, BNC word clock, MIDI, FireWire and Ethernet on one rear panel: good clock-master/slave and digital insert lesson." }
+    },
+    {
+      "id": "lexicon-pcm92",
+      "brand": "Lexicon",
+      "model": "PCM92",
+      "category": "processors-outboard",
+      "sub_type": "effects-reverb",
+      "technology": "Digital algorithmic reverb/effects (same algorithm family as PCM96: Chamber, Random Delay, Random Hall, Plate, Dual Delay, Resonant Chords, Chorus/Flange, Concert Hall, Room, Hall).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Lexicon's live- and studio-oriented sibling of the PCM96, with combo XLR/jack analog I/O; Lexicon positions it to complement 'any large scale mixing console'. It is the only Lexicon PCM unit here with an official French manual.",
+      "typical_uses": ["live FOH reverb/delay", "studio reverb (send/return)", "theatre effects"],
+      "key_specs": {
+        "analog_inputs": "XLR-1/4” (combi-jack) analog balanced inputs (datasheet); 20K Ohm, balanced",
+        "analog_outputs": "XLR and 1/4” analog balanced outputs (datasheet); 30 Ohm, electronically balanced; +20dBu at 0 dBFS",
+        "digital_io": "AES/EBU, one Male XLR output, one Female XLR input, 24 bits",
+        "sample_rates": "44.1kHz/48kHz/88.2kHz/96kHz (internal and external)",
+        "sync": "TTL Word Clock Input, 75 Ohm, BNC",
+        "ad_da_conversion": "24 bits; >112 dB unweighted, 115dB A-weighted",
+        "other_interfaces": "MIDI In/Out/Thru; Ethernet",
+        "rack_units": "1U",
+        "dimensions": "19.0” W x 1.75” H x 7.63” D (483mm x 44.5mm x 193.8mm)",
+        "weight": "7.12 lbs",
+        "power": "100-120 / 220-240 VAC 50-60Hz, 14W max; 3-pin IEC"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "analog input L/R (XLR-1/4\" combi jack)", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-m", "role": "analog output L/R (XLR)", "dir": "out", "signal": "line-level-pro", "count": 2 },
+        { "connector": "trs-quarter", "role": "analog output L/R (1/4\" balanced)", "dir": "out", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-f", "role": "AES/EBU input", "dir": "in", "signal": "aes3", "count": 1 },
+        { "connector": "xlr3-m", "role": "AES/EBU output", "dir": "out", "signal": "aes3", "count": 1 },
+        { "connector": "bnc", "role": "word clock input", "dir": "in", "signal": "wordclock", "count": 1 },
+        { "connector": "midi-din5", "role": "MIDI in, thru and out", "dir": "bidir", "signal": "midi", "count": 3 },
+        { "connector": "rj45", "role": "Ethernet (control)", "dir": "bidir", "signal": "aoip", "count": "not stated" },
+        { "connector": "iec-c14", "role": "mains in (3-pin IEC)", "dir": "in", "signal": "mains-power", "count": 1 }
+      ],
+      "signal_types": ["line-level-pro", "aes3", "wordclock", "midi", "mains-power"],
+      "manual_url": "https://lexiconpro.com/en/product_documents/pcm92_manual-frenchpdf",
+      "datasheet_url": "https://lexiconpro.com/en/product_documents/pcm92datasheetpdf",
+      "product_page_url": "https://lexiconpro.com/en/products/pcm92",
+      "manual_languages": ["fr", "en", "de", "es"],
+      "manuals": [
+        { "url": "https://lexiconpro.com/en/product_documents/pcm92_manual-frenchpdf", "title": "PCM92 Owner's Manual-French", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://lexiconpro.com/en/product_documents/pcm92_manual_5047784-apdf", "title": "PCM92 Owner's Manual-English", "language": "en", "file_type": "pdf", "version_or_date": "5047784-C (file served as PCM92_Manual_5047784-C_original.pdf)", "official": true, "kind": "user-manual" },
+        { "url": "https://lexiconpro.com/en/product_documents/pcm92manual-germanpdf", "title": "PCM92 Owner's Manual-German", "language": "de", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://lexiconpro.com/en/product_documents/pcm92_manual-spanishpdf", "title": "PCM92 Owner's Manual-Spanish", "language": "es", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://lexiconpro.com/en/product_documents/pcm92datasheetpdf", "title": "PCM92 Cut Sheet-English", "language": "en", "file_type": "pdf", "version_or_date": "©2009", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://lexiconpro.com/en/product_documents/pcm92_manual_5047784-apdf", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.digital_io", "key_specs.sample_rates", "key_specs.sync", "key_specs.ad_da_conversion", "key_specs.rack_units", "key_specs.dimensions", "key_specs.weight", "key_specs.power"] },
+        { "url": "https://lexiconpro.com/en/product_documents/pcm92datasheetpdf", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["connectors", "key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.other_interfaces", "why_it_is_a_classic"] },
+        { "url": "https://lexiconpro.com/en/products/pcm92", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "connectors", "manuals"] },
+        { "url": "https://lexiconpro.com/en/product_documents/pcm92_manual-frenchpdf", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manual_languages"] },
+        { "url": "https://lexiconpro.com/en/discontinued_products", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+      ],
+      "notes": "Status 'current' on the same basis as the PCM96 (not marked Discontinued, absent from Lexicon's discontinued list). The French manual PDF was opened and its text is in French. Ethernet is for control; aoip is only the closest existing signal id.",
+      "conflicts": [
+        { "field": "connectors", "values": [ { "value": "Digital Audio IO: 'Two FireWire Ports', Format 'AES/EBU/FireWire (400Mb)'; analog 'Two, Female XLR' in / 'Two, Male XLR' out", "source_url": "https://lexiconpro.com/en/product_documents/pcm92_manual_5047784-apdf" }, { "value": "XLR-1/4\" combi-jack inputs, XLR and 1/4\" outputs, AES/EBU, Ethernet, MIDI, Word Clock; no FireWire listed", "source_url": "https://lexiconpro.com/en/product_documents/pcm92datasheetpdf" } ], "note": "The English manual spec table appears to reuse PCM96 FireWire wording; the datasheet and product page list no FireWire. Not resolved; FireWire left out of connectors[] pending a rear-panel check." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["midi-din5"], "proposed_new_signals": ["midi"], "sim_value": "high", "sim_value_reason": "Combo XLR/jack inputs plus XLR and jack outputs, AES3, word clock: teaches choosing balanced jack vs XLR and digital insert on a live console; French manual available." }
+    },
+    {
+      "id": "lexicon-480l",
+      "brand": "Lexicon",
+      "model": "480L (M480L) Digital Effects System",
+      "category": "processors-outboard",
+      "sub_type": "effects-reverb",
+      "technology": "Digital algorithmic reverb/effects mainframe controlled from the LARC (Lexicon Alphanumeric Remote Control); 18 bit equivalent linear PCM encoding.",
+      "year_introduced": "not found",
+      "status": "discontinued",
+      "why_it_is_a_classic": "Historic studio reverb; Lexicon's own product page still titles the M480L 'Studio Standard Reverb Effects Processor' (manufacturer wording) and keeps its manuals online.",
+      "typical_uses": ["historic studio and post-production reverb", "mixing reverb in large-format consoles' effect racks"],
+      "key_specs": {
+        "audio_inputs": "Two; +6 to +28 dBm electronically balanced; 30 kilohms in parallel with 100 pF; Female XLR",
+        "audio_outputs": "Four (main L/R + aux L/R); +6 to +24 dBm transformerless balanced (600 ohms); 33 ohms; Male XLR",
+        "frequency_response": "20 Hz to 20 kHz, +0.5 dB, -1 dB (48 kHz)",
+        "dynamic_range": "98 dB typical over temp. range, 22.4 kHz unweighted noise bandwidth",
+        "encoding": "18 bit equivalent linear PCM",
+        "sampling_rate": "48.0 kHz/44.1 kHz – selectable",
+        "digital_audio_interface": "PCM 1610-compatible digital I/O; 18-bit word length capability; slaveable to 48 kHz, 44.1 kHz, or 44.056 kHz external word clock; Female DE9",
+        "remote": "LARC connector: Female DE9 (2) – Dual LARC control; LARC cable 50-ft",
+        "midi": "In, Thru, Out (Standard 5-pin female DIN)",
+        "power": "100, 120, 220, 240 Vac (+5, -10%); 50-60 Hz, 180 W maximum, 70 W typical",
+        "dimensions": "Standard 19\" rack mount 19\"w x 5.25\"h x 14.5\"d (483 x 133 x 368 mm)",
+        "weight": "24 lbs (10.89 kg) mainframe; LARC 1.9 lbs (0.9 kg)"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "main inputs L/R", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-m", "role": "main outputs L/R + aux outputs L/R", "dir": "out", "signal": "line-level-pro", "count": 4 },
+        { "connector": "dsub25", "role": "Lexicon digital audio I/O (actually female DE9, PCM 1610-compatible)", "dir": "bidir", "signal": "aes3", "count": 1 },
+        { "connector": "dsub25", "role": "LARC 1 / LARC 2 (thru) remote connectors (actually female DE9)", "dir": "bidir", "signal": "gpio-tally", "count": 2 },
+        { "connector": "dsub25", "role": "automation port (actually female DE9, for future expansion)", "dir": "n/a", "signal": "gpio-tally", "count": 1 },
+        { "connector": "midi-din5", "role": "MIDI In, Thru, Out", "dir": "bidir", "signal": "midi", "count": 3 },
+        { "connector": "iec-c14", "role": "mains in (3-pin IEC with fuse holder cartridge)", "dir": "in", "signal": "mains-power", "count": 1 }
+      ],
+      "signal_types": ["line-level-pro", "midi", "mains-power"],
+      "manual_url": "https://lexiconpro.com/en/product_documents/480l_manual_rev23pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://lexiconpro.com/en/products/m480l",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://lexiconpro.com/en/product_documents/480l_manual_rev23pdf", "title": "480L_manual_rev2.3.pdf (Lexicon 480L Owner's Manual)", "language": "en", "file_type": "pdf (scanned)", "version_or_date": "rev 2.3", "official": true, "kind": "user-manual" },
+        { "url": "https://lexiconpro.com/en/product_documents/480l_v40_softwarepdf", "title": "480L_v4.0_Software.pdf", "language": "en", "file_type": "pdf", "version_or_date": "v4.0", "official": true, "kind": "other" }
+      ],
+      "sources": [
+        { "url": "https://lexiconpro.com/en/product_documents/480l_manual_rev23pdf", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "connectors", "key_specs.audio_inputs", "key_specs.audio_outputs", "key_specs.frequency_response", "key_specs.dynamic_range", "key_specs.encoding", "key_specs.sampling_rate", "key_specs.digital_audio_interface", "key_specs.remote", "key_specs.midi", "key_specs.power", "key_specs.dimensions", "key_specs.weight"] },
+        { "url": "https://lexiconpro.com/en/products/m480l", "publisher": "Lexicon (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "why_it_is_a_classic", "manuals"] }
+      ],
+      "notes": "Only one spec source (the scanned official manual, read as page images). The digital port is a PCM-1610-compatible interface on DE9, NOT AES3; aes3 was used on that connector only as the closest digital-audio signal id and is deliberately left out of signal_types. DE9 has no TekPractice id, so dsub25 is used as closest and 'de9' is proposed. Rack height is given as 5.25\" (no rack-unit count stated in the pages read). Main inputs can optionally be transformer-coupled (Jensen JE-11P-1) per the manual.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["de9", "midi-din5"], "proposed_new_signals": ["midi", "pcm-1610-digital"], "sim_value": "medium", "sim_value_reason": "Historic lesson: proprietary/legacy digital I/O and a wired remote (LARC) instead of front-panel control; four XLR outputs for split/cascade modes." }
+    },
+    {
+      "id": "yamaha-spx2000",
+      "brand": "Yamaha",
+      "model": "SPX2000",
+      "category": "processors-outboard",
+      "sub_type": "effects-reverb",
+      "technology": "Digital multi-effects processor: 96 kHz DSP LSI with 32-bit internal processing (58-bit accumulator), REV-X reverb algorithms plus classic SPX programs.",
+      "year_introduced": "not found",
+      "status": "discontinued",
+      "why_it_is_a_classic": "Last of the SPX line; Yamaha states that almost every well-equipped studio or live rack has an SPX90, SPX90II, SPX900, SPX1000 or SPX990, and the SPX2000 keeps their programs (CLASSIC bank) while adding REV-X.",
+      "typical_uses": ["live FOH reverb/delay rack", "studio multi-effects", "theatre"],
+      "key_specs": {
+        "line_inputs": "2; XLR-3-31 type / TRS phone jack (Balanced); 10kohms; +4dBu nominal, +24dBu max before clip (+4dBu setting) / -10dBu nominal, +10dBu max (-10dBu setting)",
+        "line_outputs": "2; XLR-3-32 / TRS phone jack; 75ohms; +4dBu nominal, +24dBu max (+4dBu) / -10dBu, +10dBu max (-10dBu)",
+        "digital_io": "1x AES/EBU (2-in/2-out), 24bit, XLR-3-31 type in / XLR-3-32 type out",
+        "ad_da_converter": "24bit; 64-time(@96kHz) / 128-time(@48kHz) over sampling",
+        "internal_processing": "32bit",
+        "sampling_frequency": "Internal 44.1kHz, 48kHz, 88.2kHz, 96kHz; External 44.1kHz/88.2kHz (-10%) - 48kHz/96kHz (+6%)",
+        "signal_delay": "Less than 426 micro sec",
+        "frequency_response": "0, +1, -3dB 20Hz-40kHz",
+        "dynamic_range": "AD+DA: 106dB",
+        "thd": "Less than 0.05% (20Hz-40kHz)",
+        "control_io": "USB 1.1 TO HOST (B type); MIDI IN, OUT/THRU (DIN 5P); WORD CLOCK IN TTL/75ohms BNC",
+        "rack_units": "45mm; 1-3/4in (1U)",
+        "dimensions": "W 480mm, H 45mm, D 372.5mm",
+        "weight": "4kg; 8.8lbs",
+        "power": "AC100V, 120V or 220-240V; 50/60Hz; 25W"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "analog input L/R (XLR)", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "trs-quarter", "role": "analog input L/R (TRS, balanced)", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-m", "role": "analog output L/R (XLR)", "dir": "out", "signal": "line-level-pro", "count": 2 },
+        { "connector": "trs-quarter", "role": "analog output L/R (TRS)", "dir": "out", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-f", "role": "AES/EBU IN", "dir": "in", "signal": "aes3", "count": 1 },
+        { "connector": "xlr3-m", "role": "AES/EBU OUT", "dir": "out", "signal": "aes3", "count": 1 },
+        { "connector": "bnc", "role": "WORD CLOCK IN", "dir": "in", "signal": "wordclock", "count": 1 },
+        { "connector": "midi-din5", "role": "MIDI IN, OUT/THRU", "dir": "bidir", "signal": "midi", "count": 2 },
+        { "connector": "usb-b", "role": "USB TO HOST (editor/remote control)", "dir": "bidir", "signal": "usb-audio", "count": 1 }
+      ],
+      "signal_types": ["line-level-pro", "line-level-consumer", "aes3", "wordclock", "midi", "mains-power"],
+      "manual_url": "not found",
+      "datasheet_url": "https://fr.yamaha.com/fr/business/audio/products/processors/spx2000/specs.html",
+      "product_page_url": "https://fr.yamaha.com/fr/business/audio/products/processors/spx2000/index.html",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://fr.yamaha.com/fr/business/audio/products/processors/spx2000/specs.html", "publisher": "Yamaha", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.line_inputs", "key_specs.line_outputs", "key_specs.digital_io", "key_specs.ad_da_converter", "key_specs.internal_processing", "key_specs.sampling_frequency", "key_specs.signal_delay", "key_specs.frequency_response", "key_specs.dynamic_range", "key_specs.thd", "key_specs.control_io", "key_specs.rack_units", "key_specs.dimensions", "key_specs.weight", "key_specs.power", "connectors"] },
+        { "url": "https://fr.yamaha.com/fr/business/audio/products/processors/spx2000/index.html", "publisher": "Yamaha", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "why_it_is_a_classic", "connectors", "key_specs.dynamic_range"] },
+        { "url": "https://usa.yamaha.com/products/proaudio/processors/spx2000/specs.html", "publisher": "Yamaha", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+      ],
+      "notes": "Both the French and US Yamaha pages mark the SPX2000 'Discontinué' / 'Discontinued'. Overview page also mentions a front-panel footswitch jack for tap tempo (connector type not specified). USB is for data/editor control, not audio; usb-audio is only the closest signal id and is not listed in signal_types. The overview page and spec page are two documents from the same manufacturer (dynamic range 106 dB consistent).",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["midi-din5"], "proposed_new_signals": ["midi"], "sim_value": "high", "sim_value_reason": "Classic live-rack effect with XLR+TRS, +4/-10 level switch, AES3 and word clock: teaches level matching and digital clocking; pairs naturally with the Yamaha QL1 already in the catalog." }
+    },
+    {
+      "id": "eventide-h9000",
+      "brand": "Eventide",
+      "model": "H9000 Harmonizer",
+      "category": "processors-outboard",
+      "sub_type": "effects-reverb",
+      "technology": "Digital multi-effects processor on second-generation quad-core ARM processors, 16 DSP engines, over 1,600 algorithms (reverbs, delays, pitch/Harmonizer, modulation), 96kHz support across all algorithms.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Current flagship of the Eventide Harmonizer line (SP2016, H3000, H8000 heritage, as summarised by Sweetwater); a reference multi-effects unit in large studios and touring racks.",
+      "typical_uses": ["studio multi-effects and reverb", "pitch/Harmonizer effects", "touring FX rack", "surround/immersive reverb"],
+      "key_specs": {
+        "analog_io": "8-ch. analog I/O",
+        "digital_io": "8-ch. digital I/O",
+        "usb_audio": "16-in/16-out USB Audio",
+        "expansion": "modular Dante, MADI, and Avid DigiLink expansion (modules sold separately)",
+        "sample_rate": "96kHz support across all effect algorithms",
+        "network": "Ethernet; included Wi-Fi adapter; Emote control software"
+      },
+      "connectors": [
+        { "connector": "rj45", "role": "Ethernet (Emote control)", "dir": "bidir", "signal": "aoip", "count": "not stated" }
+      ],
+      "signal_types": ["line-level-pro", "usb-audio"],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://www.sweetwater.com/store/detail/H9000--eventide-h9000-multi-effects-processor", "publisher": "Sweetwater", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["technology", "status", "why_it_is_a_classic", "key_specs.analog_io", "key_specs.digital_io", "key_specs.usb_audio", "key_specs.expansion", "key_specs.sample_rate", "key_specs.network"] }
+      ],
+      "notes": "Low-confidence entry: eventideaudio.com returned HTTP 503 for every request this session, so no manufacturer page, manual or connector-level detail could be read; only the Sweetwater page was readable. Analog/digital connector types (DB25 etc.) are NOT recorded because no read source stated them. Status 'current' only because the retailer offers it for sale. Needs a manufacturer pass.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dante"], "sim_value": "low", "sim_value_reason": "Connector details unverified; revisit when the Eventide manual is reachable (optional Dante/MADI/DigiLink cards could make it high)." }
+    },
+    {
+      "id": "dbx-afs2",
+      "brand": "dbx",
+      "model": "AFS2 Advanced Feedback Suppression Processor",
+      "category": "processors-outboard",
+      "sub_type": "feedback-suppressor",
+      "technology": "Digital (DSP) automatic feedback suppression: dbx's patented AFS technology, up to 24 notch filters per channel with Qs up to 1/80 octave, Live and Fixed filter modes, Wizard setup; dbx Type IV conversion.",
+      "year_introduced": 2014,
+      "status": "current",
+      "why_it_is_a_classic": "Successor to the best-selling AFS224 (dbx wording); the typical 1U anti-larsen inserted on monitor or FOH sends in small venues and conference rooms.",
+      "typical_uses": ["live monitor-wedge feedback control (insert)", "speech reinforcement / conference rooms", "houses of worship"],
+      "key_specs": {
+        "channels": "2 inputs, 2 outputs",
+        "filters": "24 Programmable Filters per Channel",
+        "input_connectors": "Female XLR and 1/4” TRS; electronically balanced/unbalanced, RF filtered",
+        "input_impedance": "Balanced 50kΩ, Unbalanced 25kΩ",
+        "max_input_level": "+20 dBu",
+        "output_connectors": "Male XLR and 1/4” TRS",
+        "max_output_level": "+20 dBu",
+        "ad_da": "24-bit; dbx Type IV™ Conversion System",
+        "sample_rate": "48kHz",
+        "thd_n": "0.003% typical at +4 dBu, 1 kHz",
+        "power": "100-120VAC 50/60 Hz - EU: 220-240 VAC 50/60 Hz; 9 W",
+        "weight": "4.5 lbs. (2.04 kg)",
+        "dimensions": "1.75” (H) x 5.75” (D) x 19” (W), 4.4cm (H) x 14.6cm (D) x 48.26cm (W)"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "input 1/2 (XLR)", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "trs-quarter", "role": "input 1/2 (1/4\" TRS)", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-m", "role": "output 1/2 (XLR)", "dir": "out", "signal": "line-level-pro", "count": 2 },
+        { "connector": "trs-quarter", "role": "output 1/2 (1/4\" TRS)", "dir": "out", "signal": "line-level-pro", "count": 2 }
+      ],
+      "signal_types": ["line-level-pro", "mains-power"],
+      "manual_url": "https://dbxpro.com/en/product_documents/afs2_manual_5047637-b-pdf",
+      "datasheet_url": "https://dbxpro.com/en/product_documents/dbxafs2_brochurepdf",
+      "product_page_url": "https://dbxpro.com/en/products/afs2",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://dbxpro.com/en/product_documents/afs2_manual_5047637-b-pdf", "title": "AFS2 Owner's Manual-English", "language": "en", "file_type": "pdf", "version_or_date": "file served as AFS2_Manual_5077887-A_original.pdf", "official": true, "kind": "user-manual" },
+        { "url": "https://dbxpro.com/en/product_documents/afs2_quick_start_5040506-b-pdf", "title": "AFS2 Quickstart Guide-English", "language": "en", "file_type": "pdf", "version_or_date": "5040506-B", "official": true, "kind": "quick-start" },
+        { "url": "https://dbxpro.com/en/product_documents/dbxafs2_brochurepdf", "title": "AFS2 Brochure-English", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://dbxpro.com/en/products/afs2", "publisher": "dbx (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "technology", "why_it_is_a_classic", "key_specs.channels", "key_specs.filters", "key_specs.input_connectors", "key_specs.input_impedance", "key_specs.max_input_level", "key_specs.output_connectors", "key_specs.max_output_level", "key_specs.ad_da", "key_specs.sample_rate", "key_specs.thd_n", "key_specs.power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
+        { "url": "https://dbxpro.com/en/product_documents/afs2_manual_5047637-b-pdf", "publisher": "dbx (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.input_connectors", "key_specs.output_connectors", "key_specs.sample_rate", "connectors"] },
+        { "url": "https://dbxpro.com/en/news/dbx-debuts-afs2-advanced-feedback-suppression-processor", "publisher": "dbx (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["year_introduced"] }
+      ],
+      "notes": "year_introduced from the dbx news item 'dbx Debuts AFS2...' dated June 18, 2014 as listed on the product page. Status 'current': product page has Buy It Now and is not marked Discontinued (the AFS224 page is). Rack height 1.75\" (1U-high; no rack-unit count stated). Power inlet type not stated in pages read, so no mains connector recorded.",
+      "conflicts": [
+        { "field": "key_specs.ad_dynamic_range", "values": [ { "value": ">113 dB A-weighted, >110 dB unweighted, 22kHz BW", "source_url": "https://dbxpro.com/en/products/afs2" }, { "value": ">110dB A-weighted, >107dB unweighted, 22kHz BW", "source_url": "https://dbxpro.com/en/product_documents/afs2_manual_5047637-b-pdf" } ], "note": "web spec vs owner's manual" },
+        { "field": "key_specs.frequency_response", "values": [ { "value": "20Hz – 20kHz, +/- 0.5dB", "source_url": "https://dbxpro.com/en/products/afs2" }, { "value": "20Hz – 20kHz, +/- 1.0dB", "source_url": "https://dbxpro.com/en/product_documents/afs2_manual_5047637-b-pdf" } ], "note": "" },
+        { "field": "key_specs.thd_n", "values": [ { "value": "0.003% typical at +4 dBu, 1 kHz", "source_url": "https://dbxpro.com/en/products/afs2" }, { "value": "0.004% typical at 1Vrms input, 1KHz at +4 dBu", "source_url": "https://dbxpro.com/en/product_documents/afs2_manual_5047637-b-pdf" } ], "note": "different test conditions" }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Insert-point lesson: where to patch an anti-larsen (console aux send to wedge amp), with XLR or TRS balanced I/O." }
+    },
+    {
+      "id": "shure-scm820",
+      "brand": "Shure",
+      "model": "SCM820 IntelliMix Digital Automatic Mixer",
+      "category": "processors-outboard",
+      "sub_type": "feedback-suppressor",
+      "technology": "8-channel digital automatic mixer (IntelliMix: dynamic channel gating and attenuation, modes Classic/Smooth/Extreme/Custom/Manual) with 2 channels of DFR (Digital Feedback Reduction) adaptive filtering; 24-bit, 48 kHz conversion, 32-bit internal processing; optional Dante.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A widely specified speech automixer for conference, broadcast and recording; teaches automixing (NOM attenuation/gating) and Dante integration in one 1U box.",
+      "typical_uses": ["conference / council chamber speech reinforcement", "TV/radio panel discussions", "multi-mic recording of speech", "Dante-networked installs"],
+      "key_specs": {
+        "channels": "8 inputs, Mix A and B outputs, per-channel direct outputs",
+        "models": "SCM820 (block connectors), SCM820-DAN (block, Dante), SCM820-DB25, SCM820-DAN-DB25",
+        "channel_input": "Active Balanced; 5 kΩ; clipping Line (-0): +20 dBV, Mic (+26): −6 dBV, Mic (+46): −26 dBV",
+        "phantom_power": "48 V DC, selectable per channel, 14 mA max.",
+        "mix_output": "Active Balanced; 350 Ω; Line (±0): +20 dBV, Aux (−20): 0 dBV, Mic (−46): −26 dBV",
+        "direct_output": "Impedance Balanced; 150 Ω; +20 dBV max",
+        "aux_input": "Stereo, Unbalanced; 10 kΩ; +10 dBV",
+        "headphone_output": "6.35 mm (1/4”) TRS, 100 mW, 350 Ω",
+        "ad_da": "24-bit, 48 kHz, 113 dB dynamic range typical",
+        "network": "SCM820: Single Port, 10/100 Mbps Ethernet; SCM820-DAN: Dual Port, Gigabit Ethernet, Dante digital audio",
+        "dfr": "Two channels of DFR, each up to 16 filters (overview sheet)",
+        "dimensions": "44 mm x 483 mm x 289 mm (1.7 in. x 19.0 in. x 11.4 in.), H x W x D",
+        "weight": "5.5 kg (12.0 lbs)",
+        "power": "100 to 240 V AC, 50-60 Hz, 1 A"
+      },
+      "connectors": [
+        { "connector": "euroblock-phoenix", "role": "8 channel inputs on block connectors (SCM820 / SCM820-DAN, logic-enabled)", "dir": "in", "signal": "mic-level", "count": 8 },
+        { "connector": "dsub25", "role": "channel inputs / direct outputs on DB25 (SCM820-DB25 / -DAN-DB25)", "dir": "bidir", "signal": "mic-level", "count": "not stated" },
+        { "connector": "trs-quarter", "role": "headphone output", "dir": "out", "signal": "headphone-level", "count": 1 },
+        { "connector": "rj45", "role": "Ethernet (control) / Dante primary+secondary on -DAN models", "dir": "bidir", "signal": "aoip", "count": "1 (standard) or 2 (Dante)" }
+      ],
+      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "headphone-level", "aoip", "mains-power"],
+      "manual_url": "https://www.shure.com/en-US/docs/guide/SCM820",
+      "datasheet_url": "https://content-files.shure.com/publications/specSheet/en/scm820-spec-sheet.pdf",
+      "product_page_url": "https://www.shure.com/fr-FR/produits/mixeurs/scm820",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://www.shure.com/en-US/docs/guide/SCM820", "title": "SCM820 User Guide (online)", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://content-files.shure.com/publications/specSheet/en/scm820-spec-sheet.pdf", "title": "SCM820 Digital Automatic Mixer spec sheet", "language": "en", "file_type": "pdf", "version_or_date": "Updated: 02/21", "official": true, "kind": "spec-sheet" },
+        { "url": "https://content-files.shure.com/Pubs/scm820/scm820-overview-sheet-a4-en.pdf", "title": "SCM820 overview sheet (A4)", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" },
+        { "url": "https://content-files.shure.com/Pubs/scm820/scm820-command-strings-en-us.pdf", "title": "SCM820 command strings", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "other" }
+      ],
+      "sources": [
+        { "url": "https://content-files.shure.com/publications/specSheet/en/scm820-spec-sheet.pdf", "publisher": "Shure", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.channels", "key_specs.models", "key_specs.channel_input", "key_specs.phantom_power", "key_specs.mix_output", "key_specs.direct_output", "key_specs.aux_input", "key_specs.headphone_output", "key_specs.ad_da", "key_specs.network", "key_specs.dimensions", "key_specs.weight", "key_specs.power", "connectors"] },
+        { "url": "https://content-files.shure.com/Pubs/scm820/scm820-overview-sheet-a4-en.pdf", "publisher": "Shure", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.dfr", "key_specs.models", "connectors"] },
+        { "url": "https://www.shure.com/fr-FR/produits/mixeurs/scm820", "publisher": "Shure France", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.channels", "manuals"] }
+      ],
+      "notes": "Status 'current' because Shure France still has a live product page for SCM820/SCM820E with accessory cables, with no discontinued flag seen; not otherwise confirmed. Block connectors mapped to the proposed euroblock-phoenix id. The online user guide content is rendered by JavaScript and was not readable; specs come from the spec sheet and cross-checked (models, DB25/block, Dante, DFR) with the overview sheet. Headphone level and phantom are per spec sheet.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["euroblock-phoenix"], "proposed_new_signals": ["dante"], "sim_value": "high", "sim_value_reason": "Mic-level inputs with per-channel phantom on Euroblock or DB25, direct outs, and Dante: rich wiring lesson for conference/broadcast installs." }
+    }
+  ]
+}
