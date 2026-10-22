@@ -389,6 +389,13 @@ def main(argv=None):
             validate_room(path, rep, refs, rooms)
     counts["room"] = len(rooms)
 
+    # Placeholder / template URLs (e.g. ".../<shard>/x.glb") are invented, not sourced.
+    bad_url = re.compile(r'(https?://[^\s"]*[<>{}][^\s"]*)')
+    for p in [*(TB.glob("*/*.json")), KB / "3d-models.json", KB / "learning-resources.json"]:
+        if p.exists():
+            for m in bad_url.finditer(p.read_text(encoding="utf-8-sig")):
+                rep.err(f"{p.relative_to(KB)}: placeholder or malformed URL {m.group(1)[:90]}")
+
     pools = {"concept": set(ids["concept"]), "procedure": set(ids["procedure"]), "rule": set(ids["rule"]),
              "equipment": equip, "room": rooms, "signal": sigs, "connector": conns, "model": models}
     unresolved = 0
