@@ -62,27 +62,27 @@
     {
       "device_id": "dpa-4011",
       "what": "Specs, manual (device dropped)",
-      "searched": "dpamicrophones.com product page: Specifications/Downloads tabs are loaded by JavaScript and not readable; search budget exhausted"
+      "searched": "dpamicrophones.com product page: Specifications/Downloads tabs are loaded by JavaScript and not readable; search budget exhausted | RESOLVED 2026-10-22 (gap-fill): added from the spec panel data (DPA product API); still no manual/datasheet PDF (only a DoC is offered)."
     },
     {
       "device_id": "rode-nt1-5th-gen / rode-nt5",
       "what": "Product pages and manuals (devices dropped)",
-      "searched": "rode.com home and /en-au/microphones (JS, no product links), rode.com/sitemap.xml 404; search budget exhausted"
+      "searched": "rode.com home and /en-au/microphones (JS, no product links), rode.com/sitemap.xml 404; search budget exhausted | RESOLVED 2026-10-22 (gap-fill): both added; rode.com product HTML embeds specs and PDF links."
     },
     {
       "device_id": "audio-technica-at4050 / at4040",
       "what": "Product pages and manuals (devices dropped)",
-      "searched": "audio-technica.com and sitemap.xml returned HTTP 403; search budget exhausted"
+      "searched": "audio-technica.com and sitemap.xml returned HTTP 403; search budget exhausted | RESOLVED 2026-10-22 (gap-fill): both added; site readable with a browser user agent, spec sheets on docs.audio-technica.com."
     },
     {
       "device_id": "shure-ksm32c",
       "what": "Specs and manuals (device dropped)",
-      "searched": "shure.com/products/microphones/ksm32c has no numeric specs or downloads; Shure newsroom (2026-01-21) announces the new KSM32C; original KSM32 page not found; search budget exhausted"
+      "searched": "shure.com/products/microphones/ksm32c has no numeric specs or downloads; Shure newsroom (2026-01-21) announces the new KSM32C; original KSM32 page not found; search budget exhausted | RESOLVED 2026-10-22 (gap-fill): added from the KSM32C user guide (rendered via Shure publication service)."
     },
     {
       "device_id": "akg-c451-b",
       "what": "Product page and manual (device dropped)",
-      "searched": "akg.com returned 403; search budget exhausted"
+      "searched": "akg.com returned 403; search budget exhausted | RESOLVED 2026-10-22 (gap-fill): added with secondary sources only (AKG spec sheet hosted by Thomann + Thomann listing); akg.com still 403."
     },
     {
       "device_id": "sennheiser-mkh-40",
@@ -2035,6 +2035,958 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Tube mic with 7-pin cable and dedicated PSU; pairs with U 87 Ai to show tube vs FET powering."
+      }
+    },
+    {
+      "id": "rode-nt5",
+      "brand": "RØDE",
+      "model": "NT5",
+      "category": "microphones",
+      "sub_type": "condenser-small-diaphragm",
+      "technology": "Externally biased (true) condenser with gold-sputtered 1/2\" capsule, pressure-gradient cardioid (per RØDE datasheet).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "An affordable, widely sold small-diaphragm cardioid pencil mic, also offered as a factory-matched pair (NT5 MP), so it is a common first stereo pair for X/Y or ORTF overheads and acoustic instruments.",
+      "typical_uses": [
+        "drum overheads",
+        "acoustic guitar",
+        "piano",
+        "choir / ensemble in stereo pairs",
+        "hi-hat"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "acoustic_principle": "Pressure gradient",
+        "capsule": "1/2\" gold-sputtered",
+        "frequency_response": "20Hz - 20kHz",
+        "sensitivity": "-38 dBV (12 mV @ 94 dB SPL)",
+        "output_impedance": "100Ω",
+        "equivalent_noise": "16dBA",
+        "max_spl": "143 dB SPL",
+        "max_output": "+13.9dBu (@ 1kHz, 1% THD into 1kΩ)",
+        "phantom_power": "P48 phantom power",
+        "weight": "110 g",
+        "dimensions": "Height: 145 mm, Width: 20 mm, Diameter: 20 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "balanced mic output (pin 2 hot)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "https://edge.rode.com//pdf/products/79/nt5-mp_product_manual.pdf",
+      "datasheet_url": "https://edge.rode.com//pdf/products/79/NT5_Datasheet_05_FA.pdf",
+      "product_page_url": "https://rode.com/en-au/products/nt5",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://edge.rode.com//pdf/products/79/nt5-mp_product_manual.pdf",
+          "title": "NT5 Instruction Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://edge.rode.com//pdf/products/79/NT5_Datasheet_05_FA.pdf",
+          "title": "NT5 Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "05 (filename)",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://rode.com/en-au/products/nt5",
+          "publisher": "RØDE",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.output_impedance",
+            "key_specs.equivalent_noise",
+            "key_specs.max_spl",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://edge.rode.com//pdf/products/79/NT5_Datasheet_05_FA.pdf",
+          "publisher": "RØDE",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.output_impedance",
+            "key_specs.max_spl",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors",
+            "why_it_is_a_classic"
+          ]
+        },
+        {
+          "url": "https://edge.rode.com//pdf/products/79/nt5-mp_product_manual.pdf",
+          "publisher": "RØDE",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.max_spl",
+            "key_specs.max_output",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.thomann.fr/rode_nt_5_s.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.max_spl",
+            "key_specs.max_output"
+          ]
+        }
+      ],
+      "notes": "Specs read from the product page's embedded data and the PDFs. The older instruction manual (rodemic.com era) gives slightly different mechanical values and also lists P24, see conflicts. The product page carries an internal launch_date of 2024-11-12 that matches other RØDE pages and is a site date, not an introduction year.",
+      "conflicts": [
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "110 g",
+              "source_url": "https://edge.rode.com//pdf/products/79/NT5_Datasheet_05_FA.pdf"
+            },
+            {
+              "value": "100g (net weight)",
+              "source_url": "https://edge.rode.com//pdf/products/79/nt5-mp_product_manual.pdf"
+            }
+          ],
+          "note": "Datasheet vs older instruction manual."
+        },
+        {
+          "field": "key_specs.dimensions",
+          "values": [
+            {
+              "value": "Height: 145 / Width: 20 / Diameter: 20 (mm)",
+              "source_url": "https://edge.rode.com//pdf/products/79/NT5_Datasheet_05_FA.pdf"
+            },
+            {
+              "value": "118 x 20 x 20mm",
+              "source_url": "https://edge.rode.com//pdf/products/79/nt5-mp_product_manual.pdf"
+            }
+          ],
+          "note": "The datasheet drawing itself is labelled 118mm, so 145 may include something else; not resolved."
+        },
+        {
+          "field": "key_specs.phantom_power",
+          "values": [
+            {
+              "value": "P48 phantom power",
+              "source_url": "https://edge.rode.com//pdf/products/79/NT5_Datasheet_05_FA.pdf"
+            },
+            {
+              "value": "Phantom P48, P24",
+              "source_url": "https://edge.rode.com//pdf/products/79/nt5-mp_product_manual.pdf"
+            }
+          ],
+          "note": "Older manual also allows P24."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Plain XLR + P48 pencil condenser; useful for stereo-pair and phantom lessons but no unusual connector."
+      }
+    },
+    {
+      "id": "rode-nt1-5th-gen",
+      "brand": "RØDE",
+      "model": "NT1 5th Generation",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "1\" gold-sputtered pressure-gradient cardioid condenser with JFET impedance converter and bipolar output buffer; 'Dual Connect' analogue XLR plus USB-C digital output with built-in preamp, A/D up to 192 kHz and 32-bit float (per RØDE).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Latest version of RØDE's NT1 studio condenser, which RØDE itself describes as legendary; very low quoted self-noise (4 dBA) and the same body offers both a classic XLR path and a USB-C interface, a good teaching example of analogue vs digital outputs on one mic.",
+      "typical_uses": [
+        "home and project studio vocals",
+        "voice-over",
+        "acoustic instruments",
+        "podcast / streaming over USB"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "acoustic_principle": "Pressure gradient",
+        "capsule": "1.00\"",
+        "address": "Side",
+        "frequency_response": "20Hz - 20kHz",
+        "sensitivity": "-32 dB re 1 Volt/Pascal (25 mV @ 94 dB SPL) +/- 2 dB @ 1 kHz",
+        "output_impedance": "100Ω",
+        "equivalent_noise": "4dBA",
+        "max_spl": "142 dB SPL",
+        "phantom_power": "Via XLR: P48",
+        "usb_power": "Via USB: 5V",
+        "digital_output": "USB-C, 24-bit / 32-bit floating point, 48 / 96 / 192 kHz",
+        "dsp": "APHEX digital signal processing (only available at 48kHz)",
+        "weight": "308 g",
+        "dimensions": "Length: 52 mm, Width: 52 mm, Height: 189 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "analogue balanced mic output (needs P48)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "usb-c",
+          "role": "digital audio to computer, bus-powered",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "usb-audio"
+      ],
+      "manual_url": "https://edge.rode.com//pdf/products/1184/0927-0836-03-01 NT1 5THGEN QSG_FA_WEB.pdf",
+      "datasheet_url": "https://edge.rode.com//pdf/products/1184/NT1 5th GEN_Datasheet.pdf",
+      "product_page_url": "https://rode.com/en-au/products/nt1-5th-generation",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://edge.rode.com//pdf/products/1184/0927-0836-03-01 NT1 5THGEN QSG_FA_WEB.pdf",
+          "title": "NT1 5th Generation Product Manual (quick start guide)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "0927-0836-03-01 (filename)",
+          "official": true,
+          "kind": "quick-start"
+        },
+        {
+          "url": "https://edge.rode.com//pdf/products/1184/NT1 5th GEN_Datasheet.pdf",
+          "title": "NT1 5th Generation Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://rode.com/en-au/products/nt1-5th-generation",
+          "publisher": "RØDE",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.output_impedance",
+            "key_specs.equivalent_noise",
+            "key_specs.max_spl",
+            "key_specs.phantom_power",
+            "key_specs.digital_output",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://edge.rode.com//pdf/products/1184/NT1 5th GEN_Datasheet.pdf",
+          "publisher": "RØDE",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise",
+            "key_specs.max_spl",
+            "key_specs.phantom_power",
+            "key_specs.digital_output",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.thomann.fr/rode_nt1_5th_generation_black.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise",
+            "key_specs.max_spl",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Product manual link on rode.com is a quick start guide PDF. Thomann lists it since February 2023, which is a listing date, not an introduction year. Weight and dimensions differ slightly at Thomann (see conflicts).",
+      "conflicts": [
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "308 g",
+              "source_url": "https://rode.com/en-au/products/nt1-5th-generation"
+            },
+            {
+              "value": "311 g",
+              "source_url": "https://www.thomann.fr/rode_nt1_5th_generation_black.htm"
+            }
+          ],
+          "note": "Retailer value."
+        },
+        {
+          "field": "key_specs.dimensions",
+          "values": [
+            {
+              "value": "Length: 52, Width: 52, Height: 189 (mm)",
+              "source_url": "https://rode.com/en-au/products/nt1-5th-generation"
+            },
+            {
+              "value": "190 x 50 mm (H x Ø)",
+              "source_url": "https://www.thomann.fr/rode_nt1_5th_generation_black.htm"
+            }
+          ],
+          "note": "Retailer rounding."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "One mic with two output paths (XLR needing P48, USB-C bus-powered digital): good lesson on where phantom applies and where it does not."
+      }
+    },
+    {
+      "id": "audio-technica-at4040",
+      "brand": "Audio-Technica",
+      "model": "AT4040",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "Externally-polarized (DC bias) side-address cardioid condenser; requires 48V phantom (per Audio-Technica).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Member of Audio-Technica's 40 Series studio line; a fixed-cardioid large-diaphragm condenser with 80 Hz high-pass and 10 dB pad, widely used as an affordable studio workhorse.",
+      "typical_uses": [
+        "vocals",
+        "acoustic guitar",
+        "guitar cabinets",
+        "voice-over",
+        "overheads"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "frequency_response": "20-20,000 Hz",
+        "low_frequency_rolloff": "80 Hz, 12 dB/octave",
+        "sensitivity": "–32 dB (25.1 mV) re 1V at 1 Pa",
+        "impedance": "100 ohms",
+        "max_spl": "145 dB SPL, 1 kHz at 1% T.H.D.; 155 dB SPL, with 10 dB pad (nominal)",
+        "self_noise": "12 dB SPL",
+        "dynamic_range": "133 dB, 1 kHz at Max SPL",
+        "signal_to_noise": "82 dB, 1 kHz at 1 Pa",
+        "phantom_power": "48V DC, 4.2 mA typical",
+        "switches": "Flat, roll-off; 10 dB pad (nominal)",
+        "weight": "360 g (12.7 oz)",
+        "dimensions": "170.0 mm (6.69\") long, 53.4 mm (2.10\") maximum body diameter"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "integral 3-pin XLRM-type output (pin 2 hot)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "https://docs.audio-technica.com/us/p52144_at4040_spec_lores.pdf",
+      "datasheet_url": "https://docs.audio-technica.com/us/p52144_at4040_spec_lores.pdf",
+      "product_page_url": "https://www.audio-technica.com/en-us/microphones/wired/best-for/studio-vocals/at4040",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://docs.audio-technica.com/us/p52144_at4040_spec_lores.pdf",
+          "title": "AT4040 Specification Sheet (includes operation and maintenance)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "©2013, P52144",
+          "official": true,
+          "kind": "spec-sheet"
+        },
+        {
+          "url": "https://docs.audio-technica.com/us/at4040_submit.pdf",
+          "title": "AT4040 Submittal Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.audio-technica.com/en-us/microphones/wired/best-for/studio-vocals/at4040",
+          "publisher": "Audio-Technica U.S.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.max_spl",
+            "key_specs.self_noise",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://docs.audio-technica.com/us/p52144_at4040_spec_lores.pdf",
+          "publisher": "Audio-Technica",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.impedance",
+            "key_specs.max_spl",
+            "key_specs.self_noise",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "audio-technica.com was readable with a normal browser user agent (earlier passes got 403). Audio-Technica publishes a specification sheet with operating notes rather than a separate user manual; no French version found. Self-noise is stated as A-weighted typical in the sheet footnote.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Standard P48 + XLR condenser with pad and HPF switches; good for gain-staging lessons."
+      }
+    },
+    {
+      "id": "audio-technica-at4050",
+      "brand": "Audio-Technica",
+      "model": "AT4050",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "Large-diaphragm side-address externally polarized (DC bias) dual-diaphragm condenser, transformerless, three switchable patterns (per Audio-Technica).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Audio-Technica's multi-pattern 40 Series studio condenser (omni, cardioid, figure-of-eight), so one mic covers M/S or Blumlein figure-8 work and room/ambience pickup as well as vocals.",
+      "typical_uses": [
+        "vocals",
+        "M/S and Blumlein stereo (figure-8)",
+        "room / ambience (omni)",
+        "acoustic instruments",
+        "broadcast voice"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "omnidirectional",
+          "cardioid",
+          "figure-8"
+        ],
+        "frequency_response": "20-18,000 Hz",
+        "low_frequency_rolloff": "80 Hz, 12 dB/octave",
+        "sensitivity": "–36 dB (15.8 mV), re 1V at 1 Pa",
+        "impedance": "100 ohms",
+        "max_spl": "149 dB SPL, 1 kHz at 1% T.H.D.; 159 dB SPL, with 10 dB pad (nominal)",
+        "self_noise": "17 dB SPL",
+        "dynamic_range": "132 dB, 1 kHz at Max SPL",
+        "signal_to_noise": "77 dB, 1 kHz at 1 Pa",
+        "phantom_power": "48V DC, 4.2 mA typical",
+        "switches": "Polar selection; Flat, roll-off; 10 dB pad (nominal)",
+        "weight": "510 g (18.0 oz)",
+        "dimensions": "188.0 mm (7.40\") long, 53.4 mm (2.10\") maximum body diameter"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "integral 3-pin XLRM-type output (pin 2 hot)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "https://docs.audio-technica.com/us/p52150_at4050_spec_sheet.pdf",
+      "datasheet_url": "https://docs.audio-technica.com/us/p52150_at4050_spec_sheet.pdf",
+      "product_page_url": "https://www.audio-technica.com/en-us/microphones/wired/best-for/studio-vocals/at4050",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://docs.audio-technica.com/us/p52150_at4050_spec_sheet.pdf",
+          "title": "AT4050 Specification Sheet (includes operation and maintenance)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "©2013, P52150",
+          "official": true,
+          "kind": "spec-sheet"
+        },
+        {
+          "url": "https://docs.audio-technica.com/us/at4050_submit.pdf",
+          "title": "AT4050 Submittal Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.audio-technica.com/en-us/microphones/wired/best-for/studio-vocals/at4050",
+          "publisher": "Audio-Technica U.S.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.max_spl",
+            "key_specs.self_noise",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://docs.audio-technica.com/us/p52150_at4050_spec_sheet.pdf",
+          "publisher": "Audio-Technica",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.impedance",
+            "key_specs.max_spl",
+            "key_specs.self_noise",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Spec sheet states the mic requires 48V phantom power. The product page gives self-noise as '17 dB' and the sheet '17 dB SPL' (A-weighted typical, per footnote). No French document found.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Multi-pattern switch is a good polar-pattern lesson; wiring itself is standard XLR + P48."
+      }
+    },
+    {
+      "id": "dpa-4011",
+      "brand": "DPA Microphones",
+      "model": "4011A Cardioid Microphone",
+      "category": "microphones",
+      "sub_type": "condenser-small-diaphragm",
+      "technology": "Pre-polarized condenser, pressure-gradient cardioid, 19 mm capsule, impedance-balanced 'Active Drive' output (per DPA).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "DPA's reference cardioid pencil (current version 4011A) with very high quoted SPL handling (159 dB SPL peak at 10% THD) and long cable drive, a common choice for classical and orchestral recording and for matched stereo pairs.",
+      "typical_uses": [
+        "classical / orchestral recording",
+        "stereo pairs (ORTF, X/Y)",
+        "piano",
+        "drum overheads",
+        "strings"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "principle": "Pressure gradient",
+        "cartridge": "Pre-polarized condenser",
+        "frequency_response": "20 Hz - 20 kHz",
+        "effective_frequency_range": "40 Hz - 20 kHz (±2 dB, at 30 cm)",
+        "sensitivity": "10 mV/Pa; -40 dB re. 1 V/Pa (nominal, ±2 dB at 1 kHz)",
+        "equivalent_noise": "Typ. 18 dB(A) re. 20 µPa (max. 20 dB(A))",
+        "thd_1pct": "136 dB SPL RMS, 139 dB SPL peak",
+        "max_spl": "159 dB SPL peak (THD 10%)",
+        "dynamic_range": "Typ. 121 dB",
+        "attenuator": "0 dB / -20 dB",
+        "output_impedance": "200 Ω",
+        "cable_drive": "100 m (328 ft)",
+        "phantom_power": "P48 (Phantom Power)",
+        "current_consumption": "2.8 mA",
+        "weight": "158 g (5.6 oz)",
+        "dimensions": "19 mm (0.75 in) diameter, 170 mm (6.7 in) length"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "XLR-3M output (pin 2 + phase)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.dpamicrophones.com/microphones/pencil/4011",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/microphones/pencil/4011",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "why_it_is_a_classic",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise",
+            "key_specs.max_spl",
+            "key_specs.output_impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Specs come from the product page's 'Specifications' panel, which the page loads from DPA's own product API (read directly, product id 48). The current product is the 4011A; the Downloads panel only lists a declaration of conformity, so no manual or datasheet PDF was found. Single source only; no second source checked.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Reference P48 pencil condenser; switchable -20 dB pad useful for high-SPL gain lessons."
+      }
+    },
+    {
+      "id": "shure-ksm32c",
+      "brand": "Shure",
+      "model": "KSM32C",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "Cardioid condenser, electret type per Shure's spec table; machined anodized aluminium housing; needs +48 V phantom (works down to 12 VDC without meeting all specs).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Current successor of Shure's KSM32 studio cardioid condenser (Shure's own page refers back to the KSM32); a common studio and live large-diaphragm option with a 15 dB pad and three-position low-frequency filter.",
+      "typical_uses": [
+        "vocals",
+        "acoustic instruments",
+        "guitar cabinets",
+        "overheads",
+        "voice-over"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "type": "Condenser, electret",
+        "frequency_response": "20 to 20,000 Hz",
+        "output_impedance": "70 Ω +/- 5",
+        "sensitivity": "-36 dBV/Pa (16.0 mV) open circuit voltage, @ 1 kHz, typical",
+        "signal_to_noise": "83 dB",
+        "max_spl": "No pad: 137 dB SPL (1000 Ω load), 140 dB SPL (2500 Ω / 5000 Ω load); with 15 dB pad: 152 / 155 / 155 dB SPL (1 kHz at 1% THD)",
+        "self_noise": "11 dBA",
+        "attenuator": "0, -15 dB",
+        "low_frequency_filter": "Flat, -6 dB/octave below 115 Hz, or -18 dB/octave below 80 Hz",
+        "phantom_power": "48 V DC phantom power (5.4 mA), IEC standard 61938, P48",
+        "weight": "265 g (9.17 oz.)",
+        "dimensions": "47.6 x 154.2 mm (1.87 x 6.07 in.)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "three-pin professional audio (XLR), male, balanced",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "https://www.shure.com/en-US/docs/guide/ksm32c",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.shure.com/en-US/products/microphones/ksm32c",
+      "manual_languages": [
+        "en",
+        "fr"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.shure.com/en-US/docs/guide/ksm32c",
+          "title": "KSM32C Cardioid Condenser Microphone user guide (web; language selector includes French)",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/en-US/docs/guide/ksm32c",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.output_impedance",
+            "key_specs.sensitivity",
+            "key_specs.max_spl",
+            "key_specs.self_noise",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/en-US/products/microphones/ksm32c",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "The original KSM32 page was not found; Shure now sells the KSM32C (an earlier pass saw a Shure newsroom item dated 2026-01-21 announcing it, not re-read here, so year_introduced is 'not found'). The guide content was read through Shure's publication service that renders the docs page; the guide offers a French version via its language selector (PDF download button), but no stable French URL was captured. Single manufacturer document for specs.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Standard XLR + P48 condenser; spec table shows max SPL depending on preamp load impedance, a useful detail."
+      }
+    },
+    {
+      "id": "akg-c451-b",
+      "brand": "AKG",
+      "model": "C451 B",
+      "category": "microphones",
+      "sub_type": "condenser-small-diaphragm",
+      "technology": "Cardioid small-diaphragm condenser with permanently fixed capsule modelled on the original CK 1, transformerless output (per AKG spec sheet).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "AKG's spec sheet says the C 451 series dates back to 1969 and the B keeps the rising CK 1 character; a standard hi-hat, overhead and acoustic guitar mic in studios and on tour.",
+      "typical_uses": [
+        "hi-hat",
+        "drum overheads",
+        "acoustic guitar",
+        "percussion",
+        "choirs"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "frequency_response": "20 Hz to 20 kHz",
+        "sensitivity": "9 mV/Pa (-41 dBV) at 1 kHz",
+        "self_noise": "18 dB-A",
+        "dynamic_range": "117 dB",
+        "impedance": "200 ohms",
+        "load_impedance": ">1000 ohms",
+        "pad": "-10 and –20 dB",
+        "max_spl": "135 dB SPL (unpadded), 145 dB SPL (-10 dB pad), 155 dB SPL (-20 dB pad), for 0.5% THD",
+        "lf_rolloff": "12 dB/octave at 75 and 150 Hz",
+        "phantom_power": "Phantom powering, 9 to 52 Vdc",
+        "weight": "4.4 oz. (125 g) net",
+        "dimensions": ".75 inches diameter (19 mm), 6.3 inches length (160 mm)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "3-pin XLR-M output",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://fast-images.static-thomann.de/pics/atg/atgdata/document/specs/c451b4055c23f6aa5f.pdf",
+          "publisher": "AKG Acoustics (spec sheet copy hosted by Thomann)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer-hosted manufacturer document",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.self_noise",
+            "key_specs.impedance",
+            "key_specs.max_spl",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.thomann.fr/akg_c451b.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.max_spl",
+            "key_specs.sensitivity"
+          ]
+        }
+      ],
+      "notes": "akg.com still returns HTTP 403, so no manufacturer URL could be read. Specs come from the AKG spec sheet as hosted by Thomann (a third-party copy, so it is not listed as an official manual) and are cross-checked against the Thomann listing. Status 'current' is based on the retailer still selling it.",
+      "conflicts": [
+        {
+          "field": "key_specs.max_spl",
+          "values": [
+            {
+              "value": "135 dB SPL (unpadded) ... 155 dB SPL (-20 dB pad)",
+              "source_url": "https://fast-images.static-thomann.de/pics/atg/atgdata/document/specs/c451b4055c23f6aa5f.pdf"
+            },
+            {
+              "value": "SPL max: 155 dB",
+              "source_url": "https://www.thomann.fr/akg_c451b.htm"
+            }
+          ],
+          "note": "Retailer quotes only the padded figure."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Wide phantom range (9-52 V) and two pads make it a good phantom-voltage and pad lesson."
       }
     }
   ]
