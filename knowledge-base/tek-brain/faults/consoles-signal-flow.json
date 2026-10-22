@@ -1,0 +1,506 @@
+{
+  "entity": "fault",
+  "domain": "consoles-signal-flow",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "no-signal-at-master",
+      "name_fr": "Pas de signal au master (façade muette)",
+      "name_en": "No signal at the main output",
+      "domain": "consoles-signal-flow",
+      "symptom": "La tranche bouge sur ses vumètres (ou en PFL), mais rien ne sort en façade.",
+      "contexts": [
+        "live",
+        "studio",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Tranche non affectée au bus master (L-R / STEREO)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Tranche mutée, directement ou par un groupe de mutes / groupe de contrôle",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Fader de la tranche, du DCA ou du master baissé",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Sur console numérique : bus master non patché vers une sortie physique ou mauvais port de sortie",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Tranches envoyées dans un sous-groupe qui n'est pas renvoyé au master",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier en PFL que le signal arrive bien sur la tranche (sinon, le problème est en amont : patch d'entrée, source)",
+        "Vérifier l'affectation de la tranche au master",
+        "Vérifier le mute de la tranche et ses groupes de mutes / control groups",
+        "Vérifier les faders : tranche, DCA, sous-groupe, master",
+        "Vérifier le patch de sortie du bus master jusqu'à la prise physique"
+      ],
+      "fixes": [
+        "Affecter la tranche au master, lever le mute, renvoyer le sous-groupe au master, corriger le patch de sortie"
+      ],
+      "rule_ids": [
+        "signal-direction-out-to-in"
+      ],
+      "concept_ids": [
+        "signal-flow",
+        "main-mix-bus",
+        "mute-group",
+        "subgroup",
+        "input-patching"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5",
+        "digico-sd12"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "monitor-follows-foh-fader",
+      "name_fr": "Le retour bouge avec le fader de la façade",
+      "name_en": "Monitor level follows FOH fader",
+      "domain": "consoles-signal-flow",
+      "symptom": "Le musicien se plaint que son retour monte et descend au gré du mix de façade.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Départ auxiliaire du retour réglé en post-fader",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Tranches pilotées par un VCA alors que les départs sont post-fader (sur la plupart des consoles à VCA, ils suivent le maître VCA)",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Bouger le fader de façade d'une tranche en écoutant le bus de retour en cue",
+        "Vérifier le point de prélèvement du bus (PRE/POST, ALL PRE sur Yamaha, touche Pre sur Mackie)"
+      ],
+      "fixes": [
+        "Passer le bus de retour en pré-fader (ou pré-mute)",
+        "Garder le post-fader pour les départs d'effets"
+      ],
+      "rule_ids": [
+        "aux-monitor-send-post-fader"
+      ],
+      "concept_ids": [
+        "pre-post-fader",
+        "aux-send",
+        "vca-dca"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "checks"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "monitor-cuts-when-foh-mutes",
+      "name_fr": "Le retour se coupe quand la façade mute la tranche",
+      "name_en": "Monitor drops when FOH mutes the channel",
+      "domain": "consoles-signal-flow",
+      "symptom": "Le retour est bien en pré-fader, mais le micro disparaît des retours quand l'ingénieur façade le mute.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Départ réglé en pré-fader mais après le mute, alors qu'il fallait un départ pré-mute",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Tranche coupée par un groupe de mutes qui agit sur toute la tranche",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier les points de prélèvement disponibles (post, pré-fader, pré-mute sur DiGiCo)",
+        "Vérifier si la tranche appartient à un groupe de mutes"
+      ],
+      "fixes": [
+        "Passer le départ en pré-mute",
+        "Utiliser un mute safe ou retirer la tranche du groupe de mutes"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "pre-mute-send",
+        "pre-post-fader",
+        "mute-group"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "yamaha-cl5"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "double-signal-comb-filter",
+      "name_fr": "Signal doublé, son creux ou « phasé »",
+      "name_en": "Doubled signal / comb filtering",
+      "domain": "consoles-signal-flow",
+      "symptom": "Une source sonne plus fort que prévu, ou creuse et métallique, comme filtrée.",
+      "contexts": [
+        "live",
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "La sortie directe d'une tranche est renvoyée dans une autre tranche (ou un enregistreur en écoute) elle-même routée au master : le même signal est additionné deux fois",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "L'une des deux copies traverse un traitement ou un trajet qui la retarde : la somme d'un signal et de sa copie retardée crée un filtrage en peigne",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Couper les tranches une à une pour trouver la seconde arrivée du même signal",
+        "Vérifier le routage des sorties directes et des retours d'enregistreur (port interne « Channels » sur DiGiCo, retours multipiste)",
+        "Vérifier qu'on écoute les tranches de retour multipiste et non les tranches sources (split monitoring)"
+      ],
+      "fixes": [
+        "Ne garder qu'un chemin vers le master",
+        "En split monitoring, n'affecter au master que les tranches de retour"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "direct-out",
+        "signal-flow"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "digico-sd12"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Comb_filter",
+          "publisher": "Wikipedia — Comb filter",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "scene-recall-changed-gains",
+      "name_fr": "Après rappel de scène, gains ou patch changés",
+      "name_en": "Scene recall changed gains or patch",
+      "domain": "consoles-signal-flow",
+      "symptom": "Juste après un rappel de scène, une tranche sonne différemment, n'a plus de signal ou un invité se retrouve trop fort.",
+      "contexts": [
+        "live",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "La scène contient aussi les réglages de préampli et le patch : le rappel les a remplacés",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Recall Safe non activé (paramètre sélectionné sans le bouton SAFE)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Corrections faites en répétition jamais enregistrées (symbole E ignoré)",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Comparer la scène rappelée à l'état attendu (gains HA, patch)",
+        "Vérifier les réglages Recall Safe et Focus de la scène"
+      ],
+      "fixes": [
+        "Activer le Recall Safe sur les tranches ou paramètres à protéger",
+        "Utiliser le Focus pour limiter ce qu'une scène rappelle",
+        "Enregistrer la scène après les corrections"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "scene-memory",
+        "recall-safe-focus"
+      ],
+      "equipment_ids": [
+        "yamaha-cl5",
+        "yamaha-ql1"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "shared-stagebox-gain-conflict",
+      "name_fr": "La façade change le niveau des retours (boîtier partagé)",
+      "name_en": "FOH gain change alters monitor console level",
+      "domain": "consoles-signal-flow",
+      "symptom": "Avec deux consoles sur le même boîtier de scène, chaque correction de gain d'un opérateur fait varier le niveau chez l'autre.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Gain Tracking (DiGiCo) ou Gain Compensation (Yamaha) désactivé",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Les deux consoles pensent contrôler les gains analogiques au lieu d'une seule console « master »",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Identifier la console qui pilote les gains analogiques",
+        "Vérifier l'état du suivi ou de la compensation de gain sur chaque tranche partagée"
+      ],
+      "fixes": [
+        "Une seule console pilote les gains ; activer le suivi de gain sur l'autre (Receive Only + Gain Tracking) ou la Gain Compensation"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "gain-sharing",
+        "input-patching"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "digico-sd-rack",
+        "yamaha-cl5",
+        "yamaha-rio3224-d2"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "pfl-level-jump",
+      "name_fr": "Saut de niveau au casque en PFL",
+      "name_en": "Loud jump in headphones on PFL",
+      "domain": "consoles-signal-flow",
+      "symptom": "En pressant le solo d'une tranche dont le fader est bas, le casque ou l'écoute régie devient soudain très fort.",
+      "contexts": [
+        "studio",
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Le PFL prélève avant le fader : il envoie la tranche à son niveau interne, quelle que soit la position du fader",
+          "likelihood": "high"
+        }
+      ],
+      "checks": [
+        "Vérifier le mode solo (PFL ou AFL)",
+        "Vérifier le niveau du solo / PFL trim"
+      ],
+      "fixes": [
+        "Baisser le niveau solo ou le PFL TRIM",
+        "Utiliser l'AFL pour écouter la tranche telle qu'elle est dans le mix"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "pfl-afl-solo",
+        "monitor-source-selection"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "symptom",
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Valeur chiffrée de latence d'un insert externe sur console numérique (pour le filtrage en peigne)",
+      "searched": "SD12 Getting Started, CL V5 RM : pas de valeur trouvée ; la panne reste qualitative."
+    }
+  ]
+}
