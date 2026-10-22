@@ -79,6 +79,10 @@ export class ExploreController implements Walker {
   private unlockedAt = -Infinity
   /** Eased floor height under the player (steps onto stages smoothly). */
   private floorY = 0
+  /** A crosshair click already acted on pointerdown: swallow the Babylon tap that follows (review #5). */
+  private suppressTapUntil = 0
+  /** Last input came from the keyboard: aim at the screen centre and show the crosshair (review #6). */
+  private keyboardAim = false
   private focus!: FocusHandles
   private ui!: ExploreUi
 
@@ -146,15 +150,29 @@ export class ExploreController implements Walker {
   }
   /** FocusPatch gate: Babylon taps are stale/foreign while locked, placing or a panel is up. */
   pointerFree(): boolean {
-    return !this.locked && !(this.ui?.placing() ?? false) && (this.ui?.panelCount() ?? 0) === 0
+    return (
+      !this.locked &&
+      performance.now() >= this.suppressTapUntil &&
+      !(this.ui?.placing() ?? false) &&
+      (this.ui?.panelCount() ?? 0) === 0
+    )
   }
   /** Single click focuses only while walking (orbit keeps ADR-0008 click = select). */
   clickFocuses(): boolean {
     return this.view === 'explore' && this.focus?.view.mode !== 'focus'
   }
-  snapshot(): { view: BaseView; position: { x: number; y: number; z: number }; yaw: number; pitch: number; fovDeg: number; locked: boolean } {
+  snapshot(): {
+    view: BaseView
+    camera: string | null
+    position: { x: number; y: number; z: number }
+    yaw: number
+    pitch: number
+    fovDeg: number
+    locked: boolean
+  } {
     return {
       view: this.view,
+      camera: this.deps.scene.activeCamera?.name ?? null,
       position: { x: this.player.x, y: this.floorY + this.player.eye, z: this.player.z },
       yaw: this.player.yaw,
       pitch: this.player.pitch,
@@ -165,9 +183,14 @@ export class ExploreController implements Walker {
   /** Screen point the player aims with: crosshair when locked, else the cursor. */
   aimPoint(): { x: number; y: number } {
     const eng = this.deps.scene.getEngine()
-    return this.locked
+    return this.locked || (this.keyboardAim && this.view === 'explore')
       ? { x: eng.getRenderWidth() / 2, y: eng.getRenderHeight() / 2 }
       : { x: this.deps.scene.pointerX, y: this.deps.scene.pointerY }
+  }
+
+  private setKeyboardAim(on: boolean): void {
+    this.keyboardAim = on
+    this.deps.crosshair.hidden = !(this.locked || (on && this.walking))
   }
   settingsChanged(): void {
     const s = this.deps.settings()
@@ -240,6 +263,8 @@ export class ExploreController implements Walker {
     if (actions.length === 0) return
 
     this.keyboard.keyDown(e.code)
+    if (actions.some((a) => a.startsWith('MOVE') || a.startsWith('STRAFE') || a.startsWith('TURN') || a.startsWith('LOOK')))
+      this.setKeyboardAim(true)
     for (const a of this.keyboard.consumePressed()) this.onPressed(a, e)
     if (this.walking && actions.some((a) => a.startsWith('MOVE') || a.startsWith('STRAFE') || a.startsWith('TURN') || a.startsWith('LOOK')))
       e.preventDefault() // arrows / PageUp must not scroll the page while walking
@@ -260,6 +285,10 @@ export class ExploreController implements Walker {
         this.toggleView()
         break
       case 'FOCUS': {
+        if (this.ui.placing()) {
+          this.ui.confirmPlacement() // keyboard confirm of the ghost (review #6)
+          break
+        }
         if (this.view !== 'explore' || this.focus.view.mode === 'focus') break
         const p = this.aimPoint()
         const id = this.focus.deviceAt(p.x, p.y)
@@ -349,6 +378,7 @@ export class ExploreController implements Walker {
       this.look.dy += e.movementY
       return
     }
+    if (this.keyboardAim && (Math.abs(e.movementX) > 2 || Math.abs(e.movementY) > 2)) this.setKeyboardAim(false)
     const d = this.gesture.move(e.clientX, e.clientY)
     if (d.kind === 'look') {
       this.look.dx += d.dx
@@ -390,6 +420,7 @@ export class ExploreController implements Walker {
     const p = this.aimPoint()
     const id = this.focus.deviceAt(p.x, p.y)
     if (!id) return
+    this.suppressTapUntil = performance.now() + 400 // the release's Babylon tap carries stale coords
     document.exitPointerLock() // patching ports needs a visible cursor
     this.focus.focusInstance(id)
   }
@@ -403,7 +434,7 @@ export class ExploreController implements Walker {
 
   private onLockChange = (): void => {
     if (!this.locked) this.unlockedAt = performance.now()
-    this.deps.crosshair.hidden = !this.locked
+    this.setKeyboardAim(this.keyboardAim)
     this.look.dx = this.look.dy = 0
   }
 }

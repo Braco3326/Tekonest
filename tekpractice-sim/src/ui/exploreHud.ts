@@ -8,8 +8,8 @@
  */
 import type { BaseView } from '../scene/ExploreController'
 import type { Placement } from '../scene/Placement'
-import { ACTIONS, type Action } from '../input/actions'
-import { rebind } from '../input/bindings'
+import type { Action } from '../input/actions'
+import { rebind, REMAPPABLE, RESERVED_CODES } from '../input/bindings'
 import { labelFor, type Layout } from '../input/layoutLabels'
 import { ACTION_LABELS, controlsHelp, MOUSE_HELP } from './controlsHelp'
 import { buildInventoryModel, type InventoryDevice, type KbSheets } from './inventoryModel'
@@ -54,6 +54,7 @@ export class ExploreHud {
   closeTopPanel(): void {
     const top = this.stack.pop()
     if (!top) return
+    if (top.id === 'settings') this.capture = null // never leave a key capture armed (review #1)
     top.el.remove()
     ;(top.returnFocus as HTMLElement | null)?.focus?.()
     this.renderToolbar()
@@ -264,10 +265,11 @@ export class ExploreHud {
         <label>Capture de la souris <select name="pointerLock">${opt('auto', 'Auto (après avoir marché au clavier)', s.pointerLock)}${opt('always', 'Toujours au clic', s.pointerLock)}${opt('never', 'Jamais (souris seule)', s.pointerLock)}</select></label>
         <label>Vue par défaut dans les niveaux <select name="levelView">${opt('orbit', 'Orbite', s.levelView)}${opt('explore', 'Exploration', s.levelView)}</select></label>
         <h3>Touches</h3>
-        <table class="ex-binds"><tbody>${ACTIONS.map(
+        <table class="ex-binds"><tbody>${REMAPPABLE.map(
           (a) => `<tr><td>${esc(ACTION_LABELS[a].fr)}</td><td><kbd>${esc(s.bindings[a].map((c) => labelFor(c, this.deps.layout, this.deps.layoutMap)).join(' / '))}</kbd></td>
             <td><button type="button" data-bind="${a}">Changer</button></td></tr>`,
         ).join('')}</tbody></table>
+        <p class="ex-muted">Échap (fermer / revenir), Tab et Entrée restent fixes.</p>
         <p class="ex-capture" role="status" hidden></p>
         <button type="button" data-act="reset">Rétablir les réglages par défaut</button>
       </form>`,
@@ -305,7 +307,7 @@ export class ExploreHud {
     e.stopPropagation()
     const action = this.capture
     this.capture = null
-    if (e.code !== 'Escape') {
+    if (!RESERVED_CODES.includes(e.code)) {
       const cur = this.deps.settings()
       this.deps.onSettings({ ...cur, bindings: rebind(cur.bindings, action, [e.code]) })
     }

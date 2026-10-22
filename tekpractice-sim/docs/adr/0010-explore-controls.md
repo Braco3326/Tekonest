@@ -166,10 +166,21 @@ impossible de viser un port). Réglage `pointerLock: 'auto' | 'always' | 'never'
   d'enjambement ; nos fonctions pures donnent les tests exigés.
 - **Deuxième machine d'état pour le focus** : une seule grammaire (ADR-0008 l'exigeait déjà).
 
+## Mise en œuvre et revue (ajout du 2026-10-22)
+
+- Fichiers réels : l'inventaire, l'aide, les réglages et la pause vivent dans `src/ui/exploreHud.ts` (chunk paresseux) ; la barre d'outils toujours visible dans `src/ui/exploreToolbar.ts` (bundle de démarrage). `ui/inventory.ts` / `ui/helpOverlay.ts` prévus initialement n'existent pas.
+- **Échap n'est pas remappable** ; Tab et Entrée sont réservés (chemin clavier d'ADR-0008). Une capture de touche est désarmée à la fermeture du panneau.
+- **Examen : pas d'inventaire** (aucun indice d'aucune sorte, y compris les fiches de connecteurs).
+- **Clavier seul** : après une touche de déplacement, la visée passe au centre de l'écran (réticule visible) ; F confirme une pose.
+- **Ramasser** : touche X + bouton « Ramasser » dans la barre en Focus (Sandbox).
+- **Scènes surélevées** : le joueur monte sur une scène sans règle de marche (escaliers implicites, choix pédagogique) ; les portes mènent à un palier de 1,5 m fermé, jamais dans le vide.
+- **Pas de `dispose()` des écouteurs** : chaque changement de niveau, de salle ou d'examen recharge la page (ADR-0006/0009). Si `bootGame` devait un jour être rappelé sans rechargement, ajouter un `dispose()` à ExploreController / ExploreHud / FocusPatch.
+
 ## Conséquences
 
 - Nouveaux modules : `src/input/*`, `src/explore/*`, `src/scene/ViewDirector.ts`,
-  `src/ui/inventory.ts`, `src/ui/helpOverlay.ts`, `src/ui/exploreSettings.ts`.
+  `src/scene/ExploreController.ts`, `src/scene/Placement.ts`, `src/scene/RoomBuilder.ts`,
+  `src/ui/exploreToolbar.ts`, `src/ui/exploreHud.ts`, `src/ui/exploreSettings.ts`.
 - Changements limités : `FocusPatch` (interface `CameraDirector`, deps `clickFocuses()` et
   `inputEnabled()`), intents `SPAWN` étendu + `REMOVE`, `game.ts` (composition).
 - `window.__audioSim` gagne `explore()` (vue, position, yaw/pitch, inventaire ouvert)

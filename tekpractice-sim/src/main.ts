@@ -56,9 +56,15 @@ if (levelParam === 'sandbox') {
           }
           const file: RoomFileT = parsed.data
           const layout = roomLayout(file)
-          return { file, layout, build: (scene) => void buildRoom(scene, file, layout) }
+          const kit: NonNullable<BootOptions['room']> = { file, layout, build: (scene) => void buildRoom(scene, file, layout) }
+          return kit
         },
       )
+      // A failed chunk (offline, stale deploy) must never block the sandbox: white studio.
+      .catch((err: unknown): undefined => {
+        console.warn(`[room] ${roomParam} indisponible — studio blanc`, err)
+        return undefined
+      })
     : Promise.resolve(undefined)
   if (roomParam && !loader) console.warn(`[room] salle inconnue « ${roomParam} » — studio blanc`)
   void roomPromise.then((room) => bootGame(

@@ -1,0 +1,17 @@
+{
+ "base_url": "http://localhost:4173 (vite preview of the production build)",
+ "driver": "playwright chromium headless",
+ "pages": 8,
+ "viewports": [
+  {
+   "id": "desktop",
+   "width": 1440,
+   "height": 900
+  },
+  {
+   "id": "phone",
+   "width": 390,
+   "height": 844
+  }
+ ]
+}

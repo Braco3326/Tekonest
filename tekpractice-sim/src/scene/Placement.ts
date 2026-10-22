@@ -17,6 +17,8 @@ export interface PlacementDeps {
   halfWidth: number
   halfDepth: number
   dispatch(intent: Intent): void
+  /** Floor height under a point (procedural rooms: stage decks). Default 0. */
+  floorAt?(x: number, z: number): number
 }
 
 const GHOST = { w: 0.5, h: 0.4, d: 0.5 }
@@ -39,7 +41,7 @@ export class Placement {
   get pose(): { deviceId: string; position: [number, number, number]; rotationY: number } | null {
     if (!this.ghost || !this.deviceId) return null
     const p = this.ghost.position
-    return { deviceId: this.deviceId, position: [p.x, 0, p.z], rotationY: this.rotationDeg }
+    return { deviceId: this.deviceId, position: [p.x, this.floorHeight(p.x, p.z), p.z], rotationY: this.rotationDeg }
   }
 
   start(deviceId: string): void {
@@ -88,7 +90,12 @@ export class Placement {
     if (t === null || t < 0) return
     const hit = ray.origin.add(ray.direction.scale(t))
     const lim = (v: number, half: number) => Math.max(-half + 0.5, Math.min(half - 0.5, v))
-    this.ghost.position.x = snapToGrid(lim(hit.x, this.deps.halfWidth))
-    this.ghost.position.z = snapToGrid(lim(hit.z, this.deps.halfDepth))
+    const x = snapToGrid(lim(hit.x, this.deps.halfWidth))
+    const z = snapToGrid(lim(hit.z, this.deps.halfDepth))
+    this.ghost.position.set(x, this.floorHeight(x, z) + GHOST.h / 2, z)
+  }
+
+  private floorHeight(x: number, z: number): number {
+    return this.deps.floorAt?.(x, z) ?? 0
   }
 }

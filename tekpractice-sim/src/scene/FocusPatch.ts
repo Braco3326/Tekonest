@@ -54,6 +54,8 @@ export interface FocusPatchDeps {
    * then carry stale or foreign coordinates and must not reach the machine.
    */
   inputEnabled?(): boolean
+  /** Mode / focused device changed (the Explore toolbar shows « Ramasser » in focus). */
+  onViewChange?(): void
 }
 
 const same = (a: PortRef, b: PortRef) => a.instance === b.instance && a.port === b.port
@@ -249,9 +251,18 @@ export class FocusPatch {
   // ── machine commands → effects ──────────────────────────────────────────────
 
   private apply(t: { state: FocusState; commands: FocusCommand[] }): void {
+    const before = `${this.state.mode}|${this.state.focused}`
     this.state = t.state
     for (const cmd of t.commands) this.exec(cmd)
     this.applyHints()
+    if (`${this.state.mode}|${this.state.focused}` !== before) this.deps.onViewChange?.()
+  }
+
+  /** Back out of focus the way Esc does: drop a held cable first, then leave (placement from focus). */
+  leaveFocus(): void {
+    if (this.state.mode !== 'focus') return
+    if (this.state.held) this.apply(reduce(this.state, { type: 'ESC' }))
+    this.apply(reduce(this.state, { type: 'ESC' }))
   }
 
   private exec(cmd: FocusCommand): void {
