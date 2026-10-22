@@ -1,0 +1,1615 @@
+{
+  "entity": "concept",
+  "domain": "monitoring",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "stage-monitor-mix",
+      "name_fr": "Mix retour (mélange de scène)",
+      "name_en": "Stage monitor mix",
+      "domain": "monitoring",
+      "definition": "Mélange envoyé à un ou plusieurs musiciens sur scène (wedge, side-fill ou ear) pour qu'ils s'entendent eux-mêmes et entendent le groupe ; il est fabriqué à partir de départs auxiliaires pré-fader.",
+      "explanation": "Chaque musicien n'a pas besoin du même équilibre : le batteur veut beaucoup de batterie, le chanteur surtout sa voix. On crée donc plusieurs mixes retours (foldback), chacun sur un départ auxiliaire (aux send) réglé en pré-fader, pour que les gestes de l'ingénieur façade ne modifient pas ce que les musiciens entendent. Le nombre de mixes possibles est limité par le nombre d'auxiliaires libres de la console (une partie sert aux effets). Le guide Shure montre comment regrouper les besoins : un mix voix, un mix instruments, un mix batteur, puis un mix dédié au chanteur principal si le budget le permet. En stéréo, chaque mix consomme deux auxiliaires : 4 départs donnent 2 mixes stéréo ou 4 mixes mono. Sur une console numérique type SD12, chaque départ peut être réglé en post-fader, pré-fader ou pré-mute.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "aux-send",
+        "pre-post-fader",
+        "in-ear-monitoring",
+        "floor-wedge-monitor",
+        "monitor-engineer-role",
+        "cue-mix"
+      ],
+      "equipment_ids": [
+        "yamaha-ql1",
+        "digico-sd12",
+        "allen-heath-sq-6"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre des retours en sonorisation (E4 pratique) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "in-ear-monitoring",
+      "name_fr": "Retours intra-auriculaires (ears, IEM)",
+      "name_en": "In-ear monitoring (IEM)",
+      "domain": "monitoring",
+      "definition": "Système de retour personnel où le mix est reproduit par des écouteurs placés dans le conduit auditif, alimentés par un boîtier de ceinture filaire ou par un récepteur HF.",
+      "explanation": "Un système d'ears sans fil fonctionne comme un micro HF « à l'envers » : la sortie de la console attaque un émetteur, le musicien porte un récepteur de ceinture qui amplifie le signal vers ses écouteurs. Comme le « haut-parleur » est enfermé dans l'oreille, la boucle de larsen avec le micro est cassée, ce qui supprime la limite de gain avant larsen propre aux wedges. Des écouteurs isolants professionnels bien posés atténuent le bruit ambiant de 10 à 20 dB environ, ce qui permet d'écouter moins fort. Le son suit le musicien partout sur scène, sans « sweet spot ». En contrepartie : sensation d'isolement (corrigée par des micros d'ambiance), effet d'occlusion, et toutes les contraintes de la HF (coordination de fréquences, multitrajets). Shure rappelle que ces systèmes peuvent dépasser 130 dB SPL : le limiteur du récepteur est indispensable.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "stage-monitor-mix",
+        "iem-receiver-limiter",
+        "iem-stereo-dual-mono",
+        "ambient-microphones-iem",
+        "occlusion-effect",
+        "rf-frequency-coordination",
+        "gain-before-feedback"
+      ],
+      "equipment_ids": [
+        "shure-psm-300",
+        "shure-psm-900",
+        "shure-psm-1000",
+        "sennheiser-ew-iem-g4",
+        "shure-se215",
+        "shure-se846"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Choix et réglage d'un système d'ears — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Principe de la liaison HF et de la protection auditive — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "monitor-engineer-role",
+      "name_fr": "Ingénieur retours (rôle)",
+      "name_en": "Monitor engineer role",
+      "domain": "monitoring",
+      "definition": "Technicien chargé de fabriquer et d'ajuster en temps réel les mixes retours des musiciens, en général depuis une console dédiée placée sur le côté de la scène.",
+      "explanation": "Quand la scène grandit, une seule console ne suffit plus : on ajoute une console retours (monitor console) dont le seul rôle est de produire plusieurs mixes séparés. Les signaux des micros arrivent aux deux consoles par un split (transformateur ou partage numérique du boîtier de scène). L'ingénieur retours répond aux demandes des artistes (la plus fréquente est « monte-moi ! »), surveille le larsen, égalise les wedges et contrôle chaque mix en écoute solo (un bus solo vers ses propres ears, un autre vers un wedge de contrôle). Avec un boîtier de scène partagé, un seul poste contrôle les gains analogiques ; l'autre suit les changements grâce au suivi de gain (gain tracking). Dans les petites salles, c'est souvent l'ingénieur façade qui fait aussi les retours depuis ses auxiliaires.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "stage-monitor-mix",
+        "monitor-cue-solo-bus",
+        "microphone-split-foh-monitor",
+        "ringing-out",
+        "pfl-afl-solo",
+        "talkback"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "yamaha-cl5",
+        "allen-heath-avantis"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Organisation d'un plateau live (façade / retours) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E6",
+          "bloc": null,
+          "note": "Rôles en milieu professionnel — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "ringing-out",
+      "name_fr": "Accordage des retours (ring out)",
+      "name_en": "Ringing out",
+      "domain": "monitoring",
+      "definition": "Procédure qui consiste à monter progressivement le niveau d'un retour, micro ouvert, jusqu'à l'apparition du larsen, à identifier la fréquence qui accroche et à l'atténuer à l'égaliseur, puis à recommencer.",
+      "explanation": "Comme un système réel n'a pas une réponse plate, certaines fréquences accrochent avant les autres. En les atténuant sur l'égaliseur de la sortie auxiliaire (graphique 31 bandes ou paramétrique), on gagne du gain avant larsen : Shure annonce environ 3 à 9 dB de gain supplémentaire si la position du micro ne change pas. Une méthode répandue (ProSoundWeb) s'arrête après 5 à 7 tours, ou dès que plus de trois fréquences accrochent en même temps. QSC vise une marge d'environ 6 à 10 dB sur le fader une fois le système stable. Un analyseur (RTA) aide à trouver la fréquence. Attention : vouloir supprimer tout larsen même micro pointé dans le haut-parleur détruit la fidélité du retour ; Rane conseille des coupes larges et peu profondes plutôt que des notchs profonds en cascade.",
+      "formulas": [],
+      "units": [
+        "dB",
+        "Hz"
+      ],
+      "related_concepts": [
+        "acoustic-feedback",
+        "gain-before-feedback",
+        "monitor-graphic-eq",
+        "floor-wedge-monitor"
+      ],
+      "equipment_ids": [
+        "dbx-231s",
+        "dbx-afs2",
+        "nti-audio-xl2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Geste de sonorisation évalué en pratique — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
+          "publisher": "ProSoundWeb (PSW Staff, from Sweetwater) — Tech Tip: EQing Stage Monitors, 2010",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://support.qscaudio.com/en_US/sound-advice/sound-advice-%7C-how-to-ring-out-a-room-mains-and-monitors-to-eliminate-feedback",
+          "publisher": "QSC — Sound Advice: How to ring out a room (mains and monitors)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note158.html",
+          "publisher": "Rane — RaneNote 158, Understanding Acoustic Feedback & Suppressors",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "acoustic-feedback",
+      "name_fr": "Effet Larsen (feedback acoustique)",
+      "name_en": "Acoustic feedback",
+      "domain": "monitoring",
+      "definition": "Boucle de rétroaction positive : le micro capte le son du haut-parleur qui le diffuse, le système le réamplifie, et une fréquence se met à « sonner » quand le gain de boucle atteint 1 avec une phase de boucle multiple de 360°.",
+      "explanation": "Sur scène, le chemin le plus court et le plus probable est celui du wedge vers le micro du chanteur : le micro est proche de la bouche (bien), mais aussi proche du wedge (mal), et le wedge est loin des oreilles (mal). Le larsen est à la fois une affaire d'amplitude et de phase : une seule fréquence accroche d'abord, celle que le couple système/salle favorise le plus. Les remèdes, par ordre d'efficacité : supprimer le chemin (ears), réduire le nombre de micros ouverts, placer le wedge dans le zéro du micro, rapprocher la source du micro, puis égaliser. Dans un studio radio, la même logique impose de couper les écoutes de la pièce quand le micro est ouvert (règle R6).",
+      "formulas": [],
+      "units": [
+        "dB",
+        "Hz"
+      ],
+      "related_concepts": [
+        "gain-before-feedback",
+        "ringing-out",
+        "number-of-open-microphones",
+        "mic-polar-pattern-wedge-placement",
+        "monitor-mute-on-open-mic",
+        "phase"
+      ],
+      "equipment_ids": [
+        "shure-sm58",
+        "yamaha-dbr12",
+        "dbx-afs2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Larsen : mécanisme physique — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Prévention du larsen en sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note158.html",
+          "publisher": "Rane — RaneNote 158, Understanding Acoustic Feedback & Suppressors",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/audio/pag.html",
+          "publisher": "HyperPhysics (C. R. Nave, Georgia State University) — Potential Acoustic Gain",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "gain-before-feedback",
+      "name_fr": "Gain avant larsen et gain acoustique potentiel (PAG)",
+      "name_en": "Gain before feedback and potential acoustic gain (PAG)",
+      "domain": "monitoring",
+      "definition": "Le gain avant larsen est le gain qu'on peut appliquer à un micro avant l'accrochage ; le PAG en est l'estimation calculée à partir des distances source–micro, micro–haut-parleur, source–auditeur et haut-parleur–auditeur.",
+      "explanation": "L'équation du PAG suppose des micros omnidirectionnels et une réponse plate. Le guide Shure l'écrit avec un terme pour le nombre de micros ouverts (NOM) et une marge de sécurité de 6 dB ; HyperPhysics donne la forme géométrique simple et conseille environ 3 dB de marge. Lecture pratique : on perd du gain si la source s'éloigne du micro, si le micro est près du haut-parleur, ou si le haut-parleur est loin de l'auditeur. Pour un wedge, rapprocher le wedge des oreilles le rapproche aussi du micro : on ne gagne presque rien. Une fois l'égalisation faite, c'est de nouveau la géométrie qui limite ; seuls les ears cassent la boucle.",
+      "formulas": [
+        {
+          "expr": "PAG = 20·(log D1 − log D2 + log D0 − log Ds) − 10·log NOM − 6",
+          "vars": {
+            "Ds": "distance source → micro",
+            "D1": "distance micro → haut-parleur",
+            "D0": "distance source → auditeur",
+            "D2": "distance haut-parleur → auditeur",
+            "NOM": "nombre de micros ouverts",
+            "6": "marge de sécurité (dB)"
+          },
+          "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf"
+        },
+        {
+          "expr": "PAG = 20·log10[(D1/Ds)·(D0/D2)]",
+          "vars": {
+            "Ds": "source → micro",
+            "D1": "micro → haut-parleur",
+            "D0": "source → auditeur",
+            "D2": "haut-parleur → auditeur"
+          },
+          "source_url": "http://hyperphysics.phy-astr.gsu.edu/hbase/audio/pag.html"
+        }
+      ],
+      "units": [
+        "dB",
+        "m"
+      ],
+      "related_concepts": [
+        "acoustic-feedback",
+        "number-of-open-microphones",
+        "inverse-square-law",
+        "critical-distance",
+        "ringing-out"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Calcul de PAG (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/audio/pag.html",
+          "publisher": "HyperPhysics (C. R. Nave, Georgia State University) — Potential Acoustic Gain",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "university",
+          "covers": [
+            "formulas[1]",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "formulas",
+          "values": [
+            {
+              "value": "Shure : terme −10·log NOM et marge fixe de −6 dB inclus dans l'équation",
+              "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf"
+            },
+            {
+              "value": "HyperPhysics : forme géométrique sans NOM ; marge d'environ 3 dB à retirer ensuite",
+              "source_url": "http://hyperphysics.phy-astr.gsu.edu/hbase/audio/pag.html"
+            }
+          ],
+          "note": "Même modèle géométrique ; les deux sources diffèrent sur la marge de sécurité (6 dB contre ~3 dB) et sur l'intégration du NOM."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "number-of-open-microphones",
+      "name_fr": "Nombre de micros ouverts (NOM)",
+      "name_en": "Number of open microphones (NOM)",
+      "domain": "monitoring",
+      "definition": "Nombre de micros ouverts simultanément dans un système ; chaque doublement du NOM fait perdre environ 3 dB de gain avant larsen.",
+      "explanation": "Avec quatre micros ouverts au lieu d'un, le gain disponible a baissé d'environ 6 dB (deux doublements). Sur scène, laisser ouverts les micros des choristes pendant les morceaux où ils ne chantent pas réduit inutilement la marge des retours. En pratique : couper (mute) les micros non utilisés, ou utiliser un mélangeur automatique qui n'ouvre que les micros actifs.",
+      "formulas": [
+        {
+          "expr": "ΔPAG = −10·log NOM",
+          "vars": {
+            "NOM": "nombre de micros ouverts"
+          },
+          "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf"
+        }
+      ],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "gain-before-feedback",
+        "acoustic-feedback"
+      ],
+      "equipment_ids": [
+        "shure-scm820"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Gain avant larsen — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "floor-wedge-monitor",
+      "name_fr": "Retour de sol (wedge)",
+      "name_en": "Floor wedge monitor",
+      "domain": "monitoring",
+      "definition": "Enceinte de retour compacte à face arrière inclinée, posée au sol devant le musicien et dirigée vers le haut, vers sa tête.",
+      "explanation": "Le wedge est né quand on a retourné des enceintes vers les musiciens, puis conçu une forme en coin posée au sol. L'angle d'inclinaison dépend du modèle : Wikipedia cite typiquement 30°, le Yamaha DBR12 offre 50° en usage retour, le L-Acoustics X15 HiQ 35° sans cales et 55° avec. Un wedge crée un « sweet spot » : un pas de côté et le son change, car il est directif dans l'aigu. Son grave rayonne presque dans toutes les directions et « salit » le mix façade, surtout dans les petites salles. On place le wedge dans l'angle de rejet du micro (derrière un cardioïde).",
+      "formulas": [],
+      "units": [
+        "°"
+      ],
+      "related_concepts": [
+        "stage-monitor-mix",
+        "side-fill-monitor",
+        "drum-fill",
+        "mic-polar-pattern-wedge-placement",
+        "coverage-angle"
+      ],
+      "equipment_ids": [
+        "yamaha-dbr12",
+        "l-acoustics-x15-hiq",
+        "l-acoustics-x8"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Placement des retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://data.yamaha.com/download/files/2082568",
+          "publisher": "Yamaha — DBR15/DBR12/DBR10 Technical Specifications (03/2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/?p=956",
+          "publisher": "L-Acoustics — X15 HiQ product page",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "angle typique 30°",
+              "source_url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)"
+            },
+            {
+              "value": "DBR12 : 50° symétrique",
+              "source_url": "https://data.yamaha.com/download/files/2082568"
+            },
+            {
+              "value": "X15 HiQ : 35° sans cales, 55° avec",
+              "source_url": "https://www.l-acoustics.com/?p=956"
+            }
+          ],
+          "note": "Pas de valeur unique : l'angle dépend du modèle ; ne pas enseigner « 30° » comme une norme."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "side-fill-monitor",
+      "name_fr": "Side-fill",
+      "name_en": "Side-fill monitor",
+      "domain": "monitoring",
+      "definition": "Enceinte de retour placée debout sur le côté de la scène pour couvrir les zones que les wedges n'atteignent pas ; c'est souvent une enceinte de façade standard.",
+      "explanation": "Sur une grande scène, les wedges ne couvrent que des points précis. Les side-fills, posés de chaque côté (souvent sur un sub), diffusent un mix général vers tout le plateau pour que les musiciens qui bougent gardent un repère. Ils ajoutent du niveau sur scène et donc du risque de larsen pour les micros qui leur font face.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "floor-wedge-monitor",
+        "drum-fill",
+        "stage-monitor-mix"
+      ],
+      "equipment_ids": [
+        "yamaha-dbr12",
+        "qsc-k12-2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Plan de scène et retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "drum-fill",
+      "name_fr": "Drum-fill",
+      "name_en": "Drum fill",
+      "domain": "monitoring",
+      "definition": "Type de side-fill dédié au batteur : enceinte puissante à gros haut-parleurs de grave (2 ou 3 voies) capable de niveaux très élevés pour que le batteur entende le groupe par-dessus sa batterie acoustique.",
+      "explanation": "La batterie est l'instrument le plus fort de la scène : le batteur a besoin d'un retour plus puissant et plus riche en grave que les autres. Un drum-fill (souvent une enceinte plus un sub) remplit ce rôle. Avec des ears, on peut compléter la sensation physique du grave par un vibreur de siège (drum throne shaker), qui ne produit pas de son audible mais reproduit les vibrations.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "side-fill-monitor",
+        "stage-monitor-mix",
+        "in-ear-monitoring"
+      ],
+      "equipment_ids": [
+        "l-acoustics-x15-hiq"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Plan de scène et retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "microphone-split-foh-monitor",
+      "name_fr": "Split micro façade / retours",
+      "name_en": "Microphone split (FOH / monitors)",
+      "domain": "monitoring",
+      "definition": "Distribution de chaque signal micro et DI vers la console façade et la console retours, par un splitter à transformateur, un multipaire à sorties multiples ou le partage d'un boîtier de scène numérique.",
+      "explanation": "Pour qu'une console retours existe, elle doit recevoir les mêmes sources que la façade. En analogique, un splitter à transformateur isolé envoie le signal à deux endroits ; les câbles en Y fonctionnent mais sont fragiles. En numérique, les deux consoles partagent le même boîtier de scène : une seule commande les préamplis, l'autre suit les changements de gain et compense par son trim numérique (gain tracking sur SD12). Sans ce suivi, l'ingénieur façade qui baisse un gain casse le mix retours.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "monitor-engineer-role",
+        "gain-staging",
+        "input-channel"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "digico-sd-rack",
+        "klark-teknik-dn100-v2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Câblage d'un plateau live — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "iem-stereo-dual-mono",
+      "name_fr": "Ears en stéréo ou en double mono (MixMode, Focus)",
+      "name_en": "IEM stereo vs dual-mono (MixMode / Focus)",
+      "domain": "monitoring",
+      "definition": "Un émetteur d'ears stéréo peut transporter un mix stéréo (G/D) ou deux mixes mono indépendants que le récepteur additionne dans les deux oreilles, la balance du récepteur dosant l'un contre l'autre.",
+      "explanation": "En double mono (MixMode chez Shure, Focus chez Sennheiser G4), on envoie par exemple « ma voix » sur l'entrée 1 et « le groupe » sur l'entrée 2 ; chaque musicien règle lui-même son dosage avec la balance du récepteur, et un nombre quelconque de récepteurs peut écouter le même émetteur. Si le récepteur reste en stéréo, chaque mix n'arrive que dans une oreille. La stéréo est plus naturelle : en panoramiquant légèrement deux guitares, chacune occupe son espace et on peut écouter moins fort. Mais elle coûte deux auxiliaires par mix : stéréo = 1 émetteur et 2 aux par mix ; double mono = 1 émetteur pour 2 mixes.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "in-ear-monitoring",
+        "stage-monitor-mix",
+        "aux-send"
+      ],
+      "equipment_ids": [
+        "shure-psm-900",
+        "shure-psm-300",
+        "sennheiser-ew-iem-g4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Configuration d'un système d'ears — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/ew-iem-g4_bedienungsanleitung_05_2026_de.pdf/facce9cce7b611f08a557aeaa9c3764a?attachment=true",
+          "publisher": "Sennheiser — ew IEM G4 Bedienungsanleitung (05/2026, DE)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "iem-receiver-limiter",
+      "name_fr": "Limiteur du récepteur d'ears",
+      "name_en": "IEM receiver limiter",
+      "domain": "monitoring",
+      "definition": "Limiteur placé dans le récepteur de ceinture, après la liaison HF, qui empêche les crêtes accidentelles (débranchement d'un micro alimenté, bouffée de bruit HF) d'atteindre des niveaux dangereux pour l'oreille.",
+      "explanation": "Shure explique que de tels incidents peuvent produire des crêtes au-delà de 130 dB SPL et recommande de n'utiliser que des systèmes avec limiteur au récepteur, sans jamais le désactiver. Un compresseur ou limiteur placé avant l'émetteur est utile mais ne remplace pas celui du récepteur, car il ne protège pas contre ce qui arrive après l'émetteur (bruit HF). Si le limiteur agit souvent, c'est que le volume est trop haut. Sennheiser recommande de régler le limiteur du G4 le plus bas possible. Attention au vocabulaire : sur le PSM 900, la fonction « V LIMIT » restreint la course du volume (0 à −48 dB par pas de 3 dB) sans compresser le son. Les mélangeurs personnels des systèmes distribués n'ont généralement pas de limiteur.",
+      "formulas": [],
+      "units": [
+        "dB SPL"
+      ],
+      "related_concepts": [
+        "in-ear-monitoring",
+        "limiter",
+        "noise-induced-hearing-loss"
+      ],
+      "equipment_ids": [
+        "shure-psm-300",
+        "shure-psm-900",
+        "shure-psm-1000",
+        "sennheiser-ew-iem-g4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Sécurité auditive en retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Dynamique : limiteur — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/ew-iem-g4_bedienungsanleitung_05_2026_de.pdf/facce9cce7b611f08a557aeaa9c3764a?attachment=true",
+          "publisher": "Sennheiser — ew IEM G4 Bedienungsanleitung (05/2026, DE)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "ambient-microphones-iem",
+      "name_fr": "Micros d'ambiance pour ears",
+      "name_en": "Ambient microphones for IEM",
+      "domain": "monitoring",
+      "definition": "Micros (paire de statiques, canons vers le public, lavaliers des musiciens) mixés uniquement dans les ears pour redonner la sensation de salle et permettre aux musiciens de se parler.",
+      "explanation": "Les écouteurs isolants coupent le musicien de la salle. On réintroduit l'ambiance par des micros d'ambiance : leur niveau est réglé par l'ingénieur, et leurs repères gauche/droite ne sont justes que si l'artiste fait face au public. Les écouteurs à ambiance active (micros miniatures sur l'écouteur) gardent des repères naturels ; les écouteurs à évent passif sont simples mais exposent à des niveaux dangereux. Ces micros ne vont pas en façade.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "in-ear-monitoring",
+        "occlusion-effect",
+        "stage-monitor-mix"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mix d'ears — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "occlusion-effect",
+      "name_fr": "Effet d'occlusion",
+      "name_en": "Occlusion effect",
+      "domain": "monitoring",
+      "definition": "Accumulation de basses fréquences (en général sous 500 Hz) perçue quand le conduit auditif est fermé, due à la conduction osseuse de sa propre voix ; le son paraît « creux ».",
+      "explanation": "Les chanteurs et souffleurs qui passent aux ears entendent leur voix autrement. Effets typiques : sous-chant (la voix est enfin audible sans forcer, alors le chanteur chante moins fort et l'ingénieur façade, toujours soumis au PAG, manque de niveau) et son « creux ». Shure indique que des embouts moulés allant plus profond (au-delà du second coude du conduit) réduisent cet effet. Une période d'adaptation est souvent nécessaire.",
+      "formulas": [],
+      "units": [
+        "Hz"
+      ],
+      "related_concepts": [
+        "in-ear-monitoring",
+        "iem-latency-comb-filtering"
+      ],
+      "equipment_ids": [
+        "shure-se215",
+        "shure-se846"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mix d'ears — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "iem-latency-comb-filtering",
+      "name_fr": "Latence et filtrage en peigne dans les ears",
+      "name_en": "IEM latency and comb filtering",
+      "domain": "monitoring",
+      "definition": "Avec des écouteurs isolants, la voix du musicien arrive par conduction osseuse et par la chaîne micro → console → ears ; toute latence numérique entre les deux crée un filtrage en peigne.",
+      "explanation": "Shure explique que la latence doit dépasser environ 35 ms pour être perçue comme un écho (effet Haas), mais qu'en ears même 1 ms crée un filtrage en peigne : plus la latence est faible, plus les creux montent en fréquence. Le guide estime qu'environ 2 ms sont acceptables en sonorisation mais qu'il faudrait au plus 0,5 ms au total en ears pour égaler une chaîne analogique. La latence s'additionne d'un appareil numérique à l'autre.",
+      "formulas": [],
+      "units": [
+        "ms"
+      ],
+      "related_concepts": [
+        "latency",
+        "comb-filtering",
+        "haas-precedence-effect",
+        "occlusion-effect"
+      ],
+      "equipment_ids": [
+        "shure-psm-900"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Latence et filtrage en peigne — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "iem-mpx-stereo-limits",
+      "name_fr": "Limites de la stéréo MPX des ears HF",
+      "name_en": "MPX stereo limits of wireless IEM",
+      "domain": "monitoring",
+      "definition": "Les ears HF analogiques stéréo transmettent un signal somme (G+D) et différence (G−D) avec une tonalité pilote à 19 kHz ; leur bande passante utile est limitée à environ 15 kHz.",
+      "explanation": "Le récepteur reconstitue G et D en additionnant et soustrayant somme et différence. S'il ne détecte plus une tonalité pilote stable à 19 kHz, il repasse en mono, l'image se dégrade, et il peut même se couper (squelch à tonalité). Des boosts d'aigu au-dessus de 15 kHz sur la console ou des transitoires très aiguës (tambourin, charleston, click) peuvent perturber le pilote. Shure conseille d'éviter les boosts au-delà de 15 kHz, de panoramiquer à « 10 h / 14 h » plutôt qu'en extrême, et de placer un notch étroit à 16 kHz sur les bus de sortie. Passer en mono résout souvent ces défauts. Ce problème est souvent pris à tort pour une interférence ou des piles faibles.",
+      "formulas": [
+        {
+          "expr": "(L + R) + (L − R) = 2L ; (L + R) − (L − R) = 2R",
+          "vars": {
+            "L": "voie gauche",
+            "R": "voie droite"
+          },
+          "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf"
+        }
+      ],
+      "units": [
+        "kHz"
+      ],
+      "related_concepts": [
+        "in-ear-monitoring",
+        "iem-stereo-dual-mono",
+        "squelch"
+      ],
+      "equipment_ids": [
+        "shure-psm-300",
+        "shure-psm-900",
+        "sennheiser-ew-iem-g4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Modulation et multiplex stéréo — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "iem-rf-dropouts",
+      "name_fr": "Décrochages HF des ears",
+      "name_en": "IEM RF dropouts",
+      "domain": "monitoring",
+      "definition": "Coupures audibles du récepteur d'ears dues aux multitrajets, aux intermodulations entre émetteurs proches, à l'absence de ligne de vue ou à un mauvais choix de fréquence.",
+      "explanation": "Le guide Shure (2007) note que les récepteurs d'ears étaient alors à antenne unique, donc sensibles aux multitrajets. Remèdes cités : antennes directionnelles (log-périodique ~7–8 dB, hélicoïdale ~14 dB et insensible à la polarisation), combineur d'antennes au-delà de deux émetteurs (actif pour plus de deux, jamais cascadé activement), ligne de vue, au moins 10 ft (environ 3 m) entre antennes d'émission et de réception, émetteurs d'ears éloignés de quelques pieds des récepteurs de micros HF, coordination des fréquences (y compris intercoms et TV), piles alcalines neuves et test de déambulation sur toute la scène. Côté récepteur, baisser le squelch n'est qu'un dernier recours.",
+      "formulas": [],
+      "units": [
+        "MHz",
+        "dB"
+      ],
+      "related_concepts": [
+        "in-ear-monitoring",
+        "rf-frequency-coordination",
+        "intermodulation",
+        "diversity-reception",
+        "antenna-distribution",
+        "squelch"
+      ],
+      "equipment_ids": [
+        "shure-psm-900",
+        "shure-psm-1000",
+        "sennheiser-ew-iem-g4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre HF — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "mic-polar-pattern-wedge-placement",
+      "name_fr": "Directivité du micro et placement du wedge",
+      "name_en": "Mic polar pattern vs wedge placement",
+      "domain": "monitoring",
+      "definition": "On place le retour dans l'angle de moindre sensibilité du micro : à 180° pour un cardioïde, vers ±126–135° pour un supercardioïde, plus près de ±115° pour un hypercardioïde.",
+      "explanation": "L'équation du PAG suppose des micros omni : un cardioïde ou un supercardioïde aide, à condition de ne pas viser le haut-parleur. Shure donne pour le cardioïde un angle de meilleur rejet à 180° et pour le supercardioïde 126° ; DPA situe le zéro du supercardioïde vers ±135° et celui de l'hypercardioïde vers ±115°, avec un lobe arrière. Conséquence de terrain : un wedge unique pile derrière un supercardioïde (ex. Beta 58A) tombe dans son lobe arrière ; on préfère deux wedges écartés en V. Tenir le micro par la grille détruit la directivité.",
+      "formulas": [],
+      "units": [
+        "°"
+      ],
+      "related_concepts": [
+        "polar-pattern",
+        "floor-wedge-monitor",
+        "gain-before-feedback",
+        "acoustic-feedback"
+      ],
+      "equipment_ids": [
+        "shure-sm58",
+        "shure-beta-58a",
+        "yamaha-dbr12"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Directivité des micros contre le larsen — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Placement micros / retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+          "publisher": "DPA Microphones — Listen to your polar pattern",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "definition",
+          "values": [
+            {
+              "value": "supercardioïde : meilleur rejet à 126°",
+              "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf"
+            },
+            {
+              "value": "supercardioïde : zéro vers ±135°",
+              "source_url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/"
+            }
+          ],
+          "note": "Valeurs proches ; l'angle exact dépend du modèle, consulter la fiche du micro."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "monitor-mute-on-open-mic",
+      "name_fr": "Coupure des écoutes sur micro ouvert",
+      "name_en": "Monitor mute on open mic",
+      "domain": "monitoring",
+      "definition": "Fonction des consoles broadcast qui coupe automatiquement les haut-parleurs d'écoute de la pièce dès qu'un micro de cette même pièce est ouvert, pour éviter le larsen.",
+      "explanation": "En radio, l'animateur parle dans un micro situé à côté des enceintes de la régie. La console Axia iQ coupe les écoutes de la régie quand la tranche micro passe sur ON ; l'animateur écoute alors au casque. Le même état « micro ouvert » commande souvent le voyant ON AIR. Dans TekPractice, c'est la règle R6 : un micro ouvert et branché, des sorties isMonitorOut branchées et la commande monitor-mute inactive déclenchent une erreur de larsen.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "acoustic-feedback",
+        "talkback",
+        "tally-on-air"
+      ],
+      "equipment_ids": [
+        "axia-iq",
+        "genelec-8030c"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Studio radio : sécurité de l'antenne — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+          "publisher": "Telos Alliance / Axia — Axia iQ Quick Start Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "control-room-reference-level",
+      "name_fr": "Niveau d'écoute de référence en régie",
+      "name_en": "Control-room reference listening level",
+      "domain": "monitoring",
+      "definition": "Niveau acoustique calibré au point d'écoute pour un signal de test donné (bruit rose à un niveau numérique fixé), qui permet de mixer toujours au même niveau perçu.",
+      "explanation": "L'EBU (Tech 3276) règle chaque voie avec un bruit rose à −18 dBFS et vise au point d'écoute 85 − 10·log(n) dB(A), mesure en RMS lent, n étant le nombre d'enceintes principales ; l'écart entre voies doit rester sous 1 dB. Le monde du cinéma utilise une autre convention : Sound On Sound rappelle que la référence historique était −20 dBFS RMS de bruit rose donnant 85 dB SPL par enceinte, révisée ensuite à 83 dB SPL en pondération C, lent. Pour une petite régie, ce niveau est jugé écrasant ; l'article propose une table indicative selon le volume de la pièce (de 83 dB au-delà de 566 m³ jusqu'à 74 dB sous 42 m³). La valeur de 79 dB souvent citée pour les petites pièces n'a pas été trouvée dans une source primaire lue (voir not_found_log).",
+      "formulas": [
+        {
+          "expr": "L_LISTref = 85 − 10·log10(n) dB(A)",
+          "vars": {
+            "n": "nombre d'enceintes principales",
+            "signal": "bruit rose −18 dBFS par voie, RMS, lent"
+          },
+          "source_url": "https://tech.ebu.ch/docs/tech/tech3276.pdf"
+        }
+      ],
+      "units": [
+        "dB(A)",
+        "dB SPL",
+        "dBFS"
+      ],
+      "related_concepts": [
+        "stereo-listening-geometry",
+        "db-spl",
+        "dbfs",
+        "loudness-ebu-r128"
+      ],
+      "equipment_ids": [
+        "genelec-8030c",
+        "neumann-kh-120-ii",
+        "grace-m905",
+        "nti-audio-xl2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Conditions d'écoute normalisées — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+          "publisher": "EBU — Tech 3276, Listening conditions for the assessment of sound programme material (1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2",
+          "publisher": "Sound On Sound — H. Robjohns, Establishing Project Studio Reference Monitoring Levels (May 2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=3",
+          "publisher": "Sound On Sound — H. Robjohns, Establishing Project Studio Reference Monitoring Levels (May 2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "EBU : bruit rose −18 dBFS, 85 − 10·log n dB(A), pondération A",
+              "source_url": "https://tech.ebu.ch/docs/tech/tech3276.pdf"
+            },
+            {
+              "value": "Cinéma (rapporté par SOS) : −20 dBFS RMS → 85 dB SPL par enceinte, révisé à 83 dB SPL pondéré C",
+              "source_url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2"
+            },
+            {
+              "value": "SOS : niveau selon le volume de la pièce, 74 à 83 dB SPL (C)",
+              "source_url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=3"
+            }
+          ],
+          "note": "Conventions différentes (broadcast EBU vs cinéma vs petites régies) : toujours préciser niveau du bruit rose, pondération et par voie ou total."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "stereo-listening-geometry",
+      "name_fr": "Géométrie d'écoute stéréo en régie",
+      "name_en": "Stereo listening geometry",
+      "domain": "monitoring",
+      "definition": "Placement normalisé des enceintes de régie : triangle avec un angle de base de 60° (±30°), distance d'écoute h ≈ 0,9 × b pour un écartement b de 2 à 4 m, tête à environ 1,2 m du sol.",
+      "explanation": "L'EBU Tech 3276 fixe ces repères pour l'évaluation de programmes stéréo. Les réflexions précoces (moins de 15 ms après le son direct) doivent être au moins 10 dB sous le son direct entre 1 et 8 kHz ; la surface de la console est une source typique de réflexion. En pratique : mesurer l'écartement, orienter les enceintes vers la tête de l'auditeur, vérifier la symétrie gauche/droite avant toute calibration de niveau.",
+      "formulas": [
+        {
+          "expr": "h ≈ 0,9·b (2 m < b < 4 m)",
+          "vars": {
+            "h": "distance d'écoute (m)",
+            "b": "écartement des enceintes (m)"
+          },
+          "source_url": "https://tech.ebu.ch/docs/tech/tech3276.pdf"
+        }
+      ],
+      "units": [
+        "m",
+        "°",
+        "ms"
+      ],
+      "related_concepts": [
+        "control-room-reference-level",
+        "room-modes",
+        "comb-filtering"
+      ],
+      "equipment_ids": [
+        "genelec-8030c",
+        "neumann-kh-120-ii"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Conditions d'écoute normalisées — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+          "publisher": "EBU — Tech 3276, Listening conditions for the assessment of sound programme material (1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "monitor-cue-solo-bus",
+      "name_fr": "Écoute de contrôle des retours (bus solo)",
+      "name_en": "Monitor cue via solo bus",
+      "domain": "monitoring",
+      "definition": "Écoute par laquelle l'ingénieur retours entend exactement le mix d'un musicien, via un bus solo envoyé à ses propres ears ou à un wedge d'écoute.",
+      "explanation": "Sur une SD12, il y a deux bus solo, chacun réglable en PFL ou AFL, mono ou stéréo ; DiGiCo donne l'exemple d'un console retours où le solo 1 alimente les ears de l'ingénieur et le solo 2 un wedge. Sur le PSM 900, le CueMode permet de mémoriser jusqu'à 20 canaux dans un même récepteur pour passer d'un mix d'artiste à l'autre. Écouter dans le même type de transducteur que l'artiste est la seule façon de juger son mix.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "pfl-afl-solo",
+        "monitor-engineer-role",
+        "stage-monitor-mix"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "shure-psm-900"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Console retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "personal-monitor-mixer",
+      "name_fr": "Mélangeur personnel de retours",
+      "name_en": "Personal monitor mixer",
+      "domain": "monitoring",
+      "definition": "Petit mélangeur placé près du musicien qui lui permet de doser lui-même ses sources ; en mixage distribué, les canaux arrivent en numérique par un câble réseau.",
+      "explanation": "Le mixage distribué numérise les sorties de la console et envoie 8 à 16 canaux par câble Ethernet à des postes individuels. Chaque musicien fait son mix sans l'ingénieur, ce qui demande un minimum de formation (commencer sans rien dans les ears et n'ajouter que le nécessaire). Shure recommande de faire suivre le poste d'un système d'ears pour bénéficier du limiteur et d'un volume à la ceinture, car ces postes n'ont généralement pas de limiteur.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "stage-monitor-mix",
+        "iem-receiver-limiter",
+        "audio-over-ip"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Retours personnels — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "monitor-graphic-eq",
+      "name_fr": "Égaliseur graphique de retour",
+      "name_en": "Monitor graphic equalizer",
+      "domain": "monitoring",
+      "definition": "Égaliseur à fréquences fixes (souvent 31 bandes au tiers d'octave) inséré sur la sortie d'un mix retour pour atténuer les fréquences qui accrochent et corriger le timbre du wedge.",
+      "explanation": "C'est l'outil le plus courant contre le larsen dû à la réponse du système. Les bandes étroites isolent mieux la fréquence, mais le larsen tombe rarement pile sur le centre d'une bande : il faut parfois toucher les bandes voisines. Les retours servant surtout à retirer des fréquences, des modèles en coupe seule existent.",
+      "formulas": [],
+      "units": [
+        "Hz",
+        "dB"
+      ],
+      "related_concepts": [
+        "ringing-out",
+        "equalizer-parametric",
+        "acoustic-feedback"
+      ],
+      "equipment_ids": [
+        "dbx-231s"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Égalisation des retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Valeur de 79 dB SPL pour les petites régies (souvent attribuée à Dolby)",
+      "searched": "WebSearch 'monitor calibration 79 dB SPL…' : seulement forums et blogs ; Sound On Sound (Robjohns 2014) donne une table 74–83 dB selon le volume de la pièce, pas 79 dB"
+    },
+    {
+      "what": "Texte de SMPTE RP 200 (85/83 dB C) consulté directement",
+      "searched": "Non ouvert (payant) ; valeur rapportée par Sound On Sound seulement"
+    },
+    {
+      "what": "Chiffrage du bénéfice des ears en gain avant larsen (en dB)",
+      "searched": "Shure dit seulement que les ears suppriment la limite PAG ; pas de valeur"
+    },
+    {
+      "what": "Équation NAG (needed acoustic gain)",
+      "searched": "Pas de source primaire lue ; déjà en gap dans fundamentals/12"
+    }
+  ]
+}

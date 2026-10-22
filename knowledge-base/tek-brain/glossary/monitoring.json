@@ -1,0 +1,1064 @@
+{
+  "entity": "glossary",
+  "domain": "monitoring",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "foldback",
+      "term_fr": "Retour (foldback)",
+      "term_en": "Foldback",
+      "domain": "monitoring",
+      "definition": "Système de haut-parleurs ou d'écouteurs tourné vers les artistes pour qu'ils s'entendent ; terme britannique pour les retours de scène.",
+      "see_also": [
+        "stage-monitor-mix"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wedge",
+      "term_fr": "Wedge (retour de sol)",
+      "term_en": "Wedge",
+      "domain": "monitoring",
+      "definition": "Enceinte de retour en forme de coin posée au sol et dirigée vers le musicien.",
+      "see_also": [
+        "floor-wedge-monitor"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "side-fill",
+      "term_fr": "Side-fill",
+      "term_en": "Side-fill",
+      "domain": "monitoring",
+      "definition": "Enceinte debout sur le côté de la scène qui couvre les zones non atteintes par les wedges.",
+      "see_also": [
+        "side-fill-monitor"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drum-fill",
+      "term_fr": "Drum-fill",
+      "term_en": "Drum fill",
+      "domain": "monitoring",
+      "definition": "Side-fill puissant, riche en grave, dédié au batteur.",
+      "see_also": [
+        "drum-fill"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "monitor-console",
+      "term_fr": "Console retours",
+      "term_en": "Monitor console",
+      "domain": "monitoring",
+      "definition": "Console séparée dont le seul rôle est de fabriquer plusieurs mixes retours.",
+      "see_also": [
+        "monitor-engineer-role"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "monitor-engineer",
+      "term_fr": "Ingénieur retours",
+      "term_en": "Monitor engineer",
+      "domain": "monitoring",
+      "definition": "Technicien qui fabrique et ajuste les mixes retours des musiciens.",
+      "see_also": [
+        "monitor-engineer-role"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "in-ear-monitor",
+      "term_fr": "Ear-monitor (ears, IEM)",
+      "term_en": "In-ear monitor",
+      "domain": "monitoring",
+      "definition": "Écouteur placé dans le conduit auditif qui reproduit le mix retour d'un musicien.",
+      "see_also": [
+        "in-ear-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personal-monitor-system",
+      "term_fr": "Système de retour personnel",
+      "term_en": "Personal monitor system",
+      "domain": "monitoring",
+      "definition": "Système qui adapte un mix à un musicien sans gêner les autres ; plus large que la seule notion d'ear-monitor.",
+      "see_also": [
+        "in-ear-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bodypack-receiver",
+      "term_fr": "Récepteur de ceinture",
+      "term_en": "Bodypack receiver",
+      "domain": "monitoring",
+      "definition": "Récepteur porté par le musicien qui reçoit le signal HF et alimente ses écouteurs.",
+      "see_also": [
+        "in-ear-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hardwired-personal-monitor",
+      "term_fr": "Retour personnel filaire",
+      "term_en": "Hardwired personal monitor",
+      "domain": "monitoring",
+      "definition": "Boîtier de ceinture relié par câble à la console, sans liaison HF ; adapté aux musiciens immobiles.",
+      "see_also": [
+        "in-ear-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dual-mono-mode",
+      "term_fr": "Mode double mono (MixMode)",
+      "term_en": "Dual-mono mode (MixMode)",
+      "domain": "monitoring",
+      "definition": "Mode où le récepteur additionne deux mixes mono dans les deux oreilles, la balance dosant l'un contre l'autre.",
+      "see_also": [
+        "iem-stereo-dual-mono"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "focus-mode",
+      "term_fr": "Mode Focus",
+      "term_en": "Focus mode",
+      "domain": "monitoring",
+      "definition": "Équivalent Sennheiser (ew IEM G4) du double mono : les deux voies émises sont additionnées en mono au récepteur.",
+      "see_also": [
+        "iem-stereo-dual-mono"
+      ],
+      "sources": [
+        {
+          "url": "https://assets.sennheiser.com/download/assets/ew-iem-g4_bedienungsanleitung_05_2026_de.pdf/facce9cce7b611f08a557aeaa9c3764a?attachment=true",
+          "publisher": "Sennheiser — ew IEM G4 Bedienungsanleitung (05/2026, DE)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cuemode",
+      "term_fr": "CueMode",
+      "term_en": "CueMode",
+      "domain": "monitoring",
+      "definition": "Fonction du récepteur PSM 900 qui mémorise jusqu'à 20 canaux pour écouter tour à tour les mixes des artistes.",
+      "see_also": [
+        "monitor-cue-solo-bus"
+      ],
+      "sources": [
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "volume-limit",
+      "term_fr": "Limitation de volume (V LIMIT)",
+      "term_en": "Volume limit",
+      "domain": "monitoring",
+      "definition": "Réglage du PSM 900 qui restreint la course du volume (0 à −48 dB) sans compresser le son.",
+      "see_also": [
+        "iem-receiver-limiter"
+      ],
+      "sources": [
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "receiver-limiter",
+      "term_fr": "Limiteur de récepteur",
+      "term_en": "Receiver limiter",
+      "domain": "monitoring",
+      "definition": "Limiteur placé après la liaison HF qui bloque les crêtes accidentelles dans les écouteurs.",
+      "see_also": [
+        "iem-receiver-limiter"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rf-mute",
+      "term_fr": "Coupure HF (RF mute)",
+      "term_en": "RF mute",
+      "domain": "monitoring",
+      "definition": "Commutateur qui coupe l'émission HF de l'émetteur pendant les réglages.",
+      "see_also": [
+        "iem-rf-dropouts"
+      ],
+      "sources": [
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tone-key-squelch",
+      "term_fr": "Squelch à tonalité",
+      "term_en": "Tone-key squelch",
+      "domain": "monitoring",
+      "definition": "Circuit qui coupe le récepteur s'il ne détecte pas la tonalité pilote de son émetteur.",
+      "see_also": [
+        "iem-mpx-stereo-limits",
+        "squelch"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pilot-tone-19khz",
+      "term_fr": "Tonalité pilote 19 kHz",
+      "term_en": "19 kHz pilot tone",
+      "domain": "monitoring",
+      "definition": "Tonalité qui signale au récepteur une transmission stéréo MPX ; sans elle, le récepteur reste en mono ou se coupe.",
+      "see_also": [
+        "iem-mpx-stereo-limits"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mpx-stereo",
+      "term_fr": "Stéréo multiplex (MPX)",
+      "term_en": "Multiplex stereo (MPX)",
+      "domain": "monitoring",
+      "definition": "Codage stéréo somme/différence avec tonalité pilote, utilisé par les ears HF analogiques ; bande utile limitée à environ 15 kHz.",
+      "see_also": [
+        "iem-mpx-stereo-limits"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "antenna-combiner",
+      "term_fr": "Combineur d'antennes",
+      "term_en": "Antenna combiner",
+      "domain": "monitoring",
+      "definition": "Appareil qui regroupe plusieurs émetteurs sur une seule antenne pour réduire intermodulation et multitrajets.",
+      "see_also": [
+        "iem-rf-dropouts",
+        "antenna-distribution"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "helical-antenna",
+      "term_fr": "Antenne hélicoïdale",
+      "term_en": "Helical antenna",
+      "domain": "monitoring",
+      "definition": "Antenne directionnelle insensible à la polarisation, environ 14 dB de gain avant selon Shure.",
+      "see_also": [
+        "iem-rf-dropouts"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "multipath-dropout",
+      "term_fr": "Décrochage par multitrajets",
+      "term_en": "Multipath dropout",
+      "domain": "monitoring",
+      "definition": "Coupure due à des ondes réfléchies arrivant en opposition de phase à l'antenne du récepteur.",
+      "see_also": [
+        "iem-rf-dropouts"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ambient-microphone",
+      "term_fr": "Micro d'ambiance",
+      "term_en": "Ambient microphone",
+      "domain": "monitoring",
+      "definition": "Micro mixé seulement dans les ears pour redonner la sensation de salle ou permettre aux musiciens de se parler.",
+      "see_also": [
+        "ambient-microphones-iem"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ambient-earphone",
+      "term_fr": "Écouteur à ambiance",
+      "term_en": "Ambient earphone",
+      "domain": "monitoring",
+      "definition": "Écouteur qui laisse entrer le son extérieur, par un évent (passif) ou par des micros miniatures (actif).",
+      "see_also": [
+        "ambient-microphones-iem"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "occlusion",
+      "term_fr": "Occlusion",
+      "term_en": "Occlusion",
+      "domain": "monitoring",
+      "definition": "Fermeture du conduit auditif qui renforce le grave de sa propre voix (son creux).",
+      "see_also": [
+        "occlusion-effect"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "custom-molded-earphone",
+      "term_fr": "Écouteur moulé sur mesure",
+      "term_en": "Custom molded earphone",
+      "domain": "monitoring",
+      "definition": "Écouteur fabriqué à partir d'empreintes du conduit auditif prises par un audioprothésiste ; isolation élevée.",
+      "see_also": [
+        "in-ear-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "universal-earphone",
+      "term_fr": "Écouteur universel",
+      "term_en": "Universal earphone",
+      "domain": "monitoring",
+      "definition": "Écouteur adapté au conduit par des embouts interchangeables (mousse, silicone, triple flange).",
+      "see_also": [
+        "in-ear-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "balanced-armature",
+      "term_fr": "Armature équilibrée",
+      "term_en": "Balanced armature",
+      "domain": "monitoring",
+      "definition": "Transducteur miniature issu des aides auditives, sensible et bon en aigu, qui exige un bon joint avec le conduit.",
+      "see_also": [
+        "in-ear-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drum-throne-shaker",
+      "term_fr": "Vibreur de siège batteur",
+      "term_en": "Drum throne shaker",
+      "domain": "monitoring",
+      "definition": "Transducteur mécanique fixé au siège qui reproduit les vibrations du grave sans son audible.",
+      "see_also": [
+        "drum-fill"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "potential-acoustic-gain",
+      "term_fr": "Gain acoustique potentiel (PAG)",
+      "term_en": "Potential acoustic gain (PAG)",
+      "domain": "monitoring",
+      "definition": "Gain calculé qu'un système peut atteindre juste sous le seuil de larsen.",
+      "see_also": [
+        "gain-before-feedback"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/audio/pag.html",
+          "publisher": "HyperPhysics (C. R. Nave, Georgia State University) — Potential Acoustic Gain",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gain-before-feedback",
+      "term_fr": "Gain avant larsen",
+      "term_en": "Gain before feedback",
+      "domain": "monitoring",
+      "definition": "Gain applicable à un micro avant l'apparition du larsen.",
+      "see_also": [
+        "gain-before-feedback"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nom",
+      "term_fr": "NOM (nombre de micros ouverts)",
+      "term_en": "NOM (number of open microphones)",
+      "domain": "monitoring",
+      "definition": "Nombre de micros ouverts ; chaque doublement retire environ 3 dB de gain avant larsen.",
+      "see_also": [
+        "number-of-open-microphones"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ring-out",
+      "term_fr": "Accorder (ring out)",
+      "term_en": "Ring out",
+      "domain": "monitoring",
+      "definition": "Monter un retour jusqu'au larsen, atténuer la fréquence à l'égaliseur et répéter.",
+      "see_also": [
+        "ringing-out"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
+          "publisher": "ProSoundWeb (PSW Staff, from Sweetwater) — Tech Tip: EQing Stage Monitors, 2010",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "feedback",
+      "term_fr": "Larsen",
+      "term_en": "Feedback",
+      "domain": "monitoring",
+      "definition": "Sifflement ou ronflement dû au son du haut-parleur repris et réamplifié par le micro.",
+      "see_also": [
+        "acoustic-feedback"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sweet-spot-wedge",
+      "term_fr": "Zone d'écoute optimale (sweet spot)",
+      "term_en": "Sweet spot",
+      "domain": "monitoring",
+      "definition": "Zone restreinte devant un wedge où l'équilibre est bon ; un pas de côté change le son.",
+      "see_also": [
+        "floor-wedge-monitor"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "more-me-syndrome",
+      "term_fr": "Syndrome « plus de moi »",
+      "term_en": "More-me syndrome",
+      "domain": "monitoring",
+      "definition": "Tendance de chaque musicien à réclamer sa propre source plus fort dans un mix partagé.",
+      "see_also": [
+        "stage-monitor-mix"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distributed-mixing",
+      "term_fr": "Mixage distribué",
+      "term_en": "Distributed mixing",
+      "domain": "monitoring",
+      "definition": "Distribution numérique des canaux vers des postes de mixage personnels par câble réseau.",
+      "see_also": [
+        "personal-monitor-mixer"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mic-splitter",
+      "term_fr": "Splitter micro",
+      "term_en": "Microphone splitter",
+      "domain": "monitoring",
+      "definition": "Dispositif qui envoie chaque micro à la console façade et à la console retours.",
+      "see_also": [
+        "microphone-split-foh-monitor"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gain-tracking",
+      "term_fr": "Suivi de gain (gain tracking)",
+      "term_en": "Gain tracking",
+      "domain": "monitoring",
+      "definition": "Compensation automatique, par le trim numérique, des changements de gain analogique faits par l'autre console sur un boîtier de scène partagé.",
+      "see_also": [
+        "microphone-split-foh-monitor"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pre-mute-send",
+      "term_fr": "Départ pré-mute",
+      "term_en": "Pre-mute send",
+      "domain": "monitoring",
+      "definition": "Départ auxiliaire pris avant le mute de la voie : le retour reste actif quand la façade coupe la voie.",
+      "see_also": [
+        "pre-post-fader",
+        "stage-monitor-mix"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "monitor-mute",
+      "term_fr": "Coupure des écoutes",
+      "term_en": "Monitor mute",
+      "domain": "monitoring",
+      "definition": "Coupure automatique des haut-parleurs de la pièce quand un micro de cette pièce est ouvert.",
+      "see_also": [
+        "monitor-mute-on-open-mic"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+          "publisher": "Telos Alliance / Axia — Axia iQ Quick Start Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reference-listening-level",
+      "term_fr": "Niveau d'écoute de référence",
+      "term_en": "Reference listening level",
+      "domain": "monitoring",
+      "definition": "Niveau acoustique calibré au point d'écoute pour un bruit rose de niveau numérique donné.",
+      "see_also": [
+        "control-room-reference-level"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+          "publisher": "EBU — Tech 3276, Listening conditions for the assessment of sound programme material (1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2",
+          "publisher": "Sound On Sound — H. Robjohns, Establishing Project Studio Reference Monitoring Levels (May 2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stereo-triangle",
+      "term_fr": "Triangle stéréo",
+      "term_en": "Stereo triangle",
+      "domain": "monitoring",
+      "definition": "Disposition des enceintes et de l'auditeur avec un angle de base de 60°.",
+      "see_also": [
+        "stereo-listening-geometry"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+          "publisher": "EBU — Tech 3276, Listening conditions for the assessment of sound programme material (1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "monitor-angle",
+      "term_fr": "Angle retour",
+      "term_en": "Monitor angle",
+      "domain": "monitoring",
+      "definition": "Inclinaison de l'enceinte posée au sol en position retour (ex. 50° pour le DBR12).",
+      "see_also": [
+        "floor-wedge-monitor"
+      ],
+      "sources": [
+        {
+          "url": "https://data.yamaha.com/download/files/2082568",
+          "publisher": "Yamaha — DBR15/DBR12/DBR10 Technical Specifications (03/2024)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/?p=956",
+          "publisher": "L-Acoustics — X15 HiQ product page",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Définition sourcée de « shout mic » / talkback retours",
+      "searched": "Non trouvé dans les sources ouvertes"
+    }
+  ]
+}
