@@ -1,0 +1,198 @@
+{
+ "per_category": {
+  "accessories-mounting": {
+   "devices": 15,
+   "official_manual": 7,
+   "two_source_any": 10,
+   "conflicts": 3,
+   "primary_source": 15,
+   "french_manual": 1,
+   "in_catalog": 2
+  },
+  "amplifiers-processors": {
+   "devices": 16,
+   "official_manual": 16,
+   "two_source_any": 13,
+   "conflicts": 4,
+   "primary_source": 16,
+   "french_manual": 7,
+   "in_catalog": 0
+  },
+  "broadcast-radio": {
+   "devices": 18,
+   "official_manual": 15,
+   "two_source_any": 12,
+   "conflicts": 7,
+   "primary_source": 18,
+   "french_manual": 5,
+   "in_catalog": 3
+  },
+  "cables-connectors": {
+   "devices": 22,
+   "official_manual": 3,
+   "two_source_any": 1,
+   "conflicts": 4,
+   "primary_source": 22,
+   "french_manual": 0,
+   "in_catalog": 1
+  },
+  "consoles": {
+   "devices": 30,
+   "official_manual": 23,
+   "two_source_any": 21,
+   "conflicts": 9,
+   "primary_source": 28,
+   "french_manual": 5,
+   "in_catalog": 2
+  },
+  "di-splitters": {
+   "devices": 13,
+   "official_manual": 10,
+   "two_source_any": 13,
+   "conflicts": 24,
+   "primary_source": 13,
+   "french_manual": 0,
+   "in_catalog": 0
+  },
+  "headphones-iem": {
+   "devices": 16,
+   "official_manual": 11,
+   "two_source_any": 15,
+   "conflicts": 17,
+   "primary_source": 13,
+   "french_manual": 5,
+   "in_catalog": 0
+  },
+  "interfaces-converters-clocks": {
+   "devices": 18,
+   "official_manual": 15,
+   "two_source_any": 15,
+   "conflicts": 9,
+   "primary_source": 17,
+   "french_manual": 3,
+   "in_catalog": 3
+  },
+  "loudspeakers": {
+   "devices": 18,
+   "official_manual": 16,
+   "two_source_any": 14,
+   "conflicts": 10,
+   "primary_source": 18,
+   "french_manual": 10,
+   "in_catalog": 2
+  },
+  "measurement-tools": {
+   "devices": 13,
+   "official_manual": 9,
+   "two_source_any": 9,
+   "conflicts": 4,
+   "primary_source": 12,
+   "french_manual": 3,
+   "in_catalog": 0
+  },
+  "microphones": {
+   "devices": 63,
+   "official_manual": 42,
+   "two_source_any": 52,
+   "conflicts": 40,
+   "primary_source": 58,
+   "french_manual": 3,
+   "in_catalog": 5
+  },
+  "patchbays": {
+   "devices": 8,
+   "official_manual": 4,
+   "two_source_any": 7,
+   "conflicts": 1,
+   "primary_source": 8,
+   "french_manual": 0,
+   "in_catalog": 1
+  },
+  "processors-outboard": {
+   "devices": 26,
+   "official_manual": 16,
+   "two_source_any": 23,
+   "conflicts": 41,
+   "primary_source": 23,
+   "french_manual": 4,
+   "in_catalog": 1
+  },
+  "recorders-playback": {
+   "devices": 18,
+   "official_manual": 11,
+   "two_source_any": 18,
+   "conflicts": 4,
+   "primary_source": 13,
+   "french_manual": 5,
+   "in_catalog": 0
+  },
+  "software": {
+   "devices": 15,
+   "official_manual": 11,
+   "two_source_any": 11,
+   "conflicts": 4,
+   "primary_source": 15,
+   "french_manual": 3,
+   "in_catalog": 0
+  },
+  "stageboxes-networking": {
+   "devices": 16,
+   "official_manual": 8,
+   "two_source_any": 14,
+   "conflicts": 4,
+   "primary_source": 16,
+   "french_manual": 1,
+   "in_catalog": 1
+  },
+  "studio-monitors": {
+   "devices": 16,
+   "official_manual": 13,
+   "two_source_any": 13,
+   "conflicts": 4,
+   "primary_source": 16,
+   "french_manual": 2,
+   "in_catalog": 2
+  },
+  "wireless-systems": {
+   "devices": 16,
+   "official_manual": 16,
+   "two_source_any": 8,
+   "conflicts": 11,
+   "primary_source": 16,
+   "french_manual": 12,
+   "in_catalog": 0
+  }
+ },
+ "per_file": {
+  "accessories-mounting.json": 15,
+  "amplifiers-processors.json": 16,
+  "broadcast-radio.json": 18,
+  "cables-connectors.json": 22,
+  "consoles-analog.json": 12,
+  "consoles-digital.json": 18,
+  "di-splitters.json": 13,
+  "headphones-iem.json": 16,
+  "interfaces-converters-clocks.json": 18,
+  "loudspeakers.json": 18,
+  "measurement-tools.json": 13,
+  "microphones-condenser.json": 22,
+  "microphones-dynamic-ribbon.json": 17,
+  "microphones-specialty.json": 24,
+  "patchbays.json": 8,
+  "processors-dynamics-eq.json": 18,
+  "processors-effects.json": 8,
+  "recorders-playback.json": 18,
+  "software.json": 15,
+  "stageboxes-networking.json": 16,
+  "studio-monitors.json": 16,
+  "wireless-systems.json": 16
+ },
+ "totals": {
+  "devices": 357,
+  "official_manual": 246,
+  "two_source_any": 269,
+  "conflicts": 200,
+  "primary_source": 337,
+  "french_manual": 69
+ }
+}
