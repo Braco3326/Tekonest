@@ -12426,7 +12426,7 @@
       "model_url": "https://sketchfab.com/3d-models/a8dd30124e9d4c32a77fc5c4b8c689bd",
       "objaverse_uid": "a8dd30124e9d4c32a77fc5c4b8c689bd",
       "objaverse_lvis_category": "speaker_(stero_equipment)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/a8dd30124e9d4c32a77fc5c4b8c689bd.glb",
+      "objaverse_glb": "not found",
       "title": "Monitor Speaker",
       "author": "Saandy",
       "licence": "CC Attribution (Sketchfab API /v3/models/a8dd30124e9d4c32a77fc5c4b8c689bd, checked 2026-10-22)",
@@ -12446,7 +12446,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-stage-monitor-wedge-saandy.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-stage-monitor-wedge-saandy.glb"
+      "committed_file": "3d-models/objv-stage-monitor-wedge-saandy.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-usb-podcast-mic-generic",
@@ -12460,7 +12461,7 @@
       "model_url": "https://sketchfab.com/3d-models/d9191cc1eadb4c989eb65ef701abdafc",
       "objaverse_uid": "d9191cc1eadb4c989eb65ef701abdafc",
       "objaverse_lvis_category": "microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/d9191cc1eadb4c989eb65ef701abdafc.glb",
+      "objaverse_glb": "not found",
       "title": "Generic Yeti-style Microphone",
       "author": "Fresh Polygons (@FreshPolygons)",
       "licence": "CC Attribution (Sketchfab API /v3/models/d9191cc1eadb4c989eb65ef701abdafc, checked 2026-10-22)",
@@ -12480,7 +12481,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-usb-podcast-mic-generic.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-usb-podcast-mic-generic.glb"
+      "committed_file": "3d-models/objv-usb-podcast-mic-generic.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-trs-jack-adapter",
@@ -12494,7 +12496,7 @@
       "model_url": "https://sketchfab.com/3d-models/26f8f79fc5d14e31aa0e9cbe3303404d",
       "objaverse_uid": "26f8f79fc5d14e31aa0e9cbe3303404d",
       "objaverse_lvis_category": "boom_microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/26f8f79fc5d14e31aa0e9cbe3303404d.glb",
+      "objaverse_glb": "not found",
       "title": "TRS Converter",
       "author": "Tentrox (@sudharsanme)",
       "licence": "CC Attribution (Sketchfab API /v3/models/26f8f79fc5d14e31aa0e9cbe3303404d, checked 2026-10-22)",
@@ -12514,7 +12516,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-trs-jack-adapter.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-trs-jack-adapter.glb"
+      "committed_file": "3d-models/objv-trs-jack-adapter.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-dj-table-lowpoly",
@@ -12528,7 +12531,7 @@
       "model_url": "https://sketchfab.com/3d-models/2250094cd7bf484d9443ed0c5a97483a",
       "objaverse_uid": "2250094cd7bf484d9443ed0c5a97483a",
       "objaverse_lvis_category": "speaker_(stero_equipment)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/2250094cd7bf484d9443ed0c5a97483a.glb",
+      "objaverse_glb": "not found",
       "title": "dj table (lowpole)",
       "author": "hasp (@hospis)",
       "licence": "CC Attribution (Sketchfab API /v3/models/2250094cd7bf484d9443ed0c5a97483a, checked 2026-10-22)",
@@ -12548,7 +12551,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-dj-table-lowpoly.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-dj-table-lowpoly.glb"
+      "committed_file": "3d-models/objv-dj-table-lowpoly.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-guitar-combo-amp-lowpoly",
@@ -12562,7 +12566,7 @@
       "model_url": "https://sketchfab.com/3d-models/4c520860a87e43b095050b120eef7443",
       "objaverse_uid": "4c520860a87e43b095050b120eef7443",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/4c520860a87e43b095050b120eef7443.glb",
+      "objaverse_glb": "not found",
       "title": "Electric Guitar Amplifier",
       "author": "Agustín Hönnun (@Agustin_Honnun)",
       "licence": "CC Attribution (Sketchfab API /v3/models/4c520860a87e43b095050b120eef7443, checked 2026-10-22)",
@@ -12582,7 +12586,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-guitar-combo-amp-lowpoly.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-guitar-combo-amp-lowpoly.glb"
+      "committed_file": "3d-models/objv-guitar-combo-amp-lowpoly.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-battery-guitar-amp-camilote",
@@ -12595,7 +12600,7 @@
       "model_url": "https://sketchfab.com/3d-models/29d45cf5c404465e839c730393f9732a",
       "objaverse_uid": "29d45cf5c404465e839c730393f9732a",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/29d45cf5c404465e839c730393f9732a.glb",
+      "objaverse_glb": "not found",
       "title": "Guitar Amp",
       "author": "Gustavo Camilote (@camilote)",
       "licence": "CC Attribution (Sketchfab API /v3/models/29d45cf5c404465e839c730393f9732a, checked 2026-10-22)",
@@ -12615,7 +12620,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-battery-guitar-amp-camilote.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-battery-guitar-amp-camilote.glb"
+      "committed_file": "3d-models/objv-battery-guitar-amp-camilote.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-hifi-sound-system",
@@ -12629,7 +12635,7 @@
       "model_url": "https://sketchfab.com/3d-models/725273fbdde54a1babaf6ce1c95b96b4",
       "objaverse_uid": "725273fbdde54a1babaf6ce1c95b96b4",
       "objaverse_lvis_category": "speaker_(stero_equipment)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/725273fbdde54a1babaf6ce1c95b96b4.glb",
+      "objaverse_glb": "not found",
       "title": "Sound system",
       "author": "yryabchenko",
       "licence": "CC Attribution (Sketchfab API /v3/models/725273fbdde54a1babaf6ce1c95b96b4, checked 2026-10-22)",
@@ -12649,7 +12655,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-hifi-sound-system.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-hifi-sound-system.glb"
+      "committed_file": "3d-models/objv-hifi-sound-system.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-vintage-microphone-klasy",
@@ -12663,7 +12670,7 @@
       "model_url": "https://sketchfab.com/3d-models/a5986b39102f47c5b32b212365dd7276",
       "objaverse_uid": "a5986b39102f47c5b32b212365dd7276",
       "objaverse_lvis_category": "microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/a5986b39102f47c5b32b212365dd7276.glb",
+      "objaverse_glb": "not found",
       "title": "Vintage Microphone",
       "author": "Klasy",
       "licence": "CC Attribution (Sketchfab API /v3/models/a5986b39102f47c5b32b212365dd7276, checked 2026-10-22)",
@@ -12683,7 +12690,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-vintage-microphone-klasy.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-vintage-microphone-klasy.glb"
+      "committed_file": "3d-models/objv-vintage-microphone-klasy.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-mid-century-microphone",
@@ -12697,7 +12705,7 @@
       "model_url": "https://sketchfab.com/3d-models/bdc696f637b94faea391e3ebe67988fc",
       "objaverse_uid": "bdc696f637b94faea391e3ebe67988fc",
       "objaverse_lvis_category": "microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/bdc696f637b94faea391e3ebe67988fc.glb",
+      "objaverse_glb": "not found",
       "title": "Mid-Century Microphone",
       "author": "austinstanbury",
       "licence": "CC Attribution (Sketchfab API /v3/models/bdc696f637b94faea391e3ebe67988fc, checked 2026-10-22)",
@@ -12717,7 +12725,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-mid-century-microphone.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-mid-century-microphone.glb"
+      "committed_file": "3d-models/objv-mid-century-microphone.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-home-stereo-speakers",
@@ -12731,7 +12740,7 @@
       "model_url": "https://sketchfab.com/3d-models/f7d5399fef1744b28a503f59437db29d",
       "objaverse_uid": "f7d5399fef1744b28a503f59437db29d",
       "objaverse_lvis_category": "speaker_(stero_equipment)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/f7d5399fef1744b28a503f59437db29d.glb",
+      "objaverse_glb": "not found",
       "title": "Stereo Speakers",
       "author": "jimbogies",
       "licence": "CC Attribution (Sketchfab API /v3/models/f7d5399fef1744b28a503f59437db29d, checked 2026-10-22)",
@@ -12751,7 +12760,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-home-stereo-speakers.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-home-stereo-speakers.glb"
+      "committed_file": "3d-models/objv-home-stereo-speakers.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-on-air-desk-microphone",
@@ -12765,7 +12775,7 @@
       "model_url": "https://sketchfab.com/3d-models/812ed8c6fee44602a376159f7990a765",
       "objaverse_uid": "812ed8c6fee44602a376159f7990a765",
       "objaverse_lvis_category": "microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/812ed8c6fee44602a376159f7990a765.glb",
+      "objaverse_glb": "not found",
       "title": "Old Microphone",
       "author": "gozdemrl",
       "licence": "CC Attribution (Sketchfab API /v3/models/812ed8c6fee44602a376159f7990a765, checked 2026-10-22)",
@@ -12785,7 +12795,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-on-air-desk-microphone.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-on-air-desk-microphone.glb"
+      "committed_file": "3d-models/objv-on-air-desk-microphone.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-speaker-cabinet-rusov",
@@ -12799,7 +12810,7 @@
       "model_url": "https://sketchfab.com/3d-models/071be99aeb3044efa1d098f9c92a3449",
       "objaverse_uid": "071be99aeb3044efa1d098f9c92a3449",
       "objaverse_lvis_category": "speaker_(stero_equipment)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/071be99aeb3044efa1d098f9c92a3449.glb",
+      "objaverse_glb": "not found",
       "title": "Speaker",
       "author": "Rusov",
       "licence": "CC Attribution (Sketchfab API /v3/models/071be99aeb3044efa1d098f9c92a3449, checked 2026-10-22)",
@@ -12819,7 +12830,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-speaker-cabinet-rusov.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-speaker-cabinet-rusov.glb"
+      "committed_file": "3d-models/objv-speaker-cabinet-rusov.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-guitar-amp-futaba",
@@ -12833,7 +12845,7 @@
       "model_url": "https://sketchfab.com/3d-models/a24bb621d3cd4ec8890b8e8dca9f2c15",
       "objaverse_uid": "a24bb621d3cd4ec8890b8e8dca9f2c15",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/a24bb621d3cd4ec8890b8e8dca9f2c15.glb",
+      "objaverse_glb": "not found",
       "title": "Guitar Amp",
       "author": "futaba@blender (@futaba_blender)",
       "licence": "CC Attribution (Sketchfab API /v3/models/a24bb621d3cd4ec8890b8e8dca9f2c15, checked 2026-10-22)",
@@ -12853,7 +12865,8 @@
       "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-guitar-amp-futaba.glb",
       "added_by": "models-open-access-cad",
-      "committed_file": "3d-models/objv-guitar-amp-futaba.glb"
+      "committed_file": "3d-models/objv-guitar-amp-futaba.glb",
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-reel-tape-recorder-sp-h6v",
@@ -12867,7 +12880,7 @@
       "model_url": "https://sketchfab.com/3d-models/6210a8a2024144daaa80610d8f604e40",
       "objaverse_uid": "6210a8a2024144daaa80610d8f604e40",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/6210a8a2024144daaa80610d8f604e40.glb",
+      "objaverse_glb": "not found",
       "title": "Rejestrator SP - H6V",
       "author": "Fundacja Collect (@wirtualnemuzeawroclawia)",
       "licence": "CC Attribution (Sketchfab API /v3/models/6210a8a2024144daaa80610d8f604e40, checked 2026-10-22)",
@@ -12886,7 +12899,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-rca-44bx-ribbon-mic",
@@ -12900,7 +12914,7 @@
       "model_url": "https://sketchfab.com/3d-models/c6b0d7c071964652be6aa900b146ed53",
       "objaverse_uid": "c6b0d7c071964652be6aa900b146ed53",
       "objaverse_lvis_category": "microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/c6b0d7c071964652be6aa900b146ed53.glb",
+      "objaverse_glb": "not found",
       "title": "RCA 44-BX Microphone",
       "author": "Tom Seddon (@bloodmeat08)",
       "licence": "CC Attribution (Sketchfab API /v3/models/c6b0d7c071964652be6aa900b146ed53, checked 2026-10-22)",
@@ -12919,7 +12933,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-shure-super-55",
@@ -12933,7 +12948,7 @@
       "model_url": "https://sketchfab.com/3d-models/fac08019fef5474189f965bb495771eb",
       "objaverse_uid": "fac08019fef5474189f965bb495771eb",
       "objaverse_lvis_category": "boom_microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/fac08019fef5474189f965bb495771eb.glb",
+      "objaverse_glb": "not found",
       "title": "Shure Super 55",
       "author": "VivernaNeva",
       "licence": "CC Attribution (Sketchfab API /v3/models/fac08019fef5474189f965bb495771eb, checked 2026-10-22)",
@@ -12952,7 +12967,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-shure-sm57",
@@ -12966,7 +12982,7 @@
       "model_url": "https://sketchfab.com/3d-models/ec2dc94e022547beadee622b1ff34a5d",
       "objaverse_uid": "ec2dc94e022547beadee622b1ff34a5d",
       "objaverse_lvis_category": "microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/ec2dc94e022547beadee622b1ff34a5d.glb",
+      "objaverse_glb": "not found",
       "title": "Shure SM57 Dynamic Microphone",
       "author": "Daniel.Sharma",
       "licence": "CC Attribution (Sketchfab API /v3/models/ec2dc94e022547beadee622b1ff34a5d, checked 2026-10-22)",
@@ -12985,7 +13001,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-akg-d112-with-stand",
@@ -12999,7 +13016,7 @@
       "model_url": "https://sketchfab.com/3d-models/919a347dfcff40fdbe0eaf29b3210f1b",
       "objaverse_uid": "919a347dfcff40fdbe0eaf29b3210f1b",
       "objaverse_lvis_category": "boom_microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/919a347dfcff40fdbe0eaf29b3210f1b.glb",
+      "objaverse_glb": "not found",
       "title": "AKG D112 Bass drum microphone and stand",
       "author": "Dave.Maak",
       "licence": "CC Attribution (Sketchfab API /v3/models/919a347dfcff40fdbe0eaf29b3210f1b, checked 2026-10-22)",
@@ -13018,7 +13035,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-old-microphone-burst",
@@ -13031,7 +13049,7 @@
       "model_url": "https://sketchfab.com/3d-models/90c26d29a3124fa8bfd1456d2d63507c",
       "objaverse_uid": "90c26d29a3124fa8bfd1456d2d63507c",
       "objaverse_lvis_category": "boom_microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/90c26d29a3124fa8bfd1456d2d63507c.glb",
+      "objaverse_glb": "not found",
       "title": "Old Microphone",
       "author": "Burst Traffic Design (@bursttraffic_des)",
       "licence": "CC Attribution (Sketchfab API /v3/models/90c26d29a3124fa8bfd1456d2d63507c, checked 2026-10-22)",
@@ -13050,7 +13068,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-microphone-jgianelli",
@@ -13063,7 +13082,7 @@
       "model_url": "https://sketchfab.com/3d-models/51149a8e7ea045fdbe6aeedbf812a9c0",
       "objaverse_uid": "51149a8e7ea045fdbe6aeedbf812a9c0",
       "objaverse_lvis_category": "boom_microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/51149a8e7ea045fdbe6aeedbf812a9c0.glb",
+      "objaverse_glb": "not found",
       "title": "Microphone",
       "author": "jgianelli",
       "licence": "CC Attribution (Sketchfab API /v3/models/51149a8e7ea045fdbe6aeedbf812a9c0, checked 2026-10-22)",
@@ -13082,7 +13101,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-microphone-alexandrlight",
@@ -13095,7 +13115,7 @@
       "model_url": "https://sketchfab.com/3d-models/cb3646a27fc143ceae1473242ddae0c4",
       "objaverse_uid": "cb3646a27fc143ceae1473242ddae0c4",
       "objaverse_lvis_category": "boom_microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/cb3646a27fc143ceae1473242ddae0c4.glb",
+      "objaverse_glb": "not found",
       "title": "Microphone",
       "author": "AlexandrLight",
       "licence": "CC Attribution (Sketchfab API /v3/models/cb3646a27fc143ceae1473242ddae0c4, checked 2026-10-22)",
@@ -13114,7 +13134,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-microphone-sinord",
@@ -13127,7 +13148,7 @@
       "model_url": "https://sketchfab.com/3d-models/192eee83851d4fd78531beccb81cd267",
       "objaverse_uid": "192eee83851d4fd78531beccb81cd267",
       "objaverse_lvis_category": "microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/192eee83851d4fd78531beccb81cd267.glb",
+      "objaverse_glb": "not found",
       "title": "Microphone",
       "author": "Sinord (@sinord)",
       "licence": "CC Attribution (Sketchfab API /v3/models/192eee83851d4fd78531beccb81cd267, checked 2026-10-22)",
@@ -13146,7 +13167,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-conference-delegate-unit",
@@ -13161,7 +13183,7 @@
       "model_url": "https://sketchfab.com/3d-models/ede24e6264df47078fb625e3073b7db4",
       "objaverse_uid": "ede24e6264df47078fb625e3073b7db4",
       "objaverse_lvis_category": "boom_microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/ede24e6264df47078fb625e3073b7db4.glb",
+      "objaverse_glb": "not found",
       "title": "SENNHEISER ADN D1 délégué",
       "author": "marioSF",
       "licence": "CC Attribution (Sketchfab API /v3/models/ede24e6264df47078fb625e3073b7db4, checked 2026-10-22)",
@@ -13180,7 +13202,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-foldback-wedge-hahn",
@@ -13194,7 +13217,7 @@
       "model_url": "https://sketchfab.com/3d-models/2e3ed055f29f433c9cee1466c77867be",
       "objaverse_uid": "2e3ed055f29f433c9cee1466c77867be",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/2e3ed055f29f433c9cee1466c77867be.glb",
+      "objaverse_glb": "not found",
       "title": "Foldback",
       "author": "Noah Hahn (@noahhahn)",
       "licence": "CC Attribution (Sketchfab API /v3/models/2e3ed055f29f433c9cee1466c77867be, checked 2026-10-22)",
@@ -13213,7 +13236,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-desktop-speakers-alcayde",
@@ -13226,7 +13250,7 @@
       "model_url": "https://sketchfab.com/3d-models/1bd4e460815147d8b539a0c158c0877e",
       "objaverse_uid": "1bd4e460815147d8b539a0c158c0877e",
       "objaverse_lvis_category": "speaker_(stero_equipment)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/1bd4e460815147d8b539a0c158c0877e.glb",
+      "objaverse_glb": "not found",
       "title": "Speakers",
       "author": "Arnau Rocher Alcayde (@ArnauRocherAlcayde)",
       "licence": "CC Attribution (Sketchfab API /v3/models/1bd4e460815147d8b539a0c158c0877e, checked 2026-10-22)",
@@ -13245,7 +13269,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-speaker-roechow",
@@ -13258,7 +13283,7 @@
       "model_url": "https://sketchfab.com/3d-models/a9af14bb4c314a2fbc857796c71f8d83",
       "objaverse_uid": "a9af14bb4c314a2fbc857796c71f8d83",
       "objaverse_lvis_category": "speaker_(stero_equipment)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/a9af14bb4c314a2fbc857796c71f8d83.glb",
+      "objaverse_glb": "not found",
       "title": "Speaker",
       "author": "Joe Roechow (@JoeRoechow)",
       "licence": "CC Attribution (Sketchfab API /v3/models/a9af14bb4c314a2fbc857796c71f8d83, checked 2026-10-22)",
@@ -13277,7 +13302,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-peavey-amp-head",
@@ -13290,7 +13316,7 @@
       "model_url": "https://sketchfab.com/3d-models/65892db69b5c4b0cadb25af7c9051360",
       "objaverse_uid": "65892db69b5c4b0cadb25af7c9051360",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/65892db69b5c4b0cadb25af7c9051360.glb",
+      "objaverse_glb": "not found",
       "title": "Peavey Amp",
       "author": "Ryan_Nein",
       "licence": "CC Attribution (Sketchfab API /v3/models/65892db69b5c4b0cadb25af7c9051360, checked 2026-10-22)",
@@ -13309,7 +13335,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-marshall-combo-amp",
@@ -13322,7 +13349,7 @@
       "model_url": "https://sketchfab.com/3d-models/cd52e1b5299a40968f44c209899b4597",
       "objaverse_uid": "cd52e1b5299a40968f44c209899b4597",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/cd52e1b5299a40968f44c209899b4597.glb",
+      "objaverse_glb": "not found",
       "title": "Marshall Guitar Amp",
       "author": "D3 (@dentro)",
       "licence": "CC Attribution (Sketchfab API /v3/models/cd52e1b5299a40968f44c209899b4597, checked 2026-10-22)",
@@ -13341,7 +13368,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-boutique-stereo-amp-scan",
@@ -13354,7 +13382,7 @@
       "model_url": "https://sketchfab.com/3d-models/7dac64c06a1a49338f6573cd7c4e0cdc",
       "objaverse_uid": "7dac64c06a1a49338f6573cd7c4e0cdc",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/7dac64c06a1a49338f6573cd7c4e0cdc.glb",
+      "objaverse_glb": "not found",
       "title": "Blackhole stereo amp",
       "author": "CRHGTS",
       "licence": "CC Attribution (Sketchfab API /v3/models/7dac64c06a1a49338f6573cd7c4e0cdc, checked 2026-10-22)",
@@ -13373,7 +13401,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-roberts-retro-radio",
@@ -13387,7 +13416,7 @@
       "model_url": "https://sketchfab.com/3d-models/2037cb336566458786ae3fc5c91d8ca6",
       "objaverse_uid": "2037cb336566458786ae3fc5c91d8ca6",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/2037cb336566458786ae3fc5c91d8ca6.glb",
+      "objaverse_glb": "not found",
       "title": "Roberts Radio",
       "author": "cmpearce",
       "licence": "CC Attribution (Sketchfab API /v3/models/2037cb336566458786ae3fc5c91d8ca6, checked 2026-10-22)",
@@ -13406,7 +13435,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-soviet-radiogram-vega-341",
@@ -13419,7 +13449,7 @@
       "model_url": "https://sketchfab.com/3d-models/59a9055a9a294e7cb5f79e102606c181",
       "objaverse_uid": "59a9055a9a294e7cb5f79e102606c181",
       "objaverse_lvis_category": "speaker_(stero_equipment)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/59a9055a9a294e7cb5f79e102606c181.glb",
+      "objaverse_glb": "not found",
       "title": "Radio Vega-341 (XYZ School homework)",
       "author": "Vermishel",
       "licence": "CC Attribution (Sketchfab API /v3/models/59a9055a9a294e7cb5f79e102606c181, checked 2026-10-22)",
@@ -13438,7 +13468,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-soviet-boombox",
@@ -13451,7 +13482,7 @@
       "model_url": "https://sketchfab.com/3d-models/765edbf1bed345989049f2489d7bc980",
       "objaverse_uid": "765edbf1bed345989049f2489d7bc980",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/765edbf1bed345989049f2489d7bc980.glb",
+      "objaverse_glb": "not found",
       "title": "Soviet Music Box",
       "author": "maxisoid",
       "licence": "CC Attribution (Sketchfab API /v3/models/765edbf1bed345989049f2489d7bc980, checked 2026-10-22)",
@@ -13470,7 +13501,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-handheld-radio-transceiver",
@@ -13484,7 +13516,7 @@
       "model_url": "https://sketchfab.com/3d-models/8654fbb33d544e1cb7d35667f3859c89",
       "objaverse_uid": "8654fbb33d544e1cb7d35667f3859c89",
       "objaverse_lvis_category": "microphone",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/8654fbb33d544e1cb7d35667f3859c89.glb",
+      "objaverse_glb": "not found",
       "title": "Military Radio Transceiver",
       "author": "TheNerdForum (@RidwanManda)",
       "licence": "CC Attribution (Sketchfab API /v3/models/8654fbb33d544e1cb7d35667f3859c89, checked 2026-10-22)",
@@ -13503,7 +13535,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-radio-fernando",
@@ -13516,7 +13549,7 @@
       "model_url": "https://sketchfab.com/3d-models/31a843bd24d740158a57a59200ba0ac8",
       "objaverse_uid": "31a843bd24d740158a57a59200ba0ac8",
       "objaverse_lvis_category": "amplifier",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/31a843bd24d740158a57a59200ba0ac8.glb",
+      "objaverse_glb": "not found",
       "title": "Radio",
       "author": "fernando014",
       "licence": "CC Attribution (Sketchfab API /v3/models/31a843bd24d740158a57a59200ba0ac8, checked 2026-10-22)",
@@ -13535,7 +13568,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-jamo-s803-speakers",
@@ -13548,7 +13582,7 @@
       "model_url": "https://sketchfab.com/3d-models/47c1da3925ee41a39befc061997d8291",
       "objaverse_uid": "47c1da3925ee41a39befc061997d8291",
       "objaverse_lvis_category": "speaker_(stero_equipment)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/47c1da3925ee41a39befc061997d8291.glb",
+      "objaverse_glb": "not found",
       "title": "Jamo S803 speakers",
       "author": "gorzi (@gorzi90)",
       "licence": "CC Attribution (Sketchfab API /v3/models/47c1da3925ee41a39befc061997d8291, checked 2026-10-22)",
@@ -13567,7 +13601,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-drum-kit-rhyno",
@@ -13581,7 +13616,7 @@
       "model_url": "https://sketchfab.com/3d-models/8ae3c19e5ad34d2d8e37ba0c88a80e72",
       "objaverse_uid": "8ae3c19e5ad34d2d8e37ba0c88a80e72",
       "objaverse_lvis_category": "drum_(musical_instrument)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/8ae3c19e5ad34d2d8e37ba0c88a80e72.glb",
+      "objaverse_glb": "not found",
       "title": "Drumset 311",
       "author": "Rhyno",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13600,7 +13635,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-drums-meehan",
@@ -13613,7 +13649,7 @@
       "model_url": "https://sketchfab.com/3d-models/ab1eca756f4441f09c940196e1e82ae4",
       "objaverse_uid": "ab1eca756f4441f09c940196e1e82ae4",
       "objaverse_lvis_category": "drum_(musical_instrument)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/ab1eca756f4441f09c940196e1e82ae4.glb",
+      "objaverse_glb": "not found",
       "title": "Drums",
       "author": "CharlotteMeehan",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13632,7 +13668,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-djembe-scan",
@@ -13646,7 +13683,7 @@
       "model_url": "https://sketchfab.com/3d-models/572d364642434810abd1fa7cfb6e7782",
       "objaverse_uid": "572d364642434810abd1fa7cfb6e7782",
       "objaverse_lvis_category": "drum_(musical_instrument)",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/572d364642434810abd1fa7cfb6e7782.glb",
+      "objaverse_glb": "not found",
       "title": "Djembe Goplet Drum - Photogrammetry Scan",
       "author": "aqpetteri",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13665,7 +13702,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-acoustic-guitar-succex",
@@ -13679,7 +13717,7 @@
       "model_url": "https://sketchfab.com/3d-models/0321b21b146546929495f7d2fa597418",
       "objaverse_uid": "0321b21b146546929495f7d2fa597418",
       "objaverse_lvis_category": "guitar",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/0321b21b146546929495f7d2fa597418.glb",
+      "objaverse_glb": "not found",
       "title": "Acoustic  Guitar",
       "author": "Succex_isaac",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13698,7 +13736,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-guitar-angelellij",
@@ -13711,7 +13750,7 @@
       "model_url": "https://sketchfab.com/3d-models/01560b532c574ffb8fbd74d99fbd369a",
       "objaverse_uid": "01560b532c574ffb8fbd74d99fbd369a",
       "objaverse_lvis_category": "guitar",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/01560b532c574ffb8fbd74d99fbd369a.glb",
+      "objaverse_glb": "not found",
       "title": "Guitarra",
       "author": "angelellij",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13730,7 +13769,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-bc-rich-warlock-guitar",
@@ -13743,7 +13783,7 @@
       "model_url": "https://sketchfab.com/3d-models/1d52c72ef97c4a3a90a99075bd7904e1",
       "objaverse_uid": "1d52c72ef97c4a3a90a99075bd7904e1",
       "objaverse_lvis_category": "guitar",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/1d52c72ef97c4a3a90a99075bd7904e1.glb",
+      "objaverse_glb": "not found",
       "title": "BC Rich Warlock",
       "author": "pibraclab",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13762,7 +13802,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-heirloom-violin",
@@ -13777,7 +13818,7 @@
       "model_url": "https://sketchfab.com/3d-models/051c3db9337c412e947887477a28bb27",
       "objaverse_uid": "051c3db9337c412e947887477a28bb27",
       "objaverse_lvis_category": "violin",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/051c3db9337c412e947887477a28bb27.glb",
+      "objaverse_glb": "not found",
       "title": "Heirloom Violin",
       "author": "Queen Rose (@QueenRose)",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13796,7 +13837,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-violin-voldepreuss",
@@ -13810,7 +13852,7 @@
       "model_url": "https://sketchfab.com/3d-models/0162dea1b1044cd281c57af5e5fc2046",
       "objaverse_uid": "0162dea1b1044cd281c57af5e5fc2046",
       "objaverse_lvis_category": "violin",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/0162dea1b1044cd281c57af5e5fc2046.glb",
+      "objaverse_glb": "not found",
       "title": "Violin",
       "author": "Voldepreuss",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13829,7 +13871,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-melodica",
@@ -13843,7 +13886,7 @@
       "model_url": "https://sketchfab.com/3d-models/cbe93ddeb6984fae9521e7f71643c39b",
       "objaverse_uid": "cbe93ddeb6984fae9521e7f71643c39b",
       "objaverse_lvis_category": "musical_instrument",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/cbe93ddeb6984fae9521e7f71643c39b.glb",
+      "objaverse_glb": "not found",
       "title": "Melodica",
       "author": "ysun02",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13862,7 +13905,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-piano-lowpoly-kerem",
@@ -13876,7 +13920,7 @@
       "model_url": "https://sketchfab.com/3d-models/447866508de547ceaa17cccd39063bf4",
       "objaverse_uid": "447866508de547ceaa17cccd39063bf4",
       "objaverse_lvis_category": "piano",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/447866508de547ceaa17cccd39063bf4.glb",
+      "objaverse_glb": "not found",
       "title": "Piano",
       "author": "Kerem",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13895,7 +13939,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-upright-piano-kawai-lowpoly",
@@ -13909,7 +13954,7 @@
       "model_url": "https://sketchfab.com/3d-models/ef12dc4fce6e45dca2da7100a32c3c59",
       "objaverse_uid": "ef12dc4fce6e45dca2da7100a32c3c59",
       "objaverse_lvis_category": "piano",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/ef12dc4fce6e45dca2da7100a32c3c59.glb",
+      "objaverse_glb": "not found",
       "title": "Kawai piano",
       "author": "Jailin",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13928,7 +13973,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-headphones-re1monsen",
@@ -13942,7 +13988,7 @@
       "model_url": "https://sketchfab.com/3d-models/b12a7fb702804cc19537047a033fe0d9",
       "objaverse_uid": "b12a7fb702804cc19537047a033fe0d9",
       "objaverse_lvis_category": "headset",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/b12a7fb702804cc19537047a033fe0d9.glb",
+      "objaverse_glb": "not found",
       "title": "Headphones",
       "author": "re1monsen",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13961,7 +14007,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-old-record-player",
@@ -13975,7 +14022,7 @@
       "model_url": "https://sketchfab.com/3d-models/e96369b768ab44a39ed0e629ad6f2622",
       "objaverse_uid": "e96369b768ab44a39ed0e629ad6f2622",
       "objaverse_lvis_category": "record_player",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/e96369b768ab44a39ed0e629ad6f2622.glb",
+      "objaverse_glb": "not found",
       "title": "old recordplayer",
       "author": "maarten.cappaert",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -13994,7 +14041,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-audio-cassette",
@@ -14008,7 +14056,7 @@
       "model_url": "https://sketchfab.com/3d-models/03fe104f539744518cd35d8f2e19418c",
       "objaverse_uid": "03fe104f539744518cd35d8f2e19418c",
       "objaverse_lvis_category": "cassette",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/03fe104f539744518cd35d8f2e19418c.glb",
+      "objaverse_glb": "not found",
       "title": "Audiotape",
       "author": "odessey",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -14027,7 +14075,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-retro-radio-ptish",
@@ -14040,7 +14089,7 @@
       "model_url": "https://sketchfab.com/3d-models/60a53d04cae34dd2b10e29ab28e7b063",
       "objaverse_uid": "60a53d04cae34dd2b10e29ab28e7b063",
       "objaverse_lvis_category": "radio_receiver",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/60a53d04cae34dd2b10e29ab28e7b063.glb",
+      "objaverse_glb": "not found",
       "title": "PTish Radio",
       "author": "schmoldt.art",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -14059,7 +14108,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-old-radio-scan",
@@ -14072,7 +14122,7 @@
       "model_url": "https://sketchfab.com/3d-models/04c6b0d6e35446d2a42d4033f4e286c9",
       "objaverse_uid": "04c6b0d6e35446d2a42d4033f4e286c9",
       "objaverse_lvis_category": "radio_receiver",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/04c6b0d6e35446d2a42d4033f4e286c9.glb",
+      "objaverse_glb": "not found",
       "title": "#3DST Old Radio",
       "author": "Victor (@vtsst)",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -14091,7 +14141,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "objv-tambourine-scan",
@@ -14105,7 +14156,7 @@
       "model_url": "https://sketchfab.com/3d-models/b948f573ae844cc1aec5872440fe1fba",
       "objaverse_uid": "b948f573ae844cc1aec5872440fe1fba",
       "objaverse_lvis_category": "tambourine",
-      "objaverse_glb": "https://huggingface.co/datasets/allenai/objaverse/resolve/main/glbs/<shard>/b948f573ae844cc1aec5872440fe1fba.glb",
+      "objaverse_glb": "not found",
       "title": "3D Scan",
       "author": "olesyazaytseva",
       "licence": "CC Attribution (Objaverse metadata \"license\" field; Sketchfab page re-check blocked by HTTP 429 on 2026-10-22 — re-verify before any download)",
@@ -14124,7 +14175,8 @@
       "accessed": "2026-10-22",
       "model_url_status": "ok",
       "added_by": "models-open-access-cad",
-      "committed_file": null
+      "committed_file": null,
+      "objaverse_note": "Direct Objaverse file path needs the shard listed in allenai/objaverse object-paths.json (not looked up); the model page (model_url) is the reference."
     },
     {
       "id": "cad-db-revit-a-series",
