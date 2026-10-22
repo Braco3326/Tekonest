@@ -35,3 +35,14 @@ Decisions the overnight run could not, or should not, make alone. Each one gives
 14. **Second pass when the search budget allows.** The session's web-search cap ran out early, so whole manufacturers that render by script or block bots are thin or missing: Yamaha manual library, Neumann downloads, Behringer/Midas, AKG/Harman, Sony, Audio-Technica, Sound Devices, Electro-Voice, avid.com, Belden, HBK. These are listed in `manuals-missing.md` and the per-file `not_found_log`. A run with a higher `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION`, or a manual pass in a browser, would close most of them.
 15. **`year_introduced`** is "not found" for most devices: manufacturers rarely state it. Is it worth a dedicated pass using trade press (Sound On Sound, Mix, TEC Awards)?
 16. **French manuals.** Only about 69 of 357 devices have a French manual recorded (higher for Sennheiser, Shure wireless, NEXO, d&b, AETA, Focal). Should the course link English manuals by default and French where available? *Recommendation: yes.*
+
+## E. TEK Brain (run 2, 2026-10-22). Answered by the run, please review
+
+Each question below would normally have been asked before building. The run picked the default shown and kept going.
+
+17. **File layout.** One file per entity type per domain (`tek-brain/<entity>/<domain>.json`). *Why: 17 research agents write in parallel without collisions.* (DESIGN §2, D1)
+18. **Id uniqueness.** Unique within an entity type only; references are typed by field name. (D2)
+19. **Machine-checkable rules.** Conditions are a small JSON DSL over catalog port/signal/device fields. Rules that need data the catalog does not have (impedance, power rating, cable length, SPL) are marked `evaluable_now: false` and list `needs_catalog_fields`; those become catalog proposals, never direct edits. (D3)
+20. **BTS mapping.** Every TEK Brain `bts_mapping` stays `verified: false` until someone checks the référentiel (same blocker as #12). (D5)
+21. **Room coordinates.** Floor-centre origin, metres, z toward the audience/listener. (D6)
+22. **How the game gets rooms.** A sync tool in `tekpractice-sim/tools/` copies validated templates into `content/rooms/`, because Vercel only builds `tekpractice-sim/`. (D8)
