@@ -1,0 +1,1455 @@
+{
+  "entity": "concept",
+  "domain": "consoles-signal-flow",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "signal-flow",
+      "name_fr": "Chemin du signal (flux de signal)",
+      "name_en": "Signal flow",
+      "domain": "consoles-signal-flow",
+      "definition": "Parcours ordonné d'un signal audio, de la source jusqu'aux sorties, à travers chaque étage de traitement et de routage d'une console ou d'une installation.",
+      "explanation": "Lire un synoptique, c'est suivre le signal dans un seul sens : une sortie alimente toujours une entrée. Le manuel Mackie le résume par une formule simple : les départs (sends) sont des sorties, les retours (returns) sont des entrées. Dans une console, le signal entre par le préampli, traverse les traitements de la tranche, puis rejoint des bus (master, auxiliaires, groupes, matrices) avant d'atteindre les sorties physiques. Sur une console numérique, ce chemin passe aussi par un patch logiciel : chaque entrée physique ou réseau doit être affectée à une tranche, et chaque bus à une sortie. Quand un son manque, on remonte ce chemin étage par étage, de la source vers la sortie, jusqu'à trouver l'endroit où le signal disparaît.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "input-channel",
+        "channel-strip-order",
+        "aux-send",
+        "main-mix-bus",
+        "input-patching"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique d'une chaîne son (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Câblage et exploitation d'une console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "input-channel",
+      "name_fr": "Tranche d'entrée",
+      "name_en": "Input channel (channel strip)",
+      "domain": "consoles-signal-flow",
+      "definition": "Section de la console qui reçoit un signal d'entrée, l'amène au niveau de travail, le traite puis l'envoie vers les bus de mélange.",
+      "explanation": "Sur la Yamaha CL, une tranche mono enchaîne : patch d'entrée, inversion de phase (Ø), gain numérique, filtre passe-haut (HPF), égaliseur 4 bandes, deux processeurs de dynamique, retard d'entrée, niveau (et DCA), puis la touche ON qui coupe la tranche. Elle alimente ensuite le bus STEREO (via le panoramique), le bus MONO, les bus MIX et MATRIX. Sur une petite console analogique comme la Mackie 1604VLZ4, on retrouve le gain, l'insert, l'EQ, le filtre coupe-bas (low cut), le fader, le mute, les départs auxiliaires et les touches d'affectation. Le préampli (head amp, HA) peut être dans la console ou dans un boîtier de scène télécommandé.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "channel-strip-order",
+        "insert-point",
+        "aux-send",
+        "direct-out",
+        "input-patching"
+      ],
+      "equipment_ids": [
+        "yamaha-cl5",
+        "mackie-1604vlz4",
+        "digico-sd12"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Exploitation d'une tranche de console — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "channel-strip-order",
+      "name_fr": "Ordre des blocs d'une tranche",
+      "name_en": "Channel strip processing order",
+      "domain": "consoles-signal-flow",
+      "definition": "Ordre dans lequel le signal traverse les étages d'une tranche : en général gain, filtres, insert, égalisation, dynamique, fader et panoramique, avec des variantes selon la console.",
+      "explanation": "L'ordre conditionne ce que l'on entend : un compresseur placé après l'EQ réagit aux fréquences que l'on vient d'accentuer. Wikipedia décrit l'ordre classique : préampli, égalisation, dynamique, routage (sorties directes, départs aux, panoramique, affectations) puis fader. La CL de Yamaha place HPF, EQ, puis DYNAMICS 1 et 2 avant le fader. Sur la DiGiCo SD12, un bouton inverse l'ordre EQ et dynamique. Sur la Mackie 1604VLZ4, l'insert est fixe, juste après le gain et avant l'EQ. Sur la CL, on choisit sa position : PRE EQ, PRE FADER ou POST ON. Retenir : il faut toujours vérifier l'ordre réel dans le manuel de la console utilisée.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "input-channel",
+        "insert-point",
+        "pre-post-fader"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "yamaha-cl5",
+        "mackie-1604vlz4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Exploitation console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Ordre fixe EQ puis dynamique (préampli, EQ, dynamique, routage, fader)",
+              "source_url": "https://en.wikipedia.org/wiki/Mixing_console"
+            },
+            {
+              "value": "Ordre EQ / dynamique inversable par un bouton de la surface",
+              "source_url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf"
+            }
+          ],
+          "note": "Pas une contradiction de fait : l'ordre dépend de la console. Les deux sont conservés pour montrer qu'il ne faut pas apprendre un ordre unique."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "aux-send",
+      "name_fr": "Départ auxiliaire (aux)",
+      "name_en": "Auxiliary send",
+      "domain": "consoles-signal-flow",
+      "definition": "Prélèvement réglable du signal d'une tranche vers un bus auxiliaire, qui forme un mélange séparé envoyé à une sortie (retour de scène, effet, enregistrement).",
+      "explanation": "Chaque tranche possède un bouton de niveau par bus auxiliaire ; le bus additionne toutes les tranches et sort sur une prise « aux send ». Mackie indique deux usages : alimenter un effet en parallèle (réverbération, delay) ou les amplis des retours de scène ; les auxiliaires servent aussi à faire des mélanges séparés pour l'enregistrement ou des mix-minus. Sur la Yamaha CL, ces bus s'appellent MIX : un bus VARI a un niveau d'envoi réglable par tranche, un bus FIXED envoie à niveau fixe ; le type se choisit par paire impaire/paire. Le point de prélèvement (pré ou post-fader) décide si l'envoi suit le fader de la façade.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "pre-post-fader",
+        "pre-mute-send",
+        "effects-return",
+        "matrix-output",
+        "subgroup"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5",
+        "yamaha-ql1"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Retours depuis la façade, départs d'effets — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "pre-post-fader",
+      "name_fr": "Départ pré-fader / post-fader",
+      "name_en": "Pre-fader / post-fader send",
+      "domain": "consoles-signal-flow",
+      "definition": "Choix du point de prélèvement d'un départ : avant le fader (pré), le départ est indépendant du fader ; après le fader (post), il suit chaque mouvement du fader.",
+      "explanation": "Règle de terrain donnée par Mackie : départs post pour les effets, pour que le « mouillé » suive le « sec » ; départs pré pour les retours de scène, pour qu'ils ne bougent pas quand l'ingénieur façade joue de ses faders. Sur la Mackie 1604VLZ4, le mode pré ne suit que le gain et le coupe-bas : EQ, pan, fader et mute n'ont plus d'effet. Sur la Yamaha CL, le mode PRE se règle par bus en PRE EQ (avant l'EQ) ou PRE FADER (avant le fader). La DiGiCo SD12 propose trois points : post-fader, pré-fader et pré-mute. Une conséquence souvent oubliée : sur la plupart des consoles à VCA, les départs post-fader suivent aussi le maître VCA.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "aux-send",
+        "pre-mute-send",
+        "vca-dca",
+        "input-channel"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5",
+        "digico-sd12"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Réglage de retours depuis la façade — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique : point de prélèvement — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Pré = après gain et coupe-bas seulement : avant EQ, avant fader et avant mute (le départ pré continue quand la tranche est mutée)",
+              "source_url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf"
+            },
+            {
+              "value": "Pré-fader et pré-mute sont deux points distincts : le pré-fader est coupé par le mute, le pré-mute ne l'est pas",
+              "source_url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf"
+            },
+            {
+              "value": "PRE réglable par bus en PRE EQ ou PRE FADER",
+              "source_url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf"
+            }
+          ],
+          "note": "« Pré-fader » ne désigne pas le même point sur toutes les consoles (avant ou après EQ, avant ou après mute). Vérifier sur la console avant de faire des retours."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "pre-mute-send",
+      "name_fr": "Départ pré-mute",
+      "name_en": "Pre-mute send",
+      "domain": "consoles-signal-flow",
+      "definition": "Point de prélèvement situé avant le fader et avant le mute : le départ reste actif quand la tranche est coupée en façade.",
+      "explanation": "La DiGiCo SD12 permet de régler les départs aux et les sorties directes en post-fader, pré-fader ou pré-mute (« pre-mute and pre-fader »). C'est utile quand un musicien doit garder un micro dans ses retours alors que l'ingénieur façade le mute dans la salle, par exemple un micro d'ordre entre les morceaux. Sur la Mackie 1604VLZ4, le mute coupe l'affectation au mix, les départs post et les sorties directes, mais les départs pré, l'envoi d'insert et le solo en mode PFL continuent de fonctionner : le départ pré y est donc aussi pré-mute. Inversement, sur une console où le pré-fader est placé après le mute, couper la tranche coupe aussi le retour.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "pre-post-fader",
+        "aux-send",
+        "mute-group"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "mackie-1604vlz4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Réglage de retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "subgroup",
+      "name_fr": "Sous-groupe (groupe audio)",
+      "name_en": "Subgroup (audio group)",
+      "domain": "consoles-signal-flow",
+      "definition": "Bus audio qui additionne réellement plusieurs tranches pour les contrôler (et les traiter) ensemble avant de rejoindre le master ou une sortie.",
+      "explanation": "Exemple de Mackie : une batterie occupe sept tranches ; on les désaffecte du L-R, on les affecte aux sous-groupes 1-2, puis on renvoie le sous-groupe 1 à gauche et le 2 à droite dans le mix principal. On pilote alors toute la batterie avec deux faders. Les sorties de sous-groupes (sub outs) peuvent aussi alimenter un enregistreur multipiste. Comme le sous-groupe transporte de l'audio, on peut le traiter comme une tranche (compresseur de groupe batterie, par exemple), contrairement à un VCA. Attention : sur la 1604VLZ4, les sous-groupes n'ont pas d'insert ; il faut passer par les sorties sub out pour insérer un processeur.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "vca-dca",
+        "main-mix-bus",
+        "aux-send"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "allen-heath-zed-436"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Organisation d'un mélange — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "vca-dca",
+      "name_fr": "VCA / DCA (groupe de contrôle)",
+      "name_en": "VCA / DCA (control group)",
+      "domain": "consoles-signal-flow",
+      "definition": "Fader de commande qui ne transporte aucun audio : il modifie à distance le niveau (et souvent le mute ou le solo) des tranches membres, en conservant leurs écarts.",
+      "explanation": "Sur la Yamaha CL, un fader DCA règle le niveau de toutes les tranches du groupe en maintenant leurs écarts ; une tranche peut appartenir à plusieurs DCA, et la valeur appliquée est alors la somme des niveaux des faders DCA concernés. Les DCA sont enregistrés dans la scène. Sur la DiGiCo SD12, les groupes de contrôle (control groups) agissent en dB : +2 dB sur le maître ajoutent +2 dB à chaque membre, quelle que soit la position de son fader ; les mutes de plusieurs groupes se combinent « en série ». Comme aucun sous-mélange n'est créé, on ne peut pas insérer un compresseur sur un VCA. Wikipedia précise que, sur la plupart des consoles à VCA, les départs aux post-fader suivent le maître VCA.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "subgroup",
+        "mute-group",
+        "pre-post-fader",
+        "scene-memory"
+      ],
+      "equipment_ids": [
+        "yamaha-cl5",
+        "digico-sd12",
+        "yamaha-rivage-pm10"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Organisation d'un mélange live — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "mute-group",
+      "name_fr": "Groupe de mutes et mute safe",
+      "name_en": "Mute group and mute safe",
+      "domain": "consoles-signal-flow",
+      "definition": "Fonction qui coupe ou rétablit d'un seul geste plusieurs tranches ; le « mute safe » exclut temporairement certaines tranches de ces commandes.",
+      "explanation": "La Yamaha CL propose des groupes de mutes en plus des DCA. Une tranche placée en Mute Safe n'est pas coupée quand on mute le groupe auquel elle appartient : pratique pour garder un micro d'annonce ouvert pendant qu'on coupe tout un plateau. Sur la DiGiCo SD12, les mutes des groupes de contrôle s'additionnent : il suffit qu'un seul groupe soit muté pour couper la tranche, mais le bouton mute de la tranche elle-même peut lever ce mute sans retirer la tranche du groupe. Avant un spectacle, vérifier l'appartenance des tranches aux groupes évite de couper un micro par surprise.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "vca-dca",
+        "pre-mute-send",
+        "scene-memory"
+      ],
+      "equipment_ids": [
+        "yamaha-cl5",
+        "digico-sd12"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Exploitation live — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "matrix-output",
+      "name_fr": "Matrice (sorties matrice)",
+      "name_en": "Matrix output",
+      "domain": "consoles-signal-flow",
+      "definition": "Mélangeur de bus : il reçoit des bus (master, groupes, auxiliaires, parfois des tranches) et crée de nouveaux mélanges avec des niveaux de point de croisement pour alimenter des zones ou des enregistrements.",
+      "explanation": "Sur la DiGiCo SD12, on route par exemple le master gauche et droit vers les entrées des matrices 1 et 2, puis on dose avec les niveaux de point de croisement (crosspoint levels) la part de chaque côté envoyée à chaque sortie. Sur la Yamaha CL, les bus MATRIX sont tous de type VARI et peuvent aussi recevoir des envois directs depuis les tranches d'entrée. Usage typique : alimenter des enceintes de rappel, des délais, une régie d'enregistrement ou un mono pour la vidéo, chacun avec son niveau, sans toucher au mix principal.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "main-mix-bus",
+        "aux-send",
+        "subgroup"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "yamaha-cl5",
+        "allen-heath-zed-436"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Distribution façade / zones — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "main-mix-bus",
+      "name_fr": "Bus master (mix principal)",
+      "name_en": "Main mix bus (master)",
+      "domain": "consoles-signal-flow",
+      "definition": "Bus principal stéréo (ou LCR) où se rejoignent les tranches et groupes affectés, avant le fader master et les sorties principales.",
+      "explanation": "Sur la Mackie 1604VLZ4, toutes les tranches et retours affectés au main mix, non mutés et non baissés apparaissent aux sorties principales ; le mix passe par l'insert master avant le fader master. La DiGiCo SD12 propose un master stéréo ou LCR. La Yamaha CL offre un bus STEREO et un bus MONO, avec un mode LCR qui envoie la tranche en gauche, droite et centre. Sans affectation au master, une tranche peut très bien sonner en PFL et dans les retours, mais rester absente de la façade.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "matrix-output",
+        "subgroup",
+        "signal-flow"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "digico-sd12",
+        "yamaha-cl5"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Exploitation console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "insert-point",
+      "name_fr": "Point d'insertion (insert)",
+      "name_en": "Insert point",
+      "domain": "consoles-signal-flow",
+      "definition": "Coupure du chemin d'une tranche ou d'un bus qui envoie tout le signal vers un processeur (envoi d'insert) puis le récupère (retour d'insert) pour le réinjecter à la même place.",
+      "explanation": "L'insert sert aux traitements en série : compresseur, égaliseur, de-esser. Sur la Mackie 1604VLZ4, l'insert est un jack asymétrique TRS : pointe (tip) = envoi vers le processeur, bague (ring) = retour, corps (sleeve) = masse ; il est placé après le gain et avant l'EQ, le coupe-bas, le fader et le mute. Sur la Yamaha CL, on choisit la position (PRE EQ, PRE FADER ou POST ON) et on patche des ports d'entrée et de sortie pour l'appareil externe. La DiGiCo SD12 offre deux inserts par tranche (A et B). Inverser envoi et retour revient à relier deux sorties entre elles.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "serial-parallel-processing",
+        "channel-strip-order",
+        "patchbay-normalling"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5",
+        "digico-sd12"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Insertion d'un traitement externe — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Insert fixe : après le gain, avant l'EQ et le fader",
+              "source_url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf"
+            },
+            {
+              "value": "Position d'insert au choix : PRE EQ, PRE FADER ou POST ON",
+              "source_url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf"
+            }
+          ],
+          "note": "Selon la console, la position de l'insert est fixe ou réglable ; les deux sont exacts pour leur appareil."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "serial-parallel-processing",
+      "name_fr": "Traitement en série / en parallèle",
+      "name_en": "Serial vs parallel processing",
+      "domain": "consoles-signal-flow",
+      "definition": "En série, tout le signal passe par le processeur (insert) ; en parallèle, une partie du signal est prélevée (départ aux), traitée puis mélangée au signal direct (retour).",
+      "explanation": "Mackie donne la distinction : « série » quand le signal entier quitte la console par l'envoi d'insert, traverse l'appareil et revient par le retour d'insert (compresseurs, égaliseurs graphiques) ; « parallèle » quand une portion est envoyée par un départ aux, traitée, puis renvoyée sur un retour stéréo pour être mélangée au son sec (réverbération, delay). L'avantage du parallèle : plusieurs tranches partagent le même effet. Un compresseur en parallèle sur un aux marche, mais une réverbération en insert remplace tout le signal sec par le signal traité, ce qui n'est en général pas voulu.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "insert-point",
+        "aux-send",
+        "effects-return"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Câblage des traitements — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "effects-return",
+      "name_fr": "Retour d'effet (retour stéréo)",
+      "name_en": "Effects return (stereo return)",
+      "domain": "consoles-signal-flow",
+      "definition": "Entrée de la console qui reçoit la sortie d'un effet alimenté par un départ aux, pour mélanger le signal traité au signal sec.",
+      "explanation": "Sur la Mackie 1604VLZ4, la sortie d'une réverbération revient sur les entrées « stereo return », dont le niveau est réglé avant le mix principal ; le signal sec vient des tranches, le signal mouillé des retours. Mackie conseille de laisser les boutons de retour au cran central (gain unitaire) et de corriger le niveau sur l'appareil d'effet. Les boutons « To Aux 1 / To Aux 2 » envoient les retours 1 et 2 vers les auxiliaires 1 et 2 : c'est ainsi qu'on ajoute de la réverbération dans les retours de scène. Sur une console numérique, le même rôle est tenu par un retour d'effet interne patché sur une tranche ou un retour d'effet.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "aux-send",
+        "serial-parallel-processing"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Câblage d'effets — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "direct-out",
+      "name_fr": "Sortie directe (direct out)",
+      "name_en": "Direct output",
+      "domain": "consoles-signal-flow",
+      "definition": "Sortie individuelle d'une tranche, qui envoie le signal de cette seule tranche vers un appareil externe (enregistreur, autre console), à un point de prélèvement donné.",
+      "explanation": "Sur la Mackie 1604VLZ4, les sorties directes des tranches 1 à 8 sont prises en fin de tranche : après gain, EQ, coupe-bas, fader et mute. Elles servent au « split monitoring » : chaque tranche part vers la piste correspondante d'un multipiste, et on écoute les retours du multipiste sur d'autres tranches. Sur la Yamaha CL, le point se choisit : PRE HPF, PRE EQ, PRE FADER ou POST ON. La DiGiCo SD12 propose pré-fader, post-fader ou pré-mute, et une sortie directe peut être routée vers plusieurs sorties. Une sortie directe renvoyée dans une autre tranche elle-même routée au master double le signal.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "input-channel",
+        "pre-post-fader",
+        "insert-point"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5",
+        "digico-sd12"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Enregistrement multipiste depuis une console — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Sortie directe fixe : post-EQ, post-fader et post-mute",
+              "source_url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf"
+            },
+            {
+              "value": "Point au choix : PRE HPF, PRE EQ, PRE FADER ou POST ON",
+              "source_url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf"
+            },
+            {
+              "value": "Point au choix : pré-fader, post-fader ou pré-mute",
+              "source_url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf"
+            }
+          ],
+          "note": "Une captation multipiste veut en général un signal indépendant du fader ; sur la 1604VLZ4 ce n'est pas possible par la direct out, Mackie propose alors l'insert utilisé comme sortie (post-gain, pré-EQ)."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "pfl-afl-solo",
+      "name_fr": "Écoute PFL / AFL / solo",
+      "name_en": "PFL / AFL / solo",
+      "domain": "consoles-signal-flow",
+      "definition": "Écoute d'une tranche ou d'un bus sur le casque ou l'écoute régie : PFL avant le fader, AFL après le fader (et souvent après le panoramique).",
+      "explanation": "Le PFL (pre-fade listen) donne le niveau réel de la tranche même fader baissé : c'est le mode pour régler les gains et pré-écouter en live. L'AFL (after-fade listen) restitue ce que la tranche envoie vraiment au mix (EQ, fader, pan) : c'est le mode préféré au mixage selon Mackie. Sur la Mackie 1604VLZ4, le solo est non destructif : il remplace la source écoutée en régie sans toucher aux sorties. Sur la Yamaha CL, le point de cue d'une entrée se règle en PFL, AFL ou POST PAN, avec un PFL TRIM de −30 à +20 dB. La DiGiCo SD12 a deux bus solo réglables chacun en PFL ou AFL. Le « solo in place » (SIP), lui, coupe les autres tranches et modifie donc la sortie.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "monitor-source-selection",
+        "input-channel",
+        "pre-post-fader"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4",
+        "yamaha-cl5",
+        "digico-sd12"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Contrôle d'écoute et réglage des gains — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique console — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Le mode AFL est « parfois appelé SIP (solo-in-place) » alors que le solo de la console est non destructif",
+              "source_url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf"
+            },
+            {
+              "value": "Le SIP coupe toutes les autres tranches et change le mix de sortie, contrairement à l'AFL",
+              "source_url": "https://en.wikipedia.org/wiki/Mixing_console"
+            }
+          ],
+          "note": "Terminologie : vérifier si le solo d'une console est destructif (SIP) avant de l'utiliser pendant un spectacle."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "monitor-source-selection",
+      "name_fr": "Section d'écoute régie (sélection de source)",
+      "name_en": "Control-room monitor source selection",
+      "domain": "consoles-signal-flow",
+      "definition": "Partie de la console qui choisit ce que l'opérateur écoute au casque et en régie (master, groupes, lecture) et qui bascule automatiquement sur le solo quand une écoute solo est engagée.",
+      "explanation": "Sur la Mackie 1604VLZ4, les touches « source » choisissent le main mix, les sous-groupes 1-2 et 3-4 et l'entrée tape ; sans touche engagée, il n'y a ni signal ni indication sur les vumètres (sauf solo et retour stéréo 4). Dès qu'un solo est pressé, il remplace la sélection en régie, au casque et sur les vumètres. Le voyant « rude solo » clignote pour rappeler qu'un solo est resté actif : sans lui, on peut croire à une panne alors que les enceintes de régie jouent seulement la tranche soloée. Mackie recommande de baisser le bouton control room/phones avant de changer de source.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "pfl-afl-solo",
+        "main-mix-bus"
+      ],
+      "equipment_ids": [
+        "mackie-1604vlz4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Écoute de contrôle — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "input-patching",
+      "name_fr": "Patch d'entrée et de sortie (local / boîtier de scène)",
+      "name_en": "Input and output patching (local vs stagebox)",
+      "domain": "consoles-signal-flow",
+      "definition": "Affectation logicielle, sur une console numérique, des entrées physiques (locales, boîtier de scène, réseau) aux tranches, et des bus aux sorties physiques.",
+      "explanation": "Sur la DiGiCo SD12, l'affichage de routage propose des ports : « Local I/O » pour les prises arrière de la console, les racks distants (stage racks) et un port interne (générateurs, effets, sorties directes, bus). Une entrée de tranche n'accepte qu'un seul signal (deux en stéréo), alors qu'une sortie directe ou de bus peut alimenter plusieurs sorties ; une sortie physique n'accepte qu'une seule source. Sur la Yamaha CL, le patch se fait en deux temps : DANTE INPUT PATCH choisit jusqu'à 64 canaux parmi le réseau Dante, puis GAIN/PATCH affecte DANTE 1-64 aux tranches (par défaut 1 à 64). En sortie, OUTPUT PORT affecte les bus aux canaux Dante, puis le patch de sortie du rack les envoie aux prises XLR.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "signal-flow",
+        "gain-sharing",
+        "scene-memory",
+        "input-channel"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "digico-sd-rack",
+        "yamaha-cl5",
+        "yamaha-rio3224-d2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une console numérique et d'un boîtier de scène — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "gain-sharing",
+      "name_fr": "Partage de préamplis : suivi et compensation de gain",
+      "name_en": "Shared stagebox: gain tracking / gain compensation",
+      "domain": "consoles-signal-flow",
+      "definition": "Mécanismes qui permettent à deux consoles (façade et retours) d'utiliser le même boîtier de scène sans que le réglage de gain analogique de l'une modifie le niveau reçu par l'autre.",
+      "explanation": "Sur un rack DiGiCo partagé, une seule console (« master ») commande les gains analogiques ; l'autre, connectée en réception seule (Receive Only), active le « Gain Tracking » : son trim numérique bouge de la même valeur en sens inverse pour compenser. Seule la console master peut utiliser les sorties du rack. Sur la Yamaha CL, la « Gain Compensation » garde constant le niveau envoyé sur le réseau : si le gain analogique passe de +30 à +45 dB, le signal réseau reste à +30 dB (atténué de 15 dB). Attention : si l'entrée sature, il faut désactiver la compensation, régler le gain, puis la réactiver, sinon la distorsion reste.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "input-patching",
+        "input-channel"
+      ],
+      "equipment_ids": [
+        "digico-sd12",
+        "digico-sd-rack",
+        "yamaha-cl5",
+        "yamaha-rio3224-d2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Partage d'un boîtier de scène façade/retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "scene-memory",
+      "name_fr": "Mémoire de scène (scène / snapshot)",
+      "name_en": "Scene memory (snapshot)",
+      "domain": "consoles-signal-flow",
+      "definition": "Enregistrement nommé de l'état de la console (paramètres de mix, patch, gains) que l'on peut rappeler plus tard.",
+      "explanation": "Sur la Yamaha CL, une scène contient la position des faders et des touches ON, ainsi que le patch d'entrée/sortie, les réglages de bus, les réglages de préampli (head amp), EQ, dynamiques, racks, panoramiques, inserts et sorties directes, les envois MIX et MATRIX, les DCA, les groupes de mutes et les liens de tranches. Les scènes 001 à 300 sont inscriptibles, la scène 000 est en lecture seule. Le symbole E signale que la scène chargée a été modifiée et qu'il faut l'enregistrer (Store) pour garder les changements. Rappeler une scène peut donc changer un gain ou un patch : c'est pourquoi on utilise le Recall Safe et le Focus.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "recall-safe-focus",
+        "input-patching",
+        "vca-dca"
+      ],
+      "equipment_ids": [
+        "yamaha-cl5",
+        "yamaha-ql1",
+        "yamaha-rivage-pm10"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Exploitation console numérique — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "recall-safe-focus",
+      "name_fr": "Recall Safe et Focus Recall",
+      "name_en": "Recall Safe and Focus Recall",
+      "domain": "consoles-signal-flow",
+      "definition": "Deux filtres de rappel de scène : le Recall Safe exclut des tranches ou paramètres de tous les rappels ; le Focus définit, scène par scène, ce qui sera rappelé.",
+      "explanation": "Sur la Yamaha CL, le Recall Safe s'applique globalement à toutes les scènes, alors que le Focus Recall se règle pour chaque scène (par exemple, ne rappeler que les tranches d'entrée). Les deux se combinent : tout ce qui est exclu par l'un ou l'autre n'est pas rappelé. Les liens de tranches et les réglages de bus ne sont pas soumis au Recall Safe : ils sont toujours rappelés. Sélectionner un paramètre ne suffit pas, il faut aussi activer le bouton SAFE. On protège ainsi, par exemple, une tranche d'annonce ou les gains d'un invité pendant une suite de scènes.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "scene-memory",
+        "mute-group"
+      ],
+      "equipment_ids": [
+        "yamaha-cl5"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Exploitation console numérique — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "patchbay-normalling",
+      "name_fr": "Normalisation d'une baie de brassage (normalled / half-normalled / non-normalled)",
+      "name_en": "Patchbay normalling",
+      "domain": "consoles-signal-flow",
+      "definition": "Liaison interne d'une baie de brassage entre la prise du haut (sortie d'un appareil) et celle du bas (entrée d'un autre), active sans cordon et modifiée selon le mode quand on insère une fiche en face avant.",
+      "explanation": "Chez Samson, la rangée du haut porte les sorties et celle du bas les entrées ; sans cordon, la sortie du haut alimente l'entrée du bas. En mode normalisé (normalled), une fiche dans le jack du haut « casse la normale » : le signal part par le cordon et n'arrive plus à l'entrée du bas. En semi-normalisé (half-normalled), une fiche dans le jack du haut ne casse pas la normale : on prélève une copie du signal sans interrompre la liaison, mode souvent utilisé pour les inserts de console. En mode non normalisé (« Thru »), haut et bas sont indépendants : chaque prise arrière va seulement à sa prise avant. Sur les Switchcraft StudioPatch, le mode se change de face avant avec un tournevis (EZ Norm), et les masses se règlent par voie (reliées verticalement ou isolées).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "insert-point",
+        "signal-flow"
+      ],
+      "equipment_ids": [
+        "switchcraft-studiopatch-9625",
+        "samson-s-patch-plus",
+        "bittree-969a-2x48-1-5ru"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Câblage studio : baie de brassage — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique d'une régie — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+          "publisher": "Samson Technologies — S patch plus Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://samsontech.com/blog/the-ins-and-outs-of-a-patchbay/",
+          "publisher": "Samson Technologies — The Ins and Outs of a Patchbay (blog)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf",
+          "publisher": "Switchcraft Inc. — StudioPatch / EZ Norm sell sheets",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Texte officiel Yamaha (QL5 manuel FR, CL5 RM, DM7 RM PDF) sur yamaha.com",
+      "searched": "ca.yamaha.com / dk.yamaha.com / download.yamaha.com : HTTP 403 ; pages HTML manual.yamaha.com sans contenu lisible. Remplacé par la copie du CL V5 Reference Manual hébergée par CCI Solutions."
+    },
+    {
+      "what": "Définition écrite (texte) de quel jack casse la normale en semi-normalisé sur Bittree et Switchcraft",
+      "searched": "Bittree 969-A programming page et Audio_Schematic_Overview_Standard.pdf (schémas en image seulement), Switchcraft EZ Norm sell sheet (modes cités sans détail). Seul Samson décrit le comportement en texte."
+    },
+    {
+      "what": "Terminologie officielle française du référentiel BTS MAV pour ces notions",
+      "searched": "Non tenté : eduscol inaccessible depuis ce poste (OPEN_QUESTIONS #12)."
+    }
+  ]
+}

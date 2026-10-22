@@ -1,0 +1,308 @@
+{
+  "entity": "scenario",
+  "domain": "consoles-signal-flow",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "club-gig-foh-with-monitors-from-foh",
+      "name_fr": "Concert en club : façade numérique, boîtier de scène et retours depuis la façade",
+      "name_en": "Club gig: digital FOH, stagebox and monitors from FOH",
+      "domain": "consoles-signal-flow",
+      "brief": "Un duo voix-guitare joue dans un petit club. Une seule console numérique en façade reçoit les micros par un boîtier de scène Dante. Patcher les entrées, régler les gains en PFL, envoyer la façade et créer deux retours en aux pré-fader. Vérifier qu'un mouvement de fader façade ne change pas les retours.",
+      "room_id": "bar-club-stage-small",
+      "required_gear": [
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console façade"
+        },
+        {
+          "equipment_id": "yamaha-rio3224-d2",
+          "qty": 1,
+          "role": "boîtier de scène"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 1,
+          "role": "micro voix"
+        },
+        {
+          "equipment_id": "shure-sm57",
+          "qty": 1,
+          "role": "micro ampli guitare"
+        },
+        {
+          "equipment_id": "qsc-k12-2",
+          "qty": 2,
+          "role": "façade"
+        },
+        {
+          "equipment_id": "yamaha-dbr12",
+          "qty": 2,
+          "role": "retours de scène"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "vox",
+            "equipment_id": "shure-sm58",
+            "label": "Micro voix"
+          },
+          {
+            "id": "gtr",
+            "equipment_id": "shure-sm57",
+            "label": "Micro guitare"
+          },
+          {
+            "id": "rio",
+            "equipment_id": "yamaha-rio3224-d2",
+            "label": "Boîtier de scène"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console façade"
+          },
+          {
+            "id": "pa-l",
+            "equipment_id": "qsc-k12-2",
+            "label": "Façade gauche"
+          },
+          {
+            "id": "pa-r",
+            "equipment_id": "qsc-k12-2",
+            "label": "Façade droite"
+          },
+          {
+            "id": "mon1",
+            "equipment_id": "yamaha-dbr12",
+            "label": "Retour chanteur (MIX 1)"
+          },
+          {
+            "id": "mon2",
+            "equipment_id": "yamaha-dbr12",
+            "label": "Retour guitariste (MIX 2)"
+          }
+        ],
+        "edges": [
+          {
+            "from": "vox",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "gtr",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rio",
+            "to": "desk",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "desk",
+            "to": "pa-l",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "pa-r",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rio",
+            "to": "mon1",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rio",
+            "to": "mon2",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "patch-stagebox-to-digital-console",
+        "check-input-with-pfl",
+        "monitor-mixes-from-foh",
+        "store-recall-scenes-safely"
+      ],
+      "rule_ids": [
+        "signal-direction-out-to-in",
+        "aux-monitor-send-post-fader"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 60,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'une petite sonorisation avec console numérique — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "procedure_ids",
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "studio-insert-via-patchbay",
+      "name_fr": "Studio : insérer un compresseur matériel via la baie de brassage",
+      "name_en": "Studio: insert a hardware compressor through the patchbay",
+      "domain": "consoles-signal-flow",
+      "brief": "En régie, les sorties de l'interface passent par une baie TT semi-normalisée avant de revenir à ses entrées. Insérer un compresseur 1176 sur la voix en patchant l'envoi (jack du haut) vers le compresseur et la sortie du compresseur vers le retour (jack du bas), puis expliquer pourquoi la voie ne serait plus muette en semi-normalisé si l'on ne patchait que l'envoi.",
+      "room_id": "studio-control-room-small",
+      "required_gear": [
+        {
+          "equipment_id": "avid-hd-io",
+          "qty": 1,
+          "role": "interface audio"
+        },
+        {
+          "equipment_id": "switchcraft-studiopatch-9625",
+          "qty": 1,
+          "role": "baie de brassage"
+        },
+        {
+          "equipment_id": "universal-audio-1176ln",
+          "qty": 1,
+          "role": "compresseur inséré"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "io",
+            "equipment_id": "avid-hd-io",
+            "label": "Interface (sortie / entrée ligne)"
+          },
+          {
+            "id": "bay",
+            "equipment_id": "switchcraft-studiopatch-9625",
+            "label": "Baie TT (voie semi-normalisée)"
+          },
+          {
+            "id": "comp",
+            "equipment_id": "universal-audio-1176ln",
+            "label": "Compresseur"
+          }
+        ],
+        "edges": [
+          {
+            "from": "io",
+            "to": "bay",
+            "signal": "line-level-pro",
+            "connector": "dsub25"
+          },
+          {
+            "from": "bay",
+            "to": "comp",
+            "signal": "line-level-pro",
+            "connector": "tt-bantam"
+          },
+          {
+            "from": "comp",
+            "to": "bay",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "bay",
+            "to": "io",
+            "signal": "line-level-pro",
+            "connector": "dsub25"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "patch-outboard-on-insert"
+      ],
+      "rule_ids": [
+        "signal-direction-out-to-in",
+        "insert-send-return-reversed",
+        "patchbay-full-normal-split-break"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 30,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Câblage d'une régie studio — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Synoptique d'une régie — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+          "publisher": "Samson Technologies — S patch plus Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief",
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf",
+          "publisher": "Switchcraft Inc. — StudioPatch / EZ Norm sell sheets",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": []
+}

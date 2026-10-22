@@ -1,0 +1,1167 @@
+{
+  "entity": "glossary",
+  "domain": "consoles-signal-flow",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "channel-strip",
+      "term_fr": "Tranche",
+      "term_en": "Channel strip",
+      "domain": "consoles-signal-flow",
+      "definition": "Ensemble vertical de commandes qui traite une entrée de la console, du gain jusqu'au fader et aux départs.",
+      "see_also": [
+        "input-channel"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "head-amp",
+      "term_fr": "Préampli (HA)",
+      "term_en": "Head amp",
+      "domain": "consoles-signal-flow",
+      "definition": "Premier étage d'amplification d'une entrée micro ; sur console numérique, il peut être dans un boîtier de scène et télécommandé.",
+      "see_also": [
+        "input-channel",
+        "gain-sharing"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "digital-trim",
+      "term_fr": "Trim / gain numérique",
+      "term_en": "Digital trim / digital gain",
+      "domain": "consoles-signal-flow",
+      "definition": "Réglage de niveau dans le domaine numérique, après la conversion ; il sert notamment à compenser les gains analogiques d'une console partagée.",
+      "see_also": [
+        "gain-sharing"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "channel-phase-reverse",
+      "term_fr": "Inversion de phase (Ø)",
+      "term_en": "Phase (polarity) reverse",
+      "domain": "consoles-signal-flow",
+      "definition": "Touche de la tranche qui inverse la polarité du signal d'entrée.",
+      "see_also": [
+        "input-channel"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "low-cut",
+      "term_fr": "Coupe-bas / passe-haut de tranche",
+      "term_en": "Low cut / channel HPF",
+      "domain": "consoles-signal-flow",
+      "definition": "Filtre de la tranche qui retire le grave sous une fréquence donnée ; Mackie le conseille aussi pour limiter les bruits de mute.",
+      "see_also": [
+        "input-channel",
+        "channel-strip-order"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "insert-send",
+      "term_fr": "Envoi d'insert",
+      "term_en": "Insert send",
+      "domain": "consoles-signal-flow",
+      "definition": "Sortie de l'insert qui envoie tout le signal de la tranche vers un processeur externe (pointe du jack TRS sur Mackie).",
+      "see_also": [
+        "insert-point"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "insert-return",
+      "term_fr": "Retour d'insert",
+      "term_en": "Insert return",
+      "domain": "consoles-signal-flow",
+      "definition": "Entrée de l'insert qui ramène le signal traité dans la tranche (bague du jack TRS sur Mackie).",
+      "see_also": [
+        "insert-point"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "insert-cable",
+      "term_fr": "Câble d'insert (Y TRS)",
+      "term_en": "Insert cable",
+      "domain": "consoles-signal-flow",
+      "definition": "Câble dont une fiche TRS se branche dans l'insert et se sépare en un envoi (pointe) et un retour (bague).",
+      "see_also": [
+        "insert-point"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aux-bus",
+      "term_fr": "Bus auxiliaire",
+      "term_en": "Aux bus",
+      "domain": "consoles-signal-flow",
+      "definition": "Bus qui additionne les départs aux des tranches pour former un mélange séparé (retour, effet, enregistrement).",
+      "see_also": [
+        "aux-send"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vari-bus",
+      "term_fr": "Bus MIX VARI",
+      "term_en": "VARI mix bus",
+      "domain": "consoles-signal-flow",
+      "definition": "Sur Yamaha, bus MIX dont le niveau d'envoi se règle tranche par tranche ; les bus MATRIX sont tous VARI.",
+      "see_also": [
+        "aux-send",
+        "matrix-output"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fixed-bus",
+      "term_fr": "Bus MIX FIXED",
+      "term_en": "FIXED mix bus",
+      "domain": "consoles-signal-flow",
+      "definition": "Sur Yamaha, bus MIX dont le niveau d'envoi est fixe ; il n'a pas de réglage pré/post.",
+      "see_also": [
+        "aux-send"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pre-fader",
+      "term_fr": "Pré-fader",
+      "term_en": "Pre-fader",
+      "domain": "consoles-signal-flow",
+      "definition": "Point de prélèvement situé avant le fader : le départ ne suit pas le fader.",
+      "see_also": [
+        "pre-post-fader"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "post-fader",
+      "term_fr": "Post-fader",
+      "term_en": "Post-fader",
+      "domain": "consoles-signal-flow",
+      "definition": "Point de prélèvement situé après le fader : le départ suit le fader (et le mute).",
+      "see_also": [
+        "pre-post-fader"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pre-mute",
+      "term_fr": "Pré-mute",
+      "term_en": "Pre-mute",
+      "domain": "consoles-signal-flow",
+      "definition": "Point de prélèvement avant le fader et avant le mute : le départ reste actif quand la tranche est coupée.",
+      "see_also": [
+        "pre-mute-send"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pre-eq-send",
+      "term_fr": "Pré-EQ",
+      "term_en": "Pre-EQ",
+      "domain": "consoles-signal-flow",
+      "definition": "Point de prélèvement situé avant l'égaliseur ; proposé par Yamaha pour les envois, l'insert et la sortie directe.",
+      "see_also": [
+        "pre-post-fader",
+        "insert-point"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subgroup-bus",
+      "term_fr": "Sous-groupe",
+      "term_en": "Subgroup",
+      "domain": "consoles-signal-flow",
+      "definition": "Bus audio qui additionne plusieurs tranches pour les piloter et les traiter ensemble.",
+      "see_also": [
+        "subgroup"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sub-out",
+      "term_fr": "Sortie de sous-groupe",
+      "term_en": "Sub out",
+      "domain": "consoles-signal-flow",
+      "definition": "Sortie physique d'un sous-groupe, utilisée par exemple pour alimenter des pistes d'un enregistreur.",
+      "see_also": [
+        "subgroup"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vca",
+      "term_fr": "VCA",
+      "term_en": "VCA",
+      "domain": "consoles-signal-flow",
+      "definition": "Fader de commande qui pilote le niveau de plusieurs tranches sans transporter d'audio ; aucun sous-mélange n'est créé.",
+      "see_also": [
+        "vca-dca"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dca",
+      "term_fr": "DCA",
+      "term_en": "DCA",
+      "domain": "consoles-signal-flow",
+      "definition": "Équivalent numérique du VCA (nom utilisé notamment par Yamaha) : un fader qui règle le niveau d'un groupe de tranches en gardant leurs écarts.",
+      "see_also": [
+        "vca-dca"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "control-group",
+      "term_fr": "Groupe de contrôle (CG)",
+      "term_en": "Control group",
+      "domain": "consoles-signal-flow",
+      "definition": "Nom DiGiCo du VCA : un fader, un mute et un solo qui agissent sur tous les membres, en dB.",
+      "see_also": [
+        "vca-dca"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mute-group-term",
+      "term_fr": "Groupe de mutes",
+      "term_en": "Mute group",
+      "domain": "consoles-signal-flow",
+      "definition": "Commande qui coupe ensemble plusieurs tranches.",
+      "see_also": [
+        "mute-group"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mute-safe",
+      "term_fr": "Mute safe",
+      "term_en": "Mute safe",
+      "domain": "consoles-signal-flow",
+      "definition": "Exclusion temporaire d'une tranche des commandes de son groupe de mutes.",
+      "see_also": [
+        "mute-group"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "matrix",
+      "term_fr": "Matrice",
+      "term_en": "Matrix",
+      "domain": "consoles-signal-flow",
+      "definition": "Mélangeur de bus qui crée de nouveaux mélanges à partir des bus (master, groupes) pour des zones ou des enregistrements.",
+      "see_also": [
+        "matrix-output"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crosspoint-level",
+      "term_fr": "Niveau de point de croisement",
+      "term_en": "Crosspoint level",
+      "domain": "consoles-signal-flow",
+      "definition": "Niveau d'un bus d'entrée vers une sortie de matrice.",
+      "see_also": [
+        "matrix-output"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "main-mix",
+      "term_fr": "Mix principal (master)",
+      "term_en": "Main mix",
+      "domain": "consoles-signal-flow",
+      "definition": "Bus stéréo (ou LCR) qui alimente les sorties principales.",
+      "see_also": [
+        "main-mix-bus"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lcr",
+      "term_fr": "LCR",
+      "term_en": "LCR (left/centre/right)",
+      "domain": "consoles-signal-flow",
+      "definition": "Mode de bus principal à trois canaux : gauche, centre et droite.",
+      "see_also": [
+        "main-mix-bus"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pfl",
+      "term_fr": "PFL",
+      "term_en": "PFL (pre-fade listen)",
+      "domain": "consoles-signal-flow",
+      "definition": "Écoute d'une tranche avant le fader ; sert à régler les gains et à pré-écouter.",
+      "see_also": [
+        "pfl-afl-solo"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "afl",
+      "term_fr": "AFL",
+      "term_en": "AFL (after-fade listen)",
+      "domain": "consoles-signal-flow",
+      "definition": "Écoute d'une tranche après le fader, telle qu'elle est envoyée au mix.",
+      "see_also": [
+        "pfl-afl-solo"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "solo-in-place",
+      "term_fr": "Solo in place (SIP)",
+      "term_en": "Solo in place",
+      "domain": "consoles-signal-flow",
+      "definition": "Solo destructif qui coupe les autres tranches et change donc le mix de sortie.",
+      "see_also": [
+        "pfl-afl-solo"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Mixing_console",
+          "publisher": "Wikipedia — Mixing console",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pfl-trim",
+      "term_fr": "PFL trim",
+      "term_en": "PFL trim",
+      "domain": "consoles-signal-flow",
+      "definition": "Réglage du niveau d'écoute PFL (de −30 à +20 dB sur la Yamaha CL).",
+      "see_also": [
+        "pfl-afl-solo"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rude-solo-light",
+      "term_fr": "Voyant « rude solo »",
+      "term_en": "Rude solo light",
+      "domain": "consoles-signal-flow",
+      "definition": "Voyant clignotant de Mackie qui rappelle qu'un solo est resté engagé.",
+      "see_also": [
+        "monitor-source-selection"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "direct-out-term",
+      "term_fr": "Sortie directe",
+      "term_en": "Direct out",
+      "domain": "consoles-signal-flow",
+      "definition": "Sortie individuelle d'une tranche vers un appareil externe.",
+      "see_also": [
+        "direct-out"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "split-monitoring",
+      "term_fr": "Split monitoring",
+      "term_en": "Split monitoring",
+      "domain": "consoles-signal-flow",
+      "definition": "Méthode d'enregistrement où les tranches sources partent au multipiste par les sorties directes et où l'on écoute les retours du multipiste sur d'autres tranches.",
+      "see_also": [
+        "direct-out"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stereo-return",
+      "term_fr": "Retour stéréo",
+      "term_en": "Stereo return",
+      "domain": "consoles-signal-flow",
+      "definition": "Entrée dédiée au retour d'un effet, mélangée au signal sec dans le mix principal.",
+      "see_also": [
+        "effects-return"
+      ],
+      "sources": [
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Audio) — 1604VLZ4 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stagebox",
+      "term_fr": "Boîtier de scène (rack d'E/S)",
+      "term_en": "Stagebox / I/O rack",
+      "domain": "consoles-signal-flow",
+      "definition": "Boîtier placé sur scène qui contient préamplis et convertisseurs et relie la scène à la console par une liaison numérique (Dante, MADI…).",
+      "see_also": [
+        "input-patching",
+        "gain-sharing"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dante-input-patch",
+      "term_fr": "Patch d'entrée Dante",
+      "term_en": "Dante input patch",
+      "domain": "consoles-signal-flow",
+      "definition": "Fenêtre Yamaha qui choisit les canaux du réseau Dante reçus par la console avant de les affecter aux tranches.",
+      "see_also": [
+        "input-patching"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ripple-channels",
+      "term_fr": "Ripple (routage en cascade)",
+      "term_en": "Ripple channels",
+      "domain": "consoles-signal-flow",
+      "definition": "Fonction DiGiCo qui route des tranches consécutives vers des entrées ou sorties consécutives en une seule opération.",
+      "see_also": [
+        "input-patching"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stagebox-gain-tracking",
+      "term_fr": "Suivi de gain",
+      "term_en": "Gain tracking",
+      "domain": "consoles-signal-flow",
+      "definition": "Fonction DiGiCo : la console qui ne pilote pas les gains compense par son trim numérique chaque changement de gain fait par l'autre console.",
+      "see_also": [
+        "gain-sharing"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gain-compensation",
+      "term_fr": "Compensation de gain",
+      "term_en": "Gain compensation",
+      "domain": "consoles-signal-flow",
+      "definition": "Fonction Yamaha qui garde constant le niveau envoyé sur le réseau quand le gain analogique change.",
+      "see_also": [
+        "gain-sharing"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "receive-only",
+      "term_fr": "Réception seule",
+      "term_en": "Receive only",
+      "domain": "consoles-signal-flow",
+      "definition": "Mode de connexion d'une deuxième console à un rack partagé : elle reçoit les entrées sans piloter les gains ni utiliser les sorties.",
+      "see_also": [
+        "gain-sharing"
+      ],
+      "sources": [
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo UK Ltd — SD12 Getting Started (Issue A)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scene",
+      "term_fr": "Scène",
+      "term_en": "Scene",
+      "domain": "consoles-signal-flow",
+      "definition": "Ensemble nommé de réglages de la console (mix, patch, préamplis) enregistré et rappelable.",
+      "see_also": [
+        "scene-memory"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recall-safe",
+      "term_fr": "Recall Safe",
+      "term_en": "Recall safe",
+      "domain": "consoles-signal-flow",
+      "definition": "Exclusion globale de tranches ou de paramètres de tous les rappels de scène.",
+      "see_also": [
+        "recall-safe-focus"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "focus-recall",
+      "term_fr": "Focus Recall",
+      "term_en": "Focus recall",
+      "domain": "consoles-signal-flow",
+      "definition": "Choix, scène par scène, des paramètres que le rappel met à jour.",
+      "see_also": [
+        "recall-safe-focus"
+      ],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
+          "publisher": "Yamaha Corporation — CL5/CL3/CL1 V5 Reference Manual (copie du manuel officiel hébergée par CCI Solutions ; yamaha.com renvoyait 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "normalled",
+      "term_fr": "Normalisé",
+      "term_en": "Normalled (full normal)",
+      "domain": "consoles-signal-flow",
+      "definition": "Mode de baie où une fiche dans le jack du haut coupe la liaison interne vers l'entrée du bas.",
+      "see_also": [
+        "patchbay-normalling"
+      ],
+      "sources": [
+        {
+          "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+          "publisher": "Samson Technologies — S patch plus Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "half-normalled",
+      "term_fr": "Semi-normalisé",
+      "term_en": "Half-normalled",
+      "domain": "consoles-signal-flow",
+      "definition": "Mode de baie où une fiche dans le jack du haut prélève le signal sans couper la liaison vers l'entrée du bas.",
+      "see_also": [
+        "patchbay-normalling"
+      ],
+      "sources": [
+        {
+          "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+          "publisher": "Samson Technologies — S patch plus Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://samsontech.com/blog/the-ins-and-outs-of-a-patchbay/",
+          "publisher": "Samson Technologies — The Ins and Outs of a Patchbay (blog)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "non-normalled",
+      "term_fr": "Non normalisé (thru)",
+      "term_en": "Non-normalled (thru)",
+      "domain": "consoles-signal-flow",
+      "definition": "Mode de baie où les jacks du haut et du bas sont indépendants : chaque prise arrière va seulement à sa prise avant.",
+      "see_also": [
+        "patchbay-normalling"
+      ],
+      "sources": [
+        {
+          "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+          "publisher": "Samson Technologies — S patch plus Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "patchbay-grounding",
+      "term_fr": "Masses d'une baie (reliées / isolées)",
+      "term_en": "Patchbay grounding (strapped / isolated)",
+      "domain": "consoles-signal-flow",
+      "definition": "Réglage par voie des masses des jacks d'une baie : reliées verticalement entre haut et bas, ou isolées.",
+      "see_also": [
+        "patchbay-normalling"
+      ],
+      "sources": [
+        {
+          "url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf",
+          "publisher": "Switchcraft Inc. — StudioPatch / EZ Norm sell sheets",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_found_log": []
+}
