@@ -1,0 +1,549 @@
+{
+ "entity": "procedure",
+ "domain": "wireless-rf",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "frequency-coordination-theatre-show",
+   "name_fr": "Coordonner les fréquences HF d'un spectacle de théâtre",
+   "name_en": "Coordinate wireless frequencies for a theatre show",
+   "domain": "wireless-rf",
+   "context": "Avant l'installation d'un spectacle avec plusieurs micros HF (et éventuellement des ear monitors), établir un plan de fréquences légal et compatible pour le lieu.",
+   "duration_min": null,
+   "equipment_ids": [
+    "sennheiser-ew-dx-em-2",
+    "sennheiser-ew-d-asa",
+    "shure-ulx-d"
+   ],
+   "concept_ids": [
+    "rf-frequency-coordination",
+    "pmse-regulation-france",
+    "intermodulation",
+    "rf-scanning",
+    "channel-spacing-wireless"
+   ],
+   "rule_ids": [
+    "frequency-outside-authorised-band-fr",
+    "intermod-conflict"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "preconditions": [
+      "Liste des sources HF connue (micros, IEM, intercom)"
+     ],
+     "action": "Recenser tous les émetteurs prévus, y compris de réserve, et ceux des autres utilisateurs du lieu ou des lieux voisins.",
+     "expected_result": "Un tableau complet des canaux à coordonner.",
+     "typical_mistakes": [
+      "Oublier l'intercom ou les ear monitors",
+      "Ne pas prévoir de canaux de secours"
+     ]
+    },
+    {
+     "n": 2,
+     "preconditions": [],
+     "action": "Vérifier la variante de bande de chaque appareil et ne retenir que les plages ouvertes au PMSE en France (en pratique 470–694 MHz, éventuellement 823–832 et 1785–1805 MHz).",
+     "expected_result": "Chaque appareil a une plage légale identifiée.",
+     "typical_mistakes": [
+      "Utiliser un matériel accordé dans 694–790 MHz",
+      "Supposer que 863–865 MHz est équivalent aux bandes PMSE"
+     ]
+    },
+    {
+     "n": 3,
+     "preconditions": [
+      "Équipements de production allumés (lumière, vidéo, réseau)"
+     ],
+     "action": "Faire un scan sur place avec les récepteurs ou un logiciel, émetteurs du parc éteints.",
+     "expected_result": "Les fréquences occupées (TNT, autres systèmes) sont repérées.",
+     "typical_mistakes": [
+      "Scanner un autre jour ou ailleurs",
+      "Scanner avec les émetteurs du parc allumés"
+     ]
+    },
+    {
+     "n": 4,
+     "preconditions": [],
+     "action": "Calculer le jeu de fréquences : groupes/canaux du fabricant pour un petit parc, logiciel de coordination pour un grand parc ou des marques mélangées.",
+     "expected_result": "Aucune porteuse à moins de 400 kHz d'une autre ni à moins de 250 kHz d'un produit d'IM du 3e ordre (valeurs génériques Shure, ou grille du fabricant).",
+     "typical_mistakes": [
+      "Choisir les fréquences « à la main » sans calcul d'IM",
+      "Ignorer les produits à trois émetteurs"
+     ]
+    },
+    {
+     "n": 5,
+     "preconditions": [],
+     "action": "Programmer émetteurs et récepteurs, étiqueter chaque émetteur (nom du rôle, fréquence) et consigner le plan.",
+     "expected_result": "Chaque paire émetteur/récepteur est appairée et identifiée.",
+     "typical_mistakes": [
+      "Étiquettes manquantes lors des changements de costume"
+     ]
+    },
+    {
+     "n": 6,
+     "preconditions": [
+      "Plan programmé"
+     ],
+     "action": "Allumer tous les émetteurs ensemble dans l'aire de jeu et écouter chaque canal (voir la procédure de contrôle avant spectacle).",
+     "expected_result": "Pas d'interférence audible avec tout le parc actif.",
+     "typical_mistakes": [
+      "Tester les canaux un par un seulement"
+     ]
+    }
+   ],
+   "safety_notes": [
+    "N'utiliser une puissance supérieure que dans les limites réglementaires (50 mW PAR dans 470–694 MHz)."
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "steps"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "steps"
+     ]
+    },
+    {
+     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "steps"
+     ]
+    },
+    {
+     "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
+     "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "safety_notes"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "receiver-antenna-setup",
+   "name_fr": "Installer les antennes de réception HF",
+   "name_en": "Set up wireless receiver antennas",
+   "domain": "wireless-rf",
+   "context": "Mise en place des antennes et de la distribution d'antennes pour un parc de récepteurs en rack.",
+   "duration_min": 45,
+   "equipment_ids": [
+    "sennheiser-ew-d-asa",
+    "sennheiser-adp-uhf",
+    "shure-ua845uwb"
+   ],
+   "concept_ids": [
+    "antenna-types-wireless",
+    "antenna-distribution",
+    "antenna-cable-loss",
+    "line-of-sight-rf",
+    "diversity-reception"
+   ],
+   "rule_ids": [
+    "antenna-distance",
+    "passive-split-too-many-receivers",
+    "iem-tx-near-mic-receivers"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "preconditions": [],
+     "action": "Choisir antennes et répartiteur de la même plage que les récepteurs (par exemple version 470–694 MHz).",
+     "expected_result": "Antennes, répartiteur et récepteurs couvrent les mêmes fréquences.",
+     "typical_mistakes": [
+      "Antenne d'une autre plage UHF que les récepteurs"
+     ]
+    },
+    {
+     "n": 2,
+     "preconditions": [
+      "Répartiteur actif en rack"
+     ],
+     "action": "Relier les deux entrées d'antenne (A et B) au répartiteur actif, puis chaque sortie A/B vers les entrées A/B des récepteurs en câble 50 Ω court.",
+     "expected_result": "Chaque récepteur reçoit A et B ; un répartiteur actif dès trois récepteurs.",
+     "typical_mistakes": [
+      "Inverser A et B sur certains récepteurs",
+      "Empiler les divisions passives"
+     ]
+    },
+    {
+     "n": 3,
+     "preconditions": [],
+     "action": "Placer les antennes hors du rack, en hauteur, en visibilité directe de la scène, à au moins 5 m des émetteurs et à distance des structures métalliques parallèles.",
+     "expected_result": "Les antennes « voient » toute l'aire de jeu au-dessus du public.",
+     "typical_mistakes": [
+      "Laisser les fouets à l'arrière d'un rack métallique",
+      "Antennes collées à une poutre métallique"
+     ]
+    },
+    {
+     "n": 4,
+     "preconditions": [],
+     "action": "Espacer les deux antennes d'au moins un quart d'onde (environ 10 cm en UHF, mieux jusqu'à une longueur d'onde) ; orienter les directionnelles vers la scène, éléments verticaux.",
+     "expected_result": "Diversité efficace sur toute la zone.",
+     "typical_mistakes": [
+      "Antennes directionnelles posées à plat comme une antenne TV"
+     ]
+    },
+    {
+     "n": 5,
+     "preconditions": [],
+     "action": "Si le câble est long, utiliser un câble faible perte ou un booster alimenté ; vérifier si l'antenne accepte le courant continu (l'ADP UHF passive n'a pas de passage DC).",
+     "expected_result": "Niveau HF suffisant au récepteur.",
+     "typical_mistakes": [
+      "Long câble fin en UHF",
+      "Compter sur l'alimentation fantôme d'antenne pour une antenne passive"
+     ]
+    },
+    {
+     "n": 6,
+     "preconditions": [],
+     "action": "Placer les émetteurs d'ear monitors et d'intercom dans un autre rack, avec leurs antennes éloignées des antennes de réception.",
+     "expected_result": "Pas de désensibilisation des récepteurs par les émetteurs voisins.",
+     "typical_mistakes": [
+      "Combiner IEM et récepteurs micros dans le même rack"
+     ]
+    }
+   ],
+   "safety_notes": [
+    "Fixer solidement les antennes en hauteur (élingue de sécurité si suspendues)."
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "steps"
+     ]
+    },
+    {
+     "url": "https://assets.sennheiser.com/download/assets/EW-D_ASA_Product_specification_v1.2_EN.pdf/bb086990e7db11f08c892a34179bc91d?attachment=true",
+     "publisher": "Sennheiser, EW-D ASA product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "steps"
+     ]
+    },
+    {
+     "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
+     "publisher": "Sennheiser, ADP UHF product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "steps"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
+     "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "steps"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "wireless-preshow-check",
+   "name_fr": "Contrôle HF avant spectacle (piles, scan, test de marche)",
+   "name_en": "Wireless pre-show check",
+   "domain": "wireless-rf",
+   "context": "Vérification de tout le parc HF avant l'entrée du public, avec tout l'équipement de production allumé.",
+   "duration_min": 30,
+   "equipment_ids": [
+    "sennheiser-ew-dx-em-2",
+    "shure-ulx-d"
+   ],
+   "concept_ids": [
+    "transmitter-battery-management",
+    "rf-scanning",
+    "multipath-dropout",
+    "squelch",
+    "intermodulation"
+   ],
+   "rule_ids": [
+    "antenna-distance",
+    "intermod-conflict"
+   ],
+   "steps": [
+    {
+     "n": 1,
+     "preconditions": [],
+     "action": "Mettre des piles neuves ou des batteries pleines dans tous les émetteurs (et récepteurs de ceinture IEM).",
+     "expected_result": "Indicateurs de batterie au maximum.",
+     "typical_mistakes": [
+      "Réutiliser des piles « encore bonnes » de la veille"
+     ]
+    },
+    {
+     "n": 2,
+     "preconditions": [
+      "Émetteurs éteints"
+     ],
+     "action": "Allumer tous les récepteurs et la distribution d'antennes, sans émetteurs.",
+     "expected_result": "Peu ou pas d'activité HF sur les récepteurs.",
+     "typical_mistakes": [
+      "Interpréter une activité HF comme normale"
+     ]
+    },
+    {
+     "n": 3,
+     "preconditions": [],
+     "action": "Allumer les émetteurs un par un, à distance comparable (au moins 5 m des antennes).",
+     "expected_result": "Seul le bon récepteur s'active ; les autres restent sans signal.",
+     "typical_mistakes": [
+      "Tester avec l'émetteur posé sur le rack"
+     ]
+    },
+    {
+     "n": 4,
+     "preconditions": [],
+     "action": "Allumer tous les émetteurs ensemble (au moins 1 m les uns des autres) et vérifier que tous les récepteurs s'activent.",
+     "expected_result": "Chaque récepteur reçoit son émetteur.",
+     "typical_mistakes": []
+    },
+    {
+     "n": 5,
+     "preconditions": [],
+     "action": "Test d'écoute statique de chaque système pour valider les niveaux.",
+     "expected_result": "Niveaux cohérents, pas de crête permanente.",
+     "typical_mistakes": []
+    },
+    {
+     "n": 6,
+     "preconditions": [],
+     "action": "Test de marche (walk test) : parcourir toute l'aire de jeu et les coulisses avec chaque émetteur, puis refaire le parcours avec tout le parc allumé.",
+     "expected_result": "Aucun décrochage ni interférence audible.",
+     "typical_mistakes": [
+      "Ne faire le test de marche qu'avec un seul émetteur actif",
+      "Oublier les zones derrière le décor"
+     ]
+    },
+    {
+     "n": 7,
+     "preconditions": [
+      "Spectacle en cours"
+     ],
+     "action": "En exploitation : muter les récepteurs tant que l'émetteur n'est pas allumé, ne pas ouvrir de tranche sans émetteur actif, couper l'audio avec le mute et non l'interrupteur (sauf systèmes à tonalité pilote).",
+     "expected_result": "Pas de souffle ni de claquement dans la salle.",
+     "typical_mistakes": [
+      "Éteindre l'émetteur en plein spectacle avec la tranche ouverte"
+     ]
+    }
+   ],
+   "safety_notes": [
+    "Contrôler le niveau d'écoute au casque pendant le test de marche."
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "steps"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "squelch-adjustment-threshold",
+   "name_fr": "Régler un squelch à seuil",
+   "name_en": "Adjust a threshold squelch",
+   "domain": "wireless-rf",
+   "context": "Réglage du seuil de squelch d'un récepteur analogique quand du souffle apparaît en l'absence d'émetteur.",
+   "duration_min": 10,
+   "equipment_ids": [
+    "sennheiser-ew-100-g4"
+   ],
+   "concept_ids": [
+    "squelch",
+    "wireless-range"
+   ],
+   "rule_ids": [],
+   "steps": [
+    {
+     "n": 1,
+     "preconditions": [],
+     "action": "Éteindre l'émetteur et allumer tout l'équipement voisin (pire cas).",
+     "expected_result": "Conditions d'interférence maximales.",
+     "typical_mistakes": []
+    },
+    {
+     "n": 2,
+     "preconditions": [],
+     "action": "Baisser le volume de sortie du récepteur, l'allumer et observer les indicateurs HF et audio.",
+     "expected_result": "Lecture de l'activité HF en l'absence d'émetteur.",
+     "typical_mistakes": [
+      "Laisser la tranche console ouverte"
+     ]
+    },
+    {
+     "n": 3,
+     "preconditions": [],
+     "action": "Si un signal est indiqué, monter le seuil de squelch jusqu'à l'état « pas de signal », puis légèrement au-delà.",
+     "expected_result": "Récepteur muet sans émetteur.",
+     "typical_mistakes": [
+      "Monter le squelch au maximum « par sécurité »"
+     ]
+    },
+    {
+     "n": 4,
+     "preconditions": [],
+     "action": "Si l'état « pas de signal » est impossible même avec un seuil haut, chercher la source parasite ou changer de fréquence.",
+     "expected_result": "Fréquence propre.",
+     "typical_mistakes": []
+    },
+    {
+     "n": 5,
+     "preconditions": [],
+     "action": "Rallumer l'émetteur et vérifier la réception à la distance de jeu normale.",
+     "expected_result": "Le récepteur s'ouvre en tout point de l'aire de jeu.",
+     "typical_mistakes": [
+      "Oublier qu'un seuil élevé réduit la portée"
+     ]
+    }
+   ],
+   "safety_notes": [],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "steps"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+     "publisher": "Sennheiser, ew 100 G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "equipment_ids"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "bodypack-transmitter-setup",
+   "name_fr": "Préparer et poser un émetteur de poche",
+   "name_en": "Set up a bodypack transmitter",
+   "domain": "wireless-rf",
+   "context": "Préparation d'un émetteur de poche avec micro cravate pour un comédien ou un intervenant.",
+   "duration_min": 10,
+   "equipment_ids": [
+    "sennheiser-ew-100-g4",
+    "shure-slx-d",
+    "dpa-4060"
+   ],
+   "concept_ids": [
+    "fm-deviation",
+    "body-absorption-rf",
+    "fm-companding"
+   ],
+   "rule_ids": [],
+   "steps": [
+    {
+     "n": 1,
+     "preconditions": [],
+     "action": "Vérifier que l'émetteur est sur la même fréquence et le même mode (compander, tonalité pilote) que le récepteur.",
+     "expected_result": "Le récepteur affiche le signal et le nom attendu.",
+     "typical_mistakes": [
+      "Compander ou tonalité pilote différents entre émetteur et récepteur"
+     ]
+    },
+    {
+     "n": 2,
+     "preconditions": [],
+     "action": "Faire parler ou chanter l'artiste au niveau le plus fort prévu et régler la sensibilité pour que l'indicateur de crête ne s'allume que brièvement.",
+     "expected_result": "Pleine modulation sans crête permanente.",
+     "typical_mistakes": [
+      "Régler sur une voix parlée douce puis saturer au cri"
+     ]
+    },
+    {
+     "n": 3,
+     "preconditions": [],
+     "action": "Fixer l'émetteur (ceinture, poche ou harnais) avec l'antenne déployée librement, loin des objets métalliques, commandes accessibles si besoin.",
+     "expected_result": "Antenne droite, non repliée contre la peau ni coincée.",
+     "typical_mistakes": [
+      "Antenne enroulée autour de l'émetteur",
+      "Émetteur collé à un autre émetteur ou à un récepteur IEM"
+     ]
+    },
+    {
+     "n": 4,
+     "preconditions": [],
+     "action": "Placer le micro cravate près de la bouche sans obstruer sa grille (maquillage, adhésif), câble avec boucle de soulagement.",
+     "expected_result": "Son clair, pas de frottements.",
+     "typical_mistakes": [
+      "Grille couverte par l'adhésif"
+     ]
+    }
+   ],
+   "safety_notes": [
+    "Prévoir une housse anti-transpiration pour les émetteurs portés longtemps."
+   ],
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "steps",
+      "safety_notes"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Procédure fabricant de coordination complète avec Wireless Workbench",
+   "searched": "Article Shure IMD (renvoie à un article futur)"
+  }
+ ]
+}

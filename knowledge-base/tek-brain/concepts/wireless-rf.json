@@ -1,0 +1,1720 @@
+{
+ "entity": "concept",
+ "domain": "wireless-rf",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "uhf-wireless-system",
+   "name_fr": "Système HF (liaison micro sans fil)",
+   "name_en": "Wireless microphone system",
+   "domain": "wireless-rf",
+   "definition": "Ensemble émetteur (main, ceinture ou enfichable) et récepteur qui remplace le câble micro par une porteuse radio, le plus souvent en UHF.",
+   "explanation": "Un système HF comprend une source (micro ou instrument), un émetteur qui module une porteuse radio, une ou deux antennes de réception et un récepteur qui restitue un signal audio, généralement sur une sortie XLR symétrique commutable niveau micro / ligne. Le récepteur doit donc ressembler, côté console, à la source filaire qu'il remplace. Shure rappelle qu'un système sans fil ne peut pas être aussi constant et fiable qu'un câble, mais que les systèmes actuels donnent d'excellents résultats s'ils sont bien choisis et réglés. Au théâtre, on utilise surtout des émetteurs de poche (bodypack) avec micro cravate miniature ; en concert, des émetteurs main. Le choix suit l'ordre : application, micro, type d'émetteur, type de récepteur (diversity recommandé), nombre de canaux, lieu, coordination des fréquences, accessoires.",
+   "formulas": [],
+   "units": [
+    "MHz"
+   ],
+   "related_concepts": [
+    "analog-vs-digital-wireless",
+    "diversity-reception",
+    "rf-frequency-coordination",
+    "squelch"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4",
+    "sennheiser-ew-dx-em-2",
+    "shure-slx-d",
+    "shure-ulx-d"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+     "publisher": "Sennheiser, EW-DX EM 2 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "equipment_ids"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "analog-vs-digital-wireless",
+   "name_fr": "HF analogique et HF numérique",
+   "name_en": "Analog vs digital wireless",
+   "domain": "wireless-rf",
+   "definition": "Un système analogique module la porteuse en FM avec compression-expansion (compander) ; un système numérique transmet l'audio codé en données, avec une latence de quelques millisecondes.",
+   "explanation": "Selon Shure, l'analogique n'a pratiquement pas de latence, alors que le numérique en ajoute une qui dépend du traitement : il faut la vérifier pour la scène et la guitare. Le numérique offre en général plus de dynamique et de bande passante, et certains systèmes logent jusqu'à deux fois plus de micros compatibles dans le même espace radio. Ce n'est pas automatique : un système 2,4 GHz n'accepte typiquement que 4 à 5 systèmes compatibles. Seul le numérique permet le chiffrement (AES-256 chez Shure et Sennheiser EW-DX). Analogique ou numérique, les deux subissent les interférences : la coordination des fréquences reste obligatoire en UHF. Exemples de fiches : EW-DX EM 2 annonce 1,9 ms de latence système, EM 6000 environ 3 ms.",
+   "formulas": [],
+   "units": [
+    "ms",
+    "MHz"
+   ],
+   "related_concepts": [
+    "fm-companding",
+    "latency",
+    "rf-frequency-coordination",
+    "intermodulation"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4",
+    "sennheiser-ew-dx-em-2",
+    "sennheiser-em-6000"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transmission analogique / numérique (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Choix d'un système HF — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.shure.com/en-EU/insights/analogue-vs-digital-wireless-microphones",
+     "publisher": "Shure Europe, M. Henshall, « Analogue vs. Digital Wireless Microphones » (13/05/2015)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+     "publisher": "Sennheiser, EW-DX EM 2 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/41648-en-sp_1192_v13.0_em_6000_product_specification_en.pdf",
+     "publisher": "Sennheiser, EM 6000 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "fm-companding",
+   "name_fr": "Préaccentuation et compander en HF analogique",
+   "name_en": "Pre-emphasis and companding",
+   "domain": "wireless-rf",
+   "definition": "En HF analogique, l'émetteur relève les aigus (préaccentuation) et compresse la dynamique (souvent 2:1) ; le récepteur applique l'inverse (désaccentuation, expansion 1:2).",
+   "explanation": "La liaison radio FM a une dynamique limitée et ajoute un souffle aigu. La préaccentuation suivie de la désaccentuation réduit ce souffle d'environ 10 dB selon Shure. Le compander comprime l'audio dans l'émetteur puis l'étend dans le récepteur, ce qui permet une dynamique potentielle supérieure à 100 dB. Conséquence pratique : émetteur et récepteur doivent être réglés dans le même mode de compander (par exemple HDX chez Sennheiser ew G4) ; mélanger des marques ou des modes donne un son pompé ou terne. Les artefacts de compander s'entendent davantage sur les systèmes analogiques bon marché.",
+   "formulas": [],
+   "units": [
+    "dB"
+   ],
+   "related_concepts": [
+    "analog-vs-digital-wireless",
+    "fm-deviation"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-EU/insights/analogue-vs-digital-wireless-microphones",
+     "publisher": "Shure Europe, M. Henshall, « Analogue vs. Digital Wireless Microphones » (13/05/2015)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+     "publisher": "Sennheiser, ew 100 G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "fm-deviation",
+   "name_fr": "Excursion FM et réglage de sensibilité de l'émetteur",
+   "name_en": "FM deviation and transmitter input level",
+   "domain": "wireless-rf",
+   "definition": "L'excursion (deviation) est l'écart de fréquence de la porteuse FM produit par l'audio ; le réglage de sensibilité de l'émetteur fixe la modulation maximale.",
+   "explanation": "Plus l'audio est fort, plus la porteuse s'écarte de sa fréquence nominale ; la limite d'excursion est fixée par la conception et la réglementation. Sur le terrain, on règle la sensibilité de l'émetteur pour que le son le plus fort réellement produit (cri, refrain) atteigne tout juste la modulation maximale, en regardant l'indicateur de crête du récepteur. Une crête allumée en permanence signifie qu'il faut baisser la sensibilité, sinon la distorsion apparaît. Une sensibilité trop faible donne au contraire un signal bas et bruité. Exemple de fiche : excursion nominale ±24 kHz / ±48 kHz sur le ew 100 G4.",
+   "formulas": [],
+   "units": [
+    "kHz"
+   ],
+   "related_concepts": [
+    "fm-companding",
+    "gain-staging"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+     "publisher": "Sennheiser, ew 100 G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "rf-frequency-coordination",
+   "name_fr": "Coordination des fréquences HF",
+   "name_en": "RF frequency coordination",
+   "domain": "wireless-rf",
+   "definition": "Choix d'un jeu de fréquences autorisées, libres et mutuellement compatibles (sans intermodulation ni conflit interne) pour tous les émetteurs d'un lieu.",
+   "explanation": "Coordonner, c'est d'abord identifier les bandes légales sur le lieu, puis repérer ce qui est déjà occupé (TNT, autres productions) par un scan, enfin calculer un jeu de fréquences où aucune porteuse ne tombe sur un produit d'intermodulation. Shure recommande de le faire même pour un seul système et impérativement pour plusieurs. Les tables de groupes/canaux des fabricants supposent un spectre propre et conviennent aux petits parcs ; pour beaucoup de canaux, Shure recommande un logiciel comme Wireless Workbench. Le calcul devient vite énorme : dix systèmes représentent des milliers de combinaisons. Il faut intégrer tous les émetteurs : micros, ear monitors, intercom, et les systèmes voisins.",
+   "formulas": [],
+   "units": [
+    "MHz",
+    "kHz"
+   ],
+   "related_concepts": [
+    "intermodulation",
+    "rf-scanning",
+    "channel-spacing-wireless",
+    "pmse-regulation-france",
+    "receiver-internal-frequencies"
+   ],
+   "equipment_ids": [
+    "shure-ulx-d",
+    "shure-axient-digital-ad4d",
+    "sennheiser-ew-dx-em-2"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Préparation d'une installation multi-HF — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E6",
+     "bloc": null,
+     "note": "Situation professionnelle en spectacle vivant — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-EU/insights/analogue-vs-digital-wireless-microphones",
+     "publisher": "Shure Europe, M. Henshall, « Analogue vs. Digital Wireless Microphones » (13/05/2015)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "intermodulation",
+   "name_fr": "Intermodulation (IM)",
+   "name_en": "Intermodulation",
+   "domain": "wireless-rf",
+   "definition": "Création de fréquences parasites (produits d'IM) quand plusieurs signaux radio traversent un circuit non linéaire (étage de sortie d'un émetteur, entrée d'un récepteur).",
+   "explanation": "Les produits d'IM sont des sommes et différences des fréquences porteuses et de leurs multiples. Les plus gênants sont les produits du 3e ordre : avec deux émetteurs f1 < f2, ils tombent à 2f1 − f2 et 2f2 − f1, c'est-à-dire à un écart F sous la plus basse et au-dessus de la plus haute. Exemple Shure : 590 et 595 MHz donnent des produits à 585 et 600 MHz. Avec trois émetteurs apparaissent aussi des produits du type f1 + f2 − f3. N émetteurs créent N × (N − 1) produits du 3e ordre à deux émetteurs. La puissance d'un produit d'IM croît avec le carré de la puissance des porteuses et décroît avec le carré de la distance entre émetteurs : des émetteurs puissants et serrés les uns contre les autres (par exemple dans les coulisses) aggravent le problème. Les produits du 5e ordre ne comptent qu'en cas de grande proximité ; les ordres pairs tombent loin de la bande.",
+   "formulas": [
+    {
+     "expr": "IM3a = 2·f1 − f2 ; IM3b = 2·f2 − f1",
+     "vars": {
+      "f1": "fréquence porteuse basse (MHz)",
+      "f2": "fréquence porteuse haute (MHz)"
+     },
+     "source_url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion"
+    },
+    {
+     "expr": "IM3 (3 émetteurs) = f1 + f2 − f3 ; f1 − f2 + f3 ; f2 + f3 − f1",
+     "vars": {
+      "f1, f2, f3": "fréquences des trois porteuses (MHz)"
+     },
+     "source_url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf"
+    },
+    {
+     "expr": "N_IM3(2 émetteurs) = N·(N − 1)",
+     "vars": {
+      "N": "nombre d'émetteurs"
+     },
+     "source_url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf"
+    }
+   ],
+   "units": [
+    "MHz"
+   ],
+   "related_concepts": [
+    "rf-frequency-coordination",
+    "channel-spacing-wireless",
+    "antenna-combiner"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Non-linéarités et spectre (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Plan de fréquences multi-HF — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation",
+      "formulas[0]",
+      "formulas[1]",
+      "formulas[2]"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation",
+      "formulas[0]",
+      "formulas[1]"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "channel-spacing-wireless",
+   "name_fr": "Écarts minimaux entre fréquences",
+   "name_en": "Wireless channel spacing",
+   "domain": "wireless-rf",
+   "definition": "Règles d'écart entre porteuses et entre une porteuse et un produit parasite, données par les fabricants pour garantir la compatibilité.",
+   "explanation": "Shure indique que la plupart des fabricants recommandent au moins 400 kHz entre deux systèmes (limite de sélectivité du récepteur) et au moins 250 kHz entre tout produit d'IM du 3e ordre et une porteuse utilisée. La même marge de 250 kHz est conseillée vis-à-vis des oscillateurs locaux et des fréquences images des récepteurs. Les systèmes numériques récents annoncent des grilles plus serrées : l'EM 6000 de Sennheiser indique un espacement équidistant minimum de 400 kHz en mode Long Range et 200 kHz en mode Link Density ; l'Axient Digital de Shure 350 kHz en mode standard et 125 kHz en mode haute densité. Ces valeurs sont propres à chaque gamme : on ne les transpose pas d'un fabricant à l'autre.",
+   "formulas": [],
+   "units": [
+    "kHz"
+   ],
+   "related_concepts": [
+    "intermodulation",
+    "rf-frequency-coordination",
+    "receiver-internal-frequencies"
+   ],
+   "equipment_ids": [
+    "sennheiser-em-6000",
+    "shure-axient-digital-ad4d"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/41648-en-sp_1192_v13.0_em_6000_product_specification_en.pdf",
+     "publisher": "Sennheiser, EM 6000 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/docs/guide/AD4D",
+     "publisher": "Shure, Axient Digital AD4D user guide (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "receiver-internal-frequencies",
+   "name_fr": "Oscillateur local et fréquence image",
+   "name_en": "Local oscillator and image frequency",
+   "domain": "wireless-rf",
+   "definition": "Fréquences internes d'un récepteur superhétérodyne (oscillateur local, fréquence image à 2 × FI) qui peuvent créer des conflits avec d'autres systèmes.",
+   "explanation": "Un récepteur superhétérodyne mélange le signal reçu avec un oscillateur local (LO) pour obtenir une fréquence intermédiaire (FI). Le LO d'un récepteur peut être capté par un récepteur voisin calé sur cette fréquence, surtout s'ils sont empilés. La fréquence image se trouve à deux fois la FI de la fréquence de travail ; un émetteur à cette fréquence peut passer dans la FI. Shure conseille de rester à au moins 250 kHz de ces fréquences. Ces calculs dépendent de la conception de chaque appareil : mélanger des marques complique la prédiction, d'où l'intérêt d'un logiciel qui connaît les profils d'équipement. Les répartiteurs d'antennes actifs isolent les entrées d'antenne les unes des autres.",
+   "formulas": [],
+   "units": [
+    "MHz"
+   ],
+   "related_concepts": [
+    "rf-frequency-coordination",
+    "channel-spacing-wireless",
+    "antenna-distribution"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Principe du superhétérodyne (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "squelch",
+   "name_fr": "Squelch (silencieux)",
+   "name_en": "Squelch",
+   "domain": "wireless-rf",
+   "definition": "Circuit qui coupe la sortie audio du récepteur quand le signal de l'émetteur attendu est absent ou trop bruité.",
+   "explanation": "Sans squelch, un récepteur qui perd son émetteur (pile vide, trou de réception, distance) diffuse un souffle blanc souvent plus fort que la voix. Le squelch à seuil coupe l'audio sous un niveau HF réglé : plus le seuil est haut, plus la portée diminue. Le squelch sur le bruit (noise squelch) juge la qualité du signal par son contenu en bruit aigu. Le squelch à tonalité pilote (tone-key, pilot tone) n'ouvre le récepteur que si une tonalité inaudible envoyée par l'émetteur est présente, ce qui évite aussi les bruits de mise sous/hors tension. Exemple : le ew 100 G4 propose trois seuils (5, 15 et 25 dBµV) et une tonalité pilote. Il faut que la tonalité pilote soit activée des deux côtés, sinon le récepteur reste muet.",
+   "formulas": [],
+   "units": [
+    "dBµV"
+   ],
+   "related_concepts": [
+    "diversity-reception",
+    "wireless-range"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+     "publisher": "Sennheiser, ew 100 G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "multipath-dropout",
+   "name_fr": "Trajets multiples et décrochages",
+   "name_en": "Multipath and dropouts",
+   "domain": "wireless-rf",
+   "definition": "Combinaison au récepteur d'ondes directes et réfléchies qui s'additionnent ou s'annulent selon leur phase, provoquant souffle, « hits » ou coupures (dropouts).",
+   "explanation": "En salle, l'antenne de réception reçoit l'onde directe et des ondes réfléchies par les murs, le métal, le public. Selon leur phase, elles se renforcent ou s'annulent : un émetteur proche peut donc décrocher en certains points précis. Les zones de décrochage sont plus petites et plus rapprochées en UHF qu'en VHF, ce qui rend les trajets multiples plus sévères en UHF. On entend un léger souffle (noise-up), des chocs (hits) ou une coupure franche. Avec une seule antenne, le phénomène est imprévisible et inévitable : c'est la raison d'être de la réception en diversité. Il ne faut pas le confondre avec l'atténuation (fading) due à la distance ou à un obstacle.",
+   "formulas": [],
+   "units": [
+    "m"
+   ],
+   "related_concepts": [
+    "diversity-reception",
+    "line-of-sight-rf",
+    "wavelength"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Propagation des ondes (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Diagnostic HF — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "diversity-reception",
+   "name_fr": "Réception en diversité",
+   "name_en": "Diversity reception",
+   "domain": "wireless-rf",
+   "definition": "Réception par deux antennes (ou plus) espacées, le récepteur choisissant ou combinant le meilleur signal pour éviter les décrochages.",
+   "explanation": "La probabilité d'un décrochage simultané en deux points différents est très faible. Il faut au moins un quart de longueur d'onde entre antennes, soit environ 10 cm en UHF ; le bénéfice augmente jusqu'à une longueur d'onde puis plafonne. Plusieurs techniques existent : commutation d'antennes avec un seul récepteur, « true diversity » à deux étages de réception dont on commute l'audio, ou combinaison proportionnelle (ratio combining) qui mélange les deux sorties sans bruit de commutation et améliore le rapport signal/bruit jusqu'à 3 dB. Le ew 100 G4 est en true diversity, l'EW-DX EM 2 en diversité de commutation. Shure recommande la diversité dans presque tous les cas, sauf budget très serré. Si l'orientation de l'émetteur est imprévisible, incliner les deux antennes jusqu'à environ 45° de la verticale aide.",
+   "formulas": [],
+   "units": [
+    "m",
+    "dB"
+   ],
+   "related_concepts": [
+    "multipath-dropout",
+    "wavelength",
+    "antenna-types-wireless"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4",
+    "sennheiser-ew-dx-em-2",
+    "sennheiser-em-6000"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+     "publisher": "Sennheiser, ew 100 G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+     "publisher": "Sennheiser, EW-DX EM 2 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "line-of-sight-rf",
+   "name_fr": "Visibilité directe émetteur-antenne",
+   "name_en": "RF line of sight",
+   "domain": "wireless-rf",
+   "definition": "Disposition où aucun obstacle (métal, mur, public) ne se trouve entre l'antenne de l'émetteur et l'antenne de réception.",
+   "explanation": "Shure en fait la première règle de placement, surtout en UHF : antennes de réception dans la même pièce que les émetteurs et en hauteur au-dessus du public et des obstacles. Les objets métalliques réfléchissent les ondes, les matériaux denses les atténuent, et un obstacle crée une « ombre » radio derrière lui. Il vaut mieux rapprocher le récepteur de la scène et tirer un long câble audio que tirer un long câble d'antenne ou transmettre trop loin. Un récepteur au fond d'un rack métallique fermé, antennes à l'intérieur, perd sa visibilité directe.",
+   "formulas": [],
+   "units": [
+    "m"
+   ],
+   "related_concepts": [
+    "body-absorption-rf",
+    "multipath-dropout",
+    "wireless-range"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "body-absorption-rf",
+   "name_fr": "Absorption par le corps humain",
+   "name_en": "Body absorption",
+   "domain": "wireless-rf",
+   "definition": "Perte de signal radio quand l'onde traverse le corps de l'artiste ou du public, plus marquée pour les ondes courtes (hautes fréquences).",
+   "explanation": "Les matériaux non métalliques atténuent les ondes ; plus le matériau est dense et la fréquence élevée, plus la perte est forte. Shure précise que le corps humain cause des pertes importantes aux ondes courtes et que la puissance rayonnée d'une antenne d'émetteur diminue près du corps. En pratique : antenne fil de l'émetteur de poche bien déployée et non repliée contre la peau, main qui ne couvre pas l'antenne d'un émetteur main, et antennes de réception au-dessus de la foule. Un comédien qui tourne le dos à l'antenne avec l'émetteur dans le bas du dos peut perdre du signal.",
+   "formulas": [],
+   "units": [
+    "dB"
+   ],
+   "related_concepts": [
+    "line-of-sight-rf",
+    "wireless-range",
+    "rf-power-erp"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "wavelength-rf-antenna",
+   "name_fr": "Longueur d'onde et taille d'antenne",
+   "name_en": "RF wavelength and antenna size",
+   "domain": "wireless-rf",
+   "definition": "La taille utile d'une antenne est proportionnelle à la longueur d'onde : une antenne quart d'onde mesure un quart de la longueur d'onde de la porteuse.",
+   "explanation": "L'antenne minimale raisonnable est le quart d'onde, omnidirectionnel dans le plan perpendiculaire à son axe (un « beignet » horizontal pour une antenne verticale). Il a besoin d'un plan de masse (châssis du récepteur ou du répartiteur). Pour déporter une antenne omni, Shure recommande la demi-onde, qui n'a pas besoin de plan de masse et gagne jusqu'à environ 3 dB. Une antenne est accordée sur une plage limitée : en UHF, il faut utiliser des antennes de la même plage que les récepteurs. Shure cite comme ordre de grandeur environ 10 cm pour un quart d'onde de séparation en UHF.",
+   "formulas": [],
+   "units": [
+    "m",
+    "MHz"
+   ],
+   "related_concepts": [
+    "antenna-types-wireless",
+    "diversity-reception",
+    "wavelength"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Ondes électromagnétiques (PTES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "antenna-types-wireless",
+   "name_fr": "Types d'antennes de réception",
+   "name_en": "Wireless antenna types",
+   "domain": "wireless-rf",
+   "definition": "Antennes omnidirectionnelles (quart d'onde, demi-onde) et directionnelles (Yagi, log-périodique, hélice, panneau « paddle ») utilisées pour les systèmes HF.",
+   "explanation": "Les antennes omni (fouet quart d'onde, demi-onde déportée) captent dans toutes les directions horizontales. Les antennes directionnelles concentrent la sensibilité vers la scène : Shure cite un gain pouvant atteindre 10 dB par rapport au quart d'onde et une réjection des sources latérales jusqu'à 30 dB. La log-périodique couvre une large bande grâce à plusieurs dipôles ; la Yagi est étroite ; l'hélice est très directive et large bande. On oriente les éléments verticalement, comme les antennes des émetteurs. Exemple : l'ADP UHF de Sennheiser, antenne passive directive de 5 dBi typique, ouverture d'environ 100° à −3 dB et rapport avant/arrière > 14 dB. Pour les ear monitors, Shure propose des antennes hélicoïdales (HA-8089) en accessoire du PSM 1000.",
+   "formulas": [],
+   "units": [
+    "dBi",
+    "°",
+    "dB"
+   ],
+   "related_concepts": [
+    "wavelength-rf-antenna",
+    "antenna-cable-loss",
+    "antenna-distribution",
+    "iem-transmitter-rf"
+   ],
+   "equipment_ids": [
+    "sennheiser-adp-uhf",
+    "shure-psm-1000"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
+     "publisher": "Sennheiser, ADP UHF product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "antenna-cable-loss",
+   "name_fr": "Pertes dans le câble d'antenne",
+   "name_en": "Antenna cable loss",
+   "domain": "wireless-rf",
+   "definition": "Atténuation du signal radio dans le câble coaxial 50 Ω entre antenne et récepteur, qui croît avec la longueur et la fréquence.",
+   "explanation": "Aux fréquences radio, quelques mètres de câble suffisent à perdre beaucoup de signal ; la perte dépend du type de câble et augmente avec la fréquence, si bien que l'UHF demande des câbles faible perte. Les antennes, câbles, connecteurs et entrées sont prévus pour 50 Ω, mais Shure note que les pertes par désadaptation sont négligeables devant les pertes dues à la longueur. Règles : câble le plus court possible, peu de connexions, câble rigide à âme pleine pour l'installation fixe et câble souple pour la tournée. Un booster (amplificateur d'antenne) compense une longue liaison, à condition d'être alimenté (le répartiteur EW-D ASA fournit 12 V sur les prises d'antenne ; l'ADP UHF passive n'a pas de passage de courant continu).",
+   "formulas": [],
+   "units": [
+    "dB",
+    "Ω",
+    "m"
+   ],
+   "related_concepts": [
+    "antenna-distribution",
+    "antenna-types-wireless",
+    "wireless-range"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-d-asa",
+    "sennheiser-adp-uhf"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://assets.sennheiser.com/download/assets/EW-D_ASA_Product_specification_v1.2_EN.pdf/bb086990e7db11f08c892a34179bc91d?attachment=true",
+     "publisher": "Sennheiser, EW-D ASA product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
+     "publisher": "Sennheiser, ADP UHF product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "antenna-distribution",
+   "name_fr": "Distribution d'antennes (répartiteur)",
+   "name_en": "Antenna distribution",
+   "domain": "wireless-rf",
+   "definition": "Répartition du signal d'une paire d'antennes vers plusieurs récepteurs, par un répartiteur passif (perte d'environ 3 dB par division) ou actif (gain unitaire).",
+   "explanation": "Répartir évite une forêt d'antennes et réduit certaines interférences entre récepteurs. Une division passive coûte environ 3 dB ; Shure l'admet pour deux récepteurs et recommande fortement un répartiteur actif à partir de trois. Les répartiteurs actifs compensent la perte (gain global proche de 0 dB) et alimentent souvent les récepteurs : l'UA845UWB distribue deux antennes vers quatre paires de sorties plus une cascade, avec un gain typique de 0 dB et une isolation > 25 dB entre sorties ; l'EW-D ASA fonctionne en 2 × 1:4 ou 1 × 1:8. On peut cascader un second niveau de répartiteurs, mais Shure déconseille d'aller plus loin à cause de la distorsion HF. Il faut un répartiteur couvrant la bande des récepteurs (versions Q-R-S 470–694 MHz pour l'EW-D ASA).",
+   "formulas": [],
+   "units": [
+    "dB"
+   ],
+   "related_concepts": [
+    "antenna-cable-loss",
+    "antenna-combiner",
+    "receiver-internal-frequencies"
+   ],
+   "equipment_ids": [
+    "shure-ua845uwb",
+    "sennheiser-ew-d-asa"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
+     "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://assets.sennheiser.com/download/assets/EW-D_ASA_Product_specification_v1.2_EN.pdf/bb086990e7db11f08c892a34179bc91d?attachment=true",
+     "publisher": "Sennheiser, EW-D ASA product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "antenna-combiner",
+   "name_fr": "Combineur d'antennes",
+   "name_en": "Antenna combiner",
+   "domain": "wireless-rf",
+   "definition": "Appareil qui regroupe plusieurs signaux radio sur une seule antenne : émetteurs d'ear monitors vers une antenne d'émission, ou antennes de deux pièces vers une même entrée de récepteur.",
+   "explanation": "Pour les ear monitors, un combineur évite d'avoir une antenne par émetteur dans le rack : Shure liste pour le PSM 1000 le PA821B, combineur 8 vers 1, et le PA421B, 4 vers 1 avec distribution d'alimentation. Dans une installation multi-salles, Shure décrit aussi l'usage d'un combineur côté réception : l'antenne A de chaque pièce est combinée vers l'entrée A du récepteur, idem pour B, ce qui garde la diversité. Les émetteurs étant regroupés, la coordination des fréquences et l'intermodulation entre émetteurs doivent être soignées.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "antenna-distribution",
+    "iem-transmitter-rf",
+    "intermodulation"
+   ],
+   "equipment_ids": [
+    "shure-psm-1000"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "iem-transmitter-rf",
+   "name_fr": "Émetteur d'ear monitor (IEM) en HF",
+   "name_en": "IEM transmitter",
+   "domain": "wireless-rf",
+   "definition": "Émetteur fixe en rack qui envoie un mix de retour, souvent stéréo, vers un récepteur de ceinture porté par l'artiste.",
+   "explanation": "Le sens de la liaison est inversé par rapport au micro : l'émetteur est en régie retours et le récepteur sur l'artiste. Les systèmes analogiques Shure PSM et Sennheiser ew IEM G4 utilisent une FM stéréo multiplex ; les puissances sont commutables (par exemple 10/50/100 mW sur PSM 1000 selon les variantes, 10/30/50 mW sur ew IEM G4). Shure recommande fortement de placer les émetteurs d'ear monitors ou d'intercom dans un autre rack que les récepteurs micros et d'éloigner leurs antennes des antennes de réception. Le récepteur de ceinture du PSM 1000 est en diversité et propose un limiteur de volume ; Shure rappelle d'écouter le plus bas possible. Les variantes de bande dans 694–823 MHz sont à exclure en France.",
+   "formulas": [],
+   "units": [
+    "mW",
+    "MHz"
+   ],
+   "related_concepts": [
+    "in-ear-monitoring",
+    "antenna-combiner",
+    "intermodulation",
+    "pmse-regulation-france"
+   ],
+   "equipment_ids": [
+    "shure-psm-300",
+    "shure-psm-900",
+    "shure-psm-1000",
+    "sennheiser-ew-iem-g4"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Retours ear monitors — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://assets.sennheiser.com/download/assets/SP_1158_v2.0_ew_IEM_G4_Product_Specification_EN.pdf/fa9f41a4e7b911f0a354ea55b5d2fb86?attachment=true",
+     "publisher": "Sennheiser, ew IEM G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "rf-scanning",
+   "name_fr": "Scan HF (analyse du spectre)",
+   "name_en": "RF scanning",
+   "domain": "wireless-rf",
+   "definition": "Balayage d'une plage de fréquences par un récepteur ou un logiciel pour repérer les signaux déjà présents et trouver des canaux libres.",
+   "explanation": "Beaucoup de récepteurs savent chercher automatiquement un canal libre, et le scan peut transformer un récepteur en petit analyseur de spectre pour chasser une interférence, ou en enregistreur de niveau HF pendant une marche de contrôle. Shure explique que ses récepteurs scannent puis évitent automatiquement les fréquences à risque de la table de groupes/canaux. Pour un parc d'ear monitors, le PSM 1000 propose un « group scan » qui trouve le groupe avec le plus de canaux libres, et un seul récepteur de ceinture peut scanner puis envoyer les fréquences aux émetteurs. Il faut scanner avec tout l'équipement de production allumé (pire cas), mais émetteurs du parc éteints.",
+   "formulas": [],
+   "units": [
+    "MHz"
+   ],
+   "related_concepts": [
+    "rf-frequency-coordination",
+    "intermodulation"
+   ],
+   "equipment_ids": [
+    "shure-psm-1000",
+    "shure-ulx-d"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "rf-power-erp",
+   "name_fr": "Puissance rayonnée de l'émetteur",
+   "name_en": "Transmitter RF power and ERP",
+   "domain": "wireless-rf",
+   "definition": "Puissance radio réellement rayonnée par l'antenne d'un émetteur (puissance apparente rayonnée, PAR), limitée par la réglementation et par le rendement de l'antenne.",
+   "explanation": "La puissance maximale est fixée par le régulateur ; en France, la décision ARCEP n° 2015-0830 limite la PAR des équipements PMSE à 50 mW (17 dBm) dans 470–694 MHz, sauf liaisons d'ordre et de retour son autorisées à 1 W. Le rendement d'antenne compte autant : Shure indique qu'une antenne d'émetteur VHF typique a un rendement inférieur à 10 %, et qu'un gain ou une perte de 6 dB peut correspondre à environ 50 % de portée en plus ou en moins. Plus de puissance augmente aussi les produits d'intermodulation et vide les piles plus vite : on choisit la puissance la plus basse qui couvre la zone.",
+   "formulas": [],
+   "units": [
+    "mW",
+    "dBm",
+    "dB"
+   ],
+   "related_concepts": [
+    "wireless-range",
+    "intermodulation",
+    "pmse-regulation-france",
+    "transmitter-battery-management"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
+     "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "wireless-range",
+   "name_fr": "Portée d'une liaison HF",
+   "name_en": "Wireless range",
+   "domain": "wireless-rf",
+   "definition": "Distance à laquelle le récepteur capte encore un signal utilisable, c'est-à-dire assez fort et assez au-dessus du bruit et des interférences.",
+   "explanation": "La portée dépend de la puissance et de l'antenne de l'émetteur, du trajet (distance, obstacles, fréquence), de l'antenne et de la sensibilité du récepteur, et des interférences. Shure donne pour des systèmes de 10 à 50 mW une portée typique de 100 à 1000 pieds (environ 30 à 300 m) selon l'environnement, et seulement 50 pieds ou moins en très mauvaises conditions ; il juge impossible de prédire précisément la portée d'un système quelconque. Les fiches annoncent par exemple 100 m pour SLX-D ou ULX-D. Un squelch réglé trop haut réduit la portée.",
+   "formulas": [],
+   "units": [
+    "m"
+   ],
+   "related_concepts": [
+    "line-of-sight-rf",
+    "body-absorption-rf",
+    "antenna-cable-loss",
+    "squelch",
+    "rf-power-erp"
+   ],
+   "equipment_ids": [
+    "shure-slx-d",
+    "shure-ulx-d"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/docs/guide/SLXD",
+     "publisher": "Shure, SLX-D user guide (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "transmitter-battery-management",
+   "name_fr": "Gestion des piles et batteries des émetteurs",
+   "name_en": "Transmitter battery management",
+   "domain": "wireless-rf",
+   "definition": "Organisation du remplacement, de la charge et du contrôle des piles ou batteries des émetteurs et récepteurs portables pour éviter toute coupure en spectacle.",
+   "explanation": "Shure recommande des piles neuves du bon type, vérifiées avant l'usage et surveillées pendant (indicateur de l'émetteur ou télémétrie vers le récepteur). Le guide historique préfère les alcalines : une cellule NiCd/NiMH ne fait que 1,2 V contre 1,5 V. Les batteries modernes propres au fabricant changent la donne : QLX-D annonce plus de 11 h avec la batterie SB900C contre 8 h en alcalines. Pour des batteries en service quotidien, prévoir au moins trois par émetteur : une en charge, une chargée, une en service. Les autonomies varient beaucoup : 4 à 6 h pour un récepteur de ceinture PSM 900/1000 en AA, environ 8 h pour un émetteur ew 100 G4. On planifie donc les changements selon la durée du spectacle et des répétitions.",
+   "formulas": [],
+   "units": [
+    "V",
+    "h"
+   ],
+   "related_concepts": [
+    "wireless-range",
+    "rf-power-erp"
+   ],
+   "equipment_ids": [
+    "shure-qlx-d",
+    "shure-psm-1000",
+    "sennheiser-ew-100-g4"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+     "publisher": "Sennheiser, ew 100 G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/en-US/docs/guide/QLXD",
+     "publisher": "Shure, QLX-D user guide (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "field": "explanation",
+     "values": [
+      {
+       "value": "Les utilisateurs expérimentés choisissent presque toujours des piles alcalines ; les rechargeables sont à utiliser avec une extrême prudence.",
+       "source_url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf"
+      },
+      {
+       "value": "Les batteries lithium propres au fabricant (SB900C) donnent une autonomie supérieure aux alcalines (> 11 h contre 8 h sur QLX-D).",
+       "source_url": "https://www.shure.com/en-US/docs/guide/QLXD"
+      }
+     ],
+     "note": "Le guide Vear (2e éd.) date de l'époque NiCd/NiMH ; les guides produits récents de Shure annoncent l'inverse pour leurs batteries lithium dédiées."
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "pmse-regulation-france",
+   "name_fr": "Réglementation PMSE en France",
+   "name_en": "PMSE regulation in France",
+   "domain": "wireless-rf",
+   "definition": "Cadre fixé par l'ARCEP pour les « équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (micros sans fil, ear monitors, liaisons audio) : bandes, puissances et conditions d'usage.",
+   "explanation": "L'ARCEP liste pour le PMSE les bandes 174–223 MHz (décisions 2010-0849 et 2010-0850), 470–694 MHz (décision 2015-0830 modifiée par 2016-0272), 823–832 MHz et 1785–1805 MHz. Dans ces bandes, l'usage est réservé aux professionnels (les entrepreneurs de spectacles vivants au sens du code du travail en font partie), sans autorisation individuelle, sans redevance, à condition de respecter les paramètres techniques. Dans 470–694 MHz, la PAR est limitée à 50 mW (17 dBm), 1 W pour les liaisons d'ordre et de retour son. En contrepartie, le PMSE ne doit pas brouiller les services primaires (TNT notamment) et n'est pas protégé contre les brouillages. La bande 694–790 MHz (bande 700 MHz) est fermée au PMSE depuis le 1er juillet 2019. Pour un besoin ponctuel hors de ce cadre, l'ARCEP peut délivrer une autorisation temporaire (deux mois maximum), demandée via l'ANFR.",
+   "formulas": [],
+   "units": [
+    "MHz",
+    "mW",
+    "dBm"
+   ],
+   "related_concepts": [
+    "pmse-700mhz-band-clearance",
+    "band-863-865-mhz",
+    "rf-power-erp",
+    "rf-frequency-coordination"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-dx-em-2",
+    "sennheiser-em-6000",
+    "shure-ulx-d"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Réglementation des liaisons HF — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E6",
+     "bloc": null,
+     "note": "Cadre réglementaire du spectacle — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
+     "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.arcep.fr/uploads/tx_gsavis/16-0272.pdf",
+     "publisher": "ARCEP, décision n° 2016-0272 du 18 février 2016",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "field": "explanation",
+     "values": [
+      {
+       "value": "Interplan 800 MHz ouvert au PMSE en France : 823–832 MHz.",
+       "source_url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html"
+      },
+      {
+       "value": "CEPT ERC/REC 25-10 annexe 2 : plage d'accord 821,5–832 MHz (A5), harmonisée par la décision (UE) 2025/105.",
+       "source_url": "https://efis.cept.org/report/report2510AnnexRecommendation.do?annexId=1"
+      }
+     ],
+     "note": "La plage européenne de référence est plus large et cite une décision UE de 2025 ; la page ARCEP (mise à jour 09/07/2026) indique toujours 823–832 MHz. À vérifier avant de retenir 821,5 MHz en France."
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "pmse-700mhz-band-clearance",
+   "name_fr": "Libération de la bande 700 MHz",
+   "name_en": "700 MHz band clearance",
+   "domain": "wireless-rf",
+   "definition": "Réaffectation de la bande 694–790 MHz de l'audiovisuel vers le très haut débit mobile, qui a fermé progressivement cette bande au PMSE jusqu'au 1er juillet 2019.",
+   "explanation": "La libération s'est faite par plaques géographiques entre le 6 avril 2016 et le 1er juillet 2019. Après la date d'une commune et jusqu'au 1er juillet 2019, le PMSE n'y pouvait plus utiliser que 694–703 MHz et 733–756,8 MHz ; depuis le 1er juillet 2019, toute la bande lui est fermée en France. L'État a mis en place une aide financière (décret n° 2017-104 du 27 janvier 2017), gérée par l'ANFR, pour reconfigurer ou remplacer les équipements ; elle était ouverte jusqu'au 31 décembre 2019. Conséquence actuelle : un matériel accordé dans 694–790 MHz (par exemple les plages C et D du ew 100 G4, ou la variante P51 de l'ULX-D) ne doit pas être utilisé en France, même s'il fonctionne.",
+   "formulas": [],
+   "units": [
+    "MHz"
+   ],
+   "related_concepts": [
+    "pmse-regulation-france"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4",
+    "shure-ulx-d",
+    "shure-qlx-d"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.arcep.fr/uploads/tx_gsavis/16-0272.pdf",
+     "publisher": "ARCEP, décision n° 2016-0272 du 18 février 2016",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.anfr.fr/fileadmin/mediatheque/documents/Communiques_Presse/CP_ouverture_PMSE.pdf",
+     "publisher": "ANFR, communiqué de presse du 28 février 2017 (aides PMSE bande 700 MHz)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+     "publisher": "Sennheiser, ew 100 G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [
+    {
+     "field": "explanation",
+     "values": [
+      {
+       "value": "La réaffectation « se terminera fin juin 2019 » (avis de 2016 sur la page ARCEP).",
+       "source_url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html"
+      },
+      {
+       "value": "Fin de l'usage PMSE de la bande 700 MHz au 1er juillet 2019 (décision 2016-0272, annexe).",
+       "source_url": "https://www.arcep.fr/uploads/tx_gsavis/16-0272.pdf"
+      }
+     ],
+     "note": "Formulations équivalentes en pratique (fin juin / 1er juillet 2019)."
+    },
+    {
+     "field": "definition",
+     "values": [
+      {
+       "value": "Bande 700 MHz = 694–790 MHz (décisions ARCEP, ANFR).",
+       "source_url": "https://www.arcep.fr/uploads/tx_gsavis/16-0272.pdf"
+      },
+      {
+       "value": "Bande 700 MHz = 694–789 MHz (page ARCEP).",
+       "source_url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html"
+      }
+     ],
+     "note": "La décision autorisait le PMSE transitoire dans 694–789 MHz ; la bande nommée « 700 MHz » est 694–790 MHz."
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "band-863-865-mhz",
+   "name_fr": "Bande 863–865 MHz",
+   "name_en": "863–865 MHz band",
+   "domain": "wireless-rf",
+   "definition": "Petite bande de 2 MHz harmonisée dans l'Union européenne pour les micros sans fil et ear monitors, partagée avec des appareils audio grand public.",
+   "explanation": "La recommandation CEPT ERC/REC 25-10 la liste parmi les plages d'accord PMSE (code A6), harmonisée par la décision 2006/771/CE modifiée, avec les normes ETSI EN 300 422 et EN 301 357. La CEPT avertit que les émissions des services mobiles voisins et des autres appareils de faible portée en limitent fortement l'intérêt pour un son de qualité broadcast. Sennheiser indique pour ses produits G4 une limite de 10 mW dans cette bande en Europe. Attention : la page PMSE de l'ARCEP ne mentionne pas cette bande ; son régime exact en France (appareils de faible portée) n'a pas été vérifié ici. Plusieurs gammes (ew G4 plage E, EW-DX U1/5, QLX-D/ULX-D S50) incluent 863–865 MHz en plus de 823–832 MHz.",
+   "formulas": [],
+   "units": [
+    "MHz",
+    "mW"
+   ],
+   "related_concepts": [
+    "pmse-regulation-france"
+   ],
+   "equipment_ids": [
+    "sennheiser-ew-100-g4",
+    "sennheiser-ew-dx-em-2",
+    "shure-qlx-d"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre des liaisons HF (TES) — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://efis.cept.org/report/report2510AnnexRecommendation.do?annexId=1",
+     "publisher": "CEPT ECO / EFIS, ERC Recommendation 25-10, Annex 2 (tuning ranges for audio PMSE)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.sennheiser.com/globalassets/digizuite/40941-en-ew_g4_specifications_manufacturer_declarations_06_2025.pdf",
+     "publisher": "Sennheiser, ew G4 specifications / manufacturer declarations (extrait de recherche, via knowledge-base/equipment/wireless-systems.json)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Valeurs numériques de perte des câbles coaxiaux (RG-58, RG-8, etc.) par longueur et fréquence",
+   "searched": "Shure/Vear guide figures 2-28 et 2-29 (images, non extraites en texte) ; non recherché ailleurs faute de budget"
+  },
+  {
+   "what": "Limites de puissance et de largeur de canal dans 823–832 MHz et 1785–1805 MHz (tableaux de la décision 2014/641/UE)",
+   "searched": "Décision ARCEP 2015-0830 (renvoie à l'annexe UE, non ouverte)"
+  },
+  {
+   "what": "Régime français exact de la bande 863–865 MHz (décision ARCEP appareils de faible portée)",
+   "searched": "Page PMSE ARCEP (ne la mentionne pas), recherche ANFR 863-865 (sans résultat ANFR)"
+  },
+  {
+   "what": "Polarisation circulaire des antennes hélicoïdales et chiffres de gain d'une antenne hélice",
+   "searched": "Guide Vear (décrit seulement « très directive et large bande »), guide PSM 1000"
+  },
+  {
+   "what": "Chiffres d'absorption du corps humain en dB en UHF",
+   "searched": "Guide Vear (qualitatif seulement)"
+  },
+  {
+   "what": "Statut en France de la décision (UE) 2025/105 (821,5–832 MHz) citée par la CEPT",
+   "searched": "Page ARCEP mise à jour 09/07/2026 (indique toujours 823–832 MHz)"
+  }
+ ]
+}
