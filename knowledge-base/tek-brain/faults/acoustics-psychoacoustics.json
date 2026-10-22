@@ -1,0 +1,412 @@
+{
+  "entity": "fault",
+  "domain": "acoustics-psychoacoustics",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "boomy-room-bass",
+      "name_fr": "Grave qui « boume » ou disparaît selon la place",
+      "name_en": "Boomy or missing bass depending on position",
+      "domain": "acoustics-psychoacoustics",
+      "symptom": "Certaines notes de basse ressortent fortement au point d'écoute, d'autres disparaissent ; en se déplaçant de quelques dizaines de cm, l'équilibre du grave change.",
+      "contexts": [
+        "studio",
+        "home-studio",
+        "post"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Modes propres de la pièce (petite pièce, parois parallèles)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Point d'écoute au centre exact ou collé au mur arrière",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Annulation enceinte-paroi (SBIR)",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Calculer les modes axiaux et les comparer aux notes problématiques",
+        "Mesurer la réponse à plusieurs positions",
+        "Vérifier la distance enceinte-mur et la position du point d'écoute"
+      ],
+      "fixes": [
+        "Déplacer le point d'écoute (hors centre, ≥ 1 m des murs)",
+        "Absorbants épais décollés ou membranes pour le grave",
+        "Ne pas compter sur l'EQ pour remplir un creux"
+      ],
+      "rule_ids": [
+        "listening-position-too-close-to-walls"
+      ],
+      "concept_ids": [
+        "room-modes",
+        "sbir-boundary-interference"
+      ],
+      "equipment_ids": [
+        "rew-room-eq-wizard"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones, Mic University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "symptom",
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "checks"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/monitor-placement",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "flutter-echo-parallel-walls",
+      "name_fr": "Écho flottant entre murs parallèles",
+      "name_en": "Flutter echo between parallel walls",
+      "domain": "acoustics-psychoacoustics",
+      "symptom": "Un claquement de mains est suivi d'un « ronronnement » métallique rapide ; les transitoires enregistrés paraissent traînants.",
+      "contexts": [
+        "studio",
+        "rehearsal",
+        "conference"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Deux surfaces parallèles nues et réfléchissantes face à face",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Absorption concentrée sur une seule paire de murs",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Claquer des mains entre les murs suspects et écouter",
+        "Repérer les paires de surfaces parallèles non traitées"
+      ],
+      "fixes": [
+        "Rendre une des deux surfaces absorbante ou diffusante",
+        "Casser le parallélisme (panneaux inclinés, mobilier)"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "flutter-echo",
+        "diffusion"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "desk-reflection-comb-filtering",
+      "name_fr": "Filtrage en peigne par réflexion sur la console",
+      "name_en": "Comb filtering from desk reflection",
+      "domain": "acoustics-psychoacoustics",
+      "symptom": "Son des enceintes de proximité « creux » ou phasé dans le médium ; le timbre change quand on bouge la tête de quelques cm verticalement.",
+      "contexts": [
+        "studio",
+        "broadcast",
+        "post"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Réflexion de premier ordre sur le plateau de la console ou du bureau",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Enceintes posées à plat, axe vers la poitrine",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Mesurer au point d'écoute et chercher des creux régulièrement espacés",
+        "Poser une couverture sur le plateau et réécouter"
+      ],
+      "fixes": [
+        "Surélever et incliner les enceintes vers l'oreille (pied, Iso-Pod)",
+        "Avancer les enceintes au-delà du bord de la console",
+        "Activer le filtre « desktop » de l'enceinte si prévu"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "comb-filtering",
+        "early-reflections"
+      ],
+      "equipment_ids": [
+        "genelec-8030c"
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/8030c",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "sbir-low-frequency-notch",
+      "name_fr": "Trou dans le bas médium dû au mur arrière",
+      "name_en": "Low-frequency notch from rear wall (SBIR)",
+      "domain": "acoustics-psychoacoustics",
+      "symptom": "Un creux net dans le grave ou le bas médium (par exemple vers 100-200 Hz) au point d'écoute, que l'égaliseur ne parvient pas à combler.",
+      "contexts": [
+        "studio",
+        "home-studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Enceinte à une distance du mur arrière qui place l'annulation dans le grave utile",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Point d'écoute à distance similaire d'une autre paroi",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Mesurer la distance enceinte-mur et la comparer au tableau Genelec (0,7 m → 123 Hz ; 1 m → 86 Hz)",
+        "Avancer/reculer l'enceinte de 20 cm et remesurer"
+      ],
+      "fixes": [
+        "Rapprocher l'enceinte du mur (< 0,6 m) avec réglage de pièce",
+        "Ou l'éloigner et traiter le mur arrière",
+        "Encastrer les enceintes"
+      ],
+      "rule_ids": [
+        "monitor-wall-distance-sbir"
+      ],
+      "concept_ids": [
+        "sbir-boundary-interference",
+        "comb-filtering"
+      ],
+      "equipment_ids": [
+        "genelec-8030c"
+      ],
+      "sources": [
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "symptom",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "multi-mic-comb-filtering",
+      "name_fr": "Son phasé en mélangeant plusieurs micros",
+      "name_en": "Phasey sound when combining several mics",
+      "domain": "acoustics-psychoacoustics",
+      "symptom": "Le son s'amincit ou devient creux quand on ouvre un deuxième micro sur la même source ; en mono, c'est pire.",
+      "contexts": [
+        "studio",
+        "live",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Deux micros à des distances différentes de la même source (retard entre eux)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Fuite d'une source voisine dans un micro proche",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Écouter chaque micro seul puis ensemble, en mono",
+        "Mesurer la différence de distance source-micros"
+      ],
+      "fixes": [
+        "Appliquer la règle des 3:1 entre micros",
+        "Aligner en temps ou rapprocher les distances",
+        "Couper le micro inutile"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "comb-filtering",
+        "phase",
+        "three-to-one-rule"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Comb_filter",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-timedelayphase.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "checks"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "delay-speaker-heard-as-echo",
+      "name_fr": "Rappel de diffusion perçu comme un écho ou qui « tire » l'image",
+      "name_en": "Delay speaker heard as echo or pulling the image",
+      "domain": "acoustics-psychoacoustics",
+      "symptom": "Le public près d'une enceinte de rappel localise le son sur cette enceinte au lieu de la scène, ou entend un doublement.",
+      "contexts": [
+        "live",
+        "conference",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Retard du rappel nul ou trop court : il arrive avant la façade",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Retard trop long (> 50 ms environ pour la parole) : écho",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Rappel trop fort par rapport au direct",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Calculer le temps de propagation façade → zone de rappel (≈ 3 ms/m)",
+        "Écouter au point de recouvrement façade/rappel"
+      ],
+      "fixes": [
+        "Retarder le rappel de la propagation + environ 10 à 20 ms",
+        "Garder le rappel sous environ +10 dB par rapport au direct"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "haas-precedence-effect",
+        "speed-of-sound"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Precedence_effect",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-speedsound.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "checks"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": []
+}

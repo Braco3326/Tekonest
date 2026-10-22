@@ -1,0 +1,220 @@
+{
+  "entity": "skill",
+  "domain": "acoustics-psychoacoustics",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "acoustic-calculations-bts",
+      "name_fr": "Résoudre les calculs d'acoustique de base",
+      "name_en": "Solve basic acoustics calculations",
+      "domain": "acoustics-psychoacoustics",
+      "description": "Calculer une longueur d'onde, une chute de niveau avec la distance, un TR de Sabine, un mode axial et un déphasage, avec les bonnes unités.",
+      "level": "bts",
+      "concept_ids": [
+        "wavelength",
+        "speed-of-sound",
+        "inverse-square-law",
+        "reverberation-time-rt60",
+        "room-modes",
+        "phase"
+      ],
+      "procedure_ids": [
+        "calculate-rt60-sabine"
+      ],
+      "success_criteria": [
+        "Trouve λ ≈ 34 cm pour 1 kHz à 343 m/s, en donnant l'unité",
+        "Calcule correctement L2 pour un doublement et un quadruplement de distance (−6 et −12 dB)",
+        "Calcule un TR de Sabine à partir d'un tableau de surfaces et de coefficients, avec la bande de fréquence",
+        "Donne le premier mode axial d'une pièce de 5 m (≈ 34 Hz)"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Pratique en régie / sur site — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-wavelength.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-distance.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-RT60.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "assess-control-room-acoustics",
+      "name_fr": "Évaluer l'acoustique d'une régie",
+      "name_en": "Assess a control room's acoustics",
+      "domain": "acoustics-psychoacoustics",
+      "description": "Mesurer et interpréter TR, réponse au point d'écoute et réflexions précoces d'une régie, puis proposer des corrections de placement et de traitement.",
+      "level": "bts",
+      "concept_ids": [
+        "reverberation-time-rt60",
+        "room-modes",
+        "early-reflections",
+        "sbir-boundary-interference",
+        "comb-filtering"
+      ],
+      "procedure_ids": [
+        "measure-rt60",
+        "identify-room-modes",
+        "position-studio-monitors",
+        "find-first-reflection-points"
+      ],
+      "success_criteria": [
+        "Mesure un TR par tiers d'octave et compare la moyenne 200 Hz-4 kHz à la plage EBU 0,2-0,4 s",
+        "Repère au moins un creux SBIR ou modal dans la réponse au point d'écoute et explique sa cause",
+        "Place les enceintes en triangle équilatéral à 60°, axe acoustique vers l'oreille, symétrie gauche-droite respectée"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Pratique en régie / sur site — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276, 1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/monitor-placement",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.genelec.com/improving-room-acoustics",
+          "publisher": "Genelec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "apply-psychoacoustics-in-mix",
+      "name_fr": "Appliquer la psychoacoustique au mixage et à la sono",
+      "name_en": "Apply psychoacoustics to mixing and PA",
+      "domain": "acoustics-psychoacoustics",
+      "description": "Utiliser isosonie, masquage et effet de précédence pour régler un niveau d'écoute, séparer les instruments et retarder une enceinte de rappel.",
+      "level": "bts",
+      "concept_ids": [
+        "equal-loudness-contours",
+        "masking",
+        "haas-precedence-effect",
+        "sound-localization-itd-ild"
+      ],
+      "procedure_ids": [
+        "check-mix-at-several-levels"
+      ],
+      "success_criteria": [
+        "Vérifie l'équilibre grave/aigu d'un mix à au moins deux niveaux d'écoute différents",
+        "Règle un rappel au retard de propagation + 10 à 20 ms et constate que l'image reste sur la scène",
+        "Identifie deux sources qui se masquent et propose une correction (EQ, panoramique)"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Pratique en régie / sur site — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Pratique en régie / sur site — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.evs.ee/et/iso-226-2023",
+          "publisher": "EVS (fiche de la norme ISO 226:2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "standard",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Precedence_effect",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.1387-2, section 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}
