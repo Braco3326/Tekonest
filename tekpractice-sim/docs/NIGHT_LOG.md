@@ -456,3 +456,10 @@ la repliee a la prochaine passe Blender.
   de concert) + build. Commits par espace + integration. CREDITS/manifest par salle.
 - RESTE : studio realiste (queue IA/modelisation), teinte theatre, echelle wedge,
   placement fin par device = passe Set Editor (spec §4).
+
+## RUN EXPLORE MODE (2026-10-22) — master prompt v2, Track B (branche feature/tekpractice-explore-controls)
+- Worktree `C:\Users\brro\dev\Tekonest-wt\explore` (branche créée depuis research/sound-equipment-database @ 9d9d021).
+- Baseline : `npm ci` OK, vitest 164/164.
+- Skills : using-superpowers, using-git-worktrees, brainstorming, expert-council (Tier 2, 3 cadrages, auto-validé §0). Indisponibles, faits à la main : frontend-design, design:ux-copy, design:accessibility-review, product-management:write-spec.
+- B1 : `docs/adr/0010-explore-controls.md` (3 vues, couche d'actions, capture pointeur auto, chaîne Échap, inventaire + pose, réglages). Décisions listées dans REVIEW-ME §13.
+- 10:00 coupure réseau (DNS) : les 17 agents de recherche Track A se sont arrêtés avant d'écrire quoi que ce soit ; relancés à la reprise, rien de perdu.

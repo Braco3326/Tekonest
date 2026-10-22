@@ -222,3 +222,15 @@ sandbox ?env=blanc (toujours la). Flags :
 4. **Studio (D1) reste blanc** : aucun candidat CC0/CC-BY realiste (que des dioramas cartoon
    / bureaux surveillance). En queue : cle IA (text-to-3D) ou modelisation.
 5. Camera plateau : on voit du truss en haut du cadre — ambiance assumee, reglable (data).
+
+## 13. Run Explore mode (2026-10-22) — ADR-0010, décisions prises sans toi
+
+Le prompt v2 demandait de ne jamais s'arrêter : chaque choix ouvert est tranché avec le défaut le plus sûr. À valider en jouant.
+
+1. **Défauts §0 appliqués** : glisser droit gauche/droite = pas de côté ; Q/E = descendre/monter (hauteur d'œil) ; molette = zoom par champ de vision (FOV).
+2. **Capture du pointeur « auto »** (ADR-0010 Décision 4) : un clic sur le vide capture la souris seulement après avoir utilisé une touche de déplacement. Sinon un joueur souris seule perdrait son curseur. Réglable : auto / toujours / jamais.
+3. **Vue par défaut** : Sandbox = Explore ; niveaux A1–D1 et examen = Orbite (Explore en option avec V / bouton / `?view=explore`). À toi de dire si les niveaux doivent passer en Explore par défaut.
+4. **Clic simple sur un device en Explore = focus direct** (en Orbite, ça reste « sélection » comme ADR-0008).
+5. **Ramasser = touche X** (+ bouton en Focus), avec « Annuler » dans le toast. Les câbles du device sont débranchés.
+6. **Touches en plus de ta spec** (accès clavier seul) : flèches gauche/droite = tourner, PageUp/PageDown = regarder haut/bas, F = focus, R = tourner l'objet à poser, V = vue, H = aide.
+7. **Chaîne Échap** : pointeur → pose en cours → panneau → câble en main → focus → menu pause (Explore). En Orbite sans rien d'ouvert : rien, comme avant.
