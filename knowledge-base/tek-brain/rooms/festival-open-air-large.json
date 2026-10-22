@@ -1,0 +1,99 @@
+{
+  "id": "festival-open-air-large",
+  "name_fr": "Grande scène de festival en plein air",
+  "name_en": "Open-air festival main stage (large)",
+  "family": "outdoor",
+  "size": "large",
+  "description": "Grande scène de festival montée sur un terrain : scène couverte modulaire (plateau de 19 × 15 m à 25 × 20 m, hauteur de plancher réglable de 0,9 à 2,4 m), ailes son de chaque côté pour accrocher le line array, coulisses et zone de changement de plateau derrière, champ public sans murs, régie façade sur un échafaudage couvert au milieu du public et tours de délai plus loin. Les dimensions de structure viennent des fiches techniques de deux toits de scène Stageco (Roof 31×15 et Classic 4-Tower Roof). En plein air il n'y a pas de réverbération de salle : le son baisse avec la distance et dépend du vent et de la température, d'où les tours de délai. Le matériel suit le scénario TEK Brain « changement de plateau en festival ». Les « dimensions » de la pièce représentent l'emprise du site (scène + champ public) et la hauteur libre sous le toit de scène. Convention : la scène est vers −z, le public vers +z.",
+  "dimensions_m": {
+    "length": { "min": 80, "typical": 120, "max": 200 },
+    "width": { "min": 50, "typical": 80, "max": 150 },
+    "height": { "min": 9.6, "typical": 13.1, "max": 18.8 }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    { "surface": "floor", "material": "terrain naturel (herbe ou terre), plaques de protection de sol sur les passages", "finish_note": "Estimation : la nature du sol dépend du site." },
+    { "surface": "stage-floor", "material": "plancher de scène modulaire sur structure acier", "finish_note": "Charge admissible 500 kg/m², hauteur réglable 0,9–2,4 m (Stageco Roof 31×15 et Classic 4-Tower)." },
+    { "surface": "walls", "material": "aucun mur ; bâches latérales et fond de scène tendus sur la structure du toit", "finish_note": "Plein air : pas de réflexions de murs, seulement le sol et la scène." },
+    { "surface": "ceiling", "material": "toit de scène couvert (bâche) sur tours et poutres", "finish_note": "Hauteur libre 9,6 m (Roof 31×15) ; 13,1 à 18,8 m (Classic 4-Tower, portée jusqu'à 25 m)." }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    { "id": "scene", "kind": "stage", "rect_m": [0, -45, 25, 20], "floor_y_m": 1.8 },
+    { "id": "aile-son-gauche", "kind": "other", "rect_m": [-16.5, -45, 8, 8], "floor_y_m": 1.8 },
+    { "id": "aile-son-droite", "kind": "other", "rect_m": [16.5, -45, 8, 8], "floor_y_m": 1.8 },
+    { "id": "regie-retours", "kind": "monitor-world", "rect_m": [16.5, -51, 8, 4], "floor_y_m": 1.8 },
+    { "id": "coulisses", "kind": "backstage", "rect_m": [0, -57.5, 40, 5], "floor_y_m": 0 },
+    { "id": "public", "kind": "audience", "rect_m": [0, 10, 80, 90], "floor_y_m": 0 },
+    { "id": "regie-facade", "kind": "foh", "rect_m": [0, 2, 6, 4], "floor_y_m": 0.6 },
+    { "id": "tour-delai-gauche", "kind": "other", "rect_m": [-15, 30, 3, 3], "floor_y_m": 0 },
+    { "id": "tour-delai-droite", "kind": "other", "rect_m": [15, 30, 3, 3], "floor_y_m": 0 }
+  ],
+  "gear_positions": [
+    { "equipment_id": "yamaha-cl5", "zone": "regie-facade", "position_m": [0, 1.5, 2], "rotation_deg": 180, "note": "Console façade (comme dans le scénario de changement de plateau)." },
+    { "equipment_id": "luminex-gigacore-16t", "zone": "regie-facade", "position_m": [2, 1.2, 3], "rotation_deg": 180, "note": "Switch réseau en régie (fibre vers la scène)." },
+    { "equipment_id": "nti-audio-xl3", "zone": "regie-facade", "position_m": [-2, 2.2, 2], "rotation_deg": 180, "note": "Mesure du niveau public et des fréquences basses." },
+    { "equipment_id": "yamaha-ql1", "zone": "regie-retours", "position_m": [16.5, 2.7, -51], "rotation_deg": 270, "note": "Console retours en coulisse côté droit (vue du public)." },
+    { "equipment_id": "shure-psm-900", "zone": "regie-retours", "position_m": [19, 2.7, -52], "rotation_deg": 270, "note": "Émetteurs d'ear monitors." },
+    { "equipment_id": "shure-axient-digital-ad4d", "zone": "regie-retours", "position_m": [19, 2.7, -50], "rotation_deg": 270, "note": "Récepteurs HF." },
+    { "equipment_id": "yamaha-rio3224-d2", "zone": "scene", "position_m": [10, 1.8, -50], "rotation_deg": 270, "note": "Stagebox réseau sur roulettes (rolling riser au changement de plateau)." },
+    { "equipment_id": "l-acoustics-k2", "zone": "aile-son-gauche", "position_m": [-16.5, 12, -42], "rotation_deg": 0, "note": "Ligne principale accrochée à l'aile son gauche (Classic 4-Tower : jusqu'à 9,4 t par aile)." },
+    { "equipment_id": "l-acoustics-k2", "zone": "aile-son-droite", "position_m": [16.5, 12, -42], "rotation_deg": 0, "note": "Ligne principale droite." },
+    { "equipment_id": "l-acoustics-ks28", "zone": "public", "position_m": [-6, 0, -34], "rotation_deg": 0, "note": "Ligne de subs au sol devant la scène, derrière les crash barrières." },
+    { "equipment_id": "l-acoustics-ks28", "zone": "public", "position_m": [6, 0, -34], "rotation_deg": 0, "note": "Subs au sol, côté droit." },
+    { "equipment_id": "l-acoustics-kara-ii", "zone": "tour-delai-gauche", "position_m": [-15, 8, 30], "rotation_deg": 0, "note": "Tour de délai : retardée pour arriver juste après le son de la scène." },
+    { "equipment_id": "l-acoustics-kara-ii", "zone": "tour-delai-droite", "position_m": [15, 8, 30], "rotation_deg": 0, "note": "Tour de délai droite." },
+    { "equipment_id": "l-acoustics-la12x", "zone": "aile-son-gauche", "position_m": [-16.5, 1.8, -47], "rotation_deg": 90, "note": "Racks d'amplification sous l'aile son." }
+  ],
+  "power_points": [
+    { "position_m": [-15, 0, -58], "type": "groupe-electrogene-powerlock-3ph" },
+    { "position_m": [12, 1.8, -54], "type": "p17-63a-3ph" },
+    { "position_m": [0, 0.6, 3.5], "type": "p17-32a-3ph" }
+  ],
+  "patch_points": [
+    { "position_m": [10, 1.8, -50], "type": "stage-box-32ch-dante", "note": "Rio3224-D2 au plateau." },
+    { "position_m": [0, 0.6, 3.5], "type": "fibre-opticalcon-foh", "note": "Arrivée fibre / réseau en régie façade, câble protégé sous passage de câbles." }
+  ],
+  "openings": [],
+  "lighting": { "mood": "plein air de fin de journée puis nuit, scène en lyres et écrans LED, public dans la pénombre", "color_temp_k": 5600 },
+  "procedural": {
+    "wall_color": "#2b2b2b",
+    "floor_color": "#4f6b3a",
+    "ceiling_color": "#1d1d1d",
+    "prop_hints": ["toit de scène à tours et bâches", "ailes son avec palans", "écrans LED latéraux", "crash barrières devant la scène", "régie façade sur échafaudage couvert", "tours de délai en échafaudage", "rolling risers", "passages de câbles et plaques de sol", "groupes électrogènes en backstage"]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://www.stageco.com/uploads/pdfs/29_1508138672.pdf",
+      "publisher": "Stageco — Technical sheet « Roof 31 x 15 »",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": ["dimensions_m.height.min (clearance up to 9,6 m)", "zones.scene (performance area 19 × 15 m + ailes couvertes)", "surfaces.stage-floor (0,9–2,4 m, 500 kg/m²)", "surfaces.ceiling"]
+    },
+    {
+      "url": "https://www.stageco.com/uploads/pdfs/10_1508137537.pdf",
+      "publisher": "Stageco — Technical sheet « Classic 4-Tower Roof »",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": ["dimensions_m.height.typical (13,1 m)", "dimensions_m.height.max (18,8 m)", "zones.scene (performance area 25 × 20 m)", "zones.aile-son-gauche / aile-son-droite (PA wings jusqu'à 9 400 kg par aile)", "surfaces.stage-floor", "surfaces.ceiling"]
+    },
+    {
+      "url": "https://www.stageco.com/uploads/pdfs/18_1508138269.pdf",
+      "publisher": "Stageco — Technical sheet « FOH Structures »",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": ["zones.regie-facade (régie au milieu du public sur structure échafaudage Layher, mono- ou multi-niveaux)"]
+    }
+  ],
+  "review": "needs-oscar-review",
+  "not_found_log": [
+    { "what": "Emprise du site (longueur 80/120/200 m, largeur 50/80/150 m) : estimations ; aucune source ouverte ne donne la taille d'un champ public de festival.", "searched": "Fiches Stageco ; recherche de fiches techniques de grandes scènes de festival (aucune trouvée)", "review": "needs-oscar-review" },
+    { "what": "Distance régie façade – scène (≈ 37 m du nez de scène ici) et position des tours de délai : non sourcées. La fiche Stageco FOH ne donne aucune cote. Un résultat de recherche citait une plateforme son à 25 m de la scène (Colmar Expo) mais le PDF était introuvable (404) : non utilisé.", "searched": "Stageco FOH Structures, colmar-expo.fr", "review": "needs-oscar-review" },
+    { "what": "Hauteur de plancher choisie (1,8 m), taille des ailes son (8 × 8 m), coulisses et position du groupe électrogène : implantation estimée.", "searched": "Fiches Stageco (plages seulement)", "review": "needs-oscar-review" },
+    { "what": "RT60 : sans objet en plein air (pas de champ réverbéré) ; laissé « not found ».", "searched": "—", "review": "needs-oscar-review" }
+  ]
+}
