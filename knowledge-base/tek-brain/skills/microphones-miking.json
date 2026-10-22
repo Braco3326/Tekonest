@@ -1,0 +1,223 @@
+{
+ "entity": "skill",
+ "domain": "microphones-miking",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "choose-and-place-microphone",
+   "name_fr": "Choisir et placer un micro selon la source",
+   "name_en": "Choose and place a microphone for a source",
+   "domain": "microphones-miking",
+   "description": "Choisir transducteur et directivité selon la source, le niveau et l'environnement, puis placer le micro (distance, axe, nuls) pour obtenir le son voulu avec le moins de diaphonie.",
+   "level": "bts",
+   "concept_ids": [
+    "dynamic-microphone",
+    "condenser-microphone",
+    "ribbon-microphone",
+    "polar-pattern",
+    "null-angle",
+    "proximity-effect",
+    "max-spl-microphone",
+    "close-miking"
+   ],
+   "procedure_ids": [
+    "mic-guitar-cabinet",
+    "close-mic-vocal-studio",
+    "mic-drum-kit-multitrack"
+   ],
+   "success_criteria": [
+    "Justifie oralement le choix dynamique/condensateur/ruban par le niveau et le timbre de la source",
+    "Oriente le nul du micro vers la source indésirable principale (retour, batterie)",
+    "Aucune plosive audible sur trois prises de voix",
+    "Indique le critère de distorsion avant de comparer deux SPL max"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Choix et placement des micros — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Transducteurs et directivité — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "description",
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/",
+     "publisher": "DPA Microphones, Mic University: How to mic vocals in the recording studio",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "rig-stereo-pair",
+   "name_fr": "Installer un couple stéréo",
+   "name_en": "Rig a stereo microphone pair",
+   "domain": "microphones-miking",
+   "description": "Choisir et installer une technique stéréo (XY, ORTF, NOS, AB, MS, Blumlein) adaptée à la source, à la salle et à la diffusion (mono/stéréo), puis la contrôler.",
+   "level": "bts",
+   "concept_ids": [
+    "stereo-xy",
+    "stereo-ortf",
+    "stereo-nos",
+    "stereo-ab",
+    "stereo-ms",
+    "stereo-blumlein",
+    "decca-tree",
+    "microphone-polarity"
+   ],
+   "procedure_ids": [
+    "setup-ortf-pair",
+    "setup-ms-pair-and-decode"
+   ],
+   "success_criteria": [
+    "Géométrie mesurée conforme (ORTF : 17 cm / 110° ; NOS : 30 cm / 90°)",
+    "Écoute mono contrôlée sans perte de grave ni creux marqué",
+    "Décode un couple MS sur console (S dupliqué, une voie inversée) et règle la largeur",
+    "Choisit XY ou MS quand la diffusion mono est obligatoire et sait dire pourquoi"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Prise de son stéréophonique — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Couples stéréophoniques — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "description",
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://www.dpamicrophones.com/dict/ortf/",
+     "publisher": "DPA Microphones, Mic Dictionary: ORTF",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "manage-multi-mic-phase-and-power",
+   "name_fr": "Gérer phase, polarité et alimentation en multi-micro",
+   "name_en": "Manage phase, polarity and powering in multi-mic setups",
+   "domain": "microphones-miking",
+   "description": "Alimenter chaque micro correctement (fantôme, ruban protégé), respecter la règle des 3 pour 1 et contrôler la polarité de tous les micros captant une même source.",
+   "level": "bts",
+   "concept_ids": [
+    "phantom-power",
+    "microphone-polarity",
+    "three-to-one-rule",
+    "ribbon-microphone"
+   ],
+   "procedure_ids": [
+    "connect-condenser-with-phantom",
+    "connect-ribbon-microphone-safely",
+    "mic-drum-kit-multitrack"
+   ],
+   "success_criteria": [
+    "Aucun micro statique muet au line check",
+    "+48 V coupé avant tout branchement de ruban",
+    "Polarité du micro dessous de caisse claire inversée et vérifiée à l'écoute",
+    "Espacement entre micros de chœur ≥ 3 fois la distance micro-source"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Électricité / phase — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://royerlabs.com/pdf/manuals/R-121manual.pdf",
+     "publisher": "Royer Labs, R-121 Operation Instructions",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "accessed": "2026-10-22",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  }
+ ],
+ "not_found_log": []
+}
