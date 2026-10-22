@@ -1,0 +1,139 @@
+{
+ "id": "wedding-event-hall-medium",
+ "name_fr": "Salle des fêtes / salle de réception (mariage, soirée privée, 180–300 personnes)",
+ "name_en": "Function / wedding reception hall (medium, 180–300 guests)",
+ "family": "live",
+ "size": "medium",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 14.35,
+   "typical": 20,
+   "max": 24
+  },
+  "width": {
+   "min": 8.47,
+   "typical": 13.8,
+   "max": 16
+  },
+  "height": {
+   "min": 3.5,
+   "typical": 3.85,
+   "max": 6
+  }
+ },
+ "zones": [
+  {
+   "id": "estrade",
+   "kind": "stage",
+   "rect_m": [
+    0,
+    -7.65,
+    8.2,
+    4.7
+   ],
+   "floor_y_m": 0.4
+  },
+  {
+   "id": "regie-sono",
+   "kind": "desk",
+   "rect_m": [
+    -5.4,
+    -8.5,
+    2.4,
+    3
+   ],
+   "floor_y_m": 0.4
+  },
+  {
+   "id": "piste-de-danse",
+   "kind": "other",
+   "rect_m": [
+    0,
+    -2.3,
+    8,
+    6
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "tables",
+   "kind": "audience",
+   "rect_m": [
+    0,
+    4.5,
+    13.8,
+    11
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "bar",
+   "kind": "other",
+   "rect_m": [
+    5.4,
+    8,
+    2.4,
+    4
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": -3,
+   "width_m": 1.8,
+   "height_m": 2.2
+  },
+  {
+   "wall": "right",
+   "kind": "door",
+   "offset_m": 7,
+   "width_m": 1.2,
+   "height_m": 2.1
+  },
+  {
+   "wall": "front",
+   "kind": "door",
+   "offset_m": 5.5,
+   "width_m": 2.8,
+   "height_m": 2
+  },
+  {
+   "wall": "left",
+   "kind": "window",
+   "offset_m": 2,
+   "width_m": 3,
+   "height_m": 1.8
+  },
+  {
+   "wall": "right",
+   "kind": "window",
+   "offset_m": -2,
+   "width_m": 3,
+   "height_m": 1.8
+  }
+ ],
+ "procedural": {
+  "wall_color": "#e6dccb",
+  "floor_color": "#8a7a66",
+  "ceiling_color": "#f2efe8",
+  "prop_hints": [
+   "tables rondes nappées",
+   "chaises housses",
+   "estrade en praticables 2 × 1 m",
+   "piste de danse",
+   "comptoir de bar",
+   "lustres",
+   "écran de projection 4 × 3 m",
+   "table DJ habillée"
+  ]
+ },
+ "lighting": {
+  "mood": "salle de banquet chaleureuse : lustres et guirlandes, piste en LED colorées, estrade en face chaude",
+  "color_temp_k": 2700
+ },
+ "source_count": 5
+}

@@ -49,9 +49,11 @@ import { ExploreController, type BaseView, type ExploreUi } from './scene/Explor
 import { ViewDirector } from './scene/ViewDirector'
 import { roomWalls, type Box } from './explore/collision'
 import { loadSettings, saveSettings, type ExploreSettings } from './ui/exploreSettings'
-import { ExploreHud } from './ui/exploreHud'
+import { ExploreToolbar } from './ui/exploreToolbar'
 import { Placement } from './scene/Placement'
 import { detectLayout } from './input/layoutLabels'
+import type { RoomLayout } from './explore/roomLayout'
+import type { RoomFileT } from './explore/roomSchema'
 import { askCoach, createAiCoach } from './ai'
 import { buildGrounding } from './ai/grounding'
 
@@ -109,6 +111,13 @@ function loadEnvironment(id: string | undefined): EnvironmentT {
 export interface BootOptions {
   /** Sandbox gating (ADR-0004): true = guided 3-item palette, false = full shelves. */
   sandboxGuided?: boolean
+  /**
+   * Procedural room from a TEK Brain template (B3) — replaces the env backdrop.
+   * main.ts lazy-loads the room data AND the generator code (never in the startup bundle).
+   */
+  room?: { file: RoomFileT; layout: RoomLayout; build(scene: Scene): void }
+  /** Room picker for the sandbox shelves (content/rooms/index.json). */
+  roomIndex?: { id: string; name_fr: string }[]
 }
 
 /** Perf budget: max device bodies on the sandbox stage before spawn is refused. */
@@ -148,17 +157,21 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   const bg = Color3.FromHexString(env.backdrop.clearColor)
   scene.clearColor = new Color4(bg.r, bg.g, bg.b, 1)
 
+  // A procedural room (B3) sets its own footprint and an orbit pose from the
+  // audience side (+z), looking at the stage end (−z).
+  const room = opts.room ?? null
+  const roomRadius = room ? Math.min(55, Math.max(8, Math.max(room.layout.width, room.layout.length) * 0.8)) : 0
   const camera = new ArcRotateCamera(
     'cam',
-    env.camera.alpha,
-    env.camera.beta,
-    env.camera.radius,
-    Vector3.FromArray(env.camera.target),
+    room ? Math.PI / 2 : env.camera.alpha,
+    room ? 1.05 : env.camera.beta,
+    room ? roomRadius : env.camera.radius,
+    room ? new Vector3(0, 1, 0) : Vector3.FromArray(env.camera.target),
     scene,
   )
   camera.attachControl(true)
   camera.lowerRadiusLimit = 2
-  camera.upperRadiusLimit = 40
+  camera.upperRadiusLimit = room ? Math.max(40, roomRadius * 1.5) : 40
   camera.wheelDeltaPercentage = 0.02
 
   const hemi = new HemisphericLight('light', new Vector3(0.2, 1, 0.3), scene)
@@ -167,7 +180,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   const key = new DirectionalLight('key', new Vector3(-0.35, -1, 0.25), scene)
   key.intensity = 0.35
 
-  const [floorW, floorD] = env.backdrop.floorSize
+  const [floorW, floorD] = room ? [room.layout.width, room.layout.length] : env.backdrop.floorSize
   const ground = MeshBuilder.CreateGround('stage', { width: floorW, height: floorD }, scene)
   const groundMat = new StandardMaterial('mat:stage', scene)
   groundMat.diffuseColor = Color3.FromHexString(env.backdrop.floorColor)
@@ -175,10 +188,15 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   ground.material = groundMat
   ground.isPickable = false
 
-  // Realistic ROOM backdrop (Set-System sourcing): the room wraps AROUND the
-  // origin where the gear already lives — anchored by preset DATA. Non-blocking:
-  // any failure keeps the white studio (assets never block gameplay).
-  if (env.set) {
+  if (room) {
+    // Procedural room from data: its own floor replaces the white ground.
+    ground.setEnabled(false)
+    room.build(scene)
+    console.info(`[room] ${room.file.id} généré (${room.layout.width} × ${room.layout.length} × ${room.layout.height} m)`)
+  } else if (env.set) {
+    // Realistic ROOM backdrop (Set-System sourcing): the room wraps AROUND the
+    // origin where the gear already lives — anchored by preset DATA. Non-blocking:
+    // any failure keeps the white studio (assets never block gameplay).
     const setCfg = env.set
     SceneLoader.ImportMeshAsync(null, '/assets/environments/', setCfg.glb, scene)
       .then(({ meshes }) => {
@@ -553,7 +571,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
 
   // Collision world: four walls at the env floor edges + one box per device
   // body (cached; re-derived when the stage changes).
-  const walls = roomWalls(floorW, floorD, 4)
+  const walls = room ? room.layout.colliders : roomWalls(floorW, floorD, 4)
   let deviceBoxes: Box[] | null = null
   const invalidateObstacles = (): void => {
     deviceBoxes = null
@@ -582,8 +600,9 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   // at the preset target (inside the walls).
   const presetEye = camera.position.clone()
   const clampIn = (v: number, half: number): number => Math.max(-half + 0.6, Math.min(half - 0.6, v))
-  const startX = clampIn(presetEye.x, floorW / 2)
-  const startZ = clampIn(presetEye.z, floorD / 2)
+  const startX = room ? room.layout.spawn.x : clampIn(presetEye.x, floorW / 2)
+  const startZ = room ? room.layout.spawn.z : clampIn(presetEye.z, floorD / 2)
+  const startYaw = room ? room.layout.spawn.yaw : Math.atan2(camera.target.x - startX, camera.target.z - startZ)
   const explore = new ExploreController({
     scene,
     canvas,
@@ -591,9 +610,10 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     rig,
     settings: () => settings,
     obstacles,
-    start: { x: startX, z: startZ, yaw: Math.atan2(camera.target.x - startX, camera.target.z - startZ) },
+    start: { x: startX, z: startZ, yaw: startYaw },
     initialView,
     crosshair,
+    floorAt: room ? (x, z) => room.layout.floorAt(x, z) : undefined,
   })
   const director = new ViewDirector(scene, camera, rig, explore)
   const focusPatch = new FocusPatch(scene, camera, director, cables, instances, portPoints, {
@@ -613,7 +633,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     dispatch: (intent) => dispatch(intent),
   })
   let layoutMap: ReadonlyMap<string, string> | undefined
-  const exploreHud = new ExploreHud({
+  const exploreHud = new ExploreToolbar({
     root: document.getElementById('hud')!,
     devices: [...registry.deviceById.values()],
     sandbox: sandboxMode,
@@ -693,7 +713,9 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         }
       },
       Object.keys(ENVIRONMENTS),
-      env.id,
+      room ? '' : env.id,
+      opts.roomIndex ?? [],
+      room?.file.id ?? '',
     )
     // Hints toggle (spec §3): Sandbox defaults ON (exploration), switchable
     // OFF for self-testing. Levels are always ON, Exam is hard OFF (no toggle).

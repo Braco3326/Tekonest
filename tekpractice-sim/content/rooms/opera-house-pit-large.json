@@ -1,0 +1,142 @@
+{
+ "id": "opera-house-pit-large",
+ "name_fr": "Maison d'opéra avec fosse d'orchestre (grande salle, ~1 100 places)",
+ "name_en": "Opera house with orchestra pit, large (~1,100 seats)",
+ "family": "classical",
+ "size": "large",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 40,
+   "typical": 44,
+   "max": 50
+  },
+  "width": {
+   "min": 22,
+   "typical": 24,
+   "max": 26
+  },
+  "height": {
+   "min": 18,
+   "typical": 21,
+   "max": 23
+  }
+ },
+ "zones": [
+  {
+   "id": "scene",
+   "kind": "stage",
+   "rect_m": [
+    0,
+    -13.15,
+    24,
+    17.7
+   ],
+   "floor_y_m": 1.05
+  },
+  {
+   "id": "avant-scene",
+   "kind": "stage",
+   "rect_m": [
+    0,
+    -3.6,
+    10.85,
+    1.4
+   ],
+   "floor_y_m": 1.05
+  },
+  {
+   "id": "fosse-mobile",
+   "kind": "pit",
+   "rect_m": [
+    0,
+    -1.2,
+    12.8,
+    3.4
+   ],
+   "floor_y_m": -2
+  },
+  {
+   "id": "fosse-sous-scene",
+   "kind": "pit",
+   "rect_m": [
+    0,
+    -5.025,
+    12,
+    4.25
+   ],
+   "floor_y_m": -2
+  },
+  {
+   "id": "parterre",
+   "kind": "audience",
+   "rect_m": [
+    0,
+    9,
+    20,
+    17
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "regie",
+   "kind": "foh",
+   "rect_m": [
+    0,
+    19.5,
+    6,
+    4
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "left",
+   "kind": "door",
+   "offset_m": -12,
+   "width_m": 2.55,
+   "height_m": 3.9
+  },
+  {
+   "wall": "left",
+   "kind": "door",
+   "offset_m": 4,
+   "width_m": 1.6,
+   "height_m": 2.3
+  },
+  {
+   "wall": "right",
+   "kind": "door",
+   "offset_m": 4,
+   "width_m": 1.6,
+   "height_m": 2.3
+  },
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": 0,
+   "width_m": 2,
+   "height_m": 2.4
+  }
+ ],
+ "procedural": {
+  "wall_color": "#8a1c22",
+  "floor_color": "#151515",
+  "ceiling_color": "#e6d6b0",
+  "prop_hints": [
+   "quatre galeries en fer à cheval",
+   "lustre",
+   "rideau de fer",
+   "pupitres éclairés et chaises de contrebasse en fosse",
+   "estrade de chef au bord de fosse",
+   "porteuses motorisées",
+   "loges d'avant-scène"
+  ]
+ },
+ "lighting": {
+  "mood": "salle rouge et or sous lustre, plateau en lumière de théâtre, fosse en lampes de pupitre 24 V",
+  "color_temp_k": 3200
+ },
+ "source_count": 3
+}

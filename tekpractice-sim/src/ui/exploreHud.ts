@@ -1,11 +1,12 @@
 /**
- * Explore HUD (ADR-0010 Décisions 8–9): toolbar, inventory (Space), controls
+ * Explore HUD panels (ADR-0010 Décisions 8–9): inventory (Space), controls
  * help (H), settings with key remapping, pause menu (Esc in Explore).
- * Implements the ExploreUi surface the ExploreController drives. DOM only:
- * placement goes through the Placement scene adapter, pick-up through an
- * injected callback that dispatches an intent — the graph is never touched here.
+ * Lazy chunk: ExploreToolbar (startup bundle) loads this module on the first
+ * panel open and forwards the ExploreUi calls. DOM only: placement goes through
+ * the Placement scene adapter, pick-up through an injected callback that
+ * dispatches an intent — the graph is never touched here.
  */
-import type { ExploreUi, BaseView } from '../scene/ExploreController'
+import type { BaseView } from '../scene/ExploreController'
 import type { Placement } from '../scene/Placement'
 import { ACTIONS, type Action } from '../input/actions'
 import { rebind } from '../input/bindings'
@@ -28,30 +29,25 @@ export interface ExploreHudDeps {
   pickUp(instanceId: string): void
   toggleView(): void
   currentView(): BaseView
+  /** The toolbar re-renders its pressed states when panels open/close. */
+  onPanelsChanged(): void
 }
 
-type PanelId = 'inventory' | 'help' | 'settings' | 'pause'
+export type PanelId = 'inventory' | 'help' | 'settings' | 'pause'
 
 const esc = (s: string): string => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)
 const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 
-export class ExploreHud implements ExploreUi {
+export class ExploreHud {
   private stack: { id: PanelId; el: HTMLElement; returnFocus: Element | null }[] = []
   private sheets: KbSheets | null = null
   private capture: Action | null = null
-  private toolbar: HTMLElement
 
   constructor(private deps: ExploreHudDeps) {
-    this.toolbar = document.createElement('nav')
-    this.toolbar.id = 'explore-toolbar'
-    this.toolbar.setAttribute('aria-label', 'Contrôles du monde 3D')
-    deps.root.appendChild(this.toolbar)
-    this.renderToolbar()
     // Key capture for remapping runs after the controller (which yields while capturing).
     window.addEventListener('keydown', this.onCaptureKey, true)
   }
 
-  // ── ExploreUi ───────────────────────────────────────────────────────────────
   panelCount(): number {
     return this.stack.length
   }
@@ -68,36 +64,23 @@ export class ExploreHud implements ExploreUi {
   toggleHelp(): void {
     this.toggle('help', () => this.buildHelp())
   }
+  toggleSettings(): void {
+    this.toggle('settings', () => this.buildSettings())
+  }
   openPause(): void {
     if (!this.isOpen('pause')) this.open('pause', this.buildPause())
-  }
-  placing(): boolean {
-    return this.deps.placement.active
-  }
-  cancelPlacement(): void {
-    this.deps.placement.cancel()
-  }
-  rotatePlacement(): void {
-    this.deps.placement.rotate()
-  }
-  confirmPlacement(): void {
-    this.deps.placement.confirm()
-  }
-  pickUp(instanceId: string): void {
-    this.deps.pickUp(instanceId)
   }
   capturingKey(): boolean {
     return this.capture !== null
   }
 
-  /** Re-render labels after a view switch or settings change. */
-  refresh(): void {
-    this.renderToolbar()
+  isOpen(id: PanelId): boolean {
+    return this.stack.some((p) => p.id === id)
   }
 
-  // ── panels ──────────────────────────────────────────────────────────────────
-  private isOpen(id: PanelId): boolean {
-    return this.stack.some((p) => p.id === id)
+  /** The toolbar lives in ExploreToolbar (startup bundle): tell it to refresh. */
+  private renderToolbar(): void {
+    this.deps.onPanelsChanged()
   }
 
   private toggle(id: PanelId, build: () => HTMLElement): void {
@@ -146,30 +129,8 @@ export class ExploreHud implements ExploreUi {
     return el
   }
 
-  // ── toolbar ─────────────────────────────────────────────────────────────────
   private key(action: Action): string {
     return this.deps.settings().bindings[action].map((c) => labelFor(c, this.deps.layout, this.deps.layoutMap))[0] ?? '—'
-  }
-
-  private renderToolbar(): void {
-    const view = this.deps.currentView()
-    this.toolbar.innerHTML = `
-      <button type="button" data-act="inventory" aria-pressed="${this.isOpen('inventory')}">Inventaire <kbd>${esc(this.key('TOGGLE_INVENTORY'))}</kbd></button>
-      <button type="button" data-act="view" aria-pressed="${view === 'explore'}" title="Exploration : marcher dans la salle. Orbite : tourner autour du matériel.">Vue : ${view === 'explore' ? 'Exploration' : 'Orbite'} <kbd>${esc(this.key('TOGGLE_VIEW'))}</kbd></button>
-      <button type="button" data-act="help" aria-pressed="${this.isOpen('help')}">Aide <kbd>${esc(this.key('TOGGLE_HELP'))}</kbd></button>
-      <button type="button" data-act="settings" aria-pressed="${this.isOpen('settings')}">Réglages</button>`
-    this.toolbar.querySelectorAll<HTMLButtonElement>('button').forEach((b) =>
-      b.addEventListener('click', () => {
-        const act = b.dataset.act
-        if (act === 'inventory') this.toggleInventory()
-        else if (act === 'help') this.toggleHelp()
-        else if (act === 'settings') this.toggle('settings', () => this.buildSettings())
-        else if (act === 'view') {
-          this.deps.toggleView()
-          this.renderToolbar()
-        }
-      }),
-    )
   }
 
   // ── inventory ───────────────────────────────────────────────────────────────

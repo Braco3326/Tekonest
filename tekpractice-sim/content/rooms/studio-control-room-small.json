@@ -1,0 +1,97 @@
+{
+ "id": "studio-control-room-small",
+ "name_fr": "Régie de studio (petite, home/project studio)",
+ "name_en": "Small studio control room",
+ "family": "studio",
+ "size": "small",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 3.51,
+   "typical": 5,
+   "max": 6.4
+  },
+  "width": {
+   "min": 3.05,
+   "typical": 4,
+   "max": 4.7
+  },
+  "height": {
+   "min": 2.44,
+   "typical": 2.7,
+   "max": 3
+  }
+ },
+ "zones": [
+  {
+   "id": "desk",
+   "kind": "desk",
+   "rect_m": [
+    0,
+    -1,
+    2.4,
+    1.6
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "listening",
+   "kind": "control-room",
+   "rect_m": [
+    0,
+    -0.3,
+    1.4,
+    1.2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "rack",
+   "kind": "other",
+   "rect_m": [
+    1.55,
+    -1,
+    0.8,
+    0.8
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "overdub-corner",
+   "kind": "vocal-booth",
+   "rect_m": [
+    1.2,
+    1.7,
+    1.4,
+    1.4
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": -1.2,
+   "width_m": 0.9,
+   "height_m": 2.04
+  }
+ ],
+ "procedural": {
+  "wall_color": "#3a3f45",
+  "floor_color": "#8a6b4a",
+  "ceiling_color": "#2e3236",
+  "prop_hints": [
+   "panneaux absorbants tissu gris",
+   "bass traps d'angle",
+   "bureau studio avec étagère rack",
+   "écrans d'ordinateur",
+   "nuage acoustique au plafond"
+  ]
+ },
+ "lighting": {
+  "mood": "tamisé, indirect, pas de reflet sur les écrans",
+  "color_temp_k": 3000
+ },
+ "source_count": 4
+}

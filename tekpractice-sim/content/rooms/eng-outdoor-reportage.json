@@ -1,0 +1,79 @@
+{
+ "id": "eng-outdoor-reportage",
+ "name_fr": "Reportage extérieur (zone de travail ENG / radio)",
+ "name_en": "Outdoor news-gathering (ENG) working zone",
+ "family": "broadcast",
+ "size": "small",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 10,
+   "typical": 20,
+   "max": 40
+  },
+  "width": {
+   "min": 8,
+   "typical": 15,
+   "max": 30
+  },
+  "height": {
+   "min": 6,
+   "typical": 12,
+   "max": 25
+  }
+ },
+ "zones": [
+  {
+   "id": "interview-spot",
+   "kind": "other",
+   "rect_m": [
+    -2,
+    1,
+    4,
+    4
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "vehicle-tech-base",
+   "kind": "other",
+   "rect_m": [
+    5,
+    -5,
+    2.2,
+    5
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "passers-by",
+   "kind": "audience",
+   "rect_m": [
+    -3,
+    6.5,
+    9,
+    4
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [],
+ "procedural": {
+  "wall_color": "#b8ad9c",
+  "floor_color": "#4a4a4c",
+  "ceiling_color": "#a9c4dc",
+  "prop_hints": [
+   "angle de rue",
+   "trottoir et passage piéton",
+   "voiture de reportage coffre ouvert",
+   "vitrines",
+   "mobilier urbain",
+   "passants"
+  ]
+ },
+ "lighting": {
+  "mood": "Lumière du jour variable, réverbères le soir ; torche LED caméra",
+  "color_temp_k": 5600
+ },
+ "source_count": 1
+}

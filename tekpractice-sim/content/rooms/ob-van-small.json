@@ -1,0 +1,94 @@
+{
+ "id": "ob-van-small",
+ "name_fr": "Car régie son (petit)",
+ "name_en": "Small sound OB van",
+ "family": "broadcast",
+ "size": "small",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 2.6,
+   "typical": 5,
+   "max": 5.6
+  },
+  "width": {
+   "min": 1.6,
+   "typical": 2.1,
+   "max": 2.2
+  },
+  "height": {
+   "min": 1.4,
+   "typical": 2.05,
+   "max": 2.2
+  }
+ },
+ "zones": [
+  {
+   "id": "equipment-bay",
+   "kind": "machine-room",
+   "rect_m": [
+    0,
+    -1.95,
+    2,
+    1.1
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "audio-control",
+   "kind": "control-room",
+   "rect_m": [
+    0,
+    0.6,
+    2,
+    3.8
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "sound-desk",
+   "kind": "desk",
+   "rect_m": [
+    -0.65,
+    0.4,
+    0.7,
+    3
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": 0,
+   "width_m": 1.4,
+   "height_m": 1.8
+  },
+  {
+   "wall": "right",
+   "kind": "door",
+   "offset_m": -0.6,
+   "width_m": 0.8,
+   "height_m": 1.8
+  }
+ ],
+ "procedural": {
+  "wall_color": "#2e3035",
+  "floor_color": "#3b3b3b",
+  "ceiling_color": "#d0d0cc",
+  "prop_hints": [
+   "baie 19\" côté cabine",
+   "pupitre continu le long d'une paroi",
+   "sièges pivotants fixés au sol",
+   "tailboard arrière",
+   "touret de câble",
+   "climatisation de toit"
+  ]
+ },
+ "lighting": {
+  "mood": "Cellule exiguë, LED blanches gradables au plafond, lampes de pupitre",
+  "color_temp_k": 4000
+ },
+ "source_count": 2
+}

@@ -1,0 +1,115 @@
+{
+ "id": "studio-control-room-large",
+ "name_fr": "Grande régie d'enregistrement (console grand format)",
+ "name_en": "Large studio control room",
+ "family": "studio",
+ "size": "large",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 6.8,
+   "typical": 7.8,
+   "max": 9.5
+  },
+  "width": {
+   "min": 5.15,
+   "typical": 5.8,
+   "max": 7
+  },
+  "height": {
+   "min": 2.5,
+   "typical": 3.5,
+   "max": 4
+  }
+ },
+ "zones": [
+  {
+   "id": "console",
+   "kind": "desk",
+   "rect_m": [
+    0,
+    -1.6,
+    3.4,
+    1.6
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "listening",
+   "kind": "control-room",
+   "rect_m": [
+    0,
+    -0.8,
+    1.6,
+    1.6
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "producer-desk",
+   "kind": "desk",
+   "rect_m": [
+    0,
+    2.6,
+    3.6,
+    1.4
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "racks",
+   "kind": "machine-room",
+   "rect_m": [
+    -2.4,
+    -0.4,
+    0.9,
+    2
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "front-wall",
+   "kind": "other",
+   "rect_m": [
+    0,
+    -3.65,
+    5.8,
+    0.5
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "front",
+   "kind": "window",
+   "offset_m": 0,
+   "width_m": 2.4,
+   "height_m": 1.2
+  },
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": 2,
+   "width_m": 1,
+   "height_m": 2.1
+  }
+ ],
+ "procedural": {
+  "wall_color": "#4a3b30",
+  "floor_color": "#6e5136",
+  "ceiling_color": "#2b2622",
+  "prop_hints": [
+   "console grand format",
+   "enceintes encastrées dans un mur en bois",
+   "racks 19\" sur roulettes",
+   "canapé producteur",
+   "vitre inclinée vers le studio"
+  ]
+ },
+ "lighting": {
+  "mood": "chaud, gradable, spots sur la console",
+  "color_temp_k": 2700
+ },
+ "source_count": 4
+}

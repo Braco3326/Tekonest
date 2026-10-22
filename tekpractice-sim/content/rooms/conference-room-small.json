@@ -1,0 +1,104 @@
+{
+ "id": "conference-room-small",
+ "name_fr": "Petite salle de réunion",
+ "name_en": "Small conference room",
+ "family": "conference",
+ "size": "small",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 3,
+   "typical": 4.5,
+   "max": 6
+  },
+  "width": {
+   "min": 3,
+   "typical": 4.5,
+   "max": 4.5
+  },
+  "height": {
+   "min": 2.5,
+   "typical": 2.7,
+   "max": 3
+  }
+ },
+ "zones": [
+  {
+   "id": "front-av",
+   "kind": "other",
+   "rect_m": [
+    0,
+    -1.95,
+    3,
+    0.6
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "table",
+   "kind": "desk",
+   "rect_m": [
+    0,
+    0.3,
+    1.2,
+    2.4
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "seating",
+   "kind": "audience",
+   "rect_m": [
+    0,
+    0.3,
+    2.8,
+    2.6
+   ],
+   "floor_y_m": 0
+  },
+  {
+   "id": "credenza-rack",
+   "kind": "machine-room",
+   "rect_m": [
+    -1.75,
+    1.9,
+    1,
+    0.6
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": -1.4,
+   "width_m": 0.9,
+   "height_m": 2.04
+  },
+  {
+   "wall": "right",
+   "kind": "window",
+   "offset_m": 0,
+   "width_m": 2.4,
+   "height_m": 1.4
+  }
+ ],
+ "procedural": {
+  "wall_color": "#E8E6E1",
+  "floor_color": "#4A5059",
+  "ceiling_color": "#F4F4F2",
+  "prop_hints": [
+   "table de réunion 8 places",
+   "chaises de bureau",
+   "écran plat 65\" au mur avant",
+   "panneaux acoustiques tissu",
+   "meuble technique bas"
+  ]
+ },
+ "lighting": {
+  "mood": "éclairage de bureau diffus et uniforme, gradable par zone, stores occultants",
+  "color_temp_k": 4000
+ },
+ "source_count": 2
+}

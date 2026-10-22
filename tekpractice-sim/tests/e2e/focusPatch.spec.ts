@@ -26,14 +26,37 @@ async function assetsSettled(page: Page): Promise<void> {
 }
 
 /**
+ * Condition-based wait (replaces fixed sleeps that failed on slow software-GL
+ * machines): poll a projected screen point until it stops moving — the camera
+ * flight is over and an aimed click lands where the test means it to.
+ */
+async function settledScreen(
+  page: Page,
+  probe: { device: string } | { port: { instance: string; port: string } },
+): Promise<{ x: number; y: number }> {
+  let last: { x: number; y: number } | null = null
+  for (let i = 0; i < 40; i++) {
+    const p = await page.evaluate(
+      (pr) =>
+        'device' in pr ? window.__audioSim!.deviceScreen(pr.device) : window.__audioSim!.portScreen(pr.port),
+      probe,
+    )
+    if (!p) throw new Error(`no screen position for ${JSON.stringify(probe)}`)
+    if (last && Math.hypot(p.x - last.x, p.y - last.y) < 0.5) return p
+    last = p
+    await page.waitForTimeout(80)
+  }
+  return last!
+}
+
+/**
  * Double-click a device into focus, with Esc-recovery: if the double-click
  * landed on a port pick-sphere (accidental cable pickup — exactly what can
  * happen to a real user), cancel with Esc and re-aim slightly higher.
  */
 async function focusDevice(page: Page, instanceId: string): Promise<void> {
   for (let attempt = 0; attempt < 5; attempt++) {
-    const pos = await page.evaluate((id) => window.__audioSim!.deviceScreen(id), instanceId)
-    if (!pos) throw new Error(`no screen position for ${instanceId}`)
+    const pos = await settledScreen(page, { device: instanceId })
     await page.mouse.dblclick(pos.x, pos.y - attempt * 14)
     const focused = await page
       .waitForFunction(
@@ -55,8 +78,7 @@ async function focusDevice(page: Page, instanceId: string): Promise<void> {
 }
 
 async function clickPort(page: Page, ref: { instance: string; port: string }): Promise<void> {
-  const pos = await page.evaluate((r) => window.__audioSim!.portScreen(r), ref)
-  if (!pos) throw new Error(`no screen position for ${ref.instance}.${ref.port}`)
+  const pos = await settledScreen(page, { port: ref })
   await page.mouse.click(pos.x, pos.y)
 }
 

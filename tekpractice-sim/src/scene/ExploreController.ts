@@ -59,6 +59,8 @@ export interface ExploreDeps {
   initialView: BaseView
   crosshair: HTMLElement
   onViewChange?(view: BaseView): void
+  /** Floor height under a point (procedural rooms: raised stage zones). Default: 0. */
+  floorAt?(x: number, z: number): number
 }
 
 const isTyping = (el: Element | null): boolean =>
@@ -75,12 +77,15 @@ export class ExploreController implements Walker {
   private view: BaseView
   private suspended = false
   private unlockedAt = -Infinity
+  /** Eased floor height under the player (steps onto stages smoothly). */
+  private floorY = 0
   private focus!: FocusHandles
   private ui!: ExploreUi
 
   constructor(private deps: ExploreDeps) {
     const { scene } = deps
     this.player = initialPlayer(deps.start.x, deps.start.z, deps.start.yaw)
+    this.floorY = deps.floorAt?.(deps.start.x, deps.start.z) ?? 0
     this.keyboard = new KeyboardState(deps.settings().bindings)
     this.camera = new UniversalCamera('explore', new Vector3(this.player.x, this.player.eye, this.player.z), scene)
     this.camera.inputs.clear() // WE drive it: no Babylon key/mouse inputs
@@ -112,7 +117,7 @@ export class ExploreController implements Walker {
     return this.view === 'explore'
   }
   eyePosition(): Vector3 {
-    return new Vector3(this.player.x, this.player.eye, this.player.z)
+    return new Vector3(this.player.x, this.floorY + this.player.eye, this.player.z)
   }
   lookPoint(): Vector3 {
     const { yaw, pitch } = this.player
@@ -150,7 +155,7 @@ export class ExploreController implements Walker {
   snapshot(): { view: BaseView; position: { x: number; y: number; z: number }; yaw: number; pitch: number; fovDeg: number; locked: boolean } {
     return {
       view: this.view,
-      position: { x: this.player.x, y: this.player.eye, z: this.player.z },
+      position: { x: this.player.x, y: this.floorY + this.player.eye, z: this.player.z },
       yaw: this.player.yaw,
       pitch: this.player.pitch,
       fovDeg: (this.camera.fov * 180) / Math.PI,
@@ -209,11 +214,13 @@ export class ExploreController implements Walker {
     const next = stepPlayer(this.player, intent, dt, { speedMult: s.speedMult, reducedMotion: !motionEnabled() })
     const at = resolveMove({ x: this.player.x, z: this.player.z }, { x: next.x, z: next.z }, PLAYER_RADIUS, this.deps.obstacles())
     this.player = { ...next, x: at.x, z: at.z }
+    const target = this.deps.floorAt?.(at.x, at.z) ?? 0
+    this.floorY += (target - this.floorY) * Math.min(1, dt * 8)
     this.applyCamera()
   }
 
   private applyCamera(): void {
-    this.camera.position.set(this.player.x, this.player.eye, this.player.z)
+    this.camera.position.set(this.player.x, this.floorY + this.player.eye, this.player.z)
     this.camera.rotation.set(this.player.pitch, this.player.yaw, 0)
   }
 

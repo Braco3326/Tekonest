@@ -1,0 +1,70 @@
+{
+ "id": "studio-vocal-booth-small",
+ "name_fr": "Cabine voix (petite)",
+ "name_en": "Small vocal booth",
+ "family": "studio",
+ "size": "small",
+ "review": "needs-oscar-review",
+ "dimensions_m": {
+  "length": {
+   "min": 1.17,
+   "typical": 1.78,
+   "max": 2.4
+  },
+  "width": {
+   "min": 1.17,
+   "typical": 1.78,
+   "max": 2.2
+  },
+  "height": {
+   "min": 2.03,
+   "typical": 2.03,
+   "max": 2.7
+  }
+ },
+ "zones": [
+  {
+   "id": "booth",
+   "kind": "vocal-booth",
+   "rect_m": [
+    0,
+    0,
+    1.78,
+    1.78
+   ],
+   "floor_y_m": 0
+  }
+ ],
+ "openings": [
+  {
+   "wall": "rear",
+   "kind": "door",
+   "offset_m": 0,
+   "width_m": 0.7,
+   "height_m": 1.9
+  },
+  {
+   "wall": "rear",
+   "kind": "window",
+   "offset_m": 0,
+   "width_m": 0.41,
+   "height_m": 0.76
+  }
+ ],
+ "procedural": {
+  "wall_color": "#2f3236",
+  "floor_color": "#3d3d3d",
+  "ceiling_color": "#2a2c2f",
+  "prop_hints": [
+   "mousse acoustique pyramidale",
+   "tablette pour texte / pupitre",
+   "hublot de porte",
+   "patère casque"
+  ]
+ },
+ "lighting": {
+  "mood": "doux, chaud, pas de néon (pas de bourdonnement)",
+  "color_temp_k": 2700
+ },
+ "source_count": 3
+}
