@@ -1,0 +1,2149 @@
+{
+  "generated": "2026-10-22",
+  "audience": "French BTS MAV option metiers du son students (primary); English-language self-learners",
+  "isbn_policy": "isbn is filled only when seen as text on the publisher's own page; ean13_seen_on_bookseller records the EAN-13 shown on the Librairie Eyrolles catalogue page",
+  "resources": [
+    {
+      "id": "livre-techniques-du-son-notions-fondamentales",
+      "type": "book",
+      "title": "Le livre des techniques du son - Notions fondamentales",
+      "author_or_publisher": "Denis Mercier (dir.) - Dunod",
+      "year": 2021,
+      "edition": "6e edition",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782100826124",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "acoustique",
+        "electroacoustique",
+        "electronique",
+        "perception",
+        "traitement du signal",
+        "audionumerique"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Audiovisuel/Livre/le-livre-des-techniques-du-son-9782100826124/",
+      "why_recommended": "La reference francaise de base pour la theorie du son: acoustique, electricite, psychoacoustique et numerique dans un seul volume. C'est le livre a ouvrir quand un cours de PTES vous echappe.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Audiovisuel/Livre/le-livre-des-techniques-du-son-9782100826124/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "livre-techniques-du-son-technologies",
+      "type": "book",
+      "title": "Le livre des techniques du son - Technologies",
+      "author_or_publisher": "Denis Mercier, Franck Ernould - Dunod",
+      "year": 2023,
+      "edition": "6e edition",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782100851973",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "microphones",
+        "haut-parleurs",
+        "consoles",
+        "enregistrement",
+        "audionumerique"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Audiovisuel/Livre/le-livre-des-techniques-du-son-9782100851973/",
+      "why_recommended": "Le second volume applique la theorie aux equipements (micros, enceintes, consoles, supports, reseaux). Utile pour relier les schemas des sujets d'examen au materiel reel.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Audiovisuel/Livre/le-livre-des-techniques-du-son-9782100851973/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "techniques-de-prise-de-son-caplain",
+      "type": "book",
+      "title": "Techniques de prise de son",
+      "author_or_publisher": "Robert Caplain - Dunod",
+      "year": 2021,
+      "edition": "7e edition",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782100828661",
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "prise de son",
+        "microphones",
+        "stereophonie",
+        "consoles",
+        "montage",
+        "mixage"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Audiovisuel/Livre/techniques-de-prise-de-son-9782100828661/",
+      "why_recommended": "Court (208 pages) et concret: choix des micros, couples stereo, console et montage. Bon premier livre pratique pour la premiere annee.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Audiovisuel/Livre/techniques-de-prise-de-son-9782100828661/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guide-pratique-sonorisation-haidant",
+      "type": "book",
+      "title": "Guide pratique de la sonorisation - Concert, spectacle, conference",
+      "author_or_publisher": "Lionel Haidant - Dunod",
+      "year": 2023,
+      "edition": "3e edition",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782100856619",
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "sonorisation",
+        "systemes de diffusion",
+        "amplification",
+        "egalisation",
+        "spectacle vivant"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Audiovisuel/Livre/guide-pratique-de-la-sonorisation-9782100856619/",
+      "why_recommended": "Guide illustre qui suit l'ordre d'une installation reelle, du choix du materiel au calage des enceintes. Ideal avant un premier stage en sonorisation.",
+      "bts_relevance": "E4, general",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Audiovisuel/Livre/guide-pratique-de-la-sonorisation-9782100856619/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guide-pratique-mixage-haidant",
+      "type": "book",
+      "title": "Guide pratique du mixage - Sonorisation et enregistrement",
+      "author_or_publisher": "Lionel Haidant - Dunod",
+      "year": 2023,
+      "edition": "2e edition",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782100854738",
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "console de mixage",
+        "mixage live",
+        "mixage studio",
+        "flux de signal"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Audiovisuel/Livre/guide-pratique-du-mixage-9782100854738/",
+      "why_recommended": "Explique la console tranche par tranche (gain, EQ, aux, groupes) avec des exemples live et studio. Tres utile pour comprendre un synoptique.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Audiovisuel/Livre/guide-pratique-du-mixage-9782100854738/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guide-du-midi-braut-ernould",
+      "type": "book",
+      "title": "Le guide du MIDI - De l'equipement a l'exploitation : fondamentaux et bonnes pratiques",
+      "author_or_publisher": "Christian Braut, Franck Ernould - Dunod",
+      "year": 2024,
+      "edition": "not found",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782100797431",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "MIDI",
+        "MIDI 2.0",
+        "synchronisation",
+        "pilotage d'equipements"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Audiovisuel/Livre/le-guide-du-midi-9782100797431/",
+      "why_recommended": "Couvre la norme MIDI et son usage pour piloter instruments, logiciels et equipements de scene. A garder pour les questions de protocoles et de synchronisation.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Audiovisuel/Livre/le-guide-du-midi-9782100797431/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pratique-liaisons-hf-magnier",
+      "type": "book",
+      "title": "Pratique des liaisons HF pour la prise de son et la sonorisation",
+      "author_or_publisher": "Vincent Magnier - Dunod",
+      "year": 2014,
+      "edition": "not found",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782100600113",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "liaisons HF",
+        "micros sans fil",
+        "plan de frequences",
+        "antennes"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Sciences/Livre/pratique-des-liaisons-hf-pour-la-prise-de-son-et-la-sonorisation-9782100600113/",
+      "why_recommended": "Le seul ouvrage francais dedie aux liaisons HF en tournage et en spectacle. La reglementation des frequences a change depuis 2014: completez avec les sources officielles a jour.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Sciences/Livre/pratique-des-liaisons-hf-pour-la-prise-de-son-et-la-sonorisation-9782100600113/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audio-vision-chion",
+      "type": "book",
+      "title": "L'audio-vision - Son, image et parole au cinema",
+      "author_or_publisher": "Michel Chion - Armand Colin",
+      "year": 2025,
+      "edition": "6e edition",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782200642150",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "son a l'image",
+        "analyse filmique",
+        "narration sonore",
+        "theorie"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Audiovisuel/Livre/l-audio-vision-6e-ed--9782200642150/",
+      "why_recommended": "Texte de reference pour analyser comment le son et l'image se modifient l'un l'autre. Donne le vocabulaire (son in/off/hors-champ, synchrese...) attendu en culture audiovisuelle.",
+      "bts_relevance": "E2 culture audiovisuelle et artistique, E4",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Audiovisuel/Livre/l-audio-vision-6e-ed--9782200642150/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pour-une-ecriture-du-son-deshays",
+      "type": "book",
+      "title": "Pour une ecriture du son",
+      "author_or_publisher": "Daniel Deshays - Klincksieck",
+      "year": 2006,
+      "edition": "not found",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782252035658",
+      "language": "fr",
+      "level": "advanced",
+      "topics": [
+        "ecriture sonore",
+        "esthetique",
+        "prise de son cinema"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Audiovisuel/Livre/pour-une-ecriture-du-son-9782252035658/",
+      "why_recommended": "Reflexion d'un ingenieur du son sur les choix d'ecoute et de mise en scene sonore. A lire en deuxieme annee, quand la technique est acquise.",
+      "bts_relevance": "E2 culture audiovisuelle et artistique",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Audiovisuel/Livre/pour-une-ecriture-du-son-9782252035658/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "le-son-turrier",
+      "type": "book",
+      "title": "Le son",
+      "author_or_publisher": "Claude Turrier - Ellipses",
+      "year": 2015,
+      "edition": "not found",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782340004054",
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "physique du son",
+        "acoustique",
+        "perception"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Sciences/Livre/le-son-9782340004054/",
+      "why_recommended": "Introduction accessible a la physique du son, pratique pour revoir les bases de PTES a partir d'un niveau bac.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Sciences/Livre/le-son-9782340004054/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acoustique-calvet",
+      "type": "book",
+      "title": "Acoustique",
+      "author_or_publisher": "Olivier Calvet - Ellipses",
+      "year": 2019,
+      "edition": "not found",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782340029477",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "acoustique",
+        "ondes",
+        "acoustique des salles"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Sciences/Livre/acoustique-9782340029477/",
+      "why_recommended": "Manuel d'acoustique de niveau superieur, utile pour s'entrainer sur la partie calcul (niveaux, ondes, salles).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Sciences/Livre/acoustique-9782340029477/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "initiation-acoustique-fischetti",
+      "type": "book",
+      "title": "Initiation a l'acoustique - Cours et exercices",
+      "author_or_publisher": "Antonio Fischetti - Belin",
+      "year": 2004,
+      "edition": "not found",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782701136950",
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "acoustique",
+        "decibels",
+        "exercices"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Sciences/Livre/initiation-a-l-acoustique-cours-et-exercices-9782701136950/",
+      "why_recommended": "Cours d'acoustique avec exercices, ecrit pour les etudiants des ecoles de cinema et d'audiovisuel. Bon entrainement aux calculs en dB.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Sciences/Livre/initiation-a-l-acoustique-cours-et-exercices-9782701136950/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prise-de-son-et-mixage-tome2-baudier",
+      "type": "book",
+      "title": "Prise de son et mixage (Tome 2)",
+      "author_or_publisher": "Herve Baudier - Dixit",
+      "year": 2018,
+      "edition": "not found",
+      "isbn": "not found",
+      "ean13_seen_on_bookseller": "9782844811837",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "prise de son",
+        "mixage"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.eyrolles.com/Informatique/Livre/prise-de-son-et-mixage-tome-2--9782844811837/",
+      "why_recommended": "Ouvrage francais de pratique en prise de son et mixage. Signale temporairement indisponible chez le libraire: cherchez-le en bibliotheque.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.eyrolles.com/Informatique/Livre/prise-de-son-et-mixage-tome-2--9782844811837/",
+          "publisher": "Librairie Eyrolles (bookseller catalogue)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition",
+            "ean13_seen_on_bookseller"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mastering-audio-katz",
+      "type": "book",
+      "title": "Mastering Audio: The Art and the Science",
+      "author_or_publisher": "Bob Katz - Routledge",
+      "year": 2015,
+      "edition": "3rd edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "mastering",
+        "loudness",
+        "dither",
+        "metering",
+        "monitoring"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Mastering-Audio-The-Art-and-the-Science/Katz/p/book/9780240818962",
+      "why_recommended": "The standard text on mastering, with clear chapters on metering, loudness and monitoring calibration. Read it after you are comfortable with mixing.",
+      "bts_relevance": "E4, E3 PTES (loudness)",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Mastering-Audio-The-Art-and-the-Science/Katz/p/book/9780240818962",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ],
+      "note": "Product page shows copyright 2015; Routledge search listing shows 2014."
+    },
+    {
+      "id": "mixing-engineers-handbook-owsinski",
+      "type": "book",
+      "title": "The Mixing Engineer's Handbook",
+      "author_or_publisher": "Bobby Owsinski (Bobby Owsinski Media Group)",
+      "year": "not found",
+      "edition": "6th edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "mixing",
+        "EQ",
+        "compression",
+        "immersive audio",
+        "LUFS"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://bobbyowsinski.com/mixhandbook",
+      "why_recommended": "A practical mixing guide built around interviews with working mixers; the 6th edition adds Dolby Atmos, saturation and AI-assisted tools. Easy to read in small chunks.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://bobbyowsinski.com/mixhandbook",
+          "publisher": "Bobby Owsinski (author site)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "edition"
+          ]
+        },
+        {
+          "url": "https://bobbyowsinski.com/best-selling-books/",
+          "publisher": "Bobby Owsinski (author site)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "modern-recording-techniques-huber",
+      "type": "book",
+      "title": "Modern Recording Techniques: A Practical Guide to Modern Music Production",
+      "author_or_publisher": "David Miles Huber, Emiliano Caballero, Robert Runstein - Routledge",
+      "year": 2023,
+      "edition": "10th edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "studio recording",
+        "microphones",
+        "DAW",
+        "signal flow",
+        "MIDI"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Modern-Recording-Techniques-A-Practical-Guide-to-Modern-Music-Production/Huber-Caballero-Runstein/p/book/9781032197159",
+      "why_recommended": "A broad studio textbook used in many audio programmes, covering the whole chain from microphone to delivery.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Modern-Recording-Techniques-A-Practical-Guide-to-Modern-Music-Production/Huber-Caballero-Runstein/p/book/9781032197159",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sound-reinforcement-handbook-yamaha",
+      "type": "book",
+      "title": "The Sound Reinforcement Handbook, Second Edition",
+      "author_or_publisher": "Gary Davis, Ralph Jones - Yamaha / Hal Leonard",
+      "year": "not found",
+      "edition": "2nd edition",
+      "isbn": "9780881889000",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "sound reinforcement",
+        "microphones",
+        "loudspeakers",
+        "gain structure",
+        "decibels",
+        "MIDI"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.halleonard.com/product/500964/the-sound-reinforcement-handbook-second-edition",
+      "why_recommended": "The classic Yamaha handbook: audio theory explained alongside live-sound practice, from dB and impedance to loudspeaker systems. Still one of the clearest explanations of gain structure.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.halleonard.com/product/500964/the-sound-reinforcement-handbook-second-edition",
+          "publisher": "Hal Leonard (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "edition",
+            "isbn"
+          ]
+        },
+        {
+          "url": "https://www.halleonard.com/search/search.action?keywords=sound%20reinforcement%20handbook",
+          "publisher": "Hal Leonard (publisher search)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "isbn",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sound-systems-design-optimization-mccarthy",
+      "type": "book",
+      "title": "Sound Systems: Design and Optimization: Modern Techniques and Tools for Sound System Design and Alignment",
+      "author_or_publisher": "Bob McCarthy - Routledge",
+      "year": 2016,
+      "edition": "3rd edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "system design",
+        "alignment",
+        "measurement",
+        "line arrays",
+        "subwoofers"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Sound-Systems-Design-and-Optimization-Modern-Techniques-and-Tools-for-Sound-System-Design-and-Alignment/McCarthy/p/book/9780415731010",
+      "why_recommended": "The reference for system engineers on designing and tuning PA systems with measurement. Hard going at first, but it explains why systems are tuned the way they are.",
+      "bts_relevance": "E4, general",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Sound-Systems-Design-and-Optimization-Modern-Techniques-and-Tools-for-Sound-System-Design-and-Alignment/McCarthy/p/book/9780415731010",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sound-and-recording-rumsey-mccormick",
+      "type": "book",
+      "title": "Sound and Recording: Applications and Theory",
+      "author_or_publisher": "Francis Rumsey, Tim McCormick - Routledge",
+      "year": 2021,
+      "edition": "8th edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "acoustics",
+        "microphones",
+        "loudspeakers",
+        "digital audio",
+        "recording"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Sound-and-Recording-Applications-and-Theory/Rumsey-McCormick/p/book/9780367553029",
+      "why_recommended": "A balanced theory-plus-practice textbook whose scope closely matches the BTS physics and technology syllabus. An older edition was translated into French as \"Son et enregistrement\" (Eyrolles, 2002).",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Sound-and-Recording-Applications-and-Theory/Rumsey-McCormick/p/book/9780367553029",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sound-reproduction-toole",
+      "type": "book",
+      "title": "Sound Reproduction: The Acoustics and Psychoacoustics of Loudspeakers, Rooms and Headphones",
+      "author_or_publisher": "Floyd E. Toole, Sean Olive, Todd Welti - Routledge",
+      "year": 2025,
+      "edition": "4th edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "loudspeakers",
+        "room acoustics",
+        "psychoacoustics",
+        "headphones",
+        "monitoring"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Sound-Reproduction-The-Acoustics-and-Psychoacoustics-of-Loudspeakers-Rooms-and-Headphones/Toole-Olive-Welti/p/book/9781032761930",
+      "why_recommended": "Research-based explanation of how loudspeakers, rooms and headphones affect what we hear. Essential for anyone setting up or judging a control room.",
+      "bts_relevance": "general",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Sound-Reproduction-The-Acoustics-and-Psychoacoustics-of-Loudspeakers-Rooms-and-Headphones/Toole-Olive-Welti/p/book/9781032761930",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "handbook-for-sound-engineers-ballou",
+      "type": "book",
+      "title": "Handbook for Sound Engineers",
+      "author_or_publisher": "Glen Ballou, Doug Jones (eds.) - Focal Press / Routledge",
+      "year": 2025,
+      "edition": "6th edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "acoustics",
+        "electronics",
+        "microphones",
+        "loudspeakers",
+        "networks",
+        "reference"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Handbook-for-Sound-Engineers/Ballou-Jones/p/book/9781032553443",
+      "why_recommended": "A large multi-author reference to consult chapter by chapter rather than read cover to cover. Useful in a school library for specific questions.",
+      "bts_relevance": "general",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Handbook-for-Sound-Engineers/Ballou-Jones/p/book/9781032553443",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ],
+      "note": "Routledge search lists 2025; product page shows copyright 2026."
+    },
+    {
+      "id": "eargle-microphone-book",
+      "type": "book",
+      "title": "Eargle's The Microphone Book: From Mono to Stereo to Surround - A Guide to Microphone Design and Application",
+      "author_or_publisher": "Ray Rayburn - Routledge",
+      "year": 2011,
+      "edition": "3rd edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "microphones",
+        "polar patterns",
+        "stereo techniques",
+        "surround"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Eargles-The-Microphone-Book-From-Mono-to-Stereo-to-Surround---A-Guide-to-Microphone-Design-and-Application/Rayburn/p/book/9780240820750",
+      "why_recommended": "The reference book on how microphones work and how to place them, from transducer principles to stereo and surround arrays.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Eargles-The-Microphone-Book-From-Mono-to-Stereo-to-Surround---A-Guide-to-Microphone-Design-and-Application/Rayburn/p/book/9780240820750",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mixing-audio-izhaki",
+      "type": "book",
+      "title": "Mixing Audio: Concepts, Practices, and Tools",
+      "author_or_publisher": "Roey Izhaki - Routledge",
+      "year": 2023,
+      "edition": "4th edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "mixing",
+        "EQ",
+        "dynamics",
+        "reverb",
+        "workflow"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Mixing-Audio-Concepts-Practices-and-Tools/Izhaki/p/book/9781032219448",
+      "why_recommended": "A methodical mixing textbook that explains each processor and why it is used. More structured than interview-based mixing books.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Mixing-Audio-Concepts-Practices-and-Tools/Izhaki/p/book/9781032219448",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audio-expert-winer",
+      "type": "book",
+      "title": "The Audio Expert: Everything You Need to Know About Audio",
+      "author_or_publisher": "Ethan Winer, Michael Lawrence - Routledge",
+      "year": 2025,
+      "edition": "3rd edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "audio fundamentals",
+        "measurement",
+        "acoustics",
+        "myths"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/The-Audio-Expert-Everything-You-Need-to-Know-About-Audio/Winer-Lawrence/p/book/9781032854519",
+      "why_recommended": "Explains audio fundamentals with a measurement-first, myth-busting attitude. Good for learning to separate facts from marketing.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/The-Audio-Expert-Everything-You-Need-to-Know-About-Audio/Winer-Lawrence/p/book/9781032854519",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "practical-recording-techniques-bartlett",
+      "type": "book",
+      "title": "Practical Recording Techniques: The Step-by-Step Approach to Professional Audio Recording",
+      "author_or_publisher": "Bruce Bartlett, Jenny Bartlett - Routledge",
+      "year": 2016,
+      "edition": "7th edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "recording",
+        "microphone placement",
+        "studio setup"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Practical-Recording-Techniques-The-Step-by-Step-Approach-to-Professional-Audio-Recording/Bartlett-Bartlett/p/book/9781138904422",
+      "why_recommended": "Step-by-step recording guide for beginners, strong on microphone placement per instrument.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Practical-Recording-Techniques-The-Step-by-Step-Approach-to-Professional-Audio-Recording/Bartlett-Bartlett/p/book/9781138904422",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sound-for-film-and-television-holman",
+      "type": "book",
+      "title": "Sound for Film and Television",
+      "author_or_publisher": "Tomlinson Holman - Routledge",
+      "year": 2010,
+      "edition": "3rd edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "production sound",
+        "post-production",
+        "film mixing",
+        "surround"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/Sound-for-Film-and-Television/Holman/p/book/9780240813301",
+      "why_recommended": "Covers sound for picture from the set to the mix stage, by the engineer behind THX. Directly relevant to the audiovisual side of the BTS.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/Sound-for-Film-and-Television/Holman/p/book/9780240813301",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sound-system-design-primer-loar",
+      "type": "book",
+      "title": "The Sound System Design Primer",
+      "author_or_publisher": "Josh Loar - Routledge",
+      "year": 2019,
+      "edition": "1st edition",
+      "isbn": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "sound system design",
+        "loudspeakers",
+        "signal flow",
+        "live sound"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.routledge.com/The-Sound-System-Design-Primer/Loar/p/book/9781138716872",
+      "why_recommended": "A gentler entry into sound system design than McCarthy, aimed at students.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.routledge.com/The-Sound-System-Design-Primer/Loar/p/book/9781138716872",
+          "publisher": "Routledge / Focal Press (publisher page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "author_or_publisher",
+            "year",
+            "edition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ebu-r128",
+      "type": "standard",
+      "title": "EBU R 128 - Loudness normalisation and permitted maximum level of audio signals (version 5.0)",
+      "author_or_publisher": "European Broadcasting Union (EBU)",
+      "year": 2023,
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "loudness",
+        "LUFS",
+        "true peak",
+        "broadcast"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+      "why_recommended": "The European broadcast loudness rule (-23 LUFS target, true-peak limit). Every sound technician working for TV or radio must know it.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/publications/r128",
+          "publisher": "EBU Technology & Innovation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "version",
+            "year",
+            "free_pdf_link"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ebu-tech-3341",
+      "type": "standard",
+      "title": "EBU Tech 3341 - 'EBU Mode' metering to supplement EBU R 128 loudness normalisation (version 4.0)",
+      "author_or_publisher": "European Broadcasting Union (EBU)",
+      "year": 2023,
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "loudness metering",
+        "momentary",
+        "short-term",
+        "integrated loudness"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3341.pdf",
+      "why_recommended": "Defines how a loudness meter must behave (momentary, short-term, integrated). Read it to understand what your meter displays.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/publications/tech3341",
+          "publisher": "EBU Technology & Innovation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "version",
+            "year",
+            "free_pdf_link"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ebu-tech-3342",
+      "type": "standard",
+      "title": "EBU Tech 3342 - Loudness range: a measure to supplement EBU R 128 loudness normalisation (version 4)",
+      "author_or_publisher": "European Broadcasting Union (EBU)",
+      "year": 2023,
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "loudness range",
+        "LRA",
+        "dynamics"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3342.pdf",
+      "why_recommended": "Defines Loudness Range (LRA), the measure of a programme's dynamics used in broadcast delivery specs.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/publications/tech3342",
+          "publisher": "EBU Technology & Innovation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "version",
+            "year",
+            "free_pdf_link"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ebu-tech-3343",
+      "type": "standard",
+      "title": "EBU Tech 3343 - Practical guidelines for EBU R 128 (Loudness) (version 4.0)",
+      "author_or_publisher": "European Broadcasting Union (EBU)",
+      "year": 2023,
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "loudness",
+        "production practice",
+        "post-production"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3343.pdf",
+      "why_recommended": "The practical companion to R 128: how to apply loudness normalisation in production and post. The best first EBU document to read.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/publications/tech3343",
+          "publisher": "EBU Technology & Innovation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "version",
+            "year",
+            "free_pdf_link"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "itu-r-bs-1770",
+      "type": "standard",
+      "title": "Recommendation ITU-R BS.1770-5 - Algorithms to measure audio programme loudness and true-peak audio level",
+      "author_or_publisher": "International Telecommunication Union (ITU-R)",
+      "year": 2023,
+      "language": "multi",
+      "level": "advanced",
+      "topics": [
+        "loudness",
+        "K-weighting",
+        "true peak",
+        "measurement"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.itu.int/rec/R-REC-BS.1770-5-202311-I/en",
+      "why_recommended": "The measurement algorithm behind LUFS/LKFS that R 128 relies on. Free download, including a French version.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.itu.int/rec/R-REC-BS.1770",
+          "publisher": "ITU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "version",
+            "year",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.itu.int/rec/R-REC-BS.1770-5-202311-I/en",
+          "publisher": "ITU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "free_download",
+            "languages"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "itu-r-bs-775",
+      "type": "standard",
+      "title": "Recommendation ITU-R BS.775-4 - Multichannel stereophonic sound system with and without accompanying picture",
+      "author_or_publisher": "International Telecommunication Union (ITU-R)",
+      "year": 2022,
+      "language": "multi",
+      "level": "intermediate",
+      "topics": [
+        "5.1",
+        "multichannel",
+        "loudspeaker layout",
+        "monitoring"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.itu.int/rec/R-REC-BS.775-4-202212-I/en",
+      "why_recommended": "Defines the reference 5.1 loudspeaker layout (angles and positions) used in studios and mix rooms. Free download.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.itu.int/rec/R-REC-BS.775",
+          "publisher": "ITU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "version",
+            "year",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.itu.int/rec/R-REC-BS.775-4-202212-I/en",
+          "publisher": "ITU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "free_download"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rncp-bts-mav-metiers-du-son",
+      "type": "official-education",
+      "title": "BTS Metiers de l'audiovisuel, option metiers du son - fiche RNCP37196",
+      "author_or_publisher": "France competences (certificateur: Ministere de l'Enseignement superieur et de la Recherche)",
+      "year": 2023,
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "referentiel",
+        "competences",
+        "BTS MAV",
+        "metiers du son"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.francecompetences.fr/recherche/rncp/37196/",
+      "why_recommended": "Official record of the diploma: activities, skills blocks and the decrees (arrete du 4 juin 2013 modifie le 9 mai 2016). Read it to know exactly what the exam expects of you.",
+      "bts_relevance": "all units (E1-E6)",
+      "sources": [
+        {
+          "url": "https://www.francecompetences.fr/recherche/rncp/37196/",
+          "publisher": "France competences",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "rncp_number",
+            "level",
+            "dates",
+            "decrees",
+            "options"
+          ]
+        }
+      ],
+      "note": "Record published 09-01-2023; registration valid until 31-08-2027. The eduscol STI pages (referentiel PDF, E3 subjects) could not be reached on 2026-10-22; see not_found_log."
+    },
+    {
+      "id": "ina-campus-formations-son",
+      "type": "official-training",
+      "title": "INA campus - formations Son (formation professionnelle)",
+      "author_or_publisher": "Institut national de l'audiovisuel (INA campus)",
+      "year": "not found",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "son a l'image",
+        "post-production",
+        "AES67",
+        "intercoms",
+        "sonorisation",
+        "prise de son",
+        "mixage 5.1"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://campus.ina.fr/formation/son",
+      "why_recommended": "The main French public provider of short professional sound courses (AES67, intercoms, 5.1 mixing, radio). Useful to plan further training after the BTS or via CPF.",
+      "bts_relevance": "general (post-BTS)",
+      "sources": [
+        {
+          "url": "https://campus.ina.fr/formation/son",
+          "publisher": "INA campus",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "course titles",
+            "durations",
+            "prices"
+          ]
+        },
+        {
+          "url": "https://campus.ina.fr/",
+          "publisher": "INA campus",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "institution",
+            "training domains"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ina-pro-tools-certification-101",
+      "type": "certification",
+      "title": "Pro Tools : prendre en main le logiciel et certification 101",
+      "author_or_publisher": "INA campus",
+      "year": "not found",
+      "language": "fr",
+      "level": "beginner",
+      "topics": [
+        "Pro Tools",
+        "DAW",
+        "Avid certification"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://campus.ina.fr/formation/son/production-musicale/pro-tools-prendre-en-main-le-logiciel-et-certification-101",
+      "why_recommended": "A 5-day (35 h) French-language route to the entry-level Avid Pro Tools 101 certification, the DAW most used in post-production.",
+      "bts_relevance": "E4, general",
+      "sources": [
+        {
+          "url": "https://campus.ina.fr/formation/son",
+          "publisher": "INA campus",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "duration",
+            "price"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "femis-concours-annales",
+      "type": "official-education",
+      "title": "La Femis - concours, sujets et annales",
+      "author_or_publisher": "La Femis (Ecole nationale superieure des metiers de l'image et du son)",
+      "year": "not found",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "concours",
+        "ecole nationale",
+        "cursus son",
+        "annales"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.femis.fr/annales-des-concours",
+      "why_recommended": "Past entrance-exam subjects and reports for the national film school, which recruits sound students. Useful for BTS students aiming at a bac+5 after the BTS.",
+      "bts_relevance": "general (poursuite d'etudes)",
+      "sources": [
+        {
+          "url": "https://www.femis.fr/",
+          "publisher": "La Femis",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "links: annales, sujets, cursus"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cst-recommandations-techniques",
+      "type": "official-education",
+      "title": "CST - Recommandations techniques et mires (son et image)",
+      "author_or_publisher": "Commission superieure technique de l'image et du son (CST)",
+      "year": "not found",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "recommandations techniques",
+        "cinema",
+        "mires 5.1/7.1",
+        "bonnes pratiques"
+      ],
+      "free_or_paid": "freemium",
+      "access_link": "https://cst.fr/recommandations-techniques-cst",
+      "why_recommended": "The French technicians' association that publishes technical recommendations for cinema and TV, plus free 5.1/7.1 test patterns for screening rooms.",
+      "bts_relevance": "E4, general",
+      "sources": [
+        {
+          "url": "https://www.cst.fr/",
+          "publisher": "CST",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "organisation",
+            "RT index link",
+            "free mires"
+          ]
+        }
+      ],
+      "note": "Individual sound RT titles not listed in the fetched page."
+    },
+    {
+      "id": "afsi-association-son-image",
+      "type": "website",
+      "title": "AFSI - Association francaise du son a l'image",
+      "author_or_publisher": "AFSI",
+      "year": "not found",
+      "language": "fr",
+      "level": "intermediate",
+      "topics": [
+        "son a l'image",
+        "metiers",
+        "tests de materiel",
+        "memoires",
+        "conventions collectives"
+      ],
+      "free_or_paid": "freemium",
+      "access_link": "https://www.afsi.eu/",
+      "why_recommended": "French association of film/TV sound professionals: equipment tests, interviews, student theses, pay scales. Good for understanding the profession you are training for.",
+      "bts_relevance": "general",
+      "sources": [
+        {
+          "url": "https://www.afsi.eu/",
+          "publisher": "AFSI",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "content sections",
+            "members area"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audiofanzine-fr",
+      "type": "website",
+      "title": "Audiofanzine",
+      "author_or_publisher": "Audiofanzine",
+      "year": "not found",
+      "language": "multi",
+      "level": "beginner",
+      "topics": [
+        "tests materiel",
+        "tutoriels",
+        "forums",
+        "petites annonces"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://fr.audiofanzine.com/",
+      "why_recommended": "The largest French-language audio gear community: reviews, tutorials and forums. Handy for checking what a piece of equipment does before a practical exam.",
+      "bts_relevance": "general",
+      "sources": [
+        {
+          "url": "https://www.audiofanzine.com/",
+          "publisher": "Audiofanzine",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "sections",
+            "language versions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shure-academy",
+      "type": "manufacturer-academy",
+      "title": "Shure Academy - online training and Pro Audio learning paths",
+      "author_or_publisher": "Shure",
+      "year": "not found",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "microphones",
+        "wireless",
+        "RF",
+        "feedback",
+        "networking",
+        "Wireless Workbench"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.shure.com/en-US/shure-academy",
+      "why_recommended": "Free, self-paced courses in three levels (Pro Level 1 fundamentals ~4.5 h, Level 2 ~7 h, Level 3 ~14 h) covering sound basics up to wireless coordination. A good free first certificate for a CV.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.shure.com/en-US/shure-academy",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "free courses",
+            "topics",
+            "catalog link"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/en-US/shure-academy/online-training",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "free",
+            "self-paced",
+            "account required"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/en-US/shure-academy/certification",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "learning path levels",
+            "durations",
+            "free"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sennheiser-learn",
+      "type": "manufacturer-academy",
+      "title": "Sennheiser Learn - seminars, recorded webinars and tutorials",
+      "author_or_publisher": "Sennheiser",
+      "year": "not found",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "microphones",
+        "wireless",
+        "WMAS",
+        "RF coordination"
+      ],
+      "free_or_paid": "freemium",
+      "access_link": "https://www.sennheiser.com/en-us/learn",
+      "why_recommended": "Recorded seminars and short microphone tutorials, plus a clear explainer on WMAS broadband wireless, which is changing how HF systems are deployed.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://www.sennheiser.com/en-us/learn",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "sections",
+            "topics"
+          ]
+        }
+      ],
+      "note": "Free/paid status not stated on the page; classified freemium conservatively."
+    },
+    {
+      "id": "dpa-mic-university",
+      "type": "manufacturer-academy",
+      "title": "DPA Mic University",
+      "author_or_publisher": "DPA Microphones",
+      "year": "not found",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "microphone placement",
+        "stereo techniques",
+        "acoustics",
+        "microphone specs",
+        "dictionary"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.dpamicrophones.com/mic-university",
+      "why_recommended": "Openly accessible articles on how to mic each instrument and on microphone specs, plus a short pro audio dictionary. Excellent for practical-exam preparation.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university",
+          "publisher": "DPA Microphones",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "topics",
+            "sample articles"
+          ]
+        }
+      ],
+      "note": "No price or login shown on the page; classified free on that basis."
+    },
+    {
+      "id": "db-audiotechnik-education",
+      "type": "manufacturer-academy",
+      "title": "d&b audiotechnik Education (workshops, seminars, E-Learning Factory, tutorials)",
+      "author_or_publisher": "d&b audiotechnik",
+      "year": "not found",
+      "language": "multi",
+      "level": "intermediate",
+      "topics": [
+        "electroacoustics",
+        "line arrays",
+        "system optimisation",
+        "simulation",
+        "networks"
+      ],
+      "free_or_paid": "freemium",
+      "access_link": "https://www.dbaudio.com/global/en/education/",
+      "why_recommended": "Workshops and seminars such as the Electroacoustics seminar (also run in French in Paris) and online e-learning. Strong on acoustic fundamentals for PA systems.",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/global/en/education/",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "offer types",
+            "e-learning"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/global/en/education/seminars/electroacoustics-seminar/",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "content",
+            "French session in Paris"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/global/en/education/tutorials/by-topic/",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "tutorial topics"
+          ]
+        }
+      ],
+      "note": "Pricing not stated on fetched pages."
+    },
+    {
+      "id": "l-acoustics-education",
+      "type": "manufacturer-academy",
+      "title": "L-Acoustics Education - courses and certifications",
+      "author_or_publisher": "L-Acoustics",
+      "year": "not found",
+      "language": "multi",
+      "level": "advanced",
+      "topics": [
+        "line source",
+        "Soundvision",
+        "system tuning",
+        "M1 measurement",
+        "L-ISA immersive"
+      ],
+      "free_or_paid": "paid",
+      "access_link": "https://www.l-acoustics.com/education/courses/",
+      "why_recommended": "20 courses organised by role (System Technician, System Engineer, Immersive, Expert). The French manufacturer's path is the reference for touring PA work in France.",
+      "bts_relevance": "general (post-BTS)",
+      "sources": [
+        {
+          "url": "https://www.l-acoustics.com/education/courses/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "course list",
+            "levels"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/education/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "education sections"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/partner/become-an-l-system-engineer/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "top-tier certification path"
+          ]
+        }
+      ],
+      "note": "Pricing not stated on the courses page; classified paid as courses are booked through All Access."
+    },
+    {
+      "id": "meyer-sound-education",
+      "type": "manufacturer-academy",
+      "title": "Meyer Sound Education - training courses and tutorials",
+      "author_or_publisher": "Meyer Sound",
+      "year": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "system design",
+        "optimization",
+        "MAPP 3D",
+        "low frequency control",
+        "spatial audio"
+      ],
+      "free_or_paid": "freemium",
+      "access_link": "https://meyersound.com/education/",
+      "why_recommended": "In-person courses such as System Design & Optimization, plus archived tutorial videos online. Course descriptions alone are a good syllabus for system work.",
+      "bts_relevance": "E4, general",
+      "sources": [
+        {
+          "url": "https://meyersound.com/education/",
+          "publisher": "Meyer Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "course descriptions",
+            "tutorials"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "digico-training",
+      "type": "manufacturer-academy",
+      "title": "DiGiCo Training - online courses and in-person events",
+      "author_or_publisher": "DiGiCo",
+      "year": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "digital mixing consoles",
+        "live mixing",
+        "console operation"
+      ],
+      "free_or_paid": "freemium",
+      "access_link": "https://training.digico.biz",
+      "why_recommended": "Self-paced online courses on DiGiCo consoles, which are common on large French tours and festivals.",
+      "bts_relevance": "E4",
+      "sources": [
+        {
+          "url": "https://training.digico.biz",
+          "publisher": "DiGiCo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "online courses",
+            "in-person events"
+          ]
+        },
+        {
+          "url": "https://www.digico.biz/",
+          "publisher": "DiGiCo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "training links"
+          ]
+        }
+      ],
+      "note": "Price not stated on the training page."
+    },
+    {
+      "id": "smaart-training-rational-acoustics",
+      "type": "official-training",
+      "title": "Smaart training (Operator Fundamentals online, labs, certification)",
+      "author_or_publisher": "Rational Acoustics",
+      "year": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "measurement",
+        "FFT",
+        "transfer function",
+        "system tuning",
+        "SPL"
+      ],
+      "free_or_paid": "freemium",
+      "access_link": "https://www.rationalacoustics.com/pages/online-training",
+      "why_recommended": "Smaart is the standard measurement tool for tuning PA systems; the free 12-video Operator Fundamentals series is a good start, with paid live classes ($300) and a certification afterwards.",
+      "bts_relevance": "E4, E3 PTES",
+      "sources": [
+        {
+          "url": "https://www.rationalacoustics.com/pages/online-training",
+          "publisher": "Rational Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "class list",
+            "prices",
+            "free videos"
+          ]
+        },
+        {
+          "url": "https://www.rationalacoustics.com/",
+          "publisher": "Rational Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "training and certification links"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coursera-berklee-technology-of-music-production",
+      "type": "course",
+      "title": "The Technology of Music Production",
+      "author_or_publisher": "Berklee (on Coursera) - Loudon Stearns",
+      "year": "not found",
+      "language": "multi",
+      "level": "beginner",
+      "topics": [
+        "DAW",
+        "signal flow",
+        "EQ",
+        "dynamics",
+        "effects"
+      ],
+      "free_or_paid": "freemium",
+      "access_link": "https://www.coursera.org/learn/technology-of-music-production",
+      "why_recommended": "A clear beginner course on how sound, signal flow and processors work in a DAW; also part of Berklee's four-course Music Production Specialization (which includes Pro Tools Basics).",
+      "bts_relevance": "E3 PTES, E4",
+      "sources": [
+        {
+          "url": "https://www.coursera.org/learn/technology-of-music-production",
+          "publisher": "Coursera",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "provider",
+            "instructor",
+            "level",
+            "enrolment"
+          ]
+        },
+        {
+          "url": "https://www.coursera.org/specializations/music-production",
+          "publisher": "Coursera",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "specialization courses",
+            "level"
+          ]
+        }
+      ],
+      "note": "Page offers 'Enroll for free' but certificate/full access requires payment; AI-dubbed French available per page."
+    },
+    {
+      "id": "coursera-audio-signal-processing",
+      "type": "course",
+      "title": "Audio Signal Processing for Music Applications",
+      "author_or_publisher": "Universitat Pompeu Fabra & Stanford (on Coursera) - Xavier Serra, Julius O. Smith III",
+      "year": "not found",
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "DSP",
+        "Fourier analysis",
+        "spectral modelling",
+        "Python"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.coursera.org/learn/audio-signal-processing",
+      "why_recommended": "Free university course on spectral analysis of sound by two leading DSP researchers. For students who want to understand what plug-ins do under the hood.",
+      "bts_relevance": "E3 PTES (numerique), general",
+      "sources": [
+        {
+          "url": "https://www.coursera.org/learn/audio-signal-processing",
+          "publisher": "Coursera",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "institutions",
+            "instructors",
+            "level",
+            "free (no certificate)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mit-ocw-21m380-sound-design",
+      "type": "open-courseware",
+      "title": "MIT 21M.380 Music and Technology: Sound Design (Spring 2016)",
+      "author_or_publisher": "MIT OpenCourseWare - Dr. Florian Hollerweger",
+      "year": 2016,
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "sound design",
+        "synthesis",
+        "Pure Data",
+        "procedural audio"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://ocw.mit.edu/courses/21m-380-music-and-technology-sound-design-spring-2016/",
+      "why_recommended": "Free MIT course on recreating everyday sounds by analysis and synthesis in Pure Data; no prior programming needed.",
+      "bts_relevance": "general",
+      "sources": [
+        {
+          "url": "https://ocw.mit.edu/courses/21m-380-music-and-technology-sound-design-spring-2016/",
+          "publisher": "MIT OpenCourseWare",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "instructor",
+            "semester",
+            "level",
+            "description"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mit-ocw-6003-signals-and-systems",
+      "type": "open-courseware",
+      "title": "MIT 6.003 Signals and Systems (Fall 2011)",
+      "author_or_publisher": "MIT OpenCourseWare - Prof. Dennis Freeman",
+      "year": 2011,
+      "language": "en",
+      "level": "advanced",
+      "topics": [
+        "signals",
+        "Fourier",
+        "sampling",
+        "filters",
+        "convolution"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://ocw.mit.edu/courses/6-003-signals-and-systems-fall-2011/",
+      "why_recommended": "The mathematical background of sampling, filtering and frequency response. Optional for BTS, valuable for those going on to engineering studies.",
+      "bts_relevance": "general",
+      "sources": [
+        {
+          "url": "https://ocw.mit.edu/courses/6-003-signals-and-systems-fall-2011/",
+          "publisher": "MIT OpenCourseWare",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "title",
+            "instructor",
+            "semester",
+            "summary"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sound-on-sound",
+      "type": "website",
+      "title": "Sound On Sound (magazine website: Techniques, Sound Advice)",
+      "author_or_publisher": "SOS Publications",
+      "year": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "recording techniques",
+        "mixing",
+        "reviews",
+        "studio"
+      ],
+      "free_or_paid": "freemium",
+      "access_link": "https://www.soundonsound.com/",
+      "why_recommended": "Long-running UK recording magazine with a large online archive of technique articles and equipment reviews.",
+      "bts_relevance": "general",
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/",
+          "publisher": "Sound On Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "covers": [
+            "sections",
+            "YouTube link"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sound-on-sound-youtube",
+      "type": "video-channel",
+      "title": "Sound On Sound - YouTube channel",
+      "author_or_publisher": "Sound On Sound",
+      "year": "not found",
+      "language": "en",
+      "level": "intermediate",
+      "topics": [
+        "recording",
+        "mixing",
+        "trade shows",
+        "interviews"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.youtube.com/user/soundonsoundvideo",
+      "why_recommended": "Video companion to the magazine: technique videos, interviews and show coverage.",
+      "bts_relevance": "general",
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/",
+          "publisher": "Sound On Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "channel URL (linked from official site)"
+          ]
+        }
+      ],
+      "note": "YouTube page itself not fetched (consent wall); URL taken from the official site."
+    },
+    {
+      "id": "audio-university-youtube",
+      "type": "video-channel",
+      "title": "Audio University - YouTube channel",
+      "author_or_publisher": "Audio University",
+      "year": "not found",
+      "language": "en",
+      "level": "beginner",
+      "topics": [
+        "audio fundamentals",
+        "acoustics",
+        "monitoring",
+        "ear training"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.youtube.com/c/AudioUniversity",
+      "why_recommended": "Short, well-illustrated explainers of audio basics (decibels, gain staging, room treatment) suited to first-year students; the site also offers a free ear-training frequency guide.",
+      "bts_relevance": "E3 PTES",
+      "sources": [
+        {
+          "url": "https://audiouniversityonline.com/",
+          "publisher": "Audio University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "channel URL (linked from official site)",
+            "free resources"
+          ]
+        }
+      ],
+      "note": "YouTube page itself not fetched (consent wall)."
+    },
+    {
+      "id": "l-acoustics-youtube-webinars",
+      "type": "video-channel",
+      "title": "L-Acoustics - YouTube webinars",
+      "author_or_publisher": "L-Acoustics",
+      "year": "not found",
+      "language": "multi",
+      "level": "intermediate",
+      "topics": [
+        "line arrays",
+        "system design",
+        "immersive sound",
+        "Soundvision"
+      ],
+      "free_or_paid": "free",
+      "access_link": "https://www.youtube.com/c/LAthebestsound",
+      "why_recommended": "Free recorded webinars from the French PA manufacturer, linked from its education pages.",
+      "bts_relevance": "E4, general",
+      "sources": [
+        {
+          "url": "https://www.l-acoustics.com/education/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "covers": [
+            "channel URL (linked from official site)"
+          ]
+        }
+      ],
+      "note": "YouTube page itself not fetched (consent wall)."
+    }
+  ],
+  "not_found_log": [
+    {
+      "item": "Audinate Dante Certification (levels 1-3)",
+      "searched": "https://www.audinate.com/ and learning/training-certification pages returned HTTP 403; not verified, so not included"
+    },
+    {
+      "item": "AES education / student resources",
+      "searched": "https://www.aes.org/education/ and https://aes.org/ returned HTTP 403; not included"
+    },
+    {
+      "item": "Avid Pro Tools certification (official page)",
+      "searched": "https://www.avid.com/learn-and-support/training-and-certification returned 403; only the INA campus Pro Tools 101 course was verified"
+    },
+    {
+      "item": "Allen & Heath training",
+      "searched": "https://www.allen-heath.com/ returned 403"
+    },
+    {
+      "item": "Yamaha Pro Audio training",
+      "searched": "https://www.yamaha.com/proaudio/ returned 403"
+    },
+    {
+      "item": "eduscol STI: BTS MAV referentiel PDF and E3 PTES subjects/annales",
+      "searched": "sti.eduscol.education.fr connection reset (WebFetch, PowerShell and Python) on 2026-10-22; URLs exist in repo learning-platform data but could not be verified this session; France competences RNCP37196 used instead"
+    },
+    {
+      "item": "Onisep BTS MAV son page",
+      "searched": "HTTP 403"
+    },
+    {
+      "item": "ENS Louis-Lumiere public pages",
+      "searched": "https://www.ens-louis-lumiere.fr/ returned 403"
+    },
+    {
+      "item": "Conservatoire de Paris - Formation superieure aux metiers du son",
+      "searched": "home page fetched; no FSMS link found"
+    },
+    {
+      "item": "Stanford CCRMA online resources / Julius Smith online books",
+      "searched": "ccrma.stanford.edu TLS certificate error"
+    },
+    {
+      "item": "Dunod publisher pages (ISBN on publisher page)",
+      "searched": "dunod.com search returns unrelated results; Dunod/Armand Colin/Ellipses books verified via Librairie Eyrolles catalogue instead, ISBN left 'not found' (EAN13 recorded separately)"
+    },
+    {
+      "item": "Routledge ISBNs",
+      "searched": "ISBN not printed as text on Routledge product pages (only in URL); isbn left 'not found'"
+    },
+    {
+      "item": "Owsinski Mixing Engineer's Handbook year/publisher/ISBN",
+      "searched": "author site does not state them"
+    },
+    {
+      "item": "Sound Reinforcement Handbook year",
+      "searched": "Hal Leonard page does not state year"
+    },
+    {
+      "item": "Produce Like A Pro",
+      "searched": "https://producelikeapro.com/ returned 403"
+    },
+    {
+      "item": "French-language YouTube channels on sound engineering",
+      "searched": "WebSearch budget exhausted; youtube.com behind consent wall; none verified"
+    },
+    {
+      "item": "Le livre des techniques du son on dunod.com",
+      "searched": "WebSearch refused (search budget exhausted); verified via Eyrolles catalogue"
+    },
+    {
+      "item": "Merlijn van Veen (sub-alignment resources)",
+      "searched": "https://www.merlijnvanveen.nl/en/ returned 502"
+    },
+    {
+      "item": "Coursera / edX other audio courses, Berklee Online",
+      "searched": "not checked beyond the two Coursera courses (budget)"
+    }
+  ]
+}
