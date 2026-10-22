@@ -61,6 +61,9 @@ Repo root: `C:\Users\brro\dev\Tekonest`. You write ONE file: `knowledge-base/equ
 ## Before you finish
 Run `python knowledge-base/tools/validate.py --file <your-file>.json` from the repo root and fix every ERROR. Then reply with a short report: device count by sub_type, the number of devices with an official manual found, the number with a two-source cross-check, conflicts found, and anything you could not find. Keep the report under 250 words.
 
+## Search budget (important)
+WebSearch is capped for the whole session (200 calls, shared by all agents, refilling at about 100 per hour) and is often exhausted. Do not scrape search engines with curl and do not use proxy or reader services. Work mostly with WebFetch: start from the manufacturer's homepage or a known product page, download centre or `sitemap.xml`, and follow the links on the fetched pages (links seen in fetched pages count as tool-result URLs). Spend WebSearch calls only on what you cannot reach by navigation (at most about 10 per agent). If a search is refused, log the item with `searched: "search budget exhausted"`.
+
 ## Practical tips
 - Manufacturer sites sometimes block fetches (403) or render via JS. Try the PDF datasheet URL from search results, the manufacturer's download centre, or a retailer page as the secondary source. If a page is blocked, you may still cite a URL that appeared in search results, but mark the source `confidence` based on what you could actually read (a search snippet alone counts as `verified-secondary` at most, and only for the values visible in the snippet).
 - Work device by device and write the file incrementally (write after every few devices) so nothing is lost if you run out of context.
