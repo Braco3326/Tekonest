@@ -1,0 +1,2652 @@
+{
+  "file": "amplifiers-processors.json",
+  "category": "amplifiers-processors",
+  "generated": "2026-10-22",
+  "selection_rationale": "Picked the amplifiers and system processors most often met in French rental, touring, theatre and school racks: Crown XLS and Yamaha PX for small portable PA (class D), Yamaha XMV for installed 70/100 V sound, L-Acoustics (LA4X, LA12X, LA7.16), d&b (D40, D80), NEXO (NXAMP4x4MK2) and Powersoft X8 as tour-grade DSP amplified controllers, and dbx DriveRack PA2/VENU360, Meyer GALAXY 816 and L-Acoustics P1 as loudspeaker processors. Devices go under class-d only when the manufacturer states the class and the product is mainly a power amp; the amplified controllers (several also stated class D) are filed under dsp-amplifier. No class AB or class A device was entered: no current pro-audio product page read in this session states class AB, and class A is rare in PA power amplification. Both gaps are logged in not_found_log, partly because the shared web-search budget ran out mid-task.",
+  "not_found_log": [
+    {
+      "device_id": "class-ab (sub_type)",
+      "what": "A current or classic pro power amp whose official page states 'class AB'",
+      "searched": "Crown XTi 4002 page, datasheet and manual (class not stated); Crown XLi 3500 page (class not stated); QSC amplifier selector (RMX/PLX/GX listed, RMX page 404, class not stated); Yamaha power_amps index (current lines are class D). Search budget exhausted before trying Crown/QSC legacy datasheets."
+    },
+    {
+      "device_id": "class-a (sub_type)",
+      "what": "Pro-audio class A amplifier with official page",
+      "searched": "Not searched beyond the above (search budget exhausted). Class A is rare in PA power amplification; it appears mainly in headphone/monitor amps and preamps, outside this category's PA focus."
+    },
+    {
+      "device_id": "crown-ma-12000i",
+      "what": "Excluded: Crown states 'patented Class-I circuitry' (no matching taxonomy sub_type; not mapped to class-d or class-ab to avoid inferring). Product page shows 'Discontinued'.",
+      "searched": "crownaudio.com/en-US/products/ma-12000i, MAi datasheet (adn.harmanpro.com)"
+    },
+    {
+      "device_id": "crown-xti-4002",
+      "what": "Amplifier class not stated by any source read; not entered",
+      "searched": "crownaudio.com XTi 4002 page, XTi 2 datasheet, XTi 2 operation manual"
+    },
+    {
+      "device_id": "lab-gruppen-plm-20k44 / lab-gruppen-fp-10000q / lake-lm-44",
+      "what": "Product pages, specs and manuals",
+      "searched": "labgruppen.com sitemap and /en/products (JavaScript-rendered, product URLs not exposed); lakeprocessing.com domain now unrelated; search budget exhausted"
+    },
+    {
+      "device_id": "xta-dp448",
+      "what": "Product page / manual",
+      "searched": "xta.co.uk sitemap and products page (only DP4/DP5 legacy portfolio page, no DP448 documents)"
+    },
+    {
+      "device_id": "bss-blu-100",
+      "what": "Product page",
+      "searched": "bss.audio homepage fetch failed; search budget exhausted"
+    },
+    {
+      "device_id": "qsc-pld4-5",
+      "what": "Product page",
+      "searched": "qscaudio.com homepage, solutions-products, amplifier selector; power-amplifier pages not reached; search budget exhausted"
+    },
+    {
+      "device_id": "powersoft-quattrocanali",
+      "what": "Explicit amplifier class on product page",
+      "searched": "powersoft.com Quattrocanali 4804 DSP+D page ('fixed frequency switch-mode output stage', not stated as class D); not entered"
+    },
+    {
+      "device_id": "db-audiotechnik-d80",
+      "what": "Separate datasheet and French manual",
+      "searched": "dbaudio.com D80 product page download list (EN manual only)"
+    },
+    {
+      "device_id": "db-audiotechnik-d40",
+      "what": "French manual",
+      "searched": "dbaudio.com D40 product page download list (EN/IT/KO only)"
+    },
+    {
+      "device_id": "yamaha-px10 / yamaha-xmv8280-d",
+      "what": "French manuals",
+      "searched": "usa.yamaha.com download tabs (EN only); European Yamaha sites not reached, search budget exhausted"
+    },
+    {
+      "device_id": "l-acoustics-la12x / la4x / la7-16",
+      "what": "year_introduced",
+      "searched": "L-Acoustics spec sheets and owner's manuals (not stated); search budget exhausted"
+    },
+    {
+      "device_id": "crown-xls-2502",
+      "what": "French manual; AC connector type",
+      "searched": "crownaudio.com/fr product page (links same EN/DE documents); operation manual names 'AC Power Connector' without type"
+    }
+  ],
+  "devices": [
+    {
+      "id": "crown-xls-2502",
+      "brand": "Crown",
+      "model": "XLS 2502 (XLS DriveCore 2 Series)",
+      "category": "amplifiers-processors",
+      "sub_type": "class-d",
+      "technology": "Class D amp with Crown's DriveCore technology (manufacturer wording: 'Class D amp with Crown's ultra-efficient DriveCore technology'); 2 channels with onboard DSP crossover (PureBand) and PeakX limiters.",
+      "year_introduced": 2015,
+      "status": "current",
+      "why_it_is_a_classic": "Crown's portable-PA workhorse: a light 2U two-channel amp found in many small venues, schools and rental stocks. It is a simple class D lesson with all three output types (speakON, binding posts) and three input types (XLR, jack, RCA).",
+      "typical_uses": [
+        "portable PA",
+        "small venues",
+        "DJ / band systems",
+        "passive wedges and subs"
+      ],
+      "key_specs": {
+        "channels": 2,
+        "power_8ohm_per_channel": "440W (8Ω Dual)",
+        "power_4ohm_per_channel": "775W (4Ω Dual)",
+        "power_2ohm_per_channel": "1200W (2Ω Dual)",
+        "power_bridged": "2400W (4Ω Bridged), 1550W (8Ω Bridged)",
+        "power_rating_standard": "Maximum average power in watts at 0.5% THD, 1kHz",
+        "input_sensitivity": ".775Vrms or 1.4Vrms",
+        "frequency_response": "+0dB, -1dB (at 1W, 20Hz to 20kHz)",
+        "snr": ">103dB (A-weighted, dBr to full rated 8Ω power)",
+        "thd": "<0.5%",
+        "damping_factor": ">200 (8Ω, 10Hz ~ 400Hz)",
+        "dsp": "Band pass filter per channel, PureBand crossover, PeakX limiters",
+        "network": "none",
+        "rack_units": "2U (height 3.5 in. (8.9 cm))",
+        "dimensions": "19 in. (48.3 cm) W x 3.5 in. (8.9 cm) H x 10.7 in. (27.2 cm) D",
+        "weight": "10.8 lbs (4.9 kg)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced input per channel",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "1/4 inch input per channel (also usable as loop-thru)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "RCA (phono) input per channel",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "4-pole speakON output (Ch1 connector wired for both channels / bridge)",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 2
+        },
+        {
+          "connector": "binding-post",
+          "role": "binding post output pair per channel",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 2
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "AUX connector: sleep mode by contact closure between pins 1 & 2",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "speaker-level",
+        "mains-power"
+      ],
+      "manual_url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+      "datasheet_url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
+      "product_page_url": "https://www.crownaudio.com/en-US/products/xls-2502",
+      "manual_languages": [
+        "en",
+        "de"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "title": "XLS DriveCore 2 Series Operation Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "page lists 'updated: Apr 2026'",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.crownaudio.com/en/product_documents/5055568_04-15_xlsdc2_manual_german-pdf-d3697630-93dc-4b81-b380-8a5692d601ae",
+          "title": "Owner's Manual, German",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "page lists 'updated: Apr 2026'",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
+          "title": "XLS DriveCore 2 Series datasheet (cut sheet)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "© 2015",
+          "official": true,
+          "kind": "datasheet"
+        },
+        {
+          "url": "https://www.crownaudio.com/en/product_documents/crown_xls_dc2series_qrg_web-pdf-cfbcbf7c-cc33-464a-a670-53f6cccd0859",
+          "title": "XLS 2502 Quick Reference Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "page lists 'updated: Apr 2026'",
+          "official": true,
+          "kind": "quick-start"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.crownaudio.com/en-US/products/xls-2502",
+          "publisher": "Crown (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.input_sensitivity",
+            "key_specs.snr",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.dsp",
+            "year_introduced"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
+          "publisher": "Crown (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.power_8ohm_per_channel",
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_2ohm_per_channel",
+            "key_specs.power_bridged",
+            "key_specs.power_rating_standard",
+            "key_specs.frequency_response",
+            "key_specs.thd",
+            "key_specs.damping_factor",
+            "key_specs.rack_units",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "publisher": "Crown (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.fullcompass.com/prod/282607-crown-xls-2502-2-channel-power-amplifier-775w-at-4-ohms",
+          "publisher": "Full Compass (search snippet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_2ohm_per_channel",
+            "key_specs.power_8ohm_per_channel"
+          ]
+        }
+      ],
+      "notes": "year_introduced 2015 is from the product page news item 'April 15, 2015 Crown Introduces XLS DriveCore 2 Amplifiers'. The manual names the AC power connector but does not state its type, so no mains connector is listed. A French product page exists (crownaudio.com/fr/products/xls-2502) but it links the same English/German documents; no French manual found.",
+      "conflicts": [
+        {
+          "field": "key_specs.power_bridged",
+          "values": [
+            {
+              "value": "1550W (8Ω Bridged)",
+              "source_url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf"
+            },
+            {
+              "value": "1150W @ 8 Ohms bridge mono",
+              "source_url": "https://www.ror.ie/products/crown-xls-2502-power-amplifier-cro0330.html"
+            }
+          ],
+          "note": "Retailer figure (seen in search snippet only) disagrees with the manufacturer datasheet; datasheet is primary."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "binding-post"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Typical school PA amp: XLR/jack/RCA inputs, speakON vs binding posts, bridge wiring on one NL4 (pins 1+/2+)."
+      }
+    },
+    {
+      "id": "l-acoustics-la12x",
+      "brand": "L-Acoustics",
+      "model": "LA12X",
+      "category": "amplifiers-processors",
+      "sub_type": "dsp-amplifier",
+      "technology": "Four-channel amplified controller; 'High efficiency class D' amplification, universal SMPS with PFC, dual SHARC DSP at 96 kHz, Milan-AVB network input.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "L-Acoustics' amplified controller for its largest loudspeakers (K1, K2, KS28 etc. per the manufacturer's product family). It is a common sight in French touring and festival racks, and its French owner's manual makes it a good teaching reference.",
+      "typical_uses": [
+        "touring line array",
+        "festival PA",
+        "subwoofer arrays",
+        "large venue installation"
+      ],
+      "key_specs": {
+        "channels": 4,
+        "power_8ohm_per_channel": "1400 W",
+        "power_4ohm_per_channel": "2600 W",
+        "power_2_7ohm_per_channel": "3300 W (4 channels at 2.7 Ω)",
+        "power_rating_standard": "Output power CEA-2006 / 490A (1% THD, 1 kHz, all channels driven)",
+        "amplification_class": "High efficiency class D",
+        "frequency_response": "± 0.1 dB (20 Hz - 20 kHz, 8 Ω load, 60 W output power)",
+        "thd_n": "< 0.05% (20 Hz - 20 kHz, 8 Ω load, 60 W output power)",
+        "output_dynamic_range": "> 114 dB (20 Hz - 20 kHz, 8 Ω, A-weighted, digital input)",
+        "dsp": "Dual SHARC 32-bit, floating point, 96 kHz sampling rate; 4 x 4 routing; 8 IIR + 4 FIR EQ per output; delay 0-1000 ms; L-DRIVE protection",
+        "network": "AVB input with Milan seamless dual networking (4 channels 48 kHz / 96 kHz from 1 stream of up to 8 channels); dual-port Gigabit Ethernet etherCON",
+        "inputs": "4 analog XLR (shared with AES/EBU A & C), 2 x AES/EBU (4 channels, 44.1 - 192 kHz), XLR link outputs, Milan-AVB",
+        "outputs": "2 x 4-point speakON / 1 x 8-point CA-COM",
+        "mains_connector": "powerCON 32 A (French owner's manual: 'connecteur secteur powerCON (32 A)')",
+        "mains_rating": "100 V - 240 V ~ ±10%, 50-60 Hz",
+        "rack_units": "2U",
+        "dimensions": "483 x 88 (2U) x 419.1 mm / 19 x 3.5 (2U) x 16.5 in",
+        "weight": "14.5 kg / 32 lb"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog / AES/EBU input (A-D, A & C shared with AES)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog / AES link outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "ethercon",
+          "role": "dual-port Gigabit Ethernet (Milan-AVB audio + control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "loudspeaker outputs (4-point speakON)",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 2
+        },
+        {
+          "connector": "speakon-nl8",
+          "role": "8-point CA-COM loudspeaker output (closest id; see notes)",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 1
+        },
+        {
+          "connector": "powercon-blue",
+          "role": "mains in, powerCON 32 A (closest id; see notes)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "speaker-level",
+        "mains-power"
+      ],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Manuel%20du%20propri%C3%A9taire/LA12X_OM_FR.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Product%20Spec%20Sheet/LA12X_SP_EN_2.5.pdf",
+      "product_page_url": "https://www.l-acoustics.com/products/la12x/",
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Manuel%20du%20propri%C3%A9taire/LA12X_OM_FR.pdf",
+          "title": "LA12X manuel du propriétaire",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "version 10.1 (listed 01/11/2024)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Owner's%20Manual/LA12X_OM_EN.pdf",
+          "title": "LA12X - Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "listed 01/11/2024",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Product%20Spec%20Sheet/LA12X_SP_EN_2.5.pdf",
+          "title": "LA12X - Product Spec Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2.5 (listed 10/12/2025)",
+          "official": true,
+          "kind": "spec-sheet"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/GLOBAL/EN/R%C3%A9f%C3%A9rence%20Amplification/Amplification_Reference_TB_FR.pdf",
+          "title": "Référence Amplification",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "listed 21/05/2026",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Product%20Spec%20Sheet/LA12X_SP_EN_2.5.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.power_8ohm_per_channel",
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_2_7ohm_per_channel",
+            "key_specs.power_rating_standard",
+            "key_specs.amplification_class",
+            "key_specs.frequency_response",
+            "key_specs.thd_n",
+            "key_specs.output_dynamic_range",
+            "key_specs.dsp",
+            "key_specs.network",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.mains_rating",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Manuel%20du%20propri%C3%A9taire/LA12X_OM_FR.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mains_connector",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/electronics/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "product_page_url"
+          ]
+        }
+      ],
+      "notes": "The CA-COM 8-point output has no TekPractice id; speakon-nl8 is used as the closest id. The 32 A powerCON is not the 20 A blue powerCON; powercon-blue used as closest id and 'powercon-32a' proposed. Spec sheet footer reads 'LA12X_SPS_EN_2.4/01-2024' while the file name is 2.5. Year of introduction not stated in documents read.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "speakon-nl8",
+          "powercon-32a",
+          "ca-com-8"
+        ],
+        "proposed_new_signals": [
+          "avb-milan"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Shows AES/analog shared XLR inputs, Milan redundancy, NL4 vs 8-point outputs and 32 A powerCON mains."
+      }
+    },
+    {
+      "id": "l-acoustics-la4x",
+      "brand": "L-Acoustics",
+      "model": "LA4X",
+      "category": "amplifiers-processors",
+      "sub_type": "dsp-amplifier",
+      "technology": "4-input x 4-output amplified controller; 'High efficiency class D' amplification, universal SMPS with PFC, SHARC DSP at 96 kHz, Milan-AVB input.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The compact L-Acoustics amplified controller for small and medium systems (Kara, X-Series, subs), in both touring and installed use. The spec sheet notes it can be used as part of EN 54-16 certified voice-alarm systems.",
+      "typical_uses": [
+        "medium-format PA",
+        "theatre",
+        "installation",
+        "fills and monitors"
+      ],
+      "key_specs": {
+        "channels": 4,
+        "power_8ohm_per_channel": "1000 W",
+        "power_4ohm_per_channel": "1000 W",
+        "power_rating_standard": "Output power EIA (1% THD, 1 kHz, all channels driven)",
+        "amplification_class": "High efficiency class D",
+        "frequency_response": "± 0.25 dB (20 Hz - 20 kHz, 8 Ω load, 60 W output power)",
+        "thd_n": "< 0.05%",
+        "output_dynamic_range": "> 110 dB",
+        "dsp": "SHARC 32-bit, floating point, 96 kHz; 4 x 4 routing; 8 IIR + 4 FIR EQ per output; delay 0-1000 ms; L-DRIVE",
+        "network": "AVB input (4 channels 48kHz / 96 kHz from 1 stream of up to 8 channels); dual-port Gigabit Ethernet etherCON",
+        "inputs": "4 analog XLR (shared with AES/EBU A & C), 2 x AES/EBU, XLR link outputs, AVB",
+        "outputs": "4 x 4-point speakON",
+        "mains_connector": "powerCON 20 A (French owner's manual)",
+        "mains_rating": "100 V - 240 V ~ ±10%, 50-60 Hz",
+        "rack_units": "2U",
+        "dimensions": "483 x 88 (2U) x 406 mm / 19 x 3.5 (2U) x 16 in",
+        "weight": "11.3 kg / 24.9 lb",
+        "certification": "EN 54-16 (usable as component in an EN 54-16 certified VACIE)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog / AES/EBU inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "link outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "ethercon",
+          "role": "dual-port Gigabit Ethernet (AVB/Milan + control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "loudspeaker outputs",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 4
+        },
+        {
+          "connector": "powercon-blue",
+          "role": "mains in, powerCON 20 A",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "speaker-level",
+        "mains-power"
+      ],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Manuel%20du%20propriétaire/LA4X_OM_FR.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Product%20Spec%20Sheet/LA4X_SP_EN_4.7.pdf",
+      "product_page_url": "https://www.l-acoustics.com/products/la4x/",
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Manuel%20du%20propriétaire/LA4X_OM_FR.pdf",
+          "title": "LA4X manuel du propriétaire",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "version 16.3 (listed 10/02/2026)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Owner's%20Manual/LA4X_OM_EN.pdf",
+          "title": "LA4X - Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "listed 10/02/2026",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Product%20Spec%20Sheet/LA4X_SP_EN_4.7.pdf",
+          "title": "LA4X - Product Spec Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "4.7 (08.2026)",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Product%20Spec%20Sheet/LA4X_SP_EN_4.7.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.power_8ohm_per_channel",
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_rating_standard",
+            "key_specs.amplification_class",
+            "key_specs.frequency_response",
+            "key_specs.thd_n",
+            "key_specs.output_dynamic_range",
+            "key_specs.dsp",
+            "key_specs.network",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.mains_rating",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.certification",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Manuel%20du%20propriétaire/LA4X_OM_FR.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mains_connector",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/electronics/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "product_page_url"
+          ]
+        }
+      ],
+      "notes": "Spec sheet gives the same 1000 W figure at 4 Ω and 8 Ω (EIA, 1% THD, 1 kHz, all channels driven). Spec sheet says 'AVB input' without the 'Milan seamless dual networking' wording used for LA12X; the summary text says 'Milan-AVB audio network connectivity'.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "avb-milan"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Four NL4 outputs, shared AES/analog XLR inputs and powerCON 20 A: a clear amp-rack wiring lesson."
+      }
+    },
+    {
+      "id": "l-acoustics-la7-16",
+      "brand": "L-Acoustics",
+      "model": "LA7.16",
+      "category": "amplifiers-processors",
+      "sub_type": "dsp-amplifier",
+      "technology": "16-channel amplified controller for rental; 'High efficiency class D', universal SMPS with PFC, L-SMART adaptive power management, Gen.5 dual SHARC DSP, Milan-certified AVB.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Recent high-channel-count L-Acoustics amplified controller: 16 channels in 2U through one SC32 multipin. It shows the move to per-box drive and multipin speaker cabling in large line arrays.",
+      "typical_uses": [
+        "touring line arrays",
+        "distributed systems",
+        "high channel-count rental racks"
+      ],
+      "key_specs": {
+        "channels": 16,
+        "power_peak_12dB_crest": "1100 W @ 4 Ω, 1300 W @ 8 Ω, 700 W @ 16 Ω (Peak output power 12 dB Crest Factor, sine burst, 1 kHz, 2 ms, all channels loaded)",
+        "power_cea2006": "1000 W @ 4 Ω, 920 W @ 8 Ω, 580 W @ 16 Ω (Output power, CEA-2006 / 490A, sine burst, 1 kHz, 20 ms, < 1 % THD)",
+        "amplification_class": "High efficiency class D",
+        "frequency_response": "± 0.05 dB (20 Hz - 20 kHz, 8 Ω load, 60 W output power)",
+        "thd_n": "< 0.1%",
+        "output_dynamic_range": "> 119 dB",
+        "dsp": "Gen.5 Dual SHARC 32-bit, floating point, 96 kHz; 16 x 16 routing matrix; 8 IIR + 4 FIR EQ per output; delay 0-1000 ms",
+        "network": "AVB input with Milan seamless dual networking (16 channels from 16 streams of up to 8 channels); dual-port Gigabit Ethernet etherCON",
+        "inputs": "AVB/Milan; 1 x AES/EBU (2 channels) and 1 analog channel on shared connectors, with link",
+        "outputs": "1 SC32 connector (37 pins utilizing 32 conductors)",
+        "gpio": "3 GPIO, isolated optocoupler inputs, isolated relays contacts",
+        "mains_connector": "1 × 32 A powerCON",
+        "dsp_backup_input": "24 V DC (±15%) / 0.8 A",
+        "mains_rating": "100 V - 240 V ~ ±10%, 50-60 Hz",
+        "rack_units": "2U",
+        "dimensions": "483 x 88 (2U) x 510 mm / 19 x 3.5 (2U) x 20.1 in",
+        "weight": "15.8 kg / 34.8 lb"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "shared analog / AES/EBU input (closest id; connector type not stated in spec sheet)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": "not found"
+        },
+        {
+          "connector": "ethercon",
+          "role": "dual-port Gigabit Ethernet (Milan-AVB + control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "multipin-veam",
+          "role": "SC32 loudspeaker output, 16 channels (closest id; see notes)",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 1
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "3 GPIO",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "powercon-blue",
+          "role": "mains in, 32 A powerCON (closest id)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "aes3",
+        "line-level-pro",
+        "aoip",
+        "speaker-level",
+        "gpio-tally",
+        "mains-power",
+        "dc-power"
+      ],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA7.16/EN/Owner's%20Manual/LA7.16_OM_EN.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA7.16/EN/Product%20Spec%20Sheet/LA7.16_SP_EN_1.4.pdf",
+      "product_page_url": "https://www.l-acoustics.com/products/la7-16/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA7.16/EN/Owner's%20Manual/LA7.16_OM_EN.pdf",
+          "title": "LA7.16 owner's manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "version 4.0 (listed 08/12/2025)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA7.16/EN/Product%20Spec%20Sheet/LA7.16_SP_EN_1.4.pdf",
+          "title": "LA7.16 - Product Spec Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.4 (listed 10/12/2025)",
+          "official": true,
+          "kind": "spec-sheet"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/GLOBAL/EN/Guide%20des%20Presets/preset_guide_FR.pdf",
+          "title": "Guide des Presets",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "listed 21/05/2026",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA7.16/EN/Product%20Spec%20Sheet/LA7.16_SP_EN_1.4.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.power_peak_12dB_crest",
+            "key_specs.power_cea2006",
+            "key_specs.amplification_class",
+            "key_specs.frequency_response",
+            "key_specs.thd_n",
+            "key_specs.output_dynamic_range",
+            "key_specs.dsp",
+            "key_specs.network",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.gpio",
+            "key_specs.dsp_backup_input",
+            "key_specs.mains_rating",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA7.16/EN/Owner's%20Manual/LA7.16_OM_EN.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mains_connector",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/products/la7-16/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.power_peak_12dB_crest"
+          ]
+        }
+      ],
+      "notes": "SC32 (37-pin) has no TekPractice id; multipin-veam used as the closest multipin id and 'sc32' proposed. Peak power at 8 Ω (1300 W) is higher than at 4 Ω (1100 W) in the spec sheet; copied as stated. No French owner's manual listed in the L-Acoustics documentation centre for LA7.16.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "sc32",
+          "powercon-32a"
+        ],
+        "proposed_new_signals": [
+          "avb-milan"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Multipin (SC32) speaker distribution and Milan redundancy are good advanced lessons, but the connector set is niche."
+      }
+    },
+    {
+      "id": "db-audiotechnik-d80",
+      "brand": "d&b audiotechnik",
+      "model": "D80",
+      "category": "amplifiers-processors",
+      "sub_type": "dsp-amplifier",
+      "technology": "2 RU four channel DSP amplifier; 'incorporates Class D amplifiers' with switch mode PSU and active PFC; loudspeaker configurations for all d&b loudspeakers, LoadMatch cable compensation.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "d&b's flagship touring amplifier for large d&b systems, sold in prewired D80 Touring racks. It is a reference for NL4/NL8 output layout and for d&b Remote network control (CAN-Bus and OCA/AES70).",
+      "typical_uses": [
+        "touring line arrays (J, V, SL-Series)",
+        "festivals",
+        "large installations"
+      ],
+      "key_specs": {
+        "channels": 4,
+        "power_per_channel_cf6": "4 x 2600/2000 W (CF = 6 dB at 4 / 8 ohms)",
+        "power_per_channel_cf12": "4 x 4000/2000 W (CF = 12 dB at 4 / 8 ohms)",
+        "power_rating_standard": "Maximum output power per channel (THD+N < 0.5%, all channels driven), linear setting with subsonic filter",
+        "max_output_voltage": "180 V",
+        "dsp": "2 x 16-band PEQ/notch/shelving/asymmetric; latency 0.3 ms; delay 0.3 - 10000 ms; 96 kHz/27 Bit ADC/24 Bit DAC",
+        "network": "d&b Remote network via CAN-Bus (2 x RJ 45) and OCA/AES70 via Ethernet (2 x etherCON, 10/100 Mbit); Dante via external DS10 bridge",
+        "inputs": "4 x analog 3 pin XLR female (A1-A4) with XLR male links; 2 x AES3 3 pin XLR female (D1/2, D3/4), 48 kHz/96 kHz, AES3 link",
+        "outputs": "Speaker outputs A/B/C/D NL4; 4 Channel output NL8",
+        "mains_connector": "powerCON-HC",
+        "mains_rating": "208 - 240 V and 100 - 127 V, 50 - 60 Hz (autosensing SMPS with active PFC)",
+        "rack_units": "2 RU",
+        "dimensions": "2 RU x 19\" x 530 mm/20.9\"",
+        "weight": "19 kg/42 lb",
+        "display": "Colour TFT touchscreen, 3.5\"/320 x 240 pixel"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "INPUT ANALOG A1-A4",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "ANALOG LINK A1-A4",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "INPUT DIGITAL AES3 (D1/2, D3/4)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES3 DIGITAL LINK output",
+          "dir": "out",
+          "signal": "aes3",
+          "count": "not found"
+        },
+        {
+          "connector": "rj45",
+          "role": "CAN-Bus remote (2 x RJ 45 parallel)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 2
+        },
+        {
+          "connector": "ethercon",
+          "role": "Ethernet OCA/AES70 remote, 10/100 Mbit",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "Speaker outputs A/B/C/D",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 4
+        },
+        {
+          "connector": "speakon-nl8",
+          "role": "4 Channel output NL8 (all pins driven)",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 1
+        },
+        {
+          "connector": "powercon-blue",
+          "role": "mains in, powerCON-HC (closest id)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "speaker-level",
+        "mains-power"
+      ],
+      "manual_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-d80-1.14-en.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.dbaudio.com/global/en/products/amplifiers/d80/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-d80-1.14-en.pdf",
+          "title": "d&b D80 Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.14 en, 09/2019",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/global/en/products/amplifiers/d80/",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.power_per_channel_cf6",
+            "key_specs.power_per_channel_cf12",
+            "key_specs.dsp",
+            "key_specs.network",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.mains_connector",
+            "key_specs.mains_rating",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.display",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-d80-1.14-en.pdf",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.power_per_channel_cf6",
+            "key_specs.power_per_channel_cf12",
+            "key_specs.power_rating_standard",
+            "key_specs.max_output_voltage",
+            "key_specs.mains_connector",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Two-source cross-check (product page + manual) agrees on 4 x 2600/2000 W (CF 6 dB) and 4 x 4000/2000 W (CF 12 dB) and on powerCON-HC. powerCON-HC has no TekPractice id; powercon-blue used as closest. CAN-Bus over RJ45 has no signal id; gpio-tally used as closest control-signal id. No separate D80 datasheet found among the product page downloads, and no French D80 manual was listed.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "speakon-nl8",
+          "powercon-hc"
+        ],
+        "proposed_new_signals": [
+          "can-bus-remote"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "NL4 vs NL8 outputs, analog + AES3 inputs on XLR, CAN vs Ethernet remote: rich wiring lesson."
+      }
+    },
+    {
+      "id": "db-audiotechnik-d40",
+      "brand": "d&b audiotechnik",
+      "model": "D40",
+      "category": "amplifiers-processors",
+      "sub_type": "dsp-amplifier",
+      "technology": "Four channel Class D mobile amplifier with DSP (loudspeaker management, 2 x 16-band EQ, delay), switch mode PSU with active PFC, Milan-enabled.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "d&b's current mobile workhorse for KSL, V, Y and T-Series systems. It shows the move from CAN-Bus to Ethernet (OCA/AES70) and Milan AVB inputs on touring amplifiers.",
+      "typical_uses": [
+        "touring",
+        "rental",
+        "theatre and concert systems",
+        "monitors / fills"
+      ],
+      "key_specs": {
+        "channels": 4,
+        "power_per_channel": "4 x 2000 W/8 Ω, 4 x 2400 W/4 Ω",
+        "power_rating_standard": "Output power rating EIA-426B noise CF 12 dB",
+        "power_long_term_sine": "4 x 250 W/4 Ω (Sine wave 1 kHz, long term, +40 °C)",
+        "max_output_voltage_current": "180 Vpeak/35 Apeak",
+        "frequency_response": "35 Hz – 25 kHz (–1 dB, Linear mode)",
+        "dynamic_range": "116 dB (unweighted, digital/Milan input)",
+        "dsp": "2 x 16-band PEQ/notch/shelving/asymmetric; delay 0.3 ms - 10 s; latency 0.3 ms",
+        "network": "8 Milan inputs (one redundant Milan Listener stream of up to eight channels), built-in 5-port AVB switch; 2 x Ethernet 1 Gbit/100 Mbit on etherCON with OCA/AES70",
+        "inputs": "4 analog (3 pin XLR female) + 4 AES3 channels (D1/2, D3/4, 3 pin XLR female), with links; 8 Milan",
+        "outputs": "Speaker outputs A/B/C/D 4 x NL4; Mix TOP/SUB / 2-Way Active A/B and C/D 2 x NL4; 4 Channel output 1 x NL8",
+        "mains_connector": "powerCON TRUE1 TOP",
+        "mains_rating": "100 - 127 / 208 - 240 V, 50 - 60 Hz",
+        "rack_units": "2 RU",
+        "dimensions": "2 RU x 19\" x 512 mm/20.2\"",
+        "weight": "13,8 kg / 30,4 lb"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "INPUT ANALOG A1-A4",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "ANALOG LINK A1-A4",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "INPUT DIGITAL AES3 D1/2, D3/4",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "DIGITAL LINK output",
+          "dir": "out",
+          "signal": "aes3",
+          "count": "not found"
+        },
+        {
+          "connector": "ethercon",
+          "role": "Network Audio (Milan) / Ethernet ETH1/PRI - ETH2/SEC",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "Speaker outputs A/B/C/D and Mix TOP/SUB / 2-way outputs",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 6
+        },
+        {
+          "connector": "speakon-nl8",
+          "role": "4 Channel output",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 1
+        },
+        {
+          "connector": "powercon-true1",
+          "role": "mains in, powerCON TRUE1 TOP",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "speaker-level",
+        "mains-power"
+      ],
+      "manual_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-reference-manual-d40-1.7-en.pdf",
+      "datasheet_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-d40-1.7-en.pdf",
+      "product_page_url": "https://www.dbaudio.com/global/en/products/amplifiers/d40/",
+      "manual_languages": [
+        "en",
+        "it",
+        "ko"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-reference-manual-d40-1.7-en.pdf",
+          "title": "D40 Reference manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.7",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-start-up-manual-d40-1.6-en.pdf",
+          "title": "D40 Start-up manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.6",
+          "official": true,
+          "kind": "quick-start"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-start-up-manual-d40-1.6-it.pdf",
+          "title": "D40 Start-up manual (Italian)",
+          "language": "it",
+          "file_type": "pdf",
+          "version_or_date": "1.6",
+          "official": true,
+          "kind": "quick-start"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-d40-1.7-en.pdf",
+          "title": "D40 Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.7",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/global/en/products/amplifiers/d40/",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.power_per_channel",
+            "key_specs.max_output_voltage_current",
+            "key_specs.dsp",
+            "key_specs.network",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.mains_connector",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-d40-1.7-en.pdf",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.power_per_channel",
+            "key_specs.power_rating_standard",
+            "key_specs.power_long_term_sine",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range",
+            "key_specs.network",
+            "key_specs.outputs",
+            "key_specs.mains_connector",
+            "key_specs.mains_rating",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Product page and datasheet agree on power (4 x 2400/2000 W into 4/8 Ω, CF 12 dB) and on the powerCON TRUE1 TOP mains connector. The product page lists 'All current d&b loudspeaker setups except GSL, SL-SUB, J-Series, M2'. Only EN/IT/KO start-up manuals were listed; no French version.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "speakon-nl8"
+        ],
+        "proposed_new_signals": [
+          "avb-milan"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Milan + AES3 + analog inputs, NL4 and NL8 outputs, powerCON TRUE1 mains: the full modern amp-rack set."
+      }
+    },
+    {
+      "id": "nexo-nxamp4x4mk2",
+      "brand": "NEXO",
+      "model": "NXAMP4x4MK2",
+      "category": "amplifiers-processors",
+      "sub_type": "dsp-amplifier",
+      "technology": "Powered TD-controller: four 'ultra-low distortion Class D amplifiers' with 24-bit/96 kHz converters and 3x multicore 64-bit DSPs; universal PSU with active PFC (NEXO/Yamaha collaboration).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Amplified controller for NEXO systems (GEO, STM, PS), widely used in French rental stocks. NEXO is a French manufacturer based in Plailly, and a French user manual is available.",
+      "typical_uses": [
+        "NEXO line arrays and subs",
+        "touring",
+        "rental",
+        "installation"
+      ],
+      "key_specs": {
+        "channels": "4 amplifier channels, 2 by 2 bridgeable",
+        "power_8ohm_per_channel": "4 x 1900 W (4 channels mode / 8 Ohms load per channel)",
+        "power_4ohm_per_channel": "4 x 3300 W",
+        "power_2ohm_per_channel": "4 x 4500 W",
+        "power_bridged": "2 x 6600 W (2 channels mode / 8 Ohms), 2 x 9000 W (2 channels mode / 4 Ohms)",
+        "power_rating_standard": "Max output power (test conditions not stated)",
+        "max_output_voltage": "4 x 180 V (no load)",
+        "frequency_response": "10 Hz – 20 KHz ±1 dB",
+        "dynamic_range_thd": "110 dB unweighted / Typical 0.01% (flat setup)",
+        "latency": "580 us on a flat setup",
+        "dsp": "3x multicore 64-bits processing DSPs; AD/DA 24-bits @ 96 KHz",
+        "network": "Expansion slot: optional Dante, EtherSound, AES and Dante + AES (NXAEDT) cards; datasheet lists AES/EBU, Ethersound, Dante or AES67 input",
+        "inputs": "4x balanced analogue inputs on XLR3; 4x digital audio inputs via expansion card",
+        "outputs": "4×Neutrik Speakon NL-4 outputs",
+        "control_ports": "RS232 1×DB-9 (DPU); GPIO 1×DB-25 with 5 inputs and 8 outputs (DMU)",
+        "mains_connector": "2x Neutrik Powercon NAC3 (2x 20 A)",
+        "mains_rating": "Universal power supply with active PFC 100-240 Volts (50/60 Hz)",
+        "rack_units": "3U",
+        "dimensions": "3U 19\" rack, 502 mm / 20\" depth",
+        "weight": "24.9 kg / 54.8 lbs"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced analogue inputs (gender not stated)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "power outputs",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 4
+        },
+        {
+          "connector": "dsub25",
+          "role": "GPIO port DB-25 (5 in / 8 out)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "powercon-blue",
+          "role": "mains sockets, powerCON NAC3 20 A",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 2
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aoip",
+        "aes3",
+        "speaker-level",
+        "gpio-tally",
+        "mains-power"
+      ],
+      "manual_url": "https://www.nexo-sa.com/wp-content/uploads/NXAMPmk2-User-Manual-Rev02a-FR-1.pdf",
+      "datasheet_url": "https://www.nexo-sa.com/wp-content/uploads/NXAMP4x4mk2_datasheet_v1.3.pdf",
+      "product_page_url": "https://www.nexo-sa.com/products/nxamp4x4mk2/",
+      "manual_languages": [
+        "fr",
+        "en",
+        "es"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMPmk2-User-Manual-Rev02a-FR-1.pdf",
+          "title": "NXAMPMK2 User Manual (FR)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "Rev02a (from file name)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMPmk2-User-Manual-Rev02b-EN.pdf",
+          "title": "NXAMPMK2 User Manual (EN)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Rev02b (from file name)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMPmk2-User-Manual-Rev03SP.pdf",
+          "title": "NXAMPMK2 User Manual (ES)",
+          "language": "es",
+          "file_type": "pdf",
+          "version_or_date": "Rev03 (from file name)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMP4x4mk2_datasheet_v1.3.pdf",
+          "title": "NXAMP4X4MK2 Datasheet EN",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v1.3",
+          "official": true,
+          "kind": "datasheet"
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMP4x4mk2_datasheet_p1_v1.3-FR.pdf",
+          "title": "NXAMP4X4MK2 Datasheet FR",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "v1.3",
+          "official": true,
+          "kind": "datasheet"
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/nxampmk2_en_de_fr_es_zh_ko_ja_qsg_c1_web.pdf",
+          "title": "NXAMPMK2 Quick Start Manual",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.nexo-sa.com/products/nxamp4x4mk2/",
+          "publisher": "NEXO",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.channels",
+            "key_specs.power_8ohm_per_channel",
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_2ohm_per_channel",
+            "key_specs.power_bridged",
+            "key_specs.max_output_voltage",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range_thd",
+            "key_specs.latency",
+            "key_specs.dsp",
+            "key_specs.network",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.control_ports",
+            "key_specs.mains_connector",
+            "key_specs.mains_rating",
+            "key_specs.rack_units",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMP4x4mk2_datasheet_v1.3.pdf",
+          "publisher": "NEXO",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.power_8ohm_per_channel",
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_2ohm_per_channel",
+            "key_specs.mains_connector",
+            "key_specs.network",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/systems/nxampmk2/",
+          "publisher": "NEXO",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.weight"
+          ]
+        }
+      ],
+      "notes": "Product page and datasheet agree on 4 x 1900 / 3300 / 4500 W at 8 / 4 / 2 Ω and 2x powerCON NAC3 20 A. Test conditions for 'Max output power' are not stated on the pages read.",
+      "conflicts": [
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "24.9 kg / 54.8 lbs",
+              "source_url": "https://www.nexo-sa.com/products/nxamp4x4mk2/"
+            },
+            {
+              "value": "24.9 kg (54.9 lbs)",
+              "source_url": "https://www.nexo-sa.com/wp-content/uploads/NXAMP4x4mk2_datasheet_v1.3.pdf"
+            },
+            {
+              "value": "the 3U NXAMP4X4 MK2 weighs 25kg",
+              "source_url": "https://www.nexo-sa.com/systems/nxampmk2/"
+            }
+          ],
+          "note": "Rounding differences between NEXO pages."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "French-made amplified controller; XLR in, NL4 out, dual powerCON, optional Dante/AES card: good school lesson."
+      }
+    },
+    {
+      "id": "yamaha-px10",
+      "brand": "Yamaha",
+      "model": "PX10",
+      "category": "amplifiers-processors",
+      "sub_type": "class-d",
+      "technology": "Two-channel power amplifier; Yamaha: 'Newly developed Class-D amplifier engine with a custom LSI'; technical specifications: 'Class D, balanced output circuit (BTL)'; onboard DSP speaker processing.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Yamaha's current portable-PA amp range, successor to a line Yamaha traces back to the 1976 P2200. It is common with Yamaha passive speakers in schools and small venues and offers NL4, binding posts and jack outputs on one rear panel.",
+      "typical_uses": [
+        "portable PA",
+        "schools and small venues",
+        "passive Yamaha speakers",
+        "monitors"
+      ],
+      "key_specs": {
+        "channels": 2,
+        "power_8ohm_per_channel": "1000W x 2",
+        "power_4ohm_per_channel": "1200W x 2",
+        "power_2ohm_per_channel": "700W x 2",
+        "power_rating_standard": "Output power; 1kHz Non-clip 20msec Burst Both channels driven",
+        "thd": "0.1% (1kHz, 10W), 0.3% (1kHz, Half power)",
+        "frequency_response": "±1.0dB (1W, 8Ω, 20Hz to 20kHz)",
+        "snr": "101dB (A-weighted, 8Ω, Gain setting = +14dBu)",
+        "input_impedance": "20kΩ (Balance), 10kΩ (Unbalance)",
+        "dsp": "Input summing; D-CONTOUR (FOH/MAIN, MONITOR, OFF); Delay (0 - 74msec); HPF/LPF (20Hz~20kHz); Speaker Processor (6 band PEQ + Limiter + Delay); AD/DA 24-bit, 48kHz internal",
+        "latency": "1.5 msec (Analog Input to Speakers)",
+        "network": "none (USB 2.0 Standard-A for presets/firmware)",
+        "inputs": "XLR-3-31 x2, 1/4\" PHONE (TRS) x2",
+        "outputs": "Neutrik speakON NL4 x2, Binding post x2 pairs, 1/4\" PHONE (TS) x2",
+        "mains_connector": "AC inlet x1 with AC cord clamp (type not stated)",
+        "dimensions": "480 × 88 × 388 mm (18.90 × 3.46 × 15.28 inch)",
+        "weight": "7.4 kg (16.31 lbs)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "line input (XLR-3-31)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "line input 1/4\" TRS",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "speaker output",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 2
+        },
+        {
+          "connector": "binding-post",
+          "role": "speaker output binding post pairs",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 2
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "speaker output 1/4\" TS",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 2
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB memory for save/load, presets, firmware",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "speaker-level",
+        "mains-power"
+      ],
+      "manual_url": "https://usa.yamaha.com/files/download/other_assets/7/792727/px10_en_om_c0.pdf",
+      "datasheet_url": "https://usa.yamaha.com/files/download/other_assets/6/792726/px10_en_ts_c0.pdf",
+      "product_page_url": "https://usa.yamaha.com/products/proaudio/power_amps/px_series/index.html",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/7/792727/px10_en_om_c0.pdf",
+          "title": "PX10 Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "c0 (from file name)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/6/792726/px10_en_ts_c0.pdf",
+          "title": "PX10 Technical Specifications",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "c0 (from file name)",
+          "official": true,
+          "kind": "spec-sheet"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/8/792728/px10_en_rm_f0.pdf",
+          "title": "PX10 Reference Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "f0 (from file name)",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/px_series/index.html",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "why_it_is_a_classic"
+          ]
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/px_series/specs.html#product-tabs",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.power_8ohm_per_channel",
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_2ohm_per_channel",
+            "key_specs.power_rating_standard",
+            "key_specs.thd",
+            "key_specs.frequency_response",
+            "key_specs.snr",
+            "key_specs.input_impedance",
+            "key_specs.dsp",
+            "key_specs.latency",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.mains_connector",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/6/792726/px10_en_ts_c0.pdf",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        }
+      ],
+      "notes": "The specs page lists PX10/PX8/PX5/PX3 side by side; PX10 values are the first column. The technical-spec PDF weight column also lists 7.4 / 7.2 / 6.9 / 6.9 kg; 7.4 kg was taken as the first (PX10) value. A French manual may exist on Yamaha's European sites but was not reached (search budget exhausted).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "binding-post"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Three speaker-output types (NL4, binding post, TS jack) on one amp: teaches why a TS speaker jack is not an instrument cable."
+      }
+    },
+    {
+      "id": "yamaha-xmv8280-d",
+      "brand": "Yamaha",
+      "model": "XMV8280-D",
+      "category": "amplifiers-processors",
+      "sub_type": "class-d",
+      "technology": "8-channel installation power amplifier; XMV Series 'combine Class-D efficiency' with installation features; Dante network input; low-impedance or 70V/100V line outputs.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Typical multi-channel installed-sound amp: Dante input, Euroblock connectors, barrier-strip outputs and 70V/100V line capability. It fits the BTS 'sonorisation fixe' and conference contexts.",
+      "typical_uses": [
+        "installed sound",
+        "conference rooms",
+        "retail / hospitality zones",
+        "100V line distributed systems"
+      ],
+      "key_specs": {
+        "channels": 8,
+        "power_4ohm_per_channel": "280W x 8 (1kHz, THD+N=1%: 4Ω)",
+        "power_8ohm_per_channel": "280W x 8 (1kHz, THD+N=1%: 8Ω)",
+        "power_double_power_mode": "560W x 4 (4Ω or 8Ω / Double Power Mode)",
+        "power_high_impedance": "250W x 8 / 40 Ω (100V line and 70V line)",
+        "thd": "≤ 0.2% (1kHz, half power)",
+        "frequency_response": "0dB, ±1.0dB (RL=8Ω, 100V/70V, Po=1W, 20Hz - 20kHz)",
+        "snr": "≥ 100dB (A-weighted)",
+        "input_sensitivity": "+4dBu",
+        "network": "RJ45 x 2 (Dante PRIMARY / SECONDARY), network control shared with Dante ports",
+        "inputs": "Euroblock x 2 (6P, balanced); Dante",
+        "outputs": "Barrier strip x 8 pairs",
+        "control_ports": "Remote, Fault Output: Euroblock (3P) x 1",
+        "mains_connector": "AC Inlet x 1 (type not stated)",
+        "rack_units": "not stated (H 88mm (3.5\"))",
+        "dimensions": "W 480mm (18.9\") x H 88mm (3.5\") x D 422mm (16.6\")",
+        "weight": "10.1kg (22.3lbs)"
+      },
+      "connectors": [
+        {
+          "connector": "euroblock-phoenix",
+          "role": "analog inputs, Euroblock 6P balanced",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "Dante PRIMARY / SECONDARY",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "euroblock-phoenix",
+          "role": "Remote / Fault output, Euroblock 3P",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "euroblock-phoenix",
+          "role": "speaker outputs, barrier strip x 8 pairs (closest id; see notes)",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 8
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aoip",
+        "speaker-level",
+        "gpio-tally",
+        "mains-power"
+      ],
+      "manual_url": "https://usa.yamaha.com/files/download/other_assets/8/330088/xmv8280d_en_om_g0.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/index.html",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/8/330088/xmv8280d_en_om_g0.pdf",
+          "title": "XMV8280-D Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "g0 (from file name)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/6/330736/xmv8280d_add_sheet_a0_v020.pdf",
+          "title": "XMV8280-D additional sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "a0 v020 (from file name)",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/index.html",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status"
+          ]
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_8ohm_per_channel",
+            "key_specs.power_double_power_mode",
+            "key_specs.power_high_impedance",
+            "key_specs.thd",
+            "key_specs.frequency_response",
+            "key_specs.snr",
+            "key_specs.input_sensitivity",
+            "key_specs.network",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.control_ports",
+            "key_specs.mains_connector",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Class D is stated at series level ('XMV Series ... combine Class-D efficiency'). Barrier-strip speaker terminals have no TekPractice id; euroblock-phoenix used as the closest screw-terminal id and 'barrier-strip' proposed. Only one Yamaha source was read; no second-source cross-check.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "euroblock-phoenix",
+          "barrier-strip"
+        ],
+        "proposed_new_signals": [
+          "dante",
+          "speaker-level-100v-line"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Installed-sound lesson: Euroblock wiring, Dante redundancy, barrier strips and 100V line vs low-impedance outputs."
+      }
+    },
+    {
+      "id": "powersoft-x8",
+      "brand": "Powersoft",
+      "model": "X8",
+      "category": "amplifiers-processors",
+      "sub_type": "dsp-amplifier",
+      "technology": "8-channel amplifier platform with integrated DSP (40-bit floating point), universal single-, bi- or three-phase SMPS with PFC (85 VAC up to 460 VAC), AES3 and optional redundant Dante. Amplifier class not stated on the pages read.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "High-density touring amp platform from the Italian maker Powersoft. Its three-phase power supply and native AES3 + Dante inputs show where large touring racks have gone.",
+      "typical_uses": [
+        "medium to large-scale touring",
+        "arenas and concert halls",
+        "stadiums and open-air events",
+        "subwoofer arrays"
+      ],
+      "key_specs": {
+        "channels": "8 mono, bridgeable per ch. pair",
+        "power_8ohm_per_channel": "1600 W",
+        "power_4ohm_per_channel": "3000 W",
+        "power_2_7ohm_per_channel": "4000 W",
+        "power_2ohm_per_channel": "5200 W",
+        "power_bridged": "6000 W @ 8 Ω Bridged, 10400 W @ 4 Ω Bridged",
+        "power_total": "Peak total output, all channels driven 40000 W",
+        "power_rating_standard": "Maximum output power per channel; figure calculated by driving and loading symmetrically all the channels (no THD/standard stated)",
+        "max_output": "175 Vpeak unclipped, 130 Apeak",
+        "thd_n": "< 0.5% (typical < 0.01%) from 0.1 W to Full Power",
+        "frequency_response": "5 Hz - 30 kHz (-3 dB, 1 W @ 8 Ω)",
+        "dynamic_range": "114,3 dB (A-Weighted @ 8 Ω)",
+        "dsp": "40 bit floating point; raised-cosine, FIR, IIR EQ; crossovers 6-48 dB/oct; TruePower, RMS voltage, RMS current, peak limiters; Active DampingControl; delay up to 2 s input / 100 ms output",
+        "inputs": "Analog 8 (8x XLR); AES3 8 (4x XLR); Dante 16 (2x RJ45, Dante version only)",
+        "network": "100 Mbps and Gigabit Ethernet; redundant Dante (Brooklyn II, optional); WiFi remote",
+        "outputs": "speakON outputs, one connector per channel pair (4 connectors)",
+        "mains_connector": "AC mains Phoenix connector",
+        "mains_rating": "Single phase 100 - 240 V @ 50/60Hz; three phase 173Y/100 - 416Y/240 V",
+        "dimensions": "483 mm x 89 mm x 495 mm (19.0 in x 3.5 in x 19.5 in)",
+        "weight": "24 kg (52.9 lb)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog inputs (gender not stated)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES3 inputs, 2 channels each (gender not stated)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 4
+        },
+        {
+          "connector": "rj45",
+          "role": "Dante primary/secondary (Dante version only)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "speakon-nl4",
+          "role": "speakON output per channel pair (pole count not stated; closest id)",
+          "dir": "out",
+          "signal": "speaker-level",
+          "count": 4
+        },
+        {
+          "connector": "euroblock-phoenix",
+          "role": "AC mains Phoenix connector (closest id; see notes)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "speaker-level",
+        "mains-power"
+      ],
+      "manual_url": "https://www.powersoft.com/api/media/file/PS_XSeries_UG.pdf?v=ms9fk754",
+      "datasheet_url": "https://www.powersoft.com/api/media/file/PS_X8_DS.pdf?v=ms9fk732",
+      "product_page_url": "https://www.powersoft.com/en/products/touring-amps/x-series/x8",
+      "manual_languages": [
+        "en",
+        "fr",
+        "it",
+        "de",
+        "zh"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.powersoft.com/api/media/file/PS_XSeries_UG.pdf?v=ms9fk754",
+          "title": "X Series User Guide - Multilingual",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.powersoft.com/api/media/file/PS_X8_DS.pdf?v=ms9fk732",
+          "title": "X8 Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        },
+        {
+          "url": "https://www.powersoft.com/api/media/file/powersoft_x8_AE.pdf?v=ms9fkfcs",
+          "title": "X8 A&E Specs",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.powersoft.com/en/products/touring-amps/x-series/x8",
+          "publisher": "Powersoft",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.power_8ohm_per_channel",
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_2ohm_per_channel",
+            "key_specs.power_bridged",
+            "key_specs.max_output",
+            "key_specs.network"
+          ]
+        },
+        {
+          "url": "https://www.powersoft.com/api/media/file/PS_X8_DS.pdf?v=ms9fk732",
+          "publisher": "Powersoft",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.channels",
+            "key_specs.power_8ohm_per_channel",
+            "key_specs.power_4ohm_per_channel",
+            "key_specs.power_2_7ohm_per_channel",
+            "key_specs.power_2ohm_per_channel",
+            "key_specs.power_bridged",
+            "key_specs.power_total",
+            "key_specs.power_rating_standard",
+            "key_specs.max_output",
+            "key_specs.thd_n",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range",
+            "key_specs.dsp",
+            "key_specs.inputs",
+            "key_specs.mains_rating",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://www.powersoft.com/api/media/file/PS_XSeries_UG.pdf?v=ms9fk754",
+          "publisher": "Powersoft",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.outputs",
+            "key_specs.mains_connector",
+            "connectors",
+            "manual_languages"
+          ]
+        }
+      ],
+      "notes": "Product page and datasheet agree on 5200 / 3000 / 1600 W at 2 / 4 / 8 Ω. Neither states the amplifier class, so the device is filed as dsp-amplifier. The rear panel mains connector is a Phoenix-type terminal, not powerCON; euroblock-phoenix is used as the closest id, but it is a mains-rated connector (proposed 'phoenix-mains'). The multilingual user guide includes a French section ('Française').",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "phoenix-mains"
+        ],
+        "proposed_new_signals": [
+          "dante"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Three-phase mains and AES3/Dante input selection are advanced lessons, but the Phoenix mains terminal is unusual."
+      }
+    },
+    {
+      "id": "dbx-driverack-pa2",
+      "brand": "dbx",
+      "model": "DriveRack PA2",
+      "category": "amplifiers-processors",
+      "sub_type": "loudspeaker-processor",
+      "technology": "Complete loudspeaker management system: 2 in / 6 out DSP with crossover, PEQ, limiters, alignment delay, AutoEQ with RTA mic, AFS feedback suppression; dbx Type IV conversion; Ethernet app control.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Entry-level speaker processor found in many small PA racks and schools. Its setup wizard (crossover, AutoEQ with measurement mic, feedback suppression) makes it a common first system-tuning tool.",
+      "typical_uses": [
+        "small / medium PA",
+        "2-way and 3-way crossover",
+        "room EQ with RTA mic",
+        "feedback suppression"
+      ],
+      "key_specs": {
+        "inputs": "(2) line inputs. (1) RTA Mic input; (2) Female XLR line inputs, (1) Female XLR RTA Mic input",
+        "outputs": "(6) Line Outputs, Male XLR, electronically balanced, 120 Ω",
+        "max_output": "+20dBu",
+        "rta_mic_phantom": "+15VDC (RTA)",
+        "sample_rate": "48kHz",
+        "dynamic_range": ">110 dB A-weighted, >107dB unweighted",
+        "thd_n": "0.003% typical at +4dBu, 1kHz, 0dB input gain",
+        "frequency_response": "20Hz – 20kHz, +/- 0.5dB",
+        "dsp": "Input: compression, AFS, graphic EQ, 8-band PEQ, subharmonic synthesis; Output: crossover (full range, 2-way, 3-way), 8-band PEQs, limiting, driver alignment delays; input delay 100ms",
+        "network": "Ethernet RJ45 for control app and firmware update",
+        "mains_connector": "IEC AC Power Inlet",
+        "operating_voltage": "100-120VAC 50/60 Hz - EU: 220-240 VAC 50/60 Hz",
+        "dimensions": "1.75\" (H) x 5.75\" (D) x 19\" (W), 4.4cm (H) x 14.6cm (D) x 48.26cm (W)",
+        "weight": "5.25 lbs. (2.4 kg)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "line inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "RTA mic input (+15VDC)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line outputs (low/mid/high)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 6
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet control / firmware",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "IEC AC power inlet",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mic-level",
+        "mains-power"
+      ],
+      "manual_url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-a_fr-pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://dbxpro.com/en-US/products/driverack-pa2",
+      "manual_languages": [
+        "fr",
+        "en",
+        "de",
+        "es"
+      ],
+      "manuals": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-a_fr-pdf",
+          "title": "DriveRack PA2 Owner's Manual-French",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "page lists 'updated: Apr 2026'",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-apdf",
+          "title": "DriveRack PA2 Owner's Manual-English",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "page lists 'updated: Apr 2026'",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-a_de-pdf",
+          "title": "DriveRack PA2 Owner's Manual-German",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "page lists 'updated: Apr 2026'",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-a_es-pdf",
+          "title": "DriveRack PA2 Owner's Manual-Spanish",
+          "language": "es",
+          "file_type": "pdf",
+          "version_or_date": "page lists 'updated: Apr 2026'",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/driverack_pa2_quick_start_5033257-cpdf",
+          "title": "DriveRack PA2 Quickstart Guide-English",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "page lists 'updated: Apr 2026'",
+          "official": true,
+          "kind": "quick-start"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en-US/products/driverack-pa2",
+          "publisher": "dbx (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.max_output",
+            "key_specs.rta_mic_phantom",
+            "key_specs.sample_rate",
+            "key_specs.dynamic_range",
+            "key_specs.thd_n",
+            "key_specs.frequency_response",
+            "key_specs.dsp",
+            "key_specs.operating_voltage",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-apdf",
+          "publisher": "dbx (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.network",
+            "key_specs.mains_connector",
+            "key_specs.outputs",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "The Ethernet port is for control (not audio); aoip is used as the closest network signal id. The RTA mic input supplies +15 VDC, not 48 V phantom. No separate cut sheet for the PA2 itself was listed (the cut sheet on the page is for the RTA-M mic).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "ethernet-control"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Classic console-to-amp insert point: 2 XLR in, 6 XLR out (low/mid/high), measurement mic input: crossover wiring lesson."
+      }
+    },
+    {
+      "id": "dbx-driverack-venu360",
+      "brand": "dbx",
+      "model": "DriveRack VENU360",
+      "category": "amplifiers-processors",
+      "sub_type": "loudspeaker-processor",
+      "technology": "3 input, 6 output loudspeaker management system (successor of the DriveRack 260 per dbx), AutoEQ, AFS, analog/AES digital inputs, Ethernet control.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "dbx presents it as the improved successor of 'the dominant DriveRack 260'. It is a step up from the PA2 with AES digital inputs and higher sample rates, used in clubs and installs.",
+      "typical_uses": [
+        "club / venue installs",
+        "FOH + monitor zone processing",
+        "tower delays",
+        "AES digital link from console"
+      ],
+      "key_specs": {
+        "inputs": "(3) female XLRs (2 selectable between analog/AES digital audio formats), (1) female XLR RTA mic input",
+        "outputs": "6 outputs, Male XLR",
+        "sample_rate": "48/96 kHz (32-192 kHz using sample rate conversion)",
+        "dynamic_range": "114 dB A-weighted; 110 dB unweighted (system performance)",
+        "dsp": "AutoEQ (in output stage), AFS feedback suppression, crossover, limiting, delays",
+        "network": "Ethernet control via Android, iOS, Mac or Windows device",
+        "operating_voltage": "100-240 VAC 50/60 Hz",
+        "dimensions": "1.75\" (H) x 8.0\" (D) x 19\" (W), 4.4cm (H) x 20.32cm (D) x 48.26cm (W)",
+        "weight": "5.48 lbs. (2.49 kg)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "inputs (2 selectable analog / AES)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 3
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "RTA mic input",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 6
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "mic-level",
+        "mains-power"
+      ],
+      "manual_url": "https://dbxpro.com/en/product_documents/dbx_driverack_venu360_manual-pdf",
+      "datasheet_url": "https://dbxpro.com/en/product_documents/dbx_venu360_brochure-pdf",
+      "product_page_url": "https://dbxpro.com/en-US/products/driverack-venu360",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx_driverack_venu360_manual-pdf",
+          "title": "DriveRack VENU360 manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/venu360_quick_start_5041207-a-pdf",
+          "title": "VENU360 Quick Start",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "5041207-A (from file name)",
+          "official": true,
+          "kind": "quick-start"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx_venu360_brochure-pdf",
+          "title": "VENU360 brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en-US/products/driverack-venu360",
+          "publisher": "dbx (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "why_it_is_a_classic",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.sample_rate",
+            "key_specs.dynamic_range",
+            "key_specs.dsp",
+            "key_specs.network",
+            "key_specs.operating_voltage",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Single source (product page). The manual and brochure links were taken from the product page but not opened. Ethernet and mains connector types were not checked in the manual.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Same XLR in/out lesson as PA2, plus the analog/AES selectable input on the same XLR."
+      }
+    },
+    {
+      "id": "meyer-sound-galileo-galaxy-816",
+      "brand": "Meyer Sound",
+      "model": "Galileo GALAXY 816",
+      "category": "amplifiers-processors",
+      "sub_type": "loudspeaker-processor",
+      "technology": "Milan-certified AVB network loudspeaker processor; FPGA-based processing at 96 kHz (24-bit AD/DA); 8 inputs (analog/AES3/AVB) x 16 outputs (analog/AVB) with summing and delay matrices.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Meyer Sound's system processor for self-powered loudspeaker systems. Meyer describes it as its first fully networkable loudspeaker processor and among the first products to receive Milan certification.",
+      "typical_uses": [
+        "touring system drive",
+        "theatre and installs",
+        "cinema",
+        "SIM measurement switching"
+      ],
+      "key_specs": {
+        "inputs": "8 gold-plated XLR-F, 2 RJ-45 network ports; 8 processed inputs selectable as analog, AES3 or AVB, plus 24 AVB unprocessed matrix inputs",
+        "outputs": "16 gold-plated XLR-M, 2 RJ-45 network ports; processed outputs 1–16",
+        "max_level": "+16 dBu or +26 dBu (selectable) in and out",
+        "processing": "24-bit resolution, 96 kHz sample rate; FPGA-based audio processing",
+        "latency": "0.6ms analog in to analog out (product page)",
+        "matrix": "Sparse 32 x 16 summing matrix and delay matrix (500 ms per cross point)",
+        "dsp": "Inputs: gain, 500 ms delay, 5-band PEQ, 5-band U-Shaping; Outputs: gain, 2000 ms delay, polarity, 10-band PEQ, 5-band U-Shaping, Product Integration, LMBC, atmospheric correction, HP/LP to 48 dB/oct",
+        "network": "Primary/Secondary 1Gb etherCON Ethernet, Milan AVB (AAF/CRF streams), redundant AVB networks",
+        "sim_ports": "Two SIM 3 bus ports",
+        "mains_connector": "PowerCON 20",
+        "operating_voltage": "100–240 VAC, 50–60 Hz",
+        "rack_units": "2 RU",
+        "dimensions": "W 19.00 in (483 mm) x H 3.48 in (88 mm) x D 16.14 in (410 mm)",
+        "weight": "16.8 lb (7.6 kg)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "inputs A-H (analog or AES3)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog outputs 1-16",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 16
+        },
+        {
+          "connector": "ethercon",
+          "role": "Primary/Secondary 1Gb Ethernet, Milan AVB",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "powercon-blue",
+          "role": "mains in, PowerCON 20",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "mains-power"
+      ],
+      "manual_url": "https://docs.meyersound.com/products/en/user-guide---galileo-galaxy.html",
+      "datasheet_url": "https://docs.meyersound.com/products/en/datasheet---galileo-galaxy-816.html",
+      "product_page_url": "https://meyersound.com/product/galileo-galaxy/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://docs.meyersound.com/products/en/user-guide---galileo-galaxy.html",
+          "title": "User Guide — Galileo GALAXY",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://docs.meyersound.com/products/en/datasheet---galileo-galaxy-816.html",
+          "title": "Datasheet — Galileo GALAXY 816",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        },
+        {
+          "url": "https://docs.meyersound.com/products/en/programming-guide---galileo-galaxy.html",
+          "title": "Programming Guide — Galileo GALAXY",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://docs.meyersound.com/products/en/datasheet---galileo-galaxy-816.html",
+          "publisher": "Meyer Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.max_level",
+            "key_specs.processing",
+            "key_specs.matrix",
+            "key_specs.dsp",
+            "key_specs.network",
+            "key_specs.sim_ports",
+            "key_specs.mains_connector",
+            "key_specs.operating_voltage",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://meyersound.com/product/galileo-galaxy/",
+          "publisher": "Meyer Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.latency",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "Two Meyer documents agree on Milan certification and on the analog/AES3/AVB input choice. Mains connector is written 'PowerCON 20' in the datasheet; powercon-blue (20 A) used. Meyer documentation is HTML (docs.meyersound.com), not PDF.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "avb-milan"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Drive-system hub: 8 XLR in (analog or AES3), 16 XLR out to self-powered speakers, Milan redundancy."
+      }
+    },
+    {
+      "id": "l-acoustics-p1",
+      "brand": "L-Acoustics",
+      "model": "P1",
+      "category": "amplifiers-processors",
+      "sub_type": "loudspeaker-processor",
+      "technology": "AVB processor and measurement platform: 20 in x 16 out (+2 headphone) architecture, dual DSP core 32-bit floating point at 96 kHz, 8-bus matrix, Milan-certified with seamless redundancy, multi-mic measurement in LA Network Manager.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "L-Acoustics' system processor that bridges analog, AES/EBU and Milan-AVB at the head of an LA-amplifier network. It also serves as the measurement front end for tuning in LA Network Manager.",
+      "typical_uses": [
+        "system drive / FOH processing",
+        "format bridging analog-AES-AVB",
+        "system measurement and tuning",
+        "redundant signal distribution"
+      ],
+      "key_specs": {
+        "inputs": "4 mic/line inputs with switchable +48 V phantom; 4 analog line inputs; 4 AES/EBU inputs with SRC; 1 AVB Listener (8 channels from two streams)",
+        "outputs": "4 analog line outputs; 4 AES/EBU outputs; 1 AVB Talker (8 channels in two streams); 1 stereo headphone output",
+        "dsp": "Dual DSP core 32-bit floating point processing @ 96 kHz; 8 independent DSP busses with EQ and dynamics; cue bus; signal generator; media player",
+        "network": "AVB, IEEE 1722, IEEE 1722.1; 2/2 streams; IEC 61883-6 AM824, AAF PCM32; 48 or 96 kHz; EtherCON I/O 1 Gb/s (L-NET and AVB)",
+        "analog_line_in": "22 kΩ balanced, max +22 dBu, ±0.1 dB (10 Hz - 20 kHz), 125 dB dynamic range",
+        "analog_line_out": "100 Ω balanced, max +22 dBu, 125 dB dynamic range",
+        "mic_inputs": "2.4 kΩ balanced, max +22 dBu at 0 dB gain",
+        "gpio": "General Purpose I/O (GPIO) DB9 female connector",
+        "mains_connector": "IEC C13 V-Lock power connector (as labelled in the spec sheet)",
+        "mains_rating": "100 V - 240 V (±10%), 50-60 Hz",
+        "dimensions": "483 mm / 19 in wide, 44.5 mm / 1.75 in high (from spec-sheet drawing)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "analog mic inputs (+48 V switchable)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "analog line inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog line outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES/EBU inputs",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU outputs",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 4
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "1/4 inch stereo headphone jack",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "etherCON I/O 1 Gb/s (L-NET and AVB)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": "not found"
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB 2.0 host connectors",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": "not found"
+        },
+        {
+          "connector": "dsub25",
+          "role": "GPIO DB9 female (closest id; see notes)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "iec-c13",
+          "role": "IEC C13 V-Lock power connector (as labelled)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "headphone-level",
+        "gpio-tally",
+        "mains-power"
+      ],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/P1/EN/Owner's%20Manual/P1_OM_EN.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/P1/EN/System%20Spec%20Sheet/P1_SPS_EN_3.0.pdf",
+      "product_page_url": "https://www.l-acoustics.com/products/p1/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/P1/EN/Owner's%20Manual/P1_OM_EN.pdf",
+          "title": "P1 - Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "listed 11/03/2025",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/P1/EN/System%20Spec%20Sheet/P1_SPS_EN_3.0.pdf",
+          "title": "P1 - System Spec Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "3.0 (listed 29/12/2025)",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/P1/EN/System%20Spec%20Sheet/P1_SPS_EN_3.0.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.dsp",
+            "key_specs.network",
+            "key_specs.analog_line_in",
+            "key_specs.analog_line_out",
+            "key_specs.mic_inputs",
+            "key_specs.gpio",
+            "key_specs.mains_connector",
+            "key_specs.mains_rating",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/electronics/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "product_page_url"
+          ]
+        }
+      ],
+      "notes": "Single technical source (system spec sheet). DB9 has no TekPractice id; dsub25 used as closest D-sub id (proposed 'dsub9'). The spec sheet labels the mains connector 'IEC C13 V-Lock'; iec-c13 used as written. No French documents listed for P1 in the L-Acoustics documentation centre.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "dsub9"
+        ],
+        "proposed_new_signals": [
+          "avb-milan"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Format bridge analog/AES/AVB with phantom-powered measurement mic inputs: very rich signal-type lesson."
+      }
+    }
+  ]
+}
