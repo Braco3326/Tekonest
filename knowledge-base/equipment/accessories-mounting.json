@@ -1,0 +1,604 @@
+{
+  "file": "accessories-mounting.json",
+  "category": "accessories-mounting",
+  "generated": "2026-10-22",
+  "selection_rationale": "Reference mounting hardware a French studio, radio or location-sound student meets every day: K&M boom stands (the 210/9 is already a TekPractice catalog item), the Yellowtec m!ka broadcast arm used in radio studios, the Neumann EA 87 and Rycote InVision USM studio suspensions, Rode and Rycote windshield/blimp systems, carbon boom poles from Rode and Ambient, two classic pop filters (K&M metal-free nylon, Stedman metal), and an SKB roto-moulded 19-inch rack case. All specs come from manufacturer pages or manufacturer PDFs read this session; WebSearch was exhausted so no retailer cross-checks could be found by search.",
+  "not_found_log": [
+    { "device_id": "km-210-9", "what": "French manual / French product page", "searched": "k-m.de English product page and downloads; installation instructions PDF is German only" },
+    { "device_id": "km-210-9", "what": "year_introduced", "searched": "k-m.de product page and datasheet" },
+    { "device_id": "km-259", "what": "French manual, year_introduced", "searched": "k-m.de product page and downloads (German installation instructions only)" },
+    { "device_id": "km-23956", "what": "user manual (only datasheet and spare parts list offered), year_introduced", "searched": "k-m.de product page downloads" },
+    { "device_id": "yellowtec-mika", "what": "French manual, year_introduced", "searched": "yellowtec.com/mika, /mika/micarms/, /mika/downloads/ (French language link has no target)" },
+    { "device_id": "rode-psa1-plus", "what": "datasheet, user guide, arm weight, reach, clamp range, year_introduced; retailer cross-check", "searched": "rode.com en / en-us product pages (spec table empty), rode.com/en-au/user-guides index; thomann product URL 404; WebSearch: search budget exhausted" },
+    { "device_id": "rycote-invision-usm", "what": "user manual, thread size, current product page specs", "searched": "rycote.com InVision Studio page and Studio & Live Sound brochure; Rycote 2023 catalogue PDF returned 403" },
+    { "device_id": "rycote-cyclone-medium", "what": "weight, mic diameter range, wind attenuation figure, user manual", "searched": "rycote.com Cyclone overview page and RYC089102 product page; 2023 catalogue PDF 403" },
+    { "device_id": "rycote-modular-windshield-ws4", "what": "user manual, mount thread, year_introduced", "searched": "rycote.com RYC086001 product page; 2023 catalogue PDF 403" },
+    { "device_id": "neumann-ea-87", "what": "dedicated datasheet/manual, dimensions, material, year_introduced", "searched": "neumann.com EA 87 product page and file finder (no files listed); U 87 Ai operating manual used instead" },
+    { "device_id": "rode-blimp", "what": "year_introduced", "searched": "rode.com product page, datasheet" },
+    { "device_id": "rode-boompole-pro", "what": "user manual, year_introduced", "searched": "rode.com product page (datasheet only), rode.com user-guides index" },
+    { "device_id": "stedman-proscreen-xl", "what": "manual/datasheet, year_introduced, product page full URL (only relative path shown)", "searched": "stedmanusa.com home, /products; /pop-filters returned 404" },
+    { "device_id": "skb-1skb-r4u", "what": "user manual, year_introduced", "searched": "skbcases.com product page (drawing PDF only)" },
+    { "device_id": "rycote-classic-softie", "what": "dropped: no numeric specs or part numbers on rycote.com Classic-Softie page", "searched": "rycote.com classic-softie page" },
+    { "device_id": "k-tek-boom-pole", "what": "not researched; replaced by Ambient QuickPole and Rode Boompole Pro (manufacturer data available without WebSearch)", "searched": "search budget exhausted" }
+  ],
+  "devices": [
+    {
+      "id": "km-210-9",
+      "brand": "König & Meyer",
+      "model": "210/9 Microphone stand (21090-300-55)",
+      "category": "accessories-mounting",
+      "sub_type": "mic-stand",
+      "technology": "Steel tripod microphone stand with zinc die-cast base, foldable legs, clutch height adjustment and 2-piece telescopic boom arm locked by a T-bar screw",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "K&M's datasheet calls it a more compact version of the classic 210/2 and says the 210/9, like the 210/2, sets the standard for professional microphone boom stands. It is the generic boom stand found in most European studios and venues.",
+      "typical_uses": ["vocal and instrument miking in studio", "live stage miking", "classroom and practical exam setups"],
+      "key_specs": {
+        "article_number": "21090-300-55 (black); 21090-300-02 chrome; 21090-326-76 pure white",
+        "height": "from 900 to 1,605 mm",
+        "boom_arm_length": "from 435 to 745 mm",
+        "thread": "3/8\"",
+        "thread_code_note": "21090-300 = Code für 3/8\"-BSW-Gewinde; 21090-500 = Code für 5/8\"-UNS-27G-Gewinde (installation instructions)",
+        "weight": "3.1 kg",
+        "material": "steel",
+        "base": "socket with foldable legs; zinc die-cast base",
+        "height_adjustment": "clutch",
+        "boom_arm_clamping": "T-bar locking screw",
+        "size_when_folded": "105 x 85 x 985 mm"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "https://www.k-m.de/media/ab/ac/71/1790942461/Aufstellanleitung_838b6c74f7bc5fcbb2aecaca44b445b8.pdf?ts=1790942461",
+      "datasheet_url": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet",
+      "product_page_url": "https://www.k-m.de/en/microphone-stands-with-boom/210-9-microphone-stand-black",
+      "manual_languages": ["de", "en"],
+      "manuals": [
+        { "url": "https://www.k-m.de/media/ab/ac/71/1790942461/Aufstellanleitung_838b6c74f7bc5fcbb2aecaca44b445b8.pdf?ts=1790942461", "title": "Aufstellanleitung für K&M-Mikrofonstative (covers 21090 and other boom stands)", "language": "de", "file_type": "pdf", "version_or_date": "03-81-002-00 9/24", "official": true, "kind": "user-manual" },
+        { "url": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet", "title": "210/9 Microphone stand datasheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" },
+        { "url": "https://www.k-m.de/media/94/da/ce/1790942462/Ersatzteilliste_5600399a1532552eb52ceb7214e522fe.pdf?ts=1790942462", "title": "Replacement parts list", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "service" }
+      ],
+      "sources": [
+        { "url": "https://www.k-m.de/en/microphone-stands-with-boom/210-9-microphone-stand-black", "publisher": "König & Meyer", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.article_number", "key_specs.height", "key_specs.boom_arm_length", "key_specs.thread", "key_specs.weight", "key_specs.material", "key_specs.base", "key_specs.height_adjustment", "key_specs.boom_arm_clamping", "key_specs.size_when_folded", "status"] },
+        { "url": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet", "publisher": "König & Meyer", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.height", "key_specs.boom_arm_length", "key_specs.thread", "key_specs.material", "key_specs.size_when_folded", "why_it_is_a_classic"] },
+        { "url": "https://www.k-m.de/media/ab/ac/71/1790942461/Aufstellanleitung_838b6c74f7bc5fcbb2aecaca44b445b8.pdf?ts=1790942461", "publisher": "König & Meyer", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.thread_code_note"] }
+      ],
+      "notes": "Two manufacturer documents (web page and PDF datasheet) agree on all specs. The middle block of the article number encodes the thread: -300 is 3/8\" BSW, -500 is 5/8\"-27 UNS, so a 5/8\" mic clip needs an adapter on the standard -300 version.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": true, "catalog_id": "km-210-9", "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "No signal connectors; useful only as scene furniture and for 3/8\" vs 5/8\" thread-adapter lessons." }
+    },
+    {
+      "id": "km-259",
+      "brand": "König & Meyer",
+      "model": "259 Microphone stand (25900-300-55)",
+      "category": "accessories-mounting",
+      "sub_type": "mic-stand",
+      "technology": "Low-level steel tripod microphone stand with zinc die-cast base, foldable legs, clutch height adjustment and 2-piece telescopic boom arm",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "K&M lists it as a low-level microphone stand; it shares the boom arm of the 210/9 on a short base, the usual choice for kick drum, guitar cabinet and floor-level miking.",
+      "typical_uses": ["kick drum", "guitar and bass cabinets", "low instrument miking"],
+      "key_specs": {
+        "article_number": "25900-300-55",
+        "height": "from 425 to 645 mm",
+        "boom_arm_length": "from 435 to 745 mm",
+        "thread": "3/8\"",
+        "weight": "2.08 kg",
+        "material": "steel",
+        "special_features": "low-level microphone stand; zinc die-cast base",
+        "height_adjustment": "clutch",
+        "boom_arm_clamping": "T-bar locking screw",
+        "size_when_folded": "115 x 85 x 580 mm"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "https://www.k-m.de/media/bc/83/23/1790942526/Aufstellanleitung_6371b8c193985f8bace138409989974e.pdf?ts=1790942526",
+      "datasheet_url": "https://www.k-m.de/en/downloads/bec750e0f81abbd1756f9b0f6dfd6de2/datasheet",
+      "product_page_url": "https://www.k-m.de/en/special-stands-with-boom/259-microphone-stand-black",
+      "manual_languages": ["de"],
+      "manuals": [
+        { "url": "https://www.k-m.de/media/bc/83/23/1790942526/Aufstellanleitung_6371b8c193985f8bace138409989974e.pdf?ts=1790942526", "title": "Installation instructions (Aufstellanleitung)", "language": "de", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://www.k-m.de/en/downloads/bec750e0f81abbd1756f9b0f6dfd6de2/datasheet", "title": "259 Microphone stand datasheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" },
+        { "url": "https://www.k-m.de/media/a4/a8/9a/1790942526/Ersatzteilliste_ec3b9a3b36195a63870681777ee980f6.pdf?ts=1790942526", "title": "Replacement parts list", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "service" }
+      ],
+      "sources": [
+        { "url": "https://www.k-m.de/en/special-stands-with-boom/259-microphone-stand-black", "publisher": "König & Meyer", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.article_number", "key_specs.height", "key_specs.boom_arm_length", "key_specs.thread", "key_specs.weight", "key_specs.material", "key_specs.special_features", "key_specs.height_adjustment", "key_specs.boom_arm_clamping", "key_specs.size_when_folded", "status"] },
+        { "url": "https://www.k-m.de/media/ab/ac/71/1790942461/Aufstellanleitung_838b6c74f7bc5fcbb2aecaca44b445b8.pdf?ts=1790942461", "publisher": "König & Meyer", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.thread"] }
+      ],
+      "notes": "The generic K&M boom-stand installation instructions (03-81-002-00 9/24) list model 25900 and explain the -300 (3/8\" BSW) / -500 (5/8\"-27 UNS) thread code. Datasheet linked but its text was not read separately.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Mechanical only; could appear in a drum-miking scene as placement furniture." }
+    },
+    {
+      "id": "km-23850",
+      "brand": "König & Meyer",
+      "model": "23850 Microphone desk arm (23850-321-55)",
+      "category": "accessories-mounting",
+      "sub_type": "mic-arm",
+      "technology": "Spring-balanced steel desk arm with table clamp and supplied XLR cable",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "An affordable K&M desk arm with both 3/8\" and 5/8\" threads and an included XLR cable, common in podcast and voice-over booths as an alternative to broadcast arms.",
+      "typical_uses": ["podcast desks", "voice-over booth", "small radio or streaming studios"],
+      "key_specs": {
+        "article_number": "23850-321-55 - black",
+        "length": "from 460 to 960 mm",
+        "thread": "3/8\" and 5/8\"",
+        "max_load_capacity": "0,8 kg",
+        "weight": "1.8 kg",
+        "material": "steel",
+        "table_clamp_range": "10 to 51 mm / ø 15 to ø 51 mm",
+        "included_cable": "5 m cable with XLR connectors included in delivery"
+      },
+      "connectors": [],
+      "signal_types": ["mic-level"],
+      "manual_url": "https://www.k-m.de/media/04/7a/35/1790942723/Aufstellanleitung_0ff7f611488354dfb5babb6005cda9e9.pdf?ts=1790942723",
+      "datasheet_url": "https://www.k-m.de/en/downloads/01994d9ebc4772588bdf766150d9f1ec/datasheet",
+      "product_page_url": "https://www.k-m.de/en/microphone-desk-arms/23850-microphone-desk-arm-black",
+      "manual_languages": [],
+      "manuals": [
+        { "url": "https://www.k-m.de/media/04/7a/35/1790942723/Aufstellanleitung_0ff7f611488354dfb5babb6005cda9e9.pdf?ts=1790942723", "title": "Installation instructions (Aufstellanleitung)", "language": "not shown", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://www.k-m.de/en/downloads/01994d9ebc4772588bdf766150d9f1ec/datasheet", "title": "23850 datasheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://www.k-m.de/en/microphone-desk-arms/23850-microphone-desk-arm-black", "publisher": "König & Meyer", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.article_number", "key_specs.length", "key_specs.thread", "key_specs.max_load_capacity", "key_specs.weight", "key_specs.material", "key_specs.table_clamp_range", "key_specs.included_cable", "status"] }
+      ],
+      "notes": "The page says a 5 m XLR cable is included but does not state connector genders, so connectors[] is left empty. Installation PDF not opened; language not confirmed.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Carries a plain mic cable; little wiring content beyond a normal XLR run." }
+    },
+    {
+      "id": "yellowtec-mika",
+      "brand": "Yellowtec",
+      "model": "m!ka Mic Arm (M / XL / XS, standard and On Air versions)",
+      "category": "accessories-mounting",
+      "sub_type": "mic-arm",
+      "technology": "Aluminium-tube broadcast microphone arm with hidden internal linkage and coil springs, internal mic cable, optional On Air version with a 12-LED ring fed by a hybrid cable (12-24 V DC)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The m!ka arm is a staple of European radio studios; its On Air version integrates the red 'on air' indicator and the mic cable in one arm, which ties the arm into the studio tally logic.",
+      "typical_uses": ["radio on-air studios", "broadcast and TV presenter desks", "podcast and voice-over studios"],
+      "key_specs": {
+        "mic_thread": "5/8\"-27 UNS 2A",
+        "mount_post": "ø16 mm post, 66 mm insertion (ø51 mm column)",
+        "max_length_M": "31\" (78.7cm) (YT3201 / YT3205 / YT3601 / YT3605)",
+        "max_length_XL": "42.3\" (107.5cm) (YT3301 / YT3305 / YT3701 / YT3705)",
+        "max_length_XS": "21\" (53.5cm) (YT3105 / YT3505, On Air only)",
+        "weight_M": "2.31 lbs net (1.05kg) / 3.31 lbs gr (1.5kg)",
+        "weight_XL": "3.20 lbs net (1.45kg) / 4.63 lbs gr (2.1kg)",
+        "max_mic_weight_M_XS": "4.41 lbs (2kg)",
+        "max_mic_weight_XL": "2.65 lbs (1.2kg)",
+        "load_range_drawings": "0,5-1,5kg (XS, M); 0,5 - 1,2kg (XL)",
+        "material": "Sturdy aluminum tube construction, silk-mat anodized finish (aluminum or black)",
+        "on_air_feed": "Feed +12...+24V to activate ON AIR Signalling. Current drain approx. 40 mA (regulated DC)",
+        "on_air_hybrid_cable": "hot (red), cold (blue), shield for microphone audio; +12...+24V (orange), 0V (black) for on-air signalling",
+        "on_air_indicator": "12 LED array, constant current source; dual color (red and white) on current On Air arms",
+        "cable_tails": "Open-ended cable tails; cable juts out by >450mm (top) and >1500mm (bottom) per 2016 drawings"
+      },
+      "connectors": [],
+      "signal_types": ["mic-level", "gpio-tally", "dc-power"],
+      "manual_url": "https://www.yellowtec.com/fileadmin/user_upload/mika/downloads/mika_MicArm_Instructions.pdf",
+      "datasheet_url": "https://www.yellowtec.com/fileadmin/user_upload/mika/pdf/mika_pdf_MicArms_EN_2021.pdf",
+      "product_page_url": "https://www.yellowtec.com/mika/micarms/",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://www.yellowtec.com/fileadmin/user_upload/mika/downloads/mika_MicArm_Instructions.pdf", "title": "m!ka Mic Arm On Air Wiring Instruction", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://www.yellowtec.com/fileadmin/user_upload/mika/pdf/mika_pdf_MicArms_EN_2021.pdf", "title": "m!ka Microphone Arms overview and dimensional drawings", "language": "en", "file_type": "pdf", "version_or_date": "2021 (drawings dated 05.08.16)", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://www.yellowtec.com/fileadmin/user_upload/mika/pdf/mika_pdf_MicArms_EN_2021.pdf", "publisher": "Yellowtec", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.mic_thread", "key_specs.mount_post", "key_specs.max_length_M", "key_specs.max_length_XL", "key_specs.max_length_XS", "key_specs.weight_M", "key_specs.weight_XL", "key_specs.max_mic_weight_M_XS", "key_specs.max_mic_weight_XL", "key_specs.load_range_drawings", "key_specs.cable_tails"] },
+        { "url": "https://www.yellowtec.com/fileadmin/user_upload/mika/downloads/mika_MicArm_Instructions.pdf", "publisher": "Yellowtec", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.on_air_feed", "key_specs.on_air_hybrid_cable", "key_specs.on_air_indicator", "key_specs.mic_thread", "signal_types"] },
+        { "url": "https://www.yellowtec.com/mika/micarms/", "publisher": "Yellowtec", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.material", "key_specs.on_air_indicator", "key_specs.cable_tails", "status"] },
+        { "url": "https://www.yellowtec.com/mika/", "publisher": "Yellowtec", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.mic_thread", "key_specs.on_air_feed"] }
+      ],
+      "notes": "Two Yellowtec PDFs and two web pages agree on the 5/8\" thread and LED feed voltage. The m!ka overview page states 'up to 1.5kg' (XL max. 1.2kg) while the 2021 PDF table states max mic weight 2kg for M/XS; recorded as a conflict. The m!ka overview page also says the On Air lower end uses XLR-5 and the upper XLR-3 but that XLR connectors are not included, so connectors[] is left empty. 'dc-power' is a proposed signal id. The wiring sheet covers older article numbers YT3204/YT3205/YT3200/YT3201.",
+      "conflicts": [
+        { "field": "key_specs.max_mic_weight_M_XS", "values": [ { "value": "4.41 lbs (2kg)", "source_url": "https://www.yellowtec.com/fileadmin/user_upload/mika/pdf/mika_pdf_MicArms_EN_2021.pdf" }, { "value": "Supports microphones weighing up to 1.5kg", "source_url": "https://www.yellowtec.com/mika/micarms/" } ], "note": "The 2016 dimensional drawings in the same PDF show a 0,5-1,5kg range, matching the web page." }
+      ],
+      "tekpractice": { "in_catalog": true, "catalog_id": "yellowtec-mika", "proposed_new_connectors": [], "proposed_new_signals": ["dc-power"], "sim_value": "medium", "sim_value_reason": "On Air version carries mic audio plus a 12-24 V DC tally feed in one hybrid cable: a good on-air light / GPIO tally lesson in a radio scene." }
+    },
+    {
+      "id": "rode-psa1-plus",
+      "brand": "RØDE",
+      "model": "PSA1+",
+      "category": "accessories-mounting",
+      "sub_type": "mic-arm",
+      "technology": "Spring-balanced studio boom arm with fully damped internal springs, neoprene arm cover, 360-degree rotation, desk clamp and threaded desk mount",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Rode's updated version of the PSA1, one of the most widespread desk arms in podcast and home studios; Rode states it supports microphones from 94 g up to 1.2 kg.",
+      "typical_uses": ["podcasting", "streaming", "voice-over and home studio vocals"],
+      "key_specs": {
+        "mic_weight_range": "Microphones weighing as little as 94g all the way to 1.2kg are supported.",
+        "mount": "Compatible with any microphone or shockmount using a standard thread",
+        "rotation": "Full 360-degree rotation",
+        "desk_mounting": "threaded desk mount and padded desk clamp included",
+        "materials": "neoprene arm cover, rubber contact points, fully damped internal springs"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://rode.com/en/accessories/stands-mounts/psa1-plus",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://rode.com/en/accessories/stands-mounts/psa1-plus", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.mic_weight_range", "key_specs.mount", "key_specs.rotation", "key_specs.desk_mounting", "key_specs.materials", "status"] },
+        { "url": "https://rode.com/en-us/accessories/stands-mounts/psa1-plus", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.mic_weight_range"] }
+      ],
+      "notes": "Rode's product page specification table rendered empty (JavaScript), so reach, arm weight and thread size are not recorded. No cross-check source was reachable (WebSearch exhausted).",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Purely mechanical, no cable or signal path." }
+    },
+    {
+      "id": "neumann-ea-87",
+      "brand": "Neumann",
+      "model": "EA 87 (nickel) / EA 87 mt (black)",
+      "category": "accessories-mounting",
+      "sub_type": "shock-mount",
+      "technology": "Elastic suspension (cage type) for the U 87 Ai; microphone is set into the inner cage from above and secured with the threaded nut",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "It is the suspension supplied in the U 87 Ai Set and Stereo Set, so it is the reference shock mount for the reference studio microphone.",
+      "typical_uses": ["U 87 Ai vocal and voice-over recording", "isolating the microphone from stand-borne noise"],
+      "key_specs": {
+        "weight": "Weight (without packaging): 377 g",
+        "thread": "a 5/8\"-27 female thread, plus a thread adapter to connect to 1/2\"- and 3/8\" studs",
+        "catalog_numbers": "EA 87 nickel CAT. NO. 007297; EA 87 mt black CAT. NO. 007298",
+        "compatible_microphones": "U 87 Ai (mt) (EA 87 is part of the U 87 Ai Set and Stereo Set and listed under Selected Accessories in the U 87 Ai manual)",
+        "mounting_procedure": "set the microphone into the inner cage from above, and secure it to the inner cage with the threaded nut"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-en/products/microphone-accessories/ea-87/",
+      "manual_languages": ["en", "de", "fr", "es", "pt", "nl", "it"],
+      "manuals": [
+        { "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf", "title": "U 87 Ai operating manual (multilingual, includes EA 87 setup and accessory list)", "language": "multi", "file_type": "pdf", "version_or_date": "Publ. 06/10", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://www.neumann.com/en-en/products/microphone-accessories/ea-87/", "publisher": "Neumann", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.weight", "key_specs.thread", "key_specs.catalog_numbers", "status"] },
+        { "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf", "publisher": "Neumann", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.compatible_microphones", "key_specs.mounting_procedure", "why_it_is_a_classic"] }
+      ],
+      "notes": "No dedicated EA 87 manual was found; the U 87 Ai manual (with a French section) is used. The manual's accessory list text is partly garbled in extraction (catalogue number shown as '007 97'); the product page's 007297 is recorded. The manual URL redirects through link.sennheiser.com to an Optimizely asset.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Mechanical accessory for the in-catalog neumann-u87-ai; could be a visual add-on in a vocal booth scene." }
+    },
+    {
+      "id": "rycote-invision-usm",
+      "brand": "Rycote",
+      "model": "InVision Universal Studio Mount (USM)",
+      "category": "accessories-mounting",
+      "sub_type": "shock-mount",
+      "technology": "Lyre-type suspension (non-elastic thermoplastic webs) with adjustable universal locking clamp for side-address large-diaphragm microphones",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Rycote's Lyre suspension replaced elastic 'cat's cradle' mounts in many studios; Rycote claims the USM gives up to 12 dB better attenuation of unwanted vibrations than many conventional elasticated mounts.",
+      "typical_uses": ["vocal recording with large-diaphragm condensers", "broadcast and voice-over studios"],
+      "key_specs": {
+        "part_numbers": "InVision USM 044901; USM Studio Kit 045002; USM-L 044903; USM-L Studio Kit 045003; USM-VB 044912; USM-VB Studio Kit 045005",
+        "mic_diameter": "USM: 18-55mm; USM-L: 18-55mm; USM-VB: 55-68 mm",
+        "max_weight": "USM: horizontal 500g / vertical 750g; USM-L: horizontal 250g / vertical 750g; USM-VB: horizontal 500g / vertical 900g",
+        "attenuation_claim": "up to 12dB better attenuation of unwanted vibrations compared to many conventional \"cat's cradle\" elasticated microphone mounts",
+        "compatible_microphones": "USM: RØDE NT1-A, Audio-Technica AT 4050, Sennheiser MK4, Neumann U87 A1, Shure KSM32; USM-L: Neumann TLM 103, Neumann TLM 102, AKG C 414 B-ULS (brochure compatibility table)",
+        "studio_kit": "USM combined with InVision Universal Pop Filter 045001 (6\" vocal pop shield with universal suspension clamp)"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "not found",
+      "datasheet_url": "https://rycote.com/media/wysiwyg/2023/collections/invision-studio/Studio-Live-Sound.pdf",
+      "product_page_url": "https://www.rycote.com/microphone-windshield-shock-mount/invision-studio/",
+      "manual_languages": [],
+      "manuals": [
+        { "url": "https://rycote.com/media/wysiwyg/2023/collections/invision-studio/Studio-Live-Sound.pdf", "title": "Studio & Live Sound brochure (InVision Studio)", "language": "en", "file_type": "pdf", "version_or_date": "02/2014", "official": true, "kind": "spec-sheet" }
+      ],
+      "sources": [
+        { "url": "https://rycote.com/media/wysiwyg/2023/collections/invision-studio/Studio-Live-Sound.pdf", "publisher": "Rycote", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.part_numbers", "key_specs.mic_diameter", "key_specs.max_weight", "key_specs.attenuation_claim", "key_specs.compatible_microphones", "key_specs.studio_kit"] },
+        { "url": "https://www.rycote.com/microphone-windshield-shock-mount/invision-studio/", "publisher": "Rycote", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.studio_kit"] }
+      ],
+      "notes": "Specs come from a 2014 brochure linked on the current product page; the current page itself shows no numeric specs. Thread size not stated in either source.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Mechanical isolation only." }
+    },
+    {
+      "id": "rode-blimp",
+      "brand": "RØDE",
+      "model": "Blimp",
+      "category": "accessories-mounting",
+      "sub_type": "windshield-blimp",
+      "technology": "Suspension windshield system: basket windshield with Rycote Lyre suspension, skeleton pistol-grip handle with 3/8\" thread, internal Mogami cable, Dead Wombat fur cover",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "An affordable complete blimp built around Rycote Lyre suspension, widely used with Rode NTG shotguns in film schools and low-budget location sound.",
+      "typical_uses": ["location sound with shotgun microphones", "boom operation outdoors", "documentary and reportage"],
+      "key_specs": {
+        "weight": "550gm",
+        "dimensions": "124mmD x 285mmH x 482mmL",
+        "dimensions_without_handle": "124mmD x 160mmH x 482mmL",
+        "internal_lyre_spacing": "120mm",
+        "mic_fit": "Accommodates most shotgun microphones 325mm in length and 19-22mm diameter",
+        "thread": "Lightweight skeleton handle with 3/8\" thread mount",
+        "cable": "Mogami cable with Neutrik and Switchcraft XLR connectors",
+        "compatible_microphones": "NTG1, NTG2, NTG3 (datasheet); product page: any third-party shotgun microphone up to 325mm in length",
+        "included_accessories": "Dead Wombat windshield, Dead Wombat Comb, Hex Key Screwdriver"
+      },
+      "connectors": [],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_manual_fr.pdf",
+      "datasheet_url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_datasheet.pdf",
+      "product_page_url": "https://rode.com/en/accessories/windshields-pop-filters/blimp",
+      "manual_languages": ["fr", "en", "de", "es", "it", "ja", "ko", "zh"],
+      "manuals": [
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_manual_fr.pdf", "title": "Blimp product manual (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_manual_en.pdf", "title": "Blimp product manual (EN)", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_manual_de.pdf", "title": "Blimp product manual (DE)", "language": "de", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_manual_es.pdf", "title": "Blimp product manual (ES)", "language": "es", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_manual_it.pdf", "title": "Blimp product manual (IT)", "language": "it", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_manual_jp.pdf", "title": "Blimp product manual (JP)", "language": "ja", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_manual_ko.pdf", "title": "Blimp product manual (KO)", "language": "ko", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_manual_zh.pdf", "title": "Blimp product manual (ZH)", "language": "zh", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_datasheet.pdf", "title": "Blimp datasheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://edge.rode.com/pdf/page/1853/modules/3965/blimp_datasheet.pdf", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.weight", "key_specs.dimensions", "key_specs.dimensions_without_handle", "key_specs.internal_lyre_spacing", "key_specs.mic_fit", "key_specs.thread", "key_specs.cable", "key_specs.compatible_microphones", "key_specs.included_accessories"] },
+        { "url": "https://rode.com/en/accessories/windshields-pop-filters/blimp", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.thread", "key_specs.mic_fit", "key_specs.cable", "key_specs.compatible_microphones", "status", "manuals"] }
+      ],
+      "notes": "Product page and datasheet agree on the 3/8\" thread and 325 mm maximum mic length. The XLR cable passes the mic signal and phantom power; connector genders are not stated so connectors[] is empty. Manual PDFs were listed on the product page but not opened.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Passes the shotgun mic signal through an internal cable; minor value for a location-sound scene." }
+    },
+    {
+      "id": "rycote-cyclone-medium",
+      "brand": "Rycote",
+      "model": "Cyclone Windshield Kit, Medium (RYC089102)",
+      "category": "accessories-mounting",
+      "sub_type": "windshield-blimp",
+      "technology": "Basket windshield in grey 3D-Tex material with floating-basket suspension, Lyre microphone suspension webs and Z-locking basket design",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The Cyclone is Rycote's current flagship basket windshield system for shotgun microphones such as the Sennheiser MKH 416, the standard boom mic in French location sound.",
+      "typical_uses": ["film and TV location sound", "outdoor booming of shotgun microphones"],
+      "key_specs": {
+        "overall_length": "385 mm",
+        "mic_length": "For Microphone Lengths: 174 mm - 255 mm",
+        "thread": "Brass, 3/8\" UNC female, to suit 3/8\"16 UNC male and 3/8\" BSW",
+        "compatible_microphones": "sanken CS 2, sennheiser MKH 416, neumann KMR 81i, røde NTG-4, RYC079002 HC-22 Shotgun Microphone (22cm), neumann KMR-81D",
+        "materials": "grey 3D-Tex material, Floating-Basket Suspension, suspension webs with Rycote Lyre Technology, Z-locking basket design"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.rycote.com/cyclone-windshield-kit-medium-ryc089102/",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://www.rycote.com/cyclone-windshield-kit-medium-ryc089102/", "publisher": "Rycote", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.overall_length", "key_specs.mic_length", "key_specs.thread", "key_specs.compatible_microphones", "key_specs.materials", "status"] },
+        { "url": "https://www.rycote.com/microphone-windshield-shock-mount/cyclone/", "publisher": "Rycote", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.materials"] }
+      ],
+      "notes": "Rycote's Cyclone overview page says the Cyclone Large was originally introduced in 2014; no year is given for the Medium kit. Weight and wind-noise attenuation are not stated (page says only 'Massive wind noise reduction').",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Mechanical/acoustic accessory, no wiring." }
+    },
+    {
+      "id": "rycote-modular-windshield-ws4",
+      "brand": "Rycote",
+      "model": "Modular Windshield WS 4 Kit (RYC086001)",
+      "category": "accessories-mounting",
+      "sub_type": "windshield-blimp",
+      "technology": "Modular basket windshield and suspension package with grey windjammer fur",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Rycote's classic modular basket sized for the Sennheiser MKH 416, MKH 60 and Schoeps CMIT 5; Rycote states up to 50 dB maximum attenuation with the fur cover.",
+      "typical_uses": ["location sound booming", "outdoor news and documentary"],
+      "key_specs": {
+        "body_length": "330 mm",
+        "mic_length": "211-280 mm",
+        "mic_diameter": "19-34 mm",
+        "weight": "1.46 kg",
+        "height": "100 cm (as stated on the product page)",
+        "wind_noise_reduction": "Up to 50 dB maximum attenuation",
+        "windjammer": "grey windjammer fur 40 mm long",
+        "compatible_microphones": "Sennheiser MKH 416, MKH 60, Schoeps CMIT 5, AT 877, ECM 670, MC 836, AT 897, ECM 674, ATR 55, CS 2, AT 4073a (BP4073), NTG-4, VP89S, MC 726, MCE 85 BA, KMR 81i, MCE 87vs, CMS 9, MC 716, ECM 678"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.rycote.com/modular-windshield-ws-4-kit-ryc086001/",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://www.rycote.com/modular-windshield-ws-4-kit-ryc086001/", "publisher": "Rycote", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.body_length", "key_specs.mic_length", "key_specs.mic_diameter", "key_specs.weight", "key_specs.height", "key_specs.wind_noise_reduction", "key_specs.windjammer", "key_specs.compatible_microphones", "status"] }
+      ],
+      "notes": "The '100 cm' height on the product page looks like a data-entry error but is copied as stated. The page links the Rycote 2023 catalogue PDF, which returned HTTP 403.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "No wiring content." }
+    },
+    {
+      "id": "rode-boompole-pro",
+      "brand": "RØDE",
+      "model": "Boompole Pro",
+      "category": "accessories-mounting",
+      "sub_type": "boom-pole",
+      "technology": "5-section telescopic carbon-fibre boom pole with 3/8\" tip thread",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A lightweight 3 m carbon boom pole that pairs with the Rode Blimp and NTG shotguns, common in film schools.",
+      "typical_uses": ["location booming", "film and video production"],
+      "key_specs": {
+        "length": "810mm (collapsed) to 3m (extended)",
+        "diameter": "30mmØ (largest) - 16mmØ (smallest)",
+        "weight": "535gm",
+        "thread": "3/8\"",
+        "sections": "5",
+        "material": "Carbon fibre (pole)"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "not found",
+      "datasheet_url": "https://edge.rode.com/pdf/page/273/modules/5857/BoompolePro_Datasheet_1-1.pdf",
+      "product_page_url": "https://rode.com/en/accessories/boompoles/boompole-pro",
+      "manual_languages": [],
+      "manuals": [
+        { "url": "https://edge.rode.com/pdf/page/273/modules/5857/BoompolePro_Datasheet_1-1.pdf", "title": "Boompole Pro datasheet", "language": "en", "file_type": "pdf", "version_or_date": "PDF created 2015-09-09", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://edge.rode.com/pdf/page/273/modules/5857/BoompolePro_Datasheet_1-1.pdf", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.length", "key_specs.diameter", "key_specs.weight", "key_specs.thread", "key_specs.sections", "key_specs.material"] },
+        { "url": "https://rode.com/en/accessories/boompoles/boompole-pro", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.weight", "key_specs.length", "key_specs.material", "status"] }
+      ],
+      "notes": "Product page (535 grams, 3 metres, carbon fibre) and datasheet agree. Not internally cabled.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "No wiring." }
+    },
+    {
+      "id": "ambient-quickpole-series-5",
+      "brand": "Ambient Recording",
+      "model": "QuickPole Series 5 (QP550 / QP565 / QP580 / QP5100 / QP5130 / QP5150)",
+      "category": "accessories-mounting",
+      "sub_type": "boom-pole",
+      "technology": "5-segment carbon composite boom pole (carbon fibre with an extra UHM fibre layer), quarter-turn locks with anti-twist mechanism, optional solder-free internal cabling",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Ambient says QuickPoles have been used for decades and that Series 5 is the fifth edition of the boom pole; German-made QuickPoles are a common professional choice for film location sound.",
+      "typical_uses": ["film and TV location sound", "documentary booming", "long-reach booming (QP5150 over 6 m)"],
+      "key_specs": {
+        "sections": "five boom segments",
+        "lengths_collapsed_extended_weight": "QP550 550-1850 mm, 450 g; QP565 690-2480 mm, 540 g; QP580 840-3120 mm, 636 g; QP5100 1040-4020 mm, 760 g; QP5130 1340-5320 mm, 950 g; QP5150 1550-6370 mm, 1080 g",
+        "thread": "3/8-Zoll-Gewinde (3/8\" thread at the tip)",
+        "material": "specially developed carbon composite fiber with an additional layer of UHM fibers",
+        "locks": "with just a quarter turn the locks open and close; anti-twist mechanism of the pole sections",
+        "cabling": "recess at the tip and optional bottom end allows solder-free cable retrofit (pre-configured internal cabling)"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "https://static.ambient.de/pdf/UM_QuickPole.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://ambient.de/products/quickpole-serie-5-tonangel",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://static.ambient.de/pdf/UM_QuickPole.pdf", "title": "QuickPole Users manual", "language": "en", "file_type": "pdf", "version_or_date": "file metadata 2026-01-26", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://ambient.de/products/quickpole-serie-5-tonangel", "publisher": "Ambient Recording", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.sections", "key_specs.lengths_collapsed_extended_weight", "key_specs.thread", "key_specs.material", "key_specs.locks", "status"] },
+        { "url": "https://static.ambient.de/pdf/UM_QuickPole.pdf", "publisher": "Ambient Recording", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.sections", "key_specs.lengths_collapsed_extended_weight", "key_specs.material", "key_specs.locks", "key_specs.cabling", "why_it_is_a_classic"] }
+      ],
+      "notes": "Product page and user manual agree on all six length/weight rows (weights include tip and rubber foot). Cabled versions (side or bottom cable outlet) exist as separate products. The manual is linked from manuals.ambient.de/quickpole.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Uncabled version has no wiring; cabled versions only extend an XLR run." }
+    },
+    {
+      "id": "km-23956",
+      "brand": "König & Meyer",
+      "model": "23956 Popkiller (23956-000-55)",
+      "category": "accessories-mounting",
+      "sub_type": "pop-filter",
+      "technology": "Double nylon screen in a plastic frame on an 8 mm steel gooseneck, clamping to a 30 mm tube",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The standard K&M double-nylon pop screen that fits directly on K&M stand tubes; a common sight in European vocal booths.",
+      "typical_uses": ["vocal recording", "voice-over", "podcast"],
+      "key_specs": {
+        "shield_diameter": "130 mm",
+        "screen": "double nylon screen with plastic frame",
+        "gooseneck_diameter": "8 mm",
+        "gooseneck_length": "330 mm",
+        "screw_on_to": "tube diameter 30 mm",
+        "material": "steel",
+        "weight": "0.21 kg",
+        "colour": "black"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.k-m.de/en/downloads/01994d9ebc3771fea41c2931b2ba0f9d/datasheet",
+      "product_page_url": "https://www.k-m.de/en/popkiller/23956-popkiller-black",
+      "manual_languages": [],
+      "manuals": [
+        { "url": "https://www.k-m.de/en/downloads/01994d9ebc3771fea41c2931b2ba0f9d/datasheet", "title": "23956 Popkiller datasheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" },
+        { "url": "https://www.k-m.de/media/5a/62/16/1790942702/Ersatzteilliste_8a76562ea3265c5a8767f3e8833c903a.pdf?ts=1790942702", "title": "Replacement parts list", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "service" }
+      ],
+      "sources": [
+        { "url": "https://www.k-m.de/en/popkiller/23956-popkiller-black", "publisher": "König & Meyer", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.shield_diameter", "key_specs.screen", "key_specs.gooseneck_diameter", "key_specs.gooseneck_length", "key_specs.screw_on_to", "key_specs.material", "key_specs.weight", "key_specs.colour", "status"] }
+      ],
+      "notes": "Single-source specs (manufacturer page); datasheet not opened separately.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Acoustic accessory only." }
+    },
+    {
+      "id": "stedman-proscreen-xl",
+      "brand": "Stedman",
+      "model": "Proscreen XL",
+      "category": "accessories-mounting",
+      "sub_type": "pop-filter",
+      "technology": "Patented metal pop filter screen with rubber surround on a heavy-duty gooseneck and clamp",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The Stedman Proscreen is the best-known metal pop filter; its patented louvred metal screen is an alternative to the classic nylon mesh and is easy to wash.",
+      "typical_uses": ["vocal recording", "voice-over", "broadcast"],
+      "key_specs": {
+        "screen_diameter": "6.125 in",
+        "screen": "patented Proscreen metal filter with an ultra-fine rubber surround",
+        "gooseneck": "13 in heavy-duty adjustable",
+        "clamp_range": ".39 in to .925 in",
+        "weight": "10 oz",
+        "length": "26.5 in",
+        "xl_v2_variant": "6.125 in screen, 16.5 in gooseneck, clamp 0 to 1.5 in (Universal Clamp), 9 oz, 24 in length"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.stedmanusa.com/products",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://www.stedmanusa.com/products", "publisher": "Stedman Corporation", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.screen_diameter", "key_specs.screen", "key_specs.gooseneck", "key_specs.clamp_range", "key_specs.weight", "key_specs.length", "key_specs.xl_v2_variant", "status"] }
+      ],
+      "notes": "Specs were read from the manufacturer's products listing; individual product pages are given only as relative paths (/product-details/proscreen-xl-62jnn) and were not fetched. The base XL appears only as a 'Vivid Color' listing alongside the newer XL V2.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Acoustic accessory only." }
+    },
+    {
+      "id": "skb-1skb-r4u",
+      "brand": "SKB",
+      "model": "1SKB-R4U 4U rSeries Rack (Roto Rack)",
+      "category": "accessories-mounting",
+      "sub_type": "rack-case",
+      "technology": "Roto-moulded LLDPE 19-inch rack case with front and rear steel threaded rails and gasket-sealed front and rear lids",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "SKB's Roto Rack is a very common touring/transport rack for 19-inch audio gear (preamps, wireless receivers, interfaces); it shows students rack units (U) and front/rear rail depth.",
+      "typical_uses": ["transporting 19-inch outboard gear", "portable FOH or recording racks", "wireless receiver racks"],
+      "key_specs": {
+        "rack_spaces": "4",
+        "rail_to_rail_depth": "17.5 in (44.45 cm)",
+        "front_rail_to_back_lid": "19.75 in (50.16 cm)",
+        "exterior_dimensions": "Length 24 in (60.96 cm), width 22.25 in (56.51 cm), height 9.5 in (24.13 cm)",
+        "weight": "15.48 lb (7.02 kg)",
+        "material": "Roto molded of Linear Low Density Polyethylene (LLDPE)",
+        "rails": "front and rear steel threaded rails, 10-32 thread rack screws included",
+        "lids": "Gasket-sealed waterproof front & rear lids, recessed twist latches"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.skbcases.com/cdn/shop/files/e1a7f14c158c0d43760cf346357a9cf06554883c.pdf?v=4822216650489966307",
+      "product_page_url": "https://www.skbcases.com/products/4-u-r-series-rack",
+      "manual_languages": [],
+      "manuals": [
+        { "url": "https://www.skbcases.com/cdn/shop/files/e1a7f14c158c0d43760cf346357a9cf06554883c.pdf?v=4822216650489966307", "title": "1SKB-R4U Heavy Duty Rack Series dimensional drawing", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" }
+      ],
+      "sources": [
+        { "url": "https://www.skbcases.com/products/4-u-r-series-rack", "publisher": "SKB Corporation", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.rack_spaces", "key_specs.rail_to_rail_depth", "key_specs.front_rail_to_back_lid", "key_specs.exterior_dimensions", "key_specs.weight", "key_specs.material", "key_specs.rails", "key_specs.lids", "status"] },
+        { "url": "https://www.skbcases.com/cdn/shop/files/e1a7f14c158c0d43760cf346357a9cf06554883c.pdf?v=4822216650489966307", "publisher": "SKB Corporation", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.rack_spaces", "key_specs.exterior_dimensions", "key_specs.rail_to_rail_depth"] }
+      ],
+      "notes": "SKB's own page and drawing disagree slightly on depth and exterior size; see conflicts. The drawing marks values in parentheses as interior dimensions.",
+      "conflicts": [
+        { "field": "key_specs.rail_to_rail_depth", "values": [ { "value": "17.5 in (44.45 cm) (spec table)", "source_url": "https://www.skbcases.com/products/4-u-r-series-rack" }, { "value": "17.6\" deep from front rail to rear rail (overview text on same page)", "source_url": "https://www.skbcases.com/products/4-u-r-series-rack" }, { "value": "17.60\" (interior, drawing)", "source_url": "https://www.skbcases.com/cdn/shop/files/e1a7f14c158c0d43760cf346357a9cf06554883c.pdf?v=4822216650489966307" } ], "note": "Rounding or measurement-point difference; not resolved." },
+        { "field": "key_specs.exterior_dimensions", "values": [ { "value": "24 in x 22.25 in x 9.5 in", "source_url": "https://www.skbcases.com/products/4-u-r-series-rack" }, { "value": "24.00\" x 22.40\" x 9.69\"", "source_url": "https://www.skbcases.com/cdn/shop/files/e1a7f14c158c0d43760cf346357a9cf06554883c.pdf?v=4822216650489966307" } ], "note": "Drawing is marked 'for reference only'." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "No connectors; could serve as a container for rack-unit placement in a scene." }
+    }
+  ]
+}
