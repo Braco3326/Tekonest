@@ -1,0 +1,465 @@
+{
+  "entity": "fault",
+  "domain": "monitoring",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "wedge-feedback",
+      "name_fr": "Larsen dans les wedges",
+      "name_en": "Feedback in floor wedges",
+      "domain": "monitoring",
+      "symptom": "Une fréquence se met à siffler ou à ronfler sur scène quand le chanteur s'approche du wedge, quand on monte le retour ou quand plusieurs micros sont ouverts.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Wedge dans l'axe ou dans le lobe arrière du micro (supercardioïde/hypercardioïde)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Trop de micros ouverts dans le mix (NOM)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Retour non accordé (fréquences dominantes non atténuées)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Micro tenu par la grille (cupping) ou chanteur loin du micro",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Side-fill ou drum-fill dirigé vers un micro",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Couper le mix concerné pour arrêter le larsen",
+        "Identifier quel micro et quel mix accrochent (mute/solo)",
+        "Vérifier l'orientation du micro par rapport au wedge",
+        "Compter les micros ouverts inutiles",
+        "Mesurer la fréquence (RTA) et vérifier l'égaliseur de sortie"
+      ],
+      "fixes": [
+        "Replacer le wedge dans le zéro du micro",
+        "Couper les micros inutilisés",
+        "Accorder le retour avec des coupes modérées",
+        "Demander au chanteur de ne pas tenir la grille et de rester près du micro",
+        "Passer aux ears pour casser la boucle"
+      ],
+      "rule_ids": [
+        "feedback-risk-open-mic-same-room"
+      ],
+      "concept_ids": [
+        "acoustic-feedback",
+        "ringing-out",
+        "mic-polar-pattern-wedge-placement",
+        "number-of-open-microphones"
+      ],
+      "equipment_ids": [
+        "shure-sm58",
+        "shure-beta-58a",
+        "yamaha-dbr12",
+        "dbx-231s"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
+          "publisher": "DPA Microphones — Listen to your polar pattern",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
+          "publisher": "ProSoundWeb (PSW Staff, from Sweetwater) — Tech Tip: EQing Stage Monitors, 2010",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "artist-cannot-hear-themselves",
+      "name_fr": "L'artiste ne s'entend pas",
+      "name_en": "Artist cannot hear themselves",
+      "domain": "monitoring",
+      "symptom": "Le musicien demande sans cesse « plus de moi », force sa voix, ou joue de plus en plus fort.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Gain avant larsen insuffisant : le retour ne peut plus monter",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Mix trop chargé : les autres sources masquent la sienne (trop peu de mixes partagés)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Niveau de scène trop élevé (amplis, batterie, surenchère)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Musicien hors du « sweet spot » du wedge",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Départ post-fader ou mauvais routage du mix",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Écouter le mix en solo à la console retours",
+        "Vérifier routage et mode pré-fader du départ",
+        "Retirer du mix ce que l'artiste entend déjà acoustiquement",
+        "Vérifier la position du musicien par rapport au wedge",
+        "Évaluer le niveau général de scène"
+      ],
+      "fixes": [
+        "Alléger le mix plutôt que monter sa source",
+        "Créer un mix séparé pour l'artiste si un auxiliaire est libre",
+        "Faire baisser les amplis de scène",
+        "Repositionner le wedge",
+        "Passer aux ears ; en stéréo, panoramiquer les sources proches en timbre"
+      ],
+      "rule_ids": [
+        "monitor-mix-post-fader-send"
+      ],
+      "concept_ids": [
+        "stage-monitor-mix",
+        "gain-before-feedback",
+        "in-ear-monitoring",
+        "monitor-cue-solo-bus"
+      ],
+      "equipment_ids": [
+        "yamaha-dbr12",
+        "shure-psm-300"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "symptom",
+            "probable_causes",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "iem-dropouts",
+      "name_fr": "Coupures dans les ears",
+      "name_en": "IEM dropouts",
+      "domain": "monitoring",
+      "symptom": "Le son des ears se coupe ou crachote à certains endroits de la scène, ou de façon aléatoire.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Multitrajets (récepteur à antenne unique, réflexions métalliques)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Intermodulation entre émetteurs proches ou fréquences non coordonnées",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Pas de ligne de vue (corps, structures, public)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Piles faibles ou rechargeables à tension basse",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Squelch à tonalité qui coupe car le pilote 19 kHz est perturbé par des aigus boostés",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Noter où et quand la coupure survient (test de déambulation)",
+        "Scanner le spectre émetteurs coupés, autres systèmes allumés",
+        "Vérifier piles et LED RF du récepteur",
+        "Vérifier antennes, combineur et distance aux récepteurs de micros",
+        "Essayer le mode mono pour écarter un défaut MPX"
+      ],
+      "fixes": [
+        "Recoordonner les fréquences (y compris micros HF et intercoms)",
+        "Combiner les émetteurs et utiliser une antenne directionnelle ou hélicoïdale",
+        "Surélever les antennes avec ligne de vue",
+        "Mettre des piles neuves du type recommandé",
+        "Retirer les boosts au-delà de 15 kHz ; ne baisser le squelch qu'en dernier recours"
+      ],
+      "rule_ids": [
+        "iem-transmitter-next-to-mic-receiver"
+      ],
+      "concept_ids": [
+        "iem-rf-dropouts",
+        "rf-frequency-coordination",
+        "intermodulation",
+        "iem-mpx-stereo-limits",
+        "squelch"
+      ],
+      "equipment_ids": [
+        "shure-psm-900",
+        "sennheiser-ew-iem-g4"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "harsh-monitor-sound",
+      "name_fr": "Retours durs, creux ou agressifs",
+      "name_en": "Harsh monitor sound",
+      "domain": "monitoring",
+      "symptom": "Les wedges sonnent métalliques, creux ou fatigants ; les musiciens montent le niveau sans gagner en clarté.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Égalisation excessive à force de vouloir supprimer tout larsen",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Retour proche de la limite de larsen (« ringing ») sans accrochage franc",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Amplification ou haut-parleur en limite (écrêtage)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Effet de salle et grave réfléchi par le plateau",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Mettre l'égaliseur en bypass à niveau réduit pour comparer",
+        "Vérifier la marge restante avant larsen",
+        "Contrôler les indicateurs de clip de l'ampli ou de l'enceinte active",
+        "Écouter le wedge en solo avec une source connue"
+      ],
+      "fixes": [
+        "Refaire un accordage avec moins de coupes, plus larges et moins profondes",
+        "Baisser le niveau général de scène",
+        "Réduire le niveau d'entrée de l'enceinte pour éviter l'écrêtage"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "ringing-out",
+        "monitor-graphic-eq",
+        "gain-before-feedback"
+      ],
+      "equipment_ids": [
+        "dbx-231s",
+        "yamaha-dbr12"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note158.html",
+          "publisher": "Rane — RaneNote 158, Understanding Acoustic Feedback & Suppressors",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
+          "publisher": "ProSoundWeb (PSW Staff, from Sweetwater) — Tech Tip: EQing Stage Monitors, 2010",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "iem-hollow-or-phasey",
+      "name_fr": "Son « creux » ou phasé dans les ears",
+      "name_en": "Hollow or phasey sound in IEM",
+      "domain": "monitoring",
+      "symptom": "Le chanteur trouve sa voix creuse, nasale ou phasée dans les ears, alors que le mix sonne bien au casque de la console.",
+      "contexts": [
+        "live",
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Latence cumulée des appareils numériques : filtrage en peigne avec la conduction osseuse",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Effet d'occlusion (grave accumulé sous 500 Hz)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Écouteur mal inséré, joint imparfait",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Stéréo MPX dégradée par des aigus boostés ou des panoramiques extrêmes",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Lister les appareils numériques dans la chaîne et additionner leurs latences",
+        "Vérifier l'insertion et la taille des embouts",
+        "Comparer mono et stéréo à l'émetteur"
+      ],
+      "fixes": [
+        "Réduire le nombre d'étages numériques dans le chemin des ears",
+        "Essayer d'inverser la polarité de la voie voix (déplace les creux du peigne)",
+        "Changer d'embouts ou passer à des moulages plus profonds",
+        "Passer en mono ou corriger les aigus"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "iem-latency-comb-filtering",
+        "occlusion-effect",
+        "iem-mpx-stereo-limits"
+      ],
+      "equipment_ids": [
+        "shure-se215",
+        "shure-se846",
+        "shure-psm-900"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "control-room-feedback-open-mic",
+      "name_fr": "Larsen en régie quand on ouvre le micro",
+      "name_en": "Control-room feedback when the mic opens",
+      "domain": "monitoring",
+      "symptom": "Dès que l'animateur ou l'ingénieur ouvre le micro (ou le talkback) dans la régie, les enceintes d'écoute accrochent.",
+      "contexts": [
+        "broadcast",
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Coupure automatique des écoutes non configurée ou désactivée",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Micro de la pièce routé vers la sortie d'écoute régie",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier l'état de la commande monitor-mute de la console",
+        "Vérifier quelles sorties isMonitorOut sont branchées",
+        "Vérifier le routage du micro vers l'écoute"
+      ],
+      "fixes": [
+        "Activer la coupure des écoutes sur micro ouvert",
+        "Écouter au casque micro ouvert"
+      ],
+      "rule_ids": [
+        "monitor-mute-open-mic"
+      ],
+      "concept_ids": [
+        "monitor-mute-on-open-mic",
+        "acoustic-feedback"
+      ],
+      "equipment_ids": [
+        "axia-iq",
+        "genelec-8030c"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+          "publisher": "Telos Alliance / Axia — Axia iQ Quick Start Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes",
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}

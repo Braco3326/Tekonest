@@ -1,0 +1,456 @@
+{
+  "entity": "scenario",
+  "domain": "monitoring",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "band-soundcheck-four-wedge-mixes",
+      "name_fr": "Balance d'un groupe avec 4 mixes wedges",
+      "name_en": "Band soundcheck with four wedge mixes",
+      "domain": "monitoring",
+      "brief": "Groupe rock (batterie, basse, guitare, clavier, chant lead et deux chœurs tenus par guitare et clavier) dans un club. La console de façade fournit 4 départs pré-fader vers 4 wedges actifs, dont un pour le batteur. L'élève définit les 4 mixes, place les wedges dans l'angle de rejet des micros, accorde chaque retour puis fait la balance retours.",
+      "room_id": "bar-club-stage-small",
+      "required_gear": [
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console façade + retours (auxiliaires)"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 4,
+          "role": "micros voix / caisse claire"
+        },
+        {
+          "equipment_id": "yamaha-dbr12",
+          "qty": 4,
+          "role": "wedges actifs"
+        },
+        {
+          "equipment_id": "dbx-231s",
+          "qty": 2,
+          "role": "égaliseurs graphiques sur les 4 sorties retours"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic1",
+            "equipment_id": "shure-sm58",
+            "label": "Voix lead"
+          },
+          {
+            "id": "mic2",
+            "equipment_id": "shure-sm58",
+            "label": "Voix guitare"
+          },
+          {
+            "id": "mic3",
+            "equipment_id": "shure-sm58",
+            "label": "Voix clavier"
+          },
+          {
+            "id": "mic4",
+            "equipment_id": "shure-sm58",
+            "label": "Caisse claire"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console (aux 1–4 pré-fader)"
+          },
+          {
+            "id": "geq1",
+            "equipment_id": "dbx-231s",
+            "label": "EQ retours 1–2"
+          },
+          {
+            "id": "geq2",
+            "equipment_id": "dbx-231s",
+            "label": "EQ retours 3–4"
+          },
+          {
+            "id": "w1",
+            "equipment_id": "yamaha-dbr12",
+            "label": "Wedge voix lead"
+          },
+          {
+            "id": "w2",
+            "equipment_id": "yamaha-dbr12",
+            "label": "Wedge guitare"
+          },
+          {
+            "id": "w3",
+            "equipment_id": "yamaha-dbr12",
+            "label": "Wedge clavier"
+          },
+          {
+            "id": "w4",
+            "equipment_id": "yamaha-dbr12",
+            "label": "Drum-fill batteur"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic1",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "mic2",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "mic3",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "mic4",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "geq1",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "geq2",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "geq1",
+            "to": "w1",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "geq1",
+            "to": "w2",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "geq2",
+            "to": "w3",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "geq2",
+            "to": "w4",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "ringing-out-monitors",
+        "monitor-mix-soundcheck"
+      ],
+      "rule_ids": [
+        "feedback-risk-open-mic-same-room",
+        "monitor-mix-post-fader-send"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 75,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Situation type d'épreuve pratique en sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
+          "publisher": "ProSoundWeb (PSW Staff, from Sweetwater) — Tech Tip: EQing Stage Monitors, 2010",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "procedure_ids"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
+          "publisher": "Wikipedia — Foldback (sound engineering)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "singer-iem-festival-stage",
+      "name_fr": "Ears HF pour une chanteuse sur scène de concert",
+      "name_en": "Wireless IEM for a singer on a concert stage",
+      "domain": "monitoring",
+      "brief": "Une chanteuse passe des wedges aux ears. La console retours fournit un mix voix et un mix groupe en double mono vers un émetteur PSM 900. L'élève coordonne la fréquence avec les micros HF du plateau, règle niveaux et limiteur, construit le mix depuis zéro, ajoute une paire de micros d'ambiance et vérifie la réception par un test de déambulation.",
+      "room_id": "concert-hall-medium",
+      "required_gear": [
+        {
+          "equipment_id": "digico-sd12",
+          "qty": 1,
+          "role": "console retours"
+        },
+        {
+          "equipment_id": "shure-psm-900",
+          "qty": 1,
+          "role": "émetteur + récepteur d'ears"
+        },
+        {
+          "equipment_id": "shure-se215",
+          "qty": 1,
+          "role": "écouteurs isolants"
+        },
+        {
+          "equipment_id": "shure-beta-58a",
+          "qty": 1,
+          "role": "micro voix"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic",
+            "equipment_id": "shure-beta-58a",
+            "label": "Micro voix"
+          },
+          {
+            "id": "mon",
+            "equipment_id": "digico-sd12",
+            "label": "Console retours (aux voix / aux groupe)"
+          },
+          {
+            "id": "tx",
+            "equipment_id": "shure-psm-900",
+            "label": "Émetteur P9T (MixMode)"
+          },
+          {
+            "id": "rx",
+            "equipment_id": "shure-psm-900",
+            "label": "Récepteur P9RA+"
+          },
+          {
+            "id": "ears",
+            "equipment_id": "shure-se215",
+            "label": "Écouteurs"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic",
+            "to": "mon",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "mon",
+            "to": "tx",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "tx",
+            "to": "rx",
+            "signal": "rf-uhf",
+            "connector": null
+          },
+          {
+            "from": "rx",
+            "to": "ears",
+            "signal": "headphone-level",
+            "connector": "trs-35mm"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "iem-rf-setup",
+        "building-iem-mix"
+      ],
+      "rule_ids": [
+        "iem-without-limiter",
+        "iem-transmitter-next-to-mic-receiver",
+        "monitor-mix-post-fader-send"
+      ],
+      "difficulty": 4,
+      "estimated_time_min": 60,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre HF et retours — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Selection and Operation of Personal Monitor Systems, 3rd ed.",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
+          "publisher": "Shure — PSM 900 user guide (rendered from shure.com/en-US/docs/guide/PSM900)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "control-room-calibration-small-studio",
+      "name_fr": "Calibration de l'écoute d'une petite régie",
+      "name_en": "Small control-room monitor calibration",
+      "domain": "monitoring",
+      "brief": "Dans une petite régie, l'élève place une paire d'enceintes de proximité selon la géométrie EBU, choisit et documente une convention de niveau de référence, puis calibre chaque voie au sonomètre. Il vérifie enfin que l'ouverture du micro talkback coupe bien les écoutes.",
+      "room_id": "studio-control-room-small",
+      "required_gear": [
+        {
+          "equipment_id": "grace-m905",
+          "qty": 1,
+          "role": "contrôleur d'écoute"
+        },
+        {
+          "equipment_id": "genelec-8030c",
+          "qty": 2,
+          "role": "enceintes de proximité"
+        },
+        {
+          "equipment_id": "nti-audio-xl2",
+          "qty": 1,
+          "role": "sonomètre"
+        },
+        {
+          "equipment_id": "nti-audio-minirator-mr-pro",
+          "qty": 1,
+          "role": "générateur de bruit rose"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "gen",
+            "equipment_id": "nti-audio-minirator-mr-pro",
+            "label": "Générateur bruit rose"
+          },
+          {
+            "id": "ctl",
+            "equipment_id": "grace-m905",
+            "label": "Contrôleur d'écoute"
+          },
+          {
+            "id": "spkL",
+            "equipment_id": "genelec-8030c",
+            "label": "Enceinte gauche"
+          },
+          {
+            "id": "spkR",
+            "equipment_id": "genelec-8030c",
+            "label": "Enceinte droite"
+          }
+        ],
+        "edges": [
+          {
+            "from": "gen",
+            "to": "ctl",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "ctl",
+            "to": "spkL",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "ctl",
+            "to": "spkR",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "calibrating-control-room-monitors"
+      ],
+      "rule_ids": [
+        "monitor-mute-open-mic"
+      ],
+      "difficulty": 2,
+      "estimated_time_min": 45,
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Conditions d'écoute — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Installation d'une régie — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
+          "publisher": "EBU — Tech 3276, Listening conditions for the assessment of sound programme material (1998)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=3",
+          "publisher": "Sound On Sound — H. Robjohns, Establishing Project Studio Reference Monitoring Levels (May 2014)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": []
+}
