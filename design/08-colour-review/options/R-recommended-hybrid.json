@@ -1,0 +1,121 @@
+{
+ "name": "R-recommended-hybrid",
+ "label": "R · Council hybrid (C frame + night Soirées)",
+ "tokens": {
+  "--focus-color": "#16163F",
+  "--focus-ring": "3px solid var(--focus-color)",
+  "--cable-soirees": "#16163F",
+  "--cable-reseau": "#16163F",
+  "--cable-organiser": "#16163F",
+  "--cable-apprendre": "#16163F",
+  "--cable-tekpractice": "#16163F",
+  "--cable-soirees-text": "#16163F",
+  "--cable-reseau-text": "#16163F",
+  "--cable-organiser-text": "#16163F",
+  "--cable-apprendre-text": "#16163F",
+  "--cable-tekpractice-text": "#16163F",
+  "--signal-on-dark": "#FF8A4C",
+  "--status-now": "var(--color-ink)",
+  "--status-dev": "var(--color-ink)",
+  "--status-prep": "var(--color-ink)",
+  "--status-later": "var(--color-ink)",
+  "--poster-bg": "#16163F",
+  "--poster-ink": "#FAFAF7",
+  "--poster-ink-2": "#D2D2E4",
+  "--poster-accent": "#FF8A4C",
+  "--poster-loop": "#FAFAF7"
+ },
+ "extra_css": "\n.status::before{width:11px;height:11px;box-sizing:border-box;border:2px solid var(--color-ink);background:transparent}\n.status--now::before{background:var(--color-ink)}\n.status--dev::before{background:linear-gradient(90deg,var(--color-ink) 50%,transparent 50%)}\n.status--prep::before{}\n.status--later::before{border:2px dotted var(--color-ink)}\n\n@media (forced-colors: active){.status::before{forced-color-adjust:none;border-color:CanvasText}\n .status--now::before{background:CanvasText}.status--dev::before{background:linear-gradient(90deg,CanvasText 50%,transparent 50%)}}\n/* branch = name + NATIVE border style (survives forced colours, zoom, one-colour print). Implementation: data-branch, not [style*=] */\n[style*=\"--cable-soirees\"]{--cable-style:solid}\n[style*=\"--cable-reseau\"]{--cable-style:double}\n[style*=\"--cable-organiser\"]{--cable-style:dashed}\n[style*=\"--cable-apprendre\"]{--cable-style:dotted}\n[style*=\"--cable-tekpractice\"]{--cable-style:dotted}\n\n.door{border-top:5px var(--cable-style,solid) #16163F}\n.branch-hero .cable{height:0;width:96px;background:none;border-top:5px var(--cable-style,solid) #16163F}\n.board tbody th a{border-bottom:4px var(--cable-style,solid) #16163F;padding-bottom:4px}\n.signup{border-top:5px var(--cable-style,solid) #16163F}\n.site-footer{--focus-color:#FAFAF7}\n.branch-hero[style*=\"--cable-soirees\"]{background:#16163F;color:#FAFAF7;padding-block:72px;--focus-color:#FAFAF7;--color-ink:#FAFAF7;--color-ink-2:#D2D2E4;--color-ink-3:#D2D2E4;--color-signal:#FF8A4C}\n.branch-hero[style*=\"--cable-soirees\"] .cable{border-top-color:#FF8A4C}\n",
+ "logo": {
+  "ink": "#16163F",
+  "signal": "#E8590C"
+ },
+ "poster": {
+  "logo": "lockup-reverse.svg"
+ },
+ "semantic": {
+  "ground": "#FAFAF7",
+  "branches": {},
+  "status": {},
+  "contrast_checks": [
+   [
+    "Body text ink on paper",
+    "#16163F",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Secondary text",
+    "#4A4A6E",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Captions",
+    "#6B6B8A",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Sodium as text",
+    "#B4430A",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Focus ring (ink) vs paper",
+    "#16163F",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Sodium strand / plug vs paper (non-text)",
+    "#E8590C",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Input border",
+    "#8E8EA8",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "White on ink (primary button)",
+    "#FFFFFF",
+    "#16163F",
+    4.5
+   ],
+   [
+    "Focus ring on footer (paper colour on ink)",
+    "#FAFAF7",
+    "#16163F",
+    3
+   ],
+   [
+    "Text on night (Soirées hero)",
+    "#FAFAF7",
+    "#16163F",
+    4.5
+   ],
+   [
+    "Secondary on night",
+    "#D2D2E4",
+    "#16163F",
+    4.5
+   ],
+   [
+    "Sodium clair on night (text-capable)",
+    "#FF8A4C",
+    "#16163F",
+    4.5
+   ],
+   [
+    "Sodium on night (logo plug)",
+    "#E8590C",
+    "#16163F",
+    3
+   ]
+  ]
+ }
+}

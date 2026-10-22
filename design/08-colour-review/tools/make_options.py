@@ -75,3 +75,29 @@ C = {"name": "C-encre-invitee", "label": "C · Encre + couleur invitée (council
 
 for o in (A, B, C):
     (OUT / f"{o['name']}.json").write_text(json.dumps(o, indent=1, ensure_ascii=False)); print("wrote", o["name"])
+
+# ── Council recommendation (post round 2): C frame, native border patterns, Soirées night ground, focus colour per ground ──
+NAT = {"soirees": "solid", "reseau": "double", "organiser": "dashed", "apprendre": "dotted", "tekpractice": "dotted"}
+nat = "".join(f'[style*="--cable-{k}"]{{--cable-style:{v}}}\n' for k, v in NAT.items())
+FORCED = """
+@media (forced-colors: active){.status::before{forced-color-adjust:none;border-color:CanvasText}
+ .status--now::before{background:CanvasText}.status--dev::before{background:linear-gradient(90deg,CanvasText 50%,transparent 50%)}}
+"""
+R = {"name": "R-recommended-hybrid", "label": "R · Council hybrid (C frame + night Soirées)",
+ "tokens": {"--focus-color": INK, "--focus-ring": "3px solid var(--focus-color)", **{f"--cable-{k}": INK for k in PAT}, **{f"--cable-{k}-text": INK for k in PAT},
+            "--signal-on-dark": SCLAIR,
+            "--status-now": "var(--color-ink)", "--status-dev": "var(--color-ink)", "--status-prep": "var(--color-ink)", "--status-later": "var(--color-ink)",
+            "--poster-bg": INK, "--poster-ink": "#FAFAF7", "--poster-ink-2": "#D2D2E4", "--poster-accent": SCLAIR, "--poster-loop": "#FAFAF7"},
+ "extra_css": SHAPES + FORCED + "/* branch = name + NATIVE border style (survives forced colours, zoom, one-colour print). Implementation: data-branch, not [style*=] */\n" + nat + f"""
+.door{{border-top:5px var(--cable-style,solid) {INK}}}
+.branch-hero .cable{{height:0;width:96px;background:none;border-top:5px var(--cable-style,solid) {INK}}}
+.board tbody th a{{border-bottom:4px var(--cable-style,solid) {INK};padding-bottom:4px}}
+.signup{{border-top:5px var(--cable-style,solid) {INK}}}
+.site-footer{{--focus-color:#FAFAF7}}
+.branch-hero[style*="--cable-soirees"]{{background:{INK};color:#FAFAF7;padding-block:72px;--focus-color:#FAFAF7;--color-ink:#FAFAF7;--color-ink-2:#D2D2E4;--color-ink-3:#D2D2E4;--color-signal:{SCLAIR}}}
+.branch-hero[style*="--cable-soirees"] .cable{{border-top-color:{SCLAIR}}}
+""", "logo": {"ink": INK, "signal": "#E8590C"}, "poster": {"logo": "lockup-reverse.svg"},
+ "semantic": {"ground": "#FAFAF7", "branches": {}, "status": {}, "contrast_checks": checks("#FAFAF7", INK, "#4A4A6E", "#6B6B8A", "#B4430A", "#E8590C", "#8E8EA8", [
+     ["Focus ring on footer (paper colour on ink)", "#FAFAF7", INK, 3], ["Text on night (Soirées hero)", "#FAFAF7", INK, 4.5], ["Secondary on night", "#D2D2E4", INK, 4.5],
+     ["Sodium clair on night (text-capable)", SCLAIR, INK, 4.5], ["Sodium on night (logo plug)", "#E8590C", INK, 3]])}}
+(OUT / f"{R['name']}.json").write_text(json.dumps(R, indent=1, ensure_ascii=False)); print("wrote", R["name"])
