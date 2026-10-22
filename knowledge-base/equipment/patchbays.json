@@ -1,0 +1,407 @@
+{
+  "file": "patchbays.json",
+  "category": "patchbays",
+  "generated": "2026-10-22",
+  "selection_rationale": "The set covers the four sub_types: TT/Bantam studio and broadcast bays (Switchcraft StudioPatch 9625/6425, Bittree 969-A, Neutrik NPPA-TT-PT), 6.35 mm TRS project-studio bays (Samson S-Patch Plus, Neutrik NYS-SPP-L1), an XLR tie-line panel (Canare 162U-X21) and a 75-ohm video patchbay (Canare 32MD-ST). Each one shows a different way of choosing the normalling: a front screwdriver cam (Switchcraft EZ Norm), a front mini-toggle (Samson), shunts under the designation strips (Bittree), a reversible PCB card (Neutrik NYS), swappable pre-configured jack pairs and normalling bars (Neutrik NPPA), and a mode fixed by the fitted jack type (Canare). Between them they cover normalled, half-normalled (bottom and top row), non-normalled/isolated, parallel and switchable operation. All of these documents were read directly; the Behringer PX3000 was dropped because no manufacturer page could be reached.",
+  "not_found_log": [
+    { "device_id": "behringer-px3000", "what": "Product page, specs and manual (device dropped)", "searched": "behringer.com sitemap.xml (no product URLs), behringer.com/en/products (no PX3000), behringer.com/en/products/px3000 (Product Not Found), thomann.de -> thomann.fr (404); WebSearch refused (search budget exhausted)" },
+    { "device_id": "mosses-mitchell", "what": "Manufacturer site for a Mosses & Mitchell broadcast jackfield", "searched": "www.mosses-mitchell.com (DNS not found); WebSearch refused (search budget exhausted)" },
+    { "device_id": "switchcraft-studiopatch-9625", "what": "Official user manual and switchcraft.com product page", "searched": "switchcraft.com home and search.php (JS-rendered, empty), switchcraft.com sitemap.xml (first 100k chars, no StudioPatch URL); only the Switchcraft StudioPatch sell sheet PDF found. The customer drawing is reachable only on markertek.com" },
+    { "device_id": "switchcraft-studiopatch-6425", "what": "Official user manual and switchcraft.com product page", "searched": "same as 9625; Sweetwater, Canford and Full Compass pages returned 403" },
+    { "device_id": "samson-s-patch-plus", "what": "Dimensions, weight, year introduced", "searched": "samsontech.com product page and owner's manual v1 (neither lists them)" },
+    { "device_id": "bittree-969a-2x48-1-5ru", "what": "Data sheet PDF and year introduced", "searched": "bittree.com product page (no data sheet listed), programming-instructions pages" },
+    { "device_id": "canare-32md-st", "what": "Manual / drawing PDF", "searched": "canare.co.jp product page (drawings only sent by e-mail via a download form), canare.com productspecsanddrawings and catalog pages (no direct PDFs)" },
+    { "device_id": "canare-162u-x21", "what": "Manual / drawing PDF, pin wiring of XJ3 adapters", "searched": "canare.co.jp pages tid=5_010 and tid=5_025 (drawings gated by a form)" },
+    { "device_id": "*", "what": "French-language manuals", "searched": "No French manual on Samson, Neutrik (catalog section 07 is German), Switchcraft, Bittree or Canare pages reached" }
+  ],
+  "devices": [
+    {
+      "id": "switchcraft-studiopatch-9625",
+      "brand": "Switchcraft",
+      "model": "StudioPatch 9625",
+      "category": "patchbays",
+      "sub_type": "tt-bantam",
+      "technology": "1RU TT (Bantam) patchbay, 48 channels (96 TT/bantam jacks), DB25 rear I/O wired to the TASCAM DTRS pinout, EZ Norm front-programmable normalling jacks, programmable grounds",
+      "year_introduced": 2007,
+      "status": "current",
+      "why_it_is_a_classic": "Switchcraft itself calls the 9625 the patchbay of choice for professional recording studios, broadcast facilities and mobile production units. Its DB25 pinout matches common interfaces, so it is a frequent front end for Pro Tools-type rigs.",
+      "typical_uses": ["recording studio", "broadcast facility", "mobile production unit", "audio interface I/O patching"],
+      "key_specs": {
+        "channels": "48 channels (96 TT/bantam jacks)",
+        "rack_units": "1RU",
+        "rear_connectors": "DB25 I/O connections, wired to the TASCAM DTRS pinout",
+        "db25_pinout_channel_1": "Tip (hot) 24, Ring (cold) 12, Sleeve (ground) 25 (DB25 wiring chart on the Switchcraft customer drawing)",
+        "channels_per_db25": "8 (CHANNEL 1-8 on the connector pinout of the drawing)",
+        "normalling": {
+          "modes_supported": ["normalled (F: Full normal)", "half-normalled (H: Half normal)", "non-normalled (N: Non-normal)"],
+          "switchable": true,
+          "how_switched": "Per channel, from the front of the bay: EZ Norm jack, 'change the signal flow of each channel from Full, to Half, to Non-normalled with the twist of a standard screwdriver' (rotating cam between the jack pair, per Mix)",
+          "default": "not stated"
+        },
+        "grounding": "Programmable ground switches per channel: Up = sleeves vertically strapped, Down = sleeves isolated (drawing: accessed with top cover removed)",
+        "chassis": "Blue anodized aluminum with white laser etched text (drawing note)",
+        "included": "1 Foot Black TT Patch Cord (Markertek)"
+      },
+      "connectors": [
+        { "connector": "tt-bantam", "role": "front patch jacks (top and bottom rows)", "dir": "bidir", "signal": "line-level-pro", "count": 96 },
+        { "connector": "dsub25", "role": "rear I/O, 8 channels per connector, TASCAM DTRS pinout", "dir": "bidir", "signal": "line-level-pro", "count": "not stated by manufacturer" }
+      ],
+      "signal_types": ["line-level-pro"],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf",
+      "product_page_url": "not found",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf", "title": "StudioPatch Series Audio Patchbays (New Product Bulletin 563C) with NPB #584 and #579B", "language": "en", "file_type": "pdf", "version_or_date": "NPB 563C", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf", "publisher": "Switchcraft", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.normalling", "key_specs.grounding", "key_specs.rear_connectors", "key_specs.rack_units"] },
+        { "url": "https://cdn.eicom.ru/media/PDF/5100379.pdf", "publisher": "Switchcraft (NPB 563C, hosted by distributor eicom)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "other", "covers": ["key_specs.channels", "key_specs.rack_units", "key_specs.normalling", "key_specs.grounding", "why_it_is_a_classic"] },
+        { "url": "http://www.markertek.com/Attachments/Specifications/Switchcraft/9625-Specifications.pdf", "publisher": "Switchcraft customer drawing 9625 rev 0A (hosted by Markertek)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.db25_pinout_channel_1", "key_specs.channels_per_db25", "key_specs.normalling", "key_specs.grounding", "key_specs.chassis"] },
+        { "url": "https://www.markertek.com/product/sw-9625/switchcraft-9625-studiopatch-96-patch-points-to-db25-programmable-grounds", "publisher": "Markertek", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.included", "key_specs.normalling", "status"] },
+        { "url": "https://www.mixonline.com/?p=79561", "publisher": "Mix (Switchcraft Introduces StudioPatch Series Patchbays, 06/27/2007)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "trade-press", "covers": ["year_introduced", "key_specs.normalling", "key_specs.channels"] }
+      ],
+      "notes": "Switchcraft documents name the three positions (F, H, N) but do not spell out the signal flow; the behaviour below follows Samson's S-Patch Plus manual and Neutrik's patch panel catalog definitions. F (full normal): with no cord, the top-rear output feeds the bottom-rear input; a plug in the top jack takes the output and breaks the link, and a plug in the bottom jack feeds the input and also breaks it. H (half normal): a plug in the top jack takes a parallel copy without breaking the link (monitoring/split), while a plug in the bottom jack breaks the link. N (non-normal): top and bottom are independent; nothing reaches the bottom row unless a cord is patched. Grounds are set separately with the strap/isolate switches. The DB25 count is not stated by Switchcraft; one Reverb listing (search snippet) counts 12.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": true, "catalog_id": "switchcraft-studiopatch-9625", "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Already in the catalog; teaches F/H/N normalling, sleeve strapping and the DB25 TASCAM pinout" }
+    },
+    {
+      "id": "switchcraft-studiopatch-6425",
+      "brand": "Switchcraft",
+      "model": "StudioPatch 6425",
+      "category": "patchbays",
+      "sub_type": "tt-bantam",
+      "technology": "1RU TT (Bantam) patchbay, 32 channels (64 TT/bantam jacks), DB25 I/O (TASCAM DTRS pinout), EZ Norm front-programmable normalling, programmable grounds",
+      "year_introduced": 2007,
+      "status": "current",
+      "why_it_is_a_classic": "This is the 32-channel version of the StudioPatch 9625. Switchcraft aims it at fixed installations in studios that need less patching than a standard 48-channel bay.",
+      "typical_uses": ["fixed studio installation", "smaller studio I/O patching"],
+      "key_specs": {
+        "channels": "32 channels (64 TT/bantam jacks)",
+        "rack_units": "1RU",
+        "rear_connectors": "DB25 I/O connections wired to the TASCAM DTRS pinout",
+        "normalling": {
+          "modes_supported": ["normalled (F)", "half-normalled (H)", "non-normalled (N)"],
+          "switchable": true,
+          "how_switched": "Per channel from the front with a standard screwdriver (EZ Norm jack: (F) Full to (H) Half to (N) Non-Normalled)",
+          "default": "not stated"
+        },
+        "grounding": "Programmable grounds: Up = sleeves vertically strapped, Down = sleeves isolated"
+      },
+      "connectors": [
+        { "connector": "tt-bantam", "role": "front patch jacks (top and bottom rows)", "dir": "bidir", "signal": "line-level-pro", "count": 64 },
+        { "connector": "dsub25", "role": "rear I/O, TASCAM DTRS pinout", "dir": "bidir", "signal": "line-level-pro", "count": "not stated by manufacturer" }
+      ],
+      "signal_types": ["line-level-pro"],
+      "manual_url": "not found",
+      "datasheet_url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf",
+      "product_page_url": "not found",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf", "title": "StudioPatch Series Audio Patchbays (New Product Bulletin 563C)", "language": "en", "file_type": "pdf", "version_or_date": "NPB 563C", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf", "publisher": "Switchcraft", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.normalling", "key_specs.grounding", "key_specs.rear_connectors"] },
+        { "url": "https://cdn.eicom.ru/media/PDF/5100379.pdf", "publisher": "Switchcraft (NPB 563C, hosted by distributor eicom)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "other", "covers": ["key_specs.channels", "key_specs.rack_units", "why_it_is_a_classic"] },
+        { "url": "https://www.markertek.com/product/sw-6425/switchcraft-6425-studiopatch-64-patch-points-to-db25-with-switchable-grounds", "publisher": "Markertek", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.channels", "key_specs.rack_units", "key_specs.grounding", "status"] },
+        { "url": "https://www.mixonline.com/?p=79561", "publisher": "Mix (06/27/2007)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "trade-press", "covers": ["year_introduced", "key_specs.normalling"] }
+      ],
+      "notes": "This bay uses the same EZ Norm jack and the same F/H/N behaviour as the 9625. F: a plug in either row breaks the top-to-bottom link. H: a plug in the top row takes a copy and leaves the link in place, while a plug in the bottom row breaks it. N: the rows are independent. The flow description is paraphrased from Samson's S-Patch Plus manual and Neutrik's normalling definition, because Switchcraft only names the modes. The 6425 is a TT bay, not a 6.35 mm bay. Markertek listed it as out of stock but not discontinued.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Same lesson as the 9625 already in the catalog" }
+    },
+    {
+      "id": "bittree-969a-2x48-1-5ru",
+      "brand": "Bittree",
+      "model": "969a 2x48 1.5RU TT Patchbay, Front Selectable TRS Audio (B96DC family)",
+      "category": "patchbays",
+      "sub_type": "tt-bantam",
+      "technology": "2x48 TT (Bantam) programmable patchbay, internal wiring with digital AES wire, normals and grounds set per circuit with shunts under the designation strips; rear E3 (ELCO), DB25, E90 or punchdown",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Bittree is a US patchbay maker for broadcast and studio, and its 969 series lets you change normals and grounding per circuit from the front without removing the bay. Bittree's technical drawings for this product use the B96DC part-number family.",
+      "typical_uses": ["broadcast", "recording studio", "AES digital and analog audio patching"],
+      "key_specs": {
+        "jacks": "2x48, mono (even) jack spacing, numbered 1-48 left to right",
+        "rack_units": "1.5RU",
+        "depth": "12\" (30.48 cm) or 7\" (17.78 cm), fully enclosed",
+        "rear_connectors": "E3 (3-pin ELCO), DB25 or E90 (90-pin ELCO); ID (punchdown) drawings also listed",
+        "normalling": {
+          "modes_supported": ["normalled (Full Normal)", "half-normalled (Half Normal)", "non-normalled (Non-Normal)"],
+          "switchable": true,
+          "how_switched": "Remove the two designation strips and place red programming shunts horizontally to set the normals for each circuit; each circuit programmed independently",
+          "default": "not stated (choice of eight standard configurations or custom at order)"
+        },
+        "grounding": "Bussed, isolated or looped (white shunts placed vertically); Bittree schematics also show switched grounds",
+        "wiring": "Digital AES wire internal wiring; tag '110 ohm Audio'",
+        "designation_strips": "2 x DS800-10SA-ASSY, over/under"
+      },
+      "connectors": [
+        { "connector": "tt-bantam", "role": "front patch jacks (2 rows of 48)", "dir": "bidir", "signal": "line-level-pro", "count": 96 },
+        { "connector": "dsub25", "role": "rear I/O (DB25 option; E3/E90 ELCO and punchdown also available)", "dir": "bidir", "signal": "line-level-pro", "count": "not stated" }
+      ],
+      "signal_types": ["line-level-pro", "aes3"],
+      "manual_url": "https://cdn.shopify.com/s/files/1/0982/9080/files/969A_series_programming.pdf?1415153124977890199",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.bittree.com/collections/tt-bantam-front-programmable-969-a-series/products/969a-2x48-1-5ru-tt-patchbay-front-selectable-trs-audio",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://cdn.shopify.com/s/files/1/0982/9080/files/969A_series_programming.pdf?1415153124977890199", "title": "969-A Series TT Bantam Programming Instructions", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://cdn.shopify.com/s/files/1/0982/9080/files/Audio_Schematic_Overview_Standard.pdf?17847733881408052579", "title": "Standard Audio Patchbay Schematics", "language": "en", "file_type": "pdf", "version_or_date": "Last Updated 5/18/2015", "official": true, "kind": "other" }
+      ],
+      "sources": [
+        { "url": "https://www.bittree.com/collections/tt-bantam-front-programmable-969-a-series/products/969a-2x48-1-5ru-tt-patchbay-front-selectable-trs-audio", "publisher": "Bittree", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.jacks", "key_specs.rack_units", "key_specs.depth", "key_specs.rear_connectors", "key_specs.normalling", "key_specs.grounding", "key_specs.wiring", "key_specs.designation_strips", "status"] },
+        { "url": "https://cdn.shopify.com/s/files/1/0982/9080/files/969A_series_programming.pdf?1415153124977890199", "publisher": "Bittree", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.normalling", "key_specs.grounding", "key_specs.jacks"] },
+        { "url": "https://www.bittree.com/pages/969-a-series-patchbay-programming-instructions", "publisher": "Bittree", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.normalling", "key_specs.grounding"] },
+        { "url": "https://cdn.shopify.com/s/files/1/0982/9080/files/Audio_Schematic_Overview_Standard.pdf?17847733881408052579", "publisher": "Bittree", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.normalling", "key_specs.grounding"] }
+      ],
+      "notes": "Bittree's schematic sheet shows Full Normal, Half Normal and Non-Normal, each combined with bussed, isolated, looped or switched grounds; the text does not describe flow, so the following uses the standard definitions (Samson and Neutrik manuals). Full Normal: the top-row source feeds the bottom-row destination until a plug goes into either jack, which breaks the link. Half Normal: a plug in the top jack listens to (splits) the signal without interrupting it; a plug in the bottom jack breaks the link and feeds the destination. Non-Normal: the rows are not linked. The candidate name 'B96DC' appears only in Bittree drawing part numbers (e.g. B96DC-FNABH/E3...), so the current 969a product is recorded here.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["elco-edac-multipin"], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Shunt-based programming and the choice of ground scheme (bussed/isolated/looped) are good wiring lessons; the ELCO rear needs a new connector id" }
+    },
+    {
+      "id": "neutrik-nppa-tt-pt",
+      "brand": "Neutrik",
+      "model": "NPPA-TT-PT \"Easy Patch\"",
+      "category": "patchbays",
+      "sub_type": "tt-bantam",
+      "technology": "1U patch panel with 2 x 48 NJ3TTA gold-plated double-contact TT (Bantam) jacks in removable jack pairs, 288 spring-loaded push terminals, selectable grounding",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neutrik is the main European connector maker. In this TT panel each jack pair can be swapped for one with a different normalling while the panel is on air, which Neutrik itself highlights in the manual.",
+      "typical_uses": ["broadcast", "OB vans", "theatres", "recording studio", "AES3 digital audio patching"],
+      "key_specs": {
+        "jacks": "2 x 48 TT (Bantam) jacks, NJ3TTA gold plated double contact",
+        "rear_connection": "288 push terminals (spring loaded, wire up to 20AWG (0.5 mm2) stranded, solid up to 18AWG (0.75mm2))",
+        "normalling": {
+          "modes_supported": ["half-normalled (half normalled bottom row, standard)", "half-normalled (half normalled top row)", "normalled (full normalled)", "parallel", "non-normalled (isolated)"],
+          "switchable": true,
+          "how_switched": "Per 2-channel jack pair: swap in pre-configured jack pairs NJ3TTA-4-HNB/HNT/FN/P/I (colour-coded covers), possible while 'on air'; in an emergency, change internal normalling bars by hand (NPPA-NB kit)",
+          "default": "half normalled bottom row"
+        },
+        "grounding": "Individual (default), Group, Central, Chassis-Common (solder bridges, track cuts and jumpers)",
+        "frequency_range": "DC to > 50 MHz",
+        "digital_suitability": "Digital audio acc. to AES/EBU",
+        "channel_separation": "> 100 dB @ 10 kHz, 600 Ω terminated; > 40 dB @ 6 MHz, 110 Ω terminated",
+        "contact_resistance": "Connector < 20 mΩ; switch < 25 mΩ",
+        "lifetime": "> 5.000 Insertion / withdrawal cycles",
+        "dimensions": "482 mm (W) × 44 mm (H) (19\" × 1 U), depth 178 mm (7\")",
+        "weight": "2.9 kg"
+      },
+      "connectors": [
+        { "connector": "tt-bantam", "role": "front patch jacks (2 rows of 48)", "dir": "bidir", "signal": "line-level-pro", "count": 96 },
+        { "connector": "euroblock-phoenix", "role": "rear spring-loaded push terminals (orange tip, black ring, white sleeve)", "dir": "bidir", "signal": "line-level-pro", "count": 288 }
+      ],
+      "signal_types": ["line-level-pro", "aes3"],
+      "manual_url": "https://www.neutrik.com/media/8080/download/patch-panel-nppa-tt-pt.pdf?v=1",
+      "datasheet_url": "https://www.neutrik.com/en/product/nppa-tt-pt.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/nppa-tt-pt",
+      "manual_languages": ["en", "de"],
+      "manuals": [
+        { "url": "https://www.neutrik.com/media/8080/download/patch-panel-nppa-tt-pt.pdf?v=1", "title": "Instruction Manual NPPA-TT-PT Patch Panel \"Easy Patch\"", "language": "en", "file_type": "pdf", "version_or_date": "BDA80-2, update 03.08.2009", "official": true, "kind": "user-manual" },
+        { "url": "https://www.neutrik.com/en/product/nppa-tt-pt.pdf", "title": "NPPA-TT-PT data sheet", "language": "en", "file_type": "pdf", "version_or_date": "generated 22.10.2026", "official": true, "kind": "datasheet" },
+        { "url": "https://www.neutrik.com/media/10095/download/07%20Section%20Accessories%20and%20Patch%20Panels%20PG%20DE%20202202-V22.pdf?v=5", "title": "07 Section Accessories and Patch Panels (product guide, German)", "language": "de", "file_type": "pdf", "version_or_date": "202202-V22", "official": true, "kind": "other" }
+      ],
+      "sources": [
+        { "url": "https://www.neutrik.com/media/8080/download/patch-panel-nppa-tt-pt.pdf?v=1", "publisher": "Neutrik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.normalling", "key_specs.grounding", "key_specs.rear_connection", "key_specs.frequency_range", "key_specs.channel_separation", "key_specs.contact_resistance", "key_specs.lifetime", "key_specs.dimensions", "key_specs.weight", "connectors"] },
+        { "url": "https://www.neutrik.com/en/product/nppa-tt-pt", "publisher": "Neutrik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.jacks", "key_specs.normalling", "key_specs.digital_suitability", "key_specs.frequency_range", "key_specs.channel_separation", "status"] },
+        { "url": "https://www.neutrik.com/en/product/nppa-tt-pt.pdf", "publisher": "Neutrik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.digital_suitability", "key_specs.contact_resistance", "key_specs.channel_separation"] },
+        { "url": "https://www.neutrik.com/media/10095/download/07%20Section%20Accessories%20and%20Patch%20Panels%20PG%20DE%20202202-V22.pdf?v=5", "publisher": "Neutrik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.normalling", "notes"] }
+      ],
+      "notes": "Neutrik's product guide defines half normalled bottom row (the default): internal normalling contacts join each top jack to the jack below; a plug in the bottom jack breaks that link, while a plug in the top jack leaves it in place so the signal can be monitored. Half normalled top row is the mirror image. Full normalled breaks the link from either row. Parallel joins both jacks so both rows carry the same signal. Isolated keeps the rows separate. Neutrik warns against the parallel setting, and against other parallel paths in half-normalled setups, for digital signals (impedance mismatch). The manual also notes that the rows share no ground by default, so for phantom-powered mic lines you must wire the S terminals together or patch with a cord.",
+      "conflicts": [
+        { "field": "key_specs.contact_resistance", "values": [ { "value": "20 mΩ and < 25 mΩ (two unlabeled rows)", "source_url": "https://www.neutrik.com/en/product/nppa-tt-pt.pdf" }, { "value": "Connector contact resistance < 20 mΩ; Switch contact resistance < 25 mΩ", "source_url": "https://www.neutrik.com/media/8080/download/patch-panel-nppa-tt-pt.pdf?v=1" } ], "note": "Same figures; the data sheet drops the labels and the '<' on the first value" }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["push-terminal"], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Five normalling types including parallel and HN-top, plus the warning about phantom-power grounds and digital parallel paths" }
+    },
+    {
+      "id": "samson-s-patch-plus",
+      "brand": "Samson",
+      "model": "S-Patch Plus",
+      "category": "patchbays",
+      "sub_type": "quarter-inch-trs",
+      "technology": "1U 48-point balanced patchbay with 1/4\" TRS jacks front and rear (24 modules of two jacks), per-channel 3-way front-panel mode switch",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "This is a low-cost 1/4\" bay for home and project studios. Each channel has its own front toggle for the mode, so you can change the normalling without taking the bay out of the rack.",
+      "typical_uses": ["home studio", "project studio", "console insert points", "outboard tie lines"],
+      "key_specs": {
+        "points": "48-point, fully balanced (48 x 1/4\" front, 48 x 1/4\" rear)",
+        "rack_units": "19-inch, 1u (1 space) rack-mountable unit",
+        "normalling": {
+          "modes_supported": ["normalled (N)", "half-normalled (HN)", "non-normalled (T = Thru)"],
+          "switchable": true,
+          "how_switched": "Miniature toggle switch on the front panel for each channel: left = N (Normal), right = HN (Half-normal), T = Thru",
+          "default": "not stated"
+        },
+        "panel": "Blue, bead blasted, anodized panel",
+        "warranty": "Three year extended warranty"
+      },
+      "connectors": [
+        { "connector": "trs-quarter", "role": "front patch jacks (top and bottom rows)", "dir": "bidir", "signal": "line-level-pro", "count": 48 },
+        { "connector": "trs-quarter", "role": "rear connection jacks", "dir": "bidir", "signal": "line-level-pro", "count": 48 }
+      ],
+      "signal_types": ["line-level-pro", "line-level-consumer", "insert-send-return"],
+      "manual_url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://samsontech.com/products/studio-tools/patch-bays/s-patch-plus/",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf", "title": "S patch plus owner's manual", "language": "en", "file_type": "pdf", "version_or_date": "v1", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://samsontech.com/products/studio-tools/patch-bays/s-patch-plus/", "publisher": "Samson", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.points", "key_specs.normalling", "connectors", "status"] },
+        { "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf", "publisher": "Samson", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.points", "key_specs.rack_units", "key_specs.normalling", "key_specs.panel", "key_specs.warranty", "connectors", "notes"] },
+        { "url": "https://samsontech.com/blog/the-ins-and-outs-of-a-patchbay/", "publisher": "Samson (blog, June 1, 2021)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.normalling", "notes"] }
+      ],
+      "notes": "From the Samson manual. Normal (N): the top-rear signal feeds the bottom-rear jack. A plug in the top front jack breaks the normal and takes the signal, and the bottom front jack then gives direct access to the bottom-rear input. Half-normal (HN), which Samson suggests for console inserts: a plug in the top jack takes the signal without breaking the normal, so you get a split, and a plug in the bottom jack replaces the normalled feed. Thru (T): each rear jack goes straight to its own front jack and top and bottom are never linked (for sources such as CD players or tie lines). Samson advises against patching microphone outputs through it.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "One front toggle per channel makes the N/HN/Thru comparison very clear for students; uses existing trs-quarter ids" }
+    },
+    {
+      "id": "neutrik-nys-spp-l1",
+      "brand": "Neutrik",
+      "model": "NYS-SPP-L1",
+      "category": "patchbays",
+      "sub_type": "quarter-inch-trs",
+      "technology": "19\" x 1U modular 1/4\" patch panel, 48 PCB-wired balanced channels (24 front pairs and corresponding 24 rear pairs), 24 reversible vertical PCBs of 4 jacks each, grey normalling jack",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neutrik sells this as an economical modular 1/4\" panel. You change the normalling by flipping a card, and the grey jack shows at a glance which row breaks the normal.",
+      "typical_uses": ["project studio", "installed sound racks", "theatre / venue racks", "console input splitting"],
+      "key_specs": {
+        "channels": "48 balanced channels (24 front pairs and corresponding 24 rear pairs)",
+        "rack_units": "19\" x 1U",
+        "normalling": {
+          "modes_supported": ["half-normalled (Half Normalled bottom row, standard)", "half-normalled with the card turned (Neutrik 'Turned' / 'Gedreht' orientation)", "split/send-return with optional NYS-SPCR1 module"],
+          "switchable": true,
+          "how_switched": "Flip (turn) the individual PCB card; optional NYS-SPCR1 switching module for send/return",
+          "default": "Half Normalled bottom row"
+        },
+        "grounding": "Grounding clips per channel: Individual (default), Chassis common, Chassis top, Chassis bottom",
+        "signal_type": "AES/EBU Signals (analog)",
+        "contact_resistance": "< 10 mΩ",
+        "frequency_range": "DC to > 50 MHz",
+        "channel_separation": "> 100 dB @ 10 kHz, 600 terminated; > 40 dB @ 6 MHz, 110 terminated",
+        "handles_phantom_power": "no",
+        "lifetime": "> 10000 mating cycles",
+        "temperature_range": "-30 °C to +80 °C"
+      },
+      "connectors": [
+        { "connector": "trs-quarter", "role": "front patch jacks (24 pairs)", "dir": "bidir", "signal": "line-level-pro", "count": 48 },
+        { "connector": "trs-quarter", "role": "rear jacks (24 pairs, PCB wired)", "dir": "bidir", "signal": "line-level-pro", "count": 48 }
+      ],
+      "signal_types": ["line-level-pro", "insert-send-return"],
+      "manual_url": "https://www.neutrik.com/media/8075/download/patch-panel-nys-spp-l1.pdf?v=1",
+      "datasheet_url": "https://www.neutrik.com/en/product/nys-spp-l1.pdf",
+      "product_page_url": "https://www.neutrik.com/en/product/nys-spp-l1",
+      "manual_languages": ["en", "de"],
+      "manuals": [
+        { "url": "https://www.neutrik.com/media/8075/download/patch-panel-nys-spp-l1.pdf?v=1", "title": "Assembly Instruction NYS-SPP-L1 1/4\" Patch Panel - Grounding Variations", "language": "en", "file_type": "pdf", "version_or_date": "BDA 175, update 30.03.2010", "official": true, "kind": "other" },
+        { "url": "https://www.neutrik.com/en/product/nys-spp-l1.pdf", "title": "NYS-SPP-L1 data sheet", "language": "en", "file_type": "pdf", "version_or_date": "generated 22.10.2026", "official": true, "kind": "datasheet" },
+        { "url": "https://www.neutrik.com/media/10095/download/07%20Section%20Accessories%20and%20Patch%20Panels%20PG%20DE%20202202-V22.pdf?v=5", "title": "07 Section Accessories and Patch Panels (product guide, German)", "language": "de", "file_type": "pdf", "version_or_date": "202202-V22", "official": true, "kind": "other" }
+      ],
+      "sources": [
+        { "url": "https://www.neutrik.com/en/product/nys-spp-l1", "publisher": "Neutrik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.channels", "key_specs.normalling", "key_specs.grounding", "key_specs.contact_resistance", "key_specs.frequency_range", "key_specs.channel_separation", "key_specs.handles_phantom_power", "status"] },
+        { "url": "https://www.neutrik.com/en/product/nys-spp-l1.pdf", "publisher": "Neutrik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.normalling", "key_specs.grounding", "key_specs.signal_type", "key_specs.lifetime", "key_specs.temperature_range"] },
+        { "url": "https://www.neutrik.com/media/8075/download/patch-panel-nys-spp-l1.pdf?v=1", "publisher": "Neutrik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.grounding"] },
+        { "url": "https://www.neutrik.com/media/10095/download/07%20Section%20Accessories%20and%20Patch%20Panels%20PG%20DE%20202202-V22.pdf?v=5", "publisher": "Neutrik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.normalling", "notes"] }
+      ],
+      "notes": "Neutrik ships the card half normalled bottom row. With no cord, each top jack feeds the jack below. A plug in the grey jack always isolates the top row from the bottom row, while a plug in the other jack (Neutrik's front jack A, for 'listening') takes a copy without breaking the link. Turning the PCB gives the 'Turned' configuration. Our reading of the diagrams is that it moves the breaking jack to the other row; Neutrik does not state this in words. The NYS-SPCR1 split card handles send/return on one stereo jack and is suggested as an alternative to a Y-cable for console inputs. No full-normal or thru version is documented. Grounds are set separately with clips. Neutrik states the panel does not handle phantom power.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Flip-card normalling and the grey 'breaking' jack are a useful contrast to toggle or screwdriver switching" }
+    },
+    {
+      "id": "canare-162u-x21",
+      "brand": "Canare",
+      "model": "162U-X21 (pre-loaded XLR connector panel)",
+      "category": "patchbays",
+      "sub_type": "xlr-panel",
+      "technology": "2RU strong alloy steel panel pre-loaded with XLR3 jack-to-jack panel adapters: 16 x XJ3M-P3FA (upper row) and 16 x XJ3F-P3MA (lower row)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "This kind of panel carries a room's fixed XLR tie lines (stage boxes, wall boxes, rack I/O). Canare says its XJ3 jack-to-jack adapters greatly reduce installation hours, because no soldering is needed behind the panel.",
+      "typical_uses": ["tie lines between rooms", "rack I/O panels", "studio and theatre wall boxes"],
+      "key_specs": {
+        "rack_units": "2",
+        "connectors": "XJ3M-P3FA (16 pcs, upper row) and XJ3F-P3MA (16 pcs, lower row)",
+        "adapter_genders": "XJ3M-P3FA: front XLR 3-pin male, rear XLR 3-pin female; XJ3F-P3MA: front XLR 3-pin female, rear XLR 3-pin male",
+        "adapter_flange": "ITT XLR-F77 (XJ3M-P3FA row)",
+        "panel_part_number": "2U-AS7",
+        "dimensions_mm": "88.1 x 482.6 x 217 (axes not labelled on the page)",
+        "normalling": {
+          "modes_supported": ["non-normalled"],
+          "switchable": false,
+          "how_switched": "Not applicable: each position is an independent front-to-rear XLR pass-through (no normalling contacts)",
+          "default": "non-normalled (straight pass-through)"
+        }
+      },
+      "connectors": [
+        { "connector": "xlr3-m", "role": "front, upper row (XJ3M-P3FA)", "dir": "bidir", "signal": "mic-level", "count": 16 },
+        { "connector": "xlr3-f", "role": "rear, upper row (XJ3M-P3FA)", "dir": "bidir", "signal": "mic-level", "count": 16 },
+        { "connector": "xlr3-f", "role": "front, lower row (XJ3F-P3MA)", "dir": "bidir", "signal": "mic-level", "count": 16 },
+        { "connector": "xlr3-m", "role": "rear, lower row (XJ3F-P3MA)", "dir": "bidir", "signal": "mic-level", "count": 16 }
+      ],
+      "signal_types": ["mic-level", "line-level-pro", "aes3", "phantom-48v"],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.canare.co.jp/en/products/panels_and_patchbays/index.php?tid=5_010",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://www.canare.co.jp/en/products/panels_and_patchbays/index.php?tid=5_010", "publisher": "Canare", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.rack_units", "key_specs.connectors", "key_specs.panel_part_number", "key_specs.dimensions_mm", "status"] },
+        { "url": "https://www.canare.co.jp/en/products/panels_and_patchbays/index.php?tid=5_025", "publisher": "Canare", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.adapter_genders", "key_specs.adapter_flange", "why_it_is_a_classic"] },
+        { "url": "https://www.canare.com/patchbaysandpanels", "publisher": "Canare USA", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["sub_type", "notes"] }
+      ],
+      "notes": "This panel has no normalling. A cord plugged into a front XLR is connected only to the cable on the XLR directly behind it, so the panel behaves like a non-normalled (thru) patch point. Canare's page calls the XJ3 adapters 'jack to jack' and 'XLR3 full compatible' but does not publish the pin wiring; a 1-1/2-2/3-3 straight wiring is assumed and must be checked against the gated drawing. Because the path is passive, phantom power and AES3 would pass through, but Canare does not state this. Signal types are listed for teaching use. Canare also sells 1RU 16-way solder panels (161U-X1F/X2F).",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Teaches tie lines and XLR gender flipping (male front/female rear and the reverse) with existing xlr3 ids" }
+    },
+    {
+      "id": "canare-32md-st",
+      "brand": "Canare",
+      "model": "32MD-ST (75 ohm Staggered Mid-size Video Patchbay)",
+      "category": "patchbays",
+      "sub_type": "digital-video-patch",
+      "technology": "75 ohm 1RU video patchbay, 32 channels, Mini-WECO front jacks with BNC rear, Canare rotary switch with dual-contact construction, self-terminating; normal-through (MDVJ-STW) or straight-through (MDVJ-STS, model 32MD-STS)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Mid-size (Mini-WECO) 75 Ω bays are the usual way to patch SDI video, and with it embedded audio, in broadcast trucks and studios. Canare lists studio, OB van and broadband telecom uses.",
+      "typical_uses": ["TV studio", "OB van", "broadband telecom", "SDI / embedded audio patching"],
+      "key_specs": {
+        "channels": "32 (1 RU); 32 in 2 RU (-2U); 96 in 4 RU (-4U)",
+        "impedance": "75 ohm",
+        "signals": "Serial Digital Video (3G-SDI, HD-SDI, SD-SDI)",
+        "return_loss": "MDVJ-STW normal-through (BNC-BNC): 26 dB or greater at 750 MHz, 20 dB at 2.4 GHz, 10 dB at 3 GHz",
+        "isolation": "35 dB or greater at 1.5 GHz, 20 dB or greater at 3.0 GHz",
+        "front_connector": "Mini-WECO",
+        "rear_connector": "BNC",
+        "contacts": "Beryllium Copper, Gold Plated Center Contacts",
+        "weight": "1 RU: 2.9 kg (approx.)",
+        "normalling": {
+          "modes_supported": ["normalled (normal-through, W jacks, self-terminating)", "non-normalled (straight-through, S jacks, model 32MD-STS)"],
+          "switchable": false,
+          "how_switched": "Fixed by the jack type fitted: MDVJ-STW (normal-through) in 32MD-ST, MDVJ-STS (straight-through) in 32MD-STS",
+          "default": "normal-through (32MD-ST)"
+        }
+      },
+      "connectors": [
+        { "connector": "bnc", "role": "front Mini-WECO patch jacks (no TekPractice id; closest bnc)", "dir": "bidir", "signal": "sdi-embedded-audio", "count": 32 },
+        { "connector": "bnc", "role": "rear BNC (top and bottom per channel)", "dir": "bidir", "signal": "sdi-embedded-audio", "count": "not stated" }
+      ],
+      "signal_types": ["sdi-embedded-audio"],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.canare.co.jp/en/products/panels_and_patchbays/index.php?tid=5_005",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://www.canare.co.jp/en/products/panels_and_patchbays/index.php?tid=5_005", "publisher": "Canare", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.channels", "key_specs.impedance", "key_specs.return_loss", "key_specs.isolation", "key_specs.front_connector", "key_specs.rear_connector", "key_specs.weight", "key_specs.normalling", "notes"] },
+        { "url": "https://www.canare.com/patchbaysandpanels", "publisher": "Canare USA", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.signals", "key_specs.return_loss", "key_specs.contacts", "key_specs.normalling", "typical_uses"] }
+      ],
+      "notes": "From Canare's jack charts. On a W (normal-through) jack with no plug, the signal runs from the top rear BNC to the bottom rear BNC. A plug in the upper front port takes the source and terminates the lower BNC in 75 Ω. A plug in the lower port feeds the destination and terminates the upper BNC. Plugs in both ports give through-patching in either direction. On an S (straight-through) jack, the two halves are independent and each unused side is terminated. This is normalled behaviour, with self-termination in place of an open circuit. Two-source check: canare.com gives 'DC to 3.0GHz greater than 10dB Return Loss', which is consistent with the 10 dB at 3 GHz on canare.co.jp. AES-3id is not listed by Canare for this model.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["mini-weco-video-jack"], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Shows 75 Ω self-termination and normal-through for SDI/embedded audio; needs a Mini-WECO connector id" }
+    }
+  ]
+}
