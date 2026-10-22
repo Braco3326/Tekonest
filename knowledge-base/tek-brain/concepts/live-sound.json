@@ -43,7 +43,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
@@ -53,7 +54,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -63,7 +65,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -111,7 +114,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
@@ -121,7 +125,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -131,7 +136,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Live_sound_mixing",
@@ -141,7 +147,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -203,7 +210,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Front_of_house",
@@ -213,7 +221,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -223,7 +232,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
@@ -233,7 +243,8 @@
           "kind": "regulator",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -273,7 +284,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -284,7 +296,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
@@ -294,7 +307,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
@@ -304,7 +318,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -349,7 +364,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/?p=36647",
@@ -359,7 +375,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
@@ -369,7 +386,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
@@ -379,7 +397,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -434,7 +453,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.namm.org/festival-101-tech-rider-update",
@@ -444,7 +464,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -454,7 +475,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -498,7 +520,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
@@ -508,7 +531,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -549,7 +573,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
@@ -559,7 +584,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -607,7 +633,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -617,7 +644,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -661,7 +689,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -671,7 +700,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -712,7 +742,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -722,7 +753,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
@@ -732,7 +764,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -773,7 +806,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Live_sound_mixing",
@@ -783,7 +817,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -793,7 +828,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -833,7 +869,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Front_of_house",
@@ -843,7 +880,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -853,7 +891,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -898,7 +937,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -938,7 +978,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
@@ -948,7 +989,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -987,7 +1029,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1030,7 +1073,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
@@ -1040,7 +1084,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
@@ -1050,7 +1095,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
@@ -1060,7 +1106,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1105,7 +1152,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/?p=36647",
@@ -1115,7 +1163,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1168,7 +1217,8 @@
           "covers": [
             "definition",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -1178,7 +1228,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1220,7 +1271,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1264,7 +1316,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
@@ -1274,7 +1327,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
@@ -1284,7 +1338,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

@@ -95,7 +95,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Sound_check",
@@ -105,7 +106,8 @@
           "kind": "other",
           "covers": [
             "context"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
@@ -115,7 +117,8 @@
           "kind": "manufacturer",
           "covers": [
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
@@ -125,7 +128,8 @@
           "kind": "trade-press",
           "covers": [
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -223,7 +227,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
@@ -233,7 +238,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
@@ -243,7 +249,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -253,7 +260,8 @@
           "kind": "other",
           "covers": [
             "duration_min"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
@@ -263,7 +271,8 @@
           "kind": "regulator",
           "covers": [
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -363,7 +372,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
@@ -373,7 +383,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
@@ -384,7 +395,8 @@
           "covers": [
             "steps",
             "duration_min"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
@@ -395,7 +407,8 @@
           "covers": [
             "duration_min",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -472,7 +485,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.namm.org/festival-101-tech-rider-update",
@@ -482,7 +496,8 @@
           "kind": "other",
           "covers": [
             "context"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -492,7 +507,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -579,7 +595,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
@@ -589,7 +606,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
@@ -599,7 +617,8 @@
           "kind": "trade-press",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
@@ -609,7 +628,8 @@
           "kind": "manufacturer",
           "covers": [
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -692,7 +712,8 @@
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
@@ -702,7 +723,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
@@ -712,7 +734,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -722,7 +745,8 @@
           "kind": "other",
           "covers": [
             "context"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

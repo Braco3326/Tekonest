@@ -61,7 +61,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Mixing_console",
@@ -71,7 +72,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -139,7 +141,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://storage.googleapis.com/samson-production/uploads/documents/s-patchplus_OM_v1.pdf",
@@ -149,7 +152,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -194,7 +198,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -204,7 +209,8 @@
           "kind": "manufacturer",
           "covers": [
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Mixing_console",
@@ -214,7 +220,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -269,7 +276,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://samsontech.com/blog/the-ins-and-outs-of-a-patchbay/",
@@ -279,7 +287,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

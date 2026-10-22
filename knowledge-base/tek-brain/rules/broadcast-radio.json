@@ -1,330 +1,387 @@
 {
- "entity": "rule",
- "domain": "broadcast-radio",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "on-air-tally-light",
-   "name_fr": "Voyant ON-AIR sur micro ouvert",
-   "name_en": "ON-AIR tally on open mic",
-   "domain": "broadcast-radio",
-   "catalog_rule": "R5",
-   "status": "existing",
-   "severity": "warning",
-   "scope": "device",
-   "condition": {
-    "all": [
-     {
-      "path": "device.port.flags",
-      "op": "includes",
-      "value": "isMicInput"
-     },
-     {
-      "path": "device.controls.fader-<micPortId>",
-      "op": "eq",
-      "value": true
-     },
-     {
-      "path": "graph.count(device isOnAirTally port connected to another isOnAirTally port)",
-      "op": "eq",
-      "value": 0
-     }
-    ]
-   },
-   "explanation": "Quand un fader micro est ouvert sur une console d'antenne, sa sortie GPIO tally doit commander un voyant ON-AIR (chaîne isOnAirTally complète). La console d'antenne envoie des contacts ou commandes GPIO aux appareils du studio, et un voyant comme le litt est commandé couleur par couleur par une entrée GPI. Micro ouvert sans voyant : quelqu'un peut entrer en parlant pendant le direct.",
-   "fix": "Relier le port GPIO tally de la console à l'entrée tally du voyant ON-AIR, l'alimenter en permanence et tester chaque micro.",
-   "evaluable_now": true,
-   "needs_catalog_fields": [],
-   "concept_ids": [
-    "tally-on-air",
-    "on-air-console"
-   ],
-   "sources": [
+  "entity": "rule",
+  "domain": "broadcast-radio",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
+      "id": "on-air-tally-light",
+      "name_fr": "Voyant ON-AIR sur micro ouvert",
+      "name_en": "ON-AIR tally on open mic",
+      "domain": "broadcast-radio",
+      "catalog_rule": "R5",
+      "status": "existing",
+      "severity": "warning",
+      "scope": "device",
+      "condition": {
+        "all": [
+          {
+            "path": "device.port.flags",
+            "op": "includes",
+            "value": "isMicInput"
+          },
+          {
+            "path": "device.controls.fader-<micPortId>",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "graph.count(device isOnAirTally port connected to another isOnAirTally port)",
+            "op": "eq",
+            "value": 0
+          }
+        ]
+      },
+      "explanation": "Quand un fader micro est ouvert sur une console d'antenne, sa sortie GPIO tally doit commander un voyant ON-AIR (chaîne isOnAirTally complète). La console d'antenne envoie des contacts ou commandes GPIO aux appareils du studio, et un voyant comme le litt est commandé couleur par couleur par une entrée GPI. Micro ouvert sans voyant : quelqu'un peut entrer en parlant pendant le direct.",
+      "fix": "Relier le port GPIO tally de la console à l'entrée tally du voyant ON-AIR, l'alimenter en permanence et tester chaque micro.",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "tally-on-air",
+        "on-air-console"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+          "publisher": "Yellowtec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
-     "publisher": "Yellowtec",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "mix-minus-n1-echo",
-   "name_fr": "Écho de retour : N-1 manquant",
-   "name_en": "Mix-minus / N-1 return echo",
-   "domain": "broadcast-radio",
-   "catalog_rule": "R7",
-   "status": "existing",
-   "severity": "error",
-   "scope": "graph",
-   "condition": {
-    "all": [
-     {
-      "path": "device.controls.route-<returnPortId>-to-<busPortId>",
-      "op": "eq",
-      "value": true
-     },
-     {
-      "path": "graph.count(bus <busPortId> feeds remote K AND remote K feeds console input <returnPortId>)",
-      "op": "gt",
-      "value": 0
-     }
-    ]
-   },
-   "explanation": "Le signal envoyé à un codec distant doit être le programme MOINS le retour de ce codec (N-1). Si la tranche qui reçoit le retour d'un appareil distant est affectée au bus qui alimente l'envoi vers ce même appareil, l'intervenant entend sa voix revenir avec la latence de la liaison : écho, échange impossible. Telos définit le mix-minus comme tout ce que l'appelant doit entendre, moins l'appelant.",
-   "fix": "Retirer la tranche de retour du bus qui alimente son propre envoi (vrai mix-minus) ou utiliser le N-1 automatique de la tranche.",
-   "evaluable_now": true,
-   "needs_catalog_fields": [],
-   "concept_ids": [
-    "mix-minus-n1",
-    "audio-codec-ip",
-    "telephone-hybrid"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
+      "id": "mix-minus-n1-echo",
+      "name_fr": "Écho de retour : N-1 manquant",
+      "name_en": "Mix-minus / N-1 return echo",
+      "domain": "broadcast-radio",
+      "catalog_rule": "R7",
+      "status": "existing",
+      "severity": "error",
+      "scope": "graph",
+      "condition": {
+        "all": [
+          {
+            "path": "device.controls.route-<returnPortId>-to-<busPortId>",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "graph.count(bus <busPortId> feeds remote K AND remote K feeds console input <returnPortId>)",
+            "op": "gt",
+            "value": 0
+          }
+        ]
+      },
+      "explanation": "Le signal envoyé à un codec distant doit être le programme MOINS le retour de ce codec (N-1). Si la tranche qui reçoit le retour d'un appareil distant est affectée au bus qui alimente l'envoi vers ce même appareil, l'intervenant entend sa voix revenir avec la latence de la liaison : écho, échange impossible. Telos définit le mix-minus comme tout ce que l'appelant doit entendre, moins l'appelant.",
+      "fix": "Retirer la tranche de retour du bus qui alimente son propre envoi (vrai mix-minus) ou utiliser le N-1 automatique de la tranche.",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "mix-minus-n1",
+        "audio-codec-ip",
+        "telephone-hybrid"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "mix-minus-loop",
-   "name_fr": "Envoi distant alimenté par un bus programme complet",
-   "name_en": "Remote send fed from a full programme bus",
-   "domain": "broadcast-radio",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "connection",
-   "condition": {
-    "all": [
-     {
-      "path": "dst.port.flags",
-      "op": "includes",
-      "value": "isRemoteSend"
-     },
-     {
-      "path": "src.port.flags",
-      "op": "excludes",
-      "value": "isMixMinusOut"
-     }
-    ]
-   },
-   "explanation": "Variante structurelle de R7, vérifiable sur le câblage seul : l'entrée d'envoi d'un hybride ou d'un codec (SEND IN, entrée audio du codec) est alimentée par une sortie qui n'est pas un N-1 (sortie programme, sortie monitor). Dès que la tranche retour est ouverte à l'antenne, l'intervenant se retrouve dans son propre envoi : boucle et écho. Telos demande de câbler SEND IN sur la sortie mix-minus (bus téléphone) de la console ; Sonifex vend un générateur de N-1 pour les consoles qui n'en ont pas.",
-   "fix": "Câbler l'envoi du codec ou de l'hybride sur une sortie N-1 dédiée (mix-minus de la tranche, bus auxiliaire sans la tranche retour, ou boîtier RB-MM1).",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "port.flags:isRemoteSend",
-    "port.flags:isMixMinusOut"
-   ],
-   "concept_ids": [
-    "mix-minus-n1"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
+      "id": "mix-minus-loop",
+      "name_fr": "Envoi distant alimenté par un bus programme complet",
+      "name_en": "Remote send fed from a full programme bus",
+      "domain": "broadcast-radio",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "dst.port.flags",
+            "op": "includes",
+            "value": "isRemoteSend"
+          },
+          {
+            "path": "src.port.flags",
+            "op": "excludes",
+            "value": "isMixMinusOut"
+          }
+        ]
+      },
+      "explanation": "Variante structurelle de R7, vérifiable sur le câblage seul : l'entrée d'envoi d'un hybride ou d'un codec (SEND IN, entrée audio du codec) est alimentée par une sortie qui n'est pas un N-1 (sortie programme, sortie monitor). Dès que la tranche retour est ouverte à l'antenne, l'intervenant se retrouve dans son propre envoi : boucle et écho. Telos demande de câbler SEND IN sur la sortie mix-minus (bus téléphone) de la console ; Sonifex vend un générateur de N-1 pour les consoles qui n'en ont pas.",
+      "fix": "Câbler l'envoi du codec ou de l'hybride sur une sortie N-1 dédiée (mix-minus de la tranche, bus auxiliaire sans la tranche retour, ou boîtier RB-MM1).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isRemoteSend",
+        "port.flags:isMixMinusOut"
+      ],
+      "concept_ids": [
+        "mix-minus-n1"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://sonifex.co.uk/product/rb-mm1/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://sonifex.co.uk/product/rb-mm1/",
-     "publisher": "Sonifex",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "fix"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "shared-mix-minus-multiple-remotes",
-   "name_fr": "Un seul N-1 pour plusieurs intervenants",
-   "name_en": "One mix-minus shared by several remotes",
-   "domain": "broadcast-radio",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "graph",
-   "condition": {
-    "all": [
-     {
-      "path": "graph.count(output port flagged isMixMinusOut connected to more than one isRemoteSend port)",
-      "op": "gt",
-      "value": 0
-     }
-    ]
-   },
-   "explanation": "Chaque intervenant distant doit entendre les autres mais pas lui-même : il faut un mix-minus par ligne. Si le même N-1 alimente deux hybrides ou deux codecs, soit l'un des deux s'entend, soit ils ne s'entendent pas entre eux. Exception documentée : le Telos Hx2 peut fabriquer un mix-minus interne et envoyer à chaque appelant la voix de l'autre (micro-interrupteur OPTIONS n° 6).",
-   "fix": "Créer un N-1 par intervenant distant, ou utiliser la fonction de conférence interne de l'hybride quand elle existe.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "port.flags:isRemoteSend",
-    "port.flags:isMixMinusOut"
-   ],
-   "concept_ids": [
-    "mix-minus-n1",
-    "telephone-hybrid"
-   ],
-   "sources": [
+      "id": "shared-mix-minus-multiple-remotes",
+      "name_fr": "Un seul N-1 pour plusieurs intervenants",
+      "name_en": "One mix-minus shared by several remotes",
+      "domain": "broadcast-radio",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "graph",
+      "condition": {
+        "all": [
+          {
+            "path": "graph.count(output port flagged isMixMinusOut connected to more than one isRemoteSend port)",
+            "op": "gt",
+            "value": 0
+          }
+        ]
+      },
+      "explanation": "Chaque intervenant distant doit entendre les autres mais pas lui-même : il faut un mix-minus par ligne. Si le même N-1 alimente deux hybrides ou deux codecs, soit l'un des deux s'entend, soit ils ne s'entendent pas entre eux. Exception documentée : le Telos Hx2 peut fabriquer un mix-minus interne et envoyer à chaque appelant la voix de l'autre (micro-interrupteur OPTIONS n° 6).",
+      "fix": "Créer un N-1 par intervenant distant, ou utiliser la fonction de conférence interne de l'hybride quand elle existe.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isRemoteSend",
+        "port.flags:isMixMinusOut"
+      ],
+      "concept_ids": [
+        "mix-minus-n1",
+        "telephone-hybrid"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
+    },
     {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "loudness-out-of-tolerance",
-   "name_fr": "Sonie ou crête vraie hors tolérance",
-   "name_en": "Loudness or true peak out of tolerance",
-   "domain": "broadcast-radio",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "session",
-   "condition": {
-    "any": [
-     {
-      "path": "session.programme_loudness_lufs",
-      "op": "lt",
-      "value": -24.0
-     },
-     {
-      "path": "session.programme_loudness_lufs",
-      "op": "gt",
-      "value": -22.0
-     },
-     {
-      "path": "session.true_peak_dbtp",
-      "op": "gt",
-      "value": -1.0
-     }
-    ]
-   },
-   "explanation": "EBU R 128 normalise la sonie de programme à −23,0 LUFS ; en direct, une tolérance de ±1,0 LU est admise. La crête vraie ne doit pas dépasser −1 dBTP en production. La règle se déclenche si la sonie intégrée mesurée sort de [−24,0 ; −22,0] LUFS ou si la crête vraie dépasse −1 dBTP. Pour un programme non direct la cible est −23,0 LUFS ; la tolérance de contrôle qualité de ±0,2 LU couvre l'erreur de mesure.",
-   "fix": "Corriger le gain global du programme (ou le niveau des éléments trop forts) et ajouter un limiteur de crête vraie ; remesurer le programme entier.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "session.programme_loudness_lufs",
-    "session.true_peak_dbtp",
-    "session.is_live"
-   ],
-   "concept_ids": [
-    "loudness-ebu-r128",
-    "true-peak"
-   ],
-   "sources": [
+      "id": "loudness-out-of-tolerance",
+      "name_fr": "Sonie ou crête vraie hors tolérance",
+      "name_en": "Loudness or true peak out of tolerance",
+      "domain": "broadcast-radio",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "any": [
+          {
+            "all": [
+              {
+                "path": "session.is_live",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "any": [
+                  {
+                    "path": "session.programme_loudness_lufs",
+                    "op": "lt",
+                    "value": -24.0
+                  },
+                  {
+                    "path": "session.programme_loudness_lufs",
+                    "op": "gt",
+                    "value": -22.0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "all": [
+              {
+                "path": "session.is_live",
+                "op": "ne",
+                "value": true
+              },
+              {
+                "any": [
+                  {
+                    "path": "session.programme_loudness_lufs",
+                    "op": "lt",
+                    "value": -23.2
+                  },
+                  {
+                    "path": "session.programme_loudness_lufs",
+                    "op": "gt",
+                    "value": -22.8
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "path": "session.true_peak_dbtp",
+            "op": "gt",
+            "value": -1.0
+          }
+        ]
+      },
+      "explanation": "EBU R 128 normalise la sonie de programme à −23,0 LUFS ; en direct, une tolérance de ±1,0 LU est admise. La crête vraie ne doit pas dépasser −1 dBTP en production. La règle se déclenche : en direct (session.is_live vrai), si la sonie intégrée sort de [−24,0 ; −22,0] LUFS ; hors direct, si elle sort de [−23,2 ; −22,8] LUFS (cible −23,0 LUFS, la tolérance de contrôle qualité de ±0,2 LU ne couvrant que l'erreur de mesure) ; dans tous les cas, si la crête vraie dépasse −1 dBTP.",
+      "fix": "Corriger le gain global du programme (ou le niveau des éléments trop forts) et ajouter un limiteur de crête vraie ; remesurer le programme entier.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.programme_loudness_lufs",
+        "session.true_peak_dbtp",
+        "session.is_live"
+      ],
+      "concept_ids": [
+        "loudness-ebu-r128",
+        "true-peak"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation",
+            "condition"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review",
+      "conflicts": [
+        {
+          "field": "condition",
+          "values": [
+            {
+              "value": "{\"any\": [{\"path\": \"session.programme_loudness_lufs\", \"op\": \"lt\", \"value\": -24.0}, {\"path\": \"session.programme_loudness_lufs\", \"op\": \"gt\", \"value\": -22.0}, {\"path\": \"session.true_peak_dbtp\", \"op\": \"gt\", \"value\": -1.0}]}",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : la tolérance ±1,0 LU ne vaut que lorsque la cible n'est pas atteignable en pratique (ex. direct) selon R 128 h) ; la condition dépend désormais de session.is_live (±1,0 LU en direct, ±0,2 LU sinon)."
+        }
+      ]
+    },
     {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation",
-      "condition"
-     ]
+      "id": "silence-detection-missing",
+      "name_fr": "Pas de détection de silence sur la sortie antenne",
+      "name_en": "No silence detection on the on-air output",
+      "domain": "broadcast-radio",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "graph",
+      "condition": {
+        "all": [
+          {
+            "path": "graph.count(port flagged isTransmitterFeed)",
+            "op": "gt",
+            "value": 0
+          },
+          {
+            "path": "graph.count(device.category == 'silence-detector' on the programme path)",
+            "op": "eq",
+            "value": 0
+          }
+        ]
+      },
+      "explanation": "Une sortie qui part vers l'émetteur ou l'encodeur de streaming sans détecteur de silence laisse un « blanc » durer jusqu'à ce que quelqu'un s'en aperçoive. Un détecteur comme le Sonifex RB-SD1 bascule automatiquement sur une source de secours après une durée réglable (2 à 30 s, ou 125 s) sous un seuil réglable (−60 à −15 dBu), et signale la panne par contact.",
+      "fix": "Insérer un détecteur de silence avec source de secours entre la sortie programme et la liaison vers l'émetteur, ou activer la fonction équivalente du processeur ou du playout.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isTransmitterFeed",
+        "device.category:silence-detector"
+      ],
+      "concept_ids": [
+        "silence-detection",
+        "broadcast-redundancy"
+      ],
+      "sources": [
+        {
+          "url": "https://sonifex.co.uk/product/rb-sd1/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "silence-detection-missing",
-   "name_fr": "Pas de détection de silence sur la sortie antenne",
-   "name_en": "No silence detection on the on-air output",
-   "domain": "broadcast-radio",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "info",
-   "scope": "graph",
-   "condition": {
-    "all": [
-     {
-      "path": "graph.count(port flagged isTransmitterFeed)",
-      "op": "gt",
-      "value": 0
-     },
-     {
-      "path": "graph.count(device.category == 'silence-detector' on the programme path)",
-      "op": "eq",
-      "value": 0
-     }
-    ]
-   },
-   "explanation": "Une sortie qui part vers l'émetteur ou l'encodeur de streaming sans détecteur de silence laisse un « blanc » durer jusqu'à ce que quelqu'un s'en aperçoive. Un détecteur comme le Sonifex RB-SD1 bascule automatiquement sur une source de secours après une durée réglable (2 à 30 s, ou 125 s) sous un seuil réglable (−60 à −15 dBu), et signale la panne par contact.",
-   "fix": "Insérer un détecteur de silence avec source de secours entre la sortie programme et la liaison vers l'émetteur, ou activer la fonction équivalente du processeur ou du playout.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "port.flags:isTransmitterFeed",
-    "device.category:silence-detector"
-   ],
-   "concept_ids": [
-    "silence-detection",
-    "broadcast-redundancy"
-   ],
-   "sources": [
-    {
-     "url": "https://sonifex.co.uk/product/rb-sd1/",
-     "publisher": "Sonifex",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
-    }
-   ],
-   "review": "ok"
-  }
- ],
- "not_found_log": []
+  ],
+  "not_found_log": []
 }

@@ -226,7 +226,8 @@
       "covers": [
         "gear_positions.comrex-access-nx (codec IP portable, Wi-Fi/Ethernet/4G-5G, batterie jusqu'à 6,5 h)",
         "power_points (travail sur batterie)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

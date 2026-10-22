@@ -58,7 +58,8 @@
           "covers": [
             "symptom",
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-roommodes.htm",
@@ -68,7 +69,8 @@
           "kind": "university",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/monitor-placement",
@@ -78,7 +80,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/improving-room-acoustics",
@@ -88,7 +91,8 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -138,7 +142,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/improving-room-acoustics",
@@ -148,7 +153,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -201,7 +207,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -211,7 +218,8 @@
           "kind": "standard",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -266,7 +274,8 @@
             "symptom",
             "checks",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -276,7 +285,8 @@
           "kind": "standard",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -328,7 +338,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-timedelayphase.htm",
@@ -338,7 +349,8 @@
           "kind": "university",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -392,7 +404,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-speedsound.htm",
@@ -402,7 +415,8 @@
           "kind": "university",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

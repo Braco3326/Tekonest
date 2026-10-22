@@ -1,1187 +1,1250 @@
 {
- "entity": "glossary",
- "domain": "wireless-rf",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "hf-liaison",
-   "term_fr": "Liaison HF",
-   "term_en": "Wireless link",
-   "domain": "wireless-rf",
-   "definition": "Transmission d'un signal audio par onde radio entre un émetteur et un récepteur ; en jargon français, « un HF » désigne un micro sans fil.",
-   "see_also": [
-    "uhf-wireless-system"
-   ],
-   "sources": [
+  "entity": "glossary",
+  "domain": "wireless-rf",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "uhf",
-   "term_fr": "UHF",
-   "term_en": "Ultra High Frequency",
-   "domain": "wireless-rf",
-   "definition": "Gamme des fréquences ultra-hautes ; les micros sans fil professionnels travaillent surtout en UHF, par exemple 470–694 MHz en France.",
-   "see_also": [
-    "uhf-wireless-system"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "hf-liaison",
+      "term_fr": "Liaison HF",
+      "term_en": "Wireless link",
+      "domain": "wireless-rf",
+      "definition": "Transmission d'un signal audio par onde radio entre un émetteur et un récepteur ; en jargon français, « un HF » désigne un micro sans fil.",
+      "see_also": [
+        "uhf-wireless-system"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "vhf",
-   "term_fr": "VHF",
-   "term_en": "Very High Frequency",
-   "domain": "wireless-rf",
-   "definition": "Gamme des très hautes fréquences ; en France, la bande 174–223 MHz est ouverte au PMSE.",
-   "see_also": [
-    "pmse-regulation-france"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "uhf",
+      "term_fr": "UHF",
+      "term_en": "Ultra High Frequency",
+      "domain": "wireless-rf",
+      "definition": "Gamme des fréquences ultra-hautes ; les micros sans fil professionnels travaillent surtout en UHF, par exemple 470–694 MHz en France.",
+      "see_also": [
+        "uhf-wireless-system"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pmse",
-   "term_fr": "PMSE",
-   "term_en": "Programme Making and Special Events",
-   "domain": "wireless-rf",
-   "definition": "Désignation européenne des équipements radio de production (micros sans fil, ear monitors, liaisons d'ordre) ; en France, « équipements auxiliaires sonores de conception de programmes et de radiodiffusion ».",
-   "see_also": [
-    "pmse-regulation-france"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
+      "id": "vhf",
+      "term_fr": "VHF",
+      "term_en": "Very High Frequency",
+      "domain": "wireless-rf",
+      "definition": "Gamme des très hautes fréquences ; en France, la bande 174–223 MHz est ouverte au PMSE.",
+      "see_also": [
+        "pmse-regulation-france"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
-     "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "arcep",
-   "term_fr": "ARCEP",
-   "term_en": "French telecoms regulator",
-   "domain": "wireless-rf",
-   "definition": "Autorité de régulation des communications électroniques, des postes et de la distribution de la presse ; elle fixe les conditions d'utilisation des fréquences PMSE.",
-   "see_also": [
-    "pmse-regulation-france"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "anfr",
-   "term_fr": "ANFR",
-   "term_en": "French National Frequency Agency",
-   "domain": "wireless-rf",
-   "definition": "Agence nationale des fréquences ; elle instruit pour l'ARCEP les demandes d'autorisation temporaire et a géré les aides PMSE liées à la bande 700 MHz.",
-   "see_also": [
-    "pmse-regulation-france",
-    "pmse-700mhz-band-clearance"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
+      "id": "pmse",
+      "term_fr": "PMSE",
+      "term_en": "Programme Making and Special Events",
+      "domain": "wireless-rf",
+      "definition": "Désignation européenne des équipements radio de production (micros sans fil, ear monitors, liaisons d'ordre) ; en France, « équipements auxiliaires sonores de conception de programmes et de radiodiffusion ».",
+      "see_also": [
+        "pmse-regulation-france"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
+          "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.anfr.fr/fileadmin/mediatheque/documents/Communiques_Presse/CP_ouverture_PMSE.pdf",
-     "publisher": "ANFR, communiqué de presse du 28 février 2017 (aides PMSE bande 700 MHz)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "bande-700-mhz",
-   "term_fr": "Bande 700 MHz",
-   "term_en": "700 MHz band",
-   "domain": "wireless-rf",
-   "definition": "Bande 694–790 MHz réaffectée au très haut débit mobile et fermée au PMSE en France depuis le 1er juillet 2019.",
-   "see_also": [
-    "pmse-700mhz-band-clearance"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/uploads/tx_gsavis/16-0272.pdf",
-     "publisher": "ARCEP, décision n° 2016-0272 du 18 février 2016",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
+      "id": "arcep",
+      "term_fr": "ARCEP",
+      "term_en": "French telecoms regulator",
+      "domain": "wireless-rf",
+      "definition": "Autorité de régulation des communications électroniques, des postes et de la distribution de la presse ; elle fixe les conditions d'utilisation des fréquences PMSE.",
+      "see_also": [
+        "pmse-regulation-france"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "autorisation-temporaire",
-   "term_fr": "Autorisation temporaire de fréquence",
-   "term_en": "Temporary frequency authorisation",
-   "domain": "wireless-rf",
-   "definition": "Autorisation délivrée par l'ARCEP pour deux mois au maximum, demandée auprès de l'ANFR.",
-   "see_also": [
-    "pmse-regulation-france"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "par-erp",
-   "term_fr": "Puissance apparente rayonnée (PAR)",
-   "term_en": "Effective radiated power (ERP)",
-   "domain": "wireless-rf",
-   "definition": "Puissance rayonnée exprimée par rapport à un dipôle demi-onde ; limitée à 50 mW (17 dBm) pour le PMSE dans 470–694 MHz en France.",
-   "see_also": [
-    "rf-power-erp"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
-     "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pire-eirp",
-   "term_fr": "Puissance isotrope rayonnée équivalente (p.i.r.e.)",
-   "term_en": "EIRP",
-   "domain": "wireless-rf",
-   "definition": "Puissance rayonnée exprimée par rapport à une antenne isotrope ; utilisée par exemple dans les limites transitoires de la bande 700 MHz (19 dBm/200 kHz).",
-   "see_also": [
-    "rf-power-erp"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/uploads/tx_gsavis/16-0272.pdf",
-     "publisher": "ARCEP, décision n° 2016-0272 du 18 février 2016",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "porteuse",
-   "term_fr": "Porteuse",
-   "term_en": "Carrier",
-   "domain": "wireless-rf",
-   "definition": "Onde radio à la fréquence de travail que l'émetteur module avec l'audio.",
-   "see_also": [
-    "uhf-wireless-system"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "excursion",
-   "term_fr": "Excursion (déviation) FM",
-   "term_en": "Deviation",
-   "domain": "wireless-rf",
-   "definition": "Écart de fréquence de la porteuse FM provoqué par l'amplitude du signal audio, exprimé en kHz.",
-   "see_also": [
-    "fm-deviation"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "compander",
-   "term_fr": "Compander",
-   "term_en": "Compander",
-   "domain": "wireless-rf",
-   "definition": "Compression de la dynamique dans l'émetteur (souvent 2:1) et expansion inverse dans le récepteur (1:2) pour gagner en dynamique sur la liaison radio.",
-   "see_also": [
-    "fm-companding"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "preaccentuation",
-   "term_fr": "Préaccentuation / désaccentuation",
-   "term_en": "Pre-emphasis / de-emphasis",
-   "domain": "wireless-rf",
-   "definition": "Accentuation des aigus avant émission compensée à la réception, qui réduit le souffle aigu jusqu'à environ 10 dB.",
-   "see_also": [
-    "fm-companding"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "squelch-terme",
-   "term_fr": "Squelch",
-   "term_en": "Squelch",
-   "domain": "wireless-rf",
-   "definition": "Coupure automatique de la sortie audio du récepteur quand le signal attendu est absent ou trop faible.",
-   "see_also": [
-    "squelch"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "tonalite-pilote",
-   "term_fr": "Tonalité pilote",
-   "term_en": "Pilot tone / tone-key squelch",
-   "domain": "wireless-rf",
-   "definition": "Tonalité inaudible ajoutée par l'émetteur ; le récepteur ne s'ouvre que s'il la détecte.",
-   "see_also": [
-    "squelch"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "anfr",
+      "term_fr": "ANFR",
+      "term_en": "French National Frequency Agency",
+      "domain": "wireless-rf",
+      "definition": "Agence nationale des fréquences ; elle instruit pour l'ARCEP les demandes d'autorisation temporaire et a géré les aides PMSE liées à la bande 700 MHz.",
+      "see_also": [
+        "pmse-regulation-france",
+        "pmse-700mhz-band-clearance"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.anfr.fr/fileadmin/mediatheque/documents/Communiques_Presse/CP_ouverture_PMSE.pdf",
+          "publisher": "ANFR, communiqué de presse du 28 février 2017 (aides PMSE bande 700 MHz)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
-     "publisher": "Sennheiser, ew 100 G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "diversity",
-   "term_fr": "Diversité (diversity)",
-   "term_en": "Diversity",
-   "domain": "wireless-rf",
-   "definition": "Réception à deux antennes espacées pour réduire le risque de décrochage.",
-   "see_also": [
-    "diversity-reception"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "true-diversity",
-   "term_fr": "True diversity",
-   "term_en": "True diversity",
-   "domain": "wireless-rf",
-   "definition": "Diversité à deux étages de réception complets, chacun avec son antenne, avec sélection ou combinaison des sorties.",
-   "see_also": [
-    "diversity-reception"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dropout",
-   "term_fr": "Décrochage (dropout)",
-   "term_en": "Dropout",
-   "domain": "wireless-rf",
-   "definition": "Perte complète et brève du signal audio d'une liaison HF, souvent due aux trajets multiples ou à la distance.",
-   "see_also": [
-    "multipath-dropout"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "trajets-multiples",
-   "term_fr": "Trajets multiples",
-   "term_en": "Multipath",
-   "domain": "wireless-rf",
-   "definition": "Arrivée au récepteur d'ondes directes et réfléchies dont les phases différentes provoquent renforcements et annulations.",
-   "see_also": [
-    "multipath-dropout"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "intermodulation-terme",
-   "term_fr": "Produit d'intermodulation",
-   "term_en": "Intermodulation product",
-   "domain": "wireless-rf",
-   "definition": "Fréquence parasite issue de la combinaison de plusieurs porteuses dans un circuit non linéaire, par exemple 2f1 − f2.",
-   "see_also": [
-    "intermodulation"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "bande-700-mhz",
+      "term_fr": "Bande 700 MHz",
+      "term_en": "700 MHz band",
+      "domain": "wireless-rf",
+      "definition": "Bande 694–790 MHz réaffectée au très haut débit mobile et fermée au PMSE en France depuis le 1er juillet 2019.",
+      "see_also": [
+        "pmse-700mhz-band-clearance"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/uploads/tx_gsavis/16-0272.pdf",
+          "publisher": "ARCEP, décision n° 2016-0272 du 18 février 2016",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
-     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "im3",
-   "term_fr": "IM du 3e ordre",
-   "term_en": "Third-order intermodulation",
-   "domain": "wireless-rf",
-   "definition": "Produits d'intermodulation les plus forts proches de la bande : 2f1 − f2, 2f2 − f1 et, à trois émetteurs, f1 + f2 − f3.",
-   "see_also": [
-    "intermodulation"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "autorisation-temporaire",
+      "term_fr": "Autorisation temporaire de fréquence",
+      "term_en": "Temporary frequency authorisation",
+      "domain": "wireless-rf",
+      "definition": "Autorisation délivrée par l'ARCEP pour deux mois au maximum, demandée auprès de l'ANFR.",
+      "see_also": [
+        "pmse-regulation-france"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
-     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "selectivite",
-   "term_fr": "Sélectivité",
-   "term_en": "Selectivity",
-   "domain": "wireless-rf",
-   "definition": "Aptitude d'un récepteur à séparer des fréquences voisines ; elle fixe l'écart minimal entre deux systèmes.",
-   "see_also": [
-    "channel-spacing-wireless"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "oscillateur-local",
-   "term_fr": "Oscillateur local (LO)",
-   "term_en": "Local oscillator",
-   "domain": "wireless-rf",
-   "definition": "Oscillateur interne du récepteur superhétérodyne qui, mélangé au signal, produit la fréquence intermédiaire.",
-   "see_also": [
-    "receiver-internal-frequencies"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "frequence-image",
-   "term_fr": "Fréquence image",
-   "term_en": "Image frequency",
-   "domain": "wireless-rf",
-   "definition": "Fréquence située à deux fois la FI de la fréquence de travail, susceptible de passer dans la FI du récepteur.",
-   "see_also": [
-    "receiver-internal-frequencies"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "frequence-intermediaire",
-   "term_fr": "Fréquence intermédiaire (FI)",
-   "term_en": "Intermediate frequency (IF)",
-   "domain": "wireless-rf",
-   "definition": "Fréquence fixe obtenue par mélange dans un récepteur superhétérodyne, sur laquelle se fait le filtrage principal.",
-   "see_also": [
-    "receiver-internal-frequencies"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "scan-hf",
-   "term_fr": "Scan",
-   "term_en": "Scan",
-   "domain": "wireless-rf",
-   "definition": "Balayage d'une plage de fréquences pour repérer les signaux présents et les canaux libres.",
-   "see_also": [
-    "rf-scanning"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "par-erp",
+      "term_fr": "Puissance apparente rayonnée (PAR)",
+      "term_en": "Effective radiated power (ERP)",
+      "domain": "wireless-rf",
+      "definition": "Puissance rayonnée exprimée par rapport à un dipôle demi-onde ; limitée à 50 mW (17 dBm) pour le PMSE dans 470–694 MHz en France.",
+      "see_also": [
+        "rf-power-erp"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
+          "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
-     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "groupe-canal",
-   "term_fr": "Groupe / canal",
-   "term_en": "Group / channel",
-   "domain": "wireless-rf",
-   "definition": "Jeux de fréquences précalculés et compatibles proposés par le fabricant ; ils supposent un spectre propre.",
-   "see_also": [
-    "rf-frequency-coordination"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
-     "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "antenne-quart-onde",
-   "term_fr": "Antenne quart d'onde",
-   "term_en": "Quarter-wave antenna",
-   "domain": "wireless-rf",
-   "definition": "Antenne fouet longue d'un quart de longueur d'onde, omnidirectionnelle, qui nécessite un plan de masse.",
-   "see_also": [
-    "wavelength-rf-antenna"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "antenne-demi-onde",
-   "term_fr": "Antenne demi-onde",
-   "term_en": "Half-wave antenna",
-   "domain": "wireless-rf",
-   "definition": "Antenne omnidirectionnelle sans plan de masse, adaptée au déport ; gain théorique jusqu'à environ 3 dB sur le quart d'onde.",
-   "see_also": [
-    "antenna-types-wireless"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "plan-de-masse",
-   "term_fr": "Plan de masse",
-   "term_en": "Ground plane",
-   "domain": "wireless-rf",
-   "definition": "Surface métallique reliée à la masse au pied d'une antenne quart d'onde, nécessaire à son bon fonctionnement.",
-   "see_also": [
-    "wavelength-rf-antenna"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "antenne-log-periodique",
-   "term_fr": "Antenne log-périodique",
-   "term_en": "Log-periodic antenna",
-   "domain": "wireless-rf",
-   "definition": "Antenne directive large bande formée de dipôles de tailles croissantes ; souvent appelée « paddle » sous forme de panneau.",
-   "see_also": [
-    "antenna-types-wireless"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "antenne-helice",
-   "term_fr": "Antenne hélicoïdale",
-   "term_en": "Helical antenna",
-   "domain": "wireless-rf",
-   "definition": "Antenne très directive et large bande, utilisée notamment pour l'émission des ear monitors.",
-   "see_also": [
-    "antenna-types-wireless"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "pire-eirp",
+      "term_fr": "Puissance isotrope rayonnée équivalente (p.i.r.e.)",
+      "term_en": "EIRP",
+      "domain": "wireless-rf",
+      "definition": "Puissance rayonnée exprimée par rapport à une antenne isotrope ; utilisée par exemple dans les limites transitoires de la bande 700 MHz (19 dBm/200 kHz).",
+      "see_also": [
+        "rf-power-erp"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/uploads/tx_gsavis/16-0272.pdf",
+          "publisher": "ARCEP, décision n° 2016-0272 du 18 février 2016",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
-     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "antenne-yagi",
-   "term_fr": "Antenne Yagi",
-   "term_en": "Yagi antenna",
-   "domain": "wireless-rf",
-   "definition": "Antenne directive à dipôle, réflecteur et directeurs, à bande étroite.",
-   "see_also": [
-    "antenna-types-wireless"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dbi",
-   "term_fr": "dBi",
-   "term_en": "dBi",
-   "domain": "wireless-rf",
-   "definition": "Gain d'antenne exprimé par rapport à une antenne isotrope théorique ; par exemple 5 dBi typique pour l'ADP UHF.",
-   "see_also": [
-    "antenna-types-wireless"
-   ],
-   "sources": [
-    {
-     "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
-     "publisher": "Sennheiser, ADP UHF product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "rapport-avant-arriere",
-   "term_fr": "Rapport avant/arrière",
-   "term_en": "Front-to-back ratio",
-   "domain": "wireless-rf",
-   "definition": "Différence de sensibilité d'une antenne directive entre l'avant et l'arrière ; > 14 dB pour l'ADP UHF.",
-   "see_also": [
-    "antenna-types-wireless"
-   ],
-   "sources": [
-    {
-     "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
-     "publisher": "Sennheiser, ADP UHF product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "coaxial-50-ohms",
-   "term_fr": "Câble coaxial 50 Ω",
-   "term_en": "50-ohm coaxial cable",
-   "domain": "wireless-rf",
-   "definition": "Câble d'antenne à impédance caractéristique de 50 Ω ; ses pertes augmentent avec la longueur et la fréquence.",
-   "see_also": [
-    "antenna-cable-loss"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "booster-antenne",
-   "term_fr": "Booster (amplificateur d'antenne)",
-   "term_en": "Antenna booster",
-   "domain": "wireless-rf",
-   "definition": "Amplificateur placé près de l'antenne pour compenser les pertes d'un long câble, souvent alimenté en continu par le coaxial.",
-   "see_also": [
-    "antenna-cable-loss"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "porteuse",
+      "term_fr": "Porteuse",
+      "term_en": "Carrier",
+      "domain": "wireless-rf",
+      "definition": "Onde radio à la fréquence de travail que l'émetteur module avec l'audio.",
+      "see_also": [
+        "uhf-wireless-system"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://assets.sennheiser.com/download/assets/EW-D_ASA_Product_specification_v1.2_EN.pdf/bb086990e7db11f08c892a34179bc91d?attachment=true",
-     "publisher": "Sennheiser, EW-D ASA product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "repartiteur-antenne",
-   "term_fr": "Répartiteur d'antennes",
-   "term_en": "Antenna splitter / distribution amplifier",
-   "domain": "wireless-rf",
-   "definition": "Appareil qui distribue le signal d'une paire d'antennes vers plusieurs récepteurs ; actif, il compense la perte de division.",
-   "see_also": [
-    "antenna-distribution"
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "excursion",
+      "term_fr": "Excursion (déviation) FM",
+      "term_en": "Deviation",
+      "domain": "wireless-rf",
+      "definition": "Écart de fréquence de la porteuse FM provoqué par l'amplitude du signal audio, exprimé en kHz.",
+      "see_also": [
+        "fm-deviation"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
-     "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "cascade-rf",
-   "term_fr": "Cascade HF",
-   "term_en": "RF cascade",
-   "domain": "wireless-rf",
-   "definition": "Sortie d'un répartiteur ou d'un récepteur qui renvoie le signal d'antenne vers un autre appareil.",
-   "see_also": [
-    "antenna-distribution"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
-     "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "compander",
+      "term_fr": "Compander",
+      "term_en": "Compander",
+      "domain": "wireless-rf",
+      "definition": "Compression de la dynamique dans l'émetteur (souvent 2:1) et expansion inverse dans le récepteur (1:2) pour gagner en dynamique sur la liaison radio.",
+      "see_also": [
+        "fm-companding"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.sennheiser.com/globalassets/digizuite/41648-en-sp_1192_v13.0_em_6000_product_specification_en.pdf",
-     "publisher": "Sennheiser, EM 6000 product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "combineur",
-   "term_fr": "Combineur",
-   "term_en": "Combiner",
-   "domain": "wireless-rf",
-   "definition": "Appareil qui regroupe plusieurs émetteurs sur une seule antenne (par exemple 8 vers 1 pour des ear monitors).",
-   "see_also": [
-    "antenna-combiner"
-   ],
-   "sources": [
-    {
-     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
-     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ear-monitor-hf",
-   "term_fr": "Ear monitor HF (IEM)",
-   "term_en": "Wireless in-ear monitor",
-   "domain": "wireless-rf",
-   "definition": "Système qui transmet un mix de retour par radio vers un récepteur de ceinture et des écouteurs intra-auriculaires.",
-   "see_also": [
-    "iem-transmitter-rf",
-    "in-ear-monitoring"
-   ],
-   "sources": [
-    {
-     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
-     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "liaison-ordre",
-   "term_fr": "Liaison d'ordre",
-   "term_en": "Talkback link",
-   "domain": "wireless-rf",
-   "definition": "Liaison sans fil de type talkie-walkie entre techniciens ; autorisée jusqu'à 1 W de PAR dans 470–694 MHz en France.",
-   "see_also": [
-    "pmse-regulation-france"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
-     "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "tnt",
-   "term_fr": "TNT",
-   "term_en": "Digital terrestrial television",
-   "domain": "wireless-rf",
-   "definition": "Télévision numérique terrestre, service primaire de la bande UHF avec lequel le PMSE doit cohabiter sans le brouiller.",
-   "see_also": [
-    "pmse-regulation-france"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
+      "id": "preaccentuation",
+      "term_fr": "Préaccentuation / désaccentuation",
+      "term_en": "Pre-emphasis / de-emphasis",
+      "domain": "wireless-rf",
+      "definition": "Accentuation des aigus avant émission compensée à la réception, qui réduit le souffle aigu jusqu'à environ 10 dB.",
+      "see_also": [
+        "fm-companding"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
-     "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "latence-hf",
-   "term_fr": "Latence d'un système HF numérique",
-   "term_en": "Digital wireless latency",
-   "domain": "wireless-rf",
-   "definition": "Retard introduit par la conversion et le codage numérique ; quasi nul en analogique, quelques millisecondes en numérique.",
-   "see_also": [
-    "analog-vs-digital-wireless"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/en-EU/insights/analogue-vs-digital-wireless-microphones",
-     "publisher": "Shure Europe, M. Henshall, « Analogue vs. Digital Wireless Microphones » (13/05/2015)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "squelch-terme",
+      "term_fr": "Squelch",
+      "term_en": "Squelch",
+      "domain": "wireless-rf",
+      "definition": "Coupure automatique de la sortie audio du récepteur quand le signal attendu est absent ou trop faible.",
+      "see_also": [
+        "squelch"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
-     "publisher": "Sennheiser, EW-DX EM 2 product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "chiffrement-aes256",
-   "term_fr": "Chiffrement AES-256",
-   "term_en": "AES-256 encryption",
-   "domain": "wireless-rf",
-   "definition": "Chiffrement de l'audio possible uniquement sur les systèmes HF numériques.",
-   "see_also": [
-    "analog-vs-digital-wireless"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/en-EU/insights/analogue-vs-digital-wireless-microphones",
-     "publisher": "Shure Europe, M. Henshall, « Analogue vs. Digital Wireless Microphones » (13/05/2015)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "tonalite-pilote",
+      "term_fr": "Tonalité pilote",
+      "term_en": "Pilot tone / tone-key squelch",
+      "domain": "wireless-rf",
+      "definition": "Tonalité inaudible ajoutée par l'émetteur ; le récepteur ne s'ouvre que s'il la détecte.",
+      "see_also": [
+        "squelch"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.sennheiser.com/globalassets/digizuite/41547-en-sp_1138_v2.0_ew_100_g4-935-945-s_product_specification_en.pdf",
+          "publisher": "Sennheiser, ew 100 G4 product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
-     "publisher": "Sennheiser, EW-DX EM 2 product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "diversity",
+      "term_fr": "Diversité (diversity)",
+      "term_en": "Diversity",
+      "domain": "wireless-rf",
+      "definition": "Réception à deux antennes espacées pour réduire le risque de décrochage.",
+      "see_also": [
+        "diversity-reception"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "true-diversity",
+      "term_fr": "True diversity",
+      "term_en": "True diversity",
+      "domain": "wireless-rf",
+      "definition": "Diversité à deux étages de réception complets, chacun avec son antenne, avec sélection ou combinaison des sorties.",
+      "see_also": [
+        "diversity-reception"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "dropout",
+      "term_fr": "Décrochage (dropout)",
+      "term_en": "Dropout",
+      "domain": "wireless-rf",
+      "definition": "Perte complète et brève du signal audio d'une liaison HF, souvent due aux trajets multiples ou à la distance.",
+      "see_also": [
+        "multipath-dropout"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "trajets-multiples",
+      "term_fr": "Trajets multiples",
+      "term_en": "Multipath",
+      "domain": "wireless-rf",
+      "definition": "Arrivée au récepteur d'ondes directes et réfléchies dont les phases différentes provoquent renforcements et annulations.",
+      "see_also": [
+        "multipath-dropout"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "intermodulation-terme",
+      "term_fr": "Produit d'intermodulation",
+      "term_en": "Intermodulation product",
+      "domain": "wireless-rf",
+      "definition": "Fréquence parasite issue de la combinaison de plusieurs porteuses dans un circuit non linéaire, par exemple 2f1 − f2.",
+      "see_also": [
+        "intermodulation"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+          "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "im3",
+      "term_fr": "IM du 3e ordre",
+      "term_en": "Third-order intermodulation",
+      "domain": "wireless-rf",
+      "definition": "Produits d'intermodulation les plus forts proches de la bande : 2f1 − f2, 2f2 − f1 et, à trois émetteurs, f1 + f2 − f3.",
+      "see_also": [
+        "intermodulation"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+          "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "selectivite",
+      "term_fr": "Sélectivité",
+      "term_en": "Selectivity",
+      "domain": "wireless-rf",
+      "definition": "Aptitude d'un récepteur à séparer des fréquences voisines ; elle fixe l'écart minimal entre deux systèmes.",
+      "see_also": [
+        "channel-spacing-wireless"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "oscillateur-local",
+      "term_fr": "Oscillateur local (LO)",
+      "term_en": "Local oscillator",
+      "domain": "wireless-rf",
+      "definition": "Oscillateur interne du récepteur superhétérodyne qui, mélangé au signal, produit la fréquence intermédiaire.",
+      "see_also": [
+        "receiver-internal-frequencies"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "frequence-image",
+      "term_fr": "Fréquence image",
+      "term_en": "Image frequency",
+      "domain": "wireless-rf",
+      "definition": "Fréquence située à deux fois la FI de la fréquence de travail, susceptible de passer dans la FI du récepteur.",
+      "see_also": [
+        "receiver-internal-frequencies"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "frequence-intermediaire",
+      "term_fr": "Fréquence intermédiaire (FI)",
+      "term_en": "Intermediate frequency (IF)",
+      "domain": "wireless-rf",
+      "definition": "Fréquence fixe obtenue par mélange dans un récepteur superhétérodyne, sur laquelle se fait le filtrage principal.",
+      "see_also": [
+        "receiver-internal-frequencies"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "scan-hf",
+      "term_fr": "Scan",
+      "term_en": "Scan",
+      "domain": "wireless-rf",
+      "definition": "Balayage d'une plage de fréquences pour repérer les signaux présents et les canaux libres.",
+      "see_also": [
+        "rf-scanning"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+          "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "groupe-canal",
+      "term_fr": "Groupe / canal",
+      "term_en": "Group / channel",
+      "domain": "wireless-rf",
+      "definition": "Jeux de fréquences précalculés et compatibles proposés par le fabricant ; ils supposent un spectre propre.",
+      "see_also": [
+        "rf-frequency-coordination"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/en-US/insights/all-about-wireless-intermodulation-distortion",
+          "publisher": "Shure, « All About Wireless: Intermodulation Distortion » (07/11/2018)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "antenne-quart-onde",
+      "term_fr": "Antenne quart d'onde",
+      "term_en": "Quarter-wave antenna",
+      "domain": "wireless-rf",
+      "definition": "Antenne fouet longue d'un quart de longueur d'onde, omnidirectionnelle, qui nécessite un plan de masse.",
+      "see_also": [
+        "wavelength-rf-antenna"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "antenne-demi-onde",
+      "term_fr": "Antenne demi-onde",
+      "term_en": "Half-wave antenna",
+      "domain": "wireless-rf",
+      "definition": "Antenne omnidirectionnelle sans plan de masse, adaptée au déport ; gain théorique jusqu'à environ 3 dB sur le quart d'onde.",
+      "see_also": [
+        "antenna-types-wireless"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "plan-de-masse",
+      "term_fr": "Plan de masse",
+      "term_en": "Ground plane",
+      "domain": "wireless-rf",
+      "definition": "Surface métallique reliée à la masse au pied d'une antenne quart d'onde, nécessaire à son bon fonctionnement.",
+      "see_also": [
+        "wavelength-rf-antenna"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "antenne-log-periodique",
+      "term_fr": "Antenne log-périodique",
+      "term_en": "Log-periodic antenna",
+      "domain": "wireless-rf",
+      "definition": "Antenne directive large bande formée de dipôles de tailles croissantes ; souvent appelée « paddle » sous forme de panneau.",
+      "see_also": [
+        "antenna-types-wireless"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "antenne-helice",
+      "term_fr": "Antenne hélicoïdale",
+      "term_en": "Helical antenna",
+      "domain": "wireless-rf",
+      "definition": "Antenne très directive et large bande, utilisée notamment pour l'émission des ear monitors.",
+      "see_also": [
+        "antenna-types-wireless"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+          "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "antenne-yagi",
+      "term_fr": "Antenne Yagi",
+      "term_en": "Yagi antenna",
+      "domain": "wireless-rf",
+      "definition": "Antenne directive à dipôle, réflecteur et directeurs, à bande étroite.",
+      "see_also": [
+        "antenna-types-wireless"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok",
+          "note": "Publication Shure lue sur une copie hébergée par un tiers (George Mason University) : gardée en verified-secondary (miroir), comme partout ailleurs dans le KB."
+        }
+      ]
+    },
+    {
+      "id": "dbi",
+      "term_fr": "dBi",
+      "term_en": "dBi",
+      "domain": "wireless-rf",
+      "definition": "Gain d'antenne exprimé par rapport à une antenne isotrope théorique ; par exemple 5 dBi typique pour l'ADP UHF.",
+      "see_also": [
+        "antenna-types-wireless"
+      ],
+      "sources": [
+        {
+          "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
+          "publisher": "Sennheiser, ADP UHF product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "rapport-avant-arriere",
+      "term_fr": "Rapport avant/arrière",
+      "term_en": "Front-to-back ratio",
+      "domain": "wireless-rf",
+      "definition": "Différence de sensibilité d'une antenne directive entre l'avant et l'arrière ; > 14 dB pour l'ADP UHF.",
+      "see_also": [
+        "antenna-types-wireless"
+      ],
+      "sources": [
+        {
+          "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
+          "publisher": "Sennheiser, ADP UHF product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "coaxial-50-ohms",
+      "term_fr": "Câble coaxial 50 Ω",
+      "term_en": "50-ohm coaxial cable",
+      "domain": "wireless-rf",
+      "definition": "Câble d'antenne à impédance caractéristique de 50 Ω ; ses pertes augmentent avec la longueur et la fréquence.",
+      "see_also": [
+        "antenna-cable-loss"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "booster-antenne",
+      "term_fr": "Booster (amplificateur d'antenne)",
+      "term_en": "Antenna booster",
+      "domain": "wireless-rf",
+      "definition": "Amplificateur placé près de l'antenne pour compenser les pertes d'un long câble, souvent alimenté en continu par le coaxial.",
+      "see_also": [
+        "antenna-cable-loss"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/EW-D_ASA_Product_specification_v1.2_EN.pdf/bb086990e7db11f08c892a34179bc91d?attachment=true",
+          "publisher": "Sennheiser, EW-D ASA product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "repartiteur-antenne",
+      "term_fr": "Répartiteur d'antennes",
+      "term_en": "Antenna splitter / distribution amplifier",
+      "domain": "wireless-rf",
+      "definition": "Appareil qui distribue le signal d'une paire d'antennes vers plusieurs récepteurs ; actif, il compense la perte de division.",
+      "see_also": [
+        "antenna-distribution"
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
+          "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "cascade-rf",
+      "term_fr": "Cascade HF",
+      "term_en": "RF cascade",
+      "domain": "wireless-rf",
+      "definition": "Sortie d'un répartiteur ou d'un récepteur qui renvoie le signal d'antenne vers un autre appareil.",
+      "see_also": [
+        "antenna-distribution"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
+          "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.sennheiser.com/globalassets/digizuite/41648-en-sp_1192_v13.0_em_6000_product_specification_en.pdf",
+          "publisher": "Sennheiser, EM 6000 product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "combineur",
+      "term_fr": "Combineur",
+      "term_en": "Combiner",
+      "domain": "wireless-rf",
+      "definition": "Appareil qui regroupe plusieurs émetteurs sur une seule antenne (par exemple 8 vers 1 pour des ear monitors).",
+      "see_also": [
+        "antenna-combiner"
+      ],
+      "sources": [
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+          "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "ear-monitor-hf",
+      "term_fr": "Ear monitor HF (IEM)",
+      "term_en": "Wireless in-ear monitor",
+      "domain": "wireless-rf",
+      "definition": "Système qui transmet un mix de retour par radio vers un récepteur de ceinture et des écouteurs intra-auriculaires.",
+      "see_also": [
+        "iem-transmitter-rf",
+        "in-ear-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+          "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "liaison-ordre",
+      "term_fr": "Liaison d'ordre",
+      "term_en": "Talkback link",
+      "domain": "wireless-rf",
+      "definition": "Liaison sans fil de type talkie-walkie entre techniciens ; autorisée jusqu'à 1 W de PAR dans 470–694 MHz en France.",
+      "see_also": [
+        "pmse-regulation-france"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
+          "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "tnt",
+      "term_fr": "TNT",
+      "term_en": "Digital terrestrial television",
+      "domain": "wireless-rf",
+      "definition": "Télévision numérique terrestre, service primaire de la bande UHF avec lequel le PMSE doit cohabiter sans le brouiller.",
+      "see_also": [
+        "pmse-regulation-france"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.arcep.fr/uploads/tx_gsavis/15-0830.pdf",
+          "publisher": "ARCEP, décision n° 2015-0830 du 2 juillet 2015",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "latence-hf",
+      "term_fr": "Latence d'un système HF numérique",
+      "term_en": "Digital wireless latency",
+      "domain": "wireless-rf",
+      "definition": "Retard introduit par la conversion et le codage numérique ; quasi nul en analogique, quelques millisecondes en numérique.",
+      "see_also": [
+        "analog-vs-digital-wireless"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/en-EU/insights/analogue-vs-digital-wireless-microphones",
+          "publisher": "Shure Europe, M. Henshall, « Analogue vs. Digital Wireless Microphones » (13/05/2015)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+          "publisher": "Sennheiser, EW-DX EM 2 product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "chiffrement-aes256",
+      "term_fr": "Chiffrement AES-256",
+      "term_en": "AES-256 encryption",
+      "domain": "wireless-rf",
+      "definition": "Chiffrement de l'audio possible uniquement sur les systèmes HF numériques.",
+      "see_also": [
+        "analog-vs-digital-wireless"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/en-EU/insights/analogue-vs-digital-wireless-microphones",
+          "publisher": "Shure Europe, M. Henshall, « Analogue vs. Digital Wireless Microphones » (13/05/2015)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+          "publisher": "Sennheiser, EW-DX EM 2 product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     }
-   ]
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Définitions officielles françaises (ANFR/ARCEP) de « liaison de retour son »",
-   "searched": "Décision ARCEP 2015-0830 (terme employé sans définition)"
-  }
- ]
+  ],
+  "not_found_log": [
+    {
+      "what": "Définitions officielles françaises (ANFR/ARCEP) de « liaison de retour son »",
+      "searched": "Décision ARCEP 2015-0830 (terme employé sans définition)"
+    }
+  ]
 }

@@ -1,746 +1,767 @@
 {
- "entity": "procedure",
- "domain": "microphones-miking",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "connect-condenser-with-phantom",
-   "name_fr": "Brancher un micro statique et activer le +48 V",
-   "name_en": "Connect a condenser mic and enable phantom power",
-   "domain": "microphones-miking",
-   "context": "Mise en service d'un micro à condensateur (ex. U 87 Ai) sur un préampli ou une console, en studio ou en live.",
-   "duration_min": 5,
-   "equipment_ids": [
-    "neumann-u87-ai",
-    "focusrite-isa-one"
-   ],
-   "concept_ids": [
-    "phantom-power",
-    "condenser-microphone",
-    "microphone-sensitivity"
-   ],
-   "rule_ids": [
-    "phantom-power-required",
-    "phantom-into-unbalanced-link"
-   ],
-   "steps": [
+  "entity": "procedure",
+  "domain": "microphones-miking",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "n": 1,
-     "preconditions": [
-      "Micro, câble XLR symétrique et entrée micro identifiés"
-     ],
-     "action": "Baisser le gain du préampli et le fader de la voie ; vérifier que le +48 V de la voie est coupé.",
-     "expected_result": "Aucune tension ni signal sur la voie pendant le branchement.",
-     "typical_mistakes": [
-      "Brancher fantôme actif et volume ouvert : claquement fort dans les écoutes"
-     ]
+      "id": "connect-condenser-with-phantom",
+      "name_fr": "Brancher un micro statique et activer le +48 V",
+      "name_en": "Connect a condenser mic and enable phantom power",
+      "domain": "microphones-miking",
+      "context": "Mise en service d'un micro à condensateur (ex. U 87 Ai) sur un préampli ou une console, en studio ou en live.",
+      "duration_min": 5,
+      "equipment_ids": [
+        "neumann-u87-ai",
+        "focusrite-isa-one"
+      ],
+      "concept_ids": [
+        "phantom-power",
+        "condenser-microphone",
+        "microphone-sensitivity"
+      ],
+      "rule_ids": [
+        "phantom-power-required",
+        "phantom-into-unbalanced-link"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Micro, câble XLR symétrique et entrée micro identifiés"
+          ],
+          "action": "Baisser le gain du préampli et le fader de la voie ; vérifier que le +48 V de la voie est coupé.",
+          "expected_result": "Aucune tension ni signal sur la voie pendant le branchement.",
+          "typical_mistakes": [
+            "Brancher fantôme actif et volume ouvert : claquement fort dans les écoutes"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Relier le micro (XLR mâle) à l'entrée micro (XLR femelle) avec un câble XLR 3 broches symétrique, sans adaptateur asymétrique.",
+          "expected_result": "Liaison symétrique continue de la capsule au préampli.",
+          "typical_mistakes": [
+            "Utiliser un câble jack mono (TS) ou un adaptateur asymétrique : le fantôme ne passe pas ou se court-circuite"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Activer le +48 V sur la voie (ou le groupe de voies) et attendre quelques secondes que l'électronique du micro se stabilise.",
+          "expected_result": "Le témoin +48 V s'allume ; le micro commence à produire un signal.",
+          "typical_mistakes": [
+            "Oublier que certaines consoles commutent le fantôme par groupe de voies (risque pour un ruban voisin)"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Monter le gain en parlant ou en jouant à niveau réel, en surveillant le vumètre ; engager le pad du micro si la source est très forte.",
+          "expected_result": "Niveau correct sans écrêtage, bruit de fond bas.",
+          "typical_mistakes": [
+            "Confondre absence de fantôme et gain trop bas"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Pour débrancher : baisser le niveau, couper le +48 V, attendre, puis débrancher.",
+          "expected_result": "Pas de claquement à la déconnexion.",
+          "typical_mistakes": [
+            "Débrancher sous fantôme volume ouvert"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V et baisser le niveau avant de (dé)brancher (Neumann).",
+        "Ne pas brancher de micro ou câble asymétrique sur une entrée fantôme active (DPA)."
+      ],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+          "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+          "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "n": 2,
-     "preconditions": [],
-     "action": "Relier le micro (XLR mâle) à l'entrée micro (XLR femelle) avec un câble XLR 3 broches symétrique, sans adaptateur asymétrique.",
-     "expected_result": "Liaison symétrique continue de la capsule au préampli.",
-     "typical_mistakes": [
-      "Utiliser un câble jack mono (TS) ou un adaptateur asymétrique : le fantôme ne passe pas ou se court-circuite"
-     ]
+      "id": "connect-ribbon-microphone-safely",
+      "name_fr": "Mettre en œuvre un micro à ruban sans risque",
+      "name_en": "Set up a ribbon microphone safely",
+      "domain": "microphones-miking",
+      "context": "Utilisation d'un ruban passif (ex. Royer R-121, Coles 4038) en studio, sur une console où le fantôme est disponible.",
+      "duration_min": 10,
+      "equipment_ids": [
+        "royer-r-121",
+        "coles-4038"
+      ],
+      "concept_ids": [
+        "ribbon-microphone",
+        "phantom-power",
+        "polar-pattern"
+      ],
+      "rule_ids": [
+        "phantom-on-ribbon"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Lire la documentation du ruban : est-il compatible avec le fantôme ? Tous ne le sont pas (Royer).",
+          "expected_result": "Compatibilité connue avant tout branchement.",
+          "typical_mistakes": [
+            "Supposer que tous les rubans tolèrent le +48 V"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Couper le +48 V de la voie (et du groupe si la console commute par groupe) avant de brancher.",
+          "expected_result": "Aucune tension sur la liaison au moment du contact.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Utiliser un câble XLR en bon état, câblé de façon standard, en liaison directe vers le préampli, sans passer par les points micro d'une patchbay.",
+          "expected_result": "Liaison symétrique, sans court-circuit transitoire.",
+          "typical_mistakes": [
+            "Brasser le ruban dans une patchbay fantôme actif : impulsion destructrice (Royer)"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Placer le micro hors des souffles directs (anti-pop, pas de vent) et le transporter avec précaution.",
+          "expected_result": "Ruban protégé mécaniquement.",
+          "typical_mistakes": [
+            "Souffler dans le micro pour le tester (Coles)"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Régler le gain : le ruban est peu sensible, il demande plus de gain qu'un condensateur ; exploiter la face arrière en sachant qu'elle est en polarité inversée.",
+          "expected_result": "Niveau correct ; image et polarité maîtrisées.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Si un courant traverse le ruban, il peut être détruit instantanément (Coles).",
+        "Pas de ruban dans une patchbay micro avec fantôme actif (Royer)."
+      ],
+      "sources": [
+        {
+          "url": "https://royerlabs.com/pdf/manuals/R-121manual.pdf",
+          "publisher": "Royer Labs, R-121 Operation Instructions",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://coleselectroacoustics.com/ribbon-microphone-care-tips/",
+          "publisher": "Coles Electroacoustics, Ribbon microphone care tips",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+          "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "safety_notes"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "n": 3,
-     "preconditions": [],
-     "action": "Activer le +48 V sur la voie (ou le groupe de voies) et attendre quelques secondes que l'électronique du micro se stabilise.",
-     "expected_result": "Le témoin +48 V s'allume ; le micro commence à produire un signal.",
-     "typical_mistakes": [
-      "Oublier que certaines consoles commutent le fantôme par groupe de voies (risque pour un ruban voisin)"
-     ]
+      "id": "setup-ortf-pair",
+      "name_fr": "Installer un couple ORTF",
+      "name_en": "Set up an ORTF pair",
+      "domain": "microphones-miking",
+      "context": "Prise stéréo d'un ensemble, d'un duo ou d'un piano avec deux cardioïdes appariés (ou un micro ORTF monobloc).",
+      "duration_min": 15,
+      "equipment_ids": [
+        "neumann-km-184",
+        "schoeps-mstc-74"
+      ],
+      "concept_ids": [
+        "stereo-ortf",
+        "polar-pattern",
+        "microphone-polarity"
+      ],
+      "rule_ids": [
+        "phantom-power-required"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Deux micros de même modèle"
+          ],
+          "action": "Monter deux cardioïdes identiques sur une barrette stéréo : capsules espacées de 17 cm, axes ouverts de 110° (55° de part et d'autre de l'axe central).",
+          "expected_result": "Géométrie ORTF conforme.",
+          "typical_mistakes": [
+            "Mesurer l'espacement entre les corps et non entre les capsules"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Placer le couple face à la source, centré, à une distance qui fait tenir la source dans l'angle de prise ; ajuster la hauteur.",
+          "expected_result": "Source répartie de gauche à droite sans trou ni débordement.",
+          "typical_mistakes": [
+            "Trop près : image trop large et instruments isolés aux extrêmes"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Brancher micro gauche sur l'entrée 1 et droit sur l'entrée 2, activer le +48 V sur les deux, gains identiques.",
+          "expected_result": "Deux voies de même niveau ; panoramiques à fond gauche/droite.",
+          "typical_mistakes": [
+            "Inverser gauche et droite ; gains différents qui décentrent l'image"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Écouter en stéréo puis en mono : vérifier que le centre reste stable et que le grave ne disparaît pas.",
+          "expected_result": "Pas de creusement marqué en mono ; si le son devient maigre, vérifier la polarité des câbles.",
+          "typical_mistakes": [
+            "Ne jamais contrôler le mono"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V avant de (dé)brancher."
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/dict/ortf/",
+          "publisher": "DPA Microphones, Mic Dictionary: ORTF",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 4,
-     "preconditions": [],
-     "action": "Monter le gain en parlant ou en jouant à niveau réel, en surveillant le vumètre ; engager le pad du micro si la source est très forte.",
-     "expected_result": "Niveau correct sans écrêtage, bruit de fond bas.",
-     "typical_mistakes": [
-      "Confondre absence de fantôme et gain trop bas"
-     ]
+      "id": "setup-ms-pair-and-decode",
+      "name_fr": "Installer et décoder un couple MS",
+      "name_en": "Set up and decode an MS pair",
+      "domain": "microphones-miking",
+      "context": "Prise stéréo compatible mono (reportage, broadcast, ambiance, instrument) avec un cardioïde (Mid) et une figure en 8 (Side).",
+      "duration_min": 15,
+      "equipment_ids": [
+        "neumann-usm-69-i",
+        "sennheiser-mkh-418-s"
+      ],
+      "concept_ids": [
+        "stereo-ms",
+        "microphone-polarity",
+        "polar-pattern"
+      ],
+      "rule_ids": [
+        "phantom-power-required"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Superposer les capsules : Mid pointé vers la source, Side en figure en 8 perpendiculaire, face en phase vers la gauche.",
+          "expected_result": "Couple coïncident correctement orienté.",
+          "typical_mistakes": [
+            "Orienter le 8 face à la source"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Enregistrer M et S sur deux pistes séparées (non décodées) pour garder le réglage de largeur.",
+          "expected_result": "Deux signaux M et S disponibles.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Décoder : M sur une voie panoramiquée au centre ; S dupliqué sur deux voies panoramiquées gauche et droite, la voie droite en polarité inversée (ou utiliser un décodeur MS) ; G = M + S, D = M − S.",
+          "expected_result": "Image stéréo présente ; en coupant S, il reste un mono centré.",
+          "typical_mistakes": [
+            "Oublier l'inversion de polarité de la seconde voie S : S s'annule et on reste en mono"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Régler la largeur avec le niveau de S par rapport à M ; vérifier en mono que seul M subsiste.",
+          "expected_result": "Largeur ajustée sans bouger le micro ; mono propre.",
+          "typical_mistakes": [
+            "Trop de S : image trouée et diffuse"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "n": 5,
-     "preconditions": [],
-     "action": "Pour débrancher : baisser le niveau, couper le +48 V, attendre, puis débrancher.",
-     "expected_result": "Pas de claquement à la déconnexion.",
-     "typical_mistakes": [
-      "Débrancher sous fantôme volume ouvert"
-     ]
+      "id": "mic-guitar-cabinet",
+      "name_fr": "Prendre un ampli guitare",
+      "name_en": "Mic a guitar amplifier",
+      "domain": "microphones-miking",
+      "context": "Enregistrement ou sonorisation d'un ampli guitare électrique avec un dynamique cardioïde (ex. SM57), éventuellement complété d'un second micro.",
+      "duration_min": 15,
+      "equipment_ids": [
+        "shure-sm57",
+        "sennheiser-e-906",
+        "royer-r-121"
+      ],
+      "concept_ids": [
+        "close-miking",
+        "proximity-effect",
+        "microphone-polarity",
+        "polar-pattern"
+      ],
+      "rule_ids": [
+        "polarity-inversion-same-source"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Repérer le haut-parleur qui sonne le mieux. Placer le micro à 2,5–10 cm (1 à 4 pouces) de la toile, face au centre du cône.",
+          "expected_result": "Son précis, avec du mordant ; grave renforcé par la proximité.",
+          "typical_mistakes": [
+            "Micro collé au pied de l'ampli sans écouter"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Déplacer le micro du centre vers le bord du cône en écoutant.",
+          "expected_result": "Au centre : plus brillant, agressif ; vers le bord : plus doux, moins de souffle d'ampli.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Orienter l'arrière du cardioïde vers la source indésirable (batterie) si elle est dans la même pièce.",
+          "expected_result": "Moins de diaphonie de la batterie.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Option : ajouter un micro d'ambiance (≈ 1 m) ou un micro à l'arrière d'un combo ouvert ; contrôler la phase en sommant les deux micros et inverser la polarité du micro arrière si le grave chute.",
+          "expected_result": "Mélange plus plein, sans creux de grave.",
+          "typical_mistakes": [
+            "Ignorer le filtrage en peigne entre micro proche et micro distant"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Volume d'ampli élevé : protéger son audition (voir domaine safety)."
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "mic-drum-kit-multitrack",
+      "name_fr": "Prendre une batterie en multi-micro",
+      "name_en": "Mic a drum kit (multitrack)",
+      "domain": "microphones-miking",
+      "context": "Prise d'une batterie rock/pop en studio : grosse caisse, caisse claire dessus/dessous, toms, charleston, overheads.",
+      "duration_min": 60,
+      "equipment_ids": [
+        "shure-beta-52a",
+        "akg-d112-mkii",
+        "shure-sm57",
+        "sennheiser-md-421-ii",
+        "neumann-km-184",
+        "akg-c451-b"
+      ],
+      "concept_ids": [
+        "close-miking",
+        "three-to-one-rule",
+        "microphone-polarity",
+        "max-spl-microphone",
+        "proximity-effect",
+        "stereo-nos"
+      ],
+      "rule_ids": [
+        "polarity-inversion-same-source",
+        "phantom-power-required",
+        "three-to-one-spacing"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Grosse caisse : micro dans le fût, à 2,5–15 cm (1 à 6 pouces) de la peau de frappe, face à la batte ; ou juste à l'entrée du trou pour moins de claquant.",
+          "expected_result": "Grave et attaque (2,5–5 kHz) présents.",
+          "typical_mistakes": [
+            "Micro face au flux d'air sans angle : bruits de souffle"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Caisse claire : cardioïde ou supercardioïde sur la peau de frappe, au bord, nul arrière vers la charleston. Option micro dessous pour le timbre.",
+          "expected_result": "Attaque (4–6 kHz) nette, peu de charleston.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Micro dessous branché"
+          ],
+          "action": "Si micro dessous : inverser sa polarité à la console et comparer la somme dessus+dessous.",
+          "expected_result": "Somme plus « grasse » qu'avant inversion.",
+          "typical_mistakes": [
+            "Oublier l'inversion : son creux"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Toms : directif sur la peau, près du bord (ou un micro entre deux toms) ; charleston : micro à moins de 10 cm des cymbales, hors du souffle de fermeture.",
+          "expected_result": "Chaque fût isolé ; cymbales modérées.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Overheads : couple de condensateurs (ex. NOS environ 50 cm au-dessus des cymbales), à égale distance de la caisse claire.",
+          "expected_result": "Image stéréo du kit, caisse claire centrée.",
+          "typical_mistakes": [
+            "Overheads à des distances différentes de la caisse claire : caisse claire décentrée et colorée"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Vérifier SPL max des condensateurs (au moins 130 dB SPL en proximité selon Shure), activer le +48 V nécessaire, puis écouter tous les micros ensemble et corriger les problèmes de phase.",
+          "expected_result": "Kit cohérent en stéréo et en mono.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Niveaux très élevés près des fûts : protections auditives pour l'équipe."
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-drum-kit/",
+          "publisher": "DPA Microphones, Mic University: How to mic a drum kit",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "close-mic-vocal-studio",
+      "name_fr": "Prendre une voix chantée en studio",
+      "name_en": "Close-mic a studio vocal",
+      "domain": "microphones-miking",
+      "context": "Enregistrement d'une voix en cabine avec un condensateur cardioïde.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "neumann-u87-ai",
+        "neumann-tlm-103",
+        "stedman-proscreen-xl",
+        "neumann-ea-87"
+      ],
+      "concept_ids": [
+        "proximity-effect",
+        "plosive-pop",
+        "handling-noise",
+        "condenser-microphone"
+      ],
+      "rule_ids": [
+        "phantom-power-required"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Monter le micro sur une suspension élastique et placer un anti-pop entre la bouche et le micro.",
+          "expected_result": "Pas de bruit de pied ; plosives atténuées.",
+          "typical_mistakes": [
+            "Pas d'anti-pop en prise rapprochée"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Point de départ DPA : environ 10 cm (4 pouces) dans l'axe ; faire varier entre 5 et 15 cm pendant l'essai pour équilibrer chaleur (proximité) et brillance des consonnes.",
+          "expected_result": "Distance trouvée et repérée (l'anti-pop sert de repère).",
+          "typical_mistakes": [
+            "Chanteur qui bouge : variations de grave et de niveau"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Viser entre le nez et la bouche, légèrement hors axe si les « p/b/t/d » claquent encore ; essayer un placement au-dessus de la tête pour les voix très plosives.",
+          "expected_result": "Plosives maîtrisées sans perte de présence.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Éloigner pupitres et surfaces dures du micro, ou utiliser un pupitre ajouré.",
+          "expected_result": "Pas de réflexions colorant la voix.",
+          "typical_mistakes": [
+            "Pupitre plein juste sous le micro"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Régler le gain sur la partie la plus forte ; engager le coupe-bas si la proximité donne trop de grave.",
+          "expected_result": "Crêtes sans écrêtage ; grave naturel.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V avant de (dé)brancher le micro."
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/",
+          "publisher": "DPA Microphones, Mic University: How to mic vocals in the recording studio",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
+          "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "steps[1] distance",
+          "values": [
+            {
+              "value": "départ ≈ 4 pouces (≈ 10 cm), plage 2–6 pouces",
+              "source_url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/"
+            },
+            {
+              "value": "1–3 pouces (2–8 cm) pour la voix avec un PGA181",
+              "source_url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf"
+            },
+            {
+              "value": "6–12 pouces pour la voix parlée (podcast)",
+              "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf"
+            }
+          ],
+          "note": "Valeurs de départ propres à chaque contexte et micro, pas des normes."
+        }
+      ],
+      "review": "ok"
     }
-   ],
-   "safety_notes": [
-    "Couper le +48 V et baisser le niveau avant de (dé)brancher (Neumann).",
-    "Ne pas brancher de micro ou câble asymétrique sur une entrée fantôme active (DPA)."
-   ],
-   "sources": [
+  ],
+  "not_found_log": [
     {
-     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
-     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
-     "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps",
-      "safety_notes"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
+      "what": "Hauteur et distance précises d'overheads XY selon Shure",
+      "searched": "Shure Microphone Techniques for Recording : positions A/B non chiffrées"
     }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "connect-ribbon-microphone-safely",
-   "name_fr": "Mettre en œuvre un micro à ruban sans risque",
-   "name_en": "Set up a ribbon microphone safely",
-   "domain": "microphones-miking",
-   "context": "Utilisation d'un ruban passif (ex. Royer R-121, Coles 4038) en studio, sur une console où le fantôme est disponible.",
-   "duration_min": 10,
-   "equipment_ids": [
-    "royer-r-121",
-    "coles-4038"
-   ],
-   "concept_ids": [
-    "ribbon-microphone",
-    "phantom-power",
-    "polar-pattern"
-   ],
-   "rule_ids": [
-    "phantom-on-ribbon"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Lire la documentation du ruban : est-il compatible avec le fantôme ? Tous ne le sont pas (Royer).",
-     "expected_result": "Compatibilité connue avant tout branchement.",
-     "typical_mistakes": [
-      "Supposer que tous les rubans tolèrent le +48 V"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Couper le +48 V de la voie (et du groupe si la console commute par groupe) avant de brancher.",
-     "expected_result": "Aucune tension sur la liaison au moment du contact.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Utiliser un câble XLR en bon état, câblé de façon standard, en liaison directe vers le préampli, sans passer par les points micro d'une patchbay.",
-     "expected_result": "Liaison symétrique, sans court-circuit transitoire.",
-     "typical_mistakes": [
-      "Brasser le ruban dans une patchbay fantôme actif : impulsion destructrice (Royer)"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Placer le micro hors des souffles directs (anti-pop, pas de vent) et le transporter avec précaution.",
-     "expected_result": "Ruban protégé mécaniquement.",
-     "typical_mistakes": [
-      "Souffler dans le micro pour le tester (Coles)"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Régler le gain : le ruban est peu sensible, il demande plus de gain qu'un condensateur ; exploiter la face arrière en sachant qu'elle est en polarité inversée.",
-     "expected_result": "Niveau correct ; image et polarité maîtrisées.",
-     "typical_mistakes": []
-    }
-   ],
-   "safety_notes": [
-    "Si un courant traverse le ruban, il peut être détruit instantanément (Coles).",
-    "Pas de ruban dans une patchbay micro avec fantôme actif (Royer)."
-   ],
-   "sources": [
-    {
-     "url": "https://royerlabs.com/pdf/manuals/R-121manual.pdf",
-     "publisher": "Royer Labs, R-121 Operation Instructions",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps",
-      "safety_notes"
-     ]
-    },
-    {
-     "url": "https://coleselectroacoustics.com/ribbon-microphone-care-tips/",
-     "publisher": "Coles Electroacoustics, Ribbon microphone care tips",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps",
-      "safety_notes"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
-     "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "safety_notes"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "setup-ortf-pair",
-   "name_fr": "Installer un couple ORTF",
-   "name_en": "Set up an ORTF pair",
-   "domain": "microphones-miking",
-   "context": "Prise stéréo d'un ensemble, d'un duo ou d'un piano avec deux cardioïdes appariés (ou un micro ORTF monobloc).",
-   "duration_min": 15,
-   "equipment_ids": [
-    "neumann-km-184",
-    "schoeps-mstc-74"
-   ],
-   "concept_ids": [
-    "stereo-ortf",
-    "polar-pattern",
-    "microphone-polarity"
-   ],
-   "rule_ids": [
-    "phantom-power-required"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Deux micros de même modèle"
-     ],
-     "action": "Monter deux cardioïdes identiques sur une barrette stéréo : capsules espacées de 17 cm, axes ouverts de 110° (55° de part et d'autre de l'axe central).",
-     "expected_result": "Géométrie ORTF conforme.",
-     "typical_mistakes": [
-      "Mesurer l'espacement entre les corps et non entre les capsules"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Placer le couple face à la source, centré, à une distance qui fait tenir la source dans l'angle de prise ; ajuster la hauteur.",
-     "expected_result": "Source répartie de gauche à droite sans trou ni débordement.",
-     "typical_mistakes": [
-      "Trop près : image trop large et instruments isolés aux extrêmes"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Brancher micro gauche sur l'entrée 1 et droit sur l'entrée 2, activer le +48 V sur les deux, gains identiques.",
-     "expected_result": "Deux voies de même niveau ; panoramiques à fond gauche/droite.",
-     "typical_mistakes": [
-      "Inverser gauche et droite ; gains différents qui décentrent l'image"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Écouter en stéréo puis en mono : vérifier que le centre reste stable et que le grave ne disparaît pas.",
-     "expected_result": "Pas de creusement marqué en mono ; si le son devient maigre, vérifier la polarité des câbles.",
-     "typical_mistakes": [
-      "Ne jamais contrôler le mono"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Couper le +48 V avant de (dé)brancher."
-   ],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/dict/ortf/",
-     "publisher": "DPA Microphones, Mic Dictionary: ORTF",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "setup-ms-pair-and-decode",
-   "name_fr": "Installer et décoder un couple MS",
-   "name_en": "Set up and decode an MS pair",
-   "domain": "microphones-miking",
-   "context": "Prise stéréo compatible mono (reportage, broadcast, ambiance, instrument) avec un cardioïde (Mid) et une figure en 8 (Side).",
-   "duration_min": 15,
-   "equipment_ids": [
-    "neumann-usm-69-i",
-    "sennheiser-mkh-418-s"
-   ],
-   "concept_ids": [
-    "stereo-ms",
-    "microphone-polarity",
-    "polar-pattern"
-   ],
-   "rule_ids": [
-    "phantom-power-required"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Superposer les capsules : Mid pointé vers la source, Side en figure en 8 perpendiculaire, face en phase vers la gauche.",
-     "expected_result": "Couple coïncident correctement orienté.",
-     "typical_mistakes": [
-      "Orienter le 8 face à la source"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Enregistrer M et S sur deux pistes séparées (non décodées) pour garder le réglage de largeur.",
-     "expected_result": "Deux signaux M et S disponibles.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Décoder : M sur une voie panoramiquée au centre ; S dupliqué sur deux voies panoramiquées gauche et droite, la voie droite en polarité inversée (ou utiliser un décodeur MS) ; G = M + S, D = M − S.",
-     "expected_result": "Image stéréo présente ; en coupant S, il reste un mono centré.",
-     "typical_mistakes": [
-      "Oublier l'inversion de polarité de la seconde voie S : S s'annule et on reste en mono"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Régler la largeur avec le niveau de S par rapport à M ; vérifier en mono que seul M subsiste.",
-     "expected_result": "Largeur ajustée sans bouger le micro ; mono propre.",
-     "typical_mistakes": [
-      "Trop de S : image trouée et diffuse"
-     ]
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "mic-guitar-cabinet",
-   "name_fr": "Prendre un ampli guitare",
-   "name_en": "Mic a guitar amplifier",
-   "domain": "microphones-miking",
-   "context": "Enregistrement ou sonorisation d'un ampli guitare électrique avec un dynamique cardioïde (ex. SM57), éventuellement complété d'un second micro.",
-   "duration_min": 15,
-   "equipment_ids": [
-    "shure-sm57",
-    "sennheiser-e-906",
-    "royer-r-121"
-   ],
-   "concept_ids": [
-    "close-miking",
-    "proximity-effect",
-    "microphone-polarity",
-    "polar-pattern"
-   ],
-   "rule_ids": [
-    "polarity-inversion-same-source"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Repérer le haut-parleur qui sonne le mieux. Placer le micro à 2,5–10 cm (1 à 4 pouces) de la toile, face au centre du cône.",
-     "expected_result": "Son précis, avec du mordant ; grave renforcé par la proximité.",
-     "typical_mistakes": [
-      "Micro collé au pied de l'ampli sans écouter"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Déplacer le micro du centre vers le bord du cône en écoutant.",
-     "expected_result": "Au centre : plus brillant, agressif ; vers le bord : plus doux, moins de souffle d'ampli.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Orienter l'arrière du cardioïde vers la source indésirable (batterie) si elle est dans la même pièce.",
-     "expected_result": "Moins de diaphonie de la batterie.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Option : ajouter un micro d'ambiance (≈ 1 m) ou un micro à l'arrière d'un combo ouvert ; contrôler la phase en sommant les deux micros et inverser la polarité du micro arrière si le grave chute.",
-     "expected_result": "Mélange plus plein, sans creux de grave.",
-     "typical_mistakes": [
-      "Ignorer le filtrage en peigne entre micro proche et micro distant"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Volume d'ampli élevé : protéger son audition (voir domaine safety)."
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "mic-drum-kit-multitrack",
-   "name_fr": "Prendre une batterie en multi-micro",
-   "name_en": "Mic a drum kit (multitrack)",
-   "domain": "microphones-miking",
-   "context": "Prise d'une batterie rock/pop en studio : grosse caisse, caisse claire dessus/dessous, toms, charleston, overheads.",
-   "duration_min": 60,
-   "equipment_ids": [
-    "shure-beta-52a",
-    "akg-d112-mkii",
-    "shure-sm57",
-    "sennheiser-md-421-ii",
-    "neumann-km-184",
-    "akg-c451-b"
-   ],
-   "concept_ids": [
-    "close-miking",
-    "three-to-one-rule",
-    "microphone-polarity",
-    "max-spl-microphone",
-    "proximity-effect",
-    "stereo-nos"
-   ],
-   "rule_ids": [
-    "polarity-inversion-same-source",
-    "phantom-power-required",
-    "three-to-one-spacing"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Grosse caisse : micro dans le fût, à 2,5–15 cm (1 à 6 pouces) de la peau de frappe, face à la batte ; ou juste à l'entrée du trou pour moins de claquant.",
-     "expected_result": "Grave et attaque (2,5–5 kHz) présents.",
-     "typical_mistakes": [
-      "Micro face au flux d'air sans angle : bruits de souffle"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Caisse claire : cardioïde ou supercardioïde sur la peau de frappe, au bord, nul arrière vers la charleston. Option micro dessous pour le timbre.",
-     "expected_result": "Attaque (4–6 kHz) nette, peu de charleston.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 3,
-     "preconditions": [
-      "Micro dessous branché"
-     ],
-     "action": "Si micro dessous : inverser sa polarité à la console et comparer la somme dessus+dessous.",
-     "expected_result": "Somme plus « grasse » qu'avant inversion.",
-     "typical_mistakes": [
-      "Oublier l'inversion : son creux"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Toms : directif sur la peau, près du bord (ou un micro entre deux toms) ; charleston : micro à moins de 10 cm des cymbales, hors du souffle de fermeture.",
-     "expected_result": "Chaque fût isolé ; cymbales modérées.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Overheads : couple de condensateurs (ex. NOS environ 50 cm au-dessus des cymbales), à égale distance de la caisse claire.",
-     "expected_result": "Image stéréo du kit, caisse claire centrée.",
-     "typical_mistakes": [
-      "Overheads à des distances différentes de la caisse claire : caisse claire décentrée et colorée"
-     ]
-    },
-    {
-     "n": 6,
-     "preconditions": [],
-     "action": "Vérifier SPL max des condensateurs (au moins 130 dB SPL en proximité selon Shure), activer le +48 V nécessaire, puis écouter tous les micros ensemble et corriger les problèmes de phase.",
-     "expected_result": "Kit cohérent en stéréo et en mono.",
-     "typical_mistakes": []
-    }
-   ],
-   "safety_notes": [
-    "Niveaux très élevés près des fûts : protections auditives pour l'équipe."
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-drum-kit/",
-     "publisher": "DPA Microphones, Mic University: How to mic a drum kit",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "close-mic-vocal-studio",
-   "name_fr": "Prendre une voix chantée en studio",
-   "name_en": "Close-mic a studio vocal",
-   "domain": "microphones-miking",
-   "context": "Enregistrement d'une voix en cabine avec un condensateur cardioïde.",
-   "duration_min": 20,
-   "equipment_ids": [
-    "neumann-u87-ai",
-    "neumann-tlm-103",
-    "stedman-proscreen-xl",
-    "neumann-ea-87"
-   ],
-   "concept_ids": [
-    "proximity-effect",
-    "plosive-pop",
-    "handling-noise",
-    "condenser-microphone"
-   ],
-   "rule_ids": [
-    "phantom-power-required"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Monter le micro sur une suspension élastique et placer un anti-pop entre la bouche et le micro.",
-     "expected_result": "Pas de bruit de pied ; plosives atténuées.",
-     "typical_mistakes": [
-      "Pas d'anti-pop en prise rapprochée"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Point de départ DPA : environ 10 cm (4 pouces) dans l'axe ; faire varier entre 5 et 15 cm pendant l'essai pour équilibrer chaleur (proximité) et brillance des consonnes.",
-     "expected_result": "Distance trouvée et repérée (l'anti-pop sert de repère).",
-     "typical_mistakes": [
-      "Chanteur qui bouge : variations de grave et de niveau"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Viser entre le nez et la bouche, légèrement hors axe si les « p/b/t/d » claquent encore ; essayer un placement au-dessus de la tête pour les voix très plosives.",
-     "expected_result": "Plosives maîtrisées sans perte de présence.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Éloigner pupitres et surfaces dures du micro, ou utiliser un pupitre ajouré.",
-     "expected_result": "Pas de réflexions colorant la voix.",
-     "typical_mistakes": [
-      "Pupitre plein juste sous le micro"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Régler le gain sur la partie la plus forte ; engager le coupe-bas si la proximité donne trop de grave.",
-     "expected_result": "Crêtes sans écrêtage ; grave naturel.",
-     "typical_mistakes": []
-    }
-   ],
-   "safety_notes": [
-    "Couper le +48 V avant de (dé)brancher le micro."
-   ],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/",
-     "publisher": "DPA Microphones, Mic University: How to mic vocals in the recording studio",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/15-points-to-consider-when-choosing-a-vocal-mic/",
-     "publisher": "DPA Microphones, Mic University: 15 points to consider when choosing a vocal mic",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [
-    {
-     "field": "steps[1] distance",
-     "values": [
-      {
-       "value": "départ ≈ 4 pouces (≈ 10 cm), plage 2–6 pouces",
-       "source_url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-in-the-recording-studio/"
-      },
-      {
-       "value": "1–3 pouces (2–8 cm) pour la voix avec un PGA181",
-       "source_url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf"
-      },
-      {
-       "value": "6–12 pouces pour la voix parlée (podcast)",
-       "source_url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf"
-      }
-     ],
-     "note": "Valeurs de départ propres à chaque contexte et micro, pas des normes."
-    }
-   ],
-   "review": "ok"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Hauteur et distance précises d'overheads XY selon Shure",
-   "searched": "Shure Microphone Techniques for Recording : positions A/B non chiffrées"
-  }
- ]
+  ]
 }

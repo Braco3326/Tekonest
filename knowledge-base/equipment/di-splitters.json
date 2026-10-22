@@ -237,7 +237,7 @@
             "key_specs.ground_lift",
             "technology"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Ground-lift logic per manual: going direct (no THRU) keep ground connected so the box is grounded at the console; lift only when the THRU feeds a grounded amp. Speaker mode requires both PAD and SPEAKER switches and must only be used in parallel with a real speaker load. Not to be used in speaker mode with bridged/balanced (often class-D) amp outputs.",
@@ -805,7 +805,7 @@
             "connectors",
             "why_it_is_a_classic"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Manufacturer lists the output connectors as '6.3 mm jack, XLR' (jack = THRU). Download centre (Adam Hall portal) did not render documents for this agent.",

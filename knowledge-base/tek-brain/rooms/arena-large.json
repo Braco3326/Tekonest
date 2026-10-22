@@ -431,7 +431,8 @@
         "surfaces",
         "power_points (alimentation son 250 A sur transformateur d'isolement 150 kVA, éclairage 630 A Powerlock)",
         "description (8 888 places)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.mystrasbourg.com/data/adh_227_f1760078096.pdf",
@@ -450,7 +451,8 @@
         "patch_points.cable-trench-foh",
         "openings[0..2]",
         "description (jusqu'à 12 079 places)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://fr.wikipedia.org/wiki/Accor_Arena",
@@ -461,7 +463,8 @@
       "covers": [
         "dimensions_m.height.max (charpente à 24 m au-dessus de l'aire de jeu)",
         "description (20 300 places en concert)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

@@ -44,7 +44,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
@@ -54,7 +55,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -64,7 +66,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -121,7 +124,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
@@ -131,7 +135,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -184,7 +189,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
@@ -195,7 +201,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -205,7 +212,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -252,7 +260,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
@@ -263,7 +272,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://support.qscaudio.com/en_US/sound-advice/sound-advice-%7C-how-to-ring-out-a-room-mains-and-monitors-to-eliminate-feedback",
@@ -274,7 +284,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
@@ -284,7 +295,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note158.html",
@@ -294,7 +306,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -350,7 +363,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note158.html",
@@ -360,7 +374,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/audio/pag.html",
@@ -370,7 +385,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -439,7 +455,8 @@
             "definition",
             "explanation",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/audio/pag.html",
@@ -450,7 +467,8 @@
           "covers": [
             "formulas[1]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -517,7 +535,8 @@
             "definition",
             "explanation",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -565,7 +584,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
@@ -575,7 +595,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://data.yamaha.com/download/files/2082568",
@@ -585,7 +606,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.l-acoustics.com/?p=956",
@@ -595,7 +617,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -625,8 +648,8 @@
       "name_fr": "Side-fill",
       "name_en": "Side-fill monitor",
       "domain": "monitoring",
-      "definition": "Enceinte de retour placée debout sur le côté de la scène pour couvrir les zones que les wedges n'atteignent pas ; c'est souvent une enceinte de façade standard.",
-      "explanation": "Sur une grande scène, les wedges ne couvrent que des points précis. Les side-fills, posés de chaque côté (souvent sur un sub), diffusent un mix général vers tout le plateau pour que les musiciens qui bougent gardent un repère. Ils ajoutent du niveau sur scène et donc du risque de larsen pour les micros qui leur font face.",
+      "definition": "Enceinte de retour posée debout sur le côté de la scène pour couvrir les zones du plateau que les wedges n'atteignent pas ; c'est souvent une enceinte de façade standard.",
+      "explanation": "Sur une grande scène, les wedges ne couvrent que des points précis. Les side-fills, posés debout de chaque côté de la scène, apportent du son aux zones du plateau que les retours au sol ne couvrent pas ; Wikipédia les décrit comme de plus grandes enceintes qui aident les musiciens à entendre leur jeu et leur chant. Un cas particulier de side-fill est le drum fill.",
       "formulas": [],
       "units": [],
       "related_concepts": [
@@ -657,10 +680,22 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "conflicts": [],
+      "conflicts": [
+        {
+          "field": "definition/explanation",
+          "values": [
+            {
+              "value": "Sur une grande scène, les wedges ne couvrent que des points précis. Les side-fills, posés de chaque côté (souvent sur un sub), diffusent un mix général vers tout le plateau pour que les musiciens qui bougent gardent un repère. Ils ajoutent du niveau sur scène et donc du risque de larsen pour les micros qui leur font face.",
+              "source_url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : placement « souvent sur un sub », « mix général vers tout le plateau » et « risque de larsen » non couverts par Wikipédia, supprimés ; texte limité à ce que la page Foldback dit (revérifiée le 2026-10-22)."
+        }
+      ],
       "review": "ok"
     },
     {
@@ -698,7 +733,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
@@ -708,7 +744,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -719,8 +756,8 @@
       "name_fr": "Split micro façade / retours",
       "name_en": "Microphone split (FOH / monitors)",
       "domain": "monitoring",
-      "definition": "Distribution de chaque signal micro et DI vers la console façade et la console retours, par un splitter à transformateur, un multipaire à sorties multiples ou le partage d'un boîtier de scène numérique.",
-      "explanation": "Pour qu'une console retours existe, elle doit recevoir les mêmes sources que la façade. En analogique, un splitter à transformateur isolé envoie le signal à deux endroits ; les câbles en Y fonctionnent mais sont fragiles. En numérique, les deux consoles partagent le même boîtier de scène : une seule commande les préamplis, l'autre suit les changements de gain et compense par son trim numérique (gain tracking sur SD12). Sans ce suivi, l'ingénieur façade qui baisse un gain casse le mix retours.",
+      "definition": "Distribution de chaque signal micro et DI vers la console façade et la console retours, par un splitter micro, un multipaire à sorties multiples (split snake) ou le partage d'un boîtier de scène numérique.",
+      "explanation": "Pour qu'une console retours existe, elle doit recevoir les mêmes sources que la façade. En analogique, un splitter micro (intégré au multipaire ou à la console retours) envoie chaque signal aux deux consoles ; on peut aussi utiliser un multipaire à sorties multiples (split snake) ou un câble en Y. En numérique, les deux consoles partagent le même boîtier de scène : une seule commande les préamplis, l'autre suit les changements de gain et compense par son trim numérique (gain tracking sur SD12). Sans ce suivi, l'ingénieur façade qui baisse un gain casse le mix retours.",
       "formulas": [],
       "units": [],
       "related_concepts": [
@@ -751,7 +788,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
@@ -761,7 +799,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -771,10 +810,22 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "conflicts": [],
+      "conflicts": [
+        {
+          "field": "definition/explanation",
+          "values": [
+            {
+              "value": "splitter à transformateur isolé ; câbles en Y fragiles",
+              "source_url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : isolation par transformateur et fragilité des Y non sourcées, supprimées ; texte aligné sur Wikipédia Foldback (splitter, split snake, Y-cable)."
+        }
+      ],
       "review": "ok"
     },
     {
@@ -815,7 +866,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
@@ -825,7 +877,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/ew-iem-g4_bedienungsanleitung_05_2026_de.pdf/facce9cce7b611f08a557aeaa9c3764a?attachment=true",
@@ -835,7 +888,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -888,7 +942,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
@@ -898,7 +953,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/ew-iem-g4_bedienungsanleitung_05_2026_de.pdf/facce9cce7b611f08a557aeaa9c3764a?attachment=true",
@@ -908,7 +964,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -948,7 +1005,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
@@ -958,7 +1016,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1002,7 +1061,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1047,7 +1107,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1102,7 +1163,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1152,7 +1214,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
@@ -1162,7 +1225,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1215,7 +1279,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
@@ -1226,7 +1291,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1284,7 +1350,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1343,7 +1410,8 @@
           "covers": [
             "explanation",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2",
@@ -1353,7 +1421,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=3",
@@ -1363,7 +1432,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1439,7 +1509,8 @@
             "definition",
             "explanation",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1482,7 +1553,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
@@ -1492,7 +1564,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1532,7 +1605,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1577,7 +1651,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
@@ -1587,7 +1662,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

@@ -303,7 +303,8 @@
         "dimensions_m.length.min",
         "dimensions_m.width.min",
         "dimensions_m.height.max"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.svgeurope.org/blog/news-roundup/custom-consoles-announces-editone-radio-desk/",
@@ -313,7 +314,8 @@
       "kind": "trade-press",
       "covers": [
         "zones.on-air-desk (emprise d'un meuble présentateur + 1 invité : 2,77 m de large)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://tech.ebu.ch/docs/tech/tech3276.pdf",
@@ -324,7 +326,8 @@
       "covers": [
         "rt60_s",
         "gear_positions.genelec-8030c (hauteur centre acoustique ≥ 1,2 m)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

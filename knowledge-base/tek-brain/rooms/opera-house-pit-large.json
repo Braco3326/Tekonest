@@ -407,17 +407,19 @@
         "surfaces",
         "gear_positions (choix du matériel : MSTC 64, KM, MD421, DPA 4088, X8, LA4X, J48)",
         "openings[0] (monte-charge 2,55 × 3,90 m)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
       "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
       "accessed": "2026-10-22",
-      "confidence": "verified-secondary",
+      "confidence": "verified-primary",
       "kind": "manufacturer",
       "covers": [
         "rt60_s"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://en.wikipedia.org/wiki/Orchestra_pit",
@@ -427,7 +429,8 @@
       "kind": "other",
       "covers": [
         "description (fosse en partie sous la scène, plancher réglable, repisse)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

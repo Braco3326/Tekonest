@@ -155,7 +155,8 @@
           "covers": [
             "brief",
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
@@ -166,7 +167,8 @@
           "covers": [
             "brief",
             "rule_ids"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://data.yamaha.com/download/files/2082568",
@@ -176,7 +178,8 @@
           "kind": "manufacturer",
           "covers": [
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
@@ -186,7 +189,8 @@
           "kind": "trade-press",
           "covers": [
             "procedure_ids"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -410,7 +414,8 @@
           "covers": [
             "brief",
             "procedure_ids"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ticketfairy.com/blog/rapid-festival-changeovers-without-panic.md",
@@ -420,7 +425,8 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
@@ -431,7 +437,8 @@
           "covers": [
             "brief",
             "rule_ids"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Front_of_house",
@@ -441,7 +448,8 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Audio_multicore_cable",
@@ -451,7 +459,8 @@
           "kind": "other",
           "covers": [
             "signal_flow"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -663,7 +672,8 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
@@ -674,7 +684,8 @@
           "covers": [
             "brief",
             "procedure_ids"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
@@ -684,7 +695,8 @@
           "kind": "trade-press",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fr.wikipedia.org/wiki/Sonorisation",
@@ -694,7 +706,8 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Live_sound_mixing",
@@ -704,7 +717,8 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

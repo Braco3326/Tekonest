@@ -1,1326 +1,1369 @@
 {
- "entity": "concept",
- "domain": "safety",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "noise-induced-hearing-loss",
-   "name_fr": "Surdité induite par le bruit",
-   "name_en": "Noise-induced hearing loss (NIHL)",
-   "domain": "safety",
-   "definition": "Perte d'audition de perception, irréversible, causée par une exposition prolongée à un bruit intense qui détruit les cellules ciliées de l'oreille interne.",
-   "explanation": "L'INRS décrit une évolution en trois stades : atteinte légère, puis moyenne (les aigus sont touchés), puis profonde et irréversible. Cette surdité ne se guérit pas aujourd'hui : la seule réponse est la prévention. Un son très intense et soudain peut aussi provoquer un traumatisme sonore aigu, réversible si seul le tympan est touché, définitif si les cellules ciliées sont détruites. En France, la surdité due au bruit peut être reconnue comme maladie professionnelle (tableau n° 42 du régime général). Pour un technicien son, le risque vient autant des concerts que des retours, des casques et des ears mal réglés.",
-   "formulas": [],
-   "units": [
-    "dB(A)"
-   ],
-   "related_concepts": [
-    "tinnitus-auditory-fatigue",
-    "equal-energy-principle",
-    "worker-noise-exposure-values",
-    "hearing-protection-devices"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
+  "entity": "concept",
+  "domain": "safety",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
+      "id": "noise-induced-hearing-loss",
+      "name_fr": "Surdité induite par le bruit",
+      "name_en": "Noise-induced hearing loss (NIHL)",
+      "domain": "safety",
+      "definition": "Perte d'audition de perception, irréversible, causée par une exposition prolongée à un bruit intense qui détruit les cellules ciliées de l'oreille interne.",
+      "explanation": "L'INRS décrit une évolution en trois stades : atteinte légère, puis moyenne (les aigus sont touchés), puis profonde et irréversible. Cette surdité ne se guérit pas aujourd'hui : la seule réponse est la prévention. Un son très intense et soudain peut aussi provoquer un traumatisme sonore aigu, réversible si seul le tympan est touché, définitif si les cellules ciliées sont détruites. En France, la surdité due au bruit peut être reconnue comme maladie professionnelle (tableau n° 42 du régime général). Pour un technicien son, le risque vient autant des concerts que des retours, des casques et des ears mal réglés.",
+      "formulas": [],
+      "units": [
+        "dB(A)"
+      ],
+      "related_concepts": [
+        "tinnitus-auditory-fatigue",
+        "equal-energy-principle",
+        "worker-noise-exposure-values",
+        "hearing-protection-devices"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "tinnitus-auditory-fatigue",
-   "name_fr": "Fatigue auditive et acouphènes",
-   "name_en": "Auditory fatigue and tinnitus",
-   "domain": "safety",
-   "definition": "Baisse temporaire de l'audition, souvent accompagnée d'acouphènes (tinnitus) et de bourdonnements, après une exposition à un bruit très intense.",
-   "explanation": "Selon l'INRS, la fatigue auditive disparaît si l'exposition s'arrête : c'est un signal d'alarme, pas un état normal de fin de concert. Les chocs acoustiques au casque peuvent aussi provoquer une hyperacousie (hyperacusis) et un déplacement temporaire du seuil d'audition, reconnus comme accident du travail. Un technicien qui sort d'un show avec les oreilles qui sifflent a été exposé au-delà de ce que son oreille supporte ; répéter ces expositions mène à la surdité définitive.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "noise-induced-hearing-loss",
-    "hearing-protection-devices"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 1,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "sound-exposure-limits-france",
-   "name_fr": "Limites d'exposition sonore du public (décret 2017-1244)",
-   "name_en": "French public sound exposure limits (décret 2017-1244)",
-   "domain": "safety",
-   "definition": "Dans les lieux diffusant des sons amplifiés, le niveau ne doit dépasser, à aucun moment et en aucun endroit accessible au public, 102 dB(A) et 118 dB(C) en niveau continu équivalent sur 15 minutes ; 94 dB(A) et 104 dB(C) pour les activités destinées aux enfants jusqu'à 6 ans révolus.",
-   "explanation": "Ces valeurs sont fixées par l'article R. 1336-1 du Code de la santé publique, issu du décret n° 2017-1244 du 7 août 2017. L'obligation pèse sur l'exploitant du lieu, le producteur, le diffuseur qui a reçu par contrat la responsabilité de la sécurité du public, ou le responsable légal du lieu. Selon la catégorie du lieu (festival, discothèque, lieu de moins ou de plus de 300 personnes, cinéma…), il faut aussi enregistrer et afficher les niveaux, informer le public, distribuer des protections auditives gratuites et prévoir des zones ou périodes de repos auditif. Le dB(C) compte, car il prend en compte les basses fréquences que le dB(A) sous-estime. Attention : ces limites concernent le public ; les salariés relèvent du Code du travail (80/85/87 dB(A) sur 8 h).",
-   "formulas": [],
-   "units": [
-    "dB(A)",
-    "dB(C)",
-    "min"
-   ],
-   "related_concepts": [
-    "worker-noise-exposure-values",
-    "a-and-c-weighting",
-    "sound-level-logging-display",
-    "hearing-rest-zone",
-    "noise-impact-study-limiter",
-    "db-spl"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E52",
-     "bloc": "BC03",
-     "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
-     "verified": false
+      "id": "tinnitus-auditory-fatigue",
+      "name_fr": "Fatigue auditive et acouphènes",
+      "name_en": "Auditory fatigue and tinnitus",
+      "domain": "safety",
+      "definition": "Baisse temporaire de l'audition, souvent accompagnée d'acouphènes (tinnitus) et de bourdonnements, après une exposition à un bruit très intense.",
+      "explanation": "Selon l'INRS, la fatigue auditive disparaît si l'exposition s'arrête : c'est un signal d'alarme, pas un état normal de fin de concert. Les chocs acoustiques au casque peuvent aussi provoquer une hyperacousie (hyperacusis) et un déplacement temporaire du seuil d'audition, reconnus comme accident du travail. Un technicien qui sort d'un show avec les oreilles qui sifflent a été exposé au-delà de ce que son oreille supporte ; répéter ces expositions mène à la surdité définitive.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "noise-induced-hearing-loss",
+        "hearing-protection-devices"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
-     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "sound-exposure-limits-france",
+      "name_fr": "Limites d'exposition sonore du public (décret 2017-1244)",
+      "name_en": "French public sound exposure limits (décret 2017-1244)",
+      "domain": "safety",
+      "definition": "Dans les lieux diffusant des sons amplifiés, le niveau ne doit dépasser, à aucun moment et en aucun endroit accessible au public, 102 dB(A) et 118 dB(C) en niveau continu équivalent sur 15 minutes ; 94 dB(A) et 104 dB(C) pour les activités destinées aux enfants jusqu'à 6 ans révolus.",
+      "explanation": "Ces valeurs sont fixées par l'article R. 1336-1 du Code de la santé publique, issu du décret n° 2017-1244 du 7 août 2017. L'obligation pèse sur l'exploitant du lieu, le producteur, le diffuseur qui a reçu par contrat la responsabilité de la sécurité du public, ou le responsable légal du lieu. Selon la catégorie du lieu (festival, discothèque, lieu de moins ou de plus de 300 personnes, cinéma…), il faut aussi enregistrer et afficher les niveaux, informer le public, distribuer des protections auditives gratuites et prévoir des zones ou périodes de repos auditif. Le dB(C) compte, car il prend en compte les basses fréquences que le dB(A) sous-estime. Attention : ces limites concernent le public ; les salariés relèvent du Code du travail (80/85/87 dB(A) sur 8 h).",
+      "formulas": [],
+      "units": [
+        "dB(A)",
+        "dB(C)",
+        "min"
+      ],
+      "related_concepts": [
+        "worker-noise-exposure-values",
+        "a-and-c-weighting",
+        "sound-level-logging-display",
+        "hearing-rest-zone",
+        "noise-impact-study-limiter",
+        "db-spl"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E52",
+          "bloc": "BC03",
+          "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+          "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+          "publisher": "ARS Île-de-France",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
-     "publisher": "ARS Île-de-France",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "worker-noise-exposure-values",
-   "name_fr": "Valeurs d'exposition au bruit des travailleurs (VAI, VAS, VLE)",
-   "name_en": "Worker noise exposure action and limit values",
-   "domain": "safety",
-   "definition": "Le Code du travail fixe trois seuils : VAI 80 dB(A) / 135 dB(C) crête, VAS 85 dB(A) / 137 dB(C) crête, VLE 87 dB(A) / 140 dB(C) crête ; seule la VLE tient compte de l'atténuation des protecteurs portés.",
-   "explanation": "Au-dessus de la VAI, l'employeur met des protecteurs individuels (PICB) à disposition, informe et forme, et un examen audiométrique préventif est proposé. Au-dessus de la VAS, il faut un programme de réduction du bruit, signaler les zones bruyantes, en limiter l'accès et contrôler le port effectif des PICB. La VLE ne doit jamais être dépassée, protecteurs compris ; si c'est le cas, il faut réduire immédiatement l'exposition. Ces valeurs transposent la directive européenne 2003/10/CE, qui donne les mêmes chiffres (200 Pa, 140 Pa et 112 Pa en crête). Les articles de référence sont R. 4431-1 à R. 4437-4 du Code du travail.",
-   "formulas": [],
-   "units": [
-    "dB(A)",
-    "dB(C)",
-    "Pa"
-   ],
-   "related_concepts": [
-    "daily-noise-exposure-lex8h",
-    "peak-sound-pressure-lcpeak",
-    "hearing-protection-devices",
-    "sound-exposure-limits-france"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E52",
-     "bloc": "BC03",
-     "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
-     "verified": false
+      "id": "worker-noise-exposure-values",
+      "name_fr": "Valeurs d'exposition au bruit des travailleurs (VAI, VAS, VLE)",
+      "name_en": "Worker noise exposure action and limit values",
+      "domain": "safety",
+      "definition": "Le Code du travail fixe trois seuils : VAI 80 dB(A) / 135 dB(C) crête, VAS 85 dB(A) / 137 dB(C) crête, VLE 87 dB(A) / 140 dB(C) crête ; seule la VLE tient compte de l'atténuation des protecteurs portés.",
+      "explanation": "Au-dessus de la VAI, l'employeur met des protecteurs individuels (PICB) à disposition, informe et forme, et un examen audiométrique préventif est proposé. Au-dessus de la VAS, il faut un programme de réduction du bruit, signaler les zones bruyantes, en limiter l'accès et contrôler le port effectif des PICB. La VLE ne doit jamais être dépassée, protecteurs compris ; si c'est le cas, il faut réduire immédiatement l'exposition. Ces valeurs transposent la directive européenne 2003/10/CE, qui donne les mêmes chiffres (200 Pa, 140 Pa et 112 Pa en crête). Les articles de référence sont R. 4431-1 à R. 4437-4 du Code du travail.",
+      "formulas": [],
+      "units": [
+        "dB(A)",
+        "dB(C)",
+        "Pa"
+      ],
+      "related_concepts": [
+        "daily-noise-exposure-lex8h",
+        "peak-sound-pressure-lcpeak",
+        "hearing-protection-devices",
+        "sound-exposure-limits-france"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E52",
+          "bloc": "BC03",
+          "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.legislation.gov.uk/eudr/2003/10/article/3",
+          "publisher": "legislation.gov.uk (copie officielle de la directive 2003/10/CE, art. 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "daily-noise-exposure-lex8h",
+      "name_fr": "Exposition quotidienne au bruit LEX,8h",
+      "name_en": "Daily noise exposure level LEX,8h",
+      "domain": "safety",
+      "definition": "Niveau d'exposition quotidienne au bruit, en dB(A), ramené à une journée de travail de 8 heures ; c'est la grandeur comparée aux seuils 80/85/87 dB(A).",
+      "explanation": "Pour connaître la dose reçue, l'INRS rappelle qu'il faut tenir compte des durées passées à chaque niveau, pas seulement du niveau instantané. La mesure se fait au sonomètre à hauteur d'oreille ou par exposimétrie individuelle selon NF EN ISO 9612. La directive 2003/10/CE permet, dans des cas justifiés où l'exposition varie beaucoup d'un jour à l'autre, d'utiliser un niveau hebdomadaire à la place du niveau quotidien. Pour un technicien de tournée, une balance plus un concert peuvent suffire à dépasser la VAI.",
+      "formulas": [],
+      "units": [
+        "dB(A)",
+        "h"
+      ],
+      "related_concepts": [
+        "equal-energy-principle",
+        "worker-noise-exposure-values",
+        "a-and-c-weighting"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+          "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/bruit/exposition-risque.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.legislation.gov.uk/eudr/2003/10/article/3",
+          "publisher": "legislation.gov.uk (copie officielle de la directive 2003/10/CE, art. 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.legislation.gov.uk/eudr/2003/10/article/3",
-     "publisher": "legislation.gov.uk (copie officielle de la directive 2003/10/CE, art. 3)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "daily-noise-exposure-lex8h",
-   "name_fr": "Exposition quotidienne au bruit LEX,8h",
-   "name_en": "Daily noise exposure level LEX,8h",
-   "domain": "safety",
-   "definition": "Niveau d'exposition quotidienne au bruit, en dB(A), ramené à une journée de travail de 8 heures ; c'est la grandeur comparée aux seuils 80/85/87 dB(A).",
-   "explanation": "Pour connaître la dose reçue, l'INRS rappelle qu'il faut tenir compte des durées passées à chaque niveau, pas seulement du niveau instantané. La mesure se fait au sonomètre à hauteur d'oreille ou par exposimétrie individuelle selon NF EN ISO 9612. La directive 2003/10/CE permet, dans des cas justifiés où l'exposition varie beaucoup d'un jour à l'autre, d'utiliser un niveau hebdomadaire à la place du niveau quotidien. Pour un technicien de tournée, une balance plus un concert peuvent suffire à dépasser la VAI.",
-   "formulas": [],
-   "units": [
-    "dB(A)",
-    "h"
-   ],
-   "related_concepts": [
-    "equal-energy-principle",
-    "worker-noise-exposure-values",
-    "a-and-c-weighting"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
-     "verified": false
+      "id": "peak-sound-pressure-lcpeak",
+      "name_fr": "Niveau de pression acoustique de crête LpC,crête",
+      "name_en": "Peak sound pressure level LCpeak",
+      "domain": "safety",
+      "definition": "Valeur maximale instantanée de la pression acoustique, pondérée C, exprimée en dB(C) ; elle sert à évaluer les bruits impulsionnels (seuils 135, 137 et 140 dB(C)).",
+      "explanation": "La crête ne dépend pas de la durée : un seul coup très fort (larsen violent, pétard, coup de caisse claire tout près de l'oreille) peut dépasser le seuil. La directive 2003/10/CE donne les seuils en pascals (112, 140 et 200 Pa) et les convertit en dB(C) par rapport à 20 µPa (135, 137 et 140 dB(C)). Sous un protecteur, l'INRS parle de niveau crête « résiduel » L'pC,crête.",
+      "formulas": [],
+      "units": [
+        "dB(C)",
+        "Pa"
+      ],
+      "related_concepts": [
+        "worker-noise-exposure-values",
+        "a-and-c-weighting",
+        "sound-pressure"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+          "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.legislation.gov.uk/eudr/2003/10/article/3",
+          "publisher": "legislation.gov.uk (copie officielle de la directive 2003/10/CE, art. 3)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
-     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
+      "id": "equal-energy-principle",
+      "name_fr": "Principe d'égale énergie (3 dB = durée divisée par 2)",
+      "name_en": "Equal energy principle (3 dB exchange rate)",
+      "domain": "safety",
+      "definition": "À dose égale, chaque augmentation de 3 dB du niveau divise par deux la durée d'exposition équivalente : 8 h à 80 dB(A) sont aussi dangereuses qu'1 h à 89 dB(A).",
+      "explanation": "L'INRS donne la table : 80 dB(A) pendant 8 h, 83 pendant 4 h, 86 pendant 2 h, 89 pendant 1 h, 92 pendant 30 min, 95 pendant 15 min, 98 pendant 7,5 min. C'est la même logique qui explique que deux sources identiques de 80 dB(A) donnent 83 dB(A) : les décibels ne s'additionnent pas directement. Le décret 2017-1244 s'appuie aussi sur cette règle : les zones de repos auditif ne doivent pas dépasser l'égale énergie fondée sur 80 dB(A) sur 8 heures. À 100 dB(A) au pied de la scène, la dose journalière de 80 dB(A)/8 h est atteinte en moins d'une minute.",
+      "formulas": [
+        {
+          "expr": "Durée équivalente = 8 h / 2^((L − 80)/3), L en dB(A)",
+          "vars": {
+            "L": "niveau d'exposition (dB(A))"
+          },
+          "source_url": "https://www.inrs.fr/risques/bruit/exposition-risque.html"
+        },
+        {
+          "expr": "2 sources de 80 dB(A) → 83 dB(A) ; 3 sources → 85 dB(A)",
+          "vars": {},
+          "source_url": "https://www.inrs.fr/risques/bruit/definitions.html"
+        }
+      ],
+      "units": [
+        "dB(A)",
+        "h"
+      ],
+      "related_concepts": [
+        "daily-noise-exposure-lex8h",
+        "decibel",
+        "noise-induced-hearing-loss"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/bruit/exposition-risque.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "explanation",
+            "formulas[1]"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+          "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.inrs.fr/risques/bruit/exposition-risque.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
+      "id": "a-and-c-weighting",
+      "name_fr": "Pondérations A et C (dB(A), dB(C))",
+      "name_en": "A- and C-weighting",
+      "domain": "safety",
+      "definition": "Le dB(A) pondère le niveau pour approcher la sensibilité de l'oreille ; le dB(C), presque plat, est utilisé pour les niveaux très élevés et prend mieux en compte les basses fréquences.",
+      "explanation": "L'INRS explique qu'à très fort niveau l'oreille ne perçoit plus les sons de la même façon, d'où l'usage du dB(C). C'est pour cela que le décret 2017-1244 impose deux limites : 102 dB(A) pour l'énergie globale perçue et 118 dB(C) pour les graves, très présents dans les musiques amplifiées (subwoofers). Repères INRS : 0 dB(A) correspond au son le plus faible que l'oreille perçoit, 120 dB(A) à une sensation douloureuse. Un sonomètre de contrôle doit afficher les deux pondérations.",
+      "formulas": [],
+      "units": [
+        "dB(A)",
+        "dB(C)"
+      ],
+      "related_concepts": [
+        "equal-loudness-contours",
+        "db-spl",
+        "sound-exposure-limits-france"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+          "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://www.legislation.gov.uk/eudr/2003/10/article/3",
-     "publisher": "legislation.gov.uk (copie officielle de la directive 2003/10/CE, art. 3)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "peak-sound-pressure-lcpeak",
-   "name_fr": "Niveau de pression acoustique de crête LpC,crête",
-   "name_en": "Peak sound pressure level LCpeak",
-   "domain": "safety",
-   "definition": "Valeur maximale instantanée de la pression acoustique, pondérée C, exprimée en dB(C) ; elle sert à évaluer les bruits impulsionnels (seuils 135, 137 et 140 dB(C)).",
-   "explanation": "La crête ne dépend pas de la durée : un seul coup très fort (larsen violent, pétard, coup de caisse claire tout près de l'oreille) peut dépasser le seuil. La directive 2003/10/CE donne les seuils en pascals (112, 140 et 200 Pa) et les convertit en dB(C) par rapport à 20 µPa (135, 137 et 140 dB(C)). Sous un protecteur, l'INRS parle de niveau crête « résiduel » L'pC,crête.",
-   "formulas": [],
-   "units": [
-    "dB(C)",
-    "Pa"
-   ],
-   "related_concepts": [
-    "worker-noise-exposure-values",
-    "a-and-c-weighting",
-    "sound-pressure"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
-     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
+      "id": "sound-level-logging-display",
+      "name_fr": "Enregistrement et affichage des niveaux sonores",
+      "name_en": "Sound level logging and display",
+      "domain": "safety",
+      "definition": "Selon la catégorie du lieu, le décret 2017-1244 impose d'enregistrer en continu les niveaux en dB(A) et dB(C) auxquels le public est exposé, de conserver ces enregistrements et de les afficher en continu près de la régie.",
+      "explanation": "L'ARS Île-de-France précise que les enregistrements sont conservés au moins 6 mois et doivent pouvoir être consultés par les agents de contrôle, et que l'afficheur près de la console montre en temps réel les niveaux en dB(A) et dB(C) sur 15 minutes. Le dispositif doit être vérifié par un professionnel tous les 2 ans. En pratique, un sonomètre de classe 1 (par exemple un NTi XL2 avec son micro de mesure) ou un système de surveillance dédié mesure au point de contrôle, et l'ingénieur façade garde un œil sur la valeur glissante sur 15 min. Le tableau officiel qui associe chaque catégorie de lieu à chaque obligation n'a pas pu être lu en texte : vérifier avant d'affirmer qu'un lieu donné est soumis à l'enregistrement.",
+      "formulas": [],
+      "units": [
+        "dB(A)",
+        "dB(C)"
+      ],
+      "related_concepts": [
+        "sound-exposure-limits-france",
+        "a-and-c-weighting"
+      ],
+      "equipment_ids": [
+        "nti-audio-xl2",
+        "nti-audio-xl3",
+        "rion-nl-53"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E52",
+          "bloc": "BC03",
+          "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+          "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+          "publisher": "ARS Île-de-France",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.nti-audio.com/en/products/sound-level-meters/xl2-audio-acoustic-analyzer",
+          "publisher": "NTi Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.legislation.gov.uk/eudr/2003/10/article/3",
-     "publisher": "legislation.gov.uk (copie officielle de la directive 2003/10/CE, art. 3)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
+      "id": "hearing-rest-zone",
+      "name_fr": "Zone de repos auditif",
+      "name_en": "Hearing rest zone",
+      "domain": "safety",
+      "definition": "Espace (ou à défaut période) où le niveau sonore ne dépasse pas la règle d'égale énergie fondée sur 80 dB(A) sur 8 heures, imposé selon la catégorie de lieu par le décret 2017-1244.",
+      "explanation": "L'ARS Île-de-France demande que la zone soit facile à repérer, distincte des toilettes, des espaces de service et des zones fumeurs, et d'une capacité raisonnable ; le Haut Conseil de la santé publique (2013) recommandait au moins 10 % de la surface du lieu. Pour un festival, c'est typiquement un espace abrité loin des scènes ; dans un club, si aucune zone n'est possible, on ménage des pauses où la musique baisse.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "sound-exposure-limits-france",
+        "equal-energy-principle"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E52",
+          "bloc": "BC03",
+          "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+          "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+          "publisher": "ARS Île-de-France",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "equal-energy-principle",
-   "name_fr": "Principe d'égale énergie (3 dB = durée divisée par 2)",
-   "name_en": "Equal energy principle (3 dB exchange rate)",
-   "domain": "safety",
-   "definition": "À dose égale, chaque augmentation de 3 dB du niveau divise par deux la durée d'exposition équivalente : 8 h à 80 dB(A) sont aussi dangereuses qu'1 h à 89 dB(A).",
-   "explanation": "L'INRS donne la table : 80 dB(A) pendant 8 h, 83 pendant 4 h, 86 pendant 2 h, 89 pendant 1 h, 92 pendant 30 min, 95 pendant 15 min, 98 pendant 7,5 min. C'est la même logique qui explique que deux sources identiques de 80 dB(A) donnent 83 dB(A) : les décibels ne s'additionnent pas directement. Le décret 2017-1244 s'appuie aussi sur cette règle : les zones de repos auditif ne doivent pas dépasser l'égale énergie fondée sur 80 dB(A) sur 8 heures. À 100 dB(A) au pied de la scène, la dose journalière de 80 dB(A)/8 h est atteinte en moins d'une minute.",
-   "formulas": [
-    {
-     "expr": "Durée équivalente = 8 h / 2^((L − 80)/3), L en dB(A)",
-     "vars": {
-      "L": "niveau d'exposition (dB(A))"
-     },
-     "source_url": "https://www.inrs.fr/risques/bruit/exposition-risque.html"
+      "id": "noise-impact-study-limiter",
+      "name_fr": "Étude d'impact des nuisances sonores (EINS) et limiteur",
+      "name_en": "Noise impact study and sound pressure limiter",
+      "domain": "safety",
+      "definition": "L'EINS évalue les nuisances d'un lieu diffusant des sons amplifiés pour le voisinage ; si elle le prescrit, un limiteur de pression acoustique est installé et réglé par un professionnel.",
+      "explanation": "Selon l'ARS Île-de-France, l'EINS relève du Code de l'environnement (art. R. 571-25 à R. 571-28) et son contenu minimal est fixé par l'arrêté du 17 avril 2023. Elle doit être mise à jour si le système de diffusion ou la position des enceintes change, ou si des ouvertures ou des travaux modifient la transmission du son. Le limiteur est certifié à l'installation et vérifié tous les 2 ans ou à chaque modification de la chaîne. Pour un lieu clos, l'émergence globale admise est de 3 dB(A). Le limiteur protège les voisins ; il ne remplace pas la surveillance des 102 dB(A) / 118 dB(C) côté public.",
+      "formulas": [],
+      "units": [
+        "dB(A)"
+      ],
+      "related_concepts": [
+        "sound-exposure-limits-france",
+        "limiter"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E52",
+          "bloc": "BC03",
+          "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+          "publisher": "ARS Île-de-France",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "expr": "2 sources de 80 dB(A) → 83 dB(A) ; 3 sources → 85 dB(A)",
-     "vars": {},
-     "source_url": "https://www.inrs.fr/risques/bruit/definitions.html"
-    }
-   ],
-   "units": [
-    "dB(A)",
-    "h"
-   ],
-   "related_concepts": [
-    "daily-noise-exposure-lex8h",
-    "decibel",
-    "noise-induced-hearing-loss"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
-     "verified": false
+      "id": "hearing-protection-devices",
+      "name_fr": "Protecteurs individuels contre le bruit (PICB)",
+      "name_en": "Hearing protection devices (HPD)",
+      "domain": "safety",
+      "definition": "Bouchons d'oreille ou casques anti-bruit (serre-tête) certifiés EN 352, dont l'atténuation est exprimée par l'indice global SNR et les valeurs H, M, L.",
+      "explanation": "Le SNR (Single Number Rating) est l'atténuation globale pour un bruit rose, définie par la norme ISO 4869-2 pour une efficacité de 84 % ; H, M et L donnent l'atténuation pour des bruits à dominante aiguë, médium et grave. L'INRS rappelle que l'atténuation réelle est souvent très inférieure à celle du fabricant, et que les PICB viennent en dernier recours après la réduction à la source et les protections collectives. La durée de port est décisive : pour 8 h à 100 dB(A) avec un PICB de 30 dB(A), l'enlever 1 minute fait perdre 5 dB(A) de protection. Trop protéger est aussi un risque (surprotection) : l'INRS vise un niveau résiduel sous protecteur entre 65 et 80 dB(A). Un casque anti-bruit standard atténue beaucoup plus les aigus que les graves : peu adapté devant des subwoofers.",
+      "formulas": [],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "flat-attenuation-earplugs",
+        "worker-noise-exposure-values",
+        "noise-induced-hearing-loss"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+          "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/bruit/demarche-prevention.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/bruit/exposition-risque.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation",
-      "formulas[0]"
-     ]
+      "id": "flat-attenuation-earplugs",
+      "name_fr": "Bouchons à atténuation uniforme (bouchons « musicien »)",
+      "name_en": "Flat-attenuation (musician) earplugs",
+      "domain": "safety",
+      "definition": "Protecteurs, souvent des bouchons moulés individuels à filtre, qui atténuent presque autant toutes les fréquences : on entend moins fort sans déformer l'équilibre spectral.",
+      "explanation": "L'INRS (ED 6510) les recommande quand la perception du son est importante (parole, signaux, écoute de la musique). Ils atténuent généralement moins que les protecteurs standards (bouchons moulés : SNR de l'ordre de 30 dB au plus ; prémoulés : de l'ordre de 25 dB), donc ils peuvent être insuffisants aux niveaux les plus élevés. Les bouchons moulés individuels sont faits sur empreinte ou scan 3D, durent environ 5 ans et doivent faire l'objet d'un contrôle d'étanchéité ou d'atténuation. Pour un ingé façade, ils permettent de mixer en se protégeant, à condition de retirer les bouchons seulement pour de courtes vérifications.",
+      "formulas": [],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "hearing-protection-devices",
+        "in-ear-monitoring"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+          "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.inrs.fr/risques/bruit/definitions.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "explanation",
-      "formulas[1]"
-     ]
+      "id": "electrical-safety-earthing",
+      "name_fr": "Mise à la terre et protection contre les contacts indirects",
+      "name_en": "Protective earthing",
+      "domain": "safety",
+      "definition": "Les masses métalliques des appareils de classe I sont reliées à la terre par le conducteur de protection (PE), de sorte qu'un défaut d'isolement provoque la coupure automatique de l'alimentation.",
+      "explanation": "L'INRS classe trois façons de se protéger des contacts indirects : la mise à la terre des masses avec coupure automatique (régimes de neutre définis par NF C 15-100), la double isolation (classe II, masses non reliées à la terre) et la très basse tension de sécurité (TBTS : 50 V en général, 12 V en milieu mouillé, en alternatif et en intérieur). Supprimer le conducteur de terre d'un appareil de classe I (adaptateur sans terre, broche coupée) supprime cette protection : un défaut met alors le châssis sous tension sans que rien ne coupe. Rane rappelle que les mises à la terre d'origine doivent rester intactes ; un bourdonnement se traite côté signal (liaisons symétriques, DI avec ground lift audio), jamais côté secteur.",
+      "formulas": [],
+      "units": [
+        "V"
+      ],
+      "related_concepts": [
+        "residual-current-device",
+        "electric-shock-effects",
+        "ground-loop",
+        "balanced-line"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane (RaneNote 110, Sound System Interconnection)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
-     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "a-and-c-weighting",
-   "name_fr": "Pondérations A et C (dB(A), dB(C))",
-   "name_en": "A- and C-weighting",
-   "domain": "safety",
-   "definition": "Le dB(A) pondère le niveau pour approcher la sensibilité de l'oreille ; le dB(C), presque plat, est utilisé pour les niveaux très élevés et prend mieux en compte les basses fréquences.",
-   "explanation": "L'INRS explique qu'à très fort niveau l'oreille ne perçoit plus les sons de la même façon, d'où l'usage du dB(C). C'est pour cela que le décret 2017-1244 impose deux limites : 102 dB(A) pour l'énergie globale perçue et 118 dB(C) pour les graves, très présents dans les musiques amplifiées (subwoofers). Repères INRS : 0 dB(A) correspond au son le plus faible que l'oreille perçoit, 120 dB(A) à une sensation douloureuse. Un sonomètre de contrôle doit afficher les deux pondérations.",
-   "formulas": [],
-   "units": [
-    "dB(A)",
-    "dB(C)"
-   ],
-   "related_concepts": [
-    "equal-loudness-contours",
-    "db-spl",
-    "sound-exposure-limits-france"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/bruit/definitions.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "residual-current-device",
+      "name_fr": "Dispositif différentiel (DDR, 30 mA)",
+      "name_en": "Residual current device (RCD)",
+      "domain": "safety",
+      "definition": "Appareil qui compare les courants dans les conducteurs actifs (phase et neutre) et coupe quand leur différence, le courant de fuite vers la terre, dépasse sa sensibilité ; 30 mA est la « haute sensibilité ».",
+      "explanation": "La NF C 15-100 impose des différentiels de 30 mA au plus sur tous les circuits terminaux des logements (SéQuélec). Il existe des types AC, A, F et B selon les formes de courant de défaut détectées ; le type F ajoute une immunité contre les déclenchements intempestifs. Les mises sous tension de transformateurs ou d'alimentations à découpage peuvent créer des impulsions parasites qui font déclencher un différentiel. Le différentiel détecte une fuite vers la terre : il ne protège pas d'un contact entre phase et neutre à travers le corps. Pour les installations temporaires de spectacle, la partie 7-711 de la NF C 15-100 existe (2024), mais son contenu n'a pas été lu : ne pas affirmer de règle de 30 mA sans la norme.",
+      "formulas": [],
+      "units": [
+        "mA"
+      ],
+      "related_concepts": [
+        "electrical-safety-earthing",
+        "electric-shock-effects"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Disjoncteur_différentiel",
+          "publisher": "Wikipédia (FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://enedis.fr/media/2226/download",
+          "publisher": "SéQuélec (Enedis, FFIE, Consuel…), fiche n° 2 V2",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.boutique.afnor.org/en-gb/standard/nf-c151007711/lowvoltage-electrical-installations-part-7711-special-requirements-for-temp/fa197917/423396",
+          "publisher": "AFNOR Boutique",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
-     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "sound-level-logging-display",
-   "name_fr": "Enregistrement et affichage des niveaux sonores",
-   "name_en": "Sound level logging and display",
-   "domain": "safety",
-   "definition": "Selon la catégorie du lieu, le décret 2017-1244 impose d'enregistrer en continu les niveaux en dB(A) et dB(C) auxquels le public est exposé, de conserver ces enregistrements et de les afficher en continu près de la régie.",
-   "explanation": "L'ARS Île-de-France précise que les enregistrements sont conservés au moins 6 mois et doivent pouvoir être consultés par les agents de contrôle, et que l'afficheur près de la console montre en temps réel les niveaux en dB(A) et dB(C) sur 15 minutes. Le dispositif doit être vérifié par un professionnel tous les 2 ans. En pratique, un sonomètre de classe 1 (par exemple un NTi XL2 avec son micro de mesure) ou un système de surveillance dédié mesure au point de contrôle, et l'ingénieur façade garde un œil sur la valeur glissante sur 15 min. Le tableau officiel qui associe chaque catégorie de lieu à chaque obligation n'a pas pu être lu en texte : vérifier avant d'affirmer qu'un lieu donné est soumis à l'enregistrement.",
-   "formulas": [],
-   "units": [
-    "dB(A)",
-    "dB(C)"
-   ],
-   "related_concepts": [
-    "sound-exposure-limits-france",
-    "a-and-c-weighting"
-   ],
-   "equipment_ids": [
-    "nti-audio-xl2",
-    "nti-audio-xl3",
-    "rion-nl-53"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E52",
-     "bloc": "BC03",
-     "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
-     "verified": false
+      "id": "electric-shock-effects",
+      "name_fr": "Effets du courant électrique sur le corps",
+      "name_en": "Effects of electric current on the body",
+      "domain": "safety",
+      "definition": "Les effets dépendent surtout de l'intensité et de la durée : dès 0,5 mA, contractions involontaires possibles ; 10 mA pendant quelques secondes peuvent provoquer brûlures et troubles respiratoires ou circulatoires ; 40 mA peuvent tuer.",
+      "explanation": "L'INRS distingue l'électrisation (mineure, grave ou mortelle, appelée alors électrocution) et la brûlure, interne ou par arc. La basse tension va jusqu'à 1 000 V en alternatif : « basse » ne veut pas dire sans danger, et toute tension au-delà de 50 V est potentiellement mortelle. Une chute (depuis une échelle, une tour) peut s'ajouter au choc. Sur scène, la sensation de « picotement » en touchant un micro ou une guitare est un signal d'alarme : un châssis est sous tension.",
+      "formulas": [],
+      "units": [
+        "mA",
+        "V"
+      ],
+      "related_concepts": [
+        "electrical-safety-earthing",
+        "residual-current-device"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+          "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
-     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
+      "id": "habilitation-electrique",
+      "name_fr": "Habilitation électrique",
+      "name_en": "Electrical work authorisation (habilitation)",
+      "domain": "safety",
+      "definition": "Reconnaissance par l'employeur qu'un salarié formé et déclaré apte peut effectuer en sécurité des opérations électriques définies ; elle s'appuie sur la norme NF C 18-510.",
+      "explanation": "Le symbole d'habilitation indique le domaine de tension (B basse, H haute tension), le niveau (0 opération non électrique, 1 exécutant, 2 chargé de travaux) et la nature (R intervention BT générale, S intervention BT élémentaire, C consignation, V voisinage…). Exemple INRS : B2V, chargé de travaux BT au voisinage de pièces nues sous tension. Les habilitations sont revues chaque année ; un recyclage est conseillé tous les 3 ans. L'INRS rappelle qu'ouvrir une armoire électrique ou réarmer une protection demande l'autorisation de l'employeur. Un technicien son qui raccorde un groupe ou un coffret de distribution doit donc être habilité pour cela, ou laisser faire l'électricien.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "electrical-safety-earthing"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E52",
+          "bloc": "BC03",
+          "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/electriques/habilitation-electrique.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+          "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
-     "publisher": "ARS Île-de-France",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
+      "id": "three-phase-distribution",
+      "name_fr": "Distribution triphasée",
+      "name_en": "Three-phase distribution",
+      "domain": "safety",
+      "definition": "Trois tensions sinusoïdales de même fréquence et amplitude, déphasées de 120° ; en Europe, 230 V entre phase et neutre (tension simple) et 400 V entre phases (tension composée).",
+      "explanation": "La tension composée vaut √3 fois la tension simple (√3 × 230 V ≈ 400 V). Quand les trois phases sont chargées de façon égale, les courants s'annulent dans le neutre ; une charge déséquilibrée fait circuler un courant dans le neutre. En spectacle, un coffret triphasé alimente souvent plusieurs départs monophasés 230 V : on répartit les amplis et les régies sur les phases. Une erreur de câblage du neutre sur une distribution triphasée peut appliquer jusqu'à 400 V à un appareil prévu pour 230 V ; le raccordement relève de personnes habilitées.",
+      "formulas": [
+        {
+          "expr": "U = √3 · V",
+          "vars": {
+            "U": "tension composée entre phases (V)",
+            "V": "tension simple phase-neutre (V)"
+          },
+          "source_url": "https://fr.wikipedia.org/wiki/Courant_triphasé"
+        }
+      ],
+      "units": [
+        "V",
+        "A"
+      ],
+      "related_concepts": [
+        "habilitation-electrique",
+        "electrical-power"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Courant_triphasé",
+          "publisher": "Wikipédia (FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.nti-audio.com/en/products/sound-level-meters/xl2-audio-acoustic-analyzer",
-     "publisher": "NTi Audio",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "hearing-rest-zone",
-   "name_fr": "Zone de repos auditif",
-   "name_en": "Hearing rest zone",
-   "domain": "safety",
-   "definition": "Espace (ou à défaut période) où le niveau sonore ne dépasse pas la règle d'égale énergie fondée sur 80 dB(A) sur 8 heures, imposé selon la catégorie de lieu par le décret 2017-1244.",
-   "explanation": "L'ARS Île-de-France demande que la zone soit facile à repérer, distincte des toilettes, des espaces de service et des zones fumeurs, et d'une capacité raisonnable ; le Haut Conseil de la santé publique (2013) recommandait au moins 10 % de la surface du lieu. Pour un festival, c'est typiquement un espace abrité loin des scènes ; dans un club, si aucune zone n'est possible, on ménage des pauses où la musique baisse.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "sound-exposure-limits-france",
-    "equal-energy-principle"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E52",
-     "bloc": "BC03",
-     "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 1,
-   "sources": [
-    {
-     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
-     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "definition"
-     ]
+      "id": "rigging-safety",
+      "name_fr": "Sécurité de l'accroche (rigging)",
+      "name_en": "Rigging safety",
+      "domain": "safety",
+      "definition": "Ensemble des règles pour suspendre des enceintes ou des structures : personnel qualifié, points d'accroche adaptés, inspection avant usage, calcul de la configuration, élingue de sécurité, personne sous la charge.",
+      "explanation": "Le manuel d'accroche d&b série V donne un exemple typique de consignes fabricant : installation par du personnel qualifié et autorisé, la personne qui installe vérifie que les points de suspension conviennent, inspection visuelle et fonctionnelle de chaque pièce avant usage (retrait immédiat en cas de doute), montage à deux, personne sous la charge ou à proximité pendant le levage aux palans, ne jamais grimper sur l'array, configuration vérifiée dans le logiciel ArrayCalc. Vent : pas d'enceintes accrochées au-dessus du public au-delà de 6 Beaufort ; au-delà de 8 Beaufort, éloigner tout le monde, descendre et sécuriser le système. Les charges maximales dépendent de chaque fabricant et de chaque pièce : elles se lisent dans le manuel, jamais de mémoire.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "working-load-limit-cmu",
+        "secondary-safety",
+        "working-at-height",
+        "line-array"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v8",
+        "db-audiotechnik-arraycalc",
+        "l-acoustics-soundvision"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+          "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
-     "publisher": "ARS Île-de-France",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "noise-impact-study-limiter",
-   "name_fr": "Étude d'impact des nuisances sonores (EINS) et limiteur",
-   "name_en": "Noise impact study and sound pressure limiter",
-   "domain": "safety",
-   "definition": "L'EINS évalue les nuisances d'un lieu diffusant des sons amplifiés pour le voisinage ; si elle le prescrit, un limiteur de pression acoustique est installé et réglé par un professionnel.",
-   "explanation": "Selon l'ARS Île-de-France, l'EINS relève du Code de l'environnement (art. R. 571-25 à R. 571-28) et son contenu minimal est fixé par l'arrêté du 17 avril 2023. Elle doit être mise à jour si le système de diffusion ou la position des enceintes change, ou si des ouvertures ou des travaux modifient la transmission du son. Le limiteur est certifié à l'installation et vérifié tous les 2 ans ou à chaque modification de la chaîne. Pour un lieu clos, l'émergence globale admise est de 3 dB(A). Le limiteur protège les voisins ; il ne remplace pas la surveillance des 102 dB(A) / 118 dB(C) côté public.",
-   "formulas": [],
-   "units": [
-    "dB(A)"
-   ],
-   "related_concepts": [
-    "sound-exposure-limits-france",
-    "limiter"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E52",
-     "bloc": "BC03",
-     "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
-     "publisher": "ARS Île-de-France",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "hearing-protection-devices",
-   "name_fr": "Protecteurs individuels contre le bruit (PICB)",
-   "name_en": "Hearing protection devices (HPD)",
-   "domain": "safety",
-   "definition": "Bouchons d'oreille ou casques anti-bruit (serre-tête) certifiés EN 352, dont l'atténuation est exprimée par l'indice global SNR et les valeurs H, M, L.",
-   "explanation": "Le SNR (Single Number Rating) est l'atténuation globale pour un bruit rose, définie par la norme ISO 4869-2 pour une efficacité de 84 % ; H, M et L donnent l'atténuation pour des bruits à dominante aiguë, médium et grave. L'INRS rappelle que l'atténuation réelle est souvent très inférieure à celle du fabricant, et que les PICB viennent en dernier recours après la réduction à la source et les protections collectives. La durée de port est décisive : pour 8 h à 100 dB(A) avec un PICB de 30 dB(A), l'enlever 1 minute fait perdre 5 dB(A) de protection. Trop protéger est aussi un risque (surprotection) : l'INRS vise un niveau résiduel sous protecteur entre 65 et 80 dB(A). Un casque anti-bruit standard atténue beaucoup plus les aigus que les graves : peu adapté devant des subwoofers.",
-   "formulas": [],
-   "units": [
-    "dB"
-   ],
-   "related_concepts": [
-    "flat-attenuation-earplugs",
-    "worker-noise-exposure-values",
-    "noise-induced-hearing-loss"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
-     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "working-load-limit-cmu",
+      "name_fr": "Charge maximale d'utilisation (CMU)",
+      "name_en": "Working load limit (WLL)",
+      "domain": "safety",
+      "definition": "Charge maximale qu'un accessoire de levage (élingue, manille…) peut supporter en service ; marquée sur l'accessoire, elle vaut pour un brin unique en traction verticale.",
+      "explanation": "Avec plusieurs brins, la charge admissible dépend de l'angle de chaque brin par rapport à la verticale (β) : on multiplie la CMU d'un brin par un facteur de mode. Pour 2 brins, l'INRS donne 1,4 de 0 à 45° et 1 au-delà de 45° jusqu'à 60°. Exemple INRS : deux élingues de CMU 1 000 kg à 60° ne lèvent pas 2 000 kg mais 1 000 kg. Les fabricants de systèmes donnent aussi une charge maximale (SWL) pour leurs cadres d'accroche, par exemple 860 kg pour le cadre Z5380 de d&b série V.",
+      "formulas": [
+        {
+          "expr": "Charge maxi = CMU d'un brin × facteur de mode (2 brins : 1,4 si β ≤ 45° ; 1 si 45° < β ≤ 60°)",
+          "vars": {
+            "β": "angle de chaque brin par rapport à la verticale"
+          },
+          "source_url": "https://inrs.fr/dam/jcr:907c237a-be6c-4c82-8b40-cc2623460c40/ed6278.pdf"
+        }
+      ],
+      "units": [
+        "kg",
+        "°"
+      ],
+      "related_concepts": [
+        "rigging-safety",
+        "secondary-safety"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://inrs.fr/dam/jcr:907c237a-be6c-4c82-8b40-cc2623460c40/ed6278.pdf",
+          "publisher": "INRS (ED 6278, chapitre élingage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation",
+            "formulas[0]"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+          "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.inrs.fr/risques/bruit/demarche-prevention.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "flat-attenuation-earplugs",
-   "name_fr": "Bouchons à atténuation uniforme (bouchons « musicien »)",
-   "name_en": "Flat-attenuation (musician) earplugs",
-   "domain": "safety",
-   "definition": "Protecteurs, souvent des bouchons moulés individuels à filtre, qui atténuent presque autant toutes les fréquences : on entend moins fort sans déformer l'équilibre spectral.",
-   "explanation": "L'INRS (ED 6510) les recommande quand la perception du son est importante (parole, signaux, écoute de la musique). Ils atténuent généralement moins que les protecteurs standards (bouchons moulés : SNR de l'ordre de 30 dB au plus ; prémoulés : de l'ordre de 25 dB), donc ils peuvent être insuffisants aux niveaux les plus élevés. Les bouchons moulés individuels sont faits sur empreinte ou scan 3D, durent environ 5 ans et doivent faire l'objet d'un contrôle d'étanchéité ou d'atténuation. Pour un ingé façade, ils permettent de mixer en se protégeant, à condition de retirer les bouchons seulement pour de courtes vérifications.",
-   "formulas": [],
-   "units": [
-    "dB"
-   ],
-   "related_concepts": [
-    "hearing-protection-devices",
-    "in-ear-monitoring"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
-     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "electrical-safety-earthing",
-   "name_fr": "Mise à la terre et protection contre les contacts indirects",
-   "name_en": "Protective earthing",
-   "domain": "safety",
-   "definition": "Les masses métalliques des appareils de classe I sont reliées à la terre par le conducteur de protection (PE), de sorte qu'un défaut d'isolement provoque la coupure automatique de l'alimentation.",
-   "explanation": "L'INRS classe trois façons de se protéger des contacts indirects : la mise à la terre des masses avec coupure automatique (régimes de neutre définis par NF C 15-100), la double isolation (classe II, masses non reliées à la terre) et la très basse tension de sécurité (TBTS : 50 V en général, 12 V en milieu mouillé, en alternatif et en intérieur). Supprimer le conducteur de terre d'un appareil de classe I (adaptateur sans terre, broche coupée) supprime cette protection : un défaut met alors le châssis sous tension sans que rien ne coupe. Rane rappelle que les mises à la terre d'origine doivent rester intactes ; un bourdonnement se traite côté signal (liaisons symétriques, DI avec ground lift audio), jamais côté secteur.",
-   "formulas": [],
-   "units": [
-    "V"
-   ],
-   "related_concepts": [
-    "residual-current-device",
-    "electric-shock-effects",
-    "ground-loop",
-    "balanced-line"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
+      "id": "secondary-safety",
+      "name_fr": "Élingue de sécurité (sécurité secondaire)",
+      "name_en": "Secondary safety",
+      "domain": "safety",
+      "definition": "Suspension supplémentaire, indépendante des points d'accroche principaux, capable de porter tout le poids du système et de le retenir sans chute ni balancement si l'accroche principale cède.",
+      "explanation": "d&b précise que la sécurité secondaire doit être indépendante des points de suspension principaux et dimensionnée pour le poids total ; elle se monte de façon que l'array soit retenu sans chute ni balancement. Le cadre d'accroche V possède deux points de sécurité équipés de manilles de 2 t, et d&b recommande sa chaîne de sécurité de 2 t. Sans sécurité secondaire, une seule pièce défaillante fait tomber le système sur le public ou l'équipe.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "rigging-safety",
+        "working-load-limit-cmu"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+          "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "cable-management-safety",
+      "name_fr": "Gestion des câbles et chutes de plain-pied",
+      "name_en": "Cable management and trip hazards",
+      "domain": "safety",
+      "definition": "Ranger et protéger les câbles pour qu'ils ne gênent pas la circulation : supprimer l'encombrement du sol, couvrir les passages de câbles (passe-câbles), signaler et éclairer les zones de passage.",
+      "explanation": "Les chutes de plain-pied sont présentées par l'INRS comme la deuxième cause d'accidents du travail. L'INRS demande de supprimer autant que possible l'encombrement du sol, de couvrir les passages de câbles, de soigner l'éclairage des circulations et de signaler les zones dangereuses. ED 6344 ajoute d'éviter de marcher ou de rouler sur les câbles électriques, qui abîme leur gaine, et de ne pas tirer sur un câble pour débrancher. Sur un plateau ou une salle, on fait passer les multipaires et rallonges le long des murs, on utilise des passe-câbles dans les passages du public, et on laisse les sorties de secours dégagées.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "manual-handling",
+        "electrical-safety-earthing"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/chutes-de-plain-pied/mesures-de-prevention.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+          "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://www.ranecommercial.com/legacy/note110.html",
-     "publisher": "Rane (RaneNote 110, Sound System Interconnection)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "residual-current-device",
-   "name_fr": "Dispositif différentiel (DDR, 30 mA)",
-   "name_en": "Residual current device (RCD)",
-   "domain": "safety",
-   "definition": "Appareil qui compare les courants dans les conducteurs actifs (phase et neutre) et coupe quand leur différence, le courant de fuite vers la terre, dépasse sa sensibilité ; 30 mA est la « haute sensibilité ».",
-   "explanation": "La NF C 15-100 impose des différentiels de 30 mA au plus sur tous les circuits terminaux des logements (SéQuélec). Il existe des types AC, A, F et B selon les formes de courant de défaut détectées ; le type F ajoute une immunité contre les déclenchements intempestifs. Les mises sous tension de transformateurs ou d'alimentations à découpage peuvent créer des impulsions parasites qui font déclencher un différentiel. Le différentiel détecte une fuite vers la terre : il ne protège pas d'un contact entre phase et neutre à travers le corps. Pour les installations temporaires de spectacle, la partie 7-711 de la NF C 15-100 existe (2024), mais son contenu n'a pas été lu : ne pas affirmer de règle de 30 mA sans la norme.",
-   "formulas": [],
-   "units": [
-    "mA"
-   ],
-   "related_concepts": [
-    "electrical-safety-earthing",
-    "electric-shock-effects"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
+      "id": "manual-handling",
+      "name_fr": "Manutention manuelle des charges",
+      "name_en": "Manual handling",
+      "domain": "safety",
+      "definition": "Le Code du travail impose d'éviter la manutention manuelle en priorité par des moyens mécaniques ; un travailleur ne porte des charges de plus de 55 kg que s'il a été reconnu apte par le médecin du travail, et jamais plus de 105 kg.",
+      "explanation": "Ces limites viennent de l'article R. 4541-9 du Code du travail cité par l'aide-mémoire INRS TJ 18 ; les femmes ne sont pas autorisées à porter plus de 25 kg. Ces valeurs maximales ne sont pas des objectifs : l'employeur doit évaluer le risque, organiser les postes et former. En son, cela vise les flight-cases, enceintes, subwoofers et multipaires : on roule, on porte à deux, on utilise les poignées et les chariots plutôt que de soulever seul.",
+      "formulas": [],
+      "units": [
+        "kg"
+      ],
+      "related_concepts": [
+        "cable-management-safety",
+        "rigging-safety"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-TJ-18.pdf",
+          "publisher": "INRS (TJ 18, aide-mémoire juridique Manutention manuelle)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
-     "verified": false
+      "id": "working-at-height",
+      "name_fr": "Travail en hauteur",
+      "name_en": "Working at height",
+      "domain": "safety",
+      "definition": "Les protections collectives (garde-corps) passent avant les protections individuelles (harnais antichute), utilisées seulement si la protection collective est impossible.",
+      "explanation": "L'INRS rappelle que les échelles et escabeaux ne doivent pas servir de poste de travail, sauf impossibilité technique ou travaux courts, peu risqués et non répétitifs (R. 4323-63). La conduite d'une nacelle (PEMP) demande une autorisation de conduite délivrée par l'employeur et est interdite aux moins de 18 ans. Un harnais exige une formation, une vérification avant chaque usage et un contrôle annuel. Pour orienter une enceinte en hauteur longtemps, on préfère une plateforme avec garde-corps à un escabeau.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "rigging-safety"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/risques/chutes-hauteur/reglementation-travail-hauteur.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     }
-   ],
-   "difficulty": 3,
-   "sources": [
+  ],
+  "not_found_log": [
     {
-     "url": "https://fr.wikipedia.org/wiki/Disjoncteur_différentiel",
-     "publisher": "Wikipédia (FR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "what": "Texte du décret n° 2017-1244 et de l'article R. 1336-1 CSP sur Légifrance",
+      "searched": "legifrance.gouv.fr /jorf/id/JORFTEXT000035379571 et /loda/id/... (coquille JavaScript vide) ; copie PDF préfecture Indre-et-Loire (site en maintenance) ; media.engins.fr (404) ; aida.ineris.fr (404). Chiffres repris via ARS Grand Est (synthèse R1336-1) et ARS Île-de-France."
     },
     {
-     "url": "https://enedis.fr/media/2226/download",
-     "publisher": "SéQuélec (Enedis, FFIE, Consuel…), fiche n° 2 V2",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Tableau officiel associant chaque catégorie de lieu (festival, discothèque, LDSA ≤ / > 300 personnes, cinéma) à chaque obligation",
+      "searched": "ARS Grand Est PDF (tableau en image, non extractible) ; ARS Île-de-France (tableau illisible en texte)."
     },
     {
-     "url": "https://www.boutique.afnor.org/en-gb/standard/nf-c151007711/lowvoltage-electrical-installations-part-7711-special-requirements-for-temp/fa197917/423396",
-     "publisher": "AFNOR Boutique",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "electric-shock-effects",
-   "name_fr": "Effets du courant électrique sur le corps",
-   "name_en": "Effects of electric current on the body",
-   "domain": "safety",
-   "definition": "Les effets dépendent surtout de l'intensité et de la durée : dès 0,5 mA, contractions involontaires possibles ; 10 mA pendant quelques secondes peuvent provoquer brûlures et troubles respiratoires ou circulatoires ; 40 mA peuvent tuer.",
-   "explanation": "L'INRS distingue l'électrisation (mineure, grave ou mortelle, appelée alors électrocution) et la brûlure, interne ou par arc. La basse tension va jusqu'à 1 000 V en alternatif : « basse » ne veut pas dire sans danger, et toute tension au-delà de 50 V est potentiellement mortelle. Une chute (depuis une échelle, une tour) peut s'ajouter au choc. Sur scène, la sensation de « picotement » en touchant un micro ou une guitare est un signal d'alarme : un châssis est sous tension.",
-   "formulas": [],
-   "units": [
-    "mA",
-    "V"
-   ],
-   "related_concepts": [
-    "electrical-safety-earthing",
-    "residual-current-device"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
-     "verified": false
+      "what": "Règle 30 mA pour les installations électriques temporaires de spectacle",
+      "searched": "NF C 15-100-7-711 (2024) seulement vue sur la boutique AFNOR (titre, pas de contenu) ; INRS prévention risque électrique (ne mentionne pas le différentiel) ; WebSearch sans source officielle."
     },
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 1,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
-     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "habilitation-electrique",
-   "name_fr": "Habilitation électrique",
-   "name_en": "Electrical work authorisation (habilitation)",
-   "domain": "safety",
-   "definition": "Reconnaissance par l'employeur qu'un salarié formé et déclaré apte peut effectuer en sécurité des opérations électriques définies ; elle s'appuie sur la norme NF C 18-510.",
-   "explanation": "Le symbole d'habilitation indique le domaine de tension (B basse, H haute tension), le niveau (0 opération non électrique, 1 exécutant, 2 chargé de travaux) et la nature (R intervention BT générale, S intervention BT élémentaire, C consignation, V voisinage…). Exemple INRS : B2V, chargé de travaux BT au voisinage de pièces nues sous tension. Les habilitations sont revues chaque année ; un recyclage est conseillé tous les 3 ans. L'INRS rappelle qu'ouvrir une armoire électrique ou réarmer une protection demande l'autorisation de l'employeur. Un technicien son qui raccorde un groupe ou un coffret de distribution doit donc être habilité pour cela, ou laisser faire l'électricien.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "electrical-safety-earthing"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E52",
-     "bloc": "BC03",
-     "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
-     "verified": false
+      "what": "Texte de la directive 2003/10/CE sur EUR-Lex",
+      "searched": "eur-lex.europa.eu TXT et TXT/HTML (page vide / erreur) ; utilisé la copie legislation.gov.uk (art. 3 et 14)."
     },
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/electriques/habilitation-electrique.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "what": "Formule officielle du LAeq / LEX,8h",
+      "searched": "INRS définitions et exposition (pas de formule) ; ED 6510 glossaire (définitions sans formule). Formule non reproduite."
     },
     {
-     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
-     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Fiche IEC des fiches secteur type E/F (Schuko) et contact de terre",
+      "searched": "iec.ch/world-plugs/type-f (HTTP 403)."
     }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "three-phase-distribution",
-   "name_fr": "Distribution triphasée",
-   "name_en": "Three-phase distribution",
-   "domain": "safety",
-   "definition": "Trois tensions sinusoïdales de même fréquence et amplitude, déphasées de 120° ; en Europe, 230 V entre phase et neutre (tension simple) et 400 V entre phases (tension composée).",
-   "explanation": "La tension composée vaut √3 fois la tension simple (√3 × 230 V ≈ 400 V). Quand les trois phases sont chargées de façon égale, les courants s'annulent dans le neutre ; une charge déséquilibrée fait circuler un courant dans le neutre. En spectacle, un coffret triphasé alimente souvent plusieurs départs monophasés 230 V : on répartit les amplis et les régies sur les phases. Une erreur de câblage du neutre sur une distribution triphasée peut appliquer jusqu'à 400 V à un appareil prévu pour 230 V ; le raccordement relève de personnes habilitées.",
-   "formulas": [
-    {
-     "expr": "U = √3 · V",
-     "vars": {
-      "U": "tension composée entre phases (V)",
-      "V": "tension simple phase-neutre (V)"
-     },
-     "source_url": "https://fr.wikipedia.org/wiki/Courant_triphasé"
-    }
-   ],
-   "units": [
-    "V",
-    "A"
-   ],
-   "related_concepts": [
-    "habilitation-electrique",
-    "electrical-power"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Grandeurs physiques (dB, pondérations, électricité) en PTES — jugement, non vérifié",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Courant_triphasé",
-     "publisher": "Wikipédia (FR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "formulas[0]",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "rigging-safety",
-   "name_fr": "Sécurité de l'accroche (rigging)",
-   "name_en": "Rigging safety",
-   "domain": "safety",
-   "definition": "Ensemble des règles pour suspendre des enceintes ou des structures : personnel qualifié, points d'accroche adaptés, inspection avant usage, calcul de la configuration, élingue de sécurité, personne sous la charge.",
-   "explanation": "Le manuel d'accroche d&b série V donne un exemple typique de consignes fabricant : installation par du personnel qualifié et autorisé, la personne qui installe vérifie que les points de suspension conviennent, inspection visuelle et fonctionnelle de chaque pièce avant usage (retrait immédiat en cas de doute), montage à deux, personne sous la charge ou à proximité pendant le levage aux palans, ne jamais grimper sur l'array, configuration vérifiée dans le logiciel ArrayCalc. Vent : pas d'enceintes accrochées au-dessus du public au-delà de 6 Beaufort ; au-delà de 8 Beaufort, éloigner tout le monde, descendre et sécuriser le système. Les charges maximales dépendent de chaque fabricant et de chaque pièce : elles se lisent dans le manuel, jamais de mémoire.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "working-load-limit-cmu",
-    "secondary-safety",
-    "working-at-height",
-    "line-array"
-   ],
-   "equipment_ids": [
-    "db-audiotechnik-v8",
-    "db-audiotechnik-arraycalc",
-    "l-acoustics-soundvision"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
-     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "working-load-limit-cmu",
-   "name_fr": "Charge maximale d'utilisation (CMU)",
-   "name_en": "Working load limit (WLL)",
-   "domain": "safety",
-   "definition": "Charge maximale qu'un accessoire de levage (élingue, manille…) peut supporter en service ; marquée sur l'accessoire, elle vaut pour un brin unique en traction verticale.",
-   "explanation": "Avec plusieurs brins, la charge admissible dépend de l'angle de chaque brin par rapport à la verticale (β) : on multiplie la CMU d'un brin par un facteur de mode. Pour 2 brins, l'INRS donne 1,4 de 0 à 45° et 1 au-delà de 45° jusqu'à 60°. Exemple INRS : deux élingues de CMU 1 000 kg à 60° ne lèvent pas 2 000 kg mais 1 000 kg. Les fabricants de systèmes donnent aussi une charge maximale (SWL) pour leurs cadres d'accroche, par exemple 860 kg pour le cadre Z5380 de d&b série V.",
-   "formulas": [
-    {
-     "expr": "Charge maxi = CMU d'un brin × facteur de mode (2 brins : 1,4 si β ≤ 45° ; 1 si 45° < β ≤ 60°)",
-     "vars": {
-      "β": "angle de chaque brin par rapport à la verticale"
-     },
-     "source_url": "https://inrs.fr/dam/jcr:907c237a-be6c-4c82-8b40-cc2623460c40/ed6278.pdf"
-    }
-   ],
-   "units": [
-    "kg",
-    "°"
-   ],
-   "related_concepts": [
-    "rigging-safety",
-    "secondary-safety"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://inrs.fr/dam/jcr:907c237a-be6c-4c82-8b40-cc2623460c40/ed6278.pdf",
-     "publisher": "INRS (ED 6278, chapitre élingage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation",
-      "formulas[0]"
-     ]
-    },
-    {
-     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
-     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "secondary-safety",
-   "name_fr": "Élingue de sécurité (sécurité secondaire)",
-   "name_en": "Secondary safety",
-   "domain": "safety",
-   "definition": "Suspension supplémentaire, indépendante des points d'accroche principaux, capable de porter tout le poids du système et de le retenir sans chute ni balancement si l'accroche principale cède.",
-   "explanation": "d&b précise que la sécurité secondaire doit être indépendante des points de suspension principaux et dimensionnée pour le poids total ; elle se monte de façon que l'array soit retenu sans chute ni balancement. Le cadre d'accroche V possède deux points de sécurité équipés de manilles de 2 t, et d&b recommande sa chaîne de sécurité de 2 t. Sans sécurité secondaire, une seule pièce défaillante fait tomber le système sur le public ou l'équipe.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "rigging-safety",
-    "working-load-limit-cmu"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
-     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "cable-management-safety",
-   "name_fr": "Gestion des câbles et chutes de plain-pied",
-   "name_en": "Cable management and trip hazards",
-   "domain": "safety",
-   "definition": "Ranger et protéger les câbles pour qu'ils ne gênent pas la circulation : supprimer l'encombrement du sol, couvrir les passages de câbles (passe-câbles), signaler et éclairer les zones de passage.",
-   "explanation": "Les chutes de plain-pied sont présentées par l'INRS comme la deuxième cause d'accidents du travail. L'INRS demande de supprimer autant que possible l'encombrement du sol, de couvrir les passages de câbles, de soigner l'éclairage des circulations et de signaler les zones dangereuses. ED 6344 ajoute d'éviter de marcher ou de rouler sur les câbles électriques, qui abîme leur gaine, et de ne pas tirer sur un câble pour débrancher. Sur un plateau ou une salle, on fait passer les multipaires et rallonges le long des murs, on utilise des passe-câbles dans les passages du public, et on laisse les sorties de secours dégagées.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "manual-handling",
-    "electrical-safety-earthing"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 1,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/chutes-de-plain-pied/mesures-de-prevention.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
-     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "manual-handling",
-   "name_fr": "Manutention manuelle des charges",
-   "name_en": "Manual handling",
-   "domain": "safety",
-   "definition": "Le Code du travail impose d'éviter la manutention manuelle en priorité par des moyens mécaniques ; un travailleur ne porte des charges de plus de 55 kg que s'il a été reconnu apte par le médecin du travail, et jamais plus de 105 kg.",
-   "explanation": "Ces limites viennent de l'article R. 4541-9 du Code du travail cité par l'aide-mémoire INRS TJ 18 ; les femmes ne sont pas autorisées à porter plus de 25 kg. Ces valeurs maximales ne sont pas des objectifs : l'employeur doit évaluer le risque, organiser les postes et former. En son, cela vise les flight-cases, enceintes, subwoofers et multipaires : on roule, on porte à deux, on utilise les poignées et les chariots plutôt que de soulever seul.",
-   "formulas": [],
-   "units": [
-    "kg"
-   ],
-   "related_concepts": [
-    "cable-management-safety",
-    "rigging-safety"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 1,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-TJ-18.pdf",
-     "publisher": "INRS (TJ 18, aide-mémoire juridique Manutention manuelle)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "working-at-height",
-   "name_fr": "Travail en hauteur",
-   "name_en": "Working at height",
-   "domain": "safety",
-   "definition": "Les protections collectives (garde-corps) passent avant les protections individuelles (harnais antichute), utilisées seulement si la protection collective est impossible.",
-   "explanation": "L'INRS rappelle que les échelles et escabeaux ne doivent pas servir de poste de travail, sauf impossibilité technique ou travaux courts, peu risqués et non répétitifs (R. 4323-63). La conduite d'une nacelle (PEMP) demande une autorisation de conduite délivrée par l'employeur et est interdite aux moins de 18 ans. Un harnais exige une formation, une vérification avant chaque usage et un contrôle annuel. Pour orienter une enceinte en hauteur longtemps, on préfère une plateforme avec garde-corps à un escabeau.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "rigging-safety"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/risques/chutes-hauteur/reglementation-travail-hauteur.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Texte du décret n° 2017-1244 et de l'article R. 1336-1 CSP sur Légifrance",
-   "searched": "legifrance.gouv.fr /jorf/id/JORFTEXT000035379571 et /loda/id/... (coquille JavaScript vide) ; copie PDF préfecture Indre-et-Loire (site en maintenance) ; media.engins.fr (404) ; aida.ineris.fr (404). Chiffres repris via ARS Grand Est (synthèse R1336-1) et ARS Île-de-France."
-  },
-  {
-   "what": "Tableau officiel associant chaque catégorie de lieu (festival, discothèque, LDSA ≤ / > 300 personnes, cinéma) à chaque obligation",
-   "searched": "ARS Grand Est PDF (tableau en image, non extractible) ; ARS Île-de-France (tableau illisible en texte)."
-  },
-  {
-   "what": "Règle 30 mA pour les installations électriques temporaires de spectacle",
-   "searched": "NF C 15-100-7-711 (2024) seulement vue sur la boutique AFNOR (titre, pas de contenu) ; INRS prévention risque électrique (ne mentionne pas le différentiel) ; WebSearch sans source officielle."
-  },
-  {
-   "what": "Texte de la directive 2003/10/CE sur EUR-Lex",
-   "searched": "eur-lex.europa.eu TXT et TXT/HTML (page vide / erreur) ; utilisé la copie legislation.gov.uk (art. 3 et 14)."
-  },
-  {
-   "what": "Formule officielle du LAeq / LEX,8h",
-   "searched": "INRS définitions et exposition (pas de formule) ; ED 6510 glossaire (définitions sans formule). Formule non reproduite."
-  },
-  {
-   "what": "Fiche IEC des fiches secteur type E/F (Schuko) et contact de terre",
-   "searched": "iec.ch/world-plugs/type-f (HTTP 403)."
-  }
- ]
+  ]
 }

@@ -160,7 +160,8 @@
           "covers": [
             "procedure_ids",
             "signal_flow"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
@@ -170,7 +171,8 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -278,7 +280,8 @@
           "covers": [
             "brief",
             "signal_flow"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf",
@@ -288,7 +291,8 @@
           "kind": "manufacturer",
           "covers": [
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
@@ -298,7 +302,8 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

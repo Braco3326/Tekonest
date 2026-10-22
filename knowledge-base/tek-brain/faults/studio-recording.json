@@ -58,7 +58,8 @@
           "kind": "manufacturer",
           "covers": [
             "symptom"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
@@ -69,7 +70,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
@@ -79,7 +81,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -136,7 +139,8 @@
           "kind": "standard",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
@@ -146,7 +150,8 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
@@ -156,7 +161,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -216,7 +222,8 @@
             "symptom",
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -226,7 +233,8 @@
           "kind": "other",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -276,7 +284,8 @@
           "kind": "other",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
@@ -286,7 +295,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -303,7 +313,7 @@
       ],
       "probable_causes": [
         {
-          "cause": "Gain de préampli trop faible puis remonté en numérique",
+          "cause": "Gain de préampli trop faible : le niveau est rattrapé plus loin dans la chaîne, ce qui dégrade le rapport signal/bruit",
           "likelihood": "high"
         },
         {
@@ -321,7 +331,7 @@
         "Faire des essais d'enregistrement micro orienté différemment pour trouver la position la plus calme"
       ],
       "fixes": [
-        "Rapprocher le micro et régler le gain pour une marge raisonnable, ni écrêtage ni niveau trop bas",
+        "Rapprocher le micro, et régler le gain d'entrée avec la source jouant au plus fort jusqu'à ce que le voyant OL ne s'allume qu'occasionnellement (ni écrêtage permanent ni niveau trop bas)",
         "Éloigner et détourner le micro des sources de bruit",
         "Supprimer ou couper le bruit à la source avant la prise"
       ],
@@ -342,23 +352,39 @@
           "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
-            "probable_causes",
+            "probable_causes[1..2]",
             "checks",
-            "fixes"
-          ]
+            "fixes[0] (rapprocher le micro)",
+            "fixes[1..2]"
+          ],
+          "url_status": "ok"
         },
         {
-          "url": "https://tech.ebu.ch/publications/r068",
-          "publisher": "EBU — R 68 Alignment level in digital audio production equipment and recorders",
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
           "confidence": "verified-primary",
-          "kind": "standard",
+          "kind": "manufacturer",
           "covers": [
-            "fixes"
-          ]
+            "probable_causes[0]",
+            "fixes[0] (réglage du gain d'entrée : « Set the input mic gain trim so the mic OL light just occasionally flickers … any less and you are hurting your best possible S/N »)"
+          ],
+          "url_status": "ok"
         }
       ],
-      "review": "ok"
+      "review": "ok",
+      "conflicts": [
+        {
+          "field": "probable_causes[0]/fixes[0]",
+          "values": [
+            {
+              "value": "Gain de préampli trop faible puis remonté en numérique / Rapprocher le micro et régler le gain pour une marge raisonnable, ni écrêtage ni niveau trop bas",
+              "source_url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : EBU R 68 ne traite ni du bruit ni de la marge d'enregistrement : retirée. Cause et fix reformulés et sourcés par la RaneNote 135 (relue le 2026-10-22) ; covers Shure restreints."
+        }
+      ]
     },
     {
       "id": "stems-do-not-sum-to-mix",
@@ -410,7 +436,8 @@
             "symptom",
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

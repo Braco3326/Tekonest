@@ -408,7 +408,8 @@
         "patch_points.intercom-point",
         "openings[0]",
         "openings[1]"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://patrimoine.bourgognefranchecomte.fr/documents/Dossier-technique-theatre-Nevers-202405.pdf",
@@ -425,17 +426,19 @@
         "power_points",
         "patch_points.stage-box-32ch-dante",
         "gear_positions (choix du matériel : CL3, Rio3224-D2, ULXD4Q, DPA 4060, KM184, MD421)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
       "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
       "accessed": "2026-10-22",
-      "confidence": "verified-secondary",
+      "confidence": "verified-primary",
       "kind": "manufacturer",
       "covers": [
         "rt60_s"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

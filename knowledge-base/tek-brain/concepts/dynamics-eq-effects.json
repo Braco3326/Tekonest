@@ -1,1915 +1,1989 @@
 {
- "entity": "concept",
- "domain": "dynamics-eq-effects",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "compressor",
-   "name_fr": "Compresseur",
-   "name_en": "Compressor",
-   "domain": "dynamics-eq-effects",
-   "definition": "Processeur de dynamique qui réduit automatiquement le gain lorsque le niveau du signal dépasse un seuil, ce qui réduit l'écart entre passages forts et faibles (plage dynamique).",
-   "explanation": "Un compresseur mesure en permanence le niveau de son entrée (ou de son side-chain) et applique une réduction de gain (gain reduction) dès que ce niveau passe au-dessus du seuil (threshold). La quantité de réduction dépend du taux (ratio), la vitesse de réaction des temps d'attaque et de rétablissement (attack / release). Comme un compresseur « vers le bas » ne fait que baisser le niveau, on ajoute ensuite un gain de compensation (makeup gain). Le manuel dbx du 166xs donne des points de départ concrets : pour lisser une voix, mode OverEasy, attaque moyenne, rétablissement assez lent, ratio d'environ 4:1 et seuil réglé pour lire 6 à 10 dB de réduction de gain. Sur une console, il s'utilise normalement en insert, sur la tranche ou sur un groupe audio (la compression parallèle est l'exception où l'on dose un signal compressé à côté du sec).",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "threshold-ratio",
-    "attack-release",
-    "knee",
-    "makeup-gain",
-    "limiter",
-    "sidechain",
-    "parallel-compression",
-    "insert-point",
-    "headroom"
-   ],
-   "equipment_ids": [
-    "universal-audio-1176ln",
-    "universal-audio-teletronix-la-2a",
-    "dbx-160a",
-    "dbx-166xs",
-    "ssl-the-bus-plus",
-    "empirical-labs-distressor-el8",
-    "manley-variable-mu"
-   ],
-   "bts_mapping": [
+  "entity": "concept",
+  "domain": "dynamics-eq-effects",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
+      "id": "compressor",
+      "name_fr": "Compresseur",
+      "name_en": "Compressor",
+      "domain": "dynamics-eq-effects",
+      "definition": "Processeur de dynamique qui réduit automatiquement le gain lorsque le niveau du signal dépasse un seuil, ce qui réduit l'écart entre passages forts et faibles (plage dynamique).",
+      "explanation": "Un compresseur mesure en permanence le niveau de son entrée (ou de son side-chain) et applique une réduction de gain (gain reduction) dès que ce niveau passe au-dessus du seuil (threshold). La quantité de réduction dépend du taux (ratio), la vitesse de réaction des temps d'attaque et de rétablissement (attack / release). Comme un compresseur « vers le bas » ne fait que baisser le niveau, on ajoute ensuite un gain de compensation (makeup gain). Le manuel dbx du 166xs donne des points de départ concrets : pour lisser une voix, mode OverEasy, attaque moyenne, rétablissement assez lent, ratio d'environ 4:1 et seuil réglé pour lire 6 à 10 dB de réduction de gain. Sur une console, il s'utilise normalement en insert, sur la tranche ou sur un groupe audio (la compression parallèle est l'exception où l'on dose un signal compressé à côté du sec).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "threshold-ratio",
+        "attack-release",
+        "knee",
+        "makeup-gain",
+        "limiter",
+        "sidechain",
+        "parallel-compression",
+        "insert-point",
+        "headroom"
+      ],
+      "equipment_ids": [
+        "universal-audio-1176ln",
+        "universal-audio-teletronix-la-2a",
+        "dbx-160a",
+        "dbx-166xs",
+        "ssl-the-bus-plus",
+        "empirical-labs-distressor-el8",
+        "manley-variable-mu"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+          "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
+      "id": "threshold-ratio",
+      "name_fr": "Seuil et taux de compression",
+      "name_en": "Threshold and ratio",
+      "domain": "dynamics-eq-effects",
+      "definition": "Le seuil (threshold) est le niveau au-delà duquel le processeur agit ; le taux (ratio) indique de combien de dB l'entrée doit monter au-dessus du seuil pour que la sortie monte de 1 dB.",
+      "explanation": "Avec un ratio de 2:1, une hausse de 2 dB au-dessus du seuil ne donne que 1 dB de plus en sortie ; à ∞:1 la sortie ne monte plus du tout (dbx 166xs). Sur le 166xs, le seuil se règle de −40 dBu à +20 dBu et un ratio de 1:1 désactive la compression quel que soit le seuil. Sur certains appareils le seuil n'a pas de bouton : sur le 1176LN, c'est le potentiomètre Input qui pousse plus ou moins le signal vers un seuil fixe, et les ratios élevés relèvent aussi le seuil. Sur l'LA-2A, le bouton Peak Reduction règle à la fois le seuil et la quantité de compression. Exemple : un signal 4 dB au-dessus du seuil avec un ratio 4:1 ressort à 1 dB au-dessus, soit 3 dB de réduction de gain.",
+      "formulas": [
+        {
+          "expr": "dépassement en sortie (dB) = dépassement en entrée au-dessus du seuil (dB) / ratio",
+          "vars": {
+            "ratio": "taux de compression R:1"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Dynamic_range_compression"
+        }
+      ],
+      "units": [
+        "dB",
+        "dBu",
+        "dBFS"
+      ],
+      "related_concepts": [
+        "compressor",
+        "knee",
+        "limiter",
+        "dbu",
+        "dbfs"
+      ],
+      "equipment_ids": [
+        "dbx-166xs",
+        "universal-audio-1176ln",
+        "universal-audio-teletronix-la-2a"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+          "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+          "publisher": "Universal Audio — Teletronix LA-2A manual (PDF hébergé par Adorama)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "formulas[0]",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "attack-release",
+      "name_fr": "Temps d'attaque et de rétablissement",
+      "name_en": "Attack and release",
+      "domain": "dynamics-eq-effects",
+      "definition": "L'attaque (attack) est le temps que met le processeur à réduire le gain après un dépassement du seuil ; le rétablissement (release) est le temps qu'il met à revenir au gain initial quand le signal repasse sous le seuil.",
+      "explanation": "Une attaque rapide attrape les transitoires très brèves et « adoucit » le son ; une attaque plus lente laisse passer l'attaque des notes avant de compresser (UA 1176LN). Un rétablissement trop rapide provoque du pompage et de la respiration (pumping / breathing) car le bruit de fond remonte à chaque relâchement ; trop lent, un passage fort maintient la réduction pendant le passage doux qui suit. Les plages varient beaucoup : 20 à 800 µs d'attaque et 50 à 1100 ms de rétablissement sur le 1176LN, 0,1 à 40 ms d'attaque et 0,05 à 1,2 s de rétablissement sur le SSL Bus+. Certains appareils ont un rétablissement dépendant du programme : l'LA-2A relâche environ 50 % en 0,06 s puis complètement en 0,5 à 5 s selon la réduction précédente ; le mode AUTO du SSL utilise deux étages (100 ms et 12 s). dbx conseille, pour la basse, des temps plus lents. Il n'existe pas de standard industriel pour la définition exacte de ces temps.",
+      "formulas": [],
+      "units": [
+        "ms",
+        "s",
+        "µs"
+      ],
+      "related_concepts": [
+        "compressor",
+        "threshold-ratio",
+        "noise-gate",
+        "limiter"
+      ],
+      "equipment_ids": [
+        "universal-audio-1176ln",
+        "universal-audio-teletronix-la-2a",
+        "ssl-the-bus-plus",
+        "dbx-166xs"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+          "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+          "publisher": "Universal Audio — Teletronix LA-2A manual (PDF hébergé par Adorama)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "knee",
+      "name_fr": "Coude (knee) : hard knee et soft knee",
+      "name_en": "Knee (hard / soft)",
+      "domain": "dynamics-eq-effects",
+      "definition": "Forme de la courbe de transfert autour du seuil : coude dur (hard knee) si la compression commence net au seuil, coude doux (soft knee) si le ratio augmente progressivement autour du seuil.",
+      "explanation": "En mode hard knee, le seuil est le point exact au-dessus duquel la sortie ne suit plus l'entrée dB pour dB. En coude doux (OverEasy chez dbx), la réduction commence avant le seuil et n'atteint le ratio réglé qu'un peu au-dessus ; le seuil affiché correspond au milieu de cette zone, « à mi-chemin » de la compression. dbx indique que la compression la plus douce s'obtient avec OverEasy et AUTO, la plus agressive en hard knee avec attaque et rétablissement rapides. Le coude doux rend la transition moins audible, surtout avec des ratios élevés.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "threshold-ratio",
+        "compressor"
+      ],
+      "equipment_ids": [
+        "dbx-166xs",
+        "dbx-160a"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "makeup-gain",
+      "name_fr": "Gain de compensation (makeup gain)",
+      "name_en": "Makeup gain",
+      "domain": "dynamics-eq-effects",
+      "definition": "Gain fixe ajouté en sortie d'un compresseur pour compenser la baisse de niveau due à la réduction de gain.",
+      "explanation": "Un compresseur vers le bas ne fait que baisser le niveau ; on remonte donc le signal en sortie. Le manuel dbx du 166xs propose une méthode simple : régler ce gain de la même valeur que la réduction moyenne lue au vumètre (10 dB de réduction moyenne → +10 dB de gain de sortie), en surveillant l'écrêtage puisque jusqu'à +20 dB peuvent être ajoutés. Sur le 1176LN, c'est le bouton Output ; sur le SSL Bus+, le bouton MAKE-UP (−10 à +20 dB). Le bypass du 166xs sert à comparer signal traité et non traité ; Sound On Sound recommande, à propos de l'égalisation, d'égaliser les niveaux avant de juger, un principe qui vaut aussi ici.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "compressor",
+        "headroom",
+        "gain-staging"
+      ],
+      "equipment_ids": [
+        "dbx-166xs",
+        "universal-audio-1176ln",
+        "ssl-the-bus-plus"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+          "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+          "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "limiter",
+      "name_fr": "Limiteur",
+      "name_en": "Limiter",
+      "domain": "dynamics-eq-effects",
+      "definition": "Compresseur réglé avec un ratio élevé et une attaque rapide, destiné à empêcher le signal de dépasser un niveau maximal plutôt qu'à modeler sa dynamique.",
+      "explanation": "La frontière entre compression et limitation n'est pas fixée de la même façon partout : Wikipedia parle de limitation à partir d'environ 10:1, alors que Universal Audio range le 8:1 du 1176LN en « compression sévère » et appelle 12:1 et 20:1 de la limitation. Le dbx 166xs propose, pour protéger des enceintes, un réglage hard knee avec un ratio d'au moins 10:1 et un seuil quelques dB sous l'écrêtage, et rappelle que ce compresseur doit être placé le plus près possible des amplificateurs. Il possède aussi un limiteur PeakStop placé après tous les autres étages (y compris le gain de sortie) : un écrêteur doux réglable de 0 à +20 dBu, qu'il faut régler 1 à 2 dB sous le plafond à ne pas dépasser car de petites excursions restent possibles.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "compressor",
+        "threshold-ratio",
+        "true-peak-limiting",
+        "headroom",
+        "true-peak"
+      ],
+      "equipment_ids": [
+        "dbx-166xs",
+        "universal-audio-1176ln"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+          "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Limitation à partir d'environ 10:1",
+              "source_url": "https://en.wikipedia.org/wiki/Dynamic_range_compression"
+            },
+            {
+              "value": "8:1 = compression sévère ; 12:1 = limitation douce ; 20:1 = limitation dure (1176LN)",
+              "source_url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf"
+            }
+          ],
+          "note": "Seuil de ratio entre compresseur et limiteur : convention, pas une norme."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "true-peak-limiting",
+      "name_fr": "Limitation brickwall et true peak",
+      "name_en": "Brickwall / true-peak limiting",
+      "domain": "dynamics-eq-effects",
+      "definition": "Limitation à ratio très élevé (20:1 à ∞:1) et attaque quasi instantanée qui vise à ne jamais dépasser un plafond ; en mode true peak, le plafond s'applique aussi aux crêtes inter-échantillons de la forme d'onde reconstruite.",
+      "explanation": "Un limiteur brickwall sert surtout de sécurité : utilisé en permanence, il durcit le son (Wikipedia). Pour attraper les transitoires sans distorsion, il retarde l'audio et analyse le signal en avance (lookahead), au prix d'une latence. Les crêtes réelles (true peaks) peuvent se situer entre deux échantillons : la forme d'onde reconstruite par le convertisseur N/A ou par un encodage MP3 peut dépasser la valeur des échantillons et écrêter. FabFilter recommande comme point de départ un suréchantillonnage 4x avec au moins 0,1 ms de lookahead, ce qui garde les crêtes inter-échantillons à environ 0,1 dB ; le mode true peak ajoute environ 5 ms de latence. En broadcast, le plafond se fixe en dBTP selon les recommandations de sonie (voir le concept true-peak du domaine broadcast).",
+      "formulas": [],
+      "units": [
+        "dBTP",
+        "dBFS",
+        "ms"
+      ],
+      "related_concepts": [
+        "limiter",
+        "true-peak",
+        "loudness-ebu-r128",
+        "latency",
+        "dbfs"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.fabfilter.com/help/pro-l/using/truepeaklimiting",
+          "publisher": "FabFilter — Pro-L 2 help: True peak limiting",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.fabfilter.com/help/pro-l/using/advancedsettings",
+          "publisher": "FabFilter — Pro-L 2 help: Advanced settings",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "noise-gate",
+      "name_fr": "Porte de bruit (noise gate)",
+      "name_en": "Noise gate",
+      "domain": "dynamics-eq-effects",
+      "definition": "Processeur qui atténue d'une quantité fixe (range) le signal lorsqu'il passe sous un seuil, et le laisse passer lorsqu'il le dépasse.",
+      "explanation": "La porte est ouverte au-dessus du seuil et fermée en dessous. Ses réglages : seuil, attaque (vitesse d'ouverture), maintien (hold, durée pendant laquelle elle reste ouverte après le passage sous le seuil), décroissance ou rétablissement (decay / release, vitesse de fermeture) et plage (range, atténuation quand elle est fermée). Sur le Drawmer DS201 : attaque 10 µs à 1 s, hold 2 ms à 2 s, decay 2 ms à 4 s, range 0 à 90 dB. Drawmer précise que le range permet soit de supprimer complètement les sons indésirables, soit simplement d'atténuer des signaux trop forts. En live, on gate les micros de batterie pour réduire la repisse (bleed) entre micros et limiter le larsen. Une hystérésis (seuil de fermeture quelques dB sous le seuil d'ouverture) et un hold évitent le battement rapide (chattering).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "downward-expander",
+        "sidechain",
+        "attack-release",
+        "ducking",
+        "acoustic-feedback"
+      ],
+      "equipment_ids": [
+        "drawmer-ds201",
+        "dbx-166xs"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+          "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Noise_gate",
+          "publisher": "Wikipedia — Noise gate",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "downward-expander",
+      "name_fr": "Expandeur vers le bas",
+      "name_en": "Downward expander",
+      "domain": "dynamics-eq-effects",
+      "definition": "Processeur qui augmente l'écart de niveau sous le seuil : chaque dB de baisse en entrée donne plus d'un dB de baisse en sortie ; une porte de bruit en est un cas extrême.",
+      "explanation": "Là où la porte agit comme un interrupteur (ouvert/fermé avec un range fixe), l'expandeur applique un ratio sous le seuil. Le dbx 166xs a une section « Expander/Gate » à ratio fixe d'environ 10:1 et une atténuation supérieure à 50 dB : dbx explique que ce ratio aide à éviter les artefacts des portes de type interrupteur. Son seuil va jusqu'à +15 dBu et son attaque est fixée très rapide pour laisser passer la transitoire du début d'une note ou d'un mot. On l'utilise pour réduire un bruit de fond derrière une voix (rétablissement lent) ou resserrer une caisse claire (rétablissement rapide).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "noise-gate",
+        "compressor",
+        "signal-to-noise-ratio"
+      ],
+      "equipment_ids": [
+        "dbx-166xs"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "sidechain",
+      "name_fr": "Side-chain (chaîne latérale, clé)",
+      "name_en": "Sidechain / key input",
+      "domain": "dynamics-eq-effects",
+      "definition": "Chemin de détection d'un processeur de dynamique ; en l'alimentant par un signal filtré ou par une autre source (clé, key), on décide de ce qui déclenche la réduction de gain sans filtrer le signal audio lui-même.",
+      "explanation": "Sur le dbx 166xs, l'insert SIDECHAIN est un jack TRS : la bague envoie une copie du signal d'entrée, la pointe ramène le signal qui pilotera le détecteur (par exemple via un égaliseur). Brancher un jack coupe automatiquement le lien entre l'entrée et le détecteur. Applications citées : de-essing (égaliseur qui accentue 4–6 kHz), porte sensible à la fréquence (on accorde l'égaliseur sur la grosse caisse pour qu'elle seule ouvre la porte), compression pondérée en fréquence, porte « clé » (une basse ouverte par la grosse caisse). Le Drawmer DS201 intègre des filtres de clé (passe-haut 25 Hz–4 kHz, passe-bas 250 Hz–35 kHz), une écoute de clé (Key Listen) et une entrée clé externe. Rendre le détecteur moins sensible au grave (bouton CONTOUR du 166xs) évite, selon dbx, que l'énergie grave « creuse des trous » dans un mix ; le SSL Bus+ propose de même un passe-haut de side-chain à 12 dB/oct réglable jusqu'à 300 Hz.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "compressor",
+        "noise-gate",
+        "de-esser",
+        "ducking",
+        "high-pass-filter"
+      ],
+      "equipment_ids": [
+        "dbx-166xs",
+        "drawmer-ds201",
+        "ssl-the-bus-plus"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+          "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "de-esser",
+      "name_fr": "De-esser (réducteur de sifflantes)",
+      "name_en": "De-esser",
+      "domain": "dynamics-eq-effects",
+      "definition": "Compresseur dont la détection est rendue plus sensible à la bande des sifflantes (« s », « ch ») afin de ne réduire le niveau que pendant ces consonnes.",
+      "explanation": "Le principe classique utilise le side-chain : un égaliseur placé dans la chaîne de détection accentue la zone des sifflantes, de sorte que le compresseur ne réagit fortement que sur elles. dbx situe cette zone généralement entre 4 et 6 kHz et conseille un seuil et un ratio moyens à élevés avec attaque et rétablissement rapides. Le niveau de toutes les fréquences baisse pendant le déclenchement, mais le « s » survient en général seul, avant ou après la voyelle, ce qui rend la réduction peu audible. La bande citée varie selon les sources (voir conflits).",
+      "formulas": [],
+      "units": [
+        "kHz"
+      ],
+      "related_concepts": [
+        "sidechain",
+        "compressor",
+        "equalizer-parametric"
+      ],
+      "equipment_ids": [
+        "dbx-166xs"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
+          "publisher": "dbx Professional Products (Harman) — 166xs mode d'emploi (FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Sifflantes généralement entre 4 et 6 kHz",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf"
+            },
+            {
+              "value": "Environ 4 000–8 000 Hz dans une section, 6–9 kHz dans une autre",
+              "source_url": "https://en.wikipedia.org/wiki/Dynamic_range_compression"
+            }
+          ],
+          "note": "La bande dépend de la voix ; à repérer à l'oreille."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "ducking",
+      "name_fr": "Ducking (atténuation pilotée)",
+      "name_en": "Ducking",
+      "domain": "dynamics-eq-effects",
+      "definition": "Utilisation d'un processeur de dynamique piloté par une autre source pour baisser automatiquement un signal (par exemple la musique) quand une voix est présente.",
+      "explanation": "Le micro de l'animateur est envoyé dans le side-chain du compresseur placé sur la musique : dès qu'il parle, la musique baisse (Wikipedia). Le Drawmer DS201 propose un commutateur Gate/Duck dédié, cité pour la voix off ou pour retirer des clics. C'est un usage courant en radio et en sonorisation d'événement ; le niveau d'atténuation se règle avec le range (porte) ou le seuil et le ratio (compresseur).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "sidechain",
+        "noise-gate",
+        "compressor"
+      ],
+      "equipment_ids": [
+        "drawmer-ds201"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+          "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "level-detection-peak-rms",
+      "name_fr": "Détection crête ou RMS",
+      "name_en": "Peak vs RMS level detection",
+      "domain": "dynamics-eq-effects",
+      "definition": "Façon dont le détecteur d'un processeur de dynamique mesure le niveau : sur les crêtes (peak) ou sur une moyenne énergétique (RMS).",
+      "explanation": "La détection crête suit le niveau maximal et contrôle plus serré les pointes, sans forcément refléter la sonie perçue ; la détection RMS donne une compression plus détendue et plus proche de la perception (Wikipedia). dbx décrit sa détection « True RMS » comme proche du fonctionnement de l'oreille et précise qu'une attaque très rapide fait se comporter le 166xs comme un limiteur crête malgré sa détection RMS. En couplage stéréo, le 166xs mesure le RMS de la somme des deux canaux pour garder une image stable.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "compressor",
+        "limiter"
+      ],
+      "equipment_ids": [
+        "dbx-166xs"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "parallel-compression",
+      "name_fr": "Compression parallèle",
+      "name_en": "Parallel compression",
+      "domain": "dynamics-eq-effects",
+      "definition": "Technique qui mélange un signal fortement compressé avec le même signal non compressé, pour ajouter de la densité et du détail à bas niveau sans écraser les crêtes.",
+      "explanation": "Le signal sec garde les transitoires, la voie compressée remonte les détails faibles : avec un ratio faible c'est une forme de compression vers le haut ; avec un ratio élevé on parle de compression « New York » ou « Motown » (Wikipedia). On la réalise soit avec un départ vers un bus compressé, soit avec un bouton MIX : le SSL Bus+ a un mode Parallel qui garde le sec à 100 % et monte la part compressée, et un mode Audition (100 % compressé) pour régler le compresseur seul.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "compressor",
+        "insert-vs-send-effects",
+        "comb-filtering",
+        "latency"
+      ],
+      "equipment_ids": [
+        "ssl-the-bus-plus"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "multiband-compression",
+      "name_fr": "Compression multibande",
+      "name_en": "Multiband compression",
+      "domain": "dynamics-eq-effects",
+      "definition": "Compression qui sépare le signal en plusieurs bandes de fréquences, compresse chacune avec ses propres réglages, puis les recombine.",
+      "explanation": "Elle permet de traiter un problème limité à une bande (un grave qui gonfle, un aigu agressif) sans toucher le reste du spectre ; elle est plus complexe à régler et peut créer des problèmes de phase aux recouvrements (Wikipedia). Elle est souvent suivie d'un limiteur en mastering ou en traitement d'antenne. L'EQ dynamique (par exemple les deux bandes D-EQ du SSL Bus+) poursuit un but voisin : une bande d'égalisation dont le gain varie selon le niveau.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "compressor",
+        "equalizer-parametric",
+        "de-esser",
+        "mastering"
+      ],
+      "equipment_ids": [
+        "ssl-the-bus-plus"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "equalizer-parametric",
+      "name_fr": "Égaliseur paramétrique",
+      "name_en": "Parametric equalizer",
+      "domain": "dynamics-eq-effects",
+      "definition": "Égaliseur dont chaque bande permet de régler la fréquence centrale, le gain (accentuation ou atténuation) et la largeur de bande (Q).",
+      "explanation": "Une bande en cloche (bell) dessine une bosse ou un creux symétrique (sur une échelle logarithmique) autour de sa fréquence centrale ; un Q faible donne une bande large, un Q élevé une bande étroite (Sound On Sound). Les réglages étroits servent surtout à couper des résonances, du larsen ou un ronflement ; les corrections tonales se font plutôt avec des bandes larges. Les égaliseurs semi-paramétriques n'ont pas de réglage de Q ; certains, comme l'API 550A, ont un « Q proportionnel » qui rétrécit la bande quand le gain augmente (12 dB maximum par bande sur le 550A). Technique de recherche : accentuer fortement et balayer la fréquence pour trouver la zone gênante, puis la couper — méthode utile mais « pas infaillible ».",
+      "formulas": [],
+      "units": [
+        "Hz",
+        "dB"
+      ],
+      "related_concepts": [
+        "q-factor-bandwidth",
+        "shelving-equalizer",
+        "graphic-equalizer",
+        "high-pass-filter",
+        "frequency"
+      ],
+      "equipment_ids": [
+        "api-550a",
+        "ams-neve-1073spx",
+        "pulse-techniques-eqp-1a",
+        "avalon-vt-737sp"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+          "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://apiaudio.com/docs/brochures/br550a.pdf",
+          "publisher": "Automated Processes Inc. (API) — 550A brochure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.fabfilter.com/help/pro-q/using/bandcontrols",
+          "publisher": "FabFilter — Pro-Q help: Band controls",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "shelving-equalizer",
+      "name_fr": "Égaliseur en plateau (shelving)",
+      "name_en": "Shelving equalizer",
+      "domain": "dynamics-eq-effects",
+      "definition": "Bande d'égalisation qui décale d'un gain fixe toutes les fréquences au-dessus (plateau aigu) ou au-dessous (plateau grave) d'une fréquence de transition.",
+      "explanation": "Un plateau aigu sert souvent à ajouter de « l'air » ou de la présence : Sound On Sound propose d'essayer des plateaux à partir de 10 ou 15 kHz. Quand la pente n'est pas réglable, elle est souvent douce (6 dB/oct). Sur l'API 550A, les bandes grave et aigu sont commutables plateau / cloche. Contrairement au filtre passe-haut, un plateau grave ne fait que baisser ou monter le grave d'une valeur fixe, il ne l'élimine pas progressivement.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "equalizer-parametric",
+        "high-pass-filter",
+        "filter-slope"
+      ],
+      "equipment_ids": [
+        "api-550a"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+          "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://apiaudio.com/docs/brochures/br550a.pdf",
+          "publisher": "Automated Processes Inc. (API) — 550A brochure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "blocked"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "graphic-equalizer",
+      "name_fr": "Égaliseur graphique",
+      "name_en": "Graphic equalizer",
+      "domain": "dynamics-eq-effects",
+      "definition": "Égaliseur à bandes fixes, réparties à intervalles réguliers (souvent 1/3 ou 2/3 d'octave sur les fréquences normalisées ISO), chacune réglée par un curseur.",
+      "explanation": "Le dbx 231s offre deux canaux de 31 bandes au tiers d'octave, à Q constant, avec une plage de ±6 ou ±12 dB et un filtre coupe-bas de 50 Hz à 12 dB/oct ; le 215s a 15 bandes aux 2/3 d'octave. On l'utilise surtout sur les sorties (façade, retours) entre console et amplification, par exemple pour atténuer les fréquences qui accrochent en larsen (dbx décrit cette méthode avec un compresseur qui maintient la première fréquence de larsen pour la repérer à l'égaliseur).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "equalizer-parametric",
+        "q-factor-bandwidth",
+        "acoustic-feedback",
+        "ringing-out"
+      ],
+      "equipment_ids": [
+        "dbx-231s"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx215s_131s_231s_ownersmanualpdf--3",
+          "publisher": "dbx Professional Products (Harman) — 2-Series Graphic Equalizers (215s/131s/231s) manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "q-factor-bandwidth",
+      "name_fr": "Facteur Q et largeur de bande",
+      "name_en": "Q factor and bandwidth",
+      "domain": "dynamics-eq-effects",
+      "definition": "Le facteur Q exprime la sélectivité d'une bande d'égalisation : c'est le rapport entre la fréquence centrale et la largeur de bande ; plus Q est élevé, plus la bande est étroite.",
+      "explanation": "La largeur de bande (BW) est l'écart entre les fréquences de coupure basse et haute ; la fréquence centrale en est la moyenne géométrique. On exprime souvent la largeur en octaves : une octave correspond à Q ≈ 1,41, un tiers d'octave à Q ≈ 4,32, deux octaves à Q ≈ 0,67 (sengpielaudio). Q n'est pas l'inverse du nombre d'octaves. Attention : définir la bande par les points à −3 dB n'a plus de sens pour une accentuation de 3 dB ou moins. Sur un égaliseur logiciel comme Pro-Q, Q = 1 est la largeur par défaut et le Q n'est pas réglable sur une pente de 6 dB/oct.",
+      "formulas": [
+        {
+          "expr": "f0 = √(f1 × f2)",
+          "vars": {
+            "f1": "fréquence de coupure basse (Hz)",
+            "f2": "fréquence de coupure haute (Hz)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-bandwidth.htm"
+        },
+        {
+          "expr": "BW = f2 − f1 = f0 / Q",
+          "vars": {
+            "BW": "largeur de bande (Hz)",
+            "f0": "fréquence centrale (Hz)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-bandwidth.htm"
+        },
+        {
+          "expr": "Q = √(2^N) / (2^N − 1)",
+          "vars": {
+            "N": "largeur de bande en octaves"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-bandwidth.htm"
+        }
+      ],
+      "units": [
+        "Hz",
+        "octave"
+      ],
+      "related_concepts": [
+        "equalizer-parametric",
+        "graphic-equalizer",
+        "frequency"
+      ],
+      "equipment_ids": [
+        "api-550a"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-bandwidth.htm",
+          "publisher": "sengpielaudio (E. Sengpiel) — Bandwidth / Q factor calculator",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]",
+            "formulas[2]",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.fabfilter.com/help/pro-q/using/bandcontrols",
+          "publisher": "FabFilter — Pro-Q help: Band controls",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+          "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "high-pass-filter",
+      "name_fr": "Filtre passe-haut (coupe-bas)",
+      "name_en": "High-pass filter (low cut)",
+      "domain": "dynamics-eq-effects",
+      "definition": "Filtre qui laisse passer les fréquences au-dessus d'une fréquence de coupure et atténue progressivement celles en dessous, selon une pente exprimée en dB par octave.",
+      "explanation": "C'est le filtre le plus utile pour retirer le grondement (rumble) et les bruits subsoniques captés par les micros, ce qu'un simple réglage de grave fait mal (Sound On Sound). La plupart des consoles en ont un sur chaque tranche ; sur la DiGiCo SD12, une paire de filtres réglables précède l'égaliseur paramétrique. Deux familles : le filtre anti-grondement, raide (12 ou 18 dB/oct) avec une coupure sous 100 Hz (40, 60 ou 80 Hz), et le filtre anti-effet de proximité, doux (6 dB/oct) entre 100 et 200 Hz. Exemple : un passe-haut à 80 Hz et 18 dB/oct atténue de 18 dB à 40 Hz et de 36 dB à 20 Hz. Il ne faut pas couper trop haut sur une voix : selon DPA, la parole reste compréhensible avec un passe-haut à 500 Hz, mais l'intelligibilité chute sous 40 % à 1 kHz.",
+      "formulas": [],
+      "units": [
+        "Hz",
+        "dB/oct"
+      ],
+      "related_concepts": [
+        "filter-slope",
+        "shelving-equalizer",
+        "proximity-effect",
+        "equalizer-parametric",
+        "input-channel"
+      ],
+      "equipment_ids": [
+        "dbx-231s"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
+          "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/sound-advice/q-will-mics-high-pass-filter-counter-proximity-effect",
+          "publisher": "Sound On Sound — H. Robjohns, « Q. Will a mic's high-pass filter counter the proximity effect? » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+          "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/",
+          "publisher": "DPA Microphones — Mic University, Facts about speech intelligibility (cité dans fundamentals/03)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started (cité dans fundamentals/08)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "filter-slope",
+      "name_fr": "Pente d'un filtre (dB/octave)",
+      "name_en": "Filter slope",
+      "domain": "dynamics-eq-effects",
+      "definition": "Vitesse d'atténuation d'un filtre au-delà de sa fréquence de coupure, exprimée en dB par octave ; elle est en général un multiple de 6 dB/oct.",
+      "explanation": "Les bandes d'égalisation classiques ont une pente d'environ 6 dB/oct, les filtres de console et de DAW 12 ou 18 dB/oct, les filtres de synthétiseur jusqu'à 24 dB/oct (Sound On Sound). Les logiciels vont beaucoup plus loin : 0 à 96 dB/oct et un mode « brickwall » sur les filtres coupe-bas et coupe-haut de Pro-Q. Le SSL Bus+ précise que son filtre de side-chain à 12 dB/oct est un filtre du 2e ordre. Plus la pente est raide, plus la transition entre bande passante et bande atténuée est nette.",
+      "formulas": [],
+      "units": [
+        "dB/oct"
+      ],
+      "related_concepts": [
+        "high-pass-filter",
+        "linear-phase-eq",
+        "phase"
+      ],
+      "equipment_ids": [
+        "dbx-231s",
+        "ssl-the-bus-plus"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
+          "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+          "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.fabfilter.com/help/pro-q/using/bandcontrols",
+          "publisher": "FabFilter — Pro-Q help: Band controls",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "linear-phase-eq",
+      "name_fr": "Égaliseur à phase linéaire / phase minimale",
+      "name_en": "Linear-phase vs minimum-phase EQ",
+      "domain": "dynamics-eq-effects",
+      "definition": "Un égaliseur classique (analogique ou « zéro latence ») modifie l'amplitude et la phase ; un égaliseur à phase linéaire ne modifie que l'amplitude, au prix d'une latence et d'un possible pré-écho (pre-ringing).",
+      "explanation": "FabFilter décrit trois modes : Zero Latency (réponse en amplitude analogique, phase non idéale, aucune latence, suffisant dans la plupart des cas), Natural Phase (amplitude et phase proches de l'analogique sans latence notable) et Linear Phase (phase intacte). La phase linéaire évite les annulations quand un signal égalisé est mélangé avec une version non égalisée ou égalisée autrement, par exemple en mastering. Ses défauts : latence (de 3072 échantillons, environ 70 ms, à 66560 échantillons, environ 1,5 s à 44,1 kHz selon la résolution) et pré-écho qui peut adoucir les transitoires d'une grosse caisse. C'est un outil de résolution de problème, pas un mode « meilleur » par défaut.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "phase",
+        "comb-filtering",
+        "latency",
+        "equalizer-parametric",
+        "filter-slope"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.fabfilter.com/help/pro-q/using/processingmode",
+          "publisher": "FabFilter — Pro-Q help: Processing mode",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "reverb",
+      "name_fr": "Réverbération artificielle",
+      "name_en": "Reverb (effect)",
+      "domain": "dynamics-eq-effects",
+      "definition": "Effet qui simule la persistance du son dans un espace : un son direct suivi de réflexions précoces puis d'une queue de réverbération dense qui décroît.",
+      "explanation": "Un processeur de réverbération propose en général : le temps de réverbération (Bricasti M7 : 0,1 à 30 s pour les fréquences médiums), la taille de l'espace, le pré-délai (pre-delay, 0 à 500 ms sur le M7), la diffusion, l'équilibre entre réflexions précoces et queue, et des filtres (le Hi Cut du temps de réverbération fait mourir l'aigu plus vite). Chez Lexicon, le pré-délai est ajouté au signal diffusé avant la partie principale de la réverbération pour séparer dans le temps la réverbération du son sec ; la taille et le temps (MidRT) interagissent : une grande salle à temps court peut avoir la même durée qu'une petite à temps long. En acoustique, l'EBU appelle réflexions précoces celles qui arrivent dans les 15 ms suivant le son direct. En mixage, on alimente presque toujours la réverbération par un départ auxiliaire post-fader et on la règle à 100 % d'effet.",
+      "formulas": [],
+      "units": [
+        "s",
+        "ms"
+      ],
+      "related_concepts": [
+        "delay-effect",
+        "reverberation-time-rt60",
+        "insert-vs-send-effects",
+        "aux-send",
+        "haas-precedence-effect"
+      ],
+      "equipment_ids": [
+        "bricasti-design-m7",
+        "lexicon-pcm96",
+        "lexicon-pcm92",
+        "lexicon-480l",
+        "yamaha-spx2000"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://www.bricasti.com/images/M7.pdf",
+          "publisher": "Bricasti Design — M7 Stereo Reverb Processor manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+          "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU — Tech 3276 (cité dans knowledge-base/fundamentals/13)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
+          "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "delay-effect",
+      "name_fr": "Délai / écho (delay)",
+      "name_en": "Delay effect",
+      "domain": "dynamics-eq-effects",
+      "definition": "Effet qui reproduit le signal après un temps de retard réglable, une ou plusieurs fois ; la réinjection (feedback) renvoie la sortie à l'entrée pour créer des répétitions successives.",
+      "explanation": "Les paramètres de base sont le temps de retard (en ms ou en valeur de note), le niveau de réinjection (feedback), les filtres dans la boucle et le mélange. Sur le Lexicon PCM96, le temps peut être donné en millisecondes ou en fraction de tempo (noire, croche) défini par le bouton TAP/TEMPO (on tape au moins deux fois) ou par l'horloge MIDI. Des filtres passe-haut et passe-bas dans la boucle de réinjection imitent l'usure des échos à bande. Pour caler un écho sur le tempo : durée d'une noire en ms = 60 000 / BPM (500 ms à 120 BPM ; croche 250 ms ; triolet de croche 167 ms ; double croche 125 ms).",
+      "formulas": [
+        {
+          "expr": "t(noire, ms) = 60 000 / tempo (BPM)",
+          "vars": {
+            "tempo": "battements par minute"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-bpmtempotime.htm"
+        }
+      ],
+      "units": [
+        "ms",
+        "BPM"
+      ],
+      "related_concepts": [
+        "reverb",
+        "modulation-effects",
+        "insert-vs-send-effects",
+        "haas-precedence-effect"
+      ],
+      "equipment_ids": [
+        "lexicon-pcm96",
+        "yamaha-spx2000",
+        "eventide-h9000"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+          "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-bpmtempotime.htm",
+          "publisher": "sengpielaudio (E. Sengpiel) — Tempo BPM to delay time calculator",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "formulas[0]",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "modulation-effects",
+      "name_fr": "Effets de modulation (chorus, flanger)",
+      "name_en": "Modulation effects",
+      "domain": "dynamics-eq-effects",
+      "definition": "Effets à base de lignes de retard dont le temps varie lentement (LFO), ce qui crée de légères variations de hauteur ou un filtrage en peigne mouvant.",
+      "explanation": "Dans l'algorithme Chorus/Flange du Lexicon PCM96, les voix de retard bougent très progressivement, avec des effets de hauteur audibles. Pour le chorus, les voix bougent assez indépendamment et épaississent le son sans trop filtrer ; pour le flanger, les voix sont appariées à intervalles proches et leur mouvement produit un filtrage en peigne par annulation, souvent avec une réinjection proche de l'instabilité. Le temps de modulation peut être synchronisé au tempo.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "delay-effect",
+        "comb-filtering",
+        "phase"
+      ],
+      "equipment_ids": [
+        "lexicon-pcm96",
+        "eventide-h9000",
+        "yamaha-spx2000"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+          "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "insert-vs-send-effects",
+      "name_fr": "Traitement en insert ou effet en départ",
+      "name_en": "Insert vs send effects",
+      "domain": "dynamics-eq-effects",
+      "definition": "Un insert coupe le chemin d'une tranche pour faire passer tout le signal dans un processeur (en série) ; un départ auxiliaire envoie une copie dosée du signal vers un effet partagé dont le retour est mélangé au son sec (en parallèle).",
+      "explanation": "Les processeurs de dynamique et de timbre (égaliseur, compresseur/limiteur, expandeur/porte) s'utilisent normalement en insert ; les effets temporels (écho, délai, réverbération, chorus, flanger) peuvent passer par un insert ou par un départ (Sound On Sound, 1996). Quand un effet est alimenté par un départ, on le règle à 100 % d'effet, 0 % de sec : le départ seul dose l'effet, et les retours stéréo sont panoramiqués à fond gauche/droite. Le départ d'effet est post-fader pour que l'équilibre sec/effet suive le fader ; un départ pré-fader sert aux retours de scène. Un départ permet aussi de partager une même réverbération entre plusieurs pistes avec un dosage propre à chacune (Sound On Sound, 2022). Lexicon conseille de laisser le Mix à 100 % dans presque tous les cas et de doser à la console.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "insert-point",
+        "aux-send",
+        "pre-post-fader",
+        "reverb",
+        "parallel-compression"
+      ],
+      "equipment_ids": [
+        "lexicon-pcm96"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
+          "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/pro-tools-using-sends",
+          "publisher": "Sound On Sound — J. Rodgers, « Pro Tools: Using Sends » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+          "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo — SD12 Getting Started (cité dans fundamentals/08)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     }
-   ],
-   "difficulty": 2,
-   "sources": [
+  ],
+  "not_found_log": [
     {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "what": "Plage de fréquences chiffrée et sourcée pour les « bas-médiums boueux » (mud)",
+      "searched": "Sound On Sound EQ (S. Inglis 2022), SOS filters, recherche web soundonsound/shure/dpa — seuls des blogs non fiables donnent 200–500 Hz"
     },
     {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
+      "what": "Rane Pro Audio Reference (définitions hystérésis, de-esser)",
+      "searched": "ranecommercial.com/legacy/pdf/ranenotes/Pro_Audio_Reference.pdf → 404 ; WebSearch sans résultat officiel"
     },
     {
-     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
-     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Pentes et fréquences du filtre passe-haut du Neve 1073SPX",
+      "searched": "Manuel AMS Neve 1073SPX v1.2 : PDF téléchargé mais section EQ en image, texte non extractible"
+    },
+    {
+      "what": "Notice Empirical Labs Distressor (ratios, attaque)",
+      "searched": "empiricallabs.com/wp-content/uploads/distrecall.pdf : DNS non résolu pendant la session"
     }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "threshold-ratio",
-   "name_fr": "Seuil et taux de compression",
-   "name_en": "Threshold and ratio",
-   "domain": "dynamics-eq-effects",
-   "definition": "Le seuil (threshold) est le niveau au-delà duquel le processeur agit ; le taux (ratio) indique de combien de dB l'entrée doit monter au-dessus du seuil pour que la sortie monte de 1 dB.",
-   "explanation": "Avec un ratio de 2:1, une hausse de 2 dB au-dessus du seuil ne donne que 1 dB de plus en sortie ; à ∞:1 la sortie ne monte plus du tout (dbx 166xs). Sur le 166xs, le seuil se règle de −40 dBu à +20 dBu et un ratio de 1:1 désactive la compression quel que soit le seuil. Sur certains appareils le seuil n'a pas de bouton : sur le 1176LN, c'est le potentiomètre Input qui pousse plus ou moins le signal vers un seuil fixe, et les ratios élevés relèvent aussi le seuil. Sur l'LA-2A, le bouton Peak Reduction règle à la fois le seuil et la quantité de compression. Exemple : un signal 4 dB au-dessus du seuil avec un ratio 4:1 ressort à 1 dB au-dessus, soit 3 dB de réduction de gain.",
-   "formulas": [
-    {
-     "expr": "dépassement en sortie (dB) = dépassement en entrée au-dessus du seuil (dB) / ratio",
-     "vars": {
-      "ratio": "taux de compression R:1"
-     },
-     "source_url": "https://en.wikipedia.org/wiki/Dynamic_range_compression"
-    }
-   ],
-   "units": [
-    "dB",
-    "dBu",
-    "dBFS"
-   ],
-   "related_concepts": [
-    "compressor",
-    "knee",
-    "limiter",
-    "dbu",
-    "dbfs"
-   ],
-   "equipment_ids": [
-    "dbx-166xs",
-    "universal-audio-1176ln",
-    "universal-audio-teletronix-la-2a"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
-     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
-     "publisher": "Universal Audio — Teletronix LA-2A manual (PDF hébergé par Adorama)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "formulas[0]",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "attack-release",
-   "name_fr": "Temps d'attaque et de rétablissement",
-   "name_en": "Attack and release",
-   "domain": "dynamics-eq-effects",
-   "definition": "L'attaque (attack) est le temps que met le processeur à réduire le gain après un dépassement du seuil ; le rétablissement (release) est le temps qu'il met à revenir au gain initial quand le signal repasse sous le seuil.",
-   "explanation": "Une attaque rapide attrape les transitoires très brèves et « adoucit » le son ; une attaque plus lente laisse passer l'attaque des notes avant de compresser (UA 1176LN). Un rétablissement trop rapide provoque du pompage et de la respiration (pumping / breathing) car le bruit de fond remonte à chaque relâchement ; trop lent, un passage fort maintient la réduction pendant le passage doux qui suit. Les plages varient beaucoup : 20 à 800 µs d'attaque et 50 à 1100 ms de rétablissement sur le 1176LN, 0,1 à 40 ms d'attaque et 0,05 à 1,2 s de rétablissement sur le SSL Bus+. Certains appareils ont un rétablissement dépendant du programme : l'LA-2A relâche environ 50 % en 0,06 s puis complètement en 0,5 à 5 s selon la réduction précédente ; le mode AUTO du SSL utilise deux étages (100 ms et 12 s). dbx conseille, pour la basse, des temps plus lents. Il n'existe pas de standard industriel pour la définition exacte de ces temps.",
-   "formulas": [],
-   "units": [
-    "ms",
-    "s",
-    "µs"
-   ],
-   "related_concepts": [
-    "compressor",
-    "threshold-ratio",
-    "noise-gate",
-    "limiter"
-   ],
-   "equipment_ids": [
-    "universal-audio-1176ln",
-    "universal-audio-teletronix-la-2a",
-    "ssl-the-bus-plus",
-    "dbx-166xs"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
-     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
-     "publisher": "Universal Audio — Teletronix LA-2A manual (PDF hébergé par Adorama)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
-     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "knee",
-   "name_fr": "Coude (knee) : hard knee et soft knee",
-   "name_en": "Knee (hard / soft)",
-   "domain": "dynamics-eq-effects",
-   "definition": "Forme de la courbe de transfert autour du seuil : coude dur (hard knee) si la compression commence net au seuil, coude doux (soft knee) si le ratio augmente progressivement autour du seuil.",
-   "explanation": "En mode hard knee, le seuil est le point exact au-dessus duquel la sortie ne suit plus l'entrée dB pour dB. En coude doux (OverEasy chez dbx), la réduction commence avant le seuil et n'atteint le ratio réglé qu'un peu au-dessus ; le seuil affiché correspond au milieu de cette zone, « à mi-chemin » de la compression. dbx indique que la compression la plus douce s'obtient avec OverEasy et AUTO, la plus agressive en hard knee avec attaque et rétablissement rapides. Le coude doux rend la transition moins audible, surtout avec des ratios élevés.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "threshold-ratio",
-    "compressor"
-   ],
-   "equipment_ids": [
-    "dbx-166xs",
-    "dbx-160a"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "makeup-gain",
-   "name_fr": "Gain de compensation (makeup gain)",
-   "name_en": "Makeup gain",
-   "domain": "dynamics-eq-effects",
-   "definition": "Gain fixe ajouté en sortie d'un compresseur pour compenser la baisse de niveau due à la réduction de gain.",
-   "explanation": "Un compresseur vers le bas ne fait que baisser le niveau ; on remonte donc le signal en sortie. Le manuel dbx du 166xs propose une méthode simple : régler ce gain de la même valeur que la réduction moyenne lue au vumètre (10 dB de réduction moyenne → +10 dB de gain de sortie), en surveillant l'écrêtage puisque jusqu'à +20 dB peuvent être ajoutés. Sur le 1176LN, c'est le bouton Output ; sur le SSL Bus+, le bouton MAKE-UP (−10 à +20 dB). Le bypass du 166xs sert à comparer signal traité et non traité ; Sound On Sound recommande, à propos de l'égalisation, d'égaliser les niveaux avant de juger, un principe qui vaut aussi ici.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "compressor",
-    "headroom",
-    "gain-staging"
-   ],
-   "equipment_ids": [
-    "dbx-166xs",
-    "universal-audio-1176ln",
-    "ssl-the-bus-plus"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 1,
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
-     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
-     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
-     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "limiter",
-   "name_fr": "Limiteur",
-   "name_en": "Limiter",
-   "domain": "dynamics-eq-effects",
-   "definition": "Compresseur réglé avec un ratio élevé et une attaque rapide, destiné à empêcher le signal de dépasser un niveau maximal plutôt qu'à modeler sa dynamique.",
-   "explanation": "La frontière entre compression et limitation n'est pas fixée de la même façon partout : Wikipedia parle de limitation à partir d'environ 10:1, alors que Universal Audio range le 8:1 du 1176LN en « compression sévère » et appelle 12:1 et 20:1 de la limitation. Le dbx 166xs propose, pour protéger des enceintes, un réglage hard knee avec un ratio d'au moins 10:1 et un seuil quelques dB sous l'écrêtage, et rappelle que ce compresseur doit être placé le plus près possible des amplificateurs. Il possède aussi un limiteur PeakStop placé après tous les autres étages (y compris le gain de sortie) : un écrêteur doux réglable de 0 à +20 dBu, qu'il faut régler 1 à 2 dB sous le plafond à ne pas dépasser car de petites excursions restent possibles.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "compressor",
-    "threshold-ratio",
-    "true-peak-limiting",
-    "headroom",
-    "true-peak"
-   ],
-   "equipment_ids": [
-    "dbx-166xs",
-    "universal-audio-1176ln"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
-     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [
-    {
-     "field": "explanation",
-     "values": [
-      {
-       "value": "Limitation à partir d'environ 10:1",
-       "source_url": "https://en.wikipedia.org/wiki/Dynamic_range_compression"
-      },
-      {
-       "value": "8:1 = compression sévère ; 12:1 = limitation douce ; 20:1 = limitation dure (1176LN)",
-       "source_url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf"
-      }
-     ],
-     "note": "Seuil de ratio entre compresseur et limiteur : convention, pas une norme."
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "true-peak-limiting",
-   "name_fr": "Limitation brickwall et true peak",
-   "name_en": "Brickwall / true-peak limiting",
-   "domain": "dynamics-eq-effects",
-   "definition": "Limitation à ratio très élevé (20:1 à ∞:1) et attaque quasi instantanée qui vise à ne jamais dépasser un plafond ; en mode true peak, le plafond s'applique aussi aux crêtes inter-échantillons de la forme d'onde reconstruite.",
-   "explanation": "Un limiteur brickwall sert surtout de sécurité : utilisé en permanence, il durcit le son (Wikipedia). Pour attraper les transitoires sans distorsion, il retarde l'audio et analyse le signal en avance (lookahead), au prix d'une latence. Les crêtes réelles (true peaks) peuvent se situer entre deux échantillons : la forme d'onde reconstruite par le convertisseur N/A ou par un encodage MP3 peut dépasser la valeur des échantillons et écrêter. FabFilter recommande comme point de départ un suréchantillonnage 4x avec au moins 0,1 ms de lookahead, ce qui garde les crêtes inter-échantillons à environ 0,1 dB ; le mode true peak ajoute environ 5 ms de latence. En broadcast, le plafond se fixe en dBTP selon les recommandations de sonie (voir le concept true-peak du domaine broadcast).",
-   "formulas": [],
-   "units": [
-    "dBTP",
-    "dBFS",
-    "ms"
-   ],
-   "related_concepts": [
-    "limiter",
-    "true-peak",
-    "loudness-ebu-r128",
-    "latency",
-    "dbfs"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.fabfilter.com/help/pro-l/using/truepeaklimiting",
-     "publisher": "FabFilter — Pro-L 2 help: True peak limiting",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.fabfilter.com/help/pro-l/using/advancedsettings",
-     "publisher": "FabFilter — Pro-L 2 help: Advanced settings",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "noise-gate",
-   "name_fr": "Porte de bruit (noise gate)",
-   "name_en": "Noise gate",
-   "domain": "dynamics-eq-effects",
-   "definition": "Processeur qui atténue d'une quantité fixe (range) le signal lorsqu'il passe sous un seuil, et le laisse passer lorsqu'il le dépasse.",
-   "explanation": "La porte est ouverte au-dessus du seuil et fermée en dessous. Ses réglages : seuil, attaque (vitesse d'ouverture), maintien (hold, durée pendant laquelle elle reste ouverte après le passage sous le seuil), décroissance ou rétablissement (decay / release, vitesse de fermeture) et plage (range, atténuation quand elle est fermée). Sur le Drawmer DS201 : attaque 10 µs à 1 s, hold 2 ms à 2 s, decay 2 ms à 4 s, range 0 à 90 dB. Drawmer précise que le range permet soit de supprimer complètement les sons indésirables, soit simplement d'atténuer des signaux trop forts. En live, on gate les micros de batterie pour réduire la repisse (bleed) entre micros et limiter le larsen. Une hystérésis (seuil de fermeture quelques dB sous le seuil d'ouverture) et un hold évitent le battement rapide (chattering).",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "downward-expander",
-    "sidechain",
-    "attack-release",
-    "ducking",
-    "acoustic-feedback"
-   ],
-   "equipment_ids": [
-    "drawmer-ds201",
-    "dbx-166xs"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
-     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Noise_gate",
-     "publisher": "Wikipedia — Noise gate",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "downward-expander",
-   "name_fr": "Expandeur vers le bas",
-   "name_en": "Downward expander",
-   "domain": "dynamics-eq-effects",
-   "definition": "Processeur qui augmente l'écart de niveau sous le seuil : chaque dB de baisse en entrée donne plus d'un dB de baisse en sortie ; une porte de bruit en est un cas extrême.",
-   "explanation": "Là où la porte agit comme un interrupteur (ouvert/fermé avec un range fixe), l'expandeur applique un ratio sous le seuil. Le dbx 166xs a une section « Expander/Gate » à ratio fixe d'environ 10:1 et une atténuation supérieure à 50 dB : dbx explique que ce ratio aide à éviter les artefacts des portes de type interrupteur. Son seuil va jusqu'à +15 dBu et son attaque est fixée très rapide pour laisser passer la transitoire du début d'une note ou d'un mot. On l'utilise pour réduire un bruit de fond derrière une voix (rétablissement lent) ou resserrer une caisse claire (rétablissement rapide).",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "noise-gate",
-    "compressor",
-    "signal-to-noise-ratio"
-   ],
-   "equipment_ids": [
-    "dbx-166xs"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "sidechain",
-   "name_fr": "Side-chain (chaîne latérale, clé)",
-   "name_en": "Sidechain / key input",
-   "domain": "dynamics-eq-effects",
-   "definition": "Chemin de détection d'un processeur de dynamique ; en l'alimentant par un signal filtré ou par une autre source (clé, key), on décide de ce qui déclenche la réduction de gain sans filtrer le signal audio lui-même.",
-   "explanation": "Sur le dbx 166xs, l'insert SIDECHAIN est un jack TRS : la bague envoie une copie du signal d'entrée, la pointe ramène le signal qui pilotera le détecteur (par exemple via un égaliseur). Brancher un jack coupe automatiquement le lien entre l'entrée et le détecteur. Applications citées : de-essing (égaliseur qui accentue 4–6 kHz), porte sensible à la fréquence (on accorde l'égaliseur sur la grosse caisse pour qu'elle seule ouvre la porte), compression pondérée en fréquence, porte « clé » (une basse ouverte par la grosse caisse). Le Drawmer DS201 intègre des filtres de clé (passe-haut 25 Hz–4 kHz, passe-bas 250 Hz–35 kHz), une écoute de clé (Key Listen) et une entrée clé externe. Rendre le détecteur moins sensible au grave (bouton CONTOUR du 166xs) évite, selon dbx, que l'énergie grave « creuse des trous » dans un mix ; le SSL Bus+ propose de même un passe-haut de side-chain à 12 dB/oct réglable jusqu'à 300 Hz.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "compressor",
-    "noise-gate",
-    "de-esser",
-    "ducking",
-    "high-pass-filter"
-   ],
-   "equipment_ids": [
-    "dbx-166xs",
-    "drawmer-ds201",
-    "ssl-the-bus-plus"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
-     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
-     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "de-esser",
-   "name_fr": "De-esser (réducteur de sifflantes)",
-   "name_en": "De-esser",
-   "domain": "dynamics-eq-effects",
-   "definition": "Compresseur dont la détection est rendue plus sensible à la bande des sifflantes (« s », « ch ») afin de ne réduire le niveau que pendant ces consonnes.",
-   "explanation": "Le principe classique utilise le side-chain : un égaliseur placé dans la chaîne de détection accentue la zone des sifflantes, de sorte que le compresseur ne réagit fortement que sur elles. dbx situe cette zone généralement entre 4 et 6 kHz et conseille un seuil et un ratio moyens à élevés avec attaque et rétablissement rapides. Le niveau de toutes les fréquences baisse pendant le déclenchement, mais le « s » survient en général seul, avant ou après la voyelle, ce qui rend la réduction peu audible. La bande citée varie selon les sources (voir conflits).",
-   "formulas": [],
-   "units": [
-    "kHz"
-   ],
-   "related_concepts": [
-    "sidechain",
-    "compressor",
-    "equalizer-parametric"
-   ],
-   "equipment_ids": [
-    "dbx-166xs"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
-     "publisher": "dbx Professional Products (Harman) — 166xs mode d'emploi (FR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [
-    {
-     "field": "explanation",
-     "values": [
-      {
-       "value": "Sifflantes généralement entre 4 et 6 kHz",
-       "source_url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf"
-      },
-      {
-       "value": "Environ 4 000–8 000 Hz dans une section, 6–9 kHz dans une autre",
-       "source_url": "https://en.wikipedia.org/wiki/Dynamic_range_compression"
-      }
-     ],
-     "note": "La bande dépend de la voix ; à repérer à l'oreille."
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "ducking",
-   "name_fr": "Ducking (atténuation pilotée)",
-   "name_en": "Ducking",
-   "domain": "dynamics-eq-effects",
-   "definition": "Utilisation d'un processeur de dynamique piloté par une autre source pour baisser automatiquement un signal (par exemple la musique) quand une voix est présente.",
-   "explanation": "Le micro de l'animateur est envoyé dans le side-chain du compresseur placé sur la musique : dès qu'il parle, la musique baisse (Wikipedia). Le Drawmer DS201 propose un commutateur Gate/Duck dédié, cité pour la voix off ou pour retirer des clics. C'est un usage courant en radio et en sonorisation d'événement ; le niveau d'atténuation se règle avec le range (porte) ou le seuil et le ratio (compresseur).",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "sidechain",
-    "noise-gate",
-    "compressor"
-   ],
-   "equipment_ids": [
-    "drawmer-ds201"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
-     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "level-detection-peak-rms",
-   "name_fr": "Détection crête ou RMS",
-   "name_en": "Peak vs RMS level detection",
-   "domain": "dynamics-eq-effects",
-   "definition": "Façon dont le détecteur d'un processeur de dynamique mesure le niveau : sur les crêtes (peak) ou sur une moyenne énergétique (RMS).",
-   "explanation": "La détection crête suit le niveau maximal et contrôle plus serré les pointes, sans forcément refléter la sonie perçue ; la détection RMS donne une compression plus détendue et plus proche de la perception (Wikipedia). dbx décrit sa détection « True RMS » comme proche du fonctionnement de l'oreille et précise qu'une attaque très rapide fait se comporter le 166xs comme un limiteur crête malgré sa détection RMS. En couplage stéréo, le 166xs mesure le RMS de la somme des deux canaux pour garder une image stable.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "compressor",
-    "limiter"
-   ],
-   "equipment_ids": [
-    "dbx-166xs"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "parallel-compression",
-   "name_fr": "Compression parallèle",
-   "name_en": "Parallel compression",
-   "domain": "dynamics-eq-effects",
-   "definition": "Technique qui mélange un signal fortement compressé avec le même signal non compressé, pour ajouter de la densité et du détail à bas niveau sans écraser les crêtes.",
-   "explanation": "Le signal sec garde les transitoires, la voie compressée remonte les détails faibles : avec un ratio faible c'est une forme de compression vers le haut ; avec un ratio élevé on parle de compression « New York » ou « Motown » (Wikipedia). On la réalise soit avec un départ vers un bus compressé, soit avec un bouton MIX : le SSL Bus+ a un mode Parallel qui garde le sec à 100 % et monte la part compressée, et un mode Audition (100 % compressé) pour régler le compresseur seul.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "compressor",
-    "insert-vs-send-effects",
-    "comb-filtering",
-    "latency"
-   ],
-   "equipment_ids": [
-    "ssl-the-bus-plus"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
-     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "multiband-compression",
-   "name_fr": "Compression multibande",
-   "name_en": "Multiband compression",
-   "domain": "dynamics-eq-effects",
-   "definition": "Compression qui sépare le signal en plusieurs bandes de fréquences, compresse chacune avec ses propres réglages, puis les recombine.",
-   "explanation": "Elle permet de traiter un problème limité à une bande (un grave qui gonfle, un aigu agressif) sans toucher le reste du spectre ; elle est plus complexe à régler et peut créer des problèmes de phase aux recouvrements (Wikipedia). Elle est souvent suivie d'un limiteur en mastering ou en traitement d'antenne. L'EQ dynamique (par exemple les deux bandes D-EQ du SSL Bus+) poursuit un but voisin : une bande d'égalisation dont le gain varie selon le niveau.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "compressor",
-    "equalizer-parametric",
-    "de-esser",
-    "mastering"
-   ],
-   "equipment_ids": [
-    "ssl-the-bus-plus"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 4,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
-     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "equalizer-parametric",
-   "name_fr": "Égaliseur paramétrique",
-   "name_en": "Parametric equalizer",
-   "domain": "dynamics-eq-effects",
-   "definition": "Égaliseur dont chaque bande permet de régler la fréquence centrale, le gain (accentuation ou atténuation) et la largeur de bande (Q).",
-   "explanation": "Une bande en cloche (bell) dessine une bosse ou un creux symétrique (sur une échelle logarithmique) autour de sa fréquence centrale ; un Q faible donne une bande large, un Q élevé une bande étroite (Sound On Sound). Les réglages étroits servent surtout à couper des résonances, du larsen ou un ronflement ; les corrections tonales se font plutôt avec des bandes larges. Les égaliseurs semi-paramétriques n'ont pas de réglage de Q ; certains, comme l'API 550A, ont un « Q proportionnel » qui rétrécit la bande quand le gain augmente (12 dB maximum par bande sur le 550A). Technique de recherche : accentuer fortement et balayer la fréquence pour trouver la zone gênante, puis la couper — méthode utile mais « pas infaillible ».",
-   "formulas": [],
-   "units": [
-    "Hz",
-    "dB"
-   ],
-   "related_concepts": [
-    "q-factor-bandwidth",
-    "shelving-equalizer",
-    "graphic-equalizer",
-    "high-pass-filter",
-    "frequency"
-   ],
-   "equipment_ids": [
-    "api-550a",
-    "ams-neve-1073spx",
-    "pulse-techniques-eqp-1a",
-    "avalon-vt-737sp"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
-     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://apiaudio.com/docs/brochures/br550a.pdf",
-     "publisher": "Automated Processes Inc. (API) — 550A brochure",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.fabfilter.com/help/pro-q/using/bandcontrols",
-     "publisher": "FabFilter — Pro-Q help: Band controls",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "shelving-equalizer",
-   "name_fr": "Égaliseur en plateau (shelving)",
-   "name_en": "Shelving equalizer",
-   "domain": "dynamics-eq-effects",
-   "definition": "Bande d'égalisation qui décale d'un gain fixe toutes les fréquences au-dessus (plateau aigu) ou au-dessous (plateau grave) d'une fréquence de transition.",
-   "explanation": "Un plateau aigu sert souvent à ajouter de « l'air » ou de la présence : Sound On Sound propose d'essayer des plateaux à partir de 10 ou 15 kHz. Quand la pente n'est pas réglable, elle est souvent douce (6 dB/oct). Sur l'API 550A, les bandes grave et aigu sont commutables plateau / cloche. Contrairement au filtre passe-haut, un plateau grave ne fait que baisser ou monter le grave d'une valeur fixe, il ne l'élimine pas progressivement.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "equalizer-parametric",
-    "high-pass-filter",
-    "filter-slope"
-   ],
-   "equipment_ids": [
-    "api-550a"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
-     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://apiaudio.com/docs/brochures/br550a.pdf",
-     "publisher": "Automated Processes Inc. (API) — 550A brochure",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "graphic-equalizer",
-   "name_fr": "Égaliseur graphique",
-   "name_en": "Graphic equalizer",
-   "domain": "dynamics-eq-effects",
-   "definition": "Égaliseur à bandes fixes, réparties à intervalles réguliers (souvent 1/3 ou 2/3 d'octave sur les fréquences normalisées ISO), chacune réglée par un curseur.",
-   "explanation": "Le dbx 231s offre deux canaux de 31 bandes au tiers d'octave, à Q constant, avec une plage de ±6 ou ±12 dB et un filtre coupe-bas de 50 Hz à 12 dB/oct ; le 215s a 15 bandes aux 2/3 d'octave. On l'utilise surtout sur les sorties (façade, retours) entre console et amplification, par exemple pour atténuer les fréquences qui accrochent en larsen (dbx décrit cette méthode avec un compresseur qui maintient la première fréquence de larsen pour la repérer à l'égaliseur).",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "equalizer-parametric",
-    "q-factor-bandwidth",
-    "acoustic-feedback",
-    "ringing-out"
-   ],
-   "equipment_ids": [
-    "dbx-231s"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx215s_131s_231s_ownersmanualpdf--3",
-     "publisher": "dbx Professional Products (Harman) — 2-Series Graphic Equalizers (215s/131s/231s) manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "q-factor-bandwidth",
-   "name_fr": "Facteur Q et largeur de bande",
-   "name_en": "Q factor and bandwidth",
-   "domain": "dynamics-eq-effects",
-   "definition": "Le facteur Q exprime la sélectivité d'une bande d'égalisation : c'est le rapport entre la fréquence centrale et la largeur de bande ; plus Q est élevé, plus la bande est étroite.",
-   "explanation": "La largeur de bande (BW) est l'écart entre les fréquences de coupure basse et haute ; la fréquence centrale en est la moyenne géométrique. On exprime souvent la largeur en octaves : une octave correspond à Q ≈ 1,41, un tiers d'octave à Q ≈ 4,32, deux octaves à Q ≈ 0,67 (sengpielaudio). Q n'est pas l'inverse du nombre d'octaves. Attention : définir la bande par les points à −3 dB n'a plus de sens pour une accentuation de 3 dB ou moins. Sur un égaliseur logiciel comme Pro-Q, Q = 1 est la largeur par défaut et le Q n'est pas réglable sur une pente de 6 dB/oct.",
-   "formulas": [
-    {
-     "expr": "f0 = √(f1 × f2)",
-     "vars": {
-      "f1": "fréquence de coupure basse (Hz)",
-      "f2": "fréquence de coupure haute (Hz)"
-     },
-     "source_url": "http://www.sengpielaudio.com/calculator-bandwidth.htm"
-    },
-    {
-     "expr": "BW = f2 − f1 = f0 / Q",
-     "vars": {
-      "BW": "largeur de bande (Hz)",
-      "f0": "fréquence centrale (Hz)"
-     },
-     "source_url": "http://www.sengpielaudio.com/calculator-bandwidth.htm"
-    },
-    {
-     "expr": "Q = √(2^N) / (2^N − 1)",
-     "vars": {
-      "N": "largeur de bande en octaves"
-     },
-     "source_url": "http://www.sengpielaudio.com/calculator-bandwidth.htm"
-    }
-   ],
-   "units": [
-    "Hz",
-    "octave"
-   ],
-   "related_concepts": [
-    "equalizer-parametric",
-    "graphic-equalizer",
-    "frequency"
-   ],
-   "equipment_ids": [
-    "api-550a"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "http://www.sengpielaudio.com/calculator-bandwidth.htm",
-     "publisher": "sengpielaudio (E. Sengpiel) — Bandwidth / Q factor calculator",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "university",
-     "covers": [
-      "definition",
-      "formulas[0]",
-      "formulas[1]",
-      "formulas[2]",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.fabfilter.com/help/pro-q/using/bandcontrols",
-     "publisher": "FabFilter — Pro-Q help: Band controls",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
-     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "high-pass-filter",
-   "name_fr": "Filtre passe-haut (coupe-bas)",
-   "name_en": "High-pass filter (low cut)",
-   "domain": "dynamics-eq-effects",
-   "definition": "Filtre qui laisse passer les fréquences au-dessus d'une fréquence de coupure et atténue progressivement celles en dessous, selon une pente exprimée en dB par octave.",
-   "explanation": "C'est le filtre le plus utile pour retirer le grondement (rumble) et les bruits subsoniques captés par les micros, ce qu'un simple réglage de grave fait mal (Sound On Sound). La plupart des consoles en ont un sur chaque tranche ; sur la DiGiCo SD12, une paire de filtres réglables précède l'égaliseur paramétrique. Deux familles : le filtre anti-grondement, raide (12 ou 18 dB/oct) avec une coupure sous 100 Hz (40, 60 ou 80 Hz), et le filtre anti-effet de proximité, doux (6 dB/oct) entre 100 et 200 Hz. Exemple : un passe-haut à 80 Hz et 18 dB/oct atténue de 18 dB à 40 Hz et de 36 dB à 20 Hz. Il ne faut pas couper trop haut sur une voix : selon DPA, la parole reste compréhensible avec un passe-haut à 500 Hz, mais l'intelligibilité chute sous 40 % à 1 kHz.",
-   "formulas": [],
-   "units": [
-    "Hz",
-    "dB/oct"
-   ],
-   "related_concepts": [
-    "filter-slope",
-    "shelving-equalizer",
-    "proximity-effect",
-    "equalizer-parametric",
-    "input-channel"
-   ],
-   "equipment_ids": [
-    "dbx-231s"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 1,
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
-     "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/sound-advice/q-will-mics-high-pass-filter-counter-proximity-effect",
-     "publisher": "Sound On Sound — H. Robjohns, « Q. Will a mic's high-pass filter counter the proximity effect? » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
-     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/",
-     "publisher": "DPA Microphones — Mic University, Facts about speech intelligibility (cité dans fundamentals/03)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
-     "publisher": "DiGiCo — SD12 Getting Started (cité dans fundamentals/08)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "filter-slope",
-   "name_fr": "Pente d'un filtre (dB/octave)",
-   "name_en": "Filter slope",
-   "domain": "dynamics-eq-effects",
-   "definition": "Vitesse d'atténuation d'un filtre au-delà de sa fréquence de coupure, exprimée en dB par octave ; elle est en général un multiple de 6 dB/oct.",
-   "explanation": "Les bandes d'égalisation classiques ont une pente d'environ 6 dB/oct, les filtres de console et de DAW 12 ou 18 dB/oct, les filtres de synthétiseur jusqu'à 24 dB/oct (Sound On Sound). Les logiciels vont beaucoup plus loin : 0 à 96 dB/oct et un mode « brickwall » sur les filtres coupe-bas et coupe-haut de Pro-Q. Le SSL Bus+ précise que son filtre de side-chain à 12 dB/oct est un filtre du 2e ordre. Plus la pente est raide, plus la transition entre bande passante et bande atténuée est nette.",
-   "formulas": [],
-   "units": [
-    "dB/oct"
-   ],
-   "related_concepts": [
-    "high-pass-filter",
-    "linear-phase-eq",
-    "phase"
-   ],
-   "equipment_ids": [
-    "dbx-231s",
-    "ssl-the-bus-plus"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
-     "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
-     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition"
-     ]
-    },
-    {
-     "url": "https://www.fabfilter.com/help/pro-q/using/bandcontrols",
-     "publisher": "FabFilter — Pro-Q help: Band controls",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
-     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "linear-phase-eq",
-   "name_fr": "Égaliseur à phase linéaire / phase minimale",
-   "name_en": "Linear-phase vs minimum-phase EQ",
-   "domain": "dynamics-eq-effects",
-   "definition": "Un égaliseur classique (analogique ou « zéro latence ») modifie l'amplitude et la phase ; un égaliseur à phase linéaire ne modifie que l'amplitude, au prix d'une latence et d'un possible pré-écho (pre-ringing).",
-   "explanation": "FabFilter décrit trois modes : Zero Latency (réponse en amplitude analogique, phase non idéale, aucune latence, suffisant dans la plupart des cas), Natural Phase (amplitude et phase proches de l'analogique sans latence notable) et Linear Phase (phase intacte). La phase linéaire évite les annulations quand un signal égalisé est mélangé avec une version non égalisée ou égalisée autrement, par exemple en mastering. Ses défauts : latence (de 3072 échantillons, environ 70 ms, à 66560 échantillons, environ 1,5 s à 44,1 kHz selon la résolution) et pré-écho qui peut adoucir les transitoires d'une grosse caisse. C'est un outil de résolution de problème, pas un mode « meilleur » par défaut.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "phase",
-    "comb-filtering",
-    "latency",
-    "equalizer-parametric",
-    "filter-slope"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 4,
-   "sources": [
-    {
-     "url": "https://www.fabfilter.com/help/pro-q/using/processingmode",
-     "publisher": "FabFilter — Pro-Q help: Processing mode",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "reverb",
-   "name_fr": "Réverbération artificielle",
-   "name_en": "Reverb (effect)",
-   "domain": "dynamics-eq-effects",
-   "definition": "Effet qui simule la persistance du son dans un espace : un son direct suivi de réflexions précoces puis d'une queue de réverbération dense qui décroît.",
-   "explanation": "Un processeur de réverbération propose en général : le temps de réverbération (Bricasti M7 : 0,1 à 30 s pour les fréquences médiums), la taille de l'espace, le pré-délai (pre-delay, 0 à 500 ms sur le M7), la diffusion, l'équilibre entre réflexions précoces et queue, et des filtres (le Hi Cut du temps de réverbération fait mourir l'aigu plus vite). Chez Lexicon, le pré-délai est ajouté au signal diffusé avant la partie principale de la réverbération pour séparer dans le temps la réverbération du son sec ; la taille et le temps (MidRT) interagissent : une grande salle à temps court peut avoir la même durée qu'une petite à temps long. En acoustique, l'EBU appelle réflexions précoces celles qui arrivent dans les 15 ms suivant le son direct. En mixage, on alimente presque toujours la réverbération par un départ auxiliaire post-fader et on la règle à 100 % d'effet.",
-   "formulas": [],
-   "units": [
-    "s",
-    "ms"
-   ],
-   "related_concepts": [
-    "delay-effect",
-    "reverberation-time-rt60",
-    "insert-vs-send-effects",
-    "aux-send",
-    "haas-precedence-effect"
-   ],
-   "equipment_ids": [
-    "bricasti-design-m7",
-    "lexicon-pcm96",
-    "lexicon-pcm92",
-    "lexicon-480l",
-    "yamaha-spx2000"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "http://www.bricasti.com/images/M7.pdf",
-     "publisher": "Bricasti Design — M7 Stereo Reverb Processor manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
-     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
-     "publisher": "EBU — Tech 3276 (cité dans knowledge-base/fundamentals/13)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
-     "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "delay-effect",
-   "name_fr": "Délai / écho (delay)",
-   "name_en": "Delay effect",
-   "domain": "dynamics-eq-effects",
-   "definition": "Effet qui reproduit le signal après un temps de retard réglable, une ou plusieurs fois ; la réinjection (feedback) renvoie la sortie à l'entrée pour créer des répétitions successives.",
-   "explanation": "Les paramètres de base sont le temps de retard (en ms ou en valeur de note), le niveau de réinjection (feedback), les filtres dans la boucle et le mélange. Sur le Lexicon PCM96, le temps peut être donné en millisecondes ou en fraction de tempo (noire, croche) défini par le bouton TAP/TEMPO (on tape au moins deux fois) ou par l'horloge MIDI. Des filtres passe-haut et passe-bas dans la boucle de réinjection imitent l'usure des échos à bande. Pour caler un écho sur le tempo : durée d'une noire en ms = 60 000 / BPM (500 ms à 120 BPM ; croche 250 ms ; triolet de croche 167 ms ; double croche 125 ms).",
-   "formulas": [
-    {
-     "expr": "t(noire, ms) = 60 000 / tempo (BPM)",
-     "vars": {
-      "tempo": "battements par minute"
-     },
-     "source_url": "http://www.sengpielaudio.com/calculator-bpmtempotime.htm"
-    }
-   ],
-   "units": [
-    "ms",
-    "BPM"
-   ],
-   "related_concepts": [
-    "reverb",
-    "modulation-effects",
-    "insert-vs-send-effects",
-    "haas-precedence-effect"
-   ],
-   "equipment_ids": [
-    "lexicon-pcm96",
-    "yamaha-spx2000",
-    "eventide-h9000"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
-     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "http://www.sengpielaudio.com/calculator-bpmtempotime.htm",
-     "publisher": "sengpielaudio (E. Sengpiel) — Tempo BPM to delay time calculator",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "university",
-     "covers": [
-      "formulas[0]",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "modulation-effects",
-   "name_fr": "Effets de modulation (chorus, flanger)",
-   "name_en": "Modulation effects",
-   "domain": "dynamics-eq-effects",
-   "definition": "Effets à base de lignes de retard dont le temps varie lentement (LFO), ce qui crée de légères variations de hauteur ou un filtrage en peigne mouvant.",
-   "explanation": "Dans l'algorithme Chorus/Flange du Lexicon PCM96, les voix de retard bougent très progressivement, avec des effets de hauteur audibles. Pour le chorus, les voix bougent assez indépendamment et épaississent le son sans trop filtrer ; pour le flanger, les voix sont appariées à intervalles proches et leur mouvement produit un filtrage en peigne par annulation, souvent avec une réinjection proche de l'instabilité. Le temps de modulation peut être synchronisé au tempo.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "delay-effect",
-    "comb-filtering",
-    "phase"
-   ],
-   "equipment_ids": [
-    "lexicon-pcm96",
-    "eventide-h9000",
-    "yamaha-spx2000"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
-     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "insert-vs-send-effects",
-   "name_fr": "Traitement en insert ou effet en départ",
-   "name_en": "Insert vs send effects",
-   "domain": "dynamics-eq-effects",
-   "definition": "Un insert coupe le chemin d'une tranche pour faire passer tout le signal dans un processeur (en série) ; un départ auxiliaire envoie une copie dosée du signal vers un effet partagé dont le retour est mélangé au son sec (en parallèle).",
-   "explanation": "Les processeurs de dynamique et de timbre (égaliseur, compresseur/limiteur, expandeur/porte) s'utilisent normalement en insert ; les effets temporels (écho, délai, réverbération, chorus, flanger) peuvent passer par un insert ou par un départ (Sound On Sound, 1996). Quand un effet est alimenté par un départ, on le règle à 100 % d'effet, 0 % de sec : le départ seul dose l'effet, et les retours stéréo sont panoramiqués à fond gauche/droite. Le départ d'effet est post-fader pour que l'équilibre sec/effet suive le fader ; un départ pré-fader sert aux retours de scène. Un départ permet aussi de partager une même réverbération entre plusieurs pistes avec un dosage propre à chacune (Sound On Sound, 2022). Lexicon conseille de laisser le Mix à 100 % dans presque tous les cas et de doser à la console.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "insert-point",
-    "aux-send",
-    "pre-post-fader",
-    "reverb",
-    "parallel-compression"
-   ],
-   "equipment_ids": [
-    "lexicon-pcm96"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Traitement du signal (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre en mixage / sonorisation — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 1,
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
-     "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/techniques/pro-tools-using-sends",
-     "publisher": "Sound On Sound — J. Rodgers, « Pro Tools: Using Sends » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
-     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
-     "publisher": "DiGiCo — SD12 Getting Started (cité dans fundamentals/08)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Plage de fréquences chiffrée et sourcée pour les « bas-médiums boueux » (mud)",
-   "searched": "Sound On Sound EQ (S. Inglis 2022), SOS filters, recherche web soundonsound/shure/dpa — seuls des blogs non fiables donnent 200–500 Hz"
-  },
-  {
-   "what": "Rane Pro Audio Reference (définitions hystérésis, de-esser)",
-   "searched": "ranecommercial.com/legacy/pdf/ranenotes/Pro_Audio_Reference.pdf → 404 ; WebSearch sans résultat officiel"
-  },
-  {
-   "what": "Pentes et fréquences du filtre passe-haut du Neve 1073SPX",
-   "searched": "Manuel AMS Neve 1073SPX v1.2 : PDF téléchargé mais section EQ en image, texte non extractible"
-  },
-  {
-   "what": "Notice Empirical Labs Distressor (ratios, attaque)",
-   "searched": "empiricallabs.com/wp-content/uploads/distrecall.pdf : DNS non résolu pendant la session"
-  }
- ]
+  ]
 }

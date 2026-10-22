@@ -363,7 +363,8 @@
         "description",
         "size"
       ],
-      "note": "Collaborative lecture theatres 100-200 places ; lecture rooms < 100 ; flat lecture theatres < 50 ; micros, enceintes, projection et lecture capture courants."
+      "note": "Collaborative lecture theatres 100-200 places ; lecture rooms < 100 ; flat lecture theatres < 50 ; micros, enceintes, projection et lecture capture courants.",
+      "url_status": "ok"
     },
     {
       "url": "https://assets.publishing.service.gov.uk/media/5a8170d3e5274a2e8ab54012/BB93_February_2015.pdf",
@@ -374,7 +375,8 @@
       "covers": [
         "description"
       ],
-      "note": "Table 1 : lecture room, plafond de bruit ambiant 35 dB LAeq,30min (neuf) / 40 (rénovation). Tmf = moyenne 500 Hz-1 kHz-2 kHz. Valeurs RT du tableau 6 illisibles à l'extraction."
+      "note": "Table 1 : lecture room, plafond de bruit ambiant 35 dB LAeq,30min (neuf) / 40 (rénovation). Tmf = moyenne 500 Hz-1 kHz-2 kHz. Valeurs RT du tableau 6 illisibles à l'extraction.",
+      "url_status": "ok"
     },
     {
       "url": "https://aiic.org/document/4395/Checklist%20for%20simultaneous%20interpretation%20equipment%20-%20ENG.pdf",
@@ -385,7 +387,8 @@
       "covers": [
         "zones"
       ],
-      "note": "Cabines au fond de salle face à la tribune, ≤ 30 m de l'orateur/écran (20-25 m préférables), plancher cabine ≈ 1 m au-dessus d'un sol plat."
+      "note": "Cabines au fond de salle face à la tribune, ≤ 30 m de l'orateur/écran (20-25 m préférables), plancher cabine ≈ 1 m au-dessus d'un sol plat.",
+      "url_status": "ok"
     },
     {
       "url": "https://www.legifrance.gouv.fr/loda/id/LEGITEXT000005634431",
@@ -396,7 +399,8 @@
       "covers": [
         "description"
       ],
-      "note": "S'applique aux établissements d'enseignement neufs ; le tableau des durées de réverbération (art. 5) n'est pas reproduit en ligne (JO n° 123 du 28/05/2003, p. 9102-9104)."
+      "note": "S'applique aux établissements d'enseignement neufs ; le tableau des durées de réverbération (art. 5) n'est pas reproduit en ligne (JO n° 123 du 28/05/2003, p. 9102-9104).",
+      "url_status": "blocked"
     }
   ],
   "not_found_log": [

@@ -1,395 +1,405 @@
 {
- "entity": "scenario",
- "domain": "wireless-rf",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "theatre-play-8-wireless-lavaliers",
-   "name_fr": "Pièce de théâtre avec 8 micros HF cravate",
-   "name_en": "Theatre play with 8 wireless lavaliers",
-   "domain": "wireless-rf",
-   "brief": "Une compagnie joue une pièce dans un théâtre à l'italienne avec huit comédiens équipés de micros cravate miniatures omnidirectionnels sur émetteurs de poche numériques (EW-DX). Les quatre récepteurs doubles sont en régie, alimentés par un répartiteur d'antennes actif relié à deux antennes directionnelles placées en hauteur, en visibilité directe du plateau. L'élève doit choisir la bonne variante de bande pour la France (470–694 MHz), coordonner huit fréquences et un canal de secours, câbler la distribution d'antennes, préparer et poser les émetteurs, puis conduire le contrôle avant spectacle avec test de marche.",
-   "room_id": "theatre-italian-medium",
-   "required_gear": [
+  "entity": "scenario",
+  "domain": "wireless-rf",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "equipment_id": "sennheiser-ew-dx-em-2",
-     "qty": 4,
-     "role": "récepteurs doubles (8 canaux)"
+      "id": "theatre-play-8-wireless-lavaliers",
+      "name_fr": "Pièce de théâtre avec 8 micros HF cravate",
+      "name_en": "Theatre play with 8 wireless lavaliers",
+      "domain": "wireless-rf",
+      "brief": "Une compagnie joue une pièce dans un théâtre à l'italienne avec huit comédiens équipés de micros cravate miniatures omnidirectionnels sur émetteurs de poche numériques (EW-DX). Les quatre récepteurs doubles sont en régie, alimentés par un répartiteur d'antennes actif relié à deux antennes directionnelles placées en hauteur, en visibilité directe du plateau. L'élève doit choisir la bonne variante de bande pour la France (470–694 MHz), coordonner huit fréquences et un canal de secours, câbler la distribution d'antennes, préparer et poser les émetteurs, puis conduire le contrôle avant spectacle avec test de marche.",
+      "room_id": "theatre-italian-medium",
+      "required_gear": [
+        {
+          "equipment_id": "sennheiser-ew-dx-em-2",
+          "qty": 4,
+          "role": "récepteurs doubles (8 canaux)"
+        },
+        {
+          "equipment_id": "sennheiser-ew-d-asa",
+          "qty": 1,
+          "role": "répartiteur d'antennes actif 1:8"
+        },
+        {
+          "equipment_id": "sennheiser-adp-uhf",
+          "qty": 2,
+          "role": "antennes directionnelles A et B"
+        },
+        {
+          "equipment_id": "dpa-4060",
+          "qty": 8,
+          "role": "micros cravate miniatures"
+        },
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic1",
+            "equipment_id": "dpa-4060",
+            "label": "Micro cravate comédien 1"
+          },
+          {
+            "id": "tx1",
+            "equipment_id": null,
+            "label": "Émetteur de poche EW-DX (comédien 1)"
+          },
+          {
+            "id": "antA",
+            "equipment_id": "sennheiser-adp-uhf",
+            "label": "Antenne A"
+          },
+          {
+            "id": "antB",
+            "equipment_id": "sennheiser-adp-uhf",
+            "label": "Antenne B"
+          },
+          {
+            "id": "split",
+            "equipment_id": "sennheiser-ew-d-asa",
+            "label": "Répartiteur d'antennes"
+          },
+          {
+            "id": "rx1",
+            "equipment_id": "sennheiser-ew-dx-em-2",
+            "label": "Récepteur double 1"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic1",
+            "to": "tx1",
+            "signal": "mic-level"
+          },
+          {
+            "from": "tx1",
+            "to": "antA",
+            "signal": "rf-uhf"
+          },
+          {
+            "from": "tx1",
+            "to": "antB",
+            "signal": "rf-uhf"
+          },
+          {
+            "from": "antA",
+            "to": "split",
+            "signal": "rf-uhf",
+            "connector": "bnc-antenna-50ohm"
+          },
+          {
+            "from": "antB",
+            "to": "split",
+            "signal": "rf-uhf",
+            "connector": "bnc-antenna-50ohm"
+          },
+          {
+            "from": "split",
+            "to": "rx1",
+            "signal": "rf-uhf",
+            "connector": "bnc-antenna-50ohm"
+          },
+          {
+            "from": "rx1",
+            "to": "desk",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "frequency-coordination-theatre-show",
+        "receiver-antenna-setup",
+        "bodypack-transmitter-setup",
+        "wireless-preshow-check"
+      ],
+      "rule_ids": [
+        "frequency-outside-authorised-band-fr",
+        "intermod-conflict",
+        "antenna-distance",
+        "passive-split-too-many-receivers"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 120,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en œuvre d'un parc HF en théâtre — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+          "publisher": "Sennheiser, EW-DX EM 2 product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/EW-D_ASA_Product_specification_v1.2_EN.pdf/bb086990e7db11f08c892a34179bc91d?attachment=true",
+          "publisher": "Sennheiser, EW-D ASA product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear",
+            "signal_flow"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
+          "publisher": "Sennheiser, ADP UHF product specification (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     },
     {
-     "equipment_id": "sennheiser-ew-d-asa",
-     "qty": 1,
-     "role": "répartiteur d'antennes actif 1:8"
-    },
-    {
-     "equipment_id": "sennheiser-adp-uhf",
-     "qty": 2,
-     "role": "antennes directionnelles A et B"
-    },
-    {
-     "equipment_id": "dpa-4060",
-     "qty": 8,
-     "role": "micros cravate miniatures"
-    },
-    {
-     "equipment_id": "yamaha-ql1",
-     "qty": 1,
-     "role": "console"
+      "id": "concert-iem-and-wireless-vocals",
+      "name_fr": "Concert avec ear monitors HF et micros chant sans fil",
+      "name_en": "Concert with wireless IEMs and wireless vocal mics",
+      "domain": "wireless-rf",
+      "brief": "Un groupe joue dans une salle de concert : quatre micros chant main ULX-D et deux mix stéréo d'ear monitors sur un émetteur double PSM 1000. L'élève doit coordonner ensemble micros et ear monitors (en excluant les variantes 694–823 MHz), installer les récepteurs micros avec un répartiteur actif, placer l'émetteur IEM dans un autre rack que les récepteurs, avec son antenne hélicoïdale éloignée des antennes de réception, puis vérifier l'absence d'intermodulation en allumant tous les émetteurs.",
+      "room_id": "concert-hall-medium",
+      "required_gear": [
+        {
+          "equipment_id": "shure-ulx-d",
+          "qty": 4,
+          "role": "micros chant main + récepteurs"
+        },
+        {
+          "equipment_id": "shure-ua845uwb",
+          "qty": 1,
+          "role": "répartiteur d'antennes actif"
+        },
+        {
+          "equipment_id": "shure-psm-1000",
+          "qty": 1,
+          "role": "émetteur IEM double et récepteurs de ceinture"
+        },
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console (mix retours sur sorties)"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "hh1",
+            "equipment_id": null,
+            "label": "Émetteur main ULX-D (chant 1)"
+          },
+          {
+            "id": "rxant",
+            "equipment_id": null,
+            "label": "Antennes de réception A/B"
+          },
+          {
+            "id": "dist",
+            "equipment_id": "shure-ua845uwb",
+            "label": "Répartiteur UA845UWB"
+          },
+          {
+            "id": "rx1",
+            "equipment_id": "shure-ulx-d",
+            "label": "Récepteur ULXD4 chant 1"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console"
+          },
+          {
+            "id": "iemtx",
+            "equipment_id": "shure-psm-1000",
+            "label": "Émetteur IEM P10T"
+          },
+          {
+            "id": "iemant",
+            "equipment_id": null,
+            "label": "Antenne hélicoïdale d'émission IEM"
+          },
+          {
+            "id": "iemrx",
+            "equipment_id": null,
+            "label": "Récepteur de ceinture P10R+"
+          }
+        ],
+        "edges": [
+          {
+            "from": "hh1",
+            "to": "rxant",
+            "signal": "rf-uhf"
+          },
+          {
+            "from": "rxant",
+            "to": "dist",
+            "signal": "rf-uhf",
+            "connector": "bnc-antenna-50ohm"
+          },
+          {
+            "from": "dist",
+            "to": "rx1",
+            "signal": "rf-uhf",
+            "connector": "bnc-antenna-50ohm"
+          },
+          {
+            "from": "rx1",
+            "to": "desk",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "iemtx",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "iemtx",
+            "to": "iemant",
+            "signal": "rf-uhf",
+            "connector": "bnc-antenna-50ohm"
+          },
+          {
+            "from": "iemant",
+            "to": "iemrx",
+            "signal": "rf-uhf"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "frequency-coordination-theatre-show",
+        "receiver-antenna-setup",
+        "wireless-preshow-check"
+      ],
+      "rule_ids": [
+        "frequency-outside-authorised-band-fr",
+        "intermod-conflict",
+        "iem-tx-near-mic-receivers",
+        "antenna-distance"
+      ],
+      "difficulty": 4,
+      "estimated_time_min": 90,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Retours ear monitors et HF en concert — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
+          "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
+          "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear",
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
+          "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-US/docs/guide/ULXD",
+          "publisher": "Shure, ULX-D user guide (via knowledge-base/equipment/wireless-systems.json)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
+          "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     }
-   ],
-   "signal_flow": {
-    "nodes": [
-     {
-      "id": "mic1",
-      "equipment_id": "dpa-4060",
-      "label": "Micro cravate comédien 1"
-     },
-     {
-      "id": "tx1",
-      "equipment_id": null,
-      "label": "Émetteur de poche EW-DX (comédien 1)"
-     },
-     {
-      "id": "antA",
-      "equipment_id": "sennheiser-adp-uhf",
-      "label": "Antenne A"
-     },
-     {
-      "id": "antB",
-      "equipment_id": "sennheiser-adp-uhf",
-      "label": "Antenne B"
-     },
-     {
-      "id": "split",
-      "equipment_id": "sennheiser-ew-d-asa",
-      "label": "Répartiteur d'antennes"
-     },
-     {
-      "id": "rx1",
-      "equipment_id": "sennheiser-ew-dx-em-2",
-      "label": "Récepteur double 1"
-     },
-     {
-      "id": "desk",
-      "equipment_id": "yamaha-ql1",
-      "label": "Console"
-     }
-    ],
-    "edges": [
-     {
-      "from": "mic1",
-      "to": "tx1",
-      "signal": "mic-level"
-     },
-     {
-      "from": "tx1",
-      "to": "antA",
-      "signal": "rf-uhf"
-     },
-     {
-      "from": "tx1",
-      "to": "antB",
-      "signal": "rf-uhf"
-     },
-     {
-      "from": "antA",
-      "to": "split",
-      "signal": "rf-uhf",
-      "connector": "bnc-antenna-50ohm"
-     },
-     {
-      "from": "antB",
-      "to": "split",
-      "signal": "rf-uhf",
-      "connector": "bnc-antenna-50ohm"
-     },
-     {
-      "from": "split",
-      "to": "rx1",
-      "signal": "rf-uhf",
-      "connector": "bnc-antenna-50ohm"
-     },
-     {
-      "from": "rx1",
-      "to": "desk",
-      "signal": "line-level-pro",
-      "connector": "xlr3-m"
-     }
-    ]
-   },
-   "procedure_ids": [
-    "frequency-coordination-theatre-show",
-    "receiver-antenna-setup",
-    "bodypack-transmitter-setup",
-    "wireless-preshow-check"
-   ],
-   "rule_ids": [
-    "frequency-outside-authorised-band-fr",
-    "intermod-conflict",
-    "antenna-distance",
-    "passive-split-too-many-receivers"
-   ],
-   "difficulty": 3,
-   "estimated_time_min": 120,
-   "bts_mapping": [
+  ],
+  "not_found_log": [
     {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en œuvre d'un parc HF en théâtre — jugement, non vérifié sur eduscol",
-     "verified": false
+      "what": "Identifiant catalogue pour les émetteurs de poche EW-DX SK, émetteurs main ULX-D, récepteur de ceinture P10R+ et antenne hélicoïdale HA-8089",
+      "searched": "knowledge-base/equipment/*.json (seuls les récepteurs/systèmes sont listés) ; nœuds sans equipment_id"
     }
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
-     "publisher": "Sennheiser, EW-DX EM 2 product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "required_gear"
-     ]
-    },
-    {
-     "url": "https://assets.sennheiser.com/download/assets/EW-D_ASA_Product_specification_v1.2_EN.pdf/bb086990e7db11f08c892a34179bc91d?attachment=true",
-     "publisher": "Sennheiser, EW-D ASA product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "required_gear",
-      "signal_flow"
-     ]
-    },
-    {
-     "url": "https://assets.sennheiser.com/download/assets/EW-D_ADP_UHF_Product_Specification_v2.0_EN.pdf/7a43f0cae7b611f0bfb2beb43c66122a?attachment=true",
-     "publisher": "Sennheiser, ADP UHF product specification (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "required_gear"
-     ]
-    },
-    {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "brief"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "concert-iem-and-wireless-vocals",
-   "name_fr": "Concert avec ear monitors HF et micros chant sans fil",
-   "name_en": "Concert with wireless IEMs and wireless vocal mics",
-   "domain": "wireless-rf",
-   "brief": "Un groupe joue dans une salle de concert : quatre micros chant main ULX-D et deux mix stéréo d'ear monitors sur un émetteur double PSM 1000. L'élève doit coordonner ensemble micros et ear monitors (en excluant les variantes 694–823 MHz), installer les récepteurs micros avec un répartiteur actif, placer l'émetteur IEM dans un autre rack que les récepteurs, avec son antenne hélicoïdale éloignée des antennes de réception, puis vérifier l'absence d'intermodulation en allumant tous les émetteurs.",
-   "room_id": "concert-hall-medium",
-   "required_gear": [
-    {
-     "equipment_id": "shure-ulx-d",
-     "qty": 4,
-     "role": "micros chant main + récepteurs"
-    },
-    {
-     "equipment_id": "shure-ua845uwb",
-     "qty": 1,
-     "role": "répartiteur d'antennes actif"
-    },
-    {
-     "equipment_id": "shure-psm-1000",
-     "qty": 1,
-     "role": "émetteur IEM double et récepteurs de ceinture"
-    },
-    {
-     "equipment_id": "yamaha-ql1",
-     "qty": 1,
-     "role": "console (mix retours sur sorties)"
-    }
-   ],
-   "signal_flow": {
-    "nodes": [
-     {
-      "id": "hh1",
-      "equipment_id": null,
-      "label": "Émetteur main ULX-D (chant 1)"
-     },
-     {
-      "id": "rxant",
-      "equipment_id": null,
-      "label": "Antennes de réception A/B"
-     },
-     {
-      "id": "dist",
-      "equipment_id": "shure-ua845uwb",
-      "label": "Répartiteur UA845UWB"
-     },
-     {
-      "id": "rx1",
-      "equipment_id": "shure-ulx-d",
-      "label": "Récepteur ULXD4 chant 1"
-     },
-     {
-      "id": "desk",
-      "equipment_id": "yamaha-ql1",
-      "label": "Console"
-     },
-     {
-      "id": "iemtx",
-      "equipment_id": "shure-psm-1000",
-      "label": "Émetteur IEM P10T"
-     },
-     {
-      "id": "iemant",
-      "equipment_id": null,
-      "label": "Antenne hélicoïdale d'émission IEM"
-     },
-     {
-      "id": "iemrx",
-      "equipment_id": null,
-      "label": "Récepteur de ceinture P10R+"
-     }
-    ],
-    "edges": [
-     {
-      "from": "hh1",
-      "to": "rxant",
-      "signal": "rf-uhf"
-     },
-     {
-      "from": "rxant",
-      "to": "dist",
-      "signal": "rf-uhf",
-      "connector": "bnc-antenna-50ohm"
-     },
-     {
-      "from": "dist",
-      "to": "rx1",
-      "signal": "rf-uhf",
-      "connector": "bnc-antenna-50ohm"
-     },
-     {
-      "from": "rx1",
-      "to": "desk",
-      "signal": "line-level-pro",
-      "connector": "xlr3-m"
-     },
-     {
-      "from": "desk",
-      "to": "iemtx",
-      "signal": "line-level-pro",
-      "connector": "xlr3-m"
-     },
-     {
-      "from": "iemtx",
-      "to": "iemant",
-      "signal": "rf-uhf",
-      "connector": "bnc-antenna-50ohm"
-     },
-     {
-      "from": "iemant",
-      "to": "iemrx",
-      "signal": "rf-uhf"
-     }
-    ]
-   },
-   "procedure_ids": [
-    "frequency-coordination-theatre-show",
-    "receiver-antenna-setup",
-    "wireless-preshow-check"
-   ],
-   "rule_ids": [
-    "frequency-outside-authorised-band-fr",
-    "intermod-conflict",
-    "iem-tx-near-mic-receivers",
-    "antenna-distance"
-   ],
-   "difficulty": 4,
-   "estimated_time_min": 90,
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Retours ear monitors et HF en concert — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "sources": [
-    {
-     "url": "https://ollitest.gmu.edu/olliav/us_pro_wirelessmic.pdf",
-     "publisher": "Shure Educational Publication, T. Vear, « Selection and Operation of Wireless Microphone Systems », 2e éd. (copie hébergée par George Mason University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "manufacturer",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/8940.html.twig",
-     "publisher": "Shure, PSM 1000 user guide (rendu pubs2-api.prod.shureweb.eu)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "required_gear",
-      "brief"
-     ]
-    },
-    {
-     "url": "https://www.shure.com/en-US/docs/guide/UA845UWB",
-     "publisher": "Shure, UA845UWB user guide (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "required_gear"
-     ]
-    },
-    {
-     "url": "https://www.shure.com/en-US/docs/guide/ULXD",
-     "publisher": "Shure, ULX-D user guide (via knowledge-base/equipment/wireless-systems.json)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "required_gear"
-     ]
-    },
-    {
-     "url": "https://www.arcep.fr/la-regulation/grands-dossiers-reseaux-mobiles/les-frequences-pour-les-professionnels-de-laudiovisuel-et-du-spectacle/les-equipements-auxiliaires-sonores-de-conception-de-programmes-et-de-radiodiffusion.html",
-     "publisher": "ARCEP, page « Les équipements auxiliaires sonores de conception de programmes et de radiodiffusion » (mise à jour 09/07/2026)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "brief"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Identifiant catalogue pour les émetteurs de poche EW-DX SK, émetteurs main ULX-D, récepteur de ceinture P10R+ et antenne hélicoïdale HA-8089",
-   "searched": "knowledge-base/equipment/*.json (seuls les récepteurs/systèmes sont listés) ; nœuds sans equipment_id"
-  }
- ]
+  ]
 }

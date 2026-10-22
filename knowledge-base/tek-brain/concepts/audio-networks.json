@@ -9,7 +9,7 @@
       "name_en": "Audio over IP",
       "domain": "audio-networks",
       "definition": "Transport de nombreux canaux audio numériques sous forme de paquets sur un réseau Ethernet/IP standard, avec une horloge distribuée par le réseau (PTP) au lieu d'un câble de synchronisation dédié.",
-      "explanation": "Au lieu d'un multipaire analogique ou d'une liaison point à point (AES3, MADI), un seul câble réseau porte des dizaines voire des centaines de canaux. On distingue les technologies de couche 3 (IP routable : Dante, RAVENNA, Livewire, Q-LAN), rendues interopérables par AES67, et l'AVB/Milan, de couche 2. Dans tous les cas l'horloge passe par un protocole (PTP, IEEE 1588) : un appareil devient leader et les autres s'y calent. Sur le terrain, cela veut dire que le « patch » devient logiciel (Dante Controller, par exemple) et que le switch fait désormais partie de la chaîne audio : un switch mal réglé produit des clics comme un mauvais câble.",
+      "explanation": "Au lieu d'un multipaire analogique ou d'une liaison point à point (AES3, MADI), un seul câble réseau porte des dizaines voire des centaines de canaux. On distingue les solutions sur IP (Dante, RAVENNA, Q-LAN), rendues interopérables par AES67, et l'AVB/Milan, dont l'horloge (gPTP) fonctionne en couche 2. Dans tous les cas l'horloge passe par un protocole (PTP, IEEE 1588) : un appareil devient leader et les autres s'y calent. Sur le terrain, cela veut dire que le « patch » devient logiciel (Dante Controller, par exemple) et que le switch fait désormais partie de la chaîne audio.",
       "formulas": [],
       "units": [],
       "related_concepts": [
@@ -49,7 +49,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
@@ -59,7 +60,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
@@ -69,10 +71,22 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "conflicts": [],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "couche 3 (IP routable : Dante, RAVENNA, Livewire, Q-LAN) ; un switch mal réglé produit des clics",
+              "source_url": null
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : Livewire, le regroupement « couche 3 » et la remarque sur les clics ne sont dans aucune source citée : supprimés."
+        }
+      ],
       "review": "ok"
     },
     {
@@ -125,7 +139,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
@@ -135,7 +150,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
@@ -145,7 +161,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -199,7 +216,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
@@ -210,7 +228,8 @@
           "covers": [
             "explanation",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/aes67_and_smpte_st2110-30_audio.htm",
@@ -220,7 +239,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
@@ -230,7 +250,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -272,7 +293,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/aes67_and_smpte_st2110-30_audio.htm",
@@ -283,7 +305,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -325,7 +348,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
@@ -335,7 +359,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
@@ -345,7 +370,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -391,7 +417,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -440,7 +467,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
@@ -450,7 +478,8 @@
           "kind": "university",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -506,7 +535,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/processor/dme7/en/12_dante_en.html",
@@ -516,7 +546,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.qsys.com/q-sys_10.3/Content/Networking/Dante_Audio.htm",
@@ -526,7 +557,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
@@ -536,7 +568,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -583,7 +616,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -626,7 +660,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
@@ -636,7 +671,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
@@ -646,7 +682,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -686,17 +723,19 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
           "publisher": "Yamaha, PC-D/DI series manual: About Dante",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/processor/dme7/en/12_dante_en.html",
@@ -706,7 +745,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -742,11 +782,12 @@
           "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
           "publisher": "Yamaha, PC-D/DI series manual: About Dante",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
@@ -756,7 +797,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/AES50",
@@ -766,7 +808,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -806,7 +849,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://service.shure.com/articles/en_US/Knowledge/QOS-In-Depth",
@@ -816,7 +860,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
@@ -826,7 +871,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
@@ -836,7 +882,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs.symetrix.co/hardware/networking/dante/dante-technology.html",
@@ -846,7 +893,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -904,7 +952,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
@@ -914,7 +963,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.luminex.be/products/gigacore/gigacore-16t/",
@@ -924,7 +974,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -963,18 +1014,20 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
           "publisher": "Yamaha, PC-D/DI series manual: About Dante",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
@@ -984,7 +1037,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "conflicts": [],
@@ -1028,7 +1082,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
@@ -1038,7 +1093,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
@@ -1048,17 +1104,19 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
           "publisher": "Yamaha, PC-D/DI series manual: About Dante",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1108,7 +1166,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/processor/dme7/en/12_dante_en.html",
@@ -1118,17 +1177,19 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
           "publisher": "Yamaha, PC-D/DI series manual: About Dante",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs.symetrix.co/hardware/networking/dante/dante-technology.html",
@@ -1138,7 +1199,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1209,7 +1271,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
@@ -1219,7 +1282,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1259,7 +1323,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1299,7 +1364,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
@@ -1309,7 +1375,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.qsys.com/q-sys_10.3/Content/Networking/Dante_Audio.htm",
@@ -1319,7 +1386,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1359,7 +1427,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1412,7 +1481,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.midasconsoles.com/en/products/0606-ACJ",
@@ -1422,7 +1492,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1485,7 +1556,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
@@ -1495,7 +1567,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
@@ -1505,7 +1578,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/AES50",
@@ -1515,7 +1589,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

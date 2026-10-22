@@ -75,7 +75,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -86,7 +87,8 @@
           "covers": [
             "context",
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -170,7 +172,8 @@
           "kind": "university",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Reverberation",
@@ -180,7 +183,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.bruit.fr/images/stories/pdf/A4_correction_acoustique.pdf",
@@ -190,7 +194,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-RT60Coeff.htm",
@@ -200,7 +205,8 @@
           "kind": "university",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -271,7 +277,8 @@
           "kind": "university",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -281,7 +288,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/monitor-placement",
@@ -291,7 +299,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -379,7 +388,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/improving-room-acoustics",
@@ -389,7 +399,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -399,7 +410,8 @@
           "kind": "standard",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/8030c",
@@ -409,7 +421,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -500,7 +513,8 @@
           "covers": [
             "context",
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/improving-room-acoustics",
@@ -510,7 +524,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/8030c",
@@ -520,7 +535,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -578,7 +594,8 @@
           "kind": "standard",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/Acoustics226-2003.pdf",
@@ -588,7 +605,8 @@
           "kind": "university",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1387-2-202305-I!!PDF-E.pdf",
@@ -598,7 +616,8 @@
           "kind": "standard",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

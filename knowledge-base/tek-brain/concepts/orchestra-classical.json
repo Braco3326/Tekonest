@@ -39,22 +39,24 @@
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -66,7 +68,7 @@
       "name_en": "Spot / support microphones",
       "domain": "orchestra-classical",
       "definition": "Micros directionnels placés plus près d'un pupitre (appoint de pupitre) ou d'un soliste (appoint soliste) pour corriger l'équilibre ou la présence que le système principal ne donne pas.",
-      "explanation": "Les micros d'appoint (spot / support microphones) complètent le système principal, ils ne le remplacent pas. DPA conseille des micros directionnels à distance limitée, environ 1 à 1,5 m des pupitres, distance à laquelle l'effet de proximité est négligeable ; un cardioïde du premier ordre couvre environ 3 à 4 musiciens, en tenant compte des points à −3 dB du diagramme. Beaucoup d'appoints donnent un contrôle total mais réduisent le poids de la salle ; peu d'appoints laissent l'acoustique dominer. Ils visent des pupitres, pas des instruments isolés. Comme ils sont plus près des sources que le couple, leur signal arrive en avance : au-delà d'environ 4 m d'écart avec le couple principal, DPA recommande de les retarder (voir spot-microphone-delay-compensation). Exemple : un appoint sur les cors, mixé trop fort et sans retard, « tire » les cors vers l'avant de l'image.",
+      "explanation": "Les micros d'appoint (spot / support microphones) complètent le système principal, ils ne le remplacent pas. DPA conseille des micros directionnels à distance limitée, environ 1 à 1,5 m des pupitres, distance à laquelle l'effet de proximité est négligeable ; un cardioïde du premier ordre couvre environ 3 à 4 musiciens, en tenant compte des points à −3 dB du diagramme. Beaucoup d'appoints donnent un contrôle total mais réduisent le poids de la salle ; peu d'appoints laissent l'acoustique dominer. Ils visent des pupitres, pas des instruments isolés. Comme ils sont plus près des sources que le couple, leur signal arrive en avance : au-delà d'environ 4 m d'écart avec le couple principal, DPA recommande de les retarder (voir spot-microphone-delay-compensation).",
       "formulas": [],
       "units": [],
       "related_concepts": [
@@ -97,15 +99,27 @@
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "conflicts": [],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Exemple : un appoint sur les cors, mixé trop fort et sans retard, « tire » les cors vers l'avant de l'image.",
+              "source_url": null
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : exemple absent de l'article DPA, supprimé."
+        }
+      ],
       "review": "ok"
     },
     {
@@ -143,7 +157,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
@@ -153,7 +168,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -197,12 +213,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
           "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Wiener_Musikverein",
@@ -212,17 +229,19 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -260,7 +279,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
@@ -270,7 +290,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -324,7 +345,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.berliner-philharmoniker.de/en/stories/who-decides-the-seating-arrangement-of-the-musicians-on-stage/",
@@ -335,7 +357,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -376,7 +399,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Decca_tree",
@@ -386,7 +410,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -428,12 +453,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -498,12 +524,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
@@ -514,7 +541,8 @@
           "covers": [
             "formulas[0]",
             "formulas[1]"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -555,12 +583,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -595,12 +624,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Decca_tree",
@@ -610,17 +640,19 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -670,7 +702,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
@@ -681,7 +714,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/ORTF_stereo_technique",
@@ -691,7 +725,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -769,12 +804,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/en/products/stereo/sets/decca-tree-set.html",
@@ -784,7 +820,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -821,12 +858,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
           "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -867,7 +905,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -906,7 +945,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -949,27 +989,30 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
           "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1018,7 +1061,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1059,7 +1103,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://cinemontage.org/?p=7926",
@@ -1069,7 +1114,8 @@
           "kind": "trade-press",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1111,7 +1157,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1153,12 +1200,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1216,12 +1264,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-violin/",
@@ -1231,7 +1280,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1272,17 +1322,19 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

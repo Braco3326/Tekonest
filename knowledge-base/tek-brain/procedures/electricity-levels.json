@@ -89,11 +89,12 @@
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
@@ -103,7 +104,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -191,12 +193,13 @@
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -292,7 +295,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/jpc/specifications/",
@@ -302,7 +306,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf",
@@ -312,18 +317,20 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -404,7 +411,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/jdi/specifications/",
@@ -414,7 +422,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/j48/specifications/",
@@ -424,7 +433,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -509,12 +519,13 @@
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note151.html",
@@ -524,7 +535,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
@@ -535,7 +547,8 @@
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
@@ -545,7 +558,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -613,7 +627,8 @@
           "kind": "standard",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.645-2-199203-I!!PDF-E.pdf",
@@ -623,7 +638,8 @@
           "kind": "standard",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -633,7 +649,8 @@
           "kind": "standard",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/DBFS",
@@ -643,7 +660,8 @@
           "kind": "other",
           "covers": [
             "conflicts"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [

@@ -41,7 +41,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
@@ -52,7 +53,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -116,7 +118,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
@@ -126,7 +129,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -178,18 +182,20 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
           "publisher": "Yamaha, PC-D/DI series manual: About Dante",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -242,7 +248,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -300,7 +307,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -349,7 +357,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

@@ -1,615 +1,633 @@
 {
- "entity": "procedure",
- "domain": "dynamics-eq-effects",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "compress-lead-vocal",
-   "name_fr": "Régler un compresseur sur une voix lead",
-   "name_en": "Set a lead vocal compressor",
-   "domain": "dynamics-eq-effects",
-   "context": "Voix chantée ou parlée en studio ou en live, compresseur en insert sur la tranche (matériel ou intégré à la console), pour lisser les variations de niveau liées à la distance au micro et à la dynamique du chanteur.",
-   "duration_min": 10,
-   "equipment_ids": [
-    "dbx-166xs",
-    "universal-audio-1176ln",
-    "universal-audio-teletronix-la-2a"
-   ],
-   "concept_ids": [
-    "compressor",
-    "threshold-ratio",
-    "attack-release",
-    "knee",
-    "makeup-gain",
-    "insert-vs-send-effects"
-   ],
-   "rule_ids": [
-    "dynamics-processor-fed-from-aux-send"
-   ],
-   "steps": [
+  "entity": "procedure",
+  "domain": "dynamics-eq-effects",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "n": 1,
-     "preconditions": [
-      "Gain d'entrée réglé (voir gain-staging)",
-      "Compresseur en insert de la tranche voix"
-     ],
-     "action": "Partir d'un réglage neutre : ratio 1:1 ou seuil au maximum, gain de sortie à 0. Sur un 1176LN, Input et Output à 24 (midi), Attack et Release vers 4 (midi).",
-     "expected_result": "Aucune réduction de gain au vumètre GR ; le son est identique au bypass.",
-     "typical_mistakes": [
-      "Commencer avec un seuil très bas et un ratio extrême, ce qui masque les vrais besoins de la voix"
-     ]
+      "id": "compress-lead-vocal",
+      "name_fr": "Régler un compresseur sur une voix lead",
+      "name_en": "Set a lead vocal compressor",
+      "domain": "dynamics-eq-effects",
+      "context": "Voix chantée ou parlée en studio ou en live, compresseur en insert sur la tranche (matériel ou intégré à la console), pour lisser les variations de niveau liées à la distance au micro et à la dynamique du chanteur.",
+      "duration_min": 10,
+      "equipment_ids": [
+        "dbx-166xs",
+        "universal-audio-1176ln",
+        "universal-audio-teletronix-la-2a"
+      ],
+      "concept_ids": [
+        "compressor",
+        "threshold-ratio",
+        "attack-release",
+        "knee",
+        "makeup-gain",
+        "insert-vs-send-effects"
+      ],
+      "rule_ids": [
+        "dynamics-processor-fed-from-aux-send"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Gain d'entrée réglé (voir gain-staging)",
+            "Compresseur en insert de la tranche voix"
+          ],
+          "action": "Partir d'un réglage neutre : ratio 1:1 ou seuil au maximum, gain de sortie à 0. Sur un 1176LN, Input et Output à 24 (midi), Attack et Release vers 4 (midi).",
+          "expected_result": "Aucune réduction de gain au vumètre GR ; le son est identique au bypass.",
+          "typical_mistakes": [
+            "Commencer avec un seuil très bas et un ratio extrême, ce qui masque les vrais besoins de la voix"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Le chanteur chante un passage représentatif (refrain le plus fort)"
+          ],
+          "action": "Choisir un ratio modéré (environ 4:1, conseillé par dbx et UA pour une voix), un coude doux si disponible, une attaque moyenne et un rétablissement assez lent (ou le mode AUTO).",
+          "expected_result": "La courbe de compression est prête ; rien ne bouge tant que le seuil n'est pas atteint.",
+          "typical_mistakes": [
+            "Prendre 20:1 ou le mode All-Button par défaut : c'est de la limitation, pas un lissage"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Descendre le seuil (ou monter l'Input sur un 1176LN, le Peak Reduction sur un LA-2A) jusqu'à lire 6 à 10 dB de réduction de gain sur les passages forts (point de départ dbx).",
+          "expected_result": "Les écarts de niveau entre couplets et refrains se resserrent ; les passages doux ne sont presque pas compressés.",
+          "typical_mistakes": [
+            "Juger au vumètre seulement, sans écouter la voix dans le mix"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Ajuster l'attaque : plus lente pour laisser passer l'attaque des consonnes, plus rapide pour adoucir les crêtes. Ajuster le rétablissement pour que la réduction revienne entre les phrases sans pompage.",
+          "expected_result": "Pas de « respiration » du bruit de fond entre les phrases ; pas de réduction qui persiste sur la phrase douce suivante.",
+          "typical_mistakes": [
+            "Rétablissement trop rapide → pompage",
+            "Rétablissement trop lent → la phrase suivante reste écrasée"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Si la voix devient maigre (registre grave perdu), activer un filtre de side-chain qui rend le détecteur moins sensible au grave (CONTOUR sur le dbx 166xs).",
+          "expected_result": "Le bas du registre retrouve sa présence sans perdre le contrôle des crêtes.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Compenser au gain de sortie environ la réduction moyenne lue, puis comparer avec le bypass à niveau égal.",
+          "expected_result": "Niveau perçu identique en bypass et en service ; seule la régularité change.",
+          "typical_mistakes": [
+            "Monter le gain de sortie au point d'écrêter l'étage de sortie"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+          "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+          "publisher": "Universal Audio — Teletronix LA-2A manual (PDF hébergé par Adorama)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 2,
-     "preconditions": [
-      "Le chanteur chante un passage représentatif (refrain le plus fort)"
-     ],
-     "action": "Choisir un ratio modéré (environ 4:1, conseillé par dbx et UA pour une voix), un coude doux si disponible, une attaque moyenne et un rétablissement assez lent (ou le mode AUTO).",
-     "expected_result": "La courbe de compression est prête ; rien ne bouge tant que le seuil n'est pas atteint.",
-     "typical_mistakes": [
-      "Prendre 20:1 ou le mode All-Button par défaut : c'est de la limitation, pas un lissage"
-     ]
+      "id": "gate-toms-live",
+      "name_fr": "Gater les toms",
+      "name_en": "Gate toms",
+      "domain": "dynamics-eq-effects",
+      "context": "Batterie multi-micros en live ou en studio : chaque micro de tom capte la caisse claire, les cymbales et la grosse caisse. Une porte par tom ne s'ouvre que quand le tom est frappé.",
+      "duration_min": 10,
+      "equipment_ids": [
+        "drawmer-ds201",
+        "dbx-166xs",
+        "shure-sm57"
+      ],
+      "concept_ids": [
+        "noise-gate",
+        "sidechain",
+        "attack-release"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Gain d'entrée et polarité des micros de toms réglés",
+            "Porte en insert de la tranche tom"
+          ],
+          "action": "Régler le range au maximum, l'attaque au plus rapide, le hold et le decay courts, puis monter le seuil pendant que le batteur joue tout le kit sauf le tom.",
+          "expected_result": "Le voyant de fermeture reste allumé pendant le jeu des autres fûts : la repisse ne fait plus ouvrir la porte.",
+          "typical_mistakes": [
+            "Régler le seuil tom seul, sans le reste du kit : la porte s'ouvre ensuite sur la caisse claire"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Faire jouer le tom doucement puis fort et redescendre le seuil jusqu'à ce que les coups les plus faibles ouvrent la porte.",
+          "expected_result": "Chaque coup ouvre la porte ; la caisse claire et les cymbales ne l'ouvrent pas.",
+          "typical_mistakes": [
+            "Seuil trop haut : les fla et coups doux disparaissent"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Si les cymbales ou la caisse claire déclenchent encore, activer les filtres de clé (Drawmer : passe-haut 25 Hz–4 kHz, passe-bas 250 Hz–35 kHz) et les régler en Key Listen sur la zone du fût, puis repasser en Gate.",
+          "expected_result": "La porte n'écoute que la bande du tom ; les déclenchements parasites disparaissent.",
+          "typical_mistakes": [
+            "Oublier de quitter le mode Key Listen : on entend le signal filtré en sortie"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Régler le hold puis le decay pour suivre la résonance naturelle du tom ; fixer le range (partiel si la fermeture totale s'entend trop).",
+          "expected_result": "La queue du tom n'est pas coupée net et la porte se referme avant le coup suivant d'un autre fût.",
+          "typical_mistakes": [
+            "Decay trop court sur un son grave → battements (chattering) : le rétablissement doit durer plus d'une période de la fondamentale (dbx)"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Vérifier dans le mix complet, avec les overheads, et contrôler l'attaque : elle doit être assez rapide pour ne pas tronquer la transitoire du coup.",
+          "expected_result": "Le kit sonne plus net et la repisse baisse sans artefacts audibles.",
+          "typical_mistakes": [
+            "Attaque lente qui « mange » l'attaque de la baguette"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+          "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Noise_gate",
+          "publisher": "Wikipedia — Noise gate",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "context"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 3,
-     "preconditions": [],
-     "action": "Descendre le seuil (ou monter l'Input sur un 1176LN, le Peak Reduction sur un LA-2A) jusqu'à lire 6 à 10 dB de réduction de gain sur les passages forts (point de départ dbx).",
-     "expected_result": "Les écarts de niveau entre couplets et refrains se resserrent ; les passages doux ne sont presque pas compressés.",
-     "typical_mistakes": [
-      "Juger au vumètre seulement, sans écouter la voix dans le mix"
-     ]
+      "id": "high-pass-non-bass-channels",
+      "name_fr": "Filtrer en passe-haut les tranches non graves",
+      "name_en": "High-pass every non-bass channel",
+      "domain": "dynamics-eq-effects",
+      "context": "Début de mixage ou de balance : retirer le grondement, les bruits de manipulation et l'excès d'effet de proximité des sources qui n'ont pas d'information utile dans l'extrême grave (voix, guitares, overheads…), en laissant libres grosse caisse et basse.",
+      "duration_min": 10,
+      "equipment_ids": [
+        "dbx-231s",
+        "yamaha-ql1"
+      ],
+      "concept_ids": [
+        "high-pass-filter",
+        "filter-slope",
+        "proximity-effect",
+        "shelving-equalizer"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Gains réglés, sources jouant ensemble"
+          ],
+          "action": "Pour chaque tranche hors grosse caisse et basse, activer le passe-haut de la tranche à sa fréquence la plus basse.",
+          "expected_result": "Le filtre est en service sans changement audible du timbre.",
+          "typical_mistakes": [
+            "Activer le filtre sur la basse ou la grosse caisse"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Monter la fréquence de coupure en écoutant, jusqu'à ce que la source commence à s'amincir, puis redescendre un peu.",
+          "expected_result": "Le grondement et le « boum » de manipulation disparaissent ; le corps de la source est conservé.",
+          "typical_mistakes": [
+            "Couper trop haut sur une voix parlée : la parole reste intelligible avec un passe-haut à 500 Hz mais l'intelligibilité chute sous 40 % à 1 kHz (DPA)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Choisir la pente selon le but : raide (12–18 dB/oct, coupure sous 100 Hz) contre le grondement, douce (6 dB/oct, 100–200 Hz) contre l'effet de proximité d'une voix proche du micro.",
+          "expected_result": "Le filtre traite le bon problème sans creuser le son.",
+          "typical_mistakes": [
+            "Utiliser un filtre raide et haut pour compenser l'effet de proximité, ce qui creuse la voix"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Comparer filtre en/hors service dans le mix complet.",
+          "expected_result": "Le grave du mix est plus lisible ; la basse et la grosse caisse ressortent mieux.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
+          "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/sound-advice/q-will-mics-high-pass-filter-counter-proximity-effect",
+          "publisher": "Sound On Sound — H. Robjohns, « Q. Will a mic's high-pass filter counter the proximity effect? » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+          "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "context",
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/",
+          "publisher": "DPA Microphones — Mic University, Facts about speech intelligibility (cité dans fundamentals/03)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 4,
-     "preconditions": [],
-     "action": "Ajuster l'attaque : plus lente pour laisser passer l'attaque des consonnes, plus rapide pour adoucir les crêtes. Ajuster le rétablissement pour que la réduction revienne entre les phrases sans pompage.",
-     "expected_result": "Pas de « respiration » du bruit de fond entre les phrases ; pas de réduction qui persiste sur la phrase douce suivante.",
-     "typical_mistakes": [
-      "Rétablissement trop rapide → pompage",
-      "Rétablissement trop lent → la phrase suivante reste écrasée"
-     ]
+      "id": "set-up-reverb-send-return",
+      "name_fr": "Installer une réverbération en départ/retour",
+      "name_en": "Set up a reverb send/return",
+      "domain": "dynamics-eq-effects",
+      "context": "Console analogique ou numérique, ou DAW : une réverbération partagée par plusieurs sources, alimentée par un départ auxiliaire et récupérée sur un retour stéréo.",
+      "duration_min": 15,
+      "equipment_ids": [
+        "lexicon-pcm96",
+        "bricasti-design-m7",
+        "yamaha-ql1"
+      ],
+      "concept_ids": [
+        "reverb",
+        "insert-vs-send-effects",
+        "aux-send",
+        "pre-post-fader"
+      ],
+      "rule_ids": [
+        "reverb-on-insert-instead-of-send",
+        "effect-send-pre-fader"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Un bus auxiliaire libre"
+          ],
+          "action": "Câbler (ou router) la sortie du bus aux vers l'entrée de la réverbération ; une seule entrée suffit souvent, la réverbération stéréo additionne ses entrées.",
+          "expected_result": "Le bus aux alimente la réverbération.",
+          "typical_mistakes": [
+            "Brancher la réverbération en insert d'une seule tranche alors qu'elle doit servir à plusieurs"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Ramener les deux sorties de la réverbération sur un retour stéréo ou deux tranches panoramiquées à fond gauche et droite.",
+          "expected_result": "L'effet garde son image stéréo.",
+          "typical_mistakes": [
+            "Retours non panoramiqués : réverbération mono au centre"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Régler la réverbération à 100 % d'effet, 0 % de sec (Mix/Wet-Dry à 100 %).",
+          "expected_result": "Le retour ne contient que de la réverbération ; le dosage se fait à la console.",
+          "typical_mistakes": [
+            "Laisser le Mix à 50 % : du son sec revient aussi par le retour et le départ ne dose plus seul l'effet"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Configurer les départs de chaque tranche en post-fader et doser la quantité de réverbération par tranche.",
+          "expected_result": "Quand on baisse un fader, sa réverbération baisse aussi : l'équilibre sec/effet est conservé.",
+          "typical_mistakes": [
+            "Départ pré-fader : la réverbération reste quand le fader est baissé"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Si le retour arrive sur une tranche d'entrée, fermer complètement le départ de cette tranche vers le même aux.",
+          "expected_result": "Aucune boucle retour → départ.",
+          "typical_mistakes": [
+            "Renvoyer le retour dans son propre départ : boucle de réinjection"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Régler le pré-délai pour séparer la réverbération du son direct, puis le temps de réverbération à l'oreille.",
+          "expected_result": "La voix reste devant, la réverbération derrière.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Baisser le retour d'effet avant de modifier le routage pour éviter une boucle de réinjection à fort niveau"
+      ],
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
+          "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/pro-tools-using-sends",
+          "publisher": "Sound On Sound — J. Rodgers, « Pro Tools: Using Sends » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+          "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "http://www.bricasti.com/images/M7.pdf",
+          "publisher": "Bricasti Design — M7 Stereo Reverb Processor manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 5,
-     "preconditions": [],
-     "action": "Si la voix devient maigre (registre grave perdu), activer un filtre de side-chain qui rend le détecteur moins sensible au grave (CONTOUR sur le dbx 166xs).",
-     "expected_result": "Le bas du registre retrouve sa présence sans perdre le contrôle des crêtes.",
-     "typical_mistakes": []
+      "id": "de-ess-vocal-sidechain",
+      "name_fr": "Réduire les sifflantes d'une voix (de-essing)",
+      "name_en": "De-ess a vocal",
+      "domain": "dynamics-eq-effects",
+      "context": "Voix dont les « s » et « ch » sont agressifs, souvent accentués par la compression et l'égalisation aiguë. On utilise un de-esser ou un compresseur avec égaliseur dans le side-chain.",
+      "duration_min": 10,
+      "equipment_ids": [
+        "dbx-166xs"
+      ],
+      "concept_ids": [
+        "de-esser",
+        "sidechain",
+        "compressor",
+        "equalizer-parametric"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Compresseur avec insert de side-chain, égaliseur paramétrique disponible"
+          ],
+          "action": "Brancher l'égaliseur dans la boucle de side-chain (dbx 166xs : jack TRS, bague = départ, pointe = retour) et activer le side-chain.",
+          "expected_result": "Le détecteur reçoit le signal égalisé ; l'audio n'est pas égalisé.",
+          "typical_mistakes": [
+            "Placer l'égaliseur dans le chemin audio : la voix entière devient sourde"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Accentuer à l'égaliseur la bande où se trouvent les sifflantes (généralement 4–6 kHz selon dbx, à repérer à l'oreille).",
+          "expected_result": "Le détecteur réagit beaucoup plus sur les « s » que sur les voyelles.",
+          "typical_mistakes": [
+            "Choisir la fréquence sans écouter : elle varie d'une voix à l'autre"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Régler un seuil et un ratio moyens à élevés, attaque et rétablissement rapides.",
+          "expected_result": "Les sifflantes sont atténuées ; le timbre des voyelles est inchangé.",
+          "typical_mistakes": [
+            "Seuil trop bas : la voix entière est compressée, chaque syllabe est compressée"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Comparer en bypass, dans le mix.",
+          "expected_result": "Les « s » ne dépassent plus sans que la voix paraisse terne.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
+          "publisher": "dbx Professional Products (Harman) — 166xs mode d'emploi (FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 6,
-     "preconditions": [],
-     "action": "Compenser au gain de sortie environ la réduction moyenne lue, puis comparer avec le bypass à niveau égal.",
-     "expected_result": "Niveau perçu identique en bypass et en service ; seule la régularité change.",
-     "typical_mistakes": [
-      "Monter le gain de sortie au point d'écrêter l'étage de sortie"
-     ]
+      "id": "set-up-parallel-compression",
+      "name_fr": "Mettre en place une compression parallèle",
+      "name_en": "Set up parallel compression",
+      "domain": "dynamics-eq-effects",
+      "context": "Batterie, voix ou bus de mix : ajouter de la densité en mélangeant une version très compressée avec le signal non compressé, soit avec le bouton MIX d'un compresseur, soit avec un départ vers un bus compressé.",
+      "duration_min": 15,
+      "equipment_ids": [
+        "ssl-the-bus-plus",
+        "universal-audio-1176ln"
+      ],
+      "concept_ids": [
+        "parallel-compression",
+        "compressor",
+        "insert-vs-send-effects"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Compresseur avec contrôle MIX, ou bus auxiliaire libre"
+          ],
+          "action": "SSL Bus+ : passer le MIX en mode Parallel (le sec reste à 100 %). Sinon, envoyer les tranches vers un bus et insérer le compresseur sur ce bus.",
+          "expected_result": "Le signal sec n'est pas affecté par le compresseur.",
+          "typical_mistakes": [
+            "Rester en mode Classic : le MIX fait alors un fondu sec/compressé et baisse le sec"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Écouter la voie compressée seule (MIX à fond en mode Parallel = Audition sur le SSL Bus+) et compresser fortement (ratio élevé, réduction importante).",
+          "expected_result": "La voie compressée est dense, les détails faibles sont remontés.",
+          "typical_mistakes": [
+            "Régler la compression en écoutant le mélange : on n'entend pas ce que fait la voie compressée"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Revenir au mélange et monter progressivement la voie compressée sous le signal sec.",
+          "expected_result": "Les transitoires du sec sont conservées ; le son gagne en corps et en détail à bas niveau.",
+          "typical_mistakes": [
+            "Trop de voie compressée : on retrouve un son écrasé"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "context"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
-     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
-     "publisher": "Universal Audio — Teletronix LA-2A manual (PDF hébergé par Adorama)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "gate-toms-live",
-   "name_fr": "Gater les toms",
-   "name_en": "Gate toms",
-   "domain": "dynamics-eq-effects",
-   "context": "Batterie multi-micros en live ou en studio : chaque micro de tom capte la caisse claire, les cymbales et la grosse caisse. Une porte par tom ne s'ouvre que quand le tom est frappé.",
-   "duration_min": 10,
-   "equipment_ids": [
-    "drawmer-ds201",
-    "dbx-166xs",
-    "shure-sm57"
-   ],
-   "concept_ids": [
-    "noise-gate",
-    "sidechain",
-    "attack-release"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Gain d'entrée et polarité des micros de toms réglés",
-      "Porte en insert de la tranche tom"
-     ],
-     "action": "Régler le range au maximum, l'attaque au plus rapide, le hold et le decay courts, puis monter le seuil pendant que le batteur joue tout le kit sauf le tom.",
-     "expected_result": "Le voyant de fermeture reste allumé pendant le jeu des autres fûts : la repisse ne fait plus ouvrir la porte.",
-     "typical_mistakes": [
-      "Régler le seuil tom seul, sans le reste du kit : la porte s'ouvre ensuite sur la caisse claire"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Faire jouer le tom doucement puis fort et redescendre le seuil jusqu'à ce que les coups les plus faibles ouvrent la porte.",
-     "expected_result": "Chaque coup ouvre la porte ; la caisse claire et les cymbales ne l'ouvrent pas.",
-     "typical_mistakes": [
-      "Seuil trop haut : les fla et coups doux disparaissent"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Si les cymbales ou la caisse claire déclenchent encore, activer les filtres de clé (Drawmer : passe-haut 25 Hz–4 kHz, passe-bas 250 Hz–35 kHz) et les régler en Key Listen sur la zone du fût, puis repasser en Gate.",
-     "expected_result": "La porte n'écoute que la bande du tom ; les déclenchements parasites disparaissent.",
-     "typical_mistakes": [
-      "Oublier de quitter le mode Key Listen : on entend le signal filtré en sortie"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Régler le hold puis le decay pour suivre la résonance naturelle du tom ; fixer le range (partiel si la fermeture totale s'entend trop).",
-     "expected_result": "La queue du tom n'est pas coupée net et la porte se referme avant le coup suivant d'un autre fût.",
-     "typical_mistakes": [
-      "Decay trop court sur un son grave → battements (chattering) : le rétablissement doit durer plus d'une période de la fondamentale (dbx)"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Vérifier dans le mix complet, avec les overheads, et contrôler l'attaque : elle doit être assez rapide pour ne pas tronquer la transitoire du coup.",
-     "expected_result": "Le kit sonne plus net et la repisse baisse sans artefacts audibles.",
-     "typical_mistakes": [
-      "Attaque lente qui « mange » l'attaque de la baguette"
-     ]
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
-     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Noise_gate",
-     "publisher": "Wikipedia — Noise gate",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "context"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "high-pass-non-bass-channels",
-   "name_fr": "Filtrer en passe-haut les tranches non graves",
-   "name_en": "High-pass every non-bass channel",
-   "domain": "dynamics-eq-effects",
-   "context": "Début de mixage ou de balance : retirer le grondement, les bruits de manipulation et l'excès d'effet de proximité des sources qui n'ont pas d'information utile dans l'extrême grave (voix, guitares, overheads…), en laissant libres grosse caisse et basse.",
-   "duration_min": 10,
-   "equipment_ids": [
-    "dbx-231s",
-    "yamaha-ql1"
-   ],
-   "concept_ids": [
-    "high-pass-filter",
-    "filter-slope",
-    "proximity-effect",
-    "shelving-equalizer"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Gains réglés, sources jouant ensemble"
-     ],
-     "action": "Pour chaque tranche hors grosse caisse et basse, activer le passe-haut de la tranche à sa fréquence la plus basse.",
-     "expected_result": "Le filtre est en service sans changement audible du timbre.",
-     "typical_mistakes": [
-      "Activer le filtre sur la basse ou la grosse caisse"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Monter la fréquence de coupure en écoutant, jusqu'à ce que la source commence à s'amincir, puis redescendre un peu.",
-     "expected_result": "Le grondement et le « boum » de manipulation disparaissent ; le corps de la source est conservé.",
-     "typical_mistakes": [
-      "Couper trop haut sur une voix parlée : la parole reste intelligible avec un passe-haut à 500 Hz mais l'intelligibilité chute sous 40 % à 1 kHz (DPA)"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Choisir la pente selon le but : raide (12–18 dB/oct, coupure sous 100 Hz) contre le grondement, douce (6 dB/oct, 100–200 Hz) contre l'effet de proximité d'une voix proche du micro.",
-     "expected_result": "Le filtre traite le bon problème sans creuser le son.",
-     "typical_mistakes": [
-      "Utiliser un filtre raide et haut pour compenser l'effet de proximité, ce qui creuse la voix"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Comparer filtre en/hors service dans le mix complet.",
-     "expected_result": "Le grave du mix est plus lisible ; la basse et la grosse caisse ressortent mieux.",
-     "typical_mistakes": []
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
-     "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/sound-advice/q-will-mics-high-pass-filter-counter-proximity-effect",
-     "publisher": "Sound On Sound — H. Robjohns, « Q. Will a mic's high-pass filter counter the proximity effect? » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
-     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "context",
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/facts-about-speech-intelligibility/",
-     "publisher": "DPA Microphones — Mic University, Facts about speech intelligibility (cité dans fundamentals/03)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "set-up-reverb-send-return",
-   "name_fr": "Installer une réverbération en départ/retour",
-   "name_en": "Set up a reverb send/return",
-   "domain": "dynamics-eq-effects",
-   "context": "Console analogique ou numérique, ou DAW : une réverbération partagée par plusieurs sources, alimentée par un départ auxiliaire et récupérée sur un retour stéréo.",
-   "duration_min": 15,
-   "equipment_ids": [
-    "lexicon-pcm96",
-    "bricasti-design-m7",
-    "yamaha-ql1"
-   ],
-   "concept_ids": [
-    "reverb",
-    "insert-vs-send-effects",
-    "aux-send",
-    "pre-post-fader"
-   ],
-   "rule_ids": [
-    "reverb-on-insert-instead-of-send",
-    "effect-send-pre-fader"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Un bus auxiliaire libre"
-     ],
-     "action": "Câbler (ou router) la sortie du bus aux vers l'entrée de la réverbération ; une seule entrée suffit souvent, la réverbération stéréo additionne ses entrées.",
-     "expected_result": "Le bus aux alimente la réverbération.",
-     "typical_mistakes": [
-      "Brancher la réverbération en insert d'une seule tranche alors qu'elle doit servir à plusieurs"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Ramener les deux sorties de la réverbération sur un retour stéréo ou deux tranches panoramiquées à fond gauche et droite.",
-     "expected_result": "L'effet garde son image stéréo.",
-     "typical_mistakes": [
-      "Retours non panoramiqués : réverbération mono au centre"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Régler la réverbération à 100 % d'effet, 0 % de sec (Mix/Wet-Dry à 100 %).",
-     "expected_result": "Le retour ne contient que de la réverbération ; le dosage se fait à la console.",
-     "typical_mistakes": [
-      "Laisser le Mix à 50 % : du son sec revient aussi par le retour et le départ ne dose plus seul l'effet"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Configurer les départs de chaque tranche en post-fader et doser la quantité de réverbération par tranche.",
-     "expected_result": "Quand on baisse un fader, sa réverbération baisse aussi : l'équilibre sec/effet est conservé.",
-     "typical_mistakes": [
-      "Départ pré-fader : la réverbération reste quand le fader est baissé"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Si le retour arrive sur une tranche d'entrée, fermer complètement le départ de cette tranche vers le même aux.",
-     "expected_result": "Aucune boucle retour → départ.",
-     "typical_mistakes": [
-      "Renvoyer le retour dans son propre départ : boucle de réinjection"
-     ]
-    },
-    {
-     "n": 6,
-     "preconditions": [],
-     "action": "Régler le pré-délai pour séparer la réverbération du son direct, puis le temps de réverbération à l'oreille.",
-     "expected_result": "La voix reste devant, la réverbération derrière.",
-     "typical_mistakes": []
-    }
-   ],
-   "safety_notes": [
-    "Baisser le retour d'effet avant de modifier le routage pour éviter une boucle de réinjection à fort niveau"
-   ],
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
-     "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/techniques/pro-tools-using-sends",
-     "publisher": "Sound On Sound — J. Rodgers, « Pro Tools: Using Sends » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
-     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "http://www.bricasti.com/images/M7.pdf",
-     "publisher": "Bricasti Design — M7 Stereo Reverb Processor manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "de-ess-vocal-sidechain",
-   "name_fr": "Réduire les sifflantes d'une voix (de-essing)",
-   "name_en": "De-ess a vocal",
-   "domain": "dynamics-eq-effects",
-   "context": "Voix dont les « s » et « ch » sont agressifs, souvent accentués par la compression et l'égalisation aiguë. On utilise un de-esser ou un compresseur avec égaliseur dans le side-chain.",
-   "duration_min": 10,
-   "equipment_ids": [
-    "dbx-166xs"
-   ],
-   "concept_ids": [
-    "de-esser",
-    "sidechain",
-    "compressor",
-    "equalizer-parametric"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Compresseur avec insert de side-chain, égaliseur paramétrique disponible"
-     ],
-     "action": "Brancher l'égaliseur dans la boucle de side-chain (dbx 166xs : jack TRS, bague = départ, pointe = retour) et activer le side-chain.",
-     "expected_result": "Le détecteur reçoit le signal égalisé ; l'audio n'est pas égalisé.",
-     "typical_mistakes": [
-      "Placer l'égaliseur dans le chemin audio : la voix entière devient sourde"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Accentuer à l'égaliseur la bande où se trouvent les sifflantes (généralement 4–6 kHz selon dbx, à repérer à l'oreille).",
-     "expected_result": "Le détecteur réagit beaucoup plus sur les « s » que sur les voyelles.",
-     "typical_mistakes": [
-      "Choisir la fréquence sans écouter : elle varie d'une voix à l'autre"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Régler un seuil et un ratio moyens à élevés, attaque et rétablissement rapides.",
-     "expected_result": "Les sifflantes sont atténuées ; le timbre des voyelles est inchangé.",
-     "typical_mistakes": [
-      "Seuil trop bas : la voix entière est compressée, chaque syllabe est compressée"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Comparer en bypass, dans le mix.",
-     "expected_result": "Les « s » ne dépassent plus sans que la voix paraisse terne.",
-     "typical_mistakes": []
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
-     "publisher": "dbx Professional Products (Harman) — 166xs mode d'emploi (FR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "set-up-parallel-compression",
-   "name_fr": "Mettre en place une compression parallèle",
-   "name_en": "Set up parallel compression",
-   "domain": "dynamics-eq-effects",
-   "context": "Batterie, voix ou bus de mix : ajouter de la densité en mélangeant une version très compressée avec le signal non compressé, soit avec le bouton MIX d'un compresseur, soit avec un départ vers un bus compressé.",
-   "duration_min": 15,
-   "equipment_ids": [
-    "ssl-the-bus-plus",
-    "universal-audio-1176ln"
-   ],
-   "concept_ids": [
-    "parallel-compression",
-    "compressor",
-    "insert-vs-send-effects"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Compresseur avec contrôle MIX, ou bus auxiliaire libre"
-     ],
-     "action": "SSL Bus+ : passer le MIX en mode Parallel (le sec reste à 100 %). Sinon, envoyer les tranches vers un bus et insérer le compresseur sur ce bus.",
-     "expected_result": "Le signal sec n'est pas affecté par le compresseur.",
-     "typical_mistakes": [
-      "Rester en mode Classic : le MIX fait alors un fondu sec/compressé et baisse le sec"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Écouter la voie compressée seule (MIX à fond en mode Parallel = Audition sur le SSL Bus+) et compresser fortement (ratio élevé, réduction importante).",
-     "expected_result": "La voie compressée est dense, les détails faibles sont remontés.",
-     "typical_mistakes": [
-      "Régler la compression en écoutant le mélange : on n'entend pas ce que fait la voie compressée"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Revenir au mélange et monter progressivement la voie compressée sous le signal sec.",
-     "expected_result": "Les transitoires du sec sont conservées ; le son gagne en corps et en détail à bas niveau.",
-     "typical_mistakes": [
-      "Trop de voie compressée : on retrouve un son écrasé"
-     ]
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
-     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "context"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  }
- ],
- "not_found_log": []
+  ],
+  "not_found_log": []
 }

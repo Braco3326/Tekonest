@@ -180,17 +180,19 @@
           "covers": [
             "brief",
             "signal_flow"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
@@ -200,17 +202,19 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
           "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -340,27 +344,30 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
           "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -513,7 +520,8 @@
           "covers": [
             "brief",
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://interlude.hk/how-do-recording-sessions-work/",
@@ -523,7 +531,8 @@
           "kind": "trade-press",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -623,11 +632,12 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
@@ -637,7 +647,8 @@
           "kind": "manufacturer",
           "covers": [
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

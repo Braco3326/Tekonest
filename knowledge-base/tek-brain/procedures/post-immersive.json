@@ -1,593 +1,633 @@
 {
- "entity": "procedure",
- "domain": "post-immersive",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "aaf-import-and-conform",
-   "name_fr": "Importer un AAF et conformer la session",
-   "name_en": "AAF import and conform",
-   "domain": "post-immersive",
-   "context": "Le monteur image livre un AAF et une vidéo de référence ; le monteur son reconstruit la session avec les fichiers originaux du tournage.",
-   "duration_min": 120,
-   "equipment_ids": [
-    "avid-pro-tools",
-    "steinberg-nuendo",
-    "sound-devices-833"
-   ],
-   "concept_ids": [
-    "aaf-omf-interchange",
-    "conform",
-    "bwf-metadata",
-    "timecode",
-    "frame-rate-pull-up-pull-down"
-   ],
-   "rule_ids": [
-    "timecode-frame-rate-mismatch"
-   ],
-   "steps": [
+  "entity": "procedure",
+  "domain": "post-immersive",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "n": 1,
-     "preconditions": [
-      "Montage image verrouillé (ou version identifiée)"
-     ],
-     "action": "Récupérer l'AAF, la vidéo de référence avec timecode incrusté, la liste de cadence (images/s), les fichiers son originaux et les rapports son.",
-     "expected_result": "Toutes les pièces sont réunies et la cadence du montage est connue.",
-     "typical_mistakes": [
-      "Commencer sans connaître la cadence du montage"
-     ]
+      "id": "aaf-import-and-conform",
+      "name_fr": "Importer un AAF et conformer la session",
+      "name_en": "AAF import and conform",
+      "domain": "post-immersive",
+      "context": "Le monteur image livre un AAF et une vidéo de référence ; le monteur son reconstruit la session avec les fichiers originaux du tournage.",
+      "duration_min": 120,
+      "equipment_ids": [
+        "avid-pro-tools",
+        "steinberg-nuendo",
+        "sound-devices-833"
+      ],
+      "concept_ids": [
+        "aaf-omf-interchange",
+        "conform",
+        "bwf-metadata",
+        "timecode",
+        "frame-rate-pull-up-pull-down"
+      ],
+      "rule_ids": [
+        "timecode-frame-rate-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Montage image verrouillé (ou version identifiée)"
+          ],
+          "action": "Récupérer l'AAF, la vidéo de référence avec timecode incrusté, la liste de cadence (images/s), les fichiers son originaux et les rapports son.",
+          "expected_result": "Toutes les pièces sont réunies et la cadence du montage est connue.",
+          "typical_mistakes": [
+            "Commencer sans connaître la cadence du montage"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Créer la session audio à la même cadence d'images, la même fréquence d'échantillonnage et le même timecode de départ que le montage.",
+          "expected_result": "La session et la vidéo affichent le même timecode à la même image.",
+          "typical_mistakes": [
+            "Laisser la cadence par défaut du logiciel (ex. 29,97 au lieu de 25)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Importer l'AAF (pistes et clips) et la vidéo ; vérifier si les médias sont intégrés (embedded) ou référencés.",
+          "expected_result": "La timeline apparaît avec les clips aux bons emplacements.",
+          "typical_mistakes": [
+            "Ne pas lire le rapport d'import qui signale les médias non trouvés"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Fichiers du tournage copiés sur un disque accessible"
+          ],
+          "action": "Relier les clips aux fichiers BWF polyphoniques originaux (timecode TimeReference, nom de fichier, métadonnées) pour récupérer toutes les pistes du tournage.",
+          "expected_result": "Chaque clip a accès à la perche et à chaque HF séparément.",
+          "typical_mistakes": [
+            "Monter sur les seules pistes mixées intégrées à l'AAF"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Contrôler la synchro sur plusieurs points du film (début, milieu, fin) avec la vidéo de référence (clap, consonnes explosives).",
+          "expected_result": "La synchro est juste partout, sans dérive progressive.",
+          "typical_mistakes": [
+            "Vérifier seulement le début : une erreur de pull-up ne se voit qu'après plusieurs minutes"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Ranger les pistes par famille (dialogues par personnage, effets, musique) et sauvegarder une version de référence de la conformation.",
+          "expected_result": "Session prête pour le montage dialogues ; une copie permet de reconformer plus tard.",
+          "typical_mistakes": [
+            "Écraser la conformation d'origine"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+          "publisher": "AMWA (AS-01 AAF Edit Protocol)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+          "publisher": "Wikipedia (SMPTE timecode)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Telecine",
+          "publisher": "Wikipedia (Telecine)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 2,
-     "preconditions": [],
-     "action": "Créer la session audio à la même cadence d'images, la même fréquence d'échantillonnage et le même timecode de départ que le montage.",
-     "expected_result": "La session et la vidéo affichent le même timecode à la même image.",
-     "typical_mistakes": [
-      "Laisser la cadence par défaut du logiciel (ex. 29,97 au lieu de 25)"
-     ]
+      "id": "adr-session",
+      "name_fr": "Séance de postsynchronisation (ADR)",
+      "name_en": "ADR session",
+      "domain": "post-immersive",
+      "context": "Réenregistrer en studio des répliques inutilisables du tournage avec le comédien d'origine, synchrones à l'image.",
+      "duration_min": 240,
+      "equipment_ids": [
+        "avid-pro-tools",
+        "sennheiser-mkh-50",
+        "neumann-u87-ai",
+        "beyerdynamic-dt-770-pro",
+        "avid-hd-io",
+        "izotope-rx"
+      ],
+      "concept_ids": [
+        "adr-dubbing",
+        "bande-rythmo",
+        "timecode",
+        "dialogue-editing",
+        "dialogue-noise-reduction"
+      ],
+      "rule_ids": [
+        "timecode-frame-rate-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Montage dialogues avancé"
+          ],
+          "action": "Établir avec le superviseur la liste des répliques à refaire (repère timecode, personnage, texte, motif).",
+          "expected_result": "Une liste de repères ADR numérotée est prête.",
+          "typical_mistakes": [
+            "Oublier les respirations et réactions hors champ"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Préparer la session : vidéo synchrone, pistes par personnage, son direct audible en guide, repères (bips ou bande rythmo) avant chaque réplique.",
+          "expected_result": "Le comédien voit l'image et entend le guide avant de jouer.",
+          "typical_mistakes": [
+            "Envoyer le guide trop fort dans le casque, ce qui le fait repisser dans le micro"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Choisir un micro et une distance qui rapprochent le timbre de celui du tournage, puis régler le gain.",
+          "expected_result": "Le timbre de la prise se rapproche du son direct ; aucune saturation.",
+          "typical_mistakes": [
+            "Prendre un micro très différent du tournage, le raccord devient audible"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Enregistrer plusieurs prises par réplique en les nommant (personnage, repère, numéro de prise) et noter la prise préférée.",
+          "expected_result": "Chaque prise est retrouvable et la meilleure est identifiée.",
+          "typical_mistakes": [
+            "Écraser les prises précédentes"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Vérifier le synchronisme labial à l'image et, si besoin, recaler ou ajuster légèrement la prise.",
+          "expected_result": "La réplique tombe dans la bouche du comédien.",
+          "typical_mistakes": [
+            "Étirer trop fort une prise, artefacts audibles"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Au montage, raccorder l'ADR au direct : égalisation, réverbération et ambiance du lieu recréée (par exemple Ambience Match).",
+          "expected_result": "La réplique se fond dans la scène sans changement de couleur ou d'ambiance.",
+          "typical_mistakes": [
+            "Laisser une réplique ADR « sèche » au milieu d'un direct ambiant"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Limiter le niveau du casque du comédien sur une longue séance"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
+          "publisher": "Wikipedia (Dubbing / ADR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
+          "publisher": "iZotope (RX 12 Ambience Match)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 3,
-     "preconditions": [],
-     "action": "Importer l'AAF (pistes et clips) et la vidéo ; vérifier si les médias sont intégrés (embedded) ou référencés.",
-     "expected_result": "La timeline apparaît avec les clips aux bons emplacements.",
-     "typical_mistakes": [
-      "Ne pas lire le rapport d'import qui signale les médias non trouvés"
-     ]
+      "id": "foley-session",
+      "name_fr": "Séance de bruitage (foley)",
+      "name_en": "Foley session",
+      "domain": "post-immersive",
+      "context": "Le bruiteur rejoue pas, froissements et accessoires synchrones à l'image dans un auditorium de bruitage.",
+      "duration_min": 480,
+      "equipment_ids": [
+        "schoeps-cmc-6-mk-41",
+        "neumann-u87-ai",
+        "avid-pro-tools",
+        "avid-hd-io",
+        "genelec-8341a"
+      ],
+      "concept_ids": [
+        "foley",
+        "music-and-effects-me",
+        "timecode"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Montage image verrouillé"
+          ],
+          "action": "Visionner la séquence et lister par personnage les pas, les mouvements (vêtements) et les accessoires à faire.",
+          "expected_result": "Une liste de bruitage par famille existe.",
+          "typical_mistakes": [
+            "Oublier les sons qui n'existent que dans le son direct (perdus en VI)"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Choisir chaussures, surfaces (fosses de bruitage) et accessoires ; placer le micro et régler le gain sur l'élément le plus fort.",
+          "expected_result": "Son proche, sans saturation ni bruit de fond gênant.",
+          "typical_mistakes": [
+            "Micro trop loin : la réverbération du studio s'entend"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Enregistrer en regardant l'image, une passe par personnage et par famille (pas, mouvements, accessoires) sur des pistes séparées.",
+          "expected_result": "Chaque famille est isolée et synchrone.",
+          "typical_mistakes": [
+            "Tout enregistrer sur une seule piste"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Écouter en contexte avec les dialogues et recaler les éléments décalés.",
+          "expected_result": "Les sons collent aux actions à l'image.",
+          "typical_mistakes": [
+            "Valider au casque sans contexte"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Nommer et ranger les pistes pour le mixeur et vérifier que la VI sera complète sans les dialogues.",
+          "expected_result": "Le bruitage couvre tous les trous de la version internationale.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Attention aux accessoires cassants ou tranchants (verre, métal) dans les fosses"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
+          "publisher": "Wikipedia (Foley (filmmaking))",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 4,
-     "preconditions": [
-      "Fichiers du tournage copiés sur un disque accessible"
-     ],
-     "action": "Relier les clips aux fichiers BWF polyphoniques originaux (timecode TimeReference, nom de fichier, métadonnées) pour récupérer toutes les pistes du tournage.",
-     "expected_result": "Chaque clip a accès à la perche et à chaque HF séparément.",
-     "typical_mistakes": [
-      "Monter sur les seules pistes mixées intégrées à l'AAF"
-     ]
+      "id": "atmos-session-bed-objects",
+      "name_fr": "Préparer une session Dolby Atmos (bed et objets)",
+      "name_en": "Prepare a Dolby Atmos session (bed and objects)",
+      "domain": "post-immersive",
+      "context": "Mix d'un court métrage en Dolby Atmos dans une salle 7.1.4 avec la station audio et le Dolby Atmos Renderer.",
+      "duration_min": 90,
+      "equipment_ids": [
+        "avid-pro-tools",
+        "steinberg-nuendo",
+        "avid-protools-mtrx-studio",
+        "avid-s6",
+        "genelec-8341a",
+        "genelec-7360a"
+      ],
+      "concept_ids": [
+        "dolby-atmos",
+        "atmos-bed",
+        "object-based-audio",
+        "audio-definition-model",
+        "binaural"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Vérifier la salle : disposition 7.1.4 (L, C, R, Ls, Rs, Lrs, Rrs, quatre plafonds et caisson), calibration et niveaux d'écoute.",
+          "expected_result": "Toutes les enceintes répondent à leur position et au même niveau.",
+          "typical_mistakes": [
+            "Inverser deux enceintes plafond"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Renderer installé et licencié"
+          ],
+          "action": "Relier la station au renderer et définir la configuration d'entrées : le bed (au plus 7.1.2, 10 canaux) puis les objets, sans dépasser 128 entrées.",
+          "expected_result": "Le renderer reçoit le bed sur ses premiers canaux et les objets sur les suivants.",
+          "typical_mistakes": [
+            "Créer plus d'objets que d'entrées disponibles"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Router ambiances larges et prémix musique vers le bed, sons à positionner (voix off spatialisée, effets en mouvement) vers des objets ; le LFE ne se trouve que dans le bed.",
+          "expected_result": "Chaque élément a une destination claire.",
+          "typical_mistakes": [
+            "Envoyer un objet vers le LFE (impossible) ou tout mettre en objets"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Automatiser les positions X, Y, Z des objets et contrôler en écoute sur les replis (7.1, 5.1, stéréo) et en binaural.",
+          "expected_result": "Le mix reste équilibré sur chaque restitution.",
+          "typical_mistakes": [
+            "Ne contrôler que dans la salle 7.1.4"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Enregistrer le master avec le renderer et exporter un ADM BWF ; réimporter pour vérification.",
+          "expected_result": "Le master relu correspond au mix.",
+          "typical_mistakes": [
+            "Oublier de vérifier le timecode de départ du master"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Calibrer le niveau d'écoute pour limiter l'exposition sonore pendant les longues séances"
+      ],
+      "sources": [
+        {
+          "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+          "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
+          "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
+          "publisher": "Dolby Laboratories (7.1.4 overhead speaker setup guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
+          "publisher": "Wikipedia (Dolby Atmos)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://audient.com/tutorial/objects-and-beds-explained/",
+          "publisher": "Audient — tutoriel « Objects and Beds Explained » (fabricant d'interfaces, parlant du format Dolby Atmos)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps[2] (LFE uniquement dans le bed : « objects can't feed the LFE channel (only beds can) »)"
+          ],
+          "note": "Fabricant tiers décrivant un format Dolby : verified-secondary (pas un fait sur son propre produit).",
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "steps[2]",
+          "values": [
+            {
+              "value": "le LFE ne se trouve que dans le bed ; Envoyer un objet vers le LFE (impossible)",
+              "source_url": "https://audient.com/tutorial/objects-and-beds-explained/"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : affirmation absente des 4 pages Dolby/Wikipédia citées ; désormais sourcée par le tutoriel Audient (lu le 2026-10-22). Les replis 7.1/5.1/stéréo de l'étape 4 restent une précision non détaillée par la page Renderer (jugée acceptable par la QA)."
+        }
+      ],
+      "review": "ok"
     },
     {
-     "n": 5,
-     "preconditions": [],
-     "action": "Contrôler la synchro sur plusieurs points du film (début, milieu, fin) avec la vidéo de référence (clap, consonnes explosives).",
-     "expected_result": "La synchro est juste partout, sans dérive progressive.",
-     "typical_mistakes": [
-      "Vérifier seulement le début : une erreur de pull-up ne se voit qu'après plusieurs minutes"
-     ]
-    },
-    {
-     "n": 6,
-     "preconditions": [],
-     "action": "Ranger les pistes par famille (dialogues par personnage, effets, musique) et sauvegarder une version de référence de la conformation.",
-     "expected_result": "Session prête pour le montage dialogues ; une copie permet de reconformer plus tard.",
-     "typical_mistakes": [
-      "Écraser la conformation d'origine"
-     ]
+      "id": "stems-and-me-export",
+      "name_fr": "Exporter printmaster, stems et version internationale",
+      "name_en": "Stems and M&E export",
+      "domain": "post-immersive",
+      "context": "Fin de mixage d'un programme TV ou d'un film : produire les livrables audio conformes à la fiche technique du diffuseur.",
+      "duration_min": 120,
+      "equipment_ids": [
+        "avid-pro-tools",
+        "avid-s6",
+        "nugen-audio-vislm",
+        "rtw-touchmonitor-tm7"
+      ],
+      "concept_ids": [
+        "stems",
+        "music-and-effects-me",
+        "deliverable-loudness-france",
+        "loudness-to-dialogue-ratio",
+        "loudness-ebu-r128",
+        "true-peak",
+        "bwf-metadata"
+      ],
+      "rule_ids": [
+        "deliverable-loudness-out-of-spec"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Lire la fiche technique (PAD) du diffuseur : format de canaux, pistes, sonie, crête vraie, timecode de départ.",
+          "expected_result": "Les exigences sont listées avant l'export.",
+          "typical_mistakes": [
+            "Se fier à des valeurs de mémoire"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Vérifier que dialogues, musique et effets passent chacun par un bus de stem distinct et que leur somme refait le mix complet.",
+          "expected_result": "Somme des stems = printmaster.",
+          "typical_mistakes": [
+            "Un effet envoyé en direct au master, absent des stems"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Mesurer la sonie du programme entier (ITU-R BS.1770 / EBU Tech 3341) et la crête vraie ; pour une fiction, mesurer aussi le dialogue et le LDR.",
+          "expected_result": "−23,0 LUFS (±0,2 LU de tolérance de mesure en CQ) et crête vraie ≤ −1 dBTP, sauf fiche différente.",
+          "typical_mistakes": [
+            "Mesurer seulement un extrait ou seulement les dialogues"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Exporter le printmaster, les stems et la version internationale (sans dialogues originaux) avec le même timecode de départ.",
+          "expected_result": "Tous les fichiers sont alignés et nommés selon la fiche.",
+          "typical_mistakes": [
+            "Livrer une VI avec des trous de bruitage"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Réécouter la VI seule sur toute la durée et contrôler chaque fichier (mesure de sonie, canaux, durée).",
+          "expected_result": "Livrables validés avant envoi au contrôle qualité.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU (R 128 v5.0, nov. 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+          "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
+          "publisher": "ARPP (fiche « En 2012 la TV change d'intensité sonore », reprend CST-RT-017 v3.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     }
-   ],
-   "safety_notes": [],
-   "sources": [
+  ],
+  "not_found_log": [
     {
-     "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
-     "publisher": "AMWA (AS-01 AAF Edit Protocol)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
-     "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
-     "publisher": "Wikipedia (SMPTE timecode)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Telecine",
-     "publisher": "Wikipedia (Telecine)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
+      "what": "Guide officiel Dolby du Renderer (étapes de configuration des entrées)",
+      "searched": "professionalsupport.dolby.com (erreur certificat), steinberg.help Nuendo Atmos (503)"
     }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "adr-session",
-   "name_fr": "Séance de postsynchronisation (ADR)",
-   "name_en": "ADR session",
-   "domain": "post-immersive",
-   "context": "Réenregistrer en studio des répliques inutilisables du tournage avec le comédien d'origine, synchrones à l'image.",
-   "duration_min": 240,
-   "equipment_ids": [
-    "avid-pro-tools",
-    "sennheiser-mkh-50",
-    "neumann-u87-ai",
-    "beyerdynamic-dt-770-pro",
-    "avid-hd-io",
-    "izotope-rx"
-   ],
-   "concept_ids": [
-    "adr-dubbing",
-    "bande-rythmo",
-    "timecode",
-    "dialogue-editing",
-    "dialogue-noise-reduction"
-   ],
-   "rule_ids": [
-    "timecode-frame-rate-mismatch"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Montage dialogues avancé"
-     ],
-     "action": "Établir avec le superviseur la liste des répliques à refaire (repère timecode, personnage, texte, motif).",
-     "expected_result": "Une liste de repères ADR numérotée est prête.",
-     "typical_mistakes": [
-      "Oublier les respirations et réactions hors champ"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Préparer la session : vidéo synchrone, pistes par personnage, son direct audible en guide, repères (bips ou bande rythmo) avant chaque réplique.",
-     "expected_result": "Le comédien voit l'image et entend le guide avant de jouer.",
-     "typical_mistakes": [
-      "Envoyer le guide trop fort dans le casque, ce qui le fait repisser dans le micro"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Choisir un micro et une distance qui rapprochent le timbre de celui du tournage, puis régler le gain.",
-     "expected_result": "Le timbre de la prise se rapproche du son direct ; aucune saturation.",
-     "typical_mistakes": [
-      "Prendre un micro très différent du tournage, le raccord devient audible"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Enregistrer plusieurs prises par réplique en les nommant (personnage, repère, numéro de prise) et noter la prise préférée.",
-     "expected_result": "Chaque prise est retrouvable et la meilleure est identifiée.",
-     "typical_mistakes": [
-      "Écraser les prises précédentes"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Vérifier le synchronisme labial à l'image et, si besoin, recaler ou ajuster légèrement la prise.",
-     "expected_result": "La réplique tombe dans la bouche du comédien.",
-     "typical_mistakes": [
-      "Étirer trop fort une prise, artefacts audibles"
-     ]
-    },
-    {
-     "n": 6,
-     "preconditions": [],
-     "action": "Au montage, raccorder l'ADR au direct : égalisation, réverbération et ambiance du lieu recréée (par exemple Ambience Match).",
-     "expected_result": "La réplique se fond dans la scène sans changement de couleur ou d'ambiance.",
-     "typical_mistakes": [
-      "Laisser une réplique ADR « sèche » au milieu d'un direct ambiant"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Limiter le niveau du casque du comédien sur une longue séance"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
-     "publisher": "Wikipedia (Dubbing / ADR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
-     "publisher": "iZotope (RX 12 Ambience Match)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "foley-session",
-   "name_fr": "Séance de bruitage (foley)",
-   "name_en": "Foley session",
-   "domain": "post-immersive",
-   "context": "Le bruiteur rejoue pas, froissements et accessoires synchrones à l'image dans un auditorium de bruitage.",
-   "duration_min": 480,
-   "equipment_ids": [
-    "schoeps-cmc-6-mk-41",
-    "neumann-u87-ai",
-    "avid-pro-tools",
-    "avid-hd-io",
-    "genelec-8341a"
-   ],
-   "concept_ids": [
-    "foley",
-    "music-and-effects-me",
-    "timecode"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Montage image verrouillé"
-     ],
-     "action": "Visionner la séquence et lister par personnage les pas, les mouvements (vêtements) et les accessoires à faire.",
-     "expected_result": "Une liste de bruitage par famille existe.",
-     "typical_mistakes": [
-      "Oublier les sons qui n'existent que dans le son direct (perdus en VI)"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Choisir chaussures, surfaces (fosses de bruitage) et accessoires ; placer le micro et régler le gain sur l'élément le plus fort.",
-     "expected_result": "Son proche, sans saturation ni bruit de fond gênant.",
-     "typical_mistakes": [
-      "Micro trop loin : la réverbération du studio s'entend"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Enregistrer en regardant l'image, une passe par personnage et par famille (pas, mouvements, accessoires) sur des pistes séparées.",
-     "expected_result": "Chaque famille est isolée et synchrone.",
-     "typical_mistakes": [
-      "Tout enregistrer sur une seule piste"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Écouter en contexte avec les dialogues et recaler les éléments décalés.",
-     "expected_result": "Les sons collent aux actions à l'image.",
-     "typical_mistakes": [
-      "Valider au casque sans contexte"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Nommer et ranger les pistes pour le mixeur et vérifier que la VI sera complète sans les dialogues.",
-     "expected_result": "Le bruitage couvre tous les trous de la version internationale.",
-     "typical_mistakes": []
-    }
-   ],
-   "safety_notes": [
-    "Attention aux accessoires cassants ou tranchants (verre, métal) dans les fosses"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
-     "publisher": "Wikipedia (Foley (filmmaking))",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "atmos-session-bed-objects",
-   "name_fr": "Préparer une session Dolby Atmos (bed et objets)",
-   "name_en": "Prepare a Dolby Atmos session (bed and objects)",
-   "domain": "post-immersive",
-   "context": "Mix d'un court métrage en Dolby Atmos dans une salle 7.1.4 avec la station audio et le Dolby Atmos Renderer.",
-   "duration_min": 90,
-   "equipment_ids": [
-    "avid-pro-tools",
-    "steinberg-nuendo",
-    "avid-protools-mtrx-studio",
-    "avid-s6",
-    "genelec-8341a",
-    "genelec-7360a"
-   ],
-   "concept_ids": [
-    "dolby-atmos",
-    "atmos-bed",
-    "object-based-audio",
-    "audio-definition-model",
-    "binaural"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Vérifier la salle : disposition 7.1.4 (L, C, R, Ls, Rs, Lrs, Rrs, quatre plafonds et caisson), calibration et niveaux d'écoute.",
-     "expected_result": "Toutes les enceintes répondent à leur position et au même niveau.",
-     "typical_mistakes": [
-      "Inverser deux enceintes plafond"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [
-      "Renderer installé et licencié"
-     ],
-     "action": "Relier la station au renderer et définir la configuration d'entrées : le bed (au plus 7.1.2, 10 canaux) puis les objets, sans dépasser 128 entrées.",
-     "expected_result": "Le renderer reçoit le bed sur ses premiers canaux et les objets sur les suivants.",
-     "typical_mistakes": [
-      "Créer plus d'objets que d'entrées disponibles"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Router ambiances larges et prémix musique vers le bed, sons à positionner (voix off spatialisée, effets en mouvement) vers des objets ; le LFE ne se trouve que dans le bed.",
-     "expected_result": "Chaque élément a une destination claire.",
-     "typical_mistakes": [
-      "Envoyer un objet vers le LFE (impossible) ou tout mettre en objets"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Automatiser les positions X, Y, Z des objets et contrôler en écoute sur les replis (7.1, 5.1, stéréo) et en binaural.",
-     "expected_result": "Le mix reste équilibré sur chaque restitution.",
-     "typical_mistakes": [
-      "Ne contrôler que dans la salle 7.1.4"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Enregistrer le master avec le renderer et exporter un ADM BWF ; réimporter pour vérification.",
-     "expected_result": "Le master relu correspond au mix.",
-     "typical_mistakes": [
-      "Oublier de vérifier le timecode de départ du master"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Calibrer le niveau d'écoute pour limiter l'exposition sonore pendant les longues séances"
-   ],
-   "sources": [
-    {
-     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
-     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
-     "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
-     "publisher": "Dolby Laboratories (7.1.4 overhead speaker setup guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
-     "publisher": "Wikipedia (Dolby Atmos)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "stems-and-me-export",
-   "name_fr": "Exporter printmaster, stems et version internationale",
-   "name_en": "Stems and M&E export",
-   "domain": "post-immersive",
-   "context": "Fin de mixage d'un programme TV ou d'un film : produire les livrables audio conformes à la fiche technique du diffuseur.",
-   "duration_min": 120,
-   "equipment_ids": [
-    "avid-pro-tools",
-    "avid-s6",
-    "nugen-audio-vislm",
-    "rtw-touchmonitor-tm7"
-   ],
-   "concept_ids": [
-    "stems",
-    "music-and-effects-me",
-    "deliverable-loudness-france",
-    "loudness-to-dialogue-ratio",
-    "loudness-ebu-r128",
-    "true-peak",
-    "bwf-metadata"
-   ],
-   "rule_ids": [
-    "deliverable-loudness-out-of-spec"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Lire la fiche technique (PAD) du diffuseur : format de canaux, pistes, sonie, crête vraie, timecode de départ.",
-     "expected_result": "Les exigences sont listées avant l'export.",
-     "typical_mistakes": [
-      "Se fier à des valeurs de mémoire"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Vérifier que dialogues, musique et effets passent chacun par un bus de stem distinct et que leur somme refait le mix complet.",
-     "expected_result": "Somme des stems = printmaster.",
-     "typical_mistakes": [
-      "Un effet envoyé en direct au master, absent des stems"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Mesurer la sonie du programme entier (ITU-R BS.1770 / EBU Tech 3341) et la crête vraie ; pour une fiction, mesurer aussi le dialogue et le LDR.",
-     "expected_result": "−23,0 LUFS (±0,2 LU de tolérance de mesure en CQ) et crête vraie ≤ −1 dBTP, sauf fiche différente.",
-     "typical_mistakes": [
-      "Mesurer seulement un extrait ou seulement les dialogues"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Exporter le printmaster, les stems et la version internationale (sans dialogues originaux) avec le même timecode de départ.",
-     "expected_result": "Tous les fichiers sont alignés et nommés selon la fiche.",
-     "typical_mistakes": [
-      "Livrer une VI avec des trous de bruitage"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Réécouter la VI seule sur toute la durée et contrôler chaque fichier (mesure de sonie, canaux, durée).",
-     "expected_result": "Livrables validés avant envoi au contrôle qualité.",
-     "typical_mistakes": []
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU (R 128 v5.0, nov. 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
-     "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
-     "publisher": "ARPP (fiche « En 2012 la TV change d'intensité sonore », reprend CST-RT-017 v3.0)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Guide officiel Dolby du Renderer (étapes de configuration des entrées)",
-   "searched": "professionalsupport.dolby.com (erreur certificat), steinberg.help Nuendo Atmos (503)"
-  }
- ]
+  ]
 }

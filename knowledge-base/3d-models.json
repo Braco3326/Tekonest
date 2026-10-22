@@ -1927,7 +1927,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic stand-in for sound-devices-833 / zoom-f8n-pro class bags recorders.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "id": "pp-portable-studio-audio-recorder",
       "kind": "device",
       "room_ids": [],
@@ -1979,7 +1979,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "CC0, trivial to ship; good for conference-room ceiling/wall speaker placeholder.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "id": "pp-speaker",
       "kind": "device",
       "room_ids": [],
@@ -8707,7 +8707,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Rigged man with 11 animations (idle, clapping, sitting, walk): audience/operator placeholder.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-quaternius-man.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-quaternius-man.glb"
@@ -8750,7 +8750,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Rigged woman with 11 animations (incl. clapping, sitting): audience placeholder.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-quaternius-woman-casual.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-quaternius-woman-casual.glb"
@@ -8818,7 +8818,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Rigged woman (summer outfit): festival crowd.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -8853,7 +8853,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Punk character: club/festival crowd variety.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -8928,7 +8928,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Woman wearing a headset: operator / interpreter / presenter placeholder.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -8969,7 +8969,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Box truss segment: stage/lighting rig (520 tris).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-simple-truss.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-simple-truss.glb"
@@ -9002,7 +9002,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Scaffold tower: delay tower / FOH riser base.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -9035,7 +9035,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Theatre seat (72 tris): instance into auditorium rows.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-theatre-seat.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-theatre-seat.glb"
@@ -9102,7 +9102,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Drum kit (2.9k tris), no logos on heads.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-zsky-drum-set.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-zsky-drum-set.glb"
@@ -9296,7 +9296,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Acoustic guitar alt.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -9330,7 +9330,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Acoustic guitar (520 tris).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-acoustic-guitar.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-acoustic-guitar.glb"
@@ -9365,7 +9365,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Electric guitar (560 tris).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -9399,7 +9399,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Bass guitar.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -9434,7 +9434,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Stage/digital piano keyboard with music stand, no brand.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-stage-keyboard.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-stage-keyboard.glb"
@@ -9561,7 +9561,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Trumpet (25k tris, decimate).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -9625,7 +9625,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Drum throne.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -9662,7 +9662,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Pallet (176 tris).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-quaternius-pallet.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-quaternius-pallet.glb"
@@ -9695,7 +9695,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Barrier section usable as crowd/pit barrier placeholder.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-quaternius-barrier-large.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-quaternius-barrier-large.glb"
@@ -9727,7 +9727,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Metal fence (perimeter / crowd control).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -9765,7 +9765,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly desk/office chair (control room operator).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-kenney-desk-chair.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-kenney-desk-chair.glb"
@@ -9804,7 +9804,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Office chair (Quaternius).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -9842,7 +9842,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly lounge sofa (control-room client couch).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-kenney-lounge-sofa.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-kenney-lounge-sofa.glb"
@@ -9914,7 +9914,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Desk.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -9987,7 +9987,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Corner desk (producer workstation).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10018,7 +10018,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Whiteboard (52 tris).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "downloaded_file": "pp-dry-erase-board.glb",
       "added_by": "models-cc0-libraries",
       "committed_file": "3d-models/pp-dry-erase-board.glb"
@@ -10087,7 +10087,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Double curtains.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10121,7 +10121,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Light stand.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10156,7 +10156,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Floor lamp.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10229,7 +10229,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Houseplant.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10300,7 +10300,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Rug (drum rug / control room).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10403,7 +10403,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Concert stage (14.7k tris).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10497,7 +10497,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Tent.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10594,7 +10594,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Tall shelf.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10697,7 +10697,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Computer monitor.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10735,7 +10735,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Computer screen.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10770,7 +10770,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Computer keyboard.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10802,7 +10802,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Projector.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10833,7 +10833,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Projector screen.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10895,7 +10895,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Tripod.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -10927,7 +10927,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Bench.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11016,7 +11016,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Container toilet block (festival sanitary).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11047,7 +11047,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Food truck (sushi).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11114,7 +11114,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Server/equipment rack (generic 19\" rack look).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11194,7 +11194,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Fire extinguisher (safety).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11230,7 +11230,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Ceiling light.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11266,7 +11266,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Fluorescent 4-tube ceiling light.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11299,7 +11299,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Fluorescent fixture.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11334,7 +11334,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Metal ladder.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11407,7 +11407,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Door.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11441,7 +11441,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Drum machine (check for brand styling).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11475,7 +11475,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Guitar effects pedal.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11605,7 +11605,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Dining set (catering / wedding hall).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11643,7 +11643,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Folding table (FOH desk / registration).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11679,7 +11679,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Animated human (rigged).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11710,7 +11710,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Beach character: summer festival crowd.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok",
+      "model_url_status": "blocked",
       "added_by": "models-cc0-libraries",
       "committed_file": null
     },
@@ -11817,7 +11817,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Real scanned percussion cowbell (26 cm); drop-in percussion prop for live rooms.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": null,
       "maker": null,
       "downloaded_file": "knowledge-base/3d-models/si-cowbell-nmah.glb",
@@ -11855,7 +11855,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Historic signal-chain object for a broadcast/telecom history display; 100k tris scan, decimate to ~5k for runtime.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "1844; 1844",
       "maker": null,
       "downloaded_file": "knowledge-base/3d-models/si-morse-vail-telegraph-key.glb",
@@ -11893,7 +11893,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Electromagnetic relay: illustrates electromagnetism / signal switching in a classroom scene; decimate for runtime.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "ca 1860",
       "maker": null,
       "downloaded_file": "knowledge-base/3d-models/si-chester-telegraph-relay.glb",
@@ -11931,7 +11931,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Historic measurement instrument for the electricity-levels lab (Western Electric is the historic maker per the record; no legible logo on the texture).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "ca 1870",
       "maker": null,
       "downloaded_file": "knowledge-base/3d-models/si-tangent-galvanometer.glb",
@@ -11969,7 +11969,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Induction coil patent model: visual for transformer/induction lesson (electricity-levels domain).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "ca 1868",
       "maker": null,
       "downloaded_file": "knowledge-base/3d-models/si-page-induction-coil.glb",
@@ -12007,7 +12007,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Early battery for an electricity basics lab bench.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "1832",
       "maker": null,
       "downloaded_file": "knowledge-base/3d-models/si-henry-trough-battery.glb",
@@ -12045,7 +12045,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Best real saxophone scan found (CC0, 100k tris draco glb 3.4 MB offered). Not downloaded: maker engraving on the bell (H. N. White \"King\") = real brand mark, needs texture repaint; also celebrity provenance should not be implied in a generic sim.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "ca. 1947",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12081,7 +12081,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "15th-century carved ivory oliphant; culturally significant artwork, not a practice-room prop. Catalogue only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "Late 15th century",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12117,7 +12117,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Nightclub noisemaker (percussion idiophone). Offered glb is 150k tris: over the 100k budget and no simplifier installed, so not downloaded.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "1930 - 1945",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12153,7 +12153,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Boxing ring bell with Muhammad Ali/Dundee provenance and a Pacer Electronics label; not generic. Catalogue only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "ca. 1973",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12190,7 +12190,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Real stadium seat: useful to dress sports-venue/arena audience areas. Offered glb is 150k tris (> budget), needs decimation; not downloaded.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "ca. 1940",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12226,7 +12226,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Historic school desk; 150k tris (> budget), not downloaded.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "1925-1954",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12262,7 +12262,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Step stool prop; 150k tris and \"Pullman\" lettering = brand text; not downloaded.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "1922-1969",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12298,7 +12298,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Period (c.1820) furniture; wrong era for studios. Catalogue only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "ca. 1820",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12335,7 +12335,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Period side chair (Cooper Hewitt) could dress an opera/theatre foyer; heavy file.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "ca. 1785",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12371,7 +12371,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Optical toy, not audio; listed only because it came up in the audio sweep (museum dressing at most).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "1905-1920",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12407,7 +12407,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Early electric motor patent model; electricity lab dressing.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Smithsonian Open Access API record; 3d.si.edu HTML pages return 403 to scripted fetch)",
+      "model_url_status": "blocked",
       "date": "ca 1837",
       "maker": null,
       "added_by": "models-open-access-cad",
@@ -12443,7 +12443,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Generic wedge/stage monitor, 11.7k tris, single 2k texture. Ideal monitoring-domain prop. Imported scale is tiny (0.01 units): rescale to ~0.6 m.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-stage-monitor-wedge-saandy.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-stage-monitor-wedge-saandy.glb"
@@ -12477,7 +12477,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Author states \"unbranded for generic use\"; 3.9k tris USB side-address mic on stand. Perfect podcast-room prop.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-usb-podcast-mic-generic.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-usb-podcast-mic-generic.glb"
@@ -12511,7 +12511,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "TRS jack adapter (1.7k tris): cables-connectors lesson prop.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-trs-jack-adapter.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-trs-jack-adapter.glb"
@@ -12545,7 +12545,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Low-poly DJ table with decks and speakers (untextured vertex colours); scale in cm (rescale x0.01).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-dj-table-lowpoly.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-dj-table-lowpoly.glb"
@@ -12579,7 +12579,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "2k-tris stylised guitar combo, generic front panel (no brand on texture).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-guitar-combo-amp-lowpoly.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-guitar-combo-amp-lowpoly.glb"
@@ -12600,7 +12600,7 @@
       "author": "Gustavo Camilote (@camilote)",
       "licence": "CC Attribution (Sketchfab API /v3/models/29d45cf5c404465e839c730393f9732a, checked 2026-10-22)",
       "licence_url": "https://creativecommons.org/licenses/by/4.0/",
-      "attribution_text_required": "« Guitar Amp » par Gustavo Camilote (https://sketchfab.com/3d-models/29d45cf5c404465e839c730393f9732a) — Creative Commons Attribution",
+      "attribution_text_required": "« Guitar Amp » par Gustavo Camilote (https://sketchfab.com/3d-models/29d45cf5c404465e839c730393f9732a) — Creative Commons Attribution 4.0 (CC BY 4.0) : http://creativecommons.org/licenses/by/4.0/",
       "formats": [
         "glb (Objaverse mirror)",
         "gltf/glb/usdz on Sketchfab (token required)"
@@ -12612,7 +12612,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Small practice amp, untextured materials only; scale x0.1.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-battery-guitar-amp-camilote.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-battery-guitar-amp-camilote.glb"
@@ -12646,7 +12646,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Bookshelf hi-fi speakers on wood, 2.4k tris; consumer look, fine for lounge/green-room dressing.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-hifi-sound-system.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-hifi-sound-system.glb"
@@ -12668,7 +12668,7 @@
       "author": "Klasy",
       "licence": "CC Attribution (Sketchfab API /v3/models/a5986b39102f47c5b32b212365dd7276, checked 2026-10-22)",
       "licence_url": "https://creativecommons.org/licenses/by/4.0/",
-      "attribution_text_required": "« Vintage Microphone » par Klasy (https://sketchfab.com/3d-models/a5986b39102f47c5b32b212365dd7276) — Creative Commons Attribution",
+      "attribution_text_required": "« Vintage Microphone » par Klasy (https://sketchfab.com/3d-models/a5986b39102f47c5b32b212365dd7276) — Creative Commons Attribution 4.0 (CC BY 4.0) : http://creativecommons.org/licenses/by/4.0/",
       "formats": [
         "glb (Objaverse mirror)",
         "gltf/glb/usdz on Sketchfab (token required)"
@@ -12680,7 +12680,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Generic retro broadcast mic, 6.5k tris; no lettering on texture.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-vintage-microphone-klasy.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-vintage-microphone-klasy.glb"
@@ -12714,7 +12714,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Mid-century multi-element broadcast mic (FDR-era reference), 9.1k tris; scale in dm.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-mid-century-microphone.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-mid-century-microphone.glb"
@@ -12748,7 +12748,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Wooden home stereo pair (instanced), wood/grille textures only; consumer, not studio monitors.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-home-stereo-speakers.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-home-stereo-speakers.glb"
@@ -12782,7 +12782,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Desk mic with \"ON AIR\" switch text (generic), 9.9k tris; scale in mm (x0.001).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-on-air-desk-microphone.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-on-air-desk-microphone.glb"
@@ -12816,7 +12816,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Simple speaker cabinet, 4.4k tris, plain textures.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-speaker-cabinet-rusov.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-speaker-cabinet-rusov.glb"
@@ -12850,7 +12850,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Realistic small guitar amp modelled on an unbranded knock-off (\"Steel String Singer\"), 23.6k tris; scale in mm.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "downloaded_file": "knowledge-base/3d-models/objv-guitar-amp-futaba.glb",
       "added_by": "models-open-access-cad",
       "committed_file": "3d-models/objv-guitar-amp-futaba.glb"
@@ -12884,7 +12884,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Real reel-to-reel recorder (museum foundation scan), 72.6k tris, low-res baked texture. Not downloaded: small panel lettering may be a maker mark (could not confirm), scale x0.05.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -12917,7 +12917,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Classic ribbon mic shape (4k tris). Title names RCA (branded replica): genericize before use; good generic \"ribbon mic\" teaching prop.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -12950,7 +12950,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Iconic deco vocal mic, 6.7k tris; Shure Super 55 trade dress (branded replica): genericize before use.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -12983,7 +12983,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "22k tris SM57; already have an SM57 mesh in the manifest; branded.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13016,7 +13016,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Kick-drum mic + short stand (117k tris: decimate). Branded AKG.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13048,7 +13048,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic old mic, 7.7k tris (no tags/description; check texture for text).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13080,7 +13080,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic mic, 55k tris; no description.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13112,7 +13112,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic mic, 38.6k tris.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13144,7 +13144,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic mic, 16.8k tris.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13178,7 +13178,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Conference delegate unit (gooseneck mic + push-to-talk), 3k tris. Only conference-system model found; title names Sennheiser ADN D1: genericize.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13211,7 +13211,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Good 2.7k-tris foldback wedge, BUT description says \"Student Licenses used\" (Quixel) — textures may carry third-party student-licence terms; do not ship until re-textured.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13243,7 +13243,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Low-poly desktop speakers, 42.8k tris.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13275,7 +13275,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Simple speaker box, 3k tris.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13307,7 +13307,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Amp head (6505MH reference), 55.8k tris; title names Peavey (branded replica): genericize.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13339,7 +13339,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "MG15FX-style combo, 9.4k tris; title/tags name Marshall (branded replica): genericize.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13371,7 +13371,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "3D-scanner-app capture of a boutique Blackhole stereo amp (75k tris); brand product, scan-quality mesh.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13404,7 +13404,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Retro radio, 134k tris (decimate); Roberts logo present per description.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13436,7 +13436,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Soviet radiogram (radio + turntable), 7.9k tris; model name lettering likely.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13468,7 +13468,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Soviet-style boombox, 3.8k tris.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13501,7 +13501,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Handheld military transceiver, 2.6k tris, game-ready PBR: walkie-talkie stand-in for crew comms.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13533,7 +13533,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Simple radio, 3.6k tris.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13565,7 +13565,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Branded hi-fi floorstanders, 232k tris: over budget and branded.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (Sketchfab API 200, isDownloadable=true)",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13598,7 +13598,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Full drum kit, 22k faces: core backline prop for live rooms and club stages; check shells/heads for maker logos.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13630,7 +13630,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Drum kit, 170k faces: decimate x2+ before use.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13663,7 +13663,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Photogrammetry djembe (190k faces): realistic hand drum, decimate.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13696,7 +13696,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Acoustic guitar, 75k faces; decimate to ~10k.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13728,7 +13728,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Light guitar mesh (7.6k faces).",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13760,7 +13760,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Branded replica (B.C. Rich Warlock body shape and name in tags): trade-dress issue.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13794,7 +13794,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Realistic orchestral violin prop, 42k faces: dresses orchestra/scoring rooms (orchestra-classical domain).",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13827,7 +13827,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Violin, 75k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13860,7 +13860,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Melodica, 72k faces; check for maker logo.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13893,7 +13893,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Very low-poly piano block-out (764 faces): placeholder only.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13926,7 +13926,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Low-poly upright (666 faces); title names Kawai: genericize.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13959,7 +13959,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Closed-back studio-style headphones, 57k faces; decimate.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -13992,7 +13992,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Vintage record player, 90k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -14025,7 +14025,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Compact cassette (museum-tagged), 33k faces: recorders-playback history prop; check label text.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -14057,7 +14057,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Retro radio, 3.6k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -14089,7 +14089,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "123D photo-scan of an old radio, 47k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -14122,7 +14122,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Tambourine 3D scan (LVIS tambourine), 108k faces: decimate.",
       "accessed": "2026-10-22",
-      "model_url_status": "not checked (Sketchfab API 429); listed in Objaverse metadata",
+      "model_url_status": "ok",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -14589,7 +14589,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Reference only: use internally to check dimensions/proportions and rigging layout when modelling a generic equivalent (trademark rule: generic visuals only). Never ship the file.",
       "accessed": "2026-10-22",
-      "model_url_status": "blocked (403 to scripted fetch); URL taken from manufacturer docs page",
+      "model_url_status": "blocked",
       "added_by": "models-open-access-cad",
       "committed_file": null
     },
@@ -24116,7 +24116,7 @@
       "author": "Gustavo Camilote",
       "licence": "CC Attribution",
       "licence_url": "https://creativecommons.org/licenses/by/4.0/",
-      "attribution_text_required": "« Guitar Amp » par Gustavo Camilote (https://sketchfab.com/3d-models/guitar-amp-29d45cf5c404465e839c730393f9732a) — Creative Commons Attribution 4.0",
+      "attribution_text_required": "« Guitar Amp » par Gustavo Camilote (https://sketchfab.com/3d-models/guitar-amp-29d45cf5c404465e839c730393f9732a) — Creative Commons Attribution 4.0 (CC BY 4.0) : http://creativecommons.org/licenses/by/4.0/",
       "formats": [
         "glb",
         "gltf",
@@ -26495,7 +26495,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Large tracking room + control room; useful layout and acoustic-treatment reference.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26526,7 +26526,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Producer bedroom studio; licence is share-alike (outside CC0/CC-BY commit policy). Licence (CC Attribution-ShareAlike) blocks shipping: reference only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26557,7 +26557,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Isometric cut-away music studio: good diorama for a menu/overview, not first-person.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26589,7 +26589,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Bedroom + home studio desk setup; matches the 'small control room' entry level.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26620,7 +26620,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Isometric studio room, stylised; overview/diorama use.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26651,7 +26651,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Light (9.5k faces) small studio room; easy WebGL shell to dress with catalogue devices.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26682,7 +26682,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Very light (6.8k faces) home-studio scene; good placeholder shell.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26713,7 +26713,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Detailed home studio interior.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26745,7 +26745,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Compact record studio, 26k faces: within budget as a small control room + booth.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26776,7 +26776,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Stylised 'scribble' recording studio, 39k faces: art style may clash with realistic gear.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26807,7 +26807,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Rehearsal room (Proberaum) scan, excellent live-room reference but NC licence. Licence (CC Attribution-NonCommercial) blocks shipping: reference only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26839,7 +26839,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Soundproof recording booth, 40k faces: direct match for the vocal booth; also a base for an ISO 4043-style interpretation booth.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26871,7 +26871,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Office phone booth pod: proportions of a one-person vocal/interpretation booth.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26903,7 +26903,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Four-person acoustic meeting pod: hybrid-meeting room or two-interpreter booth stand-in.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26934,7 +26934,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Variant 2.0 of the four-person acoustic booth.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26965,7 +26965,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Audio booth; NC-SA licence. Licence (CC Attribution-NonCommercial-ShareAlike) blocks shipping: reference only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -26998,7 +26998,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Acoustic studio ceiling (clouds/diffusers), 12.6k faces: dresses mastering and mix rooms.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27031,7 +27031,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Acoustic foam tile, 1k faces: tile across booth walls.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27064,7 +27064,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Soundproof wall panel, 8k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27096,7 +27096,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Acoustic panel (absorber), 8k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27128,7 +27128,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Foam bass trap, 172 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27160,7 +27160,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Slatted acoustic wall panel, 140 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27191,7 +27191,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Pyramid acoustic foam panel, 396 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27222,7 +27222,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Small cinema room, 3.9k faces: shell for a post/Atmos mix room (add overhead speakers).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27253,7 +27253,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Home-theatre set with surround speakers; Atmos layout reference.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27284,7 +27284,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "90s home theater set (TV + speakers), 26.6k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27316,7 +27316,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Cinema auditorium interior: dubbing-stage / screening-room shell.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27348,7 +27348,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Socialist-era cinema hall, 15.9k faces: light auditorium shell.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27380,7 +27380,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Auditorium/cinema interior.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27411,7 +27411,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Cinema lounge sofa for the mix-room client couch.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27443,7 +27443,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly small film studio (2.6k faces): foley/dubbing stage or small sound stage shell.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27474,7 +27474,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Complete podcast studio with desk, mics, lights.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27505,7 +27505,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Podcast studio interior, 158k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27536,7 +27536,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Podcast room, 124k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27567,7 +27567,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Podcast studio interior.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27598,7 +27598,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Podcast studio, 50k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27629,7 +27629,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Podcast idle room.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27660,7 +27660,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Rustic podcast table, 2k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27691,7 +27691,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Real-person likeness (Joe Rogan): personality rights - never use.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27722,7 +27722,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Scan of a real newsroom podcast studio (Aktuelt), 34M faces: unusable size and real place.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27755,7 +27755,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "ON AIR light sign, 1.4k faces: essential radio/podcast cue.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27787,7 +27787,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "News studio set, 10k faces: light anchor desk + backdrop.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27818,7 +27818,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "News set design, 5.8k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27849,7 +27849,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "News studio set, 36k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27880,7 +27880,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "News studio, 313k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27911,7 +27911,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Old news studio, 4k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27942,7 +27942,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Sports news set replica.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -27973,7 +27973,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Virtual TV studio set (desk, LED panels), 459k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28004,7 +28004,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Virtual studio 01, 198k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28035,7 +28035,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "News set for Blender, 149k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28067,7 +28067,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "News Studio Prime, 10.6k faces: light TV set.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28099,7 +28099,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "University newsroom/TV studio scan.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28130,7 +28130,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "News desk with signage, 120k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28162,7 +28162,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Modular news desk, 564 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28194,7 +28194,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Newsroom interior, 92k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28226,7 +28226,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Generic studio lamp (fresnel on stand), 15.9k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28257,7 +28257,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Virtual-production LED panel, 262k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28289,7 +28289,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "TV show stage, 321k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28320,7 +28320,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Monitor wall, 2.6k faces: core of a TV gallery / régie.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28351,7 +28351,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Monitor wall, 1.7k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28382,7 +28382,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Large wall-mounted console, 1k faces (sci-fi look).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28414,7 +28414,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Comms room asset kit, 18.9k faces: desks/screens for a gallery.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28446,7 +28446,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Camera/news van, 6k faces: OB van exterior.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28477,7 +28477,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Soviet TV mobile studio truck (real OB vehicle type) with interior.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28509,7 +28509,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "News van, 500k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28540,7 +28540,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "TV van, 1.4k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28571,7 +28571,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Box truck: base body for an OB truck.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28602,7 +28602,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "News van from a Nintendo game.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28633,7 +28633,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Pub interior, 145k faces: bar-stage room.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28665,7 +28665,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Mozilla Hubs nightclub, 2.4k faces: WebGL-optimised club shell with DJ area.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28696,7 +28696,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Club interior, 720k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28727,7 +28727,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Post-apocalyptic night club, 73k faces: style mismatch.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28759,7 +28759,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Night club, 17k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28791,7 +28791,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Huge nightclub, 417k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28823,7 +28823,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly nightclub, 12.6k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28854,7 +28854,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Voxel jazz club with small stage, 43k faces: voxel style.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28885,7 +28885,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Nightclub stage with bar; CC BY-SA (outside commit policy). Licence (CC Attribution-ShareAlike) blocks shipping: reference only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28916,7 +28916,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Nightclub stage, 2.1k faces; CC BY-SA. Licence (CC Attribution-ShareAlike) blocks shipping: reference only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28947,7 +28947,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Cyberpunk nightclub, 1M faces: style mismatch.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -28979,7 +28979,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Bar counter, 14k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29011,7 +29011,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Disco ball with coloured lights, 48k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29043,7 +29043,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly music band (players + instruments), 11.9k faces: stage population.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29075,7 +29075,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "DJ booth, 3.4k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29107,7 +29107,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Small DJ booth, 339k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29139,7 +29139,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Stage DJ booth (no lights), 1.39M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29170,7 +29170,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "DJ booth, 6.8k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29201,7 +29201,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "DJ booth, 1.2k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29232,7 +29232,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Tribal-decor DJ booth, 14k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29264,7 +29264,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "DJ booth with projection-mapping facade, 70k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29295,7 +29295,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "All-in-one DJ facade + table, 1M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29326,7 +29326,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Direct-drive turntable, 5.7k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29357,7 +29357,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "DJ booth from Splatoon 3. Licence (Free Standard) blocks shipping: reference only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29388,7 +29388,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Concert hall, 9.7k faces; CC BY-SA. Licence (CC Attribution-ShareAlike) blocks shipping: reference only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29420,7 +29420,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Concert hall interior with stage + raked seating.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29451,7 +29451,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Concert hall with blue lighting, 86k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29483,7 +29483,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Japanese city public hall, 79k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29514,7 +29514,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Walt Disney Concert Hall exterior.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29546,7 +29546,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "NBA arena bowl, 143k faces: arena PA geometry reference.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29578,7 +29578,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Indoor basketball court with stands.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29609,7 +29609,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Mini stadium, 441k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29641,7 +29641,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Soccer stadium, 399k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29673,7 +29673,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly stadium seat block, 3.9k faces: instance for bowls.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29705,7 +29705,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Stadium seats, 20.7k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29737,7 +29737,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Stadium floodlight mast, 67k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29768,7 +29768,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Euro 2020 stadium.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29799,7 +29799,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Camp Nou stadium (2k faces).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29832,7 +29832,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Round stadium usable for cricket/football/stage shows, 190k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29865,7 +29865,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Audience crowd in front of a stage, 242k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29897,7 +29897,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Sports hall interior, 211k faces: multi-purpose hall.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29928,7 +29928,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Training gym, 2.58M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29959,7 +29959,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Basketball court, 21.8k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -29990,7 +29990,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly basketball court, 11k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30022,7 +30022,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Sporting event hall, 6.4k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30053,7 +30053,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Outdoor main stage with roof truss, 116k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30084,7 +30084,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Outdoor main stage, 397k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30115,7 +30115,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Outdoor stage, 4.7k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30147,7 +30147,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Metaverse concert stage, 74k faces: stylised.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30179,7 +30179,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Metaverse concert stage v2 PBR, 423k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30210,7 +30210,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Two-level FOH/VIP riser (FOH tent position).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30241,7 +30241,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "FOH structure, 197k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30272,7 +30272,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "FOH set with mixer, 261k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30303,7 +30303,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "FOH tent fit-out variant, 505k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30335,7 +30335,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Rectangular canopy tent, 2k faces: instant FOH tent.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30366,7 +30366,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Geo-dome canopy quarter, 1.1k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30397,7 +30397,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Festival tent, 12.9k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30430,7 +30430,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Event stage with LED wall and truss, 565k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30461,7 +30461,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Stage concept, 1.14M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30494,7 +30494,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "LED stage wall, 913k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30526,7 +30526,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Stage wall, 313k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30558,7 +30558,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Steel crowd barrier, 576 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30590,7 +30590,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "10 m hanging light bar, 403k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30623,7 +30623,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Cheap theatre template (stage + seating), 4.2k faces: light WebGL theatre shell.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30655,7 +30655,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Theater/club hall, 957k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30687,7 +30687,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Realistic red stage curtains, 919k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30719,7 +30719,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Theater drape, 132 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30751,7 +30751,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Worn drama stage, 5.7k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30783,7 +30783,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Performing arts center stage, 11.3k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30815,7 +30815,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "1913 toy theatre (Italian-style proscenium) - museum scan, 325k faces: proscenium/boxes reference.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30847,7 +30847,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Theatro Municipal de Sao Paulo scan (2M faces).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30878,7 +30878,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "XR 'black box' theatre space, 242k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30909,7 +30909,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "XR white-box wearable theatre, 370k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30941,7 +30941,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Classroom stage, 3k faces: school/black-box stage shell.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -30972,7 +30972,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Aalto opera house (Essen) massing model, 5k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31003,7 +31003,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Opera house, 2.1M faces; CC BY-SA. Licence (CC Attribution-ShareAlike) blocks shipping: reference only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31035,7 +31035,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "18th-century opera house bench (scan), 75k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31066,7 +31066,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Old church interior scene, 306k faces: nave + altar for worship PA.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31097,7 +31097,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Church, 13.4k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31128,7 +31128,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Cathedral, 606k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31159,7 +31159,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly VR temple interior, 4k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31191,7 +31191,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Gallery chapel (baked lighting), 133k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31222,7 +31222,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "St Peter's Church Ugborough interior scan, 2.49M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31253,7 +31253,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Church with interior, 335k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31285,7 +31285,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Museum model of a Buddhist temple hall (CC0), 2.8M faces: museum object.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31316,7 +31316,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Mosque interior scan, 150k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31347,7 +31347,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Simple mosque, 722 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31379,7 +31379,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Office asset kit (desks, chairs, screens), 30k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31411,7 +31411,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Mozilla Hubs meeting space, 5.2k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31443,7 +31443,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "6 m rectangular conference table, 640 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31474,7 +31474,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Meeting room, 20.5k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31506,7 +31506,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly meeting room assets, 61k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31537,7 +31537,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Board room, 1.86M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31569,7 +31569,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Conference room, 123k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31600,7 +31600,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Meeting room interior design, 326k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31632,7 +31632,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Phone-scanned (Polycam) real meeting room, 47k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31663,7 +31663,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Meeting room, 632k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31694,7 +31694,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "16-seat conference table, 5.6k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31725,7 +31725,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Boardroom, 456k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31757,7 +31757,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly meeting platform with video screen, 136 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31789,7 +31789,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Webcam backdrop office scene, 10.7k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31821,7 +31821,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Lecture hall, 70k faces: raked auditorium for speech reinforcement.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31852,7 +31852,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "University lecture hall, 1.2M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31883,7 +31883,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Lecture hall, 128k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31914,7 +31914,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Auditorium photogrammetry (Midtown Atlanta), 190k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31946,7 +31946,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Open-air auditorium, 11k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -31977,7 +31977,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly Roman amphitheatre (WIP), 14.6k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32008,7 +32008,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Amphitheatre, 3k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32039,7 +32039,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Auditorium test, 150k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32072,7 +32072,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "School hall, 494 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32103,7 +32103,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Epidauros ancient theatre scan (2.6M faces): acoustics reference only.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32134,7 +32134,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Auditorium from a game franchise (FNAF fan model).",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32165,7 +32165,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Classroom, 73k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32196,7 +32196,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Classroom, 74k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32227,7 +32227,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Low-poly classroom, 101k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32258,7 +32258,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Basic classroom, 386k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32289,7 +32289,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "American school classroom, 121k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32320,7 +32320,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Classroom, 101k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32351,7 +32351,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly laboratory assets, 32k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32382,7 +32382,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "IT classroom, 737k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32413,7 +32413,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "School lab, 18k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32444,7 +32444,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Japanese classroom, 326k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32475,7 +32475,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Stylised city block, 80k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32506,7 +32506,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly city street pack, 73k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32537,7 +32537,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "City street, 61.5k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32568,7 +32568,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Modular low-poly street kit, 7k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32599,7 +32599,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Street props (dumpster, traffic light), 16k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32630,7 +32630,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "City street, 1.1M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32662,7 +32662,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "News reporter character, 18k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32694,7 +32694,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Film slate / clapperboard, 9.8k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32726,7 +32726,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Gallery / showroom / banquet hall, 28.8k faces: wedding hall shell.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32757,7 +32757,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Ranch-style banquet hall, 158k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32788,7 +32788,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Faux Tudor banquet hall, 7.7k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32819,7 +32819,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Hotel banquet hall, 1M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32850,7 +32850,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Ballroom, 493k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32881,7 +32881,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Wedding venue, 1.4M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32912,7 +32912,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Banquet table, 3.4k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32943,7 +32943,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Ballroom kit, 54k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -32974,7 +32974,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Ballroom, 6k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33005,7 +33005,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "White round exhibition gallery, 87k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33036,7 +33036,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "VR exhibition gallery (baked), 10k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33067,7 +33067,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "VR gallery, 1.9k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33098,7 +33098,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "VR modern gallery room, 2.4k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33129,7 +33129,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Museum showcase (vitrine), 724 faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33160,7 +33160,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Classical museum pedestals pack, 4.7k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33191,7 +33191,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Museum, 3k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33222,7 +33222,7 @@
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Museum interior, 1.65M faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33253,7 +33253,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Gallery showroom, 31k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33284,7 +33284,7 @@
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Hintze Hall, Natural History Museum London.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     },
@@ -33315,7 +33315,7 @@
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Exhibition art gallery, 22.6k faces.",
       "accessed": "2026-10-22",
-      "model_url_status": "ok (licence from Sketchfab /v3/search result for this uid; /v3/models was rate-limited (HTTP 429) - re-verify before any use)",
+      "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
     }

@@ -340,7 +340,8 @@
         "surfaces.floor (béton)",
         "surfaces.stage-floor (moquette grise)",
         "description (276 m² + 62 m², 300 debout / 200 assis / 180 à table)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.lausanne.ch/dam/jcr:43073598-2aac-49a3-9f0c-6ae0a415c4b4/Casino-SDF.pdf",
@@ -354,7 +355,8 @@
         "openings[2] (entrée technique 2,80 × 2 m)",
         "gear_positions (choix du matériel : Allen & Heath QU-24, 2 HF main + 1 cravate, 4 filaires, EV EKX-12P)",
         "description (300 personnes, 270 en théâtre, 220 en banquet)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.belley.fr/wp-content/uploads/2025/07/Fiche-location_salledesfetes.pdf",
@@ -366,7 +368,8 @@
         "surfaces.stage-floor (estrade 28 m², 14 modules 2 × 1 m, hauteur 40 cm)",
         "zones.estrade (floor_y 0,4 m)",
         "description (230 m², 190 personnes, office 34 m²)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://patrimoine.bourgognefranchecomte.fr/documents/Fiche-technique_Proudhon_2021.pdf",
@@ -378,7 +381,8 @@
         "surfaces.ceiling (lustre à 2,90 m)",
         "description (15,65 × 9,04 m, 130 assis / 250 debout)",
         "gear_positions (choix du matériel : 4 Yamaha DXR12 mkII, console Soundcraft Ui12)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://ville-amberieuenbugey.fr/wp-content/uploads/2017/04/Fiche-technique-Dumesnil.pdf",
@@ -392,7 +396,8 @@
         "dimensions_m.height.min (3,50 m)",
         "surfaces.floor (moquette)",
         "patch_points"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

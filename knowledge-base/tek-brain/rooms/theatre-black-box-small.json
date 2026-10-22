@@ -281,7 +281,8 @@
         "zones.aire-de-jeu (11,5 × 8,5 m)",
         "surfaces",
         "gear_positions (choix du matériel : petite console, 2 enceintes, SM58, lecteur)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://artos-net.ch/system/files/documents/strucutres/alchimic%2520-%2520Fiche_Technique2010.pdf",
@@ -298,7 +299,8 @@
         "openings[0]",
         "openings[1]",
         "openings[2] (entrée public 0,65 × 2,65 m)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",

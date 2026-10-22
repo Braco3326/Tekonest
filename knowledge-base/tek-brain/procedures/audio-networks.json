@@ -101,7 +101,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
@@ -111,7 +112,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
@@ -121,7 +123,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Ethernet_over_twisted_pair",
@@ -131,7 +134,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
@@ -141,7 +145,8 @@
           "kind": "manufacturer",
           "covers": [
             "context"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -235,7 +240,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://service.shure.com/articles/en_US/Knowledge/QOS-In-Depth",
@@ -245,17 +251,19 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
           "publisher": "Yamaha, PC-D/DI series manual: About Dante",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
@@ -265,7 +273,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
@@ -275,7 +284,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -358,7 +368,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
@@ -368,7 +379,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -448,7 +460,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/processor/dme7/en/12_dante_en.html",
@@ -458,7 +471,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -545,7 +559,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
@@ -555,17 +570,19 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
           "publisher": "Yamaha, PC-D/DI series manual: About Dante",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -628,7 +645,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/AES50",
@@ -638,7 +656,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

@@ -1,1348 +1,1415 @@
 {
- "entity": "glossary",
- "domain": "post-immersive",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "smpte-timecode",
-   "term_fr": "Timecode SMPTE",
-   "term_en": "SMPTE timecode",
-   "domain": "post-immersive",
-   "definition": "Adresse HH:MM:SS:FF attachée à chaque image, normalisée par la SMPTE (ST 12-1).",
-   "see_also": [
-    "timecode"
-   ],
-   "sources": [
+  "entity": "glossary",
+  "domain": "post-immersive",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
-     "publisher": "Wikipedia (SMPTE timecode)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ltc-longitudinal-timecode",
-   "term_fr": "LTC (timecode longitudinal)",
-   "term_en": "Longitudinal timecode (LTC)",
-   "domain": "post-immersive",
-   "definition": "Timecode enregistré ou transmis comme un signal audio ; lisible seulement quand le support défile.",
-   "see_also": [
-    "timecode",
-    "video-reference-sync"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
-     "publisher": "Wikipedia (SMPTE timecode)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
+      "id": "smpte-timecode",
+      "term_fr": "Timecode SMPTE",
+      "term_en": "SMPTE timecode",
+      "domain": "post-immersive",
+      "definition": "Adresse HH:MM:SS:FF attachée à chaque image, normalisée par la SMPTE (ST 12-1).",
+      "see_also": [
+        "timecode"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+          "publisher": "Wikipedia (SMPTE timecode)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
-     "publisher": "Avid (Pro Tools | Sync X Guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "vitc",
-   "term_fr": "VITC",
-   "term_en": "Vertical interval timecode",
-   "domain": "post-immersive",
-   "definition": "Timecode inscrit dans l'intervalle de suppression verticale de la vidéo, lisible même à l'arrêt.",
-   "see_also": [
-    "timecode"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
-     "publisher": "Wikipedia (SMPTE timecode)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "drop-frame-df",
-   "term_fr": "Drop frame (DF)",
-   "term_en": "Drop frame",
-   "domain": "post-immersive",
-   "definition": "Comptage à 29,97 images/s qui saute les numéros 00 et 01 chaque minute sauf toutes les dix minutes ; noté HH;MM;SS;FF.",
-   "see_also": [
-    "drop-frame-timecode"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
-     "publisher": "Wikipedia (SMPTE timecode)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "non-drop-frame-ndf",
-   "term_fr": "Non drop frame (NDF)",
-   "term_en": "Non-drop frame",
-   "domain": "post-immersive",
-   "definition": "Comptage de timecode qui numérote toutes les images sans saut.",
-   "see_also": [
-    "drop-frame-timecode"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
-     "publisher": "Wikipedia (SMPTE timecode)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pull-down",
-   "term_fr": "Pull-down",
-   "term_en": "Pull-down",
-   "domain": "post-immersive",
-   "definition": "Ralentissement de 1000/1001 appliqué pour passer de 24 à 23,976 images/s ; le son doit suivre pour rester synchrone.",
-   "see_also": [
-    "frame-rate-pull-up-pull-down"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Telecine",
-     "publisher": "Wikipedia (Telecine)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
+      "id": "ltc-longitudinal-timecode",
+      "term_fr": "LTC (timecode longitudinal)",
+      "term_en": "Longitudinal timecode (LTC)",
+      "domain": "post-immersive",
+      "definition": "Timecode enregistré ou transmis comme un signal audio ; lisible seulement quand le support défile.",
+      "see_also": [
+        "timecode",
+        "video-reference-sync"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+          "publisher": "Wikipedia (SMPTE timecode)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+          "publisher": "Avid (Pro Tools | Sync X Guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
-     "publisher": "Avid (Pro Tools | Sync X Guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pull-up",
-   "term_fr": "Pull-up",
-   "term_en": "Pull-up",
-   "domain": "post-immersive",
-   "definition": "Accélération inverse du pull-down, proposée par les synchroniseurs (réglage Audio Rate Pull Up) pour la fréquence d'horloge audio.",
-   "see_also": [
-    "frame-rate-pull-up-pull-down"
-   ],
-   "sources": [
-    {
-     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
-     "publisher": "Avid (Pro Tools | Sync X Guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "video-reference",
-   "term_fr": "Référence vidéo (black burst, tri-level)",
-   "term_en": "Video reference",
-   "domain": "post-immersive",
-   "definition": "Signal de synchronisation vidéo sur lequel se cale l'horloge audio en post-production.",
-   "see_also": [
-    "video-reference-sync"
-   ],
-   "sources": [
-    {
-     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
-     "publisher": "Avid (Pro Tools | Sync X Guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "freewheel",
-   "term_fr": "Freewheel",
-   "term_en": "Freewheel",
-   "domain": "post-immersive",
-   "definition": "Réglage qui laisse le transport continuer quelques images quand le timecode reçu est interrompu.",
-   "see_also": [
-    "video-reference-sync"
-   ],
-   "sources": [
-    {
-     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
-     "publisher": "Avid (Pro Tools | Sync X Guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "aaf",
-   "term_fr": "AAF (Advanced Authoring Format)",
-   "term_en": "Advanced Authoring Format",
-   "domain": "post-immersive",
-   "definition": "Format ouvert d'échange de montage entre logiciels ; médias intégrés ou référencés.",
-   "see_also": [
-    "aaf-omf-interchange"
-   ],
-   "sources": [
-    {
-     "url": "https://www.amwa.tv/aaf",
-     "publisher": "AMWA (AAF)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "vitc",
+      "term_fr": "VITC",
+      "term_en": "Vertical interval timecode",
+      "domain": "post-immersive",
+      "definition": "Timecode inscrit dans l'intervalle de suppression verticale de la vidéo, lisible même à l'arrêt.",
+      "see_also": [
+        "timecode"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+          "publisher": "Wikipedia (SMPTE timecode)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
-     "publisher": "AMWA (AS-01 AAF Edit Protocol)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "aaf-embedded-media",
-   "term_fr": "AAF à médias intégrés",
-   "term_en": "Embedded AAF",
-   "domain": "post-immersive",
-   "definition": "Export où l'audio est contenu dans le fichier AAF (EssenceData) au lieu d'être référencé par un chemin.",
-   "see_also": [
-    "aaf-omf-interchange"
-   ],
-   "sources": [
-    {
-     "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
-     "publisher": "AMWA (AS-01 AAF Edit Protocol)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "omf",
-   "term_fr": "OMF (Open Media Framework)",
-   "term_en": "Open Media Framework",
-   "domain": "post-immersive",
-   "definition": "Ancien format d'échange de montage, encore importé par Pro Tools.",
-   "see_also": [
-    "aaf-omf-interchange"
-   ],
-   "sources": [
-    {
-     "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
-     "publisher": "Avid Knowledge Base (Pro Tools audio file type and session support)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "conformation",
-   "term_fr": "Conformation",
-   "term_en": "Conform",
-   "domain": "post-immersive",
-   "definition": "Reconstruction de la session son à partir de l'AAF et des fichiers originaux du tournage.",
-   "see_also": [
-    "conform"
-   ],
-   "sources": [
-    {
-     "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
-     "publisher": "AMWA (AS-01 AAF Edit Protocol)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "drop-frame-df",
+      "term_fr": "Drop frame (DF)",
+      "term_en": "Drop frame",
+      "domain": "post-immersive",
+      "definition": "Comptage à 29,97 images/s qui saute les numéros 00 et 01 chaque minute sauf toutes les dix minutes ; noté HH;MM;SS;FF.",
+      "see_also": [
+        "drop-frame-timecode"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+          "publisher": "Wikipedia (SMPTE timecode)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
-     "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "bwf-bext-chunk",
-   "term_fr": "Chunk bext",
-   "term_en": "bext chunk",
-   "domain": "post-immersive",
-   "definition": "Bloc de métadonnées du fichier BWF (description, date, TimeReference, sonie).",
-   "see_also": [
-    "bwf-metadata"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
-     "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "time-reference-bwf",
-   "term_fr": "TimeReference (BWF)",
-   "term_en": "TimeReference",
-   "domain": "post-immersive",
-   "definition": "Champ du chunk bext donnant la position du premier échantillon en échantillons depuis minuit.",
-   "see_also": [
-    "bwf-metadata",
-    "timecode"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
-     "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "room-tone",
-   "term_fr": "Ambiance de pièce (room tone)",
-   "term_en": "Room tone",
-   "domain": "post-immersive",
-   "definition": "Ambiance « silencieuse » d'un lieu, utilisée pour combler les trous entre les répliques.",
-   "see_also": [
-    "dialogue-editing"
-   ],
-   "sources": [
-    {
-     "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
-     "publisher": "iZotope (RX 12 Ambience Match)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dialogue-editor",
-   "term_fr": "Monteur dialogues",
-   "term_en": "Dialogue editor",
-   "domain": "post-immersive",
-   "definition": "Monteur son chargé d'assembler, synchroniser et nettoyer toutes les voix d'un film.",
-   "see_also": [
-    "dialogue-editing"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
-     "publisher": "Wikipedia (Dialogue editor)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "walla",
-   "term_fr": "Walla",
-   "term_en": "Walla",
-   "domain": "post-immersive",
-   "definition": "Brouhaha de foule enregistré par un groupe de comédiens pour les scènes de restaurant, de fête, etc.",
-   "see_also": [
-    "dialogue-editing"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
-     "publisher": "Wikipedia (Dialogue editor)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "adr",
-   "term_fr": "ADR (postsynchronisation)",
-   "term_en": "Automated dialogue replacement",
-   "domain": "post-immersive",
-   "definition": "Réenregistrement en studio, après le tournage, de dialogues par le comédien d'origine ou un remplaçant.",
-   "see_also": [
-    "adr-dubbing"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
-     "publisher": "Wikipedia (Dubbing / ADR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "looping",
-   "term_fr": "Looping",
-   "term_en": "Looping",
-   "domain": "post-immersive",
-   "definition": "Ancienne technique d'ADR où la scène tournait en boucle de film pendant que le comédien rejouait.",
-   "see_also": [
-    "adr-dubbing"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
-     "publisher": "Wikipedia (Dubbing / ADR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "postsynchronisation",
-   "term_fr": "Postsynchronisation",
-   "term_en": "Post-synchronisation",
-   "domain": "post-immersive",
-   "definition": "Enregistrement en studio des dialogues qui n'ont pas pu être captés au tournage.",
-   "see_also": [
-    "adr-dubbing"
-   ],
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "doublage",
-   "term_fr": "Doublage",
-   "term_en": "Dubbing",
-   "domain": "post-immersive",
-   "definition": "Remplacement de la langue originale d'une œuvre par une autre langue, synchrone à l'image.",
-   "see_also": [
-    "adr-dubbing"
-   ],
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
+      "id": "non-drop-frame-ndf",
+      "term_fr": "Non drop frame (NDF)",
+      "term_en": "Non-drop frame",
+      "domain": "post-immersive",
+      "definition": "Comptage de timecode qui numérote toutes les images sans saut.",
+      "see_also": [
+        "drop-frame-timecode"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+          "publisher": "Wikipedia (SMPTE timecode)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
-     "publisher": "Wikipedia (Dubbing / ADR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "bande-rythmo-term",
-   "term_fr": "Bande rythmo",
-   "term_en": "Rhythmo band",
-   "domain": "post-immersive",
-   "definition": "Bande défilante portant texte, respirations et repères labiaux lue par le comédien de doublage.",
-   "see_also": [
-    "bande-rythmo"
-   ],
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "detection-doublage",
-   "term_fr": "Détection",
-   "term_en": "Detection (dubbing)",
-   "domain": "post-immersive",
-   "definition": "Préparation de la bande rythmo par le détecteur : texte, respirations, changements de plan, boucles.",
-   "see_also": [
-    "bande-rythmo"
-   ],
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "boucle-doublage",
-   "term_fr": "Boucle",
-   "term_en": "Loop (dubbing)",
-   "domain": "post-immersive",
-   "definition": "Segment de travail d'environ une minute numéroté sur la bande rythmo.",
-   "see_also": [
-    "bande-rythmo"
-   ],
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "croisille",
-   "term_fr": "Croisillé",
-   "term_en": "Character cue sheet",
-   "domain": "post-immersive",
-   "definition": "Tableau des personnages et du nombre de leurs répliques, rédigé par le détecteur.",
-   "see_also": [
-    "bande-rythmo"
-   ],
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "adaptateur",
-   "term_fr": "Adaptateur",
-   "term_en": "Dubbing adapter",
-   "domain": "post-immersive",
-   "definition": "Auteur qui traduit le texte en respectant le sens, le rythme et la longueur des répliques.",
-   "see_also": [
-    "adr-dubbing"
-   ],
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "version-originale-vo",
-   "term_fr": "Version originale (VO)",
-   "term_en": "Original version",
-   "domain": "post-immersive",
-   "definition": "Piste son dans la langue d'origine, référence du doublage.",
-   "see_also": [
-    "adr-dubbing"
-   ],
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "version-internationale",
-   "term_fr": "Version internationale (VI)",
-   "term_en": "International version / M&E",
-   "domain": "post-immersive",
-   "definition": "Piste contenant ambiances, bruitages, effets et musique, sans dialogues originaux.",
-   "see_also": [
-    "music-and-effects-me"
-   ],
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "foley-term",
-   "term_fr": "Bruitage (foley)",
-   "term_en": "Foley",
-   "domain": "post-immersive",
-   "definition": "Recréation synchrone à l'image des sons du quotidien liés aux personnages.",
-   "see_also": [
-    "foley"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
-     "publisher": "Wikipedia (Foley (filmmaking))",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "foley-pits",
-   "term_fr": "Fosses de bruitage",
-   "term_en": "Foley pits",
-   "domain": "post-immersive",
-   "definition": "Surfaces variées (marbre, gravier…) d'un auditorium de bruitage pour jouer les pas.",
-   "see_also": [
-    "foley"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
-     "publisher": "Wikipedia (Foley (filmmaking))",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "foley-feet-moves-specifics",
-   "term_fr": "Pas, mouvements, accessoires",
-   "term_en": "Feet, moves, specifics",
-   "domain": "post-immersive",
-   "definition": "Les trois familles du bruitage : pas, froissements de vêtements, objets.",
-   "see_also": [
-    "foley"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
-     "publisher": "Wikipedia (Foley (filmmaking))",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dubbing-mixer",
-   "term_fr": "Mixeur (dubbing / re-recording mixer)",
-   "term_en": "Re-recording mixer",
-   "domain": "post-immersive",
-   "definition": "Ingénieur qui mixe dialogues, musique et effets pour produire la bande son finale.",
-   "see_also": [
-    "stems"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
-     "publisher": "Wikipedia (Foley (filmmaking))",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
+      "id": "pull-down",
+      "term_fr": "Pull-down",
+      "term_en": "Pull-down",
+      "domain": "post-immersive",
+      "definition": "Ralentissement de 1000/1001 appliqué pour passer de 24 à 23,976 images/s ; le son doit suivre pour rester synchrone.",
+      "see_also": [
+        "frame-rate-pull-up-pull-down"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Telecine",
+          "publisher": "Wikipedia (Telecine)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+          "publisher": "Avid (Pro Tools | Sync X Guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
-     "publisher": "Wikipedia (Dialogue editor)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "printmaster",
-   "term_fr": "Printmaster (mix complet)",
-   "term_en": "Printmaster",
-   "domain": "post-immersive",
-   "definition": "Mix final complet livré à côté des stems.",
-   "see_also": [
-    "stems"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
-     "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "stem-audio",
-   "term_fr": "Stem",
-   "term_en": "Stem",
-   "domain": "post-immersive",
-   "definition": "Sous-mixage par famille (dialogues, musique, effets) dont la somme redonne le mix complet.",
-   "see_also": [
-    "stems"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
-     "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ldr",
-   "term_fr": "LDR (écart sonie programme / dialogue)",
-   "term_en": "Loudness-to-Dialogue Ratio",
-   "domain": "post-immersive",
-   "definition": "PL − DL en LU ; l'EBU recommande ≤ 5 LU pour les fictions.",
-   "see_also": [
-    "loudness-to-dialogue-ratio"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
-     "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dialogue-loudness",
-   "term_fr": "Sonie du dialogue",
-   "term_en": "Dialogue loudness",
-   "domain": "post-immersive",
-   "definition": "Sonie mesurée sur les seules parties parlées, à partir d'un stem dialogue ou d'une détection de parole.",
-   "see_also": [
-    "loudness-to-dialogue-ratio"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
-     "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "cst-rt-017",
-   "term_fr": "CST-RT-017",
-   "term_en": "CST-RT-017",
-   "domain": "post-immersive",
-   "definition": "Recommandation technique française (CST, Ficam, HDForum, éditeurs) sur la sonie des programmes TV ; v3.0 appliquée aux publicités depuis 2012.",
-   "see_also": [
-    "deliverable-loudness-france"
-   ],
-   "sources": [
-    {
-     "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
-     "publisher": "ARPP (fiche « En 2012 la TV change d'intensité sonore », reprend CST-RT-017 v3.0)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "lfe-channel",
-   "term_fr": "Canal LFE",
-   "term_en": "Low frequency effects channel",
-   "domain": "post-immersive",
-   "definition": "Canal optionnel d'effets basses fréquences du système 5.1 (le « .1 »).",
-   "see_also": [
-    "surround-5-1-layout",
-    "atmos-bed"
-   ],
-   "sources": [
-    {
-     "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.775-4-202212-I!!PDF-E.pdf",
-     "publisher": "ITU-R (Recommandation BS.775-4, 12/2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "format-3-2",
-   "term_fr": "Format 3/2",
-   "term_en": "3/2 channel format",
-   "domain": "post-immersive",
-   "definition": "Trois canaux avant (L, C, R) et deux latéraux/arrière (LS, RS) selon ITU-R BS.775.",
-   "see_also": [
-    "surround-5-1-layout"
-   ],
-   "sources": [
-    {
-     "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.775-4-202212-I!!PDF-E.pdf",
-     "publisher": "ITU-R (Recommandation BS.775-4, 12/2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "atmos-object",
-   "term_fr": "Objet audio (Atmos)",
-   "term_en": "Audio object",
-   "domain": "post-immersive",
-   "definition": "Son transmis avec sa position X, Y, Z en métadonnées, rendu selon les enceintes présentes.",
-   "see_also": [
-    "object-based-audio",
-    "dolby-atmos"
-   ],
-   "sources": [
-    {
-     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
-     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "pull-up",
+      "term_fr": "Pull-up",
+      "term_en": "Pull-up",
+      "domain": "post-immersive",
+      "definition": "Accélération inverse du pull-down, proposée par les synchroniseurs (réglage Audio Rate Pull Up) pour la fréquence d'horloge audio.",
+      "see_also": [
+        "frame-rate-pull-up-pull-down"
+      ],
+      "sources": [
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+          "publisher": "Avid (Pro Tools | Sync X Guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
-     "publisher": "Wikipedia (Dolby Atmos)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "atmos-bed-term",
-   "term_fr": "Bed",
-   "term_en": "Bed",
-   "domain": "post-immersive",
-   "definition": "Groupe de canaux fixes d'un mix Atmos, au plus 7.1.2.",
-   "see_also": [
-    "atmos-bed"
-   ],
-   "sources": [
-    {
-     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
-     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dolby-atmos-renderer",
-   "term_fr": "Dolby Atmos Renderer",
-   "term_en": "Dolby Atmos Renderer",
-   "domain": "post-immersive",
-   "definition": "Logiciel Dolby qui rend beds et objets (jusqu'à 128 entrées) vers l'écoute et enregistre le master.",
-   "see_also": [
-    "dolby-atmos"
-   ],
-   "sources": [
-    {
-     "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
-     "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "notation-x-y-z",
-   "term_fr": "Notation x.y.z (7.1.4)",
-   "term_en": "x.y.z notation",
-   "domain": "post-immersive",
-   "definition": "Nombre d'enceintes au niveau d'oreille, de caissons et d'enceintes en hauteur (7.1.4 = 7.1 + 4 plafonds).",
-   "see_also": [
-    "dolby-atmos"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
-     "publisher": "Wikipedia (Dolby Atmos)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
+      "id": "video-reference",
+      "term_fr": "Référence vidéo (black burst, tri-level)",
+      "term_en": "Video reference",
+      "domain": "post-immersive",
+      "definition": "Signal de synchronisation vidéo sur lequel se cale l'horloge audio en post-production.",
+      "see_also": [
+        "video-reference-sync"
+      ],
+      "sources": [
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+          "publisher": "Avid (Pro Tools | Sync X Guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
-     "publisher": "Dolby Laboratories (7.1.4 overhead speaker setup guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "adm-bwf",
-   "term_fr": "ADM BWF",
-   "term_en": "ADM BWF",
-   "domain": "post-immersive",
-   "definition": "Fichier BWF contenant audio et métadonnées ADM, utilisé pour livrer un master Atmos.",
-   "see_also": [
-    "audio-definition-model"
-   ],
-   "sources": [
-    {
-     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
-     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "freewheel",
+      "term_fr": "Freewheel",
+      "term_en": "Freewheel",
+      "domain": "post-immersive",
+      "definition": "Réglage qui laisse le transport continuer quelques images quand le timecode reçu est interrompu.",
+      "see_also": [
+        "video-reference-sync"
+      ],
+      "sources": [
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+          "publisher": "Avid (Pro Tools | Sync X Guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
-     "publisher": "Avid Knowledge Base (Pro Tools audio file type and session support)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "adm-term",
-   "term_fr": "ADM",
-   "term_en": "Audio Definition Model",
-   "domain": "post-immersive",
-   "definition": "Modèle de métadonnées décrivant le contenu audio (ITU-R BS.2076, ex-EBU Tech 3364).",
-   "see_also": [
-    "audio-definition-model"
-   ],
-   "sources": [
-    {
-     "url": "https://www.itu.int/rec/R-REC-BS.2076/en",
-     "publisher": "ITU-R (page de la Recommandation BS.2076)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "aaf",
+      "term_fr": "AAF (Advanced Authoring Format)",
+      "term_en": "Advanced Authoring Format",
+      "domain": "post-immersive",
+      "definition": "Format ouvert d'échange de montage entre logiciels ; médias intégrés ou référencés.",
+      "see_also": [
+        "aaf-omf-interchange"
+      ],
+      "sources": [
+        {
+          "url": "https://www.amwa.tv/aaf",
+          "publisher": "AMWA (AAF)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+          "publisher": "AMWA (AS-01 AAF Edit Protocol)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/publications/tech3364",
-     "publisher": "EBU (Tech 3364 v2.0, Audio Definition Model)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "b-format",
-   "term_fr": "B-format",
-   "term_en": "B-format",
-   "domain": "post-immersive",
-   "definition": "Représentation ambisonique : W (omni), X, Y, Z au premier ordre.",
-   "see_also": [
-    "ambisonics"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonics",
-     "publisher": "Wikipedia (Ambisonics)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "a-format",
-   "term_fr": "A-format",
-   "term_en": "A-format",
-   "domain": "post-immersive",
-   "definition": "Signaux bruts des quatre capsules d'un micro tétraédrique, à convertir en B-format.",
-   "see_also": [
-    "ambisonics"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonics",
-     "publisher": "Wikipedia (Ambisonics)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ambisonic-order",
-   "term_fr": "Ordre ambisonique",
-   "term_en": "Ambisonic order",
-   "domain": "post-immersive",
-   "definition": "Degré de résolution spatiale ; (ℓ+1)² composantes pour la sphère complète.",
-   "see_also": [
-    "ambisonics"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonics",
-     "publisher": "Wikipedia (Ambisonics)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "acn-ordering",
-   "term_fr": "ACN",
-   "term_en": "Ambisonic Channel Number",
-   "domain": "post-immersive",
-   "definition": "Ordre des canaux ambisoniques W, Y, Z, X… utilisé par AmbiX.",
-   "see_also": [
-    "ambisonic-formats-ambix-fuma"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
-     "publisher": "Wikipedia (Ambisonic data exchange formats)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "sn3d",
-   "term_fr": "SN3D",
-   "term_en": "Schmidt semi-normalisation",
-   "domain": "post-immersive",
-   "definition": "Normalisation des composantes utilisée par AmbiX.",
-   "see_also": [
-    "ambisonic-formats-ambix-fuma"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
-     "publisher": "Wikipedia (Ambisonic data exchange formats)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "fuma",
-   "term_fr": "FuMa",
-   "term_en": "Furse-Malham",
-   "domain": "post-immersive",
-   "definition": "Convention ambisonique historique : ordre W X Y Z, W atténué de 3 dB.",
-   "see_also": [
-    "ambisonic-formats-ambix-fuma"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
-     "publisher": "Wikipedia (Ambisonic data exchange formats)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
+      "id": "aaf-embedded-media",
+      "term_fr": "AAF à médias intégrés",
+      "term_en": "Embedded AAF",
+      "domain": "post-immersive",
+      "definition": "Export où l'audio est contenu dans le fichier AAF (EssenceData) au lieu d'être référencé par un chemin.",
+      "see_also": [
+        "aaf-omf-interchange"
+      ],
+      "sources": [
+        {
+          "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+          "publisher": "AMWA (AS-01 AAF Edit Protocol)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://en.wikipedia.org/wiki/Ambisonics",
-     "publisher": "Wikipedia (Ambisonics)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ambix",
-   "term_fr": "AmbiX",
-   "term_en": "AmbiX",
-   "domain": "post-immersive",
-   "definition": "Convention ambisonique ACN + SN3D (Nachbar et al., 2011).",
-   "see_also": [
-    "ambisonic-formats-ambix-fuma"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
-     "publisher": "Wikipedia (Ambisonic data exchange formats)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dummy-head",
-   "term_fr": "Tête artificielle",
-   "term_en": "Dummy head",
-   "domain": "post-immersive",
-   "definition": "Mannequin de tête avec un micro dans chaque oreille pour l'enregistrement binaural (ex. Neumann KU 100).",
-   "see_also": [
-    "binaural"
-   ],
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Binaural_recording",
-     "publisher": "Wikipedia (Binaural recording)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
+      "id": "omf",
+      "term_fr": "OMF (Open Media Framework)",
+      "term_en": "Open Media Framework",
+      "domain": "post-immersive",
+      "definition": "Ancien format d'échange de montage, encore importé par Pro Tools.",
+      "see_also": [
+        "aaf-omf-interchange"
+      ],
+      "sources": [
+        {
+          "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
+          "publisher": "Avid Knowledge Base (Pro Tools audio file type and session support)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.neumann.com/en-en/products/microphones/ku-100/",
-     "publisher": "Neumann (KU 100)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "hrtf-term",
-   "term_fr": "HRTF",
-   "term_en": "Head-related transfer function",
-   "domain": "post-immersive",
-   "definition": "Filtrage dû à la tête et au pavillon selon la direction, base du rendu binaural.",
-   "see_also": [
-    "hrtf",
-    "binaural"
-   ],
-   "sources": [
+      "id": "conformation",
+      "term_fr": "Conformation",
+      "term_en": "Conform",
+      "domain": "post-immersive",
+      "definition": "Reconstruction de la session son à partir de l'AAF et des fichiers originaux du tournage.",
+      "see_also": [
+        "conform"
+      ],
+      "sources": [
+        {
+          "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+          "publisher": "AMWA (AS-01 AAF Edit Protocol)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://en.wikipedia.org/wiki/Binaural_recording",
-     "publisher": "Wikipedia (Binaural recording)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
+      "id": "bwf-bext-chunk",
+      "term_fr": "Chunk bext",
+      "term_en": "bext chunk",
+      "domain": "post-immersive",
+      "definition": "Bloc de métadonnées du fichier BWF (description, date, TimeReference, sonie).",
+      "see_also": [
+        "bwf-metadata"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "time-reference-bwf",
+      "term_fr": "TimeReference (BWF)",
+      "term_en": "TimeReference",
+      "domain": "post-immersive",
+      "definition": "Champ du chunk bext donnant la position du premier échantillon en échantillons depuis minuit.",
+      "see_also": [
+        "bwf-metadata",
+        "timecode"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "room-tone",
+      "term_fr": "Ambiance de pièce (room tone)",
+      "term_en": "Room tone",
+      "domain": "post-immersive",
+      "definition": "Ambiance « silencieuse » d'un lieu, utilisée pour combler les trous entre les répliques.",
+      "see_also": [
+        "dialogue-editing"
+      ],
+      "sources": [
+        {
+          "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
+          "publisher": "iZotope (RX 12 Ambience Match)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "dialogue-editor",
+      "term_fr": "Monteur dialogues",
+      "term_en": "Dialogue editor",
+      "domain": "post-immersive",
+      "definition": "Monteur son chargé d'assembler, synchroniser et nettoyer toutes les voix d'un film.",
+      "see_also": [
+        "dialogue-editing"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
+          "publisher": "Wikipedia (Dialogue editor)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "walla",
+      "term_fr": "Walla",
+      "term_en": "Walla",
+      "domain": "post-immersive",
+      "definition": "Brouhaha de foule enregistré par un groupe de comédiens pour les scènes de restaurant, de fête, etc.",
+      "see_also": [
+        "dialogue-editing"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
+          "publisher": "Wikipedia (Dialogue editor)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "adr",
+      "term_fr": "ADR (postsynchronisation)",
+      "term_en": "Automated dialogue replacement",
+      "domain": "post-immersive",
+      "definition": "Réenregistrement en studio, après le tournage, de dialogues par le comédien d'origine ou un remplaçant.",
+      "see_also": [
+        "adr-dubbing"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
+          "publisher": "Wikipedia (Dubbing / ADR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "looping",
+      "term_fr": "Looping",
+      "term_en": "Looping",
+      "domain": "post-immersive",
+      "definition": "Ancienne technique d'ADR où la scène tournait en boucle de film pendant que le comédien rejouait.",
+      "see_also": [
+        "adr-dubbing"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
+          "publisher": "Wikipedia (Dubbing / ADR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "postsynchronisation",
+      "term_fr": "Postsynchronisation",
+      "term_en": "Post-synchronisation",
+      "domain": "post-immersive",
+      "definition": "Enregistrement en studio des dialogues qui n'ont pas pu être captés au tournage.",
+      "see_also": [
+        "adr-dubbing"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "doublage",
+      "term_fr": "Doublage",
+      "term_en": "Dubbing",
+      "domain": "post-immersive",
+      "definition": "Remplacement de la langue originale d'une œuvre par une autre langue, synchrone à l'image.",
+      "see_also": [
+        "adr-dubbing"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
+          "publisher": "Wikipedia (Dubbing / ADR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "bande-rythmo-term",
+      "term_fr": "Bande rythmo",
+      "term_en": "Rhythmo band",
+      "domain": "post-immersive",
+      "definition": "Bande défilante portant texte, respirations et repères labiaux lue par le comédien de doublage.",
+      "see_also": [
+        "bande-rythmo"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "detection-doublage",
+      "term_fr": "Détection",
+      "term_en": "Detection (dubbing)",
+      "domain": "post-immersive",
+      "definition": "Préparation de la bande rythmo par le détecteur : texte, respirations, changements de plan, boucles.",
+      "see_also": [
+        "bande-rythmo"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "boucle-doublage",
+      "term_fr": "Boucle",
+      "term_en": "Loop (dubbing)",
+      "domain": "post-immersive",
+      "definition": "Segment de travail d'environ une minute numéroté sur la bande rythmo.",
+      "see_also": [
+        "bande-rythmo"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "croisille",
+      "term_fr": "Croisillé",
+      "term_en": "Character cue sheet",
+      "domain": "post-immersive",
+      "definition": "Tableau des personnages et du nombre de leurs répliques, rédigé par le détecteur.",
+      "see_also": [
+        "bande-rythmo"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "adaptateur",
+      "term_fr": "Adaptateur",
+      "term_en": "Dubbing adapter",
+      "domain": "post-immersive",
+      "definition": "Auteur qui traduit le texte en respectant le sens, le rythme et la longueur des répliques.",
+      "see_also": [
+        "adr-dubbing"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "version-originale-vo",
+      "term_fr": "Version originale (VO)",
+      "term_en": "Original version",
+      "domain": "post-immersive",
+      "definition": "Piste son dans la langue d'origine, référence du doublage.",
+      "see_also": [
+        "adr-dubbing"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "version-internationale",
+      "term_fr": "Version internationale (VI)",
+      "term_en": "International version / M&E",
+      "domain": "post-immersive",
+      "definition": "Piste contenant ambiances, bruitages, effets et musique, sans dialogues originaux.",
+      "see_also": [
+        "music-and-effects-me"
+      ],
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "foley-term",
+      "term_fr": "Bruitage (foley)",
+      "term_en": "Foley",
+      "domain": "post-immersive",
+      "definition": "Recréation synchrone à l'image des sons du quotidien liés aux personnages.",
+      "see_also": [
+        "foley"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
+          "publisher": "Wikipedia (Foley (filmmaking))",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "foley-pits",
+      "term_fr": "Fosses de bruitage",
+      "term_en": "Foley pits",
+      "domain": "post-immersive",
+      "definition": "Surfaces variées (marbre, gravier…) d'un auditorium de bruitage pour jouer les pas.",
+      "see_also": [
+        "foley"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
+          "publisher": "Wikipedia (Foley (filmmaking))",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "foley-feet-moves-specifics",
+      "term_fr": "Pas, mouvements, accessoires",
+      "term_en": "Feet, moves, specifics",
+      "domain": "post-immersive",
+      "definition": "Les trois familles du bruitage : pas, froissements de vêtements, objets.",
+      "see_also": [
+        "foley"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
+          "publisher": "Wikipedia (Foley (filmmaking))",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "dubbing-mixer",
+      "term_fr": "Mixeur (dubbing / re-recording mixer)",
+      "term_en": "Re-recording mixer",
+      "domain": "post-immersive",
+      "definition": "Ingénieur qui mixe dialogues, musique et effets pour produire la bande son finale.",
+      "see_also": [
+        "stems"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
+          "publisher": "Wikipedia (Foley (filmmaking))",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
+          "publisher": "Wikipedia (Dialogue editor)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "printmaster",
+      "term_fr": "Printmaster (mix complet)",
+      "term_en": "Printmaster",
+      "domain": "post-immersive",
+      "definition": "Mix final complet livré à côté des stems.",
+      "see_also": [
+        "stems"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+          "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "stem-audio",
+      "term_fr": "Stem",
+      "term_en": "Stem",
+      "domain": "post-immersive",
+      "definition": "Sous-mixage par famille (dialogues, musique, effets) dont la somme redonne le mix complet.",
+      "see_also": [
+        "stems"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+          "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "ldr",
+      "term_fr": "LDR (écart sonie programme / dialogue)",
+      "term_en": "Loudness-to-Dialogue Ratio",
+      "domain": "post-immersive",
+      "definition": "PL − DL en LU ; l'EBU recommande ≤ 5 LU pour les fictions.",
+      "see_also": [
+        "loudness-to-dialogue-ratio"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+          "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "dialogue-loudness",
+      "term_fr": "Sonie du dialogue",
+      "term_en": "Dialogue loudness",
+      "domain": "post-immersive",
+      "definition": "Sonie mesurée sur les seules parties parlées, à partir d'un stem dialogue ou d'une détection de parole.",
+      "see_also": [
+        "loudness-to-dialogue-ratio"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+          "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "cst-rt-017",
+      "term_fr": "CST-RT-017",
+      "term_en": "CST-RT-017",
+      "domain": "post-immersive",
+      "definition": "Recommandation technique française (CST, Ficam, HDForum, éditeurs) sur la sonie des programmes TV ; v3.0 appliquée aux publicités depuis 2012.",
+      "see_also": [
+        "deliverable-loudness-france"
+      ],
+      "sources": [
+        {
+          "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
+          "publisher": "ARPP (fiche « En 2012 la TV change d'intensité sonore », reprend CST-RT-017 v3.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "lfe-channel",
+      "term_fr": "Canal LFE",
+      "term_en": "Low frequency effects channel",
+      "domain": "post-immersive",
+      "definition": "Canal optionnel d'effets basses fréquences du système 5.1 (le « .1 »).",
+      "see_also": [
+        "surround-5-1-layout",
+        "atmos-bed"
+      ],
+      "sources": [
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.775-4-202212-I!!PDF-E.pdf",
+          "publisher": "ITU-R (Recommandation BS.775-4, 12/2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "format-3-2",
+      "term_fr": "Format 3/2",
+      "term_en": "3/2 channel format",
+      "domain": "post-immersive",
+      "definition": "Trois canaux avant (L, C, R) et deux latéraux/arrière (LS, RS) selon ITU-R BS.775.",
+      "see_also": [
+        "surround-5-1-layout"
+      ],
+      "sources": [
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.775-4-202212-I!!PDF-E.pdf",
+          "publisher": "ITU-R (Recommandation BS.775-4, 12/2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "atmos-object",
+      "term_fr": "Objet audio (Atmos)",
+      "term_en": "Audio object",
+      "domain": "post-immersive",
+      "definition": "Son transmis avec sa position X, Y, Z en métadonnées, rendu selon les enceintes présentes.",
+      "see_also": [
+        "object-based-audio",
+        "dolby-atmos"
+      ],
+      "sources": [
+        {
+          "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+          "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
+          "publisher": "Wikipedia (Dolby Atmos)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "atmos-bed-term",
+      "term_fr": "Bed",
+      "term_en": "Bed",
+      "domain": "post-immersive",
+      "definition": "Groupe de canaux fixes d'un mix Atmos, au plus 7.1.2.",
+      "see_also": [
+        "atmos-bed"
+      ],
+      "sources": [
+        {
+          "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+          "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "dolby-atmos-renderer",
+      "term_fr": "Dolby Atmos Renderer",
+      "term_en": "Dolby Atmos Renderer",
+      "domain": "post-immersive",
+      "definition": "Logiciel Dolby qui rend beds et objets (jusqu'à 128 entrées) vers l'écoute et enregistre le master.",
+      "see_also": [
+        "dolby-atmos"
+      ],
+      "sources": [
+        {
+          "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
+          "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "notation-x-y-z",
+      "term_fr": "Notation x.y.z (7.1.4)",
+      "term_en": "x.y.z notation",
+      "domain": "post-immersive",
+      "definition": "Nombre d'enceintes au niveau d'oreille, de caissons et d'enceintes en hauteur (7.1.4 = 7.1 + 4 plafonds).",
+      "see_also": [
+        "dolby-atmos"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
+          "publisher": "Wikipedia (Dolby Atmos)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
+          "publisher": "Dolby Laboratories (7.1.4 overhead speaker setup guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "adm-bwf",
+      "term_fr": "ADM BWF",
+      "term_en": "ADM BWF",
+      "domain": "post-immersive",
+      "definition": "Fichier BWF contenant audio et métadonnées ADM, utilisé pour livrer un master Atmos.",
+      "see_also": [
+        "audio-definition-model"
+      ],
+      "sources": [
+        {
+          "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+          "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
+          "publisher": "Avid Knowledge Base (Pro Tools audio file type and session support)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "adm-term",
+      "term_fr": "ADM",
+      "term_en": "Audio Definition Model",
+      "domain": "post-immersive",
+      "definition": "Modèle de métadonnées décrivant le contenu audio (ITU-R BS.2076, ex-EBU Tech 3364).",
+      "see_also": [
+        "audio-definition-model"
+      ],
+      "sources": [
+        {
+          "url": "https://www.itu.int/rec/R-REC-BS.2076/en",
+          "publisher": "ITU-R (page de la Recommandation BS.2076)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/publications/tech3364",
+          "publisher": "EBU (Tech 3364 v2.0, Audio Definition Model)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "blocked"
+        }
+      ]
+    },
+    {
+      "id": "b-format",
+      "term_fr": "B-format",
+      "term_en": "B-format",
+      "domain": "post-immersive",
+      "definition": "Représentation ambisonique : W (omni), X, Y, Z au premier ordre.",
+      "see_also": [
+        "ambisonics"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonics",
+          "publisher": "Wikipedia (Ambisonics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "a-format",
+      "term_fr": "A-format",
+      "term_en": "A-format",
+      "domain": "post-immersive",
+      "definition": "Signaux bruts des quatre capsules d'un micro tétraédrique, à convertir en B-format.",
+      "see_also": [
+        "ambisonics"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonics",
+          "publisher": "Wikipedia (Ambisonics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "ambisonic-order",
+      "term_fr": "Ordre ambisonique",
+      "term_en": "Ambisonic order",
+      "domain": "post-immersive",
+      "definition": "Degré de résolution spatiale ; (ℓ+1)² composantes pour la sphère complète.",
+      "see_also": [
+        "ambisonics"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonics",
+          "publisher": "Wikipedia (Ambisonics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "acn-ordering",
+      "term_fr": "ACN",
+      "term_en": "Ambisonic Channel Number",
+      "domain": "post-immersive",
+      "definition": "Ordre des canaux ambisoniques W, Y, Z, X… utilisé par AmbiX.",
+      "see_also": [
+        "ambisonic-formats-ambix-fuma"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
+          "publisher": "Wikipedia (Ambisonic data exchange formats)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "sn3d",
+      "term_fr": "SN3D",
+      "term_en": "Schmidt semi-normalisation",
+      "domain": "post-immersive",
+      "definition": "Normalisation des composantes utilisée par AmbiX.",
+      "see_also": [
+        "ambisonic-formats-ambix-fuma"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
+          "publisher": "Wikipedia (Ambisonic data exchange formats)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "fuma",
+      "term_fr": "FuMa",
+      "term_en": "Furse-Malham",
+      "domain": "post-immersive",
+      "definition": "Convention ambisonique historique : ordre W X Y Z, W atténué de 3 dB.",
+      "see_also": [
+        "ambisonic-formats-ambix-fuma"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
+          "publisher": "Wikipedia (Ambisonic data exchange formats)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonics",
+          "publisher": "Wikipedia (Ambisonics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "ambix",
+      "term_fr": "AmbiX",
+      "term_en": "AmbiX",
+      "domain": "post-immersive",
+      "definition": "Convention ambisonique ACN + SN3D (Nachbar et al., 2011).",
+      "see_also": [
+        "ambisonic-formats-ambix-fuma"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
+          "publisher": "Wikipedia (Ambisonic data exchange formats)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "dummy-head",
+      "term_fr": "Tête artificielle",
+      "term_en": "Dummy head",
+      "domain": "post-immersive",
+      "definition": "Mannequin de tête avec un micro dans chaque oreille pour l'enregistrement binaural (ex. Neumann KU 100).",
+      "see_also": [
+        "binaural"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Binaural_recording",
+          "publisher": "Wikipedia (Binaural recording)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.neumann.com/en-en/products/microphones/ku-100/",
+          "publisher": "Neumann (KU 100)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "hrtf-term",
+      "term_fr": "HRTF",
+      "term_en": "Head-related transfer function",
+      "domain": "post-immersive",
+      "definition": "Filtrage dû à la tête et au pavillon selon la direction, base du rendu binaural.",
+      "see_also": [
+        "hrtf",
+        "binaural"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Binaural_recording",
+          "publisher": "Wikipedia (Binaural recording)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     }
-   ]
-  }
- ],
- "not_found_log": [
-  {
-   "what": "iXML (métadonnées tournage) et EDL",
-   "searched": "aucune source ouverte cette session"
-  }
- ]
+  ],
+  "not_found_log": [
+    {
+      "what": "iXML (métadonnées tournage) et EDL",
+      "searched": "aucune source ouverte cette session"
+    }
+  ]
 }

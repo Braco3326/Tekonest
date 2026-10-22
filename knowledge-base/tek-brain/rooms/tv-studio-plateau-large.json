@@ -345,7 +345,8 @@
       "covers": [
         "dimensions_m.length.typical (108 ft = 32,9 m)",
         "dimensions_m.width.typical (100 ft = 30,5 m)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.bbcstudioworks.com/wp-content/uploads/2024/08/TC1-Plans-V451.pdf",
@@ -360,7 +361,8 @@
         "openings (portes décors 4,623 × 5,588 m et 4,242 m de large)",
         "power_points",
         "patch_points"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.bbcstudioworks.com/studio/tc3/",
@@ -372,7 +374,8 @@
         "dimensions_m.length.min (100 ft = 30,5 m, plus grande dimension)",
         "dimensions_m.width.min (80 ft = 24,4 m)",
         "dimensions_m.height.min (36 ft = 11,0 m, hauteur annoncée)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://lesstudiosdeparis.com/wp-content/uploads/2025/09/PLATEAU-3-FR_ok.pdf",
@@ -385,7 +388,8 @@
         "surfaces.floor",
         "surfaces.walls",
         "surfaces.ceiling"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://lesstudiosdeparis.com/wp-content/uploads/2025/09/PLATEAU-9-FR_ok.pdf",
@@ -397,7 +401,8 @@
         "dimensions_m.length.max (40 m)",
         "dimensions_m.width.max (31 m)",
         "surfaces.floor (béton lisse)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "conflicts": [

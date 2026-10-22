@@ -64,7 +64,8 @@
             "definition",
             "formulas[0]",
             "formulas[1]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-leveladding.htm",
@@ -75,7 +76,8 @@
           "covers": [
             "formulas[2]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
@@ -85,7 +87,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -147,7 +150,8 @@
             "definition",
             "formulas[0]",
             "formulas[1]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Line_level",
@@ -158,17 +162,19 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -227,7 +233,8 @@
             "definition",
             "formulas[0]",
             "formulas[1]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Line_level",
@@ -237,7 +244,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
@@ -247,7 +255,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -292,7 +301,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/DBFS",
@@ -302,7 +312,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -357,7 +368,8 @@
           "covers": [
             "definition",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
@@ -367,17 +379,19 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -436,7 +450,8 @@
           "covers": [
             "definition",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.645-2-199203-I!!PDF-E.pdf",
@@ -447,7 +462,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -457,7 +473,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/DBFS",
@@ -467,7 +484,8 @@
           "kind": "other",
           "covers": [
             "conflicts"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Alignment_level",
@@ -477,7 +495,8 @@
           "kind": "other",
           "covers": [
             "conflicts"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -567,17 +586,19 @@
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -641,7 +662,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/",
@@ -651,17 +673,19 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
@@ -671,7 +695,8 @@
           "kind": "other",
           "covers": [
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -718,7 +743,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/DI_unit",
@@ -728,7 +754,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://us.focusrite.com/mic-pres/isa-one/specifications",
@@ -739,7 +766,8 @@
           "covers": [
             "explanation",
             "conflicts"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.radialeng.com/product/jdi/specifications/",
@@ -749,7 +777,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/j48/specifications/",
@@ -759,7 +788,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -826,12 +856,13 @@
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
@@ -841,7 +872,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -895,13 +927,14 @@
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
@@ -911,7 +944,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -951,12 +985,13 @@
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
@@ -966,7 +1001,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1040,17 +1076,19 @@
             "formulas[0]",
             "formulas[1]",
             "formulas[2]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1087,12 +1125,13 @@
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio",
@@ -1102,7 +1141,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1146,13 +1186,14 @@
           "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1207,7 +1248,8 @@
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1266,7 +1308,8 @@
           "covers": [
             "definition",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
@@ -1276,7 +1319,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1338,7 +1382,8 @@
           "covers": [
             "definition",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Line_level",
@@ -1348,7 +1393,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
@@ -1358,7 +1404,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1414,13 +1461,14 @@
           "url": "https://www.ranecommercial.com/legacy/note124.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 124)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Line_level",
@@ -1430,7 +1478,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1476,12 +1525,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
           "publisher": "DPA Microphones (Mic University)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/XLR_connector",
@@ -1491,17 +1541,19 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1549,21 +1601,23 @@
           "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
           "publisher": "DPA Microphones (Mic University)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/DI_unit",
@@ -1573,7 +1627,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1616,17 +1671,19 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
           "publisher": "DPA Microphones (Mic University)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1673,12 +1730,13 @@
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
@@ -1689,7 +1747,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Mains_hum",
@@ -1699,7 +1758,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1742,7 +1802,8 @@
             "definition",
             "explanation",
             "conflicts"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
@@ -1752,17 +1813,19 @@
           "kind": "other",
           "covers": [
             "conflicts"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1817,17 +1880,19 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note110.html",
           "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1870,7 +1935,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
@@ -1880,7 +1946,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1936,7 +2003,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/jdi/specifications/",
@@ -1946,7 +2014,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/j48/specifications/",
@@ -1956,7 +2025,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.radialeng.com/product/jpc/specifications/",
@@ -1966,7 +2036,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -2010,7 +2081,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note126.html",
@@ -2020,7 +2092,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

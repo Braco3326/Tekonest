@@ -340,7 +340,8 @@
         "zones.dirt-pit (7 × 9 pieds, terre sans dalle)",
         "zones.water-tank (bacs à eau)",
         "gear_positions[0] (KMR 81 = standard Foley/ADR)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

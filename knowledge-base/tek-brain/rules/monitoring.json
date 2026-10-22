@@ -54,7 +54,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
@@ -64,7 +65,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -115,7 +117,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
@@ -125,7 +128,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -175,7 +179,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/ew-iem-g4_bedienungsanleitung_05_2026_de.pdf/facce9cce7b611f08a557aeaa9c3764a?attachment=true",
@@ -185,7 +190,8 @@
           "kind": "manufacturer",
           "covers": [
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -233,7 +239,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
@@ -243,7 +250,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -253,7 +261,8 @@
           "kind": "manufacturer",
           "covers": [
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -298,7 +307,8 @@
           "covers": [
             "explanation",
             "fix"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

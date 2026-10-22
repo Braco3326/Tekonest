@@ -1,403 +1,418 @@
 {
- "entity": "rule",
- "domain": "microphones-miking",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "phantom-power-required",
-   "name_fr": "Micro statique sans +48 V",
-   "name_en": "Condenser without phantom power",
-   "domain": "microphones-miking",
-   "catalog_rule": "R4",
-   "status": "existing",
-   "severity": "error",
-   "scope": "connection",
-   "condition": {
-    "all": [
-     {
-      "path": "src.port.flags",
-      "op": "includes",
-      "value": "requiresPhantom"
-     },
-     {
-      "any": [
-       {
-        "path": "dst.port.flags",
-        "op": "excludes",
-        "value": "providesPhantom"
-       },
-       {
-        "path": "dst.device.controls.phantom-48v",
-        "op": "eq",
-        "value": false
-       }
-      ]
-     }
-    ]
-   },
-   "explanation": "Miroir de R4 : un port marqué requiresPhantom doit atteindre une entrée providesPhantom dont le fantôme est activé. Un micro à condensateur a une électronique interne qui doit être alimentée ; sans +48 V il reste muet. Neumann cite l'absence d'alimentation comme première cause quand un U 87 Ai ne fonctionne pas.",
-   "fix": "Brancher le micro sur une entrée micro qui fournit le fantôme et activer le +48 V (toggle phantom-48v), niveau baissé.",
-   "evaluable_now": true,
-   "needs_catalog_fields": [],
-   "concept_ids": [
-    "phantom-power",
-    "condenser-microphone"
-   ],
-   "sources": [
+  "entity": "rule",
+  "domain": "microphones-miking",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
-     "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
+      "id": "phantom-power-required",
+      "name_fr": "Micro statique sans +48 V",
+      "name_en": "Condenser without phantom power",
+      "domain": "microphones-miking",
+      "catalog_rule": "R4",
+      "status": "existing",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.flags",
+            "op": "includes",
+            "value": "requiresPhantom"
+          },
+          {
+            "any": [
+              {
+                "path": "dst.port.flags",
+                "op": "excludes",
+                "value": "providesPhantom"
+              },
+              {
+                "path": "dst.device.controls.phantom-48v",
+                "op": "eq",
+                "value": false
+              }
+            ]
+          }
+        ]
+      },
+      "explanation": "Miroir de R4 : un port marqué requiresPhantom doit atteindre une entrée providesPhantom dont le fantôme est activé. Un micro à condensateur a une électronique interne qui doit être alimentée ; sans +48 V il reste muet. Neumann cite l'absence d'alimentation comme première cause quand un U 87 Ai ne fonctionne pas.",
+      "fix": "Brancher le micro sur une entrée micro qui fournit le fantôme et activer le +48 V (toggle phantom-48v), niveau baissé.",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "phantom-power",
+        "condenser-microphone"
+      ],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+          "publisher": "Neumann, U 87 Ai Operating Manual (opin0134)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+          "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
-     "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
+      "id": "phantom-on-ribbon",
+      "name_fr": "+48 V vers un micro à ruban",
+      "name_en": "Phantom power toward a ribbon mic",
+      "domain": "microphones-miking",
+      "catalog_rule": "R4",
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.flags",
+            "op": "includes",
+            "value": "isRibbon"
+          },
+          {
+            "path": "dst.port.flags",
+            "op": "includes",
+            "value": "providesPhantom"
+          },
+          {
+            "path": "dst.device.controls.phantom-48v",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "explanation": "Précise la clause « avertissement si +48 V vers un ruban » de R4. Sur une liaison parfaite, le fantôme ne fait pas circuler de courant dans le ruban ; mais un câble défectueux, un adaptateur asymétrique ou un brassage en patchbay sous tension fait passer un courant qui peut détruire le ruban. Tous les rubans ne sont pas compatibles fantôme (Royer).",
+      "fix": "Couper le +48 V sur la voie (et son groupe) avant de brancher un ruban ; liaison directe sans patchbay ; vérifier la doc du fabricant.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isRibbon"
+      ],
+      "concept_ids": [
+        "ribbon-microphone",
+        "phantom-power"
+      ],
+      "sources": [
+        {
+          "url": "https://royerlabs.com/pdf/manuals/R-121manual.pdf",
+          "publisher": "Royer Labs, R-121 Operation Instructions",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://coleselectroacoustics.com/ribbon-microphone-care-tips/",
+          "publisher": "Coles Electroacoustics, Ribbon microphone care tips",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+          "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
+      "id": "phantom-into-unbalanced-link",
+      "name_fr": "Fantôme sur une liaison asymétrique",
+      "name_en": "Phantom power into an unbalanced link",
+      "domain": "microphones-miking",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "dst.port.flags",
+            "op": "includes",
+            "value": "providesPhantom"
+          },
+          {
+            "path": "dst.device.controls.phantom-48v",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "src.port.connector",
+            "op": "in",
+            "value": [
+              "ts-quarter",
+              "trs-35mm",
+              "rca"
+            ]
+          }
+        ]
+      },
+      "explanation": "Le fantôme suppose une liaison symétrique, même impédance de chaque conducteur vers la masse. DPA déconseille de brancher des micros ou câbles asymétriques sur une entrée fantôme : le +48 V est alors court-circuité ou envoyé dans l'appareil, et les micros sensibles (certains rubans) peuvent être endommagés. Shure rappelle qu'un adaptateur vers jack doit être TRS pour transporter le fantôme.",
+      "fix": "Couper le +48 V, utiliser un câble XLR symétrique ou une DI ; pour un micro à plug-in power, passer par l'entrée prévue de l'appareil.",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "phantom-power",
+        "balanced-line"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
+          "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+          "publisher": "DPA Microphones, Mic University: About balanced and unbalanced lines",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "polarity-inversion-same-source",
+      "name_fr": "Inversion de polarité entre micros d'une même source",
+      "name_en": "Polarity inversion between mics on the same source",
+      "domain": "microphones-miking",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "graph",
+      "condition": {
+        "all": [
+          {
+            "path": "graph.mic_group.same_source",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "graph.mic_group.polarity_mismatch_uncompensated",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "explanation": "Deux micros qui captent la même source (couple stéréo, caisse claire dessus/dessous, ampli avant/arrière) se somment mal si l'un est en polarité inversée sans raison (câble 2-3 permuté, inverseur oublié) : annulations, son maigre, image floue. À l'inverse, quand les micros captent la source « à l'envers » (dessous de caisse claire, arrière d'un combo ouvert), Shure recommande d'inverser l'un des deux pour que les fréquences s'additionnent.",
+      "fix": "Contrôler en mono ; corriger avec l'inverseur de polarité (Ø) de la voie ou un adaptateur d'inversion ; remplacer le câble mal câblé.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.controls.polarity-invert",
+        "graph.mic_group (input channels capturing the same source)",
+        "cable.pin_swap_2_3"
+      ],
+      "concept_ids": [
+        "microphone-polarity",
+        "comb-filtering"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
+          "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "three-to-one-spacing",
+      "name_fr": "Règle des 3 pour 1 non respectée",
+      "name_en": "3-to-1 spacing not respected",
+      "domain": "microphones-miking",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "room",
+      "condition": {
+        "all": [
+          {
+            "path": "room.mic_pair.spacing_to_source_ratio",
+            "op": "lt",
+            "value": 3
+          }
+        ]
+      },
+      "explanation": "Quand deux micros ouverts sont plus proches l'un de l'autre que trois fois leur distance à leur propre source, chaque micro capte fortement la source voisine et la somme produit du filtrage en peigne (Shure).",
+      "fix": "Éloigner les micros entre eux ou les rapprocher de leurs sources ; réduire le nombre de micros ouverts ; utiliser des directivités plus serrées.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "gear_positions.mic_to_source_distance_m",
+        "gear_positions.mic_to_mic_distance_m"
+      ],
+      "concept_ids": [
+        "three-to-one-rule",
+        "comb-filtering"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-ASIA/insights/of-mics-and-monitors-live-sound-reinforcement-tips-for-choirs",
+          "publisher": "Shure Asia (J. Wasem, 2016), Of Mics and Monitors: Live Sound Reinforcement Tips for Choirs",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "mic-max-spl-exceeded",
+      "name_fr": "Niveau source au-delà du SPL max du micro",
+      "name_en": "Source level above the mic's max SPL",
+      "domain": "microphones-miking",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "session",
+      "condition": {
+        "all": [
+          {
+            "path": "session.source_spl_at_mic_db",
+            "op": "gt",
+            "value": "device.specs.max_spl_db"
+          }
+        ]
+      },
+      "explanation": "Si la pression au micro dépasse son SPL max (à son critère de distorsion), l'électronique du condensateur sature. Shure demande au moins 130 dB SPL pour un condensateur en proximité sur batterie.",
+      "fix": "Vérifier d'abord la saturation de l'entrée console, puis engager le pad du micro, éloigner le micro ou choisir un modèle plus tolérant (souvent un dynamique).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.specs.max_spl_db",
+        "device.specs.max_spl_thd_percent",
+        "session.source_spl_at_mic_db"
+      ],
+      "concept_ids": [
+        "max-spl-microphone",
+        "microphone-pad"
+      ],
+      "sources": [
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
+          "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "accessed": "2026-10-22",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "phantom-on-ribbon",
-   "name_fr": "+48 V vers un micro à ruban",
-   "name_en": "Phantom power toward a ribbon mic",
-   "domain": "microphones-miking",
-   "catalog_rule": "R4",
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "connection",
-   "condition": {
-    "all": [
-     {
-      "path": "src.port.flags",
-      "op": "includes",
-      "value": "isRibbon"
-     },
-     {
-      "path": "dst.port.flags",
-      "op": "includes",
-      "value": "providesPhantom"
-     },
-     {
-      "path": "dst.device.controls.phantom-48v",
-      "op": "eq",
-      "value": true
-     }
-    ]
-   },
-   "explanation": "Précise la clause « avertissement si +48 V vers un ruban » de R4. Sur une liaison parfaite, le fantôme ne fait pas circuler de courant dans le ruban ; mais un câble défectueux, un adaptateur asymétrique ou un brassage en patchbay sous tension fait passer un courant qui peut détruire le ruban. Tous les rubans ne sont pas compatibles fantôme (Royer).",
-   "fix": "Couper le +48 V sur la voie (et son groupe) avant de brancher un ruban ; liaison directe sans patchbay ; vérifier la doc du fabricant.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "port.flags:isRibbon"
-   ],
-   "concept_ids": [
-    "ribbon-microphone",
-    "phantom-power"
-   ],
-   "sources": [
+  ],
+  "not_found_log": [
     {
-     "url": "https://royerlabs.com/pdf/manuals/R-121manual.pdf",
-     "publisher": "Royer Labs, R-121 Operation Instructions",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
-    },
-    {
-     "url": "https://coleselectroacoustics.com/ribbon-microphone-care-tips/",
-     "publisher": "Coles Electroacoustics, Ribbon microphone care tips",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
-     "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Règle distincte 'condenser-without-phantom' : identique à R4, non créée",
+      "searched": "catalog.json R4"
     }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "phantom-into-unbalanced-link",
-   "name_fr": "Fantôme sur une liaison asymétrique",
-   "name_en": "Phantom power into an unbalanced link",
-   "domain": "microphones-miking",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "connection",
-   "condition": {
-    "all": [
-     {
-      "path": "dst.port.flags",
-      "op": "includes",
-      "value": "providesPhantom"
-     },
-     {
-      "path": "dst.device.controls.phantom-48v",
-      "op": "eq",
-      "value": true
-     },
-     {
-      "path": "src.port.connector",
-      "op": "in",
-      "value": [
-       "ts-quarter",
-       "trs-35mm",
-       "rca"
-      ]
-     }
-    ]
-   },
-   "explanation": "Le fantôme suppose une liaison symétrique, même impédance de chaque conducteur vers la masse. DPA déconseille de brancher des micros ou câbles asymétriques sur une entrée fantôme : le +48 V est alors court-circuité ou envoyé dans l'appareil, et les micros sensibles (certains rubans) peuvent être endommagés. Shure rappelle qu'un adaptateur vers jack doit être TRS pour transporter le fantôme.",
-   "fix": "Couper le +48 V, utiliser un câble XLR symétrique ou une DI ; pour un micro à plug-in power, passer par l'entrée prévue de l'appareil.",
-   "evaluable_now": true,
-   "needs_catalog_fields": [],
-   "concept_ids": [
-    "phantom-power",
-    "balanced-line"
-   ],
-   "sources": [
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/know-the-basics-about-phantom-power/",
-     "publisher": "DPA Microphones, Mic University: Know the basics about phantom power",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
-     "publisher": "DPA Microphones, Mic University: About balanced and unbalanced lines",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "polarity-inversion-same-source",
-   "name_fr": "Inversion de polarité entre micros d'une même source",
-   "name_en": "Polarity inversion between mics on the same source",
-   "domain": "microphones-miking",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "graph",
-   "condition": {
-    "all": [
-     {
-      "path": "graph.mic_group.same_source",
-      "op": "eq",
-      "value": true
-     },
-     {
-      "path": "graph.mic_group.polarity_mismatch_uncompensated",
-      "op": "eq",
-      "value": true
-     }
-    ]
-   },
-   "explanation": "Deux micros qui captent la même source (couple stéréo, caisse claire dessus/dessous, ampli avant/arrière) se somment mal si l'un est en polarité inversée sans raison (câble 2-3 permuté, inverseur oublié) : annulations, son maigre, image floue. À l'inverse, quand les micros captent la source « à l'envers » (dessous de caisse claire, arrière d'un combo ouvert), Shure recommande d'inverser l'un des deux pour que les fréquences s'additionnent.",
-   "fix": "Contrôler en mono ; corriger avec l'inverseur de polarité (Ø) de la voie ou un adaptateur d'inversion ; remplacer le câble mal câblé.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "device.controls.polarity-invert",
-    "graph.mic_group (input channels capturing the same source)",
-    "cable.pin_swap_2_3"
-   ],
-   "concept_ids": [
-    "microphone-polarity",
-    "comb-filtering"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/24/241348/download_241348.pdf",
-     "publisher": "Shure Incorporated, PGA181 User Guide 27A27346 Rev. 3 (2015), Shure document hosted by Gear4music",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
-     "publisher": "DPA Microphones (E. B. Brixen), Mic University: Stereo recording techniques and setups",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "three-to-one-spacing",
-   "name_fr": "Règle des 3 pour 1 non respectée",
-   "name_en": "3-to-1 spacing not respected",
-   "domain": "microphones-miking",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "info",
-   "scope": "room",
-   "condition": {
-    "all": [
-     {
-      "path": "room.mic_pair.spacing_to_source_ratio",
-      "op": "lt",
-      "value": 3
-     }
-    ]
-   },
-   "explanation": "Quand deux micros ouverts sont plus proches l'un de l'autre que trois fois leur distance à leur propre source, chaque micro capte fortement la source voisine et la somme produit du filtrage en peigne (Shure).",
-   "fix": "Éloigner les micros entre eux ou les rapprocher de leurs sources ; réduire le nombre de micros ouverts ; utiliser des directivités plus serrées.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "gear_positions.mic_to_source_distance_m",
-    "gear_positions.mic_to_mic_distance_m"
-   ],
-   "concept_ids": [
-    "three-to-one-rule",
-    "comb-filtering"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
-    },
-    {
-     "url": "https://www.shure.com/en-ASIA/insights/of-mics-and-monitors-live-sound-reinforcement-tips-for-choirs",
-     "publisher": "Shure Asia (J. Wasem, 2016), Of Mics and Monitors: Live Sound Reinforcement Tips for Choirs",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "mic-max-spl-exceeded",
-   "name_fr": "Niveau source au-delà du SPL max du micro",
-   "name_en": "Source level above the mic's max SPL",
-   "domain": "microphones-miking",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "info",
-   "scope": "session",
-   "condition": {
-    "all": [
-     {
-      "path": "session.source_spl_at_mic_db",
-      "op": "gt",
-      "value": "device.specs.max_spl_db"
-     }
-    ]
-   },
-   "explanation": "Si la pression au micro dépasse son SPL max (à son critère de distorsion), l'électronique du condensateur sature. Shure demande au moins 130 dB SPL pour un condensateur en proximité sur batterie.",
-   "fix": "Vérifier d'abord la saturation de l'entrée console, puis engager le pad du micro, éloigner le micro ou choisir un modèle plus tolérant (souvent un dynamique).",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "device.specs.max_spl_db",
-    "device.specs.max_spl_thd_percent",
-    "session.source_spl_at_mic_db"
-   ],
-   "concept_ids": [
-    "max-spl-microphone",
-    "microphone-pad"
-   ],
-   "sources": [
-    {
-     "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/microphone_techniques_for_recording_english.pdf-bb0469316afdb6118691d2f3f5e3ff01.pdf",
-     "publisher": "Shure Incorporated, Microphone Techniques for Recording (Shure Educational Publication)",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "accessed": "2026-10-22",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
-    }
-   ],
-   "review": "ok"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Règle distincte 'condenser-without-phantom' : identique à R4, non créée",
-   "searched": "catalog.json R4"
-  }
- ]
+  ]
 }

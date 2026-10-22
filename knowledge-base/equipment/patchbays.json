@@ -575,7 +575,7 @@
           "version_or_date": "BDA80-2, update 03.08.2009",
           "official": true,
           "kind": "user-manual",
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nppa-tt-pt.pdf",
@@ -585,7 +585,7 @@
           "version_or_date": "generated 22.10.2026",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/media/10095/download/07%20Section%20Accessories%20and%20Patch%20Panels%20PG%20DE%20202202-V22.pdf?v=5",
@@ -595,7 +595,7 @@
           "version_or_date": "202202-V22",
           "official": true,
           "kind": "other",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -617,7 +617,7 @@
             "key_specs.weight",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nppa-tt-pt",
@@ -633,7 +633,7 @@
             "key_specs.channel_separation",
             "status"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nppa-tt-pt.pdf",
@@ -646,7 +646,7 @@
             "key_specs.contact_resistance",
             "key_specs.channel_separation"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/media/10095/download/07%20Section%20Accessories%20and%20Patch%20Panels%20PG%20DE%20202202-V22.pdf?v=5",
@@ -658,7 +658,7 @@
             "key_specs.normalling",
             "notes"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Neutrik's product guide defines half normalled bottom row (the default): internal normalling contacts join each top jack to the jack below; a plug in the bottom jack breaks that link, while a plug in the top jack leaves it in place so the signal can be monitored. Half normalled top row is the mirror image. Full normalled breaks the link from either row. Parallel joins both jacks so both rows carry the same signal. Isolated keeps the rows separate. Neutrik warns against the parallel setting, and against other parallel paths in half-normalled setups, for digital signals (impedance mismatch). The manual also notes that the rows share no ground by default, so for phantom-powered mic lines you must wire the S terminals together or patch with a cord.",
@@ -688,9 +688,9 @@
         "sim_value": "high",
         "sim_value_reason": "Five normalling types including parallel and HN-top, plus the warning about phantom-power grounds and digital parallel paths"
       },
-      "manual_url_status": "ok",
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "samson-s-patch-plus",
@@ -895,7 +895,7 @@
           "version_or_date": "BDA 175, update 30.03.2010",
           "official": true,
           "kind": "other",
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nys-spp-l1.pdf",
@@ -905,7 +905,7 @@
           "version_or_date": "generated 22.10.2026",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/media/10095/download/07%20Section%20Accessories%20and%20Patch%20Panels%20PG%20DE%20202202-V22.pdf?v=5",
@@ -915,7 +915,7 @@
           "version_or_date": "202202-V22",
           "official": true,
           "kind": "other",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -935,7 +935,7 @@
             "key_specs.handles_phantom_power",
             "status"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nys-spp-l1.pdf",
@@ -951,7 +951,7 @@
             "key_specs.lifetime",
             "key_specs.temperature_range"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/media/8075/download/patch-panel-nys-spp-l1.pdf?v=1",
@@ -962,7 +962,7 @@
           "covers": [
             "key_specs.grounding"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/media/10095/download/07%20Section%20Accessories%20and%20Patch%20Panels%20PG%20DE%20202202-V22.pdf?v=5",
@@ -974,7 +974,7 @@
             "key_specs.normalling",
             "notes"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Neutrik ships the card half normalled bottom row. With no cord, each top jack feeds the jack below. A plug in the grey jack always isolates the top row from the bottom row, while a plug in the other jack (Neutrik's front jack A, for 'listening') takes a copy without breaking the link. Turning the PCB gives the 'Turned' configuration. Our reading of the diagrams is that it moves the breaking jack to the other row; Neutrik does not state this in words. The NYS-SPCR1 split card handles send/return on one stereo jack and is suggested as an alternative to a Y-cable for console inputs. No full-normal or thru version is documented. Grounds are set separately with clips. Neutrik states the panel does not handle phantom power.",
@@ -987,9 +987,9 @@
         "sim_value": "medium",
         "sim_value_reason": "Flip-card normalling and the grey 'breaking' jack are a useful contrast to toggle or screwdriver switching"
       },
-      "manual_url_status": "ok",
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "canare-162u-x21",
