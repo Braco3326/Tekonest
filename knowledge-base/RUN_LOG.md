@@ -67,3 +67,34 @@ Master prompt: `knowledge-base/docs/prompts/tekbrain-and-explore-controls.md` (v
 - `tools/validate_tekbrain.py` (stdlib): envelopes, required fields, enums, ids, sources, formula→source link, condition DSL, room geometry, cross-references (warnings, errors with `--strict`). Smoke-tested on a good and a bad record (14 expected errors caught).
 - `tek-brain/AGENT_BRIEF.md`: rules, search budget (≤ 6 WebSearch per agent), examples for every entity.
 - Self-answered design questions logged as OPEN_QUESTIONS #17–22.
+
+## A2 domains (10:00–15:30)
+- 17 research agents in parallel, one per domain, following `tek-brain/AGENT_BRIEF.md`. At about 10:00 a network (DNS) outage stopped all 17 before they had written anything. They were resumed with their context and nothing was lost.
+- All 17 domains were committed one by one: 414 concepts, 60 skills, 96 procedures, 82 rules (9 mirrors of R1–R8), 101 faults, 41 scenarios, 780 terms. Cross-domain glossary id collisions were fixed by the agents themselves (renamed or dropped).
+- Notable sourced findings: the worker peak limit is 140 dB(C), not 137 (137 is the upper action value); EBU Tech 3326 makes G.722 the safe common codec; the d&b vs NEXO speakON pin pairs; Dante clock-leader election; ADAT S/MUX halves the channels at 96 kHz; ARCEP 2015-0830 sets the PMSE limit at 50 mW ERP in 470–694 MHz.
+- Mistake: the first acoustics commit used `git add knowledge-base/tek-brain` and swept in another agent's half-written concepts file. It validated, and later commits went domain by domain.
+
+## A3 rooms and 3D (12:30–16:30)
+- 5 room agents wrote the 32 planned room templates (`ROOMS_BRIEF.md`). Sources include EBU Tech 3276, ITU-R BS.1116, BBC TC1, Studios de Paris, Studios Ferber, Zéniths, Stageco, French theatres' fiches techniques, Portuguese church acoustics papers, ISO 2603 via AIIC and Microsoft Teams room sizes. All are `needs-oscar-review`, with estimates logged.
+- 4 3D agents (`MODELS_BRIEF.md`). There is no Sketchfab token, so Sketchfab is catalogue-only, and the per-model API was rate-limited (429). Results: Sketchfab venues 232, Sketchfab props 326, CC0 libraries 275 + 25 glb, Smithsonian/Objaverse/CAD 99 + 19 glb.
+- `tools/merge_3d.py` produced 983 entries with `id`/`kind`; 64 committed glb (26.2 MB) are linked; rooms got `licensed_dressing`.
+
+## A4 resources and curriculum (14:30–17:00)
+- 3 agents (French + standards, open courseware + MOOCs, manufacturer academies). `tools/merge_resources.py` produced 315 resources, 260 free, 75 in French, plus `learning-resources-catalogue.md`.
+- The 56 run-1 entries were backfilled with `licence` and `concept_ids`.
+- Fix: the merge script used to wipe link-check fields on re-run; it now keeps merged entries.
+- `tek-brain/curriculum.md`: 24 modules, all 414 concepts placed.
+
+## A5 retrieval index
+- `tools/build_index.py` (TDD, 9 tests) builds 1,832 chunks of own-words content with source URLs. `AI_USAGE.md` covers retrieval, `[kb:id]` citations and silence in exam mode. TekPractice's coach cites these chunks (Track B).
+
+## A6 QA
+- `check_urls.py` now also covers TEK Brain: 3,161 URLs, 2,788 ok, 276 blocked, 68 "dead". 52 of those were Objaverse URLs with a literal `<shard>` placeholder written by an agent. They were replaced by the object id plus "not found", and the validator now rejects placeholder URLs. 16 links are really dead.
+- Independent spot-check of 207 records: 157 pass, 49 minor, 1 fail. All 57 findings were fixed by a separate agent: 15 claims deleted, 6 newly sourced, 163 confidence labels corrected.
+- Deep-scan gap hunt found:
+  - JSON Schemas promised but missing → `schema/tek-brain.schema.json` and `room.schema.json`, plus `tools/schema_check.py` (151 files, 0 errors)
+  - DSL `ref` and wall convention undocumented → added to DESIGN
+  - run-1 glb not linked → linked
+  - stale coach pack in TekPractice → `npm run sync:kb`
+- Final: `validate_tekbrain.py --strict` gives 0 errors, 0 warnings, 0 unresolved references.
+- Pushes: credentials became available this run, so `research/tekbrain` is pushed and no bundle was needed.

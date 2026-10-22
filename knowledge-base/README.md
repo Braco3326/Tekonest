@@ -16,9 +16,11 @@ Built 2026-10-22 on branch `research/sound-equipment-database`. **Every fact lin
 | [`equipment/tekpractice-mapping.md`](equipment/tekpractice-mapping.md) | Catalog coverage, next devices to add, missing connector/signal ids. Generated tables are in `tekpractice-mapping.generated.md`. | — |
 | [`manuals-missing.md`](manuals-missing.md) | Devices with no official manual found, plus every agent's not-found log (generated) | — |
 | [`fundamentals/`](fundamentals/) | "How sound works": 19 sourced explainers in French with English terms | 19 files |
-| [`learning-resources.json`](learning-resources.json) / [`.md`](learning-resources.md) | Books, standards, academies, courses, channels (legal links only) | 56 entries |
-| [`3d-models.json`](3d-models.json) / [`.md`](3d-models.md) | 3D model candidates with exact licences (link only) | 80 entries |
-| [`3d-models/`](3d-models/) | Redistributable glb files (CC0 / CC-BY) + `CREDITS.md` + `downloads.json` | 20 files, 16 MB |
+| [`tek-brain/`](tek-brain/README.md) | **TEK Brain (run 2):** concepts, skills, procedures, machine-checkable rules, faults, scenarios, FR↔EN glossary, parametric room templates, curriculum, retrieval index for the AI coach/tutor | 414 concepts, 60 skills, 96 procedures, 82 rules, 101 faults, 41 scenarios, 780 terms, 32 rooms, 1,832 chunks |
+| [`learning-resources.json`](learning-resources.json) / [`.md`](learning-resources.md) / [`-catalogue.md`](learning-resources-catalogue.md) | Books, standards, academies, courses, channels (legal links only), each with `licence` and TEK Brain `concept_ids` | 315 entries, 260 legally free |
+| [`3d-models.json`](3d-models.json) / [`.md`](3d-models.md) / [`-catalogue.md`](3d-models-catalogue.md) | 3D candidates with exact licences, `id` and `kind` (device, room, venue, prop, character, material), link only unless committed | 983 entries |
+| [`3d-models/`](3d-models/) | Redistributable glb files (CC0 / CC-BY) + `CREDITS.md` + `downloads.json` | 64 files, 26 MB |
+| [`schema/`](schema/) | `device.schema.json` (run 1), `tek-brain.schema.json`, `room.schema.json` (run 2) | — |
 | [`qa/spot-check.md`](qa/spot-check.md) | Independent re-check of 36 devices against their sources | — |
 | [`QUALITY_REPORT.md`](QUALITY_REPORT.md) | Counts, coverage, URL check, conflicts, licence issues | — |
 | [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md) | Decisions for Oscar | 16 questions |
@@ -60,6 +62,10 @@ The full contract is `schema/device.schema.json`; `tools/validate.py` enforces i
 4. Run `python knowledge-base/tools/check_urls.py` from time to time; manufacturer links rot.
 
 To add a category or sub-type, add it to `taxonomy.json`, and add the file name to that category's `equipment_files`.
+
+## TEK Brain (run 2)
+
+See [`tek-brain/README.md`](tek-brain/README.md) for the entity model, validation commands and how TekPractice (`npm run sync:kb`) and the learning site use it. Quality numbers are in [QUALITY_REPORT.md](QUALITY_REPORT.md#run-2-tek-brain-2026-10-22), and the decisions waiting for Oscar are in OPEN_QUESTIONS sections E–F.
 
 ## Next steps
 
