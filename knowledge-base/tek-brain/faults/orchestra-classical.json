@@ -1,0 +1,390 @@
+{
+  "entity": "fault",
+  "domain": "orchestra-classical",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "unstable-stereo-image",
+      "name_fr": "Image stéréo instable ou floue",
+      "name_en": "Unstable or vague stereo image",
+      "domain": "orchestra-classical",
+      "symptom": "Les pupitres ne sont pas localisables, l'image « flotte » ou se creuse au centre ; en mono le son change de timbre.",
+      "contexts": [
+        "concert",
+        "studio",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Couple AB trop écarté sans micro central (trou au centre)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Couple placé trop près du centre d'un orchestre en demi-cercle : bords très hors axe, différences de temps importantes",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Appoints non retardés ou mal panoramiqués qui contredisent l'image du couple",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Couple AB écouté en mono : filtre en peigne par sommation",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Écouter le couple principal seul, appoints fermés",
+        "Vérifier écartement et position du couple par rapport au plan de scène",
+        "Passer en mono pour entendre la coloration",
+        "Ouvrir les appoints un par un en surveillant la position des pupitres"
+      ],
+      "fixes": [
+        "Réduire l'écartement ou ajouter un micro central",
+        "Reculer ou monter le couple",
+        "Retarder et repanoramiquer les appoints",
+        "Choisir un couple quasi coïncident si la compatibilité mono est prioritaire"
+      ],
+      "rule_ids": [
+        "wide-spaced-pair-without-centre",
+        "spot-mic-delay-missing"
+      ],
+      "concept_ids": [
+        "centre-image-hole",
+        "main-pair-height-and-position",
+        "stereo-ab",
+        "spot-microphone-delay-compensation"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (Mic University) — « Stereo recording techniques and setups »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "excessive-room-sound",
+      "name_fr": "Trop de salle : orchestre lointain et flou",
+      "name_en": "Too much room: distant, washy orchestra",
+      "domain": "orchestra-classical",
+      "symptom": "L'orchestre paraît lointain, les attaques sont noyées dans la réverbération, le texte d'un chœur est inintelligible.",
+      "contexts": [
+        "concert",
+        "church"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Système principal trop loin ou trop haut pour une salle très réverbérante",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Couple trop écarté ou capsules trop omnidirectionnelles (cône) pour la salle",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Trop peu d'appoints dans une salle réverbérante",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Comparer l'écoute en salle et en régie",
+        "Noter le temps de réverbération supposé de la salle (DPA : 1,8–2,2 s pour une salle de concert)",
+        "Essayer un placement plus proche par pas de 50 cm"
+      ],
+      "fixes": [
+        "Rapprocher ou abaisser le système principal",
+        "Utiliser des capsules plus directives ou un couple quasi coïncident",
+        "Ajouter des appoints de pupitre à 1–1,5 m"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "concert-hall-acoustics",
+        "main-pair-height-and-position",
+        "critical-distance",
+        "concert-hall-reverberation-targets"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "checks"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "recording-too-dry",
+      "name_fr": "Enregistrement trop sec",
+      "name_en": "Recording too dry",
+      "domain": "orchestra-classical",
+      "symptom": "Son proche et détaillé mais sans profondeur ni enveloppe ; l'orchestre sonne « comme en studio ».",
+      "contexts": [
+        "concert",
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Trop d'appoints mixés trop fort par rapport au couple principal",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Salle peu réverbérante (polyvalente, théâtre)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Couple principal trop près de l'orchestre",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Écouter le couple seul : a-t-il assez de salle ?",
+        "Comparer la salle à la cible DPA (1,8–2,2 s à 500 Hz pour le classique)",
+        "Vérifier les niveaux relatifs appoints/couple"
+      ],
+      "fixes": [
+        "Baisser les appoints, le couple doit dominer",
+        "Reculer ou monter le couple, ou l'orienter vers le mur du fond",
+        "Utiliser un cône ou un couple plus large pour plus d'ambiance"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "concert-hall-reverberation-targets",
+        "spot-microphones",
+        "diffuse-field-response-main-mics"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "checks"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "spot-mics-pull-image",
+      "name_fr": "Appoints qui tirent l'image",
+      "name_en": "Spot mics pulling the image",
+      "domain": "orchestra-classical",
+      "symptom": "Quand on ouvre un appoint, le pupitre avance brusquement ou change de place dans l'image ; le timbre devient métallique (filtre en peigne).",
+      "contexts": [
+        "concert",
+        "studio",
+        "broadcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Appoint à plus de 4 m du couple, non retardé : son signal arrive en premier (effet de précédence)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Appoint trop fort par rapport au couple",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Panoramique de l'appoint différent de la position du pupitre dans l'image du couple",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Couper/ouvrir l'appoint en écoutant la position du pupitre",
+        "Mesurer la distance appoint–couple et calculer Δt = a / c",
+        "Comparer le panoramique avec l'image du couple seul"
+      ],
+      "fixes": [
+        "Régler un retard environ 25 % plus long que la première arrivée (méthode DPA)",
+        "Baisser l'appoint",
+        "Repanoramiquer à la position réelle"
+      ],
+      "rule_ids": [
+        "spot-mic-delay-missing"
+      ],
+      "concept_ids": [
+        "spot-microphone-delay-compensation",
+        "haas-precedence-effect",
+        "comb-filtering"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
+          "publisher": "sengpielaudio — « Comb filter calculator »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "checks"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "low-frequency-rumble-classical",
+      "name_fr": "Grondement grave (ventilation, pieds, sol)",
+      "name_en": "Low-frequency rumble (HVAC, stands, floor)",
+      "domain": "orchestra-classical",
+      "symptom": "Un grondement grave ou des « coups » sourds dans les micros principaux, audibles dans les passages calmes, sans lien avec la musique.",
+      "contexts": [
+        "concert",
+        "church",
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Ventilation / climatisation : bruit et courants d'air sur les micros",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Vibrations du sol ou de l'estrade transmises par les pieds de micro",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Trafic extérieur ou métro transmis par le bâtiment",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Écouter micros ouverts, salle vide, ventilation en marche puis coupée",
+        "Taper légèrement le sol près des pieds en écoutant",
+        "Visualiser le spectre sous 100 Hz pendant un silence"
+      ],
+      "fixes": [
+        "Faire couper la ventilation pendant les prises",
+        "Utiliser des suspensions élastiques et découpler les pieds de l'estrade",
+        "Activer le coupe-bas du micro ou du préampli (ex. 20 Hz 12 dB/oct sur CMC 6)"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "mechanical-and-hvac-rumble",
+        "high-pass-filter"
+      ],
+      "equipment_ids": [
+        "schoeps-cmc-6-mk-4",
+        "akg-c451-b"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Shock_mount",
+          "publisher": "Wikipedia — « Shock mount »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Valeurs de coupe-bas recommandées pour la prise classique (hors données constructeur)",
+      "searched": "Wikipedia Shock mount ; DPA choir"
+    }
+  ]
+}

@@ -1,0 +1,919 @@
+{
+  "entity": "glossary",
+  "domain": "orchestra-classical",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "main-pair",
+      "term_fr": "Couple principal",
+      "term_en": "Main pair",
+      "domain": "orchestra-classical",
+      "definition": "Couple stéréo qui donne l'image et la profondeur de l'orchestre ; il se place avant les appoints.",
+      "see_also": [
+        "main-microphone-array"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spot-mic",
+      "term_fr": "Micro d'appoint",
+      "term_en": "Spot microphone",
+      "domain": "orchestra-classical",
+      "definition": "Micro proche d'un pupitre ou d'un soliste qui complète le couple principal.",
+      "see_also": [
+        "spot-microphones"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-mic",
+      "term_fr": "Appoint de pupitre",
+      "term_en": "Section microphone",
+      "domain": "orchestra-classical",
+      "definition": "Appoint directionnel couvrant 3 à 4 musiciens d'un même pupitre, à 1–1,5 m.",
+      "see_also": [
+        "section-support-microphones"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outrigger-pair",
+      "term_fr": "Flancs (outriggers)",
+      "term_en": "Outriggers",
+      "domain": "orchestra-classical",
+      "definition": "Paire d'omnis ajoutée de chaque côté d'un arbre Decca, à la même hauteur.",
+      "see_also": [
+        "outrigger-microphones"
+      ],
+      "sources": [
+        {
+          "url": "https://abbeyroadinstitute.co.uk/blog/the-decca-tree-the-secrets-behind-the-legendary-recording-technique/",
+          "publisher": "Abbey Road Institute — « The Decca Tree: the secrets behind the legendary recording technique »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decca-tree-triangle",
+      "term_fr": "Triangle de l'arbre Decca",
+      "term_en": "Decca tree triangle",
+      "domain": "orchestra-classical",
+      "definition": "Trois omnis en triangle (souvent en T) au-dessus du chef ; le micro avant remplit le centre.",
+      "see_also": [
+        "decca-tree"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Decca_tree",
+          "publisher": "Wikipedia — « Decca tree »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "neumann-m-50",
+      "term_fr": "Neumann M 50",
+      "term_en": "Neumann M 50",
+      "domain": "orchestra-classical",
+      "definition": "Micro à lampe à petite membrane de pression montée sur une sphère, utilisé historiquement dans l'arbre Decca ; plus directif au-dessus de 1 kHz.",
+      "see_also": [
+        "decca-tree"
+      ],
+      "sources": [
+        {
+          "url": "https://abbeyroadinstitute.co.uk/blog/the-decca-tree-the-secrets-behind-the-legendary-recording-technique/",
+          "publisher": "Abbey Road Institute — « The Decca Tree: the secrets behind the legendary recording technique »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Decca_tree",
+          "publisher": "Wikipedia — « Decca tree »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acoustic-sphere-ka-40",
+      "term_fr": "Sphère acoustique (KA 40)",
+      "term_en": "Acoustic sphere attachment",
+      "domain": "orchestra-classical",
+      "definition": "Accessoire SCHOEPS monté sur une capsule omni qui augmente la directivité entre 1 et 4 kHz.",
+      "see_also": [
+        "diffuse-field-response-main-mics"
+      ],
+      "sources": [
+        {
+          "url": "https://schoeps.de/en/products/stereo/sets/decca-tree-set.html",
+          "publisher": "SCHOEPS — « Decca Tree Set »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "diffuse-field-grid",
+      "term_fr": "Grille champ diffus",
+      "term_en": "Diffuse-field grid",
+      "domain": "orchestra-classical",
+      "definition": "Grille qui donne à un omni une réponse linéaire en champ diffus, utile à distance (DPA DD0297).",
+      "see_also": [
+        "diffuse-field-response-main-mics"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nose-cone",
+      "term_fr": "Cône (nose cone)",
+      "term_en": "Nose cone",
+      "domain": "orchestra-classical",
+      "definition": "Accessoire DPA (UA0777) qui rend un omni omnidirectionnel sur toute la bande et ajoute de l'ambiance.",
+      "see_also": [
+        "diffuse-field-response-main-mics"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hole-in-the-middle",
+      "term_fr": "Trou au centre",
+      "term_en": "Hole in the middle",
+      "domain": "orchestra-classical",
+      "definition": "Manque de sources au centre de l'image avec un couple espacé trop large.",
+      "see_also": [
+        "centre-image-hole"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "american-seating-term",
+      "term_fr": "Placement à l'américaine",
+      "term_en": "American seating",
+      "domain": "orchestra-classical",
+      "definition": "Violons 1 et 2 côte à côte à gauche, puis altos et violoncelles.",
+      "see_also": [
+        "american-seating"
+      ],
+      "sources": [
+        {
+          "url": "https://www.berliner-philharmoniker.de/en/stories/who-decides-the-seating-arrangement-of-the-musicians-on-stage/",
+          "publisher": "Berliner Philharmoniker — « Who decides the seating arrangement of the musicians on stage? »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "german-seating-term",
+      "term_fr": "Placement à l'allemande",
+      "term_en": "German seating",
+      "domain": "orchestra-classical",
+      "definition": "Violons 1 à gauche et violons 2 à droite, face à face, violoncelles et altos entre eux.",
+      "see_also": [
+        "german-seating"
+      ],
+      "sources": [
+        {
+          "url": "https://www.berliner-philharmoniker.de/en/stories/who-decides-the-seating-arrangement-of-the-musicians-on-stage/",
+          "publisher": "Berliner Philharmoniker — « Who decides the seating arrangement of the musicians on stage? »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
+          "publisher": "Singapore Symphony Orchestra — « Seats and Sounds: Orchestral Seating and the Symphony of Sounds »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "antiphonal-violins",
+      "term_fr": "Violons antiphonaux",
+      "term_en": "Antiphonal violins",
+      "domain": "orchestra-classical",
+      "definition": "Violons 1 et 2 placés de part et d'autre du chef pour qu'ils se répondent.",
+      "see_also": [
+        "german-seating"
+      ],
+      "sources": [
+        {
+          "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
+          "publisher": "Singapore Symphony Orchestra — « Seats and Sounds: Orchestral Seating and the Symphony of Sounds »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "orchestra-pit-term",
+      "term_fr": "Fosse d'orchestre",
+      "term_en": "Orchestra pit",
+      "domain": "orchestra-classical",
+      "definition": "Espace abaissé devant la scène où joue l'orchestre d'opéra ou de ballet.",
+      "see_also": [
+        "orchestra-pit"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Orchestra_pit",
+          "publisher": "Wikipedia — « Orchestra pit »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pit-lift",
+      "term_fr": "Fosse mobile (élévateur)",
+      "term_en": "Pit lift",
+      "domain": "orchestra-classical",
+      "definition": "Plancher de fosse réglable en hauteur, jusqu'au niveau de la scène ou de la salle.",
+      "see_also": [
+        "orchestra-pit"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Orchestra_pit",
+          "publisher": "Wikipedia — « Orchestra pit »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shoebox-hall",
+      "term_fr": "Salle « boîte à chaussures »",
+      "term_en": "Shoebox hall",
+      "domain": "orchestra-classical",
+      "definition": "Salle rectangulaire étroite et haute à fortes réflexions latérales, comme le Musikverein.",
+      "see_also": [
+        "shoebox-concert-hall"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Wiener_Musikverein",
+          "publisher": "Wikipedia — « Wiener Musikverein »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rt-concert-hall-target",
+      "term_fr": "TR cible d'une salle de concert",
+      "term_en": "Concert hall RT target",
+      "domain": "orchestra-classical",
+      "definition": "1,8 à 2,2 s à 500 Hz pour la musique classique selon DPA.",
+      "see_also": [
+        "concert-hall-reverberation-targets"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rt-opera-target",
+      "term_fr": "TR cible d'un opéra",
+      "term_en": "Opera RT target",
+      "domain": "orchestra-classical",
+      "definition": "Environ 1,6 s à 500 Hz selon DPA, pour porter le chant en gardant l'intelligibilité.",
+      "see_also": [
+        "concert-hall-reverberation-targets"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ortf-pair",
+      "term_fr": "Couple ORTF",
+      "term_en": "ORTF pair",
+      "domain": "orchestra-classical",
+      "definition": "Deux cardioïdes à 17 cm et 110° l'un de l'autre, angle de prise de son 95° (SCHOEPS).",
+      "see_also": [
+        "stereo-ortf",
+        "near-coincident-main-pair"
+      ],
+      "sources": [
+        {
+          "url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
+          "publisher": "SCHOEPS — « MSTC 74 » (ORTF stereo microphone)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nos-pair",
+      "term_fr": "Couple NOS",
+      "term_en": "NOS pair",
+      "domain": "orchestra-classical",
+      "definition": "Deux cardioïdes espacés de 30 cm, à 90°.",
+      "see_also": [
+        "near-coincident-main-pair"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (Mic University) — « Stereo recording techniques and setups »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "din-pair",
+      "term_fr": "Couple DIN",
+      "term_en": "DIN pair",
+      "domain": "orchestra-classical",
+      "definition": "Deux cardioïdes espacés de 20 cm, à 90°.",
+      "see_also": [
+        "near-coincident-main-pair"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (Mic University) — « Stereo recording techniques and setups »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blumlein-pair",
+      "term_fr": "Couple Blumlein",
+      "term_en": "Blumlein pair",
+      "domain": "orchestra-classical",
+      "definition": "Deux bidirectionnels coïncidents à 90°, couvrant une scène d'environ ±35°.",
+      "see_also": [
+        "stereo-xy"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (Mic University) — « Stereo recording techniques and setups »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "main-pair-recording-angle",
+      "term_fr": "Angle de prise de son",
+      "term_en": "Recording angle",
+      "domain": "orchestra-classical",
+      "definition": "Largeur de la scène sonore qui se répartit sur toute la base stéréo ; DPA l'écrit en ± (140° = ±70°).",
+      "see_also": [
+        "near-coincident-main-pair",
+        "stereo-ab"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (Mic University) — « Stereo recording techniques and setups »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "time-difference-stereo",
+      "term_fr": "Stéréophonie de temps",
+      "term_en": "Time-difference stereo",
+      "domain": "orchestra-classical",
+      "definition": "Localisation par différence de temps entre micros ; environ 1,1 ms pour une source à 30° (DPA).",
+      "see_also": [
+        "stereo-ab"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (Mic University) — « Stereo recording techniques and setups »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "level-difference-stereo",
+      "term_fr": "Stéréophonie d'intensité",
+      "term_en": "Level-difference stereo",
+      "domain": "orchestra-classical",
+      "definition": "Localisation par différence de niveau ; environ 15 dB pour une source à 30° (DPA).",
+      "see_also": [
+        "stereo-xy"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (Mic University) — « Stereo recording techniques and setups »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "floor-reflection",
+      "term_fr": "Réflexion de sol",
+      "term_en": "Floor reflection",
+      "domain": "orchestra-classical",
+      "definition": "Première réflexion arrivant au couple principal, souvent prise comme référence pour régler le retard des appoints.",
+      "see_also": [
+        "spot-microphone-delay-compensation"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spot-delay",
+      "term_fr": "Retard d'appoint",
+      "term_en": "Spot delay",
+      "domain": "orchestra-classical",
+      "definition": "Retard ajouté à un appoint pour qu'il n'arrive pas avant le couple ; environ 25 % au-delà de la première arrivée (DPA).",
+      "see_also": [
+        "spot-microphone-delay-compensation"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "comb-filter-notch",
+      "term_fr": "Premier creux du filtre en peigne",
+      "term_en": "First comb-filter notch",
+      "domain": "orchestra-classical",
+      "definition": "Fréquence 1/(2Δt) où deux signaux décalés de Δt s'annulent.",
+      "see_also": [
+        "comb-filtering"
+      ],
+      "sources": [
+        {
+          "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
+          "publisher": "sengpielaudio — « Comb filter calculator »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "click-track",
+      "term_fr": "Piste click",
+      "term_en": "Click track",
+      "domain": "orchestra-classical",
+      "definition": "Pulsation diffusée au casque des musiciens pour tenir un tempo fixe à l'image.",
+      "see_also": [
+        "click-track-scoring"
+      ],
+      "sources": [
+        {
+          "url": "https://interlude.hk/how-do-recording-sessions-work/",
+          "publisher": "Interlude — O. Pashley, « How Do Recording Sessions Work? » (2022-10-19)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scoring-stage",
+      "term_fr": "Scoring stage",
+      "term_en": "Scoring stage",
+      "domain": "orchestra-classical",
+      "definition": "Grand plateau d'enregistrement dédié à la musique de film.",
+      "see_also": [
+        "scoring-stage-session"
+      ],
+      "sources": [
+        {
+          "url": "https://cinemontage.org/?p=7926",
+          "publisher": "CineMontage — M. Lambert, « A Good Way to Mic and Mix Scoring Sessions » (2013-03-01)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "headphone-console",
+      "term_fr": "Console casques",
+      "term_en": "Headphone console",
+      "domain": "orchestra-classical",
+      "definition": "Poste dédié aux mixages casque des musiciens lors d'une séance de musique de film.",
+      "see_also": [
+        "click-track-scoring",
+        "cue-mix"
+      ],
+      "sources": [
+        {
+          "url": "https://cinemontage.org/?p=7926",
+          "publisher": "CineMontage — M. Lambert, « A Good Way to Mic and Mix Scoring Sessions » (2013-03-01)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scoring-take",
+      "term_fr": "Prise",
+      "term_en": "Take",
+      "domain": "orchestra-classical",
+      "definition": "Enregistrement complet d'un passage ; plusieurs prises d'une même musique sont courantes en séance.",
+      "see_also": [
+        "recording-session"
+      ],
+      "sources": [
+        {
+          "url": "https://interlude.hk/how-do-recording-sessions-work/",
+          "publisher": "Interlude — O. Pashley, « How Do Recording Sessions Work? » (2022-10-19)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piano-lid",
+      "term_fr": "Couvercle du piano",
+      "term_en": "Piano lid",
+      "domain": "orchestra-classical",
+      "definition": "Couvercle de piano à queue dont l'ouverture (bâton long ou court) oriente les réflexions vers le public ou les micros.",
+      "see_also": [
+        "piano-recital-miking"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shock-mount-classical",
+      "term_fr": "Suspension élastique",
+      "term_en": "Shock mount",
+      "domain": "orchestra-classical",
+      "definition": "Support qui isole le micro des vibrations transmises par le pied et le sol.",
+      "see_also": [
+        "mechanical-and-hvac-rumble"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Shock_mount",
+          "publisher": "Wikipedia — « Shock mount »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hvac-noise",
+      "term_fr": "Bruit de ventilation",
+      "term_en": "HVAC noise",
+      "domain": "orchestra-classical",
+      "definition": "Bruit et courants d'air de la ventilation qui peuvent masquer un chœur et provoquer du bruit de vent.",
+      "see_also": [
+        "mechanical-and-hvac-rumble"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loudness-range-lra",
+      "term_fr": "Plage de loudness (LRA)",
+      "term_en": "Loudness Range (LRA)",
+      "domain": "orchestra-classical",
+      "definition": "Mesure de la variation de loudness d'un programme ; la musique classique a une LRA élevée.",
+      "see_also": [
+        "classical-broadcast-loudness",
+        "loudness-ebu-r128"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3343.pdf",
+          "publisher": "EBU — Tech 3343 (2023) « Guidelines for Production of Programmes in accordance with R 128 »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "music-loudness-offset",
+      "term_fr": "Décalage de loudness pour la musique",
+      "term_en": "Music loudness offset",
+      "domain": "orchestra-classical",
+      "definition": "Constat EBU : la musique très dynamique comme le classique est souvent écoutée plus fort, jusqu'à +2 à 3 LU.",
+      "see_also": [
+        "classical-broadcast-loudness"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3343.pdf",
+          "publisher": "EBU — Tech 3343 (2023) « Guidelines for Production of Programmes in accordance with R 128 »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "danmarks-radio-delay-method",
+      "term_fr": "Méthode de retard Danmarks Radio",
+      "term_en": "Danmarks Radio delay method",
+      "domain": "orchestra-classical",
+      "definition": "Réglage du retard des appoints par rapport à la première réflexion mesurée au couple, plutôt que par la seule distance.",
+      "see_also": [
+        "spot-microphone-delay-compensation"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "concertmaster",
+      "term_fr": "Premier violon solo",
+      "term_en": "Concertmaster",
+      "domain": "orchestra-classical",
+      "definition": "Premier violon solo, assis en général à la gauche du chef, au plus près du public.",
+      "see_also": [
+        "orchestra-layout"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Orchestra",
+          "publisher": "Wikipedia — « Orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mono-compatibility-classical",
+      "term_fr": "Compatibilité mono",
+      "term_en": "Mono compatibility",
+      "domain": "orchestra-classical",
+      "definition": "Aptitude d'un couple à être sommé en mono sans filtre en peigne : bonne en XY et MS, mauvaise en AB (DPA).",
+      "see_also": [
+        "stereo-ab",
+        "stereo-xy",
+        "stereo-ms"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (Mic University) — « Stereo recording techniques and setups »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Glossaire officiel FR de prise de son classique (Radio France / CST)",
+      "searched": "non cherché faute de budget de recherche"
+    }
+  ]
+}

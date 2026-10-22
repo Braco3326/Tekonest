@@ -1,0 +1,172 @@
+{
+  "entity": "skill",
+  "domain": "orchestra-classical",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "set-up-orchestral-main-system",
+      "name_fr": "Installer et régler le système principal d'un orchestre",
+      "name_en": "Set up an orchestral main microphone system",
+      "domain": "orchestra-classical",
+      "description": "Choisir entre AB, arbre Decca ou couple quasi coïncident selon l'effectif et la salle, puis régler hauteur, distance et écartement à l'écoute jusqu'à obtenir une image stable et un bon dosage de salle.",
+      "level": "bts",
+      "concept_ids": [
+        "main-microphone-array",
+        "main-pair-height-and-position",
+        "outrigger-microphones",
+        "centre-image-hole",
+        "orchestra-layout",
+        "decca-tree"
+      ],
+      "procedure_ids": [
+        "setting-up-decca-tree",
+        "orchestra-ab-main-pair-setup"
+      ],
+      "success_criteria": [
+        "Le système principal est placé au-dessus ou juste derrière le chef, entre 3 et 4 m de haut (ou hauteur justifiée par l'écoute)",
+        "Tous les pupitres sont localisables à leur place réelle sur le plan de scène, sans trou au centre",
+        "L'étudiant justifie l'écartement choisi par la taille de l'orchestre et la réverbération de la salle"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "balance-spot-mics-to-main",
+      "name_fr": "Intégrer les micros d'appoint au système principal",
+      "name_en": "Blend spot microphones into the main system",
+      "domain": "orchestra-classical",
+      "description": "Placer des appoints de pupitre à 1–1,5 m, calculer et régler leur retard quand ils sont à plus de 4 m du couple, et doser leur niveau sans déplacer l'image donnée par le couple principal.",
+      "level": "pro",
+      "concept_ids": [
+        "spot-microphones",
+        "section-support-microphones",
+        "spot-microphone-delay-compensation",
+        "comb-filtering"
+      ],
+      "procedure_ids": [
+        "placing-spot-mics-and-aligning-delay"
+      ],
+      "success_criteria": [
+        "Chaque appoint à plus de 4 m du couple porte un retard calculé (≈ 2,9 ms par mètre) puis ajusté à l'écoute",
+        "En ouvrant puis fermant un appoint, la position du pupitre dans l'image ne bouge pas",
+        "Aucune coloration en filtre en peigne audible en solo couple + appoint"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
+          "publisher": "sengpielaudio — « Comb filter calculator »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "record-choir-and-recital",
+      "name_fr": "Enregistrer un chœur ou un récital de piano",
+      "name_en": "Record a choir or a piano recital",
+      "domain": "orchestra-classical",
+      "description": "Choisir et placer un couple principal adapté à la largeur du chœur ou au piano, gérer le couvercle, les appoints et le bruit de fond de la salle, et juger l'équilibre direct/réverbéré sur enceintes.",
+      "level": "bts",
+      "concept_ids": [
+        "choir-microphone-coverage",
+        "piano-recital-miking",
+        "near-coincident-main-pair",
+        "mechanical-and-hvac-rumble"
+      ],
+      "procedure_ids": [
+        "recording-piano-recital",
+        "choir-session-recording"
+      ],
+      "success_criteria": [
+        "L'équilibre direct/réverbéré est validé sur enceintes et non au casque seul",
+        "Le bruit de fond de la salle (ventilation, vibrations) est écouté micros ouverts avant la première prise",
+        "Les appoints de chœur respectent au moins la règle 3:1 entre micros voisins"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}
