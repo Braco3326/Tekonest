@@ -1,28 +1,29 @@
-<!-- title: Réseau — Tekonest | description: Un réseau d'artistes, de techniciennes et de techniciens pour des projets créatifs payés correctement. En construction. -->
+<!-- title: Réseau — Tekonest | description: Un réseau d'artistes, de techniciennes et de techniciens pour des projets créatifs payés correctement. En projet. -->
 <section class="branch-hero" style="--cable: var(--cable-reseau)">
   <div class="wrap">
     <div class="cable" aria-hidden="true"></div>
-    <span class="status status--prep">Réseau en construction</span>
+    <span class="status status--prep">Réseau en projet</span>
     <h1>Un réseau pour travailler, être payé et progresser.</h1>
     <p class="lead">Son, lumière, image, montage, communication, DJ, musique&#8239;: Tekonest veut réunir des artistes, des techniciennes et des techniciens autour de projets réels, crédités et rémunérés.</p>
   </div>
 </section>
 
-<section class="section" aria-labelledby="pour-qui">
+<section class="section" aria-labelledby="pour-qui-titre">
   <div class="wrap">
+    <h2 id="pour-qui-titre" class="visually-hidden">Pour qui, et ce qui manque encore</h2>
     <div class="cols">
       <div class="col">
         <h3 id="pour-qui">Pour qui</h3>
         <ul>
           <li>Les artistes, techniciennes et techniciens en début de parcours.</li>
           <li>Les personnes qui aiment l'événementiel et cherchent des projets payés.</li>
-          <li>Les étudiantes et étudiants en son ou en audiovisuel, à condition d'être rémunérés.</li>
+          <li>Les étudiantes et étudiants en son ou en audiovisuel, toujours rémunérés.</li>
         </ul>
       </div>
       <div class="col">
         <h3>Ce que le réseau défend</h3>
         <ul>
-          <li>Un travail payé sur chaque soirée payante.</li>
+          <li>Un travail payé sur chaque soirée payante (principe en cours de validation).</li>
           <li>Des crédits et des images pour votre portfolio.</li>
           <li>De vraies responsabilités, avec un brief clair.</li>
         </ul>
@@ -30,7 +31,7 @@
       <div class="col">
         <h3>Ce qui manque encore</h3>
         <ul>
-          <li>Nos principes de rémunération écrits et publiés. Ils le seront avant l'ouverture.</li>
+          <li>Nos principes de rémunération écrits et publiés. Nous voulons les publier avant d'ouvrir les inscriptions.</li>
           <li>Les critères pour rejoindre le réseau.</li>
           <li>Un premier projet&#8239;: la soirée pilote.</li>
         </ul>
@@ -47,13 +48,13 @@
     </div>
     <ol class="steps" style="--cable-text: var(--cable-reseau-text)">
       <li><span><strong>Découverte.</strong> Vous nous présentez votre travail.</span></li>
-      <li><span><strong>Sélection.</strong> Selon des critères publiés, pour un projet précis.</span></li>
+      <li><span><strong>Sélection.</strong> Selon des critères que nous voulons publier, pour un projet précis.</span></li>
       <li><span><strong>Brief.</strong> Le rôle, les horaires et le matériel, par écrit.</span></li>
-      <li><span><strong>Contrat et paiement.</strong> Avant le jour J, dans un cadre légal.</span></li>
-      <li><span><strong>Le projet.</strong> La soirée, l'enregistrement ou la captation.</span></li>
+      <li><span><strong>Contrat et paiement.</strong> Un contrat signé avant le jour J, un paiement dans un cadre légal.</span></li>
+      <li><span><strong>Le projet.</strong> La soirée et sa captation.</span></li>
       <li><span><strong>Crédits et images.</strong> Votre nom et des extraits pour votre portfolio.</span></li>
       <li><span><strong>Retour.</strong> Ce qui a bien marché, ce qui peut progresser.</span></li>
-      <li><span><strong>La suite.</strong> Une prochaine opportunité quand il y en a une.</span></li>
+      <li><span><strong>La suite.</strong> Une nouvelle occasion, dès qu'il y en a une.</span></li>
     </ol>
   </div>
 </section>
@@ -62,9 +63,10 @@
   <div class="wrap">
     <form class="signup" style="--cable: var(--cable-reseau)" aria-labelledby="inscription" onsubmit="return false">
       <h2 id="inscription">Rejoindre le réseau</h2>
-      <p class="note">Inscriptions bientôt ouvertes, après la publication de nos principes de rémunération. Ce prototype ne collecte aucune donnée.</p>
-      <div class="field"><label for="nom-reseau">Nom ou nom d'artiste</label><input id="nom-reseau" type="text" autocomplete="name" disabled></div>
-      <div class="field"><label for="metier-reseau">Votre métier (son, lumière, image, DJ…)</label><input id="metier-reseau" type="text" disabled></div>
+      <p class="note">Inscriptions bientôt ouvertes, une fois nos principes de rémunération publiés. Ce prototype ne collecte aucune donnée.</p>
+      <div class="field"><label for="nom-reseau">Nom ou nom d'artiste</label><input id="nom-reseau" type="text" autocomplete="name" disabled aria-describedby="aide-reseau"></div>
+      <div class="field"><label for="metier-reseau">Votre métier (son, lumière, image, DJ…)</label><input id="metier-reseau" type="text" disabled aria-describedby="aide-reseau"></div>
+      <p id="aide-reseau" class="note">Quand l'inscription ouvrira, nous expliquerons ici à quoi servent ces informations et comment les supprimer.</p>
       <p><button class="btn btn-primary" type="submit" disabled>Inscriptions bientôt ouvertes</button></p>
     </form>
   </div>

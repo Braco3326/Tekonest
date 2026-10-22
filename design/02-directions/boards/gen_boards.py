@@ -27,7 +27,7 @@ a = page("#FAFAF7", "#16163F", f"""
     <div style="font:400 22px/1.45 Instrument;max-width:640px;margin-top:28px;color:#3D3D63">Soirées métissées à Paris, réseau créatif équitable, outils pour apprendre le son.</div>
   </div>
   <div style="display:flex;gap:16px">
-    {''.join(f'<div style="flex:1;border-top:3px solid {c};padding-top:14px;font:700 20px Bricolage">{t}<div style="font:400 14px/1.4 Instrument;color:#4A4A6E;margin-top:6px">{s}</div></div>' for t,s,c in [("Venir aux soirées","Pilote en préparation","#E8590C"),("Rejoindre le réseau","Artistes, techniciennes et techniciens","#12775A"),("Organiser avec nous","Plus tard — besoins recueillis","#6A4BC4")])}
+    {''.join(f'<div style="flex:1;border-top:3px solid {c};padding-top:14px;font:700 20px Bricolage">{t}<div style="font:400 14px/1.4 Instrument;color:#4A4A6E;margin-top:6px">{s}</div></div>' for t,s,c in [("Venir aux soirées","Soirée pilote en projet","#E8590C"),("Rejoindre le réseau","Artistes, techniciennes et techniciens","#12775A"),("Organiser avec nous","Plus tard — en projet","#6A4BC4")])}
   </div>
 </div>
 <svg style="position:absolute;right:60px;top:120px" width="520" height="520" viewBox="0 0 64 64" aria-hidden="true">
@@ -57,10 +57,10 @@ b = page("#15122B", "#F4F0FF", f"""
 """)
 # ── C. Fiche technique ──
 C_br = [("CH 01 Soirées", "#F5C400"), ("CH 02 Réseau", "#2BB673"), ("CH 03 Organisateurs", "#FF5A36"), ("CH 04 Apprendre", "#F29F05"), ("CH 05 TekPractice", "#2E5FE6")]
-rows = "".join(f'<div style="display:grid;grid-template-columns:70px 1fr 240px 160px;border-top:1px solid #000;padding:12px 0;font:15px PlexMono"><span>{i:02d}</span><span style="font:700 17px Instrument">{t}</span><span>{a}</span><span><span style="background:{c};padding:2px 8px;border-radius:3px;font:700 13px PlexMono">{st}</span></span></div>' for i,(t,a,st,c) in enumerate([("Soirées métissées","public, Paris","EN PRÉPARATION","#F5C400"),("Réseau créatif","artistes, technique","EN CONSTRUCTION","#2BB673"),("Organisateurs","organisateurs, lieux","PLUS TARD","#FF5A36"),("Apprendre le son","étudiants BTS Son","EN DÉVELOPPEMENT","#F29F05"),("TekPractice","étudiants, techniciens","EN DÉVELOPPEMENT","#8FB2FF")],1))
+rows = "".join(f'<div style="display:grid;grid-template-columns:70px 1fr 240px 160px;border-top:1px solid #000;padding:12px 0;font:15px PlexMono"><span>{i:02d}</span><span style="font:700 17px Instrument">{t}</span><span>{a}</span><span><span style="background:{c};padding:2px 8px;border-radius:3px;font:700 13px PlexMono">{st}</span></span></div>' for i,(t,a,st,c) in enumerate([("Soirées métissées","public, Paris","EN PROJET","#F5C400"),("Réseau créatif","artistes, technique","EN PROJET","#2BB673"),("Organisateurs","organisateurs, lieux","PLUS TARD","#FF5A36"),("Apprendre le son","étudiants BTS Son","EN DÉVELOPPEMENT","#F29F05"),("TekPractice","étudiants, techniciens","EN DÉVELOPPEMENT","#8FB2FF")],1))
 c = page("#FFFFFF", "#000000", f"""
 <div style="position:absolute;left:72px;top:64px"><img src="{LOGO}/c-etiquette/lockup.svg" style="height:40px"></div>
-<div style="position:absolute;left:72px;top:190px;font:700 68px/1.02 Instrument;letter-spacing:-0.03em;max-width:900px">Fiche technique d'un collectif&#8239;: qui fait quoi, pour qui, et où on en est.</div>
+<div style="position:absolute;left:72px;top:190px;font:700 68px/1.02 Instrument;letter-spacing:-0.03em;max-width:900px">Fiche technique de Tekonest&#8239;: qui fait quoi, pour qui, où nous en sommes.</div>
 <div style="position:absolute;left:72px;top:540px;width:900px">{rows}<div style="border-top:1px solid #000"></div></div>
 <div style="position:absolute;right:64px;top:64px;width:500px;display:flex;flex-direction:column;gap:22px">
   <div style="height:380px;background:#F2F2F2;border:1px dashed #000;display:flex;align-items:center;justify-content:center;font:14px PlexMono;text-align:center;padding:24px">[Plan de scène / synoptique dessiné à la main — scanné]</div>

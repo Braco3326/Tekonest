@@ -36,6 +36,25 @@ The site is static. It loads 2 CSS files, 1 tiny JS file and 3–4 WOFF2 fonts, 
 | « Comment tout se relie »: link states were small grey words | Turned into the standard status tags (dot + text) |
 | Section headings too large at 1440 px (64 px) | Scale reduced to 32 → 52 px |
 | Réseau page stated « jamais au pourcentage » as policy, but the founder has not confirmed it | Softened to « Un travail payé sur chaque soirée payante »; added to the founder decisions |
-| Story page implied the founder alone started the learning tools and that cofounders had formally joined | Rewritten neutrally (ownership and cofounder status are open questions) |
+| Story page implied the founder alone started the learning tools and that cofounders had formally joined | First attempt was not neutral enough (caught by tekreviwer). Now: « Tekonest est porté par Oscar… », « des outils pour réviser le BTS Son sont développés », « un musicien et un DJ ont dit oui… les rôles restent à définir » |
+
+## Second pass — independent review by **tekreviwer** (30 findings, all addressed)
+
+| Finding | Fix |
+| --- | --- |
+| « gratuit » stated as fact though pricing is undecided (O-08) | Removed from the site; Apprendre h1 → « Réussir le BTS Son, pas à pas. » |
+| Fair-pay rule stated as policy (F-03 open) | Framed as « Notre principe, en cours de validation » / « avec l'ambition d'une équipe payée correctement » |
+| Status labels didn't map to the brand status map | New 1:1 vocabulary: Existe / En développement / En projet / À décider (design system §8) |
+| « Quatre niveaux jouables en local » not re-verified | « construits, jouables d'après les tests de juillet 2026 » |
+| Tutor and attestations overstated | « pas encore activé en ligne », « prototype, pas encore vérifiables » |
+| Undecided brand/design choices stated as fact (« signé par Tekonest ») | Marked « Proposition » |
+| New promises (pay before the night, published criteria) | Rephrased as intentions |
+| « Prochaine étape » were Claude's suggestions | Column retitled « Prochaine étape proposée » |
+| Disabled pseudo-links (`span role=link aria-disabled`) | Real `<button disabled>` |
+| Heading jumps h1→h3 (Réseau, Organiser) | Visually hidden h2 added |
+| Doors used `role=list` on a div | Real `<ul>/<li>` |
+| Root README tree broken | Fixed |
+| Mixed « on »/« nous », small French fixes | « nous » throughout; « plutôt que de », « occasion », « toujours rémunérés » |
+| TekPractice audience creep, board wording (« collectif », « besoins recueillis ») | Audience = BTS Son students first; boards re-rendered |
 
 `before/` keeps the first home-page captures for comparison.

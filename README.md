@@ -33,10 +33,10 @@ The [status map](brand/03-status-map.md) is the canonical source for status; the
 
 ```
 brand/                     canonical overview docs (start here)
-design/                    art direction, logos, design system, review (draft)
-website-prototype/         static umbrella-site prototype (draft, not deployed)
   services/                one vision per service
   evidence/                detailed evidence registers (audit notes)
+design/                    art direction, logos, design system, review (draft)
+website-prototype/         static umbrella-site prototype (draft, not deployed)
 event-project/             event programme: pilot overview, legal guide, plan, deck, model
 learning-platform/         Next.js app (imported from repo "Technest", full history)
 tekpractice-sim/           Vite + Babylon.js app (imported from repo "Technest-Sim", full history)

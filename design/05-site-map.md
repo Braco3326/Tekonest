@@ -5,11 +5,11 @@
 
 ```
 Accueil (index.html)
-├── Soirées (soirees.html)            — public · cable sodium · « Première soirée en préparation »
-├── Réseau (reseau.html)              — artistes / technique · cable vert · « Réseau en construction »
-├── Organiser (organiser.html)        — organisateurs · cable violet · « Offre en réflexion, pas encore proposée »
+├── Soirées (soirees.html)            — public · cable sodium · « Soirée pilote en projet »
+├── Réseau (reseau.html)              — artistes / technique · cable vert · « Réseau en projet »
+├── Organiser (organiser.html)        — organisateurs · cable violet · « Offre en projet, pas encore proposée »
 ├── Apprendre (apprendre.html)        — étudiants BTS Son · cable ambre · « En développement »
-├── TekPractice (tekpractice.html)    — étudiants / techniciens · cable bleu · « En développement »
+├── TekPractice (tekpractice.html)    — étudiants BTS Son · cable bleu · « En développement »
 ├── L'histoire (histoire.html)        — tout le monde
 ├── Contact (contact.html)            — adresse e-mail à définir, pas de formulaire
 └── Accessibilité (accessibilite.html, footer)
@@ -46,10 +46,12 @@ Accueil (index.html)
 
 | Audience | CTA label | Where it goes | Why it is honest |
 | --- | --- | --- | --- |
-| Night-goers | Trouver une soirée | Soirées page | It shows the pilot is in preparation; the sign-up is disabled |
+| Night-goers | Trouver une soirée | Soirées page | It shows the pilot is a project (no date); the sign-up is disabled |
 | Artists, technicians | Rejoindre le réseau | Réseau page | Explains the principles; inscriptions open only after pay principles are published |
 | Organisers | Parlez-nous de votre événement | Organiser page, then Contact | Says clearly that it is not an offer, a quote or a commitment |
-| Students | La plateforme pour réussir le BTS Son / TekPractice | Branch pages | "Accès bientôt disponible", with no dead link |
+| Students | La plateforme pour réussir le BTS Son / TekPractice | Branch pages | A disabled "Accès bientôt disponible" button, with no dead link |
+
+**Before any external test:** set a contact e-mail (F-05). Until then « Écrire à Tekonest » leads to a contact page that says the address is still to be chosen.
 
 ## English later
 

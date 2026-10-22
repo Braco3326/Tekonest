@@ -99,10 +99,13 @@ Contrast is measured against Papier `#FAFAF7` and computed with the WCAG formula
 
 - **French first**, with narrow no-break spaces before `; : ! ?` and inside « » (applied automatically by the build script). Accented capitals; the date format is « 22 octobre 2026 ».
 - **No point médian in the interface.** Use épicène words first, then « vous », then full doublets (« techniciennes et techniciens »).
-- **Status words**, used everywhere identically:
-  - « en préparation »
-  - « en construction »
-  - « en développement »
-  - « en réflexion, pas encore proposée »
-  - « à décider »
+- **Status words** map 1:1 to the brand status map and are used everywhere identically:
+
+  | Status map | Site label | Tag colour |
+  | --- | --- | --- |
+  | Existing | « Existe » | `now` green |
+  | Under development | « En développement » | `dev` blue |
+  | Proposed | « En projet » (e.g. « Soirée pilote en projet ») | `prep` sodium |
+  | Proposed, later | « En projet, plus tard » / « Offre en projet, pas encore proposée » | `later` grey |
+  | Undecided | « À décider » | `later` grey |
 - **Every call to action names what happens.** There is no generic « Commencer ».
