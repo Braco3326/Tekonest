@@ -1,0 +1,581 @@
+{
+  "entity": "procedure",
+  "domain": "orchestra-classical",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "setting-up-decca-tree",
+      "name_fr": "Installer un arbre Decca avec flancs",
+      "name_en": "Set up a Decca tree with outriggers",
+      "domain": "orchestra-classical",
+      "context": "Enregistrement d'un orchestre symphonique en salle de concert ou sur scoring stage avec un arbre Decca de trois omnis et deux outriggers.",
+      "duration_min": 60,
+      "equipment_ids": [
+        "akg-c414-xls",
+        "km-210-9"
+      ],
+      "concept_ids": [
+        "decca-tree",
+        "outrigger-microphones",
+        "main-microphone-array",
+        "centre-image-hole",
+        "orchestra-layout"
+      ],
+      "rule_ids": [
+        "wide-spaced-pair-without-centre"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Plan de l'orchestre disponible"
+          ],
+          "action": "Relever le plan de scène réel (placement américain ou allemand, position des contrebasses et des cors) avec le régisseur d'orchestre.",
+          "expected_result": "Un plan de scène daté indique la position de chaque pupitre.",
+          "typical_mistakes": [
+            "Supposer le placement « habituel » sans vérifier"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Monter le triangle : trois omnis, les deux micros arrière espacés (Wikipedia cite 0,6 à 1,2 m ; SCHOEPS recommande au moins 1,5 m pour limiter la corrélation dans le grave), le micro avant au sommet, un peu en avant.",
+          "expected_result": "Triangle stable, micros identiques et appairés, orientés vers l'orchestre.",
+          "typical_mistakes": [
+            "Mélanger des modèles différents dans le triangle"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Pied ou perche lestés"
+          ],
+          "action": "Hisser l'arbre au-dessus du pupitre du chef, autour de 3 m de haut (Abbey Road Institute ; Wikipedia cite 3 à 3,6 m).",
+          "expected_result": "Le triangle est au-dessus du chef, centré sur l'axe de l'orchestre.",
+          "typical_mistakes": [
+            "Arbre décentré par rapport à l'axe de l'orchestre"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Placer les deux outriggers à la même hauteur que l'arbre, environ 3 m de part et d'autre du centre, vers les deux tiers de la largeur de scène.",
+          "expected_result": "Les bords de l'orchestre (premiers violons, contrebasses) sont captés directement.",
+          "typical_mistakes": [
+            "Outriggers trop près de l'arbre : image étroite"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Panoramiquer : gauche et droite de l'arbre à mi-gauche / mi-droite, micro central au centre, outriggers à fond à gauche et à droite (pratique décrite par J. Pellowe, ex-Decca).",
+          "expected_result": "Image large et continue de gauche à droite.",
+          "typical_mistakes": [
+            "Micro central trop fort : image mono et étroite",
+            "Micro central coupé : trou au centre"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Écouter un tutti puis des passages solistes ; ajuster hauteur et distance de l'arbre, puis le niveau du micro central.",
+          "expected_result": "Les pupitres sont à leur place, l'équilibre salle/détail convient au chef et au directeur artistique.",
+          "typical_mistakes": [
+            "Corriger au mixage ce qui devrait l'être par le placement"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V (ou baisser les faders) avant de brancher ou débrancher un micro statique.",
+        "Micros suspendus ou pieds hauts au-dessus des musiciens : lester les pieds, sécuriser perches et câbles, aucune charge suspendue sans point d'accroche validé par la salle."
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Decca_tree",
+          "publisher": "Wikipedia — « Decca tree »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/en/products/stereo/sets/decca-tree-set.html",
+          "publisher": "SCHOEPS — « Decca Tree Set »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://abbeyroadinstitute.co.uk/blog/the-decca-tree-the-secrets-behind-the-legendary-recording-technique/",
+          "publisher": "Abbey Road Institute — « The Decca Tree: the secrets behind the legendary recording technique »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "steps[1].action",
+          "values": [
+            {
+              "value": "Micros arrière espacés de 0,6 à 1,2 m",
+              "source_url": "https://en.wikipedia.org/wiki/Decca_tree"
+            },
+            {
+              "value": "Micros espacés d'au moins 1,5 m",
+              "source_url": "https://schoeps.de/en/products/stereo/sets/decca-tree-set.html"
+            }
+          ],
+          "note": "La taille de l'arbre n'est pas fixe : elle s'adapte à l'ensemble et à la salle."
+        },
+        {
+          "field": "steps[2].action",
+          "values": [
+            {
+              "value": "Environ 3 m au-dessus du chef",
+              "source_url": "https://abbeyroadinstitute.co.uk/blog/the-decca-tree-the-secrets-behind-the-legendary-recording-technique/"
+            },
+            {
+              "value": "3 à 3,6 m au-dessus de la scène",
+              "source_url": "https://en.wikipedia.org/wiki/Decca_tree"
+            }
+          ],
+          "note": "Ordres de grandeur compatibles."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "orchestra-ab-main-pair-setup",
+      "name_fr": "Installer un couple AB principal sur orchestre",
+      "name_en": "Set up an AB main pair on an orchestra",
+      "domain": "orchestra-classical",
+      "context": "Captation d'un orchestre avec un couple d'omnis espacés comme système principal, éventuellement sans appoints.",
+      "duration_min": 40,
+      "equipment_ids": [
+        "dpa-4011",
+        "akg-c414-xls",
+        "km-210-9"
+      ],
+      "concept_ids": [
+        "main-microphone-array",
+        "main-pair-height-and-position",
+        "stereo-ab",
+        "diffuse-field-response-main-mics",
+        "centre-image-hole"
+      ],
+      "rule_ids": [
+        "wide-spaced-pair-without-centre"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Placer le pied au-dessus ou juste derrière le pupitre du chef, micros entre 3 et 4 m de haut.",
+          "expected_result": "Depuis les micros, on « voit » tous les pupitres.",
+          "typical_mistakes": [
+            "Couple trop bas : premiers rangs trop présents, fond lointain"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Régler l'écartement de départ entre 40 et 60 cm ; l'augmenter pour un grand orchestre ou une salle plus réverbérante.",
+          "expected_result": "Image de largeur naturelle.",
+          "typical_mistakes": [
+            "Écarter de plus de 1 m sans micro central"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Si l'orchestre est en demi-cercle, éviter de placer le couple trop près du centre du cercle.",
+          "expected_result": "Les instruments des bords ne sont pas trop hors axe.",
+          "typical_mistakes": [
+            "Couple au centre du demi-cercle : coloration en filtre en peigne des bords"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Pour une distance importante, choisir une grille ou une capsule corrigée en champ diffus ; orienter éventuellement les micros vers le mur du fond, juste au-dessus de l'orchestre.",
+          "expected_result": "Aigu naturel malgré la distance, profondeur accrue.",
+          "typical_mistakes": [
+            "Corriger un aigu terne uniquement à l'égaliseur"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Régie d'écoute installée"
+          ],
+          "action": "Écouter en régie sur enceintes, ajuster hauteur, distance et écartement par petits pas.",
+          "expected_result": "Équilibre pupitres/salle validé.",
+          "typical_mistakes": [
+            "Juger au casque seul"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V (ou baisser les faders) avant de brancher ou débrancher un micro statique.",
+        "Micros suspendus ou pieds hauts au-dessus des musiciens : lester les pieds, sécuriser perches et câbles, aucune charge suspendue sans point d'accroche validé par la salle."
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps[4]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "placing-spot-mics-and-aligning-delay",
+      "name_fr": "Placer les micros d'appoint et aligner leur retard",
+      "name_en": "Place spot microphones and align their delay",
+      "domain": "orchestra-classical",
+      "context": "Après validation du système principal, ajouter des appoints de pupitre et les aligner temporellement pour qu'ils renforcent la clarté sans déplacer l'image.",
+      "duration_min": 60,
+      "equipment_ids": [
+        "dpa-4011",
+        "neumann-km-184",
+        "schoeps-cmc-6-mk-4",
+        "km-210-9"
+      ],
+      "concept_ids": [
+        "spot-microphones",
+        "section-support-microphones",
+        "spot-microphone-delay-compensation",
+        "comb-filtering",
+        "speed-of-sound"
+      ],
+      "rule_ids": [
+        "spot-mic-delay-missing"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Système principal validé"
+          ],
+          "action": "Placer chaque appoint de pupitre (cardioïde) à environ 1 à 1,5 m, en visant 3 à 4 musiciens et en tenant compte des angles à −3 dB.",
+          "expected_result": "Chaque pupitre visé est couvert de façon homogène.",
+          "typical_mistakes": [
+            "Coller le micro à un seul instrument",
+            "Installer les appoints avant le couple principal"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Mesurer la distance entre chaque appoint et le système principal.",
+          "expected_result": "Une liste distance → appoint est notée sur la feuille de patch.",
+          "typical_mistakes": [
+            "Oublier la différence de hauteur dans la distance"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Pour tout appoint à plus de 4 m, calculer le retard géométrique Δt = a / c (environ 2,9 ms par mètre à 343 m/s).",
+          "expected_result": "Valeur de départ en ms pour chaque appoint concerné.",
+          "typical_mistakes": [
+            "Retarder le couple au lieu des appoints"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Régler le retard sur la voie (ou le bus) de l'appoint. DPA (méthode Danmarks Radio) recommande environ 25 % de plus que le premier son arrivé au couple, mesuré par rapport à la première réflexion, souvent celle du sol.",
+          "expected_result": "Le son de l'appoint n'arrive plus avant celui du couple.",
+          "typical_mistakes": [
+            "Caler exactement à la distance : problèmes de phase quand les musiciens bougent"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Ouvrir l'appoint progressivement sous le couple, couper/ouvrir pour vérifier que le pupitre ne se déplace pas dans l'image et qu'il n'y a pas de filtre en peigne.",
+          "expected_result": "Gain de clarté sans changement de position ni de timbre.",
+          "typical_mistakes": [
+            "Appoint trop fort : le pupitre « saute » vers l'avant"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Panoramiquer chaque appoint à la position du pupitre dans l'image du couple principal.",
+          "expected_result": "Concordance entre appoint et image principale.",
+          "typical_mistakes": [
+            "Panoramique au jugé sans comparer avec le couple seul"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V (ou baisser les faders) avant de brancher ou débrancher un micro statique.",
+        "Ne pas placer de pieds dans les allées de circulation des musiciens ; câbles scotchés au sol."
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
+          "publisher": "sengpielaudio — « Comb filter calculator »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps[2]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "recording-piano-recital",
+      "name_fr": "Enregistrer un récital de piano",
+      "name_en": "Record a piano recital",
+      "domain": "orchestra-classical",
+      "context": "Récital de piano à queue (éventuellement avec un soliste) dans une salle de concert ou un auditorium.",
+      "duration_min": 45,
+      "equipment_ids": [
+        "dpa-4011",
+        "akg-c414-xls",
+        "km-210-9"
+      ],
+      "concept_ids": [
+        "piano-recital-miking",
+        "stereo-ab",
+        "centre-image-hole",
+        "mechanical-and-hvac-rumble"
+      ],
+      "rule_ids": [
+        "headphone-only-balance-judgement"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Vérifier avec le pianiste et l'organisateur l'ouverture du couvercle (bâton long ou court) ; l'ouvrir un peu plus si possible pour que les réflexions atteignent les micros.",
+          "expected_result": "Ouverture validée et notée.",
+          "typical_mistakes": [
+            "Changer l'ouverture du couvercle sans l'accord du pianiste"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Installer un couple AB d'omnis juste à l'extérieur du piano, relativement bas, espacé d'environ 30 cm.",
+          "expected_result": "Image du clavier continue, salle présente.",
+          "typical_mistakes": [
+            "Écartement trop grand : trou au milieu"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "En option, ajouter un couple ORTF à environ 30 cm au-dessus des cordes, au milieu du cadre, incliné de 45° vers le pianiste, pour plus de définition.",
+          "expected_result": "Une option plus proche est disponible au mixage.",
+          "typical_mistakes": [
+            "Mélanger les deux couples sans vérifier la phase"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Pour un soliste (violon, voix), placer un appoint discret ; DPA suggère pour le violon une position sous le chevalet ou vers les ouïes avec un micro miniature, ou un omni à courte distance.",
+          "expected_result": "Le soliste est défini sans être détaché de la salle.",
+          "typical_mistakes": [
+            "Appoint soliste trop fort : soliste « collé » devant le piano"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Régie installée"
+          ],
+          "action": "Écouter salle vide le bruit de fond micros ouverts (ventilation, vibrations) puis valider l'équilibre sur enceintes.",
+          "expected_result": "Bruit de fond acceptable et équilibre validé.",
+          "typical_mistakes": [
+            "Découvrir la ventilation au montage"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V (ou baisser les faders) avant de brancher ou débrancher un micro statique.",
+        "Ne jamais poser de pied ou de câble sur le piano ou contre le couvercle."
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-violin/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a violin »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps[3]"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps[4]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "choir-session-recording",
+      "name_fr": "Enregistrer une séance de chœur",
+      "name_en": "Record a choir session",
+      "domain": "orchestra-classical",
+      "context": "Enregistrement d'un chœur (a cappella ou avec orgue) dans une église ou une salle, sans sonorisation.",
+      "duration_min": 50,
+      "equipment_ids": [
+        "schoeps-mstc-74",
+        "dpa-4011",
+        "km-210-9"
+      ],
+      "concept_ids": [
+        "choir-microphone-coverage",
+        "near-coincident-main-pair",
+        "three-to-one-rule",
+        "mechanical-and-hvac-rumble"
+      ],
+      "rule_ids": [
+        "choir-mic-spacing-three-to-one",
+        "headphone-only-balance-judgement"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Choisir un couple principal (AB, XY, ORTF ou autre quasi coïncident) et son écartement selon la largeur du chœur.",
+          "expected_result": "Le chœur entier tient dans l'angle de prise de son.",
+          "typical_mistakes": [
+            "Couple trop étroit pour un grand chœur : bords hors champ"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Si des appoints sont nécessaires, les répartir en respectant au moins la règle 3:1 entre micros voisins ; pour des micros au-dessus du chœur, viser le dernier rang en gardant environ 60° vers le premier.",
+          "expected_result": "Appoints sans repisse excessive entre eux.",
+          "typical_mistakes": [
+            "Appoints trop rapprochés : filtre en peigne"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Panoramiquer : avec quatre appoints, les deux extérieurs à 100 % gauche/droite, les deux intérieurs entre 40 et 60 %.",
+          "expected_result": "Image cohérente avec le couple principal.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Faire couper la ventilation si possible et vérifier l'absence de courants d'air sur les micros.",
+          "expected_result": "Bruit de fond bas, pas de bruit de vent.",
+          "typical_mistakes": [
+            "Laisser tourner le chauffage soufflant de l'église"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Enceintes de contrôle disponibles"
+          ],
+          "action": "Équilibrer son direct et son diffus à l'écoute sur enceintes (le casque ne donne ni l'image ni l'équilibre tonal corrects).",
+          "expected_result": "Équilibre direct/réverbéré validé.",
+          "typical_mistakes": [
+            "Valider au casque seul"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper le +48 V (ou baisser les faders) avant de brancher ou débrancher un micro statique.",
+        "Câbles hors des passages du public et des choristes ; pieds hauts lestés."
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
+          "publisher": "SCHOEPS — « MSTC 74 » (ORTF stereo microphone)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps[0]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Procédure sourcée de captation broadcast en direct d'un concert (ordre des contrôles, liaisons)",
+      "searched": "EBU Tech 3343 (loudness seulement) ; pas de guide de captation classique ouvert"
+    }
+  ]
+}

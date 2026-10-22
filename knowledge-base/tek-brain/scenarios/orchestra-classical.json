@@ -1,0 +1,652 @@
+{
+  "entity": "scenario",
+  "domain": "orchestra-classical",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "orchestra-recording-concert-hall",
+      "name_fr": "Enregistrement d'un orchestre en salle de concert",
+      "name_en": "Orchestra recording in a concert hall",
+      "domain": "orchestra-classical",
+      "brief": "Un orchestre symphonique (placement allemand) joue un programme Beethoven dans une salle de concert d'environ 2 s de réverbération. Installer un arbre Decca avec flancs, quatre appoints de pupitre retardés, et enregistrer en multipiste via un stagebox Dante.",
+      "room_id": "concert-hall-medium",
+      "required_gear": [
+        {
+          "equipment_id": "akg-c414-xls",
+          "qty": 5,
+          "role": "arbre Decca (3) + outriggers (2), réglés en omni"
+        },
+        {
+          "equipment_id": "dpa-4011",
+          "qty": 4,
+          "role": "appoints de pupitre"
+        },
+        {
+          "equipment_id": "yamaha-rio3224-d2",
+          "qty": 1,
+          "role": "stagebox préamplis micro (Dante)"
+        },
+        {
+          "equipment_id": "yamaha-cl5",
+          "qty": 1,
+          "role": "console de régie / retards des appoints"
+        },
+        {
+          "equipment_id": "merging-pyramix",
+          "qty": 1,
+          "role": "enregistrement multipiste"
+        },
+        {
+          "equipment_id": "genelec-8030c",
+          "qty": 2,
+          "role": "écoute de contrôle"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "tree-l",
+            "equipment_id": "akg-c414-xls",
+            "label": "Arbre gauche"
+          },
+          {
+            "id": "tree-c",
+            "equipment_id": "akg-c414-xls",
+            "label": "Arbre centre"
+          },
+          {
+            "id": "tree-r",
+            "equipment_id": "akg-c414-xls",
+            "label": "Arbre droite"
+          },
+          {
+            "id": "out-l",
+            "equipment_id": "akg-c414-xls",
+            "label": "Outrigger gauche"
+          },
+          {
+            "id": "out-r",
+            "equipment_id": "akg-c414-xls",
+            "label": "Outrigger droite"
+          },
+          {
+            "id": "spot-vl2",
+            "equipment_id": "dpa-4011",
+            "label": "Appoint violons 2 (à droite, placement allemand)"
+          },
+          {
+            "id": "rio",
+            "equipment_id": "yamaha-rio3224-d2",
+            "label": "Stagebox"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-cl5",
+            "label": "Console"
+          },
+          {
+            "id": "daw",
+            "equipment_id": "merging-pyramix",
+            "label": "Enregistreur multipiste"
+          },
+          {
+            "id": "mon",
+            "equipment_id": "genelec-8030c",
+            "label": "Écoute"
+          }
+        ],
+        "edges": [
+          {
+            "from": "tree-l",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "tree-c",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "tree-r",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "out-l",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "out-r",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "spot-vl2",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rio",
+            "to": "desk",
+            "signal": "aoip",
+            "connector": "ethercon"
+          },
+          {
+            "from": "desk",
+            "to": "daw",
+            "signal": "aoip",
+            "connector": "rj45"
+          },
+          {
+            "from": "desk",
+            "to": "mon",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "setting-up-decca-tree",
+        "placing-spot-mics-and-aligning-delay"
+      ],
+      "rule_ids": [
+        "spot-mic-delay-missing",
+        "wide-spaced-pair-without-centre"
+      ],
+      "difficulty": 4,
+      "estimated_time_min": 120,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Decca_tree",
+          "publisher": "Wikipedia — « Decca tree »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief",
+            "signal_flow"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
+          "publisher": "Singapore Symphony Orchestra — « Seats and Sounds: Orchestral Seating and the Symphony of Sounds »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "opera-with-pit-recording",
+      "name_fr": "Captation d'un opéra avec orchestre en fosse",
+      "name_en": "Opera recording with orchestra pit",
+      "domain": "orchestra-classical",
+      "brief": "Captation pour la radio d'une représentation d'opéra : orchestre en fosse, chanteurs sur le plateau. Placer un couple principal au-dessus de la fosse, des appoints directionnels en fosse et des micros de plateau pour les voix, en gérant la repisse entre instruments dans une fosse exiguë.",
+      "room_id": "opera-house-pit-large",
+      "required_gear": [
+        {
+          "equipment_id": "akg-c414-xls",
+          "qty": 2,
+          "role": "couple principal au-dessus de la fosse (omni)"
+        },
+        {
+          "equipment_id": "dpa-4011",
+          "qty": 6,
+          "role": "appoints de pupitre en fosse"
+        },
+        {
+          "equipment_id": "schoeps-cmc-6-mk-41",
+          "qty": 3,
+          "role": "micros de plateau (supercardioïdes) pour les voix"
+        },
+        {
+          "equipment_id": "yamaha-rio3224-d2",
+          "qty": 1,
+          "role": "stagebox"
+        },
+        {
+          "equipment_id": "yamaha-cl5",
+          "qty": 1,
+          "role": "console de captation"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "main-l",
+            "equipment_id": "akg-c414-xls",
+            "label": "Principal gauche"
+          },
+          {
+            "id": "main-r",
+            "equipment_id": "akg-c414-xls",
+            "label": "Principal droite"
+          },
+          {
+            "id": "pit-vc",
+            "equipment_id": "dpa-4011",
+            "label": "Appoint violoncelles (fosse)"
+          },
+          {
+            "id": "stage-c",
+            "equipment_id": "schoeps-cmc-6-mk-41",
+            "label": "Micro de plateau centre"
+          },
+          {
+            "id": "rio",
+            "equipment_id": "yamaha-rio3224-d2",
+            "label": "Stagebox"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-cl5",
+            "label": "Console de captation"
+          }
+        ],
+        "edges": [
+          {
+            "from": "main-l",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "main-r",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "pit-vc",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "stage-c",
+            "to": "rio",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rio",
+            "to": "desk",
+            "signal": "aoip",
+            "connector": "ethercon"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "placing-spot-mics-and-aligning-delay"
+      ],
+      "rule_ids": [
+        "spot-mic-delay-missing"
+      ],
+      "difficulty": 5,
+      "estimated_time_min": 150,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Orchestra_pit",
+          "publisher": "Wikipedia — « Orchestra pit »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "film-scoring-session",
+      "name_fr": "Séance de musique de film sur scoring stage",
+      "name_en": "Film scoring session on a scoring stage",
+      "domain": "orchestra-classical",
+      "brief": "Enregistrer un orchestre de film au click : arbre Decca et outriggers, appoints de pupitre, chaque sortie sur une piste séparée, retour casque avec click pour chaque musicien. Prévoir plusieurs prises et l'enregistrement d'un pupitre en overdub sur le même click.",
+      "room_id": "scoring-stage-large",
+      "required_gear": [
+        {
+          "equipment_id": "akg-c414-xls",
+          "qty": 5,
+          "role": "arbre Decca + outriggers (omni)"
+        },
+        {
+          "equipment_id": "sennheiser-mkh-8040",
+          "qty": 6,
+          "role": "appoints de pupitre"
+        },
+        {
+          "equipment_id": "ams-neve-8424",
+          "qty": 1,
+          "role": "console / préamplis"
+        },
+        {
+          "equipment_id": "avid-hd-io",
+          "qty": 1,
+          "role": "convertisseurs"
+        },
+        {
+          "equipment_id": "avid-protools-hdx",
+          "qty": 1,
+          "role": "enregistrement + lecture du click"
+        },
+        {
+          "equipment_id": "behringer-ha400",
+          "qty": 1,
+          "role": "distribution casque (click + cue)"
+        },
+        {
+          "equipment_id": "beyerdynamic-dt-770-pro",
+          "qty": 4,
+          "role": "casques fermés des musiciens"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "tree-c",
+            "equipment_id": "akg-c414-xls",
+            "label": "Arbre centre"
+          },
+          {
+            "id": "spot-br",
+            "equipment_id": "sennheiser-mkh-8040",
+            "label": "Appoint cuivres"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "ams-neve-8424",
+            "label": "Console"
+          },
+          {
+            "id": "io",
+            "equipment_id": "avid-hd-io",
+            "label": "Convertisseur"
+          },
+          {
+            "id": "hdx",
+            "equipment_id": "avid-protools-hdx",
+            "label": "Pro Tools HDX (click)"
+          },
+          {
+            "id": "hpa",
+            "equipment_id": "behringer-ha400",
+            "label": "Ampli casque"
+          },
+          {
+            "id": "hp",
+            "equipment_id": "beyerdynamic-dt-770-pro",
+            "label": "Casque musicien"
+          }
+        ],
+        "edges": [
+          {
+            "from": "tree-c",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "spot-br",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "io",
+            "signal": "line-level-pro",
+            "connector": "dsub25"
+          },
+          {
+            "from": "io",
+            "to": "hdx",
+            "signal": "aoip",
+            "connector": "digilink"
+          },
+          {
+            "from": "io",
+            "to": "hpa",
+            "signal": "line-level-pro",
+            "connector": "trs-quarter"
+          },
+          {
+            "from": "hpa",
+            "to": "hp",
+            "signal": "headphone-level",
+            "connector": "trs-quarter"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "setting-up-decca-tree",
+        "placing-spot-mics-and-aligning-delay"
+      ],
+      "rule_ids": [
+        "spot-mic-delay-missing"
+      ],
+      "difficulty": 5,
+      "estimated_time_min": 180,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://cinemontage.org/?p=7926",
+          "publisher": "CineMontage — M. Lambert, « A Good Way to Mic and Mix Scoring Sessions » (2013-03-01)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "brief",
+            "required_gear"
+          ]
+        },
+        {
+          "url": "https://interlude.hk/how-do-recording-sessions-work/",
+          "publisher": "Interlude — O. Pashley, « How Do Recording Sessions Work? » (2022-10-19)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "brief"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "choir-in-church",
+      "name_fr": "Enregistrement d'un chœur dans une église",
+      "name_en": "Choir recording in a church",
+      "domain": "orchestra-classical",
+      "brief": "Un chœur de 24 voix enregistre un programme a cappella dans une église très réverbérante. Installer un couple ORTF principal et deux appoints, maîtriser le bruit de ventilation et valider l'équilibre direct/réverbéré sur enceintes.",
+      "room_id": "church-worship-medium",
+      "required_gear": [
+        {
+          "equipment_id": "schoeps-mstc-74",
+          "qty": 1,
+          "role": "couple principal ORTF"
+        },
+        {
+          "equipment_id": "dpa-4011",
+          "qty": 2,
+          "role": "appoints de chœur"
+        },
+        {
+          "equipment_id": "sound-devices-833",
+          "qty": 1,
+          "role": "enregistreur multipiste"
+        },
+        {
+          "equipment_id": "km-210-9",
+          "qty": 3,
+          "role": "pieds"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "ortf",
+            "equipment_id": "schoeps-mstc-74",
+            "label": "Couple ORTF (sortie XLR-5)"
+          },
+          {
+            "id": "spot-l",
+            "equipment_id": "dpa-4011",
+            "label": "Appoint gauche"
+          },
+          {
+            "id": "spot-r",
+            "equipment_id": "dpa-4011",
+            "label": "Appoint droite"
+          },
+          {
+            "id": "rec",
+            "equipment_id": "sound-devices-833",
+            "label": "Enregistreur"
+          }
+        ],
+        "edges": [
+          {
+            "from": "ortf",
+            "to": "rec",
+            "signal": "mic-level",
+            "connector": "xlr5-m"
+          },
+          {
+            "from": "spot-l",
+            "to": "rec",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "spot-r",
+            "to": "rec",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "choir-session-recording"
+      ],
+      "rule_ids": [
+        "choir-mic-spacing-three-to-one",
+        "headphone-only-balance-judgement"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 90,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
+          "publisher": "SCHOEPS — « MSTC 74 » (ORTF stereo microphone)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Retours plateau / fosse pour chanteurs d'opéra (foldback) : sources 403",
+      "searched": "myscena.org, yamaha.com AFC case study"
+    }
+  ]
+}

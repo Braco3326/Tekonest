@@ -1,0 +1,1318 @@
+{
+  "entity": "concept",
+  "domain": "orchestra-classical",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "main-microphone-array",
+      "name_fr": "Système principal (couple ou arbre principal)",
+      "name_en": "Main microphone array",
+      "domain": "orchestra-classical",
+      "definition": "Dispositif stéréo (ou multicanal) placé au-dessus ou derrière le chef, qui fournit à lui seul l'image stéréo et la profondeur de l'orchestre ; les micros d'appoint ne font que le compléter.",
+      "explanation": "En musique classique, on commence toujours par placer le système principal (main pair / main array) : c'est lui qui donne l'image, la largeur et l'impression de salle. DPA insiste pour qu'il soit correctement placé avant toute installation de micros d'appoint. Les systèmes courants sont le couple AB d'omnis, l'arbre Decca (decca-tree) et les couples quasi coïncidents comme l'ORTF. DPA indique une position optimale au-dessus ou juste derrière le pupitre du chef, entre 3 et 4 m de haut, pour qu'aucun musicien ne masque les pupitres placés derrière lui. La distance et la hauteur règlent l'équilibre entre pupitres et la quantité d'ambiance. Exemple de terrain : si les bois semblent lointains, on monte légèrement le couple plutôt que d'ajouter tout de suite un appoint.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "decca-tree",
+        "stereo-ab",
+        "stereo-ortf",
+        "spot-microphones",
+        "main-pair-height-and-position",
+        "outrigger-microphones"
+      ],
+      "equipment_ids": [
+        "schoeps-mstc-74",
+        "akg-c414-xls",
+        "dpa-4011"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "spot-microphones",
+      "name_fr": "Micros d'appoint",
+      "name_en": "Spot / support microphones",
+      "domain": "orchestra-classical",
+      "definition": "Micros directionnels placés plus près d'un pupitre (appoint de pupitre) ou d'un soliste (appoint soliste) pour corriger l'équilibre ou la présence que le système principal ne donne pas.",
+      "explanation": "Les micros d'appoint (spot / support microphones) complètent le système principal, ils ne le remplacent pas. DPA conseille des micros directionnels à distance limitée, environ 1 à 1,5 m des pupitres, distance à laquelle l'effet de proximité est négligeable ; un cardioïde du premier ordre couvre environ 3 à 4 musiciens, en tenant compte des points à −3 dB du diagramme. Beaucoup d'appoints donnent un contrôle total mais réduisent le poids de la salle ; peu d'appoints laissent l'acoustique dominer. Ils visent des pupitres, pas des instruments isolés. Comme ils sont plus près des sources que le couple, leur signal arrive en avance : au-delà d'environ 4 m d'écart avec le couple principal, DPA recommande de les retarder (voir spot-microphone-delay-compensation). Exemple : un appoint sur les cors, mixé trop fort et sans retard, « tire » les cors vers l'avant de l'image.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "main-microphone-array",
+        "section-support-microphones",
+        "spot-microphone-delay-compensation",
+        "polar-pattern",
+        "proximity-effect"
+      ],
+      "equipment_ids": [
+        "dpa-4011",
+        "schoeps-cmc-6-mk-4",
+        "neumann-km-184",
+        "sennheiser-mkh-8040",
+        "schoeps-cmc-6-mk-41"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "orchestra-layout",
+      "name_fr": "Disposition de l'orchestre",
+      "name_en": "Orchestra seating layout",
+      "domain": "orchestra-classical",
+      "definition": "Placement des pupitres sur scène, choisi par le chef : en général cordes devant, puis bois, cuivres et percussions au fond, avec plusieurs variantes pour les cordes (placement « américain » ou « allemand »).",
+      "explanation": "La disposition de l'orchestre (orchestra layout / seating) conditionne directement l'image stéréo captée par le système principal. Le Berliner Philharmoniker explique que les sections sont rangées selon leur puissance : instruments doux devant, plus forts derrière, soit cordes, bois, cuivres puis percussions. C'est le chef qui décide, en fonction du répertoire, de l'acoustique de la salle, du mélange entre pupitres et des lignes de vue. Les contrebasses peuvent être à gauche ou à droite derrière les cordes, et les cors changent parfois de côté. Avant une captation, l'ingénieur relève donc le plan de scène réel (pas seulement « l'habitude ») pour savoir où panoramiquer les appoints. Exemple : en placement allemand, les seconds violons sont à droite ; un appoint « violons 2 » doit alors être panoramiqué à droite, pas au centre-gauche.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "american-seating",
+        "german-seating",
+        "main-microphone-array",
+        "spot-microphones"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.berliner-philharmoniker.de/en/stories/who-decides-the-seating-arrangement-of-the-musicians-on-stage/",
+          "publisher": "Berliner Philharmoniker — « Who decides the seating arrangement of the musicians on stage? »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
+          "publisher": "Singapore Symphony Orchestra — « Seats and Sounds: Orchestral Seating and the Symphony of Sounds »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "concert-hall-acoustics",
+      "name_fr": "Acoustique des salles de concert",
+      "name_en": "Concert hall acoustics",
+      "domain": "orchestra-classical",
+      "definition": "Ensemble des propriétés d'une salle qui portent la musique acoustique : temps de réverbération long (DPA cite 1,8 à 2,2 s à 500 Hz pour la musique classique), réflexions latérales, diffusion et faible bruit de fond.",
+      "explanation": "Pour la musique classique, la salle fait partie de l'instrument. DPA donne comme temps de réverbération recommandés à 500 Hz : 1,8 à 2,2 s pour une salle de concert classique (valeur qui varie selon la taille et le répertoire), environ 1,6 s pour l'opéra, où la réverbération doit porter le chant tout en gardant de l'intelligibilité, et 1,1 à 1,4 s pour un théâtre. La forme compte aussi : la salle « boîte à chaussures » (shoebox) étroite du Musikverein de Vienne est connue pour ses fortes réflexions latérales. Pour la prise de son, plus la salle est réverbérante, plus DPA conseille d'écarter les omnis du couple AB, et plus il faut vérifier le rapport son direct / son réverbéré en déplaçant le couple. Exemple : dans une église très réverbérante, on rapproche le couple du chœur ; dans une salle sèche, on l'éloigne ou on ajoute des micros d'ambiance.",
+      "formulas": [],
+      "units": [
+        "s"
+      ],
+      "related_concepts": [
+        "reverberation-time-rt60",
+        "critical-distance",
+        "concert-hall-reverberation-targets",
+        "shoebox-concert-hall"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique des salles et propagation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Wiener_Musikverein",
+          "publisher": "Wikipedia — « Wiener Musikverein »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "american-seating",
+      "name_fr": "Placement « à l'américaine »",
+      "name_en": "American seating",
+      "domain": "orchestra-classical",
+      "definition": "Disposition des cordes où les seconds violons sont placés à côté des premiers, à gauche du chef, suivis des altos puis des violoncelles (de gauche à droite).",
+      "explanation": "Dans le placement américain (American seating), tous les violons sont à gauche (côté jardin vu de la salle, house left), ce qui fait venir tout le son des violons d'une même direction. Le Berliner Philharmoniker le décrit comme premiers violons, seconds violons, altos, violoncelles, de gauche à droite ; une variante fréquente inverse altos et violoncelles. Selon le Singapore Symphony Orchestra, cette disposition apparaît vers les années 1920. Pour l'ingénieur, elle donne une image où l'aigu des cordes est concentré à gauche et le grave à droite. Exemple : avec un arbre Decca, les violons occuperont toute la moitié gauche, il faut vérifier que la droite (violoncelles, contrebasses) n'est pas trop sourde.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "orchestra-layout",
+        "german-seating"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.berliner-philharmoniker.de/en/stories/who-decides-the-seating-arrangement-of-the-musicians-on-stage/",
+          "publisher": "Berliner Philharmoniker — « Who decides the seating arrangement of the musicians on stage? »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
+          "publisher": "Singapore Symphony Orchestra — « Seats and Sounds: Orchestral Seating and the Symphony of Sounds »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Apparition vers les années 1920 (sans attribution nominative)",
+              "source_url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds"
+            },
+            {
+              "value": "Le Berliner Philharmoniker ne donne aucune date ni origine",
+              "source_url": "https://www.berliner-philharmoniker.de/en/stories/who-decides-the-seating-arrangement-of-the-musicians-on-stage/"
+            }
+          ],
+          "note": "L'attribution à Leopold Stokowski n'a été trouvée que sur des forums : non retenue."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "german-seating",
+      "name_fr": "Placement « à l'allemande » (violons antiphonaux)",
+      "name_en": "German / European seating (antiphonal violins)",
+      "domain": "orchestra-classical",
+      "definition": "Disposition où premiers et seconds violons se font face de part et d'autre du chef, avec violoncelles et altos entre eux.",
+      "explanation": "Dans le placement allemand ou européen (German seating), les premiers violons sont à gauche et les seconds à droite : les deux pupitres se « répondent » (effet antiphonal). Le Singapore Symphony Orchestra le décrit, de gauche à droite, comme premiers violons, violoncelles, altos, seconds violons, contrebasses derrière les violoncelles, et le relie au répertoire de Haydn et Mozart jusqu'à Mahler ; certains compositeurs, comme Beethoven, écrivaient en pensant à cette disposition. Le Berliner Philharmoniker alterne entre ce placement et la variante premiers, seconds, violoncelles, altos. Pour la prise de son, les dialogues entre violons deviennent audibles en stéréo, ce qui rend le panoramique des appoints plus critique. Exemple : un couple principal mal centré déséquilibre ici les violons 1 et 2, ce qui s'entend immédiatement.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "orchestra-layout",
+        "american-seating"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.sso.org.sg/bravissimo/seats-and-sounds-orchestral-seating-and-the-symphony-of-sounds",
+          "publisher": "Singapore Symphony Orchestra — « Seats and Sounds: Orchestral Seating and the Symphony of Sounds »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.berliner-philharmoniker.de/en/stories/who-decides-the-seating-arrangement-of-the-musicians-on-stage/",
+          "publisher": "Berliner Philharmoniker — « Who decides the seating arrangement of the musicians on stage? »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "outrigger-microphones",
+      "name_fr": "Micros de flanc (outriggers)",
+      "name_en": "Outrigger / flank microphones",
+      "domain": "orchestra-classical",
+      "definition": "Deux omnis ajoutés de part et d'autre d'un arbre Decca, à la même hauteur, pour élargir l'image et capter les bords de l'orchestre.",
+      "explanation": "Les outriggers (micros de flanc) complètent l'arbre Decca à trois micros pour former un système à cinq micros. Selon l'Abbey Road Institute, ils sont à la même hauteur que l'arbre, environ 3 m à gauche et à droite du centre du triangle. Wikipedia rapporte qu'ils se placent vers les deux tiers de la largeur de scène, et cite l'ancien ingénieur Decca John Pellowe : outriggers espacés d'environ vingt pieds, à 3,2 m de haut, l'arbre panoramiqué à mi-gauche et mi-droite, les flancs à fond à gauche et à droite. Ils permettent de rapprocher l'arbre pour plus de détail tout en gardant la largeur. Exemple : sur un orchestre de 16 m de large, sans flancs, les premiers violons et les contrebasses paraissent « collés » au centre.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "decca-tree",
+        "main-microphone-array"
+      ],
+      "equipment_ids": [
+        "akg-c414-xls"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://abbeyroadinstitute.co.uk/blog/the-decca-tree-the-secrets-behind-the-legendary-recording-technique/",
+          "publisher": "Abbey Road Institute — « The Decca Tree: the secrets behind the legendary recording technique »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Decca_tree",
+          "publisher": "Wikipedia — « Decca tree »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "main-pair-height-and-position",
+      "name_fr": "Hauteur et position du couple principal",
+      "name_en": "Main pair height and position",
+      "domain": "orchestra-classical",
+      "definition": "Réglage de la hauteur, de la distance et de l'écartement du système principal pour équilibrer les pupitres et doser l'ambiance ; DPA cite 3 à 4 m au-dessus ou juste derrière le chef.",
+      "explanation": "DPA recommande de placer le couple AB au-dessus ou juste derrière le pupitre du chef, entre 3 et 4 m de haut, pour voir (et donc entendre) tous les pupitres : « si l'on voit la source, on l'entend aussi ». L'écartement normal d'un AB est de 40 à 60 cm ; il augmente avec la taille de l'orchestre et le temps de réverbération. Au-delà de 1 à 2,5 m, un trou apparaît au centre et il faut un troisième micro central. Avec une disposition en demi-cercle, il ne faut pas placer le couple trop près du centre : les instruments des bords seraient très hors axe, avec un effet de filtre en peigne dû aux différences de temps. Orienter les micros vers le mur du fond juste au-dessus de l'orchestre éclaire les réflexions et ajoute de la profondeur. Exemple : on écoute en régie et on ajuste la hauteur de 20 à 30 cm à la fois.",
+      "formulas": [],
+      "units": [
+        "m",
+        "cm"
+      ],
+      "related_concepts": [
+        "main-microphone-array",
+        "stereo-ab",
+        "centre-image-hole",
+        "comb-filtering"
+      ],
+      "equipment_ids": [
+        "dpa-4011",
+        "akg-c414-xls"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "spot-microphone-delay-compensation",
+      "name_fr": "Retard de compensation des micros d'appoint",
+      "name_en": "Spot microphone delay compensation",
+      "domain": "orchestra-classical",
+      "definition": "Retard appliqué à un micro d'appoint pour que son signal n'arrive pas avant celui du couple principal ; DPA le conseille au-delà de 4 m d'écart et le règle environ 25 % plus long que la première arrivée.",
+      "explanation": "Un appoint placé près d'un pupitre reçoit le son plus tôt que le couple principal : mélangés, les deux signaux créent des colorations en filtre en peigne et l'appoint « attire » la source vers l'avant. Le retard théorique se calcule avec Δt = a / c (a = écart de trajet, c = 343 m/s), soit environ 2,9 ms par mètre. DPA conseille de penser au retard quand l'écart entre couple et pupitre dépasse 4 m. Mais retarder exactement selon la distance pose des problèmes de phase dès que les musiciens bougent : la méthode décrite par DPA (développée par Danmarks Radio dans son Studio 1 de Copenhague) consiste à régler un retard environ 25 % plus long que le premier son arrivé au couple, mesuré par rapport à la première réflexion, souvent celle du sol. Cela demande de mesurer la réponse de la salle dans les zones utiles, donc une vraie préparation. Exemple : un appoint de timbales à 10 m du couple donne un retard géométrique d'environ 29 ms.",
+      "formulas": [
+        {
+          "expr": "Δt = a / c",
+          "vars": {
+            "Δt": "retard (s)",
+            "a": "différence de trajet ou écart entre micros (m)",
+            "c": "343 m/s à 20 °C"
+          },
+          "source_url": "https://www.sengpielaudio.com/calculator-combfilter.htm"
+        },
+        {
+          "expr": "f_creux1 = 1 / (2·Δt)",
+          "vars": {
+            "f_creux1": "fréquence du premier creux du filtre en peigne (Hz)",
+            "Δt": "décalage entre les deux signaux (s)"
+          },
+          "source_url": "https://www.sengpielaudio.com/calculator-combfilter.htm"
+        }
+      ],
+      "units": [
+        "ms",
+        "m",
+        "Hz"
+      ],
+      "related_concepts": [
+        "spot-microphones",
+        "comb-filtering",
+        "speed-of-sound",
+        "haas-precedence-effect",
+        "delay-effect"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Calcul de retard Δt = d/c (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
+          "publisher": "sengpielaudio — « Comb filter calculator »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "formulas[0]",
+            "formulas[1]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "section-support-microphones",
+      "name_fr": "Appoints de pupitre",
+      "name_en": "Section support microphones",
+      "domain": "orchestra-classical",
+      "definition": "Micros directionnels qui couvrent un groupe de musiciens d'un même pupitre (environ 3 à 4 par cardioïde à 1–1,5 m), plutôt qu'un instrument isolé.",
+      "explanation": "DPA distingue les appoints de pupitre (section mics), qui couvrent plusieurs musiciens, des appoints solistes. À 1 à 1,5 m, un cardioïde du premier ordre couvre environ 3 à 4 musiciens ; il faut tenir compte des points à −3 dB du diagramme polaire et de la baisse de niveau pour les musiciens hors axe. Placer les micros à cette distance évite l'effet de proximité et donne un son de pupitre plus homogène qu'un micro collé à un instrument. Exemple : pour les altos, deux cardioïdes sur pieds hauts, chacun visant le milieu de deux pupitres.",
+      "formulas": [],
+      "units": [
+        "m"
+      ],
+      "related_concepts": [
+        "spot-microphones",
+        "polar-pattern",
+        "proximity-effect"
+      ],
+      "equipment_ids": [
+        "dpa-4011",
+        "neumann-km-184",
+        "schoeps-cmc-6-mk-4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "centre-image-hole",
+      "name_fr": "Trou au centre de l'image",
+      "name_en": "Hole in the middle",
+      "domain": "orchestra-classical",
+      "definition": "Perte de sources au centre de l'image stéréo quand les deux micros d'un couple espacé sont trop écartés ; on la corrige avec un micro central.",
+      "explanation": "DPA indique qu'avec un AB très écarté (1 à 2,5 m ou plus), « un trou commence à apparaître au milieu de l'image stéréo », ce qui impose un troisième micro entre les deux. C'est exactement le rôle du micro avant de l'arbre Decca, mélangé aux deux micros espacés pour remplir le centre. Le même défaut existe en prise de piano : DPA prévient qu'un écartement trop grand laisse un trou au milieu. Exemple : à l'écoute, le soliste au centre semble lointain et flou alors que les bords sont précis.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "stereo-ab",
+        "decca-tree",
+        "main-pair-height-and-position"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Decca_tree",
+          "publisher": "Wikipedia — « Decca tree »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "near-coincident-main-pair",
+      "name_fr": "Couple principal quasi coïncident (ORTF, NOS, DIN)",
+      "name_en": "Near-coincident main pair",
+      "domain": "orchestra-classical",
+      "definition": "Couple de deux cardioïdes légèrement espacés et angulés, qui combine différences de niveau et de temps : ORTF 17 cm / 110°, NOS 30 cm / 90°, DIN 20 cm / 90°.",
+      "explanation": "Les couples quasi coïncidents mélangent les principes AB (temps) et XY (niveau). DPA donne : ORTF = deux cardioïdes espacés de 17 cm, NOS = 30 cm à 90°, DIN = 20 cm à 90°. SCHOEPS décrit l'ORTF comme deux cardioïdes à 17 cm et 110° l'un de l'autre, avec un angle de prise de son de 95°, méthode développée vers 1962 par la radiodiffusion française avec des micros SCHOEPS ; l'MSTC 74 est recommandé comme principal pour ensembles et chœurs ou comme appoint stéréo. Pour l'orchestre, un couple ORTF peut servir de principal pour un petit ensemble ou d'appoint stéréo de pupitre. DPA rappelle qu'un écart de 30° dans l'image correspond à environ 15 dB de différence de niveau ou 1,1 ms de différence de temps. Exemple : un ORTF sur un quatuor à cordes dans une église, à 3 m.",
+      "formulas": [],
+      "units": [
+        "cm",
+        "°",
+        "ms",
+        "dB"
+      ],
+      "related_concepts": [
+        "stereo-ortf",
+        "stereo-xy",
+        "stereo-ab",
+        "main-microphone-array"
+      ],
+      "equipment_ids": [
+        "schoeps-mstc-74",
+        "dpa-4011",
+        "neumann-km-184"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/",
+          "publisher": "DPA Microphones (Mic University) — « Stereo recording techniques and setups »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
+          "publisher": "SCHOEPS — « MSTC 74 » (ORTF stereo microphone)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/ORTF_stereo_technique",
+          "publisher": "Wikipedia — « ORTF stereo technique »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Angle de prise de son ORTF : 95°",
+              "source_url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html"
+            },
+            {
+              "value": "Angle de prise de son ORTF : ±48° soit 96°",
+              "source_url": "https://en.wikipedia.org/wiki/ORTF_stereo_technique"
+            }
+          ],
+          "note": "Différence de 1°, négligeable en pratique."
+        },
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "ORTF développé vers 1962",
+              "source_url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html"
+            },
+            {
+              "value": "ORTF imaginé vers 1960",
+              "source_url": "https://en.wikipedia.org/wiki/ORTF_stereo_technique"
+            }
+          ],
+          "note": "Retenir « début des années 1960 »."
+        },
+        {
+          "field": "definition",
+          "values": [
+            {
+              "value": "110° entre les deux capsules",
+              "source_url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html"
+            },
+            {
+              "value": "DPA écrit « angled ±110° »",
+              "source_url": "https://www.dpamicrophones.com/mic-university/audio-production/stereo-recording-techniques-and-setups/"
+            }
+          ],
+          "note": "La notation ±110° de DPA est trompeuse : l'angle total entre capsules est 110° (±55°)."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "diffuse-field-response-main-mics",
+      "name_fr": "Réponse en champ diffus des micros principaux",
+      "name_en": "Diffuse-field response of main microphones",
+      "domain": "orchestra-classical",
+      "definition": "À plusieurs mètres de l'orchestre, le micro principal reçoit surtout du champ réverbéré : on choisit une grille ou une capsule corrigée en champ diffus pour garder un aigu naturel malgré l'absorption de l'air.",
+      "explanation": "Un omni de pression est souvent linéaire en champ libre dans l'axe, mais un micro principal placé à 3–4 m reçoit une grande part de son réverbéré. DPA indique qu'avec ses omnis 4006A sur grand orchestre, une grille champ diffus (diffuse-field grid) est normalement nécessaire pour une réponse linéaire en champ diffus et pour compenser la perte d'aigu due à l'absorption de l'air. Le cône (nose cone) rend au contraire le micro omnidirectionnel sur toute la bande et ajoute de l'ambiance sans déplacer le couple. Dans le même esprit, SCHOEPS équipe son set Decca de sphères KA 40, qui augmentent la directivité entre 1 et 4 kHz. Exemple : un couple trop terne à 5 m peut être corrigé par la grille avant de toucher à l'égaliseur.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "main-microphone-array",
+        "polar-pattern",
+        "critical-distance"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
+          "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/en/products/stereo/sets/decca-tree-set.html",
+          "publisher": "SCHOEPS — « Decca Tree Set »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "concert-hall-reverberation-targets",
+      "name_fr": "Temps de réverbération cibles pour la musique",
+      "name_en": "Reverberation time targets for music",
+      "domain": "orchestra-classical",
+      "definition": "Valeurs de temps de réverbération recommandées à 500 Hz selon l'usage : 1,8–2,2 s salle de concert classique, environ 1,6 s opéra, 1,1–1,4 s théâtre, 0,4–0,6 s studio (DPA).",
+      "explanation": "Le temps de réverbération recommandé dépend de l'usage. DPA donne, à 500 Hz : salle de concert classique 1,8 à 2,2 s, opéra environ 1,6 s, théâtre 1,1 à 1,4 s, petites salles rock 0,6 à 1,6 s, cinéma 0,7 à 1,0 s, salle de cours 0,6 à 0,9 s, studio d'enregistrement 0,4 à 0,6 s, régie 0,2 à 0,3 s, cabine voix 0,1 à 0,2 s. L'opéra est plus court que la salle de concert parce qu'il faut garder l'intelligibilité du texte chanté. Ces chiffres servent d'ordre de grandeur pour juger une salle avant une captation : une salle polyvalente à 1 s donnera un orchestre sec, qu'on complètera par des micros d'ambiance ou une réverbération artificielle discrète.",
+      "formulas": [],
+      "units": [
+        "s",
+        "Hz"
+      ],
+      "related_concepts": [
+        "reverberation-time-rt60",
+        "concert-hall-acoustics"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique des salles et propagation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "shoebox-concert-hall",
+      "name_fr": "Salle de concert « boîte à chaussures »",
+      "name_en": "Shoebox concert hall",
+      "domain": "orchestra-classical",
+      "definition": "Salle rectangulaire étroite et haute dont les murs latéraux proches renvoient de fortes réflexions latérales, réputées favorables à la musique symphonique.",
+      "explanation": "La forme shoebox (boîte à chaussures) est celle de la Grande salle dorée du Musikverein de Vienne : environ 49 m de long, 19 m de large et 18 m de haut pour 1 744 places assises. Wikipedia, citant le manuel Architectural Acoustics de Long (2005), attribue à cette forme étroite de fortes réflexions latérales. Pour la prise de son, ces réflexions élargissent l'image captée par les micros principaux et les micros d'ambiance. Exemple : dans une telle salle, des omnis d'ambiance placés plus loin dans la salle captent une réverbération enveloppante.",
+      "formulas": [],
+      "units": [
+        "m"
+      ],
+      "related_concepts": [
+        "concert-hall-acoustics",
+        "concert-hall-reverberation-targets"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Acoustique des salles et propagation (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Wiener_Musikverein",
+          "publisher": "Wikipedia — « Wiener Musikverein »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "orchestra-pit",
+      "name_fr": "Fosse d'orchestre",
+      "name_en": "Orchestra pit",
+      "domain": "orchestra-classical",
+      "definition": "Zone abaissée devant la scène d'un théâtre ou d'un opéra où joue l'orchestre, en grande partie hors de vue, le chef faisant face à la scène.",
+      "explanation": "La fosse d'orchestre (orchestra pit) est en général un espace abaissé devant la scène ; le chef se tient à l'avant de la fosse, face au plateau. Son plancher peut souvent être descendu, réglé à mi-hauteur ou remonté au niveau de la scène ou de la salle. Ses parois sont conçues pour que l'orchestre remplisse la salle sans couvrir les voix du plateau. La fosse est souvent exiguë : les instruments repassent dans les micros des voisins (repisse, bleed). Pour la prise de son, cela impose des micros directionnels proches et une attention aux sources très fortes (cuivres, percussions) voisines des cordes. Exemple : un appoint sur les violoncelles en fosse capte aussi les trombones derrière eux.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "opera-pit-miking",
+        "spot-microphones"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Orchestra_pit",
+          "publisher": "Wikipedia — « Orchestra pit »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "opera-pit-miking",
+      "name_fr": "Prise de son de l'opéra avec fosse",
+      "name_en": "Miking opera with an orchestra pit",
+      "domain": "orchestra-classical",
+      "definition": "Captation (enregistrement ou diffusion) d'un opéra où l'orchestre est en fosse et les chanteurs sur le plateau : micros proches en fosse, micros de plateau pour les voix, et pour la salle une sonorisation au plus discrète.",
+      "explanation": "À l'opéra, l'enregistrement et la sonorisation sont deux métiers différents. Pour enregistrer ou diffuser, on combine des micros en fosse, des micros de plateau (rampe, suspendus) pour les voix et des micros d'ambiance ; la fosse étant exiguë, la repisse entre instruments est forte. DPA conseille, pour un piano en fosse, de rapprocher les micros des marteaux et d'utiliser des directionnels pour l'isolement. La salle d'opéra elle-même vise un temps de réverbération d'environ 1,6 s selon DPA, pour soutenir le chant tout en gardant l'intelligibilité : on ne cherche donc pas à « ajouter » de la salle au mixage autant qu'en concert symphonique. La question de l'amplification des voix dans les grandes maisons d'opéra n'a pas pu être vérifiée dans une source primaire ouverte ici (voir not_found_log) : on la présente comme un choix artistique de la maison, à discuter avec le sonorisateur.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "orchestra-pit",
+        "spot-microphones",
+        "main-microphone-array",
+        "concert-hall-reverberation-targets"
+      ],
+      "equipment_ids": [
+        "schoeps-cmc-6-mk-41",
+        "dpa-4011"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Orchestra_pit",
+          "publisher": "Wikipedia — « Orchestra pit »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
+          "publisher": "DPA Microphones (Mic University) — « 10 important facts about acoustics for microphone users »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "classical-broadcast-loudness",
+      "name_fr": "Loudness d'une diffusion de concert classique",
+      "name_en": "Loudness of classical concert broadcasts",
+      "domain": "orchestra-classical",
+      "definition": "En diffusion conforme à EBU R 128 (−23 LUFS), la musique classique a une grande plage de loudness (LRA) ; l'EBU déconseille une limite stricte de LRA et note qu'on l'écoute souvent plus fort.",
+      "explanation": "La recommandation EBU R 128 normalise le niveau des programmes à −23 LUFS ; la Tech 3343 (guide de production) explique comment l'appliquer. Elle cite la musique classique comme exemple de programme à grande plage de loudness (Loudness Range, LRA) et note que les auditeurs passionnés écoutent ce type de musique avec un niveau plus élevé, jusqu'à +2 à 3 LU en moyenne, peut-être à cause du niveau réel très élevé d'un fortissimo symphonique. L'EBU juge impossible et inutile de fixer une limite stricte de LRA pour tous les diffuseurs : la LRA sert surtout à juger la dynamique à long terme d'un mixage. Elle mentionne aussi qu'on peut monter l'écoute pour des signaux très dynamiques comme la musique classique. Pour une diffusion en direct, on évite donc d'écraser la dynamique de l'orchestre et on laisse les traitements éventuels en aval, selon la plateforme.",
+      "formulas": [],
+      "units": [
+        "LUFS",
+        "LU"
+      ],
+      "related_concepts": [
+        "loudness-ebu-r128",
+        "true-peak",
+        "main-microphone-array"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Diffusion de concert : niveaux et loudness — jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Mesure du loudness (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3343.pdf",
+          "publisher": "EBU — Tech 3343 (2023) « Guidelines for Production of Programmes in accordance with R 128 »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "click-track-scoring",
+      "name_fr": "Piste de click en séance de musique de film",
+      "name_en": "Click track in scoring sessions",
+      "domain": "orchestra-classical",
+      "definition": "Pulsation métronomique envoyée au casque des musiciens pendant une séance de musique à l'image, pour suivre un tempo fixé par le compositeur et permettre d'enregistrer les pupitres séparément.",
+      "explanation": "En musique de film, la partition est écrite à l'image dans un logiciel au tempo fixe : le click (click track) diffusé dans les casques garde la pulsation des musiciens aussi stricte que celle de la maquette. Il permet aussi d'enregistrer différents pupitres à des jours différents puis de les superposer. Le public n'entend jamais le click, mais les musiciens doivent garder leur musicalité malgré lui. Plusieurs prises de la même musique sont courantes (une forte, une douce, une plus agressive) et l'on attend des musiciens un résultat en une ou deux tentatives. Côté technique, cela suppose un retour casque par musicien (cue-mix) et une console ou un poste dédié aux casques : CineMontage cite un poste « headphone console » distinct dans une séance au scoring stage de la Fox. Exemple : un pupitre de cuivres absent le jour de la séance tutti peut être enregistré plus tard sur le même click, puis superposé.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "cue-mix",
+        "overdub",
+        "recording-session",
+        "scoring-stage-session"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://interlude.hk/how-do-recording-sessions-work/",
+          "publisher": "Interlude — O. Pashley, « How Do Recording Sessions Work? » (2022-10-19)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://cinemontage.org/?p=7926",
+          "publisher": "CineMontage — M. Lambert, « A Good Way to Mic and Mix Scoring Sessions » (2013-03-01)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "scoring-stage-session",
+      "name_fr": "Séance sur scoring stage",
+      "name_en": "Scoring stage session",
+      "domain": "orchestra-classical",
+      "definition": "Enregistrement d'orchestre pour l'image dans un grand plateau dédié, avec arbre Decca, flancs, nombreux appoints enregistrés séparément et retours casque pour chaque musicien.",
+      "explanation": "Un scoring stage est un grand plateau conçu pour enregistrer l'orchestre de musique de film. L'article de CineMontage (2013) décrit la méthode du mixeur John Kurlander : arbre Decca de trois omnis en T sur une perche haute au-dessus du chef (Neumann M150 et TLM50), micros hard-left / hard-right espacés de 20 à 30 pieds, appoints sur cordes, cuivres et bois, rubans pour les cuivres. Sur un film, 46 sorties micro ont été enregistrées et 25 utilisées dans la bande finale. La disposition peut changer selon le projet : violons partagés gauche/droite pour la symétrie, ou disposition traditionnelle aigu à gauche, grave à droite. Exemple : chaque sortie est enregistrée sur une piste séparée pour que le mixage (stems) puisse être refait plus tard.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "decca-tree",
+        "outrigger-microphones",
+        "click-track-scoring",
+        "stems",
+        "spot-microphones"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://cinemontage.org/?p=7926",
+          "publisher": "CineMontage — M. Lambert, « A Good Way to Mic and Mix Scoring Sessions » (2013-03-01)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "choir-microphone-coverage",
+      "name_fr": "Couverture d'un chœur par micro",
+      "name_en": "Choir microphone coverage",
+      "domain": "orchestra-classical",
+      "definition": "Nombre de choristes par micro et distances associées : plus on met de chanteurs par micro, plus ils sont loin et hors axe, et plus le niveau capté baisse (DPA : jusqu'à environ 25 dB pour 4 chanteurs par micro).",
+      "explanation": "DPA prend l'exemple théorique de 12 chanteurs. Un micro par chanteur fonctionne presque dans toutes les conditions. Avec 6 micros (2 chanteurs chacun, à environ 30 cm et ±45°), la perte est d'environ 17 dB ; avec 4 micros (3 chanteurs), environ 22,5 dB ; avec 3 micros (4 chanteurs), environ 25,5 dB. Plus de chanteurs par micro ne marche que si l'acoustique est maîtrisée. Pour des micros de chœur suspendus, DPA conseille de viser le dernier rang et de garder environ 60° entre l'axe et le premier rang. Entre micros voisins, il recommande au moins la règle 3:1 (4,5:1 en théorie pour plus de deux micros en ligne). En enregistrement, il n'y a pas de larsen : on équilibre son direct et son diffus à l'écoute sur enceintes, car le casque ne donne ni la bonne impression spatiale ni le bon équilibre tonal.",
+      "formulas": [],
+      "units": [
+        "dB",
+        "cm",
+        "°"
+      ],
+      "related_concepts": [
+        "three-to-one-rule",
+        "polar-pattern",
+        "main-microphone-array"
+      ],
+      "equipment_ids": [
+        "dpa-4011",
+        "schoeps-mstc-74"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "3 micros : chanteurs intérieurs à ±30° et 80 cm",
+              "source_url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/"
+            },
+            {
+              "value": "Annexe du même article : ±45° et 75 cm",
+              "source_url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/"
+            }
+          ],
+          "note": "Incohérence interne à la page DPA."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "piano-recital-miking",
+      "name_fr": "Prise de son d'un piano en récital",
+      "name_en": "Miking a piano recital",
+      "domain": "orchestra-classical",
+      "definition": "Prise d'un piano à queue en salle avec un couple (souvent AB d'omnis) placé à l'extérieur de l'instrument, bas, le couvercle ouvert pour que les réflexions atteignent les micros.",
+      "explanation": "Pour un piano seul, DPA propose un couple AB d'omnis juste à l'extérieur du piano, sur pied, espacé de 30 cm, placé relativement bas ; l'omni n'a pas d'effet de proximité et capte aussi la salle, qui « est souvent aussi unique que le piano ». On ouvre un peu plus le couvercle pour que ses réflexions atteignent les micros. Sur une scène surélevée, l'angle du couvercle est souvent réduit (bâton court) pour diriger le son vers le public. D'autres options : ORTF de cardioïdes à environ 30 cm au-dessus des cordes, au milieu du cadre, incliné de 45° vers le pianiste ; AB d'omnis à 30 cm au-dessus des cordes. Un écartement trop grand laisse un trou au milieu. Pour un soliste accompagné (violon, voix), on garde le même principe de couple principal et on ajoute un appoint discret sur le soliste ; DPA ne détaille pas ce cas.",
+      "formulas": [],
+      "units": [
+        "cm",
+        "°"
+      ],
+      "related_concepts": [
+        "stereo-ab",
+        "stereo-ortf",
+        "centre-image-hole",
+        "proximity-effect"
+      ],
+      "equipment_ids": [
+        "dpa-4011",
+        "akg-c414-xls",
+        "dpa-4060"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-violin/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a violin »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "mechanical-and-hvac-rumble",
+      "name_fr": "Grondement grave : ventilation et vibrations des pieds",
+      "name_en": "Low-frequency rumble from HVAC and stands",
+      "domain": "orchestra-classical",
+      "definition": "Bruit grave parasite capté par des micros sensibles dans une grande salle : vibrations transmises par le sol et les pieds, et bruit/courants d'air de la ventilation.",
+      "explanation": "En prise classique, on utilise des micros très sensibles et des gains élevés : tout bruit grave de la salle devient audible. Wikipedia rappelle que la suspension élastique (shock mount) sert surtout à isoler le micro des bruits transmis mécaniquement, par exemple les vibrations du sol transmises par un pied, un micro se comportant en partie comme un accéléromètre. DPA signale que le bruit de ventilation peut masquer un chœur et que les courants d'air peuvent provoquer du bruit de vent. Les micros de prise classique proposent souvent un filtre coupe-bas : par exemple 20 Hz à 12 dB/oct sur l'amplificateur SCHOEPS CMC 6 et 75 ou 150 Hz sur l'AKG C451 B (données de la base matériel). Exemple : on demande à couper la ventilation pendant les prises et on écoute le bruit de fond micros ouverts, salle vide, avant la séance.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "high-pass-filter",
+        "signal-to-noise-ratio"
+      ],
+      "equipment_ids": [
+        "schoeps-cmc-6-mk-4",
+        "akg-c451-b"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Prise de son orchestrale / musique classique en E4 (technique et mise en œuvre) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Shock_mount",
+          "publisher": "Wikipedia — « Shock mount »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
+          "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Mesures publiées de TR de salles précises (Musikverein, Philharmonie de Paris) et de TR d'églises",
+      "searched": "Wikipedia Musikverein, Concert hall, Reverberation ; DPA acoustics facts"
+    },
+    {
+      "what": "Pratique d'amplification des voix dans les grandes maisons d'opéra (sources Live Design, Yamaha AFC, myscena)",
+      "searched": "WebSearch opera pit sound reinforcement ; pages 403 (livedesignonline, yamaha.com, myscena.org)"
+    },
+    {
+      "what": "Attribution du placement américain à Stokowski",
+      "searched": "WebSearch seating ; seulement forums (vi-control, VSL, slippedisc)"
+    },
+    {
+      "what": "Fuite du click dans les micros (choix du son, type de casque) : page Sweetwater 403",
+      "searched": "WebSearch scoring click bleed ; sweetwater.com/insync 403"
+    },
+    {
+      "what": "Article DPA dédié à l'arbre Decca (URL citée par Wikipedia en 404)",
+      "searched": "dpamicrophones.com/mic-university/decca-tree"
+    },
+    {
+      "what": "Niveau relatif conseillé appoint/arbre en musique de film (−6 dB attribué à Shawn Murphy)",
+      "searched": "WebSearch soundonsound orchestra ; forum vi-control uniquement"
+    }
+  ]
+}
