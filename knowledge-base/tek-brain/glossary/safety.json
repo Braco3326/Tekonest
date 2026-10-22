@@ -1,0 +1,1013 @@
+{
+ "entity": "glossary",
+ "domain": "safety",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "nihl",
+   "term_fr": "Surdité induite par le bruit",
+   "term_en": "Noise-induced hearing loss (NIHL)",
+   "domain": "safety",
+   "definition": "Surdité de perception irréversible due à la destruction des cellules ciliées par un bruit intense et prolongé.",
+   "see_also": [
+    "noise-induced-hearing-loss"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tinnitus",
+   "term_fr": "Acouphène",
+   "term_en": "Tinnitus",
+   "domain": "safety",
+   "definition": "Perception d'un son (sifflement, bourdonnement) sans source extérieure, notamment après une exposition à un bruit intense.",
+   "see_also": [
+    "tinnitus-auditory-fatigue"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "auditory-fatigue",
+   "term_fr": "Fatigue auditive",
+   "term_en": "Auditory fatigue (temporary threshold shift)",
+   "domain": "safety",
+   "definition": "Baisse temporaire de l'audition après une exposition forte, qui disparaît si l'exposition cesse.",
+   "see_also": [
+    "tinnitus-auditory-fatigue"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hyperacusis",
+   "term_fr": "Hyperacousie",
+   "term_en": "Hyperacusis",
+   "domain": "safety",
+   "definition": "Sensibilité excessive aux sons, pouvant suivre un choc acoustique (par exemple au casque).",
+   "see_also": [
+    "tinnitus-auditory-fatigue"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "acoustic-trauma",
+   "term_fr": "Traumatisme sonore aigu",
+   "term_en": "Acute acoustic trauma",
+   "domain": "safety",
+   "definition": "Surdité brutale causée par un son très intense, réversible si seul le tympan est touché, définitive si les cellules ciliées sont détruites.",
+   "see_also": [
+    "noise-induced-hearing-loss"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/effets-sante.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lex-8h",
+   "term_fr": "LEX,8h",
+   "term_en": "Daily noise exposure level",
+   "domain": "safety",
+   "definition": "Niveau d'exposition quotidienne au bruit en dB(A), ramené à 8 heures.",
+   "see_also": [
+    "daily-noise-exposure-lex8h"
+   ],
+   "sources": [
+    {
+     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lpc-peak",
+   "term_fr": "LpC,crête",
+   "term_en": "C-weighted peak sound pressure level",
+   "domain": "safety",
+   "definition": "Niveau de pression acoustique de crête pondéré C, en dB(C).",
+   "see_also": [
+    "peak-sound-pressure-lcpeak"
+   ],
+   "sources": [
+    {
+     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "vai",
+   "term_fr": "VAI (valeur d'exposition inférieure déclenchant l'action)",
+   "term_en": "Lower exposure action value",
+   "domain": "safety",
+   "definition": "80 dB(A) en LEX,8h ou 135 dB(C) en crête ; au-delà, protecteurs à disposition, information et formation.",
+   "see_also": [
+    "worker-noise-exposure-values"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "vas",
+   "term_fr": "VAS (valeur d'exposition supérieure déclenchant l'action)",
+   "term_en": "Upper exposure action value",
+   "domain": "safety",
+   "definition": "85 dB(A) en LEX,8h ou 137 dB(C) en crête ; au-delà, programme de réduction, signalisation et contrôle du port des protecteurs.",
+   "see_also": [
+    "worker-noise-exposure-values"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "vle",
+   "term_fr": "VLE (valeur limite d'exposition)",
+   "term_en": "Exposure limit value",
+   "domain": "safety",
+   "definition": "87 dB(A) en LEX,8h ou 140 dB(C) en crête, atténuation des protecteurs comprise ; ne doit jamais être dépassée.",
+   "see_also": [
+    "worker-noise-exposure-values"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.legislation.gov.uk/eudr/2003/10/article/3",
+     "publisher": "legislation.gov.uk (copie officielle de la directive 2003/10/CE, art. 3)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dba",
+   "term_fr": "Décibel pondéré A, dB(A)",
+   "term_en": "A-weighted decibel",
+   "domain": "safety",
+   "definition": "Niveau sonore pondéré pour tenir compte de la perception réelle de l'oreille.",
+   "see_also": [
+    "a-and-c-weighting"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dbc",
+   "term_fr": "Décibel pondéré C, dB(C)",
+   "term_en": "C-weighted decibel",
+   "domain": "safety",
+   "definition": "Niveau sonore pondéré C, utilisé pour les niveaux très élevés ; il rend mieux compte des basses fréquences.",
+   "see_also": [
+    "a-and-c-weighting"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/definitions.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ldsa",
+   "term_fr": "LDSA (lieu diffusant des sons amplifiés)",
+   "term_en": "Venue with amplified sound",
+   "domain": "safety",
+   "definition": "Lieu ouvert au public ou recevant du public où des sons amplifiés sont diffusés, soumis à l'article R. 1336-1 du Code de la santé publique.",
+   "see_also": [
+    "sound-exposure-limits-france"
+   ],
+   "sources": [
+    {
+     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+     "publisher": "ARS Île-de-France",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hearing-rest-zone",
+   "term_fr": "Zone de repos auditif",
+   "term_en": "Hearing rest zone",
+   "domain": "safety",
+   "definition": "Espace où le niveau ne dépasse pas l'égale énergie fondée sur 80 dB(A) sur 8 heures.",
+   "see_also": [
+    "hearing-rest-zone"
+   ],
+   "sources": [
+    {
+     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "eins",
+   "term_fr": "EINS (étude de l'impact des nuisances sonores)",
+   "term_en": "Noise impact study",
+   "domain": "safety",
+   "definition": "Étude imposée aux lieux diffusant des sons amplifiés pour protéger le voisinage ; elle peut prescrire un limiteur.",
+   "see_also": [
+    "noise-impact-study-limiter"
+   ],
+   "sources": [
+    {
+     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+     "publisher": "ARS Île-de-France",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sound-pressure-limiter",
+   "term_fr": "Limiteur de pression acoustique (LPA)",
+   "term_en": "Sound pressure limiter",
+   "domain": "safety",
+   "definition": "Appareil qui plafonne le niveau de diffusion, installé et réglé par un professionnel si l'EINS le prescrit.",
+   "see_also": [
+    "noise-impact-study-limiter"
+   ],
+   "sources": [
+    {
+     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+     "publisher": "ARS Île-de-France",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "picb",
+   "term_fr": "PICB (protecteur individuel contre le bruit)",
+   "term_en": "Hearing protection device (HPD)",
+   "domain": "safety",
+   "definition": "Bouchon d'oreille ou casque anti-bruit destiné à réduire le bruit reçu par l'oreille.",
+   "see_also": [
+    "hearing-protection-devices"
+   ],
+   "sources": [
+    {
+     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "snr",
+   "term_fr": "SNR (indice global d'atténuation)",
+   "term_en": "Single Number Rating",
+   "domain": "safety",
+   "definition": "Atténuation globale d'un protecteur pour un bruit rose, définie par ISO 4869-2 pour une efficacité de 84 %.",
+   "see_also": [
+    "hearing-protection-devices"
+   ],
+   "sources": [
+    {
+     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hml",
+   "term_fr": "Valeurs H, M, L",
+   "term_en": "HML values",
+   "domain": "safety",
+   "definition": "Atténuations d'un protecteur pour des bruits à dominante aiguë, médium et grave.",
+   "see_also": [
+    "hearing-protection-devices"
+   ],
+   "sources": [
+    {
+     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "custom-molded-earplugs",
+   "term_fr": "Bouchons moulés individuels",
+   "term_en": "Custom-molded earplugs",
+   "domain": "safety",
+   "definition": "Bouchons faits sur empreinte ou scan 3D du conduit auditif, toujours munis d'un filtre, à atténuation uniforme ou contrôlée.",
+   "see_also": [
+    "flat-attenuation-earplugs"
+   ],
+   "sources": [
+    {
+     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "overprotection",
+   "term_fr": "Surprotection",
+   "term_en": "Overprotection",
+   "domain": "safety",
+   "definition": "Atténuation excessive qui isole trop l'utilisateur de son environnement sonore et nuit à la communication.",
+   "see_also": [
+    "hearing-protection-devices"
+   ],
+   "sources": [
+    {
+     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "protective-earth",
+   "term_fr": "Conducteur de protection (PE, terre)",
+   "term_en": "Protective earth (PE)",
+   "domain": "safety",
+   "definition": "Conducteur qui relie les masses des appareils de classe I à la terre pour permettre la coupure automatique en cas de défaut.",
+   "see_also": [
+    "electrical-safety-earthing"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "class-ii",
+   "term_fr": "Classe II (double isolation)",
+   "term_en": "Class II (double insulation)",
+   "domain": "safety",
+   "definition": "Appareil à isolation renforcée ou double, dont les parties métalliques ne sont pas reliées à la terre.",
+   "see_also": [
+    "electrical-safety-earthing"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tbts",
+   "term_fr": "TBTS (très basse tension de sécurité)",
+   "term_en": "Safety extra-low voltage (SELV)",
+   "domain": "safety",
+   "definition": "Alimentation à tension réduite (50 V en général, 12 V en milieu mouillé, en alternatif et en intérieur) par transformateur de sécurité.",
+   "see_also": [
+    "electrical-safety-earthing"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rcd",
+   "term_fr": "Dispositif différentiel (DDR)",
+   "term_en": "Residual current device (RCD)",
+   "domain": "safety",
+   "definition": "Appareil qui coupe le circuit quand la différence de courant entre conducteurs actifs (fuite vers la terre) dépasse sa sensibilité.",
+   "see_also": [
+    "residual-current-device"
+   ],
+   "sources": [
+    {
+     "url": "https://fr.wikipedia.org/wiki/Disjoncteur_différentiel",
+     "publisher": "Wikipédia (FR)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "electrisation",
+   "term_fr": "Électrisation",
+   "term_en": "Electric shock",
+   "domain": "safety",
+   "definition": "Passage du courant dans le corps, aux effets mineurs, graves ou mortels.",
+   "see_also": [
+    "electric-shock-effects"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "electrocution",
+   "term_fr": "Électrocution",
+   "term_en": "Electrocution",
+   "domain": "safety",
+   "definition": "Électrisation qui entraîne la mort.",
+   "see_also": [
+    "electric-shock-effects"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "low-voltage-bt",
+   "term_fr": "Basse tension (BT)",
+   "term_en": "Low voltage",
+   "domain": "safety",
+   "definition": "Domaine de tension qui s'étend jusqu'à 1 000 V en alternatif ; « basse » ne signifie pas sans danger.",
+   "see_also": [
+    "electric-shock-effects"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "emergency-stop",
+   "term_fr": "Coupure d'urgence",
+   "term_en": "Emergency power cut-off",
+   "domain": "safety",
+   "definition": "Dispositif qui permet de couper le courant en cas de danger pour les personnes ou le matériel ; il doit rester accessible.",
+   "see_also": [
+    "electrical-safety-earthing"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "habilitation-electrique",
+   "term_fr": "Habilitation électrique",
+   "term_en": "Electrical work authorisation",
+   "domain": "safety",
+   "definition": "Reconnaissance par l'employeur de la capacité d'un salarié à effectuer en sécurité des opérations électriques définies (NF C 18-510).",
+   "see_also": [
+    "habilitation-electrique"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/electriques/habilitation-electrique.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "three-phase",
+   "term_fr": "Triphasé",
+   "term_en": "Three-phase",
+   "domain": "safety",
+   "definition": "Système de trois tensions déphasées de 120° ; 230 V phase-neutre et 400 V entre phases en Europe.",
+   "see_also": [
+    "three-phase-distribution"
+   ],
+   "sources": [
+    {
+     "url": "https://fr.wikipedia.org/wiki/Courant_triphasé",
+     "publisher": "Wikipédia (FR)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "powercon",
+   "term_fr": "powerCON",
+   "term_en": "powerCON",
+   "domain": "safety",
+   "definition": "Connecteur secteur verrouillable de Neutrik ; la version bleue (entrée) n'a pas de pouvoir de coupure et ne se (dé)branche pas sous charge.",
+   "see_also": [
+    "electrical-safety-earthing"
+   ],
+   "sources": [
+    {
+     "url": "https://www.neutrik.com/en/product/nac3fca",
+     "publisher": "Neutrik",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "powercon-true1",
+   "term_fr": "powerCON TRUE1",
+   "term_en": "powerCON TRUE1",
+   "domain": "safety",
+   "definition": "Connecteur secteur verrouillable de Neutrik (2 pôles + terre) avec pouvoir de coupure : il peut être connecté ou déconnecté sous charge.",
+   "see_also": [
+    "electrical-safety-earthing"
+   ],
+   "sources": [
+    {
+     "url": "https://www.neutrik.com/en/product/nac3f-true1-s",
+     "publisher": "Neutrik",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "power-sequencing",
+   "term_fr": "Ordre de mise sous tension",
+   "term_en": "Power sequencing",
+   "domain": "safety",
+   "definition": "Allumer les amplificateurs en dernier et les éteindre en premier pour éviter les chocs dans les haut-parleurs.",
+   "see_also": [
+    "power-sequencing"
+   ],
+   "sources": [
+    {
+     "url": "https://www.prosoundweb.com/tech-tip-of-the-day-proper-pa-power-sequencing/",
+     "publisher": "ProSoundWeb (tip from Sweetwater, 2010)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cmu",
+   "term_fr": "CMU (charge maximale d'utilisation)",
+   "term_en": "Working load limit (WLL)",
+   "domain": "safety",
+   "definition": "Charge maximale qu'un accessoire de levage peut supporter en service, marquée sur l'accessoire, pour un brin.",
+   "see_also": [
+    "working-load-limit-cmu"
+   ],
+   "sources": [
+    {
+     "url": "https://inrs.fr/dam/jcr:907c237a-be6c-4c82-8b40-cc2623460c40/ed6278.pdf",
+     "publisher": "INRS (ED 6278, chapitre élingage)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "swl",
+   "term_fr": "SWL (charge de travail sûre)",
+   "term_en": "Safe working load",
+   "domain": "safety",
+   "definition": "Charge maximale indiquée par un fabricant pour une pièce d'accroche (ex. 860 kg pour le cadre Z5380 d&b série V).",
+   "see_also": [
+    "working-load-limit-cmu"
+   ],
+   "sources": [
+    {
+     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mode-factor",
+   "term_fr": "Facteur de mode",
+   "term_en": "Mode factor",
+   "domain": "safety",
+   "definition": "Coefficient, fonction du nombre de brins et de leur angle, qui multiplie la CMU d'un brin pour obtenir la charge admissible d'une élingue multibrin.",
+   "see_also": [
+    "working-load-limit-cmu"
+   ],
+   "sources": [
+    {
+     "url": "https://inrs.fr/dam/jcr:907c237a-be6c-4c82-8b40-cc2623460c40/ed6278.pdf",
+     "publisher": "INRS (ED 6278, chapitre élingage)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "secondary-safety",
+   "term_fr": "Sécurité secondaire (élingue de sécurité)",
+   "term_en": "Secondary safety",
+   "domain": "safety",
+   "definition": "Suspension indépendante qui retient un système accroché si l'accroche principale cède.",
+   "see_also": [
+    "secondary-safety"
+   ],
+   "sources": [
+    {
+     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "chain-hoist",
+   "term_fr": "Palan à chaîne",
+   "term_en": "Chain hoist",
+   "domain": "safety",
+   "definition": "Appareil de levage utilisé pour monter les systèmes accrochés ; personne ne doit se trouver sous la charge pendant son fonctionnement.",
+   "see_also": [
+    "rigging-safety"
+   ],
+   "sources": [
+    {
+     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "beaufort-scale",
+   "term_fr": "Échelle de Beaufort",
+   "term_en": "Beaufort scale",
+   "domain": "safety",
+   "definition": "Échelle de force du vent ; d&b déconseille l'accroche au-dessus du public au-delà de 6 Beaufort pour la série V.",
+   "see_also": [
+    "rigging-safety"
+   ],
+   "sources": [
+    {
+     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cable-ramp",
+   "term_fr": "Passe-câbles",
+   "term_en": "Cable ramp / cable protector",
+   "domain": "safety",
+   "definition": "Protection posée sur les câbles traversant un passage, pour éviter les chutes et protéger les gaines.",
+   "see_also": [
+    "cable-management-safety"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/chutes-de-plain-pied/mesures-de-prevention.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "slip-trip-fall",
+   "term_fr": "Chute de plain-pied",
+   "term_en": "Slip, trip and fall",
+   "domain": "safety",
+   "definition": "Chute sur une surface sans dénivelé important (glissade, trébuchement), deuxième cause d'accidents du travail selon l'INRS.",
+   "see_also": [
+    "cable-management-safety"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/chutes-de-plain-pied/mesures-de-prevention.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pemp",
+   "term_fr": "PEMP (nacelle)",
+   "term_en": "Mobile elevating work platform (MEWP)",
+   "domain": "safety",
+   "definition": "Plateforme élévatrice mobile de personnes, dont la conduite exige une autorisation de l'employeur.",
+   "see_also": [
+    "working-at-height"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/chutes-hauteur/reglementation-travail-hauteur.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fall-arrest-harness",
+   "term_fr": "Harnais antichute",
+   "term_en": "Fall-arrest harness",
+   "domain": "safety",
+   "definition": "Équipement de protection individuelle contre les chutes, utilisé quand une protection collective est impossible ; vérifié avant chaque usage et contrôlé chaque année.",
+   "see_also": [
+    "working-at-height"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/chutes-hauteur/reglementation-travail-hauteur.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "manual-handling",
+   "term_fr": "Manutention manuelle",
+   "term_en": "Manual handling",
+   "domain": "safety",
+   "definition": "Opération de transport ou de soutien d'une charge par un ou plusieurs travailleurs, à éviter en priorité par des moyens mécaniques.",
+   "see_also": [
+    "manual-handling"
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-TJ-18.pdf",
+     "publisher": "INRS (TJ 18, aide-mémoire juridique Manutention manuelle)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "definition"
+     ]
+    }
+   ]
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Limites de poids actualisées pour la manutention (texte en vigueur de R. 4541-9)",
+   "searched": "Pages INRS manutention (404) ; aide-mémoire TJ 18 utilisé (ancien) ; Légifrance non lisible."
+  }
+ ]
+}

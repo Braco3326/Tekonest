@@ -1,0 +1,235 @@
+{
+ "entity": "skill",
+ "domain": "safety",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "monitor-public-spl-compliance",
+   "name_fr": "Surveiller les niveaux sonores d'un concert selon le décret 2017-1244",
+   "name_en": "Monitor public SPL compliance",
+   "domain": "safety",
+   "description": "Mettre en place la mesure, l'affichage et l'enregistrement des niveaux, puis conduire le mix en restant sous 102 dB(A) et 118 dB(C) sur 15 minutes en tout point accessible au public.",
+   "level": "bts",
+   "concept_ids": [
+    "sound-exposure-limits-france",
+    "sound-level-logging-display",
+    "a-and-c-weighting",
+    "equal-energy-principle"
+   ],
+   "procedure_ids": [
+    "spl-monitoring-setup-decree-2017-1244"
+   ],
+   "success_criteria": [
+    "L'afficheur près de la régie montre en continu les niveaux en dB(A) et en dB(C) sur 15 min",
+    "Aucune valeur LAeq,15min ne dépasse 102 dB(A), aucune LCeq,15min ne dépasse 118 dB(C) sur l'enregistrement du concert",
+    "L'étudiant explique la différence entre les limites du public et les valeurs VAI/VAS/VLE des travailleurs"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+     "verified": false
+    },
+    {
+     "epreuve": "E52",
+     "bloc": "BC03",
+     "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+     "publisher": "ARS Île-de-France",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "regulator",
+     "covers": [
+      "description"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "check-temporary-power-safety",
+   "name_fr": "Vérifier une alimentation électrique temporaire avant de brancher la sono",
+   "name_en": "Check temporary power safety",
+   "domain": "safety",
+   "description": "Repérer la coupure d'urgence, inspecter câbles et prises, vérifier la présence de la terre et du différentiel, mettre le système sous tension dans le bon ordre, et savoir ce qui relève d'une personne habilitée.",
+   "level": "bts",
+   "concept_ids": [
+    "electrical-safety-earthing",
+    "residual-current-device",
+    "habilitation-electrique",
+    "power-sequencing",
+    "electric-shock-effects"
+   ],
+   "procedure_ids": [
+    "power-distro-safety-check",
+    "audio-system-power-sequencing"
+   ],
+   "success_criteria": [
+    "La coupure d'urgence est localisée et accessible avant toute mise sous tension",
+    "Aucun appareil de classe I n'est alimenté sans conducteur de terre",
+    "Les amplificateurs sont allumés en dernier et coupés en premier"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://www.inrs.fr/risques/electriques/prevention-risque-electrique.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "description"
+     ]
+    },
+    {
+     "url": "https://www.prosoundweb.com/tech-tip-of-the-day-proper-pa-power-sequencing/",
+     "publisher": "ProSoundWeb (tip from Sweetwater, 2010)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "fly-small-pa-safely",
+   "name_fr": "Accrocher un petit système de diffusion en sécurité",
+   "name_en": "Fly a small PA safely",
+   "domain": "safety",
+   "description": "Préparer et contrôler une accroche selon les instructions du fabricant : calcul de la configuration, inspection, montage à deux, élingue de sécurité, zone dégagée sous la charge, surveillance du vent.",
+   "level": "pro",
+   "concept_ids": [
+    "rigging-safety",
+    "working-load-limit-cmu",
+    "secondary-safety",
+    "working-at-height"
+   ],
+   "procedure_ids": [
+    "flying-small-pa-safely"
+   ],
+   "success_criteria": [
+    "La configuration est validée dans le logiciel du fabricant avant le levage",
+    "Chaque point accroché a une sécurité secondaire indépendante dimensionnée pour le poids total",
+    "Personne ne se trouve sous la charge pendant le levage"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "description",
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "plan-crew-hearing-protection",
+   "name_fr": "Organiser la protection auditive d'une équipe technique",
+   "name_en": "Plan crew hearing protection",
+   "domain": "safety",
+   "description": "Évaluer l'exposition de l'équipe, choisir des protecteurs adaptés (sans surprotection), organiser leur port et le suivi.",
+   "level": "bts",
+   "concept_ids": [
+    "worker-noise-exposure-values",
+    "hearing-protection-devices",
+    "flat-attenuation-earplugs",
+    "daily-noise-exposure-lex8h"
+   ],
+   "procedure_ids": [
+    "crew-hearing-protection-plan"
+   ],
+   "success_criteria": [
+    "Chaque poste exposé est situé par rapport à la VAI (80 dB(A)) et à la VAS (85 dB(A))",
+    "Le protecteur choisi donne un niveau résiduel estimé entre 65 et 80 dB(A)",
+    "Des protecteurs sont disponibles pour chaque membre de l'équipe dès 80 dB(A)"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+     "verified": false
+    },
+    {
+     "epreuve": "E52",
+     "bloc": "BC03",
+     "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.inrs.fr/risques/bruit/reglementation.html",
+     "publisher": "INRS",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6510.pdf",
+     "publisher": "INRS (ED 6510, Les protections auditives, guide de choix, 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  }
+ ],
+ "not_found_log": []
+}
