@@ -85,9 +85,27 @@ def main():
     credits_path.write_text(credits, encoding="utf-8")
 
     committed = {d["file"] for d in downloads}
+    by_url = {d.get("model_url"): d["file"] for d in downloads}
     for m in models:
         f = f"{m['id']}.glb"
-        m["committed_file"] = f"3d-models/{f}" if f in committed else None
+        hit = f if f in committed else by_url.get(m.get("model_url"))
+        m["committed_file"] = f"3d-models/{hit}" if hit else None
+    # Committed files with no catalogue entry (run 1 stored them in downloads.json only).
+    linked = {m["committed_file"] for m in models if m["committed_file"]}
+    for d in downloads:
+        if f"3d-models/{d['file']}" in linked:
+            continue
+        stem = d["file"].rsplit(".", 1)[0]
+        use = (d.get("intended_use") or "").lower()
+        models.append({
+            "id": stem, "kind": "device" if any(w in use for w in ("mic", "speaker", "desk", "console", "amp")) and "room:" not in use else "prop",
+            "title": stem.replace("-", " "), "source_site": d.get("source_site"), "model_url": d.get("model_url"),
+            "author": d.get("author"), "licence": d.get("licence"), "licence_url": d.get("licence_url"),
+            "attribution_text_required": d.get("attribution_text"), "polygon_count": d.get("triangles_if_known"),
+            "shows_brand_logos": d.get("shows_brand_logos"), "redistribution_allowed": "yes (committed, see CREDITS.md)",
+            "suitable_for_tekpractice": "yes", "quality_notes": d.get("intended_use"), "accessed": d.get("accessed"),
+            "room_ids": [], "device_id": None, "committed_file": f"3d-models/{d['file']}", "added_by": "run1-downloads",
+        })
     data["counts"] = {"total": len(models), "by_kind": dict(Counter(m["kind"] for m in models)),
                       "committed_files": sum(1 for m in models if m["committed_file"])}
     MODELS.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

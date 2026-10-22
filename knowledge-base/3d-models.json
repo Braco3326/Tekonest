@@ -21,16 +21,16 @@
     "neumann-u87-ai (U87 by schwabbl1)"
   ],
   "counts": {
-    "total": 966,
+    "total": 983,
     "by_kind": {
-      "device": 211,
-      "prop": 454,
+      "device": 217,
+      "prop": 465,
       "material": 88,
       "character": 47,
       "venue": 54,
       "room": 112
     },
-    "committed_files": 44
+    "committed_files": 64
   },
   "models": [
     {
@@ -1957,7 +1957,7 @@
       "id": "pp-rolling-music-speaker-stand",
       "kind": "device",
       "room_ids": [],
-      "committed_file": null
+      "committed_file": "3d-models/polypizza-rolling-speaker-stand.glb"
     },
     {
       "device_id": "generic:small-speaker",
@@ -2123,7 +2123,7 @@
       "id": "ph-metal-office-desk",
       "kind": "device",
       "room_ids": [],
-      "committed_file": null
+      "committed_file": "3d-models/polyhaven-metal-office-desk.glb"
     },
     {
       "device_id": "generic:cables",
@@ -2179,7 +2179,7 @@
       "id": "ph-mounted-fluorescent-lights",
       "kind": "device",
       "room_ids": [],
-      "committed_file": null
+      "committed_file": "3d-models/polyhaven-mounted-fluorescent-lights.glb"
     },
     {
       "device_id": "l-acoustics-k2",
@@ -33318,6 +33318,363 @@
       "model_url_status": "ok",
       "added_by": "models-sketchfab-venues",
       "committed_file": null
+    },
+    {
+      "id": "polyhaven-modern-arm-chair",
+      "kind": "prop",
+      "title": "polyhaven modern arm chair",
+      "source_site": "Poly Haven",
+      "model_url": "https://polyhaven.com/a/modern_arm_chair_01",
+      "author": "Vibrant Nordic",
+      "licence": "CC0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Modern Arm Chair 01 » by Vibrant Nordic (Poly Haven) — CC0",
+      "polygon_count": 8916,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "room:studio lounge / operator chair",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polyhaven-modern-arm-chair.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polyhaven-worn-metal-rack",
+      "kind": "prop",
+      "title": "polyhaven worn metal rack",
+      "source_site": "Poly Haven",
+      "model_url": "https://polyhaven.com/a/worn_metal_rack",
+      "author": "Luca B",
+      "licence": "CC0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Worn Metal Rack » by Luca B (Poly Haven) — CC0",
+      "polygon_count": 6372,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "room:storage / gear shelving prop",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polyhaven-worn-metal-rack.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polyhaven-metal-stool",
+      "kind": "prop",
+      "title": "polyhaven metal stool",
+      "source_site": "Poly Haven",
+      "model_url": "https://polyhaven.com/a/metal_stool_01",
+      "author": "Ulan Cabanilla",
+      "licence": "CC0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Metal Stool 01 » by Ulan Cabanilla (Poly Haven) — CC0",
+      "polygon_count": 8334,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "room:stage / studio stool",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polyhaven-metal-stool.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polyhaven-desk-lamp-arm",
+      "kind": "prop",
+      "title": "polyhaven desk lamp arm",
+      "source_site": "Poly Haven",
+      "model_url": "https://polyhaven.com/a/desk_lamp_arm_01",
+      "author": "Yann Kervran, Kuutti Siitonen",
+      "licence": "CC0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Desk Lamp Arm 01 » by Yann Kervran, Kuutti Siitonen (Poly Haven) — CC0",
+      "polygon_count": 24102,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "room:radio-booth desk lamp prop",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polyhaven-desk-lamp-arm.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-speaker",
+      "kind": "device",
+      "title": "polypizza speaker",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/zOQOThSpuo",
+      "author": "iPoly3D",
+      "licence": "CC0 1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Speaker » by iPoly3D (https://poly.pizza/m/zOQOThSpuo) — CC0 1.0",
+      "polygon_count": 794,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "generic speaker",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-speaker.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-mic",
+      "kind": "device",
+      "title": "polypizza mic",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/yqbacXdPsg",
+      "author": "iPoly3D",
+      "licence": "CC0 1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Mic » by iPoly3D (https://poly.pizza/m/yqbacXdPsg) — CC0 1.0",
+      "polygon_count": 1426,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "generic microphone",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-mic.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-headphones",
+      "kind": "prop",
+      "title": "polypizza headphones",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/PSsWSIAYIL",
+      "author": "CreativeTrio",
+      "licence": "CC0 1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Headphones » by CreativeTrio (https://poly.pizza/m/PSsWSIAYIL) — CC0 1.0",
+      "polygon_count": 472,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "generic headphones",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-headphones.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-laptop",
+      "kind": "prop",
+      "title": "polypizza laptop",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/GnbwSUiVty",
+      "author": "Kenney",
+      "licence": "CC0 1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Laptop » by Kenney (https://poly.pizza/m/GnbwSUiVty) — CC0 1.0",
+      "polygon_count": 136,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "generic laptop (DAW computer prop)",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-laptop.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-theater-spotlight",
+      "kind": "prop",
+      "title": "polypizza theater spotlight",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/Thhuwj9HCg",
+      "author": "lakescorp",
+      "licence": "CC0 1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Theater spotlight » by lakescorp (https://poly.pizza/m/Thhuwj9HCg) — CC0 1.0",
+      "polygon_count": 456,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "room:stage light",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-theater-spotlight.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-motorised-spotlight",
+      "kind": "prop",
+      "title": "polypizza motorised spotlight",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/BLq0yBWHce",
+      "author": "iPoly3D",
+      "licence": "CC0 1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Motorised Spotlight » by iPoly3D (https://poly.pizza/m/BLq0yBWHce) — CC0 1.0",
+      "polygon_count": 1070,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "room:stage moving-head light",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-motorised-spotlight.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-cable-long",
+      "kind": "prop",
+      "title": "polypizza cable long",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/WNfAG8VSD5",
+      "author": "Quaternius",
+      "licence": "CC0 1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Cable Long » by Quaternius (https://poly.pizza/m/WNfAG8VSD5) — CC0 1.0",
+      "polygon_count": 768,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "generic cable prop",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-cable-long.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-stage",
+      "kind": "prop",
+      "title": "polypizza stage",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/dGRAisemWy",
+      "author": "iPoly3D",
+      "licence": "CC0 1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Stage » by iPoly3D (https://poly.pizza/m/dGRAisemWy) — CC0 1.0",
+      "polygon_count": 6388,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "room:stage platform",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-stage.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-radio",
+      "kind": "prop",
+      "title": "polypizza radio",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/ShNRjTDU3i",
+      "author": "Kenney",
+      "licence": "CC0 1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution_text_required": "« Radio » by Kenney (https://poly.pizza/m/ShNRjTDU3i) — CC0 1.0",
+      "polygon_count": 864,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "room:radio prop",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-radio.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-bass-speakers",
+      "kind": "device",
+      "title": "polypizza bass speakers",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/c60iEzqbEw",
+      "author": "Zsky",
+      "licence": "CC-BY 3.0",
+      "licence_url": "https://creativecommons.org/licenses/by/3.0/",
+      "attribution_text_required": "« Bass Speakers » by Zsky (https://poly.pizza/m/c60iEzqbEw) — CC-BY 3.0",
+      "polygon_count": 312,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "generic subwoofer / speaker",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-bass-speakers.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-mixing-desk",
+      "kind": "device",
+      "title": "polypizza mixing desk",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/4GCowIjU9CG",
+      "author": "Peter Simcoe",
+      "licence": "CC-BY 3.0",
+      "licence_url": "https://creativecommons.org/licenses/by/3.0/",
+      "attribution_text_required": "« Mixing Desk for Audio » by Peter Simcoe (https://poly.pizza/m/4GCowIjU9CG) — CC-BY 3.0",
+      "polygon_count": 10802,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "generic mixing console (FOH / studio)",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-mixing-desk.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-guitar-amp",
+      "kind": "device",
+      "title": "polypizza guitar amp",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/3FiWjHDj0Zf",
+      "author": "Poly by Google",
+      "licence": "CC-BY 3.0",
+      "licence_url": "https://creativecommons.org/licenses/by/3.0/",
+      "attribution_text_required": "« Guitar Amp » by Poly by Google (https://poly.pizza/m/3FiWjHDj0Zf) — CC-BY 3.0",
+      "polygon_count": 1450,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "generic guitar amp (stage backline)",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-guitar-amp.glb",
+      "added_by": "run1-downloads"
+    },
+    {
+      "id": "polypizza-microphone-lowpoly",
+      "kind": "device",
+      "title": "polypizza microphone lowpoly",
+      "source_site": "Poly Pizza",
+      "model_url": "https://poly.pizza/m/bD-LseANe2b",
+      "author": "Poly by Google",
+      "licence": "CC-BY 3.0",
+      "licence_url": "https://creativecommons.org/licenses/by/3.0/",
+      "attribution_text_required": "« Microphone » by Poly by Google (https://poly.pizza/m/bD-LseANe2b) — CC-BY 3.0",
+      "polygon_count": 184,
+      "shows_brand_logos": false,
+      "redistribution_allowed": "yes (committed, see CREDITS.md)",
+      "suitable_for_tekpractice": "yes",
+      "quality_notes": "generic microphone (low-poly)",
+      "accessed": "2026-10-22",
+      "room_ids": [],
+      "device_id": null,
+      "committed_file": "3d-models/polypizza-microphone-lowpoly.glb",
+      "added_by": "run1-downloads"
     }
   ],
   "not_found_log": [
@@ -33356,6 +33713,142 @@
     {
       "query": "Poly Pizza listings",
       "result": "Search listing does not show licences; each kept model page was opened and its licence read."
+    },
+    {
+      "query": "ambientCG \"velvet\"",
+      "result": "no ambientCG material named velvet; used Poly Haven velour_velvet and ambientCG Fabric045/Fabric077 instead"
+    },
+    {
+      "query": "ambientCG \"woodfloor\"",
+      "result": "0 results for the joined word; \"wood\" query returned WoodFloor0xx assets"
+    },
+    {
+      "query": "Poly Pizza \"crowd\"",
+      "result": "only 1 crowd model (apelab, CC-BY 3.0); use Quaternius Background Posed Humans / animated men & women for crowds"
+    },
+    {
+      "query": "Poly Pizza \"truss\"",
+      "result": "only 1 real truss (Rellik 66 Simple Truss, CC-BY 3.0); no CC0 truss found"
+    },
+    {
+      "query": "Poly Pizza \"flight case\"",
+      "result": "no road/flight case model; use crates or kit-bash from Kenney prototype blocks + DiamondPlate material"
+    },
+    {
+      "query": "Poly Haven models \"sofa\" (modern)",
+      "result": "Poly Haven sofas are Victorian/vintage only (Sofa_01, sofa_02, sofa_03); low-poly modern sofas from Kenney/Quaternius instead"
+    },
+    {
+      "query": "Kenney animated-characters-1/2/3, conveyor-kit, industrial-kit pages",
+      "result": "pages did not resolve at these slugs (not catalogued)"
+    },
+    {
+      "query": "Quaternius pack downloads",
+      "result": "downloads go through Google Drive / itch.io; individual models taken from poly.pizza mirrors (Quaternius account) instead"
+    },
+    {
+      "query": "meshoptimizer (for simplify)",
+      "result": "not installed in tekpractice-sim node_modules; no downloaded model needed simplification (all < 15k tris)"
+    },
+    "Smithsonian 3d.si.edu HTML and 3d-api search return 403/WAF to scripted fetch; used api.si.edu Open Access API (DEMO_KEY) with q=online_media_type:\"3D Models\" (1937 records, all fetched) and filtered locally.",
+    "Smithsonian: no CC0 3D model of a microphone, phonograph/gramophone, radio, tape recorder, loudspeaker or headphones exists in the Open Access 3D set (1937 records, 2026-10-22). Closest: telegraph key/relay, galvanometer, induction coil, battery, saxophone, cowbell.",
+    "Smithsonian: 4 objects (stadium seat, school desk, step stool, table knocker) ship only 150k-tri glbs; not downloaded (no simplifier installed; budget ≤100k).",
+    "Objaverse: Sketchfab API rate-limited (HTTP 429) after ~250 lookups; LVIS categories microphone, boom_microphone, speaker, amplifier fully checked; for headset/earphone/radio/record player/cassette/instruments the per-object licence was read from 4 Objaverse metadata shards (000-000, 000-065, 000-073, 000-084) instead; those 17 entries are flagged for a Sketchfab re-check and were not downloaded.",
+    "Objaverse: no CC0 object found among the checked audio categories (all CC BY / BY-SA / BY-NC); BY-SA and BY-NC entries skipped.",
+    "Objaverse: Rode NT1-A + Arm, Condenser Microphone (Kyler Michaelson), Wireless Microphone (CARTE 3D) already in knowledge-base/3d-models.json; not relisted.",
+    "Shure: no CAD/BIM/3D download found on shure.com product pages (MXA920 page, insights article); site terms: works \"may not be copied, transmitted, displayed, performed, distributed ... without Shure's prior written consent\", personal download/print allowed.",
+    "Genelec: genelec.com/design-tools lists only GLL/EASE/CLF simulation data and accessory drawings; no 3D models on product pages (8341A).",
+    "BIMobject (bimobject.com) brand, product and terms pages all return 403 to scripted fetch; licence wording not verifiable.",
+    "Sennheiser: product page URL 404; legal notice 404; only BIMobject press info found.",
+    "d&b audiotechnik: legal notice page text not reachable beyond footer \"All rights reserved\"; no download licence found.",
+    {
+      "query": "Sketchfab API: \"19 inch rack\" (0 hits), \"rack case\", \"audio rack\", \"rack mount\", \"amp rack\", \"equipment rack\"",
+      "result": "Downloadable 19\" racks are almost all IT server racks (re-dress needed). One real touring amp rack (sonidero \"Travel Rack with Amps\", Crown branded). No empty generic audio rack case. Easiest to hand-model (a box with rails) or use the Poly Haven worn_metal_rack already shipped."
+    },
+    {
+      "query": "Sketchfab API: \"di box\", \"direct box\", \"di box audio\"",
+      "result": "No DI box at all (results are unrelated boxes and museum pottery). Use a guitar-pedal enclosure re-textured, or hand-model (an extruded aluminium box with 2 XLR and 1 jack: about 300 tris)."
+    },
+    {
+      "query": "Sketchfab API: \"stage box\", \"stagebox\", \"snake multicore\", \"stage snake\", \"audio snake\"",
+      "result": "No multicore/stage box found (0 hits for stagebox/snake multicore). Hand-model: a steel box with an XLR grid plus a cable reel (cable reels found)."
+    },
+    {
+      "query": "Sketchfab API: \"patch bay\", \"audio patchbay\", \"patch panel\"",
+      "result": "Only network/IT patch panels (Yohio.Art \"PATCH PANEL\"). No TT/bantam or 1/4\" audio patchbay. Re-texture a 1U panel or hand-model it."
+    },
+    {
+      "query": "Sketchfab API: \"orchestra chair\", \"conductor podium\", \"choir risers\"",
+      "result": "No dedicated orchestra chair (2 hits, irrelevant), no conductor podium (0 hits) and no choir risers (0 hits). Proxies catalogued: stacking chairs, box podiums and bleachers. Choir risers: easy hand-model (3 curved steps)."
+    },
+    {
+      "query": "Sketchfab API: \"wedge monitor\" (1 hit), \"stage monitor\"",
+      "result": "Few generic wedges: eventdesignws \"FLOOR MONITOR SOUND\", Saandy \"Monitor Speaker\", Oldessexboy active wedge. Sousinho stage monitor is already in the asset manifest, so not relisted."
+    },
+    {
+      "query": "Sketchfab API: \"line array\", \"pa speaker\", \"concert speaker\"",
+      "result": "Only about 4 real line-array models (Wilmer Saumeth 8k faces is the best generic base). Many results are \"skibidi speakerman\" fan models: excluded."
+    },
+    {
+      "query": "Sketchfab API: \"cable ramp\" (1 hit), \"cable protector\", \"cable crossover\", \"cable cover\"",
+      "result": "Two 3D-scanned cable protectors (grafi, 100k faces each). No low-poly 5-channel cable ramp. Hand-model recommended for runtime."
+    },
+    {
+      "query": "Sketchfab API: \"mic stand low\", \"boom stand\"",
+      "result": "No generic short/kick stand apart from the AKG D112 + stand (branded). The JMGameDev boom stand is already in the asset manifest, so not relisted."
+    },
+    {
+      "query": "Sketchfab API: \"keyboard stand\"",
+      "result": "Only two real keyboard stands (Michael Perez X-stand, Antoine \"Stand pour clavier\" 408k faces). The rest are PC monitor stands."
+    },
+    {
+      "query": "Excluded throughout",
+      "result": "Fan-art/IP models (skibidi toilet, FNAF, Ben 10, Polar Express), AI-generated \"createdwithai\" meshes with unclear provenance, and spam \"download\" entries were not catalogued."
+    },
+    {
+      "room_id": "foley-dubbing-stage-medium",
+      "query": "foley studio, foley, sound stage studio, dubbing studio, voice acting studio",
+      "result": "No downloadable foley stage (pits, surfaces, props) on Sketchfab; only 'Low Poly Small Film Studio' and props (slate, studio lamp, mixing console) catalogued. Build from generic room + foley-pit props."
+    },
+    {
+      "room_id": "mastering-room-medium",
+      "query": "mastering studio, audio studio room, mastering, post production studio, editing suite",
+      "result": "No dedicated mastering room. Use acoustic panels/ceiling props + a small control-room shell."
+    },
+    {
+      "room_id": "interpretation-booth-small",
+      "query": "interpreter booth, translation booth, interpreting booth, translation cabin, simultaneous interpretation",
+      "result": "No ISO 4043 interpretation booth found. Stand-ins: Soundproof Booth (Recording room), office phone/meeting pods."
+    },
+    {
+      "room_id": "scoring-stage-large",
+      "query": "orchestra stage, orchestra recording, symphony stage, orchestra chairs, recording hall, music stand orchestra",
+      "result": "No scoring stage. Use concert-hall shells + music stands; orchestra seating must be instanced."
+    },
+    {
+      "room_id": "opera-house-pit-large",
+      "query": "opera house, orchestra pit, opera",
+      "result": "No interior with an orchestra pit under CC-BY; only real-opera exteriors/scans (trade dress) and a 1913 toy theatre proscenium. Pit must be modelled."
+    },
+    {
+      "room_id": "radio-studio-self-op-small",
+      "query": "radio studio, radio station, radio studio interior, on air studio, radio room, radio dj",
+      "result": "Search returns radio receivers/military sets, not studios. Only ON AIR sign + news/podcast rooms usable; self-op radio desk must be modelled or adapted from a podcast room."
+    },
+    {
+      "room_id": "radio-talk-studio-medium",
+      "query": "radio broadcast studio, broadcast studio",
+      "result": "Covered only by small news-studio sets and news desks."
+    },
+    {
+      "room_id": "tv-gallery-regie-medium",
+      "query": "control room broadcast, tv control room, production control room, broadcast control, monitor wall, video wall room",
+      "result": "No full TV gallery; monitor walls, mixing console and comms-room kit catalogued."
+    },
+    {
+      "room_id": "studio-live-room-medium",
+      "query": "live room recording, rehearsal room, band practice room, rehearsal studio, drum room, music room",
+      "result": "Best live room (Proberaum) is NC. Use the band home studio / Newhouse scenes or build."
     },
     {
       "query": "ambientCG \"velvet\"",

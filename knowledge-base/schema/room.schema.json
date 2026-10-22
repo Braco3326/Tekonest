@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "knowledge-base/schema/room.schema.json",
+  "title": "Parametric room template (knowledge-base/tek-brain/rooms/<id>.json)",
+  "description": "DESIGN.md §6. Coordinates: origin = floor centre, x = right, y = up, z = toward the audience/listener, metres. Walls: front = −z (stage / far end), rear = +z, left = −x, right = +x; an opening's offset_m runs along its wall from the wall centre. The game (tekpractice-sim/tools/sync-rooms.ts → src/explore/roomLayout.ts) generates rooms from these files. tools/validate_tekbrain.py also checks min ≤ typical ≤ max, zones inside the footprint, gear zones, equipment and 3D-model ids.",
+  "type": "object",
+  "required": ["id", "name_fr", "name_en", "family", "size", "description", "dimensions_m", "coordinate_system", "surfaces", "rt60_s", "zones", "gear_positions", "power_points", "patch_points", "openings", "lighting", "procedural", "licensed_dressing", "sources", "review"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Equals the file name" },
+    "family": { "enum": ["studio", "post", "broadcast", "live", "theatre", "classical", "worship", "conference", "education", "installed", "outdoor"] },
+    "size": { "enum": ["small", "medium", "large"] },
+    "dimensions_m": {
+      "type": "object",
+      "required": ["length", "width", "height"],
+      "properties": {
+        "length": { "$ref": "#/$defs/range" },
+        "width": { "$ref": "#/$defs/range" },
+        "height": { "$ref": "#/$defs/range" }
+      }
+    },
+    "rt60_s": {
+      "oneOf": [
+        { "const": "not found" },
+        { "type": "object", "required": ["min", "max"], "properties": { "min": { "type": "number" }, "max": { "type": "number" }, "band_note": { "type": "string" }, "source_url": { "type": "string" } } }
+      ]
+    },
+    "zones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "rect_m"],
+        "properties": {
+          "id": { "type": "string" },
+          "kind": { "enum": ["stage", "foh", "monitor-world", "control-room", "live-room", "iso-booth", "vocal-booth", "audience", "backstage", "gallery", "booth", "pit", "desk", "machine-room", "other"] },
+          "rect_m": { "type": "array", "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }, { "type": "number" }], "minItems": 4, "maxItems": 4, "description": "[centre x, centre z, width, depth]" },
+          "floor_y_m": { "type": "number", "description": "Raised floor (stage deck)" }
+        }
+      }
+    },
+    "gear_positions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["equipment_id", "zone", "position_m"],
+        "properties": {
+          "equipment_id": { "type": "string" },
+          "zone": { "type": "string" },
+          "position_m": { "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3 },
+          "rotation_deg": { "type": "number", "description": "Yaw, 0 = facing +z" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "openings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["wall", "kind", "offset_m", "width_m", "height_m"],
+        "properties": {
+          "wall": { "enum": ["front", "rear", "left", "right"] },
+          "kind": { "type": "string", "description": "door | window (only doors cut the generated walls in v1)" },
+          "offset_m": { "type": "number" },
+          "width_m": { "type": "number", "exclusiveMinimum": 0 },
+          "height_m": { "type": "number", "exclusiveMinimum": 0 }
+        }
+      }
+    },
+    "procedural": {
+      "type": "object",
+      "required": ["wall_color", "floor_color", "ceiling_color", "prop_hints"],
+      "properties": {
+        "wall_color": { "type": "string" },
+        "floor_color": { "type": "string" },
+        "ceiling_color": { "type": "string" },
+        "prop_hints": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "lighting": { "type": "object", "required": ["mood", "color_temp_k"], "properties": { "mood": { "type": "string" }, "color_temp_k": { "type": "number" } } },
+    "licensed_dressing": { "type": "array", "items": { "type": "string" }, "description": "3d-models.json ids of COMMITTED redistributable models (filled by tools/merge_3d.py)" },
+    "sources": { "type": "array", "minItems": 1, "items": { "$ref": "tek-brain.schema.json#/$defs/source" } },
+    "not_found_log": { "type": "array", "description": "Every estimated number, explained" },
+    "review": { "enum": ["needs-oscar-review", "ok"] }
+  },
+  "$defs": {
+    "range": { "type": "object", "required": ["min", "typical", "max"], "properties": { "min": { "type": "number" }, "typical": { "type": "number" }, "max": { "type": "number" } } }
+  }
+}
