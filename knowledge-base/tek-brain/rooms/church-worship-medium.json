@@ -1,0 +1,108 @@
+{
+  "id": "church-worship-medium",
+  "name_fr": "Église de taille moyenne (nef de ~10 000 m³) pour le culte et les concerts",
+  "name_en": "Medium church for worship and concerts (~10,000 m³ nave)",
+  "family": "worship",
+  "size": "medium",
+  "description": "Église catholique à nef unique avec bas-côtés, chœur surélevé et tribune d'orgue au fond, d'un volume de 8 500 à 14 000 m³. Les dimensions typiques reprennent l'église Notre-Dame de l'Assomption de Santo Tirso (Portugal) : 38,1 × 27,2 m, 16 m de haut, 9 855 m³ (Carvalho et al., ICSV 2012). Dans ce type de volume, le temps de réverbération va de moins de 2 s à plus de 10 s selon les matériaux : la parole devient vite inintelligible, et un simple système de sonorisation n'améliore presque pas le RASTI quand la salle est très réverbérante. Le son d'église consiste donc à rapprocher les sources des auditeurs (enceintes colonnes réparties le long de la nef avec retard), à garder les micros près des bouches (ambon, HF du célébrant) et, en concert, à profiter de la réverbération pour la prise de son du chœur et de l'orgue. Convention des ouvertures : « front » = mur du chœur (−z), « rear » = façade d'entrée sous la tribune (+z).",
+  "dimensions_m": {
+    "length": { "min": 35, "typical": 38.1, "max": 49 },
+    "width": { "min": 19, "typical": 27.2, "max": 27.2 },
+    "height": { "min": 4.8, "typical": 16, "max": 17 }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    { "surface": "floor", "material": "pierre ou marbre, bancs en bois (parfois avec coussins)", "finish_note": "Les bancs rembourrés sont l'une des rares sources d'absorption ; à Fátima, des coussins testés acoustiquement ont été choisis pour cette raison." },
+    { "surface": "walls", "material": "maçonnerie de pierre enduite ou béton, soubassement bois possible", "finish_note": "Surfaces dures et très réfléchissantes ; chapelles latérales et bas-côtés forment des volumes couplés." },
+    { "surface": "ceiling", "material": "voûte ou plafond haut en pierre/béton", "finish_note": "La correction acoustique la plus efficace porte sur le plafond de la nef (Carvalho et al. proposent fibres de cellulose projetées ou enduit absorbant type BASWAphon sur ~540 m²)." },
+    { "surface": "front-wall", "material": "chœur et autel en pierre, retable", "finish_note": "Zone surélevée où se tiennent célébrant, lecteurs et chœur." }
+  ],
+  "rt60_s": {
+    "min": 1.8,
+    "max": 11.0,
+    "band_note": "Moyenne 500 Hz–1 kHz mesurée église vide sur 11 églises portugaises de 8 470 à 14 207 m³ (XIVe–XXe s.) : de 1,8 s (S. Francisco, Porto) à 11,0 s (Santo Tirso) ; la plupart entre 2,7 et 7,8 s. Les auteurs jugent inappropriée pour le culte catholique une moyenne au-dessus de 3 s.",
+    "source_url": "https://pages.up.pt/~up209614/ICSV2012carvalho.pdf"
+  },
+  "zones": [
+    { "id": "choeur", "kind": "stage", "rect_m": [0, -15.55, 12, 7], "floor_y_m": 0.6 },
+    { "id": "nef", "kind": "audience", "rect_m": [0, 2, 12, 28], "floor_y_m": 0 },
+    { "id": "bas-cote-gauche", "kind": "audience", "rect_m": [-9.6, 2, 7, 28], "floor_y_m": 0 },
+    { "id": "bas-cote-droit", "kind": "audience", "rect_m": [9.6, 2, 7, 28], "floor_y_m": 0 },
+    { "id": "tribune-orgue", "kind": "gallery", "rect_m": [0, 17.55, 12, 3], "floor_y_m": 5 },
+    { "id": "regie", "kind": "desk", "rect_m": [-9.6, 17.5, 4, 3], "floor_y_m": 0 }
+  ],
+  "gear_positions": [
+    { "equipment_id": "yamaha-tf5", "zone": "regie", "position_m": [-9.6, 0.9, 17.2], "rotation_deg": 180, "note": "Console numérique compacte au fond de l'église, sous la tribune ; dans beaucoup de paroisses, un simple mélangeur en sacristie suffit." },
+    { "equipment_id": "dbx-driverack-venu360", "zone": "regie", "position_m": [-10.6, 1.0, 18.2], "rotation_deg": 180, "note": "Processeur : égalisation et retards des enceintes réparties le long de la nef." },
+    { "equipment_id": "crown-xls-2502", "zone": "regie", "position_m": [-8.6, 1.0, 18.2], "rotation_deg": 180, "note": "Amplification (les chapelles de Fátima utilisent des amplis Crown)." },
+    { "equipment_id": "ev-evolve-50m-g2", "zone": "bas-cote-gauche", "position_m": [-6.3, 3.0, -8.0], "rotation_deg": 90, "note": "Enceinte colonne sur pilier, première rangée, orientée vers la nef ; les chapelles de Fátima utilisent des enceintes Bose placées latéralement." },
+    { "equipment_id": "ev-evolve-50m-g2", "zone": "bas-cote-droit", "position_m": [6.3, 3.0, -8.0], "rotation_deg": 270, "note": "Colonne symétrique côté droit." },
+    { "equipment_id": "ev-evolve-50m-g2", "zone": "bas-cote-gauche", "position_m": [-6.3, 3.0, 6.0], "rotation_deg": 90, "note": "Colonne retardée pour le fond de la nef (retard réglé sur la distance au chœur)." },
+    { "equipment_id": "akg-c451-b", "zone": "choeur", "position_m": [3.5, 1.9, -13.0], "rotation_deg": 0, "note": "Micro d'ambon (lectures) ; en pratique souvent un col de cygne, AKG est la marque utilisée dans les chapelles de Fátima." },
+    { "equipment_id": "sennheiser-ew-100-g4", "zone": "regie", "position_m": [-10.8, 1.0, 16.8], "rotation_deg": 180, "note": "Récepteur HF du célébrant." },
+    { "equipment_id": "sennheiser-mke-2", "zone": "choeur", "position_m": [0, 1.75, -15.0], "rotation_deg": 0, "note": "Micro cravate du célébrant, sur l'émetteur de poche." },
+    { "equipment_id": "schoeps-cmc-6-mk-4", "zone": "choeur", "position_m": [0, 2.8, -12.5], "rotation_deg": 180, "note": "Micro de chœur sur grand pied, tourné vers les choristes (concert ou enregistrement)." },
+    { "equipment_id": "radial-jdi", "zone": "tribune-orgue", "position_m": [3.0, 5.1, 18.0], "rotation_deg": 0, "note": "DI pour un piano numérique ou un orgue électronique en tribune." }
+  ],
+  "power_points": [
+    { "position_m": [-5.8, 0.4, -14.0], "type": "schuko-16a" },
+    { "position_m": [5.8, 0.4, -14.0], "type": "schuko-16a" },
+    { "position_m": [-11.5, 0.4, 18.5], "type": "schuko-16a" },
+    { "position_m": [5.5, 5.4, 18.5], "type": "schuko-16a" }
+  ],
+  "patch_points": [
+    { "position_m": [5.8, 0.3, -13.0], "type": "wall-patch-xlr-8", "note": "Prises micro au chœur (ambon, chœur, instruments), implantation typique." },
+    { "position_m": [-11.5, 0.5, 17.0], "type": "wall-patch-xlr-8", "note": "Arrivée des lignes en régie." },
+    { "position_m": [0, 0.3, 16.0], "type": "induction-loop-driver", "note": "Boucle magnétique pour malentendants souvent présente dans les lieux de culte (non sourcé ici)." }
+  ],
+  "openings": [
+    { "wall": "rear", "kind": "door", "offset_m": 0, "width_m": 3.0, "height_m": 4.5 },
+    { "wall": "left", "kind": "door", "offset_m": 6.0, "width_m": 1.6, "height_m": 3.0 },
+    { "wall": "right", "kind": "door", "offset_m": -12.0, "width_m": 1.0, "height_m": 2.2 },
+    { "wall": "left", "kind": "window", "offset_m": -6.0, "width_m": 2.0, "height_m": 5.0 },
+    { "wall": "right", "kind": "window", "offset_m": -6.0, "width_m": 2.0, "height_m": 5.0 },
+    { "wall": "left", "kind": "window", "offset_m": 6.0, "width_m": 2.0, "height_m": 5.0 },
+    { "wall": "right", "kind": "window", "offset_m": 6.0, "width_m": 2.0, "height_m": 5.0 }
+  ],
+  "lighting": { "mood": "lumière naturelle des vitraux le jour, éclairage chaud suspendu le soir, chœur plus éclairé", "color_temp_k": 3000 },
+  "procedural": {
+    "wall_color": "#d9cfbd",
+    "floor_color": "#a59a88",
+    "ceiling_color": "#e3dacb",
+    "prop_hints": ["bancs en bois en rangées", "autel et ambon", "tribune d'orgue avec buffet", "piliers séparant nef et bas-côtés", "vitraux", "pupitres de chœur", "enceintes colonnes sur piliers"]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://pages.up.pt/~up209614/ICSV2012carvalho.pdf",
+      "publisher": "A. P. O. Carvalho, M. T. Cruz, G. C. G. Pereira (Université de Porto) — « Acoustic rehabilitation of middle twentieth century Portuguese churches », ICSV19, Vilnius, 2012",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "university",
+      "covers": ["dimensions_m.length.typical", "dimensions_m.length.max", "dimensions_m.width.typical", "dimensions_m.width.max", "dimensions_m.height.typical", "dimensions_m.height.max", "rt60_s", "surfaces.ceiling", "description (RASTI peu amélioré par la sonorisation)"]
+    },
+    {
+      "url": "https://pages.up.pt/~up209614/fa2011chapels.pdf",
+      "publisher": "A. P. O. Carvalho, B. F. O. Nascimento (Université de Porto) — « Acoustical characterization of the underground chapels of the new Holy Trinity church in the Fatima shrine », Forum Acusticum 2011",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "university",
+      "covers": ["dimensions_m.length.min", "dimensions_m.width.min", "dimensions_m.height.min", "gear_positions (choix du type de système : enceintes latérales, amplis Crown, micros AKG)", "description (objectifs : TR ≈ 1 s parole, 2–4 s musique)"]
+    },
+    {
+      "url": "https://www.czasopisma.pan.pl//Content/107542/PDF/70.pdf",
+      "publisher": "A. P. O. Carvalho, P. M. A. Silva — « Sound, Noise and Speech at the 9000-Seat Holy Trinity Church in Fatima, Portugal », Archives of Acoustics 35(2), 2010",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "university",
+      "covers": ["surfaces.floor (bancs à coussins testés acoustiquement)"]
+    }
+  ],
+  "review": "needs-oscar-review",
+  "not_found_log": [
+    { "what": "Les valeurs min (35 × 19 × 4,8 m) viennent d'une chapelle moderne à plafond bas (Fátima, chapelle 3+4, 3 190 m³), pas d'une église traditionnelle : la hauteur minimale est donc peu représentative d'une nef voûtée.", "searched": "Articles Carvalho 2010, 2011, 2012", "review": "needs-oscar-review" },
+    { "what": "Hauteur de la tribune d'orgue (floor_y_m 5 m), largeur nef/bas-côtés et hauteur du chœur : estimations d'implantation.", "searched": "Articles Carvalho (pas de coupe détaillée)", "review": "needs-oscar-review" },
+    { "what": "Choix précis du matériel (console, processeur, colonnes) : typique d'une installation paroissiale, non tiré d'une fiche d'église réelle ; seules les marques des chapelles de Fátima (Bose, Crown, BSS, AKG) sont sourcées.", "searched": "Articles Carvalho ; l'enquête IOA sur des églises anglaises (Mapp) répondait 404", "review": "needs-oscar-review" },
+    { "what": "Boucle magnétique : présente dans beaucoup de lieux de culte, mais non vérifiée dans une source ouverte ici.", "searched": "aucune recherche dédiée (budget)", "review": "needs-oscar-review" }
+  ]
+}
