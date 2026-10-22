@@ -1,0 +1,569 @@
+{
+  "entity": "rule",
+  "domain": "electricity-levels",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "connector-mate-mismatch",
+      "name_fr": "Connecteurs incompatibles",
+      "name_en": "Connector mismatch",
+      "domain": "electricity-levels",
+      "catalog_rule": "R1",
+      "status": "existing",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "not": {
+          "path": "src.port.connector.matesWith",
+          "op": "includes",
+          "value": {
+            "ref": "dst.port.connector"
+          }
+        }
+      },
+      "explanation": "Miroir de R1 : les deux connecteurs doivent s'accoupler physiquement (connectorTypes.matesWith). Une XLR mâle se branche dans une XLR femelle ; un jack TS et un jack TRS ne sont pas interchangeables électriquement même s'ils entrent : le TS court-circuite le point froid d'une liaison symétrique. Forcer ou bricoler un adaptateur casse la symétrie ou le connecteur.",
+      "fix": "Utiliser le câble au bon genre et au bon format (xlr3-m ↔ xlr3-f, TRS ↔ TRS) ; pour passer d'un format à l'autre, utiliser une DI ou un adaptateur câblé selon le tableau de Rane.",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "balanced-line",
+        "unbalanced-line"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/XLR_connector",
+          "publisher": "Wikipedia (cites AES14-1992, IEC 61076-2-103, AES48-2005)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "signal-type-mismatch",
+      "name_fr": "Types de signal incompatibles",
+      "name_en": "Signal type mismatch",
+      "domain": "electricity-levels",
+      "catalog_rule": "R2",
+      "status": "existing",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "path": "src.port.signal",
+        "op": "ne",
+        "value": {
+          "ref": "dst.port.signal"
+        }
+      },
+      "explanation": "Miroir de R2 : la source et la destination doivent porter des signaux compatibles (micro → préampli micro, ligne → ligne, numérique → même format numérique ; pro +4 dBu et grand public −10 dBV sont signalés). Un micro (quelques mV, environ 1,85 mV/Pa pour un SM58) dans une entrée ligne arrive environ 56 dB trop bas pour +4 dBu ; un niveau ligne dans un préampli micro sature ; un écart pro/grand public vaut environ 11,8 dB. Le catalogue donne une version simplifiée (« 40 dB », « 12 dB ») de ces écarts.",
+      "fix": "Choisir l'entrée qui correspond au niveau de la source, ou insérer l'interface adaptée (DI, pad, préampli, convertisseur).",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "mic-level",
+        "line-level",
+        "instrument-level",
+        "dbu",
+        "dbv"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+          "publisher": "Shure (SM58 spec sheet, copy hosted by College of San Mateo)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "line-level-into-mic-input",
+      "name_fr": "Niveau ligne dans une entrée micro",
+      "name_en": "Line level into mic input",
+      "domain": "electricity-levels",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "dst.port.flags",
+            "op": "includes",
+            "value": "isMicInput"
+          },
+          {
+            "path": "src.port.signal",
+            "op": "in",
+            "value": [
+              "line-level-pro",
+              "line-level-consumer"
+            ]
+          }
+        ]
+      },
+      "explanation": "Un préampli micro est prévu pour quelques millivolts et applique beaucoup de gain ; un niveau ligne (+4 dBu ≈ 1,228 V) le sature dès qu'on monte le gain, d'où distorsion et voyant OL allumé. Les DI comme la Radial JPC ou la ProD2 servent justement à ramener une source ligne au niveau micro, et la Yamaha MG10XU dispose d'un pad de 26 dB sur ses entrées micro.",
+      "fix": "Utiliser une entrée ligne, enclencher le pad de l'entrée ou passer par une DI (avec son pad si nécessaire).",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "line-level",
+        "mic-level",
+        "gain-staging",
+        "di-box"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jpc/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        },
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "publisher": "Yamaha Corporation (MG10XU mode d'emploi FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "mic-level-into-line-input",
+      "name_fr": "Micro dans une entrée ligne",
+      "name_en": "Mic level into line input",
+      "domain": "electricity-levels",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.signal",
+            "op": "eq",
+            "value": "mic-level"
+          },
+          {
+            "path": "dst.port.signal",
+            "op": "in",
+            "value": [
+              "line-level-pro",
+              "line-level-consumer"
+            ]
+          }
+        ]
+      },
+      "explanation": "Une entrée ligne n'a pas le gain nécessaire pour un micro : un SM58 délivre environ 1,85 mV à 94 dB SPL, soit environ 56 dB sous +4 dBu. Le signal est très faible et, si on compense plus loin, le bruit des étages suivants remonte. Attention : une sortie de DI est aussi au niveau micro.",
+      "fix": "Brancher le micro (ou la sortie de DI) sur une entrée micro, ou intercaler un préampli micro.",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "mic-level",
+        "gain-staging",
+        "signal-to-noise-ratio"
+      ],
+      "sources": [
+        {
+          "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+          "publisher": "Shure (SM58 spec sheet, copy hosted by College of San Mateo)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "consumer-into-pro-level",
+      "name_fr": "Source grand public dans une entrée pro",
+      "name_en": "Consumer level into pro input",
+      "domain": "electricity-levels",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.signal",
+            "op": "eq",
+            "value": "line-level-consumer"
+          },
+          {
+            "path": "dst.port.signal",
+            "op": "eq",
+            "value": "line-level-pro"
+          }
+        ]
+      },
+      "explanation": "Le niveau nominal grand public (−10 dBV ≈ 0,316 V) est environ 11,8 dB sous le niveau pro (+4 dBu ≈ 1,228 V). Branchée directement, la source paraît faible et l'on est tenté de pousser le gain ; de plus la sortie est asymétrique, donc sensible aux boucles de masse sur une liaison longue.",
+      "fix": "Compenser au gain d'entrée en surveillant le bruit, ou mieux, utiliser une DI stéréo dédiée (Radial JPC, ProD2) ou un isolateur de ligne qui symétrise et isole la masse.",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "line-level",
+        "dbu",
+        "dbv",
+        "unbalanced-line",
+        "ground-loop"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jpc/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        },
+        {
+          "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
+          "publisher": "Ebtech / Morley (Hum Eliminator manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "instrument-into-line-input",
+      "name_fr": "Instrument dans une entrée ligne ou micro",
+      "name_en": "Instrument into line or mic input",
+      "domain": "electricity-levels",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.signal",
+            "op": "eq",
+            "value": "instrument-hiz"
+          },
+          {
+            "path": "dst.port.signal",
+            "op": "in",
+            "value": [
+              "line-level-pro",
+              "line-level-consumer",
+              "mic-level"
+            ]
+          }
+        ]
+      },
+      "explanation": "Un micro de guitare ou de basse passif a une forte impédance de sortie : sur une entrée ligne de 10 kΩ ou une entrée micro basse impédance, il est trop chargé et perd niveau et aigus. Il faut une entrée Hi-Z (47 kΩ à plus de 1 MΩ) ou une DI.",
+      "fix": "Utiliser l'entrée instrument (Hi-Z) du préampli ou une DI (passive JDI, active J48) vers une entrée micro.",
+      "evaluable_now": true,
+      "needs_catalog_fields": [],
+      "concept_ids": [
+        "instrument-level",
+        "impedance-bridging",
+        "di-box"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jdi/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "unbalanced-long-run",
+      "name_fr": "Liaison asymétrique trop longue",
+      "name_en": "Long unbalanced cable run",
+      "domain": "electricity-levels",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "any": [
+              {
+                "path": "src.port.connector",
+                "op": "in",
+                "value": [
+                  "ts-quarter",
+                  "rca",
+                  "trs-35mm"
+                ]
+              },
+              {
+                "path": "src.port.signal",
+                "op": "in",
+                "value": [
+                  "line-level-consumer",
+                  "instrument-hiz"
+                ]
+              }
+            ]
+          },
+          {
+            "path": "src.cable.length_m",
+            "op": "gt",
+            "value": 3
+          }
+        ]
+      },
+      "explanation": "Rane recommande de garder les liaisons asymétriques sous 3 m (10 ft) : au-delà, le blindage qui porte le retour du signal capte davantage de parasites et de courant de boucle de masse, et une source à forte impédance perd des aigus par la capacité du câble.",
+      "fix": "Raccourcir la liaison, ou convertir au plus près de la source en symétrique basse impédance (DI, isolateur à transformateur).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "cable.length_m",
+        "port.flags:isUnbalanced"
+      ],
+      "concept_ids": [
+        "unbalanced-line",
+        "cable-capacitance-hf-loss",
+        "di-box"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "ground-loop-risk",
+      "name_fr": "Risque de boucle de masse",
+      "name_en": "Ground loop risk",
+      "domain": "electricity-levels",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.device.power.earthed",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "dst.device.power.earthed",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "any": [
+              {
+                "path": "src.port.connector",
+                "op": "in",
+                "value": [
+                  "ts-quarter",
+                  "rca",
+                  "trs-35mm"
+                ]
+              },
+              {
+                "path": "src.port.signal",
+                "op": "eq",
+                "value": "line-level-consumer"
+              }
+            ]
+          }
+        ]
+      },
+      "explanation": "Deux appareils reliés chacun à la terre par leur cordon secteur et entre eux par un blindage audio forment une boucle de masse ; sur une liaison asymétrique, le courant de boucle passe par la masse de signal et produit une ronflette. Les liaisons symétriques bien câblées la rejettent.",
+      "fix": "Préférer une liaison symétrique ; sinon isoler par transformateur (DI passive, isolateur de ligne) ou lever la masse du blindage audio (ground lift). Ne jamais supprimer la terre de sécurité du cordon secteur.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.power.earthed",
+        "port.flags:isUnbalanced"
+      ],
+      "concept_ids": [
+        "ground-loop",
+        "balanced-line",
+        "unbalanced-line",
+        "mains-hum"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Seuil de longueur de câble pour la diaphonie dans un multipaire (règle 'crosstalk-multicore')",
+      "searched": "Wikipedia Crosstalk (pas de valeur audio sourcée)"
+    }
+  ]
+}

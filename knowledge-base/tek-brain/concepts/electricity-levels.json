@@ -1,0 +1,2044 @@
+{
+  "entity": "concept",
+  "domain": "electricity-levels",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "decibel",
+      "name_fr": "Décibel",
+      "name_en": "Decibel",
+      "domain": "electricity-levels",
+      "definition": "Unité logarithmique qui exprime le rapport entre une grandeur et une grandeur de référence ; le suffixe (SPL, u, V, FS) indique la référence.",
+      "explanation": "Le décibel (decibel, dB) ne mesure rien seul : il compare. Pour une grandeur de puissance (puissance électrique, intensité acoustique), on prend 10·log10 du rapport ; pour une grandeur de champ (tension, pression), on prend 20·log10, car la puissance varie comme le carré de la tension. Doubler une tension donne donc environ +6 dB, doubler une puissance environ +3 dB. Deux sources égales non corrélées s'additionnent à +3 dB, pas au double du nombre de dB. Sur le terrain, cela explique qu'un fader monté de 6 dB double la tension de sortie, et que deux enceintes identiques ne donnent « que » 3 dB de plus en bruit rose.",
+      "formulas": [
+        {
+          "expr": "L(dB) = 10·log10(P1/P0)",
+          "vars": {
+            "P": "puissance (W)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio"
+        },
+        {
+          "expr": "L(dB) = 20·log10(A1/A0)",
+          "vars": {
+            "A": "amplitude : tension (V) ou pression (Pa)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio"
+        },
+        {
+          "expr": "ΔL = 10·log10(n)",
+          "vars": {
+            "n": "nombre de sources égales non corrélées"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-leveladding.htm"
+        }
+      ],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "dbu",
+        "dbv",
+        "dbfs",
+        "db-spl",
+        "signal-to-noise-ratio"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-leveladding.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "formulas[2]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dbu",
+      "name_fr": "dBu",
+      "name_en": "dBu",
+      "domain": "electricity-levels",
+      "definition": "Niveau de tension exprimé par rapport à 0,775 V efficaces (0 dBu ≈ 0,7746 V, la tension qui dissipe 1 mW dans 600 Ω).",
+      "explanation": "Le dBu est l'unité de niveau de la plupart du matériel professionnel : le niveau ligne nominal pro vaut +4 dBu, soit environ 1,228 V efficaces. La référence 0,775 V vient de la téléphonie (1 mW dans 600 Ω), mais le dBu s'emploie aujourd'hui sans charge de 600 Ω : c'est une tension, pas une puissance. On passe d'une tension à un niveau par 20·log10(V/0,775). Exemple : une sortie console qui crête à +20 dBu délivre environ 7,75 V efficaces, d'où l'intérêt de connaître le niveau maximal d'entrée de l'appareil suivant.",
+      "formulas": [
+        {
+          "expr": "L(dBu) = 20·log10(V / 0,775 V)",
+          "vars": {
+            "V": "tension efficace (V)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-db-volt.htm"
+        },
+        {
+          "expr": "V = 0,775 · 10^(L/20)",
+          "vars": {
+            "L": "niveau (dBu)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-db-volt.htm"
+        }
+      ],
+      "units": [
+        "dBu",
+        "V"
+      ],
+      "related_concepts": [
+        "decibel",
+        "dbv",
+        "line-level",
+        "alignment-level"
+      ],
+      "equipment_ids": [
+        "yamaha-ql1"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dbv",
+      "name_fr": "dBV",
+      "name_en": "dBV",
+      "domain": "electricity-levels",
+      "definition": "Niveau de tension exprimé par rapport à 1 V efficace ; 0 dBV ≈ +2,2 dBu.",
+      "explanation": "Le dBV sert surtout à exprimer le niveau ligne grand public (consumer) : −10 dBV, soit environ 0,316 V efficaces. On le retrouve aussi dans les fiches de sensibilité des micros (dBV/Pa). Confondre dBV et dBu fausse le calcul de 2,2 dB : −10 dBV vaut environ −7,8 dBu, pas −10 dBu. L'écart entre +4 dBu (≈ 1,228 V) et −10 dBV (≈ 0,316 V) est donc d'environ 11,8 dB, souvent arrondi à 12 dB.",
+      "formulas": [
+        {
+          "expr": "L(dBV) = 20·log10(V / 1 V)",
+          "vars": {
+            "V": "tension efficace (V)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-db-volt.htm"
+        },
+        {
+          "expr": "dBu = dBV + 2,2",
+          "vars": {},
+          "source_url": "http://www.sengpielaudio.com/calculator-db-volt.htm"
+        }
+      ],
+      "units": [
+        "dBV",
+        "V"
+      ],
+      "related_concepts": [
+        "dbu",
+        "line-level",
+        "decibel"
+      ],
+      "equipment_ids": [
+        "playout-pc"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+          "publisher": "Shure (SM58 spec sheet, copy hosted by College of San Mateo)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dbfs",
+      "name_fr": "dBFS (décibel pleine échelle)",
+      "name_en": "dBFS (decibels relative to full scale)",
+      "domain": "electricity-levels",
+      "definition": "Niveau numérique exprimé par rapport au niveau maximal codable : 0 dBFS est le plafond, les niveaux de travail sont négatifs.",
+      "explanation": "En numérique, il n'existe pas de tension : on rapporte le niveau au maximum que le convertisseur peut coder, quel que soit le nombre de bits. Selon la convention AES17 citée par Wikipedia, la valeur efficace d'un sinus pleine échelle vaut 0 dBFS ; une onde carrée pleine échelle peut alors afficher environ +3 dBFS. Au-delà de 0 dBFS, il n'y a plus de codes disponibles : le signal est écrêté sans retour possible. La correspondance entre dBu analogiques et dBFS n'est pas universelle : elle dépend du calibrage du convertisseur et de la norme maison (voir alignment-level).",
+      "formulas": [],
+      "units": [
+        "dBFS"
+      ],
+      "related_concepts": [
+        "alignment-level",
+        "headroom",
+        "decibel",
+        "bit-depth"
+      ],
+      "equipment_ids": [
+        "avid-hd-io",
+        "rme-fireface-ufx-iii"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+          "publisher": "EBU (R 68-2000)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DBFS",
+          "publisher": "Wikipedia (cites AES17, IEC 61606, EBU R68)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "db-spl",
+      "name_fr": "dB SPL (niveau de pression acoustique)",
+      "name_en": "dB SPL (sound pressure level)",
+      "domain": "electricity-levels",
+      "definition": "Niveau de pression acoustique exprimé par rapport à p0 = 20 µPa ; 1 Pa ≈ 94 dB SPL.",
+      "explanation": "Le dB SPL relie le monde acoustique au monde électrique. Comme la pression est une grandeur de champ, on utilise 20·log10. La référence 1 Pa = 94 dB SPL est celle des fiches de sensibilité des micros : un SM58 délivre environ 1,85 mV (−54,5 dBV) pour 1 Pa à 1 kHz. Rane rappelle qu'une salle de spectacle a un bruit de fond typique de 35 à 45 dB SPL, et qu'au-delà de 100–105 dB SPL le public commence à se plaindre : la dynamique utile d'un système de sonorisation est donc de l'ordre de 55 à 70 dB.",
+      "formulas": [
+        {
+          "expr": "Lp = 20·log10(p / p0), p0 = 20 µPa",
+          "vars": {
+            "p": "pression efficace (Pa)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-soundlevel.htm"
+        }
+      ],
+      "units": [
+        "dB SPL",
+        "Pa"
+      ],
+      "related_concepts": [
+        "decibel",
+        "sound-pressure",
+        "microphone-sensitivity",
+        "dynamic-range"
+      ],
+      "equipment_ids": [
+        "shure-sm58",
+        "nti-audio-xl2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-soundlevel.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+          "publisher": "Shure (SM58 spec sheet, copy hosted by College of San Mateo)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "alignment-level",
+      "name_fr": "Niveau d'alignement",
+      "name_en": "Alignment level",
+      "domain": "electricity-levels",
+      "definition": "Niveau d'un signal de référence (sinus 1 kHz) servant à caler une chaîne ; l'EBU le place à −18 dBFS en numérique et l'ITU-R à 0 dBu0s en analogique.",
+      "explanation": "Pour qu'une chaîne (console, enregistreur, liaison) soit cohérente, on y envoie un ton d'alignement et on vérifie qu'il sort au même niveau partout. EBU R 68 fixe le niveau d'alignement numérique 18 dB sous le niveau maximal codable (−18 dBFS) ; ITU-R BS.645 fixe l'alignement analogique à 0 dBu0s et le niveau maximal permis (PML) 9 dB plus haut. EBU Tech 3276 fait le pont entre les deux, d'où l'équivalence couramment déduite 0 dBu ↔ −18 dBFS en contexte EBU. Attention : d'autres organisations utilisent d'autres correspondances (−20 dBFS = +4 dBu en post-production américaine selon Wikipedia). Il faut toujours vérifier la norme maison avant de caler un convertisseur.",
+      "formulas": [
+        {
+          "expr": "AL = −18 dBFS (18 dB sous le niveau maximal codable)",
+          "vars": {},
+          "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf"
+        }
+      ],
+      "units": [
+        "dBFS",
+        "dBu"
+      ],
+      "related_concepts": [
+        "dbfs",
+        "dbu",
+        "headroom",
+        "loudness-ebu-r128"
+      ],
+      "equipment_ids": [
+        "avid-hd-io",
+        "antelope-orion-32-plus-gen4"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+          "publisher": "EBU (R 68-2000)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.645-2-199203-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.645-2)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
+          "publisher": "EBU (Tech 3276)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DBFS",
+          "publisher": "Wikipedia (cites AES17, IEC 61606, EBU R68)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "conflicts"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Alignment_level",
+          "publisher": "Wikipedia (cites EBU R68-2000)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "conflicts"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (correspondance analogique ↔ numérique)",
+          "values": [
+            {
+              "value": "0 dBu (alignement ITU/EBU) ↔ −18 dBFS : déduit de BS.645 + Tech 3276 + R 68",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf"
+            },
+            {
+              "value": "EBU R68 : +18 dBu = 0 dBFS (formulation Wikipedia ; R 68 lui-même ne parle que du niveau numérique)",
+              "source_url": "https://en.wikipedia.org/wiki/DBFS"
+            },
+            {
+              "value": "SMPTE / post-production US et australienne : −20 dBFS = 0 VU = +4 dBu",
+              "source_url": "https://en.wikipedia.org/wiki/DBFS"
+            },
+            {
+              "value": "Japon, France et autres : convertisseurs parfois calibrés +22 dBu = 0 dBFS",
+              "source_url": "https://en.wikipedia.org/wiki/DBFS"
+            },
+            {
+              "value": "Audio pro : niveau d'alignement analogique courant 0 VU = +4 dBu ; broadcast : 0 dBu",
+              "source_url": "https://en.wikipedia.org/wiki/Alignment_level"
+            }
+          ],
+          "note": "OPEN_QUESTIONS #10 : la formule « EBU R68 : +4 dBu ↔ −18 dBFS » du cours e3/unit1 n'est confirmée par aucune source lue. Aucun texte SMPTE (RP 155) n'a été ouvert : la valeur −20 dBFS n'est attestée que par Wikipedia."
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "line-level",
+      "name_fr": "Niveau ligne (pro et grand public)",
+      "name_en": "Line level (pro and consumer)",
+      "domain": "electricity-levels",
+      "definition": "Niveau nominal des liaisons entre appareils : +4 dBu (≈ 1,228 V) en professionnel, −10 dBV (≈ 0,316 V) en grand public.",
+      "explanation": "Le niveau ligne est celui des sorties de console, processeurs, lecteurs et cartes son. Le matériel pro vise +4 dBu (≈ 1,228 V eff.), le matériel grand public −10 dBV (≈ 0,316 V eff.), soit environ 11,8 dB de moins. Une sortie ligne présente typiquement 100 à 600 Ω et une entrée ligne 10 kΩ ou plus. Brancher un lecteur grand public sur une entrée pro donne un signal faible qu'il faudra compenser au gain ; l'inverse risque la saturation. Dans TekPractice, ce sont les signaux line-level-pro et line-level-consumer.",
+      "formulas": [
+        {
+          "expr": "20·log10(1,228 / 0,316) ≈ 11,8 dB",
+          "vars": {},
+          "source_url": "https://en.wikipedia.org/wiki/Line_level"
+        }
+      ],
+      "units": [
+        "dBu",
+        "dBV",
+        "V"
+      ],
+      "related_concepts": [
+        "dbu",
+        "dbv",
+        "mic-level",
+        "instrument-level",
+        "impedance-bridging"
+      ],
+      "equipment_ids": [
+        "playout-pc",
+        "yamaha-ql1",
+        "qsc-k12-2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "mic-level",
+      "name_fr": "Niveau micro",
+      "name_en": "Mic level",
+      "domain": "electricity-levels",
+      "definition": "Niveau très faible (quelques millivolts) délivré par un microphone, qui doit être amplifié par un préampli avant d'atteindre le niveau ligne.",
+      "explanation": "Un SM58 délivre environ 1,85 mV pour une pression de 1 Pa (94 dB SPL) à 1 kHz. Pour atteindre +4 dBu (≈ 1,228 V), il faut donc un gain de l'ordre de 56 dB (20·log10(1,228/0,00185)) : c'est le travail du préampli micro. Rane donne l'exemple d'un micro demandant 60 dB de gain, à prendre en une seule fois à l'étage d'entrée. Un micro sensible demande moins de gain, et la sensibilité se lit en mV/Pa ou en dBV/Pa sur la fiche technique.",
+      "formulas": [
+        {
+          "expr": "Gain nécessaire (dB) = 20·log10(V_cible / V_micro)",
+          "vars": {
+            "V_cible": "1,228 V pour +4 dBu",
+            "V_micro": "1,85 mV (SM58 à 94 dB SPL)"
+          },
+          "source_url": "http://www.sengpielaudio.com/calculator-db-volt.htm"
+        }
+      ],
+      "units": [
+        "mV/Pa",
+        "dBV/Pa",
+        "dB"
+      ],
+      "related_concepts": [
+        "microphone-sensitivity",
+        "gain-staging",
+        "line-level",
+        "phantom-power"
+      ],
+      "equipment_ids": [
+        "shure-sm58",
+        "neumann-u87-ai",
+        "focusrite-isa-one"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+          "publisher": "Shure (SM58 spec sheet, copy hosted by College of San Mateo)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/how-to-read-microphone-specifications/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "formulas[0]"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "instrument-level",
+      "name_fr": "Niveau instrument (Hi-Z)",
+      "name_en": "Instrument level (Hi-Z)",
+      "domain": "electricity-levels",
+      "definition": "Signal asymétrique issu d'un micro de guitare ou de basse passif, à forte impédance de sortie, qui demande une entrée haute impédance (Hi-Z) ou une DI.",
+      "explanation": "Les micros de guitare et de basse passifs ont une forte impédance de sortie : branchés sur une entrée ligne de 10 kΩ ou une entrée micro basse impédance, ils perdent du niveau et des aigus. Une entrée instrument (Hi-Z) présente de 47 kΩ à plus de 1 MΩ selon Wikipedia ; la Focusrite ISA One annonce plus de 1 MΩ. Une DI passive Radial JDI présente 140 kΩ, une DI active Radial J48 220 kΩ. Dans TekPractice, ce signal est instrument-hiz.",
+      "formulas": [],
+      "units": [
+        "Ω"
+      ],
+      "related_concepts": [
+        "impedance",
+        "impedance-bridging",
+        "di-box",
+        "unbalanced-line"
+      ],
+      "equipment_ids": [
+        "focusrite-isa-one",
+        "radial-jdi",
+        "radial-j48"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://us.focusrite.com/mic-pres/isa-one/specifications",
+          "publisher": "Focusrite",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "conflicts"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jdi/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/j48/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation (impédance d'entrée Hi-Z ISA One)",
+          "values": [
+            {
+              "value": "> 1 MΩ (High) / > 300 kΩ (Low) dans le tableau de spécifications",
+              "source_url": "https://us.focusrite.com/mic-pres/isa-one/specifications"
+            },
+            {
+              "value": "2,4 MΩ / 470 kΩ dans le texte de présentation (relevé dans fundamentals/07)",
+              "source_url": "https://us.focusrite.com/mic-pres/isa-one/specifications"
+            }
+          ],
+          "note": "Incohérence interne au fabricant, relevée dans knowledge-base/fundamentals/07-impedance.md."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "gain-staging",
+      "name_fr": "Structure de gain (gain staging)",
+      "name_en": "Gain staging",
+      "domain": "electricity-levels",
+      "definition": "Réglage du gain de chaque étage d'une chaîne pour que le signal reste au-dessus du bruit de fond tout en gardant assez de marge avant l'écrêtage.",
+      "explanation": "Chaque étage analogique ajoute un bruit à peu près indépendant du niveau du signal : plus le signal est grand tôt dans la chaîne, meilleur est le rapport signal/bruit final. Rane recommande donc de prendre tout le gain nécessaire en une fois au préampli micro, puis de faire travailler les appareils suivants au gain unité. Le gain d'entrée se règle avec la source jouant aussi fort que pendant le spectacle, jusqu'à ce que le voyant OL s'allume à peine de temps en temps. Les amplis de puissance se calent ensuite pour atteindre leur pleine puissance avec le signal maximal du système. On ne règle jamais le gain d'entrée d'après la position du fader.",
+      "formulas": [],
+      "units": [
+        "dB",
+        "dBu",
+        "dBFS"
+      ],
+      "related_concepts": [
+        "headroom",
+        "signal-to-noise-ratio",
+        "noise-floor",
+        "alignment-level",
+        "input-channel"
+      ],
+      "equipment_ids": [
+        "yamaha-ql1",
+        "yamaha-mg10xu",
+        "focusrite-isa-one",
+        "crown-xls-2502"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+          "publisher": "EBU (R 68-2000)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "headroom",
+      "name_fr": "Marge (headroom)",
+      "name_en": "Headroom",
+      "domain": "electricity-levels",
+      "definition": "Écart en dB entre le niveau moyen ou nominal du signal et le plus grand niveau non distordu que l'appareil peut passer.",
+      "explanation": "Rane définit la marge comme le rapport entre le plus grand signal non distordu et le niveau moyen : à +4 dBu nominal et +26 dBu maximum, la marge est de 22 dB. La musique a un facteur de crête de 12 à 20 dB, d'où le besoin de 12 à 20 dB de marge dans chaque appareil. En numérique, EBU R 68 justifie ses 18 dB sous 0 dBFS : les crêtes réelles peuvent dépasser de 3 dB l'indication d'un crêtemètre quasi-crête et atteindre occasionnellement 15 dB au-dessus de l'alignement. Réduire la marge pour « avoir du niveau » expose à l'écrêtage.",
+      "formulas": [
+        {
+          "expr": "Marge (dB) = L_max − L_nominal",
+          "vars": {
+            "L_max": "plus grand niveau non distordu",
+            "L_nominal": "niveau moyen (ex. +4 dBu)"
+          },
+          "source_url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf"
+        }
+      ],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "gain-staging",
+        "crest-factor",
+        "dbfs",
+        "alignment-level",
+        "dynamic-range"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+          "publisher": "EBU (R 68-2000)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "noise-floor",
+      "name_fr": "Bruit de fond",
+      "name_en": "Noise floor",
+      "domain": "electricity-levels",
+      "definition": "Niveau du bruit propre d'un appareil ou d'un système en l'absence de signal ; il fixe la limite basse de la dynamique.",
+      "explanation": "Un appareil ne peut pas restituer un signal plus faible que son propre bruit. Rane indique que le meilleur matériel analogique pro descend vers −94 dBu de bruit de fond, pour un maximum de +26 dBu. Dans une salle, c'est souvent le bruit ambiant (ventilation, public : 35 à 45 dB SPL) qui fixe la limite, bien avant le bruit électronique. Pour un préampli, on lit le bruit ramené à l'entrée (EIN) : la Yamaha MG10XU annonce −128 dBu avec une source de 150 Ω au gain maximal.",
+      "formulas": [],
+      "units": [
+        "dBu",
+        "dB SPL"
+      ],
+      "related_concepts": [
+        "signal-to-noise-ratio",
+        "dynamic-range",
+        "gain-staging"
+      ],
+      "equipment_ids": [
+        "yamaha-mg10xu"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "publisher": "Yamaha Corporation (MG10XU mode d'emploi FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "signal-to-noise-ratio",
+      "name_fr": "Rapport signal/bruit",
+      "name_en": "Signal-to-noise ratio (SNR)",
+      "domain": "electricity-levels",
+      "definition": "Rapport entre la puissance d'un signal de référence et la puissance du bruit, exprimé en dB.",
+      "explanation": "Le rapport signal/bruit (S/B, SNR) dépend du signal de référence choisi, contrairement à la dynamique qui compare le plus grand signal non distordu au bruit. En pratique, le S/B d'une chaîne est surtout fixé au premier étage d'amplification : un gain d'entrée trop faible, compensé plus loin, remonte le bruit des étages suivants. En numérique, chaque bit supplémentaire apporte environ 6 dB : un quantificateur idéal de N bits offre environ 6,02·N + 1,76 dB pour un sinus pleine échelle.",
+      "formulas": [
+        {
+          "expr": "SNR(dB) = 10·log10(P_signal / P_bruit)",
+          "vars": {
+            "P": "puissance"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio"
+        },
+        {
+          "expr": "SNR(dB) = 20·log10(A_signal / A_bruit)",
+          "vars": {
+            "A": "amplitude efficace (V)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio"
+        },
+        {
+          "expr": "SNR ≈ 6,02·N + 1,76 dB",
+          "vars": {
+            "N": "nombre de bits (quantification idéale, sinus pleine échelle)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio"
+        }
+      ],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "noise-floor",
+        "dynamic-range",
+        "gain-staging",
+        "bit-depth",
+        "quantization-noise"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "formulas[1]",
+            "formulas[2]"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dynamic-range",
+      "name_fr": "Dynamique",
+      "name_en": "Dynamic range",
+      "domain": "electricity-levels",
+      "definition": "Rapport en dB entre le plus grand signal non distordu et le plus petit signal discernable (en général le bruit de fond).",
+      "explanation": "Rane distingue la dynamique d'un appareil (jusqu'à environ 120 dB entre +26 dBu et −94 dBu) et celle d'un système de sonorisation, limitée par le bruit de la salle et le confort du public (environ 55 à 70 dB). L'ingénieur n'a donc pas besoin de toute la dynamique des machines : il doit surtout préserver la marge de chaque appareil. Ne pas confondre avec le rapport signal/bruit, qui dépend d'un niveau de référence arbitraire.",
+      "formulas": [],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "headroom",
+        "noise-floor",
+        "signal-to-noise-ratio"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "crest-factor",
+      "name_fr": "Facteur de crête",
+      "name_en": "Crest factor",
+      "domain": "electricity-levels",
+      "definition": "Rapport entre la valeur crête et la valeur efficace (RMS) d'un signal ; 3 dB pour un sinus, 12 à 20 dB pour la musique.",
+      "explanation": "Un sinus a une crête 1,414 fois plus grande que sa valeur efficace, soit 3 dB. La musique est bien plus « pointue » : Rane cite un facteur de crête de 4 à 10, soit 12 à 20 dB. C'est pour cela qu'un vumètre (qui lit une moyenne) peut indiquer un niveau confortable pendant que les crêtes écrêtent, et qu'il faut prévoir 12 à 20 dB de marge au-dessus du niveau nominal.",
+      "formulas": [
+        {
+          "expr": "CF(dB) = 20·log10(V_crête / V_eff)",
+          "vars": {
+            "V": "tension"
+          },
+          "source_url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf"
+        }
+      ],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "headroom",
+        "dbfs"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "ohms-law",
+      "name_fr": "Loi d'Ohm",
+      "name_en": "Ohm's law",
+      "domain": "electricity-levels",
+      "definition": "La tension aux bornes d'un dipôle est égale au produit de son impédance (ou résistance) par le courant qui le traverse : V = Z·I.",
+      "explanation": "En continu ou pour une résistance pure, V = R·I. En alternatif, on remplace R par l'impédance Z, qui dépend de la fréquence dès qu'il y a des condensateurs ou des bobines (câbles, haut-parleurs). Sur le terrain, la loi d'Ohm sert à calculer le courant demandé à une sortie, la chute de tension dans un câble ou le pont diviseur formé par une impédance de sortie et une impédance d'entrée.",
+      "formulas": [
+        {
+          "expr": "V = Z·I",
+          "vars": {
+            "V": "tension efficace (V)",
+            "Z": "impédance (Ω)",
+            "I": "courant efficace (A)"
+          },
+          "source_url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html"
+        }
+      ],
+      "units": [
+        "V",
+        "A",
+        "Ω"
+      ],
+      "related_concepts": [
+        "impedance",
+        "electrical-power",
+        "impedance-bridging"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 1,
+      "sources": [
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html",
+          "publisher": "HyperPhysics (C. R. Nave, Georgia State University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "electrical-power",
+      "name_fr": "Puissance électrique",
+      "name_en": "Electrical power",
+      "domain": "electricity-levels",
+      "definition": "Énergie transférée par seconde dans un circuit : P = V·I, soit V²/R ou R·I² dans une résistance.",
+      "explanation": "Entre un ampli de puissance et un haut-parleur, c'est bien une puissance qui est transférée, et elle dépend de l'impédance de charge. À tension égale, diviser la charge par deux double en théorie la puissance demandée ; en pratique l'ampli plafonne. Le Crown XLS 2502 donne 440 W sous 8 Ω, 775 W sous 4 Ω et 1200 W sous 2 Ω par canal : la puissance ne double pas exactement. Entre étages de ligne, en revanche, on transfère une tension, pas une puissance.",
+      "formulas": [
+        {
+          "expr": "P = V·I = V²/R = R·I²",
+          "vars": {
+            "P": "puissance (W)",
+            "V": "tension efficace (V)",
+            "I": "courant efficace (A)",
+            "R": "résistance (Ω)"
+          },
+          "source_url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/elepow.html"
+        }
+      ],
+      "units": [
+        "W",
+        "V",
+        "A",
+        "Ω"
+      ],
+      "related_concepts": [
+        "ohms-law",
+        "impedance",
+        "amplifier-power-rating",
+        "speaker-impedance-load"
+      ],
+      "equipment_ids": [
+        "crown-xls-2502"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/elepow.html",
+          "publisher": "HyperPhysics (C. R. Nave, Georgia State University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
+          "publisher": "Crown Audio (XLS DriveCore 2 data sheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "impedance",
+      "name_fr": "Impédance",
+      "name_en": "Impedance",
+      "domain": "electricity-levels",
+      "definition": "Rapport entre tension et courant efficaces d'un circuit en alternatif, en ohms ; il dépend de la fréquence dès qu'il y a capacité ou inductance.",
+      "explanation": "Pour une résistance pure, Z = R ; condensateurs et bobines ajoutent une composante déphasée qui varie avec la fréquence. En audio, on parle d'impédance de sortie (source) et d'impédance d'entrée (charge). Ordres de grandeur : micro dynamique SM58 150 Ω nominal ; sortie ligne 100 à 600 Ω ; entrée ligne 10 kΩ ou plus ; entrée instrument de 47 kΩ à plus de 1 MΩ. L'impédance nominale d'un catalogue est une valeur arrondie : l'impédance réelle varie avec la fréquence.",
+      "formulas": [
+        {
+          "expr": "Z = V / I",
+          "vars": {
+            "Z": "impédance (Ω)",
+            "V": "tension efficace (V)",
+            "I": "courant efficace (A)"
+          },
+          "source_url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html"
+        }
+      ],
+      "units": [
+        "Ω"
+      ],
+      "related_concepts": [
+        "ohms-law",
+        "impedance-bridging",
+        "instrument-level",
+        "speaker-impedance-load"
+      ],
+      "equipment_ids": [
+        "shure-sm58",
+        "focusrite-isa-one"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html",
+          "publisher": "HyperPhysics (C. R. Nave, Georgia State University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+          "publisher": "Shure (SM58 spec sheet, copy hosted by College of San Mateo)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "impedance-bridging",
+      "name_fr": "Adaptation en tension (bridging)",
+      "name_en": "Impedance bridging",
+      "domain": "electricity-levels",
+      "definition": "Liaison où une sortie à faible impédance attaque une entrée à forte impédance, pour transférer la tension sans charger la source.",
+      "explanation": "En audio moderne, on n'adapte plus les impédances entre étages de ligne (héritage 600 Ω de la téléphonie) : on vise Z_entrée très supérieure à Z_sortie. Rane calcule qu'une sortie de 100 Ω dans une entrée de 20 kΩ perd environ 0,04 dB ; si l'on « adapte » en chargeant l'entrée à environ 100 Ω, on perd 6 dB de niveau et de dynamique, avec plus de courant et de distorsion. Pour un micro, on recommande une charge 5 à 10 fois supérieure à son impédance. L'adaptation en puissance ne garde un sens qu'entre ampli et haut-parleurs.",
+      "formulas": [
+        {
+          "expr": "U_entrée / U_source = Z_entrée / (Z_entrée + Z_sortie)",
+          "vars": {
+            "Z": "impédance (Ω)"
+          },
+          "source_url": "https://www.ranecommercial.com/legacy/note124.html"
+        }
+      ],
+      "units": [
+        "Ω",
+        "dB"
+      ],
+      "related_concepts": [
+        "impedance",
+        "line-level",
+        "instrument-level",
+        "di-box"
+      ],
+      "equipment_ids": [
+        "focusrite-isa-one",
+        "radial-jdi"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note124.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 124)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "balanced-line",
+      "name_fr": "Liaison symétrique",
+      "name_en": "Balanced line",
+      "domain": "electricity-levels",
+      "definition": "Liaison à deux conducteurs de signal présentant la même impédance par rapport à la masse, reçue par une entrée différentielle qui rejette les parasites de mode commun.",
+      "explanation": "Ce qui fait la symétrie, c'est l'égalité des impédances de chaque conducteur vers la masse, de l'émetteur au récepteur ; le blindage ne transporte pas le signal. Un parasite induit de la même façon sur les deux conducteurs (mode commun) est soustrait par l'entrée différentielle. Sur la XLR, broche 1 = masse/blindage, 2 = point chaud, 3 = point froid ; sur le jack TRS, pointe = chaud, bague = froid, corps = masse. La liaison symétrique permet de longues distances et rejette les courants de boucle de masse lorsqu'elle est bien réalisée.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "unbalanced-line",
+        "cmrr",
+        "ground-loop",
+        "pin-1-problem",
+        "crosstalk"
+      ],
+      "equipment_ids": [
+        "neutrik-nc3mxx",
+        "sommer-sc-primus"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/XLR_connector",
+          "publisher": "Wikipedia (cites AES14-1992, IEC 61076-2-103, AES48-2005)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "unbalanced-line",
+      "name_fr": "Liaison asymétrique",
+      "name_en": "Unbalanced line",
+      "domain": "electricity-levels",
+      "definition": "Liaison où le signal circule sur un conducteur et revient par le blindage, qui fait partie du circuit et capte donc les parasites.",
+      "explanation": "Jack TS, RCA et mini-jack 3,5 mm grand public sont asymétriques. Le blindage sert de retour au signal : tout courant qui y circule (boucle de masse, rayonnement) s'ajoute à l'audio. Rane conseille de garder les liaisons asymétriques sous 3 m (10 ft) et d'isoler par transformateur ou DI tout raccordement asymétrique vers un système symétrique. Les sources haute impédance sur câble long subissent en plus un filtrage des aigus par la capacité du câble.",
+      "formulas": [],
+      "units": [
+        "m"
+      ],
+      "related_concepts": [
+        "balanced-line",
+        "ground-loop",
+        "di-box",
+        "instrument-level"
+      ],
+      "equipment_ids": [
+        "playout-pc",
+        "radial-jpc",
+        "ebtech-hum-eliminator-he-2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "cmrr",
+      "name_fr": "Taux de réjection du mode commun (CMRR)",
+      "name_en": "Common-mode rejection ratio (CMRR)",
+      "domain": "electricity-levels",
+      "definition": "Capacité d'une entrée différentielle à supprimer un signal présent identiquement sur ses deux conducteurs, exprimée en dB (plus c'est élevé, mieux c'est).",
+      "explanation": "Le CMRR (common mode rejection ratio) mesure l'efficacité d'une entrée symétrique. DPA cite environ 65 dB pour un préampli MMP-A ; 60 dB signifie que moins d'un millième du bruit de mode commun passe. Le CMRR dépend de l'égalité des impédances : un câble abîmé, un adaptateur asymétrique ou des résistances de fantôme mal appariées le dégradent. Le splitter Radial ProMS2 annonce 114 dB à 60 Hz.",
+      "formulas": [],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "balanced-line",
+        "ground-loop"
+      ],
+      "equipment_ids": [
+        "radial-proms2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/electromagnetic-interference-emc-rfi-immunity-and-cmrr/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "ground-loop",
+      "name_fr": "Boucle de masse",
+      "name_en": "Ground loop",
+      "domain": "electricity-levels",
+      "definition": "Situation où deux appareils sont reliés à la masse par plus d'un chemin (terre secteur et blindage), si bien qu'un courant circule dans la masse de signal et produit une ronflette.",
+      "explanation": "Deux appareils reliés par un câble audio et chacun à la terre par leur cordon secteur forment une boucle. Des champs magnétiques ou des différences de potentiel entre prises y font circuler un courant ; la chute de tension le long du blindage s'ajoute au signal. Le bruit se situe à la fréquence du secteur et ses harmoniques. Remèdes : liaisons symétriques bien câblées (blindage au châssis), transformateur d'isolement ou DI à transformateur, alimentation depuis une même distribution, ground lift côté blindage audio. On ne supprime jamais la terre de sécurité : un cordon sans terre peut laisser une tension dangereuse sur le châssis.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "balanced-line",
+        "unbalanced-line",
+        "pin-1-problem",
+        "mains-hum",
+        "electrical-safety-earthing"
+      ],
+      "equipment_ids": [
+        "ebtech-hum-eliminator-he-2",
+        "radial-jdi",
+        "radial-jpc"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Mains_hum",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "mains-hum",
+      "name_fr": "Ronflette secteur",
+      "name_en": "Mains hum",
+      "domain": "electricity-levels",
+      "definition": "Bruit grave et continu lié au courant alternatif du secteur, à sa fréquence ou à son double, accompagné d'harmoniques.",
+      "explanation": "La ronflette (hum) vient soit d'une boucle de masse, soit d'une induction par des transformateurs ou appareils secteur proches de circuits à fort gain ou forte impédance, soit de courants de masse importants dans les alimentations. Selon le mécanisme, la fondamentale entendue est la fréquence du secteur ou son double (100 Hz sur un réseau 50 Hz). Rane emploie indifféremment « hum » et « buzz » ; un bruit plus aigu et riche en harmoniques est souvent appelé buzz sur le terrain.",
+      "formulas": [],
+      "units": [
+        "Hz"
+      ],
+      "related_concepts": [
+        "ground-loop",
+        "pin-1-problem",
+        "balanced-line"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Mains_hum",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation",
+            "conflicts"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "conflicts"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "definition (fréquence de la ronflette)",
+          "values": [
+            {
+              "value": "Ronflette à la fréquence du secteur, 50 ou 60 Hz (boucle de masse)",
+              "source_url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)"
+            },
+            {
+              "value": "Ronflette au double de la fréquence du secteur : 100 Hz sur 50 Hz, 120 Hz sur 60 Hz (induction, courants de masse d'alimentation)",
+              "source_url": "https://en.wikipedia.org/wiki/Mains_hum"
+            }
+          ],
+          "note": "Les deux mécanismes existent ; la fondamentale entendue dépend de la cause. Ne pas enseigner « ronflette = 50 Hz » comme règle absolue."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "pin-1-problem",
+      "name_fr": "Problème de la broche 1",
+      "name_en": "Pin 1 problem",
+      "domain": "electricity-levels",
+      "definition": "Défaut de conception où le blindage (broche 1 de la XLR) est relié à la masse de signal au lieu du châssis, si bien que le courant de blindage injecte ronflette et buzz dans l'audio.",
+      "explanation": "Un câble XLR standard relie le blindage à la broche 1 aux deux extrémités. Si l'appareil raccorde cette broche à sa masse audio interne plutôt qu'au châssis, tout courant circulant dans le blindage module la référence du signal. Rane recommande que le blindage soit relié au châssis à son point d'entrée, comme une extension du boîtier ; c'est ce que demande AES48. Le technicien ne peut pas corriger l'appareil, mais il peut identifier l'entrée fautive et l'isoler (transformateur, ground lift côté blindage).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "ground-loop",
+        "balanced-line",
+        "mains-hum"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note151.html",
+          "publisher": "Rane Corporation (Steve Macatee, RaneNote 151)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "crosstalk",
+      "name_fr": "Diaphonie",
+      "name_en": "Crosstalk",
+      "domain": "electricity-levels",
+      "definition": "Fuite indésirable d'un signal d'un canal ou d'un circuit vers un autre, par couplage capacitif, inductif ou par impédance commune.",
+      "explanation": "La diaphonie (crosstalk) se mesure en dB : plus la valeur est négative, meilleure est la séparation. En audio, elle dégrade la séparation stéréo et se remarque surtout entre canaux qui portent des programmes différents (départs, liaisons studio). Elle vient de couplages entre conducteurs voisins ou d'un retour de masse partagé ; les paires torsadées réduisent le couplage magnétique. Exemple de spécification : l'Ebtech Hum Eliminator annonce une diaphonie meilleure que −97 dB.",
+      "formulas": [],
+      "units": [
+        "dB"
+      ],
+      "related_concepts": [
+        "balanced-line",
+        "ground-loop"
+      ],
+      "equipment_ids": [
+        "ebtech-hum-eliminator-he-2"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Crosstalk",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
+          "publisher": "Ebtech / Morley (Hum Eliminator manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "di-box",
+      "name_fr": "Boîte de direct (DI)",
+      "name_en": "DI box (direct injection)",
+      "domain": "electricity-levels",
+      "definition": "Boîtier qui convertit un signal asymétrique haute impédance (instrument, source grand public) en signal symétrique basse impédance au niveau micro, souvent avec ground lift et pad.",
+      "explanation": "La DI relie un instrument ou une source asymétrique à une entrée micro de console. Version passive : un transformateur, sans alimentation, qui isole galvaniquement et aide contre les boucles de masse (Radial JDI : entrée 140 kΩ, sortie 150 Ω). Version active : un préampli alimenté par pile ou fantôme +48 V (Radial J48 : entrée 220 kΩ). Des modèles stéréo comme la Radial JPC sont conçus pour les ordinateurs et sources grand public (mini-jack, RCA) et demandent le fantôme sur chaque canal. La sortie basse impédance symétrique supporte les longs câbles sans perte d'aigus.",
+      "formulas": [],
+      "units": [
+        "Ω"
+      ],
+      "related_concepts": [
+        "instrument-level",
+        "unbalanced-line",
+        "balanced-line",
+        "ground-loop",
+        "phantom-power"
+      ],
+      "equipment_ids": [
+        "radial-jdi",
+        "radial-j48",
+        "radial-jpc",
+        "radial-prod2",
+        "behringer-di100"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre pratique (TES/E4) — jugement, non vérifié ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jdi/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/j48/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jpc/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "cable-capacitance-hf-loss",
+      "name_fr": "Perte d'aigus par capacité du câble",
+      "name_en": "Cable capacitance high-frequency loss",
+      "domain": "electricity-levels",
+      "definition": "Tout câble est capacitif : avec une source à forte impédance de sortie, il forme un filtre passe-bas qui atténue les aigus d'autant plus que le câble est long.",
+      "explanation": "Le câble et l'impédance de sortie de la source forment un filtre RC. Avec une guitare passive sur un long câble asymétrique, la perte d'aigus est audible. Rane donne des ordres de grandeur pour des sorties ligne : à 200 Ω on garde environ 23 kHz (−3 dB) sur 300 m de câble, à 600 Ω environ 15,6 kHz sur seulement 150 m. D'où l'intérêt d'une DI ou d'une sortie basse impédance pour les longues distances.",
+      "formulas": [],
+      "units": [
+        "pF",
+        "Ω",
+        "m",
+        "Hz"
+      ],
+      "related_concepts": [
+        "impedance",
+        "unbalanced-line",
+        "di-box"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Électricité et niveaux (PTES) — jugement pédagogique, non vérifié sur eduscol ; bloc BC02 repris de fundamentals/02 (fiche RNCP37196), non revérifié ici.",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note126.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 126)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Texte SMPTE RP 155 (−20 dBFS) non ouvert ; valeur attestée seulement via Wikipedia DBFS",
+      "searched": "Wikipedia DBFS, Alignment level ; SMPTE non consulté (payant)"
+    },
+    {
+      "what": "Niveau typique d'un signal instrument en dBu/mV (aucune valeur chiffrée trouvée dans une source fiable)",
+      "searched": "Wikipedia Line level, DI unit"
+    },
+    {
+      "what": "Fréquence du réseau français (50 Hz) dans une source officielle",
+      "searched": "non recherché faute de budget ; Wikipedia Mains hum mentionne 50 Hz en général"
+    }
+  ]
+}

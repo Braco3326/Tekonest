@@ -1,0 +1,1101 @@
+{
+  "entity": "glossary",
+  "domain": "electricity-levels",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "decibel",
+      "term_fr": "Décibel",
+      "term_en": "Decibel",
+      "domain": "electricity-levels",
+      "definition": "Unité logarithmique d'un rapport entre une grandeur et une référence ; 10·log pour une puissance, 20·log pour une tension ou une pression.",
+      "see_also": [
+        "decibel"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dbu",
+      "term_fr": "dBu",
+      "term_en": "dBu",
+      "domain": "electricity-levels",
+      "definition": "Niveau de tension rapporté à 0,775 V efficaces.",
+      "see_also": [
+        "dbu"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dbv",
+      "term_fr": "dBV",
+      "term_en": "dBV",
+      "domain": "electricity-levels",
+      "definition": "Niveau de tension rapporté à 1 V efficace ; 0 dBV ≈ +2,2 dBu.",
+      "see_also": [
+        "dbv"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-db-volt.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dbfs",
+      "term_fr": "dBFS",
+      "term_en": "dBFS",
+      "domain": "electricity-levels",
+      "definition": "Niveau numérique rapporté au niveau maximal codable ; 0 dBFS est le plafond.",
+      "see_also": [
+        "dbfs"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+          "publisher": "EBU (R 68-2000)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DBFS",
+          "publisher": "Wikipedia (cites AES17, IEC 61606, EBU R68)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "db-spl",
+      "term_fr": "dB SPL",
+      "term_en": "dB SPL",
+      "domain": "electricity-levels",
+      "definition": "Niveau de pression acoustique rapporté à 20 µPa.",
+      "see_also": [
+        "db-spl"
+      ],
+      "sources": [
+        {
+          "url": "http://www.sengpielaudio.com/calculator-soundlevel.htm",
+          "publisher": "sengpielaudio (Eberhard Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dbm",
+      "term_fr": "dBm",
+      "term_en": "dBm",
+      "domain": "electricity-levels",
+      "definition": "Niveau de puissance rapporté à 1 mW ; 0 dBu est la tension qui donne 1 mW dans 600 Ω.",
+      "see_also": [
+        "dbu"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alignment-level",
+      "term_fr": "Niveau d'alignement",
+      "term_en": "Alignment level",
+      "domain": "electricity-levels",
+      "definition": "Niveau d'un ton de référence servant à caler une chaîne ; −18 dBFS selon EBU R 68.",
+      "see_also": [
+        "alignment-level"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r068.pdf",
+          "publisher": "EBU (R 68-2000)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "permitted-maximum-level",
+      "term_fr": "Niveau maximal permis (PML)",
+      "term_en": "Permitted maximum level",
+      "domain": "electricity-levels",
+      "definition": "Niveau que le programme ne doit pas dépasser sur une liaison ; 9 dB au-dessus de l'alignement selon ITU-R BS.645.",
+      "see_also": [
+        "alignment-level",
+        "headroom"
+      ],
+      "sources": [
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.645-2-199203-I!!PDF-E.pdf",
+          "publisher": "ITU-R (BS.645-2)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "headroom",
+      "term_fr": "Marge",
+      "term_en": "Headroom",
+      "domain": "electricity-levels",
+      "definition": "Écart entre le niveau nominal ou moyen et le plus grand niveau non distordu.",
+      "see_also": [
+        "headroom"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "noise-floor",
+      "term_fr": "Bruit de fond",
+      "term_en": "Noise floor",
+      "domain": "electricity-levels",
+      "definition": "Niveau du bruit propre d'un appareil ou d'un système en l'absence de signal.",
+      "see_also": [
+        "noise-floor"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dynamic-range",
+      "term_fr": "Dynamique",
+      "term_en": "Dynamic range",
+      "domain": "electricity-levels",
+      "definition": "Rapport entre le plus grand signal non distordu et le plus petit signal discernable.",
+      "see_also": [
+        "dynamic-range"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signal-to-noise-ratio",
+      "term_fr": "Rapport signal/bruit (S/B)",
+      "term_en": "Signal-to-noise ratio",
+      "domain": "electricity-levels",
+      "definition": "Rapport entre la puissance d'un signal de référence et celle du bruit, en dB.",
+      "see_also": [
+        "signal-to-noise-ratio"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Signal-to-noise_ratio",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crest-factor",
+      "term_fr": "Facteur de crête",
+      "term_en": "Crest factor",
+      "domain": "electricity-levels",
+      "definition": "Rapport crête / valeur efficace d'un signal ; 3 dB pour un sinus.",
+      "see_also": [
+        "crest-factor"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clipping",
+      "term_fr": "Écrêtage",
+      "term_en": "Clipping",
+      "domain": "electricity-levels",
+      "definition": "Distorsion qui apparaît quand le signal dépasse le niveau maximal qu'un étage peut délivrer ; la crête est « coupée ».",
+      "see_also": [
+        "headroom",
+        "gain-staging"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gain-staging",
+      "term_fr": "Structure de gain",
+      "term_en": "Gain staging",
+      "domain": "electricity-levels",
+      "definition": "Répartition du gain dans une chaîne pour maximiser le rapport signal/bruit sans écrêtage.",
+      "see_also": [
+        "gain-staging"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unity-gain",
+      "term_fr": "Gain unité",
+      "term_en": "Unity gain",
+      "domain": "electricity-levels",
+      "definition": "Réglage où le niveau de sortie égale le niveau d'entrée ; Rane note que sa définition varie selon le type d'étage de sortie.",
+      "see_also": [
+        "gain-staging"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note124.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 124)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pad",
+      "term_fr": "Atténuateur (pad)",
+      "term_en": "Pad",
+      "domain": "electricity-levels",
+      "definition": "Atténuateur fixe commutable (par ex. 26 dB sur la MG10XU, −15 dB sur la JDI) pour accepter une source trop forte.",
+      "see_also": [
+        "gain-staging"
+      ],
+      "sources": [
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "publisher": "Yamaha Corporation (MG10XU mode d'emploi FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jdi/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amplifier-sensitivity",
+      "term_fr": "Sensibilité d'entrée d'un ampli",
+      "term_en": "Amplifier input sensitivity",
+      "domain": "electricity-levels",
+      "definition": "Niveau d'entrée qui fait délivrer à l'ampli sa pleine puissance ; la commande de « volume » d'un ampli est une sensibilité, pas une puissance.",
+      "see_also": [
+        "gain-staging",
+        "electrical-power"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vu-meter",
+      "term_fr": "Vumètre",
+      "term_en": "VU meter",
+      "domain": "electricity-levels",
+      "definition": "Indicateur de niveau moyen ; avec la pratique pro, +4 dBu s'affiche 0 VU sur un vrai vumètre.",
+      "see_also": [
+        "line-level",
+        "crest-factor"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/pdf/ranenotes/Setting_Sound_System_Level_Controls.pdf",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 135, 1997)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nominal-level",
+      "term_fr": "Niveau nominal",
+      "term_en": "Nominal level",
+      "domain": "electricity-levels",
+      "definition": "Niveau de fonctionnement normal prévu pour une liaison (+4 dBu pro, −10 dBV grand public).",
+      "see_also": [
+        "line-level"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line-level",
+      "term_fr": "Niveau ligne",
+      "term_en": "Line level",
+      "domain": "electricity-levels",
+      "definition": "Niveau des liaisons entre appareils : +4 dBu (≈ 1,228 V) pro, −10 dBV (≈ 0,316 V) grand public.",
+      "see_also": [
+        "line-level"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mic-level",
+      "term_fr": "Niveau micro",
+      "term_en": "Mic level",
+      "domain": "electricity-levels",
+      "definition": "Niveau de quelques millivolts délivré par un micro, à amplifier par un préampli.",
+      "see_also": [
+        "mic-level"
+      ],
+      "sources": [
+        {
+          "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+          "publisher": "Shure (SM58 spec sheet, copy hosted by College of San Mateo)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "instrument-level",
+      "term_fr": "Niveau instrument",
+      "term_en": "Instrument level",
+      "domain": "electricity-levels",
+      "definition": "Signal asymétrique haute impédance d'un micro de guitare ou de basse.",
+      "see_also": [
+        "instrument-level"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "speaker-level",
+      "term_fr": "Niveau haut-parleur",
+      "term_en": "Speaker level",
+      "domain": "electricity-levels",
+      "definition": "Signal amplifié de forte puissance destiné aux haut-parleurs ou casques.",
+      "see_also": [
+        "electrical-power"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hi-z-input",
+      "term_fr": "Entrée haute impédance (Hi-Z)",
+      "term_en": "Hi-Z input",
+      "domain": "electricity-levels",
+      "definition": "Entrée instrument de 47 kΩ à plus de 1 MΩ.",
+      "see_also": [
+        "instrument-level",
+        "impedance"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "impedance",
+      "term_fr": "Impédance",
+      "term_en": "Impedance",
+      "domain": "electricity-levels",
+      "definition": "Rapport tension / courant en alternatif, en ohms, dépendant de la fréquence.",
+      "see_also": [
+        "impedance"
+      ],
+      "sources": [
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html",
+          "publisher": "HyperPhysics (C. R. Nave, Georgia State University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "impedance-bridging",
+      "term_fr": "Adaptation en tension (bridging)",
+      "term_en": "Impedance bridging",
+      "domain": "electricity-levels",
+      "definition": "Sortie basse impédance vers entrée haute impédance pour transférer la tension.",
+      "see_also": [
+        "impedance-bridging"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note124.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 124)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Line_level",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "impedance-matching",
+      "term_fr": "Adaptation d'impédance",
+      "term_en": "Impedance matching",
+      "domain": "electricity-levels",
+      "definition": "Égalité des impédances de source et de charge pour un transfert de puissance maximal ; en ligne, elle coûte 6 dB.",
+      "see_also": [
+        "impedance-bridging"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note124.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 124)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ohms-law",
+      "term_fr": "Loi d'Ohm",
+      "term_en": "Ohm's law",
+      "domain": "electricity-levels",
+      "definition": "V = Z·I (V = R·I pour une résistance).",
+      "see_also": [
+        "ohms-law"
+      ],
+      "sources": [
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html",
+          "publisher": "HyperPhysics (C. R. Nave, Georgia State University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "electrical-power",
+      "term_fr": "Puissance électrique",
+      "term_en": "Electrical power",
+      "domain": "electricity-levels",
+      "definition": "P = V·I ; dans une résistance P = V²/R = R·I².",
+      "see_also": [
+        "electrical-power"
+      ],
+      "sources": [
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/elepow.html",
+          "publisher": "HyperPhysics (C. R. Nave, Georgia State University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "balanced-line",
+      "term_fr": "Liaison symétrique",
+      "term_en": "Balanced line",
+      "domain": "electricity-levels",
+      "definition": "Deux conducteurs d'impédances égales vers la masse, reçus par une entrée différentielle.",
+      "see_also": [
+        "balanced-line"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unbalanced-line",
+      "term_fr": "Liaison asymétrique",
+      "term_en": "Unbalanced line",
+      "domain": "electricity-levels",
+      "definition": "Un conducteur de signal, retour par le blindage.",
+      "see_also": [
+        "unbalanced-line"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "common-mode",
+      "term_fr": "Mode commun",
+      "term_en": "Common mode",
+      "domain": "electricity-levels",
+      "definition": "Signal ou parasite présent de façon identique sur les deux conducteurs d'une liaison symétrique, rejeté par l'entrée différentielle.",
+      "see_also": [
+        "balanced-line",
+        "cmrr"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/about-balanced-and-unbalanced-lines/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/electromagnetic-interference-emc-rfi-immunity-and-cmrr/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cmrr",
+      "term_fr": "Taux de réjection du mode commun",
+      "term_en": "Common-mode rejection ratio",
+      "domain": "electricity-levels",
+      "definition": "Mesure en dB de la capacité d'une entrée à supprimer le mode commun.",
+      "see_also": [
+        "cmrr"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/technology/electromagnetic-interference-emc-rfi-immunity-and-cmrr/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ground-loop",
+      "term_fr": "Boucle de masse",
+      "term_en": "Ground loop",
+      "domain": "electricity-levels",
+      "definition": "Plusieurs chemins de masse entre appareils, où circule un courant qui produit une ronflette.",
+      "see_also": [
+        "ground-loop"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ground-lift",
+      "term_fr": "Levée de masse",
+      "term_en": "Ground lift",
+      "domain": "electricity-levels",
+      "definition": "Interrupteur qui déconnecte le blindage (broche 1) d'un côté pour casser une boucle de masse ; il ne touche jamais la terre de sécurité.",
+      "see_also": [
+        "ground-loop",
+        "di-box"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 110)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.radialeng.com/product/jdi/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mains-hum",
+      "term_fr": "Ronflette",
+      "term_en": "Mains hum",
+      "domain": "electricity-levels",
+      "definition": "Bruit grave lié au secteur, à sa fréquence ou à son double, avec harmoniques.",
+      "see_also": [
+        "mains-hum"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Mains_hum",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ground_loop_(electricity)",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pin-1-problem",
+      "term_fr": "Problème de la broche 1",
+      "term_en": "Pin 1 problem",
+      "domain": "electricity-levels",
+      "definition": "Blindage relié à la masse audio au lieu du châssis, source de ronflette et de buzz.",
+      "see_also": [
+        "pin-1-problem"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note151.html",
+          "publisher": "Rane Corporation (Steve Macatee, RaneNote 151)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crosstalk",
+      "term_fr": "Diaphonie",
+      "term_en": "Crosstalk",
+      "domain": "electricity-levels",
+      "definition": "Fuite indésirable d'un signal d'un canal vers un autre.",
+      "see_also": [
+        "crosstalk"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Crosstalk",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "di-box",
+      "term_fr": "Boîte de direct (DI)",
+      "term_en": "DI box",
+      "domain": "electricity-levels",
+      "definition": "Convertit une source asymétrique haute impédance en signal symétrique basse impédance au niveau micro.",
+      "see_also": [
+        "di-box"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "isolation-transformer",
+      "term_fr": "Transformateur d'isolement",
+      "term_en": "Isolation transformer",
+      "domain": "electricity-levels",
+      "definition": "Transformateur 1:1 qui transmet le signal sans liaison galvanique et casse une boucle de masse.",
+      "see_also": [
+        "ground-loop"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Mains_hum",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
+          "publisher": "Ebtech / Morley (Hum Eliminator manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "xlr-pin-2-hot",
+      "term_fr": "XLR broche 2 point chaud",
+      "term_en": "XLR pin 2 hot",
+      "domain": "electricity-levels",
+      "definition": "Convention : broche 1 masse, 2 chaud (+), 3 froid (−).",
+      "see_also": [
+        "balanced-line"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/XLR_connector",
+          "publisher": "Wikipedia (cites AES14-1992, IEC 61076-2-103, AES48-2005)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
+          "publisher": "Shure (SM58 spec sheet, copy hosted by College of San Mateo)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cable-capacitance",
+      "term_fr": "Capacité du câble",
+      "term_en": "Cable capacitance",
+      "domain": "electricity-levels",
+      "definition": "Capacité répartie d'un câble qui, avec une source à forte impédance, forme un filtre passe-bas.",
+      "see_also": [
+        "cable-capacitance-hf-loss"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/DI_unit",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note126.html",
+          "publisher": "Rane Corporation (Dennis Bohn, RaneNote 126)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        }
+      ]
+    }
+  ],
+  "not_found_log": []
+}
