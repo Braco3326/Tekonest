@@ -1,0 +1,329 @@
+{
+  "version": 1,
+  "status": "ids frozen 2026-10-22 — description/principle/uses/sources filled during Phase 1",
+  "note": "category.id and sub_types[].id are stable slugs used by equipment/*.json. Never rename; add only.",
+  "categories": [
+    {
+      "id": "microphones",
+      "name_en": "Microphones", "name_fr": "Microphones",
+      "equipment_files": ["microphones-dynamic-ribbon.json", "microphones-condenser.json", "microphones-specialty.json"],
+      "sub_types": [
+        { "id": "dynamic-moving-coil", "name_en": "Dynamic (moving coil)", "name_fr": "Dynamique (à bobine mobile)" },
+        { "id": "ribbon", "name_en": "Ribbon", "name_fr": "À ruban" },
+        { "id": "condenser-large-diaphragm", "name_en": "Large-diaphragm condenser", "name_fr": "Statique grande membrane" },
+        { "id": "condenser-small-diaphragm", "name_en": "Small-diaphragm condenser", "name_fr": "Statique petite membrane" },
+        { "id": "electret", "name_en": "Electret condenser", "name_fr": "Électret" },
+        { "id": "tube-valve", "name_en": "Tube / valve condenser", "name_fr": "Statique à lampe" },
+        { "id": "boundary-pzm", "name_en": "Boundary / PZM", "name_fr": "Microphone de surface (PZM)" },
+        { "id": "shotgun-interference-tube", "name_en": "Shotgun / interference tube", "name_fr": "Canon (tube à interférences)" },
+        { "id": "lavalier", "name_en": "Lavalier", "name_fr": "Micro-cravate" },
+        { "id": "headset", "name_en": "Headset", "name_fr": "Micro serre-tête" },
+        { "id": "measurement", "name_en": "Measurement", "name_fr": "Microphone de mesure" },
+        { "id": "contact-piezo", "name_en": "Contact / piezo", "name_fr": "Capteur de contact / piézo" },
+        { "id": "usb", "name_en": "USB microphone", "name_fr": "Microphone USB" },
+        { "id": "stereo-ambisonic", "name_en": "Stereo / ambisonic / multi-capsule", "name_fr": "Stéréo / ambisonique / multicapsule" }
+      ],
+      "attributes": {
+        "polar_patterns": ["omnidirectional", "cardioid", "supercardioid", "hypercardioid", "figure-8", "lobar-shotgun", "multi-pattern", "subcardioid"]
+      }
+    },
+    {
+      "id": "wireless-systems",
+      "name_en": "Wireless systems", "name_fr": "Systèmes HF (sans fil)",
+      "equipment_files": ["wireless-systems.json"],
+      "sub_types": [
+        { "id": "analog-uhf", "name_en": "Analog UHF wireless mic", "name_fr": "HF analogique UHF" },
+        { "id": "digital-wireless", "name_en": "Digital wireless mic", "name_fr": "HF numérique" },
+        { "id": "wireless-iem", "name_en": "Wireless in-ear monitor transmitter/receiver", "name_fr": "Retour ear HF (émetteur/récepteur)" },
+        { "id": "antenna-distribution", "name_en": "Antennas & distribution", "name_fr": "Antennes et distribution" },
+        { "id": "camera-eng-wireless", "name_en": "Camera / ENG plug-on & slot wireless", "name_fr": "HF caméra / reportage" }
+      ]
+    },
+    {
+      "id": "consoles",
+      "name_en": "Mixing consoles", "name_fr": "Consoles de mixage",
+      "equipment_files": ["consoles-analog.json", "consoles-digital.json"],
+      "sub_types": [
+        { "id": "analog-live", "name_en": "Analog live console", "name_fr": "Console analogique live" },
+        { "id": "analog-studio-inline", "name_en": "Analog studio / in-line console", "name_fr": "Console analogique studio / in-line" },
+        { "id": "small-mixer", "name_en": "Small / compact mixer", "name_fr": "Petite console / mixette" },
+        { "id": "digital-live", "name_en": "Digital live console", "name_fr": "Console numérique live" },
+        { "id": "digital-broadcast-radio", "name_en": "Digital broadcast / radio console", "name_fr": "Console numérique broadcast / radio" },
+        { "id": "digital-studio-post", "name_en": "Digital studio / post console", "name_fr": "Console numérique studio / post-production" },
+        { "id": "control-surface", "name_en": "DAW control surface", "name_fr": "Surface de contrôle" }
+      ]
+    },
+    {
+      "id": "stageboxes-networking",
+      "name_en": "Stage boxes & audio networking", "name_fr": "Boîtiers de scène et réseaux audio",
+      "equipment_files": ["stageboxes-networking.json"],
+      "sub_types": [
+        { "id": "analog-multicore", "name_en": "Analog multicore / snake", "name_fr": "Multipaire analogique" },
+        { "id": "digital-stagebox", "name_en": "Digital stage box", "name_fr": "Boîtier de scène numérique" },
+        { "id": "dante-device", "name_en": "Dante interface / adapter", "name_fr": "Interface Dante" },
+        { "id": "avb-milan-device", "name_en": "AVB / Milan device", "name_fr": "Équipement AVB / Milan" },
+        { "id": "madi-device", "name_en": "MADI device", "name_fr": "Équipement MADI" },
+        { "id": "aes50-device", "name_en": "AES50 device", "name_fr": "Équipement AES50" },
+        { "id": "format-converter", "name_en": "Format converter / bridge", "name_fr": "Convertisseur de format / passerelle" },
+        { "id": "network-switch", "name_en": "Network switch for AoIP", "name_fr": "Switch réseau AoIP" }
+      ],
+      "attributes": {
+        "transport_formats": ["dante", "aes67", "avb-milan", "madi-aes10", "aes50", "aes3-aes-ebu", "adat", "spdif", "ravenna", "livewire-plus", "smpte-st-2110-30"]
+      }
+    },
+    {
+      "id": "interfaces-converters-clocks",
+      "name_en": "Audio interfaces, converters & clocks", "name_fr": "Interfaces audio, convertisseurs et horloges",
+      "equipment_files": ["interfaces-converters-clocks.json"],
+      "sub_types": [
+        { "id": "usb-thunderbolt-interface", "name_en": "USB / Thunderbolt audio interface", "name_fr": "Interface audio USB / Thunderbolt" },
+        { "id": "network-interface", "name_en": "Network (AoIP) audio interface", "name_fr": "Interface audio réseau" },
+        { "id": "ad-da-converter", "name_en": "AD/DA converter", "name_fr": "Convertisseur A/N – N/A" },
+        { "id": "pcie-dsp-system", "name_en": "PCIe / DSP-based DAW system", "name_fr": "Système DAW PCIe / DSP" },
+        { "id": "master-clock", "name_en": "Master / word clock generator", "name_fr": "Horloge maître (word clock)" }
+      ]
+    },
+    {
+      "id": "processors-outboard",
+      "name_en": "Preamps, processors & outboard", "name_fr": "Préamplis, traitements et périphériques",
+      "equipment_files": ["processors-dynamics-eq.json", "processors-effects.json"],
+      "sub_types": [
+        { "id": "mic-preamp", "name_en": "Microphone preamp", "name_fr": "Préampli micro" },
+        { "id": "channel-strip", "name_en": "Channel strip", "name_fr": "Tranche de console (channel strip)" },
+        { "id": "compressor-limiter", "name_en": "Compressor / limiter", "name_fr": "Compresseur / limiteur" },
+        { "id": "equalizer", "name_en": "Equalizer (parametric / graphic)", "name_fr": "Égaliseur (paramétrique / graphique)" },
+        { "id": "gate-expander", "name_en": "Gate / expander", "name_fr": "Noise gate / expandeur" },
+        { "id": "effects-reverb", "name_en": "Reverb / delay / effects", "name_fr": "Réverbération / délai / effets" },
+        { "id": "feedback-suppressor", "name_en": "Feedback suppressor / automixer", "name_fr": "Anti-larsen / automixeur" }
+      ]
+    },
+    {
+      "id": "di-splitters",
+      "name_en": "DI boxes & splitters", "name_fr": "Boîtes de direct (DI) et splitters",
+      "equipment_files": ["di-splitters.json"],
+      "sub_types": [
+        { "id": "di-passive", "name_en": "Passive DI box", "name_fr": "DI passive" },
+        { "id": "di-active", "name_en": "Active DI box", "name_fr": "DI active" },
+        { "id": "mic-splitter", "name_en": "Microphone splitter (passive / active)", "name_fr": "Splitter micro (passif / actif)" },
+        { "id": "isolation-reamp", "name_en": "Line isolator / re-amp", "name_fr": "Isolateur de ligne / re-amp" }
+      ]
+    },
+    {
+      "id": "loudspeakers",
+      "name_en": "Loudspeakers (sound reinforcement)", "name_fr": "Enceintes de sonorisation",
+      "equipment_files": ["loudspeakers.json"],
+      "sub_types": [
+        { "id": "passive", "name_en": "Passive loudspeaker", "name_fr": "Enceinte passive" },
+        { "id": "active-powered", "name_en": "Active / powered loudspeaker", "name_fr": "Enceinte active / amplifiée" },
+        { "id": "line-array", "name_en": "Line array", "name_fr": "Système line array" },
+        { "id": "point-source", "name_en": "Point source", "name_fr": "Source ponctuelle" },
+        { "id": "subwoofer", "name_en": "Subwoofer", "name_fr": "Caisson de basses (sub)" },
+        { "id": "stage-monitor-wedge", "name_en": "Stage monitor / wedge", "name_fr": "Retour de scène (wedge)" },
+        { "id": "column", "name_en": "Column loudspeaker", "name_fr": "Enceinte colonne" }
+      ]
+    },
+    {
+      "id": "studio-monitors",
+      "name_en": "Studio monitors & monitor control", "name_fr": "Écoutes de studio et contrôle d'écoute",
+      "equipment_files": ["studio-monitors.json"],
+      "sub_types": [
+        { "id": "nearfield", "name_en": "Near-field monitor", "name_fr": "Écoute de proximité (near-field)" },
+        { "id": "midfield", "name_en": "Mid-field monitor", "name_fr": "Écoute mid-field" },
+        { "id": "farfield-main", "name_en": "Far-field / main monitor", "name_fr": "Écoute principale (far-field)" },
+        { "id": "studio-subwoofer", "name_en": "Studio subwoofer", "name_fr": "Caisson de studio" },
+        { "id": "monitor-controller", "name_en": "Monitor controller", "name_fr": "Contrôleur d'écoute" }
+      ]
+    },
+    {
+      "id": "amplifiers-processors",
+      "name_en": "Amplifiers & loudspeaker management", "name_fr": "Amplificateurs et gestion de diffusion",
+      "equipment_files": ["amplifiers-processors.json"],
+      "sub_types": [
+        { "id": "class-ab", "name_en": "Class AB power amplifier", "name_fr": "Ampli de puissance classe AB" },
+        { "id": "class-d", "name_en": "Class D power amplifier", "name_fr": "Ampli de puissance classe D" },
+        { "id": "class-a", "name_en": "Class A amplifier", "name_fr": "Amplificateur classe A" },
+        { "id": "dsp-amplifier", "name_en": "DSP amplifier / amplified controller", "name_fr": "Ampli DSP / contrôleur amplifié" },
+        { "id": "loudspeaker-processor", "name_en": "Loudspeaker processor / system controller", "name_fr": "Processeur / contrôleur de diffusion" }
+      ]
+    },
+    {
+      "id": "headphones-iem",
+      "name_en": "Headphones & in-ear monitors", "name_fr": "Casques et écouteurs intra-auriculaires",
+      "equipment_files": ["headphones-iem.json"],
+      "sub_types": [
+        { "id": "closed-back", "name_en": "Closed-back headphones", "name_fr": "Casque fermé" },
+        { "id": "open-back", "name_en": "Open-back headphones", "name_fr": "Casque ouvert" },
+        { "id": "broadcast-headset", "name_en": "Broadcast headset (with mic)", "name_fr": "Micro-casque broadcast" },
+        { "id": "in-ear-monitor", "name_en": "In-ear monitor earphones", "name_fr": "Écouteurs intra (ear monitors)" },
+        { "id": "headphone-amplifier", "name_en": "Headphone amplifier / distribution", "name_fr": "Ampli casque / distribution" }
+      ]
+    },
+    {
+      "id": "recorders-playback",
+      "name_en": "Recorders & playback", "name_fr": "Enregistreurs et lecture",
+      "equipment_files": ["recorders-playback.json"],
+      "sub_types": [
+        { "id": "field-recorder", "name_en": "Professional field / location recorder", "name_fr": "Enregistreur de terrain (tournage)" },
+        { "id": "handheld-recorder", "name_en": "Handheld recorder", "name_fr": "Enregistreur portable de poche" },
+        { "id": "multitrack-recorder", "name_en": "Multitrack recorder", "name_fr": "Enregistreur multipiste" },
+        { "id": "playout-system", "name_en": "Playout / automation system", "name_fr": "Système de diffusion (playout)" },
+        { "id": "playback-device", "name_en": "Show playback / cart player", "name_fr": "Lecteur de diffusion (spectacle / cart)" }
+      ]
+    },
+    {
+      "id": "broadcast-radio",
+      "name_en": "Broadcast & radio systems", "name_fr": "Équipements broadcast et radio",
+      "equipment_files": ["broadcast-radio.json"],
+      "sub_types": [
+        { "id": "ip-codec", "name_en": "IP audio codec", "name_fr": "Codec audio IP" },
+        { "id": "isdn-codec-legacy", "name_en": "ISDN codec (legacy)", "name_fr": "Codec RNIS (historique)" },
+        { "id": "on-air-processor", "name_en": "On-air / FM-DAB processor", "name_fr": "Processeur antenne (FM/DAB)" },
+        { "id": "intercom-talkback", "name_en": "Intercom / talkback", "name_fr": "Intercom / ordres" },
+        { "id": "tally-on-air-light", "name_en": "Tally / ON-AIR signalling", "name_fr": "Tally / signalisation antenne" },
+        { "id": "telephone-hybrid", "name_en": "Telephone hybrid / talk-show system", "name_fr": "Coupleur téléphonique" },
+        { "id": "mix-minus-system", "name_en": "Mix-minus (N-1) system", "name_fr": "Système N-1 (mix-minus)" },
+        { "id": "loudness-monitoring", "name_en": "Loudness / broadcast monitoring", "name_fr": "Mesure de loudness / contrôle antenne" }
+      ]
+    },
+    {
+      "id": "cables-connectors",
+      "name_en": "Cables & connectors", "name_fr": "Câbles et connecteurs",
+      "equipment_files": ["cables-connectors.json"],
+      "sub_types": [
+        { "id": "connector", "name_en": "Connector (product family)", "name_fr": "Connecteur" },
+        { "id": "microphone-cable", "name_en": "Balanced microphone / line cable", "name_fr": "Câble micro / ligne symétrique" },
+        { "id": "speaker-cable", "name_en": "Loudspeaker cable", "name_fr": "Câble HP" },
+        { "id": "multicore-cable", "name_en": "Multicore cable (bulk)", "name_fr": "Câble multipaire" },
+        { "id": "digital-audio-cable", "name_en": "Digital audio cable (AES 110 Ω / 75 Ω coax)", "name_fr": "Câble audionumérique" },
+        { "id": "network-cable", "name_en": "Network cable (Cat5e/6/6A, tactical)", "name_fr": "Câble réseau" },
+        { "id": "fibre", "name_en": "Optical fibre / tactical fibre", "name_fr": "Fibre optique" },
+        { "id": "breakout-adapter", "name_en": "Breakout loom / adapter", "name_fr": "Éclaté / adaptateur" }
+      ],
+      "attributes": {
+        "connector_families": ["xlr", "trs-jack", "ts-jack", "mini-jack", "rca", "speakon", "powercon", "ethercon-rj45", "bnc", "toslink", "opticalcon-fibre", "dsub25", "multipin", "tt-bantam", "mini-xlr-ta4", "lemo", "iec", "schuko-cee"],
+        "line_types": ["balanced", "unbalanced"]
+      }
+    },
+    {
+      "id": "patchbays",
+      "name_en": "Patchbays", "name_fr": "Baies de brassage (patch)",
+      "equipment_files": ["patchbays.json"],
+      "sub_types": [
+        { "id": "tt-bantam", "name_en": "TT / Bantam patchbay", "name_fr": "Patch TT / Bantam" },
+        { "id": "quarter-inch-trs", "name_en": "6.35 mm TRS patchbay", "name_fr": "Patch jack 6,35 mm" },
+        { "id": "xlr-panel", "name_en": "XLR / connector panel", "name_fr": "Panneau XLR" },
+        { "id": "digital-video-patch", "name_en": "Digital (AES / BNC) patch", "name_fr": "Patch numérique (AES / BNC)" }
+      ],
+      "attributes": {
+        "normalling_modes": ["normalled", "half-normalled", "non-normalled", "switchable"]
+      }
+    },
+    {
+      "id": "measurement-tools",
+      "name_en": "Measurement & test tools", "name_fr": "Mesure et outils de test",
+      "equipment_files": ["measurement-tools.json"],
+      "sub_types": [
+        { "id": "spl-meter", "name_en": "Sound level meter", "name_fr": "Sonomètre" },
+        { "id": "measurement-mic-kit", "name_en": "Measurement microphone / RTA kit", "name_fr": "Micro de mesure / kit RTA" },
+        { "id": "audio-analyzer", "name_en": "Audio analyzer", "name_fr": "Analyseur audio" },
+        { "id": "analysis-software", "name_en": "Acoustic analysis software", "name_fr": "Logiciel d'analyse acoustique" },
+        { "id": "cable-tester", "name_en": "Cable tester", "name_fr": "Testeur de câbles" },
+        { "id": "loudness-meter", "name_en": "Loudness meter", "name_fr": "Loudness-mètre" },
+        { "id": "signal-generator-phase", "name_en": "Signal generator / polarity checker", "name_fr": "Générateur / testeur de polarité" }
+      ]
+    },
+    {
+      "id": "accessories-mounting",
+      "name_en": "Stands, mounts & mic accessories", "name_fr": "Pieds, suspensions et accessoires micro",
+      "equipment_files": ["accessories-mounting.json"],
+      "sub_types": [
+        { "id": "mic-stand", "name_en": "Microphone stand", "name_fr": "Pied de micro" },
+        { "id": "mic-arm", "name_en": "Broadcast mic arm", "name_fr": "Bras micro broadcast" },
+        { "id": "shock-mount", "name_en": "Shock mount", "name_fr": "Suspension" },
+        { "id": "windshield-blimp", "name_en": "Windshield / blimp / fur", "name_fr": "Bonnette / zeppelin / poils" },
+        { "id": "boom-pole", "name_en": "Boom pole", "name_fr": "Perche" },
+        { "id": "pop-filter", "name_en": "Pop filter", "name_fr": "Anti-pop" },
+        { "id": "rack-case", "name_en": "Rack / flight case", "name_fr": "Rack / flight-case" }
+      ]
+    },
+    {
+      "id": "software",
+      "name_en": "Audio software (DAW, control, analysis)", "name_fr": "Logiciels audio (STAN, contrôle, analyse)",
+      "equipment_files": ["software.json"],
+      "sub_types": [
+        { "id": "daw", "name_en": "Digital audio workstation", "name_fr": "Station audionumérique (STAN / DAW)" },
+        { "id": "network-control", "name_en": "Audio network control software", "name_fr": "Logiciel de contrôle réseau audio" },
+        { "id": "show-control-playback", "name_en": "Show control / playback software", "name_fr": "Logiciel de conduite / lecture spectacle" },
+        { "id": "system-design-prediction", "name_en": "System design / prediction software", "name_fr": "Logiciel de prédiction / conception de système" },
+        { "id": "restoration-editing", "name_en": "Restoration / editing software", "name_fr": "Logiciel de restauration / édition" }
+      ]
+    },
+    {
+      "id": "installations-rooms",
+      "name_en": "Installations & rooms (contexts, no devices)", "name_fr": "Installations et lieux (contextes)",
+      "equipment_files": [],
+      "sub_types": [
+        { "id": "recording-studio", "name_en": "Recording studio (control room + live room)", "name_fr": "Studio d'enregistrement (cabine + prise)" },
+        { "id": "radio-booth", "name_en": "Radio studio / booth", "name_fr": "Studio radio / cabine" },
+        { "id": "tv-set", "name_en": "TV studio set & gallery", "name_fr": "Plateau TV et régie" },
+        { "id": "theatre", "name_en": "Theatre", "name_fr": "Théâtre" },
+        { "id": "concert-open-air", "name_en": "Concert hall / open-air festival", "name_fr": "Salle de concert / plein air" },
+        { "id": "conference-installed", "name_en": "Conference / installed sound", "name_fr": "Conférence / sonorisation fixe" },
+        { "id": "eng-outdoor-reportage", "name_en": "Outdoor reportage / ENG / film location", "name_fr": "Reportage extérieur / tournage" },
+        { "id": "post-production-room", "name_en": "Post-production / mixing room", "name_fr": "Auditorium de post-production / mixage" }
+      ]
+    }
+  ],
+  "tekpractice_connector_ids_existing": ["xlr3-m","xlr3-f","xlr5-m","xlr5-f","trs-quarter","ts-quarter","trs-35mm","rca","rj45","ethercon","speakon-nl4","powercon-blue","powercon-true1","iec-c13","iec-c14","schuko-plug","schuko-socket","bnc","tt-bantam","dsub25","toslink","usb-a","usb-b","usb-c","digilink","gpio-terminal"],
+  "tekpractice_signal_ids_existing": ["mic-level","line-level-pro","line-level-consumer","instrument-hiz","speaker-level","headphone-level","aes3","spdif","madi","aoip","wordclock","usb-audio","gpio-tally","dmx512","phantom-48v","mains-power"],
+  "proposed_connector_ids": {
+    "_note": "Use these ids when a device has a connector not in the TekPractice catalog. Proposals only — catalog.json is not edited. Add new ones here if needed, kebab-case.",
+    "speakon-nl8": "Neutrik speakON NL8 (8-pole, multi-way amplifier links)",
+    "speakon-nl2": "Neutrik speakON NL2 (2-pole)",
+    "powercon-grey": "Neutrik powerCON grey (power out / link)",
+    "xlr4": "XLR 4-pin (intercom headsets, DC power)",
+    "mini-xlr-ta4": "Mini-XLR TA4 (bodypack lavalier/headset inputs)",
+    "mini-xlr-ta3": "Mini-XLR TA3",
+    "trs-quarter-unbalanced-insert": "6.35 mm TRS used as unbalanced insert (send/return on one jack)",
+    "lemo-3pin": "LEMO 3-pin (bodypacks, some lavaliers)",
+    "lemo-5pin-timecode": "LEMO 5-pin (timecode on recorders/cameras)",
+    "opticalcon": "Neutrik opticalCON (rugged fibre)",
+    "sc-fibre": "SC fibre connector",
+    "lc-fibre": "LC fibre connector",
+    "sfp-cage": "SFP cage (copper/fibre transceiver)",
+    "bnc-antenna-50ohm": "BNC 50 Ω RF antenna connector",
+    "sma": "SMA / reverse-SMA antenna connector",
+    "midi-din5": "MIDI 5-pin DIN",
+    "binding-post": "Binding post / banana (passive speaker)",
+    "euroblock-phoenix": "Euroblock / Phoenix terminal (installed sound)",
+    "multipin-harting": "Harting / multipin (analog multicore)",
+    "multipin-veam": "VEAM / Socapex-type multipin",
+    "dc-barrel": "DC barrel power inlet",
+    "hirose-4pin": "Hirose 4-pin DC (field recorders, cameras)",
+    "sd-card-slot": "SD / CF card media slot (not a signal connector; recorders)",
+    "thunderbolt": "Thunderbolt 3/4 (usb-c form)",
+    "ieee-firewire": "FireWire 400/800 (legacy)",
+    "coax-f-type": "F-type coax (RF/antenna, legacy)",
+    "camlock": "Camlock single-pole power (large power distribution)",
+    "cee-form-32a": "CEE-form / P17 industrial power connector (16/32/63 A)"
+  },
+  "proposed_signal_ids": {
+    "_note": "Proposals for signal types missing from the TekPractice catalog.",
+    "adat": "ADAT optical (8 ch @48 kHz on TOSLINK)",
+    "aes50": "AES50 (SuperMAC/HyperMAC on Cat5e)",
+    "avb-milan": "AVB / Milan (IEEE 802.1 TSN)",
+    "dante": "Dante (when distinguishing from generic aoip)",
+    "aes67": "AES67 (interoperability layer)",
+    "smpte-2110": "SMPTE ST 2110-30/31 audio",
+    "ltc-timecode": "Linear timecode (SMPTE LTC)",
+    "midi": "MIDI control",
+    "rf-uhf": "RF (UHF wireless carrier)",
+    "dc-power": "DC power supply",
+    "insert-send-return": "Insert send/return (unbalanced line on TRS)",
+    "aes3-id-75ohm": "AES-3id (AES3 on 75 Ω BNC)",
+    "sdi-embedded-audio": "SDI with embedded audio (broadcast video)",
+    "intercom-party-line": "Analog party-line intercom (e.g. Clear-Com/RTS on XLR3)",
+    "intercom-4wire": "4-wire intercom / talkback",
+    "fibre-optical-transport": "Proprietary fibre transport (e.g. stage-box fibre)"
+  }
+}
