@@ -4,16 +4,56 @@
   "generated": "2026-10-22",
   "selection_rationale": "DAWs cover the post/broadcast references (Pro Tools, Nuendo, Pyramix) and the music/education tools common in French schools (Logic Pro, Ableton Live, REAPER). Dante Controller and Dante Virtual Soundcard are the standard tools for the Dante networks found in the other equipment files. QLab is the theatre playback reference. Soundvision, ArrayCalc, EASE Focus and EASE cover manufacturer and generic system prediction. iZotope RX and Adobe Audition cover restoration and editing. Merging and Avid main sites blocked fetches, so some fields rely on knowledge-base or partner pages.",
   "not_found_log": [
-    { "device_id": "avid-pro-tools", "what": "product page, track counts per edition, sample rates, AAF statement", "searched": "avid.com/pro-tools (HTTP 403); kb.avid.com system requirements, audio file type and session support, How to acquire" },
-    { "device_id": "avid-pro-tools", "what": "French manual", "searched": "kb.avid.com Pro Tools Documentation page lists English Reference Guides and English/Japanese What's New only" },
-    { "device_id": "steinberg-nuendo", "what": "manufacturer specification values (tracks, sample rate, AAF/ADM)", "searched": "steinberg.net/nuendo, /fr/nuendo/compare-editions, press/2026/nuendo-15 (JavaScript-rendered, no content returned); steinberg.net sitemap" },
-    { "device_id": "merging-pyramix", "what": "user manual and merging.com product page", "searched": "merging.com and confluence.merging.com (connection reset); neumann.com download centre (no files rendered); merging.atlassian.net PUBLICDOC (known-issues pages only, points to merging.com/support/downloads)" },
-    { "device_id": "apple-logic-pro", "what": "max track counts, sample rates, AAF/OMF details", "searched": "apple.com/logic-pro/specs, support.apple.com/125029, Logic Pro user guide AAF page (body text not returned)" },
-    { "device_id": "adobe-audition", "what": "user guide, system requirements, platforms", "searched": "helpx.adobe.com/audition/user-guide.html, /fr/ variant and system-requirements.html (all HTTP 403)" },
-    { "device_id": "l-acoustics-soundvision", "what": "user manual (Soundvision Help is mentioned but not downloadable)", "searched": "l-acoustics.com Soundvision product page and documentation centre (only readme, optimization note, CATT/EASE files)" },
-    { "device_id": "db-audiotechnik-arraycalc", "what": "full user manual (help is built into the software per the quick guide); price/licence statement; French documents", "searched": "dbaudio.com ArrayCalc product page and software overview" },
-    { "device_id": "izotope-rx", "what": "system requirements and plug-in formats", "searched": "izotope.com RX pages, docs.izotope.com RX 12 guide navigation, support.izotope.com (HTTP 403)" },
-    { "device_id": "all", "what": "year_introduced", "searched": "manufacturer pages fetched above; no first-release year stated; search budget kept for Pyramix" }
+    {
+      "device_id": "avid-pro-tools",
+      "what": "product page, track counts per edition, sample rates, AAF statement",
+      "searched": "avid.com/pro-tools (HTTP 403); kb.avid.com system requirements, audio file type and session support, How to acquire"
+    },
+    {
+      "device_id": "avid-pro-tools",
+      "what": "French manual",
+      "searched": "kb.avid.com Pro Tools Documentation page lists English Reference Guides and English/Japanese What's New only"
+    },
+    {
+      "device_id": "steinberg-nuendo",
+      "what": "manufacturer specification values (tracks, sample rate, AAF/ADM)",
+      "searched": "steinberg.net/nuendo, /fr/nuendo/compare-editions, press/2026/nuendo-15 (JavaScript-rendered, no content returned); steinberg.net sitemap"
+    },
+    {
+      "device_id": "merging-pyramix",
+      "what": "user manual and merging.com product page",
+      "searched": "merging.com and confluence.merging.com (connection reset); neumann.com download centre (no files rendered); merging.atlassian.net PUBLICDOC (known-issues pages only, points to merging.com/support/downloads)"
+    },
+    {
+      "device_id": "apple-logic-pro",
+      "what": "max track counts, sample rates, AAF/OMF details",
+      "searched": "apple.com/logic-pro/specs, support.apple.com/125029, Logic Pro user guide AAF page (body text not returned)"
+    },
+    {
+      "device_id": "adobe-audition",
+      "what": "user guide, system requirements, platforms",
+      "searched": "helpx.adobe.com/audition/user-guide.html, /fr/ variant and system-requirements.html (all HTTP 403)"
+    },
+    {
+      "device_id": "l-acoustics-soundvision",
+      "what": "user manual (Soundvision Help is mentioned but not downloadable)",
+      "searched": "l-acoustics.com Soundvision product page and documentation centre (only readme, optimization note, CATT/EASE files)"
+    },
+    {
+      "device_id": "db-audiotechnik-arraycalc",
+      "what": "full user manual (help is built into the software per the quick guide); price/licence statement; French documents",
+      "searched": "dbaudio.com ArrayCalc product page and software overview"
+    },
+    {
+      "device_id": "izotope-rx",
+      "what": "system requirements and plug-in formats",
+      "searched": "izotope.com RX pages, docs.izotope.com RX 12 guide navigation, support.izotope.com (HTTP 403)"
+    },
+    {
+      "device_id": "all",
+      "what": "year_introduced",
+      "searched": "manufacturer pages fetched above; no first-release year stated; search budget kept for Pyramix"
+    }
   ],
   "devices": [
     {
@@ -26,13 +66,30 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The DAW of record in post-production and music studios, and the one paired with HDX and MTRX hardware in the TekPractice catalogue. Its session interchange (AAF/OMF, ADM BWF) is the reference for film and TV deliveries.",
-      "typical_uses": ["music recording and mixing", "film/TV post-production", "Dolby Atmos mixing", "broadcast"],
+      "typical_uses": [
+        "music recording and mixing",
+        "film/TV post-production",
+        "Dolby Atmos mixing",
+        "broadcast"
+      ],
       "key_specs": {
-        "platform": ["macOS Tahoe 26.3.x, macOS Sequoia 15.7.x, or macOS Sonoma 14.8.x", "Windows 11 (25H2 or 24H2)"],
-        "editions": ["Pro Tools Intro", "Artist", "Studio", "Ultimate"],
+        "platform": [
+          "macOS Tahoe 26.3.x, macOS Sequoia 15.7.x, or macOS Sonoma 14.8.x",
+          "Windows 11 (25H2 or 24H2)"
+        ],
+        "editions": [
+          "Pro Tools Intro",
+          "Artist",
+          "Studio",
+          "Ultimate"
+        ],
         "licence_model": "Subscription, or Software Updates + Support Plan (as worded by Avid KB)",
         "audio_file_types": ".wav, .aif/.aiff, .mxf without conversion; .m4a, .mp3, .mov converted on import",
-        "interchange_formats": ["OMF (listed under .wav)", "Dolby Atmos WAV ADM BWF Files", "RF64, BW64 (audio data only)"],
+        "interchange_formats": [
+          "OMF (listed under .wav)",
+          "Dolby Atmos WAV ADM BWF Files",
+          "RF64, BW64 (audio data only)"
+        ],
         "current_version_documented": "2026.4"
       },
       "connectors": [],
@@ -40,20 +97,93 @@
       "manual_url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Reference_Guide_2026.4.pdf",
       "datasheet_url": "not found",
       "product_page_url": "not found",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Reference_Guide_2026.4.pdf", "title": "Pro Tools Reference Guide 2026.4", "language": "en", "file_type": "pdf", "version_or_date": "2026.4", "official": true, "kind": "user-manual" },
-        { "url": "https://resources.avid.com/SupportFiles/PT/Whats_New_in_Pro_Tools_2026.4.pdf", "title": "What's New in Pro Tools 2026.4", "language": "en", "file_type": "pdf", "version_or_date": "2026.4", "official": true, "kind": "other" }
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Reference_Guide_2026.4.pdf",
+          "title": "Pro Tools Reference Guide 2026.4",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2026.4",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Whats_New_in_Pro_Tools_2026.4.pdf",
+          "title": "What's New in Pro Tools 2026.4",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2026.4",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://kb.avid.com/pkb/articles/compatibility/Pro-Tools-System-Requirements", "publisher": "Avid", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.editions"] },
-        { "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support", "publisher": "Avid", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.audio_file_types", "key_specs.interchange_formats"] },
-        { "url": "https://kb.avid.com/pkb/articles/Knowledge/How-to-Acquire-Pro-Tools", "publisher": "Avid", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.licence_model", "key_specs.editions"] },
-        { "url": "https://kb.avid.com/pkb/articles/en_US/user_guide/Pro-Tools-Documentation", "publisher": "Avid", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals", "key_specs.current_version_documented", "status"] }
+        {
+          "url": "https://kb.avid.com/pkb/articles/compatibility/Pro-Tools-System-Requirements",
+          "publisher": "Avid",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.editions"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
+          "publisher": "Avid",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.audio_file_types",
+            "key_specs.interchange_formats"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kb.avid.com/pkb/articles/Knowledge/How-to-Acquire-Pro-Tools",
+          "publisher": "Avid",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.licence_model",
+            "key_specs.editions"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kb.avid.com/pkb/articles/en_US/user_guide/Pro-Tools-Documentation",
+          "publisher": "Avid",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals",
+            "key_specs.current_version_documented",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Avid's main site returned HTTP 403, so specs come from the Avid knowledge base. The Reference Guide PDF exceeded the fetch size limit and was not read; its URL comes from the official documentation index. Track counts per edition were not found.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "No physical connectors, but it is the software end of the catalogue's HDX/HD I/O chain (I/O setup and routing lessons)." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "No physical connectors, but it is the software end of the catalogue's HDX/HD I/O chain (I/O setup and routing lessons)."
+      },
+      "manual_url_status": "ok"
     },
     {
       "id": "steinberg-nuendo",
@@ -65,33 +195,118 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Steinberg's post-production DAW, with dedicated broadcast, Dolby Atmos, MPEG-H and game-audio sections on its site. It is the main post alternative to Pro Tools in European studios and broadcasters.",
-      "typical_uses": ["film/TV post-production", "broadcast", "game audio", "immersive mixing"],
+      "typical_uses": [
+        "film/TV post-production",
+        "broadcast",
+        "game audio",
+        "immersive mixing"
+      ],
       "key_specs": {
-        "platform": ["Windows: a partir de 10 (64-Bit)", "Mac OS (64 bits): 11, 12"],
+        "platform": [
+          "Windows: a partir de 10 (64-Bit)",
+          "Mac OS (64 bits): 11, 12"
+        ],
         "max_audio_tracks": "Pistes audio Illimité",
         "max_sample_rate": "384 kHz",
         "licence_model": "Validité de la licence: Illimitée; Activation en ligne, 3 simultaneous activations (retailer)",
         "interchange_formats": "Prise en charge Auro-3D, AES31, OMF et MPEG-H (retailer feature list)",
-        "application_areas": ["broadcast", "dolby-atmos", "game-audio", "mpeg-h-audio", "post-production", "virtual-reality"]
+        "application_areas": [
+          "broadcast",
+          "dolby-atmos",
+          "game-audio",
+          "mpeg-h-audio",
+          "post-production",
+          "virtual-reality"
+        ]
       },
       "connectors": [],
       "signal_types": [],
       "manual_url": "https://www.steinberg.help/r/nuendo/15.0/fr",
       "datasheet_url": "not found",
       "product_page_url": "https://www.steinberg.net/nuendo/",
-      "manual_languages": ["fr", "en", "de", "es", "it", "ja"],
+      "manual_languages": [
+        "fr",
+        "en",
+        "de",
+        "es",
+        "it",
+        "ja"
+      ],
       "manuals": [
-        { "url": "https://www.steinberg.help/r/nuendo/15.0/fr", "title": "Aide de Nuendo - Nuendo - 15.0", "language": "fr", "file_type": "html", "version_or_date": "15.0", "official": true, "kind": "user-manual" },
-        { "url": "https://www.steinberg.help/r/nuendo/15.0/en", "title": "Nuendo 15.0 online help", "language": "en", "file_type": "html", "version_or_date": "15.0", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.steinberg.help/r/nuendo/15.0/fr",
+          "title": "Aide de Nuendo - Nuendo - 15.0",
+          "language": "fr",
+          "file_type": "html",
+          "version_or_date": "15.0",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.steinberg.help/r/nuendo/15.0/en",
+          "title": "Nuendo 15.0 online help",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "15.0",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.thomann.fr/steinberg_nuendo_15.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.platform", "key_specs.max_audio_tracks", "key_specs.max_sample_rate", "key_specs.licence_model", "key_specs.interchange_formats"] },
-        { "url": "https://www.steinberg.net/sitemap.xml", "publisher": "Steinberg", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.application_areas", "status"] },
-        { "url": "https://www.steinberg.help/r/nuendo/15.0/fr", "publisher": "Steinberg", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals", "model"] }
+        {
+          "url": "https://www.thomann.fr/steinberg_nuendo_15.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.max_audio_tracks",
+            "key_specs.max_sample_rate",
+            "key_specs.licence_model",
+            "key_specs.interchange_formats"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.steinberg.net/sitemap.xml",
+          "publisher": "Steinberg",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.application_areas",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.steinberg.help/r/nuendo/15.0/fr",
+          "publisher": "Steinberg",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals",
+            "model"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Steinberg product pages are JavaScript-rendered and returned no spec text, so specs are from Thomann France only (single source). The macOS list on Thomann (11, 12) looks out of date for version 15; check before teaching. ADM/AAF support not confirmed from a readable source.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Pure software; no wiring lesson beyond the generic DAW/interface link." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Pure software; no wiring lesson beyond the generic DAW/interface link."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "merging-pyramix",
@@ -103,31 +318,89 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A reference for classical recording, DSD/DXD mastering and large-channel-count live recording. Neumann now sells it alongside Merging's networked converters.",
-      "typical_uses": ["classical and orchestral recording", "DSD/DXD mastering", "broadcast and live multitrack recording", "immersive production"],
+      "typical_uses": [
+        "classical and orchestral recording",
+        "DSD/DXD mastering",
+        "broadcast and live multitrack recording",
+        "immersive production"
+      ],
       "key_specs": {
         "platform": "Running on Windows 10/11",
         "sample_rates": "from 44.1 kHz to 384 kHz; DSD256 1-bit process/DXD",
         "io_native_asio": "up to 192 I/O with an ASIO sound card (256 I/O with PREMIUM pack)",
         "io_masscore": "up to 384 I/O",
-        "interchange_formats": ["AAF/ OMF", "Dolby Atmos 48/ 96kHz ADM import and exports. (PREMIUM pack only)"],
-        "editions": ["Elements", "Pro", "Premium"],
+        "interchange_formats": [
+          "AAF/ OMF",
+          "Dolby Atmos 48/ 96kHz ADM import and exports. (PREMIUM pack only)"
+        ],
+        "editions": [
+          "Elements",
+          "Pro",
+          "Premium"
+        ],
         "hardware_dependency": "MassCore engine optional; networked audio interfaces (RAVENNA/AES67 per trade press, not stated on the Neumann page)"
       },
       "connectors": [],
-      "signal_types": ["aoip"],
+      "signal_types": [
+        "aoip"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.neumann.com/fr-ch/products/software/pyramix-pro-pack",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.neumann.com/fr-ch/products/software/pyramix-pro-pack", "publisher": "Neumann (Merging Technologies)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.sample_rates", "key_specs.io_native_asio", "key_specs.io_masscore", "key_specs.interchange_formats"] },
-        { "url": "https://www.fast-and-wide.com/equipment-releases/mixing/20400-merging-technologies-pyramix-16", "publisher": "Fast and Wide", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "trade-press", "covers": ["key_specs.io_masscore", "key_specs.editions", "key_specs.platform"] },
-        { "url": "https://merging.atlassian.net/wiki/spaces/PUBLICDOC/overview", "publisher": "Merging Technologies", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+        {
+          "url": "https://www.neumann.com/fr-ch/products/software/pyramix-pro-pack",
+          "publisher": "Neumann (Merging Technologies)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.sample_rates",
+            "key_specs.io_native_asio",
+            "key_specs.io_masscore",
+            "key_specs.interchange_formats"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.fast-and-wide.com/equipment-releases/mixing/20400-merging-technologies-pyramix-16",
+          "publisher": "Fast and Wide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "key_specs.io_masscore",
+            "key_specs.editions",
+            "key_specs.platform"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://merging.atlassian.net/wiki/spaces/PUBLICDOC/overview",
+          "publisher": "Merging Technologies",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "signal_types 'aoip' because Pyramix/MassCore drives networked (RAVENNA/AES67) interfaces; RAVENNA/AES67 wording is from trade-press search snippets only. merging.com reset every connection, so the user manual could not be located. The trade-press article cited covers Pyramix 15 figures (384 I/O MassCore).",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Links to AoIP / RAVENNA routing lessons and DSD/DXD sample-rate concepts." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Links to AoIP / RAVENNA routing lessons and DSD/DXD sample-rate concepts."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "cockos-reaper",
@@ -139,7 +412,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Low-cost, DRM-free DAW with a full 60-day evaluation and no track limits, which makes it common in schools and home studios. It also runs on Linux.",
-      "typical_uses": ["music recording and mixing", "education", "podcast and radio editing", "live multitrack recording"],
+      "typical_uses": [
+        "music recording and mixing",
+        "education",
+        "podcast and radio editing",
+        "live multitrack recording"
+      ],
       "key_specs": {
         "platform": "Windows, macOS, and linux",
         "licence_model": "Discounted license $60; Commercial license $225; DRM-free; 60-day evaluation; REAPER 7 licence includes updates through 8.99",
@@ -147,7 +425,15 @@
         "limits": "no limits on track counts, sends/receives, FX",
         "internal_processing": "64-bit",
         "sample_rates": "at any sample rate or bit depth",
-        "plugin_formats": ["VST", "VST3", "LV2", "AU", "CLAP", "DX", "JS"],
+        "plugin_formats": [
+          "VST",
+          "VST3",
+          "LV2",
+          "AU",
+          "CLAP",
+          "DX",
+          "JS"
+        ],
         "interchange_formats": "BWF read and write",
         "current_version": "7.82"
       },
@@ -156,21 +442,109 @@
       "manual_url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://www.reaper.fm/",
-      "manual_languages": ["en", "de", "pl"],
+      "manual_languages": [
+        "en",
+        "de",
+        "pl"
+      ],
       "manuals": [
-        { "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf", "title": "REAPER User Guide", "language": "en", "file_type": "pdf", "version_or_date": "v7.81", "official": true, "kind": "user-manual" },
-        { "url": "https://www.reaper.fm/userguide/REAPEREffectsGuide2021.pdf", "title": "ReaEffects Guide", "language": "en", "file_type": "pdf", "version_or_date": "v6.x", "official": true, "kind": "other" },
-        { "url": "https://www.reaper.fm/userguide/ReaperHandbuch476.pdf", "title": "REAPER Handbuch", "language": "de", "file_type": "pdf", "version_or_date": "v4.76", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "title": "REAPER User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v7.81",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/REAPEREffectsGuide2021.pdf",
+          "title": "ReaEffects Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v6.x",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperHandbuch476.pdf",
+          "title": "REAPER Handbuch",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "v4.76",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.reaper.fm/", "publisher": "Cockos", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.channels_per_track", "key_specs.limits", "key_specs.internal_processing", "key_specs.plugin_formats", "key_specs.current_version", "key_specs.licence_model"] },
-        { "url": "https://www.reaper.fm/purchase.php", "publisher": "Cockos", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.licence_model"] },
-        { "url": "https://www.reaper.fm/about.php", "publisher": "Cockos", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.sample_rates", "key_specs.interchange_formats", "key_specs.current_version"] },
-        { "url": "https://www.reaper.fm/userguide.php", "publisher": "Cockos", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+        {
+          "url": "https://www.reaper.fm/",
+          "publisher": "Cockos",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.channels_per_track",
+            "key_specs.limits",
+            "key_specs.internal_processing",
+            "key_specs.plugin_formats",
+            "key_specs.current_version",
+            "key_specs.licence_model"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.reaper.fm/purchase.php",
+          "publisher": "Cockos",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.licence_model"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.reaper.fm/about.php",
+          "publisher": "Cockos",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.sample_rates",
+            "key_specs.interchange_formats",
+            "key_specs.current_version"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.reaper.fm/userguide.php",
+          "publisher": "Cockos",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Unofficial guides in other languages exist (Spanish on Lulu) but are not listed here. AAF/OMF/ADM are not mentioned on the Cockos pages read.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Pure software; could stand in as the generic DAW in a playout-PC scenario." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Pure software; could stand in as the generic DAW in a playout-PC scenario."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "apple-logic-pro",
@@ -182,13 +556,23 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Apple's DAW, widely used for music production and in schools equipped with Macs. It has built-in Dolby Atmos and ADM export.",
-      "typical_uses": ["music production", "songwriting", "Dolby Atmos music mixing", "education"],
+      "typical_uses": [
+        "music production",
+        "songwriting",
+        "Dolby Atmos music mixing",
+        "education"
+      ],
       "key_specs": {
         "platform": "macOS; a Mac with Apple silicon",
         "minimum_os": "macOS 15.6 or later",
         "licence_model": "standalone app for $199.99 (one-time purchase on the App Store) or $12.99 per month or $129 per year",
         "immersive": "integrated Dolby Atmos tools; export as industry-standard ADM files",
-        "interchange_formats": ["AAF files (listed under Supported media and file formats)", "Final Cut Pro XML files", "Standard MIDI files", "ADM"],
+        "interchange_formats": [
+          "AAF files (listed under Supported media and file formats)",
+          "Final Cut Pro XML files",
+          "Standard MIDI files",
+          "ADM"
+        ],
         "current_version": "12.3"
       },
       "connectors": [],
@@ -196,22 +580,113 @@
       "manual_url": "https://support.apple.com/fr-fr/guide/logicpro/welcome/mac",
       "datasheet_url": "https://www.apple.com/logic-pro/specs/",
       "product_page_url": "https://www.apple.com/logic-pro/",
-      "manual_languages": ["fr", "en"],
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
       "manuals": [
-        { "url": "https://support.apple.com/fr-fr/guide/logicpro/welcome/mac", "title": "Guide d'utilisation de Logic Pro pour Mac", "language": "fr", "file_type": "html", "version_or_date": "12.3", "official": true, "kind": "user-manual" },
-        { "url": "https://support.apple.com/guide/logicpro/welcome/mac", "title": "Logic Pro User Guide for Mac", "language": "en", "file_type": "html", "version_or_date": "12.3", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://support.apple.com/fr-fr/guide/logicpro/welcome/mac",
+          "title": "Guide d'utilisation de Logic Pro pour Mac",
+          "language": "fr",
+          "file_type": "html",
+          "version_or_date": "12.3",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://support.apple.com/guide/logicpro/welcome/mac",
+          "title": "Logic Pro User Guide for Mac",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "12.3",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.apple.com/logic-pro/specs/", "publisher": "Apple", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.minimum_os", "key_specs.licence_model", "key_specs.immersive"] },
-        { "url": "https://www.apple.com/logic-pro/", "publisher": "Apple", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.minimum_os", "key_specs.immersive"] },
-        { "url": "https://support.apple.com/125029", "publisher": "Apple", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.minimum_os"] },
-        { "url": "https://support.apple.com/guide/logicpro/welcome/mac", "publisher": "Apple", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.interchange_formats", "key_specs.current_version", "manuals"] }
+        {
+          "url": "https://www.apple.com/logic-pro/specs/",
+          "publisher": "Apple",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.minimum_os",
+            "key_specs.licence_model",
+            "key_specs.immersive"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.apple.com/logic-pro/",
+          "publisher": "Apple",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.minimum_os",
+            "key_specs.immersive"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://support.apple.com/125029",
+          "publisher": "Apple",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.minimum_os"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://support.apple.com/guide/logicpro/welcome/mac",
+          "publisher": "Apple",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.interchange_formats",
+            "key_specs.current_version",
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Apple does not publish track limits or sample rates on the pages read. The AAF article exists in the user guide but its body text was not returned.",
       "conflicts": [
-        { "field": "key_specs.minimum_os", "values": [ { "value": "macOS 15.6 or later", "source_url": "https://www.apple.com/logic-pro/specs/" }, { "value": "macOS 15.4 or later", "source_url": "https://support.apple.com/125029" } ], "note": "Two Apple pages disagree; the support article may refer to an earlier 12.x release." }
+        {
+          "field": "key_specs.minimum_os",
+          "values": [
+            {
+              "value": "macOS 15.6 or later",
+              "source_url": "https://www.apple.com/logic-pro/specs/"
+            },
+            {
+              "value": "macOS 15.4 or later",
+              "source_url": "https://support.apple.com/125029"
+            }
+          ],
+          "note": "Two Apple pages disagree; the support article may refer to an earlier 12.x release."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Pure software." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Pure software."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "ableton-live",
@@ -223,10 +698,22 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A standard for electronic music production and live performance with laptops. The official reference manual exists in French.",
-      "typical_uses": ["electronic music production", "live performance", "sound design", "theatre/installation playback"],
+      "typical_uses": [
+        "electronic music production",
+        "live performance",
+        "sound design",
+        "theatre/installation playback"
+      ],
       "key_specs": {
-        "platform": ["macOS 11.7.10 Big Sur through macOS 15.7.3 Sequoia", "Windows 10 (Version 22H2) or Windows 11 (version 22H2 or higher)"],
-        "max_audio_midi_tracks": { "Intro": "16", "Standard": "Unlimited", "Suite": "Unlimited" },
+        "platform": [
+          "macOS 11.7.10 Big Sur through macOS 15.7.3 Sequoia",
+          "Windows 10 (Version 22H2) or Windows 11 (version 22H2 or higher)"
+        ],
+        "max_audio_midi_tracks": {
+          "Intro": "16",
+          "Standard": "Unlimited",
+          "Suite": "Unlimited"
+        },
         "licence_model": "One-time purchase: Intro EUR 79, Standard EUR 279, Suite EUR 599; Suite rent-to-own EUR 24.96/mo; registered to a single user, up to two computers",
         "current_version": "12.4"
       },
@@ -235,20 +722,92 @@
       "manual_url": "https://www.ableton.com/fr/live-manual/12/welcome-to-live/",
       "datasheet_url": "not found",
       "product_page_url": "https://www.ableton.com/en/live/",
-      "manual_languages": ["fr", "en"],
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.ableton.com/fr/live-manual/12/welcome-to-live/", "title": "Bienvenue dans Live — Ableton Reference Manual Version 12", "language": "fr", "file_type": "html", "version_or_date": "12", "official": true, "kind": "user-manual" },
-        { "url": "https://www.ableton.com/en/live-manual/12/welcome-to-live/", "title": "Ableton Reference Manual Version 12", "language": "en", "file_type": "html", "version_or_date": "12", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.ableton.com/fr/live-manual/12/welcome-to-live/",
+          "title": "Bienvenue dans Live — Ableton Reference Manual Version 12",
+          "language": "fr",
+          "file_type": "html",
+          "version_or_date": "12",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.ableton.com/en/live-manual/12/welcome-to-live/",
+          "title": "Ableton Reference Manual Version 12",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "12",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.ableton.com/en/live/compare-editions/", "publisher": "Ableton", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.max_audio_midi_tracks"] },
-        { "url": "https://www.ableton.com/en/shop/live/", "publisher": "Ableton", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.licence_model"] },
-        { "url": "https://www.ableton.com/en/live/", "publisher": "Ableton", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.current_version", "status"] },
-        { "url": "https://www.ableton.com/en/help/", "publisher": "Ableton", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+        {
+          "url": "https://www.ableton.com/en/live/compare-editions/",
+          "publisher": "Ableton",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.max_audio_midi_tracks"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.ableton.com/en/shop/live/",
+          "publisher": "Ableton",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.licence_model"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.ableton.com/en/live/",
+          "publisher": "Ableton",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.current_version",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.ableton.com/en/help/",
+          "publisher": "Ableton",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Some French manual pages may still show English text, per Ableton's notice.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Pure software." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Pure software."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "audinate-dante-controller",
@@ -260,7 +819,13 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Every Dante system (consoles, stageboxes, AVIO adapters in this knowledge base) is routed and checked with it. It is the tool used to teach subscriptions, leader clock and latency on Dante networks.",
-      "typical_uses": ["Dante routing", "clock leader checks", "latency settings", "AES67 / ST 2110-30 flows", "device firmware updates"],
+      "typical_uses": [
+        "Dante routing",
+        "clock leader checks",
+        "latency settings",
+        "AES67 / ST 2110-30 flows",
+        "device firmware updates"
+      ],
       "key_specs": {
         "platform": "free download for Mac OS or PC",
         "licence_model": "Free",
@@ -269,26 +834,95 @@
         "min_processor": "1GHz or better",
         "min_memory": "512Mbyte of RAM",
         "network": "Standard wired Ethernet network interface (100Mbps or Gigabit) or wireless LAN (Wi-Fi) interface",
-        "functions": ["routing audio and video", "device clock and network settings", "receive latency", "presets", "device lock", "AES67 and ST 2110-30 flows", "Dante Domain Manager connection"],
+        "functions": [
+          "routing audio and video",
+          "device clock and network settings",
+          "receive latency",
+          "presets",
+          "device lock",
+          "AES67 and ST 2110-30 flows",
+          "Dante Domain Manager connection"
+        ],
         "user_guide_version": "For Dante Controller version 4.18.x and up"
       },
       "connectors": [],
-      "signal_types": ["aoip"],
+      "signal_types": [
+        "aoip"
+      ],
       "manual_url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
       "datasheet_url": "not found",
       "product_page_url": "https://www.getdante.com/products/software-essentials/dante-controller/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/", "title": "Dante Controller User Guide", "language": "en", "file_type": "pdf", "version_or_date": "For Dante Controller version 4.18.x and up, document version 1.0", "official": true, "kind": "user-manual" },
-        { "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/", "title": "Dante Controller User Guide (web help)", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "title": "Dante Controller User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "For Dante Controller version 4.18.x and up, document version 1.0",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/",
+          "title": "Dante Controller User Guide (web help)",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/", "publisher": "Audinate", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.windows_hardware", "key_specs.macos_hardware", "key_specs.min_processor", "key_specs.min_memory", "key_specs.network", "key_specs.functions", "key_specs.licence_model", "key_specs.user_guide_version"] },
-        { "url": "https://www.getdante.com/products/software-essentials/dante-controller/", "publisher": "Audinate", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.licence_model", "key_specs.functions", "status"] }
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.windows_hardware",
+            "key_specs.macos_hardware",
+            "key_specs.min_processor",
+            "key_specs.min_memory",
+            "key_specs.network",
+            "key_specs.functions",
+            "key_specs.licence_model",
+            "key_specs.user_guide_version"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.getdante.com/products/software-essentials/dante-controller/",
+          "publisher": "Audinate",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.licence_model",
+            "key_specs.functions",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "signal_types 'aoip' because the software manages Dante/AES67 audio-over-IP; it carries no audio itself. Supported OS versions are delegated to release notes at getdante.com. The guide mentions Wi-Fi for the controller computer, but Wi-Fi is not supported for Dante audio on Dante Virtual Soundcard.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "A simulated routing matrix (subscriptions, clock leader, latency) would complete the Dante wiring lessons with Rio3224-D2 / QL1." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "A simulated routing matrix (subscriptions, clock leader, latency) would complete the Dante wiring lessons with Rio3224-D2 / QL1."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "audinate-dante-virtual-soundcard",
@@ -300,36 +934,120 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The usual way to multitrack-record a Dante console or stagebox into a DAW, or to play QLab/playout audio onto Dante, without an extra interface.",
-      "typical_uses": ["virtual soundcheck and live multitrack recording", "playback onto a Dante network", "QLab/DAW to Dante"],
+      "typical_uses": [
+        "virtual soundcheck and live multitrack recording",
+        "playback onto a Dante network",
+        "QLab/DAW to Dante"
+      ],
       "key_specs": {
-        "platform": ["Windows 10 or 11", "macOS 13, 14 or 15"],
+        "platform": [
+          "Windows 10 or 11",
+          "macOS 13, 14 or 15"
+        ],
         "driver_types": "ASIO or WDM device on Windows and as a Core Audio device on macOS",
-        "max_channels": { "100Mbps": "32x32 @48kHz/24bit, 16x16 @96kHz, 8x8 @192kHz", "Gigabit Standard License": "64x64 @48kHz/24bit, 32x32 @96kHz, 8x8 @192kHz", "Gigabit DVS Pro": "128x128 @48kHz/24bit, 128x128 @96kHz, 16x16 @192kHz" },
-        "sample_rates": { "ASIO": "44.1, 48, 88.2, 96, 176.4, 192 kHz", "WDM": "44.1, 48, 88.2, 96 kHz", "Core Audio": "44.1, 48, 88.2, 96, 176.4, 192 kHz" },
+        "max_channels": {
+          "100Mbps": "32x32 @48kHz/24bit, 16x16 @96kHz, 8x8 @192kHz",
+          "Gigabit Standard License": "64x64 @48kHz/24bit, 32x32 @96kHz, 8x8 @192kHz",
+          "Gigabit DVS Pro": "128x128 @48kHz/24bit, 128x128 @96kHz, 16x16 @192kHz"
+        },
+        "sample_rates": {
+          "ASIO": "44.1, 48, 88.2, 96, 176.4, 192 kHz",
+          "WDM": "44.1, 48, 88.2, 96 kHz",
+          "Core Audio": "44.1, 48, 88.2, 96, 176.4, 192 kHz"
+        },
         "bit_depth": "16 bit, 24 bit, 32 bit",
-        "dante_latency": ["4ms", "6ms", "10ms", "20ms (DVS Pro only)", "40ms (DVS Pro only)"],
+        "dante_latency": [
+          "4ms",
+          "6ms",
+          "10ms",
+          "20ms (DVS Pro only)",
+          "40ms (DVS Pro only)"
+        ],
         "licence_model": "Single Machine License, Transferable License, DVS Pro Subscription License (charged annually)",
         "network_requirement": "1 Gigabit (1Gb) wired Ethernet interface; or USB 3.0-to-Ethernet adapter compliant with CDC-NCM; Wireless LAN (Wi-Fi) Ethernet interfaces are not supported",
         "min_hardware": "Dual core CPU; 4 Gigabytes of RAM",
         "user_guide_version": "4.5.x, published 7th January 2025"
       },
       "connectors": [],
-      "signal_types": ["aoip"],
+      "signal_types": [
+        "aoip"
+      ],
       "manual_url": "https://dev.audinate.com/GA/dvs/userguide/pdf/latest/",
       "datasheet_url": "https://www.getdante.com/docs/dante-virtual-soundcard-datasheet/",
       "product_page_url": "https://www.getdante.com/products/software-essentials/dante-virtual-soundcard/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://dev.audinate.com/GA/dvs/userguide/pdf/latest/", "title": "Dante Virtual Soundcard User Guide (AUD-MAN-DanteVirtualSoundcard_4.5.x-v1.0)", "language": "en", "file_type": "pdf", "version_or_date": "4.5.x, 7th January 2025", "official": true, "kind": "user-manual" },
-        { "url": "https://www.getdante.com/docs/dante-virtual-soundcard-datasheet/", "title": "Dante Virtual Soundcard datasheet", "language": "en", "file_type": "not shown", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://dev.audinate.com/GA/dvs/userguide/pdf/latest/",
+          "title": "Dante Virtual Soundcard User Guide (AUD-MAN-DanteVirtualSoundcard_4.5.x-v1.0)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "4.5.x, 7th January 2025",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.getdante.com/docs/dante-virtual-soundcard-datasheet/",
+          "title": "Dante Virtual Soundcard datasheet",
+          "language": "en",
+          "file_type": "not shown",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://dev.audinate.com/GA/dvs/userguide/pdf/latest/", "publisher": "Audinate", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.driver_types", "key_specs.max_channels", "key_specs.sample_rates", "key_specs.bit_depth", "key_specs.dante_latency", "key_specs.licence_model", "key_specs.network_requirement", "key_specs.min_hardware", "key_specs.user_guide_version"] },
-        { "url": "https://www.getdante.com/products/software-essentials/dante-virtual-soundcard/", "publisher": "Audinate", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.driver_types", "key_specs.max_channels", "status"] }
+        {
+          "url": "https://dev.audinate.com/GA/dvs/userguide/pdf/latest/",
+          "publisher": "Audinate",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.driver_types",
+            "key_specs.max_channels",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.dante_latency",
+            "key_specs.licence_model",
+            "key_specs.network_requirement",
+            "key_specs.min_hardware",
+            "key_specs.user_guide_version"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.getdante.com/products/software-essentials/dante-virtual-soundcard/",
+          "publisher": "Audinate",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.driver_types",
+            "key_specs.max_channels",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Product page says 'Record up to 128 channels of audio', which matches the DVS Pro 128x128 figure in the guide. signal_types 'aoip': audio leaves the computer as Dante over the Ethernet port. Datasheet link seen on the product page but not opened.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Lets the playout-pc catalogue device join a Dante network over RJ45: a clear lesson on channel count vs network speed and sample rate." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Lets the playout-pc catalogue device join a Dante network over RJ45: a clear lesson on channel count vs network speed and sample rate."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "figure53-qlab",
@@ -341,14 +1059,27 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Figure 53 describes it as macOS software for designing and playing back sound, video, light and show-control cues. It is the usual theatre sound-playback tool, and the free version teaches cue-list logic.",
-      "typical_uses": ["theatre sound playback", "events", "museum/installation playback", "show control via OSC/MIDI/timecode"],
+      "typical_uses": [
+        "theatre sound playback",
+        "events",
+        "museum/installation playback",
+        "show control via OSC/MIDI/timecode"
+      ],
       "key_specs": {
         "platform": "Mac-only; macOS Big Sur (macOS 11) or higher; Apple Silicon and Intel",
         "licence_model": "Free features ($0.00); paid Audio, Video and Lighting licences bought to use in perpetuity, or rented; Pro features (Network, MIDI, Script, Timecode cues) included with any paid license",
-        "audio_outputs": { "Free": "2 output channels, 2 channels per audio file", "Audio license": "128 output channels, 24 channels per file" },
+        "audio_outputs": {
+          "Free": "2 output channels, 2 channels per audio file",
+          "Audio license": "128 output channels, 24 channels per file"
+        },
         "output_format": "16- or 24-bit output at sample rates up to 192 kHz (above 48 kHz not recommended)",
         "audio_devices": "Any Core Audio-compliant device; network audio via Dante Virtual Soundcard",
-        "control_protocols": ["OSC", "MIDI", "MIDI Show Control (MSC)", "Timecode"],
+        "control_protocols": [
+          "OSC",
+          "MIDI",
+          "MIDI Show Control (MSC)",
+          "Timecode"
+        ],
         "min_memory": "4 GB minimum for the simplest shows; 8 GB for middling or more complex shows",
         "current_version": "5.6.3"
       },
@@ -357,21 +1088,107 @@
       "manual_url": "https://qlab.app/docs/v5/",
       "datasheet_url": "not found",
       "product_page_url": "https://qlab.app/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://qlab.app/docs/v5/", "title": "The QLab 5 Manual", "language": "en", "file_type": "html", "version_or_date": "updated August 31, 2026, for QLab 5.6.3", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://qlab.app/docs/v5/",
+          "title": "The QLab 5 Manual",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "updated August 31, 2026, for QLab 5.6.3",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://qlab.app/", "publisher": "Figure 53", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.current_version", "technology"] },
-        { "url": "https://qlab.app/faq/", "publisher": "Figure 53", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform"] },
-        { "url": "https://qlab.app/docs/v5/general/system-recommendations/", "publisher": "Figure 53", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.output_format", "key_specs.audio_devices", "key_specs.min_memory"] },
-        { "url": "https://qlab.app/docs/v5/general/features/", "publisher": "Figure 53", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.audio_outputs"] },
-        { "url": "https://qlab.app/shop/", "publisher": "Figure 53", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.licence_model"] },
-        { "url": "https://qlab.app/docs/v5/", "publisher": "Figure 53", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.control_protocols", "manuals"] }
+        {
+          "url": "https://qlab.app/",
+          "publisher": "Figure 53",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.current_version",
+            "technology"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://qlab.app/faq/",
+          "publisher": "Figure 53",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://qlab.app/docs/v5/general/system-recommendations/",
+          "publisher": "Figure 53",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.output_format",
+            "key_specs.audio_devices",
+            "key_specs.min_memory"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://qlab.app/docs/v5/general/features/",
+          "publisher": "Figure 53",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.audio_outputs"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://qlab.app/shop/",
+          "publisher": "Figure 53",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.licence_model"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://qlab.app/docs/v5/",
+          "publisher": "Figure 53",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.control_protocols",
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Paid licence prices were not shown on the shop page. The FAQ says Figure 53 has supported QLab for over 10 years, but gives no release year.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Theatre playback machine feeding a console via an interface or DVS; free tier's 2-output limit is a good patching lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Theatre playback machine feeding a console via an interface or DVS; free tier's 2-output limit is a good patching lesson."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "l-acoustics-soundvision",
@@ -383,13 +1200,35 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The required design tool for L-Acoustics line arrays, which are common on French tours and in French venues. It combines SPL prediction with rigging load data.",
-      "typical_uses": ["concert system design", "rigging/load calculation", "installation design", "L-ISA immersive design"],
+      "typical_uses": [
+        "concert system design",
+        "rigging/load calculation",
+        "installation design",
+        "L-ISA immersive design"
+      ],
       "key_specs": {
-        "platform": ["Windows 10, Windows 11", "macOS Catalina (10.15) through macOS Tahoe (26)"],
+        "platform": [
+          "Windows 10, Windows 11",
+          "macOS Catalina (10.15) through macOS Tahoe (26)"
+        ],
         "min_hardware": "1 GB RAM, 1.2 GHz processor, 100 MB disk space; Intel HD/Iris, GeForce 8-series or newer, ATI Radeon HD 2000-series or newer",
-        "simulation": ["Real-Time Mapping of SPL in dBA, dBC and unweighted dB", "delay mode", "Autosplay", "Autofilter", "Mechanical View (dimensions, weight, load)"],
-        "file_formats": [".xmls venue database", "export to EASE (GLL)", "DXF"],
-        "integrations": ["LA Network Manager (3.9.0 or later required by 2026.4)", "L-ISA Controller", "SketchUp and VectorWorks plugins"],
+        "simulation": [
+          "Real-Time Mapping of SPL in dBA, dBC and unweighted dB",
+          "delay mode",
+          "Autosplay",
+          "Autofilter",
+          "Mechanical View (dimensions, weight, load)"
+        ],
+        "file_formats": [
+          ".xmls venue database",
+          "export to EASE (GLL)",
+          "DXF"
+        ],
+        "integrations": [
+          "LA Network Manager (3.9.0 or later required by 2026.4)",
+          "L-ISA Controller",
+          "SketchUp and VectorWorks plugins"
+        ],
         "current_version": "2026.4"
       },
       "connectors": [],
@@ -397,21 +1236,100 @@
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.l-acoustics.com/products/soundvision/",
-      "manual_languages": ["en", "fr"],
+      "manual_languages": [
+        "en",
+        "fr"
+      ],
       "manuals": [
-        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Read%20Me/Soundvision_2026.4_readme_ML.pdf", "title": "Soundvision 2026.4 Readme (EN + FR sections)", "language": "multi", "file_type": "pdf", "version_or_date": "2026.4", "official": true, "kind": "other" },
-        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Optimization/soundvision-optimization_tb_ml_1-0.pdf", "title": "Soundvision - Optimization", "language": "en", "file_type": "pdf", "version_or_date": "1.0", "official": true, "kind": "other" }
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Read%20Me/Soundvision_2026.4_readme_ML.pdf",
+          "title": "Soundvision 2026.4 Readme (EN + FR sections)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "2026.4",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Optimization/soundvision-optimization_tb_ml_1-0.pdf",
+          "title": "Soundvision - Optimization",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.0",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.l-acoustics.com/products/soundvision/", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.min_hardware", "key_specs.simulation", "key_specs.file_formats", "key_specs.integrations", "key_specs.current_version"] },
-        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Read%20Me/Soundvision_2026.4_readme_ML.pdf", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.min_hardware", "key_specs.current_version"] },
-        { "url": "https://www.l-acoustics.com/result-documentation-center/?choice=Soundvision", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+        {
+          "url": "https://www.l-acoustics.com/products/soundvision/",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.min_hardware",
+            "key_specs.simulation",
+            "key_specs.file_formats",
+            "key_specs.integrations",
+            "key_specs.current_version"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Read%20Me/Soundvision_2026.4_readme_ML.pdf",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.min_hardware",
+            "key_specs.current_version"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.l-acoustics.com/result-documentation-center/?choice=Soundvision",
+          "publisher": "L-Acoustics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "No downloadable user manual; the readme has English and French sections (system requirements, installation). Price not stated; download requires a form.",
       "conflicts": [
-        { "field": "key_specs.platform", "values": [ { "value": "Windows 10, Windows 11", "source_url": "https://www.l-acoustics.com/products/soundvision/" }, { "value": "Windows 10 (64-bit)", "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Read%20Me/Soundvision_2026.4_readme_ML.pdf" } ], "note": "Readme lists only Windows 10 as recommended OS; product page adds Windows 11." }
+        {
+          "field": "key_specs.platform",
+          "values": [
+            {
+              "value": "Windows 10, Windows 11",
+              "source_url": "https://www.l-acoustics.com/products/soundvision/"
+            },
+            {
+              "value": "Windows 10 (64-bit)",
+              "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/SOFTWARE/Soundvision/Read%20Me/Soundvision_2026.4_readme_ML.pdf"
+            }
+          ],
+          "note": "Readme lists only Windows 10 as recommended OS; product page adds Windows 11."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Design software; no wiring lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Design software; no wiring lesson."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "db-audiotechnik-arraycalc",
@@ -423,12 +1341,29 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "d&b states that its line arrays must be designed in ArrayCalc for safety and acoustic reasons. It covers prediction, alignment, rigging and safety parameters, and its data feeds R1 control software.",
-      "typical_uses": ["concert system design", "rigging safety", "time alignment", "installation design"],
+      "typical_uses": [
+        "concert system design",
+        "rigging safety",
+        "time alignment",
+        "installation design"
+      ],
       "key_specs": {
-        "platform": ["Windows 10 or higher (Vulkan support)", "macOS 11.0 or higher (Metal support)"],
+        "platform": [
+          "Windows 10 or higher (Vulkan support)",
+          "macOS 11.0 or higher (Metal support)"
+        ],
         "min_hardware": "Intel/AMD 1.5 GHz or more (Intel i5 or higher recommended); RAM 4 GB (8 GB recommended); 1 GB free disk; 1280 x 800 or higher",
-        "simulation": ["3D level distribution on listening planes", "time alignment and SUB phase at a reference point", "HeadroomCalc (up to five receiver points)", "System Auralization (binaural)"],
-        "file_formats": ["*.dbpr project files", "*.dbacv venue files via ArrayCalc Exchange", "EASE and DXF data export"],
+        "simulation": [
+          "3D level distribution on listening planes",
+          "time alignment and SUB phase at a reference point",
+          "HeadroomCalc (up to five receiver points)",
+          "System Auralization (binaural)"
+        ],
+        "file_formats": [
+          "*.dbpr project files",
+          "*.dbacv venue files via ArrayCalc Exchange",
+          "EASE and DXF data export"
+        ],
         "current_version": "12.8.3 (V13 beta offered)"
       },
       "connectors": [],
@@ -436,22 +1371,115 @@
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.dbaudio.com/global/en/products/software/arraycalc/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-quick-guide-arraycalc-software-and-licenses-1.4-en.pdf", "title": "ArrayCalc simulation software. Licenses and credits. Quick guide", "language": "en", "file_type": "pdf", "version_or_date": "1.4 en, 12/2022", "official": true, "kind": "quick-start" },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-release-notes-arraycalc-v12.8.3-en.pdf", "title": "Release notes ArrayCalc 12.8.3", "language": "en", "file_type": "pdf", "version_or_date": "12.8.3", "official": true, "kind": "other" }
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-quick-guide-arraycalc-software-and-licenses-1.4-en.pdf",
+          "title": "ArrayCalc simulation software. Licenses and credits. Quick guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.4 en, 12/2022",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-release-notes-arraycalc-v12.8.3-en.pdf",
+          "title": "Release notes ArrayCalc 12.8.3",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "12.8.3",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.dbaudio.com/global/en/products/software/arraycalc/", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.min_hardware", "key_specs.current_version"] },
-        { "url": "https://www.dbaudio.com/global/en/arraycalc/", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.simulation", "key_specs.file_formats", "why_it_is_a_classic"] },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-quick-guide-arraycalc-software-and-licenses-1.4-en.pdf", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.platform", "key_specs.min_hardware", "key_specs.file_formats", "why_it_is_a_classic"] }
+        {
+          "url": "https://www.dbaudio.com/global/en/products/software/arraycalc/",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.min_hardware",
+            "key_specs.current_version"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/global/en/arraycalc/",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.simulation",
+            "key_specs.file_formats",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-quick-guide-arraycalc-software-and-licenses-1.4-en.pdf",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.platform",
+            "key_specs.min_hardware",
+            "key_specs.file_formats",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The quick guide says the full operating help is built into the software (F1 HelpViewer), so no standalone user manual exists online. Price/licence terms are not stated on the pages read.",
       "conflicts": [
-        { "field": "key_specs.platform", "values": [ { "value": "Windows 10 or higher; macOS 11.0 or higher", "source_url": "https://www.dbaudio.com/global/en/products/software/arraycalc/" }, { "value": "Windows 7 or higher (64bit version recommended); macOS 10.12 or later", "source_url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-quick-guide-arraycalc-software-and-licenses-1.4-en.pdf" } ], "note": "Quick guide dates from 12/2022; the product page reflects version 12.8.3." },
-        { "field": "key_specs.min_hardware", "values": [ { "value": "1 GB free disk; 1280 x 800 or higher", "source_url": "https://www.dbaudio.com/global/en/products/software/arraycalc/" }, { "value": "200 MB free disk; 1920 x 1080 or higher", "source_url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-quick-guide-arraycalc-software-and-licenses-1.4-en.pdf" } ], "note": "Different document dates." }
+        {
+          "field": "key_specs.platform",
+          "values": [
+            {
+              "value": "Windows 10 or higher; macOS 11.0 or higher",
+              "source_url": "https://www.dbaudio.com/global/en/products/software/arraycalc/"
+            },
+            {
+              "value": "Windows 7 or higher (64bit version recommended); macOS 10.12 or later",
+              "source_url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-quick-guide-arraycalc-software-and-licenses-1.4-en.pdf"
+            }
+          ],
+          "note": "Quick guide dates from 12/2022; the product page reflects version 12.8.3."
+        },
+        {
+          "field": "key_specs.min_hardware",
+          "values": [
+            {
+              "value": "1 GB free disk; 1280 x 800 or higher",
+              "source_url": "https://www.dbaudio.com/global/en/products/software/arraycalc/"
+            },
+            {
+              "value": "200 MB free disk; 1920 x 1080 or higher",
+              "source_url": "https://www.dbaudio.com/assets/products/downloads/software/arraycalc/dbaudio-quick-guide-arraycalc-software-and-licenses-1.4-en.pdf"
+            }
+          ],
+          "note": "Different document dates."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Design software; no wiring lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Design software; no wiring lesson."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "afmg-ease-focus-3",
@@ -463,7 +1491,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Free for end users thanks to loudspeaker-manufacturer support, and it loads GLL data from many brands. That makes it the common brand-neutral prediction tool in schools.",
-      "typical_uses": ["line-array aiming", "coverage prediction", "education", "column loudspeaker design"],
+      "typical_uses": [
+        "line-array aiming",
+        "coverage prediction",
+        "education",
+        "column loudspeaker design"
+      ],
       "key_specs": {
         "platform": "Windows 7, 8, 8.1, 10, or 11, 32-bit or 64-bit",
         "licence_model": "free software for the end user (0 EUR net)",
@@ -476,18 +1509,72 @@
       "manual_url": "https://www.afmg.eu/sites/default/files/2021-09/EASE%20Focus%203%20User%27s%20Guide.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://www.afmg.eu/en/ease-focus",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.afmg.eu/sites/default/files/2021-09/EASE%20Focus%203%20User%27s%20Guide.pdf", "title": "EASE Focus 3 User's Guide", "language": "en", "file_type": "pdf", "version_or_date": "not shown (file folder 2021-09)", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.afmg.eu/sites/default/files/2021-09/EASE%20Focus%203%20User%27s%20Guide.pdf",
+          "title": "EASE Focus 3 User's Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown (file folder 2021-09)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.afmg.eu/en/ease-focus", "publisher": "AFMG", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.licence_model", "key_specs.loudspeaker_data", "key_specs.current_version"] },
-        { "url": "https://www.afmg.eu/node/382", "publisher": "AFMG", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.min_hardware"] },
-        { "url": "https://www.afmg.eu/node/546", "publisher": "AFMG", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+        {
+          "url": "https://www.afmg.eu/en/ease-focus",
+          "publisher": "AFMG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.licence_model",
+            "key_specs.loudspeaker_data",
+            "key_specs.current_version"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.afmg.eu/node/382",
+          "publisher": "AFMG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.min_hardware"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.afmg.eu/node/546",
+          "publisher": "AFMG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Windows only per the system requirements page.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Design software; no wiring lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Design software; no wiring lesson."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "afmg-ease-5",
@@ -499,12 +1586,20 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "AFMG calls EASE 'the established standard in electro- and room acoustic simulation worldwide'. It is the generic tool used for room acoustics and speech intelligibility (STI) in installation projects.",
-      "typical_uses": ["room acoustic design", "speech intelligibility (STI) prediction", "PA/VA installation design", "auralization"],
+      "typical_uses": [
+        "room acoustic design",
+        "speech intelligibility (STI) prediction",
+        "PA/VA installation design",
+        "auralization"
+      ],
       "key_specs": {
         "platform": "64-bit Windows 10 or 11, or Windows Server 2016 through 2025; on Mac via Parallels Desktop 15 or later",
         "licence_model": "Per-user time-limited licences (1 or 2 years): EASE JR 690/990 EUR, EASE Standard 1,890/2,540 EUR, EASE Pro 2,570/3,490 EUR (initial fee, net)",
         "min_hardware": "16 GB RAM; 2 GHz, 8 cores; DirectX 11 Feature Level 10 or higher",
-        "standards": ["IEC 60268-16:2020 (STI)", "ISO 3382"],
+        "standards": [
+          "IEC 60268-16:2020 (STI)",
+          "ISO 3382"
+        ],
         "loudspeaker_data": "about 3,000 GLL data sets from about 300 brands",
         "current_version": "5.86"
       },
@@ -513,18 +1608,75 @@
       "manual_url": "https://www.afmg.eu/en/ease-users-guide",
       "datasheet_url": "not found",
       "product_page_url": "https://www.afmg.eu/en/ease",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.afmg.eu/en/ease-users-guide", "title": "EASE 5 User's Guide (page links to EASE_5-TE_UsersGuide.pdf)", "language": "en", "file_type": "html/pdf", "version_or_date": "5.86", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.afmg.eu/en/ease-users-guide",
+          "title": "EASE 5 User's Guide (page links to EASE_5-TE_UsersGuide.pdf)",
+          "language": "en",
+          "file_type": "html/pdf",
+          "version_or_date": "5.86",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.afmg.eu/en/ease", "publisher": "AFMG", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.licence_model", "key_specs.standards", "key_specs.loudspeaker_data", "key_specs.current_version", "why_it_is_a_classic"] },
-        { "url": "https://www.afmg.eu/en/ease-software-hardware-requirements", "publisher": "AFMG", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.platform", "key_specs.min_hardware"] },
-        { "url": "https://www.afmg.eu/en/ease-users-guide", "publisher": "AFMG", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals", "key_specs.current_version"] }
+        {
+          "url": "https://www.afmg.eu/en/ease",
+          "publisher": "AFMG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.licence_model",
+            "key_specs.standards",
+            "key_specs.loudspeaker_data",
+            "key_specs.current_version",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.afmg.eu/en/ease-software-hardware-requirements",
+          "publisher": "AFMG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.platform",
+            "key_specs.min_hardware"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.afmg.eu/en/ease-users-guide",
+          "publisher": "AFMG",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals",
+            "key_specs.current_version"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Prices are AFMG list prices (net) at access date; EASE Pro includes AURA and EARS modules.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Design software; no wiring lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Design software; no wiring lesson."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "izotope-rx",
@@ -536,33 +1688,125 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The usual restoration tool in dialogue post-production and archive work. It integrates with Pro Tools (AudioSuite), Nuendo, Audition and Logic.",
-      "typical_uses": ["dialogue cleanup", "archive restoration", "noise and click removal", "podcast/radio editing"],
+      "typical_uses": [
+        "dialogue cleanup",
+        "archive restoration",
+        "noise and click removal",
+        "podcast/radio editing"
+      ],
       "key_specs": {
-        "editions_prices": { "RX 12 Elements": "$99.00", "RX 12 Standard": "$399.00", "RX 12 Advanced": "$1,399.00" },
+        "editions_prices": {
+          "RX 12 Elements": "$99.00",
+          "RX 12 Standard": "$399.00",
+          "RX 12 Advanced": "$1,399.00"
+        },
         "licence_model": "Purchase per edition; a subscription option is offered (terms not shown)",
-        "modules": ["Spectral De-noise", "De-click", "Spectral Repair", "Dialogue Isolate"],
+        "modules": [
+          "Spectral De-noise",
+          "De-click",
+          "Spectral Repair",
+          "Dialogue Isolate"
+        ],
         "audio_file_formats": "AAC, AAX (Audible Audiobook Format), AIFF/AIF, BWF, CAF, FLAC, M4A, MP3, OGG, SD2, WAV, WMA",
-        "host_integration": ["Pro Tools AudioSuite", "RX Connect (Pro Tools, Audition, Cubase, Nuendo)", "ARA (Spectral Editor)", "external editor for Logic Pro, Premiere Pro, DaVinci Resolve"]
+        "host_integration": [
+          "Pro Tools AudioSuite",
+          "RX Connect (Pro Tools, Audition, Cubase, Nuendo)",
+          "ARA (Spectral Editor)",
+          "external editor for Logic Pro, Premiere Pro, DaVinci Resolve"
+        ]
       },
       "connectors": [],
       "signal_types": [],
       "manual_url": "https://docs.izotope.com/rx12/en/index-en.html",
       "datasheet_url": "not found",
       "product_page_url": "https://www.izotope.com/products/rx-advanced",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://docs.izotope.com/rx12/en/index-en.html", "title": "RX 12 user guide", "language": "en", "file_type": "html", "version_or_date": "RX 12", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://docs.izotope.com/rx12/en/index-en.html",
+          "title": "RX 12 user guide",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "RX 12",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.izotope.com/en/products/rx.html", "publisher": "iZotope", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.editions_prices", "key_specs.modules", "key_specs.licence_model"] },
-        { "url": "https://www.izotope.com/products/rx-advanced", "publisher": "iZotope", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.editions_prices", "key_specs.licence_model"] },
-        { "url": "https://www.izotope.com/en/products/rx/features/spectral-repair", "publisher": "iZotope", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.modules"] },
-        { "url": "https://docs.izotope.com/rx12/en/working-with-files.html", "publisher": "iZotope", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.audio_file_formats"] },
-        { "url": "https://docs.izotope.com/rx12/en/using-rx-plug-ins.html", "publisher": "iZotope", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.host_integration"] }
+        {
+          "url": "https://www.izotope.com/en/products/rx.html",
+          "publisher": "iZotope",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.editions_prices",
+            "key_specs.modules",
+            "key_specs.licence_model"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.izotope.com/products/rx-advanced",
+          "publisher": "iZotope",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.editions_prices",
+            "key_specs.licence_model"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.izotope.com/en/products/rx/features/spectral-repair",
+          "publisher": "iZotope",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.modules"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://docs.izotope.com/rx12/en/working-with-files.html",
+          "publisher": "iZotope",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.audio_file_formats"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://docs.izotope.com/rx12/en/using-rx-plug-ins.html",
+          "publisher": "iZotope",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.host_integration"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Platforms and plug-in formats (AAX/AU/VST3) were not stated on the pages read; support site returned 403. Which edition includes Spectral Repair and Dialogue Isolate was not confirmed.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Pure software." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Pure software."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "adobe-audition",
@@ -574,11 +1818,23 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Part of Creative Cloud, so many schools and radio/podcast teams already have it. Its spectral frequency display and noise reduction cover everyday cleanup and editing.",
-      "typical_uses": ["radio and podcast editing", "audio cleanup and restoration", "multitrack voice production", "video post audio"],
+      "typical_uses": [
+        "radio and podcast editing",
+        "audio cleanup and restoration",
+        "multitrack voice production",
+        "video post audio"
+      ],
       "key_specs": {
         "licence_model": "Subscription through Adobe Creative Cloud: Audition alone US$22.99/mo (annual plan, billed monthly); students and teachers US$19.99/mo",
-        "views": ["multitrack", "waveform", "spectral display"],
-        "restoration": ["spectral frequency display", "noise reduction and audio cleanup"]
+        "views": [
+          "multitrack",
+          "waveform",
+          "spectral display"
+        ],
+        "restoration": [
+          "spectral frequency display",
+          "noise reduction and audio cleanup"
+        ]
       },
       "connectors": [],
       "signal_types": [],
@@ -588,11 +1844,32 @@
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.adobe.com/products/audition.html", "publisher": "Adobe", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.licence_model", "key_specs.views", "key_specs.restoration", "status"] }
+        {
+          "url": "https://www.adobe.com/products/audition.html",
+          "publisher": "Adobe",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.licence_model",
+            "key_specs.views",
+            "key_specs.restoration",
+            "status"
+          ],
+          "url_status": "blocked"
+        }
       ],
       "notes": "Adobe Help (user guide and system requirements, English and French) returned HTTP 403, so platforms and file formats are not recorded. iZotope documents RX Connect integration with Audition.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Pure software." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Pure software."
+      },
+      "product_page_url_status": "blocked"
     }
   ]
 }

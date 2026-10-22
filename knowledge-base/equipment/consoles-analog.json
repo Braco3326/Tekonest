@@ -4,22 +4,86 @@
   "generated": "2026-10-22",
   "selection_rationale": "Twelve analog consoles chosen to teach the three analog sub-types: small mixers found in every school, rehearsal room and podcast desk (Yamaha MG10XU, Behringer X1204USB, Mackie ProFX12v3, Soundcraft Signature 12 MTK); live consoles from compact 2-bus to 4-bus/matrix FOH desks (Allen & Heath ZED-22FX and ZED-436, Mackie 1604VLZ4, Soundcraft GB4); and studio consoles showing the contrast between true in-line designs (SSL ORIGIN, Audient ASP8024-HE, both used in schools per their makers), a single-path split console (API 1608-II, whose own manual contrasts it with the in-line 2448) and a hybrid DAW-summing console with only two built-in preamps (AMS Neve 8424). Each was kept only when manufacturer documents could be read; historic desks (SSL 4000 E/G) and discontinued live consoles (Midas Venice F, Allen & Heath GL2400) were dropped because their specifications could not be sourced this session.",
   "not_found_log": [
-    { "device_id": "yamaha-mg10xu", "what": "English owner's manual and English technical specifications PDF (official)", "searched": "de.yamaha.com mg10xu_en_om_c0.pdf returned HTTP 404; nl.yamaha.com MG10XU_technical_specifications_En_B0.pdf returned 403/404; usa.yamaha.com mg_xu product page redirects to the mixers index; search budget exhausted" },
-    { "device_id": "yamaha-mg10xu", "what": "official product page URL", "searched": "usa.yamaha.com/products/proaudio/mixers/mg_xu/ redirects to /products/proaudio/mixers/ (MG Series still listed there); search budget exhausted" },
-    { "device_id": "behringer-xenyx-x1204usb", "what": "official Behringer product page and manual on behringer.com", "searched": "only the Thomann-hosted copy of the Behringer EU operating/safety instructions was found; behringer.com pages could not be located without search (search budget exhausted)" },
-    { "device_id": "mackie-1604vlz4", "what": "French owner's manual", "searched": "mackie.com/en and mackie.com/fr 1604VLZ4 pages list only English, German and Spanish manuals" },
-    { "device_id": "mackie-profx12v3", "what": "French owner's manual", "searched": "mackie.com ProFX12v3 page lists English and German manuals only" },
-    { "device_id": "allen-heath-zed-22fx", "what": "French user guide", "searched": "allen-heath.com ZED Mid resources page lists English user guide only" },
-    { "device_id": "allen-heath-zed-436", "what": "French user guide; second (non-manufacturer) source", "searched": "allen-heath.com ZED Max resources page (English only); thomann.de/intl/allen_heath_zed_436.htm returned an error; search budget exhausted" },
-    { "device_id": "soundcraft-signature-12-mtk", "what": "French user guide; year of discontinuation", "searched": "soundcraft.com/en Signature 12 MTK page (marked Discontinued, lists English user guide); search budget exhausted" },
-    { "device_id": "soundcraft-gb4", "what": "French user guide; year introduced", "searched": "soundcraft.com/en/products/gb4 downloads (English and Spanish user guides, English datasheet)" },
-    { "device_id": "ssl-origin", "what": "year introduced; French manual", "searched": "solidstatelogic.com/products/origin, ORIGIN brochure and user guide V2.0 (no launch year stated); search budget exhausted" },
-    { "device_id": "audient-asp8024-he", "what": "year introduced; frame sizes; French manual", "searched": "audient.com ASP8024-HE overview page and manual V1 (manual says the ASP8024 has been in production for nearly 20 years, no exact year)" },
-    { "device_id": "api-1608-ii", "what": "year introduced for the -II revision; EIN/noise specs", "searched": "apiaudio.com 1608-II page and 1608-II/2448 user manual 2026-09-17 (states original 1608 released 2008; no mic-pre noise spec found)" },
-    { "device_id": "ams-neve-8424", "what": "year introduced", "searched": "ams-neve.com 8424 page and user manual issue 5.3; Thomann lists 'available since April 2023' only" },
-    { "device_id": "ssl-4000-e", "what": "whole device (historic in-line console)", "searched": "solidstatelogic.com/our-history gives SL 4000 E introduction 1979 but no specifications; search budget exhausted, so not added" },
-    { "device_id": "midas-venice-f", "what": "whole device (status and specs)", "searched": "midasconsoles.com homepage renders by JavaScript, no product links; search budget exhausted" },
-    { "device_id": "allen-heath-gl2400", "what": "whole device (status and specs)", "searched": "allen-heath.com current hardware pages only; legacy page not reachable without search (budget exhausted)" }
+    {
+      "device_id": "yamaha-mg10xu",
+      "what": "English owner's manual and English technical specifications PDF (official)",
+      "searched": "de.yamaha.com mg10xu_en_om_c0.pdf returned HTTP 404; nl.yamaha.com MG10XU_technical_specifications_En_B0.pdf returned 403/404; usa.yamaha.com mg_xu product page redirects to the mixers index; search budget exhausted"
+    },
+    {
+      "device_id": "yamaha-mg10xu",
+      "what": "official product page URL",
+      "searched": "usa.yamaha.com/products/proaudio/mixers/mg_xu/ redirects to /products/proaudio/mixers/ (MG Series still listed there); search budget exhausted"
+    },
+    {
+      "device_id": "behringer-xenyx-x1204usb",
+      "what": "official Behringer product page and manual on behringer.com",
+      "searched": "only the Thomann-hosted copy of the Behringer EU operating/safety instructions was found; behringer.com pages could not be located without search (search budget exhausted)"
+    },
+    {
+      "device_id": "mackie-1604vlz4",
+      "what": "French owner's manual",
+      "searched": "mackie.com/en and mackie.com/fr 1604VLZ4 pages list only English, German and Spanish manuals"
+    },
+    {
+      "device_id": "mackie-profx12v3",
+      "what": "French owner's manual",
+      "searched": "mackie.com ProFX12v3 page lists English and German manuals only"
+    },
+    {
+      "device_id": "allen-heath-zed-22fx",
+      "what": "French user guide",
+      "searched": "allen-heath.com ZED Mid resources page lists English user guide only"
+    },
+    {
+      "device_id": "allen-heath-zed-436",
+      "what": "French user guide; second (non-manufacturer) source",
+      "searched": "allen-heath.com ZED Max resources page (English only); thomann.de/intl/allen_heath_zed_436.htm returned an error; search budget exhausted"
+    },
+    {
+      "device_id": "soundcraft-signature-12-mtk",
+      "what": "French user guide; year of discontinuation",
+      "searched": "soundcraft.com/en Signature 12 MTK page (marked Discontinued, lists English user guide); search budget exhausted"
+    },
+    {
+      "device_id": "soundcraft-gb4",
+      "what": "French user guide; year introduced",
+      "searched": "soundcraft.com/en/products/gb4 downloads (English and Spanish user guides, English datasheet)"
+    },
+    {
+      "device_id": "ssl-origin",
+      "what": "year introduced; French manual",
+      "searched": "solidstatelogic.com/products/origin, ORIGIN brochure and user guide V2.0 (no launch year stated); search budget exhausted"
+    },
+    {
+      "device_id": "audient-asp8024-he",
+      "what": "year introduced; frame sizes; French manual",
+      "searched": "audient.com ASP8024-HE overview page and manual V1 (manual says the ASP8024 has been in production for nearly 20 years, no exact year)"
+    },
+    {
+      "device_id": "api-1608-ii",
+      "what": "year introduced for the -II revision; EIN/noise specs",
+      "searched": "apiaudio.com 1608-II page and 1608-II/2448 user manual 2026-09-17 (states original 1608 released 2008; no mic-pre noise spec found)"
+    },
+    {
+      "device_id": "ams-neve-8424",
+      "what": "year introduced",
+      "searched": "ams-neve.com 8424 page and user manual issue 5.3; Thomann lists 'available since April 2023' only"
+    },
+    {
+      "device_id": "ssl-4000-e",
+      "what": "whole device (historic in-line console)",
+      "searched": "solidstatelogic.com/our-history gives SL 4000 E introduction 1979 but no specifications; search budget exhausted, so not added"
+    },
+    {
+      "device_id": "midas-venice-f",
+      "what": "whole device (status and specs)",
+      "searched": "midasconsoles.com homepage renders by JavaScript, no product links; search budget exhausted"
+    },
+    {
+      "device_id": "allen-heath-gl2400",
+      "what": "whole device (status and specs)",
+      "searched": "allen-heath.com current hardware pages only; legacy page not reachable without search (budget exhausted)"
+    }
   ],
   "devices": [
     {
@@ -32,7 +96,13 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A very common entry-level 10-input mixer in schools, small venues and home studios; it shows the basic chain of gain, pad, HPF, EQ, aux/FX send and stereo bus in a compact layout.",
-      "typical_uses": ["small PA", "rehearsal room", "podcast / streaming", "classroom sound", "home recording"],
+      "typical_uses": [
+        "small PA",
+        "rehearsal room",
+        "podcast / streaming",
+        "classroom sound",
+        "home recording"
+      ],
       "key_specs": {
         "input_channels": "10 canaux ; mono [MIC/LINE] : 4, stéréo [LINE] : 3",
         "mic_preamps": "4 (mono [MIC/LINE] channels 1-4, XLR/jack combo)",
@@ -55,33 +125,158 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic/line input ch 1-4 (combo, XLR part)", "dir": "in", "signal": "mic-level", "count": 4 },
-        { "connector": "trs-quarter", "role": "mic/line input ch 1-4 (combo, jack part)", "dir": "in", "signal": "line-level-pro", "count": 4 },
-        { "connector": "trs-quarter", "role": "stereo line inputs ch 5/6 to 9/10 (L, R)", "dir": "in", "signal": "line-level-pro", "count": 6 },
-        { "connector": "rca", "role": "stereo line inputs (RCA pin) on stereo channels", "dir": "in", "signal": "line-level-consumer", "count": "not stated" },
-        { "connector": "xlr3-m", "role": "STEREO OUT L/R (XLR)", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "STEREO OUT L/R (jack), MONITOR OUT L/R, FX/AUX SEND", "dir": "out", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "trs-quarter", "role": "PHONES", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "ts-quarter", "role": "FOOT SW (effects on/off)", "dir": "in", "signal": "gpio-tally", "count": 1 },
-        { "connector": "usb-b", "role": "USB 2.0 audio to computer", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "dc-barrel", "role": "AC ADAPTOR IN (locking connector for PA-10 adaptor)", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line input ch 1-4 (combo, XLR part)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "mic/line input ch 1-4 (combo, jack part)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "stereo line inputs ch 5/6 to 9/10 (L, R)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 6
+        },
+        {
+          "connector": "rca",
+          "role": "stereo line inputs (RCA pin) on stereo channels",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": "not stated"
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "STEREO OUT L/R (XLR)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "STEREO OUT L/R (jack), MONITOR OUT L/R, FX/AUX SEND",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "PHONES",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "FOOT SW (effects on/off)",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB 2.0 audio to computer",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "AC ADAPTOR IN (locking connector for PA-10 adaptor)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "phantom-48v", "usb-audio", "headphone-level"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "usb-audio",
+        "headphone-level"
+      ],
       "manual_url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
       "datasheet_url": "not found",
       "product_page_url": "not found",
-      "manual_languages": ["fr"],
+      "manual_languages": [
+        "fr"
+      ],
       "manuals": [
-        { "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf", "title": "MG10XU/MG10X/MG10 Console de mixage – Mode d'emploi", "language": "fr", "file_type": "pdf", "version_or_date": "Published 03/2024, LBEM-B0", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "title": "MG10XU/MG10X/MG10 Console de mixage – Mode d'emploi",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "Published 03/2024, LBEM-B0",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf", "publisher": "Yamaha Corporation", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs", "connectors", "signal_types", "technology"] },
-        { "url": "https://www.thomannmusic.com/yamaha_mg10_xu.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.mic_preamps", "key_specs.phantom_power", "key_specs.usb_audio", "key_specs.aux_sends", "key_specs.dimensions", "key_specs.weight", "status"] },
-        { "url": "https://usa.yamaha.com/products/proaudio/mixers/", "publisher": "Yamaha Corporation of America", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "publisher": "Yamaha Corporation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors",
+            "signal_types",
+            "technology"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomannmusic.com/yamaha_mg10_xu.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.mic_preamps",
+            "key_specs.phantom_power",
+            "key_specs.usb_audio",
+            "key_specs.aux_sends",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/mixers/",
+          "publisher": "Yamaha Corporation of America",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Cross-checked: Thomann lists 4 mic inputs with +48V, channels 1-2 with compressor, 1 aux way, USB-B 2 in/2 out, 244 x 71 x 294 mm, 2.1 kg, matching the Yamaha manual. Thomann lists the item as available since March 2014 (retailer date, not used as year_introduced). Status 'current' is based on the MG Series still being listed on Yamaha USA's analog mixer page and on sale at Thomann; the MG10XU itself was not confirmed on a Yamaha product page. The power inlet is a locking connector for an AC adaptor (38 V AC centre-tap), mapped to dc-barrel as the closest id. The RCA count was not stated in the manual (stereo channels 5/6 and 7/8 accept RCA, jack takes priority).",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Combo XLR/jack inputs, single global phantom switch, RCA consumer inputs and USB make it a good first-mixer wiring and gain-staging lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Combo XLR/jack inputs, single global phantom switch, RCA consumer inputs and USB make it a good first-mixer wiring and gain-staging lesson."
+      },
+      "manual_url_status": "ok"
     },
     {
       "id": "behringer-xenyx-x1204usb",
@@ -93,7 +288,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A low-cost 12-channel mixer widely sold for small PA and home recording; useful to show an ALT 3-4 bus, aux pre/post switching and an RCA tape/2-track loop.",
-      "typical_uses": ["small PA", "rehearsal room", "home recording", "conference / speech"],
+      "typical_uses": [
+        "small PA",
+        "rehearsal room",
+        "home recording",
+        "conference / speech"
+      ],
       "key_specs": {
         "channels": "12 Channels",
         "mic_inputs": "4",
@@ -113,32 +313,158 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic inputs ch 1-4", "dir": "in", "signal": "mic-level", "count": 4 },
-        { "connector": "trs-quarter", "role": "line inputs (balanced) mono channels", "dir": "in", "signal": "line-level-pro", "count": 4 },
-        { "connector": "trs-quarter", "role": "stereo channel inputs", "dir": "in", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "ts-quarter", "role": "AUX SEND outputs (unbalanced mono jack)", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "rca", "role": "CD/Tape In", "dir": "in", "signal": "line-level-consumer", "count": 2 },
-        { "connector": "rca", "role": "CD/Tape Out", "dir": "out", "signal": "line-level-consumer", "count": 2 },
-        { "connector": "xlr3-m", "role": "main mix output", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "phones (stereo jack, unbalanced)", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "usb-b", "role": "USB audio", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "iec-c14", "role": "mains in (Kaltgeräteanschluss)", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic inputs ch 1-4",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "line inputs (balanced) mono channels",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "stereo channel inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "AUX SEND outputs (unbalanced mono jack)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "CD/Tape In",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "CD/Tape Out",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "main mix output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "phones (stereo jack, unbalanced)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB audio",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (Kaltgeräteanschluss)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "phantom-48v", "usb-audio", "headphone-level", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "usb-audio",
+        "headphone-level",
+        "mains-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "not found",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.thomannmusic.com/behringer_xenyx_x1204_usb.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.channels", "key_specs.mic_inputs", "key_specs.stereo_inputs", "key_specs.aux_sends", "key_specs.groups", "key_specs.inserts", "key_specs.phantom_power", "key_specs.dimensions", "key_specs.weight", "connectors", "status"] },
-        { "url": "https://fast-images.static-thomann.de/pics/atg/atgdata/document/manual/243148_1204usb_x1204usb_p0794_oi_eu.pdf", "publisher": "Behringer document (EU operating/safety instructions) hosted by Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.mic_ein", "key_specs.mic_gain_range", "key_specs.frequency_response", "key_specs.usb_audio", "key_specs.dsp", "key_specs.power", "key_specs.dimensions", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://www.thomannmusic.com/behringer_xenyx_x1204_usb.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.mic_inputs",
+            "key_specs.stereo_inputs",
+            "key_specs.aux_sends",
+            "key_specs.groups",
+            "key_specs.inserts",
+            "key_specs.phantom_power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://fast-images.static-thomann.de/pics/atg/atgdata/document/manual/243148_1204usb_x1204usb_p0794_oi_eu.pdf",
+          "publisher": "Behringer document (EU operating/safety instructions) hosted by Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.mic_ein",
+            "key_specs.mic_gain_range",
+            "key_specs.frequency_response",
+            "key_specs.usb_audio",
+            "key_specs.dsp",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The Behringer specification table was read from a Behringer EU multilingual operating-instruction booklet hosted on Thomann's server (German section quoted; no English or French section in that booklet), so it is not listed as an official manual. Thomann lists it as available since February 2010 (retailer date). The '-129 dB 130,5 dB' EIN is copied as printed (two figures side by side). Status 'current' is based only on the retailer listing.",
       "conflicts": [
-        { "field": "key_specs.weight", "values": [ { "value": "2.8 kg (feature list) / 3,8 kg (spec table)", "source_url": "https://www.thomannmusic.com/behringer_xenyx_x1204_usb.htm" }, { "value": "2,8 kg, 6,2 lbs", "source_url": "https://fast-images.static-thomann.de/pics/atg/atgdata/document/manual/243148_1204usb_x1204usb_p0794_oi_eu.pdf" } ], "note": "Thomann's own page is internally inconsistent; Behringer booklet says 2,8 kg." }
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "2.8 kg (feature list) / 3,8 kg (spec table)",
+              "source_url": "https://www.thomannmusic.com/behringer_xenyx_x1204_usb.htm"
+            },
+            {
+              "value": "2,8 kg, 6,2 lbs",
+              "source_url": "https://fast-images.static-thomann.de/pics/atg/atgdata/document/manual/243148_1204usb_x1204usb_p0794_oi_eu.pdf"
+            }
+          ],
+          "note": "Thomann's own page is internally inconsistent; Behringer booklet says 2,8 kg."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Shows RCA tape loop vs balanced XLR main out and an ALT 3-4 bus, but overlaps with the Yamaha MG10XU lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Shows RCA tape loop vs balanced XLR main out and an ALT 3-4 bus, but overlaps with the Yamaha MG10XU lesson."
+      }
     },
     {
       "id": "mackie-profx12v3",
@@ -150,7 +476,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Current version of Mackie's popular ProFX line; a 12-channel mixer with channel inserts, a sub 1-2 bus and USB, which makes it a compact teaching desk for sends, subgroups and recording.",
-      "typical_uses": ["small PA", "houses of worship", "home recording", "live streaming"],
+      "typical_uses": [
+        "small PA",
+        "houses of worship",
+        "home recording",
+        "live streaming"
+      ],
       "key_specs": {
         "channels": "12-Channel Mixer",
         "mic_inputs": "7",
@@ -172,35 +503,195 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic inputs", "dir": "in", "signal": "mic-level", "count": 7 },
-        { "connector": "trs-quarter-unbalanced-insert", "role": "channel inserts", "dir": "bidir", "signal": "insert-send-return", "count": 4 },
-        { "connector": "trs-35mm", "role": "1/8 in stereo line input (ch 11/12)", "dir": "in", "signal": "line-level-consumer", "count": 1 },
-        { "connector": "xlr3-m", "role": "main mix outputs", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "mon send, FX send, sub outs, control room outs", "dir": "out", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "trs-quarter", "role": "FX footswitch", "dir": "in", "signal": "gpio-tally", "count": 1 },
-        { "connector": "usb-b", "role": "USB audio interface", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "iec-c14", "role": "mains in (3-pin IEC)", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic inputs",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 7
+        },
+        {
+          "connector": "trs-quarter-unbalanced-insert",
+          "role": "channel inserts",
+          "dir": "bidir",
+          "signal": "insert-send-return",
+          "count": 4
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "1/8 in stereo line input (ch 11/12)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "main mix outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "mon send, FX send, sub outs, control room outs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "FX footswitch",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB audio interface",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (3-pin IEC)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "instrument-hiz", "phantom-48v", "usb-audio", "headphone-level", "mains-power", "insert-send-return"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "instrument-hiz",
+        "phantom-48v",
+        "usb-audio",
+        "headphone-level",
+        "mains-power",
+        "insert-send-return"
+      ],
       "manual_url": "https://mackie.com/img/file_resources/ProFXv3_Series_OM2024July.pdf",
       "datasheet_url": "https://mackie.com/img/file_resources/ProFXv3_SS.pdf",
       "product_page_url": "https://mackie.com/en/products/mixers/profxv3-series/ProFX12v3.html",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://mackie.com/img/file_resources/ProFXv3_Series_OM2024July.pdf", "title": "ProFXv3 Series Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "July 2024 (per filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://mackie.com/img/file_resources/ProFXv3_SS.pdf", "title": "ProFXv3 Series specification sheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://mackie.com/img/file_resources/ProFXv3_Series_OM2024July.pdf",
+          "title": "ProFXv3 Series Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "July 2024 (per filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/ProFXv3_SS.pdf",
+          "title": "ProFXv3 Series specification sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://mackie.com/img/file_resources/ProFXv3_SS.pdf", "publisher": "Mackie (LOUD Audio)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.ein", "key_specs.frequency_response", "key_specs.max_levels", "key_specs.phantom_power", "key_specs.usb_audio", "key_specs.effects", "key_specs.power", "key_specs.dimensions", "key_specs.weight"] },
-        { "url": "https://mackie.com/img/file_resources/ProFXv3_Series_OM2024July.pdf", "publisher": "Mackie (LOUD Audio)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.hybrid_channels", "key_specs.stereo_3_5mm_channel", "key_specs.compressor", "key_specs.aux_sends", "key_specs.groups", "connectors"] },
-        { "url": "https://mackie.com/en/products/mixers/profxv3-series/ProFX12v3.html", "publisher": "Mackie (LOUD Audio)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] },
-        { "url": "https://www.thomannmusic.com/mackie_profx12v3.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.channels", "key_specs.mic_inputs", "key_specs.inserts", "key_specs.phantom_power", "key_specs.dimensions", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://mackie.com/img/file_resources/ProFXv3_SS.pdf",
+          "publisher": "Mackie (LOUD Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.ein",
+            "key_specs.frequency_response",
+            "key_specs.max_levels",
+            "key_specs.phantom_power",
+            "key_specs.usb_audio",
+            "key_specs.effects",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/ProFXv3_Series_OM2024July.pdf",
+          "publisher": "Mackie (LOUD Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.hybrid_channels",
+            "key_specs.stereo_3_5mm_channel",
+            "key_specs.compressor",
+            "key_specs.aux_sends",
+            "key_specs.groups",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mackie.com/en/products/mixers/profxv3-series/ProFX12v3.html",
+          "publisher": "Mackie (LOUD Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomannmusic.com/mackie_profx12v3.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.mic_inputs",
+            "key_specs.inserts",
+            "key_specs.phantom_power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Dimensions and weight match between Mackie and Thomann. Mic count (7) is from Thomann and agrees with the Mackie manual's layout (mono channels 1-4 plus hybrid channels 5/6-9/10). Thomann lists it as available since November 2019 (retailer date). A ProFX12v3+ variant is also listed by Mackie.",
       "conflicts": [
-        { "field": "key_specs.usb_audio", "values": [ { "value": "2x4 USB I/O (spec sheet page 1); I/O: 1 Stereo Input, 2 Stereo Outputs (spec sheet table)", "source_url": "https://mackie.com/img/file_resources/ProFXv3_SS.pdf" }, { "value": "Audio Interface Input 4 / Output 2; feature list '2x 4 USB interface'", "source_url": "https://www.thomannmusic.com/mackie_profx12v3.htm" } ], "note": "Direction naming differs (mixer vs computer point of view); the 2-in/4-out vs 4-in/2-out labelling is not consistent between sources." }
+        {
+          "field": "key_specs.usb_audio",
+          "values": [
+            {
+              "value": "2x4 USB I/O (spec sheet page 1); I/O: 1 Stereo Input, 2 Stereo Outputs (spec sheet table)",
+              "source_url": "https://mackie.com/img/file_resources/ProFXv3_SS.pdf"
+            },
+            {
+              "value": "Audio Interface Input 4 / Output 2; feature list '2x 4 USB interface'",
+              "source_url": "https://www.thomannmusic.com/mackie_profx12v3.htm"
+            }
+          ],
+          "note": "Direction naming differs (mixer vs computer point of view); the 2-in/4-out vs 4-in/2-out labelling is not consistent between sources."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "TRS insert points, sub outs and a 3.5 mm consumer input on one small desk give clear insert-cable and level-matching exercises." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "TRS insert points, sub outs and a 3.5 mm consumer input on one small desk give clear insert-cable and level-matching exercises."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "soundcraft-signature-12-mtk",
@@ -212,7 +703,12 @@
       "year_introduced": 2015,
       "status": "discontinued",
       "why_it_is_a_classic": "A small analog desk whose USB interface records every channel separately, so it is a good bridge between live mixing and multitrack DAW recording; Soundcraft says it uses GB Series routing with subgroups.",
-      "typical_uses": ["small live gigs", "multitrack recording of rehearsals", "school studio", "houses of worship"],
+      "typical_uses": [
+        "small live gigs",
+        "multitrack recording of rehearsals",
+        "school studio",
+        "houses of worship"
+      ],
       "key_specs": {
         "channels": "12",
         "mic_preamps": "8 (Soundcraft Ghost Preamps)",
@@ -233,28 +729,131 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic inputs", "dir": "in", "signal": "mic-level", "count": 8 },
-        { "connector": "trs-quarter", "role": "line / Hi-Z inputs and outputs", "dir": "bidir", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "rca", "role": "phono analogue I/O", "dir": "bidir", "signal": "line-level-consumer", "count": "not stated" },
-        { "connector": "xlr3-m", "role": "mix outputs", "dir": "out", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "usb-b", "role": "multitrack USB audio", "dir": "bidir", "signal": "usb-audio", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic inputs",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 8
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "line / Hi-Z inputs and outputs",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "rca",
+          "role": "phono analogue I/O",
+          "dir": "bidir",
+          "signal": "line-level-consumer",
+          "count": "not stated"
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "mix outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "usb-b",
+          "role": "multitrack USB audio",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "instrument-hiz", "phantom-48v", "usb-audio", "headphone-level"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "instrument-hiz",
+        "phantom-48v",
+        "usb-audio",
+        "headphone-level"
+      ],
       "manual_url": "https://www.soundcraft.com/en/product_documents/soundcraft_signature_10-12_user_guide-pdf-d6480890-ea64-4908-b40c-3d462f8e359c",
       "datasheet_url": "not found",
       "product_page_url": "https://www.soundcraft.com/en/products/signature-12-mtk",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.soundcraft.com/en/product_documents/soundcraft_signature_10-12_user_guide-pdf-d6480890-ea64-4908-b40c-3d462f8e359c", "title": "Soundcraft Signature 10, 12 & 12MTK User Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.soundcraft.com/en/product_documents/soundcraft_signature_10-12_user_guide-pdf-d6480890-ea64-4908-b40c-3d462f8e359c",
+          "title": "Soundcraft Signature 10, 12 & 12MTK User Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.soundcraft.com/en/products/signature-12-mtk", "publisher": "Soundcraft (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.channels", "key_specs.mic_preamps", "key_specs.aux_sends", "key_specs.subgroups", "key_specs.eq", "key_specs.dbx_limiters", "key_specs.effects", "key_specs.phantom_power"] },
-        { "url": "https://www.soundcraft.com/en/product_documents/soundcraft_signature_10-12_user_guide-pdf-d6480890-ea64-4908-b40c-3d462f8e359c", "publisher": "Soundcraft (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usb_audio", "key_specs.frequency_response", "key_specs.ein", "key_specs.max_levels", "key_specs.power_consumption", "key_specs.dimensions", "key_specs.weight", "connectors"] },
-        { "url": "https://www.soundcraft.com/en/news/soundcraft-takes-analog-into-the-21st-century-with-signature-22-and-signature-12-multi-track-recording-mixing-consoles", "publisher": "Soundcraft (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["year_introduced"] }
+        {
+          "url": "https://www.soundcraft.com/en/products/signature-12-mtk",
+          "publisher": "Soundcraft (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.channels",
+            "key_specs.mic_preamps",
+            "key_specs.aux_sends",
+            "key_specs.subgroups",
+            "key_specs.eq",
+            "key_specs.dbx_limiters",
+            "key_specs.effects",
+            "key_specs.phantom_power"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundcraft.com/en/product_documents/soundcraft_signature_10-12_user_guide-pdf-d6480890-ea64-4908-b40c-3d462f8e359c",
+          "publisher": "Soundcraft (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.usb_audio",
+            "key_specs.frequency_response",
+            "key_specs.ein",
+            "key_specs.max_levels",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundcraft.com/en/news/soundcraft-takes-analog-into-the-21st-century-with-signature-22-and-signature-12-multi-track-recording-mixing-consoles",
+          "publisher": "Soundcraft (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Soundcraft's product page marks the Signature 12 MTK as Discontinued; the Signature Plus series (12/16/22/32) is listed as its successor family. Year 2015 comes from the date (January 22, 2015) on Soundcraft's announcement page for the Signature 22 and 12 MTK; marked secondary because only the page date was read. No channel inserts are described in the user manual. The user manual says the console uses XLR, jack and phono for analogue I/O; exact counts per connector type were not extracted.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Good for multitrack USB recording and subgroup lessons; fewer distinctive connectors (no inserts)." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Good for multitrack USB recording and subgroup lessons; fewer distinctive connectors (no inserts)."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "allen-heath-zed-22fx",
@@ -266,7 +865,12 @@
       "year_introduced": 2008,
       "status": "current",
       "why_it_is_a_classic": "A 16-mic-input 2-bus desk still sold after its 2008 launch, common for bands, small venues and rental; it shows per-channel inserts, aux pre/post use and USB stereo recording.",
-      "typical_uses": ["band live sound", "small venue FOH", "rental", "school concerts"],
+      "typical_uses": [
+        "band live sound",
+        "small venue FOH",
+        "rental",
+        "school concerts"
+      ],
       "key_specs": {
         "mono_channels": "16 mic/line channels with inserts",
         "stereo_inputs": "3 dual stereo Eingänge (Thomann); three stereo line inputs (Sound On Sound)",
@@ -284,34 +888,181 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mono channel mic inputs", "dir": "in", "signal": "mic-level", "count": 16 },
-        { "connector": "trs-quarter", "role": "mono channel line inputs", "dir": "in", "signal": "line-level-pro", "count": 16 },
-        { "connector": "trs-quarter-unbalanced-insert", "role": "channel and L/R insert points (TRS)", "dir": "bidir", "signal": "insert-send-return", "count": "16 + L/R" },
-        { "connector": "trs-quarter", "role": "stereo inputs (jack sockets)", "dir": "in", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "rca", "role": "stereo input (phono sockets), Alt and Rec outputs (phono)", "dir": "bidir", "signal": "line-level-consumer", "count": "not stated" },
-        { "connector": "xlr3-m", "role": "L, R main outputs", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "Mono output (jack), Aux outputs (jack)", "dir": "out", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "usb-b", "role": "USB audio (Type A-B lead supplied)", "dir": "bidir", "signal": "usb-audio", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mono channel mic inputs",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 16
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "mono channel line inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 16
+        },
+        {
+          "connector": "trs-quarter-unbalanced-insert",
+          "role": "channel and L/R insert points (TRS)",
+          "dir": "bidir",
+          "signal": "insert-send-return",
+          "count": "16 + L/R"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "stereo inputs (jack sockets)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "rca",
+          "role": "stereo input (phono sockets), Alt and Rec outputs (phono)",
+          "dir": "bidir",
+          "signal": "line-level-consumer",
+          "count": "not stated"
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "L, R main outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Mono output (jack), Aux outputs (jack)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB audio (Type A-B lead supplied)",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "phantom-48v", "usb-audio", "headphone-level", "insert-send-return"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "usb-audio",
+        "headphone-level",
+        "insert-send-return"
+      ],
       "manual_url": "https://www.allen-heath.com/content/uploads/2023/06/AP7085_3-ZED12FX_ZED16FX_ZED22FX-User-Guide-Issue-3.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://www.allen-heath.com/hardware/zed-series/zed-mid/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/AP7085_3-ZED12FX_ZED16FX_ZED22FX-User-Guide-Issue-3.pdf", "title": "ZED-12FX, 16FX & 22FX User Guide (AP7085 Issue 3)", "language": "en", "file_type": "pdf", "version_or_date": "Issue 3", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/AP7085_3-ZED12FX_ZED16FX_ZED22FX-User-Guide-Issue-3.pdf",
+          "title": "ZED-12FX, 16FX & 22FX User Guide (AP7085 Issue 3)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Issue 3",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/AP7085_3-ZED12FX_ZED16FX_ZED22FX-User-Guide-Issue-3.pdf", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.phantom_power", "key_specs.mic_gain_range", "key_specs.mic_input_level", "key_specs.frequency_response", "key_specs.ein", "key_specs.usb_audio", "key_specs.weight", "key_specs.width", "connectors"] },
-        { "url": "https://www.allen-heath.com/hardware/zed-series/zed-mid/", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.mono_channels", "key_specs.aux_sends", "key_specs.inserts", "key_specs.usb_audio"] },
-        { "url": "https://www.thomann.de/de/allenheath_zed22fx.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.mono_channels", "key_specs.stereo_inputs", "key_specs.aux_sends", "key_specs.mic_gain_range", "key_specs.phantom_power", "key_specs.weight"] },
-        { "url": "https://www.soundonsound.com/news/frankfurt-2008-allen-heath-zed-series-video", "publisher": "Sound On Sound", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "trade-press", "covers": ["year_introduced", "key_specs.stereo_inputs"] }
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/AP7085_3-ZED12FX_ZED16FX_ZED22FX-User-Guide-Issue-3.pdf",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.phantom_power",
+            "key_specs.mic_gain_range",
+            "key_specs.mic_input_level",
+            "key_specs.frequency_response",
+            "key_specs.ein",
+            "key_specs.usb_audio",
+            "key_specs.weight",
+            "key_specs.width",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.allen-heath.com/hardware/zed-series/zed-mid/",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.mono_channels",
+            "key_specs.aux_sends",
+            "key_specs.inserts",
+            "key_specs.usb_audio"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.thomann.de/de/allenheath_zed22fx.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.mono_channels",
+            "key_specs.stereo_inputs",
+            "key_specs.aux_sends",
+            "key_specs.mic_gain_range",
+            "key_specs.phantom_power",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/news/frankfurt-2008-allen-heath-zed-series-video",
+          "publisher": "Sound On Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "year_introduced",
+            "key_specs.stereo_inputs"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Sound On Sound (published 20/3/08, Frankfurt Musikmesse 2008) reports the ZED 22FX as new and shipping that month. Allen & Heath's ZED Mid page still lists it. Thomann's spec table gives 4 aux ways (3 aux + FX send), matching A&H's '3 aux + internal FX bus'.",
       "conflicts": [
-        { "field": "key_specs.weight", "values": [ { "value": "10.5kg (23.1 lb) unpacked", "source_url": "https://www.allen-heath.com/content/uploads/2023/06/AP7085_3-ZED12FX_ZED16FX_ZED22FX-User-Guide-Issue-3.pdf" }, { "value": "Gewicht: 11,5 kg", "source_url": "https://www.thomann.de/de/allenheath_zed22fx.htm" } ], "note": "Retailer figure may include packaging or differ by revision." }
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "10.5kg (23.1 lb) unpacked",
+              "source_url": "https://www.allen-heath.com/content/uploads/2023/06/AP7085_3-ZED12FX_ZED16FX_ZED22FX-User-Guide-Issue-3.pdf"
+            },
+            {
+              "value": "Gewicht: 11,5 kg",
+              "source_url": "https://www.thomann.de/de/allenheath_zed22fx.htm"
+            }
+          ],
+          "note": "Retailer figure may include packaging or differ by revision."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "16 XLR + 16 TRS inserts + XLR mains with insert points: classic insert-cable (tip send / ring return) and stage-patch lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "16 XLR + 16 TRS inserts + XLR mains with insert points: classic insert-cable (tip send / ring return) and stage-patch lesson."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "allen-heath-zed-436",
@@ -323,7 +1074,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Largest model of Allen & Heath's current ZED analog range, with groups, matrix and direct outs, so it shows the full FOH bus structure (aux, group, matrix) on an affordable analog desk.",
-      "typical_uses": ["FOH for bands and venues", "theatre / events", "teaching subgroups and matrix"],
+      "typical_uses": [
+        "FOH for bands and venues",
+        "theatre / events",
+        "teaching subgroups and matrix"
+      ],
       "key_specs": {
         "mono_channels": "32 mic/line channels with inserts",
         "stereo_inputs": "ST1–ST4 stereo inputs shown on panel drawing",
@@ -342,30 +1097,141 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mono channel mic inputs", "dir": "in", "signal": "mic-level", "count": 32 },
-        { "connector": "trs-quarter", "role": "mono channel line inputs", "dir": "in", "signal": "line-level-pro", "count": 32 },
-        { "connector": "trs-quarter-unbalanced-insert", "role": "channel, group and L/R/M insert points", "dir": "bidir", "signal": "insert-send-return", "count": "not stated" },
-        { "connector": "trs-quarter", "role": "direct outs (TRS)", "dir": "out", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "trs-quarter", "role": "group, aux and matrix outputs", "dir": "out", "signal": "line-level-pro", "count": "4 group + 6 aux + 2 matrix" },
-        { "connector": "xlr3-m", "role": "L, R & Mono outputs", "dir": "out", "signal": "line-level-pro", "count": 3 },
-        { "connector": "rca", "role": "stereo input (phono), 2 Track input and output (phono)", "dir": "bidir", "signal": "line-level-consumer", "count": "not stated" },
-        { "connector": "usb-b", "role": "USB audio", "dir": "bidir", "signal": "usb-audio", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mono channel mic inputs",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 32
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "mono channel line inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 32
+        },
+        {
+          "connector": "trs-quarter-unbalanced-insert",
+          "role": "channel, group and L/R/M insert points",
+          "dir": "bidir",
+          "signal": "insert-send-return",
+          "count": "not stated"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "direct outs (TRS)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "group, aux and matrix outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "4 group + 6 aux + 2 matrix"
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "L, R & Mono outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 3
+        },
+        {
+          "connector": "rca",
+          "role": "stereo input (phono), 2 Track input and output (phono)",
+          "dir": "bidir",
+          "signal": "line-level-consumer",
+          "count": "not stated"
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB audio",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "phantom-48v", "usb-audio", "headphone-level", "insert-send-return"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "usb-audio",
+        "headphone-level",
+        "insert-send-return"
+      ],
       "manual_url": "https://www.allen-heath.com/content/uploads/2023/06/AP7028-ZED420-ZED428-ZED436-User-Guide-Issue-2.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://www.allen-heath.com/hardware/zed-series/zed-max/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/AP7028-ZED420-ZED428-ZED436-User-Guide-Issue-2.pdf", "title": "ZED-4 Bus User Guide (ZED420, ZED428, ZED436), AP7028 Issue 2", "language": "en", "file_type": "pdf", "version_or_date": "Issue 2", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/AP7028-ZED420-ZED428-ZED436-User-Guide-Issue-2.pdf",
+          "title": "ZED-4 Bus User Guide (ZED420, ZED428, ZED436), AP7028 Issue 2",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Issue 2",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.allen-heath.com/hardware/zed-series/zed-max/", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.mono_channels", "key_specs.aux_sends", "key_specs.groups", "key_specs.matrix", "key_specs.mic_gain_range", "key_specs.usb_audio"] },
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/AP7028-ZED420-ZED428-ZED436-User-Guide-Issue-2.pdf", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.stereo_inputs", "key_specs.inserts", "key_specs.direct_outs", "key_specs.phantom_power", "key_specs.frequency_response", "key_specs.ein", "key_specs.main_output_level", "key_specs.usb_audio", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://www.allen-heath.com/hardware/zed-series/zed-max/",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.mono_channels",
+            "key_specs.aux_sends",
+            "key_specs.groups",
+            "key_specs.matrix",
+            "key_specs.mic_gain_range",
+            "key_specs.usb_audio"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/AP7028-ZED420-ZED428-ZED436-User-Guide-Issue-2.pdf",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.stereo_inputs",
+            "key_specs.inserts",
+            "key_specs.direct_outs",
+            "key_specs.phantom_power",
+            "key_specs.frequency_response",
+            "key_specs.ein",
+            "key_specs.main_output_level",
+            "key_specs.usb_audio",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Cross-check is between two Allen & Heath documents (product page and user guide), not an independent source. The weight table in the user guide prints packed 22 kg and unpacked 26.5 kg for the ZED-436 (apparently swapped); values copied as printed.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Groups, matrix, direct outs and inserts on group and master: full FOH bus lesson with many distinct jack outputs." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Groups, matrix, direct outs and inserts on group and master: full FOH bus lesson with many distinct jack outputs."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "mackie-1604vlz4",
@@ -377,7 +1243,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Mackie describes the 1604 as 'an industry mainstay' found in broadcast and post facilities; the VLZ4 version keeps 16 mic pres, 16 inserts, 4 subgroups and 6 aux buses in a rack-mountable frame.",
-      "typical_uses": ["band live sound", "broadcast / post utility mixer", "multitrack recording via direct outs", "installed sound"],
+      "typical_uses": [
+        "band live sound",
+        "broadcast / post utility mixer",
+        "multitrack recording via direct outs",
+        "installed sound"
+      ],
       "key_specs": {
         "channels": "16 mono channels, each with Onyx mic pre, line input and insert",
         "mic_preamps": "16 boutique-quality Onyx mic preamps",
@@ -397,36 +1268,202 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic inputs", "dir": "in", "signal": "mic-level", "count": 16 },
-        { "connector": "trs-quarter", "role": "line inputs", "dir": "in", "signal": "line-level-pro", "count": 16 },
-        { "connector": "trs-quarter-unbalanced-insert", "role": "channel inserts and main L/R inserts", "dir": "bidir", "signal": "insert-send-return", "count": "16 + main" },
-        { "connector": "trs-quarter", "role": "direct outs ch 1-8", "dir": "out", "signal": "line-level-pro", "count": 8 },
-        { "connector": "trs-quarter", "role": "sub outs 1-4", "dir": "out", "signal": "line-level-pro", "count": 4 },
-        { "connector": "trs-quarter", "role": "aux send outputs 1-6", "dir": "out", "signal": "line-level-pro", "count": 6 },
-        { "connector": "trs-quarter", "role": "stereo returns 1-4 (L/R jacks)", "dir": "in", "signal": "line-level-pro", "count": "4 stereo pairs" },
-        { "connector": "trs-quarter", "role": "main outs L/R (1/4 in TRS) and mono out", "dir": "out", "signal": "line-level-pro", "count": 3 },
-        { "connector": "rca", "role": "tape in / tape out (unbalanced RCA)", "dir": "bidir", "signal": "line-level-consumer", "count": 4 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic inputs",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 16
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "line inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 16
+        },
+        {
+          "connector": "trs-quarter-unbalanced-insert",
+          "role": "channel inserts and main L/R inserts",
+          "dir": "bidir",
+          "signal": "insert-send-return",
+          "count": "16 + main"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "direct outs ch 1-8",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "sub outs 1-4",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "aux send outputs 1-6",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 6
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "stereo returns 1-4 (L/R jacks)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": "4 stereo pairs"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "main outs L/R (1/4 in TRS) and mono out",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 3
+        },
+        {
+          "connector": "rca",
+          "role": "tape in / tape out (unbalanced RCA)",
+          "dir": "bidir",
+          "signal": "line-level-consumer",
+          "count": 4
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "phantom-48v", "headphone-level", "insert-send-return", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "headphone-level",
+        "insert-send-return",
+        "mains-power"
+      ],
       "manual_url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
       "datasheet_url": "https://mackie.com/img/file_resources/1604VLZ4_SS.pdf",
       "product_page_url": "https://mackie.com/en/products/mixers/vlz4-series/1604VLZ4.html",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf", "title": "1604VLZ4 Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://mackie.com/img/file_resources/1604VLZ4_SS.pdf", "title": "1604VLZ4 Specification Sheet", "language": "en", "file_type": "pdf", "version_or_date": "Part No. SW0994 Rev. A 08/13", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "title": "1604VLZ4 Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_SS.pdf",
+          "title": "1604VLZ4 Specification Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Part No. SW0994 Rev. A 08/13",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://mackie.com/img/file_resources/1604VLZ4_SS.pdf", "publisher": "Mackie (LOUD Technologies)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.channels", "key_specs.mic_preamps", "key_specs.groups", "key_specs.stereo_returns", "key_specs.direct_outs", "key_specs.inserts", "key_specs.low_cut", "key_specs.ein", "key_specs.frequency_response", "key_specs.max_levels", "key_specs.power", "key_specs.dimensions", "key_specs.weight", "why_it_is_a_classic"] },
-        { "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf", "publisher": "Mackie (LOUD Technologies)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.aux_sends", "key_specs.phantom_power", "connectors"] },
-        { "url": "https://mackie.com/en/products/mixers/vlz4-series", "publisher": "Mackie (LOUD Audio)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] },
-        { "url": "https://www.thomannmusic.com/mackie_1604_vlz4.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.channels", "key_specs.aux_sends", "key_specs.groups", "key_specs.direct_outs", "key_specs.inserts", "key_specs.phantom_power", "key_specs.weight"] }
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_SS.pdf",
+          "publisher": "Mackie (LOUD Technologies)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.mic_preamps",
+            "key_specs.groups",
+            "key_specs.stereo_returns",
+            "key_specs.direct_outs",
+            "key_specs.inserts",
+            "key_specs.low_cut",
+            "key_specs.ein",
+            "key_specs.frequency_response",
+            "key_specs.max_levels",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
+          "publisher": "Mackie (LOUD Technologies)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.aux_sends",
+            "key_specs.phantom_power",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mackie.com/en/products/mixers/vlz4-series",
+          "publisher": "Mackie (LOUD Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomannmusic.com/mackie_1604_vlz4.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.aux_sends",
+            "key_specs.groups",
+            "key_specs.direct_outs",
+            "key_specs.inserts",
+            "key_specs.phantom_power",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Spec sheet copyright 2013 (Rev. A 08/13); Thomann lists it as available since September 2013 (retailer date), but no source states a launch year, so year_introduced is 'not found'. Mackie's VLZ4 series page still lists the 1604VLZ4. The Mackie spec sheet labels 433 mm as 'Height' and 129 mm as 'Depth' (copied as printed). Main outputs are described in the manual as 1/4 in jacks; the manual appendix also describes balanced XLR output wiring generically, so an XLR main output is not listed here.",
       "conflicts": [
-        { "field": "key_specs.aux_sends", "values": [ { "value": "Four aux sends (feature list); 1604VLZ4 has six aux sends via 5/6 shift", "source_url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf" }, { "value": "6 Aux sends (feature list) / Aux Ways 4 (spec table)", "source_url": "https://www.thomannmusic.com/mackie_1604_vlz4.htm" } ], "note": "Counting difference: four knobs per channel, six aux outputs." }
+        {
+          "field": "key_specs.aux_sends",
+          "values": [
+            {
+              "value": "Four aux sends (feature list); 1604VLZ4 has six aux sends via 5/6 shift",
+              "source_url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf"
+            },
+            {
+              "value": "6 Aux sends (feature list) / Aux Ways 4 (spec table)",
+              "source_url": "https://www.thomannmusic.com/mackie_1604_vlz4.htm"
+            }
+          ],
+          "note": "Counting difference: four knobs per channel, six aux outputs."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Direct outs, sub outs, 6 aux outputs, inserts and RCA tape loop: excellent multitrack and monitor-send patching lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Direct outs, sub outs, 6 aux outputs, inserts and RCA tape loop: excellent multitrack and monitor-send patching lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "soundcraft-gb4",
@@ -438,7 +1475,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A long-running Soundcraft FOH/monitor frame console designed by Graham Blyth; with 8 auxes, 4 groups, LCR mix and a 7x4 matrix it is the classic analog live-console layout taught in sound courses.",
-      "typical_uses": ["FOH in venues and churches", "monitor mixing (dual-mode)", "small touring", "theatre"],
+      "typical_uses": [
+        "FOH in venues and churches",
+        "monitor mixing (dual-mode)",
+        "small touring",
+        "theatre"
+      ],
       "key_specs": {
         "frame_sizes": "Available in frame sizes from 16 to 40 channels",
         "aux_sends": "8 Aux sends",
@@ -459,32 +1501,170 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mono input mic inputs (and stereo-channel mic pairs)", "dir": "in", "signal": "mic-level", "count": "per frame size" },
-        { "connector": "trs-quarter", "role": "line inputs (electronically balanced)", "dir": "in", "signal": "line-level-pro", "count": "per frame size" },
-        { "connector": "trs-quarter-unbalanced-insert", "role": "channel insert (TRS), group and L/R/C inserts", "dir": "bidir", "signal": "insert-send-return", "count": "per frame size" },
-        { "connector": "trs-quarter", "role": "direct outputs (mono inputs)", "dir": "out", "signal": "line-level-pro", "count": "per frame size" },
-        { "connector": "xlr3-m", "role": "group outputs and main mix outputs", "dir": "out", "signal": "line-level-pro", "count": "not stated" }
+        {
+          "connector": "xlr3-f",
+          "role": "mono input mic inputs (and stereo-channel mic pairs)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": "per frame size"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "line inputs (electronically balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": "per frame size"
+        },
+        {
+          "connector": "trs-quarter-unbalanced-insert",
+          "role": "channel insert (TRS), group and L/R/C inserts",
+          "dir": "bidir",
+          "signal": "insert-send-return",
+          "count": "per frame size"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "direct outputs (mono inputs)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "per frame size"
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "group outputs and main mix outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "headphone-level", "insert-send-return", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "headphone-level",
+        "insert-send-return",
+        "mains-power"
+      ],
       "manual_url": "https://www.soundcraft.com/en/product_documents/gb4-ug-v2zm0302-pdf",
       "datasheet_url": "https://www.soundcraft.com/en/product_documents/soundcraft-gb4-td-pdf",
       "product_page_url": "https://www.soundcraft.com/en/products/gb4",
-      "manual_languages": ["en", "es"],
+      "manual_languages": [
+        "en",
+        "es"
+      ],
       "manuals": [
-        { "url": "https://www.soundcraft.com/en/product_documents/gb4-ug-v2zm0302-pdf", "title": "GB4 User Guide", "language": "en", "file_type": "pdf", "version_or_date": "updated Apr 2026 (download listing)", "official": true, "kind": "user-manual" },
-        { "url": "https://www.soundcraft.com/en/product_documents/gb4-user-guide-spanish-pdf", "title": "GB4 User Guide (Spanish)", "language": "es", "file_type": "pdf", "version_or_date": "updated Apr 2026 (download listing)", "official": true, "kind": "user-manual" },
-        { "url": "https://www.soundcraft.com/en/product_documents/soundcraft-gb4-td-pdf", "title": "Soundcraft GB4 Technical Datasheet", "language": "en", "file_type": "pdf", "version_or_date": "updated Apr 2026 (download listing)", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.soundcraft.com/en/product_documents/gb4-ug-v2zm0302-pdf",
+          "title": "GB4 User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "updated Apr 2026 (download listing)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundcraft.com/en/product_documents/gb4-user-guide-spanish-pdf",
+          "title": "GB4 User Guide (Spanish)",
+          "language": "es",
+          "file_type": "pdf",
+          "version_or_date": "updated Apr 2026 (download listing)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundcraft.com/en/product_documents/soundcraft-gb4-td-pdf",
+          "title": "Soundcraft GB4 Technical Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "updated Apr 2026 (download listing)",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.soundcraft.com/en/product_documents/soundcraft-gb4-td-pdf", "publisher": "Soundcraft (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.aux_sends", "key_specs.groups", "key_specs.mute_groups", "key_specs.matrix", "key_specs.direct_outs", "key_specs.phantom_power", "key_specs.eq", "key_specs.ein", "key_specs.frequency_response", "key_specs.max_levels", "key_specs.height", "key_specs.weight", "key_specs.power"] },
-        { "url": "https://www.soundcraft.com/en/product_documents/gb4-ug-v2zm0302-pdf", "publisher": "Soundcraft (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.main_mix", "key_specs.inserts", "connectors"] },
-        { "url": "https://www.soundcraft.com/en/products/gb4", "publisher": "Soundcraft (HARMAN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.frame_sizes", "key_specs.matrix", "key_specs.mute_groups", "why_it_is_a_classic"] }
+        {
+          "url": "https://www.soundcraft.com/en/product_documents/soundcraft-gb4-td-pdf",
+          "publisher": "Soundcraft (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.aux_sends",
+            "key_specs.groups",
+            "key_specs.mute_groups",
+            "key_specs.matrix",
+            "key_specs.direct_outs",
+            "key_specs.phantom_power",
+            "key_specs.eq",
+            "key_specs.ein",
+            "key_specs.frequency_response",
+            "key_specs.max_levels",
+            "key_specs.height",
+            "key_specs.weight",
+            "key_specs.power"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundcraft.com/en/product_documents/gb4-ug-v2zm0302-pdf",
+          "publisher": "Soundcraft (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.main_mix",
+            "key_specs.inserts",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundcraft.com/en/products/gb4",
+          "publisher": "Soundcraft (HARMAN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.frame_sizes",
+            "key_specs.matrix",
+            "key_specs.mute_groups",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Listed under 'Analog Only > GB Series' on Soundcraft's site without a Discontinued tag. Datasheet text extraction shows the ohm sign as 'W' (font encoding); values here use Ω. Cross-check is between Soundcraft documents only (datasheet, user guide, product page).",
       "conflicts": [
-        { "field": "key_specs.frame_sizes", "values": [ { "value": "Available in frame sizes from 16 to 40 channels", "source_url": "https://www.soundcraft.com/en/products/gb4" }, { "value": "Width table lists 12, 16, 24, 32 and 40 channel frames", "source_url": "https://www.soundcraft.com/en/product_documents/soundcraft-gb4-td-pdf" } ], "note": "Datasheet includes a 12-channel width figure not mentioned on the product page." }
+        {
+          "field": "key_specs.frame_sizes",
+          "values": [
+            {
+              "value": "Available in frame sizes from 16 to 40 channels",
+              "source_url": "https://www.soundcraft.com/en/products/gb4"
+            },
+            {
+              "value": "Width table lists 12, 16, 24, 32 and 40 channel frames",
+              "source_url": "https://www.soundcraft.com/en/product_documents/soundcraft-gb4-td-pdf"
+            }
+          ],
+          "note": "Datasheet includes a 12-channel width figure not mentioned on the product page."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "LCR mains, groups, matrix and per-channel phantom: ideal for FOH/monitor routing and matrix-feed exercises." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "LCR mains, groups, matrix and per-channel phantom: ideal for FOH/monitor routing and matrix-feed exercises."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "ssl-origin",
@@ -496,7 +1676,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "SSL presents ORIGIN as carrying forward the 4000 Series in-line lineage (the SL 4000 E was introduced in 1979 according to SSL); its brochure quotes music schools (Stockholm Royal College of Music, Abbey Road Institute) using it for teaching.",
-      "typical_uses": ["recording / tracking", "analogue summing of DAW stems", "music schools", "mid-size commercial studios"],
+      "typical_uses": [
+        "recording / tracking",
+        "analogue summing of DAW stems",
+        "music schools",
+        "mid-size commercial studios"
+      ],
       "key_specs": {
         "channel_count": "16 mono in-line (ORIGIN 16) / 32 mono in-line (ORIGIN 32)",
         "total_inputs_to_mix": "56 (ORIGIN 16) / 88 (ORIGIN 32)",
@@ -518,30 +1703,158 @@
         "in_line_architecture": true
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "channel mic input (rear)", "dir": "in", "signal": "mic-level", "count": "16 / 32" },
-        { "connector": "dsub25", "role": "multichannel line I/O (channel/monitor inputs, direct outs, bus and group connections) on DB25", "dir": "bidir", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "xlr3-f", "role": "talkback mic input (front panel)", "dir": "in", "signal": "mic-level", "count": 1 },
-        { "connector": "trs-35mm", "role": "front-panel stereo monitor source input and external oscillator input", "dir": "in", "signal": "line-level-consumer", "count": 2 }
+        {
+          "connector": "xlr3-f",
+          "role": "channel mic input (rear)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": "16 / 32"
+        },
+        {
+          "connector": "dsub25",
+          "role": "multichannel line I/O (channel/monitor inputs, direct outs, bus and group connections) on DB25",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "talkback mic input (front panel)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "front-panel stereo monitor source input and external oscillator input",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 2
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "headphone-level", "insert-send-return", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "headphone-level",
+        "insert-send-return",
+        "mains-power"
+      ],
       "manual_url": "https://www.solidstatelogic.com/assets/uploads/downloads/SSL_Origin32_16_User_Guide_V2_0_p.pdf",
       "datasheet_url": "https://eu1.download.solidstatelogic.com/ORIGIN/SSL%20ORIGIN%20Series%20Brochure.pdf",
       "product_page_url": "https://www.solidstatelogic.com/products/origin",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.solidstatelogic.com/assets/uploads/downloads/SSL_Origin32_16_User_Guide_V2_0_p.pdf", "title": "SSL ORIGIN 32/16 User Guide V2.0", "language": "en", "file_type": "pdf", "version_or_date": "V2.0", "official": true, "kind": "user-manual" },
-        { "url": "https://www.solidstatelogic.com/assets/uploads/downloads/SSL_Origin16_32_Install_Guide_V2_0_p.pdf", "title": "SSL ORIGIN 16/32 Install Guide V2.0", "language": "en", "file_type": "pdf", "version_or_date": "V2.0", "official": true, "kind": "other" },
-        { "url": "https://eu1.download.solidstatelogic.com/ORIGIN/SSL%20ORIGIN%20Series%20Brochure.pdf", "title": "ORIGIN Series Brochure", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.solidstatelogic.com/assets/uploads/downloads/SSL_Origin32_16_User_Guide_V2_0_p.pdf",
+          "title": "SSL ORIGIN 32/16 User Guide V2.0",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V2.0",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.solidstatelogic.com/assets/uploads/downloads/SSL_Origin16_32_Install_Guide_V2_0_p.pdf",
+          "title": "SSL ORIGIN 16/32 Install Guide V2.0",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V2.0",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://eu1.download.solidstatelogic.com/ORIGIN/SSL%20ORIGIN%20Series%20Brochure.pdf",
+          "title": "ORIGIN Series Brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://eu1.download.solidstatelogic.com/ORIGIN/SSL%20ORIGIN%20Series%20Brochure.pdf", "publisher": "Solid State Logic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.channel_count", "key_specs.total_inputs_to_mix", "key_specs.mic_preamps", "key_specs.track_busses", "key_specs.sub_groups", "key_specs.mix_busses", "key_specs.aux_sends", "key_specs.channel_insert_points", "key_specs.direct_outputs", "key_specs.stereo_returns", "key_specs.eq", "key_specs.dimensions_origin_32", "key_specs.weight", "why_it_is_a_classic"] },
-        { "url": "https://www.solidstatelogic.com/assets/uploads/downloads/SSL_Origin32_16_User_Guide_V2_0_p.pdf", "publisher": "Solid State Logic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.phantom_power", "key_specs.mic_gain", "key_specs.ein", "key_specs.frequency_response", "connectors"] },
-        { "url": "https://www.solidstatelogic.com/products/origin", "publisher": "Solid State Logic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] },
-        { "url": "https://solidstatelogic.com/our-history", "publisher": "Solid State Logic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["why_it_is_a_classic"] }
+        {
+          "url": "https://eu1.download.solidstatelogic.com/ORIGIN/SSL%20ORIGIN%20Series%20Brochure.pdf",
+          "publisher": "Solid State Logic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.channel_count",
+            "key_specs.total_inputs_to_mix",
+            "key_specs.mic_preamps",
+            "key_specs.track_busses",
+            "key_specs.sub_groups",
+            "key_specs.mix_busses",
+            "key_specs.aux_sends",
+            "key_specs.channel_insert_points",
+            "key_specs.direct_outputs",
+            "key_specs.stereo_returns",
+            "key_specs.eq",
+            "key_specs.dimensions_origin_32",
+            "key_specs.weight",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.solidstatelogic.com/assets/uploads/downloads/SSL_Origin32_16_User_Guide_V2_0_p.pdf",
+          "publisher": "Solid State Logic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.phantom_power",
+            "key_specs.mic_gain",
+            "key_specs.ein",
+            "key_specs.frequency_response",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.solidstatelogic.com/products/origin",
+          "publisher": "Solid State Logic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://solidstatelogic.com/our-history",
+          "publisher": "Solid State Logic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "An ORIGIN EVO variant adds E-Series dynamics and a low-pass filter per channel; this entry covers the base ORIGIN 16/32. In-line: each channel has a small-fader channel path (typically recording) and a large-fader monitor path (DAW returns), with an insert per path. Exact DB25 connector count and pinout standard were not extracted from the user guide.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "The reference in-line console: channel vs monitor path, DB25 looms to the DAW interface and per-path inserts are core studio wiring lessons." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "The reference in-line console: channel vs monitor path, DB25 looms to the DAW interface and per-path inserts are core studio wiring lessons."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "audient-asp8024-he",
@@ -553,7 +1866,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Audient says the ASP8024 has been hand-built for nearly 20 years with thousands of consoles in use; its long/short-fader in-line layout and education programme make it a common teaching console.",
-      "typical_uses": ["recording studios", "music and audio schools", "tracking and mixing", "hybrid DAW studios"],
+      "typical_uses": [
+        "recording studios",
+        "music and audio schools",
+        "tracking and mixing",
+        "hybrid DAW studios"
+      ],
       "key_specs": {
         "architecture": "fully inline console (long and short faders give separate record and monitor balances on one strip)",
         "busses": "24 Buses (48 Buses with optional 48 Channel Bus Mod)",
@@ -569,28 +1887,125 @@
         "in_line_architecture": true
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "channel mic input (Neutrik XLR, rear connector panel)", "dir": "in", "signal": "mic-level", "count": "per channel" },
-        { "connector": "trs-quarter", "role": "line input and Tape/DAW input per channel", "dir": "in", "signal": "line-level-pro", "count": "2 per channel" },
-        { "connector": "trs-quarter", "role": "insert send/return (two insert points per channel)", "dir": "bidir", "signal": "line-level-pro", "count": "4 per channel" },
-        { "connector": "dsub25", "role": "multitrack bus outputs (3 x 8 tracks) and sub group outputs (Tascam DB25 standard)", "dir": "out", "signal": "line-level-pro", "count": 4 },
-        { "connector": "xlr3-f", "role": "talkback mic connector (+48V available)", "dir": "in", "signal": "mic-level", "count": 1 },
-        { "connector": "iec-c14", "role": "mains in (IEC power cable)", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "channel mic input (Neutrik XLR, rear connector panel)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": "per channel"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "line input and Tape/DAW input per channel",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": "2 per channel"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "insert send/return (two insert points per channel)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": "4 per channel"
+        },
+        {
+          "connector": "dsub25",
+          "role": "multitrack bus outputs (3 x 8 tracks) and sub group outputs (Tascam DB25 standard)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "talkback mic connector (+48V available)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (IEC power cable)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "headphone-level", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "headphone-level",
+        "mains-power"
+      ],
       "manual_url": "https://d9w4fhj63j193.cloudfront.net/ASP8024/2023/ASP8024-HE%20Manual%20V1%20(Cosmetic%20Update).pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://audient.com/products/consoles/asp8024-he/overview/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://d9w4fhj63j193.cloudfront.net/ASP8024/2023/ASP8024-HE%20Manual%20V1%20(Cosmetic%20Update).pdf", "title": "ASP8024-HE Manual V1 (Cosmetic Update)", "language": "en", "file_type": "pdf", "version_or_date": "V1, 2023 folder", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://d9w4fhj63j193.cloudfront.net/ASP8024/2023/ASP8024-HE%20Manual%20V1%20(Cosmetic%20Update).pdf",
+          "title": "ASP8024-HE Manual V1 (Cosmetic Update)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V1, 2023 folder",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://d9w4fhj63j193.cloudfront.net/ASP8024/2023/ASP8024-HE%20Manual%20V1%20(Cosmetic%20Update).pdf", "publisher": "Audient (manual linked from audient.com, hosted on Audient's CDN)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.architecture", "key_specs.busses", "key_specs.aux_sends", "key_specs.inserts", "key_specs.phantom_power", "key_specs.frequency_response", "key_specs.ein", "key_specs.thd", "key_specs.max_input", "key_specs.max_output", "key_specs.multitrack_bus_outputs", "connectors", "why_it_is_a_classic"] },
-        { "url": "https://audient.com/products/consoles/asp8024-he/overview/", "publisher": "Audient", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.architecture", "connectors"] }
+        {
+          "url": "https://d9w4fhj63j193.cloudfront.net/ASP8024/2023/ASP8024-HE%20Manual%20V1%20(Cosmetic%20Update).pdf",
+          "publisher": "Audient (manual linked from audient.com, hosted on Audient's CDN)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.architecture",
+            "key_specs.busses",
+            "key_specs.aux_sends",
+            "key_specs.inserts",
+            "key_specs.phantom_power",
+            "key_specs.frequency_response",
+            "key_specs.ein",
+            "key_specs.thd",
+            "key_specs.max_input",
+            "key_specs.max_output",
+            "key_specs.multitrack_bus_outputs",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://audient.com/products/consoles/asp8024-he/overview/",
+          "publisher": "Audient",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.architecture",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The product page states that on a standard console each channel has mic, line, tape input and two send/return connections, and that with the optional Patchbay module the inserts and Tape/DAW returns move to the patchbay. The page also has an 'Audient in Education' section. The manual's IEC mains mention is mapped to iec-c14 (inlet type not stated). Cross-check is between two Audient documents.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Two inserts per channel, Tascam DB25 bus outputs and long/short fader in-line routing; matches what students meet in school studios." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Two inserts per channel, Tascam DB25 bus outputs and long/short fader in-line routing; matches what students meet in school studios."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "api-1608-ii",
@@ -602,7 +2017,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "API says the 1608 (mkI and mkII) has been installed in over 600 studios; its own manual contrasts it with the in-line 2448, which makes it a useful example of a non-in-line studio console.",
-      "typical_uses": ["tracking with API preamps/EQ", "analogue summing", "commercial and project studios"],
+      "typical_uses": [
+        "tracking with API preamps/EQ",
+        "analogue summing",
+        "commercial and project studios"
+      ],
       "key_specs": {
         "frame_sizes": "16, 32, or 48 Input Channel Frame sizes",
         "architecture": "single audio path channels capable of recording or mixing, but not at the same time",
@@ -617,29 +2036,142 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "channel MIC INPUT (rear panel)", "dir": "in", "signal": "mic-level", "count": "per channel" },
-        { "connector": "xlr3-f", "role": "channel LINE INPUT (rear panel)", "dir": "in", "signal": "line-level-pro", "count": "per channel" },
-        { "connector": "dsub25", "role": "direct outputs, bus outputs 1-8, aux send outputs 1-8, stereo returns, insert send/return, preamp out / EQ in (female 25-pin D-sub)", "dir": "bidir", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "usb-a", "role": "automation USB (rear panel, label 'USB')", "dir": "bidir", "signal": "usb-audio", "count": "not stated" },
-        { "connector": "midi-din5", "role": "automation MIDI (rear panel label)", "dir": "bidir", "signal": "midi", "count": "not stated" }
+        {
+          "connector": "xlr3-f",
+          "role": "channel MIC INPUT (rear panel)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": "per channel"
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "channel LINE INPUT (rear panel)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": "per channel"
+        },
+        {
+          "connector": "dsub25",
+          "role": "direct outputs, bus outputs 1-8, aux send outputs 1-8, stereo returns, insert send/return, preamp out / EQ in (female 25-pin D-sub)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "usb-a",
+          "role": "automation USB (rear panel, label 'USB')",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": "not stated"
+        },
+        {
+          "connector": "midi-din5",
+          "role": "automation MIDI (rear panel label)",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": "not stated"
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "headphone-level", "insert-send-return"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "headphone-level",
+        "insert-send-return"
+      ],
       "manual_url": "https://apiaudio.com/wp-content/uploads/2026/09/1608-II-and-2448_user_2026-09-17.pdf",
       "datasheet_url": "https://apiaudio.com/wp-content/uploads/2024/09/1608-II_rear_2018-7-06.pdf",
       "product_page_url": "https://apiaudio.com/product/1608-ii-console/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://apiaudio.com/wp-content/uploads/2026/09/1608-II-and-2448_user_2026-09-17.pdf", "title": "API 1608-II and 2448 user manual", "language": "en", "file_type": "pdf", "version_or_date": "2026-09-17 (per filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://apiaudio.com/wp-content/uploads/2024/09/1608-II_rear_2018-7-06.pdf", "title": "1608-II rear panel drawing", "language": "en", "file_type": "pdf", "version_or_date": "2018-7-06 (per filename)", "official": true, "kind": "other" }
+        {
+          "url": "https://apiaudio.com/wp-content/uploads/2026/09/1608-II-and-2448_user_2026-09-17.pdf",
+          "title": "API 1608-II and 2448 user manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2026-09-17 (per filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://apiaudio.com/wp-content/uploads/2024/09/1608-II_rear_2018-7-06.pdf",
+          "title": "1608-II rear panel drawing",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2018-7-06 (per filename)",
+          "official": true,
+          "kind": "other",
+          "url_status": "blocked"
+        }
       ],
       "sources": [
-        { "url": "https://apiaudio.com/product/1608-ii-console/", "publisher": "API", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.frame_sizes", "key_specs.multitrack_buses", "key_specs.aux_buses", "key_specs.stereo_bus", "key_specs.stereo_returns", "key_specs.eq", "key_specs.direct_outputs", "key_specs.automation", "why_it_is_a_classic"] },
-        { "url": "https://apiaudio.com/wp-content/uploads/2026/09/1608-II-and-2448_user_2026-09-17.pdf", "publisher": "API", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.architecture", "key_specs.mic_preamp", "connectors", "why_it_is_a_classic"] },
-        { "url": "https://apiaudio.com/wp-content/uploads/2024/09/1608-II_rear_2018-7-06.pdf", "publisher": "API", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["connectors"] }
+        {
+          "url": "https://apiaudio.com/product/1608-ii-console/",
+          "publisher": "API",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.frame_sizes",
+            "key_specs.multitrack_buses",
+            "key_specs.aux_buses",
+            "key_specs.stereo_bus",
+            "key_specs.stereo_returns",
+            "key_specs.eq",
+            "key_specs.direct_outputs",
+            "key_specs.automation",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://apiaudio.com/wp-content/uploads/2026/09/1608-II-and-2448_user_2026-09-17.pdf",
+          "publisher": "API",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.architecture",
+            "key_specs.mic_preamp",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://apiaudio.com/wp-content/uploads/2024/09/1608-II_rear_2018-7-06.pdf",
+          "publisher": "API",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "connectors"
+          ],
+          "url_status": "blocked"
+        }
       ],
       "notes": "Classified under analog-studio-inline because that sub_type covers analog studio consoles, but the 1608-II itself is NOT in-line (API's manual says the 2448 is the in-line, dual-path model). The manual states the original API 1608 was released in 2008; the -II revision date was not found. USB/MIDI/HDMI/SMPTE LTC labels on the rear-panel drawing belong to the automation system; the USB connector type is not stated, usb-a used as placeholder. midi-din5 and midi are proposed ids.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["midi-din5"], "proposed_new_signals": ["midi"], "sim_value": "high", "sim_value_reason": "Separate XLR mic/line per channel plus D-sub looms for everything else; good contrast case 'split vs in-line' for students." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "midi-din5"
+        ],
+        "proposed_new_signals": [
+          "midi"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Separate XLR mic/line per channel plus D-sub looms for everything else; good contrast case 'split vs in-line' for students."
+      },
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "ams-neve-8424",
@@ -651,7 +2183,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A current small-format Neve console built around DAW summing: 24 dual-input channels but only two 1073 mic preamps, which shows students how modern hybrid consoles differ from classic large-format desks.",
-      "typical_uses": ["DAW summing and mixing", "hybrid project studios", "tracking with 1073 preamps", "music schools"],
+      "typical_uses": [
+        "DAW summing and mixing",
+        "hybrid project studios",
+        "tracking with 1073 preamps",
+        "music schools"
+      ],
       "key_specs": {
         "channels": "24 (dual input channel strip: Input A via D-Type, Input B via TRS)",
         "mic_preamps": "Dual 1073 Preamps (centre section)",
@@ -670,28 +2207,136 @@
         "in_line_architecture": false
       },
       "connectors": [
-        { "connector": "dsub25", "role": "Input A (DAW returns), 25-way D-Type per fader bank in sets of 8; Input C; direct outputs", "dir": "bidir", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "trs-quarter", "role": "Input B per channel (line level)", "dir": "in", "signal": "line-level-pro", "count": 24 },
-        { "connector": "trs-quarter", "role": "channel insert send and return (balanced)", "dir": "bidir", "signal": "line-level-pro", "count": 48 },
-        { "connector": "xlr3-m", "role": "1073 output XLR (rear)", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "rj45", "role": "COMMS ethernet (recall app / OPX control)", "dir": "bidir", "signal": "aoip", "count": 1 }
+        {
+          "connector": "dsub25",
+          "role": "Input A (DAW returns), 25-way D-Type per fader bank in sets of 8; Input C; direct outputs",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Input B per channel (line level)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 24
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "channel insert send and return (balanced)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": 48
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "1073 output XLR (rear)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "COMMS ethernet (recall app / OPX control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "instrument-hiz", "phantom-48v", "headphone-level", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "instrument-hiz",
+        "phantom-48v",
+        "headphone-level",
+        "mains-power"
+      ],
       "manual_url": "https://www.ams-neve.com/wp-content/uploads/2025/06/8424-User-Manual-Issue-5.3.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://www.ams-neve.com/consoles/small-format-consoles/neve-8424/",
-      "manual_languages": ["en", "fr"],
+      "manual_languages": [
+        "en",
+        "fr"
+      ],
       "manuals": [
-        { "url": "https://www.ams-neve.com/wp-content/uploads/2025/06/8424-User-Manual-Issue-5.3.pdf", "title": "8424 User Manual Issue 5.3 (includes English and French sections, e.g. 'Spécifications Audio')", "language": "multi", "file_type": "pdf", "version_or_date": "Issue 5.3", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.ams-neve.com/wp-content/uploads/2025/06/8424-User-Manual-Issue-5.3.pdf",
+          "title": "8424 User Manual Issue 5.3 (includes English and French sections, e.g. 'Spécifications Audio')",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "Issue 5.3",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.ams-neve.com/consoles/small-format-consoles/neve-8424/", "publisher": "AMS Neve", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "technology", "key_specs.channels", "key_specs.mic_preamps", "key_specs.aux_sends", "key_specs.groups", "key_specs.inserts", "key_specs.returns", "key_specs.500_series_slots"] },
-        { "url": "https://www.ams-neve.com/wp-content/uploads/2025/06/8424-User-Manual-Issue-5.3.pdf", "publisher": "AMS Neve", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.phantom_power", "key_specs.ein_1073", "key_specs.frequency_response_1073", "key_specs.headroom_1073", "key_specs.dimensions", "key_specs.weight", "key_specs.power", "connectors", "manual_languages"] },
-        { "url": "https://www.thomann.de/intl/ams_neve_8424.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.mic_preamps", "key_specs.aux_sends", "key_specs.phantom_power", "key_specs.dimensions", "key_specs.weight"] }
+        {
+          "url": "https://www.ams-neve.com/consoles/small-format-consoles/neve-8424/",
+          "publisher": "AMS Neve",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "technology",
+            "key_specs.channels",
+            "key_specs.mic_preamps",
+            "key_specs.aux_sends",
+            "key_specs.groups",
+            "key_specs.inserts",
+            "key_specs.returns",
+            "key_specs.500_series_slots"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.ams-neve.com/wp-content/uploads/2025/06/8424-User-Manual-Issue-5.3.pdf",
+          "publisher": "AMS Neve",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.phantom_power",
+            "key_specs.ein_1073",
+            "key_specs.frequency_response_1073",
+            "key_specs.headroom_1073",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.power",
+            "connectors",
+            "manual_languages"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomann.de/intl/ams_neve_8424.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.mic_preamps",
+            "key_specs.aux_sends",
+            "key_specs.phantom_power",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Not an in-line console in the classic sense: each channel has two selectable inputs (A = DAW via D-Type, B = TRS) rather than separate record and monitor paths. Thomann agrees on 2 mic inputs, 3 aux ways, 48 V, 1190 x 850 x 500 mm and 53 kg; Thomann lists it as available since April 2023 (retailer date). The COMMS ethernet port is a control network, not audio; 'aoip' is used as the closest signal id.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Good DAW-summing lesson (D-Type looms in, TRS inserts), but only two mic inputs limits tracking exercises." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Good DAW-summing lesson (D-Type looms in, TRS inserts), but only two mic inputs limits tracking exercises."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     }
   ]
 }

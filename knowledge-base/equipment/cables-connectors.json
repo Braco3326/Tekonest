@@ -113,7 +113,8 @@
           "file_type": "pdf",
           "version_or_date": "12.03.2008",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc3mxx.pdf",
@@ -122,7 +123,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/media/10098/download/01%20NEUTRIK%20Section%20XLR%20Connectors%20PG%20EN%20202202-V23_opt.pdf?v=7",
@@ -131,7 +133,8 @@
           "file_type": "pdf",
           "version_or_date": "202202-V23",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -145,7 +148,8 @@
             "key_specs",
             "connectors",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc3mxx.pdf",
@@ -161,7 +165,8 @@
             "key_specs.locking",
             "key_specs.lifetime",
             "key_specs.contact_resistance"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/XLR_connector",
@@ -171,7 +176,8 @@
           "kind": "other",
           "covers": [
             "key_specs.pin_assignment_balanced_audio"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/know-the-basics-about-phantom-power",
@@ -181,7 +187,8 @@
           "kind": "manufacturer",
           "covers": [
             "key_specs.phantom_power"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Pin assignment comes from Wikipedia, which cites EIA RS-297-A; the AES14 and IEC 60268-12 texts could not be reached (aes.org returned 403). Wikipedia also notes that some older US equipment used pin 3 hot. Neutrik's pages give no introduction year.",
@@ -193,7 +200,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "The basic XLR3 connector: gender, pin 2 hot, and phantom on pins 2/3 are core wiring lessons."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-nc3fxx",
@@ -257,7 +267,8 @@
           "file_type": "pdf",
           "version_or_date": "12.03.2008",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc3fxx.pdf",
@@ -266,7 +277,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/media/10098/download/01%20NEUTRIK%20Section%20XLR%20Connectors%20PG%20EN%20202202-V23_opt.pdf?v=7",
@@ -275,7 +287,8 @@
           "file_type": "pdf",
           "version_or_date": "202202-V23",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -289,7 +302,8 @@
             "key_specs",
             "connectors",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc3fxx.pdf",
@@ -305,7 +319,8 @@
             "key_specs.locking",
             "key_specs.lifetime",
             "key_specs.contact_resistance"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/XLR_connector",
@@ -315,7 +330,8 @@
           "kind": "other",
           "covers": [
             "key_specs.pin_assignment_balanced_audio"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/know-the-basics-about-phantom-power",
@@ -325,7 +341,8 @@
           "kind": "manufacturer",
           "covers": [
             "key_specs.phantom_power"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Pin assignment comes from Wikipedia, which cites EIA RS-297-A; the AES14 and IEC 60268-12 texts could not be reached (aes.org returned 403). Wikipedia also notes that some older US equipment used pin 3 hot. Neutrik's pages give no introduction year.",
@@ -337,7 +354,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "The basic XLR3 connector: gender, pin 2 hot, and phantom on pins 2/3 are core wiring lessons."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-nc5mxx",
@@ -395,7 +415,8 @@
           "file_type": "pdf",
           "version_or_date": "12.03.2008",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc5mxx.pdf",
@@ -404,7 +425,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -417,7 +439,8 @@
           "covers": [
             "key_specs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc5mxx.pdf",
@@ -431,7 +454,8 @@
             "key_specs.wire_size",
             "key_specs.locking",
             "key_specs.lifetime"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/XLR_connector",
@@ -441,7 +465,8 @@
           "kind": "other",
           "covers": [
             "typical_uses"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Rated current per contact (7.5 A) is lower than the 3-pole version (16 A) and the max wire size is smaller (1.0 mm²).",
@@ -453,7 +478,10 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Shows XLR5 vs XLR3 (DMX on XLR5) and the risk of confusing audio and DMX cables."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-np3x",
@@ -513,7 +541,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -526,7 +555,8 @@
           "covers": [
             "key_specs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/np3x.pdf",
@@ -539,7 +569,8 @@
             "key_specs.wire_size",
             "key_specs.lifetime",
             "key_specs.rated_voltage"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://content-files.shure.com/Pubs/audio-systems-guide-for-video-and-film-production/audio-systems-guide-for-video-and-film-production-english.pdf",
@@ -549,7 +580,8 @@
           "kind": "manufacturer",
           "covers": [
             "key_specs.usage_note"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Neutrik gives rated current and contact resistance as 'depends on mating connector'. No separate assembly manual was found on the product page. 'insert-send-return' is a proposed signal id.",
@@ -563,7 +595,9 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "TRS vs TS is a key balanced/unbalanced lesson (inserts, instruments, headphones)."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-np2x",
@@ -622,7 +656,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -635,7 +670,8 @@
           "covers": [
             "key_specs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/np2x.pdf",
@@ -648,7 +684,8 @@
             "key_specs.wire_size",
             "key_specs.lifetime",
             "key_specs.rated_voltage"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://content-files.shure.com/Pubs/audio-systems-guide-for-video-and-film-production/audio-systems-guide-for-video-and-film-production-english.pdf",
@@ -658,7 +695,8 @@
           "kind": "manufacturer",
           "covers": [
             "key_specs.usage_note"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Neutrik gives rated current and contact resistance as 'depends on mating connector'. No separate assembly manual was found on the product page.",
@@ -670,7 +708,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "TRS vs TS is a key balanced/unbalanced lesson (inserts, instruments, headphones)."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-nl4fxx-w-s",
@@ -728,7 +768,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -741,7 +782,8 @@
           "covers": [
             "key_specs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nl4fxx-w-s.pdf",
@@ -755,7 +797,8 @@
             "key_specs.wire_size",
             "key_specs.locking",
             "key_specs.lifetime"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nl4fx",
@@ -766,7 +809,8 @@
           "covers": [
             "status",
             "notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The older NL4FX (40 A rms continuous, Quick Lock latch, cable OD 7–14.5 mm) is marked discontinued on neutrik.com, which lists NL4FXX-W-S (6–12 mm) and NL4FXX-W-L (10–16 mm) as successors. No pin assignment (1+/1-/2+/2-) was found on the pages read.",
@@ -778,7 +822,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Speaker-level vs line-level and the 'never mains on speakON' rule."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-nl8fc",
@@ -834,7 +880,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -847,7 +894,8 @@
           "covers": [
             "key_specs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nl8fc.pdf",
@@ -862,7 +910,8 @@
             "key_specs.wire_size",
             "key_specs.locking",
             "key_specs.lifetime"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Status set to 'not found' because the product page states no lifecycle status and lists no successor. 'speakon-nl8' is a proposed connector id.",
@@ -876,7 +925,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Multi-way amp links; teaches that one 8-pole cable carries 4 speaker circuits."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-nac3f-true1-s",
@@ -933,7 +984,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -946,7 +998,8 @@
           "covers": [
             "key_specs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nac3f-true1-s.pdf",
@@ -960,7 +1013,8 @@
             "key_specs.wire_size",
             "key_specs.lifetime",
             "key_specs.dielectric_strength"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nac3fx-w-top",
@@ -971,7 +1025,8 @@
           "covers": [
             "notes",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The requested candidate NAC3FX-W-TOP (powerCON TRUE1 TOP) is marked phased out on neutrik.com with NAC3F-TRUE1-S named as replacement (TOP version: 16 A EU / 20 A US, 250 V AC, IP65 only with SCNAC-FX cover). Status of NAC3F-TRUE1-S is not stated on its page.",
@@ -983,7 +1038,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Mains link on powered speakers; breaking capacity vs classic blue/grey powerCON."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-ne8mx",
@@ -1039,7 +1096,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1052,7 +1110,8 @@
           "covers": [
             "key_specs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/ne8mx.pdf",
@@ -1064,7 +1123,8 @@
             "key_specs.cable_od",
             "key_specs.lifetime",
             "key_specs.insertion_force"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/ne8mc",
@@ -1074,7 +1134,8 @@
           "kind": "manufacturer",
           "covers": [
             "notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Requested candidate NE8MC is marked discontinued on neutrik.com (successor NE8MX). Neutrik's page lists no Cat rating, shielding or data rate for NE8MX; these depend on the RJ45 plug and cable used. Signal ids 'dante' and 'aes50' are proposed ids.",
@@ -1089,7 +1150,9 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "etherCON vs plain RJ45 and the Cat6 chassis non-intermating trap."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-no2-4fdw-a",
@@ -1153,7 +1216,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1166,7 +1230,8 @@
           "covers": [
             "key_specs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/no2-4fdw-a.pdf",
@@ -1179,7 +1244,8 @@
             "key_specs.locking",
             "key_specs.lifetime",
             "key_specs.rated_current_electrical_contacts"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Chosen as the opticalCON DUO representative because the cable-connector page could not be reached without search. Neutrik also lists an NAOBO breakout adapter kit and NAO2*-SFP-LC transceiver adapter as accessories. 'opticalcon', 'lc-fibre' and 'fibre-optical-transport' are proposed ids.",
@@ -1196,7 +1262,9 @@
         ],
         "sim_value": "medium",
         "sim_value_reason": "Introduces fibre (no electrical noise, long runs) and rugged vs bare LC connectors."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neutrik-nbnc75blp7",
@@ -1255,7 +1323,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1268,7 +1337,8 @@
           "covers": [
             "key_specs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neutrik.com/en/product/nbnc75blp7.pdf",
@@ -1282,7 +1352,8 @@
             "key_specs.cable_od",
             "key_specs.locking",
             "key_specs.lifetime"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Neutrik markets it for HD video; its use for word clock / MADI / AES-3id follows from the 75 Ω BNC interface, not from a Neutrik statement.",
@@ -1297,7 +1368,9 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "Word clock / MADI on BNC; 75 Ω vs 50 Ω RF BNC confusion."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "harting-han-e-06-f",
@@ -1357,7 +1430,8 @@
             "key_specs",
             "connectors",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.harting.com/en-GB/c/Industrial-connectors-Han-57904/Rectangular-connectors-57905/list",
@@ -1368,7 +1442,8 @@
           "covers": [
             "key_specs.rated_current",
             "key_specs.conductor_cross_section"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sommercable.com/en-gb/Products/Distribution-Systems/Stage-Multicores/",
@@ -1378,7 +1453,8 @@
           "kind": "manufacturer",
           "covers": [
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Only the 6-pole Han E insert was reachable; audio multicores usually use higher-pin-count Han inserts (e.g. Han E 24 / Han DD), which could not be located without search. The insert needs a separate hood/housing (not listed on the page). No datasheet PDF link appeared in the fetched page.",
@@ -1392,7 +1468,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Introduces multipin multicore terminations; 'multipin-harting' is a proposed id."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "sommer-sc-primus",
@@ -1446,7 +1523,8 @@
           "file_type": "pdf",
           "version_or_date": "14.10.2026",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1458,7 +1536,8 @@
           "kind": "manufacturer",
           "covers": [
             "key_specs"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/fb/ed/9e/1752679358/Datasheet_200-0151_pm_4448.pdf?ts=1791974806",
@@ -1472,7 +1551,8 @@
             "key_specs.capacitance_core_core",
             "key_specs.capacitance_core_shield",
             "key_specs.outer_diameter"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Sold as bulk cable; connectors are fitted by the user (typically XLR3). No max length is stated.",
@@ -1484,7 +1564,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Generic twisted-pair mic cable; contrasts with star-quad."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "canare-l-4e6s",
@@ -1533,7 +1615,8 @@
           "covers": [
             "key_specs",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Canare lists two capacitance values with footnotes (*) and (**) whose meaning was not shown in the fetched page (probably conductor-conductor vs conductor-shield; not confirmed). Spec sheet at canare.com/productspecsanddrawings was not opened.",
@@ -1545,7 +1628,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Star-quad wiring (pairs of conductors per XLR pin) is a useful advanced lesson."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "mogami-w2534",
@@ -1596,7 +1680,8 @@
           "file_type": "pdf",
           "version_or_date": "2019",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1609,7 +1694,8 @@
           "covers": [
             "key_specs",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The page writes the insulation as 'XLCPE' in the table and 'XLPE' in the text. Noise figures are measured with Mogami's own test methods. Tech catalogue PDF listed but not read.",
@@ -1621,7 +1707,8 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Same lesson as other quad cable; bulk cable only."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "sommer-meridian-mobile-sp225",
@@ -1670,7 +1757,8 @@
           "file_type": "pdf",
           "version_or_date": "12.06.2023",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1683,7 +1771,8 @@
           "covers": [
             "key_specs",
             "typical_uses"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/5c/cb/db/1752685392/Datasheet_425-0051_pm_4791.pdf?ts=1752685392",
@@ -1696,7 +1785,8 @@
             "key_specs.awg",
             "key_specs.conductor_resistance",
             "key_specs.outer_diameter"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Conductor resistance (7,5 Ω/km per conductor) is the figure to use for loss calculations; no maximum length is stated.",
@@ -1708,7 +1798,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Gauge/length vs loss and damping factor; fits speakON NL4 terminations."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sommer-sc-mistral-mcf08",
@@ -1761,7 +1853,8 @@
           "file_type": "pdf",
           "version_or_date": "07.12.2023",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1773,7 +1866,8 @@
           "kind": "manufacturer",
           "covers": [
             "key_specs"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/ca/8f/b1/1752678636/Datasheet_100-0101-08F_pm_5164.pdf?ts=1752678636",
@@ -1785,7 +1879,8 @@
             "key_specs.construction",
             "key_specs.outer_diameter",
             "key_specs.pairs"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The datasheet PDF repeats only construction, diameter and channel count; electrical values come from the product page only.",
@@ -1797,7 +1892,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Each pair is an independent balanced line; links to DB25 / multipin looms."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "mogami-w3080",
@@ -1843,7 +1940,8 @@
           "kind": "manufacturer",
           "covers": [
             "key_specs"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://mogamicable.com/pdf/MogamiCatalog.pdf",
@@ -1853,7 +1951,8 @@
           "kind": "manufacturer",
           "covers": [
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Replaces the requested Belden 1800F: belden.com returned HTTP 403 for every page. A ferrite-core variant W3080-FC is listed.",
@@ -1865,7 +1964,8 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "110 Ω AES3 vs ordinary mic cable on XLR: same connector, different cable impedance."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "canare-l-5cfb",
@@ -1916,7 +2016,8 @@
           "covers": [
             "key_specs",
             "typical_uses"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Replaces the requested Belden 1694A (belden.com blocked, HTTP 403). The impedance is stated by the page's 75 Ω category heading, not per model. Word clock/MADI/AES-3id use is inferred from the 75 Ω coax type, not a Canare statement.",
@@ -1931,7 +2032,8 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "75 Ω coax on BNC for word clock/MADI."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "sommer-sc-mercator-cat7-pur",
@@ -1981,7 +2083,8 @@
           "file_type": "pdf",
           "version_or_date": "26.06.2025",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1994,7 +2097,8 @@
           "covers": [
             "key_specs",
             "typical_uses"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/a3/69/fa/1752685267/Datasheet_581-0071_pm_5028.pdf",
@@ -2008,7 +2112,8 @@
             "key_specs.awg",
             "key_specs.outer_diameter",
             "key_specs.capacitance"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "No 'tactical' Cat cable was listed in the Sommer category fetched; SC-Mercator CAT.7 PUR is Sommer's mobile network cable. The page also lists 'Digital 110 Ω AES/EBU' as a property beside 100 Ω.",
@@ -2063,7 +2168,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Rugged Cat cable for AoIP; pairs with etherCON."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sommer-sc-octopus-g-4-os2",
@@ -2108,7 +2215,8 @@
           "file_type": "pdf",
           "version_or_date": "09.11.2020",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2121,7 +2229,8 @@
           "covers": [
             "key_specs",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/5f/8b/7d/1752680737/Datasheet_590-0321-04_pm_4813.pdf?ts=1753704065",
@@ -2133,7 +2242,8 @@
             "key_specs.fibres",
             "key_specs.fibre_type",
             "key_specs.outer_diameter"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Neither page nor datasheet gives attenuation per km or bend radius. Terminate with LC/opticalCON connectors (assembled by Sommer or a fibre specialist).",
@@ -2162,7 +2272,9 @@
         ],
         "sim_value": "medium",
         "sim_value_reason": "Fibre (galvanic isolation, km runs) vs copper Cat."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "mogami-gold-db25-xlrm",
@@ -2219,7 +2331,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2232,7 +2345,8 @@
           "covers": [
             "model",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://mogamicable.com/category/recording_interface/analog/",
@@ -2244,7 +2358,8 @@
             "key_specs.channels",
             "key_specs.pinout",
             "key_specs.lengths"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://mogamicable.com/pdf/MogamiCatalog.pdf",
@@ -2256,7 +2371,8 @@
             "key_specs.lengths",
             "key_specs.shell",
             "key_specs.pinout"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Mogami does not name the pinout standard; the catalogue distinguishes 'Tascam' and 'Yamaha' AES formats only for its digital DB25 cables. The XLR male end makes this an output-side loom (DB25 out to XLR inputs). Analog vs AES (digital) DB25 looms are not interchangeable.",
@@ -2268,7 +2384,8 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Already in catalog; DB25 pinout and channel-to-XLR mapping lesson."
-      }
+      },
+      "product_page_url_status": "ok"
     }
   ]
 }

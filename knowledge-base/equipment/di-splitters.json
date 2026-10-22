@@ -4,15 +4,51 @@
   "generated": "2026-10-22",
   "selection_rationale": "Radial Engineering boxes (JDI, J48, ProDI/ProD2, JPC, JS2, ProMS2, JCR) form the core because they are the usual rider/backline DI and splitter references and every one has an official manual, a smart sheet and a web spec page, which allows a two-source cross-check. Countryman Type 85 (which its own datasheet calls 'an industry standard'), Klark Teknik DN100 V2 and Behringer DI100 cover active DIs at three price points; Palmer PAN 01 is the common European budget passive DI. Ebtech Hum Eliminator and Radial JCR cover line isolation and re-amping. Together they cover every TekPractice impedance/level lesson: instrument hi-Z -> mic level, consumer -10 dBV (RCA / 3.5 mm) -> mic level, mic split with phantom return path, line -> instrument (re-amp) and unbalanced <-> balanced isolation.",
   "not_found_log": [
-    { "device_id": "radial-jdi", "what": "French manual (also for radial-j48, radial-prodi, radial-prod2, radial-jpc, radial-js2, radial-proms2, radial-jcr)", "searched": "radialeng.com/product-downloads lists English owner's manuals only" },
-    { "device_id": "bss-ar-133", "what": "Device dropped: no readable source", "searched": "bssaudio.com/en/products/ar-133 (TLS certificate error on fetch), thomann.fr guessed URLs 404; web search budget exhausted for the session" },
-    { "device_id": "palmer-pan-01", "what": "Official manual / datasheet PDF", "searched": "palmer-germany.com product page has no direct PDF; portal.adamhall.com/downloadcenter/article/PAN01 renders by JavaScript and returned no document links" },
-    { "device_id": "behringer-di100", "what": "Official manual / spec sheet PDF, input impedance, frequency response, weight", "searched": "behringer.com/products/0809-AAA (Downloads tab not rendered, no PDF URLs), behringer.com search 404; web search budget exhausted" },
-    { "device_id": "klark-teknik-dn100-v2", "what": "Official manual / spec sheet PDF, output impedance, dimensions, weight", "searched": "klarkteknik.com/products/0809-AAR (no PDF URLs in rendered page); web search budget exhausted" },
-    { "device_id": "countryman-type-85", "what": "French manual, year introduced", "searched": "countryman.com product page and its two downloads (datasheet, booklet), English only, no year stated" },
-    { "device_id": "ebtech-hum-eliminator-he-2", "what": "French manual, year introduced, current product page", "searched": "morleyproducts.com/ebtech-downloads/ (English owner's manual and spec sheet only); Ebtech support page says Ebtech products are discontinued" },
-    { "device_id": "radial-ox8-j", "what": "Device dropped: spec table not extractable from OX8 manual text", "searched": "radialeng.com OX8 manual PDF (OX8-Manual-WEB-06-2026.pdf), text extraction had no specification values" },
-    { "device_id": "*", "what": "year_introduced for all Radial devices except JCR", "searched": "Radial product pages, spec pages, smart sheets and manuals; only copyright dates found (not intro years)" }
+    {
+      "device_id": "radial-jdi",
+      "what": "French manual (also for radial-j48, radial-prodi, radial-prod2, radial-jpc, radial-js2, radial-proms2, radial-jcr)",
+      "searched": "radialeng.com/product-downloads lists English owner's manuals only"
+    },
+    {
+      "device_id": "bss-ar-133",
+      "what": "Device dropped: no readable source",
+      "searched": "bssaudio.com/en/products/ar-133 (TLS certificate error on fetch), thomann.fr guessed URLs 404; web search budget exhausted for the session"
+    },
+    {
+      "device_id": "palmer-pan-01",
+      "what": "Official manual / datasheet PDF",
+      "searched": "palmer-germany.com product page has no direct PDF; portal.adamhall.com/downloadcenter/article/PAN01 renders by JavaScript and returned no document links"
+    },
+    {
+      "device_id": "behringer-di100",
+      "what": "Official manual / spec sheet PDF, input impedance, frequency response, weight",
+      "searched": "behringer.com/products/0809-AAA (Downloads tab not rendered, no PDF URLs), behringer.com search 404; web search budget exhausted"
+    },
+    {
+      "device_id": "klark-teknik-dn100-v2",
+      "what": "Official manual / spec sheet PDF, output impedance, dimensions, weight",
+      "searched": "klarkteknik.com/products/0809-AAR (no PDF URLs in rendered page); web search budget exhausted"
+    },
+    {
+      "device_id": "countryman-type-85",
+      "what": "French manual, year introduced",
+      "searched": "countryman.com product page and its two downloads (datasheet, booklet), English only, no year stated"
+    },
+    {
+      "device_id": "ebtech-hum-eliminator-he-2",
+      "what": "French manual, year introduced, current product page",
+      "searched": "morleyproducts.com/ebtech-downloads/ (English owner's manual and spec sheet only); Ebtech support page says Ebtech products are discontinued"
+    },
+    {
+      "device_id": "radial-ox8-j",
+      "what": "Device dropped: spec table not extractable from OX8 manual text",
+      "searched": "radialeng.com OX8 manual PDF (OX8-Manual-WEB-06-2026.pdf), text extraction had no specification values"
+    },
+    {
+      "device_id": "*",
+      "what": "year_introduced for all Radial devices except JCR",
+      "searched": "Radial product pages, spec pages, smart sheets and manuals; only copyright dates found (not intro years)"
+    }
   ],
   "devices": [
     {
@@ -25,7 +61,13 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Radial calls the JDI 'the world's finest passive direct box'; its Jensen transformer gives galvanic isolation (ground-loop cure) and it handles hot keyboard and active-bass levels. It is a common reference passive DI on backline riders.",
-      "typical_uses": ["keyboards and synths", "active bass", "acoustic guitar with preamp", "stereo keyboard summed to mono (merge)", "tapping a guitar amp speaker output (speaker switch)"],
+      "typical_uses": [
+        "keyboards and synths",
+        "active bass",
+        "acoustic guitar with preamp",
+        "stereo keyboard summed to mono (merge)",
+        "tapping a guitar amp speaker output (speaker switch)"
+      ],
       "key_specs": {
         "type": "Passive Jensen Transformer equipped",
         "transformer": "JT-DB-EPC (web spec page) / Jensen JT-DBE (manual)",
@@ -47,35 +89,226 @@
         "dimensions": "3.5\" wide, 2\" high, 5.5\" deep (manual) / 5\" x 3.3\" x 1.8\" (127mm x 84.1mm x 45.5mm) (spec page)"
       },
       "connectors": [
-        { "connector": "ts-quarter", "role": "instrument INPUT (L input when MERGE on)", "dir": "in", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "ts-quarter", "role": "THRU to instrument amp (R input when MERGE on)", "dir": "bidir", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "xlr3-m", "role": "balanced mic-level output to mixer/snake", "dir": "out", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "ts-quarter",
+          "role": "instrument INPUT (L input when MERGE on)",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "THRU to instrument amp (R input when MERGE on)",
+          "dir": "bidir",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "balanced mic-level output to mixer/snake",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["instrument-hiz", "line-level-consumer", "speaker-level", "mic-level"],
+      "signal_types": [
+        "instrument-hiz",
+        "line-level-consumer",
+        "speaker-level",
+        "mic-level"
+      ],
       "manual_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf",
       "datasheet_url": "https://www.radialeng.com/wp-content/uploads/2017/12/Radial-SmartSheetBook-JDI.pdf",
       "product_page_url": "https://www.radialeng.com/product/jdi",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf", "title": "JDI Passive Direct Box User Guide", "language": "en", "file_type": "pdf", "version_or_date": "v2.7 / 06-2026", "official": true, "kind": "user-manual" },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2017/12/Radial-SmartSheetBook-JDI.pdf", "title": "JDI Smart Sheet", "language": "en", "file_type": "pdf", "version_or_date": "© 2018", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf",
+          "title": "JDI Passive Direct Box User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v2.7 / 06-2026",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2017/12/Radial-SmartSheetBook-JDI.pdf",
+          "title": "JDI Smart Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "© 2018",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.frequency_response", "key_specs.total_harmonic_distortion", "key_specs.phase_distortion", "key_specs.maximum_input_level", "key_specs.pad", "key_specs.ground_lift", "key_specs.polarity_reverse", "key_specs.merge", "key_specs.weight", "key_specs.dimensions", "connectors"] },
-        { "url": "https://www.radialeng.com/product/jdi/specifications/", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transformer", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.frequency_response", "key_specs.dynamic_range", "key_specs.power", "key_specs.weight", "key_specs.dimensions"] },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2017/12/Radial-SmartSheetBook-JDI.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transformer", "key_specs.speaker_pad", "key_specs.merge", "why_it_is_a_classic"] },
-        { "url": "https://www.radialeng.com/product/jdi", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transformer", "status"] },
-        { "url": "https://www.radialeng.com/product-downloads", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manual_url"] },
-        { "url": "https://www.thomann.fr/radial_engineering_jdi.htm", "publisher": "Thomann (FR)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["connectors", "key_specs.pad", "key_specs.ground_lift", "technology"] }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.total_harmonic_distortion",
+            "key_specs.phase_distortion",
+            "key_specs.maximum_input_level",
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "key_specs.polarity_reverse",
+            "key_specs.merge",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/jdi/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transformer",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range",
+            "key_specs.power",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2017/12/Radial-SmartSheetBook-JDI.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transformer",
+            "key_specs.speaker_pad",
+            "key_specs.merge",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/jdi",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transformer",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product-downloads",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manual_url"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomann.fr/radial_engineering_jdi.htm",
+          "publisher": "Thomann (FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "connectors",
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "technology"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Ground-lift logic per manual: going direct (no THRU) keep ground connected so the box is grounded at the console; lift only when the THRU feeds a grounded amp. Speaker mode requires both PAD and SPEAKER switches and must only be used in parallel with a real speaker load. Not to be used in speaker mode with bridged/balanced (often class-D) amp outputs.",
       "conflicts": [
-        { "field": "key_specs.transformer", "values": [ { "value": "Jensen JT-DBE", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf" }, { "value": "JT-DB-EPC", "source_url": "https://www.radialeng.com/product/jdi/specifications/" } ], "note": "Manual introduction vs web spec page and smart sheet." },
-        { "field": "key_specs.input_impedance", "values": [ { "value": "130k Ohm instrument input (feature list)", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf" }, { "value": "Unbalanced 140k Ohms typical (spec table)", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf" } ], "note": "Same manual states both; spec page says 140k Ohms." },
-        { "field": "key_specs.frequency_response", "values": [ { "value": "20Hz to 20kHz (+/- 0.2dB)", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf" }, { "value": "ruler-flat frequency response from 10Hz up to 40kHz", "source_url": "https://www.radialeng.com/wp-content/uploads/2017/12/Radial-SmartSheetBook-JDI.pdf" } ], "note": "Marketing range vs measured tolerance band." },
-        { "field": "key_specs.weight", "values": [ { "value": "1kg / 2.2lbs", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf" }, { "value": "1.55 lbs (703 grams)", "source_url": "https://www.radialeng.com/product/jdi/specifications/" } ] }
+        {
+          "field": "key_specs.transformer",
+          "values": [
+            {
+              "value": "Jensen JT-DBE",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf"
+            },
+            {
+              "value": "JT-DB-EPC",
+              "source_url": "https://www.radialeng.com/product/jdi/specifications/"
+            }
+          ],
+          "note": "Manual introduction vs web spec page and smart sheet."
+        },
+        {
+          "field": "key_specs.input_impedance",
+          "values": [
+            {
+              "value": "130k Ohm instrument input (feature list)",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf"
+            },
+            {
+              "value": "Unbalanced 140k Ohms typical (spec table)",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf"
+            }
+          ],
+          "note": "Same manual states both; spec page says 140k Ohms."
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "values": [
+            {
+              "value": "20Hz to 20kHz (+/- 0.2dB)",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf"
+            },
+            {
+              "value": "ruler-flat frequency response from 10Hz up to 40kHz",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2017/12/Radial-SmartSheetBook-JDI.pdf"
+            }
+          ],
+          "note": "Marketing range vs measured tolerance band."
+        },
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "1kg / 2.2lbs",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JDI-Manual-WEB-06-2026.pdf"
+            },
+            {
+              "value": "1.55 lbs (703 grams)",
+              "source_url": "https://www.radialeng.com/product/jdi/specifications/"
+            }
+          ]
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Reference passive DI: hi-Z instrument to balanced mic level, THRU to amp, pad, ground lift and polarity, all core wiring lessons." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Reference passive DI: hi-Z instrument to balanced mic level, THRU to amp, pad, ground lift and polarity, all core wiring lessons."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "radial-prodi",
@@ -87,7 +320,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Radial's smart sheet positions it as the affordable passive DI for regional sound companies and project studios, following the JDI. It is the budget passive DI often found in quantity in rental and venue stocks.",
-      "typical_uses": ["bass guitar", "acoustic guitar with active pickup", "keyboards", "consumer audio into a mic input"],
+      "typical_uses": [
+        "bass guitar",
+        "acoustic guitar with active pickup",
+        "keyboards",
+        "consumer audio into a mic input"
+      ],
       "key_specs": {
         "transformer": "Eclipse™ ET-DB2, 12:1 ratio",
         "input_impedance": "140K ohms (with 1kHz input)",
@@ -103,31 +341,171 @@
         "dimensions": "4.25\" x 2.75\" x 1.75\" (108 x 70 x 44mm)"
       },
       "connectors": [
-        { "connector": "ts-quarter", "role": "instrument input", "dir": "in", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "ts-quarter", "role": "thru-put to amplifier", "dir": "out", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "xlr3-m", "role": "balanced low-Z mic-level output", "dir": "out", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "ts-quarter",
+          "role": "instrument input",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "thru-put to amplifier",
+          "dir": "out",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "balanced low-Z mic-level output",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["instrument-hiz", "line-level-consumer", "mic-level"],
+      "signal_types": [
+        "instrument-hiz",
+        "line-level-consumer",
+        "mic-level"
+      ],
       "manual_url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf",
       "datasheet_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf",
       "product_page_url": "https://www.radialeng.com/product/prodi",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf", "title": "ProDI and ProD2 User Guide", "language": "en", "file_type": "pdf", "version_or_date": "02-2026", "official": true, "kind": "user-manual" },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf", "title": "ProDI / ProD2 Smart Sheet", "language": "en", "file_type": "pdf", "version_or_date": "© 2006", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf",
+          "title": "ProDI and ProD2 User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "02-2026",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf",
+          "title": "ProDI / ProD2 Smart Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "© 2006",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.frequency_response", "key_specs.total_harmonic_distortion", "key_specs.pad", "key_specs.ground_lift", "connectors"] },
-        { "url": "https://www.radialeng.com/product/prodi/specifications/", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transformer", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.frequency_response", "key_specs.maximum_input", "key_specs.dynamic_range", "key_specs.weight", "key_specs.dimensions", "key_specs.power", "connectors"] },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["why_it_is_a_classic", "key_specs.pad", "key_specs.ground_lift"] },
-        { "url": "https://www.radialeng.com/product/prodi", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.input_impedance", "status"] }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.total_harmonic_distortion",
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/prodi/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transformer",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.maximum_input",
+            "key_specs.dynamic_range",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "key_specs.power",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic",
+            "key_specs.pad",
+            "key_specs.ground_lift"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/prodi",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.input_impedance",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Manual FAQ: phantom power is ignored by the ProDI and blocked from reaching the connected source. Output is mic level, so it is quieter than a keyboard line output by design.",
       "conflicts": [
-        { "field": "key_specs.output_impedance", "values": [ { "value": "150 ohms", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf" }, { "value": "XLR balanced 600Ω mic-level output", "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf" } ], "note": "Manual and spec page say 150 ohms; older smart sheet says 600Ω." },
-        { "field": "key_specs.frequency_response", "values": [ { "value": "20Hz to 20kHz +/- 2.5dB", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf" }, { "value": "20Hz ~ 18.5KHz (± 0.2dB)", "source_url": "https://www.radialeng.com/product/prodi/specifications/" }, { "value": "linear frequency response from 20Hz to 18kHz", "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf" } ] }
+        {
+          "field": "key_specs.output_impedance",
+          "values": [
+            {
+              "value": "150 ohms",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf"
+            },
+            {
+              "value": "XLR balanced 600Ω mic-level output",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf"
+            }
+          ],
+          "note": "Manual and spec page say 150 ohms; older smart sheet says 600Ω."
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "values": [
+            {
+              "value": "20Hz to 20kHz +/- 2.5dB",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf"
+            },
+            {
+              "value": "20Hz ~ 18.5KHz (± 0.2dB)",
+              "source_url": "https://www.radialeng.com/product/prodi/specifications/"
+            },
+            {
+              "value": "linear frequency response from 20Hz to 18kHz",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf"
+            }
+          ]
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Simplest passive DI (pad + ground lift only): ideal first lesson on hi-Z to mic-level conversion and phantom blocking." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Simplest passive DI (pad + ground lift only): ideal first lesson on hi-Z to mic-level conversion and phantom blocking."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "radial-prod2",
@@ -139,7 +517,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Radial describes it as two ProDIs in one box for stereo keyboards, DJ gear and consumer hi-fi, which makes it the go-to stereo passive DI for keyboard positions.",
-      "typical_uses": ["stereo keyboards", "drum machines / samplers", "DJ mixer to PA", "consumer hi-fi to pro inputs"],
+      "typical_uses": [
+        "stereo keyboards",
+        "drum machines / samplers",
+        "DJ mixer to PA",
+        "consumer hi-fi to pro inputs"
+      ],
       "key_specs": {
         "transformer": "Eclipse ET-DB2, 12:1 ratio",
         "channels": "2",
@@ -155,32 +538,169 @@
         "dimensions": "5\" x 3.3\" x 1.8\" (127mm x 84.1mm x 45.5mm)"
       },
       "connectors": [
-        { "connector": "ts-quarter", "role": "L / R instrument inputs", "dir": "in", "signal": "instrument-hiz", "count": 2 },
-        { "connector": "ts-quarter", "role": "L / R thru-puts", "dir": "out", "signal": "instrument-hiz", "count": 2 },
-        { "connector": "xlr3-m", "role": "L / R balanced mic-level outputs", "dir": "out", "signal": "mic-level", "count": 2 }
+        {
+          "connector": "ts-quarter",
+          "role": "L / R instrument inputs",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 2
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "L / R thru-puts",
+          "dir": "out",
+          "signal": "instrument-hiz",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "L / R balanced mic-level outputs",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 2
+        }
       ],
-      "signal_types": ["instrument-hiz", "line-level-consumer", "mic-level"],
+      "signal_types": [
+        "instrument-hiz",
+        "line-level-consumer",
+        "mic-level"
+      ],
       "manual_url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf",
       "datasheet_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2-1.pdf",
       "product_page_url": "https://www.radialeng.com/product/prod2",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf", "title": "ProDI and ProD2 User Guide", "language": "en", "file_type": "pdf", "version_or_date": "02-2026", "official": true, "kind": "user-manual" },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2025/07/ProDI-ProD2-Manual-WEB-07-2025.pdf", "title": "ProDI and ProD2 User Guide (ProD2 download link)", "language": "en", "file_type": "pdf", "version_or_date": "07-2025", "official": true, "kind": "user-manual" },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2-1.pdf", "title": "ProDI / ProD2 Smart Sheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf",
+          "title": "ProDI and ProD2 User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "02-2026",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2025/07/ProDI-ProD2-Manual-WEB-07-2025.pdf",
+          "title": "ProDI and ProD2 User Guide (ProD2 download link)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "07-2025",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2-1.pdf",
+          "title": "ProDI / ProD2 Smart Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.radialeng.com/product/prod2/specifications/", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transformer", "key_specs.channels", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.frequency_response", "key_specs.maximum_input", "key_specs.dynamic_range", "key_specs.weight", "key_specs.dimensions", "key_specs.power"] },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["connectors", "key_specs.pad", "key_specs.ground_lift", "key_specs.input_impedance"] },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["why_it_is_a_classic", "connectors"] },
-        { "url": "https://www.radialeng.com/product/prod2", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status"] },
-        { "url": "https://www.radialeng.com/product-downloads", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manual_url"] }
+        {
+          "url": "https://www.radialeng.com/product/prod2/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transformer",
+            "key_specs.channels",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.maximum_input",
+            "key_specs.dynamic_range",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "key_specs.power"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/02/ProDI-ProD2-Manual-WEB-02-2026.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "connectors",
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "key_specs.input_impedance"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/prod2",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product-downloads",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manual_url"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "No merge/mono-sum function (unlike JDI/J48); the product page suggests using CH1 THRU to feed CH2 as a splitter. Radial's download page links two dates of the shared ProDI/ProD2 manual.",
       "conflicts": [
-        { "field": "key_specs.output_impedance", "values": [ { "value": "150 Ohms, balanced", "source_url": "https://www.radialeng.com/product/prod2/specifications/" }, { "value": "XLR balanced 600Ω mic-level output", "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf" } ] }
+        {
+          "field": "key_specs.output_impedance",
+          "values": [
+            {
+              "value": "150 Ohms, balanced",
+              "source_url": "https://www.radialeng.com/product/prod2/specifications/"
+            },
+            {
+              "value": "XLR balanced 600Ω mic-level output",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-prodi-prod2.pdf"
+            }
+          ]
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Stereo version of the ProDI: useful for keyboard L/R patching, but no new signal lesson beyond the ProDI." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Stereo version of the ProDI: useful for keyboard L/R patching, but no new signal lesson beyond the ProDI."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "palmer-pan-01",
@@ -192,7 +712,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Palmer is a German brand widely sold in Europe (Thomann FR lists it at 49 €), so the PAN 01 is a typical low-cost passive DI in French schools, venues and rental stock.",
-      "typical_uses": ["keyboards", "bass", "acoustic guitar", "line sources to mic inputs"],
+      "typical_uses": [
+        "keyboards",
+        "bass",
+        "acoustic guitar",
+        "line sources to mic inputs"
+      ],
       "key_specs": {
         "transformer_ratio": "10 : 1",
         "input_impedance": "(@ 60 Hz) 60k Ohm(s)",
@@ -207,25 +732,107 @@
         "dimensions": "110 x 73 x 42 mm"
       },
       "connectors": [
-        { "connector": "ts-quarter", "role": "input", "dir": "in", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "ts-quarter", "role": "link / thru output", "dir": "out", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "xlr3-m", "role": "balanced output", "dir": "out", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "ts-quarter",
+          "role": "input",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "link / thru output",
+          "dir": "out",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "balanced output",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["instrument-hiz", "line-level-consumer", "mic-level"],
+      "signal_types": [
+        "instrument-hiz",
+        "line-level-consumer",
+        "mic-level"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117", "publisher": "Palmer / Adam Hall", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.transformer_ratio", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.max_input_level", "key_specs.max_output_level", "key_specs.frequency_response", "key_specs.pad", "key_specs.ground_lift", "key_specs.weight", "key_specs.dimensions", "connectors", "status"] },
-        { "url": "https://www.thomann.fr/palmer_pan_01.htm", "publisher": "Thomann (FR)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.input_impedance", "key_specs.output_impedance", "key_specs.transformer_ratio", "key_specs.pad", "key_specs.ground_lift", "key_specs.power", "key_specs.dimensions", "connectors", "why_it_is_a_classic"] }
+        {
+          "url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117",
+          "publisher": "Palmer / Adam Hall",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.transformer_ratio",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.max_input_level",
+            "key_specs.max_output_level",
+            "key_specs.frequency_response",
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomann.fr/palmer_pan_01.htm",
+          "publisher": "Thomann (FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.transformer_ratio",
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Manufacturer lists the output connectors as '6.3 mm jack, XLR' (jack = THRU). Download centre (Adam Hall portal) did not render documents for this agent.",
       "conflicts": [
-        { "field": "key_specs.input_impedance", "values": [ { "value": "(@ 60 Hz) 60k Ohm(s)", "source_url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117" }, { "value": "Impédance d'entrée: 68 kOhm", "source_url": "https://www.thomann.fr/palmer_pan_01.htm" } ] }
+        {
+          "field": "key_specs.input_impedance",
+          "values": [
+            {
+              "value": "(@ 60 Hz) 60k Ohm(s)",
+              "source_url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117"
+            },
+            {
+              "value": "Impédance d'entrée: 68 kOhm",
+              "source_url": "https://www.thomann.fr/palmer_pan_01.htm"
+            }
+          ]
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Same lesson as the Radial passive DIs; useful as the cheap European variant with a -30 dB pad." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Same lesson as the Radial passive DIs; useful as the cheap European variant with a -30 dB pad."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "radial-j48",
@@ -237,7 +844,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Radial calls the J48 'the world's finest phantom-powered active DI'; its 9 V internal rail from 48 V phantom gives headroom for active basses and acoustics. Radial also uses it as the reference DI for recording the dry track in its re-amp workflow.",
-      "typical_uses": ["passive bass and guitar pickups", "active acoustic guitar", "keyboards and drum modules", "dry DI track for re-amping"],
+      "typical_uses": [
+        "passive bass and guitar pickups",
+        "active acoustic guitar",
+        "keyboards and drum modules",
+        "dry DI track for re-amping"
+      ],
       "key_specs": {
         "type": "Active 48V with switching supply",
         "input_impedance": "Unbalanced 220K-Ohms",
@@ -258,32 +870,185 @@
         "dimensions": "3.3\" x 5.0\" x 2\" (84 x 127 x 48mm)"
       },
       "connectors": [
-        { "connector": "ts-quarter", "role": "instrument input", "dir": "in", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "ts-quarter", "role": "thru-put to amp (second input when MERGE on)", "dir": "bidir", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "xlr3-m", "role": "balanced mic-level output; receives 48V phantom", "dir": "out", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "ts-quarter",
+          "role": "instrument input",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "thru-put to amp (second input when MERGE on)",
+          "dir": "bidir",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "balanced mic-level output; receives 48V phantom",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["instrument-hiz", "mic-level", "phantom-48v"],
+      "signal_types": [
+        "instrument-hiz",
+        "mic-level",
+        "phantom-48v"
+      ],
       "manual_url": "https://www.radialeng.com/wp-content/uploads/2026/03/J48-Manual-WEB-02-26.pdf",
       "datasheet_url": "https://www.radialeng.com/wp-content/uploads/2018/03/J48-SmartSheet-05-2021.pdf",
       "product_page_url": "https://www.radialeng.com/product/j48",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/03/J48-Manual-WEB-02-26.pdf", "title": "J48 User Guide", "language": "en", "file_type": "pdf", "version_or_date": "03-2026", "official": true, "kind": "user-manual" },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/03/J48-SmartSheet-05-2021.pdf", "title": "J48 Smart Sheet", "language": "en", "file_type": "pdf", "version_or_date": "05-2021", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/03/J48-Manual-WEB-02-26.pdf",
+          "title": "J48 User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "03-2026",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/03/J48-SmartSheet-05-2021.pdf",
+          "title": "J48 Smart Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "05-2021",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/03/J48-Manual-WEB-02-26.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.type", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.frequency_response", "key_specs.noise_floor", "key_specs.total_harmonic_distortion", "key_specs.maximum_input", "key_specs.pad", "key_specs.low_cut_filter", "key_specs.ground_lift", "key_specs.polarity_reverse", "key_specs.merge", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
-        { "url": "https://www.radialeng.com/product/j48/specifications/", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.input_impedance", "key_specs.output_impedance", "key_specs.frequency_response", "key_specs.dynamic_range", "key_specs.equivalent_input_noise", "key_specs.maximum_input", "key_specs.weight", "key_specs.dimensions", "connectors"] },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/03/J48-SmartSheet-05-2021.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["why_it_is_a_classic", "key_specs.output_impedance", "key_specs.low_cut_filter"] },
-        { "url": "https://www.radialeng.com/product/j48", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "technology"] },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JCReamp-user-guide-WEB-07-2026.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["why_it_is_a_classic"] }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/03/J48-Manual-WEB-02-26.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.type",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.noise_floor",
+            "key_specs.total_harmonic_distortion",
+            "key_specs.maximum_input",
+            "key_specs.pad",
+            "key_specs.low_cut_filter",
+            "key_specs.ground_lift",
+            "key_specs.polarity_reverse",
+            "key_specs.merge",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/j48/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range",
+            "key_specs.equivalent_input_noise",
+            "key_specs.maximum_input",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/03/J48-SmartSheet-05-2021.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic",
+            "key_specs.output_impedance",
+            "key_specs.low_cut_filter"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/j48",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "technology"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JCReamp-user-guide-WEB-07-2026.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Phantom only, no battery. Smart sheet says the XLR output 'will drive 1000 feet without appreciable noise'.",
       "conflicts": [
-        { "field": "key_specs.output_impedance", "values": [ { "value": "Balanced 600-Ohms", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/03/J48-Manual-WEB-02-26.pdf" }, { "value": "200Ω - XLR output", "source_url": "https://www.radialeng.com/product/j48/specifications/" } ] },
-        { "field": "key_specs.phase_deviation", "values": [ { "value": "1º @ 100Hz; 11º @ 20Hz", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/03/J48-Manual-WEB-02-26.pdf" }, { "value": "+10º at 20Hz | 0º at 1kHz | -1º at 20kHz", "source_url": "https://www.radialeng.com/product/j48/specifications/" } ] }
+        {
+          "field": "key_specs.output_impedance",
+          "values": [
+            {
+              "value": "Balanced 600-Ohms",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/03/J48-Manual-WEB-02-26.pdf"
+            },
+            {
+              "value": "200Ω - XLR output",
+              "source_url": "https://www.radialeng.com/product/j48/specifications/"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.phase_deviation",
+          "values": [
+            {
+              "value": "1º @ 100Hz; 11º @ 20Hz",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/03/J48-Manual-WEB-02-26.pdf"
+            },
+            {
+              "value": "+10º at 20Hz | 0º at 1kHz | -1º at 20kHz",
+              "source_url": "https://www.radialeng.com/product/j48/specifications/"
+            }
+          ]
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Active DI that only works when the console sends 48V phantom: perfect phantom-power fault-finding lesson next to the passive JDI." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Active DI that only works when the console sends 48V phantom: perfect phantom-power fault-finding lesson next to the passive JDI."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "countryman-type-85",
@@ -295,7 +1060,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Countryman's own datasheet calls it 'an industry standard with road-proven ruggedness'. Its 10 MΩ input suits piezo pickups, and the speaker mode accepts an amp's speaker output.",
-      "typical_uses": ["piezo / passive pickups", "electric and acoustic bass", "guitar amp speaker output tap", "keyboards"],
+      "typical_uses": [
+        "piezo / passive pickups",
+        "electric and acoustic bass",
+        "guitar amp speaker output tap",
+        "keyboards"
+      ],
       "key_specs": {
         "input_resistance": "10 MΩ in Pickup mode",
         "input_impedance_speaker_mode": "Speaker mode: 10kOhms (booklet)",
@@ -314,32 +1084,188 @@
         "dimensions": "1.75 in x 3 in x 5 in (45 mm x 77 mm x 127 mm)"
       },
       "connectors": [
-        { "connector": "ts-quarter", "role": "INST input (plugging in switches battery on)", "dir": "in", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "ts-quarter", "role": "AMP jack, parallel to INST", "dir": "out", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "xlr3-m", "role": "MIC OUTPUT", "dir": "out", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "ts-quarter",
+          "role": "INST input (plugging in switches battery on)",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "AMP jack, parallel to INST",
+          "dir": "out",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "MIC OUTPUT",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["instrument-hiz", "speaker-level", "mic-level", "phantom-48v"],
+      "signal_types": [
+        "instrument-hiz",
+        "speaker-level",
+        "mic-level",
+        "phantom-48v"
+      ],
       "manual_url": "https://countryman.com/download/184908/",
       "datasheet_url": "https://countryman.com/download/184911/",
       "product_page_url": "https://countryman.com/product/type-85-direct-box/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://countryman.com/download/184908/", "title": "Type 85 Booklet (FAQ, specifications, hook-up)", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://countryman.com/download/184911/", "title": "Type 85 Datasheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://countryman.com/download/184908/",
+          "title": "Type 85 Booklet (FAQ, specifications, hook-up)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://countryman.com/download/184911/",
+          "title": "Type 85 Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://countryman.com/download/184911/", "publisher": "Countryman Associates", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "why_it_is_a_classic", "key_specs.input_resistance", "key_specs.input_capacitance", "key_specs.frequency_response", "key_specs.noise_floor", "key_specs.voltage_gain", "key_specs.maximum_input_level", "key_specs.input_protection", "key_specs.rf_filtering", "key_specs.distortion", "key_specs.power", "key_specs.ground_lift", "key_specs.weight", "key_specs.dimensions", "connectors"] },
-        { "url": "https://countryman.com/download/184908/", "publisher": "Countryman Associates", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.input_impedance_speaker_mode", "key_specs.output_source_impedance", "key_specs.power", "connectors"] },
-        { "url": "https://countryman.com/product/type-85-direct-box/", "publisher": "Countryman Associates", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.power", "key_specs.voltage_gain", "key_specs.maximum_input_level", "key_specs.input_resistance", "key_specs.weight", "key_specs.dimensions", "status"] }
+        {
+          "url": "https://countryman.com/download/184911/",
+          "publisher": "Countryman Associates",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "key_specs.input_resistance",
+            "key_specs.input_capacitance",
+            "key_specs.frequency_response",
+            "key_specs.noise_floor",
+            "key_specs.voltage_gain",
+            "key_specs.maximum_input_level",
+            "key_specs.input_protection",
+            "key_specs.rf_filtering",
+            "key_specs.distortion",
+            "key_specs.power",
+            "key_specs.ground_lift",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://countryman.com/download/184908/",
+          "publisher": "Countryman Associates",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.input_impedance_speaker_mode",
+            "key_specs.output_source_impedance",
+            "key_specs.power",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://countryman.com/product/type-85-direct-box/",
+          "publisher": "Countryman Associates",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.power",
+            "key_specs.voltage_gain",
+            "key_specs.maximum_input_level",
+            "key_specs.input_resistance",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Inserting a plug in INST turns the battery on; on phantom, unplugging INST shorts the input to ground. Booklet says it runs on phantom as low as 24 V with the battery removed. Speaker mode: booklet says it distorts at the equivalent of 1,700 watts into 8 ohms.",
       "conflicts": [
-        { "field": "key_specs.voltage_gain", "values": [ { "value": "-10 dB in Pickup mode, -46 dB in Speaker mode", "source_url": "https://countryman.com/download/184911/" }, { "value": "Pickup mode: -12 dB, Speaker mode: -48 dB", "source_url": "https://countryman.com/download/184908/" } ] },
-        { "field": "key_specs.frequency_response", "values": [ { "value": "20 Hz to 20 kHz +- 1 dB", "source_url": "https://countryman.com/download/184911/" }, { "value": "20Hz to 20kHz ± 0.5dB", "source_url": "https://countryman.com/download/184908/" } ] },
-        { "field": "key_specs.power", "values": [ { "value": "400 hours from a single internal 9 V battery", "source_url": "https://countryman.com/download/184911/" }, { "value": "1.5mA from a 9V battery (300 HourLife)", "source_url": "https://countryman.com/download/184908/" } ] },
-        { "field": "key_specs.distortion", "values": [ { "value": ".018% THD @ 1 kHz and 1 V P-P in", "source_url": "https://countryman.com/download/184911/" }, { "value": "0.05% at 1kHz and 1Vpp. input", "source_url": "https://countryman.com/download/184908/" } ] }
+        {
+          "field": "key_specs.voltage_gain",
+          "values": [
+            {
+              "value": "-10 dB in Pickup mode, -46 dB in Speaker mode",
+              "source_url": "https://countryman.com/download/184911/"
+            },
+            {
+              "value": "Pickup mode: -12 dB, Speaker mode: -48 dB",
+              "source_url": "https://countryman.com/download/184908/"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "values": [
+            {
+              "value": "20 Hz to 20 kHz +- 1 dB",
+              "source_url": "https://countryman.com/download/184911/"
+            },
+            {
+              "value": "20Hz to 20kHz ± 0.5dB",
+              "source_url": "https://countryman.com/download/184908/"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.power",
+          "values": [
+            {
+              "value": "400 hours from a single internal 9 V battery",
+              "source_url": "https://countryman.com/download/184911/"
+            },
+            {
+              "value": "1.5mA from a 9V battery (300 HourLife)",
+              "source_url": "https://countryman.com/download/184908/"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.distortion",
+          "values": [
+            {
+              "value": ".018% THD @ 1 kHz and 1 V P-P in",
+              "source_url": "https://countryman.com/download/184911/"
+            },
+            {
+              "value": "0.05% at 1kHz and 1Vpp. input",
+              "source_url": "https://countryman.com/download/184908/"
+            }
+          ]
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Battery-or-phantom auto switching and pickup/speaker mode: teaches powering options and speaker-level to mic-level conversion." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Battery-or-phantom auto switching and pickup/speaker mode: teaches powering options and speaker-level to mic-level conversion."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "klark-teknik-dn100-v2",
@@ -351,7 +1277,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Klark Teknik's long-running DN-series active DI, widely available in Europe; the V2 adds an XLR line input with a different impedance, which shows how the input socket choice changes loading.",
-      "typical_uses": ["passive bass and guitar", "keyboards", "line-level equipment via XLR input", "amp output with -30 dB pad"],
+      "typical_uses": [
+        "passive bass and guitar",
+        "keyboards",
+        "line-level equipment via XLR input",
+        "amp output with -30 dB pad"
+      ],
       "key_specs": {
         "input_impedance": "20 kΩ (XLR input only) / nominal 1 MΩ (jack in a ¼\" TRS input)",
         "output_clip": "+10 dBu output into a 2 kΩ load",
@@ -361,23 +1292,82 @@
         "phantom_power": "+48 V phantom"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "parallel-connected XLR line input", "dir": "in", "signal": "line-level-pro", "count": 1 },
-        { "connector": "trs-quarter", "role": "¼\" TRS inputs (one doubles as link output)", "dir": "bidir", "signal": "instrument-hiz", "count": 2 },
-        { "connector": "xlr3-m", "role": "transformer output to console; receives phantom", "dir": "out", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "parallel-connected XLR line input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "¼\" TRS inputs (one doubles as link output)",
+          "dir": "bidir",
+          "signal": "instrument-hiz",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "transformer output to console; receives phantom",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["instrument-hiz", "line-level-pro", "mic-level", "phantom-48v"],
+      "signal_types": [
+        "instrument-hiz",
+        "line-level-pro",
+        "mic-level",
+        "phantom-48v"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.klarkteknik.com/products/0809-AAR",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.klarkteknik.com/products/0809-AAR", "publisher": "Klark Teknik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.input_impedance", "key_specs.output_clip", "key_specs.pad", "key_specs.ground_lift", "key_specs.frequency_response", "key_specs.phantom_power", "connectors", "status"] },
-        { "url": "https://www.klarkteknik.com/products?category_id=di-boxes", "publisher": "Klark Teknik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+        {
+          "url": "https://www.klarkteknik.com/products/0809-AAR",
+          "publisher": "Klark Teknik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.input_impedance",
+            "key_specs.output_clip",
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "key_specs.frequency_response",
+            "key_specs.phantom_power",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.klarkteknik.com/products?category_id=di-boxes",
+          "publisher": "Klark Teknik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Single source only (manufacturer web page); no PDF manual reachable. The output signal is listed as mic-level by inference from its use on console mic inputs; the page itself does not say 'mic level'.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Shows input impedance changing with the socket used (20 kΩ XLR vs 1 MΩ jack); otherwise similar to the J48." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Shows input impedance changing with the socket used (20 kΩ XLR vs 1 MΩ jack); otherwise similar to the J48."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "behringer-di100",
@@ -389,7 +1379,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Behringer positions it as an affordable professional DI; it is the budget active DI commonly found in schools and small venues.",
-      "typical_uses": ["keyboards", "bass and guitar", "guitar/bass amp speaker output", "school and rehearsal-room stock"],
+      "typical_uses": [
+        "keyboards",
+        "bass and guitar",
+        "guitar/bass amp speaker output",
+        "school and rehearsal-room stock"
+      ],
       "key_specs": {
         "pad": "Pad atténuateur -20, -40 dB (Thomann) / attenuation pad for input levels of up to +50 dB (Behringer)",
         "ground_lift": "ground-lift switch",
@@ -398,25 +1393,99 @@
         "dimensions": "95 x 127 x 41 mm"
       },
       "connectors": [
-        { "connector": "trs-quarter", "role": "input", "dir": "in", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "ts-quarter", "role": "LINK jack to on-stage amplifier", "dir": "out", "signal": "instrument-hiz", "count": 1 },
-        { "connector": "xlr3-m", "role": "balanced output", "dir": "out", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "trs-quarter",
+          "role": "input",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "LINK jack to on-stage amplifier",
+          "dir": "out",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "balanced output",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["instrument-hiz", "speaker-level", "mic-level", "phantom-48v"],
+      "signal_types": [
+        "instrument-hiz",
+        "speaker-level",
+        "mic-level",
+        "phantom-48v"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.behringer.com/products/0809-AAA",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.behringer.com/products/0809-AAA", "publisher": "Behringer", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.pad", "key_specs.ground_lift", "key_specs.speaker_input", "connectors", "why_it_is_a_classic", "status"] },
-        { "url": "https://www.thomann.fr/behringer_di100_ultra_di.htm", "publisher": "Thomann (FR)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.pad", "key_specs.ground_lift", "key_specs.power", "key_specs.dimensions", "connectors"] }
+        {
+          "url": "https://www.behringer.com/products/0809-AAA",
+          "publisher": "Behringer",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "key_specs.speaker_input",
+            "connectors",
+            "why_it_is_a_classic",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomann.fr/behringer_di100_ultra_di.htm",
+          "publisher": "Thomann (FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Input impedance, frequency response and weight not found. The manufacturer page text describes a 'balanced ¼\" TRS or XLR input'; Thomann lists 'Entrée jack, sortie jack et XLR'. Connectors here follow Thomann (jack in, jack link, XLR out); the jack type of the LINK output was not stated, ts-quarter used.",
       "conflicts": [
-        { "field": "connectors", "values": [ { "value": "balanced ¼\" TRS or XLR input, XLR output, ¼\" LINK", "source_url": "https://www.behringer.com/products/0809-AAA" }, { "value": "Entrée jack, sortie jack et XLR", "source_url": "https://www.thomann.fr/behringer_di100_ultra_di.htm" } ], "note": "Unclear whether an XLR input exists; check the official manual." }
+        {
+          "field": "connectors",
+          "values": [
+            {
+              "value": "balanced ¼\" TRS or XLR input, XLR output, ¼\" LINK",
+              "source_url": "https://www.behringer.com/products/0809-AAA"
+            },
+            {
+              "value": "Entrée jack, sortie jack et XLR",
+              "source_url": "https://www.thomann.fr/behringer_di100_ultra_di.htm"
+            }
+          ],
+          "note": "Unclear whether an XLR input exists; check the official manual."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Battery/phantom active DI students will meet in schools; teaching value overlaps with J48/Type 85." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Battery/phantom active DI students will meet in schools; teaching value overlaps with J48/Type 85."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "radial-jpc",
@@ -428,7 +1497,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Radial designed it specifically to connect computer sound cards and consumer gear (3.5 mm, RCA, jack) to pro mic inputs with ground-loop isolation, the classic laptop-playback DI on stage.",
-      "typical_uses": ["laptop / PC playback to PA", "CD / MP3 players", "video playback audio", "DJ mixer to mic inputs"],
+      "typical_uses": [
+        "laptop / PC playback to PA",
+        "CD / MP3 players",
+        "video playback audio",
+        "DJ mixer to mic inputs"
+      ],
       "key_specs": {
         "type": "Stereo active 48V phantom powered",
         "channels": "2",
@@ -446,34 +1520,202 @@
         "dimensions": "3.5\" wide, 2\" high, 5.5\" deep (manual) / 3.3\" x 5.0\" x 2\" (84 x 127 x 48mm) (spec page)"
       },
       "connectors": [
-        { "connector": "ts-quarter", "role": "dual 1/4\" inputs (stereo or two mono)", "dir": "in", "signal": "line-level-consumer", "count": 2 },
-        { "connector": "trs-35mm", "role": "3.5mm TRS stereo input for PC / laptop", "dir": "in", "signal": "line-level-consumer", "count": 1 },
-        { "connector": "rca", "role": "stereo RCA input (L/R)", "dir": "in", "signal": "line-level-consumer", "count": 2 },
-        { "connector": "rca", "role": "stereo RCA thru-puts (L/R)", "dir": "out", "signal": "line-level-consumer", "count": 2 },
-        { "connector": "xlr3-m", "role": "L / R balanced mic-level outputs, each needs 48V phantom", "dir": "out", "signal": "mic-level", "count": 2 }
+        {
+          "connector": "ts-quarter",
+          "role": "dual 1/4\" inputs (stereo or two mono)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "3.5mm TRS stereo input for PC / laptop",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "rca",
+          "role": "stereo RCA input (L/R)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "stereo RCA thru-puts (L/R)",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "L / R balanced mic-level outputs, each needs 48V phantom",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 2
+        }
       ],
-      "signal_types": ["line-level-consumer", "headphone-level", "mic-level", "phantom-48v"],
+      "signal_types": [
+        "line-level-consumer",
+        "headphone-level",
+        "mic-level",
+        "phantom-48v"
+      ],
       "manual_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf",
       "datasheet_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-jpc.pdf",
       "product_page_url": "https://www.radialeng.com/product/jpc",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf", "title": "JPC Stereo PC Direct Box User Guide", "language": "en", "file_type": "pdf", "version_or_date": "07-2026", "official": true, "kind": "user-manual" },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-jpc.pdf", "title": "JPC Smart Sheet", "language": "en", "file_type": "pdf", "version_or_date": "© 2009", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf",
+          "title": "JPC Stereo PC Direct Box User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "07-2026",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-jpc.pdf",
+          "title": "JPC Smart Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "© 2009",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.type", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.frequency_response", "key_specs.total_harmonic_distortion", "key_specs.maximum_input", "key_specs.output_level", "key_specs.pad", "key_specs.ground_lift", "key_specs.weight", "key_specs.dimensions", "connectors"] },
-        { "url": "https://www.radialeng.com/product/jpc/specifications/", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.channels", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.frequency_response", "key_specs.dynamic_range", "key_specs.maximum_input", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-jpc.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "why_it_is_a_classic", "connectors", "key_specs.output_impedance"] },
-        { "url": "https://www.radialeng.com/product/jpc", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["connectors", "key_specs.phantom_power", "status"] }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.type",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.total_harmonic_distortion",
+            "key_specs.maximum_input",
+            "key_specs.output_level",
+            "key_specs.pad",
+            "key_specs.ground_lift",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/jpc/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range",
+            "key_specs.maximum_input",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-jpc.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "connectors",
+            "key_specs.output_impedance"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/jpc",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "connectors",
+            "key_specs.phantom_power",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Hybrid: passive transformers on the inputs (isolation) plus active phantom-powered output drivers, so sub_type di-active. Each channel shows its own 48V LED, so one missing phantom feed silences only that side. Smart sheet: any input can serve as a thru-put.",
       "conflicts": [
-        { "field": "key_specs.pad", "values": [ { "value": "–15dB Pad", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf" }, { "value": "-10 dB PAD", "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-jpc.pdf" } ] },
-        { "field": "key_specs.maximum_input", "values": [ { "value": "3.12 Volts RMS ( 9V peak )", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf" }, { "value": "+17dBu", "source_url": "https://www.radialeng.com/product/jpc/specifications/" } ], "note": "Different units; values not converted here." },
-        { "field": "connectors", "values": [ { "value": "Input connections: 1/4\" TS, 3.5mm TRS, stereo RCA x 2", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf" }, { "value": "DUAL 1/4\" TRS -10dB input", "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-jpc.pdf" } ] }
+        {
+          "field": "key_specs.pad",
+          "values": [
+            {
+              "value": "–15dB Pad",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf"
+            },
+            {
+              "value": "-10 dB PAD",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-jpc.pdf"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.maximum_input",
+          "values": [
+            {
+              "value": "3.12 Volts RMS ( 9V peak )",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf"
+            },
+            {
+              "value": "+17dBu",
+              "source_url": "https://www.radialeng.com/product/jpc/specifications/"
+            }
+          ],
+          "note": "Different units; values not converted here."
+        },
+        {
+          "field": "connectors",
+          "values": [
+            {
+              "value": "Input connections: 1/4\" TS, 3.5mm TRS, stereo RCA x 2",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JPC-Manual-WEB-07-2026.pdf"
+            },
+            {
+              "value": "DUAL 1/4\" TRS -10dB input",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-jpc.pdf"
+            }
+          ]
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Teaches consumer -10 dBV (3.5 mm / RCA) to balanced mic level, stereo patching and per-channel phantom; very common laptop-playback task." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Teaches consumer -10 dBV (3.5 mm / RCA) to balanced mic level, stereo patching and per-channel phantom; very common laptop-playback task."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "radial-js2",
@@ -485,7 +1727,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Radial's Jensen-equipped passive splitter is a simple way to feed FOH, monitors and a recorder or broadcast truck from one mic while keeping the isolated feed free of ground loops.",
-      "typical_uses": ["FOH / monitor split", "live recording or broadcast feed", "splitting a line signal (with -30 dB pad)"],
+      "typical_uses": [
+        "FOH / monitor split",
+        "live recording or broadcast feed",
+        "splitting a line signal (with -30 dB pad)"
+      ],
       "key_specs": {
         "transformer": "JT-MB-CPC, 1:1 ratio",
         "frequency_response": "20Hz to 20kHz +0dB/-2dB",
@@ -502,32 +1748,177 @@
         "dimensions": "3.3\" x 5\" x 2\""
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "MIC INPUT", "dir": "in", "signal": "mic-level", "count": 1 },
-        { "connector": "xlr3-m", "role": "DIRECT-1 THRU to main console (phantom path to mic)", "dir": "out", "signal": "mic-level", "count": 1 },
-        { "connector": "xlr3-m", "role": "DIRECT-2 THRU with ground lift", "dir": "out", "signal": "mic-level", "count": 1 },
-        { "connector": "xlr3-m", "role": "ISOLATED OUTPUT (transformer) with ground lift", "dir": "out", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "MIC INPUT",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "DIRECT-1 THRU to main console (phantom path to mic)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "DIRECT-2 THRU with ground lift",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "ISOLATED OUTPUT (transformer) with ground lift",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v"
+      ],
       "manual_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JS2-manual-WEB-06-2026.pdf",
       "datasheet_url": "https://www.radialeng.com/wp-content/uploads/2018/05/smartsheet-js2-js3.pdf",
       "product_page_url": "https://www.radialeng.com/product/js2",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/06/JS2-manual-WEB-06-2026.pdf", "title": "JS•2 2-Way Microphone Splitter Users Guide", "language": "en", "file_type": "pdf", "version_or_date": "06-2026", "official": true, "kind": "user-manual" },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/05/smartsheet-js2-js3.pdf", "title": "JS•2 and JS•3 Smart Sheet", "language": "en", "file_type": "pdf", "version_or_date": "© 2006", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/06/JS2-manual-WEB-06-2026.pdf",
+          "title": "JS•2 2-Way Microphone Splitter Users Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "06-2026",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/05/smartsheet-js2-js3.pdf",
+          "title": "JS•2 and JS•3 Smart Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "© 2006",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/06/JS2-manual-WEB-06-2026.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.frequency_response", "key_specs.maximum_input", "key_specs.total_harmonic_distortion", "key_specs.dynamic_range", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.input_pad", "key_specs.ground_lift", "key_specs.phantom_power", "key_specs.power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
-        { "url": "https://www.radialeng.com/product/js2/specifications/", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transformer", "key_specs.frequency_response", "key_specs.maximum_input", "key_specs.dynamic_range", "key_specs.weight", "key_specs.dimensions", "key_specs.power"] },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/05/smartsheet-js2-js3.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["why_it_is_a_classic", "key_specs.input_pad", "connectors"] },
-        { "url": "https://www.radialeng.com/product/js2", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.ground_lift"] }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/06/JS2-manual-WEB-06-2026.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.frequency_response",
+            "key_specs.maximum_input",
+            "key_specs.total_harmonic_distortion",
+            "key_specs.dynamic_range",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.input_pad",
+            "key_specs.ground_lift",
+            "key_specs.phantom_power",
+            "key_specs.power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/js2/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transformer",
+            "key_specs.frequency_response",
+            "key_specs.maximum_input",
+            "key_specs.dynamic_range",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "key_specs.power"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/05/smartsheet-js2-js3.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic",
+            "key_specs.input_pad",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/js2",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.ground_lift"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Manual: the JS2 always outputs mic level regardless of input level; engage the -30 dB pad for line sources so the transformer does not saturate. Only the console on DIRECT-1 should supply phantom. Smart sheet claims better than -90dB common-mode rejection.",
       "conflicts": [
-        { "field": "key_specs.input_impedance", "values": [ { "value": "Source dependent", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JS2-manual-WEB-06-2026.pdf" }, { "value": "MIC INPUT Standard 600Ω main input", "source_url": "https://www.radialeng.com/wp-content/uploads/2018/05/smartsheet-js2-js3.pdf" } ] },
-        { "field": "key_specs.weight", "values": [ { "value": "1.55 lbs.", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JS2-manual-WEB-06-2026.pdf" }, { "value": "1.55lb (0.7kg)", "source_url": "https://www.radialeng.com/product/js2/specifications/" } ], "note": "Consistent; listed only to show both units." }
+        {
+          "field": "key_specs.input_impedance",
+          "values": [
+            {
+              "value": "Source dependent",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JS2-manual-WEB-06-2026.pdf"
+            },
+            {
+              "value": "MIC INPUT Standard 600Ω main input",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2018/05/smartsheet-js2-js3.pdf"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "1.55 lbs.",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/JS2-manual-WEB-06-2026.pdf"
+            },
+            {
+              "value": "1.55lb (0.7kg)",
+              "source_url": "https://www.radialeng.com/product/js2/specifications/"
+            }
+          ],
+          "note": "Consistent; listed only to show both units."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Mic split with a single phantom source, direct vs isolated outputs and ground lift: key FOH/monitor/recording wiring lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Mic split with a single phantom source, direct vs isolated outputs and ground lift: key FOH/monitor/recording wiring lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "radial-proms2",
@@ -539,7 +1930,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Radial's lower-cost passive splitter with the same three-output layout as the JS2, aimed at feeding a second console or recorder from one mic or DI.",
-      "typical_uses": ["FOH / monitor split", "recording feed from live stage", "broadcast feed"],
+      "typical_uses": [
+        "FOH / monitor split",
+        "recording feed from live stage",
+        "broadcast feed"
+      ],
       "key_specs": {
         "audio_circuit": "Passive mic splitter, transformer based",
         "channels": "Three-way splitter (one in/three out)",
@@ -558,31 +1953,165 @@
         "weight": "1.55lb (0.7kg)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic input", "dir": "in", "signal": "mic-level", "count": 1 },
-        { "connector": "xlr3-m", "role": "Direct-1 thru to primary console", "dir": "out", "signal": "mic-level", "count": 1 },
-        { "connector": "xlr3-m", "role": "Direct-2 output with lift", "dir": "out", "signal": "mic-level", "count": 1 },
-        { "connector": "xlr3-m", "role": "Isolated output with lift", "dir": "out", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic input",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Direct-1 thru to primary console",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Direct-2 output with lift",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Isolated output with lift",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v"
+      ],
       "manual_url": "https://www.radialeng.com/wp-content/uploads/2026/06/ProMS2-Manual-WEB-06-2026.pdf",
       "datasheet_url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-proms2.pdf",
       "product_page_url": "https://www.radialeng.com/product/proms2",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/06/ProMS2-Manual-WEB-06-2026.pdf", "title": "ProMS2 Microphone Splitter User Guide", "language": "en", "file_type": "pdf", "version_or_date": "06-2026", "official": true, "kind": "user-manual" },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-proms2.pdf", "title": "ProMS2 Smart Sheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/06/ProMS2-Manual-WEB-06-2026.pdf",
+          "title": "ProMS2 Microphone Splitter User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "06-2026",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/04/smartsheet-proms2.pdf",
+          "title": "ProMS2 Smart Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/06/ProMS2-Manual-WEB-06-2026.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.audio_circuit", "key_specs.channels", "key_specs.transformer", "key_specs.frequency_response", "key_specs.dynamic_range", "key_specs.maximum_input", "key_specs.harmonic_distortion", "key_specs.phase_deviation", "key_specs.cmrr", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.input_pad", "key_specs.ground_lift", "connectors"] },
-        { "url": "https://www.radialeng.com/product/proms2/specifications/", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transformer", "key_specs.frequency_response", "key_specs.maximum_input", "key_specs.cmrr", "key_specs.power", "key_specs.weight", "connectors"] },
-        { "url": "https://www.radialeng.com/product/proms2", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "why_it_is_a_classic", "status"] }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/06/ProMS2-Manual-WEB-06-2026.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.audio_circuit",
+            "key_specs.channels",
+            "key_specs.transformer",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range",
+            "key_specs.maximum_input",
+            "key_specs.harmonic_distortion",
+            "key_specs.phase_deviation",
+            "key_specs.cmrr",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.input_pad",
+            "key_specs.ground_lift",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/proms2/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transformer",
+            "key_specs.frequency_response",
+            "key_specs.maximum_input",
+            "key_specs.cmrr",
+            "key_specs.power",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/proms2",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Product page is inconsistent about which output gives the phantom return path (main output in the 2-way text, a direct out in the 3-way text); the manual names Direct-1 thru as the bridge to the primary console.",
       "conflicts": [
-        { "field": "key_specs.cmrr", "values": [ { "value": "114dB @ 60Hz", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/ProMS2-Manual-WEB-06-2026.pdf" }, { "value": "-115dB at 60Hz", "source_url": "https://www.radialeng.com/product/proms2/specifications/" } ] },
-        { "field": "key_specs.phase_deviation", "values": [ { "value": "1° @ 100Hz; 4° @ 20Hz", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/ProMS2-Manual-WEB-06-2026.pdf" }, { "value": "1° @ 20Hz", "source_url": "https://www.radialeng.com/product/proms2/specifications/" } ] }
+        {
+          "field": "key_specs.cmrr",
+          "values": [
+            {
+              "value": "114dB @ 60Hz",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/ProMS2-Manual-WEB-06-2026.pdf"
+            },
+            {
+              "value": "-115dB at 60Hz",
+              "source_url": "https://www.radialeng.com/product/proms2/specifications/"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.phase_deviation",
+          "values": [
+            {
+              "value": "1° @ 100Hz; 4° @ 20Hz",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/06/ProMS2-Manual-WEB-06-2026.pdf"
+            },
+            {
+              "value": "1° @ 20Hz",
+              "source_url": "https://www.radialeng.com/product/proms2/specifications/"
+            }
+          ]
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Same split lesson as the JS2; useful as an alternative model but adds no new signal type." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Same split lesson as the JS2; useful as an alternative model but adds no new signal type."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "radial-jcr",
@@ -594,7 +2123,11 @@
       "year_introduced": 2010,
       "status": "current",
       "why_it_is_a_classic": "Radial states it follows the original Reamp design by its inventor John Cuniberti (first prototype 1993) and was used on recordings by Joe Satriani, U2, the Rolling Stones and Van Halen; it is the reference passive re-amp box.",
-      "typical_uses": ["re-amping a recorded dry DI track through a guitar amp", "sending tracks through guitar pedals", "re-amping bass, keys, vocals or drums"],
+      "typical_uses": [
+        "re-amping a recorded dry DI track through a guitar amp",
+        "sending tracks through guitar pedals",
+        "re-amping bass, keys, vocals or drums"
+      ],
       "key_specs": {
         "frequency_response": "20Hz to 20kHz (+/- 1dB)",
         "total_harmonic_distortion": "0.001% @ 1kHz/0dBu input",
@@ -613,31 +2146,173 @@
         "dimensions": "3.3\" wide, 2\" high, 5\" deep (84mm x 48mm x 127mm)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "XLR balanced line input from recorder/DAW", "dir": "in", "signal": "line-level-pro", "count": 1 },
-        { "connector": "trs-quarter", "role": "¼\" TRS bal./unbal. line input, parallel with XLR", "dir": "in", "signal": "line-level-pro", "count": 1 },
-        { "connector": "ts-quarter", "role": "¼\" TS unbalanced hi-Z output to guitar amp / pedals", "dir": "out", "signal": "instrument-hiz", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "XLR balanced line input from recorder/DAW",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "¼\" TRS bal./unbal. line input, parallel with XLR",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "¼\" TS unbalanced hi-Z output to guitar amp / pedals",
+          "dir": "out",
+          "signal": "instrument-hiz",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "line-level-consumer", "instrument-hiz"],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "instrument-hiz"
+      ],
       "manual_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JCReamp-user-guide-WEB-07-2026.pdf",
       "datasheet_url": "https://www.radialeng.com/wp-content/uploads/2018/04/JCR-SmartSheet-08_2024.pdf",
       "product_page_url": "https://www.radialeng.com/product/jcr",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JCReamp-user-guide-WEB-07-2026.pdf", "title": "JCR Reamp Users Guide", "language": "en", "file_type": "pdf", "version_or_date": "07-2026", "official": true, "kind": "user-manual" },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/04/JCR-SmartSheet-08_2024.pdf", "title": "Reamp JCR Smart Sheet", "language": "en", "file_type": "pdf", "version_or_date": "08-2024", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JCReamp-user-guide-WEB-07-2026.pdf",
+          "title": "JCR Reamp Users Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "07-2026",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/04/JCR-SmartSheet-08_2024.pdf",
+          "title": "Reamp JCR Smart Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "08-2024",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JCReamp-user-guide-WEB-07-2026.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.frequency_response", "key_specs.total_harmonic_distortion", "key_specs.input", "key_specs.maximum_input_level", "key_specs.output", "key_specs.filter", "key_specs.ground_lift", "key_specs.polarity", "key_specs.mute", "key_specs.power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
-        { "url": "https://www.radialeng.com/product/jcr/specifications/", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.input", "key_specs.output", "key_specs.noise_floor", "key_specs.cmrr", "key_specs.maximum_input_level", "key_specs.weight", "key_specs.dimensions", "connectors"] },
-        { "url": "https://www.radialeng.com/wp-content/uploads/2018/04/JCR-SmartSheet-08_2024.pdf", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["year_introduced", "why_it_is_a_classic", "technology"] },
-        { "url": "https://www.radialeng.com/product/jcr", "publisher": "Radial Engineering", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["year_introduced", "technology", "status"] }
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2026/07/JCReamp-user-guide-WEB-07-2026.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.frequency_response",
+            "key_specs.total_harmonic_distortion",
+            "key_specs.input",
+            "key_specs.maximum_input_level",
+            "key_specs.output",
+            "key_specs.filter",
+            "key_specs.ground_lift",
+            "key_specs.polarity",
+            "key_specs.mute",
+            "key_specs.power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/jcr/specifications/",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.input",
+            "key_specs.output",
+            "key_specs.noise_floor",
+            "key_specs.cmrr",
+            "key_specs.maximum_input_level",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/wp-content/uploads/2018/04/JCR-SmartSheet-08_2024.pdf",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "why_it_is_a_classic",
+            "technology"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.radialeng.com/product/jcr",
+          "publisher": "Radial Engineering",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "technology",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The reverse of a DI: balanced line in, hi-Z instrument out. Smart sheet: Cuniberti prototype 1993, production Reamp 1994, Radial issued the JCR in 2010. The product page (via a linked blog post) gives 2011.",
       "conflicts": [
-        { "field": "year_introduced", "values": [ { "value": "2010 ('In 2010 Radial takes the helm and issues the JCR')", "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/JCR-SmartSheet-08_2024.pdf" }, { "value": "2011 (per related blog post shown on product page)", "source_url": "https://www.radialeng.com/product/jcr" } ] },
-        { "field": "key_specs.weight", "values": [ { "value": "840g (1.85lbs)", "source_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JCReamp-user-guide-WEB-07-2026.pdf" }, { "value": "1.32lb (600g); shipping weight 1.85lb (840g)", "source_url": "https://www.radialeng.com/product/jcr/specifications/" } ], "note": "Manual figure matches the web shipping weight." }
+        {
+          "field": "year_introduced",
+          "values": [
+            {
+              "value": "2010 ('In 2010 Radial takes the helm and issues the JCR')",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2018/04/JCR-SmartSheet-08_2024.pdf"
+            },
+            {
+              "value": "2011 (per related blog post shown on product page)",
+              "source_url": "https://www.radialeng.com/product/jcr"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "840g (1.85lbs)",
+              "source_url": "https://www.radialeng.com/wp-content/uploads/2026/07/JCReamp-user-guide-WEB-07-2026.pdf"
+            },
+            {
+              "value": "1.32lb (600g); shipping weight 1.85lb (840g)",
+              "source_url": "https://www.radialeng.com/product/jcr/specifications/"
+            }
+          ],
+          "note": "Manual figure matches the web shipping weight."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Reverse DI: line-level to instrument hi-Z conversion, a distinct signal-flow lesson (DAW out -> amp in) that no DI teaches." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Reverse DI: line-level to instrument hi-Z conversion, a distinct signal-flow lesson (DAW out -> amp in) that no DI teaches."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "ebtech-hum-eliminator-he-2",
@@ -649,7 +2324,12 @@
       "year_introduced": "not found",
       "status": "discontinued",
       "why_it_is_a_classic": "Ebtech says the Hum Eliminator is used around the world in installations, front of house, studios and broadcasting; it is the classic drop-in fix for line-level ground-loop hum.",
-      "typical_uses": ["breaking ground loops between line-level devices", "computer sound card to mixer", "unbalanced to balanced conversion", "feeding power amp inputs"],
+      "typical_uses": [
+        "breaking ground loops between line-level devices",
+        "computer sound card to mixer",
+        "unbalanced to balanced conversion",
+        "feeding power amp inputs"
+      ],
       "key_specs": {
         "channels": "2 channel box (8 channel single space rack version also available)",
         "frequency_response": "20Hz to 70kHz plus or minus 0.5dB",
@@ -661,27 +2341,126 @@
         "housing": "Cold Rolled Steel Housing"
       },
       "connectors": [
-        { "connector": "trs-quarter", "role": "1/4\" TRS 'smart' inputs", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "1/4\" TRS 'smart' outputs", "dir": "out", "signal": "line-level-pro", "count": 2 }
+        {
+          "connector": "trs-quarter",
+          "role": "1/4\" TRS 'smart' inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "1/4\" TRS 'smart' outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        }
       ],
-      "signal_types": ["line-level-pro", "line-level-consumer"],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer"
+      ],
       "manual_url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
       "datasheet_url": "https://morleyproducts.com/wp-content/uploads/2018/03/llsheinf.pdf",
       "product_page_url": "not found",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf", "title": "Hum Eliminator User Instructions", "language": "en", "file_type": "pdf", "version_or_date": "#M49-945171-001", "official": true, "kind": "user-manual" },
-        { "url": "https://morleyproducts.com/wp-content/uploads/2018/03/llsheinf.pdf", "title": "Hum Eliminator / Line Level Shifter Features & Specifications", "language": "en", "file_type": "pdf", "version_or_date": "Rev. October 18, 2017", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
+          "title": "Hum Eliminator User Instructions",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "#M49-945171-001",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://morleyproducts.com/wp-content/uploads/2018/03/llsheinf.pdf",
+          "title": "Hum Eliminator / Line Level Shifter Features & Specifications",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Rev. October 18, 2017",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf", "publisher": "Ebtech / Morley", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.frequency_response", "key_specs.distortion", "key_specs.crosstalk", "key_specs.source_load_impedance", "key_specs.level", "key_specs.housing", "typical_uses"] },
-        { "url": "https://morleyproducts.com/wp-content/uploads/2018/03/llsheinf.pdf", "publisher": "Ebtech / Morley", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.channels", "key_specs.frequency_response", "key_specs.distortion", "key_specs.crosstalk", "key_specs.source_load_impedance", "key_specs.power", "connectors", "why_it_is_a_classic"] },
-        { "url": "https://www.morleyproducts.com/ebtech-support/", "publisher": "Morley", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] },
-        { "url": "https://morleyproducts.com/ebtech-downloads/", "publisher": "Morley", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manual_url", "datasheet_url"] }
+        {
+          "url": "https://morleyproducts.com/wp-content/uploads/2018/03/he-owners-manual-WEB-070717.pdf",
+          "publisher": "Ebtech / Morley",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.frequency_response",
+            "key_specs.distortion",
+            "key_specs.crosstalk",
+            "key_specs.source_load_impedance",
+            "key_specs.level",
+            "key_specs.housing",
+            "typical_uses"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://morleyproducts.com/wp-content/uploads/2018/03/llsheinf.pdf",
+          "publisher": "Ebtech / Morley",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.frequency_response",
+            "key_specs.distortion",
+            "key_specs.crosstalk",
+            "key_specs.source_load_impedance",
+            "key_specs.power",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.morleyproducts.com/ebtech-support/",
+          "publisher": "Morley",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://morleyproducts.com/ebtech-downloads/",
+          "publisher": "Morley",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manual_url",
+            "datasheet_url"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Line level only: the manual warns never to place it between a power amplifier and speakers. On the HE-2-XLR, 1/4\" and XLR jacks can be used in any combination. Ebtech support page states all Ebtech products are discontinued and replaced by Morley versions.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Line-level ground-loop isolator and unbalanced-to-balanced converter: lets students fix laptop/console hum without a DI." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Line-level ground-loop isolator and unbalanced-to-balanced converter: lets students fix laptop/console hum without a DI."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok"
     }
   ]
 }

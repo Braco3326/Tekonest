@@ -1,0 +1,1664 @@
+{
+  "generated": "2026-10-22",
+  "seed": 20261022,
+  "method": "Each record's own sources/manual/datasheet/product URLs re-fetched (python requests + pypdf text extraction; WebFetch for 403/429 pages); 3-5 key_specs compared verbatim; manual/datasheet opened and identified; status compared with manufacturer page.",
+  "sample_size": 36,
+  "overall_counts": {
+    "pass": 28,
+    "minor-issues": 7,
+    "fail": 1
+  },
+  "field_verdict_counts": {
+    "match": 170,
+    "partial": 3,
+    "mismatch": 1,
+    "unreachable": 1
+  },
+  "pass_rate_strict": 0.778,
+  "pass_rate_incl_minor": 0.972,
+  "devices": [
+    {
+      "file": "processors-dynamics-eq.json",
+      "device_id": "dbx-160a",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.input_impedance",
+          "kb_value": "40kΩ (cut sheet/product page); 100kΩ bal / 50kΩ unbal (manual) - conflict noted",
+          "source_value": "Product page 'Input Impedance 40k'; cut sheet 'Impedance: 40kΩ'; manual spec table '100kΩ balanced, 50kΩ unbalanced'",
+          "source_url": "https://dbxpro.com/en/products/160a",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_input_level",
+          "kb_value": "+24dBu, Balanced or Unbalanced",
+          "source_value": "Maximum Level: +24dBu, Balanced or Unbalanced (Absolute)",
+          "source_url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "kb_value": "20Hz — 20kHz, +0, -0.5dB; +0, -3dB 0.5Hz and 90kHz",
+          "source_value": "20Hz -20kHz, +0, -0.5dB; +0, -3dB 0.5Hz and 90kHz",
+          "source_url": "https://dbxpro.com/en/products/160a",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.dynamic_range",
+          "kb_value": ">113dB",
+          "source_value": "Dynamic Range: >113dB",
+          "source_url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "4.45 lbs (1.99 kg) net",
+          "source_value": "Net Weight: 4.45 lbs (1.99 kg)",
+          "source_url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (dbx 'MODEL 160A COMPRESSOR LIMITER' owner's manual, EN) and datasheet_url (160A cut sheet, EN) both open (HTTP 200), official dbxpro.com, correct model.",
+      "status_check": "KB 'discontinued' matches: product page shows 'Discontinued'.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "loudspeakers.json",
+      "device_id": "db-audiotechnik-y10p",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.frequency_response",
+          "kb_value": "59 Hz - 18 kHz (-5 dB normal); 118 Hz - 18 kHz (-5 dB CUT)",
+          "source_value": "Réponse en fréquence (-5 dB mode normal) 59 Hz - 18 kHz; (-5 dB mode CUT) 118 Hz - 18 kHz",
+          "source_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-y/y10p/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.dispersion",
+          "kb_value": "110° x 40° (h x v)",
+          "source_value": "Angle nominal de directivité (h x v) 110° x 40°",
+          "source_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-y/y10p/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.nominal_impedance",
+          "kb_value": "8 Ω",
+          "source_value": "Impédance nominale 8 Ω",
+          "source_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-y/y10p/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.power_handling",
+          "kb_value": "400 W / 1600 W (RMS / crête 10 ms)",
+          "source_value": "Puissance admissible (RMS/crête 10 ms) 400/1600 W",
+          "source_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-y/y10p/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "18 kg (40 lb)",
+          "source_value": "Poids 18 kg 40 lb",
+          "source_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-y/y10p/",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url = d&b 'Manuel Y7P/Y10P 1.3 fr' (HTTP 200, official, French as stated); EN manual 1.3 also opens. Shared Y7P/Y10P manual covers this model. datasheet_url 'not found' (acceptable).",
+      "status_check": "KB 'current' consistent: product page live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "di-splitters.json",
+      "device_id": "palmer-pan-01",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.transformer_ratio",
+          "kb_value": "10 : 1",
+          "source_value": "Ratio | 10 : 1",
+          "source_url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.input_impedance",
+          "kb_value": "(@ 60 Hz) 60k Ohm(s)",
+          "source_value": "Input impedance | (@ 60 Hz) 60k Ohm(s)",
+          "source_url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_input_level",
+          "kb_value": "+ 54 dBu",
+          "source_value": "Max. input level | + 54 dBu",
+          "source_url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.pad",
+          "kb_value": "0 / -30 dB",
+          "source_value": "Input pad | 0 / -30 dB",
+          "source_url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "0,34 kg",
+          "source_value": "Weight | 0,34 kg",
+          "source_url": "https://www.palmer-germany.com/en/products/di-boxes/5003/pan-01?c=2117",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url and datasheet_url are 'not found'; product page (official, EN) opens. Nothing to verify.",
+      "status_check": "KB 'current' consistent: manufacturer page live with Buy links, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "broadcast-radio.json",
+      "device_id": "clear-com-ms-702",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.station_capacity",
+          "kb_value": "Up to 55 RS-701 beltpacks or 10 speaker stations or 12 headset stations",
+          "source_value": "supports up to 55 beltpacks or 10 speaker stations or 12 headset stations distributed over both channels",
+          "source_url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.partyline_power",
+          "kb_value": "30V DC ± 0.5V; 1.2A continuous per channel; 2A peak",
+          "source_value": "Output Voltage : 30V DC ± 0.5V; 1.2A",
+          "source_url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.program_input",
+          "kb_value": ">= 20dBu; >= 5KΩ",
+          "source_value": "Maximum Level before Clipping: >= 20dBu; Input Impedance: >= 5KΩ",
+          "source_url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.mains_power",
+          "kb_value": "100 - 240V AC; 50 - 60Hz; <= 60VA",
+          "source_value": "Input Voltage Range: 100 - 240V AC; Input Power: <= 60VA",
+          "source_url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "6.1lbs (2.8kg)",
+          "source_value": "6.1lbs (2.8kg)",
+          "source_url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (Encore MS-702 Two-Channel Main Station Instruction Manual, 810342Z Rev.4, EN) and datasheet_url (MS-702 datasheet, EN) open, official clearcom.com, correct model.",
+      "status_check": "KB 'current' consistent: product page has no discontinued marker ('Discontinued Products' appears only in site navigation).",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "interfaces-converters-clocks.json",
+      "device_id": "focusrite-scarlett-2i2-4th-gen",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.mic_gain_range",
+          "kb_value": "69dB",
+          "source_value": "a huge 69dB gain range",
+          "source_url": "https://focusrite.com/products/scarlett-2i2",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.mic_ein",
+          "kb_value": "-127dBu (A-Weighted)",
+          "source_value": "Noise EIN -127dBu (A-Weighted)",
+          "source_url": "https://focusrite.com/products/scarlett-2i2",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.instrument_inputs",
+          "kb_value": "62dB gain, 1MΩ, 12dBu max, 113dB dynamic range",
+          "source_value": "Gain Range 62dB; Impedance 1MΩ; Maximum Input Level 12dBu; Dynamic Range 113dB (A-Weighted)",
+          "source_url": "https://focusrite.com/products/scarlett-2i2",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.sample_rates",
+          "kb_value": "44.1 ... 192 kHz (6 rates)",
+          "source_value": "44.1kHz, 48kHz, 88.2kHz, 96kHz, 176.4kHz, 192kHz",
+          "source_url": "https://focusrite.com/products/scarlett-2i2",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.phantom_power",
+          "kb_value": "48V, one button for both inputs",
+          "source_value": "When 48V is on, the Scarlett 2i2 applies 48V phantom power to both inputs",
+          "source_url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/scarlett_2i2_4th_gen_user_guide_v4-pdf-en.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url = Scarlett 2i2 4th Gen user guide v4.0 in French (HTTP 200, official Focusrite CDN, language as stated); EN version also opens. datasheet 'not found'.",
+      "status_check": "KB 'current' consistent: product page live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "consoles-analog.json",
+      "device_id": "soundcraft-signature-12-mtk",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.mic_preamps",
+          "kb_value": "8 (Soundcraft Ghost Preamps)",
+          "source_value": "Soundcraft Ghost Preamps: 8 (Signature 12 column)",
+          "source_url": "https://www.soundcraft.com/en/products/signature-12-mtk",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.usb_audio",
+          "kb_value": "14-in, 12-out",
+          "source_value": "2-in/2-out (14-in/12-out on 12 MTK)",
+          "source_url": "https://www.soundcraft.com/en/products/signature-12-mtk",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.ein",
+          "kb_value": "<-126dBu (150Ω)",
+          "source_value": "Mono Mic Input E.I.N. (max gain): <-126dBu",
+          "source_url": "https://www.soundcraft.com/en/product_documents/soundcraft_signature_10-12_user_guide-pdf-d6480890-ea64-4908-b40c-3d462f8e359c",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.power_consumption",
+          "kb_value": "<70VA",
+          "source_value": "Signature 12MTK: <70VA",
+          "source_url": "https://www.soundcraft.com/en/product_documents/soundcraft_signature_10-12_user_guide-pdf-d6480890-ea64-4908-b40c-3d462f8e359c",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "5.86kg",
+          "source_value": "Signature 12MTK: 5.86kg",
+          "source_url": "https://www.soundcraft.com/en/product_documents/soundcraft_signature_10-12_user_guide-pdf-d6480890-ea64-4908-b40c-3d462f8e359c",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url = 'Signature 10, 12, 12MTK User Manual' (EN, official soundcraft.com, opens). Shared manual explicitly covers the 12MTK.",
+      "status_check": "KB 'discontinued' matches: product page shows 'Discontinued'.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "consoles-analog.json",
+      "device_id": "allen-heath-zed-436",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.mono_channels",
+          "kb_value": "32 mic/line channels with inserts",
+          "source_value": "ZED-436 ... 32 mic/line channels with inserts",
+          "source_url": "https://www.allen-heath.com/hardware/zed-series/zed-max/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.aux_sends",
+          "kb_value": "6 aux sends (2x pre, 2x post, 2x pre/post)",
+          "source_value": "6 aux sends (2x pre, 2x post, 2x pre/post)",
+          "source_url": "https://www.allen-heath.com/hardware/zed-series/zed-max/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.matrix",
+          "kb_value": "7×2 matrix",
+          "source_value": "7×2 matrix",
+          "source_url": "https://www.allen-heath.com/hardware/zed-series/zed-max/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.ein",
+          "kb_value": "-127dBu",
+          "source_value": "Mic Pre EIN @ max gain 150R input Z 22-22kHz -127dBu",
+          "source_url": "https://www.allen-heath.com/content/uploads/2023/06/AP7028-ZED420-ZED428-ZED436-User-Guide-Issue-2.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.main_output_level",
+          "kb_value": "+4dBu nominal, +27dBu maximum",
+          "source_value": "L, R & Mono Outputs (XLR) +4dBu nominal. +27dBu maximum.",
+          "source_url": "https://www.allen-heath.com/content/uploads/2023/06/AP7028-ZED420-ZED428-ZED436-User-Guide-Issue-2.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url = AP7028 ZED-420/428/436 User Guide Issue 2 (EN, official allen-heath.com, opens), covers this model.",
+      "status_check": "KB 'current' consistent: ZED Max page lists ZED-436, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "accessories-mounting.json",
+      "device_id": "km-210-9",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.height",
+          "kb_value": "from 900 to 1,605 mm",
+          "source_value": "Height from 900 to 1,605 mm",
+          "source_url": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.boom_arm_length",
+          "kb_value": "from 435 to 745 mm",
+          "source_value": "Boom arm length from 435 to 745 mm",
+          "source_url": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "3.1 kg",
+          "source_value": "3.1 kg",
+          "source_url": "https://www.k-m.de/en/microphone-stands-with-boom/210-9-microphone-stand-black",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.size_when_folded",
+          "kb_value": "105 x 85 x 985 mm",
+          "source_value": "Size when folded 105 x 85 x 985 mm",
+          "source_url": "https://www.k-m.de/en/downloads/01994d9eb9907194b59b7d910e75132d/datasheet",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.article_number",
+          "kb_value": "21090-300-55 (black); 21090-300-02 chrome; 21090-326-76 pure white",
+          "source_value": "Product page and datasheet show only 21090-300-55 (black); installation instructions list -300-02 chrome and -300-87 basalt grey. 21090-326-76 'pure white' appears in none of the cited sources.",
+          "source_url": "https://www.k-m.de/media/ab/ac/71/1790942461/Aufstellanleitung_838b6c74f7bc5fcbb2aecaca44b445b8.pdf?ts=1790942461",
+          "verdict": "partial"
+        }
+      ],
+      "manual_check": "manual_url (K&M 'Aufstellanleitung' for 21020...21090 stands, official k-m.de, opens) is bilingual German + English, not German only; multi-model sheet that includes 21090. datasheet_url (EN) opens and is model-specific.",
+      "status_check": "KB 'current' consistent: product page live. The 'Discontinued model' text on the page belongs to a 'Similar products' tile (21080-300-02), not to the 210/9.",
+      "overall": "minor-issues",
+      "recommended_fixes": [
+        "key_specs.article_number: remove '21090-326-76 pure white' or add a source that shows it (not in product page, datasheet or instructions); the instructions instead list 21090-300-87 basalt grey. Source: https://www.k-m.de/media/ab/ac/71/1790942461/Aufstellanleitung_838b6c74f7bc5fcbb2aecaca44b445b8.pdf?ts=1790942461",
+        "manuals[0].language / manual_languages: Aufstellanleitung is bilingual DE+EN; set language to 'multi' (or list de,en). Source: https://www.k-m.de/media/ab/ac/71/1790942461/Aufstellanleitung_838b6c74f7bc5fcbb2aecaca44b445b8.pdf?ts=1790942461"
+      ]
+    },
+    {
+      "file": "processors-dynamics-eq.json",
+      "device_id": "ssl-the-bus-plus",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.input_impedance",
+          "kb_value": "10 kΩ",
+          "source_value": "Input Impedance 10 kΩ",
+          "source_url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.output_impedance",
+          "kb_value": "60 Ω",
+          "source_value": "Output Impedance 60 Ω",
+          "source_url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_input_output_level",
+          "kb_value": "+27.5 dBu",
+          "source_value": "Huge +27.5 dBu headroom",
+          "source_url": "https://www.solidstatelogic.com/products/the-bus-plus",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.operating_level",
+          "kb_value": "0 dB (nominal), +10 dB or -5 dB selectable",
+          "source_value": "Settable Operating Level - 0 dB (nominal), +10 dB, -5 dB",
+          "source_url": "https://www.solidstatelogic.com/products/the-bus-plus",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "5.92 kg / 13.1 lbs",
+          "source_value": "Weight 5.92 kg / 13.1 lbs",
+          "source_url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url = 'THE BUS+ User Guide' (EN, official solidstatelogic.com, opens; cover reads 'THE BUS+'). Note: filename says 'The_Bus' but the content is THE BUS+.",
+      "status_check": "KB 'current' consistent: product page live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "software.json",
+      "device_id": "adobe-audition",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.licence_model",
+          "kb_value": "US$22.99/mo (annual, billed monthly); students/teachers US$19.99/mo",
+          "source_value": "'US$22.99/mo' Annual, billed monthly; students and teachers 'US$19.99/mo' Annual, billed monthly (fetched via WebFetch; direct fetch got HTTP 403)",
+          "source_url": "https://www.adobe.com/products/audition.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.views",
+          "kb_value": "multitrack, waveform, spectral display",
+          "source_value": "includes multitrack, waveform, and spectral display",
+          "source_url": "https://www.adobe.com/products/audition.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.restoration",
+          "kb_value": "spectral frequency display; noise reduction and audio cleanup",
+          "source_value": "'Noise Reduction'; 'audio cleanup, restoration'; 'spectral frequency display'",
+          "source_url": "https://www.adobe.com/products/audition.html",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url and datasheet_url are 'not found' (nothing to verify). Optional: Adobe publishes an official online Audition user guide on helpx.adobe.com.",
+      "status_check": "KB 'current' consistent: page offers Buy now / Free trial.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "loudspeakers.json",
+      "device_id": "l-acoustics-x8",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.usable_bandwidth",
+          "kb_value": "60 Hz - 20 kHz ([X8] preset) (-10 dB)",
+          "source_value": "Usable bandwidth (-10 dB) 60 Hz - 20 kHz ([X8] preset)",
+          "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/System%20Spec%20Sheet/X8_SPS_EN_3.0.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_spl",
+          "kb_value": "129 dB ([X8] preset)",
+          "source_value": "Maximum SPL 129 dB ([X8] preset)",
+          "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/System%20Spec%20Sheet/X8_SPS_EN_3.0.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.nominal_impedance",
+          "kb_value": "8 Ω",
+          "source_value": "Nominal impedance 8 Ω",
+          "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/System%20Spec%20Sheet/X8_SPS_EN_3.0.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "12 kg / 26.5 lb",
+          "source_value": "Weight (net) 12 kg / 26.5 lb",
+          "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/System%20Spec%20Sheet/X8_SPS_EN_3.0.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.ip_rating",
+          "kb_value": "IP43",
+          "source_value": "IP IP43",
+          "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/System%20Spec%20Sheet/X8_SPS_EN_3.0.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (X8 owner's manual EN v2.0, 2024-10-29) and datasheet_url (X8 system spec sheet EN 3.0) both open, official L-Acoustics storage, correct model/language.",
+      "status_check": "KB 'current': product page opens (title 'X8 - L-Acoustics') but is JS-rendered; no discontinued marker visible. Not contradicted.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "cables-connectors.json",
+      "device_id": "neutrik-nc3mxx",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.rated_current",
+          "kb_value": "16 A per contact",
+          "source_value": "16 A",
+          "source_url": "https://www.neutrik.com/en/product/nc3mxx",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.contact_resistance",
+          "kb_value": "≤ 3 mΩ",
+          "source_value": "≤ 3 mΩ",
+          "source_url": "https://www.neutrik.com/en/product/nc3mxx",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.cable_od",
+          "kb_value": "3.5 – 8.0 mm",
+          "source_value": "3.5 - 8.0 mm",
+          "source_url": "https://www.neutrik.com/en/product/nc3mxx",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.protection_class",
+          "kb_value": "IP 40",
+          "source_value": "IP 40",
+          "source_url": "https://www.neutrik.com/en/product/nc3mxx",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.temperature_range",
+          "kb_value": "-30 °C to +80 °C",
+          "source_value": "-30 °C to +80 °C",
+          "source_url": "https://www.neutrik.com/en/product/nc3mxx",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "datasheet_url (nc3mxx.pdf, EN) and manual_url (XX-series assembly instruction, EN) open, official neutrik.com.",
+      "status_check": "KB 'current' consistent: product page live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "broadcast-radio.json",
+      "device_id": "aeta-scoop5-s",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.analog_max_level",
+          "kb_value": "niveau max. ajustable de 0 à +22 dBu",
+          "source_value": "Symétrique, niveau max. ajustable de 0 à +22 dBu",
+          "source_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.input_impedance",
+          "kb_value": "600 Ω ou 10 kΩ",
+          "source_value": "Impédance en entrée 600 Ω ou 10 kΩ",
+          "source_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.sample_rates_aes",
+          "kb_value": "32 kHz, 48 kHz, 96 kHz ou synchronisé (Genlock)",
+          "source_value": "Taux d'échantillonage 32 kHz, 48 kHz, 96 kHz",
+          "source_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.gpio",
+          "kb_value": "8 entrées, 8 sorties",
+          "source_value": "GPIO : 8 entrées, 8 sorties",
+          "source_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.audio_inputs",
+          "kb_value": "2 balanced analog inputs, 1 AES/EBU input",
+          "source_value": "2 entrées symétriques analogiques; 1 entrée numérique AES/EBU",
+          "source_url": "https://www.aeta-audio.com/products/scoop5s/",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (manuel_scoop5s.pdf, FR) and datasheet_url (Scoop5S_FR.pdf) open, official aeta-audio.com, French as stated; EN versions also open.",
+      "status_check": "KB 'discontinued' matches: site navigation lists Scoop5 S under 'Anciens produits' / 'Old range products'.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "cables-connectors.json",
+      "device_id": "mogami-w3080",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.impedance",
+          "kb_value": "110Ω ±5%",
+          "source_value": "Characteristic Impedance (W3080 column) 110Ω±5%",
+          "source_url": "https://mogamicable.com/category/bulk/dig_interface/aes_ebu/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.capacitance",
+          "kb_value": "46 pF/m",
+          "source_value": "Capacitance at 1kHz (W3080) 46pF/m",
+          "source_url": "https://mogamicable.com/category/bulk/dig_interface/aes_ebu/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.attenuation",
+          "kb_value": "0.069 dB/m (6 MHz)",
+          "source_value": "Attenuation (6MHz) 0.069dB/m",
+          "source_url": "https://mogamicable.com/category/bulk/dig_interface/aes_ebu/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.outer_diameter",
+          "kb_value": "5.0 ±0.3mm",
+          "source_value": "Ov. Jacket 5.0±0.3Ø",
+          "source_url": "https://mogamicable.com/category/bulk/dig_interface/aes_ebu/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_suggested_length",
+          "kb_value": "150m without equalizer; up to 1.5x with equalizer",
+          "source_value": "Suggested maximum length table (merged cells: 150m / 300m / 150m across W3159, W3228, W3080, ...); 'up to 1.5 times longer' with equalizer",
+          "source_url": "https://mogamicable.com/category/bulk/dig_interface/aes_ebu/",
+          "verdict": "partial"
+        }
+      ],
+      "manual_check": "manual_url / datasheet_url 'not found'; manufacturer page opens and carries the full spec table.",
+      "status_check": "KB 'current' consistent: listed on mogamicable.com product page.",
+      "overall": "pass",
+      "recommended_fixes": [
+        "(optional) key_specs.max_suggested_length: the Mogami table uses merged cells; the 150 m column assignment to W3080 is a reasonable but not unambiguous reading. No change required."
+      ]
+    },
+    {
+      "file": "cables-connectors.json",
+      "device_id": "sommer-sc-mistral-mcf08",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.construction",
+          "kb_value": "[08(2LI2Y0,22mm²)(ST)Y]F(ST)Y",
+          "source_value": "Construction: [08(2LI2Y0,22mm²)(ST)Y]F(ST)Y",
+          "source_url": "https://www.sommercable.com/en-gb/Multipair-SC-Mistral-MCF-black-2-x-0-22-mm2-x-number-of-pairs/100-0101-08F",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.capacitance_core_core",
+          "kb_value": "46 pF/m",
+          "source_value": "Capac. cond./cond. per 1 m (audio): 46 pF",
+          "source_url": "https://www.sommercable.com/en-gb/Multipair-SC-Mistral-MCF-black-2-x-0-22-mm2-x-number-of-pairs/100-0101-08F",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.impedance",
+          "kb_value": "110 Ω",
+          "source_value": "Impedance: 110 Ω",
+          "source_url": "https://www.sommercable.com/en-gb/Multipair-SC-Mistral-MCF-black-2-x-0-22-mm2-x-number-of-pairs/100-0101-08F",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.conductor_resistance",
+          "kb_value": "80 Ω/km",
+          "source_value": "Conductor resistance per 1 km: 80 Ω",
+          "source_url": "https://www.sommercable.com/en-gb/Multipair-SC-Mistral-MCF-black-2-x-0-22-mm2-x-number-of-pairs/100-0101-08F",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.outer_diameter",
+          "kb_value": "15,00 mm",
+          "source_value": "Jacket Ø [mm]: 15,00",
+          "source_url": "https://storage.googleapis.com/sommercable-storage-shopware-prd3/media/ca/8f/b1/1752678636/Datasheet_100-0101-08F_pm_5164.pdf?ts=1752678636",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "datasheet_url = Sommer datasheet for 100-0101-08F (EN, official Sommer storage, opens). manual 'not found' (n/a for cable).",
+      "status_check": "KB 'current' consistent: product orderable on sommercable.com.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "consoles-digital.json",
+      "device_id": "lawo-ruby",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.faders",
+          "kb_value": "4 to 60 physical faders",
+          "source_value": "4 to 60 physical faders",
+          "source_url": "https://lawo.com/products/ruby/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.crosspoints",
+          "kb_value": "Up to 1,920 x 1,920 crosspoints",
+          "source_value": "Up to 1,920 x 1,920 crosspoints",
+          "source_url": "https://lawo.com/products/ruby/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.dsp_channels",
+          "kb_value": "Up to 96 DSP channels",
+          "source_value": "Up to 96 DSP channels",
+          "source_url": "https://lawo.com/products/ruby/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.summing_busses",
+          "kb_value": "Up to 80 summing busses",
+          "source_value": "Up to 80 summing busses",
+          "source_url": "https://lawo.com/products/ruby/",
+          "verdict": "match"
+        },
+        {
+          "field": "status",
+          "kb_value": "current",
+          "source_value": "'ruby Radio Mixing Console - This product is no longer available. Ruby has been replaced by the Lawo diamond Modular Broadcast Console.'",
+          "source_url": "https://lawo.com/products/ruby/",
+          "verdict": "mismatch"
+        }
+      ],
+      "manual_check": "manual_url and datasheet_url 'not found'; nothing to verify.",
+      "status_check": "MISMATCH: KB 'current', but the cited manufacturer page states the product is no longer available and replaced by Lawo diamond.",
+      "overall": "fail",
+      "recommended_fixes": [
+        "status: 'current' -> 'discontinued'. Source: https://lawo.com/products/ruby/ ('This product is no longer available. Ruby has been replaced by the Lawo diamond Modular Broadcast Console.'). Also add a note naming 'diamond' as successor and drop 'status' from that source's claim of current status."
+      ]
+    },
+    {
+      "file": "patchbays.json",
+      "device_id": "switchcraft-studiopatch-9625",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.channels",
+          "kb_value": "48 channels (96 TT/bantam jacks)",
+          "source_value": "48 channels (96 TT/bantam jacks), DB25 I/O ... all in 1RU!",
+          "source_url": "https://cdn.eicom.ru/media/PDF/5100379.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.rear_connectors",
+          "kb_value": "DB25 I/O, TASCAM DTRS pinout",
+          "source_value": "DB25 I/O connections, wired to the TASCAM DTRS pinout",
+          "source_url": "https://www.switchcraft.com/assets/1/27/1625,_9625,_EZ_NORM_SG.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.db25_pinout_channel_1",
+          "kb_value": "Tip 24, Ring 12, Sleeve 25",
+          "source_value": "DB25 WIRING CHART ... 1 24 12 25",
+          "source_url": "http://www.markertek.com/Attachments/Specifications/Switchcraft/9625-Specifications.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.grounding",
+          "kb_value": "Up = sleeves vertically strapped, Down = isolated; top cover removed",
+          "source_value": "UP POSITION = VERTICALLY STRAPPED; DOWN POSITION = ISOLATED; TOP COVER REMOVED",
+          "source_url": "http://www.markertek.com/Attachments/Specifications/Switchcraft/9625-Specifications.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "datasheet_url = Switchcraft StudioPatch new product bulletin (EN, official switchcraft.com, opens; names 'StudioPatch 9625 P/N: 9625'). manual_url / product_page_url 'not found'.",
+      "status_check": "KB 'current' supported only by retailer (Markertek 'Availability: In Stock'); no manufacturer page cited. Not contradicted.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "processors-dynamics-eq.json",
+      "device_id": "universal-audio-teletronix-la-2a",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.gain",
+          "kb_value": "40 dB ±1dB",
+          "source_value": "40 dB ±1dB (via WebFetch; direct fetch HTTP 429)",
+          "source_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "kb_value": "+0/-1 dB 30 Hz to 15kHz",
+          "source_value": "+0/-1 dB 30 Hz to 15kHz",
+          "source_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.attack",
+          "kb_value": "10 milliseconds",
+          "source_value": "10 milliseconds",
+          "source_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.rack_units",
+          "kb_value": "3U",
+          "source_value": "19\" Rackmount chassis, 3U",
+          "source_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.tubes",
+          "kb_value": "(2) 12AX7A, (1) 12BH7A, (1) 6AQ5",
+          "source_value": "Tube Complement: (2) 12AX7A, (1) 12BH7A, (1) 6AQ5 (UA manual hosted by Adorama)",
+          "source_url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url 'not found', but manuals[] lists the UA LA-2A manual hosted on adorama.com (a retailer). The document is UA's own manual (correct model, EN) but the URL is not a manufacturer URL.",
+      "status_check": "KB 'current' consistent: UA product page has Shop Now, no discontinued marker.",
+      "overall": "minor-issues",
+      "recommended_fixes": [
+        "manuals[0].url: replace the retailer-hosted copy https://www.adorama.com/col/productManuals/UALA2AD.pdf with the manual from uaudio.com (help.uaudio.com / uaudio.com product page downloads) and set manual_url accordingly; if no UA-hosted copy exists, mark manuals[0].official=false."
+      ]
+    },
+    {
+      "file": "stageboxes-networking.json",
+      "device_id": "yamaha-rio3224-d2",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.dante_channels",
+          "kb_value": "32ch out / 24ch in",
+          "source_value": "32ch (Rio3224-D2 to other devices); 24ch (Other devices to Rio3224-D2)",
+          "source_url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.signal_delay",
+          "kb_value": "Less than 1.7 ms (PM10, 96 kHz, 0.25 ms receive latency)",
+          "source_value": "Less than 1.7 ms, Rio INPUT to Rio OUTPUT connect with PM10 using Dante, Fs= 96 kHz, Dante Receive Latency set to 0.25 msec",
+          "source_url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.equivalent_input_noise",
+          "kb_value": "–128 dBu typ., Input Gain= Max.",
+          "source_value": "–128 dBu typ., Input Gain= Max.",
+          "source_url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.power_consumption",
+          "kb_value": "120W",
+          "source_value": "120W",
+          "source_url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "13.5 kg (29.8 lbs)",
+          "source_value": "13.5 kg (29.8 lbs)",
+          "source_url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url / datasheet_url 'not found'; Yamaha spec page opens (official).",
+      "status_check": "KB 'discontinued' matches: usa.yamaha.com R Series 2nd-gen page shows 'Discontinued'.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "patchbays.json",
+      "device_id": "neutrik-nys-spp-l1",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.channels",
+          "kb_value": "48 balanced channels (24 front pairs, 24 rear pairs)",
+          "source_value": "48 balanced channels with fully PCB wired jack (24 vertical PC boards), 24 front pairs and corresponding 24 rear pairs",
+          "source_url": "https://www.neutrik.com/en/product/nys-spp-l1",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.normalling.default",
+          "kb_value": "Half Normalled bottom row",
+          "source_value": "Standard configuration, when delivered, is Half Normalled bottom row",
+          "source_url": "https://www.neutrik.com/en/product/nys-spp-l1",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.contact_resistance",
+          "kb_value": "< 10 mΩ",
+          "source_value": "Contact resistance < 10 mΩ",
+          "source_url": "https://www.neutrik.com/en/product/nys-spp-l1.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.handles_phantom_power",
+          "kb_value": "no",
+          "source_value": "Handles Phantom Power: no",
+          "source_url": "https://www.neutrik.com/en/product/nys-spp-l1",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.channel_separation",
+          "kb_value": "> 100 dB @ 10 kHz 600; > 40 dB @ 6 MHz 110",
+          "source_value": "> 100 dB @ 10 kHz, 600 terminated > 40 dB @ 6 MHz, 110 terminated",
+          "source_url": "https://www.neutrik.com/en/product/nys-spp-l1",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (NYS-SPP-L1 patch-panel instruction, EN) and datasheet_url (nys-spp-l1.pdf, EN) open, official neutrik.com, correct model.",
+      "status_check": "KB 'current' consistent: product page live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "measurement-tools.json",
+      "device_id": "rtw-touchmonitor-tm7",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.display",
+          "kb_value": "7\" 16:9 TFT touch screen",
+          "source_value": "7\" or 9\" touch screen 16:9 TFT",
+          "source_url": "https://www.rtw.com/touchmonitor-tm7-and-tm9",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.loudness_standards",
+          "kb_value": "EBU R128, ITU-R BS.1770-4/1771-1, ATSC A/85, ARIB, OP-59, AGCOM, CALM, LEQ(M), TASA, SAWA",
+          "source_value": "Loudness (EBU R128, ITU, ATSC A/85, ARIB, OP-59, AGCOM, CALM, LEQ(M), TASA, SAWA)",
+          "source_url": "https://www.rtw.com/web/content/10456?unique=8b78ccc06b1bd14d0933e5f7c211f17dce9b3c86&download=true",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.common_connectors",
+          "kb_value": "Ethernet, VGA, 2 x USB 2.0, GPIO",
+          "source_value": "Connectors for Ethernet, VGA, 2 x USB 2.0, GPIO",
+          "source_url": "https://www.rtw.com/web/content/10456?unique=8b78ccc06b1bd14d0933e5f7c211f17dce9b3c86&download=true",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.power",
+          "kb_value": "12 - 24 V DC, 24 VA (Binder 710 per product page)",
+          "source_value": "Power supply 12 - 24 V DC, 24 VA; 'Typ Binder 710' (stated in the data sheet, not on the product page)",
+          "source_url": "https://www.rtw.com/web/content/10456?unique=8b78ccc06b1bd14d0933e5f7c211f17dce9b3c86&download=true",
+          "verdict": "partial"
+        }
+      ],
+      "manual_check": "datasheet_url = 'TouchMonitor TM7 Series Data Sheet' (EN, official rtw.com, opens). manual_url is a ZIP (RTW_TM7_TM9_Stick_Man_fw_8-05.zip) that returns HTTP 200; contents not inspected (not executed/extracted).",
+      "status_check": "KB 'current' consistent: product page live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": [
+        "(cosmetic) key_specs.power: attribution '(Binder 710-type connector per product page)' should read 'per data sheet'. Source: https://www.rtw.com/web/content/10456?unique=8b78ccc06b1bd14d0933e5f7c211f17dce9b3c86&download=true"
+      ]
+    },
+    {
+      "file": "broadcast-radio.json",
+      "device_id": "riedel-bolero",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.beltpacks_per_system",
+          "kb_value": "Up to 250 (Integrated, Active Antenna); 100 (Standalone)",
+          "source_value": "Up to 250 beltpacks per Bolero Net; 100 Antennas and 100 Beltpacks (standalone)",
+          "source_url": "https://www.riedel.net/wp-json/riedel-downloads/v1/asset/ad8d0fb7-278c-45d0-a1fa-b51f5ef4614a?language=en",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.band",
+          "kb_value": "license free 1.9GHz DECT; 2.4 GHz variants exist",
+          "source_value": "Digital, license free 1.9GHz DECT band; 'Discover Bolero 6-key Beltpack – 2.4GHz'",
+          "source_url": "https://www.riedel.net/intercom/bolero/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.beltpack_audio_bandwidth",
+          "kb_value": "200 Hz to 7 kHz (-3dB)",
+          "source_value": "200 Hz to 7 kHz (-3dB)",
+          "source_url": "https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.beltpack_keys",
+          "kb_value": "4 pushbuttons + REPLY key + 2 walkie-talkie keys",
+          "source_value": "4 pushbuttons + REPLY key + 2 walkie-talkie keys (PTT, Latching & Auto mode)",
+          "source_url": "https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.beltpack_weight",
+          "kb_value": "420 g",
+          "source_value": "Weight 420 g",
+          "source_url": "https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "datasheet_url = Riedel Bolero brochure/datasheet (EN, official riedel.net, opens; kind 'other'). manual_url 'not found'.",
+      "status_check": "System 'current' consistent with the Bolero system page. BUT the beltpack page cited for all beltpack_* specs is marked 'Discontinued' (Bolero 6-key Beltpack – Standard (1.9GHz), SKU 1430020).",
+      "overall": "minor-issues",
+      "recommended_fixes": [
+        "sources[1] / beltpack_* specs: the cited page https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/ is for a beltpack SKU (1430020) marked 'Discontinued'. Either re-source beltpack_* specs from the current beltpack variant page, or add a note that these values come from the discontinued Standard 1.9 GHz beltpack."
+      ]
+    },
+    {
+      "file": "processors-effects.json",
+      "device_id": "bricasti-design-m7",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.digital_io",
+          "kb_value": "AES/EBU 24 bit Single Wire on XLR; AES single wire 192k supported",
+          "source_value": "Format: AES/EBU 24 bit Single Wire; 'AES single wire 192k supported'",
+          "source_url": "http://www.bricasti.com/images/M7.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.sample_rates",
+          "kb_value": "44.1, 48, 88, 96, 192 kHz",
+          "source_value": "Sample Rates: 44.1 kHz, 48 kHz, 88 kHz, 96 kHz, 192 kHz",
+          "source_url": "http://www.bricasti.com/images/M7.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.analog_input_impedance",
+          "kb_value": "100 k ohm",
+          "source_value": "Impedance: 100 k ohm",
+          "source_url": "http://www.bricasti.com/images/M7.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_input_level",
+          "kb_value": "+24 dbm",
+          "source_value": "Max input level: +24 dbm (manual); Maximum Input Level: +24 dBu (web specs)",
+          "source_url": "http://www.bricasti.com/images/M7.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.cmrr",
+          "kb_value": "> 100dB @ 1 kHz",
+          "source_value": "CMRR: > 100 dB @ <= 1 kHz",
+          "source_url": "https://www.bricasti.com/en/pro/m7_specs.php",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (M7.pdf, EN, official bricasti.com, opens). datasheet_url points to an HTML specs page (m7_specs.php), official but not a document.",
+      "status_check": "KB 'current' consistent: M7 listed in Products menu, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "wireless-systems.json",
+      "device_id": "sennheiser-ew-dx-em-2",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.channel_grid",
+          "kb_value": "146 standard; 293 Link Density Mode",
+          "source_value": "146 channels in standard mode; 293 channels in Link Density Mode",
+          "source_url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.dynamic_range",
+          "kb_value": "134 dB",
+          "source_value": "Dynamic range 134 dB",
+          "source_url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.system_latency",
+          "kb_value": "1.9 ms",
+          "source_value": "System latency 1.9 ms",
+          "source_url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.input_voltage",
+          "kb_value": "11 - 13 V DC or PoE IEEE 802.3af Class 0",
+          "source_value": "Input voltage 11 - 13 V DC; PoE IEEE 802.3af Class 0",
+          "source_url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.headphone_output",
+          "kb_value": "2x 70 mW @ 32 Ω",
+          "source_value": "Headphone output 2x 70 mW @ 32 Ω",
+          "source_url": "https://www.sennheiser.com/globalassets/digizuite/40808-en-ew-dx_em2_product_specification_v1.4_en.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (EW-D instruction manual 06/2026, EN, assets.sennheiser.com) and datasheet_url (EW-DX EM 2 product specification v1.4 EN) open, official, correct product family/model.",
+      "status_check": "KB 'current' consistent: product page live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "processors-effects.json",
+      "device_id": "yamaha-spx2000",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.signal_delay",
+          "kb_value": "Less than 426 micro sec",
+          "source_value": "Less than 426 micro sec",
+          "source_url": "https://fr.yamaha.com/fr/business/audio/products/processors/spx2000/specs.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.dynamic_range",
+          "kb_value": "AD+DA: 106dB",
+          "source_value": "AD+DA: 106dB",
+          "source_url": "https://fr.yamaha.com/fr/business/audio/products/processors/spx2000/specs.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.thd",
+          "kb_value": "Less than 0.05% (20Hz-40kHz)",
+          "source_value": "Less than 0.05% (20Hz-40kHz)",
+          "source_url": "https://fr.yamaha.com/fr/business/audio/products/processors/spx2000/specs.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "4kg; 8.8lbs",
+          "source_value": "4kg; 8.8lbs",
+          "source_url": "https://fr.yamaha.com/fr/business/audio/products/processors/spx2000/specs.html",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.power",
+          "kb_value": "...; 25W",
+          "source_value": "25W",
+          "source_url": "https://fr.yamaha.com/fr/business/audio/products/processors/spx2000/specs.html",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url 'not found'; datasheet_url points to the official Yamaha FR specs web page (HTML, opens).",
+      "status_check": "KB 'discontinued' matches: FR pages show 'Discontinué', USA specs page shows 'Discontinued'.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "cables-connectors.json",
+      "device_id": "neutrik-nl4fxx-w-s",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.rated_current",
+          "kb_value": "37 A (IEC 61984); 35 A (UL1977); 24 A (CSA)",
+          "source_value": "IEC 61984: 37 A 250 V AC; UL1977: 35 A 250 V AC; CSA C22.2 No.182.3: 24 A 250 V AC",
+          "source_url": "https://www.neutrik.com/en/product/nl4fxx-w-s",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.contact_resistance",
+          "kb_value": "≤ 2 mΩ",
+          "source_value": "≤ 2 mΩ",
+          "source_url": "https://www.neutrik.com/en/product/nl4fxx-w-s",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.wire_size",
+          "kb_value": "1.5 – 4 mm² (17 – 11 AWG)",
+          "source_value": "1.5 – 4 mm²; 17 – 11 AWG",
+          "source_url": "https://www.neutrik.com/en/product/nl4fxx-w-s",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.lifetime",
+          "kb_value": "typically 5000 mating cycles",
+          "source_value": "typically 5'000 mating cycles",
+          "source_url": "https://www.neutrik.com/en/product/nl4fxx-w-s",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.temperature_range",
+          "kb_value": "-33 °C to +80 °C",
+          "source_value": "-33 °C to +80 °C",
+          "source_url": "https://www.neutrik.com/en/product/nl4fxx-w-s",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "datasheet_url (nl4fxx-w-s.pdf, EN, official neutrik.com) opens. manual 'not found'.",
+      "status_check": "KB 'current' consistent: product page live; NL4FX page names NL4FXX-W-S as its direct replacement.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "interfaces-converters-clocks.json",
+      "device_id": "mutec-mc-3-plus",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.word_clock_outputs",
+          "kb_value": "6 BNC outputs, unbalanced, individually buffered, adjustable in pairs",
+          "source_value": "6 x BNC outputs for Word Clock, terminated, unbalanced, individually buffered, adjustable in pairs",
+          "source_url": "https://www.mutec-net.com/product_mc-3-plus.php",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.aes3_in",
+          "kb_value": "1 XLR, transformer balanced, 110 Ω",
+          "source_value": "1 x XLR input for AES3/11, 110 ohms terminated, transformer balanced",
+          "source_url": "https://www.mutec-net.com/product_mc-3-plus.php",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.oscillator",
+          "kb_value": "accuracy below 0.1 ppm, AES11 Grade 1",
+          "source_value": "basis clock accuracy of <0.1ppm (when shipped), AES11, Grade 1",
+          "source_url": "https://www.mutec-net.com/product_mc-3-plus.php",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "about 1260 g",
+          "source_value": "Weight: approx. 1260 g",
+          "source_url": "https://www.mutec-net.com/product_mc-3-plus.php",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.housing",
+          "kb_value": "196 x 42 x 156 mm",
+          "source_value": "196 x 42 x 156mm without connectors (W x H x D)",
+          "source_url": "https://www.mutec-net.com/product_mc-3-plus.php",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (MUTEC MC-3+ operating manual, EN, official mutec-net.com) opens.",
+      "status_check": "KB 'current' consistent: product page live.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "broadcast-radio.json",
+      "device_id": "yellowtec-litt",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.segments",
+          "kb_value": "up to five Color Segments or four + one Sound Segment",
+          "source_value": "Drives up to five litt Color Segments or four Color Segments combined with one litt Sound Segment",
+          "source_url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.control_inputs",
+          "kb_value": "2,4 - 24VDC per colour; GPI +3V…24V",
+          "source_value": "Individual control inputs for each color (2,4 - 24VDC); GPI ... +3V…24V",
+          "source_url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.power",
+          "kb_value": "9V…24V; USB cannot power",
+          "source_value": "Power supply (permanent): 9V…24V; 'It is not possible to use USB ports for power supply'",
+          "source_url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.segment_heights",
+          "kb_value": "41mm and 27mm",
+          "source_value": "two heights: 41mm (1.61 inch) and 27mm (1.1 inch)",
+          "source_url": "https://www.yellowtec.com/litt/",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (Litt installation briefing) and datasheet_url (Product Brief) open, official yellowtec.com; both are English but recorded with language 'not stated'.",
+      "status_check": "KB 'current' consistent: product pages live.",
+      "overall": "minor-issues",
+      "recommended_fixes": [
+        "manuals[0].language and manuals[2].language: 'not stated' -> 'en' (installation briefing and product brief are in English; installation briefing is mostly pictorial). Sources: https://www.yellowtec.com/fileadmin/downloads/Litt_installation_Briefing.pdf, https://www.yellowtec.com/fileadmin/downloads/Product-Brief-litt-web.pdf"
+      ]
+    },
+    {
+      "file": "consoles-analog.json",
+      "device_id": "yamaha-mg10xu",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.ein",
+          "kb_value": "-128 dBu (Rs 150 Ω, GAIN max)",
+          "source_value": "équivalent -128 dBu (canal d'entrée mono, Rs : 150 Ω, bouton GAIN : max.)",
+          "source_url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "kb_value": "+0,5 dB/-1,0 dB (20 Hz à 48 kHz)",
+          "source_value": "+0,5 dB/-1,0 dB (20 Hz à 48 kHz)",
+          "source_url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.usb_audio",
+          "kb_value": "2 IN / 2 OUT, USB 2.0 class, max 192 kHz, 24 bits",
+          "source_value": "2 IN / 2 OUT Conforme à la classe audio USB 2.0; Fréquence d'échantillonnage : Max. 192 kHz ; profondeur de bit : 24 bits",
+          "source_url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.power",
+          "kb_value": "PA-10 (CA 38 VCT, 0,62 A); 22,9 W",
+          "source_value": "Adaptateur secteur PA-10 (CA 38 VCT, 0,62 A ...); Consommation 22,9 W",
+          "source_url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "2,1 kg",
+          "source_value": "Poids net MG10XU, MG10X : 2,1 kg",
+          "source_url": "https://ca.yamaha.com/files/download/other_assets/4/1506964/MG10XU_owners_manual_Fr_B0.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url = MG10XU owner's manual, French (ca.yamaha.com, official, opens; language as stated). product_page_url 'not found' although Yamaha publishes an MG10XU product page.",
+      "status_check": "KB 'current' supported only by a retailer (Thomann) and the generic usa.yamaha.com mixers index (lists 'MG Series', not the model). No manufacturer model page cited.",
+      "overall": "minor-issues",
+      "recommended_fixes": [
+        "product_page_url: 'not found' -> the official Yamaha MG10XU product page (e.g. under usa.yamaha.com/products/proaudio/mixers/mg_series/), and re-derive status from it instead of from https://www.thomannmusic.com/yamaha_mg10_xu.htm."
+      ]
+    },
+    {
+      "file": "measurement-tools.json",
+      "device_id": "nti-audio-xl3",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.measurement_range_xl3_m2230",
+          "kb_value": "17,1 dB(A) – 137,8 dB @ 42 mV/Pa",
+          "source_value": "XL3 + M2230 : 17,1 dB(A) – 137,8 dB @ 42 mV/Pa",
+          "source_url": "https://www.nti-audio.com/wp-content/uploads/XL3-Technical-Data-A4-fr-FR.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.linear_range_xl3_m2230",
+          "kb_value": "24 dB(A) – 137 dB | 27 dB(C) – 137 dB",
+          "source_value": "XL3 + M2230 : 24 dB(A) – 137 dB | 27 dB(C) – 137 dB @ 42 mV/Pa",
+          "source_url": "https://www.nti-audio.com/wp-content/uploads/XL3-Technical-Data-A4-fr-FR.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.measurement_bandwidth",
+          "kb_value": "4,4 Hz - 23,0 kHz (-3dB)",
+          "source_value": "Bande passante de mesure (-3dB) : 4,4 Hz - 23,0 kHz",
+          "source_url": "https://www.nti-audio.com/wp-content/uploads/XL3-Technical-Data-A4-fr-FR.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.xlr_input",
+          "kb_value": "200 kΩ; +48 V switchable; 10 mA max per NF EN 61938",
+          "source_value": "Impédance d'entrée 200 kΩ; maximum de 10 mA selon NF EN 61938",
+          "source_url": "https://www.nti-audio.com/wp-content/uploads/XL3-Technical-Data-A4-fr-FR.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.memory",
+          "kb_value": "Carte SD amovible de 32 Go",
+          "source_value": "carte SD amovible de 32 Go",
+          "source_url": "https://www.nti-audio.com/fr/produits/sonometres/analyseur-acoustique-xl3",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (XL3 user manual fr-FR) and datasheet_url (XL3 technical data fr-FR) open, official nti-audio.com, French as stated.",
+      "status_check": "KB 'current' consistent: FR and EN product pages live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "microphones-condenser.json",
+      "device_id": "sennheiser-mkh-50",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.polar_pattern",
+          "kb_value": "supercardioid",
+          "source_value": "Pick-up pattern: super-cardioid",
+          "source_url": "https://assets.sennheiser.com/download/assets/MKH_50-P48_Quick_Guide_07_2026.pdf/cf991e32e7b711f0a8807aeaa9c3764a?attachment=true",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "kb_value": "40 – 20,000 Hz",
+          "source_value": "40 – 20,000 Hz",
+          "source_url": "https://assets.sennheiser.com/download/assets/MKH_50-P48_Quick_Guide_07_2026.pdf/cf991e32e7b711f0a8807aeaa9c3764a?attachment=true",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.sensitivity",
+          "kb_value": "25 (8) mV/Pa ±1 dB",
+          "source_value": "25 (8) mV/Pa ±1 dB",
+          "source_url": "https://assets.sennheiser.com/download/assets/MKH_50-P48_Quick_Guide_07_2026.pdf/cf991e32e7b711f0a8807aeaa9c3764a?attachment=true",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_spl",
+          "kb_value": "134 (142) dB / 1 kHz",
+          "source_value": "134 (142) dB / 1 kHz",
+          "source_url": "https://assets.sennheiser.com/download/assets/MKH_50-P48_Quick_Guide_07_2026.pdf/cf991e32e7b711f0a8807aeaa9c3764a?attachment=true",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.phantom_power",
+          "kb_value": "48 V ±4 V, 2 mA",
+          "source_value": "Phantom powering 48 V ±4 V; Current consumption 2 mA",
+          "source_url": "https://assets.sennheiser.com/download/assets/MKH_50-P48_Quick_Guide_07_2026.pdf/cf991e32e7b711f0a8807aeaa9c3764a?attachment=true",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url = MKH 50-P48 Quick Guide 07/26 (multilingual, official assets.sennheiser.com, opens; language 'multi' correct). It is a quick guide, not a full manual, and is labelled as such in manuals[].",
+      "status_check": "KB 'current' consistent: FR product page live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "microphones-condenser.json",
+      "device_id": "neumann-tlm-107",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.polar_pattern",
+          "kb_value": "omni, wide cardioid, cardioid, hypercardioid, figure-8",
+          "source_value": "Omni, wide angle cardioid, cardioid, hypercardioid, figure-8",
+          "source_url": "https://www.neumann.com/en-cn/products/microphones/tlm-107",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "kb_value": "20 Hz to 20 kHz",
+          "source_value": "20 Hz ... 20 kHz",
+          "source_url": "https://www.neumann.com/en-cn/products/microphones/tlm-107",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.sensitivity",
+          "kb_value": "11 mV/Pa (1 kHz into 1 kΩ)",
+          "source_value": "Sensitivity at 1 kHz into 1 kohm 11 mV/Pa",
+          "source_url": "https://www.neumann.com/en-cn/products/microphones/tlm-107",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_spl",
+          "kb_value": "141 dB; 147 dB (-6); 153 dB (-12)",
+          "source_value": "141 dB; 147 dB with -6 dB pad; 153 dB with -12 dB pad",
+          "source_url": "https://www.neumann.com/en-cn/products/microphones/tlm-107",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.phantom_power",
+          "kb_value": "48 V ± 4 V, 3.2 mA",
+          "source_value": "48 V ± 4 V; 3.2 mA",
+          "source_url": "https://www.neumann.com/en-cn/products/microphones/tlm-107",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url / datasheet_url 'not found' (Neumann publishes a TLM 107 manual; optional addition). Nothing to verify.",
+      "status_check": "KB 'current' consistent: product page live.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "microphones-dynamic-ribbon.json",
+      "device_id": "akg-d112-mkii",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.polar_pattern",
+          "kb_value": "cardioid",
+          "source_value": "Directivité: cardioïde (retailer)",
+          "source_url": "https://www.thomann.fr/akg_d_112_mkii.htm",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "kb_value": "20 Hz to 17,000 Hz",
+          "source_value": "Réponse en fréquence: 20 - 17 000 Hz (retailer)",
+          "source_url": "https://www.thomann.fr/akg_d_112_mkii.htm",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.impedance",
+          "kb_value": "210 Ω",
+          "source_value": "Impédance: 210 Ohms (retailer)",
+          "source_url": "https://www.thomann.fr/akg_d_112_mkii.htm",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "320 g",
+          "source_value": "Poids: 320 g (retailer)",
+          "source_url": "https://www.thomann.fr/akg_d_112_mkii.htm",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.sensitivity",
+          "kb_value": "not found",
+          "source_value": "not checked against manufacturer: akg.com product page returned HTTP 403 to WebFetch",
+          "source_url": "https://www.akg.com/Microphones/Dynamic%20Microphones/D112MKII.html",
+          "verdict": "unreachable"
+        }
+      ],
+      "manual_check": "No manual_url, datasheet_url or product_page_url; the only source is a retailer. Manufacturer verification not possible in this session (akg.com HTTP 403).",
+      "status_check": "KB 'current' supported only by retailer stock ('Disponible immédiatement'); no manufacturer evidence.",
+      "overall": "minor-issues",
+      "recommended_fixes": [
+        "Add an AKG manufacturer source (product page + spec sheet/manual) and re-verify all key_specs; sensitivity and max_spl are 'not found' and should be filled from the AKG spec sheet. Current single source is retailer-only: https://www.thomann.fr/akg_d_112_mkii.htm"
+      ]
+    },
+    {
+      "file": "microphones-dynamic-ribbon.json",
+      "device_id": "royer-r-121",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.polar_pattern",
+          "kb_value": "figure-8",
+          "source_value": "Polar Pattern: Figure-8",
+          "source_url": "https://royerlabs.com/r-121/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "kb_value": "30 to 15,000 Hz, ±3 dB",
+          "source_value": "30 -15,000 Hz +/- 3dB",
+          "source_url": "https://royerlabs.com/r-121/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.sensitivity",
+          "kb_value": "-47 dBv re. 1 V/Pa",
+          "source_value": "Sensitivity: -47 dBv Re. 1v/pa",
+          "source_url": "https://royerlabs.com/r-121/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_spl",
+          "kb_value": ">160 dB at 1 kHz; >135 dB at 20 Hz",
+          "source_value": "Maximum SPL: >160dB @ 1kHz, >135dB @ 20Hz",
+          "source_url": "https://royerlabs.com/r-121/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "244 g (8.6 oz)",
+          "source_value": "Weight: 244g (8.6 oz)",
+          "source_url": "https://royerlabs.com/r-121/",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url (R-121 manual, EN) and datasheet_url (R-121 cut sheet, EN, http://) open, official royerlabs.com, correct model.",
+      "status_check": "KB 'current' consistent: R-121 page live; only the 'R-121 Live' variant is marked discontinued.",
+      "overall": "pass",
+      "recommended_fixes": []
+    },
+    {
+      "file": "recorders-playback.json",
+      "device_id": "sound-devices-mixpre-6-ii",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.mic_gain",
+          "kb_value": "+6 dB to +76 dB",
+          "source_value": "Gain Mic input: +6dB to +76dB (MixPre II Series User Guide v9.01, MixPre-6 II section)",
+          "source_url": "https://sites.bu.edu/ftpc/files/2025/08/SoundDevices_MixPre368manual.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.equivalent_input_noise",
+          "kb_value": "-130 dBV (-128 dBu) max",
+          "source_value": "Equivalent Input Noise -130dBV(-128dBu) max (A-weighting, gain=76dB, 150 ohm)",
+          "source_url": "https://sites.bu.edu/ftpc/files/2025/08/SoundDevices_MixPre368manual.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.tracks",
+          "kb_value": "8 Tracks: stereo mix + 6 ISOs",
+          "source_value": "Recording 8 Tracks: stereo mix + 6 ISOs",
+          "source_url": "https://sites.bu.edu/ftpc/files/2025/08/SoundDevices_MixPre368manual.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.usb_interface",
+          "kb_value": "8-in/4-out; 44.1 to 96 kHz",
+          "source_value": "USB Audio Interface (USB-C): 8-in/4-out; 44.1 to 96kHz",
+          "source_url": "https://sites.bu.edu/ftpc/files/2025/08/SoundDevices_MixPre368manual.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": ".56 kg; 19.9 oz.",
+          "source_value": "Weight: .56kg; 19.9oz. (unpackaged, without batteries)",
+          "source_url": "https://sites.bu.edu/ftpc/files/2025/08/SoundDevices_MixPre368manual.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url, datasheet_url and product_page_url all 'not found'. The only full spec source is a Sound Devices user guide re-hosted on a third-party site (sites.bu.edu). Official product page exists: https://www.sounddevices.com/product/mixpre-6-ii/ (HTTP 200 on direct fetch, no discontinued marker).",
+      "status_check": "KB 'current' is consistent with the official product page found during this check, but the record cites only retailers for status (productiongear.co.uk HTTP 429; fullcompass HTTP 403).",
+      "overall": "minor-issues",
+      "recommended_fixes": [
+        "product_page_url: 'not found' -> https://www.sounddevices.com/product/mixpre-6-ii/ (verified HTTP 200; no discontinued marker); use it as the status source.",
+        "manual_url: replace third-party copy https://sites.bu.edu/ftpc/files/2025/08/SoundDevices_MixPre368manual.pdf with the official MixPre II Series User Guide from Sound Devices (cdn.sounddevices.com / support downloads)."
+      ]
+    },
+    {
+      "file": "recorders-playback.json",
+      "device_id": "sound-devices-833",
+      "identity_check": "match",
+      "checked_fields": [
+        {
+          "field": "key_specs.channels_buses_tracks",
+          "kb_value": "8 channels, 6 buses, 12 tracks",
+          "source_value": "8 channels, 6 buses, 12 tracks",
+          "source_url": "https://www.sounddevices.com/product/833/",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.max_gain_mic_trim",
+          "kb_value": "Trim stage (mic input): 76 dB",
+          "source_value": "Trim stage (mic input): 76 dB",
+          "source_url": "https://cdn.sounddevices.com/wp-content/uploads/2025/09/833-v11.00-User-Guide.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.equivalent_input_noise",
+          "kb_value": "-131 dBV (-129 dBu) max",
+          "source_value": "-131 dBV (-129 dBu) max (mic in, A-weighting, 76 dB gain, 150-ohm source impedance)",
+          "source_url": "https://cdn.sounddevices.com/wp-content/uploads/2025/09/833-v11.00-User-Guide.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.ad_converters",
+          "kb_value": "32-bit, 140 dB A-weighted",
+          "source_value": "Multi-stage 32-bit converters, 140 dB A-weighted dynamic range",
+          "source_url": "https://cdn.sounddevices.com/wp-content/uploads/2025/09/833-v11.00-User-Guide.pdf",
+          "verdict": "match"
+        },
+        {
+          "field": "key_specs.weight",
+          "kb_value": "1.25 kg",
+          "source_value": "1.25 kg (unpackaged, without batteries)",
+          "source_url": "https://cdn.sounddevices.com/wp-content/uploads/2025/09/833-v11.00-User-Guide.pdf",
+          "verdict": "match"
+        }
+      ],
+      "manual_check": "manual_url = 833 v11.00 User Guide (EN, official cdn.sounddevices.com, opens).",
+      "status_check": "KB 'current' consistent: product page live, no discontinued marker.",
+      "overall": "pass",
+      "recommended_fixes": []
+    }
+  ]
+}

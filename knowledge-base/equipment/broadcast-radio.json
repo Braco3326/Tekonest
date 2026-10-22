@@ -4,18 +4,66 @@
   "generated": "2026-10-22",
   "selection_rationale": "Radio contribution in France runs on AETA codecs (French maker; Scoop5 S and Scoopy+ S are the TekPractice catalog references, ScoopTeam is the current commentary unit), so AETA has three entries. Tieline and Comrex cover the main international IP codec families, and the Telos Zephyr Xstream represents the ISDN (RNIS) era that EBU Tech 3326 / N-ACIP replaced. The other devices are reference examples for each remaining sub_type: an FM/DAB+ processor (Orban OPTIMOD 5950 HD, Omnia.11), party-line, digital-wireless and IP intercom (Clear-Com Encore MS-702 + RS-701, FreeSpeak II, Riedel Bolero, Green-GO MCX), an ON-AIR signalling light (Yellowtec litt), telephone hybrids (Telos Hx2, Sonifex DHY-04S) and a dedicated mix-minus generator (Sonifex RB-MM1). Each was checked on the manufacturer's site.",
   "not_found_log": [
-    { "device_id": "aeta-scoopy-plus-s", "what": "English user manual and English datasheet", "searched": "aeta-audio.com FR product page /products/scoopys/ lists only French PDFs; English product page not reached (search budget exhausted)" },
-    { "device_id": "aeta-scoopteam", "what": "English datasheet; language of manual_ScoopTeam.pdf not opened to confirm", "searched": "aeta-audio.com /products/scoopteam-2/ lists one product sheet (FR) and one manual" },
-    { "device_id": "aeta-scoop5-s", "what": "year_introduced", "searched": "product page, FR datasheet (12/2020), FR manual; no launch year stated" },
-    { "device_id": "tieline-via", "what": "User manual PDF (public)", "searched": "tieline.com/via-support-page/ says 'Please sign in to Download these PDF Manuals'; only brochures are public" },
-    { "device_id": "tieline-gateway", "what": "User manual PDF (public)", "searched": "tieline.com/gateway/ links no manual; support pages require sign-in (as for ViA)" },
-    { "device_id": "riedel-bolero", "what": "User manual / datasheet PDF", "searched": "riedel.net/intercom/bolero/, beltpack product page, manuals.riedel.net (no Bolero entry listed); only brochures found" },
-    { "device_id": "telos-hx2", "what": "PDF user manual", "searched": "telosalliance.com Hx1/Hx2 page links a web manual (docs.telosalliance.com) and a quick start guide only" },
-    { "device_id": "clear-com-freespeak-ii", "what": "French manual", "searched": "clearcom.com Download Center (JS-rendered, no language versions visible)" },
-    { "device_id": "telos-zephyr-xstream", "what": "Original ISDN Zephyr (1990s) as separate entry; Zephyr Xstream used instead", "searched": "telosalliance.com legacy Telos products list: Zephyr Xstream, Zephyr Xport, Zephyr iPort; Zephyr Classic manuals archived" },
-    { "device_id": "glensound", "what": "Glensound N-1 / IFB unit", "searched": "not reached; search budget exhausted. Sonifex RB-MM1 (dedicated mix-minus generator) found via sonifex.co.uk Telephony > Telephone Mix Minus Generators and used instead" },
-    { "device_id": "comrex-bric-link-iii", "what": "Dropped to keep within 14-18 devices (product page data was collected: Opus/AAC/linear PCM/G.722, EBU 3326/SIP, XLR + AES3)", "searched": "comrex.com/products/bric-link-iii/" },
-    { "device_id": "telos-vx", "what": "VoIP talk-show system not added", "searched": "telosalliance.com VX pages listed but not fetched (time); Hx2 + Sonifex DHY-04S cover telephone-hybrid" }
+    {
+      "device_id": "aeta-scoopy-plus-s",
+      "what": "English user manual and English datasheet",
+      "searched": "aeta-audio.com FR product page /products/scoopys/ lists only French PDFs; English product page not reached (search budget exhausted)"
+    },
+    {
+      "device_id": "aeta-scoopteam",
+      "what": "English datasheet; language of manual_ScoopTeam.pdf not opened to confirm",
+      "searched": "aeta-audio.com /products/scoopteam-2/ lists one product sheet (FR) and one manual"
+    },
+    {
+      "device_id": "aeta-scoop5-s",
+      "what": "year_introduced",
+      "searched": "product page, FR datasheet (12/2020), FR manual; no launch year stated"
+    },
+    {
+      "device_id": "tieline-via",
+      "what": "User manual PDF (public)",
+      "searched": "tieline.com/via-support-page/ says 'Please sign in to Download these PDF Manuals'; only brochures are public"
+    },
+    {
+      "device_id": "tieline-gateway",
+      "what": "User manual PDF (public)",
+      "searched": "tieline.com/gateway/ links no manual; support pages require sign-in (as for ViA)"
+    },
+    {
+      "device_id": "riedel-bolero",
+      "what": "User manual / datasheet PDF",
+      "searched": "riedel.net/intercom/bolero/, beltpack product page, manuals.riedel.net (no Bolero entry listed); only brochures found"
+    },
+    {
+      "device_id": "telos-hx2",
+      "what": "PDF user manual",
+      "searched": "telosalliance.com Hx1/Hx2 page links a web manual (docs.telosalliance.com) and a quick start guide only"
+    },
+    {
+      "device_id": "clear-com-freespeak-ii",
+      "what": "French manual",
+      "searched": "clearcom.com Download Center (JS-rendered, no language versions visible)"
+    },
+    {
+      "device_id": "telos-zephyr-xstream",
+      "what": "Original ISDN Zephyr (1990s) as separate entry; Zephyr Xstream used instead",
+      "searched": "telosalliance.com legacy Telos products list: Zephyr Xstream, Zephyr Xport, Zephyr iPort; Zephyr Classic manuals archived"
+    },
+    {
+      "device_id": "glensound",
+      "what": "Glensound N-1 / IFB unit",
+      "searched": "not reached; search budget exhausted. Sonifex RB-MM1 (dedicated mix-minus generator) found via sonifex.co.uk Telephony > Telephone Mix Minus Generators and used instead"
+    },
+    {
+      "device_id": "comrex-bric-link-iii",
+      "what": "Dropped to keep within 14-18 devices (product page data was collected: Opus/AAC/linear PCM/G.722, EBU 3326/SIP, XLR + AES3)",
+      "searched": "comrex.com/products/bric-link-iii/"
+    },
+    {
+      "device_id": "telos-vx",
+      "what": "VoIP talk-show system not added",
+      "searched": "telosalliance.com VX pages listed but not fetched (time); Hx2 + Sonifex DHY-04S cover telephone-hybrid"
+    }
   ],
   "devices": [
     {
@@ -28,7 +76,12 @@
       "year_introduced": "not found",
       "status": "discontinued",
       "why_it_is_a_classic": "French-made studio codec by AETA that combines AoIP (SIP, N/ACIP / UER Tech 3326) with legacy ISDN in one rack unit. It shows the move from RNIS to IP in French radio studios. AETA now lists it under 'Anciens produits'.",
-      "typical_uses": ["studio-side codec receiving remote reports", "ISDN-to-IP transition", "leased-line contribution", "dual mono links"],
+      "typical_uses": [
+        "studio-side codec receiving remote reports",
+        "ISDN-to-IP transition",
+        "leased-line contribution",
+        "dual mono links"
+      ],
       "key_specs": {
         "audio_inputs": "2 balanced analog inputs, 1 AES/EBU digital input",
         "audio_outputs": "2 balanced analog outputs, 1 AES/EBU digital output",
@@ -49,42 +102,261 @@
         "weight": "Poids max. : 3.4 kg"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "analog inputs 1-2", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-m", "role": "analog outputs 1-2", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-f", "role": "AES/EBU input", "dir": "in", "signal": "aes3", "count": 1 },
-        { "connector": "xlr3-m", "role": "AES/EBU output", "dir": "out", "signal": "aes3", "count": 1 },
-        { "connector": "trs-quarter", "role": "headphone (jack 6,35 mm, front)", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "rj45", "role": "Ethernet 100BaseT (AoIP / control)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "rj45", "role": "ISDN S0 lines (option)", "dir": "bidir", "signal": "isdn-s0", "count": "1-2" },
-        { "connector": "gpio-terminal", "role": "'Digital I/O' GPIO transmission (Sub-D 15)", "dir": "bidir", "signal": "gpio-tally", "count": 1 },
-        { "connector": "dsub25", "role": "'Aux' call remote / loop transmission (Sub-D 25 femelle)", "dir": "bidir", "signal": "gpio-tally", "count": 1 },
-        { "connector": "sma", "role": "mobile antennas (option)", "dir": "bidir", "signal": "rf-cellular", "count": 2 },
-        { "connector": "xlr4", "role": "12 V DC input (option '12V DC')", "dir": "in", "signal": "dc-power", "count": 1 },
-        { "connector": "iec-c14", "role": "mains inlet", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "analog inputs 1-2",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog outputs 1-2",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES/EBU input",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU output",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone (jack 6,35 mm, front)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet 100BaseT (AoIP / control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "ISDN S0 lines (option)",
+          "dir": "bidir",
+          "signal": "isdn-s0",
+          "count": "1-2"
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "'Digital I/O' GPIO transmission (Sub-D 15)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "dsub25",
+          "role": "'Aux' call remote / loop transmission (Sub-D 25 femelle)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "sma",
+          "role": "mobile antennas (option)",
+          "dir": "bidir",
+          "signal": "rf-cellular",
+          "count": 2
+        },
+        {
+          "connector": "xlr4",
+          "role": "12 V DC input (option '12V DC')",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains inlet",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "aes3", "aoip", "headphone-level", "gpio-tally", "dc-power", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "headphone-level",
+        "gpio-tally",
+        "dc-power",
+        "mains-power"
+      ],
       "manual_url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf",
       "datasheet_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf",
       "product_page_url": "https://www.aeta-audio.com/products/scoop5s/",
-      "manual_languages": ["fr", "en"],
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf", "title": "Scoop5 S manuel utilisateur", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoop5S.pdf", "title": "Scoop5 S user manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf", "title": "Fiche produit Scoop5 S", "language": "fr", "file_type": "pdf", "version_or_date": "12/2020", "official": true, "kind": "datasheet" },
-        { "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_ENG.pdf", "title": "Scoop5 S product sheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf",
+          "title": "Scoop5 S manuel utilisateur",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_scoop5S.pdf",
+          "title": "Scoop5 S user manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf",
+          "title": "Fiche produit Scoop5 S",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "12/2020",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_ENG.pdf",
+          "title": "Scoop5 S product sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.aeta-audio.com/products/scoop5s/", "publisher": "AETA Audio Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.audio_inputs", "key_specs.audio_outputs", "key_specs.protocols", "key_specs.networks", "status"] },
-        { "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf", "publisher": "AETA Audio Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.analog_max_level", "key_specs.input_impedance", "key_specs.output_impedance", "key_specs.sample_rates_aes", "key_specs.bandwidth", "key_specs.thd_n", "key_specs.algorithms_ip", "key_specs.algorithms_isdn", "key_specs.algorithms_mobile_voice", "key_specs.protocols", "key_specs.networks", "key_specs.gpio", "key_specs.power", "key_specs.dimensions", "key_specs.weight", "connectors"] },
-        { "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf", "publisher": "AETA Audio Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["connectors"] },
-        { "url": "https://www.aeta-audio.com/en/products/scoop5-s/", "publisher": "AETA Audio Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.audio_inputs", "key_specs.audio_outputs", "manuals"] }
+        {
+          "url": "https://www.aeta-audio.com/products/scoop5s/",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.audio_inputs",
+            "key_specs.audio_outputs",
+            "key_specs.protocols",
+            "key_specs.networks",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.analog_max_level",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.sample_rates_aes",
+            "key_specs.bandwidth",
+            "key_specs.thd_n",
+            "key_specs.algorithms_ip",
+            "key_specs.algorithms_isdn",
+            "key_specs.algorithms_mobile_voice",
+            "key_specs.protocols",
+            "key_specs.networks",
+            "key_specs.gpio",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/en/products/scoop5-s/",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.audio_inputs",
+            "key_specs.audio_outputs",
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Status 'discontinued' because aeta-audio.com lists it under 'Anciens produits'; the product page itself does not say so. The GPIO connector is a Sub-D 15, so it is mapped to gpio-terminal (no dsub15 id). 'isdn-s0' and 'rf-cellular' are proposed signal ids. The successor studio codec on the AETA site is Scoop 6.",
       "conflicts": [
-        { "field": "connectors (Digital I/O gender)", "values": [ { "value": "connecteur sub-D mâle 15 contacts (manual §3, p.43)", "source_url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf" }, { "value": "Prise Sub-D femelle à 15 contacts (manual §7.1.15, p.127)", "source_url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf" } ], "note": "Same manual contradicts itself; check the rear panel." },
-        { "field": "key_specs.algorithms_ip (Opus range)", "values": [ { "value": "Opus adjustable live 12 to 192 kbit/s", "source_url": "https://www.aeta-audio.com/products/scoop5s/" }, { "value": "Débit OPUS réglable (12- 256 kbit/s); 12-192 mono, 16-256 stereo", "source_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf" } ], "note": "Page gives the mono range only." }
+        {
+          "field": "connectors (Digital I/O gender)",
+          "values": [
+            {
+              "value": "connecteur sub-D mâle 15 contacts (manual §3, p.43)",
+              "source_url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf"
+            },
+            {
+              "value": "Prise Sub-D femelle à 15 contacts (manual §7.1.15, p.127)",
+              "source_url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoop5s.pdf"
+            }
+          ],
+          "note": "Same manual contradicts itself; check the rear panel."
+        },
+        {
+          "field": "key_specs.algorithms_ip (Opus range)",
+          "values": [
+            {
+              "value": "Opus adjustable live 12 to 192 kbit/s",
+              "source_url": "https://www.aeta-audio.com/products/scoop5s/"
+            },
+            {
+              "value": "Débit OPUS réglable (12- 256 kbit/s); 12-192 mono, 16-256 stereo",
+              "source_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoop5S_FR.pdf"
+            }
+          ],
+          "note": "Page gives the mono range only."
+        }
       ],
-      "tekpractice": { "in_catalog": true, "catalog_id": "aeta-scoop5-s", "proposed_new_connectors": [], "proposed_new_signals": ["isdn-s0", "rf-cellular"], "sim_value": "high", "sim_value_reason": "Analog XLR + AES3 XLR + Ethernet + ISDN RJ45 + Sub-D GPIO: teaches codec studio wiring and IP vs ISDN." }
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "aeta-scoop5-s",
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "isdn-s0",
+          "rf-cellular"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Analog XLR + AES3 XLR + Ethernet + ISDN RJ45 + Sub-D GPIO: teaches codec studio wiring and IP vs ISDN."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "aeta-scoopy-plus-s",
@@ -96,7 +368,12 @@
       "year_introduced": "not found",
       "status": "discontinued",
       "why_it_is_a_classic": "AETA's portable field codec used by reporters for live remotes over IP, 4G or ISDN. It is in the TekPractice catalog as the field-side counterpart of the Scoop5 S. AETA now lists it under 'Anciens produits'.",
-      "typical_uses": ["live reporting (reportage)", "remote broadcast over 4G", "sports commentary", "ISDN backup"],
+      "typical_uses": [
+        "live reporting (reportage)",
+        "remote broadcast over 4G",
+        "sports commentary",
+        "ISDN backup"
+      ],
       "key_specs": {
         "audio_inputs": "3 entrées micros/lignes symétriques; entrée AES additionnelle (option)",
         "audio_outputs": "2 sorties lignes symétriques; 2 sorties casques stéréo",
@@ -117,34 +394,181 @@
         "weight": "Poids max.: 1.14 kg (batteries exclues)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic/line inputs 1-3", "dir": "in", "signal": "mic-level", "count": 3 },
-        { "connector": "xlr3-m", "role": "line outputs L/R", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "headphones 1-2 (jack 6,35 mm)", "dir": "out", "signal": "headphone-level", "count": 2 },
-        { "connector": "rj45", "role": "Ethernet 100BaseT", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "rj45", "role": "ISDN S0 (option)", "dir": "bidir", "signal": "isdn-s0", "count": 1 },
-        { "connector": "usb-a", "role": "USB host for 4G / Wi-Fi dongles", "dir": "bidir", "signal": "usb-data", "count": 1 },
-        { "connector": "dc-barrel", "role": "external DC (jack 2,1 mm)", "dir": "in", "signal": "dc-power", "count": 1 },
-        { "connector": "hirose-4pin", "role": "lockable power inlet (option)", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-3",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 3
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line outputs L/R",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphones 1-2 (jack 6,35 mm)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet 100BaseT",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "ISDN S0 (option)",
+          "dir": "bidir",
+          "signal": "isdn-s0",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB host for 4G / Wi-Fi dongles",
+          "dir": "bidir",
+          "signal": "usb-data",
+          "count": 1
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "external DC (jack 2,1 mm)",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "hirose-4pin",
+          "role": "lockable power inlet (option)",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "phantom-48v", "line-level-pro", "headphone-level", "aoip", "dc-power"],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "line-level-pro",
+        "headphone-level",
+        "aoip",
+        "dc-power"
+      ],
       "manual_url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoopyplusS.pdf",
       "datasheet_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoopy%2BS_FR.pdf",
       "product_page_url": "https://www.aeta-audio.com/products/scoopys/",
-      "manual_languages": ["fr"],
+      "manual_languages": [
+        "fr"
+      ],
       "manuals": [
-        { "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoopyplusS.pdf", "title": "SCOOPY+ S manuel utilisateur", "language": "fr", "file_type": "pdf", "version_or_date": "firmware 1.11", "official": true, "kind": "user-manual" },
-        { "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoopy%2BS_FR.pdf", "title": "Fiche produit Scoopy+ S", "language": "fr", "file_type": "pdf", "version_or_date": "2022", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoopyplusS.pdf",
+          "title": "SCOOPY+ S manuel utilisateur",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "firmware 1.11",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoopy%2BS_FR.pdf",
+          "title": "Fiche produit Scoopy+ S",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "2022",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.aeta-audio.com/products/scoopys/", "publisher": "AETA Audio Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.audio_inputs", "key_specs.audio_outputs", "key_specs.networks", "key_specs.protocols", "status"] },
-        { "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoopy%2BS_FR.pdf", "publisher": "AETA Audio Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.mic_gain", "key_specs.max_input_level", "key_specs.phantom_power", "key_specs.line_output_level", "key_specs.ein", "key_specs.frequency_response", "key_specs.algorithms_ip", "key_specs.algorithms_isdn", "key_specs.gpio", "key_specs.power", "key_specs.battery_life", "key_specs.dimensions", "key_specs.weight"] },
-        { "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoopyplusS.pdf", "publisher": "AETA Audio Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["connectors"] }
+        {
+          "url": "https://www.aeta-audio.com/products/scoopys/",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.audio_inputs",
+            "key_specs.audio_outputs",
+            "key_specs.networks",
+            "key_specs.protocols",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoopy%2BS_FR.pdf",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mic_gain",
+            "key_specs.max_input_level",
+            "key_specs.phantom_power",
+            "key_specs.line_output_level",
+            "key_specs.ein",
+            "key_specs.frequency_response",
+            "key_specs.algorithms_ip",
+            "key_specs.algorithms_isdn",
+            "key_specs.gpio",
+            "key_specs.power",
+            "key_specs.battery_life",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/manuals/manuel_scoopyplusS.pdf",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Connector types (XLR3 F inputs, XLR3 M outputs, 6.35 mm jacks, RJ45 ISDN, 2.1 mm DC, Hirose 4-pin option) are from the French manual. 'usb-data' and 'isdn-s0' are proposed signal ids.",
       "conflicts": [
-        { "field": "key_specs.audio_inputs (AES input)", "values": [ { "value": "1 AES input listed as standard in the product table", "source_url": "https://www.aeta-audio.com/products/scoopys/" }, { "value": "Entrée AES listed under OPTIONS", "source_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoopy%2BS_FR.pdf" } ], "note": "Product page is itself ambiguous; datasheet lists AES input as an option." }
+        {
+          "field": "key_specs.audio_inputs (AES input)",
+          "values": [
+            {
+              "value": "1 AES input listed as standard in the product table",
+              "source_url": "https://www.aeta-audio.com/products/scoopys/"
+            },
+            {
+              "value": "Entrée AES listed under OPTIONS",
+              "source_url": "https://www.aeta-audio.com/downloads/doc/product_data/Scoopy%2BS_FR.pdf"
+            }
+          ],
+          "note": "Product page is itself ambiguous; datasheet lists AES input as an option."
+        }
       ],
-      "tekpractice": { "in_catalog": true, "catalog_id": "aeta-scoopy-plus-s", "proposed_new_connectors": [], "proposed_new_signals": ["isdn-s0", "usb-data"], "sim_value": "high", "sim_value_reason": "Field codec with mic preamps + phantom + 4G/Ethernet: core remote-broadcast wiring lesson." }
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "aeta-scoopy-plus-s",
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "isdn-s0",
+          "usb-data"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Field codec with mic preamps + phantom + 4G/Ethernet: core remote-broadcast wiring lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "aeta-scoopteam",
@@ -156,7 +580,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "AETA's current commentary codec, which combines a commentator mixer for up to 4 positions with a dual IP codec. AES67 (RAVENNA or Dante) brings the field unit onto studio AoIP networks.",
-      "typical_uses": ["sports commentary", "multi-presenter outside broadcast", "remote talk shows over 4G/5G", "AES67 contribution"],
+      "typical_uses": [
+        "sports commentary",
+        "multi-presenter outside broadcast",
+        "remote talk shows over 4G/5G",
+        "AES67 contribution"
+      ],
       "key_specs": {
         "audio_inputs": "2 entrées microphone avec alim. fantôme, filtre HP, limiteur; 1 entrée mic/line avec alim. fantôme; 1 entrée mic/line; 2 entrées lignes auxiliaires, 1 entrée AES3; Interface USB audio (mono)",
         "audio_outputs": "4 sorties casques stéréo; 2 sorties ligne; 19 sorties audio (incluant 2 sorties ligne)",
@@ -171,28 +600,131 @@
         "weight": "< 2,2 kg"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic inputs (4 commentator positions)", "dir": "in", "signal": "mic-level", "count": 4 },
-        { "connector": "xlr3-f", "role": "2 auxiliary line inputs (XLR3, one switchable to AES3)", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-m", "role": "2 line outputs (XLR3)", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "rj45", "role": "Ethernet (audio and control)", "dir": "bidir", "signal": "aoip", "count": 2 },
-        { "connector": "xlr4", "role": "external 12 V DC / battery input", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic inputs (4 commentator positions)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "2 auxiliary line inputs (XLR3, one switchable to AES3)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "2 line outputs (XLR3)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet (audio and control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "xlr4",
+          "role": "external 12 V DC / battery input",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "phantom-48v", "line-level-pro", "aes3", "headphone-level", "aoip", "dc-power"],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "line-level-pro",
+        "aes3",
+        "headphone-level",
+        "aoip",
+        "dc-power"
+      ],
       "manual_url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_ScoopTeam.pdf",
       "datasheet_url": "https://www.aeta-audio.com/downloads/doc/product_data/ScoopTeam_FR.pdf",
       "product_page_url": "https://www.aeta-audio.com/products/scoopteam-2/",
-      "manual_languages": ["fr"],
+      "manual_languages": [
+        "fr"
+      ],
       "manuals": [
-        { "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_ScoopTeam.pdf", "title": "ScoopTeam manual (listed on the French product page)", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://www.aeta-audio.com/downloads/doc/product_data/ScoopTeam_FR.pdf", "title": "Fiche produit ScoopTeam", "language": "fr", "file_type": "pdf", "version_or_date": "2022", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/manuals/manual_ScoopTeam.pdf",
+          "title": "ScoopTeam manual (listed on the French product page)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/product_data/ScoopTeam_FR.pdf",
+          "title": "Fiche produit ScoopTeam",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "2022",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.aeta-audio.com/products/scoopteam-2/", "publisher": "AETA Audio Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.audio_inputs", "key_specs.audio_outputs", "key_specs.aoip", "key_specs.protocols", "connectors", "status"] },
-        { "url": "https://www.aeta-audio.com/downloads/doc/product_data/ScoopTeam_FR.pdf", "publisher": "AETA Audio Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.audio_inputs", "key_specs.audio_outputs", "key_specs.aoip", "key_specs.algorithms_ip", "key_specs.algorithms_isdn", "key_specs.protocols", "key_specs.networks", "key_specs.gpio", "key_specs.power", "key_specs.dimensions", "key_specs.weight"] }
+        {
+          "url": "https://www.aeta-audio.com/products/scoopteam-2/",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.audio_inputs",
+            "key_specs.audio_outputs",
+            "key_specs.aoip",
+            "key_specs.protocols",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/downloads/doc/product_data/ScoopTeam_FR.pdf",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.audio_inputs",
+            "key_specs.audio_outputs",
+            "key_specs.aoip",
+            "key_specs.algorithms_ip",
+            "key_specs.algorithms_isdn",
+            "key_specs.protocols",
+            "key_specs.networks",
+            "key_specs.gpio",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The product page says the 2 analog inputs are 'sur XLR3 ou AES3' and that the 2 line outputs are XLR3. Mic input and headphone connector types are not stated in the sources read. The mic inputs are assumed to be XLR3-F for TekPractice purposes; check the manual. The manual's language was not confirmed (filename 'manual_', listed on the FR page).",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "4 commentator mics + headphones + AES67/Dante + dual codec: rich routing and IFB lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "4 commentator mics + headphones + AES67/Dante + dual codec: rich routing and IFB lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "tieline-via",
@@ -204,7 +736,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Tieline's portable remote codec, which Tieline says can stream a stereo program plus a separate IFB, all full duplex. It supports SIP compliant with EBU N/ACIP Tech 3326 & 3368, so it can connect to other brands' codecs.",
-      "typical_uses": ["outside broadcast remotes", "sports commentary", "program + IFB over two networks", "podcast recording"],
+      "typical_uses": [
+        "outside broadcast remotes",
+        "sports commentary",
+        "program + IFB over two networks",
+        "podcast recording"
+      ],
       "key_specs": {
         "analog_inputs": "3 x Female XLR mic / line inputs",
         "analog_outputs": "2 x Male XLR",
@@ -224,33 +761,177 @@
         "weight": "1.62 kg (with battery)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic/line inputs 1-3 (input 1 also AES3/AES42)", "dir": "in", "signal": "mic-level", "count": 3 },
-        { "connector": "xlr3-m", "role": "analog outputs", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "headphone outputs", "dir": "out", "signal": "headphone-level", "count": 3 },
-        { "connector": "rca", "role": "S/PDIF in/out (aux)", "dir": "bidir", "signal": "spdif", "count": 2 },
-        { "connector": "trs-35mm", "role": "stereo aux line input", "dir": "in", "signal": "line-level-consumer", "count": 1 },
-        { "connector": "gpio-terminal", "role": "control port GPIO (DB15)", "dir": "bidir", "signal": "gpio-tally", "count": 1 },
-        { "connector": "rj45", "role": "Gigabit Ethernet", "dir": "bidir", "signal": "aoip", "count": 2 },
-        { "connector": "usb-a", "role": "USB 2.0 host for cellular modems", "dir": "bidir", "signal": "usb-data", "count": 2 },
-        { "connector": "dc-barrel", "role": "external 12 VDC 3A supply", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-3 (input 1 also AES3/AES42)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 3
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone outputs",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 3
+        },
+        {
+          "connector": "rca",
+          "role": "S/PDIF in/out (aux)",
+          "dir": "bidir",
+          "signal": "spdif",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "stereo aux line input",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "control port GPIO (DB15)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Gigabit Ethernet",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB 2.0 host for cellular modems",
+          "dir": "bidir",
+          "signal": "usb-data",
+          "count": 2
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "external 12 VDC 3A supply",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "phantom-48v", "aes3", "line-level-pro", "spdif", "headphone-level", "gpio-tally", "aoip", "dc-power"],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "aes3",
+        "line-level-pro",
+        "spdif",
+        "headphone-level",
+        "gpio-tally",
+        "aoip",
+        "dc-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/ViA-11_3-17th_Feb_2026_English.pdf",
       "product_page_url": "https://www.tieline.com/via/",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/ViA-11_3-17th_Feb_2026_English.pdf", "title": "ViA brochure / datasheet", "language": "en", "file_type": "pdf", "version_or_date": "V11.3, 17 Feb 2026", "official": true, "kind": "datasheet" },
-        { "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2025/06/ViA-10_1-25th_June_2025_French.pdf", "title": "ViA brochure (French)", "language": "fr", "file_type": "pdf", "version_or_date": "10.1, 25 June 2025 (from filename)", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/ViA-11_3-17th_Feb_2026_English.pdf",
+          "title": "ViA brochure / datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V11.3, 17 Feb 2026",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2025/06/ViA-10_1-25th_June_2025_French.pdf",
+          "title": "ViA brochure (French)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "10.1, 25 June 2025 (from filename)",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.tieline.com/via/", "publisher": "Tieline", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.algorithms", "key_specs.protocols", "key_specs.networks", "key_specs.power", "key_specs.battery_life", "key_specs.dimensions", "key_specs.weight", "status"] },
-        { "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/ViA-11_3-17th_Feb_2026_English.pdf", "publisher": "Tieline", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.aes3_in", "key_specs.aux_io", "key_specs.headphones", "key_specs.gpio", "key_specs.phantom_power", "key_specs.frequency_response", "key_specs.sample_frequencies", "key_specs.algorithms", "key_specs.protocols", "key_specs.networks", "key_specs.dimensions", "key_specs.weight", "connectors"] },
-        { "url": "https://tieline.com/via-support-page/", "publisher": "Tieline", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+        {
+          "url": "https://www.tieline.com/via/",
+          "publisher": "Tieline",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.algorithms",
+            "key_specs.protocols",
+            "key_specs.networks",
+            "key_specs.power",
+            "key_specs.battery_life",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/ViA-11_3-17th_Feb_2026_English.pdf",
+          "publisher": "Tieline",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.aes3_in",
+            "key_specs.aux_io",
+            "key_specs.headphones",
+            "key_specs.gpio",
+            "key_specs.phantom_power",
+            "key_specs.frequency_response",
+            "key_specs.sample_frequencies",
+            "key_specs.algorithms",
+            "key_specs.protocols",
+            "key_specs.networks",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tieline.com/via-support-page/",
+          "publisher": "Tieline",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "User manuals require a Tieline sign-in, so manual_url is 'not found'. The DB15 GPIO is mapped to gpio-terminal (no dsub15 id). 'usb-data' is a proposed signal id. The DC inlet type is not stated in the sources read; dc-barrel is an assumption.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["usb-data"], "sim_value": "medium", "sim_value_reason": "Similar lesson to Scoopy+ S; adds AES3/AES42 on a shared XLR and 10/48 V phantom choice." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "usb-data"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Similar lesson to Scoopy+ S; adds AES3/AES42 on a shared XLR and 10/48 V phantom choice."
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "tieline-gateway",
@@ -262,7 +943,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A studio 'codec farm' in 1U that bridges SIP/EBU N/ACIP links to the station's AES67/ST 2110 network. It shows how modern studios terminate many remote feeds at once.",
-      "typical_uses": ["studio codec hub for many remotes", "AES67 / ST 2110 contribution", "multicast distribution", "STL / network distribution"],
+      "typical_uses": [
+        "studio codec hub for many remotes",
+        "AES67 / ST 2110 contribution",
+        "multicast distribution",
+        "STL / network distribution"
+      ],
       "key_specs": {
         "channels": "16 Channels (16 Mono or 8 Stereo); 8-channel base model",
         "analog_aes_io": "RJ45 Analog Inputs 1-4/AES3 Inputs 1-4; RJ45 Analog Outputs 1-4/AES3 Outputs 1-4; RJ45 AES3 Inputs 5-8; RJ45 AES3 Outputs 5-8",
@@ -282,32 +968,164 @@
         "power": "Dual AC 90-240V IEC power inlets; 2A 50-60 Hz; Nominal 30W, Maximum 45W"
       },
       "connectors": [
-        { "connector": "rj45", "role": "analog/AES3 inputs 1-4 (shared)", "dir": "in", "signal": "line-level-pro", "count": "1-4 (pairs)" },
-        { "connector": "rj45", "role": "analog/AES3 outputs 1-4 (shared)", "dir": "out", "signal": "line-level-pro", "count": "1-4 (pairs)" },
-        { "connector": "rj45", "role": "AES3 inputs/outputs 5-8", "dir": "bidir", "signal": "aes3", "count": "not stated" },
-        { "connector": "rj45", "role": "Gigabit WAN/LAN ports", "dir": "bidir", "signal": "aoip", "count": 2 },
-        { "connector": "rj45", "role": "Gigabit AoIP ports (AES67 / ST 2110-30)", "dir": "bidir", "signal": "aes67", "count": 2 },
-        { "connector": "bnc", "role": "sync in/out (wordclock, AES11, PTP)", "dir": "bidir", "signal": "wordclock", "count": 2 },
-        { "connector": "dsub25", "role": "control ports (GPIO)", "dir": "bidir", "signal": "gpio-tally", "count": 2 },
-        { "connector": "trs-quarter", "role": "front headphone", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "iec-c14", "role": "dual AC inlets", "dir": "in", "signal": "mains-power", "count": 2 }
+        {
+          "connector": "rj45",
+          "role": "analog/AES3 inputs 1-4 (shared)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": "1-4 (pairs)"
+        },
+        {
+          "connector": "rj45",
+          "role": "analog/AES3 outputs 1-4 (shared)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "1-4 (pairs)"
+        },
+        {
+          "connector": "rj45",
+          "role": "AES3 inputs/outputs 5-8",
+          "dir": "bidir",
+          "signal": "aes3",
+          "count": "not stated"
+        },
+        {
+          "connector": "rj45",
+          "role": "Gigabit WAN/LAN ports",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "Gigabit AoIP ports (AES67 / ST 2110-30)",
+          "dir": "bidir",
+          "signal": "aes67",
+          "count": 2
+        },
+        {
+          "connector": "bnc",
+          "role": "sync in/out (wordclock, AES11, PTP)",
+          "dir": "bidir",
+          "signal": "wordclock",
+          "count": 2
+        },
+        {
+          "connector": "dsub25",
+          "role": "control ports (GPIO)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "front headphone",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "dual AC inlets",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 2
+        }
       ],
-      "signal_types": ["line-level-pro", "aes3", "aoip", "aes67", "smpte-2110", "wordclock", "gpio-tally", "headphone-level", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "aes67",
+        "smpte-2110",
+        "wordclock",
+        "gpio-tally",
+        "headphone-level",
+        "mains-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/Gateway-16th_Feb_2026_v24_2_English.pdf",
       "product_page_url": "https://tieline.com/gateway/",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/Gateway-16th_Feb_2026_v24_2_English.pdf", "title": "Gateway brochure / datasheet", "language": "en", "file_type": "pdf", "version_or_date": "v24.2, 16 Feb 2026 (from filename)", "official": true, "kind": "datasheet" },
-        { "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2025/06/Gateway-25th_June_2025_v18_1_French.pdf", "title": "Gateway brochure (French)", "language": "fr", "file_type": "pdf", "version_or_date": "v18.1, 25 June 2025 (from filename)", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/Gateway-16th_Feb_2026_v24_2_English.pdf",
+          "title": "Gateway brochure / datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v24.2, 16 Feb 2026 (from filename)",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2025/06/Gateway-25th_June_2025_v18_1_French.pdf",
+          "title": "Gateway brochure (French)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "v18.1, 25 June 2025 (from filename)",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://tieline.com/gateway/", "publisher": "Tieline", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.channels", "key_specs.aoip", "key_specs.gpio", "key_specs.algorithms", "key_specs.rack_size", "key_specs.dimensions", "key_specs.power", "status"] },
-        { "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/Gateway-16th_Feb_2026_v24_2_English.pdf", "publisher": "Tieline", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.analog_aes_io", "key_specs.aoip", "key_specs.wan", "key_specs.sync", "key_specs.gpio", "key_specs.headphone", "key_specs.analog_levels", "key_specs.frequency_response", "key_specs.algorithms", "key_specs.standards", "key_specs.isdn", "key_specs.dimensions", "key_specs.weight", "key_specs.power", "connectors"] }
+        {
+          "url": "https://tieline.com/gateway/",
+          "publisher": "Tieline",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.aoip",
+            "key_specs.gpio",
+            "key_specs.algorithms",
+            "key_specs.rack_size",
+            "key_specs.dimensions",
+            "key_specs.power",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tieline.com/wp-content/uploads/bsk-pdf-manager/2026/04/Gateway-16th_Feb_2026_v24_2_English.pdf",
+          "publisher": "Tieline",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.analog_aes_io",
+            "key_specs.aoip",
+            "key_specs.wan",
+            "key_specs.sync",
+            "key_specs.gpio",
+            "key_specs.headphone",
+            "key_specs.analog_levels",
+            "key_specs.frequency_response",
+            "key_specs.algorithms",
+            "key_specs.standards",
+            "key_specs.isdn",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.power",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Analog and AES3 audio use RJ45 connectors (StudioHub-style), not XLR. This is a useful counter-example for wiring lessons. The product page counts 16 GPIOs, and the datasheet gives 16 inputs + 16 outputs on dual DB-25. The manual needs a Tieline sign-in.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Analog/AES3 on RJ45 plus AES67/ST 2110 ports, BNC sync and DB-25 GPIO: many distinct studio-side signals." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Analog/AES3 on RJ45 plus AES67/ST 2110 ports, BNC sync and DB-25 GPIO: many distinct studio-side signals."
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "comrex-access-nx",
@@ -319,7 +1137,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Comrex's portable IP codec for remote broadcasts. It has an 'EBU 3326/SIP mode for third-party compatibility' alongside Comrex's own BRIC Normal mode and CrossLock reliability layer.",
-      "typical_uses": ["sports play-by-play", "remote broadcasts over cellular", "news reporting"],
+      "typical_uses": [
+        "sports play-by-play",
+        "remote broadcasts over cellular",
+        "news reporting"
+      ],
       "key_specs": {
         "inputs": "Two mic-line inputs; XLR In: 3-pin female; Stereo Line In: 3.5mm female (unbalanced)",
         "input_levels": "Line, Mic HI, and Mic LO",
@@ -336,32 +1158,168 @@
         "weight": "3.16 lbs (1.43 kg)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "CH1/CH2 mic/line inputs", "dir": "in", "signal": "mic-level", "count": 2 },
-        { "connector": "trs-35mm", "role": "stereo line in (unbalanced)", "dir": "in", "signal": "line-level-consumer", "count": 1 },
-        { "connector": "trs-35mm", "role": "line out (unbalanced)", "dir": "out", "signal": "line-level-consumer", "count": 1 },
-        { "connector": "trs-quarter", "role": "headphone out", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "gpio-terminal", "role": "contact closures (9-pin DIN female)", "dir": "bidir", "signal": "gpio-tally", "count": 1 },
-        { "connector": "usb-a", "role": "USB type A (modems)", "dir": "bidir", "signal": "usb-data", "count": 2 },
-        { "connector": "rj45", "role": "Ethernet 1000Base-T", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "dc-barrel", "role": "power (4-pin mini-DIN female)", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "CH1/CH2 mic/line inputs",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "stereo line in (unbalanced)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "line out (unbalanced)",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone out",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "contact closures (9-pin DIN female)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB type A (modems)",
+          "dir": "bidir",
+          "signal": "usb-data",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet 1000Base-T",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "power (4-pin mini-DIN female)",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-consumer", "headphone-level", "gpio-tally", "aoip", "dc-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-consumer",
+        "headphone-level",
+        "gpio-tally",
+        "aoip",
+        "dc-power"
+      ],
       "manual_url": "https://www.comrex.com/wp-content/uploads/2017/04/ACCESS-NX-Manual.pdf",
       "datasheet_url": "https://www.comrex.com/wp-content/uploads/2017/04/ACCESS-NX-Brochure-March-2019.pdf",
       "product_page_url": "https://www.comrex.com/products/access-nx/",
-      "manual_languages": ["en", "es"],
+      "manual_languages": [
+        "en",
+        "es"
+      ],
       "manuals": [
-        { "url": "https://www.comrex.com/wp-content/uploads/2017/04/ACCESS-NX-Manual.pdf", "title": "ACCESS NX Product Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://www.comrex.com/wp-content/uploads/2017/04/NX-Manual-Spanish.pdf", "title": "ACCESS NX Manual en Español", "language": "es", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://www.comrex.com/wp-content/uploads/2017/04/ACCESS-NX-Brochure-March-2019.pdf", "title": "ACCESS NX Brochure", "language": "en", "file_type": "pdf", "version_or_date": "March 2019 (from filename)", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.comrex.com/wp-content/uploads/2017/04/ACCESS-NX-Manual.pdf",
+          "title": "ACCESS NX Product Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.comrex.com/wp-content/uploads/2017/04/NX-Manual-Spanish.pdf",
+          "title": "ACCESS NX Manual en Español",
+          "language": "es",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.comrex.com/wp-content/uploads/2017/04/ACCESS-NX-Brochure-March-2019.pdf",
+          "title": "ACCESS NX Brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "March 2019 (from filename)",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.comrex.com/products/access-nx/", "publisher": "Comrex", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.inputs", "key_specs.algorithms", "key_specs.protocols", "key_specs.networks", "key_specs.battery", "status"] },
-        { "url": "https://www.comrex.com/wp-content/uploads/2017/04/ACCESS-NX-Manual.pdf", "publisher": "Comrex", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.inputs", "key_specs.input_levels", "key_specs.xlr_input_impedance", "key_specs.phantom_power", "key_specs.line_output", "key_specs.headphone_out", "key_specs.algorithms", "key_specs.protocols", "key_specs.power", "key_specs.dimensions", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://www.comrex.com/products/access-nx/",
+          "publisher": "Comrex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.algorithms",
+            "key_specs.protocols",
+            "key_specs.networks",
+            "key_specs.battery",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.comrex.com/wp-content/uploads/2017/04/ACCESS-NX-Manual.pdf",
+          "publisher": "Comrex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.input_levels",
+            "key_specs.xlr_input_impedance",
+            "key_specs.phantom_power",
+            "key_specs.line_output",
+            "key_specs.headphone_out",
+            "key_specs.algorithms",
+            "key_specs.protocols",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Phantom power is 12 V, not 48 V (manual). The power inlet is a 4-pin mini-DIN and the contact closures use a 9-pin DIN. Neither has a TekPractice id, so they are mapped to the closest ids (dc-barrel, gpio-terminal). The brochure PDF was not opened.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["mini-din-4", "din-9"], "proposed_new_signals": ["usb-data"], "sim_value": "medium", "sim_value_reason": "12 V phantom (not 48 V) and unbalanced 3.5 mm I/O give a good 'read the spec' lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "mini-din-4",
+          "din-9"
+        ],
+        "proposed_new_signals": [
+          "usb-data"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "12 V phantom (not 48 V) and unbalanced 3.5 mm I/O give a good 'read the spec' lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "telos-zephyr-xstream",
@@ -373,7 +1331,12 @@
       "year_introduced": "not found",
       "status": "discontinued",
       "why_it_is_a_classic": "The Telos Zephyr family is the classic ISDN codec of the pre-IP era, and Telos now archives it as a 'LEGACY PRODUCT'. It shows ISDN contribution: B channels at 56/64 kbit/s, NT1, and the S/T vs U interface.",
-      "typical_uses": ["ISDN remote broadcasts (historical)", "studio-to-studio ISDN links", "voice-over sessions", "teaching ISDN vs IP contribution"],
+      "typical_uses": [
+        "ISDN remote broadcasts (historical)",
+        "studio-to-studio ISDN links",
+        "voice-over sessions",
+        "teaching ISDN vs IP contribution"
+      ],
       "key_specs": {
         "algorithms": "MPEG-2 AAC, MPEG-4 AAC-LD MPEG-2 Layer-3, MPEG-2 Layer-2, AACPlus, and G.722",
         "frequency_response_layer3": "Layer-3 all modes: 20-16,000Hz at 48kHz fs., 20-15,000Hz at 32kHz fs",
@@ -391,34 +1354,185 @@
         "weight": "9 pounds (4 kg) (non-mixer) shipping weight"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "send inputs (XLR/TRS combo)", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-m", "role": "receive outputs", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-f", "role": "AES/EBU input (non-mixer version)", "dir": "in", "signal": "aes3", "count": 1 },
-        { "connector": "xlr3-m", "role": "AES/EBU output (non-mixer version)", "dir": "out", "signal": "aes3", "count": 1 },
-        { "connector": "rj45", "role": "ISDN line (S/T to NT1 or U interface)", "dir": "bidir", "signal": "isdn-s0", "count": 1 },
-        { "connector": "rj45", "role": "100Base-T Ethernet (control, streaming, SIP)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "gpio-terminal", "role": "RS-232 remote control (DB9 female)", "dir": "bidir", "signal": "rs232", "count": 1 },
-        { "connector": "trs-quarter", "role": "headphone outputs (¼\" stereo jacks)", "dir": "out", "signal": "headphone-level", "count": "not stated" },
-        { "connector": "iec-c14", "role": "mains inlet", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "send inputs (XLR/TRS combo)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "receive outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES/EBU input (non-mixer version)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU output (non-mixer version)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "ISDN line (S/T to NT1 or U interface)",
+          "dir": "bidir",
+          "signal": "isdn-s0",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "100Base-T Ethernet (control, streaming, SIP)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "RS-232 remote control (DB9 female)",
+          "dir": "bidir",
+          "signal": "rs232",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone outputs (¼\" stereo jacks)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": "not stated"
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains inlet",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "aes3", "aoip", "headphone-level", "gpio-tally", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "headphone-level",
+        "gpio-tally",
+        "mains-power"
+      ],
       "manual_url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/XStream/Support%20Files/Telos_Zephyr%20Xstream_Manual_C1917049.pdf",
       "datasheet_url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/XStream/Support%20Files/xstream-brochure.pdf",
       "product_page_url": "https://www.telosalliance.com/legacy/telos-zephyr-xstream",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/XStream/Support%20Files/Telos_Zephyr%20Xstream_Manual_C1917049.pdf", "title": "Zephyr Xstream User Manual", "language": "en", "file_type": "pdf", "version_or_date": "Copyright 1994, 2002, 2007, 2009", "official": true, "kind": "user-manual" },
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/XStream/Support%20Files/xstream-brochure.pdf", "title": "Zephyr Xstream / Xport Brochure", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" },
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Discontinued%20Products/Zephyr%20Classic%20Family/zephyr-manual.pdf", "title": "Zephyr ISDN Transceiver Manual (Zephyr Classic)", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/XStream/Support%20Files/Telos_Zephyr%20Xstream_Manual_C1917049.pdf",
+          "title": "Zephyr Xstream User Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Copyright 1994, 2002, 2007, 2009",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/XStream/Support%20Files/xstream-brochure.pdf",
+          "title": "Zephyr Xstream / Xport Brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Discontinued%20Products/Zephyr%20Classic%20Family/zephyr-manual.pdf",
+          "title": "Zephyr ISDN Transceiver Manual (Zephyr Classic)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.telosalliance.com/legacy/telos-zephyr-xstream", "publisher": "Telos Alliance", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.algorithms", "key_specs.isdn_interface", "key_specs.control_ports", "key_specs.remote", "status"] },
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/XStream/Support%20Files/Telos_Zephyr%20Xstream_Manual_C1917049.pdf", "publisher": "Telos Systems", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.algorithms", "key_specs.frequency_response_layer3", "key_specs.frequency_response_g722", "key_specs.isdn_bit_rates", "key_specs.isdn_interface", "key_specs.send_input", "key_specs.receive_output", "key_specs.aes_ebu", "key_specs.control_ports", "key_specs.remote", "key_specs.ip_support", "key_specs.power", "key_specs.dimensions", "key_specs.weight", "connectors"] },
-        { "url": "https://www.telosalliance.com/legacy/telos-products", "publisher": "Telos Alliance", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+        {
+          "url": "https://www.telosalliance.com/legacy/telos-zephyr-xstream",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.algorithms",
+            "key_specs.isdn_interface",
+            "key_specs.control_ports",
+            "key_specs.remote",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/XStream/Support%20Files/Telos_Zephyr%20Xstream_Manual_C1917049.pdf",
+          "publisher": "Telos Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.algorithms",
+            "key_specs.frequency_response_layer3",
+            "key_specs.frequency_response_g722",
+            "key_specs.isdn_bit_rates",
+            "key_specs.isdn_interface",
+            "key_specs.send_input",
+            "key_specs.receive_output",
+            "key_specs.aes_ebu",
+            "key_specs.control_ports",
+            "key_specs.remote",
+            "key_specs.ip_support",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.telosalliance.com/legacy/telos-products",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The manual describes an RJ-45-style ISDN jack and an NT1 'S/T' connection (U interface on North American units). The input/output counts (2) are inferred from the '(x2)' impedance entries. The DB9 serial port is mapped to gpio-terminal with the proposed signal 'rs232'. The 'Zephyr Classic' manual is listed for the original Zephyr.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["isdn-s0", "rs232"], "sim_value": "medium", "sim_value_reason": "Historical ISDN lesson (B channels, NT1) that contrasts with SIP/EBU 3326 IP codecs." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "isdn-s0",
+          "rs232"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Historical ISDN lesson (B channels, NT1) that contrasts with SIP/EBU 3326 IP codecs."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "orban-optimod-5950-hd",
@@ -430,7 +1544,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "OPTIMOD is Orban's long-running on-air processor line. Orban describes the 5950 HD as incorporating the best features of the OPTIMOD 8700i. It processes FM and DAB+ in one unit and includes the ITU BS.412 MPX power control required in some countries.",
-      "typical_uses": ["FM transmitter processing and stereo encoding", "DAB+ / HD Radio / streaming processing", "MPX over AES / IP to transmitter site", "RDS generation"],
+      "typical_uses": [
+        "FM transmitter processing and stereo encoding",
+        "DAB+ / HD Radio / streaming processing",
+        "MPX over AES / IP to transmitter site",
+        "RDS generation"
+      ],
       "key_specs": {
         "processing_structures": "Five-Band, Low-Latency Five-Band, Ultra-Low Latency Five-Band, Two-Band, Five-Band MX and Two- Band MX",
         "audio_inputs": "1 x stereo analog; 2 x stereo digital AES3; 2 x stereo AoIP",
@@ -446,31 +1565,162 @@
         "rack_size": "1 RU"
       },
       "connectors": [
-        { "connector": "rj45", "role": "AoIP dual-redundant (AES67/ST 2110, Dante or RAVENNA)", "dir": "bidir", "signal": "aes67", "count": 2 },
-        { "connector": "rj45", "role": "Ethernet management/control", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "rj45", "role": "Ethernet streaming / μMPX / APTmpX", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "bnc", "role": "SCA inputs", "dir": "in", "signal": "mpx-composite", "count": 2 },
-        { "connector": "bnc", "role": "10 MHz clock input", "dir": "in", "signal": "wordclock", "count": 1 },
-        { "connector": "iec-c14", "role": "dual independent AC inlets", "dir": "in", "signal": "mains-power", "count": 2 }
+        {
+          "connector": "rj45",
+          "role": "AoIP dual-redundant (AES67/ST 2110, Dante or RAVENNA)",
+          "dir": "bidir",
+          "signal": "aes67",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet management/control",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet streaming / μMPX / APTmpX",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "SCA inputs",
+          "dir": "in",
+          "signal": "mpx-composite",
+          "count": 2
+        },
+        {
+          "connector": "bnc",
+          "role": "10 MHz clock input",
+          "dir": "in",
+          "signal": "wordclock",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "dual independent AC inlets",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 2
+        }
       ],
-      "signal_types": ["line-level-pro", "aes3", "aes67", "smpte-2110", "dante", "gpio-tally", "headphone-level", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aes67",
+        "smpte-2110",
+        "dante",
+        "gpio-tally",
+        "headphone-level",
+        "mains-power"
+      ],
       "manual_url": "https://www.orban-europe.com/downloads/5950HD/Documentation/5950HD%20Manual%20V_2_0%20Aug%2026.pdf",
       "datasheet_url": "https://www.orban.com/s/SpecSheet-Optimod-5950HD-vAug2025.pdf",
       "product_page_url": "https://www.orban.com/optimod-5950-hd-overview",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.orban-europe.com/downloads/5950HD/Documentation/5950HD%20Manual%20V_2_0%20Aug%2026.pdf", "title": "5950HD Manual V_2_0", "language": "en", "file_type": "pdf", "version_or_date": "V2.0 Aug 26 (from filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://www.orban.com/s/SpecSheet-Optimod-5950HD-vAug2025.pdf", "title": "OPTIMOD 5950 HD spec sheet", "language": "en", "file_type": "pdf", "version_or_date": "Version: August 2025", "official": true, "kind": "spec-sheet" },
-        { "url": "https://orban.com/s/QuickStartGuide_5950HD_2026-07-24.pdf", "title": "5950HD Quick Start Guide", "language": "en", "file_type": "pdf", "version_or_date": "2026-07-24 (from filename)", "official": true, "kind": "quick-start" }
+        {
+          "url": "https://www.orban-europe.com/downloads/5950HD/Documentation/5950HD%20Manual%20V_2_0%20Aug%2026.pdf",
+          "title": "5950HD Manual V_2_0",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V2.0 Aug 26 (from filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.orban.com/s/SpecSheet-Optimod-5950HD-vAug2025.pdf",
+          "title": "OPTIMOD 5950 HD spec sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Version: August 2025",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://orban.com/s/QuickStartGuide_5950HD_2026-07-24.pdf",
+          "title": "5950HD Quick Start Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2026-07-24 (from filename)",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.orban.com/optimod-5950-hd-overview", "publisher": "Orban", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.processing_structures", "key_specs.ip_network", "key_specs.rack_size", "key_specs.power", "status"] },
-        { "url": "https://www.orban.com/s/SpecSheet-Optimod-5950HD-vAug2025.pdf", "publisher": "Orban", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.processing_structures", "key_specs.audio_inputs", "key_specs.audio_outputs", "key_specs.sca_inputs", "key_specs.sync", "key_specs.gpio", "key_specs.latency", "key_specs.ip_network", "key_specs.loudness_and_mpx", "key_specs.rds", "key_specs.power", "connectors"] },
-        { "url": "https://www.orban-europe.com/downloads/5950HD/Documentation/", "publisher": "Orban Europe", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+        {
+          "url": "https://www.orban.com/optimod-5950-hd-overview",
+          "publisher": "Orban",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.processing_structures",
+            "key_specs.ip_network",
+            "key_specs.rack_size",
+            "key_specs.power",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.orban.com/s/SpecSheet-Optimod-5950HD-vAug2025.pdf",
+          "publisher": "Orban",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.processing_structures",
+            "key_specs.audio_inputs",
+            "key_specs.audio_outputs",
+            "key_specs.sca_inputs",
+            "key_specs.sync",
+            "key_specs.gpio",
+            "key_specs.latency",
+            "key_specs.ip_network",
+            "key_specs.loudness_and_mpx",
+            "key_specs.rds",
+            "key_specs.power",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.orban-europe.com/downloads/5950HD/Documentation/",
+          "publisher": "Orban Europe",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Analog audio, AES3 and MPX connector types are not stated in the spec sheet read. The IEC inlet type is an assumption from 'independent AC line inputs'. The manual URL joins the relative link on the orban-europe.com documentation index with that host; the PDF itself was not opened. 'mpx-composite' is a proposed signal id. The spec sheet URL redirects to a squarespace static host.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["mpx-composite"], "sim_value": "medium", "sim_value_reason": "Shows the end of the air chain (processor -> MPX -> transmitter), but connector types need the manual." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "mpx-composite"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Shows the end of the air chain (processor -> MPX -> transmitter), but connector types need the manual."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "omnia-11",
@@ -482,7 +1732,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Omnia's flagship hardware FM processor. Telos Alliance describes it as having an 'integrated laboratory-grade stereo generator with dual MPX outputs'. It is the main alternative to Orban OPTIMOD in FM air chains.",
-      "typical_uses": ["FM on-air processing", "FM+HD / DRM processing", "composite MPX feed to exciter", "MPX over AES (Omnia Direct)"],
+      "typical_uses": [
+        "FM on-air processing",
+        "FM+HD / DRM processing",
+        "composite MPX feed to exciter",
+        "MPX over AES (Omnia Direct)"
+      ],
       "key_specs": {
         "analog_input": "Left/Right Stereo. Electronically balanced; 10k ohms; max +22 dBu; Two, EMI-suppressed XLR-female",
         "analog_output": "Electronically balanced; 20 ohms; adjustable from -2 dBu to +22dBu peak; Two, EMI-suppressed XLR-male",
@@ -500,32 +1755,158 @@
         "rack_size": "Rugged 4 RU chassis"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "analog inputs L/R", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-m", "role": "analog outputs L/R", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-f", "role": "AES/EBU input", "dir": "in", "signal": "aes3", "count": 1 },
-        { "connector": "xlr3-m", "role": "AES/EBU outputs #1 and #2", "dir": "out", "signal": "aes3", "count": 2 },
-        { "connector": "xlr3-f", "role": "AES external sync input", "dir": "in", "signal": "aes3", "count": 1 },
-        { "connector": "bnc", "role": "MPX / composite outputs", "dir": "out", "signal": "mpx-composite", "count": 2 },
-        { "connector": "gpio-terminal", "role": "GPI (DB-15 female)", "dir": "in", "signal": "gpio-tally", "count": 1 },
-        { "connector": "rj45", "role": "Ethernet remote control / Livewire", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "iec-c14", "role": "mains inlet (IEC male)", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "analog inputs L/R",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog outputs L/R",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES/EBU input",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU outputs #1 and #2",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES external sync input",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "MPX / composite outputs",
+          "dir": "out",
+          "signal": "mpx-composite",
+          "count": 2
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "GPI (DB-15 female)",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet remote control / Livewire",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains inlet (IEC male)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "aes3", "aoip", "gpio-tally", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "gpio-tally",
+        "mains-power"
+      ],
       "manual_url": "https://telosalliance-uat.s3.amazonaws.com/public/Omnia%20Products/Omnia%2011/Omnia11_Audio_Processor_Manual_v3.0.1_C1815073.pdf",
       "datasheet_url": "https://telosalliance-uat.s3.amazonaws.com/public/Omnia%20Products/Omnia%2011/Omnia_11_Audio_Processor_Brochure-C19415033.pdf",
       "product_page_url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Omnia%20Products/Omnia%2011/Omnia11_Audio_Processor_Manual_v3.0.1_C1815073.pdf", "title": "Omnia.11 Manual", "language": "en", "file_type": "pdf", "version_or_date": "v3.0.1", "official": true, "kind": "user-manual" },
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Omnia%20Products/Omnia%2011/Omnia-11-QSG-073016.pdf", "title": "Omnia.11 Quick Start Guide", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Omnia%20Products/Omnia%2011/Omnia_11_Audio_Processor_Brochure-C19415033.pdf", "title": "Omnia.11 brochure", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Omnia%20Products/Omnia%2011/Omnia11_Audio_Processor_Manual_v3.0.1_C1815073.pdf",
+          "title": "Omnia.11 Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v3.0.1",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Omnia%20Products/Omnia%2011/Omnia-11-QSG-073016.pdf",
+          "title": "Omnia.11 Quick Start Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Omnia%20Products/Omnia%2011/Omnia_11_Audio_Processor_Brochure-C19415033.pdf",
+          "title": "Omnia.11 brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11", "publisher": "Telos Alliance", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.analog_input", "key_specs.analog_output", "key_specs.aes_input", "key_specs.aes_outputs", "key_specs.external_sync", "key_specs.mpx_outputs", "key_specs.stereo_generator", "key_specs.pilot_protection", "key_specs.frequency_response", "key_specs.converters", "key_specs.gpi", "key_specs.remote", "key_specs.power", "key_specs.rack_size", "connectors", "status"] }
+        {
+          "url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.analog_input",
+            "key_specs.analog_output",
+            "key_specs.aes_input",
+            "key_specs.aes_outputs",
+            "key_specs.external_sync",
+            "key_specs.mpx_outputs",
+            "key_specs.stereo_generator",
+            "key_specs.pilot_protection",
+            "key_specs.frequency_response",
+            "key_specs.converters",
+            "key_specs.gpi",
+            "key_specs.remote",
+            "key_specs.power",
+            "key_specs.rack_size",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "All specs come from the product page specification section. The manual and brochure were listed but not opened, so there is no second-source cross-check. The Livewire connector is not described; Ethernet RJ45 is assumed to carry it. 'mpx-composite' is a proposed signal id. Status 'current' because the page shows 'Buy Now'.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["mpx-composite"], "sim_value": "high", "sim_value_reason": "XLR analog + AES3 in/out + AES sync + BNC MPX outputs: clear air-chain wiring lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "mpx-composite"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "XLR analog + AES3 in/out + AES sync + BNC MPX outputs: clear air-chain wiring lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "clear-com-ms-702",
@@ -537,7 +1918,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The Encore 2-channel main station powers and feeds a Clear-Com analog party-line, the standard wired talkback in theatres and OB trucks. It shows how one XLR3 cable carries power and audio (pin 2 +28-30 V DC, pin 3 audio).",
-      "typical_uses": ["theatre stage management party-line", "OB truck talkback", "studio floor talkback", "program feed with IFB interrupt"],
+      "typical_uses": [
+        "theatre stage management party-line",
+        "OB truck talkback",
+        "studio floor talkback",
+        "program feed with IFB interrupt"
+      ],
       "key_specs": {
         "channels": "2 (1RU two-channel main station)",
         "station_capacity": "Up to 55 RS-701 beltpacks or 10 speaker stations or 12 headset stations distributed over both channels",
@@ -554,31 +1940,159 @@
         "weight": "6.1lbs (2.8kg)"
       },
       "connectors": [
-        { "connector": "xlr3-m", "role": "Channel A intercom line (party-line)", "dir": "bidir", "signal": "intercom-party-line", "count": "not stated" },
-        { "connector": "xlr3-m", "role": "Channel B intercom line (party-line)", "dir": "bidir", "signal": "intercom-party-line", "count": "not stated" },
-        { "connector": "xlr4", "role": "headset (XLR-4M, front)", "dir": "bidir", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "Announce out (balanced line)", "dir": "out", "signal": "line-level-pro", "count": 1 },
-        { "connector": "trs-quarter", "role": "Announce relay out", "dir": "out", "signal": "gpio-tally", "count": 1 }
+        {
+          "connector": "xlr3-m",
+          "role": "Channel A intercom line (party-line)",
+          "dir": "bidir",
+          "signal": "intercom-party-line",
+          "count": "not stated"
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Channel B intercom line (party-line)",
+          "dir": "bidir",
+          "signal": "intercom-party-line",
+          "count": "not stated"
+        },
+        {
+          "connector": "xlr4",
+          "role": "headset (XLR-4M, front)",
+          "dir": "bidir",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Announce out (balanced line)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Announce relay out",
+          "dir": "out",
+          "signal": "gpio-tally",
+          "count": 1
+        }
       ],
-      "signal_types": ["intercom-party-line", "headphone-level", "mic-level", "line-level-pro", "gpio-tally", "mains-power"],
+      "signal_types": [
+        "intercom-party-line",
+        "headphone-level",
+        "mic-level",
+        "line-level-pro",
+        "gpio-tally",
+        "mains-power"
+      ],
       "manual_url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/Clear-Com_MS-702_Manual.pdf",
       "datasheet_url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
       "product_page_url": "https://www.clearcom.com/Product/ms-702-3?CategoryName=Clear-Com-Encoresup-stylefont-size60%C2%AEsup-Analog-Partyline-Systems&id=1571",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/Clear-Com_MS-702_Manual.pdf", "title": "MS-702 Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf", "title": "MS-702 Two-Channel Main Station datasheet", "language": "en", "file_type": "pdf", "version_or_date": "Rev: Sept./2023", "official": true, "kind": "datasheet" },
-        { "url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/Encore_Partyline_Installation_Manual.pdf", "title": "Encore Partyline Installation Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/Clear-Com_MS-702_Manual.pdf",
+          "title": "MS-702 Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "title": "MS-702 Two-Channel Main Station datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Rev: Sept./2023",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/Encore_Partyline_Installation_Manual.pdf",
+          "title": "Encore Partyline Installation Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.clearcom.com/Product/ms-702-3?CategoryName=Clear-Com-Encoresup-stylefont-size60%C2%AEsup-Analog-Partyline-Systems&id=1571", "publisher": "Clear-Com", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.station_capacity", "key_specs.partyline_power", "key_specs.program_input", "key_specs.mains_power", "key_specs.dimensions", "key_specs.weight", "status"] },
-        { "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf", "publisher": "Clear-Com", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.channels", "key_specs.station_capacity", "key_specs.partyline_power", "key_specs.headset_connector", "key_specs.headset_mic_input", "key_specs.panel_mic_input", "key_specs.program_input", "key_specs.stage_announce_out", "key_specs.ifb_hot_mic", "key_specs.frequency_response_headset_mic_partyline", "key_specs.mains_power", "key_specs.dimensions", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://www.clearcom.com/Product/ms-702-3?CategoryName=Clear-Com-Encoresup-stylefont-size60%C2%AEsup-Analog-Partyline-Systems&id=1571",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.station_capacity",
+            "key_specs.partyline_power",
+            "key_specs.program_input",
+            "key_specs.mains_power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.station_capacity",
+            "key_specs.partyline_power",
+            "key_specs.headset_connector",
+            "key_specs.headset_mic_input",
+            "key_specs.panel_mic_input",
+            "key_specs.program_input",
+            "key_specs.stage_announce_out",
+            "key_specs.ifb_hot_mic",
+            "key_specs.frequency_response_headset_mic_partyline",
+            "key_specs.mains_power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The datasheet back-panel legend lists 'Channel A XLR-3M intercom connectors' and 'Channel B XLR-3M intercom connectors' without a count. Program input, IFB/Hot Mic and power connector types are not stated. The product page URL is the encoded form of the link shown on the Encore listing page.",
       "conflicts": [
-        { "field": "key_specs.mains_power (input power)", "values": [ { "value": "Input Power: <= 60V AC", "source_url": "https://www.clearcom.com/Product/ms-702-3?CategoryName=Clear-Com-Encoresup-stylefont-size60%C2%AEsup-Analog-Partyline-Systems&id=1571" }, { "value": "Input Power: <= 60VA", "source_url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf" } ], "note": "Web page value looks like a unit typo; datasheet says VA." }
+        {
+          "field": "key_specs.mains_power (input power)",
+          "values": [
+            {
+              "value": "Input Power: <= 60V AC",
+              "source_url": "https://www.clearcom.com/Product/ms-702-3?CategoryName=Clear-Com-Encoresup-stylefont-size60%C2%AEsup-Analog-Partyline-Systems&id=1571"
+            },
+            {
+              "value": "Input Power: <= 60VA",
+              "source_url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf"
+            }
+          ],
+          "note": "Web page value looks like a unit typo; datasheet says VA."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Party-line powering over XLR3 (pin 2 DC, pin 3 audio) and XLR4 headset: classic 'don't plug intercom into a mic input' lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Party-line powering over XLR3 (pin 2 DC, pin 3 audio) and XLR4 headset: classic 'don't plug intercom into a mic input' lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "clear-com-rs-701",
@@ -590,7 +2104,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The standard Clear-Com single-channel beltpack. It daisy-chains on the XLR3 line from an MS-702 and takes an XLR4 headset, and Clear-Com states it is compatible with all Encore partyline products.",
-      "typical_uses": ["stage crew talkback", "camera operators on OB", "lighting/follow-spot cues", "studio floor manager"],
+      "typical_uses": [
+        "stage crew talkback",
+        "camera operators on OB",
+        "lighting/follow-spot cues",
+        "studio floor manager"
+      ],
       "key_specs": {
         "channels": "Single-channel",
         "intercom_line": "(2) 3-pin XLR–M–F; Pin 1: Common; Pin 2: PL Power (+28V DC); Pin 3: Line (Audio)",
@@ -603,27 +2122,122 @@
         "weight": "10.5oz (0.30kg)"
       },
       "connectors": [
-        { "connector": "xlr3-m", "role": "intercom line out (loop-through)", "dir": "bidir", "signal": "intercom-party-line", "count": 1 },
-        { "connector": "xlr3-f", "role": "intercom line in", "dir": "bidir", "signal": "intercom-party-line", "count": 1 },
-        { "connector": "xlr4", "role": "headset (4-pin XLR-M)", "dir": "bidir", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "xlr3-m",
+          "role": "intercom line out (loop-through)",
+          "dir": "bidir",
+          "signal": "intercom-party-line",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "intercom line in",
+          "dir": "bidir",
+          "signal": "intercom-party-line",
+          "count": 1
+        },
+        {
+          "connector": "xlr4",
+          "role": "headset (4-pin XLR-M)",
+          "dir": "bidir",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["intercom-party-line", "headphone-level", "mic-level", "dc-power"],
+      "signal_types": [
+        "intercom-party-line",
+        "headphone-level",
+        "mic-level",
+        "dc-power"
+      ],
       "manual_url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/Encore_Partyline_Installation_Manual.pdf",
       "datasheet_url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/RS-701_Beltpack_Datasheet.pdf",
       "product_page_url": "https://www.clearcom.com/Product/rs-701-7?CategoryName=Clear-Com-Encoresup-stylefont-size60%C2%AEsup-Analog-Partyline-Systems&id=1642",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/RS-701_Beltpack_Datasheet.pdf", "title": "RS-701 Single-Channel Beltpack datasheet", "language": "en", "file_type": "pdf", "version_or_date": "Rev: August/2021", "official": true, "kind": "datasheet" },
-        { "url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/RS-701_QuickStartGuide-399G034.pdf", "title": "RS-701 Quick Start Guide", "language": "en", "file_type": "pdf", "version_or_date": "399G034", "official": true, "kind": "quick-start" },
-        { "url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/Encore_Partyline_Installation_Manual.pdf", "title": "Encore Partyline Installation Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/RS-701_Beltpack_Datasheet.pdf",
+          "title": "RS-701 Single-Channel Beltpack datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Rev: August/2021",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/RS-701_QuickStartGuide-399G034.pdf",
+          "title": "RS-701 Quick Start Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "399G034",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/manuals/Encore/Encore_Partyline_Installation_Manual.pdf",
+          "title": "Encore Partyline Installation Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.clearcom.com/Product/rs-701-7?CategoryName=Clear-Com-Encoresup-stylefont-size60%C2%AEsup-Analog-Partyline-Systems&id=1642", "publisher": "Clear-Com", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.intercom_line", "key_specs.headset_connector", "key_specs.power", "connectors", "status"] },
-        { "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/RS-701_Beltpack_Datasheet.pdf", "publisher": "Clear-Com", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.channels", "key_specs.intercom_line", "key_specs.headset_connector", "key_specs.power", "key_specs.call_voltage", "key_specs.frequency_response_mic_to_line", "key_specs.frequency_response_line_to_headphone", "key_specs.dimensions", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://www.clearcom.com/Product/rs-701-7?CategoryName=Clear-Com-Encoresup-stylefont-size60%C2%AEsup-Analog-Partyline-Systems&id=1642",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.intercom_line",
+            "key_specs.headset_connector",
+            "key_specs.power",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/RS-701_Beltpack_Datasheet.pdf",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.intercom_line",
+            "key_specs.headset_connector",
+            "key_specs.power",
+            "key_specs.call_voltage",
+            "key_specs.frequency_response_mic_to_line",
+            "key_specs.frequency_response_line_to_headphone",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Which of the two XLR3 sockets is male and which is female is inferred from 'XLR–M–F' and the 'Intercom Line In / Out' legend. The manual_url points to the Encore system installation manual; no RS-701-specific manual beyond the QSG was listed.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "XLR3 loop-through party-line plus XLR4 headset: teaches daisy-chaining and the XLR4 headset pinout." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "XLR3 loop-through party-line plus XLR4 headset: teaches daisy-chaining and the XLR4 headset pinout."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "clear-com-freespeak-ii",
@@ -635,7 +2249,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Clear-Com's digital wireless intercom family for theatre, live events and broadcast. The base connects wireless beltpacks to party-line (XLR3) and 4-wire circuits, linking the wireless and wired talkback worlds.",
-      "typical_uses": ["wireless crew talkback in theatres", "broadcast floor crews", "live events", "interfacing wireless users to party-line and matrix"],
+      "typical_uses": [
+        "wireless crew talkback in theatres",
+        "broadcast floor crews",
+        "live events",
+        "interfacing wireless users to party-line and matrix"
+      ],
       "key_specs": {
         "band_1g9": "ISM license-free 1.9 GHz; EU: 1880-1900 MHz; USA, Canada, Mexico: 1920-1930 MHz",
         "bands": "1.9 GHz and 2.4 GHz FreeSpeak beltpacks and transceivers",
@@ -655,35 +2274,197 @@
         "base_power": "100 to 240V AC, 50 to 60Hz, 48W max; 12V DC, 4A max (external PSU)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "base 2-wire party-line I/O", "dir": "bidir", "signal": "intercom-party-line", "count": 4 },
-        { "connector": "rj45", "role": "base 4-wire I/O", "dir": "bidir", "signal": "intercom-4wire", "count": 4 },
-        { "connector": "xlr3-f", "role": "base program audio input", "dir": "in", "signal": "line-level-pro", "count": 1 },
-        { "connector": "rj45", "role": "base E1 transceiver/splitter ports", "dir": "bidir", "signal": "e1-transceiver-link", "count": 2 },
-        { "connector": "sfp-cage", "role": "base transceiver ports (alternative)", "dir": "bidir", "signal": "e1-transceiver-link", "count": 2 },
-        { "connector": "gpio-terminal", "role": "base GPIO (DB15F)", "dir": "bidir", "signal": "gpio-tally", "count": 1 },
-        { "connector": "dc-barrel", "role": "base 12 V DC input from external PSU", "dir": "in", "signal": "dc-power", "count": 1 },
-        { "connector": "xlr4", "role": "beltpack headset (4-pin male)", "dir": "bidir", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "base 2-wire party-line I/O",
+          "dir": "bidir",
+          "signal": "intercom-party-line",
+          "count": 4
+        },
+        {
+          "connector": "rj45",
+          "role": "base 4-wire I/O",
+          "dir": "bidir",
+          "signal": "intercom-4wire",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "base program audio input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "base E1 transceiver/splitter ports",
+          "dir": "bidir",
+          "signal": "e1-transceiver-link",
+          "count": 2
+        },
+        {
+          "connector": "sfp-cage",
+          "role": "base transceiver ports (alternative)",
+          "dir": "bidir",
+          "signal": "e1-transceiver-link",
+          "count": 2
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "base GPIO (DB15F)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "base 12 V DC input from external PSU",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "xlr4",
+          "role": "beltpack headset (4-pin male)",
+          "dir": "bidir",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["intercom-party-line", "intercom-4wire", "line-level-pro", "gpio-tally", "headphone-level", "dc-power"],
+      "signal_types": [
+        "intercom-party-line",
+        "intercom-4wire",
+        "line-level-pro",
+        "gpio-tally",
+        "headphone-level",
+        "dc-power"
+      ],
       "manual_url": "https://www.clearcom.com/DownloadCenter/manuals/FreeSpeakII_BaseII_v1.5.2/FSII-BASE-II_UserGuide-399G169F.pdf",
       "datasheet_url": "https://www.clearcom.com/DownloadCenter/datasheets/FreeSpeakII/FSII-BASE-II_FreeSpeakII_Base_II_Datasheet.pdf",
       "product_page_url": "https://www.clearcom.com/Products/Products-by-Technology/Wireless-Systems/FreeSpeak-II",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.clearcom.com/DownloadCenter/manuals/FreeSpeakII_BaseII_v1.5.2/FSII-BASE-II_UserGuide-399G169F.pdf", "title": "FSII-BASE-II User Guide", "language": "en", "file_type": "pdf", "version_or_date": "2021-01", "official": true, "kind": "user-manual" },
-        { "url": "https://www.clearcom.com/DownloadCenter/manuals/FreeSpeakII_BaseII_v1.5.2/FSII-BASE-II_QuickStartGuide-399G168D.pdf", "title": "FSII-BASE-II Quick Start Guide", "language": "en", "file_type": "pdf", "version_or_date": "2019-10", "official": true, "kind": "quick-start" },
-        { "url": "https://www.clearcom.com/DownloadCenter/datasheets/FreeSpeakII/FSII-BASE-II_FreeSpeakII_Base_II_Datasheet.pdf", "title": "FreeSpeak II Base II datasheet", "language": "en", "file_type": "pdf", "version_or_date": "2026-01", "official": true, "kind": "datasheet" },
-        { "url": "https://clearcom.com/DownloadCenter/datasheets/FreeSpeakII/FSII-BP19_FreeSpeakII_19_Beltpack_Datasheet.pdf", "title": "FreeSpeak II 1.9GHz Beltpack Datasheet", "language": "en", "file_type": "pdf", "version_or_date": "2026-08", "official": true, "kind": "datasheet" },
-        { "url": "https://clearcom.com/DownloadCenter/manuals/EclipseHX_v13.1/FreeSpeakII_Eclipse_UserGuide-PUB-00064C.pdf", "title": "FreeSpeak II - Eclipse User Guide", "language": "en", "file_type": "pdf", "version_or_date": "2023-10", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/manuals/FreeSpeakII_BaseII_v1.5.2/FSII-BASE-II_UserGuide-399G169F.pdf",
+          "title": "FSII-BASE-II User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2021-01",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/manuals/FreeSpeakII_BaseII_v1.5.2/FSII-BASE-II_QuickStartGuide-399G168D.pdf",
+          "title": "FSII-BASE-II Quick Start Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2019-10",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/datasheets/FreeSpeakII/FSII-BASE-II_FreeSpeakII_Base_II_Datasheet.pdf",
+          "title": "FreeSpeak II Base II datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2026-01",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://clearcom.com/DownloadCenter/datasheets/FreeSpeakII/FSII-BP19_FreeSpeakII_19_Beltpack_Datasheet.pdf",
+          "title": "FreeSpeak II 1.9GHz Beltpack Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2026-08",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://clearcom.com/DownloadCenter/manuals/EclipseHX_v13.1/FreeSpeakII_Eclipse_UserGuide-PUB-00064C.pdf",
+          "title": "FreeSpeak II - Eclipse User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2023-10",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.clearcom.com/Products/Products-by-Technology/Wireless-Systems/FreeSpeak-II", "publisher": "Clear-Com", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.bands", "key_specs.base_capacity", "status"] },
-        { "url": "https://www.clearcom.com/Product/category/freespeak-ii-digital-wireless-systems/1-9ghz-digital-beltpack?id=2665", "publisher": "Clear-Com", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.band_1g9", "key_specs.beltpack_audio_paths", "key_specs.beltpack_headset_connector", "key_specs.beltpack_battery", "key_specs.beltpack_audio_bandwidth", "key_specs.beltpack_rf_power", "key_specs.beltpack_weight", "connectors"] },
-        { "url": "https://www.clearcom.com/Product/category/freespeak-ii-digital-wireless-systems/fsii-base-ii?id=2609", "publisher": "Clear-Com", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.base_capacity", "key_specs.base_2wire", "key_specs.base_4wire", "key_specs.base_program_input", "key_specs.base_transceiver_ports", "key_specs.base_gpio", "key_specs.base_rack", "key_specs.base_power", "connectors"] }
+        {
+          "url": "https://www.clearcom.com/Products/Products-by-Technology/Wireless-Systems/FreeSpeak-II",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.bands",
+            "key_specs.base_capacity",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/Product/category/freespeak-ii-digital-wireless-systems/1-9ghz-digital-beltpack?id=2665",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.band_1g9",
+            "key_specs.beltpack_audio_paths",
+            "key_specs.beltpack_headset_connector",
+            "key_specs.beltpack_battery",
+            "key_specs.beltpack_audio_bandwidth",
+            "key_specs.beltpack_rf_power",
+            "key_specs.beltpack_weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.clearcom.com/Product/category/freespeak-ii-digital-wireless-systems/fsii-base-ii?id=2609",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.base_capacity",
+            "key_specs.base_2wire",
+            "key_specs.base_4wire",
+            "key_specs.base_program_input",
+            "key_specs.base_transceiver_ports",
+            "key_specs.base_gpio",
+            "key_specs.base_rack",
+            "key_specs.base_power",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Intercom type: digital wireless, 1.9 GHz (DECT-band) and 2.4 GHz. The Clear-Com page says 'ISM license-free 1.9 GHz' and does not use the word DECT. The beltpack headset connector is described as '4-pin male, Clear-Com standard' (XLR4 assumed). The datasheet PDFs were listed but not opened. 'e1-transceiver-link' and 'rf-dect-1g9' are proposed signal ids.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["e1-transceiver-link", "rf-dect-1g9"], "sim_value": "high", "sim_value_reason": "Base station joins wireless, 2-wire XLR3 party-line and 4-wire RJ45: good intercom topology lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "e1-transceiver-link",
+          "rf-dect-1g9"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Base station joins wireless, 2-wire XLR3 party-line and 4-wire RJ45: good intercom topology lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "riedel-bolero",
@@ -695,7 +2476,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Riedel's DECT wireless intercom, integrated with the Artist matrix used in major broadcast and sports productions. Its antennas are distributed over AES67 / SMPTE 2110-30 IP.",
-      "typical_uses": ["broadcast production crews", "sports events", "theatre", "large venues with many antennas"],
+      "typical_uses": [
+        "broadcast production crews",
+        "sports events",
+        "theatre",
+        "large venues with many antennas"
+      ],
       "key_specs": {
         "band": "Digital, license free 1.9GHz DECT band; 2.4 GHz variants also exist",
         "beltpacks_per_system": "Up to 250 (Integrated, Active Antenna); 100 (Standalone Link and Standalone 2110)",
@@ -710,25 +2496,100 @@
         "beltpack_dimensions": "8.6 cm x 4.8 cm x 13.0 cm (W x D x H)"
       },
       "connectors": [
-        { "connector": "xlr4", "role": "beltpack headset (4-pin male XLR)", "dir": "bidir", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "xlr4",
+          "role": "beltpack headset (4-pin male XLR)",
+          "dir": "bidir",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level", "mic-level", "aes67", "smpte-2110"],
+      "signal_types": [
+        "headphone-level",
+        "mic-level",
+        "aes67",
+        "smpte-2110"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://www.riedel.net/wp-json/riedel-downloads/v1/asset/ad8d0fb7-278c-45d0-a1fa-b51f5ef4614a?language=en",
       "product_page_url": "https://www.riedel.net/intercom/bolero/",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://www.riedel.net/wp-json/riedel-downloads/v1/asset/ad8d0fb7-278c-45d0-a1fa-b51f5ef4614a?language=en", "title": "BOLERO Brochure", "language": "en", "file_type": "pdf", "version_or_date": "v2, October 8, 2026", "official": true, "kind": "other" }
+        {
+          "url": "https://www.riedel.net/wp-json/riedel-downloads/v1/asset/ad8d0fb7-278c-45d0-a1fa-b51f5ef4614a?language=en",
+          "title": "BOLERO Brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v2, October 8, 2026",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.riedel.net/intercom/bolero/", "publisher": "Riedel Communications", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.band", "key_specs.beltpacks_per_system", "key_specs.antennas", "status"] },
-        { "url": "https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/", "publisher": "Riedel Communications", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.beltpack_headset_connector", "key_specs.beltpack_battery", "key_specs.beltpack_audio_bandwidth", "key_specs.beltpack_keys", "key_specs.beltpack_bluetooth", "key_specs.beltpack_nfc", "key_specs.beltpack_weight", "key_specs.beltpack_dimensions", "connectors"] }
+        {
+          "url": "https://www.riedel.net/intercom/bolero/",
+          "publisher": "Riedel Communications",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.band",
+            "key_specs.beltpacks_per_system",
+            "key_specs.antennas",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/",
+          "publisher": "Riedel Communications",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.beltpack_headset_connector",
+            "key_specs.beltpack_battery",
+            "key_specs.beltpack_audio_bandwidth",
+            "key_specs.beltpack_keys",
+            "key_specs.beltpack_bluetooth",
+            "key_specs.beltpack_nfc",
+            "key_specs.beltpack_weight",
+            "key_specs.beltpack_dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Intercom type: digital wireless DECT 1.9 GHz, IP-networked antennas. Antenna connector types and the codec name are not stated in the pages read. No public manual was found. 'rf-dect-1g9' is a proposed signal id.",
       "conflicts": [
-        { "field": "key_specs.beltpack_keys", "values": [ { "value": "'Bolero 6-key Beltpack' (product title)", "source_url": "https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/" }, { "value": "'seven individually configurable keys' (description)", "source_url": "https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/" } ], "note": "Likely 6 intercom keys + REPLY; the page wording is inconsistent." }
+        {
+          "field": "key_specs.beltpack_keys",
+          "values": [
+            {
+              "value": "'Bolero 6-key Beltpack' (product title)",
+              "source_url": "https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/"
+            },
+            {
+              "value": "'seven individually configurable keys' (description)",
+              "source_url": "https://www.riedel.net/produkt/intercom/bolero/bolero-6-key-beltpack-standard-1-9ghz/"
+            }
+          ],
+          "note": "Likely 6 intercom keys + REPLY; the page wording is inconsistent."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["rf-dect-1g9"], "sim_value": "low", "sim_value_reason": "Wireless system with few physical connectors on the beltpack; useful mainly as a topology concept." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "rf-dect-1g9"
+        ],
+        "sim_value": "low",
+        "sim_value_reason": "Wireless system with few physical connectors on the beltpack; useful mainly as a topology concept."
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "green-go-mcx",
@@ -740,7 +2601,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Green-GO is a networked digital intercom that runs over standard Ethernet with PoE, without a central matrix frame. The MCX is its multi-channel rack station, with an XLR4 headset and XLR3 mic and line connections.",
-      "typical_uses": ["theatre and live-event intercom over Ethernet", "director / stage manager station", "interfacing line audio into intercom", "touring productions"],
+      "typical_uses": [
+        "theatre and live-event intercom over Ethernet",
+        "director / stage manager station",
+        "interfacing line audio into intercom",
+        "touring productions"
+      ],
       "key_specs": {
         "channels": "Access up to 32 communication channels, plus a program audio channel and a direct user channel",
         "network": "Two EtherCON LAN ports with integrated 100 Mbit switch",
@@ -754,31 +2620,146 @@
         "weight": "1,74 kg"
       },
       "connectors": [
-        { "connector": "ethercon", "role": "LAN ports (port 1 PoE in)", "dir": "bidir", "signal": "aoip", "count": 2 },
-        { "connector": "xlr4", "role": "headset (Neutrik XLR4-M)", "dir": "bidir", "signal": "headphone-level", "count": 1 },
-        { "connector": "xlr3-f", "role": "microphone input", "dir": "in", "signal": "mic-level", "count": 1 },
-        { "connector": "xlr3-f", "role": "line audio input", "dir": "in", "signal": "line-level-pro", "count": 1 },
-        { "connector": "xlr3-m", "role": "line audio output", "dir": "out", "signal": "line-level-pro", "count": 1 },
-        { "connector": "gpio-terminal", "role": "GPIO 2 in / 2 out", "dir": "bidir", "signal": "gpio-tally", "count": 1 },
-        { "connector": "dc-barrel", "role": "12 V DC secondary power", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "ethercon",
+          "role": "LAN ports (port 1 PoE in)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "xlr4",
+          "role": "headset (Neutrik XLR4-M)",
+          "dir": "bidir",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "microphone input",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "line audio input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line audio output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "GPIO 2 in / 2 out",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "12 V DC secondary power",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["aoip", "headphone-level", "mic-level", "line-level-pro", "gpio-tally", "dc-power"],
+      "signal_types": [
+        "aoip",
+        "headphone-level",
+        "mic-level",
+        "line-level-pro",
+        "gpio-tally",
+        "dc-power"
+      ],
       "manual_url": "https://manual.greengoconnect.com/en/devices/mcx/",
       "datasheet_url": "not found",
       "product_page_url": "https://www.greengocom.com/products/mcx",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://manual.greengoconnect.com/en/devices/mcx/", "title": "Green-GO MCX online manual", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://manual.greengoconnect.com/en/devices/mcx/",
+          "title": "Green-GO MCX online manual",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.greengocom.com/products/mcx", "publisher": "Green-GO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.channels", "key_specs.network", "key_specs.power", "key_specs.headset_connector", "key_specs.mic_input", "key_specs.line_io", "key_specs.gpio", "status"] },
-        { "url": "https://manual.greengoconnect.com/en/devices/mcx/", "publisher": "Green-GO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.network", "key_specs.power", "key_specs.power_consumption", "key_specs.headset_connector", "key_specs.dimensions", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://www.greengocom.com/products/mcx",
+          "publisher": "Green-GO",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.network",
+            "key_specs.power",
+            "key_specs.headset_connector",
+            "key_specs.mic_input",
+            "key_specs.line_io",
+            "key_specs.gpio",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://manual.greengoconnect.com/en/devices/mcx/",
+          "publisher": "Green-GO",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.network",
+            "key_specs.power",
+            "key_specs.power_consumption",
+            "key_specs.headset_connector",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Intercom type: digital IP (Ethernet) intercom without a central matrix. greengoconnect.com redirects to a forum, so the current site is greengocom.com. The gender of the line I/O XLR connectors is not stated and is assumed. The GPIO connector type is not stated.",
       "conflicts": [
-        { "field": "key_specs.mic_input (phantom)", "values": [ { "value": "3-pin XLR microphone input with 48V phantom power", "source_url": "https://www.greengocom.com/products/mcx" }, { "value": "XLR3 female microphone connector optionally supplies microphones with up to 10 V of power; FrontMic Max. 10 V", "source_url": "https://manual.greengoconnect.com/en/devices/mcx/" } ], "note": "Product page and manual disagree on mic power voltage." }
+        {
+          "field": "key_specs.mic_input (phantom)",
+          "values": [
+            {
+              "value": "3-pin XLR microphone input with 48V phantom power",
+              "source_url": "https://www.greengocom.com/products/mcx"
+            },
+            {
+              "value": "XLR3 female microphone connector optionally supplies microphones with up to 10 V of power; FrontMic Max. 10 V",
+              "source_url": "https://manual.greengoconnect.com/en/devices/mcx/"
+            }
+          ],
+          "note": "Product page and manual disagree on mic power voltage."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "etherCON + PoE intercom with XLR4 headset: contrasts IP intercom with analog party-line." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "etherCON + PoE intercom with XLR4 headset: contrasts IP intercom with analog party-line."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "yellowtec-litt",
@@ -790,7 +2771,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A modular studio signalling light used as an ON-AIR / mic-live indicator. Each colour segment is switched by its own GPI (tally) input, which makes it a simple example of console-to-light tally wiring. It is already in the TekPractice catalog.",
-      "typical_uses": ["ON AIR / mic-live warning outside studios", "phone ringing / call signalling", "studio tally", "status signalling in control rooms"],
+      "typical_uses": [
+        "ON AIR / mic-live warning outside studios",
+        "phone ringing / call signalling",
+        "studio tally",
+        "status signalling in control rooms"
+      ],
       "key_specs": {
         "segments": "Drives up to five litt Color Segments or four Color Segments combined with one litt Sound Segment",
         "colors": "red, green, yellow, white and blue",
@@ -802,29 +2788,138 @@
         "segment_heights": "41mm (1.61 inch) and 27mm (1.1 inch)"
       },
       "connectors": [
-        { "connector": "euroblock-phoenix", "role": "8-pin terminal: PE, 0V, +9-24V supply, 5 GPI inputs", "dir": "in", "signal": "gpio-tally", "count": 1 },
-        { "connector": "usb-b", "role": "mini-USB configuration port", "dir": "bidir", "signal": "usb-data", "count": 1 }
+        {
+          "connector": "euroblock-phoenix",
+          "role": "8-pin terminal: PE, 0V, +9-24V supply, 5 GPI inputs",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "mini-USB configuration port",
+          "dir": "bidir",
+          "signal": "usb-data",
+          "count": 1
+        }
       ],
-      "signal_types": ["gpio-tally", "dc-power"],
+      "signal_types": [
+        "gpio-tally",
+        "dc-power"
+      ],
       "manual_url": "https://www.yellowtec.com/fileadmin/downloads/Litt_installation_Briefing.pdf",
       "datasheet_url": "https://www.yellowtec.com/fileadmin/downloads/Product-Brief-litt-web.pdf",
       "product_page_url": "https://www.yellowtec.com/litt/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.yellowtec.com/fileadmin/downloads/Litt_installation_Briefing.pdf", "title": "litt Installation Briefing", "language": "not stated", "file_type": "pdf", "version_or_date": "07/2025", "official": true, "kind": "user-manual" },
-        { "url": "https://www.yellowtec.com/fileadmin/downloads/litt-brochure-EN.pdf", "title": "litt Brochure", "language": "en", "file_type": "pdf", "version_or_date": "09/2018", "official": true, "kind": "other" },
-        { "url": "https://www.yellowtec.com/fileadmin/downloads/Product-Brief-litt-web.pdf", "title": "litt Catalog", "language": "not stated", "file_type": "pdf", "version_or_date": "10/2018", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.yellowtec.com/fileadmin/downloads/Litt_installation_Briefing.pdf",
+          "title": "litt Installation Briefing",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "07/2025",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.yellowtec.com/fileadmin/downloads/litt-brochure-EN.pdf",
+          "title": "litt Brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "09/2018",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.yellowtec.com/fileadmin/downloads/Product-Brief-litt-web.pdf",
+          "title": "litt Catalog",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "10/2018",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.yellowtec.com/litt/", "publisher": "Yellowtec", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.colors", "key_specs.power", "key_specs.segment_heights", "status"] },
-        { "url": "https://www.yellowtec.com/litt/litt-base-controllers/", "publisher": "Yellowtec", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.segments", "key_specs.control_inputs", "key_specs.configuration", "key_specs.connector", "key_specs.power", "key_specs.base_controller_dimensions", "connectors"] },
-        { "url": "https://www.yellowtec.com/fileadmin/downloads/litt-brochure-EN.pdf", "publisher": "Yellowtec", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.colors", "key_specs.configuration"] }
+        {
+          "url": "https://www.yellowtec.com/litt/",
+          "publisher": "Yellowtec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.colors",
+            "key_specs.power",
+            "key_specs.segment_heights",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+          "publisher": "Yellowtec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.segments",
+            "key_specs.control_inputs",
+            "key_specs.configuration",
+            "key_specs.connector",
+            "key_specs.power",
+            "key_specs.base_controller_dimensions",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.yellowtec.com/fileadmin/downloads/litt-brochure-EN.pdf",
+          "publisher": "Yellowtec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.colors",
+            "key_specs.configuration"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The ON AIR inscription is not mentioned on the pages read. litt shows ON AIR status by colour, driven from the console's GPO. The mini-USB port is mapped to usb-b. The installation briefing and catalog PDFs were listed on the downloads page but not opened. The brochure PDF was opened and confirms the 5 colours and USB/Lighthouse programming.",
       "conflicts": [
-        { "field": "key_specs.power", "values": [ { "value": "Power supply (permanent): 9V…24V", "source_url": "https://www.yellowtec.com/litt/litt-base-controllers/" }, { "value": "+9V...25V (connections table)", "source_url": "https://www.yellowtec.com/litt/litt-base-controllers/" } ], "note": "Same page gives two upper limits." }
+        {
+          "field": "key_specs.power",
+          "values": [
+            {
+              "value": "Power supply (permanent): 9V…24V",
+              "source_url": "https://www.yellowtec.com/litt/litt-base-controllers/"
+            },
+            {
+              "value": "+9V...25V (connections table)",
+              "source_url": "https://www.yellowtec.com/litt/litt-base-controllers/"
+            }
+          ],
+          "note": "Same page gives two upper limits."
+        }
       ],
-      "tekpractice": { "in_catalog": true, "catalog_id": "yellowtec-litt", "proposed_new_connectors": [], "proposed_new_signals": ["usb-data"], "sim_value": "high", "sim_value_reason": "Console GPO -> Phoenix GPI per colour: the standard ON-AIR tally wiring lesson." }
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "yellowtec-litt",
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "usb-data"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Console GPO -> Phoenix GPI per colour: the standard ON-AIR tally wiring lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "telos-hx2",
@@ -836,7 +2931,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Telos is the reference brand for broadcast telephone hybrids, and the Hx1/Hx2 are its compact analog-line models. The Hx2 shows the classic hybrid wiring: a mix-minus send in, caller audio out, a telco line and a phone set.",
-      "typical_uses": ["on-air phone callers", "phone-in talk shows", "remote reporter over phone line", "two-caller conferences"],
+      "typical_uses": [
+        "on-air phone callers",
+        "phone-in talk shows",
+        "remote reporter over phone line",
+        "two-caller conferences"
+      ],
       "key_specs": {
         "lines": "two-line (Hx2) capacity",
         "line_interface": "Universal interface for worldwide application; RJ ports for telco input and phoneset",
@@ -848,30 +2948,141 @@
         "power": "Internal auto-ranging, 90–265 VAC auto-switching, 50–60 Hz; 100 Watts"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "send inputs (mix-minus from console), one per hybrid", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-m", "role": "receive outputs (caller audio), one per hybrid", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "rj45", "role": "telco line inputs", "dir": "bidir", "signal": "pots-telephone-line", "count": 2 },
-        { "connector": "rj45", "role": "phone set ports", "dir": "bidir", "signal": "pots-telephone-line", "count": 2 },
-        { "connector": "gpio-terminal", "role": "remote control / GPIO (DB9)", "dir": "bidir", "signal": "gpio-tally", "count": 1 },
-        { "connector": "iec-c14", "role": "mains inlet", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "send inputs (mix-minus from console), one per hybrid",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "receive outputs (caller audio), one per hybrid",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "telco line inputs",
+          "dir": "bidir",
+          "signal": "pots-telephone-line",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "phone set ports",
+          "dir": "bidir",
+          "signal": "pots-telephone-line",
+          "count": 2
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "remote control / GPIO (DB9)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains inlet",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "gpio-tally", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "gpio-tally",
+        "mains-power"
+      ],
       "manual_url": "https://docs.telosalliance.com/telos-hx1-and-hx2/",
       "datasheet_url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Telos+Products/Hx/Brochure/Telos_Hx1+Hx2_Brochure_C24217111.pdf",
       "product_page_url": "https://www.telosalliance.com/broadcast-phone-systems/telos-hx1-hx2-digital-hybrids",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://docs.telosalliance.com/telos-hx1-and-hx2/", "title": "Telos Hx1 and Hx2 user manual (web)", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf", "title": "Hx1/Hx2 Quick Start Guide", "language": "en", "file_type": "pdf", "version_or_date": "C21117016", "official": true, "kind": "quick-start" },
-        { "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Telos+Products/Hx/Brochure/Telos_Hx1+Hx2_Brochure_C24217111.pdf", "title": "Telos Hx1 + Hx2 Brochure", "language": "en", "file_type": "pdf", "version_or_date": "C24217111", "official": true, "kind": "datasheet" },
-        { "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Telos+Products/Hx/Brochure/Telos_HX_Brochure_Spanish_C24117008.pdf", "title": "Telos Hx Brochure (Spanish)", "language": "es", "file_type": "pdf", "version_or_date": "C24117008", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://docs.telosalliance.com/telos-hx1-and-hx2/",
+          "title": "Telos Hx1 and Hx2 user manual (web)",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "title": "Hx1/Hx2 Quick Start Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "C21117016",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Telos+Products/Hx/Brochure/Telos_Hx1+Hx2_Brochure_C24217111.pdf",
+          "title": "Telos Hx1 + Hx2 Brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "C24217111",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Telos+Products/Hx/Brochure/Telos_HX_Brochure_Spanish_C24117008.pdf",
+          "title": "Telos Hx Brochure (Spanish)",
+          "language": "es",
+          "file_type": "pdf",
+          "version_or_date": "C24117008",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.telosalliance.com/broadcast-phone-systems/telos-hx1-hx2-digital-hybrids", "publisher": "Telos Alliance", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.lines", "key_specs.line_interface", "key_specs.send_input", "key_specs.receive_output", "key_specs.digital_option", "key_specs.processing", "key_specs.remote_control", "key_specs.power", "connectors", "status"] }
+        {
+          "url": "https://www.telosalliance.com/broadcast-phone-systems/telos-hx1-hx2-digital-hybrids",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.lines",
+            "key_specs.line_interface",
+            "key_specs.send_input",
+            "key_specs.receive_output",
+            "key_specs.digital_option",
+            "key_specs.processing",
+            "key_specs.remote_control",
+            "key_specs.power",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Specs come from the product page only (no second source opened). The page says 'RJ ports' for telco and phone set but does not name RJ11; the RJ11 telco jacks are mapped to rj45 (closest id; 'rj11' proposed) and the phone-set count of 2 is assumed. 'pots-telephone-line' is a proposed signal id. The send input is where the console's mix-minus (N-1) is patched.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["rj11"], "proposed_new_signals": ["pots-telephone-line"], "sim_value": "high", "sim_value_reason": "Teaches mix-minus send vs caller receive: the classic N-1 / feedback lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "rj11"
+        ],
+        "proposed_new_signals": [
+          "pots-telephone-line"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Teaches mix-minus send vs caller receive: the classic N-1 / feedback lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sonifex-dhy-04s",
@@ -883,7 +3094,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Sonifex (UK) makes the European-style 'TBU' (telephone balance unit) used in European radio. The DHY-04S's XLR inputs accept analogue or AES/EBU, and its echo canceller and line-balance rejection are quantified on the product page.",
-      "typical_uses": ["phone-ins to air", "reporter calls on PSTN", "studio talkback over phone line"],
+      "typical_uses": [
+        "phone-ins to air",
+        "reporter calls on PSTN",
+        "studio talkback over phone line"
+      ],
       "key_specs": {
         "telephone_line": "RJ11 6/4 socket",
         "input": "Mic/Line/AES-EBU Input: XLR 3 pin female, with push-button mic/line selection",
@@ -900,28 +3115,129 @@
         "power": "Universal 12W power supply: 90 to 250V AC; 47-63Hz; fused 1A"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic/line/AES-EBU input (send to caller)", "dir": "in", "signal": "line-level-pro", "count": 1 },
-        { "connector": "xlr3-m", "role": "line/AES-EBU output (caller audio)", "dir": "out", "signal": "line-level-pro", "count": 1 },
-        { "connector": "rj45", "role": "telephone line (RJ11 6/4)", "dir": "bidir", "signal": "pots-telephone-line", "count": 1 },
-        { "connector": "gpio-terminal", "role": "remotes (9-way D-type)", "dir": "bidir", "signal": "gpio-tally", "count": 1 },
-        { "connector": "rj45", "role": "Ethernet (web GUI)", "dir": "bidir", "signal": "ethernet-control", "count": 1 },
-        { "connector": "iec-c14", "role": "mains inlet", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line/AES-EBU input (send to caller)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line/AES-EBU output (caller audio)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "telephone line (RJ11 6/4)",
+          "dir": "bidir",
+          "signal": "pots-telephone-line",
+          "count": 1
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "remotes (9-way D-type)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet (web GUI)",
+          "dir": "bidir",
+          "signal": "ethernet-control",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains inlet",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "mic-level", "aes3", "gpio-tally", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "mic-level",
+        "aes3",
+        "gpio-tally",
+        "mains-power"
+      ],
       "manual_url": "https://sonifex.co.uk/wp-content/uploads/products/DHY-04S/dhy04.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://sonifex.co.uk/product/dhy-04s/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://sonifex.co.uk/wp-content/uploads/products/DHY-04S/dhy04.pdf", "title": "DHY-04 Handbook", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://sonifex.co.uk/wp-content/uploads/products/DHY-04S/dhy04.pdf",
+          "title": "DHY-04 Handbook",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://sonifex.co.uk/product/dhy-04s/", "publisher": "Sonifex", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.telephone_line", "key_specs.input", "key_specs.output", "key_specs.max_input_levels", "key_specs.output_impedance", "key_specs.bandwidth_to_line", "key_specs.echo_cancellation", "key_specs.line_balance_rejection", "key_specs.remotes", "key_specs.ethernet", "key_specs.rack_size", "key_specs.dimensions", "key_specs.power", "connectors", "status"] },
-        { "url": "https://sonifex.co.uk/category/telephone-hybrids/", "publisher": "Sonifex", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology"] }
+        {
+          "url": "https://sonifex.co.uk/product/dhy-04s/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.telephone_line",
+            "key_specs.input",
+            "key_specs.output",
+            "key_specs.max_input_levels",
+            "key_specs.output_impedance",
+            "key_specs.bandwidth_to_line",
+            "key_specs.echo_cancellation",
+            "key_specs.line_balance_rejection",
+            "key_specs.remotes",
+            "key_specs.ethernet",
+            "key_specs.rack_size",
+            "key_specs.dimensions",
+            "key_specs.power",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://sonifex.co.uk/category/telephone-hybrids/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Single source (product page); the handbook was not opened. The 9-way D-type is mapped to gpio-terminal. RJ11 mapped to rj45 ('rj11' proposed connector), 'pots-telephone-line' and 'ethernet-control' (signals) are proposed ids. The IEC inlet is assumed from 'Filtered/fused' universal supply wording. The DHY-04 is a redesign of the DHY-03.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["rj11"], "proposed_new_signals": ["pots-telephone-line", "ethernet-control"], "sim_value": "high", "sim_value_reason": "XLR in/out that is either analog or AES3 plus an RJ11 line: good 'same connector, different signal' lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "rj11"
+        ],
+        "proposed_new_signals": [
+          "pots-telephone-line",
+          "ethernet-control"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "XLR in/out that is either analog or AES3 plus an RJ11 line: good 'same connector, different signal' lesson."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sonifex-rb-mm1",
@@ -933,7 +3249,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A dedicated N-1 box, for desks that have no mix-minus bus. Sonifex says it is used when 'callers join on-air shows through telephone hybrids or codecs', which need mix-minus feeds.",
-      "typical_uses": ["creating N-1 for a telephone hybrid", "creating N-1 for an IP codec return", "small studios with consoles lacking mix-minus buses"],
+      "typical_uses": [
+        "creating N-1 for a telephone hybrid",
+        "creating N-1 for an IP codec return",
+        "small studios with consoles lacking mix-minus buses"
+      ],
       "key_specs": {
         "inputs": "2 x XLR 3 pin female (balanced) (L & R) from the mixer; 1 x XLR 3 pin female (balanced) (L & R) from the telephone fader",
         "output": "Analogue Output To TBU: 1 x XLR 3 pin male (balanced) (L & R)",
@@ -946,26 +3266,103 @@
         "power": "Filtered IEC, switchable 110-120V, or 220-240V, fused, 6W max."
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mixer program input L/R", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-f", "role": "telephone fader input (L & R)", "dir": "in", "signal": "line-level-pro", "count": 1 },
-        { "connector": "xlr3-m", "role": "mix-minus output to TBU (L & R)", "dir": "out", "signal": "line-level-pro", "count": 1 },
-        { "connector": "iec-c14", "role": "filtered IEC mains inlet", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mixer program input L/R",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "telephone fader input (L & R)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "mix-minus output to TBU (L & R)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "filtered IEC mains inlet",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
       "manual_url": "https://sonifex.co.uk/wp-content/uploads/products/RB-MM1/redbox-06_hb.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://sonifex.co.uk/product/rb-mm1/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://sonifex.co.uk/wp-content/uploads/products/RB-MM1/redbox-06_hb.pdf", "title": "RB-MM1 Handbook", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://sonifex.co.uk/wp-content/uploads/products/RB-MM1/redbox-06_hb.pdf",
+          "title": "RB-MM1 Handbook",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://sonifex.co.uk/product/rb-mm1/", "publisher": "Sonifex", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.inputs", "key_specs.output", "key_specs.connectors", "key_specs.max_input_level", "key_specs.max_output_level", "key_specs.output_gain", "key_specs.frequency_response", "key_specs.dimensions", "key_specs.power", "connectors", "status"] },
-        { "url": "https://sonifex.co.uk/category/telephone-mix-minus-generators/", "publisher": "Sonifex", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["typical_uses"] }
+        {
+          "url": "https://sonifex.co.uk/product/rb-mm1/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.output",
+            "key_specs.connectors",
+            "key_specs.max_input_level",
+            "key_specs.max_output_level",
+            "key_specs.output_gain",
+            "key_specs.frequency_response",
+            "key_specs.dimensions",
+            "key_specs.power",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://sonifex.co.uk/category/telephone-mix-minus-generators/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "typical_uses"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "In most broadcast consoles N-1 / mix-minus is a built-in bus function (per-channel 'N-1' outputs). A dedicated box like this is the exception, which is why it is the only mix-minus-system device here. Sonifex lists it as the only product in its 'Telephone Mix Minus Generators' category. The page says '(L & R)' for single XLR entries, so the stereo/mono split per connector is unclear. The handbook was not opened.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Makes the N-1 concept physical: program in, caller fader in, mix-minus out to the hybrid." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Makes the N-1 concept physical: program in, caller fader in, mix-minus out to the hybrid."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     }
   ]
 }

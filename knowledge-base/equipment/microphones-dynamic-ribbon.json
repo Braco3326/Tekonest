@@ -121,7 +121,8 @@
           "file_type": "html",
           "version_or_date": "not shown (JS-rendered; page lists French and 13 other languages without separate URLs)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -136,7 +137,8 @@
             "key_specs.polar_pattern",
             "technology",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/fr-BE/produits/microphones/sm58",
@@ -147,7 +149,8 @@
           "covers": [
             "key_specs.frequency_response",
             "key_specs.polar_pattern"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://collegeofsanmateo.edu/theatre/docs/sm58_specsheet.pdf",
@@ -166,7 +169,8 @@
             "key_specs.replacement_cartridge",
             "connectors",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.mixonline.com/blog/mix-live-blog-a-birthday-look-back-at-the-sm57-and-sm58",
@@ -176,7 +180,8 @@
           "kind": "trade-press",
           "covers": [
             "year_introduced"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Shure's official guide pages are JavaScript-rendered and the fr-FR guide URL redirects to en-US, so the numeric specs were read from a Shure-authored spec sheet hosted by a third party. Variant SM58S has an on/off switch.",
@@ -188,7 +193,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Reference dynamic mic already in catalog; shows that a dynamic needs no phantom and outputs mic level on XLR (pin 2 hot)."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "shure-sm57",
@@ -245,7 +252,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -260,7 +268,8 @@
             "key_specs.polar_pattern",
             "technology",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://collegeofsanmateo.edu/theatre/docs/sm57_specsheet.pdf",
@@ -278,7 +287,8 @@
             "key_specs.dimensions",
             "connectors",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.la-bs.com/Objets/SM57LCE_dt.pdf",
@@ -294,7 +304,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.mixonline.com/blog/mix-live-blog-a-birthday-look-back-at-the-sm57-and-sm58",
@@ -304,7 +315,8 @@
           "kind": "trade-press",
           "covers": [
             "year_introduced"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "A search summary mentioned an older Shure manual giving -54.5 dBV/Pa (1.9 mV); that document was not read, so it is not recorded as a conflict. The 2009 and 2014 Shure sheets agree.",
@@ -316,7 +328,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Already in catalog; the standard instrument dynamic for drum and amp patching exercises."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "shure-beta-58a",
@@ -369,7 +383,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -384,7 +399,8 @@
             "technology",
             "status",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://rent.djcenter.ee/images/kasutusjuhendid/shure_beta58a.pdf",
@@ -399,7 +415,8 @@
             "key_specs.impedance",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Polar pattern is cross-checked (Shure product page + Shure spec sheet); frequency response and electrical values come from the spec sheet copy only. A search summary showed Recording Hacks listing 290 ohms; that page was not read.",
@@ -411,7 +428,9 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Wiring is identical to the SM58; mainly a polar-pattern lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "shure-beta-52a",
@@ -466,7 +485,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -481,7 +501,8 @@
             "key_specs.polar_pattern",
             "connectors",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.la-bs.com/Objets/BETA52_dt.pdf",
@@ -499,7 +520,8 @@
             "key_specs.weight",
             "connectors",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ccslightsound.com.au/assets/brochures/SHR-BETA52A.pdf",
@@ -514,7 +536,8 @@
             "key_specs.impedance",
             "key_specs.max_spl",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Shure's French page mentions a presence bump at 4,000 Hz.",
@@ -526,7 +549,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Its XLR is in the stand adapter, which is useful for drum-kit patch-list exercises."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "shure-sm7b",
@@ -583,7 +608,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -598,7 +624,8 @@
             "technology",
             "status",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.la-bs.com/Objets/SM7B_me.pdf",
@@ -616,7 +643,8 @@
             "key_specs.weight",
             "connectors",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Shure's French page mentions the newer SM7dB (with built-in preamp) as a separate model. The multilingual guide PDF read here includes a French section but is hosted by a third party, so it is not listed as an official manual.",
@@ -628,7 +656,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Good gain-staging lesson (low-output dynamic) for radio and podcast scenarios."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sennheiser-md-421-ii",
@@ -688,7 +718,8 @@
           "file_type": "pdf",
           "version_or_date": "02/2026",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/MD_421-II_Product_Specification_v1.1_EN.pdf/801bf3fee7ce11f0bce7beb43c66122a?attachment=true",
@@ -697,7 +728,8 @@
           "file_type": "pdf",
           "version_or_date": "v1.1",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/MD_421-II_Product_Specification_v1.1_DE.pdf/806f3e2ee7ce11f0a866ce3d75c40f07?attachment=true",
@@ -706,7 +738,8 @@
           "file_type": "pdf",
           "version_or_date": "v1.1",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/MD_Mics_Safety_Guide_05_2026.pdf/510aadd6a14511f1ac55d2df9d0c4ac6?attachment=true",
@@ -715,7 +748,8 @@
           "file_type": "pdf",
           "version_or_date": "05/2026",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -737,7 +771,8 @@
             "technology",
             "status",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/MD_421-II_Product_Specification_v1.1_EN.pdf/801bf3fee7ce11f0bce7beb43c66122a?attachment=true",
@@ -753,7 +788,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/Quick+Guide_MD_421+II_02_2026.pdf/8231678ce7ce11f0a0d2beb43c66122a?attachment=true",
@@ -767,7 +803,8 @@
             "key_specs.sensitivity",
             "key_specs.impedance",
             "manual_languages"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/MD_421_KOMPAKT_Product_Specification_FR_v.1.pdf/cdd38366da9311f0bee7a2427bb03fc9?attachment=true",
@@ -778,7 +815,8 @@
           "covers": [
             "why_it_is_a_classic",
             "notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Sennheiser also sells the shorter MD 421 KOMPAKT (159 g, 122 x 49 x 84 mm, same 30–17 000 Hz, 2 mV/Pa, 250 Ω per its French spec sheet; page https://www.sennheiser.com/en-us/catalog/products/microphones/md-421-kompakt). Its sheet says it keeps the sound of the original MD 421 and MD 421-II. The MD 421-II page was still live with 2026 documents, so both are treated as current.",
@@ -805,7 +843,10 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Standard XLR dynamic; useful for drum and radio scenarios, with a bass roll-off switch to explain."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sennheiser-e-835",
@@ -863,7 +904,8 @@
           "file_type": "pdf",
           "version_or_date": "04/2026",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/evolution-wired_instruction_manual_04_2026_en.pdf/9708c52c340111f18ffc8a5e4ed1ff4b?attachment=true",
@@ -872,7 +914,8 @@
           "file_type": "pdf",
           "version_or_date": "04/2026",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/e835_Manual_01_2019_FR.pdf/6de8d3e6e7b511f0aa98ea55b5d2fb86?attachment=true",
@@ -881,7 +924,8 @@
           "file_type": "pdf",
           "version_or_date": "01/2019",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "dead"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf/75ad675ee7ba11f09ec3beb43c66122a?attachment=true",
@@ -890,7 +934,8 @@
           "file_type": "pdf",
           "version_or_date": "v1.0",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -911,7 +956,8 @@
             "connectors",
             "status",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/SP_1209_v1.0_e_835_e_835-S_Product_Specification_EN.pdf/75ad675ee7ba11f09ec3beb43c66122a?attachment=true",
@@ -929,7 +975,8 @@
             "key_specs.dimensions",
             "connectors",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Variant e 835-S adds a silent on/off switch.",
@@ -941,7 +988,10 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Wiring is the same as the SM58."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sennheiser-e-906",
@@ -983,7 +1033,7 @@
       "signal_types": [
         "mic-level"
       ],
-      "manual_url": "https://assets.sennheiser.com/download/assets/e906_Manual_07_2020_FR.pdf/b27672cae7b511f088db768ee8e97aea?attachment=true",
+      "manual_url": "https://assets.sennheiser.com/download/assets/evolution-wired_notice_d-emploi_04_2026_fr.pdf/96f0c7f6340111f1b2960257a51247fc?attachment=true",
       "datasheet_url": "https://assets.sennheiser.com/download/assets/e_906_Product_Specification_v1.1_EN.pdf/828aed16e7ba11f0bfb2beb43c66122a?attachment=true",
       "product_page_url": "https://www.sennheiser.com/en-us/catalog/products/microphones/e-906",
       "manual_languages": [
@@ -1000,7 +1050,8 @@
           "file_type": "pdf",
           "version_or_date": "07/2020",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "dead"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/e906_Manual_07_2020_EN.pdf/af364996e7b511f09469ce3d75c40f07?attachment=true",
@@ -1009,7 +1060,8 @@
           "file_type": "pdf",
           "version_or_date": "07/2020",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "dead"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/evolution-wired_notice_d-emploi_04_2026_fr.pdf/96f0c7f6340111f1b2960257a51247fc?attachment=true",
@@ -1018,7 +1070,8 @@
           "file_type": "pdf",
           "version_or_date": "04/2026",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/e_906_Product_Specification_v1.1_EN.pdf/828aed16e7ba11f0bfb2beb43c66122a?attachment=true",
@@ -1027,7 +1080,8 @@
           "file_type": "pdf",
           "version_or_date": "v1.1",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1048,7 +1102,8 @@
             "connectors",
             "status",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/e_906_Product_Specification_v1.1_EN.pdf/828aed16e7ba11f0bfb2beb43c66122a?attachment=true",
@@ -1065,10 +1120,11 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "notes": "The product page lists dimensions 55 x 34 x 134 mm but a separate length field shows 135 mm; the spec sheet says 134 mm. This is treated as minor and not recorded as a conflict.",
+      "notes": "The product page lists dimensions 55 x 34 x 134 mm but a separate length field shows 135 mm; the spec sheet says 134 mm. This is treated as minor and not recorded as a conflict. [QA 2026-10-22] previous manual_url returned 404 (https://assets.sennheiser.com/download/assets/e906_Manual_07_2020_FR.pdf/b27672cae7b511f088db768ee8e97aea); repointed to another official manual.",
       "conflicts": [],
       "tekpractice": {
         "in_catalog": false,
@@ -1077,7 +1133,10 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Standard XLR dynamic; the lesson value is placement, not wiring."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "beyerdynamic-m-88",
@@ -1142,7 +1201,8 @@
           "file_type": "pdf",
           "version_or_date": "PDF created 2026-10-12",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://api.beyerdynamic.de/amfile/file/download/file/1719/",
@@ -1151,7 +1211,8 @@
           "file_type": "pdf",
           "version_or_date": "E8/M88 (10.26)",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://api.beyerdynamic.de/amfile/file/download/file/1717/",
@@ -1160,7 +1221,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1177,7 +1239,8 @@
             "status",
             "technology",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://api.beyerdynamic.de/amfile/file/download/file/1719/",
@@ -1197,7 +1260,8 @@
             "key_specs.dimensions",
             "connectors",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://api.beyerdynamic.de/amfile/file/download/file/1716/",
@@ -1211,7 +1275,8 @@
             "key_specs.sensitivity",
             "key_specs.impedance",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The candidate list named the M 88 TG. The current beyerdynamic page and datasheet call it simply 'M 88' (order # 730092), so the current name is used here. Earlier TG-branded versions may differ.",
@@ -1223,7 +1288,10 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Wiring is the same as other XLR dynamics."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "akg-d112-mkii",
@@ -1283,7 +1351,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "akg.com blocks automated access (HTTP 403), so there is no manufacturer cross-check. The XLR output is assumed from standard practice and was not read in a source. Verify all values against an AKG datasheet before use.",
@@ -1361,7 +1430,8 @@
             "technology",
             "status",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Specs come from the structured data on the EV product page (product variants RE20 Beige / RE20 Black). The online store showed the item as out of stock, but the variant status was active. The documents page (electrovoice.com/product-documents/re20) listed 0 files when fetched. No second source was read.",
@@ -1373,7 +1443,8 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Already in catalog; the radio-studio reference dynamic for broadcast scenarios."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "ev-re50",
@@ -1435,7 +1506,8 @@
             "key_specs.case_material",
             "technology",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Catalog id ev-re50 refers to this RE50/B. The EV page says the 150-ohm output works with 50-150 and 250-ohm inputs. The page also listed length 216.7 mm, the same value as the RE20, which looks like a shared template field, so it is not recorded. No second source was read.",
@@ -1447,7 +1519,8 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Already in catalog; pairs with the AETA reporters' codecs for field-recording scenarios."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "beyerdynamic-m-160",
@@ -1513,7 +1586,8 @@
           "file_type": "pdf",
           "version_or_date": "PDF created 2023-08-31",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://api.beyerdynamic.de/amfile/file/download/file/1726/",
@@ -1522,7 +1596,8 @@
           "file_type": "pdf",
           "version_or_date": "E7/M 160 (09.23)",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://api.beyerdynamic.de/amfile/file/download/file/1717/",
@@ -1531,7 +1606,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1547,7 +1623,8 @@
             "connectors",
             "status",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://api.beyerdynamic.de/amfile/file/download/file/1726/",
@@ -1567,7 +1644,8 @@
             "connectors",
             "technology",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://api.beyerdynamic.de/amfile/file/download/file/1724/",
@@ -1582,7 +1660,8 @@
             "key_specs.impedance",
             "key_specs.weight",
             "key_specs.phantom_power"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Phantom power (rule R4): the M 160 manual text extracted here has no phantom-power warning or statement, and neither does the product page. Treat it like any passive ribbon (phantom off) per the general ribbon warnings from Royer, AEA and Coles.",
@@ -1594,7 +1673,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "A ribbon on a standard XLR, so R4 (no phantom on ribbons) needs to be checked; it also shows that not all ribbons are figure-8."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "royer-r-121",
@@ -1652,7 +1734,8 @@
           "file_type": "pdf",
           "version_or_date": "PDF dated 2021-09-27",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "http://royerlabs.com/pdf/cutsheets/R-121cutsheet.pdf",
@@ -1661,7 +1744,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown (not opened)",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1684,7 +1768,8 @@
             "technology",
             "status",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://royerlabs.com/pdf/manuals/R-121manual.pdf",
@@ -1702,7 +1787,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The manual also says the rear side should not exceed 115 dB SPL (front rated 135 dB) and that the preamp input impedance should be at least 1500 ohms (5x the mic impedance). R4 lesson: the risk comes from miswired cables and hot-patching through a patch bay with phantom on, not from correctly wired phantom alone.",
@@ -1757,7 +1843,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Core R4 device: a passive ribbon on XLR with the maker's explicit patch-bay phantom warning."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "coles-4038",
@@ -1814,7 +1903,8 @@
           "file_type": "pdf",
           "version_or_date": "PDF dated 2012-09-28",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1829,7 +1919,8 @@
             "key_specs.polar_pattern",
             "why_it_is_a_classic",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://coleselectroacoustics.com/wp-content/uploads/2021/12/4038Spec.pdf",
@@ -1849,7 +1940,8 @@
             "key_specs.dimensions",
             "technology",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://coleselectroacoustics.com/ribbon-microphone-care-tips/",
@@ -1859,7 +1951,8 @@
           "kind": "manufacturer",
           "covers": [
             "key_specs.phantom_power"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The spec PDF is a scanned image, so values were read from the rendered page. The output is NOT a native XLR: it uses the Coles 4069 3-pin jack plug with a 4069-to-XLR accessory, and the sheet states pin 1 positive (not the XLR pin 2 hot convention). Coles' care page also warns never to blow into the mic and never to lay a ribbon mic down on a surface (tramp iron).",
@@ -1873,7 +1966,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "R4 phantom lesson plus a proprietary 4069 connector, an adaptor requirement and a non-standard pin-1-positive polarity."
-      }
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "aea-r84",
@@ -1934,7 +2029,8 @@
           "file_type": "pdf",
           "version_or_date": "2024V2",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://aearibbonmics.com/wp-content/uploads/2018/01/AEA-R84-Series-Specifications-2-3-18.pdf",
@@ -1943,7 +2039,8 @@
           "file_type": "pdf",
           "version_or_date": "2-3-18",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1967,7 +2064,8 @@
             "connectors",
             "technology",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://aearibbonmics.com/wp-content/uploads/2022/11/R84-manual-2024V2-web.pdf",
@@ -1979,7 +2077,8 @@
             "key_specs.phantom_power",
             "key_specs.polar_pattern",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://aearibbonmics.com/audio-products/r84-series/",
@@ -1990,7 +2089,8 @@
           "covers": [
             "status",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The active R84A (formerly A840) needs P48 phantom (7 mA) and has different specs (-44 dBv/Pa, 92 Ω, 141+ dB SPL). AEA recommends a preamp with at least +60 dB gain for the passive R84. The product page was read only for its document links.",
@@ -2002,7 +2102,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Good R4 contrast: the passive R84 must not get phantom, while the R84A needs P48. AEA also warns about patch bays."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sennheiser-md-441-u",
@@ -2061,7 +2164,8 @@
           "file_type": "pdf",
           "version_or_date": "11/2025 (filename)",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2082,7 +2186,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/Quick+Guide_MD_441-U_11_2025.pdf/4c2195f6e7b811f0a354ea55b5d2fb86",
@@ -2099,7 +2204,8 @@
             "key_specs.weight",
             "connectors",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Product page found through Sennheiser's commerce sitemap. No phantom power is needed (dynamic). The quick guide shows XLR wiring and an XLR to 6.3 mm adapter option. No French document found.",
@@ -2126,7 +2232,9 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Passive dynamic on XLR; the onboard EQ switches are the only distinctive feature."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     }
   ]
 }

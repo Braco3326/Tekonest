@@ -164,7 +164,8 @@
           "file_type": "pdf",
           "version_or_date": "06-10 (file name opin0134_u87ai_06-10)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -188,7 +189,8 @@
             "key_specs.dimensions",
             "connectors",
             "manual_languages"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.neumann.com/en-en/products/microphones/u-87-ai/",
@@ -206,7 +208,8 @@
             "key_specs.phantom_power",
             "key_specs.weight",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.mixonline.com/technology/1967-neumann-u87-383659",
@@ -217,7 +220,8 @@
           "covers": [
             "why_it_is_a_classic",
             "notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Mix dates the original U 87 to 1967 and the DC/DC-converter U 87 A to 1986; it says the Ai name came with the change from Tuchel to XLR connector but gives no year for that, so year_introduced is left 'not found'. Product page download links go to a JS file finder; no separate official datasheet PDF was retrieved.",
@@ -229,7 +233,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Reference phantom-powered condenser: P48 lesson, pad/HPF and pattern switching."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neumann-tlm-103",
@@ -303,7 +309,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://im.static-thomann.de/pics/atg/atgdata/document/manual/127970_manual.pdf",
@@ -319,7 +326,8 @@
             "key_specs.impedance",
             "key_specs.phantom_power",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Older Neumann operating instructions (Thomann-hosted copy, not an official Neumann URL so not listed in manuals[]) state a transformerless output and 21 mV/Pa sensitivity; the current product page gives 23 mV/Pa. Neumann's product page links only to a JS file finder, so no official manual PDF URL was obtained.",
@@ -346,7 +354,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Standard P48 XLR condenser; useful as a transformerless counterpart to the U 87 Ai but no new wiring lesson."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "neumann-tlm-102",
@@ -418,7 +427,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.syntex.cz/media/document/16199/quick-start.pdf",
@@ -437,7 +447,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "All key specs match between the product page and the Neumann quick guide. Official manual PDF not reachable (Neumann file finder is JS-only); only distributor-hosted copies found.",
@@ -449,7 +460,8 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Plain cardioid P48 condenser, same wiring as U 87 Ai."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "neumann-u-47-fet-i",
@@ -525,7 +537,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "year_introduced is the original U 47 fet (1972, per Neumann); the current product is the 'U 47 fet i' reissue, whose own release year was not stated. Single-source specs (no second source reachable: web search budget exhausted).",
@@ -537,7 +550,8 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Standard P48 XLR condenser; interesting only for gain-staging / pad lesson on loud sources."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "akg-c414-xls",
@@ -620,7 +634,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.bax-shop.co.uk/large-diaphragm-condenser-microphones/akg-c-414-xls",
@@ -631,7 +646,8 @@
           "covers": [
             "key_specs.frequency_response",
             "key_specs.sensitivity"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "akg.com returned HTTP 403/500 for every fetch, so no official product page or AKG-hosted manual could be read; specs come from the AKG manual copy hosted by a retailer (it contains a French 'Mode d'emploi' section). Status could not be confirmed on the manufacturer site. No verified-primary source.",
@@ -738,7 +754,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.markertek.com/Attachments/Specifications/Neumann/NEUM-TLM-107-Specifications.pdf",
@@ -752,7 +769,8 @@
             "key_specs.sensitivity",
             "key_specs.impedance",
             "key_specs.equivalent_noise_ccir"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Specs on the product page match the Neumann manual copy (Markertek-hosted, not an official URL so not listed in manuals[]). Official manual not reachable via Neumann's JS file finder.",
@@ -764,7 +782,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Multi-pattern transformerless mic with pad/HPF menu: pattern and gain-staging lessons."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "neumann-km-184",
@@ -838,7 +857,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.avbroadcast.fr/media/productfile/n/e/neumann-km184-mt-manuel.pdf",
@@ -856,7 +876,8 @@
             "key_specs.phantom_power",
             "key_specs.weight",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Series 180 manual table lists the three models together (KM 183/184/185 = 12/15/10 mV/Pa, 140/138/142 dB max SPL); the KM 184 values match the product page. Official Neumann-hosted manual URL not obtained (JS file finder).",
@@ -868,7 +889,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Pencil condenser used in pairs: stereo-pair and phantom-power lessons."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "schoeps-cmc-6-mk-4",
@@ -931,7 +953,8 @@
           "file_type": "pdf",
           "version_or_date": "2015-10-03 (file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_D_2015-10-03_1444310835.pdf",
@@ -940,7 +963,8 @@
           "file_type": "pdf",
           "version_or_date": "2015-10-03 (file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Kataloge_und_Broschueren/Colette_Broschuere/SCHOEPS_Colette_Brochure_EN.pdf",
@@ -949,7 +973,8 @@
           "file_type": "pdf",
           "version_or_date": "2024-12-05 (PDF metadata)",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -968,7 +993,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/produkte/colette/mikrofonverstaerker/cmc-6.html",
@@ -986,7 +1012,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
@@ -999,7 +1026,8 @@
             "key_specs.phantom_power",
             "key_specs.max_output_voltage",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Kataloge_und_Broschueren/Colette_Broschuere/SCHOEPS_Colette_Brochure_EN.pdf",
@@ -1010,7 +1038,8 @@
           "covers": [
             "why_it_is_a_classic",
             "typical_uses"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "year_introduced 1991 is the CMC 6 'Generation A0' market launch as stated in the CMC 6 product history on schoeps.de; the Colette system and MK 4 capsule may be older (not stated). The Schoeps site has French product pages (e.g. schoeps.de/fr/produits/colette/preamplis-micro/cmc-6.html) but no French user manual was listed. The 2015 manual gives older values than the current web pages (see conflicts); the 'brochure' entry is marketing, not a manual.",
@@ -1103,7 +1132,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Modular capsule + amplifier and dual P48/P12 phantom support: good lesson on phantom standards and capsule swapping."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "schoeps-cmc-6-mk-41",
@@ -1163,7 +1194,8 @@
           "file_type": "pdf",
           "version_or_date": "2015-10-03 (file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_D_2015-10-03_1444310835.pdf",
@@ -1172,7 +1204,8 @@
           "file_type": "pdf",
           "version_or_date": "2015-10-03 (file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1193,7 +1226,8 @@
             "key_specs.max_spl",
             "key_specs.weight",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/produkte/colette/mikrofonverstaerker/cmc-6.html",
@@ -1208,7 +1242,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
@@ -1219,7 +1254,8 @@
           "covers": [
             "key_specs.polar_pattern",
             "key_specs.phantom_power"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Kataloge_und_Broschueren/Colette_Broschuere/SCHOEPS_Colette_Brochure_EN.pdf",
@@ -1230,7 +1266,8 @@
           "covers": [
             "why_it_is_a_classic",
             "typical_uses"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Included alongside the CMC 6 + MK 4 because it is the reference film interior-dialogue mic (relevant to French film sound and BTS MAV). It is a supercardioid capsule, not a shotgun. 2015 manual lists MK 41 as 40 Hz – 20 kHz, 13 mV/Pa, 16 dB A-weighted, 132 dB (see conflicts).",
@@ -1296,7 +1333,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Same wiring as CMC 6 + MK 4; adds the film-boom context and capsule-swap concept."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sennheiser-mkh-8040",
@@ -1357,7 +1396,8 @@
           "file_type": "pdf",
           "version_or_date": "06/2025",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/mkh-8000_bedienungsanleitung_06_2025_de.pdf/0a73677ce7d811f088db768ee8e97aea?attachment=true",
@@ -1366,7 +1406,8 @@
           "file_type": "pdf",
           "version_or_date": "06/2025",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/MKH_8040_Product_Specification_v1.1_EN.pdf/48570e2ce7d311f0ae307aeaa9c3764a?attachment=true",
@@ -1375,7 +1416,8 @@
           "file_type": "pdf",
           "version_or_date": "V1.1",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/MKH_8040_Quick_Guide_07_2024.pdf/4821762ce7d311f0b959ce3d75c40f07?attachment=true",
@@ -1384,7 +1426,8 @@
           "file_type": "pdf",
           "version_or_date": "07/2024",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1404,7 +1447,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "typical_uses"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sennheiser.com/fr-fr/catalog/products/microphone/mkh-8040/mkh-8040-506289",
@@ -1424,7 +1468,8 @@
             "key_specs.weight",
             "connectors",
             "manual_languages"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sennheiser.com/fr-fr/product-families/micros-mkh",
@@ -1435,7 +1480,8 @@
           "covers": [
             "technology",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/MKH-Story_WhitePaper_en.pdf/53095012e7c111f0bfb2beb43c66122a?attachment=true",
@@ -1446,7 +1492,8 @@
           "covers": [
             "year_introduced",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Chosen instead of MKH 40: the Sennheiser MKH family page lists the MKH 30 and MKH 50 but no MKH 40 (the MKH Story says the MKH 40 launched in 1985 and the MKH 8000 line in 2007 with the 8020/8040/8050). Minor value differences: product page length 74 mm with XLR module vs spec sheet 75 mm with filter module (different modules, not a conflict). The FR product page mentions a 'Mode d'emploi' in the box but links no French PDF. The product page's 'Raccord: Sans fil' field is an apparent labelling error.",
@@ -1458,7 +1505,10 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Teaches RF-condenser principle and modular XLR head; wiring is still standard P48 XLR."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sennheiser-mkh-50",
@@ -1518,7 +1568,8 @@
           "file_type": "pdf",
           "version_or_date": "07/2026",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1539,7 +1590,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sennheiser.com/fr-fr/catalog/products/microphone/mkh-50/mkh-50-p48-003109",
@@ -1556,7 +1608,8 @@
             "key_specs.phantom_power",
             "key_specs.weight",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/MKH-Story_WhitePaper_en.pdf/53095012e7c111f0bfb2beb43c66122a?attachment=true",
@@ -1568,7 +1621,8 @@
             "year_introduced",
             "technology",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Supercardioid but not a shotgun (no interference tube), so it belongs in this file. The product page lists 'substitute noise level 12 (18) dB' without weighting; the Quick Guide clarifies A-weighted 12 (18) dB(A) and CCIR 21 (27) dB. No full operating manual or French document was linked on the product page.",
@@ -1580,7 +1634,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Film/TV boom mic: RF-condenser and pad lesson with standard P48 XLR wiring."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neumann-m-149-tube",
@@ -1660,7 +1716,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.thomannmusic.com/neumann_m149_tube_mic.htm",
@@ -1678,7 +1735,8 @@
             "key_specs.impedance",
             "key_specs.weight",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Mic connects to the N 149 A PSU via an 8-pin DIN connection (Neumann: matching connector 'DIN 8 F'; Thomann: '8-core cable'); no TekPractice id exists for it, so it is proposed rather than listed in connectors[]. The PSU is mains-powered (230 V / 117 V variants, power cable included) but its inlet connector type was not stated in the sources, so it is not listed. The URL slug says 'm-149-v-set' but the page names the product 'M 149 Tube'. A 1997 TEC Award is mentioned, but no introduction year.",
@@ -1692,7 +1750,8 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Tube mic system lesson: mic -> multipin cable -> PSU -> XLR to preamp, with phantom power OFF."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "telefunken-ela-m-251e",
@@ -1749,7 +1808,8 @@
           "file_type": "pdf",
           "version_or_date": "2026 (upload path 2026/02)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1773,7 +1833,8 @@
             "key_specs.transformer",
             "key_specs.weight",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.telefunken-elektroakustik.com/wp-content/uploads/2026/02/Diamond-Series-Manuals-ELA-M-251E-2026-AB.pdf",
@@ -1796,7 +1857,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "year_introduced 1959 is the original ELA M 251 (manual: about 2,000 made 1959-1963); the reissue's launch year was not stated. Manual: the M 850E cable has a swivel stand-mount connector at the mic end and a Neutrik 7-pin XLR at the PSU end; no 7-pin XLR id exists in TekPractice, so it is proposed rather than listed. The M 950E's audio-output connector and mains inlet types are not stated in the sources (only 'premium Neutrik connectors'), so connectors[] is left empty rather than guessed. Product page noted the webstore was temporarily not accepting orders (status still 'current'). Both sources come from the same manufacturer.",
@@ -1810,7 +1872,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Classic tube-mic chain: mic -> 7-pin XLR cable -> PSU (mains) -> XLR to preamp, phantom must stay off."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "telefunken-c12",
@@ -1867,7 +1931,8 @@
           "file_type": "pdf",
           "version_or_date": "2026 (upload path 2026/02)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1890,7 +1955,8 @@
             "key_specs.transformer",
             "key_specs.weight",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.telefunken-elektroakustik.com/wp-content/uploads/2026/02/Diamond-Series-Manuals-C12-2026-AB.pdf",
@@ -1913,7 +1979,8 @@
             "key_specs.transformer",
             "key_specs.weight",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Chosen as the 'C12' candidate; AKG's own C12 VR page could not be reached (akg.com returned 403). year_introduced 1953 is the original AKG C12 (per Telefunken manual); the recreation's launch year not stated. Manual: M 810 cable has a swivel stand-mount connector at the mic and a Neutrik 7-pin XLR at the PSU; the M 910 PSU combines power supply and pattern selector. PSU audio-output and mains connector types not stated, so connectors[] is empty rather than guessed.",
@@ -1927,7 +1994,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Tube system where the polar pattern is chosen on the PSU, not the mic: strong wiring/signal-flow lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "neumann-u-67",
@@ -2009,7 +2078,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://assets.sennheiser.com/download/assets/SoDr_SR_Neumann_Test_E.pdf/d66e152adc1611f086ef7ec57e6db003",
@@ -2021,7 +2091,8 @@
             "why_it_is_a_classic",
             "technology",
             "notes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "year_introduced is the original U 67 (1960, per Neumann); the reissue was presented at a January NAMM show per the Sound & Recording 05/2018 review (year not stated explicitly beyond the issue date). The review confirms a PSU supplying anode and filament voltages and the same 7-pin connectors as vintage U 67s; no 7-pin id exists in TekPractice, so it is proposed. The product page's P48 line looks inconsistent with a mains PSU tube mic and should be checked in the official manual (not retrieved: Neumann file finder is JS-only).",
@@ -2035,7 +2106,8 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Tube mic with 7-pin cable and dedicated PSU; pairs with U 87 Ai to show tube vs FET powering."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "rode-nt5",
@@ -2097,7 +2169,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://edge.rode.com//pdf/products/79/NT5_Datasheet_05_FA.pdf",
@@ -2106,7 +2179,8 @@
           "file_type": "pdf",
           "version_or_date": "05 (filename)",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2129,7 +2203,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://edge.rode.com//pdf/products/79/NT5_Datasheet_05_FA.pdf",
@@ -2149,7 +2224,8 @@
             "key_specs.dimensions",
             "connectors",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://edge.rode.com//pdf/products/79/nt5-mp_product_manual.pdf",
@@ -2167,7 +2243,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.thomann.fr/rode_nt_5_s.htm",
@@ -2180,7 +2257,8 @@
             "key_specs.frequency_response",
             "key_specs.max_spl",
             "key_specs.max_output"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "Specs read from the product page's embedded data and the PDFs. The older instruction manual (rodemic.com era) gives slightly different mechanical values and also lists P24, see conflicts. The product page carries an internal launch_date of 2024-11-12 that matches other RØDE pages and is a site date, not an introduction year.",
@@ -2235,7 +2313,10 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Plain XLR + P48 pencil condenser; useful for stereo-pair and phantom lessons but no unusual connector."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "rode-nt1-5th-gen",
@@ -2307,7 +2388,8 @@
           "file_type": "pdf",
           "version_or_date": "0927-0836-03-01 (filename)",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         },
         {
           "url": "https://edge.rode.com//pdf/products/1184/NT1 5th GEN_Datasheet.pdf",
@@ -2316,7 +2398,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2340,7 +2423,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://edge.rode.com//pdf/products/1184/NT1 5th GEN_Datasheet.pdf",
@@ -2359,7 +2443,8 @@
             "key_specs.phantom_power",
             "key_specs.digital_output",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.thomann.fr/rode_nt1_5th_generation_black.htm",
@@ -2376,7 +2461,8 @@
             "key_specs.phantom_power",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Product manual link on rode.com is a quick start guide PDF. Thomann lists it since February 2023, which is a listing date, not an introduction year. Weight and dimensions differ slightly at Thomann (see conflicts).",
@@ -2417,7 +2503,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "One mic with two output paths (XLR needing P48, USB-C bus-powered digital): good lesson on where phantom applies and where it does not."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "audio-technica-at4040",
@@ -2480,7 +2569,8 @@
           "file_type": "pdf",
           "version_or_date": "©2013, P52144",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         },
         {
           "url": "https://docs.audio-technica.com/us/at4040_submit.pdf",
@@ -2489,7 +2579,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2511,7 +2602,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://docs.audio-technica.com/us/p52144_at4040_spec_lores.pdf",
@@ -2531,7 +2623,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "audio-technica.com was readable with a normal browser user agent (earlier passes got 403). Audio-Technica publishes a specification sheet with operating notes rather than a separate user manual; no French version found. Self-noise is stated as A-weighted typical in the sheet footnote.",
@@ -2543,7 +2636,10 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Standard P48 + XLR condenser with pad and HPF switches; good for gain-staging lessons."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "audio-technica-at4050",
@@ -2608,7 +2704,8 @@
           "file_type": "pdf",
           "version_or_date": "©2013, P52150",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         },
         {
           "url": "https://docs.audio-technica.com/us/at4050_submit.pdf",
@@ -2617,7 +2714,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2639,7 +2737,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://docs.audio-technica.com/us/p52150_at4050_spec_sheet.pdf",
@@ -2660,7 +2759,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Spec sheet states the mic requires 48V phantom power. The product page gives self-noise as '17 dB' and the sheet '17 dB SPL' (A-weighted typical, per footnote). No French document found.",
@@ -2672,7 +2772,10 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Multi-pattern switch is a good polar-pattern lesson; wiring itself is standard XLR + P48."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "dpa-4011",
@@ -2751,7 +2854,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Specs come from the product page's 'Specifications' panel, which the page loads from DPA's own product API (read directly, product id 48). The current product is the 4011A; the Downloads panel only lists a declaration of conformity, so no manual or datasheet PDF was found. Single source only; no second source checked.",
@@ -2763,7 +2867,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Reference P48 pencil condenser; switchable -20 dB pad useful for high-SPL gain lessons."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "shure-ksm32c",
@@ -2827,7 +2932,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2849,7 +2955,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/en-US/products/microphones/ksm32c",
@@ -2860,7 +2967,8 @@
           "covers": [
             "status",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The original KSM32 page was not found; Shure now sells the KSM32C (an earlier pass saw a Shure newsroom item dated 2026-01-21 announcing it, not re-read here, so year_introduced is 'not found'). The guide content was read through Shure's publication service that renders the docs page; the guide offers a French version via its language selector (PDF download button), but no stable French URL was captured. Single manufacturer document for specs.",
@@ -2872,7 +2980,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Standard XLR + P48 condenser; spec table shows max SPL depending on preamp load impedance, a useful detail."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "akg-c451-b",
@@ -2946,7 +3056,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.thomann.fr/akg_c451b.htm",
@@ -2960,7 +3071,8 @@
             "key_specs.frequency_response",
             "key_specs.max_spl",
             "key_specs.sensitivity"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "akg.com still returns HTTP 403, so no manufacturer URL could be read. Specs come from the AKG spec sheet as hosted by Thomann (a third-party copy, so it is not listed as an official manual) and are cross-checked against the Thomann listing. Status 'current' is based on the retailer still selling it.",

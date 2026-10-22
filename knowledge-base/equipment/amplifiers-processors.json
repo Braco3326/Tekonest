@@ -185,7 +185,8 @@
           "file_type": "pdf",
           "version_or_date": "page lists 'updated: Apr 2026'",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.crownaudio.com/en/product_documents/5055568_04-15_xlsdc2_manual_german-pdf-d3697630-93dc-4b81-b380-8a5692d601ae",
@@ -194,7 +195,8 @@
           "file_type": "pdf",
           "version_or_date": "page lists 'updated: Apr 2026'",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
@@ -203,7 +205,8 @@
           "file_type": "pdf",
           "version_or_date": "© 2015",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://www.crownaudio.com/en/product_documents/crown_xls_dc2series_qrg_web-pdf-cfbcbf7c-cc33-464a-a670-53f6cccd0859",
@@ -212,7 +215,8 @@
           "file_type": "pdf",
           "version_or_date": "page lists 'updated: Apr 2026'",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -231,7 +235,8 @@
             "key_specs.weight",
             "key_specs.dsp",
             "year_introduced"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.crownaudio.com/en-US/product_documents/xls_dc2_datasheet_web_050615-pdf",
@@ -251,7 +256,8 @@
             "key_specs.damping_factor",
             "key_specs.rack_units",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
@@ -262,7 +268,8 @@
           "covers": [
             "technology",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.fullcompass.com/prod/282607-crown-xls-2502-2-channel-power-amplifier-775w-at-4-ohms",
@@ -274,7 +281,8 @@
             "key_specs.power_4ohm_per_channel",
             "key_specs.power_2ohm_per_channel",
             "key_specs.power_8ohm_per_channel"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "year_introduced 2015 is from the product page news item 'April 15, 2015 Crown Introduces XLS DriveCore 2 Amplifiers'. The manual names the AC power connector but does not state its type, so no mains connector is listed. A French product page exists (crownaudio.com/fr/products/xls-2502) but it links the same English/German documents; no French manual found.",
@@ -303,7 +311,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Typical school PA amp: XLR/jack/RCA inputs, speakON vs binding posts, bridge wiring on one NL4 (pins 1+/2+)."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "l-acoustics-la12x",
@@ -407,7 +418,8 @@
           "file_type": "pdf",
           "version_or_date": "version 10.1 (listed 01/11/2024)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Owner's%20Manual/LA12X_OM_EN.pdf",
@@ -416,7 +428,8 @@
           "file_type": "pdf",
           "version_or_date": "listed 01/11/2024",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Product%20Spec%20Sheet/LA12X_SP_EN_2.5.pdf",
@@ -425,7 +438,8 @@
           "file_type": "pdf",
           "version_or_date": "2.5 (listed 10/12/2025)",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/GLOBAL/EN/R%C3%A9f%C3%A9rence%20Amplification/Amplification_Reference_TB_FR.pdf",
@@ -434,7 +448,8 @@
           "file_type": "pdf",
           "version_or_date": "listed 21/05/2026",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -463,7 +478,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA12X/EN/Manuel%20du%20propri%C3%A9taire/LA12X_OM_FR.pdf",
@@ -474,7 +490,8 @@
           "covers": [
             "key_specs.mains_connector",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.l-acoustics.com/electronics/",
@@ -485,7 +502,8 @@
           "covers": [
             "status",
             "product_page_url"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The CA-COM 8-point output has no TekPractice id; speakon-nl8 is used as the closest id. The 32 A powerCON is not the 20 A blue powerCON; powercon-blue used as closest id and 'powercon-32a' proposed. Spec sheet footer reads 'LA12X_SPS_EN_2.4/01-2024' while the file name is 2.5. Year of introduction not stated in documents read.",
@@ -503,7 +521,10 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "Shows AES/analog shared XLR inputs, Milan redundancy, NL4 vs 8-point outputs and 32 A powerCON mains."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "l-acoustics-la4x",
@@ -600,7 +621,8 @@
           "file_type": "pdf",
           "version_or_date": "version 16.3 (listed 10/02/2026)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Owner's%20Manual/LA4X_OM_EN.pdf",
@@ -609,7 +631,8 @@
           "file_type": "pdf",
           "version_or_date": "listed 10/02/2026",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Product%20Spec%20Sheet/LA4X_SP_EN_4.7.pdf",
@@ -618,7 +641,8 @@
           "file_type": "pdf",
           "version_or_date": "4.7 (08.2026)",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -647,7 +671,8 @@
             "key_specs.weight",
             "key_specs.certification",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA4X/EN/Manuel%20du%20propriétaire/LA4X_OM_FR.pdf",
@@ -658,7 +683,8 @@
           "covers": [
             "key_specs.mains_connector",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.l-acoustics.com/electronics/",
@@ -669,7 +695,8 @@
           "covers": [
             "status",
             "product_page_url"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Spec sheet gives the same 1000 W figure at 4 Ω and 8 Ω (EIA, 1% THD, 1 kHz, all channels driven). Spec sheet says 'AVB input' without the 'Milan seamless dual networking' wording used for LA12X; the summary text says 'Milan-AVB audio network connectivity'.",
@@ -683,7 +710,10 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "Four NL4 outputs, shared AES/analog XLR inputs and powerCON 20 A: a clear amp-rack wiring lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "l-acoustics-la7-16",
@@ -780,7 +810,8 @@
           "file_type": "pdf",
           "version_or_date": "version 4.0 (listed 08/12/2025)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA7.16/EN/Product%20Spec%20Sheet/LA7.16_SP_EN_1.4.pdf",
@@ -789,7 +820,8 @@
           "file_type": "pdf",
           "version_or_date": "1.4 (listed 10/12/2025)",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/GLOBAL/EN/Guide%20des%20Presets/preset_guide_FR.pdf",
@@ -798,7 +830,8 @@
           "file_type": "pdf",
           "version_or_date": "listed 21/05/2026",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -826,7 +859,8 @@
             "key_specs.rack_units",
             "key_specs.dimensions",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/LA7.16/EN/Owner's%20Manual/LA7.16_OM_EN.pdf",
@@ -837,7 +871,8 @@
           "covers": [
             "key_specs.mains_connector",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.l-acoustics.com/products/la7-16/",
@@ -848,7 +883,8 @@
           "covers": [
             "status",
             "key_specs.power_peak_12dB_crest"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "SC32 (37-pin) has no TekPractice id; multipin-veam used as the closest multipin id and 'sc32' proposed. Peak power at 8 Ω (1300 W) is higher than at 4 Ω (1100 W) in the spec sheet; copied as stated. No French owner's manual listed in the L-Acoustics documentation centre for LA7.16.",
@@ -865,7 +901,10 @@
         ],
         "sim_value": "medium",
         "sim_value_reason": "Multipin (SC32) speaker distribution and Milan redundancy are good advanced lessons, but the connector set is niche."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "db-audiotechnik-d80",
@@ -984,7 +1023,8 @@
           "file_type": "pdf",
           "version_or_date": "1.14 en, 09/2019",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1010,7 +1050,8 @@
             "key_specs.weight",
             "key_specs.display",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-d80-1.14-en.pdf",
@@ -1026,7 +1067,8 @@
             "key_specs.max_output_voltage",
             "key_specs.mains_connector",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Two-source cross-check (product page + manual) agrees on 4 x 2600/2000 W (CF 6 dB) and 4 x 4000/2000 W (CF 12 dB) and on powerCON-HC. powerCON-HC has no TekPractice id; powercon-blue used as closest. CAN-Bus over RJ45 has no signal id; gpio-tally used as closest control-signal id. No separate D80 datasheet found among the product page downloads, and no French D80 manual was listed.",
@@ -1043,7 +1085,9 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "NL4 vs NL8 outputs, analog + AES3 inputs on XLR, CAN vs Ethernet remote: rich wiring lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "db-audiotechnik-d40",
@@ -1160,7 +1204,8 @@
           "file_type": "pdf",
           "version_or_date": "1.7",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-start-up-manual-d40-1.6-en.pdf",
@@ -1169,7 +1214,8 @@
           "file_type": "pdf",
           "version_or_date": "1.6",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-start-up-manual-d40-1.6-it.pdf",
@@ -1178,7 +1224,8 @@
           "file_type": "pdf",
           "version_or_date": "1.6",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-d40-1.7-en.pdf",
@@ -1187,7 +1234,8 @@
           "file_type": "pdf",
           "version_or_date": "1.7",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1211,7 +1259,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-d40-1.7-en.pdf",
@@ -1231,7 +1280,8 @@
             "key_specs.mains_connector",
             "key_specs.mains_rating",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Product page and datasheet agree on power (4 x 2400/2000 W into 4/8 Ω, CF 12 dB) and on the powerCON TRUE1 TOP mains connector. The product page lists 'All current d&b loudspeaker setups except GSL, SL-SUB, J-Series, M2'. Only EN/IT/KO start-up manuals were listed; no French version.",
@@ -1247,7 +1297,10 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "Milan + AES3 + analog inputs, NL4 and NL8 outputs, powerCON TRUE1 mains: the full modern amp-rack set."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "nexo-nxamp4x4mk2",
@@ -1341,7 +1394,8 @@
           "file_type": "pdf",
           "version_or_date": "Rev02a (from file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMPmk2-User-Manual-Rev02b-EN.pdf",
@@ -1350,7 +1404,8 @@
           "file_type": "pdf",
           "version_or_date": "Rev02b (from file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMPmk2-User-Manual-Rev03SP.pdf",
@@ -1359,7 +1414,8 @@
           "file_type": "pdf",
           "version_or_date": "Rev03 (from file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMP4x4mk2_datasheet_v1.3.pdf",
@@ -1368,7 +1424,8 @@
           "file_type": "pdf",
           "version_or_date": "v1.3",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMP4x4mk2_datasheet_p1_v1.3-FR.pdf",
@@ -1377,7 +1434,8 @@
           "file_type": "pdf",
           "version_or_date": "v1.3",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/wp-content/uploads/nxampmk2_en_de_fr_es_zh_ko_ja_qsg_c1_web.pdf",
@@ -1386,7 +1444,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1418,7 +1477,8 @@
             "key_specs.rack_units",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/wp-content/uploads/NXAMP4x4mk2_datasheet_v1.3.pdf",
@@ -1433,7 +1493,8 @@
             "key_specs.mains_connector",
             "key_specs.network",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/systems/nxampmk2/",
@@ -1444,7 +1505,8 @@
           "covers": [
             "technology",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Product page and datasheet agree on 4 x 1900 / 3300 / 4500 W at 8 / 4 / 2 Ω and 2x powerCON NAC3 20 A. Test conditions for 'Max output power' are not stated on the pages read.",
@@ -1477,7 +1539,10 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "French-made amplified controller; XLR in, NL4 out, dual powerCON, optional Dante/AES card: good school lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "yamaha-px10",
@@ -1577,7 +1642,8 @@
           "file_type": "pdf",
           "version_or_date": "c0 (from file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://usa.yamaha.com/files/download/other_assets/6/792726/px10_en_ts_c0.pdf",
@@ -1586,7 +1652,8 @@
           "file_type": "pdf",
           "version_or_date": "c0 (from file name)",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         },
         {
           "url": "https://usa.yamaha.com/files/download/other_assets/8/792728/px10_en_rm_f0.pdf",
@@ -1595,7 +1662,8 @@
           "file_type": "pdf",
           "version_or_date": "f0 (from file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1609,7 +1677,8 @@
             "technology",
             "status",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://usa.yamaha.com/products/proaudio/power_amps/px_series/specs.html#product-tabs",
@@ -1632,7 +1701,8 @@
             "key_specs.outputs",
             "key_specs.mains_connector",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://usa.yamaha.com/files/download/other_assets/6/792726/px10_en_ts_c0.pdf",
@@ -1645,7 +1715,8 @@
             "key_specs.power_4ohm_per_channel",
             "key_specs.dimensions",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The specs page lists PX10/PX8/PX5/PX3 side by side; PX10 values are the first column. The technical-spec PDF weight column also lists 7.4 / 7.2 / 6.9 / 6.9 kg; 7.4 kg was taken as the first (PX10) value. A French manual may exist on Yamaha's European sites but was not reached (search budget exhausted).",
@@ -1659,7 +1730,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Three speaker-output types (NL4, binding post, TS jack) on one amp: teaches why a TS speaker jack is not an instrument cable."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "yamaha-xmv8280-d",
@@ -1747,7 +1821,8 @@
           "file_type": "pdf",
           "version_or_date": "g0 (from file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://usa.yamaha.com/files/download/other_assets/6/330736/xmv8280d_add_sheet_a0_v020.pdf",
@@ -1756,7 +1831,8 @@
           "file_type": "pdf",
           "version_or_date": "a0 v020 (from file name)",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1769,7 +1845,8 @@
           "covers": [
             "technology",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
@@ -1794,7 +1871,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Class D is stated at series level ('XMV Series ... combine Class-D efficiency'). Barrier-strip speaker terminals have no TekPractice id; euroblock-phoenix used as the closest screw-terminal id and 'barrier-strip' proposed. Only one Yamaha source was read; no second-source cross-check.",
@@ -1812,7 +1890,9 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "Installed-sound lesson: Euroblock wiring, Dante redundancy, barrier strips and 100V line vs low-impedance outputs."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "powersoft-x8",
@@ -1914,7 +1994,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.powersoft.com/api/media/file/PS_X8_DS.pdf?v=ms9fk732",
@@ -1923,7 +2004,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://www.powersoft.com/api/media/file/powersoft_x8_AE.pdf?v=ms9fkfcs",
@@ -1932,7 +2014,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1951,7 +2034,8 @@
             "key_specs.power_bridged",
             "key_specs.max_output",
             "key_specs.network"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.powersoft.com/api/media/file/PS_X8_DS.pdf?v=ms9fk732",
@@ -1978,7 +2062,8 @@
             "key_specs.mains_rating",
             "key_specs.dimensions",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.powersoft.com/api/media/file/PS_XSeries_UG.pdf?v=ms9fk754",
@@ -1991,7 +2076,8 @@
             "key_specs.mains_connector",
             "connectors",
             "manual_languages"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Product page and datasheet agree on 5200 / 3000 / 1600 W at 2 / 4 / 8 Ω. Neither states the amplifier class, so the device is filed as dsp-amplifier. The rear panel mains connector is a Phoenix-type terminal, not powerCON; euroblock-phoenix is used as the closest id, but it is a mains-rated connector (proposed 'phoenix-mains'). The multilingual user guide includes a French section ('Française').",
@@ -2007,7 +2093,10 @@
         ],
         "sim_value": "medium",
         "sim_value_reason": "Three-phase mains and AES3/Dante input selection are advanced lessons, but the Phoenix mains terminal is unusual."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "dbx-driverack-pa2",
@@ -2100,7 +2189,8 @@
           "file_type": "pdf",
           "version_or_date": "page lists 'updated: Apr 2026'",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-apdf",
@@ -2109,7 +2199,8 @@
           "file_type": "pdf",
           "version_or_date": "page lists 'updated: Apr 2026'",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-a_de-pdf",
@@ -2118,7 +2209,8 @@
           "file_type": "pdf",
           "version_or_date": "page lists 'updated: Apr 2026'",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-a_es-pdf",
@@ -2127,7 +2219,8 @@
           "file_type": "pdf",
           "version_or_date": "page lists 'updated: Apr 2026'",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/driverack_pa2_quick_start_5033257-cpdf",
@@ -2136,7 +2229,8 @@
           "file_type": "pdf",
           "version_or_date": "page lists 'updated: Apr 2026'",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2161,7 +2255,8 @@
             "key_specs.operating_voltage",
             "key_specs.dimensions",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/driverack_pa2_manual_5044138-apdf",
@@ -2174,7 +2269,8 @@
             "key_specs.mains_connector",
             "key_specs.outputs",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The Ethernet port is for control (not audio); aoip is used as the closest network signal id. The RTA mic input supplies +15 VDC, not 48 V phantom. No separate cut sheet for the PA2 itself was listed (the cut sheet on the page is for the RTA-M mic).",
@@ -2188,7 +2284,9 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "Classic console-to-amp insert point: 2 XLR in, 6 XLR out (low/mid/high), measurement mic input: crossover wiring lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "dbx-driverack-venu360",
@@ -2260,7 +2358,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/venu360_quick_start_5041207-a-pdf",
@@ -2269,7 +2368,8 @@
           "file_type": "pdf",
           "version_or_date": "5041207-A (from file name)",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx_venu360_brochure-pdf",
@@ -2278,7 +2378,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2302,7 +2403,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Single source (product page). The manual and brochure links were taken from the product page but not opened. Ethernet and mains connector types were not checked in the manual.",
@@ -2314,7 +2416,10 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Same XLR in/out lesson as PA2, plus the analog/AES selectable input on the same XLR."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "meyer-sound-galileo-galaxy-816",
@@ -2398,7 +2503,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://docs.meyersound.com/products/en/datasheet---galileo-galaxy-816.html",
@@ -2407,7 +2513,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://docs.meyersound.com/products/en/programming-guide---galileo-galaxy.html",
@@ -2416,7 +2523,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2442,7 +2550,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://meyersound.com/product/galileo-galaxy/",
@@ -2455,7 +2564,8 @@
             "status",
             "key_specs.latency",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Two Meyer documents agree on Milan certification and on the analog/AES3/AVB input choice. Mains connector is written 'PowerCON 20' in the datasheet; powercon-blue (20 A) used. Meyer documentation is HTML (docs.meyersound.com), not PDF.",
@@ -2469,7 +2579,10 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "Drive-system hub: 8 XLR in (analog or AES3), 16 XLR out to self-powered speakers, Milan redundancy."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "l-acoustics-p1",
@@ -2596,7 +2709,8 @@
           "file_type": "pdf",
           "version_or_date": "listed 11/03/2025",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/ELECTRONICS/P1/EN/System%20Spec%20Sheet/P1_SPS_EN_3.0.pdf",
@@ -2605,7 +2719,8 @@
           "file_type": "pdf",
           "version_or_date": "3.0 (listed 29/12/2025)",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2629,7 +2744,8 @@
             "key_specs.mains_rating",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.l-acoustics.com/electronics/",
@@ -2640,7 +2756,8 @@
           "covers": [
             "status",
             "product_page_url"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Single technical source (system spec sheet). DB9 has no TekPractice id; dsub25 used as closest D-sub id (proposed 'dsub9'). The spec sheet labels the mains connector 'IEC C13 V-Lock'; iec-c13 used as written. No French documents listed for P1 in the L-Acoustics documentation centre.",
@@ -2656,7 +2773,10 @@
         ],
         "sim_value": "high",
         "sim_value_reason": "Format bridge analog/AES/AVB with phantom-powered measurement mic inputs: very rich signal-type lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "qsc-rmx-850",
@@ -2764,7 +2884,8 @@
           "file_type": "pdf",
           "version_or_date": "TD-000085-00; © Copyright 1999, 2001",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
@@ -2773,7 +2894,8 @@
           "file_type": "pdf",
           "version_or_date": "TD-000085-00",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series_specs.pdf",
@@ -2782,7 +2904,8 @@
           "file_type": "pdf",
           "version_or_date": "RMX Spec Sheet 09/18/06",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2815,7 +2938,8 @@
             "key_specs.rack_units",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
@@ -2830,7 +2954,8 @@
             "key_specs.weight",
             "connectors",
             "manual_languages"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/support/discontinued-products/amplifiers/",
@@ -2841,7 +2966,8 @@
           "covers": [
             "status",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/rmxa/q_amp_rmxa_specsheet.pdf",
@@ -2851,7 +2977,8 @@
           "kind": "datasheet",
           "covers": [
             "key_specs.output_circuitry"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "QSC lists the RMX series as 'End of Service' on its discontinued-amplifiers page; the later RMXa spec sheet (Rev 07/29/2022) also states 'Output Circuitry: Class AB' for the RMX 850a and 1450a and 'Class H' for the bigger models. Class is copied from QSC, not inferred. The barrier-strip input uses the proposed euroblock-phoenix id; IEC inlet assumed C14 from 'IEC connector' (the gender/type is not stated).",
@@ -2881,7 +3008,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "qsc-rmx-1450",
@@ -2989,7 +3119,8 @@
           "file_type": "pdf",
           "version_or_date": "TD-000085-00; © Copyright 1999, 2001",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
@@ -2998,7 +3129,8 @@
           "file_type": "pdf",
           "version_or_date": "TD-000085-00",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series_specs.pdf",
@@ -3007,7 +3139,8 @@
           "file_type": "pdf",
           "version_or_date": "RMX Spec Sheet 09/18/06",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -3040,7 +3173,8 @@
             "key_specs.rack_units",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
@@ -3055,7 +3189,8 @@
             "key_specs.weight",
             "connectors",
             "manual_languages"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/support/discontinued-products/amplifiers/",
@@ -3066,7 +3201,8 @@
           "covers": [
             "status",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/rmxa/q_amp_rmxa_specsheet.pdf",
@@ -3076,7 +3212,8 @@
           "kind": "datasheet",
           "covers": [
             "key_specs.output_circuitry"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "QSC lists the RMX series as 'End of Service' on its discontinued-amplifiers page; the later RMXa spec sheet (Rev 07/29/2022) also states 'Output Circuitry: Class AB' for the RMX 850a and 1450a and 'Class H' for the bigger models. Class is copied from QSC, not inferred. The barrier-strip input uses the proposed euroblock-phoenix id; IEC inlet assumed C14 from 'IEC connector' (the gender/type is not stated).",
@@ -3106,7 +3243,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Three input types (XLR, TRS, terminal block) and two output types (speakON, binding posts) plus bridge mode: a complete amp wiring lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     }
   ]
 }

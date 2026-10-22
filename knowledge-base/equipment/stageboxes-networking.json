@@ -4,19 +4,71 @@
   "generated": "2026-10-22",
   "selection_rationale": "Stage boxes most often met behind the consoles used in French venues and schools (Yamaha CL/QL/TF, Allen & Heath Qu/SQ/dLive, Midas/Behringer M32/X32, DiGiCo SD), one passive analog multipin snake, and one or two reference devices per transport: Dante (Focusrite RedNet, Audinate AVIO), AVB/Milan (d&b DS20), MADI (RME M-32 AD, DiGiCo SD-Rack), AES50 (Midas DL16), bridges (d&b DS10, DirectOut PRODIGY.MC, AVIO AES3) and AoIP switches (Luminex, NETGEAR). Candidates that could not be reached without web search (Klark Teknik DN9650, Yamaha SWP1, Behringer S16) were dropped rather than entered unsourced.",
   "not_found_log": [
-    { "device_id": "yamaha-rio3224-d2", "what": "Official owner's manual PDF (EN/FR) and datasheet", "searched": "Yamaha manual library (JS-only), in.yamaha.com and ca.yamaha.com/fr downloads pages (JS-only); leaflet and JA manual PDFs returned 403/404; only mans.io / manualslib mirrors found; then search budget exhausted" },
-    { "device_id": "yamaha-tio1608-d", "what": "Official owner's manual; Yamaha-hosted datasheet; status and year", "searched": "no.yamaha.com datasheet PDF 404; mx.yamaha.com spec page has no manual link; search budget exhausted" },
-    { "device_id": "midas-dl16", "what": "Official Music Tribe download of DL16 user manual / quick start", "searched": "midasconsoles.com product page (no links), old midasconsoles.com downloads URL 404; search budget exhausted" },
-    { "device_id": "klark-teknik-dn9650", "what": "Whole device (AES50 network bridge)", "searched": "klarkteknik.com/en/products is a JS app with no product data in HTML; search budget exhausted" },
-    { "device_id": "yamaha-swp1", "what": "Whole device (Dante network switch)", "searched": "No product URL found by navigation from Yamaha pages; search budget exhausted" },
-    { "device_id": "behringer-s16", "what": "Whole device (AES50 stage box)", "searched": "Not attempted after Music Tribe sites proved JS-only for Klark Teknik; search budget exhausted" },
-    { "device_id": "rme-adi-648", "what": "Whole device (MADI-ADAT converter)", "searched": "rme-audio.de navigation lists no ADI-648 page (M-32 AD used instead)" },
-    { "device_id": "luminex-gigacore-16xt", "what": "Product page", "searched": "luminex.be lists GigaCore 16t/16i/16tf but not 16Xt; replaced by GigaCore 16t" },
-    { "device_id": "luminex-gigacore-16t", "what": "User manual", "searched": "Product page 'Product downloads' tab is JS-rendered; only the preliminary spec sheet PDF was linked" },
-    { "device_id": "db-audiotechnik-ds10", "what": "French manual", "searched": "d&b DS10 / DS20 product pages list EN, IT, KO manuals only" },
-    { "device_id": "directout-prodigy-mc", "what": "Second source and datasheet", "searched": "directout.eu product page and WooCommerce store API; manual link is a tokenised download page not opened; search budget exhausted" },
-    { "device_id": "sommer-cable-the-boxx-mp-08-04", "what": "Manual / datasheet; alternative brands", "searched": "sommercable.com product page (catalog page reference only); cordial.eu returned 403; klotz-ais.com links only to a shop category" },
-    { "device_id": "all", "what": "year_introduced for most devices", "searched": "search budget exhausted; manufacturer pages do not state launch years" }
+    {
+      "device_id": "yamaha-rio3224-d2",
+      "what": "Official owner's manual PDF (EN/FR) and datasheet",
+      "searched": "Yamaha manual library (JS-only), in.yamaha.com and ca.yamaha.com/fr downloads pages (JS-only); leaflet and JA manual PDFs returned 403/404; only mans.io / manualslib mirrors found; then search budget exhausted"
+    },
+    {
+      "device_id": "yamaha-tio1608-d",
+      "what": "Official owner's manual; Yamaha-hosted datasheet; status and year",
+      "searched": "no.yamaha.com datasheet PDF 404; mx.yamaha.com spec page has no manual link; search budget exhausted"
+    },
+    {
+      "device_id": "midas-dl16",
+      "what": "Official Music Tribe download of DL16 user manual / quick start",
+      "searched": "midasconsoles.com product page (no links), old midasconsoles.com downloads URL 404; search budget exhausted"
+    },
+    {
+      "device_id": "klark-teknik-dn9650",
+      "what": "Whole device (AES50 network bridge)",
+      "searched": "klarkteknik.com/en/products is a JS app with no product data in HTML; search budget exhausted"
+    },
+    {
+      "device_id": "yamaha-swp1",
+      "what": "Whole device (Dante network switch)",
+      "searched": "No product URL found by navigation from Yamaha pages; search budget exhausted"
+    },
+    {
+      "device_id": "behringer-s16",
+      "what": "Whole device (AES50 stage box)",
+      "searched": "Not attempted after Music Tribe sites proved JS-only for Klark Teknik; search budget exhausted"
+    },
+    {
+      "device_id": "rme-adi-648",
+      "what": "Whole device (MADI-ADAT converter)",
+      "searched": "rme-audio.de navigation lists no ADI-648 page (M-32 AD used instead)"
+    },
+    {
+      "device_id": "luminex-gigacore-16xt",
+      "what": "Product page",
+      "searched": "luminex.be lists GigaCore 16t/16i/16tf but not 16Xt; replaced by GigaCore 16t"
+    },
+    {
+      "device_id": "luminex-gigacore-16t",
+      "what": "User manual",
+      "searched": "Product page 'Product downloads' tab is JS-rendered; only the preliminary spec sheet PDF was linked"
+    },
+    {
+      "device_id": "db-audiotechnik-ds10",
+      "what": "French manual",
+      "searched": "d&b DS10 / DS20 product pages list EN, IT, KO manuals only"
+    },
+    {
+      "device_id": "directout-prodigy-mc",
+      "what": "Second source and datasheet",
+      "searched": "directout.eu product page and WooCommerce store API; manual link is a tokenised download page not opened; search budget exhausted"
+    },
+    {
+      "device_id": "sommer-cable-the-boxx-mp-08-04",
+      "what": "Manual / datasheet; alternative brands",
+      "searched": "sommercable.com product page (catalog page reference only); cordial.eu returned 403; klotz-ais.com links only to a shop category"
+    },
+    {
+      "device_id": "all",
+      "what": "year_introduced for most devices",
+      "searched": "search budget exhausted; manufacturer pages do not state launch years"
+    }
   ],
   "devices": [
     {
@@ -29,7 +81,12 @@
       "year_introduced": 2018,
       "status": "discontinued",
       "why_it_is_a_classic": "Yamaha presents the Rio3224-D2 as a standard component of the RIVAGE PM7 system and fully compatible with CL and QL consoles, which makes it one of the most common Dante stage racks behind Yamaha desks. It succeeded the 2012 Rio3224-D, the first Yamaha R-series rack with Dante.",
-      "typical_uses": ["live sound stage I/O for Yamaha CL / QL / RIVAGE PM consoles", "theatre and venue Dante networks", "redundant digital snake", "broadcast and multitrack recording splits over Dante"],
+      "typical_uses": [
+        "live sound stage I/O for Yamaha CL / QL / RIVAGE PM consoles",
+        "theatre and venue Dante networks",
+        "redundant digital snake",
+        "broadcast and multitrack recording splits over Dante"
+      ],
       "key_specs": {
         "transport_protocol": "Dante (Primary/Secondary), 24-bit or 32-bit, 1000Base-T",
         "dante_channels": "32ch (Rio3224-D2 to other devices) / 24ch (Other devices to Rio3224-D2)",
@@ -52,28 +109,148 @@
         "rack_height": "5U"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic/line inputs 1-32", "dir": "in", "signal": "mic-level", "count": 32 },
-        { "connector": "xlr3-m", "role": "analog line outputs 1-16", "dir": "out", "signal": "line-level-pro", "count": 16 },
-        { "connector": "xlr3-m", "role": "AES/EBU outputs 1-8", "dir": "out", "signal": "aes3", "count": 8 },
-        { "connector": "ethercon", "role": "Dante primary", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "ethercon", "role": "Dante secondary", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "iec-c14", "role": "mains in (dual PSU)", "dir": "in", "signal": "mains-power", "count": "not found" }
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-32",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 32
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog line outputs 1-16",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 16
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU outputs 1-8",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 8
+        },
+        {
+          "connector": "ethercon",
+          "role": "Dante primary",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "Dante secondary",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (dual PSU)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": "not found"
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aes3", "aoip", "dante", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes3",
+        "aoip",
+        "dante",
+        "mains-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_adda_2/index.html",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html", "publisher": "Yamaha", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transport_protocol", "key_specs.dante_channels", "key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.aes_ebu_outputs", "key_specs.sampling_rates", "key_specs.signal_delay", "key_specs.frequency_response", "key_specs.dynamic_range", "key_specs.equivalent_input_noise", "key_specs.input_level_max_before_clip", "key_specs.output_level", "key_specs.phantom_power", "key_specs.power_consumption", "key_specs.power_requirements", "key_specs.dimensions", "key_specs.weight", "connectors"] },
-        { "url": "https://mea.yamaha.com/en/business/audio/news/2018/0206-50-rio2.html", "publisher": "Yamaha (news release, 6 Feb 2018)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["year_introduced", "key_specs.redundancy", "why_it_is_a_classic"] },
-        { "url": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_adda_2/index.html", "publisher": "Yamaha Corporation of America", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "why_it_is_a_classic"] },
-        { "url": "https://www.turramusic.com.au/products/yamaha-rio3224-d2", "publisher": "Turramusic (retailer)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.aes_ebu_outputs", "key_specs.sampling_rates", "key_specs.redundancy", "key_specs.power_consumption", "key_specs.rack_height"] }
+        {
+          "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+          "publisher": "Yamaha",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transport_protocol",
+            "key_specs.dante_channels",
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.aes_ebu_outputs",
+            "key_specs.sampling_rates",
+            "key_specs.signal_delay",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range",
+            "key_specs.equivalent_input_noise",
+            "key_specs.input_level_max_before_clip",
+            "key_specs.output_level",
+            "key_specs.phantom_power",
+            "key_specs.power_consumption",
+            "key_specs.power_requirements",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mea.yamaha.com/en/business/audio/news/2018/0206-50-rio2.html",
+          "publisher": "Yamaha (news release, 6 Feb 2018)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "key_specs.redundancy",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/interfaces/r_series_adda_2/index.html",
+          "publisher": "Yamaha Corporation of America",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.turramusic.com.au/products/yamaha-rio3224-d2",
+          "publisher": "Turramusic (retailer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.aes_ebu_outputs",
+            "key_specs.sampling_rates",
+            "key_specs.redundancy",
+            "key_specs.power_consumption",
+            "key_specs.rack_height"
+          ],
+          "url_status": "blocked"
+        }
       ],
       "notes": "Yamaha's US product page marks the R Series 2nd generation as discontinued; a third generation (Rio3224-D3) is listed on Yamaha's UK site per a search summary (not opened). The spec page lists no word clock connector; the unit clocks from the Dante network. A web search summary mentioned a manual signal-delay figure of 'less than 1.9 ms' and AES67 support, which I could not open on an official page, so they are not recorded. The official owner's manual is listed in Yamaha's JS-driven manual library, which I could not open directly; only third-party mirrors (mans.io, manualslib) were seen, so manual_url stays 'not found'. Mains connector type not stated on the spec page.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": true, "catalog_id": "yamaha-rio3224-d2", "proposed_new_connectors": [], "proposed_new_signals": ["dante"], "sim_value": "high", "sim_value_reason": "Already in catalog; teaches Dante primary/secondary redundancy, AES/EBU outputs and remote preamp control from the console." }
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "yamaha-rio3224-d2",
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Already in catalog; teaches Dante primary/secondary redundancy, AES/EBU outputs and remote preamp control from the console."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "yamaha-tio1608-d",
@@ -85,7 +262,11 @@
       "year_introduced": "not found",
       "status": "not found",
       "why_it_is_a_classic": "Yamaha's datasheet describes it as an I/O rack optimised for TF series consoles with setup via the console's QUICK CONFIG, making it the usual entry-level Dante stage box in schools and small venues using TF desks.",
-      "typical_uses": ["stage box for Yamaha TF series consoles", "small venue / school Dante snake", "multitrack recording over Dante"],
+      "typical_uses": [
+        "stage box for Yamaha TF series consoles",
+        "small venue / school Dante snake",
+        "multitrack recording over Dante"
+      ],
       "key_specs": {
         "transport_protocol": "Dante, Primary/Secondary, 24bit or 32bit, 1000Base-T",
         "dante_channels": "16ch Input/8ch Output",
@@ -107,26 +288,120 @@
         "rack_height": "2U"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic/line inputs 1-16 (XLR/TRS combo)", "dir": "in", "signal": "mic-level", "count": 16 },
-        { "connector": "xlr3-m", "role": "line outputs 1-8", "dir": "out", "signal": "line-level-pro", "count": 8 },
-        { "connector": "ethercon", "role": "Dante primary", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "ethercon", "role": "Dante secondary", "dir": "bidir", "signal": "aoip", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-16 (XLR/TRS combo)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 16
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line outputs 1-8",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "ethercon",
+          "role": "Dante primary",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "Dante secondary",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aoip", "dante", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aoip",
+        "dante",
+        "mains-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://www.la-bs.com/Objets/TIO1608D_dt.pdf",
       "product_page_url": "https://mx.yamaha.com/es/products/proaudio/interfaces/tio1608-d/specs.html",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://www.la-bs.com/Objets/TIO1608D_dt.pdf", "title": "Technical Data Sheet I/O Rack Tio1608-D (Yamaha document hosted by a distributor)", "language": "en", "file_type": "pdf", "version_or_date": "Created in March, 2017", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.la-bs.com/Objets/TIO1608D_dt.pdf",
+          "title": "Technical Data Sheet I/O Rack Tio1608-D (Yamaha document hosted by a distributor)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Created in March, 2017",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://mx.yamaha.com/es/products/proaudio/interfaces/tio1608-d/specs.html", "publisher": "Yamaha (Mexico)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transport_protocol", "key_specs.dante_channels", "key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.signal_delay", "key_specs.frequency_response", "key_specs.dynamic_range", "key_specs.output_level", "key_specs.phantom_power", "key_specs.power_consumption", "key_specs.dimensions", "key_specs.weight", "key_specs.rack_height", "connectors"] },
-        { "url": "https://www.la-bs.com/Objets/TIO1608D_dt.pdf", "publisher": "Yamaha technical data sheet (hosted by la-bs.com)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.sampling_rates", "key_specs.signal_delay", "key_specs.dynamic_range", "key_specs.equivalent_input_noise", "key_specs.ad_converters", "key_specs.max_system_io", "key_specs.power_consumption", "key_specs.dimensions", "key_specs.weight", "connectors", "why_it_is_a_classic"] }
+        {
+          "url": "https://mx.yamaha.com/es/products/proaudio/interfaces/tio1608-d/specs.html",
+          "publisher": "Yamaha (Mexico)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transport_protocol",
+            "key_specs.dante_channels",
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.signal_delay",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range",
+            "key_specs.output_level",
+            "key_specs.phantom_power",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.rack_height",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.la-bs.com/Objets/TIO1608D_dt.pdf",
+          "publisher": "Yamaha technical data sheet (hosted by la-bs.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.sampling_rates",
+            "key_specs.signal_delay",
+            "key_specs.dynamic_range",
+            "key_specs.equivalent_input_noise",
+            "key_specs.ad_converters",
+            "key_specs.max_system_io",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The data sheet is a Yamaha document but is hosted on a distributor site; the Yamaha-hosted copy (no.yamaha.com) returned 404. Only the Primary port carries remote HA control according to a search summary; the Yamaha comparison table on the spec page says 'HA Control Redundancy from CL/QL consoles: N/A (Primary only)'. Status: a search summary said one retailer lists it as discontinued and that a Tio1608-D2 (96 kHz) exists; not confirmed on an official page.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dante"], "sim_value": "medium", "sim_value_reason": "Simple 16x8 Dante box with combo inputs; good beginner wiring exercise with a TF console, but overlaps the Rio already in catalog." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Simple 16x8 Dante box with combo inputs; good beginner wiring exercise with a TF console, but overlaps the Rio already in catalog."
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "midas-dl16",
@@ -138,7 +413,12 @@
       "year_introduced": 2014,
       "status": "current",
       "why_it_is_a_classic": "The standard stage box for the Midas M32 and Behringer X32 family; Midas states up to three units can be daisy-chained over one shielded Cat5 cable for 48 inputs and 24 outputs. It is the most common way students meet AES50 in practice.",
-      "typical_uses": ["stage box for Midas M32 / Behringer X32 consoles", "standalone 16-channel digital snake (pair of DL16)", "16-channel mic preamp to a recorder via ADAT", "personal monitor feed via ULTRANET"],
+      "typical_uses": [
+        "stage box for Midas M32 / Behringer X32 consoles",
+        "standalone 16-channel digital snake (pair of DL16)",
+        "16-channel mic preamp to a recorder via ADAT",
+        "personal monitor feed via ULTRANET"
+      ],
       "key_specs": {
         "transport_protocol": "AES50 (SuperMAC), 2 ports",
         "aes50_channels": "48 bidirectional audio channels at 48 kHz",
@@ -165,30 +445,161 @@
         "rack_height": "two rack spaces"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic/line inputs 1-16", "dir": "in", "signal": "mic-level", "count": 16 },
-        { "connector": "xlr3-m", "role": "analog outputs 1-8", "dir": "out", "signal": "line-level-pro", "count": 8 },
-        { "connector": "ethercon", "role": "AES50 port A", "dir": "bidir", "signal": "aes50", "count": 1 },
-        { "connector": "ethercon", "role": "AES50 port B (daisy chain)", "dir": "bidir", "signal": "aes50", "count": 1 },
-        { "connector": "ethercon", "role": "ULTRANET P-16 output (no power)", "dir": "out", "signal": "aoip", "count": 1 },
-        { "connector": "toslink", "role": "ADAT outputs (2 x 8 ch)", "dir": "out", "signal": "adat", "count": 2 },
-        { "connector": "midi-din5", "role": "MIDI in / out", "dir": "bidir", "signal": "midi", "count": 2 },
-        { "connector": "trs-quarter", "role": "phones output (mono)", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "usb-b", "role": "system updates", "dir": "in", "signal": "usb-audio", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-16",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 16
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analog outputs 1-8",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "ethercon",
+          "role": "AES50 port A",
+          "dir": "bidir",
+          "signal": "aes50",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "AES50 port B (daisy chain)",
+          "dir": "bidir",
+          "signal": "aes50",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "ULTRANET P-16 output (no power)",
+          "dir": "out",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "toslink",
+          "role": "ADAT outputs (2 x 8 ch)",
+          "dir": "out",
+          "signal": "adat",
+          "count": 2
+        },
+        {
+          "connector": "midi-din5",
+          "role": "MIDI in / out",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "phones output (mono)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "system updates",
+          "dir": "in",
+          "signal": "usb-audio",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aes50", "adat", "midi", "headphone-level", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes50",
+        "adat",
+        "midi",
+        "headphone-level",
+        "mains-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.midasconsoles.com/en/products/0606-ACJ",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.midasconsoles.com/en/products/0606-ACJ", "publisher": "Midas", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transport_protocol", "key_specs.aes50_channels", "key_specs.aes50_latency", "key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.phantom_power", "key_specs.cabling", "key_specs.rack_height", "connectors", "why_it_is_a_classic"] },
-        { "url": "https://r2.gear4music.com/media/38/386506/download_386506.pdf", "publisher": "Midas DL16 User Manual (copy hosted by Gear4music)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.networked_io_latency", "key_specs.adat_outputs", "key_specs.ultranet", "key_specs.midi", "key_specs.ad_converters", "key_specs.da_converters", "key_specs.frequency_response", "key_specs.dynamic_range_analog_in_to_out", "key_specs.equivalent_input_noise", "key_specs.max_input_level", "key_specs.output_level", "key_specs.power_supply", "key_specs.power_consumption", "key_specs.dimensions", "key_specs.weight", "connectors"] },
-        { "url": "https://thomann.co.uk/midas_dl16.htm", "publisher": "Thomann (search-result snippet only)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["year_introduced"] }
+        {
+          "url": "https://www.midasconsoles.com/en/products/0606-ACJ",
+          "publisher": "Midas",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transport_protocol",
+            "key_specs.aes50_channels",
+            "key_specs.aes50_latency",
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.phantom_power",
+            "key_specs.cabling",
+            "key_specs.rack_height",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/38/386506/download_386506.pdf",
+          "publisher": "Midas DL16 User Manual (copy hosted by Gear4music)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.networked_io_latency",
+            "key_specs.adat_outputs",
+            "key_specs.ultranet",
+            "key_specs.midi",
+            "key_specs.ad_converters",
+            "key_specs.da_converters",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range_analog_in_to_out",
+            "key_specs.equivalent_input_noise",
+            "key_specs.max_input_level",
+            "key_specs.output_level",
+            "key_specs.power_supply",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://thomann.co.uk/midas_dl16.htm",
+          "publisher": "Thomann (search-result snippet only)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "year_introduced"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "ULTRANET is a Behringer/Midas proprietary format on an RJ45/etherCON jack; it is recorded with signal 'aoip' as the closest id. The ULTRANET and USB connector shapes are inferred from the manual's 'P-16 connector' and 'USB type B' wording; AES50 on etherCON per the product page (RJ45 over CAT5) and retailers. year_introduced comes from a Thomann 'Available since December 2014' snippet (retailer listing date, not a manufacturer launch date). The full user manual was read from a retailer-hosted copy; the official Music Tribe download link was not found (the old midasconsoles.com downloads URL returned 404 and web search budget ran out).",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["midi-din5"], "proposed_new_signals": ["aes50", "adat", "midi"], "sim_value": "high", "sim_value_reason": "Distinctive AES50 A/B ports plus ADAT and ULTRANET on one box: a strong lesson on mixing proprietary and open digital formats over Cat5." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "midi-din5"
+        ],
+        "proposed_new_signals": [
+          "aes50",
+          "adat",
+          "midi"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Distinctive AES50 A/B ports plus ADAT and ULTRANET on one box: a strong lesson on mixing proprietary and open digital formats over Cat5."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "focusrite-rednet-mp8r",
@@ -200,7 +611,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A reference Dante mic-pre box in studios and broadcast; Focusrite describes its gain-tracking outputs as a way to split FOH/monitor feeds in the digital domain, a key AoIP concept.",
-      "typical_uses": ["remote mic preamps on a Dante network", "live recording / broadcast splits", "studio live-room stage box", "FOH/monitor digital split with gain compensation"],
+      "typical_uses": [
+        "remote mic preamps on a Dante network",
+        "live recording / broadcast splits",
+        "studio live-room stage box",
+        "FOH/monitor digital split with gain compensation"
+      ],
       "key_specs": {
         "transport_protocol": "Dante",
         "dante_channels": "appears as a 16-channel device on the network (8 direct preamp feeds + 8 DSP level-compensated outputs)",
@@ -222,30 +638,161 @@
         "weight": "5.75kg"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic inputs 1-8", "dir": "in", "signal": "mic-level", "count": 8 },
-        { "connector": "ethercon", "role": "Dante primary (etherCON NE8FBH-S, RJ45 compatible)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "ethercon", "role": "Dante secondary", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "iec-c14", "role": "mains in (2 x IEC with retaining clips)", "dir": "in", "signal": "mains-power", "count": 2 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic inputs 1-8",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 8
+        },
+        {
+          "connector": "ethercon",
+          "role": "Dante primary (etherCON NE8FBH-S, RJ45 compatible)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "Dante secondary",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (2 x IEC with retaining clips)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 2
+        }
       ],
-      "signal_types": ["mic-level", "phantom-48v", "aoip", "dante", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "aoip",
+        "dante",
+        "mains-power"
+      ],
       "manual_url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/F_RedNet MP8R User Manual.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://focusrite.com/products/rednet-mp8r",
-      "manual_languages": ["fr", "en"],
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
       "manuals": [
-        { "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/F_RedNet MP8R User Manual.pdf", "title": "RedNet MP8R Mode d'emploi", "language": "fr", "file_type": "pdf", "version_or_date": "FFFA001189-06", "official": true, "kind": "user-manual" },
-        { "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/RedNet MP8R User Manual.pdf", "title": "RedNet MP8R User Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/F_RedNet MP8R User Manual.pdf",
+          "title": "RedNet MP8R Mode d'emploi",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "FFFA001189-06",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/RedNet MP8R User Manual.pdf",
+          "title": "RedNet MP8R User Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://focusrite.com/products/rednet-mp8r", "publisher": "Focusrite", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.dante_channels", "key_specs.mic_inputs", "key_specs.gain_range", "key_specs.max_input_level", "key_specs.frequency_response", "key_specs.ein", "key_specs.phantom_power", "key_specs.sampling_rates", "key_specs.clocking", "key_specs.redundancy", "connectors", "why_it_is_a_classic", "status"] },
-        { "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/RedNet MP8R User Manual.pdf", "publisher": "Focusrite (user manual)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.gain_range", "key_specs.input_impedance", "key_specs.max_input_level", "key_specs.thd_n", "key_specs.ein", "key_specs.signal_to_noise", "key_specs.pad_hpf", "key_specs.sampling_rates", "key_specs.clocking", "key_specs.redundancy", "key_specs.power", "key_specs.dimensions", "key_specs.weight", "connectors"] },
-        { "url": "https://downloads.focusrite.com/focusrite/rednet/rednet-mp8r", "publisher": "Focusrite downloads", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+        {
+          "url": "https://focusrite.com/products/rednet-mp8r",
+          "publisher": "Focusrite",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.dante_channels",
+            "key_specs.mic_inputs",
+            "key_specs.gain_range",
+            "key_specs.max_input_level",
+            "key_specs.frequency_response",
+            "key_specs.ein",
+            "key_specs.phantom_power",
+            "key_specs.sampling_rates",
+            "key_specs.clocking",
+            "key_specs.redundancy",
+            "connectors",
+            "why_it_is_a_classic",
+            "status"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/RedNet MP8R User Manual.pdf",
+          "publisher": "Focusrite (user manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.gain_range",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.thd_n",
+            "key_specs.ein",
+            "key_specs.signal_to_noise",
+            "key_specs.pad_hpf",
+            "key_specs.sampling_rates",
+            "key_specs.clocking",
+            "key_specs.redundancy",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://downloads.focusrite.com/focusrite/rednet/rednet-mp8r",
+          "publisher": "Focusrite downloads",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The product page overview text says 'increased maximum input level of 28dBu' while both the spec table and manual give 29dBu ±0.5 (logged as conflict). Manual URLs contain spaces exactly as listed on Focusrite's download page; encode as %20 when fetching.",
       "conflicts": [
-        { "field": "key_specs.max_input_level", "values": [ { "value": "28dBu (overview text)", "source_url": "https://focusrite.com/products/rednet-mp8r" }, { "value": "29dBu ±0.5 (spec table and manual)", "source_url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/RedNet MP8R User Manual.pdf" } ], "note": "Marketing text vs measured spec; spec table likely authoritative." }
+        {
+          "field": "key_specs.max_input_level",
+          "values": [
+            {
+              "value": "28dBu (overview text)",
+              "source_url": "https://focusrite.com/products/rednet-mp8r"
+            },
+            {
+              "value": "29dBu ±0.5 (spec table and manual)",
+              "source_url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/RedNet MP8R User Manual.pdf"
+            }
+          ],
+          "note": "Marketing text vs measured spec; spec table likely authoritative."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dante"], "sim_value": "medium", "sim_value_reason": "Clean Dante mic-pre lesson (redundant vs switched modes, clock from network master), but no analog outputs to wire." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Clean Dante mic-pre lesson (redundant vs switched modes, clock from network master), but no analog outputs to wire."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "rme-m-32-ad",
@@ -257,7 +804,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A compact way to put 32 analog lines onto one MADI fibre or coax, with automatic MADI input redundancy and cascading of two units to fill 64 channels at 48 kHz; RME's manual is also a well-known MADI primer.",
-      "typical_uses": ["analog to MADI conversion for recording / broadcast", "MADI feed to HDSPe MADI / MADIface systems", "ADAT feed to computer interfaces", "MADI cascading in OB trucks and studios"],
+      "typical_uses": [
+        "analog to MADI conversion for recording / broadcast",
+        "MADI feed to HDSPe MADI / MADIface systems",
+        "ADAT feed to computer interfaces",
+        "MADI cascading in OB trucks and studios"
+      ],
       "key_specs": {
         "transport_protocol": "MADI (AES10) optical and coaxial, plus ADAT",
         "madi_channels": "Up to 48 kHz 64 channels can be transmitted, up to 96 kHz 32, and up to 192 kHz 16 channels",
@@ -277,30 +829,148 @@
         "dimensions": "(WxHxD) 483 x 88 x 200 mm"
       },
       "connectors": [
-        { "connector": "trs-quarter", "role": "line inputs (front)", "dir": "in", "signal": "line-level-pro", "count": "not found" },
-        { "connector": "dsub25", "role": "line inputs (rear D-sub)", "dir": "in", "signal": "line-level-pro", "count": "not found" },
-        { "connector": "sc-fibre", "role": "MADI optical in/out", "dir": "bidir", "signal": "madi", "count": 1 },
-        { "connector": "bnc", "role": "MADI coaxial in/out", "dir": "bidir", "signal": "madi", "count": 2 },
-        { "connector": "toslink", "role": "ADAT outputs", "dir": "out", "signal": "adat", "count": 4 },
-        { "connector": "toslink", "role": "ADAT input (sync only)", "dir": "in", "signal": "adat", "count": 1 },
-        { "connector": "bnc", "role": "word clock in/out", "dir": "bidir", "signal": "wordclock", "count": "not found" },
-        { "connector": "midi-din5", "role": "MIDI in/out (remote control)", "dir": "bidir", "signal": "midi", "count": "not found" }
+        {
+          "connector": "trs-quarter",
+          "role": "line inputs (front)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": "not found"
+        },
+        {
+          "connector": "dsub25",
+          "role": "line inputs (rear D-sub)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": "not found"
+        },
+        {
+          "connector": "sc-fibre",
+          "role": "MADI optical in/out",
+          "dir": "bidir",
+          "signal": "madi",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "MADI coaxial in/out",
+          "dir": "bidir",
+          "signal": "madi",
+          "count": 2
+        },
+        {
+          "connector": "toslink",
+          "role": "ADAT outputs",
+          "dir": "out",
+          "signal": "adat",
+          "count": 4
+        },
+        {
+          "connector": "toslink",
+          "role": "ADAT input (sync only)",
+          "dir": "in",
+          "signal": "adat",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "word clock in/out",
+          "dir": "bidir",
+          "signal": "wordclock",
+          "count": "not found"
+        },
+        {
+          "connector": "midi-din5",
+          "role": "MIDI in/out (remote control)",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": "not found"
+        }
       ],
-      "signal_types": ["line-level-pro", "madi", "adat", "wordclock", "midi", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "madi",
+        "adat",
+        "wordclock",
+        "midi",
+        "mains-power"
+      ],
       "manual_url": "https://www.rme-audio.de/downloads/m32ad_e.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://www.rme-audio.de/m-32-m-16-ad.html",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.rme-audio.de/downloads/m32ad_e.pdf", "title": "M-32 AD and M-16 AD manual", "language": "en", "file_type": "pdf", "version_or_date": "version 1.2, 4/2010", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.rme-audio.de/downloads/m32ad_e.pdf",
+          "title": "M-32 AD and M-16 AD manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "version 1.2, 4/2010",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.rme-audio.de/m-32-m-16-ad.html", "publisher": "RME", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.madi_io", "key_specs.adat_outputs", "key_specs.analog_inputs", "key_specs.input_level_0dbfs", "key_specs.dynamic_range", "key_specs.thd_n", "key_specs.frequency_response", "key_specs.sampling_rates", "key_specs.power_supply", "key_specs.dimensions", "connectors", "status"] },
-        { "url": "https://www.rme-audio.de/downloads/m32ad_e.pdf", "publisher": "RME (user's guide)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.madi_channels", "key_specs.adat_outputs", "key_specs.redundancy", "key_specs.madi_coax_output", "key_specs.madi_optical", "key_specs.clocking", "connectors"] }
+        {
+          "url": "https://www.rme-audio.de/m-32-m-16-ad.html",
+          "publisher": "RME",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.madi_io",
+            "key_specs.adat_outputs",
+            "key_specs.analog_inputs",
+            "key_specs.input_level_0dbfs",
+            "key_specs.dynamic_range",
+            "key_specs.thd_n",
+            "key_specs.frequency_response",
+            "key_specs.sampling_rates",
+            "key_specs.power_supply",
+            "key_specs.dimensions",
+            "connectors",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/m32ad_e.pdf",
+          "publisher": "RME (user's guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.madi_channels",
+            "key_specs.adat_outputs",
+            "key_specs.redundancy",
+            "key_specs.madi_coax_output",
+            "key_specs.madi_optical",
+            "key_specs.clocking",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Product page lists '1 x Word Clock I/O' and '1 x MIDI I/O'; BNC for word clock and DIN for MIDI are assumed standard and not confirmed in the text read. The manual (chapter 16.6) explains the MADI 56/64-channel modes and SC multimode fibre, useful as teaching material. A French manual was not listed on the product page.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["sc-fibre", "midi-din5"], "proposed_new_signals": ["adat", "midi"], "sim_value": "high", "sim_value_reason": "MADI coax (BNC 75 Ω) and SC fibre side by side, plus ADAT and word clock: an ideal clocking and channel-count lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "sc-fibre",
+          "midi-din5"
+        ],
+        "proposed_new_signals": [
+          "adat",
+          "midi"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "MADI coax (BNC 75 Ω) and SC fibre side by side, plus ADAT and word clock: an ideal clocking and channel-count lesson."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "db-audiotechnik-ds10",
@@ -312,7 +982,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "d&b describes the DS10 as the start of its system approach: it sits in front of the amplifiers and turns Dante into AES3 for d&b amps, so it is found in many touring racks and theatres using d&b systems.",
-      "typical_uses": ["Dante to AES3 feed for d&b amplifier racks", "FOH break-in via AES3 inputs", "single-cable audio + R1 remote control to amp racks"],
+      "typical_uses": [
+        "Dante to AES3 feed for d&b amplifier racks",
+        "FOH break-in via AES3 inputs",
+        "single-cable audio + R1 remote control to amp racks"
+      ],
       "key_specs": {
         "transport_protocol": "Dante/AES67 to AES3",
         "aes3_outputs": "DIGITAL OUT 16 channels (8 x AES3), 3 pin XLR male",
@@ -328,29 +1002,154 @@
         "article_number": "Z4010"
       },
       "connectors": [
-        { "connector": "xlr3-m", "role": "AES3 outputs (8 x AES3 = 16 ch)", "dir": "out", "signal": "aes3", "count": 8 },
-        { "connector": "xlr3-f", "role": "AES3 inputs (2 x AES3 = 4 ch)", "dir": "in", "signal": "aes3", "count": 2 },
-        { "connector": "ethercon", "role": "integrated 5-port switch (Dante primary/secondary, control)", "dir": "bidir", "signal": "aoip", "count": 5 },
-        { "connector": "powercon-blue", "role": "mains in", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-m",
+          "role": "AES3 outputs (8 x AES3 = 16 ch)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES3 inputs (2 x AES3 = 4 ch)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 2
+        },
+        {
+          "connector": "ethercon",
+          "role": "integrated 5-port switch (Dante primary/secondary, control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 5
+        },
+        {
+          "connector": "powercon-blue",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["aes3", "aoip", "dante", "aes67", "mains-power"],
+      "signal_types": [
+        "aes3",
+        "aoip",
+        "dante",
+        "aes67",
+        "mains-power"
+      ],
       "manual_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds10-1.11-en.pdf",
       "datasheet_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds10-en.pdf",
       "product_page_url": "https://www.dbaudio.com/global/en/products/processing-and-matrix/ds10/",
-      "manual_languages": ["en", "it", "ko"],
+      "manual_languages": [
+        "en",
+        "it",
+        "ko"
+      ],
       "manuals": [
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds10-1.11-en.pdf", "title": "DS10 Manual 1.11", "language": "en", "file_type": "pdf", "version_or_date": "1.11 (2024-04)", "official": true, "kind": "user-manual" },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds10-1.10-it.pdf", "title": "DS10 Manuale d'uso 1.10", "language": "it", "file_type": "pdf", "version_or_date": "1.10 (2024-04)", "official": true, "kind": "user-manual" },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds10-1.10-ko.pdf", "title": "DS10 Manual 1.10 (Korean)", "language": "ko", "file_type": "pdf", "version_or_date": "1.10 (2024-04)", "official": true, "kind": "user-manual" },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds10-en.pdf", "title": "DS10 Datasheet", "language": "en", "file_type": "pdf", "version_or_date": "2019-07", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds10-1.11-en.pdf",
+          "title": "DS10 Manual 1.11",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.11 (2024-04)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds10-1.10-it.pdf",
+          "title": "DS10 Manuale d'uso 1.10",
+          "language": "it",
+          "file_type": "pdf",
+          "version_or_date": "1.10 (2024-04)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds10-1.10-ko.pdf",
+          "title": "DS10 Manual 1.10 (Korean)",
+          "language": "ko",
+          "file_type": "pdf",
+          "version_or_date": "1.10 (2024-04)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds10-en.pdf",
+          "title": "DS10 Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2019-07",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.dbaudio.com/global/en/products/processing-and-matrix/ds10/", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.transport_protocol", "key_specs.aes3_outputs", "key_specs.aes3_inputs", "key_specs.output_sampling", "key_specs.input_sampling", "key_specs.network", "key_specs.redundancy", "key_specs.mains", "key_specs.dimensions", "key_specs.weight", "key_specs.article_number", "connectors", "manuals"] },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds10-en.pdf", "publisher": "d&b audiotechnik (datasheet)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.aes3_outputs", "key_specs.aes3_inputs", "key_specs.output_sampling", "key_specs.input_sampling", "key_specs.network", "key_specs.bypass", "key_specs.redundancy", "key_specs.dimensions", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://www.dbaudio.com/global/en/products/processing-and-matrix/ds10/",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.transport_protocol",
+            "key_specs.aes3_outputs",
+            "key_specs.aes3_inputs",
+            "key_specs.output_sampling",
+            "key_specs.input_sampling",
+            "key_specs.network",
+            "key_specs.redundancy",
+            "key_specs.mains",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.article_number",
+            "connectors",
+            "manuals"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds10-en.pdf",
+          "publisher": "d&b audiotechnik (datasheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.aes3_outputs",
+            "key_specs.aes3_inputs",
+            "key_specs.output_sampling",
+            "key_specs.input_sampling",
+            "key_specs.network",
+            "key_specs.bypass",
+            "key_specs.redundancy",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The 2019 datasheet speaks of Dante only; the current product page says Dante/AES67. Etherport count is from 'built-in 5-port Ethernet switch'; whether all five are etherCON is not stated explicitly. powerCON colour (blue) is assumed for a mains input. No French manual is listed on the d&b product page.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dante", "aes67"], "sim_value": "high", "sim_value_reason": "Classic network-to-AES3 conversion in front of amplifiers, with input SRC and bypass mode: a clear clocking and format-bridge lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante",
+          "aes67"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Classic network-to-AES3 conversion in front of amplifiers, with input SRC and bypass mode: a clear clocking and format-bridge lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "db-audiotechnik-ds20",
@@ -362,7 +1161,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The Milan counterpart of the DS10, used to feed d&b amplifiers from an AVB/Milan network; a concrete example of a Milan endpoint that also acts as an AVB switch.",
-      "typical_uses": ["Milan network to AES3 for d&b amplifiers", "AVB/Milan touring systems", "FOH break-in via AES3 inputs"],
+      "typical_uses": [
+        "Milan network to AES3 for d&b amplifiers",
+        "AVB/Milan touring systems",
+        "FOH break-in via AES3 inputs"
+      ],
       "key_specs": {
         "transport_protocol": "Milan (AVB) to AES3",
         "aes3_outputs": "DIGITAL OUT 16 channels (8 x AES3), 3 pin XLR male, output impedance 110 ohms",
@@ -378,29 +1181,151 @@
         "article_number": "Z4011"
       },
       "connectors": [
-        { "connector": "xlr3-m", "role": "AES3 outputs (8 x AES3 = 16 ch)", "dir": "out", "signal": "aes3", "count": 8 },
-        { "connector": "xlr3-f", "role": "AES3 inputs (2 x AES3 = 4 ch)", "dir": "in", "signal": "aes3", "count": 2 },
-        { "connector": "ethercon", "role": "integrated 5-port AVB switch (Milan primary/secondary, control)", "dir": "bidir", "signal": "avb-milan", "count": 5 },
-        { "connector": "powercon-blue", "role": "mains in", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-m",
+          "role": "AES3 outputs (8 x AES3 = 16 ch)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES3 inputs (2 x AES3 = 4 ch)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 2
+        },
+        {
+          "connector": "ethercon",
+          "role": "integrated 5-port AVB switch (Milan primary/secondary, control)",
+          "dir": "bidir",
+          "signal": "avb-milan",
+          "count": 5
+        },
+        {
+          "connector": "powercon-blue",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["aes3", "aoip", "avb-milan", "mains-power"],
+      "signal_types": [
+        "aes3",
+        "aoip",
+        "avb-milan",
+        "mains-power"
+      ],
       "manual_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds20-1.5-en.pdf",
       "datasheet_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds20-1.2-en.pdf",
       "product_page_url": "https://www.dbaudio.com/global/en/products/processing-and-matrix/ds20/",
-      "manual_languages": ["en", "it", "ko"],
+      "manual_languages": [
+        "en",
+        "it",
+        "ko"
+      ],
       "manuals": [
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds20-1.5-en.pdf", "title": "DS20 Manual 1.5", "language": "en", "file_type": "pdf", "version_or_date": "1.5 (2024-05)", "official": true, "kind": "user-manual" },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds20-1.5-it.pdf", "title": "DS20 Manuale d'uso 1.5 it", "language": "it", "file_type": "pdf", "version_or_date": "1.5 (2025-09)", "official": true, "kind": "user-manual" },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds20-1.5-ko.pdf", "title": "DS20 Manual 1.5 ko", "language": "ko", "file_type": "pdf", "version_or_date": "1.5 (2025-09)", "official": true, "kind": "user-manual" },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds20-1.2-en.pdf", "title": "DS20 Datasheet 1.2", "language": "en", "file_type": "pdf", "version_or_date": "1.2 (01/2024)", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds20-1.5-en.pdf",
+          "title": "DS20 Manual 1.5",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.5 (2024-05)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds20-1.5-it.pdf",
+          "title": "DS20 Manuale d'uso 1.5 it",
+          "language": "it",
+          "file_type": "pdf",
+          "version_or_date": "1.5 (2025-09)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-manual-ds20-1.5-ko.pdf",
+          "title": "DS20 Manual 1.5 ko",
+          "language": "ko",
+          "file_type": "pdf",
+          "version_or_date": "1.5 (2025-09)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds20-1.2-en.pdf",
+          "title": "DS20 Datasheet 1.2",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.2 (01/2024)",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.dbaudio.com/global/en/products/processing-and-matrix/ds20/", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.transport_protocol", "key_specs.aes3_outputs", "key_specs.aes3_inputs", "key_specs.output_sampling", "key_specs.input_sampling", "key_specs.network", "key_specs.redundancy", "key_specs.mains", "key_specs.dimensions", "key_specs.weight", "key_specs.article_number", "connectors", "manuals"] },
-        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds20-1.2-en.pdf", "publisher": "d&b audiotechnik (datasheet)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.aes3_outputs", "key_specs.aes3_inputs", "key_specs.output_sampling", "key_specs.redundancy", "key_specs.power_consumption", "key_specs.mains", "key_specs.dimensions", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://www.dbaudio.com/global/en/products/processing-and-matrix/ds20/",
+          "publisher": "d&b audiotechnik",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.transport_protocol",
+            "key_specs.aes3_outputs",
+            "key_specs.aes3_inputs",
+            "key_specs.output_sampling",
+            "key_specs.input_sampling",
+            "key_specs.network",
+            "key_specs.redundancy",
+            "key_specs.mains",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.article_number",
+            "connectors",
+            "manuals"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/electronics/dbaudio-datasheet-ds20-1.2-en.pdf",
+          "publisher": "d&b audiotechnik (datasheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.aes3_outputs",
+            "key_specs.aes3_inputs",
+            "key_specs.output_sampling",
+            "key_specs.redundancy",
+            "key_specs.power_consumption",
+            "key_specs.mains",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The candidate list named the DS10 as the Milan device, but d&b's pages show the DS10 is Dante/AES67 and the DS20 is the Milan model, so both are included (DS10 as format-converter, DS20 as avb-milan-device). The DS20 datasheet's architectural text still mentions 'a normal Dante device (Network) in conjunction with Dante controller', apparently copied from the DS10; noted, not used. powerCON colour assumed blue.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["avb-milan"], "sim_value": "high", "sim_value_reason": "Only Milan endpoint in this file with a built-in AVB switch; pairs naturally with the DS10 to contrast Dante and Milan." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "avb-milan"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Only Milan endpoint in this file with a built-in AVB switch; pairs naturally with the DS10 to contrast Dante and Milan."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "directout-prodigy-mc",
@@ -412,7 +1337,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A typical 'Swiss army knife' converter for broadcast and live: one frame can join MADI, Dante, AES67/ST 2110 and Milan worlds. DirectOut states its RAV.IO module is listed in the JT-NM Tested Catalog for SMPTE 2110 alignment.",
-      "typical_uses": ["MADI <-> Dante / AES67 / Milan bridging", "broadcast ST 2110-30 integration", "redundant console front-end", "multitrack recording via virtual soundcard"],
+      "typical_uses": [
+        "MADI <-> Dante / AES67 / Milan bridging",
+        "broadcast ST 2110-30 integration",
+        "redundant console front-end",
+        "multitrack recording via virtual soundcard"
+      ],
       "key_specs": {
         "transport_protocol": "RAVENNA / AES67, Dante, SoundGrid, AVB / MILAN, MADI single-port and multi-port, Analog, AES3, USB (module dependent)",
         "slot_capacity": "A slot up to 128 channels per module; B slot single-port MADI 64 channels per module; C slot converter and AES3 8 channels per module",
@@ -429,31 +1359,157 @@
         "weight": "about 10 kg"
       },
       "connectors": [
-        { "connector": "rj45", "role": "network audio module ports (primary/secondary)", "dir": "bidir", "signal": "aoip", "count": 2 },
-        { "connector": "sfp-cage", "role": "network or MADI SFP (module dependent)", "dir": "bidir", "signal": "madi", "count": "not found" },
-        { "connector": "bnc", "role": "MADI coax (BNC.IO module)", "dir": "bidir", "signal": "madi", "count": 2 },
-        { "connector": "sc-fibre", "role": "MADI optical (SC.IO module)", "dir": "bidir", "signal": "madi", "count": 1 },
-        { "connector": "dsub25", "role": "analog / AES3 C-module I/O", "dir": "bidir", "signal": "line-level-pro", "count": "not found" },
-        { "connector": "bnc", "role": "word clock I/O", "dir": "bidir", "signal": "wordclock", "count": 1 },
-        { "connector": "trs-35mm", "role": "headphone output #2", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "rj45", "role": "remote control network", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "gpio-terminal", "role": "GPI/GPO", "dir": "bidir", "signal": "gpio-tally", "count": "not found" },
-        { "connector": "iec-c14", "role": "mains in x2 (phase-redundant)", "dir": "in", "signal": "mains-power", "count": 2 }
+        {
+          "connector": "rj45",
+          "role": "network audio module ports (primary/secondary)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "sfp-cage",
+          "role": "network or MADI SFP (module dependent)",
+          "dir": "bidir",
+          "signal": "madi",
+          "count": "not found"
+        },
+        {
+          "connector": "bnc",
+          "role": "MADI coax (BNC.IO module)",
+          "dir": "bidir",
+          "signal": "madi",
+          "count": 2
+        },
+        {
+          "connector": "sc-fibre",
+          "role": "MADI optical (SC.IO module)",
+          "dir": "bidir",
+          "signal": "madi",
+          "count": 1
+        },
+        {
+          "connector": "dsub25",
+          "role": "analog / AES3 C-module I/O",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": "not found"
+        },
+        {
+          "connector": "bnc",
+          "role": "word clock I/O",
+          "dir": "bidir",
+          "signal": "wordclock",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "headphone output #2",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "remote control network",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "GPI/GPO",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": "not found"
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in x2 (phase-redundant)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 2
+        }
       ],
-      "signal_types": ["madi", "aoip", "dante", "aes67", "avb-milan", "smpte-2110", "aes3", "line-level-pro", "mic-level", "wordclock", "gpio-tally", "mains-power"],
+      "signal_types": [
+        "madi",
+        "aoip",
+        "dante",
+        "aes67",
+        "avb-milan",
+        "smpte-2110",
+        "aes3",
+        "line-level-pro",
+        "mic-level",
+        "wordclock",
+        "gpio-tally",
+        "mains-power"
+      ],
       "manual_url": "https://www.directout.eu/download/prodigy-mc-manual/?wpdmdl=6816&refresh=6ad955633a6591792628067",
       "datasheet_url": "not found",
       "product_page_url": "https://www.directout.eu/product/prodigy-mc/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.directout.eu/download/prodigy-mc-manual/?wpdmdl=6816&refresh=6ad955633a6591792628067", "title": "PRODIGY.MC User's Manual (download page)", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://www.directout.eu/download/prodigy-mc-manual/?wpdmdl=6816&refresh=6ad955633a6591792628067",
+          "title": "PRODIGY.MC User's Manual (download page)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.directout.eu/product/prodigy-mc/", "publisher": "DirectOut", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.transport_protocol", "key_specs.slot_capacity", "key_specs.total_channels", "key_specs.madi_modules", "key_specs.network_modules", "key_specs.redundancy", "key_specs.word_clock", "key_specs.gpio", "key_specs.control", "key_specs.power_supply", "key_specs.power_consumption", "key_specs.dimensions", "key_specs.weight", "connectors", "why_it_is_a_classic"] }
+        {
+          "url": "https://www.directout.eu/product/prodigy-mc/",
+          "publisher": "DirectOut",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.transport_protocol",
+            "key_specs.slot_capacity",
+            "key_specs.total_channels",
+            "key_specs.madi_modules",
+            "key_specs.network_modules",
+            "key_specs.redundancy",
+            "key_specs.word_clock",
+            "key_specs.gpio",
+            "key_specs.control",
+            "key_specs.power_supply",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Only one source was read (manufacturer product page); the manual link is a WordPress Download Manager URL with a session token and was not opened. Connector counts depend on fitted modules. Mains inlet type is not stated (IEC assumed). The candidate list proposed PRODIGY.MP (the processor variant); PRODIGY.MC was chosen as the pure converter.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["sfp-cage", "sc-fibre"], "proposed_new_signals": ["dante", "aes67", "avb-milan", "smpte-2110"], "sim_value": "medium", "sim_value_reason": "Great for explaining format bridging and SRC, but its modular nature makes a fixed wiring model harder." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "sfp-cage",
+          "sc-fibre"
+        ],
+        "proposed_new_signals": [
+          "dante",
+          "aes67",
+          "avb-milan",
+          "smpte-2110"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Great for explaining format bridging and SRC, but its modular nature makes a fixed wiring model harder."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "luminex-gigacore-16t",
@@ -465,7 +1521,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "GigaCore switches are a common touring backbone for converged audio/lighting/video networks; Luminex states they are validated with Dante, AVB/MILAN, RAVENNA/AES67 and ST 2110 among others. The 16t succeeds the long-running GigaCore 16Xt named in the brief.",
-      "typical_uses": ["touring AoIP backbone (Dante, Milan, AES67)", "converged audio / lighting / video network", "redundant ring with RLinkX", "PoE powering of network devices"],
+      "typical_uses": [
+        "touring AoIP backbone (Dante, Milan, AES67)",
+        "converged audio / lighting / video network",
+        "redundant ring with RLinkX",
+        "PoE powering of network devices"
+      ],
       "key_specs": {
         "ports": "8 x EtherCon connectors (4x front, 4x rear) (1Gbps), 8 x RJ 45 connectors (rear) (1Gbps)",
         "fiber": "No",
@@ -481,25 +1542,106 @@
         "weight": "4kg (Device only)"
       },
       "connectors": [
-        { "connector": "ethercon", "role": "1 Gb ports (4 front, 4 rear)", "dir": "bidir", "signal": "aoip", "count": 8 },
-        { "connector": "rj45", "role": "1 Gb ports (rear)", "dir": "bidir", "signal": "aoip", "count": 8 },
-        { "connector": "powercon-true1", "role": "mains in / link out", "dir": "bidir", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "ethercon",
+          "role": "1 Gb ports (4 front, 4 rear)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 8
+        },
+        {
+          "connector": "rj45",
+          "role": "1 Gb ports (rear)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 8
+        },
+        {
+          "connector": "powercon-true1",
+          "role": "mains in / link out",
+          "dir": "bidir",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["aoip", "dante", "aes67", "avb-milan", "mains-power"],
+      "signal_types": [
+        "aoip",
+        "dante",
+        "aes67",
+        "avb-milan",
+        "mains-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://www.luminex.be/wp-content/uploads/2023/05/Prelimary_Product-specification-sheet-GigaCore-16t-v1.0.0.pdf",
       "product_page_url": "https://www.luminex.be/products/gigacore/gigacore-16t/",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://www.luminex.be/wp-content/uploads/2023/05/Prelimary_Product-specification-sheet-GigaCore-16t-v1.0.0.pdf", "title": "Preliminary Technical specifications GigaCore 16t", "language": "en", "file_type": "pdf", "version_or_date": "v1.0.0", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://www.luminex.be/wp-content/uploads/2023/05/Prelimary_Product-specification-sheet-GigaCore-16t-v1.0.0.pdf",
+          "title": "Preliminary Technical specifications GigaCore 16t",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v1.0.0",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.luminex.be/products/gigacore/gigacore-16t/", "publisher": "Luminex", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.ports", "key_specs.fiber", "key_specs.switching_capacity", "key_specs.supported_protocols", "key_specs.igmp", "key_specs.redundancy", "key_specs.power_connector", "key_specs.power_input", "key_specs.power_consumption", "key_specs.dimensions", "key_specs.weight", "connectors", "why_it_is_a_classic"] },
-        { "url": "https://www.luminex.be/wp-content/uploads/2023/05/Prelimary_Product-specification-sheet-GigaCore-16t-v1.0.0.pdf", "publisher": "Luminex (preliminary spec sheet)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.supported_protocols", "key_specs.poe", "key_specs.igmp", "key_specs.ports", "connectors"] }
+        {
+          "url": "https://www.luminex.be/products/gigacore/gigacore-16t/",
+          "publisher": "Luminex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.ports",
+            "key_specs.fiber",
+            "key_specs.switching_capacity",
+            "key_specs.supported_protocols",
+            "key_specs.igmp",
+            "key_specs.redundancy",
+            "key_specs.power_connector",
+            "key_specs.power_input",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.luminex.be/wp-content/uploads/2023/05/Prelimary_Product-specification-sheet-GigaCore-16t-v1.0.0.pdf",
+          "publisher": "Luminex (preliminary spec sheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.supported_protocols",
+            "key_specs.poe",
+            "key_specs.igmp",
+            "key_specs.ports",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Swapped from GigaCore 16Xt (named in the brief) to the current GigaCore 16t because Luminex's site lists the 16t and not the 16Xt. The preliminary PDF gives 'Switching troughput 168 Gbps (10Gbps versions)', which refers to other versions and is not used. The product page lists the user manual under a JS 'Product downloads' tab that was not reachable.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["avb-milan"], "sim_value": "medium", "sim_value_reason": "Teaches VLAN groups, IGMP and PTP for AoIP and etherCON vs RJ45 ports, but a switch has no audio signal flow to wire." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "avb-milan"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Teaches VLAN groups, IGMP and PTP for AoIP and etherCON vs RJ45 ports, but a switch has no audio signal flow to wire."
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "netgear-m4250-10g2xf-poe-plus",
@@ -511,7 +1653,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "NETGEAR markets the M4250 series as pre-configured for audio and video over IP, with built-in profiles for Dante, Q-SYS, AES67 and AVB, making it a common affordable switch in installed AoIP systems.",
-      "typical_uses": ["Dante / AES67 installed networks", "AVB/Milan with licence", "PoE for AoIP endpoints (mics, speakers, intercom)"],
+      "typical_uses": [
+        "Dante / AES67 installed networks",
+        "AVB/Milan with licence",
+        "PoE for AoIP endpoints (mics, speakers, intercom)"
+      ],
       "key_specs": {
         "ports": "12 (10x 1G, 2x SFP+)",
         "poe": "8 PoE+ (30W/port), 240W Budget",
@@ -525,28 +1671,136 @@
         "weight": "2.9Kg (6.39lb)"
       },
       "connectors": [
-        { "connector": "rj45", "role": "1G copper ports (8 with PoE+)", "dir": "bidir", "signal": "aoip", "count": 10 },
-        { "connector": "sfp-cage", "role": "SFP+ uplinks", "dir": "bidir", "signal": "aoip", "count": 2 },
-        { "connector": "usb-c", "role": "console port", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "iec-c14", "role": "mains in", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "rj45",
+          "role": "1G copper ports (8 with PoE+)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 10
+        },
+        {
+          "connector": "sfp-cage",
+          "role": "SFP+ uplinks",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "usb-c",
+          "role": "console port",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["aoip", "dante", "aes67", "avb-milan", "mains-power"],
+      "signal_types": [
+        "aoip",
+        "dante",
+        "aes67",
+        "avb-milan",
+        "mains-power"
+      ],
       "manual_url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_AV_UM_EN.pdf",
       "datasheet_url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_Datasheet.pdf",
       "product_page_url": "https://www.netgear.com/business/wired/switches/fully-managed/gsm4212px/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_AV_UM_EN.pdf", "title": "M4250 AV user manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_IG_EN.pdf", "title": "M4250 installation guide", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
-        { "url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_Datasheet.pdf", "title": "M4250 series datasheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_AV_UM_EN.pdf",
+          "title": "M4250 AV user manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_IG_EN.pdf",
+          "title": "M4250 installation guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_Datasheet.pdf",
+          "title": "M4250 series datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.netgear.com/business/wired/switches/fully-managed/gsm4212px/", "publisher": "NETGEAR", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.ports", "key_specs.poe", "key_specs.avb", "key_specs.igmp", "key_specs.jumbo_frames", "key_specs.acoustics", "key_specs.power_consumption", "key_specs.dimensions", "key_specs.weight", "connectors", "manuals"] },
-        { "url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_Datasheet.pdf", "publisher": "NETGEAR (M4250 datasheet)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.audio_profiles", "key_specs.ports", "key_specs.poe", "why_it_is_a_classic"] }
+        {
+          "url": "https://www.netgear.com/business/wired/switches/fully-managed/gsm4212px/",
+          "publisher": "NETGEAR",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.ports",
+            "key_specs.poe",
+            "key_specs.avb",
+            "key_specs.igmp",
+            "key_specs.jumbo_frames",
+            "key_specs.acoustics",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "manuals"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.downloads.netgear.com/files/GDC/M4250/M4250_Datasheet.pdf",
+          "publisher": "NETGEAR (M4250 datasheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.audio_profiles",
+            "key_specs.ports",
+            "key_specs.poe",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The brief named the M4250 series; this entry fixes one representative model (GSM4212PX). The box contents list 'Console USB Type-C and RJ45-DB9 cables'; the USB-C console port is mapped to usb-c with a non-audio role ('usb-audio' is the closest existing signal id, not accurate). Mains inlet type not stated (IEC assumed). The M4250 user manual and IG are only available in English on the product page.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["sfp-cage"], "proposed_new_signals": ["dante", "aes67", "avb-milan"], "sim_value": "low", "sim_value_reason": "Generic RJ45/SFP switch; useful only for network topology and PoE exercises." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "sfp-cage"
+        ],
+        "proposed_new_signals": [
+          "dante",
+          "aes67",
+          "avb-milan"
+        ],
+        "sim_value": "low",
+        "sim_value_reason": "Generic RJ45/SFP switch; useful only for network topology and PoE exercises."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sommer-cable-the-boxx-mp-08-04",
@@ -558,7 +1812,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Represents the classic analog snake: XLR panel on stage, one multipin connector, multicore trunk to FOH. Sommer Cable offers it in 8/0 to 20/4 configurations for live events and permanent installation.",
-      "typical_uses": ["analog stage snake head for live events", "permanent installation stage pockets", "multipin trunk to FOH or splitter"],
+      "typical_uses": [
+        "analog stage snake head for live events",
+        "permanent installation stage pockets",
+        "multipin trunk to FOH or splitter"
+      ],
       "key_specs": {
         "channels": "In: 08, Out: 04",
         "available_configurations": "08/00, 08/04, 12/00, 12/04, 16/04, 20/04; common or separate grounding",
@@ -571,25 +1829,100 @@
         "ean": "4049371105798"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "stage inputs 1-8 (mics/DI)", "dir": "in", "signal": "mic-level", "count": 8 },
-        { "connector": "xlr3-m", "role": "returns 1-4 (to wedges/amps)", "dir": "out", "signal": "line-level-pro", "count": 4 },
-        { "connector": "multipin-harting", "role": "multicore trunk (ILME MP 10, 42-pole)", "dir": "bidir", "signal": "mic-level", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "stage inputs 1-8 (mics/DI)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "returns 1-4 (to wedges/amps)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "multipin-harting",
+          "role": "multicore trunk (ILME MP 10, 42-pole)",
+          "dir": "bidir",
+          "signal": "mic-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.sommercable.com/en-us/THE-BOXX-Square-MP-connector/XXPP-M08-04",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.sommercable.com/en-us/THE-BOXX-Square-MP-connector/XXPP-M08-04", "publisher": "Sommer Cable", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.channels", "key_specs.available_configurations", "key_specs.multipin_connector", "key_specs.xlr_inputs", "key_specs.xlr_outputs", "key_specs.housing", "key_specs.grounding", "key_specs.article_number", "key_specs.ean", "connectors"] },
-        { "url": "https://www.sommercable.com/en-us/Products/Distribution-Systems/Stagebox-Systems/", "publisher": "Sommer Cable (category listing)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+        {
+          "url": "https://www.sommercable.com/en-us/THE-BOXX-Square-MP-connector/XXPP-M08-04",
+          "publisher": "Sommer Cable",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.channels",
+            "key_specs.available_configurations",
+            "key_specs.multipin_connector",
+            "key_specs.xlr_inputs",
+            "key_specs.xlr_outputs",
+            "key_specs.housing",
+            "key_specs.grounding",
+            "key_specs.article_number",
+            "key_specs.ean",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.sommercable.com/en-us/Products/Distribution-Systems/Stagebox-Systems/",
+          "publisher": "Sommer Cable (category listing)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "ILME rectangular 'MP' multipin is mapped to the proposed id 'multipin-harting' (closest: Harting Han-type rectangular industrial multipin). Phantom power is not mentioned by Sommer; a passive snake simply passes it from the console, listed as a signal for teaching. The page text says 'The wiring has a common grounding' while this article variant is 'separate grounding'; the variant attribute is recorded. Only a catalog page reference ('Catalog V07.1 Page 347') is given, no manual. Cordial (cordial.eu) returned 403; Klotz only linked a shop category, so Sommer was used.",
       "conflicts": [
-        { "field": "key_specs.grounding", "values": [ { "value": "The wiring has a common grounding (description text)", "source_url": "https://www.sommercable.com/en-us/THE-BOXX-Square-MP-connector/XXPP-M08-04" }, { "value": "Configuration: separate grounding (article properties)", "source_url": "https://www.sommercable.com/en-us/THE-BOXX-Square-MP-connector/XXPP-M08-04" } ], "note": "Generic description shared across variants vs specific article attribute." }
+        {
+          "field": "key_specs.grounding",
+          "values": [
+            {
+              "value": "The wiring has a common grounding (description text)",
+              "source_url": "https://www.sommercable.com/en-us/THE-BOXX-Square-MP-connector/XXPP-M08-04"
+            },
+            {
+              "value": "Configuration: separate grounding (article properties)",
+              "source_url": "https://www.sommercable.com/en-us/THE-BOXX-Square-MP-connector/XXPP-M08-04"
+            }
+          ],
+          "note": "Generic description shared across variants vs specific article attribute."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["multipin-harting"], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "The basic analog snake: XLR in/out numbering, multipin trunk and ground separation are core BTS live-sound wiring lessons." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "multipin-harting"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "The basic analog snake: XLR in/out numbering, multipin trunk and ground separation are core BTS live-sound wiring lessons."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "allen-heath-ar2412",
@@ -601,7 +1934,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The standard stage rack for Allen & Heath Qu and SQ consoles, which are widespread in schools, small venues and rental; plug-and-play with no configuration according to the manufacturer.",
-      "typical_uses": ["stage box for Qu / SQ / Avantis / AHM", "school and small-venue digital snake", "feed for ME personal monitor mixers"],
+      "typical_uses": [
+        "stage box for Qu / SQ / Avantis / AHM",
+        "school and small-venue digital snake",
+        "feed for ME personal monitor mixers"
+      ],
       "key_specs": {
         "transport_protocol": "dSNAKE (Allen & Heath Ethernet protocol over Cat5)",
         "sample_rate": "48kHz",
@@ -622,32 +1959,168 @@
         "rack_height": "3U"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic/line inputs 1-24", "dir": "in", "signal": "mic-level", "count": 24 },
-        { "connector": "xlr3-m", "role": "line outputs 1-12", "dir": "out", "signal": "line-level-pro", "count": 12 },
-        { "connector": "ethercon", "role": "dSNAKE to mixer", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "ethercon", "role": "Expander (AR84 / AB168)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "ethercon", "role": "Monitor (ME / Aviom Pro16)", "dir": "out", "signal": "aoip", "count": 1 },
-        { "connector": "iec-c14", "role": "mains in", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-24",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 24
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line outputs 1-12",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 12
+        },
+        {
+          "connector": "ethercon",
+          "role": "dSNAKE to mixer",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "Expander (AR84 / AB168)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "Monitor (ME / Aviom Pro16)",
+          "dir": "out",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "aoip", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "aoip",
+        "mains-power"
+      ],
       "manual_url": "https://support.allen-heath.com/hc/en-gb/articles/40221439994385-AR2412-Getting-Started-Guide",
       "datasheet_url": "https://www.allen-heath.com/content/uploads/2023/06/AR2412-Technical-Datasheet-1.pdf",
       "product_page_url": "https://www.allen-heath.com/hardware/everything-i-o/ar2412/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://support.allen-heath.com/hc/en-gb/articles/40221439994385-AR2412-Getting-Started-Guide", "title": "AR2412 Getting Started Guide (web)", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/AR2412-Technical-Datasheet-1.pdf", "title": "AR2412 Technical Datasheet", "language": "en", "file_type": "pdf", "version_or_date": "Issue 2", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://support.allen-heath.com/hc/en-gb/articles/40221439994385-AR2412-Getting-Started-Guide",
+          "title": "AR2412 Getting Started Guide (web)",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/AR2412-Technical-Datasheet-1.pdf",
+          "title": "AR2412 Technical Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Issue 2",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.allen-heath.com/hardware/everything-i-o/ar2412/", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.sample_rate", "key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.analogue_gain", "key_specs.pad", "key_specs.max_cable_length", "key_specs.rack_height", "connectors", "why_it_is_a_classic", "status"] },
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/AR2412-Technical-Datasheet-1.pdf", "publisher": "Allen & Heath (technical datasheet)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transport_protocol", "key_specs.analogue_gain", "key_specs.input_sensitivity", "key_specs.max_input_level", "key_specs.input_impedance", "key_specs.mic_ein", "key_specs.output_level", "key_specs.output_impedance", "key_specs.monitor_port", "key_specs.expander_port", "key_specs.max_cable_length", "key_specs.mains", "key_specs.rack_height", "connectors"] },
-        { "url": "https://www.allen-heath.com/hardware/everything-i-o/ar2412/resources/", "publisher": "Allen & Heath (resources)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+        {
+          "url": "https://www.allen-heath.com/hardware/everything-i-o/ar2412/",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.sample_rate",
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.analogue_gain",
+            "key_specs.pad",
+            "key_specs.max_cable_length",
+            "key_specs.rack_height",
+            "connectors",
+            "why_it_is_a_classic",
+            "status"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/AR2412-Technical-Datasheet-1.pdf",
+          "publisher": "Allen & Heath (technical datasheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transport_protocol",
+            "key_specs.analogue_gain",
+            "key_specs.input_sensitivity",
+            "key_specs.max_input_level",
+            "key_specs.input_impedance",
+            "key_specs.mic_ein",
+            "key_specs.output_level",
+            "key_specs.output_impedance",
+            "key_specs.monitor_port",
+            "key_specs.expander_port",
+            "key_specs.max_cable_length",
+            "key_specs.mains",
+            "key_specs.rack_height",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.allen-heath.com/hardware/everything-i-o/ar2412/resources/",
+          "publisher": "Allen & Heath (resources)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ],
+          "url_status": "blocked"
+        }
       ],
       "notes": "dSNAKE is proprietary to Allen & Heath; recorded with signal 'aoip' as the closest id (it is not Dante/AES67). Phantom power is not stated in the datasheet text read for the AR2412 (it is for the DX168), so it is not listed. Dimensions/weight are in a separate zip, not opened.",
       "conflicts": [
-        { "field": "key_specs.operating_temperature", "values": [ { "value": "5 to 35 degrees Celsius (A&E text)", "source_url": "https://www.allen-heath.com/content/uploads/2023/06/AR2412-Technical-Datasheet-1.pdf" }, { "value": "0 deg C to 35 deg C (spec table)", "source_url": "https://www.allen-heath.com/content/uploads/2023/06/AR2412-Technical-Datasheet-1.pdf" } ], "note": "Two values inside the same datasheet." }
+        {
+          "field": "key_specs.operating_temperature",
+          "values": [
+            {
+              "value": "5 to 35 degrees Celsius (A&E text)",
+              "source_url": "https://www.allen-heath.com/content/uploads/2023/06/AR2412-Technical-Datasheet-1.pdf"
+            },
+            {
+              "value": "0 deg C to 35 deg C (spec table)",
+              "source_url": "https://www.allen-heath.com/content/uploads/2023/06/AR2412-Technical-Datasheet-1.pdf"
+            }
+          ],
+          "note": "Two values inside the same datasheet."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Three etherCON ports with different roles (snake, expander, monitor) make a good 'which cable goes where' exercise for school Qu/SQ setups." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Three etherCON ports with different roles (snake, expander, monitor) make a good 'which cable goes where' exercise for school Qu/SQ setups."
+      },
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "allen-heath-dx168",
@@ -659,7 +2132,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Allen & Heath's rugged floor stage box for dLive, Avantis and SQ; a clear example of a mechanical redundant/cascade switch on a proprietary stage-box link.",
-      "typical_uses": ["floor stage box for dLive / Avantis / SQ", "redundant link to dLive MixRack", "daisy-chained remote I/O"],
+      "typical_uses": [
+        "floor stage box for dLive / Avantis / SQ",
+        "redundant link to dLive MixRack",
+        "daisy-chained remote I/O"
+      ],
       "key_specs": {
         "transport_protocol": "DX link (Allen & Heath), two etherCON ports",
         "sample_rate": "96kHz",
@@ -676,32 +2153,168 @@
         "dimensions_weight": "410mm x 190mm x 185mm x 4.6kg (W x D x H x weight)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "mic/line inputs 1-16", "dir": "in", "signal": "mic-level", "count": 16 },
-        { "connector": "xlr3-m", "role": "line outputs 1-8", "dir": "out", "signal": "line-level-pro", "count": 8 },
-        { "connector": "ethercon", "role": "DX A (to mixer)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "ethercon", "role": "DX B (redundant or cascade)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "iec-c14", "role": "mains in", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-16",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 16
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line outputs 1-8",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "ethercon",
+          "role": "DX A (to mixer)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "DX B (redundant or cascade)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aoip", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aoip",
+        "mains-power"
+      ],
       "manual_url": "https://support.allen-heath.com/hc/en-gb/articles/40432468352145-DX168-Getting-Started-Guide",
       "datasheet_url": "https://www.allen-heath.com/content/uploads/2023/06/DX168-Datasheet.pdf",
       "product_page_url": "https://www.allen-heath.com/hardware/everything-i-o/dx168/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://support.allen-heath.com/hc/en-gb/articles/40432468352145-DX168-Getting-Started-Guide", "title": "DX168 Getting Started Guide (web)", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
-        { "url": "https://support.allen-heath.com/hc/en-gb/articles/48830893970193-DX-GX-System-Guide", "title": "DX / GX System Guide (web)", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/DX168-Datasheet.pdf", "title": "DX168 Technical Datasheet", "language": "en", "file_type": "pdf", "version_or_date": "Issue 2", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://support.allen-heath.com/hc/en-gb/articles/40432468352145-DX168-Getting-Started-Guide",
+          "title": "DX168 Getting Started Guide (web)",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://support.allen-heath.com/hc/en-gb/articles/48830893970193-DX-GX-System-Guide",
+          "title": "DX / GX System Guide (web)",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/DX168-Datasheet.pdf",
+          "title": "DX168 Technical Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Issue 2",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.allen-heath.com/hardware/everything-i-o/dx168/", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.sample_rate", "key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.max_cable_length", "key_specs.redundancy", "key_specs.dimensions_weight", "connectors", "status"] },
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/DX168-Datasheet.pdf", "publisher": "Allen & Heath (technical datasheet)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.sample_rate", "key_specs.analog_inputs", "key_specs.analog_outputs", "key_specs.analogue_gain", "key_specs.pad", "key_specs.max_input_level", "key_specs.mic_ein", "key_specs.output_level", "key_specs.redundancy", "key_specs.mains", "key_specs.dimensions_weight", "connectors"] },
-        { "url": "https://www.allen-heath.com/hardware/everything-i-o/dx168/resources/", "publisher": "Allen & Heath (resources)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+        {
+          "url": "https://www.allen-heath.com/hardware/everything-i-o/dx168/",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.sample_rate",
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.max_cable_length",
+            "key_specs.redundancy",
+            "key_specs.dimensions_weight",
+            "connectors",
+            "status"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/DX168-Datasheet.pdf",
+          "publisher": "Allen & Heath (technical datasheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.sample_rate",
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.analogue_gain",
+            "key_specs.pad",
+            "key_specs.max_input_level",
+            "key_specs.mic_ein",
+            "key_specs.output_level",
+            "key_specs.redundancy",
+            "key_specs.mains",
+            "key_specs.dimensions_weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.allen-heath.com/hardware/everything-i-o/dx168/resources/",
+          "publisher": "Allen & Heath (resources)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ],
+          "url_status": "blocked"
+        }
       ],
       "notes": "DX is an Allen & Heath proprietary link, mapped to signal 'aoip' as the closest id. The product page says Qu compatibility applies to '96kHz Qu models only'.",
       "conflicts": [
-        { "field": "key_specs.dimensions_weight", "values": [ { "value": "Weighing in at just 4.8kg", "source_url": "https://www.allen-heath.com/hardware/everything-i-o/dx168/" }, { "value": "4.6kg", "source_url": "https://www.allen-heath.com/content/uploads/2023/06/DX168-Datasheet.pdf" } ], "note": "Product page vs datasheet weight." }
+        {
+          "field": "key_specs.dimensions_weight",
+          "values": [
+            {
+              "value": "Weighing in at just 4.8kg",
+              "source_url": "https://www.allen-heath.com/hardware/everything-i-o/dx168/"
+            },
+            {
+              "value": "4.6kg",
+              "source_url": "https://www.allen-heath.com/content/uploads/2023/06/DX168-Datasheet.pdf"
+            }
+          ],
+          "note": "Product page vs datasheet weight."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Redundant vs cascade switch on two etherCON ports is a nice lesson, similar wiring to the AR2412." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Redundant vs cascade switch on two etherCON ports is a nice lesson, similar wiring to the AR2412."
+      },
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "digico-sd-rack",
@@ -713,7 +2326,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "DiGiCo calls it 'the finest I/O rack available'; it is the reference stage rack for SD and Quantum consoles in touring and theatre, and a showcase of MADI redundancy, Optocore loops and gain tracking for shared racks.",
-      "typical_uses": ["stage rack for DiGiCo SD / Quantum consoles", "shared FOH/monitor/broadcast loop with Gain Tracking", "MADI split to broadcast truck"],
+      "typical_uses": [
+        "stage rack for DiGiCo SD / Quantum consoles",
+        "shared FOH/monitor/broadcast loop with Gain Tracking",
+        "MADI split to broadcast truck"
+      ],
       "key_specs": {
         "transport_protocol": "MADI (BNC) and optional Optocore optical fibre loop",
         "io_capacity": "14 card module slots (7 input and 7 output), up to 56 inputs and 56 outputs",
@@ -731,29 +2348,144 @@
         "rack_height": "10U"
       },
       "connectors": [
-        { "connector": "bnc", "role": "MADI Main and Aux I/O", "dir": "bidir", "signal": "madi", "count": 2 },
-        { "connector": "bnc", "role": "MADI Split Main and Aux outputs", "dir": "out", "signal": "madi", "count": 2 },
-        { "connector": "opticalcon", "role": "Optocore fibre loop (optional; HMA, opticalCON or ST)", "dir": "bidir", "signal": "fibre-optical-transport", "count": "not found" },
-        { "connector": "bnc", "role": "word clock I/O", "dir": "bidir", "signal": "wordclock", "count": "not found" },
-        { "connector": "usb-b", "role": "firmware / DiGiCo Control software", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "xlr3-f", "role": "mic/line inputs on input cards (card dependent)", "dir": "in", "signal": "mic-level", "count": "up to 56" },
-        { "connector": "xlr3-m", "role": "outputs on output cards (card dependent)", "dir": "out", "signal": "line-level-pro", "count": "up to 56" }
+        {
+          "connector": "bnc",
+          "role": "MADI Main and Aux I/O",
+          "dir": "bidir",
+          "signal": "madi",
+          "count": 2
+        },
+        {
+          "connector": "bnc",
+          "role": "MADI Split Main and Aux outputs",
+          "dir": "out",
+          "signal": "madi",
+          "count": 2
+        },
+        {
+          "connector": "opticalcon",
+          "role": "Optocore fibre loop (optional; HMA, opticalCON or ST)",
+          "dir": "bidir",
+          "signal": "fibre-optical-transport",
+          "count": "not found"
+        },
+        {
+          "connector": "bnc",
+          "role": "word clock I/O",
+          "dir": "bidir",
+          "signal": "wordclock",
+          "count": "not found"
+        },
+        {
+          "connector": "usb-b",
+          "role": "firmware / DiGiCo Control software",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs on input cards (card dependent)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": "up to 56"
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "outputs on output cards (card dependent)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "up to 56"
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "madi", "wordclock", "fibre-optical-transport", "aes3", "dante", "adat", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "madi",
+        "wordclock",
+        "fibre-optical-transport",
+        "aes3",
+        "dante",
+        "adat",
+        "mains-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://digico.biz/wp-content/uploads/2018/11/DiGiCo-SD-Rack-Data-Sheet-web.pdf",
       "product_page_url": "https://digico.biz/racks/sd-rack/",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://digico.biz/wp-content/uploads/2018/11/DiGiCo-SD-Rack-Data-Sheet-web.pdf", "title": "DiGiCo SD-Rack Datasheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://digico.biz/wp-content/uploads/2018/11/DiGiCo-SD-Rack-Data-Sheet-web.pdf",
+          "title": "DiGiCo SD-Rack Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://digico.biz/racks/sd-rack/", "publisher": "DiGiCo", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.io_capacity", "key_specs.madi_channels", "key_specs.loop_capacity", "key_specs.compatible_cards", "why_it_is_a_classic", "status"] },
-        { "url": "https://digico.biz/wp-content/uploads/2018/11/DiGiCo-SD-Rack-Data-Sheet-web.pdf", "publisher": "DiGiCo (datasheet)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.io_capacity", "key_specs.madi_ports", "key_specs.madi_channels", "key_specs.split_output_madi_type", "key_specs.optocore", "key_specs.sample_rates", "key_specs.word_clock", "key_specs.redundancy", "key_specs.compatible_cards", "key_specs.dimensions", "key_specs.weight", "key_specs.rack_height", "connectors"] }
+        {
+          "url": "https://digico.biz/racks/sd-rack/",
+          "publisher": "DiGiCo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.io_capacity",
+            "key_specs.madi_channels",
+            "key_specs.loop_capacity",
+            "key_specs.compatible_cards",
+            "why_it_is_a_classic",
+            "status"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2018/11/DiGiCo-SD-Rack-Data-Sheet-web.pdf",
+          "publisher": "DiGiCo (datasheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.io_capacity",
+            "key_specs.madi_ports",
+            "key_specs.madi_channels",
+            "key_specs.split_output_madi_type",
+            "key_specs.optocore",
+            "key_specs.sample_rates",
+            "key_specs.word_clock",
+            "key_specs.redundancy",
+            "key_specs.compatible_cards",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.rack_height",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Analog connector counts depend on fitted cards (8 channels per card implied by 56 = 7 x 8, not stated explicitly). Optocore is proprietary; recorded with proposed signal 'fibre-optical-transport' and connector 'opticalcon' (HMA and ST variants exist). Phantom power is controlled via DiGiCo Control software per the datasheet. Mains connector not stated. A user manual was not linked on the product page.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["opticalcon"], "proposed_new_signals": ["fibre-optical-transport", "dante", "adat"], "sim_value": "high", "sim_value_reason": "MADI main/aux redundancy, MADI split for broadcast, fibre loop and word clock in one rack: rich touring-scale wiring lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "opticalcon"
+        ],
+        "proposed_new_signals": [
+          "fibre-optical-transport",
+          "dante",
+          "adat"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "MADI main/aux redundancy, MADI split for broadcast, fibre loop and word clock in one rack: rich touring-scale wiring lesson."
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "audinate-dante-avio-analog-input-2ch",
@@ -765,7 +2497,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Audinate's own low-cost way to put any analog line source (wireless receiver, small mixer, DI) on a Dante network; ubiquitous in kit bags according to Audinate's positioning of the AVIO range for live use.",
-      "typical_uses": ["wireless receiver or small mixer onto Dante", "legacy analog console to Dante", "temporary analog drop points"],
+      "typical_uses": [
+        "wireless receiver or small mixer onto Dante",
+        "legacy analog console to Dante",
+        "temporary analog drop points"
+      ],
       "key_specs": {
         "transport_protocol": "Dante Audio over IP, AES67 RTP",
         "io": "2 in / 0 out",
@@ -781,24 +2517,97 @@
         "operating_temp": "-10 to +50C"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "analog line inputs (cable tails)", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "rj45", "role": "Dante / PoE", "dir": "bidir", "signal": "aoip", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "analog line inputs (cable tails)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "Dante / PoE",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "aoip", "dante", "aes67"],
+      "signal_types": [
+        "line-level-pro",
+        "aoip",
+        "dante",
+        "aes67"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://www.getdante.com/docs/dante-avio-analog-datasheet/",
       "product_page_url": "https://www.getdante.com/products/adapters/dante-avio-adapters/live/",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://www.getdante.com/docs/dante-avio-analog-datasheet/", "title": "Dante AVIO Analog Adapters datasheet", "language": "en", "file_type": "pdf", "version_or_date": "v.0625", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.getdante.com/docs/dante-avio-analog-datasheet/",
+          "title": "Dante AVIO Analog Adapters datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v.0625",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.getdante.com/products/adapters/dante-avio-adapters/live/", "publisher": "Audinate", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.io", "key_specs.transport_protocol", "key_specs.sampling_rates", "connectors", "why_it_is_a_classic"] },
-        { "url": "https://www.getdante.com/docs/dante-avio-analog-datasheet/", "publisher": "Audinate (datasheet)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.transport_protocol", "key_specs.max_signal_level", "key_specs.frequency_response", "key_specs.input_impedance", "key_specs.dynamic_range", "key_specs.thd", "key_specs.sampling_rates", "key_specs.bit_depth", "key_specs.dante_latency", "key_specs.power", "key_specs.operating_temp", "connectors"] }
+        {
+          "url": "https://www.getdante.com/products/adapters/dante-avio-adapters/live/",
+          "publisher": "Audinate",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.io",
+            "key_specs.transport_protocol",
+            "key_specs.sampling_rates",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.getdante.com/docs/dante-avio-analog-datasheet/",
+          "publisher": "Audinate (datasheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.transport_protocol",
+            "key_specs.max_signal_level",
+            "key_specs.frequency_response",
+            "key_specs.input_impedance",
+            "key_specs.dynamic_range",
+            "key_specs.thd",
+            "key_specs.sampling_rates",
+            "key_specs.bit_depth",
+            "key_specs.dante_latency",
+            "key_specs.power",
+            "key_specs.operating_temp",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Line level only: the datasheet lists selectable maximum levels down to -10dBV and no phantom power, so it is not a mic preamp. A 1-channel version (ADP-DAI-AU-1x0) and output versions (ADP-DAO-AU-0x1 / 0x2) exist. A French version of the AVIO product page exists (getdante.com/fr/...), but no manual.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dante", "aes67"], "sim_value": "high", "sim_value_reason": "Simplest possible analog-to-Dante path with PoE: ideal first AoIP wiring exercise." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante",
+          "aes67"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Simplest possible analog-to-Dante path with PoE: ideal first AoIP wiring exercise."
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "audinate-dante-avio-aes3",
@@ -810,7 +2619,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Shows the AES3-to-network conversion step (with SRC) in its simplest form; Audinate lists amplifiers, speaker processors, consoles and SDI video systems as typical partners.",
-      "typical_uses": ["AES3 amplifiers / processors onto Dante", "digital console AES out to Dante", "AES3 from SDI embedders onto Dante"],
+      "typical_uses": [
+        "AES3 amplifiers / processors onto Dante",
+        "digital console AES out to Dante",
+        "AES3 from SDI embedders onto Dante"
+      ],
       "key_specs": {
         "transport_protocol": "Dante Audio over IP, AES67 RTP <-> AES3",
         "io": "2 in, 2 out",
@@ -823,25 +2636,101 @@
         "operating_temp": "-10 to +50C"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "AES3 input (cable tail)", "dir": "in", "signal": "aes3", "count": 1 },
-        { "connector": "xlr3-m", "role": "AES3 output (cable tail)", "dir": "out", "signal": "aes3", "count": 1 },
-        { "connector": "rj45", "role": "Dante / PoE", "dir": "bidir", "signal": "aoip", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "AES3 input (cable tail)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES3 output (cable tail)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Dante / PoE",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        }
       ],
-      "signal_types": ["aes3", "aoip", "dante", "aes67"],
+      "signal_types": [
+        "aes3",
+        "aoip",
+        "dante",
+        "aes67"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://www.getdante.com/docs/dante-avio-aes3-datasheet/",
       "product_page_url": "https://www.getdante.com/products/adapters/dante-avio-adapters/live/",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://www.getdante.com/docs/dante-avio-aes3-datasheet/", "title": "Dante AVIO 2CH AES3 I/O Adapter datasheet", "language": "en", "file_type": "pdf", "version_or_date": "v.0625", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://www.getdante.com/docs/dante-avio-aes3-datasheet/",
+          "title": "Dante AVIO 2CH AES3 I/O Adapter datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v.0625",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.getdante.com/products/adapters/dante-avio-adapters/live/", "publisher": "Audinate", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.io", "key_specs.transport_protocol", "key_specs.sampling_rates", "connectors"] },
-        { "url": "https://www.getdante.com/docs/dante-avio-aes3-datasheet/", "publisher": "Audinate (datasheet)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.io", "key_specs.src", "key_specs.sampling_rates", "key_specs.bit_depth", "key_specs.signal_to_noise", "key_specs.dante_latency", "key_specs.power", "key_specs.operating_temp", "connectors", "why_it_is_a_classic"] }
+        {
+          "url": "https://www.getdante.com/products/adapters/dante-avio-adapters/live/",
+          "publisher": "Audinate",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.io",
+            "key_specs.transport_protocol",
+            "key_specs.sampling_rates",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.getdante.com/docs/dante-avio-aes3-datasheet/",
+          "publisher": "Audinate (datasheet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.io",
+            "key_specs.src",
+            "key_specs.sampling_rates",
+            "key_specs.bit_depth",
+            "key_specs.signal_to_noise",
+            "key_specs.dante_latency",
+            "key_specs.power",
+            "key_specs.operating_temp",
+            "connectors",
+            "why_it_is_a_classic"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "One AES3 XLR carries 2 channels each way (2 in / 2 out). The datasheet's 'Connectors: RJ45, 1 XLR-M, 1 XLR-F' is consistent with the web page. A USB AVIO (2x2, 48 kHz, USB-A or USB-C) also exists but is closer to a computer interface, so it was not given its own entry.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dante", "aes67"], "sim_value": "medium", "sim_value_reason": "Teaches that AES3 travels on XLR (2 ch per cable) and needs SRC when clocks differ." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante",
+          "aes67"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Teaches that AES3 travels on XLR (2 ch per cable) and needs SRC when clocks differ."
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     }
   ]
 }

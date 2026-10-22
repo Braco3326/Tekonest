@@ -4,22 +4,86 @@
   "generated": "2026-10-22",
   "selection_rationale": "Live desks most likely met in French schools, theatres and rental fleets (Yamaha QL1/CL5/TF5/DM7, Allen & Heath SQ-6/Avantis, Behringer X32) plus the touring flagships that teach the main digital transports (DiGiCo SD12 = MADI/Optocore, Avid S6L = AVB, Yamaha RIVAGE PM10 = TWINLANe fibre + Dante). Broadcast/radio covers the three AoIP families (Axia iQ = Livewire+/AES67, Lawo ruby and DHD RX2 = AES67/RAVENNA/ST2110 + Dante) and Calrec Brio for TV. Avid S6 represents the post-production mix-stage console; Avid S1, SSL UF8 and Mackie MCU Pro cover DAW control surfaces and the EUCON / HUI / MCU protocols.",
   "not_found_log": [
-    { "device_id": "behringer-x32", "what": "Official product page, datasheet and manual (behringer.com)", "searched": "behringer.com is JS-rendered; sitemap.xml and /en/products expose no product URLs; search budget exhausted" },
-    { "device_id": "midas-m32", "what": "Whole device (candidate dropped)", "searched": "midasconsoles.com JS-rendered, sitemap has no product pages; Thomann URL guesses 404; search budget exhausted" },
-    { "device_id": "behringer-wing", "what": "Whole device (candidate dropped)", "searched": "behringer.com JS-rendered; Thomann URL guesses 404; search budget exhausted" },
-    { "device_id": "midas-hd96-24", "what": "Whole device (candidate dropped)", "searched": "midasconsoles.com JS-rendered; search budget exhausted" },
-    { "device_id": "ssl-live-l550-plus", "what": "Whole device (candidate dropped)", "searched": "solidstatelogic.com/products/live 404; search budget exhausted" },
-    { "device_id": "ssl-system-t", "what": "Whole device (candidate dropped)", "searched": "solidstatelogic.com/products/system-t 404; search budget exhausted" },
-    { "device_id": "lawo-mc2-36", "what": "Whole device (candidate dropped)", "searched": "lawo.com/products/audio-consoles/mc236-mkiii/ 404; lawo.com/products/ 404; search budget exhausted" },
-    { "device_id": "yamaha-cl5", "what": "French owner's manual", "searched": "usa.yamaha.com CL downloads page (only EN listed); ca.yamaha.com/fr downloads redirected to product index" },
-    { "device_id": "yamaha-ql1", "what": "Datasheet / spec sheet PDF", "searched": "dk.yamaha.com QL brochure PDF (404/403)" },
-    { "device_id": "yamaha-rivage-pm10", "what": "PM10 datasheet", "searched": "fullcompass.com 40407-RIVAGEPM10Datasheet.pdf (403)" },
-    { "device_id": "yamaha-tf5", "what": "Owner's manual", "searched": "not fetched; search budget exhausted" },
-    { "device_id": "calrec-brio", "what": "Operator manual and brochure PDFs", "searched": "calrec.com Brio product page lists them but links are script-loaded" },
-    { "device_id": "lawo-ruby", "what": "Manual, datasheet, power consumption", "searched": "lawo.com/products/ruby, /support/manuals-and-knowledge-base/ (no PDFs in static HTML), Lawo_ruby_EN.pdf URL guess 404" },
-    { "device_id": "dhd-rx2", "what": "User manual", "searched": "dhd.audio RX2 and XC3 pages; only flyer PDF linked" },
-    { "device_id": "allen-heath-avantis", "what": "Datasheet, manual, power, dimensions", "searched": "allen-heath.com/hardware/avantis/resources/ redirected to Qu-16 resources; search budget exhausted" },
-    { "device_id": "all", "what": "year_introduced for most devices", "searched": "Only QL1 (2014), CL5 (2012), DM7 (2023) found in launch press before the search budget ran out" }
+    {
+      "device_id": "behringer-x32",
+      "what": "Official product page, datasheet and manual (behringer.com)",
+      "searched": "behringer.com is JS-rendered; sitemap.xml and /en/products expose no product URLs; search budget exhausted"
+    },
+    {
+      "device_id": "midas-m32",
+      "what": "Whole device (candidate dropped)",
+      "searched": "midasconsoles.com JS-rendered, sitemap has no product pages; Thomann URL guesses 404; search budget exhausted"
+    },
+    {
+      "device_id": "behringer-wing",
+      "what": "Whole device (candidate dropped)",
+      "searched": "behringer.com JS-rendered; Thomann URL guesses 404; search budget exhausted"
+    },
+    {
+      "device_id": "midas-hd96-24",
+      "what": "Whole device (candidate dropped)",
+      "searched": "midasconsoles.com JS-rendered; search budget exhausted"
+    },
+    {
+      "device_id": "ssl-live-l550-plus",
+      "what": "Whole device (candidate dropped)",
+      "searched": "solidstatelogic.com/products/live 404; search budget exhausted"
+    },
+    {
+      "device_id": "ssl-system-t",
+      "what": "Whole device (candidate dropped)",
+      "searched": "solidstatelogic.com/products/system-t 404; search budget exhausted"
+    },
+    {
+      "device_id": "lawo-mc2-36",
+      "what": "Whole device (candidate dropped)",
+      "searched": "lawo.com/products/audio-consoles/mc236-mkiii/ 404; lawo.com/products/ 404; search budget exhausted"
+    },
+    {
+      "device_id": "yamaha-cl5",
+      "what": "French owner's manual",
+      "searched": "usa.yamaha.com CL downloads page (only EN listed); ca.yamaha.com/fr downloads redirected to product index"
+    },
+    {
+      "device_id": "yamaha-ql1",
+      "what": "Datasheet / spec sheet PDF",
+      "searched": "dk.yamaha.com QL brochure PDF (404/403)"
+    },
+    {
+      "device_id": "yamaha-rivage-pm10",
+      "what": "PM10 datasheet",
+      "searched": "fullcompass.com 40407-RIVAGEPM10Datasheet.pdf (403)"
+    },
+    {
+      "device_id": "yamaha-tf5",
+      "what": "Owner's manual",
+      "searched": "not fetched; search budget exhausted"
+    },
+    {
+      "device_id": "calrec-brio",
+      "what": "Operator manual and brochure PDFs",
+      "searched": "calrec.com Brio product page lists them but links are script-loaded"
+    },
+    {
+      "device_id": "lawo-ruby",
+      "what": "Manual, datasheet, power consumption",
+      "searched": "lawo.com/products/ruby, /support/manuals-and-knowledge-base/ (no PDFs in static HTML), Lawo_ruby_EN.pdf URL guess 404"
+    },
+    {
+      "device_id": "dhd-rx2",
+      "what": "User manual",
+      "searched": "dhd.audio RX2 and XC3 pages; only flyer PDF linked"
+    },
+    {
+      "device_id": "allen-heath-avantis",
+      "what": "Datasheet, manual, power, dimensions",
+      "searched": "allen-heath.com/hardware/avantis/resources/ redirected to Qu-16 resources; search budget exhausted"
+    },
+    {
+      "device_id": "all",
+      "what": "year_introduced for most devices",
+      "searched": "Only QL1 (2014), CL5 (2012), DM7 (2023) found in launch press before the search budget ran out"
+    }
   ],
   "devices": [
     {
@@ -32,7 +96,13 @@
       "year_introduced": 2014,
       "status": "discontinued",
       "why_it_is_a_classic": "Yamaha launched the QL series at Prolight + Sound 2014 as compact all-in-one consoles inheriting CL-series technology. The QL1 brings Dante, Rio stage-box remote control and Yamaha's CL workflow into a 19-inch-rackable frame, which made it common in theatres, schools and rental stock.",
-      "typical_uses": ["small and medium live sound", "theatre", "corporate / AV", "monitor mixing", "Dante networked systems with Rio stage boxes"],
+      "typical_uses": [
+        "small and medium live sound",
+        "theatre",
+        "corporate / AV",
+        "monitor mixing",
+        "Dante networked systems with Rio stage boxes"
+      ],
       "key_specs": {
         "input_mixing_channels": "32 mono + 8 stereo",
         "mix_buses": "16",
@@ -61,38 +131,215 @@
         "scene_memory": "300"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "INPUT 1-16 mic/line (XLR-3-31, balanced, +48V)", "dir": "in", "signal": "mic-level", "count": 16 },
-        { "connector": "xlr3-m", "role": "OMNI OUT 1-8 (XLR-3-32, balanced)", "dir": "out", "signal": "line-level-pro", "count": 8 },
-        { "connector": "xlr3-m", "role": "DIGITAL OUT AES/EBU (XLR-3-32)", "dir": "out", "signal": "aes3", "count": 1 },
-        { "connector": "ethercon", "role": "Dante PRIMARY / SECONDARY (1000Base-T)", "dir": "bidir", "signal": "aoip", "count": 2 },
-        { "connector": "rj45", "role": "NETWORK (10BASE-T/100Base-TX, editor / StageMix control)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "bnc", "role": "WORDCLOCK IN / OUT", "dir": "bidir", "signal": "wordclock", "count": 2 },
-        { "connector": "midi-din5", "role": "MIDI IN / OUT", "dir": "bidir", "signal": "midi", "count": 2 },
-        { "connector": "gpio-terminal", "role": "GPI 5 in / 5 out (D-Sub 15P female)", "dir": "bidir", "signal": "gpio-tally", "count": 1 },
-        { "connector": "trs-quarter", "role": "PHONES (stereo phone jack)", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "xlr4", "role": "LAMP (gooseneck lamp, 12V)", "dir": "out", "signal": "dc-power", "count": 1 },
-        { "connector": "usb-a", "role": "USB HOST (USB 2.0, memory recording / scenes)", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "iec-c14", "role": "AC inlet (V-Lock type)", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "INPUT 1-16 mic/line (XLR-3-31, balanced, +48V)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 16
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "OMNI OUT 1-8 (XLR-3-32, balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "DIGITAL OUT AES/EBU (XLR-3-32)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "Dante PRIMARY / SECONDARY (1000Base-T)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "NETWORK (10BASE-T/100Base-TX, editor / StageMix control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "WORDCLOCK IN / OUT",
+          "dir": "bidir",
+          "signal": "wordclock",
+          "count": 2
+        },
+        {
+          "connector": "midi-din5",
+          "role": "MIDI IN / OUT",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 2
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "GPI 5 in / 5 out (D-Sub 15P female)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "PHONES (stereo phone jack)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr4",
+          "role": "LAMP (gooseneck lamp, 12V)",
+          "dir": "out",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB HOST (USB 2.0, memory recording / scenes)",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC inlet (V-Lock type)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aes3", "aoip", "dante", "wordclock", "midi", "gpio-tally", "headphone-level", "usb-audio", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes3",
+        "aoip",
+        "dante",
+        "wordclock",
+        "midi",
+        "gpio-tally",
+        "headphone-level",
+        "usb-audio",
+        "mains-power"
+      ],
       "manual_url": "https://ca.yamaha.com/files/download/other_assets/7/807227/ql5_1_fr_om_d0.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://usa.yamaha.com/products/proaudio/mixers/ql_series/specs.html",
-      "manual_languages": ["fr", "en"],
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
       "manuals": [
-        { "url": "https://ca.yamaha.com/files/download/other_assets/7/807227/ql5_1_fr_om_d0.pdf", "title": "QL5/QL1 Mode d'emploi", "language": "fr", "file_type": "pdf", "version_or_date": "d0 (filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://de.yamaha.com/files/download/other_assets/4/1626404/ql5_1_fr_rm_e0.pdf", "title": "QL5/QL1 Manuel de référence", "language": "fr", "file_type": "pdf", "version_or_date": "e0 (filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://usa.yamaha.com/files/download/other_assets/1/798481/ql5_1_en_om_d1.pdf", "title": "QL5/QL1 Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "d1 (filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://usa.yamaha.com/files/download/other_assets/2/1506322/ql5_1_en_rm_e0.pdf", "title": "QL5/QL1 Reference Manual", "language": "en", "file_type": "pdf", "version_or_date": "e0 (filename)", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/7/807227/ql5_1_fr_om_d0.pdf",
+          "title": "QL5/QL1 Mode d'emploi",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "d0 (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://de.yamaha.com/files/download/other_assets/4/1626404/ql5_1_fr_rm_e0.pdf",
+          "title": "QL5/QL1 Manuel de référence",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "e0 (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "dead"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/1/798481/ql5_1_en_om_d1.pdf",
+          "title": "QL5/QL1 Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "d1 (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/2/1506322/ql5_1_en_rm_e0.pdf",
+          "title": "QL5/QL1 Reference Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "e0 (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://usa.yamaha.com/products/proaudio/mixers/ql_series/specs.html", "publisher": "Yamaha Corporation of America", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs", "connectors", "signal_types"] },
-        { "url": "https://ca.yamaha.com/files/download/other_assets/7/807227/ql5_1_fr_om_d0.pdf", "publisher": "Yamaha Corporation", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.dante_io", "connectors", "manual_url"] },
-        { "url": "https://usa.yamaha.com/news_events/2014/20140311_ql_series_us.html", "publisher": "Yamaha Corporation of America (press release, via search result)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["year_introduced", "key_specs.input_mixing_channels", "key_specs.local_analog_inputs", "key_specs.local_analog_outputs"] }
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/mixers/ql_series/specs.html",
+          "publisher": "Yamaha Corporation of America",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs",
+            "connectors",
+            "signal_types"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://ca.yamaha.com/files/download/other_assets/7/807227/ql5_1_fr_om_d0.pdf",
+          "publisher": "Yamaha Corporation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.dante_io",
+            "connectors",
+            "manual_url"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/news_events/2014/20140311_ql_series_us.html",
+          "publisher": "Yamaha Corporation of America (press release, via search result)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "key_specs.input_mixing_channels",
+            "key_specs.local_analog_inputs",
+            "key_specs.local_analog_outputs"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Yamaha's spec page marks the QL Series as Discontinued. GPI is a D-Sub 15-pin female connector; no catalog id exists for DB15, so gpio-terminal is used. The AC inlet is IEC with V-Lock retention. Year from the Prolight + Sound 2014 launch press release (seen as search snippet only).",
       "conflicts": [],
-      "tekpractice": { "in_catalog": true, "catalog_id": "yamaha-ql1", "proposed_new_connectors": ["midi-din5", "xlr4"], "proposed_new_signals": ["dante", "midi"], "sim_value": "high", "sim_value_reason": "Already in catalog; Dante primary/secondary redundancy, AES out, word clock BNC and Rio remote-preamp lessons." }
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "yamaha-ql1",
+        "proposed_new_connectors": [
+          "midi-din5",
+          "xlr4"
+        ],
+        "proposed_new_signals": [
+          "dante",
+          "midi"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Already in catalog; Dante primary/secondary redundancy, AES out, word clock BNC and Rio remote-preamp lessons."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "yamaha-cl5",
@@ -104,7 +351,13 @@
       "year_introduced": 2012,
       "status": "discontinued",
       "why_it_is_a_classic": "Launched at Prolight + Sound 2012 as a Dante network-based console family, the CL5 is the flagship of the CL series and a long-running rental and venue standard paired with Rio stage boxes.",
-      "typical_uses": ["front-of-house live sound", "monitor mixing", "theatre and musicals", "touring and rental", "broadcast events (mix-minus, 5.1 panning in V3+)"],
+      "typical_uses": [
+        "front-of-house live sound",
+        "monitor mixing",
+        "theatre and musicals",
+        "touring and rental",
+        "broadcast events (mix-minus, 5.1 panning in V3+)"
+      ],
       "key_specs": {
         "input_mixing_channels": "72 mono + 8 stereo",
         "mix_buses": "24",
@@ -131,31 +384,159 @@
         "display": "10 inch Touch Panel"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "OMNI IN 1-8 mic/line (+48V)", "dir": "in", "signal": "mic-level", "count": 8 },
-        { "connector": "xlr3-m", "role": "OMNI OUT 1-8", "dir": "out", "signal": "line-level-pro", "count": 8 },
-        { "connector": "xlr3-m", "role": "DIGITAL OUT AES/EBU", "dir": "out", "signal": "aes3", "count": 1 },
-        { "connector": "ethercon", "role": "Dante PRIMARY / SECONDARY (1000Base-T)", "dir": "bidir", "signal": "aoip", "count": 2 },
-        { "connector": "bnc", "role": "Word clock IN / OUT", "dir": "bidir", "signal": "wordclock", "count": 2 },
-        { "connector": "midi-din5", "role": "MIDI IN / OUT", "dir": "bidir", "signal": "midi", "count": 2 },
-        { "connector": "iec-c14", "role": "AC inlet (V-Lock type)", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "OMNI IN 1-8 mic/line (+48V)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "OMNI OUT 1-8",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "DIGITAL OUT AES/EBU",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "Dante PRIMARY / SECONDARY (1000Base-T)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "bnc",
+          "role": "Word clock IN / OUT",
+          "dir": "bidir",
+          "signal": "wordclock",
+          "count": 2
+        },
+        {
+          "connector": "midi-din5",
+          "role": "MIDI IN / OUT",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 2
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC inlet (V-Lock type)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aes3", "aoip", "dante", "wordclock", "midi", "gpio-tally", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes3",
+        "aoip",
+        "dante",
+        "wordclock",
+        "midi",
+        "gpio-tally",
+        "mains-power"
+      ],
       "manual_url": "https://usa.yamaha.com/files/download/other_assets/9/798479/cl5_3_1_en_om_f0.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://usa.yamaha.com/products/proaudio/mixers/cl_series/specs.html",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://usa.yamaha.com/files/download/other_assets/9/798479/cl5_3_1_en_om_f0.pdf", "title": "CL5/CL3/CL1 Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "f0 (filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://usa.yamaha.com/files/download/other_assets/0/1506320/cl5_3_1_en_rm_g0.pdf", "title": "CL5/CL3/CL1 Reference Manual", "language": "en", "file_type": "pdf", "version_or_date": "g0 (filename)", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/9/798479/cl5_3_1_en_om_f0.pdf",
+          "title": "CL5/CL3/CL1 Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "f0 (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/0/1506320/cl5_3_1_en_rm_g0.pdf",
+          "title": "CL5/CL3/CL1 Reference Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "g0 (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://usa.yamaha.com/products/proaudio/mixers/cl_series/specs.html", "publisher": "Yamaha Corporation of America", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs", "connectors"] },
-        { "url": "https://usa.yamaha.com/products/proaudio/mixers/ql_series/specs.html", "publisher": "Yamaha Corporation of America", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.input_mixing_channels", "key_specs.mix_buses", "key_specs.local_analog_inputs", "key_specs.local_analog_outputs", "key_specs.my_slots", "key_specs.dante_io", "key_specs.dca_groups"] },
-        { "url": "https://www.svconline.com/the-wire/yamaha-commercial-audio-systems-launches-cl-series-digital-consoles-382750", "publisher": "Sound & Video Contractor (search result snippet)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "trade-press", "covers": ["year_introduced", "key_specs.input_mixing_channels", "key_specs.mix_buses", "key_specs.dca_groups"] }
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/mixers/cl_series/specs.html",
+          "publisher": "Yamaha Corporation of America",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/mixers/ql_series/specs.html",
+          "publisher": "Yamaha Corporation of America",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.input_mixing_channels",
+            "key_specs.mix_buses",
+            "key_specs.local_analog_inputs",
+            "key_specs.local_analog_outputs",
+            "key_specs.my_slots",
+            "key_specs.dante_io",
+            "key_specs.dca_groups"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.svconline.com/the-wire/yamaha-commercial-audio-systems-launches-cl-series-digital-consoles-382750",
+          "publisher": "Sound & Video Contractor (search result snippet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "year_introduced",
+            "key_specs.input_mixing_channels",
+            "key_specs.mix_buses",
+            "key_specs.dca_groups"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Yamaha's CL spec page marks the CL series Discontinued. The page's comparison table (CL and QL columns side by side) and the CL general specs table were both read. Year from trade-press launch coverage (Prolight + Sound 2012), seen as search snippet.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["midi-din5"], "proposed_new_signals": ["dante", "midi"], "sim_value": "medium", "sim_value_reason": "Same Dante/Rio lessons as the QL1 already in catalog; adds redundant external PSU concept." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "midi-din5"
+        ],
+        "proposed_new_signals": [
+          "dante",
+          "midi"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Same Dante/Rio lessons as the QL1 already in catalog; adds redundant external PSU concept."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "yamaha-dm7",
@@ -167,7 +548,13 @@
       "year_introduced": 2023,
       "status": "current",
       "why_it_is_a_classic": "Yamaha announced the DM7 series in June 2023 as its new mid-size platform covering live, broadcast and theatre (optional Broadcast and Theatre packages), inheriting the RIVAGE PM channel-strip interface. It succeeds the CL/QL generation in many venues.",
-      "typical_uses": ["live sound FOH / monitors", "broadcast (with Broadcast Package)", "theatre (with Theatre Package)", "installed venues", "multitrack recording over USB or Dante"],
+      "typical_uses": [
+        "live sound FOH / monitors",
+        "broadcast (with Broadcast Package)",
+        "theatre (with Theatre Package)",
+        "installed venues",
+        "multitrack recording over USB or Dante"
+      ],
       "key_specs": {
         "mixing_capacity": "DM7: 120 Inputs, 48 MIX + 12 MATRIX + 2 STEREO",
         "faders": "DM7: 100 mm touch-sensitive motorized fader × 28",
@@ -188,32 +575,182 @@
         "weight": "DM7: 23.5 kg"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "Mic/line inputs (count verified; XLR type not confirmed on pages read)", "dir": "in", "signal": "mic-level", "count": 32 },
-        { "connector": "xlr3-m", "role": "Analog outputs (count verified; XLR type not confirmed on pages read)", "dir": "out", "signal": "line-level-pro", "count": 16 },
-        { "connector": "ethercon", "role": "Dante Primary / Secondary", "dir": "bidir", "signal": "aoip", "count": 2 },
-        { "connector": "usb-b", "role": "USB 2.0 audio interface 18 in / 18 out (connector type per Yamaha manual not verified)", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "iec-c14", "role": "AC inlets (two AC power cords supplied)", "dir": "in", "signal": "mains-power", "count": 2 }
+        {
+          "connector": "xlr3-f",
+          "role": "Mic/line inputs (count verified; XLR type not confirmed on pages read)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 32
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Analog outputs (count verified; XLR type not confirmed on pages read)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 16
+        },
+        {
+          "connector": "ethercon",
+          "role": "Dante Primary / Secondary",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 2
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB 2.0 audio interface 18 in / 18 out (connector type per Yamaha manual not verified)",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC inlets (two AC power cords supplied)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 2
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aes3", "aoip", "dante", "usb-audio", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes3",
+        "aoip",
+        "dante",
+        "usb-audio",
+        "mains-power"
+      ],
       "manual_url": "https://manual.yamaha.com/pa/mixers/dm7/rm/fr-FR/",
       "datasheet_url": "not found",
       "product_page_url": "https://europe.yamaha.com/en/business/audio/products/mixers/dm7/",
-      "manual_languages": ["fr", "en"],
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
       "manuals": [
-        { "url": "https://manual.yamaha.com/pa/mixers/dm7/rm/fr-FR/", "title": "Série DM7 – Manuel de référence (web, PDF download link on page)", "language": "fr", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html", "title": "DM7 Series Reference Manual – General specifications", "language": "en", "file_type": "html", "version_or_date": "Published 05/2025", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://manual.yamaha.com/pa/mixers/dm7/rm/fr-FR/",
+          "title": "Série DM7 – Manuel de référence (web, PDF download link on page)",
+          "language": "fr",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html",
+          "title": "DM7 Series Reference Manual – General specifications",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "Published 05/2025",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html", "publisher": "Yamaha Corporation", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.mixing_capacity", "key_specs.faders", "key_specs.sampling_frequency_internal", "key_specs.external_clock_range", "key_specs.signal_delay", "key_specs.screens", "key_specs.power_requirements", "key_specs.power_consumption", "key_specs.dimensions", "key_specs.weight"] },
-        { "url": "https://europe.yamaha.com/en/business/audio/products/mixers/dm7/", "publisher": "Yamaha Music Europe", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.mixing_capacity", "key_specs.local_analog_io", "key_specs.aes_ebu", "key_specs.dante", "key_specs.slot", "key_specs.usb_audio_interface", "key_specs.power_consumption", "key_specs.dimensions", "key_specs.weight"] },
-        { "url": "https://www.thomann.de/be/yamaha_dm7.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.mixing_capacity", "key_specs.local_analog_io", "key_specs.aes_ebu", "key_specs.dante", "key_specs.usb_audio_interface", "key_specs.dca_groups", "key_specs.power_supply", "key_specs.weight", "key_specs.dimensions"] },
-        { "url": "https://usa.yamaha.com/news_events/2023/yamaha-introduces-the-new-dm7-series-digital-mixers.html", "publisher": "Yamaha Corporation of America (press release, search snippet)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["year_introduced"] }
+        {
+          "url": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html",
+          "publisher": "Yamaha Corporation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mixing_capacity",
+            "key_specs.faders",
+            "key_specs.sampling_frequency_internal",
+            "key_specs.external_clock_range",
+            "key_specs.signal_delay",
+            "key_specs.screens",
+            "key_specs.power_requirements",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://europe.yamaha.com/en/business/audio/products/mixers/dm7/",
+          "publisher": "Yamaha Music Europe",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.mixing_capacity",
+            "key_specs.local_analog_io",
+            "key_specs.aes_ebu",
+            "key_specs.dante",
+            "key_specs.slot",
+            "key_specs.usb_audio_interface",
+            "key_specs.power_consumption",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomann.de/be/yamaha_dm7.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.mixing_capacity",
+            "key_specs.local_analog_io",
+            "key_specs.aes_ebu",
+            "key_specs.dante",
+            "key_specs.usb_audio_interface",
+            "key_specs.dca_groups",
+            "key_specs.power_supply",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/news_events/2023/yamaha-introduces-the-new-dm7-series-digital-mixers.html",
+          "publisher": "Yamaha Corporation of America (press release, search snippet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Only the DM7 (full size) is described; DM7 Compact has 72 inputs, 16 analog in / 16 out, 16 faders. Connector types of the analog I/O were not stated on pages read (XLR assumed from Yamaha convention is NOT confirmed); treat counts as verified, connector type as unverified. PY64-D/PY64-MD cards add Dante or MADI (2 BNC in / 2 BNC out) via the PY slot.",
       "conflicts": [
-        { "field": "key_specs.sampling_frequency_internal", "values": [ { "value": "48 kHz / 96 kHz", "source_url": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html" }, { "value": "44,1/48/96 kHz", "source_url": "https://www.thomann.de/be/yamaha_dm7.htm" } ], "note": "Yamaha's reference manual lists only 48/96 kHz; Thomann adds 44.1 kHz." }
+        {
+          "field": "key_specs.sampling_frequency_internal",
+          "values": [
+            {
+              "value": "48 kHz / 96 kHz",
+              "source_url": "https://manual.yamaha.com/pa/mixers/dm7/rm/en-US/9546033675.html"
+            },
+            {
+              "value": "44,1/48/96 kHz",
+              "source_url": "https://www.thomann.de/be/yamaha_dm7.htm"
+            }
+          ],
+          "note": "Yamaha's reference manual lists only 48/96 kHz; Thomann adds 44.1 kHz."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dante"], "sim_value": "medium", "sim_value_reason": "Modern successor to QL1 in catalog; adds 96 kHz Dante, dual PSU and USB multitrack lessons." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Modern successor to QL1 in catalog; adds 96 kHz Dante, dual PSU and USB multitrack lessons."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "allen-heath-sq-6",
@@ -225,7 +762,13 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The SQ series is Allen & Heath's compact 96 kHz mixer line for small-to-mid-size live, AV and installation work; the SQ-6 is the 24-fader middle model widely found in venues and rental fleets alongside A&H stage boxes.",
-      "typical_uses": ["small and medium live sound", "in-ear monitor mixing", "conferences and AV (automatic mic mixer)", "houses of worship", "multitrack recording to USB"],
+      "typical_uses": [
+        "small and medium live sound",
+        "in-ear monitor mixing",
+        "conferences and AV (automatic mic mixer)",
+        "houses of worship",
+        "multitrack recording to USB"
+      ],
       "key_specs": {
         "input_channels": "48 Input Channels",
         "total_busses": "36 Total Busses",
@@ -253,38 +796,207 @@
         "weight": "Unpacked weight 14.5 kg (32 lbs)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "Mic/line inputs (recallable preamps, 48V)", "dir": "in", "signal": "mic-level", "count": 24 },
-        { "connector": "xlr3-f", "role": "Talkback mic input", "dir": "in", "signal": "mic-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "Stereo line inputs ST1, ST2 (balanced)", "dir": "in", "signal": "line-level-pro", "count": 4 },
-        { "connector": "trs-35mm", "role": "ST3 stereo input (unbalanced)", "dir": "in", "signal": "line-level-consumer", "count": 1 },
-        { "connector": "xlr3-m", "role": "Line outputs", "dir": "out", "signal": "line-level-pro", "count": 14 },
-        { "connector": "trs-quarter", "role": "Line outputs A and B (balanced)", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "xlr3-m", "role": "AES digital output (2 ch)", "dir": "out", "signal": "aes3", "count": 1 },
-        { "connector": "ethercon", "role": "SLink (dSnake / DX / gigaACE remote audio, ME personal mixing)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "rj45", "role": "Network (Fast Ethernet, MIDI over TCP/IP, apps)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "usb-b", "role": "USB-B audio streaming 32x32 and MIDI", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "usb-a", "role": "SQ-Drive (record/playback to USB drive)", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "trs-quarter", "role": "Headphone out", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "iec-c14", "role": "Mains in (earthed 3-pin IEC male)", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "Mic/line inputs (recallable preamps, 48V)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 24
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "Talkback mic input",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Stereo line inputs ST1, ST2 (balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "ST3 stereo input (unbalanced)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Line outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 14
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Line outputs A and B (balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES digital output (2 ch)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "SLink (dSnake / DX / gigaACE remote audio, ME personal mixing)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Network (Fast Ethernet, MIDI over TCP/IP, apps)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB-B audio streaming 32x32 and MIDI",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "SQ-Drive (record/playback to USB drive)",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Headphone out",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "Mains in (earthed 3-pin IEC male)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "phantom-48v", "aes3", "aoip", "usb-audio", "headphone-level", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "aes3",
+        "aoip",
+        "usb-audio",
+        "headphone-level",
+        "mains-power"
+      ],
       "manual_url": "https://support.allen-heath.com/hc/articles/41332471203985-SQ-5-SQ-6-SQ-7-Getting-Started-Guide",
       "datasheet_url": "https://www.allen-heath.com/content/uploads/2023/06/SQ-6-Technical-Datasheet_G.pdf",
       "product_page_url": "https://www.allen-heath.com/hardware/sq/sq-6/",
-      "manual_languages": ["fr", "en"],
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
       "manuals": [
-        { "url": "https://support.allen-heath.com/hc/articles/41332471203985-SQ-5-SQ-6-SQ-7-Getting-Started-Guide", "title": "SQ-5 SQ-6 SQ-7 Getting Started Guide (served as 'Guide de démarrage' in French locale)", "language": "multi", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/SQ-6-Technical-Datasheet_G.pdf", "title": "SQ-6 Technical Datasheet", "language": "en", "file_type": "pdf", "version_or_date": "G", "official": true, "kind": "datasheet" },
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/Weights-and-Measures-SQ-6.pdf", "title": "Weights and Measures SQ-6", "language": "en", "file_type": "pdf", "version_or_date": "Rev 2, 12/11/2019", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://support.allen-heath.com/hc/articles/41332471203985-SQ-5-SQ-6-SQ-7-Getting-Started-Guide",
+          "title": "SQ-5 SQ-6 SQ-7 Getting Started Guide (served as 'Guide de démarrage' in French locale)",
+          "language": "multi",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/SQ-6-Technical-Datasheet_G.pdf",
+          "title": "SQ-6 Technical Datasheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "G",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/Weights-and-Measures-SQ-6.pdf",
+          "title": "Weights and Measures SQ-6",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Rev 2, 12/11/2019",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/SQ-6-Technical-Datasheet_G.pdf", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs", "connectors", "signal_types"] },
-        { "url": "https://www.allen-heath.com/hardware/sq/sq-6/", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.input_channels", "key_specs.total_busses", "key_specs.matrix", "key_specs.faders", "key_specs.local_outputs", "key_specs.io_port", "key_specs.usb_audio", "key_specs.sampling_rate"] },
-        { "url": "https://www.allen-heath.com/content/uploads/2023/06/Weights-and-Measures-SQ-6.pdf", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.dimensions", "key_specs.weight"] }
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/SQ-6-Technical-Datasheet_G.pdf",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors",
+            "signal_types"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.allen-heath.com/hardware/sq/sq-6/",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.input_channels",
+            "key_specs.total_busses",
+            "key_specs.matrix",
+            "key_specs.faders",
+            "key_specs.local_outputs",
+            "key_specs.io_port",
+            "key_specs.usb_audio",
+            "key_specs.sampling_rate"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.allen-heath.com/content/uploads/2023/06/Weights-and-Measures-SQ-6.pdf",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "No full PDF user manual was found; A&H publishes an online Getting Started Guide (French locale available) and a Firmware Reference Guide on its support site. The product page lists 24+1 preamps where the +1 is the talkback input.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Common school/venue desk; SLink etherCON vs option-card Dante vs USB-B shows three different digital transports on one mixer." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Common school/venue desk; SLink etherCON vs option-card Dante vs USB-B shows three different digital transports on one mixer."
+      },
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "digico-sd12",
@@ -296,7 +1008,13 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The SD12 is DiGiCo's compact SD-Range console aimed at touring, corporate, theatre, worship and broadcast; DiGiCo says it was the first SD-Range desk with an integrated recording interface (UB MADI). It is a common rider-friendly desk with SD-Racks over MADI or Optocore.",
-      "typical_uses": ["touring FOH / monitors", "theatre (Theatre software option)", "corporate events", "broadcast", "virtual soundcheck via UB MADI"],
+      "typical_uses": [
+        "touring FOH / monitors",
+        "theatre (Theatre software option)",
+        "corporate events",
+        "broadcast",
+        "virtual soundcheck via UB MADI"
+      ],
       "key_specs": {
         "input_channels": "72 Input Channels",
         "busses": "36 plus masters Aux / Group busses with full processing Mono / Stereo / LCR",
@@ -320,38 +1038,229 @@
         "sd12_96_option": "optional SD12 96 software extension: 96 input channels and 48 Aux/Sub-group Busses"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "Local mic/line inputs", "dir": "in", "signal": "mic-level", "count": 8 },
-        { "connector": "xlr3-m", "role": "Local line outputs", "dir": "out", "signal": "line-level-pro", "count": 8 },
-        { "connector": "xlr3-f", "role": "AES/EBU inputs (8 channels)", "dir": "in", "signal": "aes3", "count": 4 },
-        { "connector": "xlr3-m", "role": "AES/EBU outputs (8 channels)", "dir": "out", "signal": "aes3", "count": 4 },
-        { "connector": "bnc", "role": "MADI 1/2 IN and OUT (75 Ω coax to SD-Racks or MADI recorder)", "dir": "bidir", "signal": "madi", "count": 4 },
-        { "connector": "bnc", "role": "Word Clock I/O", "dir": "bidir", "signal": "wordclock", "count": 2 },
-        { "connector": "opticalcon", "role": "Optocore loop (optional; HMA, opticalCON or ST variants)", "dir": "bidir", "signal": "fibre-optical-transport", "count": "1 or 2 loops" },
-        { "connector": "dsub25", "role": "GPI DSub37 (16 inputs) and GPO DSub37 (16 outputs)", "dir": "bidir", "signal": "gpio-tally", "count": 2 },
-        { "connector": "midi-din5", "role": "MIDI In / Thru / Out", "dir": "bidir", "signal": "midi", "count": 3 },
-        { "connector": "usb-b", "role": "UB MADI USB audio (up to 48 ch)", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "usb-a", "role": "USB 2.0 slots", "dir": "bidir", "signal": "usb-audio", "count": 4 },
-        { "connector": "rj45", "role": "Ethernet port", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "iec-c14", "role": "Mains in, dual redundant PSUs", "dir": "in", "signal": "mains-power", "count": 2 }
+        {
+          "connector": "xlr3-f",
+          "role": "Local mic/line inputs",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Local line outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES/EBU inputs (8 channels)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU outputs (8 channels)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 4
+        },
+        {
+          "connector": "bnc",
+          "role": "MADI 1/2 IN and OUT (75 Ω coax to SD-Racks or MADI recorder)",
+          "dir": "bidir",
+          "signal": "madi",
+          "count": 4
+        },
+        {
+          "connector": "bnc",
+          "role": "Word Clock I/O",
+          "dir": "bidir",
+          "signal": "wordclock",
+          "count": 2
+        },
+        {
+          "connector": "opticalcon",
+          "role": "Optocore loop (optional; HMA, opticalCON or ST variants)",
+          "dir": "bidir",
+          "signal": "fibre-optical-transport",
+          "count": "1 or 2 loops"
+        },
+        {
+          "connector": "dsub25",
+          "role": "GPI DSub37 (16 inputs) and GPO DSub37 (16 outputs)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 2
+        },
+        {
+          "connector": "midi-din5",
+          "role": "MIDI In / Thru / Out",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 3
+        },
+        {
+          "connector": "usb-b",
+          "role": "UB MADI USB audio (up to 48 ch)",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB 2.0 slots",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 4
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet port",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "Mains in, dual redundant PSUs",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 2
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aes3", "madi", "wordclock", "fibre-optical-transport", "gpio-tally", "midi", "usb-audio", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes3",
+        "madi",
+        "wordclock",
+        "fibre-optical-transport",
+        "gpio-tally",
+        "midi",
+        "usb-audio",
+        "mains-power"
+      ],
       "manual_url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
       "datasheet_url": "https://digico.biz/wp-content/uploads/2020/04/DiGiCo-SD12-Data-Sheet-1.pdf",
       "product_page_url": "https://digico.biz/consoles/sd12/",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf", "title": "SD12 Getting Started", "language": "en", "file_type": "pdf", "version_or_date": "Issue A (filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://digico.biz/wp-content/uploads/2022/03/SD-Quantum-Software-Reference-Issue-E-V1528.pdf", "title": "SD / Quantum Software Reference Issue E (V1528)", "language": "en", "file_type": "pdf", "version_or_date": "Issue E", "official": true, "kind": "user-manual" },
-        { "url": "https://digico.biz/wp-content/uploads/2020/04/DiGiCo-SD12-Data-Sheet-1.pdf", "title": "SD12 Data Sheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "title": "SD12 Getting Started",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Issue A (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2022/03/SD-Quantum-Software-Reference-Issue-E-V1528.pdf",
+          "title": "SD / Quantum Software Reference Issue E (V1528)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Issue E",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/04/DiGiCo-SD12-Data-Sheet-1.pdf",
+          "title": "SD12 Data Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://digico.biz/consoles/sd12/", "publisher": "DiGiCo", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.input_channels", "key_specs.busses", "key_specs.matrix", "key_specs.control_groups", "key_specs.faders", "key_specs.local_io", "key_specs.madi", "key_specs.sampling_rates", "key_specs.processing_delay", "key_specs.power_requirements", "key_specs.weight", "key_specs.dmi_slots"] },
-        { "url": "https://digico.biz/wp-content/uploads/2020/04/DiGiCo-SD12-Data-Sheet-1.pdf", "publisher": "DiGiCo", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.input_channels", "key_specs.busses", "key_specs.matrix", "key_specs.control_groups", "key_specs.faders", "key_specs.local_io", "key_specs.madi", "key_specs.optocore", "key_specs.usb_audio", "key_specs.power_supplies", "key_specs.weight", "key_specs.sampling_rates", "connectors"] },
-        { "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf", "publisher": "DiGiCo", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usb_audio", "key_specs.ext_sync", "connectors"] }
+        {
+          "url": "https://digico.biz/consoles/sd12/",
+          "publisher": "DiGiCo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.input_channels",
+            "key_specs.busses",
+            "key_specs.matrix",
+            "key_specs.control_groups",
+            "key_specs.faders",
+            "key_specs.local_io",
+            "key_specs.madi",
+            "key_specs.sampling_rates",
+            "key_specs.processing_delay",
+            "key_specs.power_requirements",
+            "key_specs.weight",
+            "key_specs.dmi_slots"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/04/DiGiCo-SD12-Data-Sheet-1.pdf",
+          "publisher": "DiGiCo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.input_channels",
+            "key_specs.busses",
+            "key_specs.matrix",
+            "key_specs.control_groups",
+            "key_specs.faders",
+            "key_specs.local_io",
+            "key_specs.madi",
+            "key_specs.optocore",
+            "key_specs.usb_audio",
+            "key_specs.power_supplies",
+            "key_specs.weight",
+            "key_specs.sampling_rates",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
+          "publisher": "DiGiCo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.usb_audio",
+            "key_specs.ext_sync",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "GPI/GPO use D-Sub 37 connectors; dsub25 is the closest existing id (pin count differs). Optocore ports are a factory option with three connector types (HMA, opticalCON, ST); opticalcon is listed as the representative. DMI cards add Dante (Primary/Secondary Gigabit etherCON), MADI, AES, AVB, Hydra2 etc.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["opticalcon", "midi-din5"], "proposed_new_signals": ["fibre-optical-transport", "midi"], "sim_value": "high", "sim_value_reason": "Clear MADI-over-BNC lesson (IN to OUT crossing with SD-Rack), plus AES on XLR, word clock and optional fibre loop." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "opticalcon",
+          "midi-din5"
+        ],
+        "proposed_new_signals": [
+          "fibre-optical-transport",
+          "midi"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Clear MADI-over-BNC lesson (IN to OUT crossing with SD-Rack), plus AES on XLR, word clock and optional fibre loop."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "avid-venue-s6l",
@@ -363,7 +1272,13 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "S6L is Avid's flagship VENUE live platform with direct Pro Tools recording over AVB and AAX plug-ins; a Avid product page quotes engineers using VENUE on major tours. It is a frequent rider request on large tours and festivals.",
-      "typical_uses": ["large touring FOH / monitors", "festivals", "live recording with Pro Tools (up to 128 tracks)", "immersive live mixing", "shared I/O across networked systems"],
+      "typical_uses": [
+        "large touring FOH / monitors",
+        "festivals",
+        "live recording with Pro Tools (up to 128 tracks)",
+        "immersive live mixing",
+        "shared I/O across networked systems"
+      ],
       "key_specs": {
         "system": "Five control surface models (16 to 48 faders), three E6L engines, four I/O racks",
         "input_channels": "E6L-192: 192 / E6L-144: 144 / E6L-112: 112",
@@ -385,36 +1300,194 @@
         "newer_engine": "VENUE | E6LX-256: 256 inputs and 192 output busses (product page, VENUE 8.0)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "Surface analog mic/line inputs (+48V)", "dir": "in", "signal": "mic-level", "count": 8 },
-        { "connector": "xlr3-m", "role": "Surface analog outputs", "dir": "out", "signal": "line-level-pro", "count": 8 },
-        { "connector": "xlr3-f", "role": "Surface AES/EBU inputs (4 pairs)", "dir": "in", "signal": "aes3", "count": 4 },
-        { "connector": "xlr3-m", "role": "Surface AES/EBU outputs (4 pairs)", "dir": "out", "signal": "aes3", "count": 4 },
-        { "connector": "ethercon", "role": "AVB audio network ports (copper option)", "dir": "bidir", "signal": "avb-milan", "count": 4 },
-        { "connector": "sfp-cage", "role": "AVB audio network ports (fibre option, same 4 ports)", "dir": "bidir", "signal": "avb-milan", "count": 4 },
-        { "connector": "trs-quarter", "role": "Headphone outputs", "dir": "out", "signal": "headphone-level", "count": 2 },
-        { "connector": "bnc", "role": "Word clock in/out (E6L engine)", "dir": "bidir", "signal": "wordclock", "count": 2 },
-        { "connector": "bnc", "role": "MADI split outs (Stage 64 rack)", "dir": "out", "signal": "madi", "count": 2 },
-        { "connector": "rj45", "role": "ECx Ethernet (remote control)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "xlr4", "role": "Lamp sockets (Built-in 2x XLR lights)", "dir": "out", "signal": "dc-power", "count": 2 }
+        {
+          "connector": "xlr3-f",
+          "role": "Surface analog mic/line inputs (+48V)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Surface analog outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "Surface AES/EBU inputs (4 pairs)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Surface AES/EBU outputs (4 pairs)",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 4
+        },
+        {
+          "connector": "ethercon",
+          "role": "AVB audio network ports (copper option)",
+          "dir": "bidir",
+          "signal": "avb-milan",
+          "count": 4
+        },
+        {
+          "connector": "sfp-cage",
+          "role": "AVB audio network ports (fibre option, same 4 ports)",
+          "dir": "bidir",
+          "signal": "avb-milan",
+          "count": 4
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Headphone outputs",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 2
+        },
+        {
+          "connector": "bnc",
+          "role": "Word clock in/out (E6L engine)",
+          "dir": "bidir",
+          "signal": "wordclock",
+          "count": 2
+        },
+        {
+          "connector": "bnc",
+          "role": "MADI split outs (Stage 64 rack)",
+          "dir": "out",
+          "signal": "madi",
+          "count": 2
+        },
+        {
+          "connector": "rj45",
+          "role": "ECx Ethernet (remote control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "xlr4",
+          "role": "Lamp sockets (Built-in 2x XLR lights)",
+          "dir": "out",
+          "signal": "dc-power",
+          "count": 2
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aes3", "avb-milan", "madi", "wordclock", "headphone-level", "gpio-tally", "ltc-timecode", "midi", "aoip"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes3",
+        "avb-milan",
+        "madi",
+        "wordclock",
+        "headphone-level",
+        "gpio-tally",
+        "ltc-timecode",
+        "midi",
+        "aoip"
+      ],
       "manual_url": "https://resources.avid.com/SupportFiles/VENUE/VENUE_S6L_System_Guide.pdf",
       "datasheet_url": "https://cdn.avid.com/myavid/avid/files/resource-center/s6l_product_specifications.pdf",
       "product_page_url": "https://www.avid.com/products/venue-s6l-system",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://resources.avid.com/SupportFiles/VENUE/VENUE_S6L_System_Guide.pdf", "title": "VENUE S6L System Guide", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://resources.avid.com/SupportFiles/VENUE/VENUE_S6L_Installation_Guide.pdf", "title": "VENUE S6L Installation Guide", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://cdn.avid.com/myavid/avid/files/resource-center/s6l_product_specifications.pdf", "title": "Avid VENUE | S6L Product Specifications", "language": "en", "file_type": "pdf", "version_or_date": "© 2020", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://resources.avid.com/SupportFiles/VENUE/VENUE_S6L_System_Guide.pdf",
+          "title": "VENUE S6L System Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://resources.avid.com/SupportFiles/VENUE/VENUE_S6L_Installation_Guide.pdf",
+          "title": "VENUE S6L Installation Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://cdn.avid.com/myavid/avid/files/resource-center/s6l_product_specifications.pdf",
+          "title": "Avid VENUE | S6L Product Specifications",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "© 2020",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://cdn.avid.com/myavid/avid/files/resource-center/s6l_product_specifications.pdf", "publisher": "Avid Technology", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs", "connectors", "signal_types"] },
-        { "url": "https://www.avid.com/products/venue-s6l-system", "publisher": "Avid Technology", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.newer_engine", "key_specs.sample_rate", "key_specs.plugin_slots", "key_specs.avb_ports"] },
-        { "url": "https://kb.avid.com/pkb/articles/user_guide/S6L-Documentation", "publisher": "Avid Knowledge Base", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manual_url"] }
+        {
+          "url": "https://cdn.avid.com/myavid/avid/files/resource-center/s6l_product_specifications.pdf",
+          "publisher": "Avid Technology",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors",
+            "signal_types"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.avid.com/products/venue-s6l-system",
+          "publisher": "Avid Technology",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.newer_engine",
+            "key_specs.sample_rate",
+            "key_specs.plugin_slots",
+            "key_specs.avb_ports"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kb.avid.com/pkb/articles/user_guide/S6L-Documentation",
+          "publisher": "Avid Knowledge Base",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manual_url"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Specs PDF (© 2020) predates the E6LX engines mentioned on the product page. The product page says AVB fibre runs up to 10 km; the spec PDF gives 500 m multimode / 10,000 m single-mode for racks. The S6L System Guide PDF link was taken from the Avid KB documentation page and was not opened. Lamp connector type (XLR 'lights') assumed 4-pin is NOT confirmed.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["sfp-cage"], "proposed_new_signals": ["avb-milan"], "sim_value": "high", "sim_value_reason": "Only AVB-native system in this file; etherCON vs SFP fibre per port and redundant star topology are distinctive lessons." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "sfp-cage"
+        ],
+        "proposed_new_signals": [
+          "avb-milan"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Only AVB-native system in this file; etherCON vs SFP fibre per port and redundant star topology are distinctive lessons."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "avid-s6",
@@ -426,7 +1499,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Avid describes S6 as building on its ICON and System 5 console families and offers integrated Dolby Atmos workflows with Pro Tools Ultimate; it is the large-format 'console' in many post-production and music mix rooms.",
-      "typical_uses": ["film/TV post-production mixing", "Dolby Atmos mixing", "music mixing on Pro Tools", "multi-workstation control (up to eight DAWs)"],
+      "typical_uses": [
+        "film/TV post-production mixing",
+        "Dolby Atmos mixing",
+        "music mixing on Pro Tools",
+        "multi-workstation control (up to eight DAWs)"
+      ],
       "key_specs": {
         "architecture": "fully modular … Fader, Knob, Process, and Display Modules; optional modules for surround and post mixing",
         "master_touch_module": "12.1-inch tilting multipoint touchscreen",
@@ -438,27 +1516,117 @@
         "ethernet_switch": "16-port 11.29 W / 24-port 14.83 W"
       },
       "connectors": [
-        { "connector": "rj45", "role": "EUCON Ethernet (modules to internal switch, switch to DAW workstations)", "dir": "bidir", "signal": "aoip", "count": "per configuration" },
-        { "connector": "iec-c14", "role": "Mains to chassis PSU(s)", "dir": "in", "signal": "mains-power", "count": "per chassis" }
+        {
+          "connector": "rj45",
+          "role": "EUCON Ethernet (modules to internal switch, switch to DAW workstations)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": "per configuration"
+        },
+        {
+          "connector": "iec-c14",
+          "role": "Mains to chassis PSU(s)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": "per chassis"
+        }
       ],
-      "signal_types": ["mains-power"],
+      "signal_types": [
+        "mains-power"
+      ],
       "manual_url": "https://resources.avid.com/SupportFiles/ProMixing/S4_S6_Guide_v2025.12.pdf",
       "datasheet_url": "https://akmedia.digidesign.com/support/docs/S6_Power_and_Weight_94769.pdf",
       "product_page_url": "https://www.avid.com/products/avid-s6",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://resources.avid.com/SupportFiles/ProMixing/S4_S6_Guide_v2025.12.pdf", "title": "S4 / S6 Guide v2025.12", "language": "en", "file_type": "pdf", "version_or_date": "v2025.12", "official": true, "kind": "user-manual" },
-        { "url": "https://resources.avid.com/SupportFiles/ProMixing/S4_S6_Operation_v2026.4.pdf", "title": "S4 / S6 Operation v2026.4", "language": "en", "file_type": "pdf", "version_or_date": "v2026.4", "official": true, "kind": "user-manual" },
-        { "url": "https://akmedia.digidesign.com/support/docs/S6_Power_and_Weight_94769.pdf", "title": "S6 Power and Weight Specifications", "language": "en", "file_type": "pdf", "version_or_date": "12/15/16", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://resources.avid.com/SupportFiles/ProMixing/S4_S6_Guide_v2025.12.pdf",
+          "title": "S4 / S6 Guide v2025.12",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v2025.12",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://resources.avid.com/SupportFiles/ProMixing/S4_S6_Operation_v2026.4.pdf",
+          "title": "S4 / S6 Operation v2026.4",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v2026.4",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://akmedia.digidesign.com/support/docs/S6_Power_and_Weight_94769.pdf",
+          "title": "S6 Power and Weight Specifications",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "12/15/16",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.avid.com/products/avid-s6", "publisher": "Avid Technology", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.architecture", "key_specs.master_touch_module", "key_specs.control_protocol", "key_specs.workstations"] },
-        { "url": "https://akmedia.digidesign.com/support/docs/S6_Power_and_Weight_94769.pdf", "publisher": "Avid Technology", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.module_power_avg_max", "key_specs.chassis_power_rule", "key_specs.module_weights", "key_specs.ethernet_switch"] },
-        { "url": "https://kb.avid.com/pkb/articles/en_US/user_guide/EUCON-Product-Guides", "publisher": "Avid Knowledge Base", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manual_url"] }
+        {
+          "url": "https://www.avid.com/products/avid-s6",
+          "publisher": "Avid Technology",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.architecture",
+            "key_specs.master_touch_module",
+            "key_specs.control_protocol",
+            "key_specs.workstations"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://akmedia.digidesign.com/support/docs/S6_Power_and_Weight_94769.pdf",
+          "publisher": "Avid Technology",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.module_power_avg_max",
+            "key_specs.chassis_power_rule",
+            "key_specs.module_weights",
+            "key_specs.ethernet_switch"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kb.avid.com/pkb/articles/en_US/user_guide/EUCON-Product-Guides",
+          "publisher": "Avid Knowledge Base",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manual_url"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "S6 carries no audio; it is placed under digital-studio-post because it is the console of reference in post mix stages, but it is technically a control surface. Physical connector details (IEC on PSU) were seen in the S4/S6 guide only for S4 ('included IEC power cables'); treat S6 IEC as unverified. Signal type 'EUCON control over Ethernet' has no id; aoip used only as a placeholder on the connector.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Only Ethernet control and mains; useful to teach control-vs-audio networks, little wiring content." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Only Ethernet control and mains; useful to teach control-vs-audio networks, little wiring content."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "avid-s1",
@@ -470,7 +1638,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Avid positions S1 as bringing S6 workflows to a desktop unit for small rooms and education, with deep Pro Tools and Media Composer integration over EUCON.",
-      "typical_uses": ["Pro Tools mixing in small studios", "education / classrooms", "audio post editing with Avid Dock", "multi-DAW control (Logic Pro, Cubase, Premiere Pro)"],
+      "typical_uses": [
+        "Pro Tools mixing in small studios",
+        "education / classrooms",
+        "audio post editing with Avid Dock",
+        "multi-DAW control (Logic Pro, Cubase, Premiere Pro)"
+      ],
       "key_specs": {
         "faders": "Eight motorized, touch sensitive faders",
         "expansion": "connecting up to four S1 surfaces—plus Avid Dock—to create a 32-fader system",
@@ -483,27 +1656,113 @@
         "weight": "4.17 lbs / 1.89 kg"
       },
       "connectors": [
-        { "connector": "rj45", "role": "Gigabit Ethernet (EUCON to workstation)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "trs-quarter", "role": "Footswitch input (1/4-inch)", "dir": "in", "signal": "gpio-tally", "count": 1 },
-        { "connector": "usb-a", "role": "Tablet charging/power only (connector type not stated)", "dir": "out", "signal": "dc-power", "count": 1 },
-        { "connector": "dc-barrel", "role": "Universal power supply input (connector type not stated)", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "rj45",
+          "role": "Gigabit Ethernet (EUCON to workstation)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Footswitch input (1/4-inch)",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "Tablet charging/power only (connector type not stated)",
+          "dir": "out",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "Universal power supply input (connector type not stated)",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["dc-power"],
+      "signal_types": [
+        "dc-power"
+      ],
       "manual_url": "https://resources.avid.com/SupportFiles/ProMixing/Avid_S1_Guide_v2025.12.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://www.avid.com/products/avid-s1",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://resources.avid.com/SupportFiles/ProMixing/Avid_S1_Guide_v2025.12.pdf", "title": "Avid S1 Guide v2025.12", "language": "en", "file_type": "pdf", "version_or_date": "v2025.12", "official": true, "kind": "user-manual" },
-        { "url": "https://resources.avid.com/SupportFiles/ProMixing/Avid_Dock_Guide_v2025.12.pdf", "title": "Avid Dock Guide v2025.12", "language": "en", "file_type": "pdf", "version_or_date": "v2025.12", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://resources.avid.com/SupportFiles/ProMixing/Avid_S1_Guide_v2025.12.pdf",
+          "title": "Avid S1 Guide v2025.12",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v2025.12",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://resources.avid.com/SupportFiles/ProMixing/Avid_Dock_Guide_v2025.12.pdf",
+          "title": "Avid Dock Guide v2025.12",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v2025.12",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.avid.com/products/avid-s1", "publisher": "Avid Technology", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.faders", "key_specs.expansion", "key_specs.protocol"] },
-        { "url": "https://resources.avid.com/SupportFiles/ProMixing/Avid_S1_Guide_v2025.12.pdf", "publisher": "Avid Technology", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.protocol", "key_specs.ethernet_port", "key_specs.footswitch", "key_specs.usb", "key_specs.power_requirements", "key_specs.dimensions", "key_specs.weight"] }
+        {
+          "url": "https://www.avid.com/products/avid-s1",
+          "publisher": "Avid Technology",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.faders",
+            "key_specs.expansion",
+            "key_specs.protocol"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://resources.avid.com/SupportFiles/ProMixing/Avid_S1_Guide_v2025.12.pdf",
+          "publisher": "Avid Technology",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.protocol",
+            "key_specs.ethernet_port",
+            "key_specs.footswitch",
+            "key_specs.usb",
+            "key_specs.power_requirements",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Product page lists a universal power supply and Ethernet cable as included; the PSU plug type is not described in the sources read (dc-barrel is a placeholder). No audio I/O.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["dc-barrel"], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Control-only Ethernet device; could pair with the avid-protools-hdx catalog item to show control vs audio paths." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "dc-barrel"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Control-only Ethernet device; could pair with the avid-protools-hdx catalog item to show control vs audio paths."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "ssl-uf8",
@@ -515,7 +1774,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "SSL presents UF8 as distilling its console workflow into an expandable USB DAW controller; it is a widely used modern alternative to the Mackie MCU in project and post studios.",
-      "typical_uses": ["DAW mixing (Pro Tools, Logic, Cubase, Live, Studio One)", "post-production (up to 32 faders with 4 units)", "home and project studios"],
+      "typical_uses": [
+        "DAW mixing (Pro Tools, Logic, Cubase, Live, Studio One)",
+        "post-production (up to 32 faders with 4 units)",
+        "home and project studios"
+      ],
       "key_specs": {
         "faders": "100 mm touch sensitive faders (motorised)",
         "channels": "expandable 8-channel advanced DAW controller; connect 4 UF8s within a single system to create a 32-channel controller",
@@ -529,28 +1792,131 @@
         "rack_mount": "occupies 6U of space (optional kit)"
       },
       "connectors": [
-        { "connector": "usb-c", "role": "Host computer connection", "dir": "bidir", "signal": "midi", "count": 1 },
-        { "connector": "usb-a", "role": "Daisy-chain to next UF8 / USB dongle", "dir": "bidir", "signal": "midi", "count": 1 },
-        { "connector": "trs-quarter", "role": "Footswitch inputs (jack sockets)", "dir": "in", "signal": "gpio-tally", "count": 2 },
-        { "connector": "dc-barrel", "role": "DC socket for external 12 V 5 A PSU", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "usb-c",
+          "role": "Host computer connection",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "Daisy-chain to next UF8 / USB dongle",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Footswitch inputs (jack sockets)",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 2
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "DC socket for external 12 V 5 A PSU",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["midi", "dc-power"],
+      "signal_types": [
+        "midi",
+        "dc-power"
+      ],
       "manual_url": "https://solidstatelogic.com/assets/uploads/downloads/UF8/Quickstart Guide French.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://solidstatelogic.com/products/uf8",
-      "manual_languages": ["fr", "en"],
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
       "manuals": [
-        { "url": "https://solidstatelogic.com/assets/uploads/downloads/UF8/Quickstart Guide French.pdf", "title": "UF8 Quickstart Guide (French)", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
-        { "url": "https://eu1.download.solidstatelogic.com/UF8/SSL%20UF8%20User%20Guide_Rev12.1.pdf", "title": "SSL UF8 User Guide Rev 12.1", "language": "en", "file_type": "pdf", "version_or_date": "Rev 12.1", "official": true, "kind": "user-manual" },
-        { "url": "https://solidstatelogic.com/assets/uploads/downloads/UF8/SSL UF8 Quickstart Guide - EN.pdf", "title": "UF8 Quickstart Guide (English)", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" }
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/UF8/Quickstart Guide French.pdf",
+          "title": "UF8 Quickstart Guide (French)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://eu1.download.solidstatelogic.com/UF8/SSL%20UF8%20User%20Guide_Rev12.1.pdf",
+          "title": "SSL UF8 User Guide Rev 12.1",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Rev 12.1",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/UF8/SSL UF8 Quickstart Guide - EN.pdf",
+          "title": "UF8 Quickstart Guide (English)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://solidstatelogic.com/products/uf8", "publisher": "Solid State Logic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.faders", "key_specs.channels", "key_specs.computer_connection", "key_specs.usb_a_port", "key_specs.footswitch", "key_specs.dimensions", "key_specs.weight", "connectors"] },
-        { "url": "https://eu1.download.solidstatelogic.com/UF8/SSL%20UF8%20User%20Guide_Rev12.1.pdf", "publisher": "Solid State Logic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.protocols", "key_specs.power_supply", "key_specs.dimensions", "key_specs.weight", "key_specs.rack_mount", "connectors"] }
+        {
+          "url": "https://solidstatelogic.com/products/uf8",
+          "publisher": "Solid State Logic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.faders",
+            "key_specs.channels",
+            "key_specs.computer_connection",
+            "key_specs.usb_a_port",
+            "key_specs.footswitch",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://eu1.download.solidstatelogic.com/UF8/SSL%20UF8%20User%20Guide_Rev12.1.pdf",
+          "publisher": "Solid State Logic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.protocols",
+            "key_specs.power_supply",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.rack_mount",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Only a French Quickstart guide exists (not a full French manual); the French quickstart PDF was linked from the product page but not opened. MIDI here means HUI/MCU control data over USB (SSL V-MIDI ports), not audio.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["dc-barrel"], "proposed_new_signals": ["midi"], "sim_value": "low", "sim_value_reason": "USB control only; shows HUI vs MCU protocol choice rather than wiring." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "dc-barrel"
+        ],
+        "proposed_new_signals": [
+          "midi"
+        ],
+        "sim_value": "low",
+        "sim_value_reason": "USB control only; shows HUI vs MCU protocol choice rather than wiring."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "mackie-mcu-pro",
@@ -562,7 +1928,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Its Mackie Control protocol (MCU/MCP) became the generic language that many other controllers, including SSL UF8, still implement for non-Pro Tools DAWs; the MCU Pro supports Mackie Control, Logic Control and HUI modes.",
-      "typical_uses": ["DAW mixing and automation", "project studios", "education labs", "expanded systems with MCU XT Pro"],
+      "typical_uses": [
+        "DAW mixing and automation",
+        "project studios",
+        "education labs",
+        "expanded systems with MCU XT Pro"
+      ],
       "key_specs": {
         "faders": "100mm Alps Touch Sensitive Motorized Faders",
         "modes": "1. Mackie Control 2. Logic Control 3. HUI (use with Avid Pro Tools)",
@@ -574,28 +1945,125 @@
         "weight": "16.8 lb / 7.6 kg (MCU Pro)"
       },
       "connectors": [
-        { "connector": "usb-b", "role": "USB port to host computer (connector shape not stated in text)", "dir": "bidir", "signal": "midi", "count": 1 },
-        { "connector": "midi-din5", "role": "MIDI IN/OUT ports 2, 3, 4", "dir": "bidir", "signal": "midi", "count": 6 },
-        { "connector": "trs-quarter", "role": "User Switch 1 and 2 (footswitch; jack type not stated)", "dir": "in", "signal": "gpio-tally", "count": 2 },
-        { "connector": "dc-barrel", "role": "External power 7.5V 3.0A-4.0A", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "usb-b",
+          "role": "USB port to host computer (connector shape not stated in text)",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 1
+        },
+        {
+          "connector": "midi-din5",
+          "role": "MIDI IN/OUT ports 2, 3, 4",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 6
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "User Switch 1 and 2 (footswitch; jack type not stated)",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 2
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "External power 7.5V 3.0A-4.0A",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["midi", "dc-power"],
+      "signal_types": [
+        "midi",
+        "dc-power"
+      ],
       "manual_url": "https://mackie.com/img/file_resources/MCU_Pro-XT_Pro_OM_FR.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://mackie.com/en/products/controllers/mcu-pro-and-xt-pro/mcu_pro.html",
-      "manual_languages": ["fr", "en", "es", "de"],
+      "manual_languages": [
+        "fr",
+        "en",
+        "es",
+        "de"
+      ],
       "manuals": [
-        { "url": "https://mackie.com/img/file_resources/MCU_Pro-XT_Pro_OM_FR.pdf", "title": "MCU Pro / XT Pro Owner's Manual (French)", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://mackie.com/img/file_resources/MCU_Pro-XT_Pro_OM.pdf", "title": "MCU Pro / XT Pro Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://mackie.com/img/file_resources/MCU_Pro-XT_Pro_OM_FR.pdf",
+          "title": "MCU Pro / XT Pro Owner's Manual (French)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/MCU_Pro-XT_Pro_OM.pdf",
+          "title": "MCU Pro / XT Pro Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://mackie.com/img/file_resources/MCU_Pro-XT_Pro_OM.pdf", "publisher": "Mackie (LOUD Audio)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs", "connectors"] },
-        { "url": "https://mackie.com/en/products/controllers/mcu-pro-and-xt-pro/mcu_pro.html", "publisher": "Mackie (LOUD Audio)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.faders", "manual_url"] },
-        { "url": "https://mackie.com/img/file_resources/MCU_Pro-XT_Pro_OM_FR.pdf", "publisher": "Mackie (LOUD Audio)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manual_url"] }
+        {
+          "url": "https://mackie.com/img/file_resources/MCU_Pro-XT_Pro_OM.pdf",
+          "publisher": "Mackie (LOUD Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mackie.com/en/products/controllers/mcu-pro-and-xt-pro/mcu_pro.html",
+          "publisher": "Mackie (LOUD Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.faders",
+            "manual_url"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://mackie.com/img/file_resources/MCU_Pro-XT_Pro_OM_FR.pdf",
+          "publisher": "Mackie (LOUD Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manual_url"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Product page is live under Controllers with a back-in-stock notice, so status 'current' is a judgement; it is not on the page as discontinued. Manual PDFs resolve via the page's base href (mackie.com/img/...). The rear panel text calls the footswitch inputs USER SWITCH; jack type not stated.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["midi-din5", "dc-barrel"], "proposed_new_signals": ["midi"], "sim_value": "medium", "sim_value_reason": "5-pin MIDI IN/OUT crossing (OUT to IN) plus USB is a good basic MIDI wiring lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "midi-din5",
+          "dc-barrel"
+        ],
+        "proposed_new_signals": [
+          "midi"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "5-pin MIDI IN/OUT crossing (OUT to IN) plus USB is a good basic MIDI wiring lesson."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "axia-iq",
@@ -607,7 +2075,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "iQ is Axia's compact AoIP on-air console with automatic per-fader mix-minus and Program buses; Axia/Livewire consoles are common in IP radio studios and the iQ is already used as TekPractice's radio console.",
-      "typical_uses": ["radio on-air studio", "talk shows with phone callers (mix-minus)", "production studios", "AoIP (Livewire+/AES67) networks"],
+      "typical_uses": [
+        "radio on-air studio",
+        "talk shows with phone callers (mix-minus)",
+        "production studios",
+        "AoIP (Livewire+/AES67) networks"
+      ],
       "key_specs": {
         "faders": "Configurable from 8 to 24 faders; 100mm. conductive-plastic faders",
         "program_buses": "3 dedicated stereo Program buses, plus a stereo Utility bus that can be used … as a fourth Program bus",
@@ -628,34 +2101,192 @@
         "dimensions": "iQ Main Frame 20.5” x 19” x 4.5” (desktop to meter bridge); iQ Expansion Frames 17.5” x 18.25” x 3”"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "Engine mic inputs (48V phantom)", "dir": "in", "signal": "mic-level", "count": 4 },
-        { "connector": "rj45", "role": "Analog line inputs/outputs (Axia RJ-45 audio pinout)", "dir": "bidir", "signal": "line-level-pro", "count": "not stated" },
-        { "connector": "rj45", "role": "AES/EBU inputs/outputs on RJ-45", "dir": "bidir", "signal": "aes3", "count": "2 inputs (outputs not stated)" },
-        { "connector": "rj45", "role": "Livewire+/AES67 Ethernet (100 Mbps PoE, 100 Mbps, 2 x 1000 Mbps)", "dir": "bidir", "signal": "aoip", "count": "not stated" },
-        { "connector": "gpio-terminal", "role": "GPIO ports (DB-15)", "dir": "bidir", "signal": "gpio-tally", "count": 8 },
-        { "connector": "iec-c14", "role": "AC mains (IEC receptacle)", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "Engine mic inputs (48V phantom)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "rj45",
+          "role": "Analog line inputs/outputs (Axia RJ-45 audio pinout)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "rj45",
+          "role": "AES/EBU inputs/outputs on RJ-45",
+          "dir": "bidir",
+          "signal": "aes3",
+          "count": "2 inputs (outputs not stated)"
+        },
+        {
+          "connector": "rj45",
+          "role": "Livewire+/AES67 Ethernet (100 Mbps PoE, 100 Mbps, 2 x 1000 Mbps)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": "not stated"
+        },
+        {
+          "connector": "gpio-terminal",
+          "role": "GPIO ports (DB-15)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 8
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC mains (IEC receptacle)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "aes3", "aoip", "aes67", "gpio-tally", "headphone-level", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes3",
+        "aoip",
+        "aes67",
+        "gpio-tally",
+        "headphone-level",
+        "mains-power"
+      ],
       "manual_url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Axia-iQ Manual-v1.3.1-C21316028.pdf",
       "datasheet_url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
       "product_page_url": "https://www.telosalliance.com/consoles-audio-mixing/broadcast-consoles/axia-iq-family/axia-iq",
-      "manual_languages": ["en", "es"],
+      "manual_languages": [
+        "en",
+        "es"
+      ],
       "manuals": [
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Axia-iQ Manual-v1.3.1-C21316028.pdf", "title": "Axia iQ Manual v1.3.1", "language": "en", "file_type": "pdf", "version_or_date": "Rev 1.3.1 — January, 2019", "official": true, "kind": "user-manual" },
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Axia_iQ_Spanish Rev1.2.1_C2116098.pdf", "title": "Axia iQ manual (Spanish) Rev 1.2.1", "language": "es", "file_type": "pdf", "version_or_date": "Rev 1.2.1", "official": true, "kind": "user-manual" },
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Support Files/Axia_iQ_QSG_C21116017_Web.pdf", "title": "Axia iQ Quick Start Guide", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
-        { "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf", "title": "Axia iQ Console Brochure", "language": "en", "file_type": "pdf", "version_or_date": "© 2025, C25/3/16094", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Axia-iQ Manual-v1.3.1-C21316028.pdf",
+          "title": "Axia iQ Manual v1.3.1",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Rev 1.3.1 — January, 2019",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Axia_iQ_Spanish Rev1.2.1_C2116098.pdf",
+          "title": "Axia iQ manual (Spanish) Rev 1.2.1",
+          "language": "es",
+          "file_type": "pdf",
+          "version_or_date": "Rev 1.2.1",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Support Files/Axia_iQ_QSG_C21116017_Web.pdf",
+          "title": "Axia iQ Quick Start Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "title": "Axia iQ Console Brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "© 2025, C25/3/16094",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf", "publisher": "Telos Alliance", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.faders", "key_specs.program_buses", "key_specs.mix_minus", "key_specs.network", "key_specs.studiocore_io", "key_specs.internal_sampling_rate", "key_specs.latency", "key_specs.mic_ein", "key_specs.power_supply", "key_specs.power_consumption", "key_specs.dimensions"] },
-        { "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Axia-iQ Manual-v1.3.1-C21316028.pdf", "publisher": "Axia Audio / Telos Alliance", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.qor32_mic_inputs", "key_specs.qor32_line_inputs", "key_specs.qor32_aes_inputs", "key_specs.qor32_gpio", "key_specs.qor32_ethernet", "key_specs.qor32_backup_psu", "connectors"] },
-        { "url": "https://www.telosalliance.com/consoles-audio-mixing/broadcast-consoles/axia-iq-family/axia-iq", "publisher": "Telos Alliance", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "manual_url", "datasheet_url"] }
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.faders",
+            "key_specs.program_buses",
+            "key_specs.mix_minus",
+            "key_specs.network",
+            "key_specs.studiocore_io",
+            "key_specs.internal_sampling_rate",
+            "key_specs.latency",
+            "key_specs.mic_ein",
+            "key_specs.power_supply",
+            "key_specs.power_consumption",
+            "key_specs.dimensions"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Axia-iQ Manual-v1.3.1-C21316028.pdf",
+          "publisher": "Axia Audio / Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.qor32_mic_inputs",
+            "key_specs.qor32_line_inputs",
+            "key_specs.qor32_aes_inputs",
+            "key_specs.qor32_gpio",
+            "key_specs.qor32_ethernet",
+            "key_specs.qor32_backup_psu",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.telosalliance.com/consoles-audio-mixing/broadcast-consoles/axia-iq-family/axia-iq",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "manual_url",
+            "datasheet_url"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The engine changed over time: the 2019 manual describes the QOR.32 (4 XLR mic, 16 stereo line inputs on RJ-45, AES on RJ-45, 8 DB-15 GPIO); the 2025 brochure describes StudioCore (4 mic/line, 8 line in/out, 3 configurable AES/S/PDIF/USB digital, 4 GPIO) yet still titles its power spec 'QOR.32 with iQ Console'. Axia's RJ-45 analog audio convention is a key wiring lesson: never plug network cable into an audio RJ-45. GPIO DB-15 has no catalog id (gpio-terminal used). Livewire+ has no signal id (only a transport_format attribute), so aoip + aes67 are used. No French manual found.",
       "conflicts": [
-        { "field": "key_specs.engine_io", "values": [ { "value": "QOR.32: four XLR mic inputs, sixteen stereo line inputs on RJ-45, two AES/EBU inputs on RJ-45, eight GPIO", "source_url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Axia-iQ Manual-v1.3.1-C21316028.pdf" }, { "value": "StudioCore: four selectable mic/line inputs, eight line inputs and outputs, three configurable digital I/O, four GPI/O", "source_url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf" } ], "note": "Different engine generations; TekPractice should state which engine its axia-iq model represents." }
+        {
+          "field": "key_specs.engine_io",
+          "values": [
+            {
+              "value": "QOR.32: four XLR mic inputs, sixteen stereo line inputs on RJ-45, two AES/EBU inputs on RJ-45, eight GPIO",
+              "source_url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia Products/iQ/Axia-iQ Manual-v1.3.1-C21316028.pdf"
+            },
+            {
+              "value": "StudioCore: four selectable mic/line inputs, eight line inputs and outputs, three configurable digital I/O, four GPI/O",
+              "source_url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf"
+            }
+          ],
+          "note": "Different engine generations; TekPractice should state which engine its axia-iq model represents."
+        }
       ],
-      "tekpractice": { "in_catalog": true, "catalog_id": "axia-iq", "proposed_new_connectors": [], "proposed_new_signals": ["aes67"], "sim_value": "high", "sim_value_reason": "Already in catalog; RJ-45 used for analog audio, AES and Ethernet on the same engine is a distinctive mis-patching lesson, plus mix-minus." }
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "axia-iq",
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "aes67"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Already in catalog; RJ-45 used for analog audio, AES and Ethernet on the same engine is a distinctive mis-patching lesson, plus mix-minus."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "lawo-ruby",
@@ -665,9 +2296,14 @@
       "sub_type": "digital-broadcast-radio",
       "technology": "Modular AoIP radio mixing surface (4 to 60 physical faders) with multi-touch VisTool GUI, running on the Lawo Power Core 1RU DSP/I/O engine; native RAVENNA / AES67 and ST2110-30, plus MADI.",
       "year_introduced": "not found",
-      "status": "current",
+      "status": "discontinued",
       "why_it_is_a_classic": "Lawo says it was an integral part of developing the AES67 standard and that ruby was designed around AES67 from the ground up; Lawo radio consoles are widely used in European public radio.",
-      "typical_uses": ["radio on-air and production studios", "multi-mic talk shows (AutoGain / AutoMix)", "AES67 / ST2110 radio-TV facilities", "multi-studio setups sharing one Power Core"],
+      "typical_uses": [
+        "radio on-air and production studios",
+        "multi-mic talk shows (AutoGain / AutoMix)",
+        "AES67 / ST2110 radio-TV facilities",
+        "multi-studio setups sharing one Power Core"
+      ],
       "key_specs": {
         "faders": "4 to 60 physical faders; Motorized 100 mm faders, touch-sensitive",
         "frame_sizes": "Desktop or flush-mount versions in 4, 8, 12 and 16 fader frame sizes, plus standalone 4 and 8 fader and Master Control extenders",
@@ -681,23 +2317,93 @@
         "redundancy": "SMPTE 2022-7 (“hitless merge”) … dual IP links (Power Core)"
       },
       "connectors": [
-        { "connector": "rj45", "role": "Surface/engine network (AES67/RAVENNA, control) – exact port types not stated on pages read", "dir": "bidir", "signal": "aes67", "count": "not stated" },
-        { "connector": "sfp-cage", "role": "Power Core MADI expansion module: two SFP ports, 64 channels each", "dir": "bidir", "signal": "madi", "count": 2 },
-        { "connector": "dsub25", "role": "Power Core I/O modules with high-density DB-25 (AES59 wiring)", "dir": "bidir", "signal": "line-level-pro", "count": "per module" }
+        {
+          "connector": "rj45",
+          "role": "Surface/engine network (AES67/RAVENNA, control) – exact port types not stated on pages read",
+          "dir": "bidir",
+          "signal": "aes67",
+          "count": "not stated"
+        },
+        {
+          "connector": "sfp-cage",
+          "role": "Power Core MADI expansion module: two SFP ports, 64 channels each",
+          "dir": "bidir",
+          "signal": "madi",
+          "count": 2
+        },
+        {
+          "connector": "dsub25",
+          "role": "Power Core I/O modules with high-density DB-25 (AES59 wiring)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": "per module"
+        }
       ],
-      "signal_types": ["aes67", "smpte-2110", "madi", "aoip", "dante", "aes3"],
+      "signal_types": [
+        "aes67",
+        "smpte-2110",
+        "madi",
+        "aoip",
+        "dante",
+        "aes3"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://lawo.com/products/ruby/",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://lawo.com/products/ruby/", "publisher": "Lawo", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.faders", "key_specs.frame_sizes", "key_specs.crosspoints", "key_specs.dsp_channels", "key_specs.summing_busses", "key_specs.mix_minus", "key_specs.networking", "key_specs.dimensions"] },
-        { "url": "https://lawo.com/products/power-core/", "publisher": "Lawo", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.engine_power_core", "key_specs.redundancy", "key_specs.crosspoints", "key_specs.dsp_channels", "connectors"] }
+        {
+          "url": "https://lawo.com/products/ruby/",
+          "publisher": "Lawo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.faders",
+            "key_specs.frame_sizes",
+            "key_specs.crosspoints",
+            "key_specs.dsp_channels",
+            "key_specs.summing_busses",
+            "key_specs.mix_minus",
+            "key_specs.networking",
+            "key_specs.dimensions"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://lawo.com/products/power-core/",
+          "publisher": "Lawo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.engine_power_core",
+            "key_specs.redundancy",
+            "key_specs.crosspoints",
+            "key_specs.dsp_channels",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
-      "notes": "RAVENNA has no signal id (only a transport_format attribute in taxonomy), so aes67 + aoip are used. Lawo manuals sit behind the support portal (lawo.com/support/manuals-and-knowledge-base/) which did not list ruby PDFs in static HTML. Power consumption not found.",
+      "notes": "RAVENNA has no signal id (only a transport_format attribute in taxonomy), so aes67 + aoip are used. Lawo manuals sit behind the support portal (lawo.com/support/manuals-and-knowledge-base/) which did not list ruby PDFs in static HTML. Power consumption not found. [QA 2026-10-22] status corrected current -> discontinued: the cited lawo.com/products/ruby/ page states the product is no longer available and was replaced by Lawo diamond.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["sfp-cage"], "proposed_new_signals": ["aes67", "smpte-2110"], "sim_value": "medium", "sim_value_reason": "Surface-plus-engine split and AES67/ST2110 radio networking complement axia-iq (Livewire+)." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "sfp-cage"
+        ],
+        "proposed_new_signals": [
+          "aes67",
+          "smpte-2110"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Surface-plus-engine split and AES67/ST2110 radio networking complement axia-iq (Livewire+)."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "calrec-brio",
@@ -709,7 +2415,13 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Calrec, a long-standing broadcast console maker, positions Brio as its compact plug-and-play TV broadcast console with dedicated DSP per path, mix-minus and surround; the product page cites use in smaller OB trucks and a Quebec training college (Cégep de Jonquière).",
-      "typical_uses": ["TV studio galleries", "small OB trucks", "radio-TV hybrid production", "broadcast training", "5.1 / Dolby Atmos mixing (training course offered)"],
+      "typical_uses": [
+        "TV studio galleries",
+        "small OB trucks",
+        "radio-TV hybrid production",
+        "broadcast training",
+        "5.1 / Dolby Atmos mixing (training course offered)"
+      ],
       "key_specs": {
         "faders": "12 or 36 x dual layer faders – 100mm, motorised, with PFL overpress",
         "sample_rates": "operates at 44.1, 48, 88.2 and 96kHz",
@@ -726,21 +2438,64 @@
         "dimensions": "Brio 36 only 892mm wide x 892mm deep x 270mm high; Brio 12 only 484mm wide x 892mm deep x 270mm high"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "Mic/line inputs (Brio 36; connector type not stated on page)", "dir": "in", "signal": "mic-level", "count": 24 },
-        { "connector": "xlr3-m", "role": "Analogue outputs (Brio 36; connector type not stated on page)", "dir": "out", "signal": "line-level-pro", "count": 16 }
+        {
+          "connector": "xlr3-f",
+          "role": "Mic/line inputs (Brio 36; connector type not stated on page)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 24
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Analogue outputs (Brio 36; connector type not stated on page)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 16
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "aes3", "madi", "dante", "sdi-embedded-audio", "gpio-tally", "aes67", "smpte-2110"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "aes3",
+        "madi",
+        "dante",
+        "sdi-embedded-audio",
+        "gpio-tally",
+        "aes67",
+        "smpte-2110"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://calrec.com/shop/broadcast-audio-consoles/brio/",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://calrec.com/shop/broadcast-audio-consoles/brio/", "publisher": "Calrec Audio", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs"] }
+        {
+          "url": "https://calrec.com/shop/broadcast-audio-consoles/brio/",
+          "publisher": "Calrec Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Placed in digital-broadcast-radio (TV broadcast). The product page lists a 'Brio Operator Manual' and brochure, but the links are loaded by script and no PDF URL was exposed; physical connector types (XLR vs D-type) for the built-in I/O were therefore not verified. Single source only.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["sdi-embedded-audio"], "sim_value": "medium", "sim_value_reason": "TV broadcast counterpart to radio consoles: mix-minus, GPIO tallies, SDI/MADI expansion." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "sdi-embedded-audio"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "TV broadcast counterpart to radio consoles: mix-minus, GPIO tallies, SDI/MADI expansion."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "dhd-rx2",
@@ -752,7 +2507,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "DHD calls the RX2 its most flexible Series 52 surface for on-air radio, master control rooms and OB vans; DHD consoles are common in German and European radio, and the product news on DHD's site cites RX2 deployments for remote sports coverage.",
-      "typical_uses": ["radio on-air studios", "TV/radio master control rooms", "OB vans", "remote production"],
+      "typical_uses": [
+        "radio on-air studios",
+        "TV/radio master control rooms",
+        "OB vans",
+        "remote production"
+      ],
       "key_specs": {
         "faders": "6 to 60 faders — modular and scalable (web page); up to 96 faders (flyer); professional-grade 100mm motorized faders with dust-protection",
         "displays": "10.1″ touch displays on every section; 7 inch vertical touch display in the central section",
@@ -766,27 +2526,123 @@
         "core_psu_options": "52-7496A XC Power Supply 48V / 250W; 52-7498B XC Power Supply 48V / 150W"
       },
       "connectors": [
-        { "connector": "rj45", "role": "Surface to XC3/XD3 core (Ethernet control) and APC links to I/O boxes (audio + power + control on CAT)", "dir": "bidir", "signal": "aoip", "count": "per configuration" },
-        { "connector": "rj45", "role": "Dante IPx module: two Gigabit Ethernet ports (redundant)", "dir": "bidir", "signal": "dante", "count": 2 }
+        {
+          "connector": "rj45",
+          "role": "Surface to XC3/XD3 core (Ethernet control) and APC links to I/O boxes (audio + power + control on CAT)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": "per configuration"
+        },
+        {
+          "connector": "rj45",
+          "role": "Dante IPx module: two Gigabit Ethernet ports (redundant)",
+          "dir": "bidir",
+          "signal": "dante",
+          "count": 2
+        }
       ],
-      "signal_types": ["mic-level", "headphone-level", "aoip", "dante", "aes67", "smpte-2110", "madi", "gpio-tally"],
+      "signal_types": [
+        "mic-level",
+        "headphone-level",
+        "aoip",
+        "dante",
+        "aes67",
+        "smpte-2110",
+        "madi",
+        "gpio-tally"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://dhd.audio/wp-content/uploads/2026/02/DHDaudio_Flyer_RX2.pdf",
       "product_page_url": "https://dhd.audio/systems/rx2/",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://dhd.audio/wp-content/uploads/2026/02/DHDaudio_Flyer_RX2.pdf", "title": "DHD audio Flyer RX2", "language": "en", "file_type": "pdf", "version_or_date": "version 2023-08-08", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://dhd.audio/wp-content/uploads/2026/02/DHDaudio_Flyer_RX2.pdf",
+          "title": "DHD audio Flyer RX2",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "version 2023-08-08",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://dhd.audio/systems/rx2/", "publisher": "DHD audio", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.faders", "key_specs.displays", "key_specs.central_module_io"] },
-        { "url": "https://dhd.audio/wp-content/uploads/2026/02/DHDaudio_Flyer_RX2.pdf", "publisher": "DHD audio", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.faders", "key_specs.displays", "key_specs.central_module_io", "key_specs.module_power", "key_specs.dsp_core", "key_specs.io_modules", "key_specs.control_interfaces"] },
-        { "url": "https://dhd.audio/systems/xc3/", "publisher": "DHD audio", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.aoip", "key_specs.apc", "key_specs.core_psu_options"] }
+        {
+          "url": "https://dhd.audio/systems/rx2/",
+          "publisher": "DHD audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.faders",
+            "key_specs.displays",
+            "key_specs.central_module_io"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dhd.audio/wp-content/uploads/2026/02/DHDaudio_Flyer_RX2.pdf",
+          "publisher": "DHD audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.faders",
+            "key_specs.displays",
+            "key_specs.central_module_io",
+            "key_specs.module_power",
+            "key_specs.dsp_core",
+            "key_specs.io_modules",
+            "key_specs.control_interfaces"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dhd.audio/systems/xc3/",
+          "publisher": "DHD audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.aoip",
+            "key_specs.apc",
+            "key_specs.core_psu_options"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Candidate list said 'DHD RX2/TX?': TX2 exists as a companion touch mixer (52-1256), the RX2 is the console. Connector types of the central module mic/headphone/speaker outputs not stated. User manual is not public on the pages read (DHD support portal).",
       "conflicts": [
-        { "field": "key_specs.faders", "values": [ { "value": "6 to 60 faders", "source_url": "https://dhd.audio/systems/rx2/" }, { "value": "up to 96 faders", "source_url": "https://dhd.audio/wp-content/uploads/2026/02/DHDaudio_Flyer_RX2.pdf" } ], "note": "Flyer dated 2023-08-08; web page is newer." }
+        {
+          "field": "key_specs.faders",
+          "values": [
+            {
+              "value": "6 to 60 faders",
+              "source_url": "https://dhd.audio/systems/rx2/"
+            },
+            {
+              "value": "up to 96 faders",
+              "source_url": "https://dhd.audio/wp-content/uploads/2026/02/DHDaudio_Flyer_RX2.pdf"
+            }
+          ],
+          "note": "Flyer dated 2023-08-08; web page is newer."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["aes67", "dante"], "sim_value": "medium", "sim_value_reason": "Shows APC (audio+power+control on one CAT cable) and surface/core split for radio." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "aes67",
+          "dante"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Shows APC (audio+power+control on one CAT cable) and surface/core split for radio."
+      },
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "yamaha-rivage-pm10",
@@ -798,7 +2654,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "RIVAGE PM10 is Yamaha's top-tier touring/theatre console line, whose interface the DM7 later inherited; its TWINLANe optical network carries up to 400 channels per ring.",
-      "typical_uses": ["large tours FOH / monitors", "theatre and musicals (Theatre Mode)", "broadcast events (mix-minus, 5.1)", "dual-console and DSP mirroring setups"],
+      "typical_uses": [
+        "large tours FOH / monitors",
+        "theatre and musicals (Theatre Mode)",
+        "broadcast events (mix-minus, 5.1)",
+        "dual-console and DSP mirroring setups"
+      ],
       "key_specs": {
         "input_mixing_channels": "DSP-RX: 120 / DSP-RX-EX: 288",
         "mix_buses": "DSP-RX: 48 / DSP-RX-EX: 72",
@@ -822,34 +2683,198 @@
         "weight_cs_r10": "85 kg (187 lbs)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "Surface analog inputs (SILK)", "dir": "in", "signal": "mic-level", "count": 8 },
-        { "connector": "xlr3-m", "role": "Surface analog outputs", "dir": "out", "signal": "line-level-pro", "count": 8 },
-        { "connector": "opticalcon", "role": "TWINLANe IN / OUT on HY256-TL card (opticalCON DUO multimode)", "dir": "bidir", "signal": "fibre-optical-transport", "count": 2 },
-        { "connector": "bnc", "role": "Word clock OUT (surface)", "dir": "out", "signal": "wordclock", "count": 1 },
-        { "connector": "midi-din5", "role": "MIDI IN/OUT", "dir": "bidir", "signal": "midi", "count": 2 },
-        { "connector": "iec-c14", "role": "AC inlets (V-Lock type), dual PSU", "dir": "in", "signal": "mains-power", "count": 2 }
+        {
+          "connector": "xlr3-f",
+          "role": "Surface analog inputs (SILK)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 8
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Surface analog outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 8
+        },
+        {
+          "connector": "opticalcon",
+          "role": "TWINLANe IN / OUT on HY256-TL card (opticalCON DUO multimode)",
+          "dir": "bidir",
+          "signal": "fibre-optical-transport",
+          "count": 2
+        },
+        {
+          "connector": "bnc",
+          "role": "Word clock OUT (surface)",
+          "dir": "out",
+          "signal": "wordclock",
+          "count": 1
+        },
+        {
+          "connector": "midi-din5",
+          "role": "MIDI IN/OUT",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 2
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC inlets (V-Lock type), dual PSU",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 2
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "aes3", "fibre-optical-transport", "dante", "madi", "wordclock", "midi", "gpio-tally", "ltc-timecode", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "aes3",
+        "fibre-optical-transport",
+        "dante",
+        "madi",
+        "wordclock",
+        "midi",
+        "gpio-tally",
+        "ltc-timecode",
+        "mains-power"
+      ],
       "manual_url": "https://usa.yamaha.com/files/download/other_assets/7/1159867/RIVAGE_PM_Series_OM_En_L0.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://usa.yamaha.com/products/proaudio/mixers/rivage_pm/specs.html",
-      "manual_languages": ["en"],
+      "manual_languages": [
+        "en"
+      ],
       "manuals": [
-        { "url": "https://usa.yamaha.com/files/download/other_assets/7/1159867/RIVAGE_PM_Series_OM_En_L0.pdf", "title": "RIVAGE PM Series Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "L0 (filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://usa.yamaha.com/files/download/other_assets/7/1330167/dsp_rx_ex_en_om_b0.pdf", "title": "DSP-RX / DSP-RX-EX Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "b0 (filename)", "official": true, "kind": "user-manual" },
-        { "url": "https://usa.yamaha.com/files/download/other_assets/2/445722/hy256tl_en_om_b0.pdf", "title": "HY256-TL Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "b0 (filename)", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/7/1159867/RIVAGE_PM_Series_OM_En_L0.pdf",
+          "title": "RIVAGE PM Series Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "L0 (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/7/1330167/dsp_rx_ex_en_om_b0.pdf",
+          "title": "DSP-RX / DSP-RX-EX Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "b0 (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/2/445722/hy256tl_en_om_b0.pdf",
+          "title": "HY256-TL Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "b0 (filename)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://usa.yamaha.com/products/proaudio/mixers/rivage_pm/specs.html", "publisher": "Yamaha Corporation of America", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.input_mixing_channels", "key_specs.mix_buses", "key_specs.matrices", "key_specs.stereo_mono_cue", "key_specs.dca_groups", "key_specs.mute_groups", "key_specs.faders", "key_specs.display", "key_specs.surface_local_io", "key_specs.expansion_slots", "key_specs.twinlane", "key_specs.dante", "key_specs.madi", "key_specs.surface_ac_inlet", "key_specs.plugin_slots", "key_specs.scene_memory", "key_specs.dimensions_cs_r10", "key_specs.weight_cs_r10"] },
-        { "url": "https://usa.yamaha.com/files/download/other_assets/7/1330167/dsp_rx_ex_en_om_b0.pdf", "publisher": "Yamaha Corporation", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.dsp_engine_sampling", "key_specs.dsp_engine_power"] },
-        { "url": "https://usa.yamaha.com/files/download/other_assets/2/445722/hy256tl_en_om_b0.pdf", "publisher": "Yamaha Corporation", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.twinlane", "connectors"] },
-        { "url": "https://www.audiotechnology.com/?p=29016", "publisher": "AudioTechnology (search result snippet)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "trade-press", "covers": ["key_specs.twinlane"] }
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/mixers/rivage_pm/specs.html",
+          "publisher": "Yamaha Corporation of America",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.input_mixing_channels",
+            "key_specs.mix_buses",
+            "key_specs.matrices",
+            "key_specs.stereo_mono_cue",
+            "key_specs.dca_groups",
+            "key_specs.mute_groups",
+            "key_specs.faders",
+            "key_specs.display",
+            "key_specs.surface_local_io",
+            "key_specs.expansion_slots",
+            "key_specs.twinlane",
+            "key_specs.dante",
+            "key_specs.madi",
+            "key_specs.surface_ac_inlet",
+            "key_specs.plugin_slots",
+            "key_specs.scene_memory",
+            "key_specs.dimensions_cs_r10",
+            "key_specs.weight_cs_r10"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/7/1330167/dsp_rx_ex_en_om_b0.pdf",
+          "publisher": "Yamaha Corporation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.dsp_engine_sampling",
+            "key_specs.dsp_engine_power"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://usa.yamaha.com/files/download/other_assets/2/445722/hy256tl_en_om_b0.pdf",
+          "publisher": "Yamaha Corporation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.twinlane",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.audiotechnology.com/?p=29016",
+          "publisher": "AudioTechnology (search result snippet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "key_specs.twinlane"
+          ],
+          "url_status": "blocked"
+        }
       ],
       "notes": "The Yamaha spec table has merged cells across PM10/PM7/PM5/PM3 columns; values given here are those in the CS-R10 column or common to all. Surface XLR connector types and the word clock BNC are inferred from Yamaha convention and the row names, not from an explicit connector table (unverified). Launch-era search snippets mentioned 144 inputs / 72 mix / 36 matrix for the original DSP-R10 engine; current engines are DSP-RX/RX-EX.",
       "conflicts": [
-        { "field": "key_specs.input_mixing_channels", "values": [ { "value": "144 input channels (original DSP-R10, launch specs per search snippet)", "source_url": "https://www.audiotechnology.com/?p=29016" }, { "value": "DSP-RX: 120 / DSP-RX-EX: 288", "source_url": "https://usa.yamaha.com/products/proaudio/mixers/rivage_pm/specs.html" } ], "note": "Different DSP engine generations." }
+        {
+          "field": "key_specs.input_mixing_channels",
+          "values": [
+            {
+              "value": "144 input channels (original DSP-R10, launch specs per search snippet)",
+              "source_url": "https://www.audiotechnology.com/?p=29016"
+            },
+            {
+              "value": "DSP-RX: 120 / DSP-RX-EX: 288",
+              "source_url": "https://usa.yamaha.com/products/proaudio/mixers/rivage_pm/specs.html"
+            }
+          ],
+          "note": "Different DSP engine generations."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["opticalcon", "midi-din5"], "proposed_new_signals": ["fibre-optical-transport", "midi"], "sim_value": "medium", "sim_value_reason": "Optical TWINLANe ring vs Dante cards; complements QL1/Rio in catalog but large and costly." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "opticalcon",
+          "midi-din5"
+        ],
+        "proposed_new_signals": [
+          "fibre-optical-transport",
+          "midi"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Optical TWINLANe ring vs Dante cards; complements QL1/Rio in catalog but large and costly."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "yamaha-tf5",
@@ -861,7 +2886,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The TF series is Yamaha's entry-level 'TouchFlow' digital mixer family; the TF5 (32+1 faders) is a frequent desk in schools, small venues and rental, and is easy to pair with Yamaha Tio/Rio stage boxes via an expansion card.",
-      "typical_uses": ["small and medium live sound", "schools and community venues", "houses of worship", "34-track USB recording"],
+      "typical_uses": [
+        "small and medium live sound",
+        "schools and community venues",
+        "houses of worship",
+        "34-track USB recording"
+      ],
       "key_specs": {
         "faders": "32 + 1 (Master)",
         "input_channels": "48 (40 mono + 2 stereo + 2 return)",
@@ -883,27 +2913,103 @@
         "weight": "20.0 kg (44.1lb)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "INPUT 1-32 combo jack (XLR-3-31 or TRS phone), balanced, +48V on XLR", "dir": "in", "signal": "mic-level", "count": 32 },
-        { "connector": "rca", "role": "ST IN 1, 2 (RCA pin jack, unbalanced, L/R)", "dir": "in", "signal": "line-level-consumer", "count": 4 },
-        { "connector": "xlr3-m", "role": "OMNI OUT 1-16 (XLR-3-32, balanced)", "dir": "out", "signal": "line-level-pro", "count": 16 },
-        { "connector": "trs-quarter", "role": "PHONES (stereo phone jack)", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "usb-b", "role": "USB TO HOST (34ch in / 34ch out)", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "usb-a", "role": "USB storage (2-track rec/play)", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "rj45", "role": "NETWORK (10BASE-T/100Base-TX)", "dir": "bidir", "signal": "aoip", "count": 1 },
-        { "connector": "trs-quarter", "role": "FOOT SW (jack type not stated)", "dir": "in", "signal": "gpio-tally", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "INPUT 1-32 combo jack (XLR-3-31 or TRS phone), balanced, +48V on XLR",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 32
+        },
+        {
+          "connector": "rca",
+          "role": "ST IN 1, 2 (RCA pin jack, unbalanced, L/R)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "OMNI OUT 1-16 (XLR-3-32, balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 16
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "PHONES (stereo phone jack)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB TO HOST (34ch in / 34ch out)",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB storage (2-track rec/play)",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "NETWORK (10BASE-T/100Base-TX)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "FOOT SW (jack type not stated)",
+          "dir": "in",
+          "signal": "gpio-tally",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "phantom-48v", "headphone-level", "usb-audio", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "headphone-level",
+        "usb-audio",
+        "mains-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://usa.yamaha.com/products/proaudio/mixers/tf/specs.html",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://usa.yamaha.com/products/proaudio/mixers/tf/specs.html", "publisher": "Yamaha Corporation of America", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs", "connectors"] }
+        {
+          "url": "https://usa.yamaha.com/products/proaudio/mixers/tf/specs.html",
+          "publisher": "Yamaha Corporation of America",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The combo inputs accept XLR or TRS (xlr3-f listed as primary). Dante requires the NY64-D expansion card (not verified on pages read). Single manufacturer source; manuals not fetched (search budget exhausted).",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "XLR/TRS combo inputs, RCA unbalanced inputs and USB-B multitrack make it a strong beginner wiring device." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "XLR/TRS combo inputs, RCA unbalanced inputs and USB-B multitrack make it a strong beginner wiring device."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "allen-heath-avantis",
@@ -915,7 +3021,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Allen & Heath markets Avantis as bringing its flagship dLive processing into a self-contained mid-size console; it is widely used by rental companies already stocking A&H stage boxes.",
-      "typical_uses": ["mid-size live FOH / monitors", "touring with A&H stage boxes", "corporate / AV", "FOH-monitor splits via gigaACE"],
+      "typical_uses": [
+        "mid-size live FOH / monitors",
+        "touring with A&H stage boxes",
+        "corporate / AV",
+        "FOH-monitor splits via gigaACE"
+      ],
       "key_specs": {
         "input_channels": "64 Input Channels (96 with dPack)",
         "busses": "42 Busses (56 with dPack); 42 configurable bus",
@@ -930,24 +3041,82 @@
         "remote_control": "up to 48 IP remote controllers over a standard TCP/IP network"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "Analog inputs (XLR per A&H page)", "dir": "in", "signal": "mic-level", "count": 12 },
-        { "connector": "xlr3-m", "role": "Analog outputs (XLR per A&H page)", "dir": "out", "signal": "line-level-pro", "count": 12 },
-        { "connector": "xlr3-f", "role": "AES stereo input", "dir": "in", "signal": "aes3", "count": 1 },
-        { "connector": "xlr3-m", "role": "AES stereo outputs", "dir": "out", "signal": "aes3", "count": 2 },
-        { "connector": "ethercon", "role": "SLink (A&H expanders; connector type assumed from SQ datasheet, not confirmed for Avantis)", "dir": "bidir", "signal": "aoip", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "Analog inputs (XLR per A&H page)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 12
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Analog outputs (XLR per A&H page)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 12
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES stereo input",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES stereo outputs",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 2
+        },
+        {
+          "connector": "ethercon",
+          "role": "SLink (A&H expanders; connector type assumed from SQ datasheet, not confirmed for Avantis)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "aes3", "aoip", "dante", "madi"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "aes3",
+        "aoip",
+        "dante",
+        "madi"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.allen-heath.com/hardware/avantis/",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.allen-heath.com/hardware/avantis/", "publisher": "Allen & Heath", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs"] }
+        {
+          "url": "https://www.allen-heath.com/hardware/avantis/",
+          "publisher": "Allen & Heath",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs"
+          ],
+          "url_status": "blocked"
+        }
       ],
       "notes": "Chosen instead of dLive S5000 because Avantis is self-contained (dLive splits surface and MixRack). The Avantis resources URL redirected to an unrelated Qu-16 page, so no datasheet/manual was reached; power consumption, dimensions and weight not found. Single source.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dante"], "sim_value": "medium", "sim_value_reason": "Two I/O-port cards (Dante + gigaACE/MADI) show multi-network bridging on one desk." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "dante"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Two I/O-port cards (Dante + gigaACE/MADI) show multi-network bridging on one desk."
+      },
+      "product_page_url_status": "blocked"
     },
     {
       "id": "behringer-x32",
@@ -959,7 +3128,13 @@
       "year_introduced": "not found",
       "status": "not found",
       "why_it_is_a_classic": "The X32 made a full-featured digital console with AES50 stage-box networking affordable, and it (with its Midas M32 sibling) is one of the most common desks in French schools, small venues and rental stock.",
-      "typical_uses": ["small and medium live sound", "education", "houses of worship", "multitrack recording via X-USB card", "AES50 digital snake with stage boxes"],
+      "typical_uses": [
+        "small and medium live sound",
+        "education",
+        "houses of worship",
+        "multitrack recording via X-USB card",
+        "AES50 digital snake with stage boxes"
+      ],
       "key_specs": {
         "processing_channels": "32 input channels, 8 aux channels, 8 fx return channels",
         "buses": "Mix Bus 1-16, Main LR/C, Matrix 1-6 (title: 40-Input, 25-Bus)",
@@ -980,34 +3155,162 @@
         "weight": "20.6 kg (45.4 lbs)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "Mic/line inputs (MIDAS-designed preamps, 48V)", "dir": "in", "signal": "mic-level", "count": 32 },
-        { "connector": "xlr3-f", "role": "Talkback mic input", "dir": "in", "signal": "mic-level", "count": 1 },
-        { "connector": "xlr3-m", "role": "XLR outputs", "dir": "out", "signal": "line-level-pro", "count": 16 },
-        { "connector": "trs-quarter", "role": "Aux inputs / outputs (balanced)", "dir": "bidir", "signal": "line-level-pro", "count": 12 },
-        { "connector": "rca", "role": "RCA inputs / outputs", "dir": "bidir", "signal": "line-level-consumer", "count": 4 },
-        { "connector": "xlr3-m", "role": "Monitoring outputs XLR (also 2 x 1/4\" TRS)", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "Phones outputs (stereo)", "dir": "out", "signal": "headphone-level", "count": 2 },
-        { "connector": "xlr3-m", "role": "AES/EBU digital output", "dir": "out", "signal": "aes3", "count": 1 },
-        { "connector": "ethercon", "role": "AES50 A / B (SuperMAC)", "dir": "bidir", "signal": "aes50", "count": 2 },
-        { "connector": "ethercon", "role": "P-16 Ultranet (no power supplied; connector type not stated)", "dir": "out", "signal": "aoip", "count": 1 },
-        { "connector": "midi-din5", "role": "MIDI in / out", "dir": "bidir", "signal": "midi", "count": 2 },
-        { "connector": "usb-a", "role": "USB Type A, top panel (audio and data)", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "usb-b", "role": "USB Type B, rear panel (remote control)", "dir": "bidir", "signal": "usb-audio", "count": 1 },
-        { "connector": "rj45", "role": "Ethernet (remote control)", "dir": "bidir", "signal": "aoip", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "Mic/line inputs (MIDAS-designed preamps, 48V)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 32
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "Talkback mic input",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "XLR outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 16
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Aux inputs / outputs (balanced)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": 12
+        },
+        {
+          "connector": "rca",
+          "role": "RCA inputs / outputs",
+          "dir": "bidir",
+          "signal": "line-level-consumer",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Monitoring outputs XLR (also 2 x 1/4\" TRS)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "Phones outputs (stereo)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU digital output",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "ethercon",
+          "role": "AES50 A / B (SuperMAC)",
+          "dir": "bidir",
+          "signal": "aes50",
+          "count": 2
+        },
+        {
+          "connector": "ethercon",
+          "role": "P-16 Ultranet (no power supplied; connector type not stated)",
+          "dir": "out",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "midi-din5",
+          "role": "MIDI in / out",
+          "dir": "bidir",
+          "signal": "midi",
+          "count": 2
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB Type A, top panel (audio and data)",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB Type B, rear panel (remote control)",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet (remote control)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        }
       ],
-      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "phantom-48v", "aes3", "aes50", "headphone-level", "midi", "usb-audio", "mains-power"],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "aes3",
+        "aes50",
+        "headphone-level",
+        "midi",
+        "usb-audio",
+        "mains-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "not found",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.adorama.com/col/productManuals/BEX32.pdf", "publisher": "Adorama (retailer-hosted copy of Behringer 'X32 Digital Mixer Preliminary User Manual')", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs", "connectors"] },
-        { "url": "https://www.markertek.com/product/beh-x32compact/behringer-x32-compact-40-input-25-bus-digital-mixing-console-with-16-programmable-midas-preamps", "publisher": "Markertek (search result title only; listing is for the X32 Compact, same 40-input/25-bus engine)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.buses"] }
+        {
+          "url": "https://www.adorama.com/col/productManuals/BEX32.pdf",
+          "publisher": "Adorama (retailer-hosted copy of Behringer 'X32 Digital Mixer Preliminary User Manual')",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.markertek.com/product/beh-x32compact/behringer-x32-compact-40-input-25-bus-digital-mixing-console-with-16-programmable-midas-preamps",
+          "publisher": "Markertek (search result title only; listing is for the X32 Compact, same 40-input/25-bus engine)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.buses"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "behringer.com is a JavaScript-only site; product page, official manual and datasheet could not be reached and the search budget was exhausted. Specs come from a retailer-hosted copy of Behringer's preliminary user manual (not linked as official manual per brief). Status unknown. The P-16 Ultranet connector type is not given in the spec list.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["midi-din5"], "proposed_new_signals": ["aes50", "midi"], "sim_value": "high", "sim_value_reason": "Very common school desk; AES50 on etherCON vs Ultranet on RJ45-type vs Ethernet control is a classic 'which network cable goes where' lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "midi-din5"
+        ],
+        "proposed_new_signals": [
+          "aes50",
+          "midi"
+        ],
+        "sim_value": "high",
+        "sim_value_reason": "Very common school desk; AES50 on etherCON vs Ultranet on RJ45-type vs Ethernet control is a classic 'which network cable goes where' lesson."
+      }
     }
   ]
 }

@@ -38,9 +38,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "livre-techniques-du-son-technologies",
@@ -76,9 +78,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "techniques-de-prise-de-son-caplain",
@@ -115,9 +119,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "guide-pratique-sonorisation-haidant",
@@ -153,9 +159,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "guide-pratique-mixage-haidant",
@@ -190,9 +198,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "guide-du-midi-braut-ernould",
@@ -227,9 +237,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "pratique-liaisons-hf-magnier",
@@ -264,9 +276,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "audio-vision-chion",
@@ -301,9 +315,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "pour-une-ecriture-du-son-deshays",
@@ -337,9 +353,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "le-son-turrier",
@@ -373,9 +391,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "acoustique-calvet",
@@ -409,9 +429,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "initiation-acoustique-fischetti",
@@ -445,9 +467,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "prise-de-son-et-mixage-tome2-baudier",
@@ -480,9 +504,11 @@
             "year",
             "edition",
             "ean13_seen_on_bookseller"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "mastering-audio-katz",
@@ -516,10 +542,12 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "Product page shows copyright 2015; Routledge search listing shows 2014."
+      "note": "Product page shows copyright 2015; Routledge search listing shows 2014.",
+      "access_link_status": "ok"
     },
     {
       "id": "mixing-engineers-handbook-owsinski",
@@ -551,7 +579,8 @@
           "covers": [
             "title",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://bobbyowsinski.com/best-selling-books/",
@@ -560,9 +589,11 @@
           "confidence": "verified-primary",
           "covers": [
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "modern-recording-techniques-huber",
@@ -596,9 +627,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "sound-reinforcement-handbook-yamaha",
@@ -633,7 +666,8 @@
             "author_or_publisher",
             "edition",
             "isbn"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.halleonard.com/search/search.action?keywords=sound%20reinforcement%20handbook",
@@ -643,9 +677,11 @@
           "covers": [
             "isbn",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "sound-systems-design-optimization-mccarthy",
@@ -679,9 +715,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "sound-and-recording-rumsey-mccormick",
@@ -715,9 +753,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "sound-reproduction-toole",
@@ -751,9 +791,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "handbook-for-sound-engineers-ballou",
@@ -788,10 +830,12 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "Routledge search lists 2025; product page shows copyright 2026."
+      "note": "Routledge search lists 2025; product page shows copyright 2026.",
+      "access_link_status": "ok"
     },
     {
       "id": "eargle-microphone-book",
@@ -824,9 +868,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "mixing-audio-izhaki",
@@ -860,9 +906,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "audio-expert-winer",
@@ -895,9 +943,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "practical-recording-techniques-bartlett",
@@ -929,9 +979,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "sound-for-film-and-television-holman",
@@ -964,9 +1016,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "sound-system-design-primer-loar",
@@ -999,9 +1053,11 @@
             "author_or_publisher",
             "year",
             "edition"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "ebu-r128",
@@ -1032,9 +1088,11 @@
             "version",
             "year",
             "free_pdf_link"
-          ]
+          ],
+          "url_status": "blocked"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "ebu-tech-3341",
@@ -1065,9 +1123,11 @@
             "version",
             "year",
             "free_pdf_link"
-          ]
+          ],
+          "url_status": "blocked"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "ebu-tech-3342",
@@ -1097,9 +1157,11 @@
             "version",
             "year",
             "free_pdf_link"
-          ]
+          ],
+          "url_status": "blocked"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "ebu-tech-3343",
@@ -1129,9 +1191,11 @@
             "version",
             "year",
             "free_pdf_link"
-          ]
+          ],
+          "url_status": "blocked"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "itu-r-bs-1770",
@@ -1162,7 +1226,8 @@
             "version",
             "year",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.itu.int/rec/R-REC-BS.1770-5-202311-I/en",
@@ -1172,9 +1237,11 @@
           "covers": [
             "free_download",
             "languages"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "itu-r-bs-775",
@@ -1205,7 +1272,8 @@
             "version",
             "year",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.itu.int/rec/R-REC-BS.775-4-202212-I/en",
@@ -1214,9 +1282,11 @@
           "confidence": "verified-primary",
           "covers": [
             "free_download"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "rncp-bts-mav-metiers-du-son",
@@ -1249,10 +1319,12 @@
             "dates",
             "decrees",
             "options"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "Record published 09-01-2023; registration valid until 31-08-2027. The eduscol STI pages (referentiel PDF, E3 subjects) could not be reached on 2026-10-22; see not_found_log."
+      "note": "Record published 09-01-2023; registration valid until 31-08-2027. The eduscol STI pages (referentiel PDF, E3 subjects) could not be reached on 2026-10-22; see not_found_log.",
+      "access_link_status": "ok"
     },
     {
       "id": "ina-campus-formations-son",
@@ -1285,7 +1357,8 @@
             "course titles",
             "durations",
             "prices"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://campus.ina.fr/",
@@ -1295,9 +1368,11 @@
           "covers": [
             "institution",
             "training domains"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "ina-pro-tools-certification-101",
@@ -1326,9 +1401,11 @@
             "title",
             "duration",
             "price"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "femis-concours-annales",
@@ -1356,9 +1433,11 @@
           "confidence": "verified-primary",
           "covers": [
             "links: annales, sujets, cursus"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "cst-recommandations-techniques",
@@ -1388,10 +1467,12 @@
             "organisation",
             "RT index link",
             "free mires"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "Individual sound RT titles not listed in the fetched page."
+      "note": "Individual sound RT titles not listed in the fetched page.",
+      "access_link_status": "ok"
     },
     {
       "id": "afsi-association-son-image",
@@ -1421,9 +1502,11 @@
           "covers": [
             "content sections",
             "members area"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "audiofanzine-fr",
@@ -1452,9 +1535,11 @@
           "covers": [
             "sections",
             "language versions"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "shure-academy",
@@ -1486,7 +1571,8 @@
             "free courses",
             "topics",
             "catalog link"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/en-US/shure-academy/online-training",
@@ -1497,7 +1583,8 @@
             "free",
             "self-paced",
             "account required"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/en-US/shure-academy/certification",
@@ -1508,9 +1595,11 @@
             "learning path levels",
             "durations",
             "free"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "sennheiser-learn",
@@ -1539,10 +1628,12 @@
           "covers": [
             "sections",
             "topics"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "Free/paid status not stated on the page; classified freemium conservatively."
+      "note": "Free/paid status not stated on the page; classified freemium conservatively.",
+      "access_link_status": "ok"
     },
     {
       "id": "dpa-mic-university",
@@ -1572,10 +1663,12 @@
           "covers": [
             "topics",
             "sample articles"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "No price or login shown on the page; classified free on that basis."
+      "note": "No price or login shown on the page; classified free on that basis.",
+      "access_link_status": "ok"
     },
     {
       "id": "db-audiotechnik-education",
@@ -1605,7 +1698,8 @@
           "covers": [
             "offer types",
             "e-learning"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/global/en/education/seminars/electroacoustics-seminar/",
@@ -1615,7 +1709,8 @@
           "covers": [
             "content",
             "French session in Paris"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/global/en/education/tutorials/by-topic/",
@@ -1624,10 +1719,12 @@
           "confidence": "verified-primary",
           "covers": [
             "tutorial topics"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "Pricing not stated on fetched pages."
+      "note": "Pricing not stated on fetched pages.",
+      "access_link_status": "ok"
     },
     {
       "id": "l-acoustics-education",
@@ -1657,7 +1754,8 @@
           "covers": [
             "course list",
             "levels"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.l-acoustics.com/education/",
@@ -1666,7 +1764,8 @@
           "confidence": "verified-primary",
           "covers": [
             "education sections"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.l-acoustics.com/partner/become-an-l-system-engineer/",
@@ -1675,10 +1774,12 @@
           "confidence": "verified-primary",
           "covers": [
             "top-tier certification path"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "Pricing not stated on the courses page; classified paid as courses are booked through All Access."
+      "note": "Pricing not stated on the courses page; classified paid as courses are booked through All Access.",
+      "access_link_status": "ok"
     },
     {
       "id": "meyer-sound-education",
@@ -1708,9 +1809,11 @@
           "covers": [
             "course descriptions",
             "tutorials"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "digico-training",
@@ -1738,7 +1841,8 @@
           "covers": [
             "online courses",
             "in-person events"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.digico.biz/",
@@ -1747,10 +1851,12 @@
           "confidence": "verified-primary",
           "covers": [
             "training links"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "Price not stated on the training page."
+      "note": "Price not stated on the training page.",
+      "access_link_status": "ok"
     },
     {
       "id": "smaart-training-rational-acoustics",
@@ -1781,7 +1887,8 @@
             "class list",
             "prices",
             "free videos"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.rationalacoustics.com/",
@@ -1790,9 +1897,11 @@
           "confidence": "verified-primary",
           "covers": [
             "training and certification links"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "coursera-berklee-technology-of-music-production",
@@ -1825,7 +1934,8 @@
             "instructor",
             "level",
             "enrolment"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.coursera.org/specializations/music-production",
@@ -1835,10 +1945,12 @@
           "covers": [
             "specialization courses",
             "level"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "Page offers 'Enroll for free' but certificate/full access requires payment; AI-dubbed French available per page."
+      "note": "Page offers 'Enroll for free' but certificate/full access requires payment; AI-dubbed French available per page.",
+      "access_link_status": "ok"
     },
     {
       "id": "coursera-audio-signal-processing",
@@ -1870,9 +1982,11 @@
             "instructors",
             "level",
             "free (no certificate)"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "mit-ocw-21m380-sound-design",
@@ -1904,9 +2018,11 @@
             "semester",
             "level",
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "mit-ocw-6003-signals-and-systems",
@@ -1938,9 +2054,11 @@
             "instructor",
             "semester",
             "summary"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "sound-on-sound",
@@ -1969,9 +2087,11 @@
           "covers": [
             "sections",
             "YouTube link"
-          ]
+          ],
+          "url_status": "ok"
         }
-      ]
+      ],
+      "access_link_status": "ok"
     },
     {
       "id": "sound-on-sound-youtube",
@@ -1999,10 +2119,12 @@
           "confidence": "verified-secondary",
           "covers": [
             "channel URL (linked from official site)"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "YouTube page itself not fetched (consent wall); URL taken from the official site."
+      "note": "YouTube page itself not fetched (consent wall); URL taken from the official site.",
+      "access_link_status": "ok"
     },
     {
       "id": "audio-university-youtube",
@@ -2031,10 +2153,12 @@
           "covers": [
             "channel URL (linked from official site)",
             "free resources"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "YouTube page itself not fetched (consent wall)."
+      "note": "YouTube page itself not fetched (consent wall).",
+      "access_link_status": "ok"
     },
     {
       "id": "l-acoustics-youtube-webinars",
@@ -2062,10 +2186,12 @@
           "confidence": "verified-secondary",
           "covers": [
             "channel URL (linked from official site)"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "note": "YouTube page itself not fetched (consent wall)."
+      "note": "YouTube page itself not fetched (consent wall).",
+      "access_link_status": "ok"
     }
   ],
   "not_found_log": [
