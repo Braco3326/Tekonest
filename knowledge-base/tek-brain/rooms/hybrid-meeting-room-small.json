@@ -1,0 +1,336 @@
+{
+  "id": "hybrid-meeting-room-small",
+  "name_fr": "Petite salle de réunion hybride (visioconférence)",
+  "name_en": "Small hybrid meeting room",
+  "family": "conference",
+  "size": "small",
+  "description": "Salle visio pour un petit groupe (6 à 8 personnes) tourné vers un grand écran : les participants distants doivent entendre chaque voix de la salle et la salle doit entendre les distants sans écho. Référence : la « Signature Teams Room » de Microsoft (25 ft × 14 ft soit 7,62 m × 4,27 m, 6 à 8 personnes, table incurvée d'un seul côté, hauteur de table 76 cm, centre vertical de l'écran à ±15° de la ligne des yeux) et les catégories Teams « small 4,5 m × 4,5 m » / « medium 4,5 m × 6 m ». Le PC de salle reçoit l'audio par Dante Virtual Soundcard ; l'annulation d'écho (AEC) serait faite par un DSP de conférence absent du KB. Convention de ce gabarit : le mur avant (front) est le mur z négatif (écran, pupitre ou vitrage) ; les personnes assises regardent vers −z (rotation_deg 180) ; une enceinte au mur avant qui arrose la salle a rotation_deg 0 ; un rack au mur gauche ouvert vers la salle a rotation_deg 90.",
+  "dimensions_m": {
+    "length": {
+      "min": 4.5,
+      "typical": 6.0,
+      "max": 7.62
+    },
+    "width": {
+      "min": 4.27,
+      "typical": 4.5,
+      "max": 4.5
+    },
+    "height": {
+      "min": 2.5,
+      "typical": 2.8,
+      "max": 3.0
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "moquette",
+      "finish_note": "Sol moquetté ou traité acoustiquement (Microsoft)."
+    },
+    {
+      "surface": "walls",
+      "material": "plâtre peint + panneaux absorbants tissu sur au moins deux murs",
+      "finish_note": "Traitement contre l'écho et le bruit ambiant (Microsoft) ; mur arrière traité en priorité car il fait face aux micros et à la caméra."
+    },
+    {
+      "surface": "ceiling",
+      "material": "dalles minérales absorbantes",
+      "finish_note": "Plénum pour micros plafond et câbles."
+    },
+    {
+      "surface": "front-wall",
+      "material": "écran large (ou projection courte focale) + caméra sous l'image",
+      "finish_note": "Caméra au-dessus de la table, sous l'image, au plus près de la hauteur des yeux (Microsoft)."
+    }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    {
+      "id": "front-av",
+      "kind": "other",
+      "rect_m": [
+        0.0,
+        -2.7,
+        4.0,
+        0.6
+      ],
+      "floor_y_m": 0.0,
+      "note": "Mur avant : écran large, caméra, enceintes stéréo gauche/droite."
+    },
+    {
+      "id": "table",
+      "kind": "desk",
+      "rect_m": [
+        0.0,
+        0.2,
+        3.2,
+        1.2
+      ],
+      "floor_y_m": 0.0,
+      "note": "Table incurvée, participants d'un seul côté face à l'écran (modèle Signature)."
+    },
+    {
+      "id": "seating",
+      "kind": "audience",
+      "rect_m": [
+        0.0,
+        1.3,
+        3.6,
+        1.2
+      ],
+      "floor_y_m": 0.0,
+      "note": "Rang de sièges derrière la table."
+    },
+    {
+      "id": "rack",
+      "kind": "machine-room",
+      "rect_m": [
+        -1.85,
+        2.6,
+        0.8,
+        0.6
+      ],
+      "floor_y_m": 0.0,
+      "note": "Petit rack mural ou meuble technique."
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "front-av",
+      "position_m": [
+        -1.6,
+        1.3,
+        -2.85
+      ],
+      "rotation_deg": 0,
+      "note": "Canal gauche : Microsoft demande une vraie stéréo G/D pour l'audio spatial."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "front-av",
+      "position_m": [
+        1.6,
+        1.3,
+        -2.85
+      ],
+      "rotation_deg": 0,
+      "note": "Canal droit."
+    },
+    {
+      "equipment_id": "shure-beta-91a",
+      "zone": "table",
+      "position_m": [
+        -0.8,
+        0.76,
+        0.0
+      ],
+      "rotation_deg": 180,
+      "note": "Micro de surface ; dans une vraie salle Teams : micro plafond ou barre certifiée."
+    },
+    {
+      "equipment_id": "shure-beta-91a",
+      "zone": "table",
+      "position_m": [
+        0.8,
+        0.76,
+        0.0
+      ],
+      "rotation_deg": 180,
+      "note": "Second micro de surface."
+    },
+    {
+      "equipment_id": "shure-scm820",
+      "zone": "rack",
+      "position_m": [
+        -1.85,
+        1.0,
+        2.6
+      ],
+      "rotation_deg": 90,
+      "note": "Automixer : réduit le nombre de micros ouverts, donc bruit et risque d'écho."
+    },
+    {
+      "equipment_id": "audinate-dante-virtual-soundcard",
+      "zone": "rack",
+      "position_m": [
+        -1.85,
+        0.6,
+        2.6
+      ],
+      "rotation_deg": 90,
+      "note": "Logiciel sur le PC de salle : entrées/sorties Dante vues comme carte son par l'appli visio."
+    },
+    {
+      "equipment_id": "netgear-m4250-10g2xf-poe-plus",
+      "zone": "rack",
+      "position_m": [
+        -1.85,
+        1.2,
+        2.6
+      ],
+      "rotation_deg": 90,
+      "note": "Commutateur PoE+ pour le réseau AV (Dante)."
+    },
+    {
+      "equipment_id": "sennheiser-ew-dx-em-2",
+      "zone": "rack",
+      "position_m": [
+        -1.85,
+        1.4,
+        2.6
+      ],
+      "rotation_deg": 90,
+      "note": "Récepteur HF pour un présentateur debout près de l'écran."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        0.0,
+        0.3,
+        -2.95
+      ],
+      "type": "schuko-16a",
+      "note": "Mur avant (écran, caméra, enceintes)."
+    },
+    {
+      "position_m": [
+        -2.2,
+        0.3,
+        2.6
+      ],
+      "type": "schuko-16a",
+      "note": "Rack."
+    },
+    {
+      "position_m": [
+        0.0,
+        0.0,
+        0.2
+      ],
+      "type": "floor-box-schuko-16a",
+      "note": "Sous la table (Microsoft : alimentation à la table et à l'emplacement des équipements)."
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        0.0,
+        0.0,
+        0.2
+      ],
+      "type": "floor-box-hdmi-usb-rj45",
+      "note": "Présentation locale à la table + réseau."
+    },
+    {
+      "position_m": [
+        0.0,
+        1.0,
+        -2.95
+      ],
+      "type": "dante-wall-port",
+      "note": "Mur avant."
+    },
+    {
+      "position_m": [
+        -2.2,
+        1.0,
+        2.6
+      ],
+      "type": "dante-wall-port",
+      "note": "Rack."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 1.5,
+      "width_m": 0.9,
+      "height_m": 2.04
+    },
+    {
+      "wall": "left",
+      "kind": "window",
+      "offset_m": -0.5,
+      "width_m": 2.0,
+      "height_m": 1.4,
+      "note": "Store occultant obligatoire (éblouissement caméra/écran, Microsoft)."
+    }
+  ],
+  "lighting": {
+    "mood": "éclairage frontal diffus sur les visages, pas de contre-jour, gradable",
+    "color_temp_k": 4000
+  },
+  "procedural": {
+    "wall_color": "#DCDAD5",
+    "floor_color": "#3F444C",
+    "ceiling_color": "#F2F2F0",
+    "prop_hints": [
+      "table incurvée",
+      "écran 21:9 ou projection courte focale",
+      "caméra grand angle sous l'image",
+      "console tactile au centre de la table",
+      "panneaux acoustiques tissu"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/microsoftteams/rooms/room-planning-guidance",
+      "publisher": "Microsoft Learn",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "dimensions_m.length.max",
+        "dimensions_m.width.min",
+        "description",
+        "surfaces",
+        "zones",
+        "openings"
+      ],
+      "note": "Signature Teams Room : 25 ft × 14 ft, 6-8 personnes, table 76 cm, écran ±15° de la ligne des yeux, au moins deux murs traités, sol moquetté, stores."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/microsoftteams/devices/certified-hardware-android",
+      "publisher": "Microsoft Learn",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "dimensions_m.length.min",
+        "dimensions_m.length.typical",
+        "dimensions_m.width.typical",
+        "dimensions_m.width.max"
+      ],
+      "note": "Catégories Teams : Small 4,5 m × 4,5 m, Medium 4,5 m × 6 m."
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "dimensions_m.height (2,5 / 2,8 / 3,0 m)",
+      "searched": "Guide Microsoft (seule hauteur donnée : micros plafond à 9-12 ft dans la Signature Boardroom de 20-25 personnes, pas applicable à une petite salle). Estimation.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "rt60_s",
+      "searched": "Microsoft Learn (recherche « reverberation time » sur learn.microsoft.com), Yealink : pas de valeur chiffrée.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Barre visio / micro plafond / DSP AEC certifiés Teams",
+      "searched": "Absents de knowledge-base/equipment et catalog.json (ex. Jabra PanaCast 50, Shure MXA920, Biamp Parlé). Proposition catalogue.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "gear_positions, power_points, patch_points, offsets des ouvertures, couleurs procédurales et lighting.color_temp_k",
+      "searched": "Aucune source ne fixe ces valeurs pour ce type de salle : ce sont des choix de mise en page d'intégrateur (layout), pas des données sourcées.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

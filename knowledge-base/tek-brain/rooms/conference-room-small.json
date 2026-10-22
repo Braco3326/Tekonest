@@ -1,0 +1,333 @@
+{
+  "id": "conference-room-small",
+  "name_fr": "Petite salle de réunion",
+  "name_en": "Small conference room",
+  "family": "conference",
+  "size": "small",
+  "description": "Salle de réunion de 4 à 8 personnes autour d'une table, sonorisée pour la parole : micros de table (boundary) gérés par un mélangeur automatique (automixer), petite amplification d'installation, deux enceintes au mur avant de part et d'autre de l'écran, un micro HF main pour l'intervenant debout. Les catégories de taille reprennent celles de Microsoft Teams Rooms : huddle room 3 m × 3 m, small meeting room 4,5 m × 4,5 m, medium size room 4,5 m × 6 m. Le KB ne contient pas encore de micros plafond à formation de faisceau, de haut-parleurs plafonniers ni de DSP de conférence (AEC) : les ids utilisés sont les plus proches disponibles (voir not_found_log). Convention de ce gabarit : le mur avant (front) est le mur z négatif (écran, pupitre ou vitrage) ; les personnes assises regardent vers −z (rotation_deg 180) ; une enceinte au mur avant qui arrose la salle a rotation_deg 0 ; un rack au mur gauche ouvert vers la salle a rotation_deg 90.",
+  "dimensions_m": {
+    "length": {
+      "min": 3.0,
+      "typical": 4.5,
+      "max": 6.0
+    },
+    "width": {
+      "min": 3.0,
+      "typical": 4.5,
+      "max": 4.5
+    },
+    "height": {
+      "min": 2.5,
+      "typical": 2.7,
+      "max": 3.0
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "moquette",
+      "finish_note": "Sol textile pour limiter les réflexions et les bruits de pas (Microsoft recommande un sol moquetté ou traité dans les salles visio)."
+    },
+    {
+      "surface": "walls",
+      "material": "plâtre peint + 2 murs avec panneaux absorbants tendus de tissu",
+      "finish_note": "Au moins deux murs traités (recommandation Microsoft pour les salles Teams), idéalement le mur arrière face aux micros."
+    },
+    {
+      "surface": "ceiling",
+      "material": "faux plafond en dalles minérales absorbantes",
+      "finish_note": "Plénum utilisable pour câbles et futurs micros/enceintes plafond."
+    },
+    {
+      "surface": "front-wall",
+      "material": "plâtre peint, écran plat ou écran de projection",
+      "finish_note": "Pas de vitrage nu derrière l'écran (contre-jour caméra)."
+    }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    {
+      "id": "front-av",
+      "kind": "other",
+      "rect_m": [
+        0.0,
+        -1.95,
+        3.0,
+        0.6
+      ],
+      "floor_y_m": 0.0,
+      "note": "Mur avant : écran, enceintes."
+    },
+    {
+      "id": "table",
+      "kind": "desk",
+      "rect_m": [
+        0.0,
+        0.3,
+        1.2,
+        2.4
+      ],
+      "floor_y_m": 0.0,
+      "note": "Table de réunion 8 places dans l'axe de l'écran."
+    },
+    {
+      "id": "seating",
+      "kind": "audience",
+      "rect_m": [
+        0.0,
+        0.3,
+        2.8,
+        2.6
+      ],
+      "floor_y_m": 0.0,
+      "note": "Chaises autour de la table."
+    },
+    {
+      "id": "credenza-rack",
+      "kind": "machine-room",
+      "rect_m": [
+        -1.75,
+        1.9,
+        1.0,
+        0.6
+      ],
+      "floor_y_m": 0.0,
+      "note": "Meuble technique / rack 19\" bas au mur gauche, côté porte."
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "front-av",
+      "position_m": [
+        -1.2,
+        1.9,
+        -2.1
+      ],
+      "rotation_deg": 0,
+      "note": "Enceinte active gauche à côté de l'écran ; en installation réelle on trouverait souvent des plafonniers."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "front-av",
+      "position_m": [
+        1.2,
+        1.9,
+        -2.1
+      ],
+      "rotation_deg": 0,
+      "note": "Enceinte active droite."
+    },
+    {
+      "equipment_id": "shure-beta-91a",
+      "zone": "table",
+      "position_m": [
+        0.0,
+        0.76,
+        -0.4
+      ],
+      "rotation_deg": 180,
+      "note": "Micro de surface (boundary) demi-cardioïde posé sur la table, côté écran."
+    },
+    {
+      "equipment_id": "shure-beta-91a",
+      "zone": "table",
+      "position_m": [
+        0.0,
+        0.76,
+        1.0
+      ],
+      "rotation_deg": 180,
+      "note": "Second micro de surface, côté fond de table."
+    },
+    {
+      "equipment_id": "shure-scm820",
+      "zone": "credenza-rack",
+      "position_m": [
+        -1.75,
+        0.7,
+        1.9
+      ],
+      "rotation_deg": 90,
+      "note": "Mélangeur automatique 8 voies (IntelliMix) : ouvre seulement les micros actifs."
+    },
+    {
+      "equipment_id": "sennheiser-ew-dx-em-2",
+      "zone": "credenza-rack",
+      "position_m": [
+        -1.75,
+        0.8,
+        1.9
+      ],
+      "rotation_deg": 90,
+      "note": "Récepteur HF 2 canaux pour l'intervenant debout."
+    },
+    {
+      "equipment_id": "yamaha-xmv8280-d",
+      "zone": "credenza-rack",
+      "position_m": [
+        -1.75,
+        0.5,
+        1.9
+      ],
+      "rotation_deg": 90,
+      "note": "Ampli d'installation (utile si l'on passe à des plafonniers passifs)."
+    },
+    {
+      "equipment_id": "audinate-dante-avio-analog-input-2ch",
+      "zone": "credenza-rack",
+      "position_m": [
+        -1.75,
+        0.3,
+        1.9
+      ],
+      "rotation_deg": 90,
+      "note": "Adaptateur analogique → Dante pour envoyer le mix vers le PC visio ou l'enregistrement."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        0.0,
+        0.3,
+        -2.2
+      ],
+      "type": "schuko-16a",
+      "note": "Derrière l'écran (prise 2P+T 16 A, type E en France)."
+    },
+    {
+      "position_m": [
+        -2.2,
+        0.3,
+        1.9
+      ],
+      "type": "schuko-16a",
+      "note": "Meuble technique."
+    },
+    {
+      "position_m": [
+        0.0,
+        0.0,
+        0.3
+      ],
+      "type": "floor-box-schuko-16a",
+      "note": "Boîte de sol sous la table pour les portables."
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        0.0,
+        0.0,
+        0.3
+      ],
+      "type": "floor-box-xlr-4",
+      "note": "Départs micros de table vers le meuble technique."
+    },
+    {
+      "position_m": [
+        0.0,
+        1.2,
+        -2.2
+      ],
+      "type": "dante-wall-port",
+      "note": "Prise réseau derrière l'écran."
+    },
+    {
+      "position_m": [
+        -2.2,
+        0.3,
+        1.6
+      ],
+      "type": "dante-wall-port",
+      "note": "Réseau AV du meuble technique."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": -1.4,
+      "width_m": 0.9,
+      "height_m": 2.04
+    },
+    {
+      "wall": "right",
+      "kind": "window",
+      "offset_m": 0.0,
+      "width_m": 2.4,
+      "height_m": 1.4
+    }
+  ],
+  "lighting": {
+    "mood": "éclairage de bureau diffus et uniforme, gradable par zone, stores occultants",
+    "color_temp_k": 4000
+  },
+  "procedural": {
+    "wall_color": "#E8E6E1",
+    "floor_color": "#4A5059",
+    "ceiling_color": "#F4F4F2",
+    "prop_hints": [
+      "table de réunion 8 places",
+      "chaises de bureau",
+      "écran plat 65\" au mur avant",
+      "panneaux acoustiques tissu",
+      "meuble technique bas"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/microsoftteams/devices/certified-hardware-android",
+      "publisher": "Microsoft Learn",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "dimensions_m.length.min",
+        "dimensions_m.width.min",
+        "dimensions_m.length.typical",
+        "dimensions_m.width.typical",
+        "dimensions_m.width.max",
+        "dimensions_m.length.max",
+        "description"
+      ],
+      "note": "Catégories de taille utilisées dans la liste des appareils Teams Rooms on Android certifiés : Huddle 3 m × 3 m, Small 4,5 m × 4,5 m, Medium 4,5 m × 6 m, Large 4,5 m × 8,5 m."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/microsoftteams/rooms/room-planning-guidance",
+      "publisher": "Microsoft Learn",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "surfaces"
+      ],
+      "note": "Au moins deux murs traités, sol moquetté ou traité, occultation des fenêtres."
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "dimensions_m.height (2,5 / 2,7 / 3,0 m)",
+      "searched": "Pages Microsoft Teams Rooms (catégories de taille, guide de conception), Yealink : aucune hauteur sous plafond pour une petite salle. Estimation d'intégrateur (bureaux tertiaires).",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "rt60_s",
+      "searched": "Microsoft, Yealink, Shure insights : aucune cible chiffrée de temps de réverbération pour une salle de réunion trouvée ; norme NF S 31-080 (bureaux) payante, non consultée.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Matériel de conférence absent du KB",
+      "searched": "knowledge-base/equipment/*.json et catalog.json : pas de micro plafond (Shure MXA, Sennheiser TeamConnect Ceiling 2), pas de DSP avec AEC (Biamp Tesira, Q-SYS), pas de haut-parleur plafonnier ni de micro col-de-cygne. Proposition catalogue pour Oscar.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "gear_positions, power_points, patch_points, offsets des ouvertures, couleurs procédurales et lighting.color_temp_k",
+      "searched": "Aucune source ne fixe ces valeurs pour ce type de salle : ce sont des choix de mise en page d'intégrateur (layout), pas des données sourcées.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

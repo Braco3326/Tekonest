@@ -1,0 +1,416 @@
+{
+  "id": "auditorium-amphitheatre-medium",
+  "name_fr": "Amphithéâtre universitaire moyen (≈ 150-250 places)",
+  "name_en": "Medium lecture theatre / auditorium",
+  "family": "education",
+  "size": "medium",
+  "description": "Amphithéâtre en gradins pour cours magistraux, colloques et conférences : estrade avec pupitre, micro-casque HF de l'enseignant, micro main pour les questions, deux enceintes en façade, console numérique et rack en régie au fond, cabine d'interprétation en option au fond de salle (AIIC : cabines au fond, face à la tribune, à moins de 30 m de l'orateur et de l'écran). Les lecture theatres « collaboratifs » comptent typiquement 100 à 200 places, les grands amphis plusieurs centaines (Wikipedia). Bruit de fond visé pour une lecture room : 35 dB LAeq,30min en neuf (40 en rénovation) selon le BB93 britannique ; en France l'arrêté du 25 avril 2003 fixe des durées de réverbération par type de local (tableau non reproduit sur Légifrance). Les gradins ne sont pas modélisés : floor_y_m = 0 pour la zone public, rampe à ajouter par le moteur. Convention de ce gabarit : le mur avant (front) est le mur z négatif (écran, pupitre ou vitrage) ; les personnes assises regardent vers −z (rotation_deg 180) ; une enceinte au mur avant qui arrose la salle a rotation_deg 0 ; un rack au mur gauche ouvert vers la salle a rotation_deg 90.",
+  "dimensions_m": {
+    "length": {
+      "min": 15.0,
+      "typical": 20.0,
+      "max": 25.0
+    },
+    "width": {
+      "min": 12.0,
+      "typical": 16.0,
+      "max": 20.0
+    },
+    "height": {
+      "min": 5.0,
+      "typical": 6.5,
+      "max": 8.0
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "stage-floor",
+      "material": "parquet sur estrade (≈ 0,4 m)",
+      "finish_note": "Estrade enseignant avec pupitre et paillasse de démonstration."
+    },
+    {
+      "surface": "floor",
+      "material": "gradins béton + moquette dans les circulations",
+      "finish_note": "Fauteuils rembourrés à tablette ; le rembourrage stabilise le RT entre salle vide et pleine."
+    },
+    {
+      "surface": "walls",
+      "material": "plâtre + panneaux bois perforés absorbants sur les murs latéraux, mur arrière absorbant",
+      "finish_note": "Mur arrière traité pour éviter l'écho retour vers l'orateur."
+    },
+    {
+      "surface": "ceiling",
+      "material": "plafond plâtre réfléchissant au-dessus de l'estrade, absorbant au fond",
+      "finish_note": "Réflecteur au-dessus de l'orateur pour porter la voix non amplifiée."
+    },
+    {
+      "surface": "front-wall",
+      "material": "écran de projection motorisé + tableaux",
+      "finish_note": "Enceintes de part et d'autre de l'écran."
+    }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    {
+      "id": "stage",
+      "kind": "stage",
+      "rect_m": [
+        0.0,
+        -8.5,
+        12.0,
+        3.0
+      ],
+      "floor_y_m": 0.4,
+      "note": "Estrade enseignant, pupitre, écran au mur avant."
+    },
+    {
+      "id": "audience",
+      "kind": "audience",
+      "rect_m": [
+        0.0,
+        0.3,
+        15.0,
+        14.6
+      ],
+      "floor_y_m": 0.0,
+      "note": "Gradins (rampe non modélisée)."
+    },
+    {
+      "id": "control-room",
+      "kind": "control-room",
+      "rect_m": [
+        5.5,
+        9.0,
+        4.0,
+        2.0
+      ],
+      "floor_y_m": 1.2,
+      "note": "Régie au sommet des gradins, vue directe sur l'estrade."
+    },
+    {
+      "id": "interp-booth",
+      "kind": "booth",
+      "rect_m": [
+        -5.0,
+        8.8,
+        2.5,
+        2.4
+      ],
+      "floor_y_m": 1.0,
+      "note": "Cabine d'interprétation ISO 2603 (voir interpretation-booth-small) ; plancher surélevé d'environ 1 m (AIIC)."
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "nexo-p12",
+      "zone": "stage",
+      "position_m": [
+        -5.0,
+        3.0,
+        -9.3
+      ],
+      "rotation_deg": 0,
+      "note": "Enceinte façade gauche (coaxiale), orientée vers les gradins."
+    },
+    {
+      "equipment_id": "nexo-p12",
+      "zone": "stage",
+      "position_m": [
+        5.0,
+        3.0,
+        -9.3
+      ],
+      "rotation_deg": 0,
+      "note": "Enceinte façade droite."
+    },
+    {
+      "equipment_id": "shure-sm58",
+      "zone": "stage",
+      "position_m": [
+        -3.0,
+        1.5,
+        -8.0
+      ],
+      "rotation_deg": 180,
+      "note": "Micro main sur pince au pupitre (questions, intervenants)."
+    },
+    {
+      "equipment_id": "yamaha-tio1608-d",
+      "zone": "stage",
+      "position_m": [
+        5.5,
+        0.4,
+        -9.6
+      ],
+      "rotation_deg": 0,
+      "note": "Boîtier de scène Dante en coulisse d'estrade : micros pupitre et retours HF."
+    },
+    {
+      "equipment_id": "shure-ulx-d",
+      "zone": "control-room",
+      "position_m": [
+        6.5,
+        1.8,
+        9.5
+      ],
+      "rotation_deg": 180,
+      "note": "Récepteurs HF numériques en régie."
+    },
+    {
+      "equipment_id": "dpa-4088",
+      "zone": "stage",
+      "position_m": [
+        0.0,
+        1.6,
+        -8.5
+      ],
+      "rotation_deg": 0,
+      "note": "Micro-casque de l'enseignant (émetteur ceinture ULX-D)."
+    },
+    {
+      "equipment_id": "yamaha-tf5",
+      "zone": "control-room",
+      "position_m": [
+        5.5,
+        2.0,
+        8.6
+      ],
+      "rotation_deg": 180,
+      "note": "Console numérique en régie, face à l'estrade."
+    },
+    {
+      "equipment_id": "shure-scm820",
+      "zone": "control-room",
+      "position_m": [
+        4.2,
+        1.8,
+        9.6
+      ],
+      "rotation_deg": 180,
+      "note": "Automixer pour les tables rondes à plusieurs micros."
+    },
+    {
+      "equipment_id": "nexo-nxamp4x4mk2",
+      "zone": "control-room",
+      "position_m": [
+        4.8,
+        1.6,
+        9.6
+      ],
+      "rotation_deg": 180,
+      "note": "Contrôleur-ampli des NEXO P12."
+    },
+    {
+      "equipment_id": "audinate-dante-virtual-soundcard",
+      "zone": "control-room",
+      "position_m": [
+        6.8,
+        2.0,
+        8.6
+      ],
+      "rotation_deg": 180,
+      "note": "Captation du cours (lecture capture) sur PC via Dante."
+    },
+    {
+      "equipment_id": "beyerdynamic-dt-297-pv-mkii",
+      "zone": "interp-booth",
+      "position_m": [
+        -5.0,
+        1.76,
+        7.8
+      ],
+      "rotation_deg": 180,
+      "note": "Casque-micro interprète (si colloque multilingue)."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        -5.8,
+        0.7,
+        -9.7
+      ],
+      "type": "schuko-16a",
+      "note": "Estrade côté jardin."
+    },
+    {
+      "position_m": [
+        5.8,
+        0.7,
+        -9.7
+      ],
+      "type": "schuko-16a",
+      "note": "Estrade côté cour (boîtier de scène)."
+    },
+    {
+      "position_m": [
+        7.6,
+        1.5,
+        9.8
+      ],
+      "type": "schuko-16a-x6-ups",
+      "note": "Régie, départ ondulé pour console et rack."
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        -2.5,
+        0.7,
+        -9.9
+      ],
+      "type": "wall-patch-xlr-8",
+      "note": "Pupitre / estrade."
+    },
+    {
+      "position_m": [
+        5.8,
+        0.7,
+        -9.8
+      ],
+      "type": "dante-wall-port",
+      "note": "Liaison boîtier de scène ↔ régie."
+    },
+    {
+      "position_m": [
+        7.6,
+        1.5,
+        9.8
+      ],
+      "type": "dante-wall-port",
+      "note": "Régie."
+    },
+    {
+      "position_m": [
+        -3.6,
+        1.3,
+        9.8
+      ],
+      "type": "interpreter-desk-connector",
+      "note": "Cabine d'interprétation."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 0.0,
+      "width_m": 1.8,
+      "height_m": 2.1,
+      "note": "Entrée public double vantail en haut des gradins."
+    },
+    {
+      "wall": "left",
+      "kind": "door",
+      "offset_m": -7.0,
+      "width_m": 1.4,
+      "height_m": 2.1,
+      "note": "Sortie bas de gradins / accès estrade."
+    },
+    {
+      "wall": "right",
+      "kind": "door",
+      "offset_m": -7.0,
+      "width_m": 1.4,
+      "height_m": 2.1,
+      "note": "Sortie de secours bas de gradins."
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 5.5,
+      "width_m": 0.9,
+      "height_m": 2.04,
+      "note": "Accès régie."
+    }
+  ],
+  "lighting": {
+    "mood": "éclairage de salle gradable par zones, douche sur l'estrade, salle plongée pour la projection",
+    "color_temp_k": 3500
+  },
+  "procedural": {
+    "wall_color": "#B89A74",
+    "floor_color": "#5A4A3A",
+    "ceiling_color": "#EDEAE4",
+    "prop_hints": [
+      "gradins avec fauteuils à tablette",
+      "pupitre de conférence",
+      "écran motorisé",
+      "tableaux coulissants",
+      "vidéoprojecteur au plafond",
+      "rack 19\" en régie"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Lecture_hall",
+      "publisher": "Wikipedia (Lecture hall)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "other",
+      "covers": [
+        "description",
+        "size"
+      ],
+      "note": "Collaborative lecture theatres 100-200 places ; lecture rooms < 100 ; flat lecture theatres < 50 ; micros, enceintes, projection et lecture capture courants."
+    },
+    {
+      "url": "https://assets.publishing.service.gov.uk/media/5a8170d3e5274a2e8ab54012/BB93_February_2015.pdf",
+      "publisher": "UK Department for Education — BB93 Acoustic design of schools: performance standards (2015)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "regulator",
+      "covers": [
+        "description"
+      ],
+      "note": "Table 1 : lecture room, plafond de bruit ambiant 35 dB LAeq,30min (neuf) / 40 (rénovation). Tmf = moyenne 500 Hz-1 kHz-2 kHz. Valeurs RT du tableau 6 illisibles à l'extraction."
+    },
+    {
+      "url": "https://aiic.org/document/4395/Checklist%20for%20simultaneous%20interpretation%20equipment%20-%20ENG.pdf",
+      "publisher": "AIIC — Technical Group AIIC Swiss",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "other",
+      "covers": [
+        "zones"
+      ],
+      "note": "Cabines au fond de salle face à la tribune, ≤ 30 m de l'orateur/écran (20-25 m préférables), plancher cabine ≈ 1 m au-dessus d'un sol plat."
+    },
+    {
+      "url": "https://www.legifrance.gouv.fr/loda/id/LEGITEXT000005634431",
+      "publisher": "Légifrance — Arrêté du 25 avril 2003 relatif à la limitation du bruit dans les établissements d'enseignement",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "regulator",
+      "covers": [
+        "description"
+      ],
+      "note": "S'applique aux établissements d'enseignement neufs ; le tableau des durées de réverbération (art. 5) n'est pas reproduit en ligne (JO n° 123 du 28/05/2003, p. 9102-9104)."
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "dimensions_m (toutes : L 15/20/25, l 12/16/20, H 5/6,5/8 m)",
+      "searched": "Pages techniques d'amphithéâtres universitaires non trouvées avec le budget de recherche ; Wikipedia ne donne que des capacités. Estimation d'intégrateur pour 150-250 places en gradins.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "rt60_s",
+      "searched": "BB93 tableau 6 (lecture rooms < 50 / > 50 personnes) : valeurs illisibles à l'extraction PDF ; arrêté du 25 avril 2003 : tableau non reproduit sur Légifrance. À relire sur le JO du 28/05/2003 p. 9103.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Micro col-de-cygne de pupitre, boucle magnétique (hearing loop)",
+      "searched": "Absents du KB et de catalog.json ; SM58 sur pince utilisé à la place.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "gear_positions, power_points, patch_points, offsets des ouvertures, couleurs procédurales et lighting.color_temp_k",
+      "searched": "Aucune source ne fixe ces valeurs pour ce type de salle : ce sont des choix de mise en page d'intégrateur (layout), pas des données sourcées.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

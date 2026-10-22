@@ -1,0 +1,362 @@
+{
+  "id": "museum-installed-sound-medium",
+  "name_fr": "Salle d'exposition sonorisée (musée)",
+  "name_en": "Museum gallery with installed sound",
+  "family": "installed",
+  "size": "medium",
+  "description": "Salle d'exposition de musée avec ambiance sonore diffusée par zones, une alcôve audiovisuelle (projection + son) et une station d'écoute au casque. Lecture automatique depuis un ordinateur de show-control, distribution en Dante vers un ampli d'installation multicanal, réglage des niveaux par zone par le personnel. Retours d'expérience Genelec : au Bob Dylan Center (Tulsa, ≈ 30 000 ft² sur deux niveaux) 23 × 4430A et 13 × 4040A Smart IP avec niveaux réglés galerie par galerie et équilibrés avec un audioguide au casque ; au musée de l'ancienne banque de Parkano (Finlande) une salle de projection en 7.1.4, une ambiance dans le hall et le coffre, et un démarrage/arrêt du musée par un bouton unique. Les enceintes Genelec installation ne sont pas dans le KB : 8030C utilisée à la place. Convention de ce gabarit : le mur avant (front) est le mur z négatif (écran, pupitre ou vitrage) ; les personnes assises regardent vers −z (rotation_deg 180) ; une enceinte au mur avant qui arrose la salle a rotation_deg 0 ; un rack au mur gauche ouvert vers la salle a rotation_deg 90.",
+  "dimensions_m": {
+    "length": {
+      "min": 12.0,
+      "typical": 18.0,
+      "max": 25.0
+    },
+    "width": {
+      "min": 8.0,
+      "typical": 12.0,
+      "max": 15.0
+    },
+    "height": {
+      "min": 3.5,
+      "typical": 4.5,
+      "max": 6.0
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "parquet chêne ou béton ciré",
+      "finish_note": "Surfaces dures fréquentes en musée : RT souvent long, d'où des enceintes proches et directives."
+    },
+    {
+      "surface": "walls",
+      "material": "cimaises plâtre peint (accrochage)",
+      "finish_note": "Peu d'absorption possible sur les murs d'accrochage ; absorbants derrière rideaux ou au plafond (ex. Parkano : panneaux derrière rideaux)."
+    },
+    {
+      "surface": "ceiling",
+      "material": "plafond technique noir avec rails d'éclairage",
+      "finish_note": "Enceintes et vidéoprojecteurs suspendus aux rails ou au plafond."
+    },
+    {
+      "surface": "rear-wall",
+      "material": "rideau velours noir (alcôve AV)",
+      "finish_note": "Absorption locale de l'alcôve de projection."
+    }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    {
+      "id": "gallery-a",
+      "kind": "other",
+      "rect_m": [
+        0.0,
+        -4.0,
+        11.0,
+        8.0
+      ],
+      "floor_y_m": 0.0,
+      "note": "Zone d'ambiance A (vitrines)."
+    },
+    {
+      "id": "av-alcove",
+      "kind": "other",
+      "rect_m": [
+        0.0,
+        6.0,
+        6.0,
+        5.0
+      ],
+      "floor_y_m": 0.0,
+      "note": "Alcôve de projection avec bancs."
+    },
+    {
+      "id": "listening-station",
+      "kind": "other",
+      "rect_m": [
+        -4.5,
+        5.5,
+        2.0,
+        2.0
+      ],
+      "floor_y_m": 0.0,
+      "note": "Borne d'écoute au casque."
+    },
+    {
+      "id": "tech-cupboard",
+      "kind": "machine-room",
+      "rect_m": [
+        5.0,
+        8.0,
+        1.6,
+        1.6
+      ],
+      "floor_y_m": 0.0,
+      "note": "Local technique (rack, switch, PC de lecture)."
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "gallery-a",
+      "position_m": [
+        -4.5,
+        3.2,
+        -7.5
+      ],
+      "rotation_deg": 0,
+      "note": "Enceinte d'ambiance zone A, en hauteur sur rail."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "gallery-a",
+      "position_m": [
+        4.5,
+        3.2,
+        -7.5
+      ],
+      "rotation_deg": 0,
+      "note": "Enceinte d'ambiance zone A."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "av-alcove",
+      "position_m": [
+        -2.4,
+        2.5,
+        3.8
+      ],
+      "rotation_deg": 180,
+      "note": "Canal gauche alcôve, tourné vers les bancs (dos à l'entrée)."
+    },
+    {
+      "equipment_id": "genelec-8030c",
+      "zone": "av-alcove",
+      "position_m": [
+        2.4,
+        2.5,
+        3.8
+      ],
+      "rotation_deg": 180,
+      "note": "Canal droit alcôve."
+    },
+    {
+      "equipment_id": "sennheiser-hd-25",
+      "zone": "listening-station",
+      "position_m": [
+        -4.5,
+        1.2,
+        5.5
+      ],
+      "rotation_deg": 90,
+      "note": "Casque de la borne d'écoute."
+    },
+    {
+      "equipment_id": "figure53-qlab",
+      "zone": "tech-cupboard",
+      "position_m": [
+        5.0,
+        1.0,
+        8.0
+      ],
+      "rotation_deg": 270,
+      "note": "Lecture et cues programmées (ouverture/fermeture du musée)."
+    },
+    {
+      "equipment_id": "yamaha-xmv8280-d",
+      "zone": "tech-cupboard",
+      "position_m": [
+        5.0,
+        0.8,
+        8.2
+      ],
+      "rotation_deg": 270,
+      "note": "Ampli d'installation 8 canaux Dante (si enceintes passives)."
+    },
+    {
+      "equipment_id": "netgear-m4250-10g2xf-poe-plus",
+      "zone": "tech-cupboard",
+      "position_m": [
+        5.0,
+        1.4,
+        8.2
+      ],
+      "rotation_deg": 270,
+      "note": "Switch PoE+ du réseau AV."
+    },
+    {
+      "equipment_id": "dbx-driverack-venu360",
+      "zone": "tech-cupboard",
+      "position_m": [
+        5.0,
+        1.2,
+        8.2
+      ],
+      "rotation_deg": 270,
+      "note": "Processeur de zones : EQ, délais et limiteurs par zone."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        5.9,
+        0.3,
+        8.0
+      ],
+      "type": "schuko-16a-x6-ups",
+      "note": "Local technique, sur onduleur."
+    },
+    {
+      "position_m": [
+        0.0,
+        4.4,
+        -4.0
+      ],
+      "type": "track-power-16a",
+      "note": "Rail plafond (éclairage + enceintes/projecteurs)."
+    },
+    {
+      "position_m": [
+        -5.9,
+        0.3,
+        5.5
+      ],
+      "type": "schuko-16a",
+      "note": "Borne d'écoute."
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        5.9,
+        1.0,
+        7.5
+      ],
+      "type": "dante-wall-port",
+      "note": "Départ réseau AV vers les zones."
+    },
+    {
+      "position_m": [
+        0.0,
+        4.4,
+        -7.5
+      ],
+      "type": "dante-wall-port",
+      "note": "Prise réseau plafond zone A (PoE pour enceintes IP)."
+    },
+    {
+      "position_m": [
+        0.0,
+        4.4,
+        5.0
+      ],
+      "type": "dante-wall-port",
+      "note": "Plafond alcôve (projecteur + enceintes)."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "front",
+      "kind": "door",
+      "offset_m": 0.0,
+      "width_m": 2.4,
+      "height_m": 3.0,
+      "note": "Entrée des visiteurs depuis la salle précédente."
+    },
+    {
+      "wall": "right",
+      "kind": "door",
+      "offset_m": 6.5,
+      "width_m": 1.8,
+      "height_m": 2.5,
+      "note": "Sortie vers la salle suivante."
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 5.0,
+      "width_m": 0.9,
+      "height_m": 2.04,
+      "note": "Accès personnel au local technique."
+    }
+  ],
+  "lighting": {
+    "mood": "éclairage muséographique d'accent sur les œuvres, salle tamisée, alcôve dans le noir",
+    "color_temp_k": 3000
+  },
+  "procedural": {
+    "wall_color": "#2E3A46",
+    "floor_color": "#8B6F4E",
+    "ceiling_color": "#1A1A1A",
+    "prop_hints": [
+      "vitrines",
+      "cimaises",
+      "rails d'éclairage",
+      "bancs dans l'alcôve",
+      "borne d'écoute avec casque",
+      "cartels"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://www.genelec.com/museums-and-attractions",
+      "publisher": "Genelec — Museums and Attractions",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "manufacturer",
+      "covers": [
+        "description",
+        "surfaces"
+      ],
+      "note": "Enceintes installation actives (pas d'ampli externe) et Smart IP (audio, alimentation et gestion sur un câble CAT), montage mural/plafond."
+    },
+    {
+      "url": "https://www.genelec.com/-/reference/genelec-smart-ip-brings-music-history-to-life",
+      "publisher": "Genelec — référence Bob Dylan Center (Tulsa)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "manufacturer",
+      "covers": [
+        "description"
+      ],
+      "note": "23 × 4430A, 13 × 4040A, 7370A + 7350A ; niveaux par galerie ; ambiance équilibrée avec guide au casque."
+    },
+    {
+      "url": "https://www.genelec.com/-/reference/genelec-loudspeakers-help-transform-finland-s-historic-parkano-bank-into-interactive-museum",
+      "publisher": "Genelec — référence musée de la banque de Parkano (Finlande)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "manufacturer",
+      "covers": [
+        "description",
+        "surfaces"
+      ],
+      "note": "Salle de projection 7.1.4, ambiance hall/coffre, contrôle par bouton unique, panneaux acoustiques derrière rideaux, intégrateur 4Business."
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "dimensions_m (toutes : L 12/18/25, l 8/12/15, H 3,5/4,5/6 m)",
+      "searched": "Les références Genelec ne donnent pas les dimensions des salles (seulement 30 000 ft² pour tout le Bob Dylan Center). Estimation.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "rt60_s",
+      "searched": "Aucune cible de RT pour une salle d'exposition dans les sources ouvertes.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Enceintes d'installation / IP (Genelec 4430A, 4040A, 4420A) et lecteur multicanal dédié",
+      "searched": "Absents du KB et de catalog.json ; Genelec 8030C (studio) utilisée à la place. Proposition catalogue.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "gear_positions, power_points, patch_points, offsets des ouvertures, couleurs procédurales et lighting.color_temp_k",
+      "searched": "Aucune source ne fixe ces valeurs pour ce type de salle : ce sont des choix de mise en page d'intégrateur (layout), pas des données sourcées.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}

@@ -1,0 +1,370 @@
+{
+  "id": "classroom-lab-small",
+  "name_fr": "Petite salle de TP son (salle de classe équipée)",
+  "name_en": "Small audio teaching lab / classroom",
+  "family": "education",
+  "size": "small",
+  "description": "Salle de classe de lycée/BTS transformée en salle de TP son : 6 à 8 postes élèves (interface audio USB, casque fermé, petite table de mixage), un poste enseignant en façade avec console numérique et paire d'enceintes de démonstration, un micro dynamique et un statique pour les exercices de prise de son. Réglementation française (arrêté du 25 avril 2003, art. 5) : durées de réverbération exprimées comme moyenne des bandes d'octave 500, 1000 et 2000 Hz, local meublé et inoccupé ; pour une salle de classe la plage citée est 0,4 à 0,8 s (résumé de la Société suisse d'acoustique). Repère britannique BB93 : salle de classe et ICT room, bruit ambiant ≤ 35 dB LAeq,30min en neuf. Volume typique ici ≈ 168 m³. Convention de ce gabarit : le mur avant (front) est le mur z négatif (écran, pupitre ou vitrage) ; les personnes assises regardent vers −z (rotation_deg 180) ; une enceinte au mur avant qui arrose la salle a rotation_deg 0 ; un rack au mur gauche ouvert vers la salle a rotation_deg 90.",
+  "dimensions_m": {
+    "length": {
+      "min": 7.0,
+      "typical": 8.0,
+      "max": 9.0
+    },
+    "width": {
+      "min": 6.0,
+      "typical": 7.0,
+      "max": 8.0
+    },
+    "height": {
+      "min": 2.7,
+      "typical": 3.0,
+      "max": 3.3
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "floor",
+      "material": "sol PVC acoustique",
+      "finish_note": "Sol souple courant en établissement scolaire ; limite les bruits de chaises."
+    },
+    {
+      "surface": "walls",
+      "material": "plâtre peint + panneaux absorbants au mur arrière",
+      "finish_note": "Mur arrière traité pour ramener le RT dans la plage réglementaire et éviter l'écho vers le tableau."
+    },
+    {
+      "surface": "ceiling",
+      "material": "faux plafond en dalles absorbantes",
+      "finish_note": "Principal levier d'absorption dans une salle de classe."
+    },
+    {
+      "surface": "front-wall",
+      "material": "tableau blanc + écran / vidéoprojecteur",
+      "finish_note": "Enceintes de démonstration de part et d'autre."
+    }
+  ],
+  "rt60_s": {
+    "min": 0.4,
+    "max": 0.8,
+    "band_note": "Moyenne arithmétique des bandes d'octave 500, 1000 et 2000 Hz, local normalement meublé et inoccupé (arrêté du 25 avril 2003, art. 5) ; plage « classe » citée par la SSA d'après le même arrêté.",
+    "source_url": "https://sga-ssa.ch/docs/events//yverdon07_koller.pdf"
+  },
+  "zones": [
+    {
+      "id": "teacher-desk",
+      "kind": "desk",
+      "rect_m": [
+        0.0,
+        -3.2,
+        2.4,
+        1.0
+      ],
+      "floor_y_m": 0.0,
+      "note": "Bureau enseignant / poste de démonstration."
+    },
+    {
+      "id": "student-benches",
+      "kind": "desk",
+      "rect_m": [
+        0.0,
+        0.6,
+        6.0,
+        4.6
+      ],
+      "floor_y_m": 0.0,
+      "note": "Paillasses élèves en rangées face au tableau, 6 à 8 postes."
+    },
+    {
+      "id": "rack-corner",
+      "kind": "machine-room",
+      "rect_m": [
+        -3.0,
+        3.6,
+        0.8,
+        0.6
+      ],
+      "floor_y_m": 0.0,
+      "note": "Armoire technique (stock micros, câbles, réseau)."
+    },
+    {
+      "id": "recording-corner",
+      "kind": "vocal-booth",
+      "rect_m": [
+        2.6,
+        3.4,
+        1.6,
+        1.2
+      ],
+      "floor_y_m": 0.0,
+      "note": "Coin prise de son avec paravent absorbant."
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "behringer-x32",
+      "zone": "teacher-desk",
+      "position_m": [
+        0.0,
+        0.76,
+        -3.2
+      ],
+      "rotation_deg": 180,
+      "note": "Console numérique de démonstration (routing, gain staging)."
+    },
+    {
+      "equipment_id": "yamaha-hs8",
+      "zone": "teacher-desk",
+      "position_m": [
+        -1.8,
+        1.4,
+        -3.7
+      ],
+      "rotation_deg": 0,
+      "note": "Enceinte de démonstration gauche, tournée vers les élèves."
+    },
+    {
+      "equipment_id": "yamaha-hs8",
+      "zone": "teacher-desk",
+      "position_m": [
+        1.8,
+        1.4,
+        -3.7
+      ],
+      "rotation_deg": 0,
+      "note": "Enceinte de démonstration droite."
+    },
+    {
+      "equipment_id": "focusrite-scarlett-2i2-4th-gen",
+      "zone": "student-benches",
+      "position_m": [
+        -2.0,
+        0.76,
+        -0.8
+      ],
+      "rotation_deg": 180,
+      "note": "Interface audio USB d'un poste élève."
+    },
+    {
+      "equipment_id": "yamaha-mg10xu",
+      "zone": "student-benches",
+      "position_m": [
+        -1.0,
+        0.76,
+        -0.8
+      ],
+      "rotation_deg": 180,
+      "note": "Petite table de mixage analogique d'un poste élève."
+    },
+    {
+      "equipment_id": "beyerdynamic-dt-770-pro",
+      "zone": "student-benches",
+      "position_m": [
+        1.0,
+        0.76,
+        -0.8
+      ],
+      "rotation_deg": 180,
+      "note": "Casque fermé élève (écoute sans gêner les voisins)."
+    },
+    {
+      "equipment_id": "audio-technica-ath-m50x",
+      "zone": "student-benches",
+      "position_m": [
+        2.0,
+        0.76,
+        1.2
+      ],
+      "rotation_deg": 180,
+      "note": "Casque élève (autre rangée)."
+    },
+    {
+      "equipment_id": "cockos-reaper",
+      "zone": "student-benches",
+      "position_m": [
+        -2.0,
+        0.76,
+        1.2
+      ],
+      "rotation_deg": 180,
+      "note": "STAN installée sur les postes élèves."
+    },
+    {
+      "equipment_id": "shure-sm58",
+      "zone": "recording-corner",
+      "position_m": [
+        2.6,
+        1.5,
+        3.2
+      ],
+      "rotation_deg": 180,
+      "note": "Micro dynamique sur pied pour les TP voix."
+    },
+    {
+      "equipment_id": "rode-nt1-5th-gen",
+      "zone": "recording-corner",
+      "position_m": [
+        2.9,
+        1.6,
+        3.4
+      ],
+      "rotation_deg": 180,
+      "note": "Micro statique large membrane (fantôme 48 V)."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        0.0,
+        0.3,
+        -3.95
+      ],
+      "type": "schuko-16a",
+      "note": "Bureau enseignant."
+    },
+    {
+      "position_m": [
+        -3.45,
+        0.9,
+        0.6
+      ],
+      "type": "goulotte-schuko-16a-x8",
+      "note": "Goulotte murale le long des paillasses gauche."
+    },
+    {
+      "position_m": [
+        3.45,
+        0.9,
+        0.6
+      ],
+      "type": "goulotte-schuko-16a-x8",
+      "note": "Goulotte murale le long des paillasses droite."
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        0.0,
+        0.5,
+        -3.95
+      ],
+      "type": "wall-patch-xlr-8",
+      "note": "Liaison coin prise de son → console enseignant."
+    },
+    {
+      "position_m": [
+        3.45,
+        0.5,
+        3.4
+      ],
+      "type": "wall-patch-xlr-4",
+      "note": "Coin prise de son."
+    },
+    {
+      "position_m": [
+        -3.45,
+        0.5,
+        3.6
+      ],
+      "type": "rj45-wall-port",
+      "note": "Réseau établissement."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": -2.5,
+      "width_m": 0.9,
+      "height_m": 2.04
+    },
+    {
+      "wall": "right",
+      "kind": "window",
+      "offset_m": -1.5,
+      "width_m": 1.8,
+      "height_m": 1.5
+    },
+    {
+      "wall": "right",
+      "kind": "window",
+      "offset_m": 1.5,
+      "width_m": 1.8,
+      "height_m": 1.5
+    }
+  ],
+  "lighting": {
+    "mood": "éclairage de classe uniforme, rang de luminaires gradable côté tableau",
+    "color_temp_k": 4000
+  },
+  "procedural": {
+    "wall_color": "#EEEAE0",
+    "floor_color": "#7A8590",
+    "ceiling_color": "#F6F6F4",
+    "prop_hints": [
+      "paillasses élèves avec PC",
+      "tableau blanc",
+      "vidéoprojecteur",
+      "pieds de micro",
+      "paravent acoustique",
+      "armoire à câbles"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://sga-ssa.ch/docs/events//yverdon07_koller.pdf",
+      "publisher": "Société suisse d'acoustique (SGA-SSA) — présentation Koller, Yverdon 2007",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "other",
+      "covers": [
+        "rt60_s.min",
+        "rt60_s.max"
+      ],
+      "note": "Tableau comparatif citant l'arrêté du 25 avril 2003 : classe 0,4-0,8 s."
+    },
+    {
+      "url": "https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000006219354",
+      "publisher": "Légifrance — Arrêté du 25 avril 2003, article 5",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "regulator",
+      "covers": [
+        "rt60_s.band_note",
+        "description"
+      ],
+      "note": "Moyenne 500/1000/2000 Hz, local meublé inoccupé ; tableau non reproduit en ligne (JO 28/05/2003)."
+    },
+    {
+      "url": "https://assets.publishing.service.gov.uk/media/5a8170d3e5274a2e8ab54012/BB93_February_2015.pdf",
+      "publisher": "UK Department for Education — BB93 (2015)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "regulator",
+      "covers": [
+        "description"
+      ],
+      "note": "Table 1 : salle de classe secondaire, 35 dB LAeq,30min (neuf) / 40 (rénovation)."
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "dimensions_m (L 7/8/9, l 6/7/8, H 2,7/3,0/3,3 m)",
+      "searched": "Aucune surface réglementaire de salle de classe trouvée dans le budget de recherche. Estimation (salle de classe courante 50-60 m²).",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Seuil de volume (< 250 m³) associé à la plage 0,4-0,8 s",
+      "searched": "Résultats de recherche (exercices de bac) l'associent à V < 250 m³ ; non confirmé sur une source ouverte (tableau JO non reproduit). Le volume typique de ce gabarit (≈ 168 m³) reste sous ce seuil.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "gear_positions, power_points, patch_points, offsets des ouvertures, couleurs procédurales et lighting.color_temp_k",
+      "searched": "Aucune source ne fixe ces valeurs pour ce type de salle : ce sont des choix de mise en page d'intégrateur (layout), pas des données sourcées.",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}
