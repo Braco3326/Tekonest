@@ -1,0 +1,494 @@
+{
+  "entity": "fault",
+  "domain": "live-sound",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "missing-channel-at-line-check",
+      "name_fr": "Canal muet au line check",
+      "name_en": "Missing channel at line check",
+      "domain": "live-sound",
+      "symptom": "Au line check, une source jouée sur scène ne fait bouger aucun vumètre sur le canal prévu.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Micro branché sur une autre entrée du boîtier ou du multipaire que celle de l'input list",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Canal coupé (mute) ou non routé vers un bus de sortie",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Câble défectueux",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Volume de l'instrument à zéro ou pile de DI / d'instrument vide",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "+48 V absent pour un micro statique ou une DI active",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Vérifier le patch : entrée du boîtier et canal console correspondent à l'input list",
+        "Vérifier mute et routage du canal",
+        "Demander au musicien de monter son volume",
+        "Remplacer le câble par un câble testé",
+        "Vérifier pile et +48 V selon le type de micro ou de DI"
+      ],
+      "fixes": [
+        "Corriger le patch ou le routage",
+        "Remplacer câble ou pile",
+        "Activer le +48 V sur ce seul canal si la source en a besoin"
+      ],
+      "rule_ids": [
+        "input-list-patch-mismatch"
+      ],
+      "concept_ids": [
+        "line-check",
+        "stage-plot-input-list",
+        "phantom-power"
+      ],
+      "equipment_ids": [
+        "behringer-ct200",
+        "radial-jdi"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
+          "publisher": "ProSoundWeb — B. Bartlett, « The Beginner's Guide To Taking Charge Of The Sound Check » (2015), p. 1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "feedback-during-soundcheck",
+      "name_fr": "Larsen pendant la balance",
+      "name_en": "Feedback during soundcheck",
+      "domain": "live-sound",
+      "symptom": "Un sifflement ou un grondement qui enfle tout seul pendant la balance, souvent en montant un retour ou en ouvrant un canal.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Gain ou fader monté trop vite, ou canal ouvert avec un gain élevé",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Niveau global des retours trop chaud",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Wedge dans l'axe de captation du micro",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Trop de micros ouverts en même temps (NOM)",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Repérer le mix (façade ou retour) qui accroche en baissant les masters un par un",
+        "Vérifier l'orientation du micro par rapport au wedge",
+        "Compter les micros ouverts inutiles"
+      ],
+      "fixes": [
+        "Baisser légèrement le master du retour qui accroche",
+        "Orienter l'angle de rejet du micro vers le wedge",
+        "Couper les micros qui ne servent pas",
+        "Filtrer les basses dans les retours",
+        "Avancer lentement : régler gain puis fader par petites touches"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "acoustic-feedback",
+        "open-mic-count-nom",
+        "stage-monitor-mix",
+        "soundcheck"
+      ],
+      "equipment_ids": [
+        "shure-sm58",
+        "dbx-afs2"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 3",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
+          "publisher": "Shure — G. Sigismondi, Personal Monitor Systems: Selection and Operation, 3rd ed. (cité dans fundamentals/15)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-vocals-with-handheld-mics-on-stage/",
+          "publisher": "DPA Microphones, Mic University — How to mic vocals with handheld mics on stage (cité dans fundamentals/15)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "hum-from-stage-power",
+      "name_fr": "Ronflement lié à l'alimentation de scène",
+      "name_en": "Hum from stage power",
+      "domain": "live-sound",
+      "symptom": "Un bourdonnement grave et constant apparaît sur une ou plusieurs entrées, même quand personne ne joue.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Boucle de masse entre appareils reliés à la terre par plusieurs chemins (cordons secteur, racks, blindages)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Entrée non branchée ou câble au blindage cassé qui capte le bruit",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Mélange d'appareils symétriques et asymétriques sur une longue liaison",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Appareil qui relie le blindage (broche 1) à la masse audio au lieu du châssis",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Vérifier que chaque source est bien branchée et couper les canaux inutilisés",
+        "Débrancher les liaisons une par une pour isoler l'appareil fautif",
+        "Remplacer les câbles suspects",
+        "Essayer le ground-lift de la DI (coupure du blindage audio, jamais de la terre secteur)"
+      ],
+      "fixes": [
+        "Utiliser des liaisons symétriques et des DI",
+        "Remplacer les câbles au blindage abîmé",
+        "Utiliser le ground-lift de la DI",
+        "Garder la terre de protection de chaque appareil intacte"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "ground-loop",
+        "balanced-line",
+        "electrical-safety-earthing"
+      ],
+      "equipment_ids": [
+        "radial-jdi",
+        "radial-prodi"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ranecommercial.com/legacy/note151.html",
+          "publisher": "Rane (S. Macatee), RaneNote 151 – Grounding and Shielding Audio Devices",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.ranecommercial.com/legacy/note110.html",
+          "publisher": "Rane (D. Bohn), RaneNote 110 – Sound System Interconnection",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/2/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 2",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+          "publisher": "QSC, K.2 Series User Manual (TD-000523-01-G)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "wrong-patch",
+      "name_fr": "Entrées inversées (mauvais patch)",
+      "name_en": "Wrong patch (swapped inputs)",
+      "domain": "live-sound",
+      "symptom": "Au line check, la source annoncée sort sur un autre canal que prévu (par exemple la guitare sur le canal clavier).",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Câbles branchés dans le désordre sur le boîtier de scène ou un sub-snake",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Patch logique de la console numérique différent de l'input list",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Sub-snake rebranché sur la mauvaise prise après un changement de plateau",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Faire annoncer chaque source au micro et noter le canal réel",
+        "Comparer le patch logique de la console avec l'input list",
+        "Suivre l'étiquetage des câbles et des sub-snakes"
+      ],
+      "fixes": [
+        "Repatcher physiquement ou dans la console",
+        "Refaire le line check de la ligne",
+        "Mettre à jour l'étiquetage"
+      ],
+      "rule_ids": [
+        "input-list-patch-mismatch",
+        "line-check-after-changeover"
+      ],
+      "concept_ids": [
+        "line-check",
+        "stage-plot-input-list",
+        "sub-snake"
+      ],
+      "equipment_ids": [
+        "yamaha-rio3224-d2"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_check",
+          "publisher": "Wikipedia, « Soundcheck »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "symptom",
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
+          "publisher": "ProSoundWeb — B. Bartlett, « The Beginner's Guide To Taking Charge Of The Sound Check » (2015), p. 1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "checks"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "live-input-clipping",
+      "name_fr": "Distorsion d'une entrée",
+      "name_en": "Input clipping / distortion",
+      "domain": "live-sound",
+      "symptom": "Une source sonne saturée ; l'indicateur d'écrêtage du canal s'allume sur les passages forts.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Gain d'entrée trop élevé",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Micro statique très proche d'une source forte sans pad",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Pédale ou préampli d'instrument mal réglé avant la DI",
+          "likelihood": "low"
+        },
+        {
+          "cause": "Câble défectueux",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Regarder les crêtes du canal pendant le passage le plus fort",
+        "Vérifier le pad du micro ou de la console",
+        "Vérifier les pédales du musicien"
+      ],
+      "fixes": [
+        "Baisser le gain d'entrée",
+        "Activer le pad",
+        "Si le gain baisse en plein concert, remonter le départ retour d'autant pour ne pas changer le retour du musicien"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "gain-staging",
+        "headroom",
+        "soundcheck"
+      ],
+      "equipment_ids": [
+        "akg-c451-b"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/2/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 2",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "pop-when-plugging",
+      "name_fr": "Claquement au branchement",
+      "name_en": "Pop when plugging",
+      "domain": "live-sound",
+      "symptom": "Un claquement fort sort des enceintes au moment où un musicien branche ou débranche son instrument, ou à l'allumage du système.",
+      "contexts": [
+        "live"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Instrument branché dans une DI sans couper le canal",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Enceintes amplifiées allumées avant la console ou éteintes après",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Console où le départ retour n'est pas coupé par le mute du canal",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Demander aux musiciens de prévenir avant de brancher",
+        "Vérifier l'ordre de mise sous tension"
+      ],
+      "fixes": [
+        "Couper le canal (et baisser le départ retour si besoin) avant tout branchement",
+        "Appliquer « enceintes en dernier allumées, en premier éteintes »"
+      ],
+      "rule_ids": [
+        "speakers-last-on-first-off"
+      ],
+      "concept_ids": [
+        "power-sequencing",
+        "load-in-load-out"
+      ],
+      "equipment_ids": [
+        "radial-jdi",
+        "qsc-k12-2"
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf",
+          "publisher": "QSC, K.2 Series User Manual (TD-000523-01-G)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Source primaire affirmant explicitement « alimenter toute la sono depuis la même distribution électrique »",
+      "searched": "RaneNote 110 et 151 (ne l'affirment pas)"
+    }
+  ]
+}

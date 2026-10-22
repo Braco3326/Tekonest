@@ -1,0 +1,236 @@
+{
+  "entity": "skill",
+  "domain": "live-sound",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "run-a-line-check",
+      "name_fr": "Mener un line check",
+      "name_en": "Run a line check",
+      "domain": "live-sound",
+      "description": "Valider toutes les entrées d'une scène à partir de l'input list, localiser et corriger les lignes muettes ou mal patchées avant l'arrivée des musiciens.",
+      "level": "bts",
+      "concept_ids": [
+        "line-check",
+        "stage-plot-input-list",
+        "stage-box"
+      ],
+      "procedure_ids": [
+        "line-check",
+        "patch-from-input-list"
+      ],
+      "success_criteria": [
+        "Chaque entrée de l'input list est annoncée et confirmée sur son canal",
+        "Toute ligne muette est diagnostiquée avec la liste de vérifications (patch, mute/routage, câble, pile, +48 V) avant de changer le micro",
+        "Aucun larsen pendant le line check",
+        "En présence de public, le contrôle se fait au casque"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une sonorisation live (TES / E4 pratique) — jugement ; BC02 « installer, configurer, tester les équipements de sonorisation » relevé sur RNCP37196 via fundamentals/15, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/",
+          "publisher": "ProSoundWeb — B. Bartlett, « The Beginner's Guide To Taking Charge Of The Sound Check » (2015), p. 1",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Sound_check",
+          "publisher": "Wikipedia, « Soundcheck »",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "description"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "run-a-band-soundcheck",
+      "name_fr": "Conduire la balance d'un groupe",
+      "name_en": "Run a band soundcheck",
+      "domain": "live-sound",
+      "description": "Régler les gains, les retours, la pré-égalisation et le mix façade d'un groupe en communiquant clairement avec les musiciens.",
+      "level": "bts",
+      "concept_ids": [
+        "soundcheck",
+        "foh-mix",
+        "gain-staging",
+        "stage-monitor-mix"
+      ],
+      "procedure_ids": [
+        "soundcheck-band"
+      ],
+      "success_criteria": [
+        "Gain réglé sur le jeu le plus fort, environ 10 dB sous l'écrêtage",
+        "Chaque musicien confirme son retour",
+        "Consignes données au groupe avant chaque étape",
+        "Aucun larsen provoqué par une manœuvre trop rapide"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une sonorisation live (TES / E4 pratique) — jugement ; BC02 « installer, configurer, tester les équipements de sonorisation » relevé sur RNCP37196 via fundamentals/15, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/3/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 3",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 4",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "description"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "manage-a-festival-changeover",
+      "name_fr": "Gérer un changement de plateau en festival",
+      "name_en": "Manage a festival changeover",
+      "domain": "live-sound",
+      "description": "Installer un groupe, faire le line check et dégrossir les retours dans le temps annoncé par le régisseur, en s'appuyant sur le patch festival et le rappel de scène.",
+      "level": "pro",
+      "concept_ids": [
+        "changeover",
+        "festival-patch",
+        "rolling-riser",
+        "console-scene-recall",
+        "stage-manager-role"
+      ],
+      "procedure_ids": [
+        "festival-changeover",
+        "line-check"
+      ],
+      "success_criteria": [
+        "Le fichier du groupe est chargé sans écraser celui du groupe en cours",
+        "Toutes les entrées sont testées au niveau de jeu réel",
+        "Le set commence à l'heure annoncée par le régisseur"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une sonorisation live (TES / E4 pratique) — jugement ; BC02 « installer, configurer, tester les équipements de sonorisation » relevé sur RNCP37196 via fundamentals/15, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.prosoundweb.com/?p=36647",
+          "publisher": "ProSoundWeb / Live Sound International — D. Dermont, « Max Efficiency: A Simple, Straightforward Process For Quick & Effective Festival Changeovers » (2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
+          "publisher": "ProSoundWeb — B. Bartlett, Sound Check guide (2015), p. 5",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "description"
+          ]
+        },
+        {
+          "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
+          "publisher": "R. Ames (The Stage Clock, Substack), « What Actually Happens In Between Bands At A Festival »",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "prepare-a-gig-from-a-rider",
+      "name_fr": "Préparer une date à partir de la fiche technique",
+      "name_en": "Prepare a gig from a technical rider",
+      "domain": "live-sound",
+      "description": "Lire une fiche technique, en déduire le matériel, le patch et le plan d'implantation, et signaler les écarts à l'artiste avant le jour J.",
+      "level": "bts",
+      "concept_ids": [
+        "technical-rider",
+        "stage-plot-input-list",
+        "backline"
+      ],
+      "procedure_ids": [
+        "read-tech-rider",
+        "patch-from-input-list"
+      ],
+      "success_criteria": [
+        "Les cinq parties de la fiche sont identifiées",
+        "Une liste de matériel (micros, DI, pieds, câbles) est établie à partir de la patch list",
+        "Chaque écart est envoyé par écrit au contact technique avant la date"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre d'une sonorisation live (TES / E4 pratique) — jugement ; BC02 « installer, configurer, tester les équipements de sonorisation » relevé sur RNCP37196 via fundamentals/15, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.livetonight.fr/guide-musicien-independant/trouver-des-dates-de-concert-/La-fiche-technique.pdf",
+          "publisher": "Roadie / Live Tonight, guide « La fiche technique » (2021)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.namm.org/festival-101-tech-rider-update",
+          "publisher": "NAMM, « Festival 101: Tech Rider Update » (session description)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "description"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}
