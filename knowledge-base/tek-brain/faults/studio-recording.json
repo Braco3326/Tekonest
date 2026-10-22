@@ -1,0 +1,425 @@
+{
+  "entity": "fault",
+  "domain": "studio-recording",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "cue-mix-latency",
+      "name_fr": "Écho ou retard dans le casque",
+      "name_en": "Latency in the cue mix",
+      "domain": "studio-recording",
+      "symptom": "Le musicien entend sa voix ou son instrument en retard, comme un écho ou un dédoublement, et décroche du tempo.",
+      "contexts": [
+        "studio",
+        "home-studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Écoute passant par la STAN avec un tampon trop grand",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Écoute directe de l'interface et écoute d'entrée de la STAN actives en même temps (signal entendu deux fois)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Plug-in à forte latence sur la piste écoutée ou sur le bus",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Identifier le chemin d'écoute (mixeur de l'interface ou STAN)",
+        "Lire la taille du tampon dans les réglages du pilote",
+        "Couper l'écoute d'entrée de la STAN et écouter seulement l'écoute directe",
+        "Désactiver les plug-ins de la piste armée et du master"
+      ],
+      "fixes": [
+        "Utiliser l'écoute directe de l'interface (TotalMix FX…) et couper l'écoute d'entrée de la STAN",
+        "Réduire le tampon à 128 ou 256 échantillons pendant la prise",
+        "Retirer les plug-ins à latence pendant l'enregistrement"
+      ],
+      "rule_ids": [
+        "monitoring-latency-excessive"
+      ],
+      "concept_ids": [
+        "monitoring-latency",
+        "buffer-size",
+        "direct-monitoring"
+      ],
+      "equipment_ids": [
+        "rme-fireface-ufx-iii"
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "symptom"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
+          "publisher": "RME — Fireface UFX III User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "clipped-take",
+      "name_fr": "Prise écrêtée",
+      "name_en": "Clipped take",
+      "domain": "studio-recording",
+      "symptom": "Distorsion dure sur les passages forts ; l'indicateur de crête de la piste est allumé et la forme d'onde est aplatie à la pleine échelle.",
+      "contexts": [
+        "studio",
+        "podcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Gain du préampli réglé sur un passage calme",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Musicien qui s'approche du micro ou joue plus fort à la prise qu'au réglage",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Source trop forte pour l'entrée (absence de pad)",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Repérer où l'écrêtage apparaît (préampli, convertisseur, plug-in)",
+        "Faire jouer le passage le plus fort et lire la crête",
+        "Vérifier la distance micro-source"
+      ],
+      "fixes": [
+        "Baisser le gain et refaire la prise ; garder de la marge par rapport au niveau d'alignement (−18 dBFS selon EBU R 68)",
+        "Demander une distance constante au micro",
+        "Activer le pad du micro ou du préampli"
+      ],
+      "rule_ids": [
+        "record-peak-clipping"
+      ],
+      "concept_ids": [
+        "gain-staging",
+        "headroom",
+        "dbfs"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/publications/r068",
+          "publisher": "EBU — R 68 Alignment level in digital audio production equipment and recorders",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
+          "publisher": "Shure — How to Start a Podcast: Recording an Episode",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "missing-media-files",
+      "name_fr": "Fichiers manquants à l'ouverture dans un autre studio",
+      "name_en": "Missing files on another studio's system",
+      "domain": "studio-recording",
+      "symptom": "À l'ouverture de la session sur une autre machine, la STAN signale des médias ou des plug-ins introuvables ; des régions sont vides ou grisées.",
+      "contexts": [
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Médias restés hors du dossier projet (importés depuis une bibliothèque ou un autre disque)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Plug-ins absents ou d'une autre version sur la machine d'accueil",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Fichiers renommés ou déplacés après l'enregistrement",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Lire la liste des fichiers manquants proposée par la STAN",
+        "Vérifier si les médias sont dans le dossier du projet",
+        "Lister les plug-ins utilisés et les comparer à ceux du studio d'accueil"
+      ],
+      "fixes": [
+        "Sur la machine d'origine, ré-enregistrer la session en copiant tous les médias dans le dossier du projet",
+        "Livrer aussi des pistes consolidées en BWF au même départ, lisibles sans la session",
+        "Imprimer les pistes avec leurs traitements si le plug-in n'existe pas chez le destinataire"
+      ],
+      "rule_ids": [
+        "backup-3-2-1-incomplete"
+      ],
+      "concept_ids": [
+        "consolidation",
+        "broadcast-wave-metadata"
+      ],
+      "equipment_ids": [
+        "cockos-reaper",
+        "avid-pro-tools"
+      ],
+      "sources": [
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "symptom",
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "sample-rate-mismatch-import",
+      "name_fr": "Fichier importé trop rapide et trop aigu",
+      "name_en": "Sample-rate mismatch on import",
+      "domain": "studio-recording",
+      "symptom": "Un fichier importé joue plus vite et plus aigu (ou plus lent et plus grave) que prévu et se décale par rapport aux autres pistes.",
+      "contexts": [
+        "studio",
+        "post-production"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Fichier enregistré à une fréquence différente de la session et importé sans conversion",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Interface réglée à une autre fréquence que la session pendant la prise",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Comparer la fréquence du fichier (propriétés du fichier) à celle de la session",
+        "Vérifier la fréquence de l'interface et de l'horloge"
+      ],
+      "fixes": [
+        "Réimporter avec conversion de fréquence vers la fréquence de session",
+        "Fixer la fréquence du projet avant la première prise et la noter sur la fiche"
+      ],
+      "rule_ids": [
+        "session-sample-rate-mismatch"
+      ],
+      "concept_ids": [
+        "session-sample-rate-choice",
+        "sample-rate-conversion"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sample-rate_conversion",
+          "publisher": "Wikipedia — Sample-rate conversion",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "noisy-take-gain-staging",
+      "name_fr": "Prise bruyante (souffle, bruit de fond)",
+      "name_en": "Noisy take",
+      "domain": "studio-recording",
+      "symptom": "Souffle ou bruit de pièce trop présent quand on remonte la piste au mixage.",
+      "contexts": [
+        "studio",
+        "podcast"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Gain de préampli trop faible puis remonté en numérique",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Micro trop loin de la source ou tourné vers une source de bruit (ventilation, fenêtre)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Pièce non traitée, surfaces réfléchissantes",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Écouter la piste seule entre deux phrases",
+        "Vérifier le niveau crête de la prise",
+        "Faire des essais d'enregistrement micro orienté différemment pour trouver la position la plus calme"
+      ],
+      "fixes": [
+        "Rapprocher le micro et régler le gain pour une marge raisonnable, ni écrêtage ni niveau trop bas",
+        "Éloigner et détourner le micro des sources de bruit",
+        "Supprimer ou couper le bruit à la source avant la prise"
+      ],
+      "rule_ids": [
+        "record-peak-clipping"
+      ],
+      "concept_ids": [
+        "gain-staging",
+        "signal-to-noise-ratio",
+        "podcast-recording"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://tech.ebu.ch/publications/r068",
+          "publisher": "EBU — R 68 Alignment level in digital audio production equipment and recorders",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "stems-do-not-sum-to-mix",
+      "name_fr": "Les stems ne recomposent pas le mix",
+      "name_en": "Stems do not sum to the mix",
+      "domain": "studio-recording",
+      "symptom": "Les stems remis ensemble sonnent plus forts, moins compressés ou décalés par rapport au mix master.",
+      "contexts": [
+        "studio"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Compresseur de bus qui réagit différemment à chaque stem qu'au mix complet",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Stems imprimés avec des points de départ différents",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Retours d'effets oubliés dans certains stems",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Comparer la somme des stems au mix master",
+        "Vérifier que tous les stems démarrent au même point",
+        "Vérifier que chaque stem contient ses retours d'effets"
+      ],
+      "fixes": [
+        "Déclencher le sidechain du compresseur de bus par un « key mix » imprimé sans traitement de bus",
+        "Réimprimer tous les stems avec le même début et la même fin"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "mix-stem-delivery",
+        "sidechain",
+        "compressor"
+      ],
+      "equipment_ids": [],
+      "sources": [
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "symptom",
+            "probable_causes",
+            "fixes"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Documentation éditeur décrivant le changement de vitesse/hauteur d'un fichier importé sans conversion",
+      "searched": "Avid KB (forums seulement) ; source retenue : Wikipedia Sample-rate conversion"
+    }
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "entity": "rule",
+  "domain": "studio-recording",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "session-sample-rate-mismatch",
+      "name_fr": "Fichier importé à une autre fréquence que la session",
+      "name_en": "Session sample-rate mismatch on import",
+      "domain": "studio-recording",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "session",
+      "condition": {
+        "all": [
+          {
+            "path": "session.import.sample_rate_matches_project",
+            "op": "eq",
+            "value": false
+          },
+          {
+            "path": "session.import.src_applied",
+            "op": "eq",
+            "value": false
+          }
+        ]
+      },
+      "explanation": "Un fichier lu à une fréquence différente de celle où il a été enregistré change de vitesse et de hauteur ; la conversion de fréquence (SRC) évite ce changement. Exemple : un fichier 44,1 kHz lu sans conversion dans une session 48 kHz joue trop vite et trop aigu.",
+      "fix": "Convertir le fichier à la fréquence de la session à l'import (ou rendre le fichier à la bonne fréquence), et vérifier la fréquence de la session avant de commencer.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.project_sample_rate_hz",
+        "session.import.file_sample_rate_hz",
+        "session.import.src_applied"
+      ],
+      "concept_ids": [
+        "session-sample-rate-choice",
+        "sample-rate-conversion"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sample-rate_conversion",
+          "publisher": "Wikipedia — Sample-rate conversion",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "cue-send-post-fader",
+      "name_fr": "Envoi casque en post-fader",
+      "name_en": "Cue send set post-fader",
+      "domain": "studio-recording",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.flags",
+            "op": "includes",
+            "value": "isCueSend"
+          },
+          {
+            "path": "src.device.controls.send_position",
+            "op": "eq",
+            "value": "post-fader"
+          }
+        ]
+      },
+      "explanation": "Un envoi post-fader suit le fader de la voie : chaque mouvement du mix régie change le retour du musicien. Les retours se font en pré-fader pour rester indépendants du mix principal.",
+      "fix": "Passer l'envoi casque en pré-fader (ou utiliser le mixeur DSP de l'interface).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isCueSend",
+        "device.controls.send_position"
+      ],
+      "concept_ids": [
+        "cue-mix",
+        "pre-post-fader",
+        "aux-send"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Aux-send",
+          "publisher": "Wikipedia — Aux-send",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "monitoring-latency-excessive",
+      "name_fr": "Latence d'écoute trop élevée en prise",
+      "name_en": "Excessive monitoring latency while tracking",
+      "domain": "studio-recording",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "all": [
+          {
+            "path": "session.monitoring_path",
+            "op": "eq",
+            "value": "daw-software"
+          },
+          {
+            "path": "session.roundtrip_latency_ms",
+            "op": "gt",
+            "value": 10
+          }
+        ]
+      },
+      "explanation": "Selon Shure, au-delà de 10 ms de latence, le rythme et la mise en place du musicien sont nettement affectés ; quelques millisecondes restent acceptables.",
+      "fix": "Écoute directe par l'interface, ou réduire la taille du tampon (128 ou 256 échantillons) pendant la prise.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.monitoring_path",
+        "session.roundtrip_latency_ms"
+      ],
+      "concept_ids": [
+        "monitoring-latency",
+        "buffer-size",
+        "direct-monitoring"
+      ],
+      "sources": [
+        {
+          "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
+          "publisher": "Shure — C. Lyons, Introduction to Home Recording and Podcasting (Shure Educational Publication)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
+          "publisher": "Cockos — Up and Running: A REAPER User Guide v7.81",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "record-peak-clipping",
+      "name_fr": "Prise écrêtée à 0 dBFS",
+      "name_en": "Recorded take clipping at 0 dBFS",
+      "domain": "studio-recording",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "session",
+      "condition": {
+        "path": "session.take_peak_dbfs",
+        "op": "gte",
+        "value": 0
+      },
+      "explanation": "En numérique, rien n'existe au-dessus de la pleine échelle : un signal qui atteint 0 dBFS est écrêté et la prise est irrécupérable. L'EBU R 68 place le niveau d'alignement 18 dB sous la pleine échelle pour garder de la marge.",
+      "fix": "Baisser le gain du préampli (ou insérer un pad) et refaire la prise.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.take_peak_dbfs"
+      ],
+      "concept_ids": [
+        "gain-staging",
+        "headroom",
+        "dbfs"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/publications/r068",
+          "publisher": "EBU — R 68 Alignment level in digital audio production equipment and recorders",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
+          "publisher": "Shure — How to Start a Podcast: Recording an Episode",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "backup-3-2-1-incomplete",
+      "name_fr": "Sauvegarde 3-2-1 incomplète",
+      "name_en": "Incomplete 3-2-1 backup",
+      "domain": "studio-recording",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "session",
+      "condition": {
+        "any": [
+          {
+            "path": "session.backup.copies_total",
+            "op": "lt",
+            "value": 3
+          },
+          {
+            "path": "session.backup.media_types",
+            "op": "lt",
+            "value": 2
+          },
+          {
+            "path": "session.backup.offsite_copies",
+            "op": "lt",
+            "value": 1
+          }
+        ]
+      },
+      "explanation": "La règle 3-2-1 demande 3 copies (1 principale + 2 sauvegardes), sur 2 types de supports, dont 1 hors site. Moins que cela expose la session à une panne, un vol ou un sinistre.",
+      "fix": "Ajouter les copies manquantes sur un autre type de support et en dehors du studio, puis les vérifier.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "session.backup.copies_total",
+        "session.backup.media_types",
+        "session.backup.offsite_copies"
+      ],
+      "concept_ids": [
+        "session-backup-321"
+      ],
+      "sources": [
+        {
+          "url": "https://www.cisa.gov/sites/default/files/publications/data_backup_options.pdf",
+          "publisher": "US-CERT / CISA (Carnegie Mellon University, 2012) — Data Backup Options",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "condition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
+          "publisher": "Recording Academy Producers & Engineers Wing — Delivery Recommendations for Recorded Music Projects (rév. 2017-10-10, copie hébergée par barryrudolph.com)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}
