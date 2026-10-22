@@ -1,0 +1,566 @@
+{
+ "entity": "scenario",
+ "domain": "post-immersive",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "post-dub-session-adr-foley",
+   "name_fr": "Séance de postsynchro et bruitage en auditorium",
+   "name_en": "Post-production dub session (ADR and foley)",
+   "domain": "post-immersive",
+   "brief": "Dans un auditorium de doublage et bruitage, enregistrer trois répliques ADR d'un comédien puis les pas et accessoires d'une scène, synchrones à la vidéo de référence en 25 images/s. Le préampli micro alimente l'interface Pro Tools, le synchroniseur reçoit la référence vidéo et horloge l'interface. Objectif : prises nommées, synchrones et raccordables au son direct.",
+   "room_id": "foley-dubbing-stage-medium",
+   "required_gear": [
+    {
+     "equipment_id": "sennheiser-mkh-50",
+     "qty": 1,
+     "role": "micro ADR (proche du son de tournage)"
+    },
+    {
+     "equipment_id": "schoeps-cmc-6-mk-41",
+     "qty": 1,
+     "role": "micro bruitage"
+    },
+    {
+     "equipment_id": "focusrite-isa-one",
+     "qty": 2,
+     "role": "préamplis micro"
+    },
+    {
+     "equipment_id": "avid-hd-io",
+     "qty": 1,
+     "role": "interface audio"
+    },
+    {
+     "equipment_id": "avid-protools-hdx",
+     "qty": 1,
+     "role": "carte DSP / hôte"
+    },
+    {
+     "equipment_id": "avid-pro-tools",
+     "qty": 1,
+     "role": "station audio"
+    },
+    {
+     "equipment_id": "avid-protools-sync-x",
+     "qty": 1,
+     "role": "synchroniseur (référence vidéo, LTC)"
+    },
+    {
+     "equipment_id": "genelec-8341a",
+     "qty": 2,
+     "role": "écoute régie"
+    },
+    {
+     "equipment_id": "beyerdynamic-dt-770-pro",
+     "qty": 2,
+     "role": "casques comédien / bruiteur"
+    }
+   ],
+   "signal_flow": {
+    "nodes": [
+     {
+      "id": "mic-adr",
+      "label": "Micro ADR",
+      "equipment_id": "sennheiser-mkh-50"
+     },
+     {
+      "id": "mic-foley",
+      "label": "Micro bruitage",
+      "equipment_id": "schoeps-cmc-6-mk-41"
+     },
+     {
+      "id": "pre1",
+      "label": "Préampli ADR",
+      "equipment_id": "focusrite-isa-one"
+     },
+     {
+      "id": "pre2",
+      "label": "Préampli bruitage",
+      "equipment_id": "focusrite-isa-one"
+     },
+     {
+      "id": "io",
+      "label": "Interface HD I/O",
+      "equipment_id": "avid-hd-io"
+     },
+     {
+      "id": "hdx",
+      "label": "Carte HDX",
+      "equipment_id": "avid-protools-hdx"
+     },
+     {
+      "id": "sync",
+      "label": "Sync X",
+      "equipment_id": "avid-protools-sync-x"
+     },
+     {
+      "id": "mon-l",
+      "label": "Écoute G",
+      "equipment_id": "genelec-8341a"
+     },
+     {
+      "id": "mon-r",
+      "label": "Écoute D",
+      "equipment_id": "genelec-8341a"
+     }
+    ],
+    "edges": [
+     {
+      "from": "mic-adr",
+      "to": "pre1",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "mic-foley",
+      "to": "pre2",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "pre1",
+      "to": "io",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     },
+     {
+      "from": "pre2",
+      "to": "io",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     },
+     {
+      "from": "io",
+      "to": "hdx",
+      "connector": "digilink"
+     },
+     {
+      "from": "sync",
+      "to": "io",
+      "signal": "wordclock",
+      "connector": "bnc"
+     },
+     {
+      "from": "io",
+      "to": "mon-l",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     },
+     {
+      "from": "io",
+      "to": "mon-r",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     }
+    ]
+   },
+   "procedure_ids": [
+    "adr-session",
+    "foley-session"
+   ],
+   "rule_ids": [
+    "timecode-frame-rate-mismatch",
+    "audio-clock-not-referenced-to-video"
+   ],
+   "difficulty": 3,
+   "estimated_time_min": 120,
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une séance de post-production — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
+     "publisher": "Wikipedia (Dubbing / ADR)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
+     "publisher": "Wikipedia (Foley (filmmaking))",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+     "publisher": "Avid (Pro Tools | Sync X Guide)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "signal_flow"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "atmos-short-film-mix",
+   "name_fr": "Mixage Dolby Atmos d'un court métrage",
+   "name_en": "Atmos mix of a short film",
+   "domain": "post-immersive",
+   "brief": "Mixer un court métrage de 12 minutes en Dolby Atmos dans une salle 7.1.4 : bed 7.1.2 pour ambiances et musique, objets pour les effets en mouvement, contrôle des replis 5.1/stéréo et du rendu binaural, puis export d'un master ADM BWF. L'interface MTRX Studio alimente les onze enceintes et le caisson ; la surface S6 pilote la station.",
+   "room_id": "post-atmos-mix-room-medium",
+   "required_gear": [
+    {
+     "equipment_id": "avid-pro-tools",
+     "qty": 1,
+     "role": "station audio"
+    },
+    {
+     "equipment_id": "avid-protools-mtrx-studio",
+     "qty": 1,
+     "role": "interface et gestion d'écoute"
+    },
+    {
+     "equipment_id": "avid-s6",
+     "qty": 1,
+     "role": "surface de contrôle"
+    },
+    {
+     "equipment_id": "genelec-8341a",
+     "qty": 11,
+     "role": "enceintes 7.1.4 (7 au niveau d'oreille, 4 au plafond)"
+    },
+    {
+     "equipment_id": "genelec-7360a",
+     "qty": 1,
+     "role": "caisson de basses (LFE)"
+    }
+   ],
+   "signal_flow": {
+    "nodes": [
+     {
+      "id": "daw",
+      "label": "Pro Tools (+ Dolby Atmos Renderer, logiciel hors catalogue)",
+      "equipment_id": "avid-pro-tools"
+     },
+     {
+      "id": "s6",
+      "label": "Surface S6",
+      "equipment_id": "avid-s6"
+     },
+     {
+      "id": "mtrx",
+      "label": "MTRX Studio",
+      "equipment_id": "avid-protools-mtrx-studio"
+     },
+     {
+      "id": "bed-front",
+      "label": "L / C / R",
+      "equipment_id": "genelec-8341a"
+     },
+     {
+      "id": "bed-surr",
+      "label": "Ls / Rs / Lrs / Rrs",
+      "equipment_id": "genelec-8341a"
+     },
+     {
+      "id": "tops",
+      "label": "Plafonds Ltf / Rtf / Ltr / Rtr",
+      "equipment_id": "genelec-8341a"
+     },
+     {
+      "id": "sub",
+      "label": "Caisson LFE",
+      "equipment_id": "genelec-7360a"
+     }
+    ],
+    "edges": [
+     {
+      "from": "s6",
+      "to": "daw",
+      "connector": "rj45"
+     },
+     {
+      "from": "daw",
+      "to": "mtrx",
+      "connector": "digilink"
+     },
+     {
+      "from": "mtrx",
+      "to": "bed-front",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     },
+     {
+      "from": "mtrx",
+      "to": "bed-surr",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     },
+     {
+      "from": "mtrx",
+      "to": "tops",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     },
+     {
+      "from": "mtrx",
+      "to": "sub",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     }
+    ]
+   },
+   "procedure_ids": [
+    "atmos-session-bed-objects",
+    "stems-and-me-export"
+   ],
+   "rule_ids": [],
+   "difficulty": 4,
+   "estimated_time_min": 240,
+   "bts_mapping": [
+    {
+     "epreuve": "E51",
+     "bloc": "BC03",
+     "note": "Projet de post-production immersive — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
+     "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
+     "publisher": "Dolby Laboratories (7.1.4 overhead speaker setup guide)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "signal_flow"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
+     "publisher": "Wikipedia (Dolby Atmos)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "brief"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "tv-documentary-final-mix",
+   "name_fr": "Mixage final d'un documentaire TV",
+   "name_en": "TV documentary final mix",
+   "domain": "post-immersive",
+   "brief": "Conformer l'AAF d'un documentaire de 52 minutes, nettoyer les interviews, mixer en 5.1 et stéréo, puis livrer printmaster, stems et version internationale conformes à la fiche technique d'une chaîne française (EBU R 128 / CST-RT-017). Un mesureur RTW reçoit la sortie AES3 de l'interface pour la mesure de sonie.",
+   "room_id": "studio-control-room-large",
+   "required_gear": [
+    {
+     "equipment_id": "avid-pro-tools",
+     "qty": 1,
+     "role": "station audio"
+    },
+    {
+     "equipment_id": "avid-protools-hdx",
+     "qty": 1,
+     "role": "carte DSP / hôte"
+    },
+    {
+     "equipment_id": "avid-hd-io",
+     "qty": 1,
+     "role": "interface"
+    },
+    {
+     "equipment_id": "avid-s6",
+     "qty": 1,
+     "role": "surface de contrôle"
+    },
+    {
+     "equipment_id": "izotope-rx",
+     "qty": 1,
+     "role": "débruitage dialogues"
+    },
+    {
+     "equipment_id": "nugen-audio-vislm",
+     "qty": 1,
+     "role": "mesure de sonie logicielle"
+    },
+    {
+     "equipment_id": "rtw-touchmonitor-tm7",
+     "qty": 1,
+     "role": "mesureur de sonie matériel"
+    },
+    {
+     "equipment_id": "genelec-8341a",
+     "qty": 5,
+     "role": "écoute 5.1 (L, C, R, LS, RS)"
+    },
+    {
+     "equipment_id": "genelec-7360a",
+     "qty": 1,
+     "role": "caisson LFE"
+    }
+   ],
+   "signal_flow": {
+    "nodes": [
+     {
+      "id": "hdx",
+      "label": "Carte HDX",
+      "equipment_id": "avid-protools-hdx"
+     },
+     {
+      "id": "io",
+      "label": "Interface HD I/O",
+      "equipment_id": "avid-hd-io"
+     },
+     {
+      "id": "meter",
+      "label": "Mesureur RTW TM7",
+      "equipment_id": "rtw-touchmonitor-tm7"
+     },
+     {
+      "id": "front",
+      "label": "L / C / R",
+      "equipment_id": "genelec-8341a"
+     },
+     {
+      "id": "surr",
+      "label": "LS / RS (100–120°)",
+      "equipment_id": "genelec-8341a"
+     },
+     {
+      "id": "sub",
+      "label": "Caisson LFE",
+      "equipment_id": "genelec-7360a"
+     }
+    ],
+    "edges": [
+     {
+      "from": "hdx",
+      "to": "io",
+      "connector": "digilink"
+     },
+     {
+      "from": "io",
+      "to": "meter",
+      "signal": "aes3",
+      "connector": "dsub25"
+     },
+     {
+      "from": "io",
+      "to": "front",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     },
+     {
+      "from": "io",
+      "to": "surr",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     },
+     {
+      "from": "io",
+      "to": "sub",
+      "signal": "line-level-pro",
+      "connector": "dsub25"
+     }
+    ]
+   },
+   "procedure_ids": [
+    "aaf-import-and-conform",
+    "stems-and-me-export"
+   ],
+   "rule_ids": [
+    "deliverable-loudness-out-of-spec",
+    "timecode-frame-rate-mismatch"
+   ],
+   "difficulty": 3,
+   "estimated_time_min": 480,
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Post-production et livraison broadcast — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+     "publisher": "EBU (R 128 v5.0, nov. 2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
+     "publisher": "ARPP (fiche « En 2012 la TV change d'intensité sonore », reprend CST-RT-017 v3.0)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.775-4-202212-I!!PDF-E.pdf",
+     "publisher": "ITU-R (Recommandation BS.775-4, 12/2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "signal_flow"
+     ]
+    },
+    {
+     "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+     "publisher": "AMWA (AS-01 AAF Edit Protocol)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "brief"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Id catalogue pour le Dolby Atmos Renderer (logiciel) et pour une vidéo de référence / lecteur vidéo",
+   "searched": "knowledge-base/equipment/*.json, catalog.json"
+  }
+ ]
+}
