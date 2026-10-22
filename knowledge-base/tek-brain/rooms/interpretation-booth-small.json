@@ -225,7 +225,12 @@
       "vitrage frontal incliné"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-mid-century-lounge-chair",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "pp-kenney-lounge-sofa"
+  ],
   "conflicts": [
     {
       "field": "openings[0].height_m",

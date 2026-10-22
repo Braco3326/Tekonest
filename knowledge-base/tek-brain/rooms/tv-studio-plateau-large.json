@@ -6,77 +6,446 @@
   "size": "large",
   "description": "Grand plateau de télévision de type divertissement : un décor adossé au cyclo, une zone caméras devant, des gradins pour le public (plusieurs centaines de places), un gril technique à plus de 13 m où sont accrochés projecteurs et micros d'ambiance public. Le son du plateau part par des boîtes murales techniques vers la régie son ; sur le plateau on trouve surtout des micros HF (cravates, main), une perche, des micros suspendus au-dessus du public, des enceintes de retour/public et l'intercom HF du régisseur plateau.",
   "dimensions_m": {
-    "length": { "min": 30.5, "typical": 32.9, "max": 40.0 },
-    "width": { "min": 24.4, "typical": 30.5, "max": 31.0 },
-    "height": { "min": 11.0, "typical": 13.4, "max": 15.9 }
+    "length": {
+      "min": 30.5,
+      "typical": 32.9,
+      "max": 40.0
+    },
+    "width": {
+      "min": 24.4,
+      "typical": 30.5,
+      "max": 31.0
+    },
+    "height": {
+      "min": 11.0,
+      "typical": 13.4,
+      "max": 15.9
+    }
   },
   "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
   "surfaces": [
-    { "surface": "floor", "material": "béton lissé peint ou plancher bois (sapin) selon le plateau", "finish_note": "Sol parfaitement plan pour les travellings caméra ; charge admissible 1000 kg/m² sur les plateaux des Studios de Paris." },
-    { "surface": "walls", "material": "parois isolées, lisses en bois périphériques (4 lisses espacées de 3 m aux Studios de Paris), rideaux noirs et cyclo", "finish_note": "Bruit de fond annoncé NR 20 / 25 dB(A) avec climatisation basse vitesse (Studios de Paris)." },
-    { "surface": "ceiling", "material": "gril en platelage métallique (profilés 15 cm, espacement 7,5 cm) avec trémie de palan", "finish_note": "Charge gril 150 kg/m² aux Studios de Paris ; TC1 : dessous du gril à 13,4 m, porteuses lumière jusqu'à 12,5 m." }
+    {
+      "surface": "floor",
+      "material": "béton lissé peint ou plancher bois (sapin) selon le plateau",
+      "finish_note": "Sol parfaitement plan pour les travellings caméra ; charge admissible 1000 kg/m² sur les plateaux des Studios de Paris."
+    },
+    {
+      "surface": "walls",
+      "material": "parois isolées, lisses en bois périphériques (4 lisses espacées de 3 m aux Studios de Paris), rideaux noirs et cyclo",
+      "finish_note": "Bruit de fond annoncé NR 20 / 25 dB(A) avec climatisation basse vitesse (Studios de Paris)."
+    },
+    {
+      "surface": "ceiling",
+      "material": "gril en platelage métallique (profilés 15 cm, espacement 7,5 cm) avec trémie de palan",
+      "finish_note": "Charge gril 150 kg/m² aux Studios de Paris ; TC1 : dessous du gril à 13,4 m, porteuses lumière jusqu'à 12,5 m."
+    }
   ],
   "rt60_s": "not found",
   "zones": [
-    { "id": "set", "kind": "stage", "rect_m": [0, -7.0, 20.0, 12.0], "floor_y_m": 0 },
-    { "id": "cyclorama", "kind": "other", "rect_m": [0, -14.9, 26.0, 2.0], "floor_y_m": 0 },
-    { "id": "camera-floor", "kind": "other", "rect_m": [0, 1.5, 24.0, 5.0], "floor_y_m": 0 },
-    { "id": "audience-seating", "kind": "audience", "rect_m": [0, 10.0, 24.0, 12.0], "floor_y_m": 0 },
-    { "id": "sound-floor-store", "kind": "other", "rect_m": [-13.5, -2.0, 2.5, 3.0], "floor_y_m": 0 }
+    {
+      "id": "set",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        -7.0,
+        20.0,
+        12.0
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "cyclorama",
+      "kind": "other",
+      "rect_m": [
+        0,
+        -14.9,
+        26.0,
+        2.0
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "camera-floor",
+      "kind": "other",
+      "rect_m": [
+        0,
+        1.5,
+        24.0,
+        5.0
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "audience-seating",
+      "kind": "audience",
+      "rect_m": [
+        0,
+        10.0,
+        24.0,
+        12.0
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "sound-floor-store",
+      "kind": "other",
+      "rect_m": [
+        -13.5,
+        -2.0,
+        2.5,
+        3.0
+      ],
+      "floor_y_m": 0
+    }
   ],
   "gear_positions": [
-    { "equipment_id": "dpa-4060", "zone": "set", "position_m": [-2.0, 1.4, -4.0], "rotation_deg": 0, "note": "Micro cravate de l'animateur, émetteur ceinture HF." },
-    { "equipment_id": "dpa-4060", "zone": "set", "position_m": [2.0, 1.2, -4.5], "rotation_deg": 0, "note": "Cravate invité (assis)." },
-    { "equipment_id": "shure-sm58", "zone": "set", "position_m": [6.0, 1.5, -3.0], "rotation_deg": 0, "note": "Micro main (chauffeur de salle, prestation)." },
-    { "equipment_id": "sennheiser-mkh-416", "zone": "set", "position_m": [0, 3.0, -2.0], "rotation_deg": 180, "note": "Micro canon sur perche, en secours des cravates ou pour un groupe." },
-    { "equipment_id": "schoeps-cmc-6-mk-41", "zone": "audience-seating", "position_m": [-5.0, 6.0, 9.0], "rotation_deg": 0, "note": "Micro d'ambiance public suspendu au gril (rires, applaudissements)." },
-    { "equipment_id": "schoeps-cmc-6-mk-41", "zone": "audience-seating", "position_m": [5.0, 6.0, 9.0], "rotation_deg": 0, "note": "Second micro public." },
-    { "equipment_id": "qsc-k12-2", "zone": "camera-floor", "position_m": [-11.0, 1.8, 3.5], "rotation_deg": 0, "note": "Diffusion public (renfort léger) orientée vers les gradins, hors axe des micros." },
-    { "equipment_id": "qsc-k12-2", "zone": "camera-floor", "position_m": [11.0, 1.8, 3.5], "rotation_deg": 0, "note": "Diffusion public côté droit." },
-    { "equipment_id": "sennheiser-ew-iem-g4", "zone": "set", "position_m": [-3.0, 1.2, -6.0], "rotation_deg": 0, "note": "Retour oreillette de l'animateur (ordres + programme)." },
-    { "equipment_id": "riedel-bolero", "zone": "camera-floor", "position_m": [3.0, 1.1, 1.0], "rotation_deg": 180, "note": "Beltpack intercom HF du régisseur plateau (floor manager)." },
-    { "equipment_id": "shure-axient-digital-ad4d", "zone": "sound-floor-store", "position_m": [-13.5, 1.0, -2.0], "rotation_deg": 90, "note": "Récepteurs HF et distribution d'antennes dans le local son plateau." }
+    {
+      "equipment_id": "dpa-4060",
+      "zone": "set",
+      "position_m": [
+        -2.0,
+        1.4,
+        -4.0
+      ],
+      "rotation_deg": 0,
+      "note": "Micro cravate de l'animateur, émetteur ceinture HF."
+    },
+    {
+      "equipment_id": "dpa-4060",
+      "zone": "set",
+      "position_m": [
+        2.0,
+        1.2,
+        -4.5
+      ],
+      "rotation_deg": 0,
+      "note": "Cravate invité (assis)."
+    },
+    {
+      "equipment_id": "shure-sm58",
+      "zone": "set",
+      "position_m": [
+        6.0,
+        1.5,
+        -3.0
+      ],
+      "rotation_deg": 0,
+      "note": "Micro main (chauffeur de salle, prestation)."
+    },
+    {
+      "equipment_id": "sennheiser-mkh-416",
+      "zone": "set",
+      "position_m": [
+        0,
+        3.0,
+        -2.0
+      ],
+      "rotation_deg": 180,
+      "note": "Micro canon sur perche, en secours des cravates ou pour un groupe."
+    },
+    {
+      "equipment_id": "schoeps-cmc-6-mk-41",
+      "zone": "audience-seating",
+      "position_m": [
+        -5.0,
+        6.0,
+        9.0
+      ],
+      "rotation_deg": 0,
+      "note": "Micro d'ambiance public suspendu au gril (rires, applaudissements)."
+    },
+    {
+      "equipment_id": "schoeps-cmc-6-mk-41",
+      "zone": "audience-seating",
+      "position_m": [
+        5.0,
+        6.0,
+        9.0
+      ],
+      "rotation_deg": 0,
+      "note": "Second micro public."
+    },
+    {
+      "equipment_id": "qsc-k12-2",
+      "zone": "camera-floor",
+      "position_m": [
+        -11.0,
+        1.8,
+        3.5
+      ],
+      "rotation_deg": 0,
+      "note": "Diffusion public (renfort léger) orientée vers les gradins, hors axe des micros."
+    },
+    {
+      "equipment_id": "qsc-k12-2",
+      "zone": "camera-floor",
+      "position_m": [
+        11.0,
+        1.8,
+        3.5
+      ],
+      "rotation_deg": 0,
+      "note": "Diffusion public côté droit."
+    },
+    {
+      "equipment_id": "sennheiser-ew-iem-g4",
+      "zone": "set",
+      "position_m": [
+        -3.0,
+        1.2,
+        -6.0
+      ],
+      "rotation_deg": 0,
+      "note": "Retour oreillette de l'animateur (ordres + programme)."
+    },
+    {
+      "equipment_id": "riedel-bolero",
+      "zone": "camera-floor",
+      "position_m": [
+        3.0,
+        1.1,
+        1.0
+      ],
+      "rotation_deg": 180,
+      "note": "Beltpack intercom HF du régisseur plateau (floor manager)."
+    },
+    {
+      "equipment_id": "shure-axient-digital-ad4d",
+      "zone": "sound-floor-store",
+      "position_m": [
+        -13.5,
+        1.0,
+        -2.0
+      ],
+      "rotation_deg": 90,
+      "note": "Récepteurs HF et distribution d'antennes dans le local son plateau."
+    }
   ],
   "power_points": [
-    { "position_m": [-15.0, 0.6, -10.0], "type": "tech-wallbox-ups-63a-1ph" },
-    { "position_m": [15.0, 0.6, -10.0], "type": "tech-wallbox-ups-63a-1ph" },
-    { "position_m": [-15.0, 0.6, 6.0], "type": "lx-wallbox-400a-3ph-powerlock" },
-    { "position_m": [15.0, 0.6, 6.0], "type": "lx-wallbox-125a-3ph" }
+    {
+      "position_m": [
+        -15.0,
+        0.6,
+        -10.0
+      ],
+      "type": "tech-wallbox-ups-63a-1ph"
+    },
+    {
+      "position_m": [
+        15.0,
+        0.6,
+        -10.0
+      ],
+      "type": "tech-wallbox-ups-63a-1ph"
+    },
+    {
+      "position_m": [
+        -15.0,
+        0.6,
+        6.0
+      ],
+      "type": "lx-wallbox-400a-3ph-powerlock"
+    },
+    {
+      "position_m": [
+        15.0,
+        0.6,
+        6.0
+      ],
+      "type": "lx-wallbox-125a-3ph"
+    }
   ],
   "patch_points": [
-    { "position_m": [-15.0, 0.6, -6.0], "type": "tech-wallbox-av", "note": "Boîte murale technique (lignes micro/ligne, vidéo, intercom, réseau) vers les régies ; TC1 en compte plusieurs au sol, en coursive et au gril." },
-    { "position_m": [15.0, 0.6, -6.0], "type": "tech-wallbox-av", "note": "Boîte murale côté opposé, évite de traverser le plateau avec des câbles." },
-    { "position_m": [0, 13.4, 0], "type": "grid-tech-box", "note": "Boîte technique au gril pour les micros suspendus et la lumière (DMX)." }
+    {
+      "position_m": [
+        -15.0,
+        0.6,
+        -6.0
+      ],
+      "type": "tech-wallbox-av",
+      "note": "Boîte murale technique (lignes micro/ligne, vidéo, intercom, réseau) vers les régies ; TC1 en compte plusieurs au sol, en coursive et au gril."
+    },
+    {
+      "position_m": [
+        15.0,
+        0.6,
+        -6.0
+      ],
+      "type": "tech-wallbox-av",
+      "note": "Boîte murale côté opposé, évite de traverser le plateau avec des câbles."
+    },
+    {
+      "position_m": [
+        0,
+        13.4,
+        0
+      ],
+      "type": "grid-tech-box",
+      "note": "Boîte technique au gril pour les micros suspendus et la lumière (DMX)."
+    }
   ],
   "openings": [
-    { "wall": "left", "kind": "door", "offset_m": -8.0, "width_m": 4.62, "height_m": 5.59 },
-    { "wall": "right", "kind": "door", "offset_m": -8.0, "width_m": 4.24, "height_m": 5.59 },
-    { "wall": "rear", "kind": "door", "offset_m": 12.0, "width_m": 1.8, "height_m": 2.1 },
-    { "wall": "rear", "kind": "door", "offset_m": -12.0, "width_m": 1.8, "height_m": 2.1 }
+    {
+      "wall": "left",
+      "kind": "door",
+      "offset_m": -8.0,
+      "width_m": 4.62,
+      "height_m": 5.59
+    },
+    {
+      "wall": "right",
+      "kind": "door",
+      "offset_m": -8.0,
+      "width_m": 4.24,
+      "height_m": 5.59
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 12.0,
+      "width_m": 1.8,
+      "height_m": 2.1
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": -12.0,
+      "width_m": 1.8,
+      "height_m": 2.1
+    }
   ],
-  "lighting": { "mood": "Décor sur-éclairé, public en lumière plus basse, gril chargé de projecteurs LED", "color_temp_k": 5600 },
+  "lighting": {
+    "mood": "Décor sur-éclairé, public en lumière plus basse, gril chargé de projecteurs LED",
+    "color_temp_k": 5600
+  },
   "procedural": {
     "wall_color": "#1d1d1f",
     "floor_color": "#3c3c3e",
     "ceiling_color": "#2a2a2c",
-    "prop_hints": ["cyclo blanc ou vert", "gradins rétractables", "caméras sur piédestal et grue", "gril métallique et palans", "lisses bois périphériques", "boîtes murales techniques", "rideaux noirs"]
+    "prop_hints": [
+      "cyclo blanc ou vert",
+      "gradins rétractables",
+      "caméras sur piédestal et grue",
+      "gril métallique et palans",
+      "lisses bois périphériques",
+      "boîtes murales techniques",
+      "rideaux noirs"
+    ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "pp-simple-truss"
+  ],
   "sources": [
-    { "url": "https://www.bbcstudioworks.com/studio/tc1/", "publisher": "BBC Studioworks (Television Centre, TC1)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "other", "covers": ["dimensions_m.length.typical (108 ft = 32,9 m)", "dimensions_m.width.typical (100 ft = 30,5 m)"] },
-    { "url": "https://www.bbcstudioworks.com/wp-content/uploads/2024/08/TC1-Plans-V451.pdf", "publisher": "BBC Studioworks (plan TC1 V451, 2020)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "other", "covers": ["dimensions_m.height.typical (dessous du gril 13,4 m)", "surfaces.ceiling", "zones.audience-seating (500 places + 4 PMR)", "openings (portes décors 4,623 × 5,588 m et 4,242 m de large)", "power_points", "patch_points"] },
-    { "url": "https://www.bbcstudioworks.com/studio/tc3/", "publisher": "BBC Studioworks (Television Centre, TC3)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "other", "covers": ["dimensions_m.length.min (100 ft = 30,5 m, plus grande dimension)", "dimensions_m.width.min (80 ft = 24,4 m)", "dimensions_m.height.min (36 ft = 11,0 m, hauteur annoncée)"] },
-    { "url": "https://lesstudiosdeparis.com/wp-content/uploads/2025/09/PLATEAU-3-FR_ok.pdf", "publisher": "Les Studios de Paris (fiche Plateau 3)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "other", "covers": ["dimensions_m.height.max (15,9 m sous gril)", "surfaces.floor", "surfaces.walls", "surfaces.ceiling"] },
-    { "url": "https://lesstudiosdeparis.com/wp-content/uploads/2025/09/PLATEAU-9-FR_ok.pdf", "publisher": "Les Studios de Paris (fiche Plateau 9)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "other", "covers": ["dimensions_m.length.max (40 m)", "dimensions_m.width.max (31 m)", "surfaces.floor (béton lisse)"] }
+    {
+      "url": "https://www.bbcstudioworks.com/studio/tc1/",
+      "publisher": "BBC Studioworks (Television Centre, TC1)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m.length.typical (108 ft = 32,9 m)",
+        "dimensions_m.width.typical (100 ft = 30,5 m)"
+      ]
+    },
+    {
+      "url": "https://www.bbcstudioworks.com/wp-content/uploads/2024/08/TC1-Plans-V451.pdf",
+      "publisher": "BBC Studioworks (plan TC1 V451, 2020)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m.height.typical (dessous du gril 13,4 m)",
+        "surfaces.ceiling",
+        "zones.audience-seating (500 places + 4 PMR)",
+        "openings (portes décors 4,623 × 5,588 m et 4,242 m de large)",
+        "power_points",
+        "patch_points"
+      ]
+    },
+    {
+      "url": "https://www.bbcstudioworks.com/studio/tc3/",
+      "publisher": "BBC Studioworks (Television Centre, TC3)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m.length.min (100 ft = 30,5 m, plus grande dimension)",
+        "dimensions_m.width.min (80 ft = 24,4 m)",
+        "dimensions_m.height.min (36 ft = 11,0 m, hauteur annoncée)"
+      ]
+    },
+    {
+      "url": "https://lesstudiosdeparis.com/wp-content/uploads/2025/09/PLATEAU-3-FR_ok.pdf",
+      "publisher": "Les Studios de Paris (fiche Plateau 3)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m.height.max (15,9 m sous gril)",
+        "surfaces.floor",
+        "surfaces.walls",
+        "surfaces.ceiling"
+      ]
+    },
+    {
+      "url": "https://lesstudiosdeparis.com/wp-content/uploads/2025/09/PLATEAU-9-FR_ok.pdf",
+      "publisher": "Les Studios de Paris (fiche Plateau 9)",
+      "accessed": "2026-10-22",
+      "confidence": "verified-primary",
+      "kind": "other",
+      "covers": [
+        "dimensions_m.length.max (40 m)",
+        "dimensions_m.width.max (31 m)",
+        "surfaces.floor (béton lisse)"
+      ]
+    }
   ],
   "conflicts": [
-    { "field": "openings[1].height_m", "values": [ { "value": "5.588 m", "source_url": "https://www.bbcstudioworks.com/wp-content/uploads/2024/08/TC1-Plans-V451.pdf" }, { "value": "13'4'' (≈ 4,06 m)", "source_url": "https://www.bbcstudioworks.com/wp-content/uploads/2024/08/TC1-Plans-V451.pdf" } ], "note": "Le plan TC1 écrit « 5.588m (13'4'') » pour la deuxième porte : métrique et impérial ne concordent pas ; 5,588 m retenu (identique à la première porte, 18'4'')." },
-    { "field": "dimensions_m.height", "values": [ { "value": "45 ft (13,7 m) hauteur", "source_url": "https://www.bbcstudioworks.com/studio/tc1/" }, { "value": "13,4 m dessous du gril", "source_url": "https://www.bbcstudioworks.com/wp-content/uploads/2024/08/TC1-Plans-V451.pdf" } ], "note": "La page web donne une hauteur globale, le plan la hauteur utile sous gril ; la hauteur sous gril est retenue." }
+    {
+      "field": "openings[1].height_m",
+      "values": [
+        {
+          "value": "5.588 m",
+          "source_url": "https://www.bbcstudioworks.com/wp-content/uploads/2024/08/TC1-Plans-V451.pdf"
+        },
+        {
+          "value": "13'4'' (≈ 4,06 m)",
+          "source_url": "https://www.bbcstudioworks.com/wp-content/uploads/2024/08/TC1-Plans-V451.pdf"
+        }
+      ],
+      "note": "Le plan TC1 écrit « 5.588m (13'4'') » pour la deuxième porte : métrique et impérial ne concordent pas ; 5,588 m retenu (identique à la première porte, 18'4'')."
+    },
+    {
+      "field": "dimensions_m.height",
+      "values": [
+        {
+          "value": "45 ft (13,7 m) hauteur",
+          "source_url": "https://www.bbcstudioworks.com/studio/tc1/"
+        },
+        {
+          "value": "13,4 m dessous du gril",
+          "source_url": "https://www.bbcstudioworks.com/wp-content/uploads/2024/08/TC1-Plans-V451.pdf"
+        }
+      ],
+      "note": "La page web donne une hauteur globale, le plan la hauteur utile sous gril ; la hauteur sous gril est retenue."
+    }
   ],
   "not_found_log": [
-    { "what": "RT60 d'un grand plateau TV : aucune valeur publiée par BBC Studioworks ni les Studios de Paris.", "searched": "Pages et plans TC1/TC3, fiches Plateaux 3 et 9", "review": "needs-oscar-review" },
-    { "what": "Les plateaux 3 et 9 des Studios de Paris sont des plateaux de tournage cinéma/TV ; utilisés comme bornes hautes. Pour TC3, la « hauteur 36 ft » n'est pas explicitement la hauteur sous gril.", "searched": "Fiches techniques", "review": "needs-oscar-review" },
-    { "what": "Positions des zones (décor, caméras, gradins) et des boîtes murales : schéma type, pas relevé sur plan.", "searched": "Plan TC1 (texte extrait, cotes non exploitables)", "review": "needs-oscar-review" }
+    {
+      "what": "RT60 d'un grand plateau TV : aucune valeur publiée par BBC Studioworks ni les Studios de Paris.",
+      "searched": "Pages et plans TC1/TC3, fiches Plateaux 3 et 9",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Les plateaux 3 et 9 des Studios de Paris sont des plateaux de tournage cinéma/TV ; utilisés comme bornes hautes. Pour TC3, la « hauteur 36 ft » n'est pas explicitement la hauteur sous gril.",
+      "searched": "Fiches techniques",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Positions des zones (décor, caméras, gradins) et des boîtes murales : schéma type, pas relevé sur plan.",
+      "searched": "Plan TC1 (texte extrait, cotes non exploitables)",
+      "review": "needs-oscar-review"
+    }
   ],
   "review": "needs-oscar-review"
 }

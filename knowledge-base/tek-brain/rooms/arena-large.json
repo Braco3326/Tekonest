@@ -6,69 +6,415 @@
   "size": "large",
   "description": "Salle de très grande jauge construite pour accueillir les tournées : espace scénique de 38,5 m de large sur 22 à 26 m de profondeur sous un gril technique, scène modulable de 1,3 à 1,9 m de haut, parterre debout, gradins en couronnes, régie façade sur une plateforme surélevée à 35–47 m du nez de scène. La salle est livrée « vide » : tout le système (line arrays accrochés, subs, consoles, retours) arrive avec la production ; la salle fournit le gril, l'électricité (dont une alimentation son sur transformateur d'isolement) et le passage de câbles vers la régie. Le modèle s'appuie sur les fiches techniques du Zénith de Dijon (8 888 places) et du Zénith de Strasbourg (jusqu'à 12 079 places), complétées par l'Accor Arena (Paris-Bercy, 20 300 places, charpente à 24 m). Convention des ouvertures : le mur « front » est le mur du lointain derrière la scène (vers −z), « rear » le fond de salle (+z). La vraie salle est en éventail ; le gabarit la simplifie en rectangle.",
   "dimensions_m": {
-    "length": { "min": 60, "typical": 75, "max": 90 },
-    "width": { "min": 38.5, "typical": 53, "max": 60 },
-    "height": { "min": 13.4, "typical": 15.6, "max": 24 }
+    "length": {
+      "min": 60,
+      "typical": 75,
+      "max": 90
+    },
+    "width": {
+      "min": 38.5,
+      "typical": 53,
+      "max": 60
+    },
+    "height": {
+      "min": 13.4,
+      "typical": 15.6,
+      "max": 24
+    }
   },
   "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
   "surfaces": [
-    { "surface": "floor", "material": "dallage béton avec finition durcisseur (béton quartzé)", "finish_note": "Dijon : dalle de 15 cm, charge maxi 1 t/m² ; Strasbourg : sol béton quartzé." },
-    { "surface": "stage-floor", "material": "scène modulable en éléments (type Stacco), jupe de scène en velours noir", "finish_note": "Charge 600 kg/m² (Dijon) ou 500 daN/m² (Strasbourg) ; hauteur 1,26–1,90 m (Dijon), 1,30–1,80 m (Strasbourg)." },
-    { "surface": "walls", "material": "gradins béton en couronnes, rideaux d'occultation noirs pour moduler la jauge", "finish_note": "Les deux Zéniths ont des rideaux d'occultation de gradins et de fosse ; le public est la principale surface absorbante." },
-    { "surface": "ceiling", "material": "charpente métallique avec passerelles et gril technique", "finish_note": "Hauteur sous passerelle 13,4 m (Dijon), 15,6 m (Strasbourg), points d'accroche jusqu'à 17 m ; gril de 40 t au-dessus de l'espace scénique à Strasbourg ; charpente à 24 m au-dessus de l'aire de jeu à Bercy." },
-    { "surface": "front-wall", "material": "rideau de fond de scène noir sur patience", "finish_note": "Dijon : rideau de 34 m de large sur pont motorisé ; rideaux de cadre réduisant l'ouverture jusqu'à 8 m." }
+    {
+      "surface": "floor",
+      "material": "dallage béton avec finition durcisseur (béton quartzé)",
+      "finish_note": "Dijon : dalle de 15 cm, charge maxi 1 t/m² ; Strasbourg : sol béton quartzé."
+    },
+    {
+      "surface": "stage-floor",
+      "material": "scène modulable en éléments (type Stacco), jupe de scène en velours noir",
+      "finish_note": "Charge 600 kg/m² (Dijon) ou 500 daN/m² (Strasbourg) ; hauteur 1,26–1,90 m (Dijon), 1,30–1,80 m (Strasbourg)."
+    },
+    {
+      "surface": "walls",
+      "material": "gradins béton en couronnes, rideaux d'occultation noirs pour moduler la jauge",
+      "finish_note": "Les deux Zéniths ont des rideaux d'occultation de gradins et de fosse ; le public est la principale surface absorbante."
+    },
+    {
+      "surface": "ceiling",
+      "material": "charpente métallique avec passerelles et gril technique",
+      "finish_note": "Hauteur sous passerelle 13,4 m (Dijon), 15,6 m (Strasbourg), points d'accroche jusqu'à 17 m ; gril de 40 t au-dessus de l'espace scénique à Strasbourg ; charpente à 24 m au-dessus de l'aire de jeu à Bercy."
+    },
+    {
+      "surface": "front-wall",
+      "material": "rideau de fond de scène noir sur patience",
+      "finish_note": "Dijon : rideau de 34 m de large sur pont motorisé ; rideaux de cadre réduisant l'ouverture jusqu'à 8 m."
+    }
   ],
   "rt60_s": "not found",
   "zones": [
-    { "id": "espace-scenique", "kind": "backstage", "rect_m": [0, -24.5, 38.5, 26], "floor_y_m": 0 },
-    { "id": "scene", "kind": "stage", "rect_m": [0, -18.82, 24.4, 14.64], "floor_y_m": 1.4 },
-    { "id": "regie-retours", "kind": "monitor-world", "rect_m": [15.5, -19, 5, 8], "floor_y_m": 1.4 },
-    { "id": "fosse", "kind": "audience", "rect_m": [0, 6, 53, 35], "floor_y_m": 0 },
-    { "id": "regie-facade", "kind": "foh", "rect_m": [0, 25, 8, 3], "floor_y_m": 4 },
-    { "id": "gradins", "kind": "audience", "rect_m": [0, 31.5, 53, 12], "floor_y_m": 6 }
+    {
+      "id": "espace-scenique",
+      "kind": "backstage",
+      "rect_m": [
+        0,
+        -24.5,
+        38.5,
+        26
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "scene",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        -18.82,
+        24.4,
+        14.64
+      ],
+      "floor_y_m": 1.4
+    },
+    {
+      "id": "regie-retours",
+      "kind": "monitor-world",
+      "rect_m": [
+        15.5,
+        -19,
+        5,
+        8
+      ],
+      "floor_y_m": 1.4
+    },
+    {
+      "id": "fosse",
+      "kind": "audience",
+      "rect_m": [
+        0,
+        6,
+        53,
+        35
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "regie-facade",
+      "kind": "foh",
+      "rect_m": [
+        0,
+        25,
+        8,
+        3
+      ],
+      "floor_y_m": 4
+    },
+    {
+      "id": "gradins",
+      "kind": "audience",
+      "rect_m": [
+        0,
+        31.5,
+        53,
+        12
+      ],
+      "floor_y_m": 6
+    }
   ],
   "gear_positions": [
-    { "equipment_id": "yamaha-rivage-pm10", "zone": "regie-facade", "position_m": [0, 4.9, 25], "rotation_deg": 180, "note": "Console façade de tournée sur la plateforme régie (8 × 3 m, 4 m au-dessus du sol à Strasbourg)." },
-    { "equipment_id": "yamaha-cl5", "zone": "regie-retours", "position_m": [15.5, 2.3, -19], "rotation_deg": 270, "note": "Console retours en coulisse, à vue des musiciens." },
-    { "equipment_id": "yamaha-rio3224-d2", "zone": "regie-retours", "position_m": [16.5, 1.4, -22], "rotation_deg": 270, "note": "Stagebox réseau ; en tournée on en empile souvent plusieurs." },
-    { "equipment_id": "l-acoustics-k2", "zone": "espace-scenique", "position_m": [-14, 12, -12], "rotation_deg": 0, "note": "Ligne principale gauche accrochée au gril (charges validées sur le plan de charges de la salle)." },
-    { "equipment_id": "l-acoustics-k2", "zone": "espace-scenique", "position_m": [14, 12, -12], "rotation_deg": 0, "note": "Ligne principale droite." },
-    { "equipment_id": "l-acoustics-ks28", "zone": "fosse", "position_m": [-6, 0, -10.8], "rotation_deg": 0, "note": "Subs au sol devant la scène, derrière les crash barrières." },
-    { "equipment_id": "l-acoustics-ks28", "zone": "fosse", "position_m": [6, 0, -10.8], "rotation_deg": 0, "note": "Subs au sol, côté droit." },
-    { "equipment_id": "l-acoustics-kara-ii", "zone": "fosse", "position_m": [-20, 10, -10], "rotation_deg": 30, "note": "Ligne de débouchage latéral (out fill) vers les gradins côté gauche." },
-    { "equipment_id": "l-acoustics-kara-ii", "zone": "fosse", "position_m": [20, 10, -10], "rotation_deg": 330, "note": "Out fill droit." },
-    { "equipment_id": "l-acoustics-la12x", "zone": "espace-scenique", "position_m": [17, 0, -30], "rotation_deg": 270, "note": "Racks d'amplification au lointain cour, près de l'armoire son de la salle." },
-    { "equipment_id": "l-acoustics-x15-hiq", "zone": "scene", "position_m": [0, 1.4, -13.2], "rotation_deg": 180, "note": "Wedge en bord de scène (beaucoup d'artistes sont en ear monitors)." },
-    { "equipment_id": "shure-psm-1000", "zone": "regie-retours", "position_m": [17, 2.3, -16.5], "rotation_deg": 270, "note": "Émetteurs d'ear monitors." },
-    { "equipment_id": "shure-axient-digital-ad4d", "zone": "regie-retours", "position_m": [17, 2.3, -17.5], "rotation_deg": 270, "note": "Récepteurs HF des micros chant." },
-    { "equipment_id": "shure-beta-58a", "zone": "scene", "position_m": [0, 3.0, -14], "rotation_deg": 0, "note": "Micro chant (capsule filaire de secours)." },
-    { "equipment_id": "nti-audio-xl2", "zone": "regie-facade", "position_m": [1.5, 5.5, 25], "rotation_deg": 180, "note": "Sonomètre en régie pour suivre le Leq réglementaire." }
+    {
+      "equipment_id": "yamaha-rivage-pm10",
+      "zone": "regie-facade",
+      "position_m": [
+        0,
+        4.9,
+        25
+      ],
+      "rotation_deg": 180,
+      "note": "Console façade de tournée sur la plateforme régie (8 × 3 m, 4 m au-dessus du sol à Strasbourg)."
+    },
+    {
+      "equipment_id": "yamaha-cl5",
+      "zone": "regie-retours",
+      "position_m": [
+        15.5,
+        2.3,
+        -19
+      ],
+      "rotation_deg": 270,
+      "note": "Console retours en coulisse, à vue des musiciens."
+    },
+    {
+      "equipment_id": "yamaha-rio3224-d2",
+      "zone": "regie-retours",
+      "position_m": [
+        16.5,
+        1.4,
+        -22
+      ],
+      "rotation_deg": 270,
+      "note": "Stagebox réseau ; en tournée on en empile souvent plusieurs."
+    },
+    {
+      "equipment_id": "l-acoustics-k2",
+      "zone": "espace-scenique",
+      "position_m": [
+        -14,
+        12,
+        -12
+      ],
+      "rotation_deg": 0,
+      "note": "Ligne principale gauche accrochée au gril (charges validées sur le plan de charges de la salle)."
+    },
+    {
+      "equipment_id": "l-acoustics-k2",
+      "zone": "espace-scenique",
+      "position_m": [
+        14,
+        12,
+        -12
+      ],
+      "rotation_deg": 0,
+      "note": "Ligne principale droite."
+    },
+    {
+      "equipment_id": "l-acoustics-ks28",
+      "zone": "fosse",
+      "position_m": [
+        -6,
+        0,
+        -10.8
+      ],
+      "rotation_deg": 0,
+      "note": "Subs au sol devant la scène, derrière les crash barrières."
+    },
+    {
+      "equipment_id": "l-acoustics-ks28",
+      "zone": "fosse",
+      "position_m": [
+        6,
+        0,
+        -10.8
+      ],
+      "rotation_deg": 0,
+      "note": "Subs au sol, côté droit."
+    },
+    {
+      "equipment_id": "l-acoustics-kara-ii",
+      "zone": "fosse",
+      "position_m": [
+        -20,
+        10,
+        -10
+      ],
+      "rotation_deg": 30,
+      "note": "Ligne de débouchage latéral (out fill) vers les gradins côté gauche."
+    },
+    {
+      "equipment_id": "l-acoustics-kara-ii",
+      "zone": "fosse",
+      "position_m": [
+        20,
+        10,
+        -10
+      ],
+      "rotation_deg": 330,
+      "note": "Out fill droit."
+    },
+    {
+      "equipment_id": "l-acoustics-la12x",
+      "zone": "espace-scenique",
+      "position_m": [
+        17,
+        0,
+        -30
+      ],
+      "rotation_deg": 270,
+      "note": "Racks d'amplification au lointain cour, près de l'armoire son de la salle."
+    },
+    {
+      "equipment_id": "l-acoustics-x15-hiq",
+      "zone": "scene",
+      "position_m": [
+        0,
+        1.4,
+        -13.2
+      ],
+      "rotation_deg": 180,
+      "note": "Wedge en bord de scène (beaucoup d'artistes sont en ear monitors)."
+    },
+    {
+      "equipment_id": "shure-psm-1000",
+      "zone": "regie-retours",
+      "position_m": [
+        17,
+        2.3,
+        -16.5
+      ],
+      "rotation_deg": 270,
+      "note": "Émetteurs d'ear monitors."
+    },
+    {
+      "equipment_id": "shure-axient-digital-ad4d",
+      "zone": "regie-retours",
+      "position_m": [
+        17,
+        2.3,
+        -17.5
+      ],
+      "rotation_deg": 270,
+      "note": "Récepteurs HF des micros chant."
+    },
+    {
+      "equipment_id": "shure-beta-58a",
+      "zone": "scene",
+      "position_m": [
+        0,
+        3.0,
+        -14
+      ],
+      "rotation_deg": 0,
+      "note": "Micro chant (capsule filaire de secours)."
+    },
+    {
+      "equipment_id": "nti-audio-xl2",
+      "zone": "regie-facade",
+      "position_m": [
+        1.5,
+        5.5,
+        25
+      ],
+      "rotation_deg": 180,
+      "note": "Sonomètre en régie pour suivre le Leq réglementaire."
+    }
   ],
   "power_points": [
-    { "position_m": [17, 0, -36.5], "type": "powerlock-250a-3ph-transfo-isolement" },
-    { "position_m": [16, 0, -24], "type": "p17-125a-3ph" },
-    { "position_m": [-17, 0, -36.5], "type": "powerlock-630a-3ph" },
-    { "position_m": [3, 4, 25.5], "type": "p17-32a-3ph" }
+    {
+      "position_m": [
+        17,
+        0,
+        -36.5
+      ],
+      "type": "powerlock-250a-3ph-transfo-isolement"
+    },
+    {
+      "position_m": [
+        16,
+        0,
+        -24
+      ],
+      "type": "p17-125a-3ph"
+    },
+    {
+      "position_m": [
+        -17,
+        0,
+        -36.5
+      ],
+      "type": "powerlock-630a-3ph"
+    },
+    {
+      "position_m": [
+        3,
+        4,
+        25.5
+      ],
+      "type": "p17-32a-3ph"
+    }
   ],
   "patch_points": [
-    { "position_m": [16.5, 1.4, -22], "type": "stage-box-32ch-dante", "note": "Stagebox de la production en coulisse cour." },
-    { "position_m": [0, 0, 5], "type": "cable-trench-foh", "note": "Strasbourg : caniveau de passage de câbles dans l'axe de la salle jusqu'à la régie, plus 30 passages de câbles 3 voies." }
+    {
+      "position_m": [
+        16.5,
+        1.4,
+        -22
+      ],
+      "type": "stage-box-32ch-dante",
+      "note": "Stagebox de la production en coulisse cour."
+    },
+    {
+      "position_m": [
+        0,
+        0,
+        5
+      ],
+      "type": "cable-trench-foh",
+      "note": "Strasbourg : caniveau de passage de câbles dans l'axe de la salle jusqu'à la régie, plus 30 passages de câbles 3 voies."
+    }
   ],
   "openings": [
-    { "wall": "front", "kind": "door", "offset_m": -15, "width_m": 4.8, "height_m": 4.25, "note": "Accès camion jardin (Strasbourg : 4,80 × 4,25 m)." },
-    { "wall": "front", "kind": "door", "offset_m": 15, "width_m": 4.8, "height_m": 4.25, "note": "Accès camion cour (Strasbourg)." },
-    { "wall": "front", "kind": "door", "offset_m": 0, "width_m": 4.5, "height_m": 3.9, "note": "Porte centrale (Strasbourg : 4,50 × 3,90 m)." },
-    { "wall": "rear", "kind": "door", "offset_m": -12, "width_m": 2.4, "height_m": 2.5, "note": "Accès public parterre (dimensions estimées ; Dijon : 4 portes depuis le hall)." },
-    { "wall": "rear", "kind": "door", "offset_m": 12, "width_m": 2.4, "height_m": 2.5, "note": "Accès public parterre (estimé)." }
+    {
+      "wall": "front",
+      "kind": "door",
+      "offset_m": -15,
+      "width_m": 4.8,
+      "height_m": 4.25,
+      "note": "Accès camion jardin (Strasbourg : 4,80 × 4,25 m)."
+    },
+    {
+      "wall": "front",
+      "kind": "door",
+      "offset_m": 15,
+      "width_m": 4.8,
+      "height_m": 4.25,
+      "note": "Accès camion cour (Strasbourg)."
+    },
+    {
+      "wall": "front",
+      "kind": "door",
+      "offset_m": 0,
+      "width_m": 4.5,
+      "height_m": 3.9,
+      "note": "Porte centrale (Strasbourg : 4,50 × 3,90 m)."
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": -12,
+      "width_m": 2.4,
+      "height_m": 2.5,
+      "note": "Accès public parterre (dimensions estimées ; Dijon : 4 portes depuis le hall)."
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 12,
+      "width_m": 2.4,
+      "height_m": 2.5,
+      "note": "Accès public parterre (estimé)."
+    }
   ],
-  "lighting": { "mood": "salle noire immense, plateau en lyres et écrans LED, poursuites en passerelles, éclairage de service bleu en coulisse", "color_temp_k": 5600 },
+  "lighting": {
+    "mood": "salle noire immense, plateau en lyres et écrans LED, poursuites en passerelles, éclairage de service bleu en coulisse",
+    "color_temp_k": 5600
+  },
   "procedural": {
     "wall_color": "#1a1a1e",
     "floor_color": "#5a5a58",
     "ceiling_color": "#101014",
-    "prop_hints": ["gril et passerelles métalliques", "palans électriques et élingues", "crash barrières alu devant la scène", "plateforme régie sur échafaudage", "gradins en couronnes avec rideaux d'occultation", "écrans LED latéraux", "chariot élévateur en coulisse", "flight-cases empilés"]
+    "prop_hints": [
+      "gril et passerelles métalliques",
+      "palans électriques et élingues",
+      "crash barrières alu devant la scène",
+      "plateforme régie sur échafaudage",
+      "gradins en couronnes avec rideaux d'occultation",
+      "écrans LED latéraux",
+      "chariot élévateur en coulisse",
+      "flight-cases empilés"
+    ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-hand-truck",
+    "ph-plastic-crate-02",
+    "ph-wooden-ladder-02",
+    "pp-acoustic-guitar",
+    "pp-apelab-crowd",
+    "pp-quaternius-barrier-large",
+    "pp-quaternius-man",
+    "pp-quaternius-pallet",
+    "pp-quaternius-woman-casual",
+    "pp-simple-truss",
+    "pp-stage-keyboard",
+    "pp-zsky-drum-set"
+  ],
   "sources": [
     {
       "url": "https://patrimoine.bourgognefranchecomte.fr/documents/Zénith_Dijon_fiche_technique_16-10-2017.pdf",
@@ -76,7 +422,16 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["dimensions_m.width.min (ouverture du cadre 38,5 m mur à mur)", "dimensions_m.height.min (13,4 m sous passerelle)", "zones.espace-scenique (profondeur 22 m jusqu'au nez de scène, 850 m²)", "zones.scene (scène Stacco jusqu'à 31,78 × 15,89 m, hauteur 1,26–1,90 m)", "zones.regie-facade (régie 7 × 3 m à 35 m du bord du cadre de scène)", "surfaces", "power_points (alimentation son 250 A sur transformateur d'isolement 150 kVA, éclairage 630 A Powerlock)", "description (8 888 places)"]
+      "covers": [
+        "dimensions_m.width.min (ouverture du cadre 38,5 m mur à mur)",
+        "dimensions_m.height.min (13,4 m sous passerelle)",
+        "zones.espace-scenique (profondeur 22 m jusqu'au nez de scène, 850 m²)",
+        "zones.scene (scène Stacco jusqu'à 31,78 × 15,89 m, hauteur 1,26–1,90 m)",
+        "zones.regie-facade (régie 7 × 3 m à 35 m du bord du cadre de scène)",
+        "surfaces",
+        "power_points (alimentation son 250 A sur transformateur d'isolement 150 kVA, éclairage 630 A Powerlock)",
+        "description (8 888 places)"
+      ]
     },
     {
       "url": "https://www.mystrasbourg.com/data/adh_227_f1760078096.pdf",
@@ -84,7 +439,18 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["dimensions_m.width.typical (largeur au cadre 53 m)", "dimensions_m.height.typical (15,60 m sous passerelle)", "zones.espace-scenique (38,50 × 26 m)", "zones.scene (standard 24,40 × 14,64 × 1,40 m)", "zones.regie-facade (8 × 3 m, 4 m de haut, à 34 / 41 / 47 m de la scène selon la jauge)", "surfaces", "power_points (son 250 A/400 V sur transformateur d'isolement, armoire son lointain cour, 32 A P17 en régie)", "patch_points.cable-trench-foh", "openings[0..2]", "description (jusqu'à 12 079 places)"]
+      "covers": [
+        "dimensions_m.width.typical (largeur au cadre 53 m)",
+        "dimensions_m.height.typical (15,60 m sous passerelle)",
+        "zones.espace-scenique (38,50 × 26 m)",
+        "zones.scene (standard 24,40 × 14,64 × 1,40 m)",
+        "zones.regie-facade (8 × 3 m, 4 m de haut, à 34 / 41 / 47 m de la scène selon la jauge)",
+        "surfaces",
+        "power_points (son 250 A/400 V sur transformateur d'isolement, armoire son lointain cour, 32 A P17 en régie)",
+        "patch_points.cable-trench-foh",
+        "openings[0..2]",
+        "description (jusqu'à 12 079 places)"
+      ]
     },
     {
       "url": "https://fr.wikipedia.org/wiki/Accor_Arena",
@@ -92,15 +458,38 @@
       "accessed": "2026-10-22",
       "confidence": "verified-secondary",
       "kind": "other",
-      "covers": ["dimensions_m.height.max (charpente à 24 m au-dessus de l'aire de jeu)", "description (20 300 places en concert)"]
+      "covers": [
+        "dimensions_m.height.max (charpente à 24 m au-dessus de l'aire de jeu)",
+        "description (20 300 places en concert)"
+      ]
     }
   ],
   "review": "needs-oscar-review",
   "not_found_log": [
-    { "what": "Longueur de salle (min 60, typique 75, max 90 m) : estimation. Seules les profondeurs d'espace scénique (22–26 m) et les distances régie–scène (34–47 m) sont publiées ; la longueur typique additionne ces deux valeurs plus les gradins arrière.", "searched": "Fiches Zénith Dijon, Zénith Strasbourg ; Wikipédia Accor Arena (pas de cotes de l'aire)", "review": "needs-oscar-review" },
-    { "what": "Largeur max 60 m : estimation (au-delà des 53 m publiés pour Strasbourg).", "searched": "Mêmes sources", "review": "needs-oscar-review" },
-    { "what": "RT60 d'un Zénith ou d'une arena : non trouvé.", "searched": "Fiches techniques Dijon et Strasbourg, Wikipédia Accor Arena", "review": "needs-oscar-review" },
-    { "what": "Choix et positions du système de diffusion (K2, KS28, Kara II, consoles Yamaha) : la salle ne fournit pas de système ; c'est un exemple pédagogique de production en tournée, pas une source.", "searched": "Fiches Dijon et Strasbourg (aucun système son fourni par la salle)", "review": "needs-oscar-review" },
-    { "what": "Hauteur des gradins (6 m) et position des portes public : estimées.", "searched": "Fiches Dijon et Strasbourg", "review": "needs-oscar-review" }
+    {
+      "what": "Longueur de salle (min 60, typique 75, max 90 m) : estimation. Seules les profondeurs d'espace scénique (22–26 m) et les distances régie–scène (34–47 m) sont publiées ; la longueur typique additionne ces deux valeurs plus les gradins arrière.",
+      "searched": "Fiches Zénith Dijon, Zénith Strasbourg ; Wikipédia Accor Arena (pas de cotes de l'aire)",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Largeur max 60 m : estimation (au-delà des 53 m publiés pour Strasbourg).",
+      "searched": "Mêmes sources",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "RT60 d'un Zénith ou d'une arena : non trouvé.",
+      "searched": "Fiches techniques Dijon et Strasbourg, Wikipédia Accor Arena",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Choix et positions du système de diffusion (K2, KS28, Kara II, consoles Yamaha) : la salle ne fournit pas de système ; c'est un exemple pédagogique de production en tournée, pas une source.",
+      "searched": "Fiches Dijon et Strasbourg (aucun système son fourni par la salle)",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Hauteur des gradins (6 m) et position des portes public : estimées.",
+      "searched": "Fiches Dijon et Strasbourg",
+      "review": "needs-oscar-review"
+    }
   ]
 }

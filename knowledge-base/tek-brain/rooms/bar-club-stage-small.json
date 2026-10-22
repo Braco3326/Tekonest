@@ -6,16 +6,44 @@
   "size": "small",
   "description": "Petite salle de musiques actuelles en « boîte à chaussures » : une salle rectangulaire d'environ 16 × 10 m, une scène en praticables de 0,4 à 1,2 m de haut sur toute la largeur du fond, un bar au fond de salle et une régie façade posée dans le public. Le modèle s'appuie sur trois fiches techniques réelles : Nouveau Monde (Fribourg, 300 debout, salle 16,20 × 9,80 m), le Club de Paloma (SMAC de Nîmes, 372 personnes) et la salle Jacques Barathon (Thouars, 300 debout). Ces salles ont un vrai système de diffusion (line array compact, subs, retours coaxiaux, console numérique et stagebox réseau), ce qui en fait le premier terrain d'apprentissage du line check et des retours. Le niveau sonore y est limité par la réglementation (Paloma affiche 102 dB(A) et 118 dB(C) en Leq 15 min). Convention des ouvertures : le mur « front » est le mur derrière la scène (vers −z), « rear » le fond de salle (+z).",
   "dimensions_m": {
-    "length": { "min": 12, "typical": 16.2, "max": 22 },
-    "width": { "min": 9, "typical": 9.8, "max": 10 },
-    "height": { "min": 3.7, "typical": 4.7, "max": 4.95 }
+    "length": {
+      "min": 12,
+      "typical": 16.2,
+      "max": 22
+    },
+    "width": {
+      "min": 9,
+      "typical": 9.8,
+      "max": 10
+    },
+    "height": {
+      "min": 3.7,
+      "typical": 4.7,
+      "max": 4.95
+    }
   },
   "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
   "surfaces": [
-    { "surface": "floor", "material": "plancher bois peint noir", "finish_note": "Nouveau Monde : « sol en bois noir ». Sol nu : le public debout fait l'essentiel de l'absorption quand la salle est pleine." },
-    { "surface": "stage-floor", "material": "praticables bois recouverts de tapis de danse noir", "finish_note": "Hauteur de scène 0,40 m (Barathon), 0,80 m (Nouveau Monde), 1,20 m (Paloma Club)." },
-    { "surface": "walls", "material": "murs peints noir mat, pendrillons en velours noir sur les côtés de scène", "finish_note": "Finition estimée (non décrite dans les fiches) ; pendrillons cités par la fiche Barathon (10 pendrillons 3 × 1 m)." },
-    { "surface": "ceiling", "material": "plafond technique noir avec gril / porteuses", "finish_note": "Hauteur sous gril 4,70 m (Paloma Club), sous perches salle 4,95 m (Nouveau Monde), 3,70 m (Barathon)." }
+    {
+      "surface": "floor",
+      "material": "plancher bois peint noir",
+      "finish_note": "Nouveau Monde : « sol en bois noir ». Sol nu : le public debout fait l'essentiel de l'absorption quand la salle est pleine."
+    },
+    {
+      "surface": "stage-floor",
+      "material": "praticables bois recouverts de tapis de danse noir",
+      "finish_note": "Hauteur de scène 0,40 m (Barathon), 0,80 m (Nouveau Monde), 1,20 m (Paloma Club)."
+    },
+    {
+      "surface": "walls",
+      "material": "murs peints noir mat, pendrillons en velours noir sur les côtés de scène",
+      "finish_note": "Finition estimée (non décrite dans les fiches) ; pendrillons cités par la fiche Barathon (10 pendrillons 3 × 1 m)."
+    },
+    {
+      "surface": "ceiling",
+      "material": "plafond technique noir avec gril / porteuses",
+      "finish_note": "Hauteur sous gril 4,70 m (Paloma Club), sous perches salle 4,95 m (Nouveau Monde), 3,70 m (Barathon)."
+    }
   ],
   "rt60_s": {
     "min": 0.6,
@@ -24,49 +52,316 @@
     "source_url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/"
   },
   "zones": [
-    { "id": "scene", "kind": "stage", "rect_m": [0, -5.6, 9.7, 5], "floor_y_m": 0.8 },
-    { "id": "public", "kind": "audience", "rect_m": [0, 2.5, 9.8, 11.2], "floor_y_m": 0 },
-    { "id": "regie-facade", "kind": "foh", "rect_m": [0, 6.6, 3, 2], "floor_y_m": 0 },
-    { "id": "bar", "kind": "other", "rect_m": [-3.4, 6.6, 3, 3], "floor_y_m": 0 }
+    {
+      "id": "scene",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        -5.6,
+        9.7,
+        5
+      ],
+      "floor_y_m": 0.8
+    },
+    {
+      "id": "public",
+      "kind": "audience",
+      "rect_m": [
+        0,
+        2.5,
+        9.8,
+        11.2
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "regie-facade",
+      "kind": "foh",
+      "rect_m": [
+        0,
+        6.6,
+        3,
+        2
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "bar",
+      "kind": "other",
+      "rect_m": [
+        -3.4,
+        6.6,
+        3,
+        3
+      ],
+      "floor_y_m": 0
+    }
   ],
   "gear_positions": [
-    { "equipment_id": "yamaha-cl5", "zone": "regie-facade", "position_m": [0, 0.9, 6.6], "rotation_deg": 180, "note": "Console façade : Nouveau Monde liste une Yamaha CL5 (Paloma Club : Yamaha DM7)." },
-    { "equipment_id": "yamaha-rio3224-d2", "zone": "scene", "position_m": [4.2, 0.8, -7.6], "rotation_deg": 180, "note": "Stagebox Dante au plateau (Nouveau Monde : Rio 32-24 + Rio 16-8 ; Paloma : Rio3224 + Rio1608)." },
-    { "equipment_id": "l-acoustics-kara-ii", "zone": "scene", "position_m": [-4.3, 4.2, -3.3], "rotation_deg": 0, "note": "Ligne gauche accrochée au nez de scène (Nouveau Monde : 10 KARA au total, soit 5 par côté)." },
-    { "equipment_id": "l-acoustics-kara-ii", "zone": "scene", "position_m": [4.3, 4.2, -3.3], "rotation_deg": 0, "note": "Ligne droite." },
-    { "equipment_id": "l-acoustics-ks28", "zone": "scene", "position_m": [-3.6, 0, -3.6], "rotation_deg": 0, "note": "Sub au sol sous le nez de scène ; Nouveau Monde utilise 2 SB28 (le KS28 est le modèle de la même famille présent dans le catalogue)." },
-    { "equipment_id": "l-acoustics-ks28", "zone": "scene", "position_m": [3.6, 0, -3.6], "rotation_deg": 0, "note": "Sub droit." },
-    { "equipment_id": "l-acoustics-x8", "zone": "scene", "position_m": [-1.5, 0.8, -3.3], "rotation_deg": 0, "note": "Front fill posé au nez de scène (Nouveau Monde : 2 X8 en front fill)." },
-    { "equipment_id": "l-acoustics-x15-hiq", "zone": "scene", "position_m": [0, 0.8, -4.0], "rotation_deg": 180, "note": "Retour de scène (wedge) tourné vers le chanteur (Nouveau Monde : 6 X15 HiQ)." },
-    { "equipment_id": "l-acoustics-la12x", "zone": "scene", "position_m": [-4.2, 0.8, -7.6], "rotation_deg": 180, "note": "Rack d'amplification en coulisse de scène ; Nouveau Monde utilise des LA8 (génération précédente)." },
-    { "equipment_id": "shure-sm58", "zone": "scene", "position_m": [0, 2.4, -4.6], "rotation_deg": 0, "note": "Micro chant sur pied (25 SM58 au parc de Paloma)." },
-    { "equipment_id": "shure-beta-52a", "zone": "scene", "position_m": [0.3, 1.1, -6.8], "rotation_deg": 0, "note": "Grosse caisse (présent dans les fiches Nouveau Monde et Paloma)." },
-    { "equipment_id": "shure-sm57", "zone": "scene", "position_m": [-0.4, 1.4, -6.6], "rotation_deg": 0, "note": "Caisse claire." },
-    { "equipment_id": "sennheiser-e-906", "zone": "scene", "position_m": [2.8, 1.1, -7.0], "rotation_deg": 180, "note": "Ampli guitare (Paloma : 6 e906)." },
-    { "equipment_id": "klark-teknik-dn100-v2", "zone": "scene", "position_m": [-2.6, 0.8, -6.0], "rotation_deg": 0, "note": "DI active pour clavier ou basse (Nouveau Monde : 6 DN100)." }
+    {
+      "equipment_id": "yamaha-cl5",
+      "zone": "regie-facade",
+      "position_m": [
+        0,
+        0.9,
+        6.6
+      ],
+      "rotation_deg": 180,
+      "note": "Console façade : Nouveau Monde liste une Yamaha CL5 (Paloma Club : Yamaha DM7)."
+    },
+    {
+      "equipment_id": "yamaha-rio3224-d2",
+      "zone": "scene",
+      "position_m": [
+        4.2,
+        0.8,
+        -7.6
+      ],
+      "rotation_deg": 180,
+      "note": "Stagebox Dante au plateau (Nouveau Monde : Rio 32-24 + Rio 16-8 ; Paloma : Rio3224 + Rio1608)."
+    },
+    {
+      "equipment_id": "l-acoustics-kara-ii",
+      "zone": "scene",
+      "position_m": [
+        -4.3,
+        4.2,
+        -3.3
+      ],
+      "rotation_deg": 0,
+      "note": "Ligne gauche accrochée au nez de scène (Nouveau Monde : 10 KARA au total, soit 5 par côté)."
+    },
+    {
+      "equipment_id": "l-acoustics-kara-ii",
+      "zone": "scene",
+      "position_m": [
+        4.3,
+        4.2,
+        -3.3
+      ],
+      "rotation_deg": 0,
+      "note": "Ligne droite."
+    },
+    {
+      "equipment_id": "l-acoustics-ks28",
+      "zone": "scene",
+      "position_m": [
+        -3.6,
+        0,
+        -3.6
+      ],
+      "rotation_deg": 0,
+      "note": "Sub au sol sous le nez de scène ; Nouveau Monde utilise 2 SB28 (le KS28 est le modèle de la même famille présent dans le catalogue)."
+    },
+    {
+      "equipment_id": "l-acoustics-ks28",
+      "zone": "scene",
+      "position_m": [
+        3.6,
+        0,
+        -3.6
+      ],
+      "rotation_deg": 0,
+      "note": "Sub droit."
+    },
+    {
+      "equipment_id": "l-acoustics-x8",
+      "zone": "scene",
+      "position_m": [
+        -1.5,
+        0.8,
+        -3.3
+      ],
+      "rotation_deg": 0,
+      "note": "Front fill posé au nez de scène (Nouveau Monde : 2 X8 en front fill)."
+    },
+    {
+      "equipment_id": "l-acoustics-x15-hiq",
+      "zone": "scene",
+      "position_m": [
+        0,
+        0.8,
+        -4.0
+      ],
+      "rotation_deg": 180,
+      "note": "Retour de scène (wedge) tourné vers le chanteur (Nouveau Monde : 6 X15 HiQ)."
+    },
+    {
+      "equipment_id": "l-acoustics-la12x",
+      "zone": "scene",
+      "position_m": [
+        -4.2,
+        0.8,
+        -7.6
+      ],
+      "rotation_deg": 180,
+      "note": "Rack d'amplification en coulisse de scène ; Nouveau Monde utilise des LA8 (génération précédente)."
+    },
+    {
+      "equipment_id": "shure-sm58",
+      "zone": "scene",
+      "position_m": [
+        0,
+        2.4,
+        -4.6
+      ],
+      "rotation_deg": 0,
+      "note": "Micro chant sur pied (25 SM58 au parc de Paloma)."
+    },
+    {
+      "equipment_id": "shure-beta-52a",
+      "zone": "scene",
+      "position_m": [
+        0.3,
+        1.1,
+        -6.8
+      ],
+      "rotation_deg": 0,
+      "note": "Grosse caisse (présent dans les fiches Nouveau Monde et Paloma)."
+    },
+    {
+      "equipment_id": "shure-sm57",
+      "zone": "scene",
+      "position_m": [
+        -0.4,
+        1.4,
+        -6.6
+      ],
+      "rotation_deg": 0,
+      "note": "Caisse claire."
+    },
+    {
+      "equipment_id": "sennheiser-e-906",
+      "zone": "scene",
+      "position_m": [
+        2.8,
+        1.1,
+        -7.0
+      ],
+      "rotation_deg": 180,
+      "note": "Ampli guitare (Paloma : 6 e906)."
+    },
+    {
+      "equipment_id": "klark-teknik-dn100-v2",
+      "zone": "scene",
+      "position_m": [
+        -2.6,
+        0.8,
+        -6.0
+      ],
+      "rotation_deg": 0,
+      "note": "DI active pour clavier ou basse (Nouveau Monde : 6 DN100)."
+    }
   ],
   "power_points": [
-    { "position_m": [4.6, 0.8, -7.9], "type": "p17-32a-3ph" },
-    { "position_m": [-4.6, 0.8, -7.9], "type": "schuko-16a" },
-    { "position_m": [0, 0, 7.6], "type": "schuko-16a" }
+    {
+      "position_m": [
+        4.6,
+        0.8,
+        -7.9
+      ],
+      "type": "p17-32a-3ph"
+    },
+    {
+      "position_m": [
+        -4.6,
+        0.8,
+        -7.9
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        0,
+        0,
+        7.6
+      ],
+      "type": "schuko-16a"
+    }
   ],
   "patch_points": [
-    { "position_m": [4.2, 0.8, -7.6], "type": "stage-box-32ch-dante", "note": "Rio3224-D2 : 32 entrées micro/ligne, 16 sorties ; liaison réseau vers la régie." },
-    { "position_m": [0, 0, 7.4], "type": "dante-wall-port", "note": "Arrivée réseau en régie façade (câble posé le long du mur ou passage de câbles au sol)." }
+    {
+      "position_m": [
+        4.2,
+        0.8,
+        -7.6
+      ],
+      "type": "stage-box-32ch-dante",
+      "note": "Rio3224-D2 : 32 entrées micro/ligne, 16 sorties ; liaison réseau vers la régie."
+    },
+    {
+      "position_m": [
+        0,
+        0,
+        7.4
+      ],
+      "type": "dante-wall-port",
+      "note": "Arrivée réseau en régie façade (câble posé le long du mur ou passage de câbles au sol)."
+    }
   ],
   "openings": [
-    { "wall": "front", "kind": "door", "offset_m": 3.0, "width_m": 2.5, "height_m": 3.5, "note": "Accès décors / déchargement de plain-pied à l'arrière-scène (Nouveau Monde : portes 2,5 × 3,5 m)." },
-    { "wall": "rear", "kind": "door", "offset_m": 2.5, "width_m": 1.8, "height_m": 2.2, "note": "Entrée public (dimensions estimées)." },
-    { "wall": "left", "kind": "door", "offset_m": 3.0, "width_m": 1.4, "height_m": 2.1, "note": "Issue de secours (position estimée)." }
+    {
+      "wall": "front",
+      "kind": "door",
+      "offset_m": 3.0,
+      "width_m": 2.5,
+      "height_m": 3.5,
+      "note": "Accès décors / déchargement de plain-pied à l'arrière-scène (Nouveau Monde : portes 2,5 × 3,5 m)."
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 2.5,
+      "width_m": 1.8,
+      "height_m": 2.2,
+      "note": "Entrée public (dimensions estimées)."
+    },
+    {
+      "wall": "left",
+      "kind": "door",
+      "offset_m": 3.0,
+      "width_m": 1.4,
+      "height_m": 2.1,
+      "note": "Issue de secours (position estimée)."
+    }
   ],
-  "lighting": { "mood": "salle sombre, plateau en LED colorées et lyres, fumée légère, bar éclairé chaud", "color_temp_k": 3200 },
+  "lighting": {
+    "mood": "salle sombre, plateau en LED colorées et lyres, fumée légère, bar éclairé chaud",
+    "color_temp_k": 3200
+  },
   "procedural": {
     "wall_color": "#141414",
     "floor_color": "#1c1c1c",
     "ceiling_color": "#0e0e0e",
-    "prop_hints": ["praticables 2 × 1 m", "tapis de danse noir", "pendrillons velours noir", "comptoir de bar et tireuses", "barrière légère devant la scène", "gaffer au sol", "pieds de micro perche", "racks 19\" en coulisse"]
+    "prop_hints": [
+      "praticables 2 × 1 m",
+      "tapis de danse noir",
+      "pendrillons velours noir",
+      "comptoir de bar et tireuses",
+      "barrière légère devant la scène",
+      "gaffer au sol",
+      "pieds de micro perche",
+      "racks 19\" en coulisse"
+    ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "objv-dj-table-lowpoly",
+    "objv-guitar-amp-futaba",
+    "objv-guitar-combo-amp-lowpoly",
+    "objv-stage-monitor-wedge-saandy",
+    "ph-hand-truck",
+    "ph-plastic-crate-02",
+    "ph-wooden-ladder-02",
+    "pp-acoustic-guitar",
+    "pp-apelab-crowd",
+    "pp-quaternius-man",
+    "pp-quaternius-pallet",
+    "pp-quaternius-woman-casual",
+    "pp-simple-truss",
+    "pp-stage-keyboard",
+    "pp-zsky-drum-set",
+    "si-cowbell-nmah"
+  ],
   "sources": [
     {
       "url": "https://2019.belluard.ch/media/filer-content/public/2018/11/19/fiche_technique_nm_012018.pdf",
@@ -74,7 +369,15 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["dimensions_m.length.typical (16,20 m mur à mur)", "dimensions_m.width.typical (9,80 m)", "dimensions_m.height.max (4,95 m sous perche salle)", "zones.scene (ouverture 9,70 m, cadre 7 m, profondeur 5 m, hauteur 0,80 m)", "surfaces.floor", "openings[0]", "gear_positions (choix du matériel : CL5, Rio, KARA, X8, SB28, LA8, X15 HiQ, SM57/58, Beta 52, DN100)"]
+      "covers": [
+        "dimensions_m.length.typical (16,20 m mur à mur)",
+        "dimensions_m.width.typical (9,80 m)",
+        "dimensions_m.height.max (4,95 m sous perche salle)",
+        "zones.scene (ouverture 9,70 m, cadre 7 m, profondeur 5 m, hauteur 0,80 m)",
+        "surfaces.floor",
+        "openings[0]",
+        "gear_positions (choix du matériel : CL5, Rio, KARA, X8, SB28, LA8, X15 HiQ, SM57/58, Beta 52, DN100)"
+      ]
     },
     {
       "url": "https://paloma-nimes.fr/wp-content/uploads/2025/09/ft-club-paloma-2025.pdf",
@@ -82,7 +385,13 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["dimensions_m.height.typical (4,70 m sous gril)", "dimensions_m.width.max (plateau 10 m mur à mur, utilisé comme largeur de salle)", "surfaces.stage-floor (hauteur 1,20 m)", "description (jauge 372, limitation 102 dB(A) / 118 dB(C) Leq 15 min)", "gear_positions (choix du matériel : DM7, Rio3224, Beta 52, SM58, e906)"]
+      "covers": [
+        "dimensions_m.height.typical (4,70 m sous gril)",
+        "dimensions_m.width.max (plateau 10 m mur à mur, utilisé comme largeur de salle)",
+        "surfaces.stage-floor (hauteur 1,20 m)",
+        "description (jauge 372, limitation 102 dB(A) / 118 dB(C) Leq 15 min)",
+        "gear_positions (choix du matériel : DM7, Rio3224, Beta 52, SM58, e906)"
+      ]
     },
     {
       "url": "https://thouars-communaute.fr/Fichiers/Culture%20Sports/Conservatoire%20Tyndo/Fiche_technique_salle_JACQUES_BA.pdf",
@@ -90,7 +399,13 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["dimensions_m.height.min (3,70 m sous perches)", "dimensions_m.width.min (scène 9 m mur à mur, utilisée comme largeur de salle)", "surfaces.stage-floor (hauteur 0,40 m, tapis de danse)", "surfaces.walls (pendrillons)", "description (300 debout)"]
+      "covers": [
+        "dimensions_m.height.min (3,70 m sous perches)",
+        "dimensions_m.width.min (scène 9 m mur à mur, utilisée comme largeur de salle)",
+        "surfaces.stage-floor (hauteur 0,40 m, tapis de danse)",
+        "surfaces.walls (pendrillons)",
+        "description (300 debout)"
+      ]
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -98,15 +413,37 @@
       "accessed": "2026-10-22",
       "confidence": "verified-secondary",
       "kind": "manufacturer",
-      "covers": ["rt60_s"]
+      "covers": [
+        "rt60_s"
+      ]
     }
   ],
   "review": "needs-oscar-review",
   "not_found_log": [
-    { "what": "Longueur min 12 m et max 22 m : estimations ; seule la longueur de Nouveau Monde (16,20 m) est publiée.", "searched": "Fiches Nouveau Monde, Paloma Club, Barathon (Barathon donne 234 m² sans longueur ni largeur)", "review": "needs-oscar-review" },
-    { "what": "Largeur min (9 m) et max (10 m) : ce sont les largeurs de scène « mur à mur » de Barathon et Paloma, prises comme largeur de salle (hypothèse d'une salle rectangulaire de même largeur que la scène).", "searched": "Fiches Barathon, Paloma Club", "review": "needs-oscar-review" },
-    { "what": "Position et taille de la régie façade : aucune des trois fiches ne donne la distance régie-scène ; régie placée au fond du public par convention.", "searched": "Fiches Nouveau Monde, Paloma Club (plan « régies FOH » sans cotes lisibles), Barathon", "review": "needs-oscar-review" },
-    { "what": "RT60 mesuré de ces salles : non publié ; valeur recommandée DPA utilisée.", "searched": "Fiches techniques des trois salles", "review": "needs-oscar-review" },
-    { "what": "Matériaux des murs, positions du bar, des prises et des portes autres que l'accès décors : implantation estimée.", "searched": "Fiches des trois salles", "review": "needs-oscar-review" }
+    {
+      "what": "Longueur min 12 m et max 22 m : estimations ; seule la longueur de Nouveau Monde (16,20 m) est publiée.",
+      "searched": "Fiches Nouveau Monde, Paloma Club, Barathon (Barathon donne 234 m² sans longueur ni largeur)",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Largeur min (9 m) et max (10 m) : ce sont les largeurs de scène « mur à mur » de Barathon et Paloma, prises comme largeur de salle (hypothèse d'une salle rectangulaire de même largeur que la scène).",
+      "searched": "Fiches Barathon, Paloma Club",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Position et taille de la régie façade : aucune des trois fiches ne donne la distance régie-scène ; régie placée au fond du public par convention.",
+      "searched": "Fiches Nouveau Monde, Paloma Club (plan « régies FOH » sans cotes lisibles), Barathon",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "RT60 mesuré de ces salles : non publié ; valeur recommandée DPA utilisée.",
+      "searched": "Fiches techniques des trois salles",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Matériaux des murs, positions du bar, des prises et des portes autres que l'accès décors : implantation estimée.",
+      "searched": "Fiches des trois salles",
+      "review": "needs-oscar-review"
+    }
   ]
 }

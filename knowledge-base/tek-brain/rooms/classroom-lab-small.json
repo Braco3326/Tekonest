@@ -311,7 +311,22 @@
       "armoire à câbles"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-modern-ceiling-lamp-01",
+    "ph-potted-plant-04",
+    "ph-school-chair-01",
+    "ph-school-desk-01",
+    "ph-steel-frame-shelves-03",
+    "pp-dry-erase-board",
+    "pp-kenney-desk-chair",
+    "pp-quaternius-man",
+    "pp-quaternius-woman-casual",
+    "si-chester-telegraph-relay",
+    "si-henry-trough-battery",
+    "si-morse-vail-telegraph-key",
+    "si-page-induction-coil",
+    "si-tangent-galvanometer"
+  ],
   "sources": [
     {
       "url": "https://sga-ssa.ch/docs/events//yverdon07_koller.pdf",

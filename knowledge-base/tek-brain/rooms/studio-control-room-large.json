@@ -334,7 +334,16 @@
       "vitre inclinée vers le studio"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-mid-century-lounge-chair",
+    "ph-modern-ceiling-lamp-01",
+    "ph-modern-coffee-table-01",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "ph-steel-frame-shelves-03",
+    "pp-kenney-desk-chair",
+    "pp-kenney-lounge-sofa"
+  ],
   "sources": [
     {
       "url": "https://studios-ferber.com/studio-d/",
