@@ -1,0 +1,2041 @@
+{
+  "file": "microphones-condenser.json",
+  "category": "microphones",
+  "generated": "2026-10-22",
+  "selection_rationale": "Reference studio condensers found in French studios, schools, radio, film and classical recording: the Neumann line (U 87 Ai, already in the TekPractice catalog, plus TLM 103/102/107, U 47 fet i, KM 184 and the tube M 149 and U 67), AKG C414 XLS (9-pattern workhorse), Schoeps Colette CMC 6 with MK 4 and MK 41 (references in French radio and film), Sennheiser RF condensers (MKH 8040, MKH 50) and vintage-design tube mics (Telefunken ELA M 251E and C12). Selection was limited to models whose documents could actually be read: the shared web-search budget ran out mid-task, and several manufacturer sites (AKG, Audio-Technica) returned 403 or render specs only via JavaScript (DPA, Rode, Shure KSM32C), so those candidates were swapped for fully sourced alternatives.",
+  "not_found_log": [
+    {
+      "device_id": "neumann-tlm-103",
+      "what": "Official Neumann-hosted operating manual / datasheet PDF (any language, incl. French)",
+      "searched": "neumann.com product page downloads (JS file finder returns no file list); web search 'neumann.com globalassets TLM 103 operating manual pdf' found only retailer copies"
+    },
+    {
+      "device_id": "neumann-tlm-102",
+      "what": "Official Neumann-hosted manual PDF, French version",
+      "searched": "neumann.com file finder (JS-only); web search found syntex.cz / la-bs.com copies only"
+    },
+    {
+      "device_id": "neumann-km-184",
+      "what": "Official Neumann-hosted Series 180 manual PDF",
+      "searched": "neumann.com file finder (JS-only); web search found avbroadcast.fr copy only"
+    },
+    {
+      "device_id": "neumann-m-149-tube",
+      "what": "Official manual PDF and year introduced",
+      "searched": "neumann.com product page + file finder; web search found Thomann/klangfarbe copies only"
+    },
+    {
+      "device_id": "neumann-u-47-fet-i",
+      "what": "Manual PDF and a second (non-Neumann) spec source",
+      "searched": "neumann.com file finder (JS-only); search budget exhausted"
+    },
+    {
+      "device_id": "neumann-u-67",
+      "what": "Official manual PDF (to check PSU/P48 statement)",
+      "searched": "neumann.com file finder (JS-only); search budget exhausted"
+    },
+    {
+      "device_id": "neumann-tlm-107",
+      "what": "Official Neumann-hosted manual PDF",
+      "searched": "neumann.com file finder (JS-only); only markertek.com copy found"
+    },
+    {
+      "device_id": "neumann-u87-ai",
+      "what": "Separate official datasheet / product information PDF; exact year of Ai version",
+      "searched": "neumann.com product page (links only to JS file finder); mixonline.com history article gives 1967 (U 87) and 1986 (U 87 A) only"
+    },
+    {
+      "device_id": "akg-c414-xls",
+      "what": "Official AKG product page and AKG-hosted manual; current status; year introduced",
+      "searched": "akg.com / fr.akg.com returned HTTP 403, akg.com/sitemap.xml HTTP 500; web search found only retailer-hosted manual copies"
+    },
+    {
+      "device_id": "schoeps-cmc-6-mk-4",
+      "what": "French user manual; MK 4 datasheet PDF",
+      "searched": "schoeps.de FR/EN/DE user-manual pages and product-information page (only EN and DE CMC/MK manuals listed)"
+    },
+    {
+      "device_id": "sennheiser-mkh-50",
+      "what": "Full operating manual and French documents",
+      "searched": "sennheiser.com FR product page downloads (only quick guide, safety guide, DoC, MKH Story listed)"
+    },
+    {
+      "device_id": "dpa-4011",
+      "what": "Specs, manual (device dropped)",
+      "searched": "dpamicrophones.com product page: Specifications/Downloads tabs are loaded by JavaScript and not readable; search budget exhausted"
+    },
+    {
+      "device_id": "rode-nt1-5th-gen / rode-nt5",
+      "what": "Product pages and manuals (devices dropped)",
+      "searched": "rode.com home and /en-au/microphones (JS, no product links), rode.com/sitemap.xml 404; search budget exhausted"
+    },
+    {
+      "device_id": "audio-technica-at4050 / at4040",
+      "what": "Product pages and manuals (devices dropped)",
+      "searched": "audio-technica.com and sitemap.xml returned HTTP 403; search budget exhausted"
+    },
+    {
+      "device_id": "shure-ksm32c",
+      "what": "Specs and manuals (device dropped)",
+      "searched": "shure.com/products/microphones/ksm32c has no numeric specs or downloads; Shure newsroom (2026-01-21) announces the new KSM32C; original KSM32 page not found; search budget exhausted"
+    },
+    {
+      "device_id": "akg-c451-b",
+      "what": "Product page and manual (device dropped)",
+      "searched": "akg.com returned 403; search budget exhausted"
+    },
+    {
+      "device_id": "sennheiser-mkh-40",
+      "what": "Current product page (substituted by MKH 8040)",
+      "searched": "sennheiser.com FR MKH family page lists MKH 30 and MKH 50 but no MKH 40"
+    }
+  ],
+  "devices": [
+    {
+      "id": "neumann-u87-ai",
+      "brand": "Neumann",
+      "model": "U 87 Ai",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "Large-diaphragm pressure-gradient condenser (dual-diaphragm), multi-pattern, FET electronics with balanced transformer output (manual: 'condenser studio microphone with a transformer output')",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Mix magazine traces the U 87 back to 1967 as the solid-state successor of the tube U 67; the Ai version is still listed by Neumann today. Neumann's own manual names dubbing, broadcasting, solo voices and choirs as typical uses, which is why it is the reference voice mic in many studios and dubbing rooms.",
+      "typical_uses": [
+        "vocals",
+        "voice-over / dubbing",
+        "broadcast",
+        "choir",
+        "piano",
+        "strings (cello, double bass)",
+        "wind instruments",
+        "percussion"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "omnidirectional",
+          "cardioid",
+          "figure-8"
+        ],
+        "acoustic_principle": "Pressure gradient transducer",
+        "frequency_response": "20 Hz...20 kHz",
+        "sensitivity": "20/28/22 mV/Pa ± 1 dB (omni/cardioid/figure-8)",
+        "equivalent_noise_a_weighted": "15/12/14 dB-A",
+        "equivalent_noise_ccir": "26/23/25 dB",
+        "max_spl": "117 dB (less than 0.5 % THD, cardioid); 127 dB with preattenuation",
+        "max_output_voltage": "–6 dBu",
+        "impedance": "200 ohms (rated load impedance 1000 ohms)",
+        "phantom_power": "48 V ± 4 V (P48, IEC 61938), 0.8 mA",
+        "pad": "-10 dB pre-attenuation switch",
+        "high_pass_filter": "switchable",
+        "weight": "500 g",
+        "dimensions": "Diameter 56 mm, length 200 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output (balanced, transformer) + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-en/products/microphones/u-87-ai/",
+      "manual_languages": [
+        "en",
+        "de",
+        "fr",
+        "es",
+        "pt",
+        "nl",
+        "it"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+          "title": "U 87 Ai Operating Manual / Bedienungsanleitung / Mode d'emploi (multilingual, French section included)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "06-10 (file name opin0134_u87ai_06-10)",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/globalassets/digizuite/16474-en-opin0134_u87ai_06-10.pdf",
+          "publisher": "Georg Neumann GmbH",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "typical_uses",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors",
+            "manual_languages"
+          ]
+        },
+        {
+          "url": "https://www.neumann.com/en-en/products/microphones/u-87-ai/",
+          "publisher": "Neumann (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        },
+        {
+          "url": "https://www.mixonline.com/technology/1967-neumann-u87-383659",
+          "publisher": "Mix magazine",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "why_it_is_a_classic",
+            "notes"
+          ]
+        }
+      ],
+      "notes": "Mix dates the original U 87 to 1967 and the DC/DC-converter U 87 A to 1986; it says the Ai name came with the change from Tuchel to XLR connector but gives no year for that, so year_introduced is left 'not found'. Product page download links go to a JS file finder; no separate official datasheet PDF was retrieved.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "neumann-u87-ai",
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Reference phantom-powered condenser: P48 lesson, pad/HPF and pattern switching."
+      }
+    },
+    {
+      "id": "neumann-tlm-103",
+      "brand": "Neumann",
+      "model": "TLM 103",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "Large-diaphragm pressure-gradient condenser, cardioid only, transformerless output stage; capsule derived from the K 67/87 capsule of the U 87 (per Neumann)",
+      "year_introduced": 1997,
+      "status": "current",
+      "why_it_is_a_classic": "Neumann says it introduced the TLM 103 in 1997 as an affordable alternative to the U 87, using a capsule derived from it. Its very low self-noise (7 dB-A) makes it a common choice for voice-over and home/project studios.",
+      "typical_uses": [
+        "vocals",
+        "voice-over / speech",
+        "radio",
+        "acoustic instruments",
+        "home and project studio"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "acoustic_principle": "Pressure gradient transducer",
+        "frequency_response": "20 Hz ... 20 kHz",
+        "sensitivity": "23 mV/Pa (–32.5 dBV ± 1 dB)",
+        "equivalent_noise_a_weighted": "7 dB-A",
+        "equivalent_noise_ccir": "17.5 dB",
+        "max_spl": "138 dB (THD 0.5%)",
+        "max_output_voltage": "13 dBu",
+        "impedance": "50 Ω (rated load impedance 1 kΩ)",
+        "phantom_power": "48 V ± 4 V (P48, IEC 61938), 3 mA",
+        "weight": "approx. 450 g",
+        "dimensions": "60 mm diameter × 132 mm length"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output (balanced, transformerless) + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-cn/products/microphones/tlm-103",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-cn/products/microphones/tlm-103",
+          "publisher": "Neumann (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "year_introduced",
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://im.static-thomann.de/pics/atg/atgdata/document/manual/127970_manual.pdf",
+          "publisher": "Neumann operating instructions (DE/EN), copy hosted by Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "technology"
+          ]
+        }
+      ],
+      "notes": "Older Neumann operating instructions (Thomann-hosted copy, not an official Neumann URL so not listed in manuals[]) state a transformerless output and 21 mV/Pa sensitivity; the current product page gives 23 mV/Pa. Neumann's product page links only to a JS file finder, so no official manual PDF URL was obtained.",
+      "conflicts": [
+        {
+          "field": "key_specs.sensitivity",
+          "values": [
+            {
+              "value": "23 mV/Pa (–32.5 dBV ± 1 dB)",
+              "source_url": "https://www.neumann.com/en-cn/products/microphones/tlm-103"
+            },
+            {
+              "value": "21 mV/Pa = – 33,5 dBV ± 1 dB",
+              "source_url": "https://im.static-thomann.de/pics/atg/atgdata/document/manual/127970_manual.pdf"
+            }
+          ],
+          "note": "Older manual revision vs current product page; reason for the change not stated."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Standard P48 XLR condenser; useful as a transformerless counterpart to the U 87 Ai but no new wiring lesson."
+      }
+    },
+    {
+      "id": "neumann-tlm-102",
+      "brand": "Neumann",
+      "model": "TLM 102",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "Large-diaphragm pressure-gradient condenser, cardioid, compact body",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neumann's most compact and lowest-priced large-diaphragm studio mic, widely used in project studios and voice booths. Its 144 dB max SPL (Neumann figure) also lets it handle loud sources such as guitar cabinets and drums.",
+      "typical_uses": [
+        "vocals",
+        "speech / podcast / voice-over",
+        "guitar amps",
+        "drums",
+        "home and project studio"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "acoustic_principle": "Pressure gradient transducer",
+        "frequency_response": "20 Hz - 20 kHz",
+        "sensitivity": "11 mV/Pa (−39 dBV ± 1 dB)",
+        "equivalent_noise_a_weighted": "12 dB-A",
+        "equivalent_noise_ccir": "21 dB",
+        "max_spl": "144 dB (THD ≤ 0.5%)",
+        "max_output_voltage": "13 dBu",
+        "impedance": "50 Ω (rated load impedance 1000 Ω)",
+        "phantom_power": "48 V ± 4 V (P48, IEC 61938), 3.5 mA",
+        "weight": "210 g",
+        "dimensions": "ø 52 mm / 116 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-cn/products/microphones/tlm-102",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-cn/products/microphones/tlm-102",
+          "publisher": "Neumann (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.syntex.cz/media/document/16199/quick-start.pdf",
+          "publisher": "Neumann TLM 102 quick guide, copy hosted by Syntex (distributor)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "All key specs match between the product page and the Neumann quick guide. Official manual PDF not reachable (Neumann file finder is JS-only); only distributor-hosted copies found.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Plain cardioid P48 condenser, same wiring as U 87 Ai."
+      }
+    },
+    {
+      "id": "neumann-u-47-fet-i",
+      "brand": "Neumann",
+      "model": "U 47 fet i (reissue of the U 47 fet)",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "Large-diaphragm pressure-gradient condenser, cardioid, K 47 capsule, FET electronics with large output transformer",
+      "year_introduced": 1972,
+      "status": "current",
+      "why_it_is_a_classic": "Neumann states the original U 47 fet was introduced in 1972 as the solid-state successor of the U 47 tube mic, built 1972-1986, and has reissued it from the same components. It is known as a kick-drum, bass-cabinet and brass mic thanks to its high SPL handling with the pad.",
+      "typical_uses": [
+        "kick drum",
+        "bass amp",
+        "brass",
+        "vocals",
+        "guitar amps"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "acoustic_principle": "Pressure gradient transducer",
+        "frequency_response": "40 Hz ... 16 kHz",
+        "sensitivity": "8 mV/Pa = −42 dBV ± 1 dB",
+        "equivalent_noise_a_weighted": "18 dB-A",
+        "equivalent_noise_ccir": "25 dB",
+        "max_spl": "137 dB (THD 0.5%); 147 dB with pre-attenuation",
+        "max_output_voltage": "−3.3 dBu",
+        "impedance": "150 Ω (rated load impedance 1 kΩ)",
+        "phantom_power": "48 V ± 4 V (P48, IEC 61938), 0.5 mA",
+        "switches": "-10 dB pad, low-cut, 6 dB output attenuation",
+        "weight": "710 g",
+        "dimensions": "Diameter 63 mm, length 160 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output (transformer-balanced) + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-cn/products/microphones/u-47-fet-i",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-cn/products/microphones/u-47-fet-i",
+          "publisher": "Neumann (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "year_introduced",
+            "status",
+            "why_it_is_a_classic",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "year_introduced is the original U 47 fet (1972, per Neumann); the current product is the 'U 47 fet i' reissue, whose own release year was not stated. Single-source specs (no second source reachable: web search budget exhausted).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Standard P48 XLR condenser; interesting only for gain-staging / pad lesson on loud sources."
+      }
+    },
+    {
+      "id": "akg-c414-xls",
+      "brand": "AKG",
+      "model": "C414 XLS (sister model C414 XLII)",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "1-inch large-diaphragm pressure-gradient condenser, 9 selectable polar patterns, 3-step pad and 3-step bass-cut, P48",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "AKG's manual places the C414 XLS in a lineage running from the C12 through the C414 comb, EB-P48, B-ULS, B-TL II and B-XLII. With nine patterns, pads and filters, it is a versatile multi-pattern studio workhorse. The XLII variant is the same mic with a presence boost from about 3 kHz.",
+      "typical_uses": [
+        "vocals",
+        "acoustic instruments",
+        "piano",
+        "drum overheads / toms",
+        "guitar amps",
+        "stereo pairs (XY, M/S, Blumlein)",
+        "ensemble / room"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "omnidirectional",
+          "wide cardioid",
+          "cardioid",
+          "hypercardioid",
+          "figure-8",
+          "4 intermediate settings (9 total)"
+        ],
+        "acoustic_principle": "1-inch large diaphragm pressure gradient microphone",
+        "frequency_response": "20 to 20,000 Hz",
+        "sensitivity": "23 mV/Pa (-33 dBV ± 0.5 dB)",
+        "equivalent_noise_a_weighted": "6 dB(A) (0 dB preattenuation)",
+        "equivalent_noise_ccir": "20 dB to IEC 60268-4 (0 dB preattenuation)",
+        "max_spl": "140/146/152/158 dB SPL for 0.5% THD (0/-6/-12/-18 dB preattenuation)",
+        "max_output_voltage": "5 V rms (+14 dBV)",
+        "impedance": "≤ 200 ohms (recommended load ≥2200 ohms)",
+        "phantom_power": "48 V phantom power to IEC 61938, approx. 4.5 mA",
+        "pad": "-6 dB, -12 dB, -18 dB",
+        "high_pass_filter": "12 dB/octave at 40 Hz and 80 Hz; 6 dB/octave at 160 Hz",
+        "weight": "300 g",
+        "dimensions": "50 x 38 x 160 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output (IEC standard 3-pin XLR) + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/AKG-C414XLS_userGuide.pdf",
+          "publisher": "AKG C414 XLS / C414 XLII manual (DE/EN/FR/ES), copy hosted by CCI Solutions (retailer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "typical_uses",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.bax-shop.co.uk/large-diaphragm-condenser-microphones/akg-c-414-xls",
+          "publisher": "Bax-shop (search-result snippet only; page body truncated when fetched)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.sensitivity"
+          ]
+        }
+      ],
+      "notes": "akg.com returned HTTP 403/500 for every fetch, so no official product page or AKG-hosted manual could be read; specs come from the AKG manual copy hosted by a retailer (it contains a French 'Mode d'emploi' section). Status could not be confirmed on the manufacturer site. No verified-primary source.",
+      "conflicts": [
+        {
+          "field": "key_specs.sensitivity",
+          "values": [
+            {
+              "value": "23 mV/Pa (-33 dBV ± 0.5 dB)",
+              "source_url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/AKG-C414XLS_userGuide.pdf"
+            },
+            {
+              "value": "20 mV/Pa (-34 dBV) ±0.5 dB",
+              "source_url": "https://www.bax-shop.co.uk/large-diaphragm-condenser-microphones/akg-c-414-xls"
+            }
+          ],
+          "note": "Retailer value seen only in a search snippet; may reflect an older manual revision."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Multi-pattern mic with 3-step pad: good for pattern and gain-staging exercises, standard P48 XLR wiring."
+      }
+    },
+    {
+      "id": "neumann-tlm-107",
+      "brand": "Neumann",
+      "model": "TLM 107",
+      "category": "microphones",
+      "sub_type": "condenser-large-diaphragm",
+      "technology": "Large-diaphragm pressure-gradient condenser, 5 polar patterns, transformerless, with 3-step pad and 3-step low cut",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neumann's current transformerless multi-pattern studio mic (5 patterns, pad and low-cut), which won an AES Best of Show (2013) and a TEC Award (2015) per Neumann. It is a modern counterpart to the U 87 Ai for teaching pattern selection.",
+      "typical_uses": [
+        "vocals",
+        "voice-over / broadcast",
+        "acoustic instruments",
+        "drums / loud sources (with pad)",
+        "stereo techniques (M/S, Blumlein)"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "omnidirectional",
+          "wide cardioid (subcardioid)",
+          "cardioid",
+          "hypercardioid",
+          "figure-8"
+        ],
+        "acoustic_principle": "Pressure gradient transducer",
+        "frequency_response": "20 Hz to 20 kHz",
+        "sensitivity": "11 mV/Pa (1 kHz into 1 kΩ)",
+        "equivalent_noise_a_weighted": "10 dB-A",
+        "equivalent_noise_ccir": "22 dB",
+        "max_spl": "141 dB (THD 0.5%); 147 dB with -6 dB pad; 153 dB with -12 dB pad",
+        "max_output_voltage": "10 dBu",
+        "impedance": "50 Ω (rated load impedance 1000 Ω)",
+        "phantom_power": "48 V ± 4 V (P48, IEC 61938), 3.2 mA",
+        "pad": "0, -6, -12 dB",
+        "high_pass_filter": "Linear, 40 Hz, 100 Hz",
+        "weight": "445 g",
+        "dimensions": "Diameter 64 mm, length 145 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output (transformerless) + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-cn/products/microphones/tlm-107",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-cn/products/microphones/tlm-107",
+          "publisher": "Neumann (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "why_it_is_a_classic",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.markertek.com/Attachments/Specifications/Neumann/NEUM-TLM-107-Specifications.pdf",
+          "publisher": "Neumann TLM 107 operating manual, copy hosted by Markertek (retailer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.impedance",
+            "key_specs.equivalent_noise_ccir"
+          ]
+        }
+      ],
+      "notes": "Specs on the product page match the Neumann manual copy (Markertek-hosted, not an official URL so not listed in manuals[]). Official manual not reachable via Neumann's JS file finder.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Multi-pattern transformerless mic with pad/HPF menu: pattern and gain-staging lessons."
+      }
+    },
+    {
+      "id": "neumann-km-184",
+      "brand": "Neumann",
+      "model": "KM 184 (Series 180)",
+      "category": "microphones",
+      "sub_type": "condenser-small-diaphragm",
+      "technology": "Small-diaphragm pressure-gradient condenser, cardioid, transformerless electronics (Series 180 alongside KM 183 omni and KM 185 hypercardioid)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The cardioid member of Neumann's Series 180 miniature mics, a frequent choice for overheads, acoustic guitar, piano and stereo pairs (XY/ORTF). It shares a manual and electronics with the KM 183/185, which makes it a good teaching example of capsule-pattern families.",
+      "typical_uses": [
+        "drum overheads",
+        "acoustic guitar",
+        "piano",
+        "strings",
+        "stereo pairs (XY / ORTF)",
+        "choir / ensemble"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "acoustic_principle": "Pressure gradient transducer",
+        "frequency_response": "20 Hz to 20 kHz",
+        "sensitivity": "15 mV/Pa ±1 dB",
+        "equivalent_noise_a_weighted": "13 dB-A",
+        "equivalent_noise_ccir": "22 dB",
+        "max_spl": "138 dB (THD 0.5%)",
+        "max_output_voltage": "10 dBu",
+        "impedance": "50 Ω (rated load impedance 1 kΩ)",
+        "phantom_power": "48 V ±4 V (P48, IEC 61938), 3.2 mA",
+        "weight": "Approx. 80 g",
+        "dimensions": "Diameter 22 mm; length 107 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-cn/products/microphones/km-184-series-180",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-cn/products/microphones/km-184-series-180",
+          "publisher": "Neumann (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.avbroadcast.fr/media/productfile/n/e/neumann-km184-mt-manuel.pdf",
+          "publisher": "Neumann Series 180 operating manual (DE/EN), copy hosted by AV Broadcast (French retailer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        }
+      ],
+      "notes": "Series 180 manual table lists the three models together (KM 183/184/185 = 12/15/10 mV/Pa, 140/138/142 dB max SPL); the KM 184 values match the product page. Official Neumann-hosted manual URL not obtained (JS file finder).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Pencil condenser used in pairs: stereo-pair and phantom-power lessons."
+      }
+    },
+    {
+      "id": "schoeps-cmc-6-mk-4",
+      "brand": "Schoeps",
+      "model": "CMC 6 + MK 4 (Colette modular system)",
+      "category": "microphones",
+      "sub_type": "condenser-small-diaphragm",
+      "technology": "Modular small-diaphragm condenser: CMC 6 microphone amplifier (balanced, transformer- and capacitor-free class-A output stage, P48/P12) with interchangeable MK 4 cardioid capsule",
+      "year_introduced": 1991,
+      "status": "current",
+      "why_it_is_a_classic": "Schoeps' own Colette brochure calls the MK 4 'the standard in many different recording situations' for years; the CMC 6 + MK capsule system is widely used in classical recording, broadcast and film. Its modular design (one amplifier, many capsules) is a useful teaching example.",
+      "typical_uses": [
+        "classical / orchestral recording",
+        "stereo pairs (ORTF, XY, MS with MK 8)",
+        "acoustic instruments",
+        "radio and broadcast",
+        "film / theatre (interior dialogue, with supercardioid capsules)"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "frequency_response": "40 Hz – 26 kHz (MK 4 with CMC 6); 40 Hz – 41 kHz with CMC 6xt",
+        "sensitivity": "−36.5 dB (V/Pa), 15 mV/Pa",
+        "equivalent_noise_a_weighted": "14 dB (A-weighted)",
+        "equivalent_noise_ccir": "24 dB (CCIR)",
+        "max_spl": "131 dB SPL with CMC 6 (THD < 0.5 %)",
+        "impedance": "42 Ω (CMC 6 output impedance); minimum recommended load 1 kΩ",
+        "max_output_voltage": "1 V (0 dBV) at 1 kΩ load",
+        "phantom_power": "P48: 20–52 V, 4 mA; P12: 10–13 V, 8 mA",
+        "low_cut": "20 Hz, 12 dB/oct",
+        "weight": "CMC 6: 60 g; MK 4: 17 g",
+        "dimensions": "CMC 6: 116 mm long, 20 mm diameter; MK 4: 22 mm long, 20 mm diameter"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output (XLR-3M on CMC 6) + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://schoeps.de/en/products/colette/microphone-amplifiers/cmc-6.html",
+      "manual_languages": [
+        "en",
+        "de"
+      ],
+      "manuals": [
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+          "title": "Colette Modular System: CMC microphone amplifiers and MK capsules, user manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2015-10-03 (file name)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_D_2015-10-03_1444310835.pdf",
+          "title": "CMC 6, Mikrofonverstärker (Bedienungsanleitung CMC/MK)",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "2015-10-03 (file name)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Kataloge_und_Broschueren/Colette_Broschuere/SCHOEPS_Colette_Brochure_EN.pdf",
+          "title": "SCHOEPS Colette brochure",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2024-12-05 (PDF metadata)",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://schoeps.de/en/products/colette/capsules/cardioids/mk-4.html",
+          "publisher": "SCHOEPS (MK 4 product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "status"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/produkte/colette/mikrofonverstaerker/cmc-6.html",
+          "publisher": "SCHOEPS (CMC 6 product page, German)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "year_introduced",
+            "status",
+            "key_specs.phantom_power",
+            "key_specs.impedance",
+            "key_specs.max_output_voltage",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+          "publisher": "SCHOEPS (user manual, 2015)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.phantom_power",
+            "key_specs.max_output_voltage",
+            "key_specs.dimensions"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Kataloge_und_Broschueren/Colette_Broschuere/SCHOEPS_Colette_Brochure_EN.pdf",
+          "publisher": "SCHOEPS (Colette brochure)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic",
+            "typical_uses"
+          ]
+        }
+      ],
+      "notes": "year_introduced 1991 is the CMC 6 'Generation A0' market launch as stated in the CMC 6 product history on schoeps.de; the Colette system and MK 4 capsule may be older (not stated). The Schoeps site has French product pages (e.g. schoeps.de/fr/produits/colette/preamplis-micro/cmc-6.html) but no French user manual was listed. The 2015 manual gives older values than the current web pages (see conflicts); the 'brochure' entry is marketing, not a manual.",
+      "conflicts": [
+        {
+          "field": "key_specs.frequency_response",
+          "values": [
+            {
+              "value": "40 Hz – 26 kHz (with CMC 6)",
+              "source_url": "https://schoeps.de/en/products/colette/capsules/cardioids/mk-4.html"
+            },
+            {
+              "value": "40 Hz – 20 kHz*",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ],
+          "note": "2015 manual vs current product page."
+        },
+        {
+          "field": "key_specs.sensitivity",
+          "values": [
+            {
+              "value": "15 mV/Pa",
+              "source_url": "https://schoeps.de/en/products/colette/capsules/cardioids/mk-4.html"
+            },
+            {
+              "value": "13 mV/Pa",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ],
+          "note": "2015 manual vs current product page."
+        },
+        {
+          "field": "key_specs.equivalent_noise_a_weighted",
+          "values": [
+            {
+              "value": "14 dB",
+              "source_url": "https://schoeps.de/en/products/colette/capsules/cardioids/mk-4.html"
+            },
+            {
+              "value": "15 dB",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.max_spl",
+          "values": [
+            {
+              "value": "131 dB SPL with CMC 6",
+              "source_url": "https://schoeps.de/en/products/colette/capsules/cardioids/mk-4.html"
+            },
+            {
+              "value": "132 dB (0.5% THD)",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.impedance",
+          "values": [
+            {
+              "value": "42 Ω",
+              "source_url": "https://schoeps.de/produkte/colette/mikrofonverstaerker/cmc-6.html"
+            },
+            {
+              "value": "35 Ohms at 48 V phantom, 25 Ohms at 12 V phantom (CMC 6U)",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "CMC 6: 60 g",
+              "source_url": "https://schoeps.de/produkte/colette/mikrofonverstaerker/cmc-6.html"
+            },
+            {
+              "value": "65 – 68 g, depending on type",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ]
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Modular capsule + amplifier and dual P48/P12 phantom support: good lesson on phantom standards and capsule swapping."
+      }
+    },
+    {
+      "id": "schoeps-cmc-6-mk-41",
+      "brand": "Schoeps",
+      "model": "CMC 6 + MK 41 (Colette supercardioid)",
+      "category": "microphones",
+      "sub_type": "condenser-small-diaphragm",
+      "technology": "Modular small-diaphragm condenser: CMC 6 amplifier (transformerless class-A output, P48/P12) with MK 41 supercardioid capsule",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Schoeps calls the MK 41 'an international standard for indoor film sound' and its Colette brochure says it is the professional standard for interior dialogue in Hollywood and other film capitals. It is the usual boom mic for interiors where a shotgun would sound coloured.",
+      "typical_uses": [
+        "film / TV interior dialogue (boom)",
+        "spot microphone in orchestra and opera",
+        "theatre",
+        "music recording (supercardioid)"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "supercardioid"
+        ],
+        "frequency_response": "40 Hz to 26 kHz (with CMC 6); 40 Hz to 41 kHz with CMC 6xt",
+        "sensitivity": "-36 dB (V/Pa), 16 mV/Pa",
+        "equivalent_noise_a_weighted": "14 dB (A-weighted)",
+        "equivalent_noise_ccir": "23 dB (CCIR)",
+        "max_spl": "131 dB-SPL with CMC 6 (THD < 0.5%)",
+        "impedance": "42 Ω (CMC 6 output impedance); minimum recommended load 1 kΩ",
+        "phantom_power": "P48: 20–52 V, 4 mA; P12: 10–13 V, 8 mA (CMC 6)",
+        "weight": "MK 41: 17 g; CMC 6: 60 g",
+        "dimensions": "MK 41: 22 mm long, 20 mm diameter; CMC 6: 116 mm long, 20 mm diameter"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output (XLR-3M on CMC 6) + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://schoeps.de/en/products/colette/capsules/supercardioids/mk-41.html",
+      "manual_languages": [
+        "en",
+        "de"
+      ],
+      "manuals": [
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+          "title": "Colette Modular System: CMC microphone amplifiers and MK capsules, user manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2015-10-03 (file name)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_D_2015-10-03_1444310835.pdf",
+          "title": "Bedienungsanleitung CMC/MK",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "2015-10-03 (file name)",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://schoeps.de/en/products/colette/capsules/supercardioids/mk-41.html",
+          "publisher": "SCHOEPS (MK 41 product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "why_it_is_a_classic",
+            "typical_uses",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/produkte/colette/mikrofonverstaerker/cmc-6.html",
+          "publisher": "SCHOEPS (CMC 6 product page, German)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.phantom_power",
+            "key_specs.impedance",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+          "publisher": "SCHOEPS (user manual, 2015)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.phantom_power"
+          ]
+        },
+        {
+          "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Kataloge_und_Broschueren/Colette_Broschuere/SCHOEPS_Colette_Brochure_EN.pdf",
+          "publisher": "SCHOEPS (Colette brochure)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "why_it_is_a_classic",
+            "typical_uses"
+          ]
+        }
+      ],
+      "notes": "Included alongside the CMC 6 + MK 4 because it is the reference film interior-dialogue mic (relevant to French film sound and BTS MAV). It is a supercardioid capsule, not a shotgun. 2015 manual lists MK 41 as 40 Hz – 20 kHz, 13 mV/Pa, 16 dB A-weighted, 132 dB (see conflicts).",
+      "conflicts": [
+        {
+          "field": "key_specs.sensitivity",
+          "values": [
+            {
+              "value": "16 mV/Pa",
+              "source_url": "https://schoeps.de/en/products/colette/capsules/supercardioids/mk-41.html"
+            },
+            {
+              "value": "13 mV/Pa",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ],
+          "note": "Current page vs 2015 manual."
+        },
+        {
+          "field": "key_specs.equivalent_noise_a_weighted",
+          "values": [
+            {
+              "value": "14 dB",
+              "source_url": "https://schoeps.de/en/products/colette/capsules/supercardioids/mk-41.html"
+            },
+            {
+              "value": "16 dB",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.frequency_response",
+          "values": [
+            {
+              "value": "40 Hz to 26 kHz (with CMC 6)",
+              "source_url": "https://schoeps.de/en/products/colette/capsules/supercardioids/mk-41.html"
+            },
+            {
+              "value": "40 Hz – 20 kHz*",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ]
+        },
+        {
+          "field": "key_specs.max_spl",
+          "values": [
+            {
+              "value": "131 dB-SPL with CMC 6",
+              "source_url": "https://schoeps.de/en/products/colette/capsules/supercardioids/mk-41.html"
+            },
+            {
+              "value": "132 dB",
+              "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf"
+            }
+          ]
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Same wiring as CMC 6 + MK 4; adds the film-boom context and capsule-swap concept."
+      }
+    },
+    {
+      "id": "sennheiser-mkh-8040",
+      "brand": "Sennheiser",
+      "model": "MKH 8040",
+      "category": "microphones",
+      "sub_type": "condenser-small-diaphragm",
+      "technology": "RF condenser (Sennheiser MKH 8000 series): an RF current of about 8 MHz through a low-impedance capsule is amplitude-modulated by the audio and demodulated to a balanced, transformerless output; modular design with detachable XLR module MZX 8000",
+      "year_introduced": 2007,
+      "status": "current",
+      "why_it_is_a_classic": "Representative of Sennheiser's MKH RF-condenser line, which Sennheiser credits with low self-noise, extended frequency response and resistance to humidity. Its 30-50,000 Hz response and miniature modular body make it a spot and surround mic for classical and broadcast work.",
+      "typical_uses": [
+        "spot microphone (orchestral / acoustic instruments)",
+        "surround and stereo recording",
+        "drum overheads",
+        "outdoor / humid conditions",
+        "broadcast"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid"
+        ],
+        "frequency_response": "30 – 50,000 Hz",
+        "sensitivity": "-34 dBV/Pa (-44 dBV/Pa with filter module MZF 8000 II)",
+        "equivalent_noise_a_weighted": "13 dB(A)",
+        "equivalent_noise_ccir": "22 dB",
+        "max_spl": "142 dB (137 dB with filter module MZF 8000 II)",
+        "impedance": "25 Ω (minimum load impedance 1000 Ω)",
+        "phantom_power": "48 V ±4 V (P48, IEC 61938), 3.3 mA",
+        "weight": "approx. 25 g (approx. 55 g with filter module MZF 8000 II)",
+        "dimensions": "approx. 19 mm diameter; approx. 41 mm length (approx. 75 mm with filter module MZF 8000 II)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output via XLR module MZX 8000 (balanced, transformerless, floating) + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "https://assets.sennheiser.com/download/assets/mkh-8000_instruction_manual_06_2025_en.pdf/0af73fc0e7d811f0a866ce3d75c40f07?attachment=true",
+      "datasheet_url": "https://assets.sennheiser.com/download/assets/MKH_8040_Product_Specification_v1.1_EN.pdf/48570e2ce7d311f0ae307aeaa9c3764a?attachment=true",
+      "product_page_url": "https://www.sennheiser.com/fr-fr/catalog/products/microphone/mkh-8040/mkh-8040-506289",
+      "manual_languages": [
+        "en",
+        "de"
+      ],
+      "manuals": [
+        {
+          "url": "https://assets.sennheiser.com/download/assets/mkh-8000_instruction_manual_06_2025_en.pdf/0af73fc0e7d811f0a866ce3d75c40f07?attachment=true",
+          "title": "MKH 8000 series instruction manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "06/2025",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/mkh-8000_bedienungsanleitung_06_2025_de.pdf/0a73677ce7d811f088db768ee8e97aea?attachment=true",
+          "title": "MKH 8000 Bedienungsanleitung",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "06/2025",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/MKH_8040_Product_Specification_v1.1_EN.pdf/48570e2ce7d311f0ae307aeaa9c3764a?attachment=true",
+          "title": "MKH 8040 Product Specification",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V1.1",
+          "official": true,
+          "kind": "spec-sheet"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/MKH_8040_Quick_Guide_07_2024.pdf/4821762ce7d311f0b959ce3d75c40f07?attachment=true",
+          "title": "MKH 8040 Quick Guide",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "07/2024",
+          "official": true,
+          "kind": "quick-start"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://assets.sennheiser.com/download/assets/MKH_8040_Product_Specification_v1.1_EN.pdf/48570e2ce7d311f0ae307aeaa9c3764a?attachment=true",
+          "publisher": "Sennheiser (product specification V1.1)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "typical_uses"
+          ]
+        },
+        {
+          "url": "https://www.sennheiser.com/fr-fr/catalog/products/microphone/mkh-8040/mkh-8040-506289",
+          "publisher": "Sennheiser (product page, FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "connectors",
+            "manual_languages"
+          ]
+        },
+        {
+          "url": "https://www.sennheiser.com/fr-fr/product-families/micros-mkh",
+          "publisher": "Sennheiser (MKH family page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic"
+          ]
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/MKH-Story_WhitePaper_en.pdf/53095012e7c111f0bfb2beb43c66122a?attachment=true",
+          "publisher": "Sennheiser, 'The MKH Story' white paper (Manfred Hibbing)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "technology"
+          ]
+        }
+      ],
+      "notes": "Chosen instead of MKH 40: the Sennheiser MKH family page lists the MKH 30 and MKH 50 but no MKH 40 (the MKH Story says the MKH 40 launched in 1985 and the MKH 8000 line in 2007 with the 8020/8040/8050). Minor value differences: product page length 74 mm with XLR module vs spec sheet 75 mm with filter module (different modules, not a conflict). The FR product page mentions a 'Mode d'emploi' in the box but links no French PDF. The product page's 'Raccord: Sans fil' field is an apparent labelling error.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Teaches RF-condenser principle and modular XLR head; wiring is still standard P48 XLR."
+      }
+    },
+    {
+      "id": "sennheiser-mkh-50",
+      "brand": "Sennheiser",
+      "model": "MKH 50-P48",
+      "category": "microphones",
+      "sub_type": "condenser-small-diaphragm",
+      "technology": "RF condenser (Sennheiser MKH principle), symmetrical push-pull capsule, supercardioid with frequency-independent directivity; switchable -10 dB pre-attenuation and roll-off filter",
+      "year_introduced": 1988,
+      "status": "current",
+      "why_it_is_a_classic": "Sennheiser's MKH Story says the MKH 50 launched in 1988 as a supercardioid keeping the extended bass of the MKH 40. As a short supercardioid without an interference tube, it is a common choice for indoor dialogue and spot miking where a shotgun is too long.",
+      "typical_uses": [
+        "film / TV indoor dialogue (boom)",
+        "speech / broadcast",
+        "spot miking in orchestra / theatre",
+        "acoustic instruments"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "supercardioid"
+        ],
+        "frequency_response": "40 – 20,000 Hz",
+        "sensitivity": "25 (8) mV/Pa ±1 dB (free field, no load, 1 kHz; value in () with -10 dB attenuator)",
+        "equivalent_noise_a_weighted": "12 (18) dB(A)",
+        "equivalent_noise_ccir": "21 (27) dB",
+        "max_spl": "134 (142) dB / 1 kHz",
+        "impedance": "150 Ω (min. terminating impedance 1 kΩ)",
+        "phantom_power": "48 V ±4 V, 2 mA",
+        "pad": "-10 dB pre-attenuation switch",
+        "weight": "approx. 100 g",
+        "dimensions": "⌀ 25 x 153 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "mic output (XLR-3 connector) + phantom power in",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v"
+      ],
+      "manual_url": "https://assets.sennheiser.com/download/assets/MKH_50-P48_Quick_Guide_07_2026.pdf/cf991e32e7b711f0a8807aeaa9c3764a?attachment=true",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.sennheiser.com/fr-fr/catalog/products/microphone/mkh-50/mkh-50-p48-003109",
+      "manual_languages": [
+        "multi"
+      ],
+      "manuals": [
+        {
+          "url": "https://assets.sennheiser.com/download/assets/MKH_50-P48_Quick_Guide_07_2026.pdf/cf991e32e7b711f0a8807aeaa9c3764a?attachment=true",
+          "title": "MKH 50-P48 Quick Guide (pictogram/spec sheet, mostly language-neutral)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "07/2026",
+          "official": true,
+          "kind": "quick-start"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://assets.sennheiser.com/download/assets/MKH_50-P48_Quick_Guide_07_2026.pdf/cf991e32e7b711f0a8807aeaa9c3764a?attachment=true",
+          "publisher": "Sennheiser (MKH 50-P48 Quick Guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.sennheiser.com/fr-fr/catalog/products/microphone/mkh-50/mkh-50-p48-003109",
+          "publisher": "Sennheiser (product page, FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.max_spl",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/MKH-Story_WhitePaper_en.pdf/53095012e7c111f0bfb2beb43c66122a?attachment=true",
+          "publisher": "Sennheiser, 'The MKH Story' white paper (Manfred Hibbing)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "technology",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "Supercardioid but not a shotgun (no interference tube), so it belongs in this file. The product page lists 'substitute noise level 12 (18) dB' without weighting; the Quick Guide clarifies A-weighted 12 (18) dB(A) and CCIR 21 (27) dB. No full operating manual or French document was linked on the product page.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Film/TV boom mic: RF-condenser and pad lesson with standard P48 XLR wiring."
+      }
+    },
+    {
+      "id": "neumann-m-149-tube",
+      "brand": "Neumann",
+      "model": "M 149 Tube",
+      "category": "microphones",
+      "sub_type": "tube-valve",
+      "technology": "Large-diaphragm pressure-gradient condenser with subminiature triode tube input stage, 9 switchable polar patterns, external N 149 A power supply",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neumann's current multi-pattern tube studio mic (9 patterns), still listed with order numbers. It teaches the tube-mic system: dedicated PSU, multi-core mic cable, no phantom power.",
+      "typical_uses": [
+        "vocals",
+        "voice-over",
+        "acoustic instruments",
+        "orchestral / room",
+        "piano"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "omnidirectional",
+          "wide cardioid (subcardioid)",
+          "cardioid",
+          "hypercardioid",
+          "figure-8",
+          "4 intermediate positions"
+        ],
+        "acoustic_principle": "Pressure gradient transducer",
+        "frequency_response": "20 Hz to 20 kHz",
+        "sensitivity": "34/47/62 mV/Pa (omni/cardioid/figure-8), 1 kHz into 1 kΩ",
+        "equivalent_noise_a_weighted": "16/13/11 dB-A (omni/cardioid/figure-8)",
+        "equivalent_noise_ccir": "28/25/23 dB",
+        "max_spl": "120 dB for K<0.5%; 136 dB for K<5%",
+        "max_output_voltage": "18 dBu",
+        "impedance": "50 Ω (rated load impedance 1 kΩ)",
+        "phantom_power": "not used: external power supply N 149 A (230 V EU / 117 V US / 230 V UK variants)",
+        "tube": "subminiature triode (type not named)",
+        "weight": "Approx. 730 g",
+        "dimensions": "Diameter 70 mm, length 201 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "audio output on N 149 A power supply (matching connector XLR 3 F)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-cn/products/microphones/m-149-v-set",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-cn/products/microphones/m-149-v-set",
+          "publisher": "Neumann (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.tube",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.thomannmusic.com/neumann_m149_tube_mic.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        }
+      ],
+      "notes": "Mic connects to the N 149 A PSU via an 8-pin DIN connection (Neumann: matching connector 'DIN 8 F'; Thomann: '8-core cable'); no TekPractice id exists for it, so it is proposed rather than listed in connectors[]. The PSU is mains-powered (230 V / 117 V variants, power cable included) but its inlet connector type was not stated in the sources, so it is not listed. The URL slug says 'm-149-v-set' but the page names the product 'M 149 Tube'. A 1997 TEC Award is mentioned, but no introduction year.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "din-8-pin"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Tube mic system lesson: mic -> multipin cable -> PSU -> XLR to preamp, with phantom power OFF."
+      }
+    },
+    {
+      "id": "telefunken-ela-m-251e",
+      "brand": "TELEFUNKEN Elektroakustik",
+      "model": "ELA M 251E (Diamond Series reissue)",
+      "category": "microphones",
+      "sub_type": "tube-valve",
+      "technology": "Vacuum tube large-diaphragm condenser: CK12 edge-terminated capsule, TELEFUNKEN 6072A tube, Haufe T14/1 output transformer, external M 950E power supply; 3 patterns",
+      "year_introduced": 1959,
+      "status": "current",
+      "why_it_is_a_classic": "Telefunken's manual recounts that AKG designed the ELA M 251 for Telefunken after 1958 as a variant of the C12, with roughly 2,000 units built 1959-1963. The modern reissue is presented by the maker as an accurate recreation and is a reference vintage-style vocal tube mic.",
+      "typical_uses": [
+        "lead vocals",
+        "acoustic guitar",
+        "piano",
+        "strings",
+        "room / overhead"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "cardioid",
+          "omnidirectional",
+          "figure-8"
+        ],
+        "frequency_response": "20 Hz - 20 kHz, ±3 dB",
+        "sensitivity": "17 mV/Pa ± 1 dB",
+        "self_noise": "9 dBA (amplifier)",
+        "signal_to_noise": "85 dBA",
+        "max_spl": "130 dB (for 1% THD)",
+        "thd": "< 0.2% (at 1 kHz, 1 Pa, amplifier)",
+        "impedance": "200 Ω",
+        "phantom_power": "not used: External Power Supply (M 950E)",
+        "tube": "TELEFUNKEN 6072A",
+        "transformer": "Haufe T14/1",
+        "weight": "596 g",
+        "dimensions": "216 mm L x 50 mm Dia"
+      },
+      "connectors": [],
+      "signal_types": [
+        "mic-level",
+        "mains-power"
+      ],
+      "manual_url": "https://www.telefunken-elektroakustik.com/wp-content/uploads/2026/02/Diamond-Series-Manuals-ELA-M-251E-2026-AB.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.telefunken-elektroakustik.com/product/ela-m-251e/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.telefunken-elektroakustik.com/wp-content/uploads/2026/02/Diamond-Series-Manuals-ELA-M-251E-2026-AB.pdf",
+          "title": "Diamond Series manual: ELA M 251E & ELA M 251T",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2026 (upload path 2026/02)",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.telefunken-elektroakustik.com/product/ela-m-251e/",
+          "publisher": "TELEFUNKEN Elektroakustik (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.self_noise",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.tube",
+            "key_specs.transformer",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        },
+        {
+          "url": "https://www.telefunken-elektroakustik.com/wp-content/uploads/2026/02/Diamond-Series-Manuals-ELA-M-251E-2026-AB.pdf",
+          "publisher": "TELEFUNKEN Elektroakustik (Diamond Series manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "why_it_is_a_classic",
+            "technology",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.self_noise",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.tube",
+            "key_specs.transformer",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "year_introduced 1959 is the original ELA M 251 (manual: about 2,000 made 1959-1963); the reissue's launch year was not stated. Manual: the M 850E cable has a swivel stand-mount connector at the mic end and a Neutrik 7-pin XLR at the PSU end; no 7-pin XLR id exists in TekPractice, so it is proposed rather than listed. The M 950E's audio-output connector and mains inlet types are not stated in the sources (only 'premium Neutrik connectors'), so connectors[] is left empty rather than guessed. Product page noted the webstore was temporarily not accepting orders (status still 'current'). Both sources come from the same manufacturer.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "xlr7"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Classic tube-mic chain: mic -> 7-pin XLR cable -> PSU (mains) -> XLR to preamp, phantom must stay off."
+      }
+    },
+    {
+      "id": "telefunken-c12",
+      "brand": "TELEFUNKEN Elektroakustik",
+      "model": "C12 (Diamond Series recreation of the AKG C12)",
+      "category": "microphones",
+      "sub_type": "tube-valve",
+      "technology": "Vacuum tube large-diaphragm condenser, CK12 edge-terminated dual-diaphragm capsule, TELEFUNKEN 6072A tube (cathode self-bias), Haufe T14/1 transformer; 9 patterns selected remotely on the M 910 power supply",
+      "year_introduced": 1953,
+      "status": "current",
+      "why_it_is_a_classic": "Telefunken's manual states the original C12 was introduced by AKG in 1953 (designer Konrad Wolf) to compete with the U47, and that its CK12 capsule later appeared in the ELA M 251 and early C 414. The modern recreation keeps the remote pattern control on the power supply, a feature typical of vintage multi-pattern tube mics.",
+      "typical_uses": [
+        "lead vocals",
+        "acoustic instruments",
+        "strings",
+        "stereo techniques (XY, ORTF, Blumlein, M/S with stereo set)"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "omnidirectional",
+          "cardioid",
+          "figure-8",
+          "9-pattern variable (intermediate positions)"
+        ],
+        "frequency_response": "20 Hz - 20 kHz, ±3 dB",
+        "sensitivity": "10 mV/Pa ± 1 dB",
+        "self_noise": "9 dBA (amplifier)",
+        "signal_to_noise": "85 dBA",
+        "max_spl": "130 dB (for 1% THD)",
+        "thd": "< 0.25% (at 1 kHz, 1 Pa, amplifier)",
+        "impedance": "200 Ω",
+        "phantom_power": "not used: External Power Supply (M 910, includes pattern selector)",
+        "tube": "TELEFUNKEN 6072A",
+        "transformer": "Haufe T14/1",
+        "weight": "567 g",
+        "dimensions": "250 mm L x 42.5 mm Dia"
+      },
+      "connectors": [],
+      "signal_types": [
+        "mic-level",
+        "mains-power"
+      ],
+      "manual_url": "https://www.telefunken-elektroakustik.com/wp-content/uploads/2026/02/Diamond-Series-Manuals-C12-2026-AB.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.telefunken-elektroakustik.com/product/c12/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.telefunken-elektroakustik.com/wp-content/uploads/2026/02/Diamond-Series-Manuals-C12-2026-AB.pdf",
+          "title": "Diamond Series manual: C12",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2026 (upload path 2026/02)",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.telefunken-elektroakustik.com/product/c12/",
+          "publisher": "TELEFUNKEN Elektroakustik (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.self_noise",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.tube",
+            "key_specs.transformer",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        },
+        {
+          "url": "https://www.telefunken-elektroakustik.com/wp-content/uploads/2026/02/Diamond-Series-Manuals-C12-2026-AB.pdf",
+          "publisher": "TELEFUNKEN Elektroakustik (Diamond Series manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "why_it_is_a_classic",
+            "technology",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.self_noise",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.tube",
+            "key_specs.transformer",
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        }
+      ],
+      "notes": "Chosen as the 'C12' candidate; AKG's own C12 VR page could not be reached (akg.com returned 403). year_introduced 1953 is the original AKG C12 (per Telefunken manual); the recreation's launch year not stated. Manual: M 810 cable has a swivel stand-mount connector at the mic and a Neutrik 7-pin XLR at the PSU; the M 910 PSU combines power supply and pattern selector. PSU audio-output and mains connector types not stated, so connectors[] is empty rather than guessed.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "xlr7"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Tube system where the polar pattern is chosen on the PSU, not the mic: strong wiring/signal-flow lesson."
+      }
+    },
+    {
+      "id": "neumann-u-67",
+      "brand": "Neumann",
+      "model": "U 67 (reissue, U 67 Set)",
+      "category": "microphones",
+      "sub_type": "tube-valve",
+      "technology": "Large-diaphragm pressure-gradient tube condenser, EF86 tube, BV 12 output transformer, 3 patterns; external NU 67 V power supply via 7-pin multipin cable",
+      "year_introduced": 1960,
+      "status": "current",
+      "why_it_is_a_classic": "Neumann states the U 67 was introduced in 1960 and made until 1971, and that the reissue is sonically identical; it is the tube ancestor of the U 87. Sound & Recording (05/2018) reports the reissue was unveiled at the January NAMM show and compared it with a 1960s unit.",
+      "typical_uses": [
+        "vocals",
+        "voice-over",
+        "strings",
+        "piano",
+        "brass",
+        "room / ensemble"
+      ],
+      "key_specs": {
+        "polar_pattern": [
+          "omnidirectional",
+          "cardioid",
+          "figure-8"
+        ],
+        "acoustic_principle": "Pressure gradient transducer",
+        "frequency_response": "20 Hz to 20 kHz",
+        "sensitivity": "15/24/16 mV/Pa ±1 dB (omni/cardioid/figure-8), 1 kHz into 1 kΩ",
+        "equivalent_noise_a_weighted": "21 / 17 / 20 dB-A (omni / cardioid / figure-8)",
+        "equivalent_noise_ccir": "32 / 28 / 31 dB",
+        "max_spl": "114 dB at 0.5% THD (cardioid); 124 dB with preattenuation",
+        "max_output_voltage": "−9.8 dBu",
+        "impedance": "200 Ω (rated load impedance 1 kΩ)",
+        "phantom_power": "Power supply NU 67 V (adapts automatically to local mains voltage); product page also lists 'P48 (IEC 61938), 48 V ±4 V, 3.5 mA' (see notes)",
+        "tube": "EF86 (selected for low noise)",
+        "transformer": "BV 12",
+        "weight": "560 g",
+        "dimensions": "Diameter 56 mm, length 200 mm"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-m",
+          "role": "audio output on NU 67 V power supply (matching connector XLR 3 F)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-cn/products/microphones/u-67-set",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.neumann.com/en-cn/products/microphones/u-67-set",
+          "publisher": "Neumann (product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "year_introduced",
+            "status",
+            "why_it_is_a_classic",
+            "key_specs.polar_pattern",
+            "key_specs.frequency_response",
+            "key_specs.sensitivity",
+            "key_specs.equivalent_noise_a_weighted",
+            "key_specs.max_spl",
+            "key_specs.impedance",
+            "key_specs.phantom_power",
+            "key_specs.tube",
+            "key_specs.transformer",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/SoDr_SR_Neumann_Test_E.pdf/d66e152adc1611f086ef7ec57e6db003",
+          "publisher": "Sound & Recording review 05/2018 (reprint hosted by Sennheiser/Neumann)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "why_it_is_a_classic",
+            "technology",
+            "notes"
+          ]
+        }
+      ],
+      "notes": "year_introduced is the original U 67 (1960, per Neumann); the reissue was presented at a January NAMM show per the Sound & Recording 05/2018 review (year not stated explicitly beyond the issue date). The review confirms a PSU supplying anode and filament voltages and the same 7-pin connectors as vintage U 67s; no 7-pin id exists in TekPractice, so it is proposed. The product page's P48 line looks inconsistent with a mains PSU tube mic and should be checked in the official manual (not retrieved: Neumann file finder is JS-only).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "xlr7"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Tube mic with 7-pin cable and dedicated PSU; pairs with U 87 Ai to show tube vs FET powering."
+      }
+    }
+  ]
+}
