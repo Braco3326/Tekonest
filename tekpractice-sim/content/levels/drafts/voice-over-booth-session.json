@@ -1,0 +1,96 @@
+{
+ "id": "draft-voice-over-booth-session",
+ "version": 1,
+ "domain": "post",
+ "title": "[BROUILLON] Séance de voix off en cabine",
+ "brief": "Un comédien enregistre une voix off en cabine pour un film (session 48 kHz / 24 bits). U 87 Ai en frontal rapproché avec anti-pop, préampli ISA One, interface Pro Tools HD I/O sous horloge OCX HD, écoute régie Grace m905 + Genelec, retour casque du comédien par un ampli casque, ordre pour diriger. Punch-in sur les phrases à reprendre, puis export de fichiers BWF bien nommés.",
+ "devices": [
+  {
+   "instanceId": "mic",
+   "deviceId": "neumann-u87-ai"
+  },
+  {
+   "instanceId": "pre",
+   "deviceId": "focusrite-isa-one"
+  },
+  {
+   "instanceId": "io",
+   "deviceId": "avid-hd-io"
+  },
+  {
+   "instanceId": "hdx",
+   "deviceId": "avid-protools-hdx"
+  },
+  {
+   "instanceId": "clk",
+   "deviceId": "antelope-ocx-hd"
+  },
+  {
+   "instanceId": "mon",
+   "deviceId": "grace-m905"
+  },
+  {
+   "instanceId": "spk",
+   "deviceId": "genelec-8030c"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "mic",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "pre",
+    "port": "in-mic"
+   }
+  },
+  {
+   "from": {
+    "instance": "clk",
+    "port": "wordclock-out-1"
+   },
+   "to": {
+    "instance": "io",
+    "port": "wordclock-in"
+   }
+  },
+  {
+   "from": {
+    "instance": "io",
+    "port": "digilink"
+   },
+   "to": {
+    "instance": "hdx",
+    "port": "digilink"
+   }
+  },
+  {
+   "from": {
+    "instance": "mon",
+    "port": "out-main-l"
+   },
+   "to": {
+    "instance": "spk",
+    "port": "in-analog"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/studio-recording.json#voice-over-booth-session",
+  "room_id": "studio-vocal-booth-small",
+  "difficulty": 3,
+  "unmapped_nodes": [
+   "Ampli casque",
+   "Casque comédien"
+  ],
+  "unresolved_edges": [
+   "pre → io (line-level-pro)",
+   "io → mon (line-level-pro)"
+  ]
+ }
+}

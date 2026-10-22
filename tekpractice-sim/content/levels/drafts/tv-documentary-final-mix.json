@@ -1,0 +1,45 @@
+{
+ "id": "draft-tv-documentary-final-mix",
+ "version": 1,
+ "domain": "post",
+ "title": "[BROUILLON] Mixage final d'un documentaire TV",
+ "brief": "Conformer l'AAF d'un documentaire de 52 minutes, nettoyer les interviews, mixer en 5.1 et stéréo, puis livrer printmaster, stems et version internationale conformes à la fiche technique d'une chaîne française (EBU R 128 / CST-RT-017). Un mesureur RTW reçoit la sortie AES3 de l'interface pour la mesure de sonie.",
+ "devices": [
+  {
+   "instanceId": "hdx",
+   "deviceId": "avid-protools-hdx"
+  },
+  {
+   "instanceId": "io",
+   "deviceId": "avid-hd-io"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "hdx",
+    "port": "digilink"
+   },
+   "to": {
+    "instance": "io",
+    "port": "digilink"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/post-immersive.json#tv-documentary-final-mix",
+  "room_id": "studio-control-room-large",
+  "difficulty": 3,
+  "unmapped_nodes": [
+   "Mesureur RTW TM7",
+   "L / C / R",
+   "LS / RS (100–120°)",
+   "Caisson LFE"
+  ],
+  "unresolved_edges": []
+ }
+}

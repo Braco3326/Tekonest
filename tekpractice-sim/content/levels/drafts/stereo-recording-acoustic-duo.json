@@ -1,0 +1,67 @@
+{
+ "id": "draft-stereo-recording-acoustic-duo",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Enregistrement stéréo d'un duo acoustique",
+ "brief": "Un duo guitare acoustique et voix vient enregistrer en prise live dans une salle de prise moyenne. Installer un couple ORTF de cardioïdes devant le duo pour l'image et l'ambiance, plus deux micros d'appoint (voix et guitare) pour le contrôle de l'équilibre. Alimenter tous les condensateurs en +48 V, régler les gains, contrôler la compatibilité mono et la polarité, respecter la règle des 3 pour 1 entre les appoints.",
+ "devices": [
+  {
+   "instanceId": "spot-vox",
+   "deviceId": "neumann-u87-ai"
+  },
+  {
+   "instanceId": "pre1",
+   "deviceId": "focusrite-isa-one"
+  },
+  {
+   "instanceId": "pre2",
+   "deviceId": "focusrite-isa-one"
+  },
+  {
+   "instanceId": "pre3",
+   "deviceId": "focusrite-isa-one"
+  },
+  {
+   "instanceId": "pre4",
+   "deviceId": "focusrite-isa-one"
+  },
+  {
+   "instanceId": "adc",
+   "deviceId": "avid-hd-io"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "spot-vox",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "pre4",
+    "port": "in-mic"
+   }
+  }
+ ],
+ "logicChecks": [
+  "R4"
+ ],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/microphones-miking.json#stereo-recording-acoustic-duo",
+  "room_id": "studio-live-room-medium",
+  "difficulty": 3,
+  "unmapped_nodes": [
+   "ORTF gauche",
+   "ORTF droite",
+   "Appoint guitare"
+  ],
+  "unresolved_edges": [
+   "pre1 → adc (line-level-pro)",
+   "pre2 → adc (line-level-pro)",
+   "pre3 → adc (line-level-pro)",
+   "pre4 → adc (line-level-pro)"
+  ]
+ }
+}

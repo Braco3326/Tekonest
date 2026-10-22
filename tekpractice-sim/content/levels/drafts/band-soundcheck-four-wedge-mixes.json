@@ -1,0 +1,84 @@
+{
+ "id": "draft-band-soundcheck-four-wedge-mixes",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Balance d'un groupe avec 4 mixes wedges",
+ "brief": "Groupe rock (batterie, basse, guitare, clavier, chant lead et deux chœurs tenus par guitare et clavier) dans un club. La console de façade fournit 4 départs pré-fader vers 4 wedges actifs, dont un pour le batteur. L'élève définit les 4 mixes, place les wedges dans l'angle de rejet des micros, accorde chaque retour puis fait la balance retours.",
+ "devices": [
+  {
+   "instanceId": "mic1",
+   "deviceId": "shure-sm58"
+  },
+  {
+   "instanceId": "mic2",
+   "deviceId": "shure-sm58"
+  },
+  {
+   "instanceId": "mic3",
+   "deviceId": "shure-sm58"
+  },
+  {
+   "instanceId": "mic4",
+   "deviceId": "shure-sm58"
+  },
+  {
+   "instanceId": "desk",
+   "deviceId": "yamaha-ql1"
+  },
+  {
+   "instanceId": "w1",
+   "deviceId": "yamaha-dbr12"
+  },
+  {
+   "instanceId": "w2",
+   "deviceId": "yamaha-dbr12"
+  },
+  {
+   "instanceId": "w3",
+   "deviceId": "yamaha-dbr12"
+  },
+  {
+   "instanceId": "w4",
+   "deviceId": "yamaha-dbr12"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "mic1",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "in-mic-1"
+   }
+  },
+  {
+   "from": {
+    "instance": "mic2",
+    "port": "out-xlr"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "in-mic-2"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/monitoring.json#band-soundcheck-four-wedge-mixes",
+  "room_id": "bar-club-stage-small",
+  "difficulty": 3,
+  "unmapped_nodes": [
+   "EQ retours 1–2",
+   "EQ retours 3–4"
+  ],
+  "unresolved_edges": [
+   "mic3 → desk (mic-level)",
+   "mic4 → desk (mic-level)"
+  ]
+ }
+}

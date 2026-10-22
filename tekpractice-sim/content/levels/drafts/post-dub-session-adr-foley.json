@@ -1,0 +1,57 @@
+{
+ "id": "draft-post-dub-session-adr-foley",
+ "version": 1,
+ "domain": "post",
+ "title": "[BROUILLON] Séance de postsynchro et bruitage en auditorium",
+ "brief": "Dans un auditorium de doublage et bruitage, enregistrer trois répliques ADR d'un comédien puis les pas et accessoires d'une scène, synchrones à la vidéo de référence en 25 images/s. Le préampli micro alimente l'interface Pro Tools, le synchroniseur reçoit la référence vidéo et horloge l'interface. Objectif : prises nommées, synchrones et raccordables au son direct.",
+ "devices": [
+  {
+   "instanceId": "pre1",
+   "deviceId": "focusrite-isa-one"
+  },
+  {
+   "instanceId": "pre2",
+   "deviceId": "focusrite-isa-one"
+  },
+  {
+   "instanceId": "io",
+   "deviceId": "avid-hd-io"
+  },
+  {
+   "instanceId": "hdx",
+   "deviceId": "avid-protools-hdx"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "io",
+    "port": "digilink"
+   },
+   "to": {
+    "instance": "hdx",
+    "port": "digilink"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/post-immersive.json#post-dub-session-adr-foley",
+  "room_id": "foley-dubbing-stage-medium",
+  "difficulty": 3,
+  "unmapped_nodes": [
+   "Micro ADR",
+   "Micro bruitage",
+   "Sync X",
+   "Écoute G",
+   "Écoute D"
+  ],
+  "unresolved_edges": [
+   "pre1 → io (line-level-pro)",
+   "pre2 → io (line-level-pro)"
+  ]
+ }
+}

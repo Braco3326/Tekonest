@@ -1,0 +1,62 @@
+{
+ "id": "draft-post-room-hdx-house-clock",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Salle de post-production : Pro Tools HDX sur horloge maison",
+ "brief": "Dans une salle de post-production, l'interface HD I/O reçoit le word clock de l'horloge maître OCX HD ; le contrôleur d'écoute est alimenté en AES3 depuis l'interface (il se cale sur le flux AES3, auto-synchronisant). L'élève vérifie que la session, l'horloge et l'interface sont à 48 kHz, branche le word clock et explique pourquoi le contrôleur n'a pas besoin de câble word clock.",
+ "devices": [
+  {
+   "instanceId": "clock",
+   "deviceId": "antelope-ocx-hd"
+  },
+  {
+   "instanceId": "hdio",
+   "deviceId": "avid-hd-io"
+  },
+  {
+   "instanceId": "hdx",
+   "deviceId": "avid-protools-hdx"
+  },
+  {
+   "instanceId": "mon",
+   "deviceId": "grace-m905"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "clock",
+    "port": "wordclock-out-1"
+   },
+   "to": {
+    "instance": "hdio",
+    "port": "wordclock-in"
+   }
+  },
+  {
+   "from": {
+    "instance": "hdx",
+    "port": "digilink"
+   },
+   "to": {
+    "instance": "hdio",
+    "port": "digilink"
+   }
+  }
+ ],
+ "logicChecks": [
+  "R8"
+ ],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/digital-audio-clocking.json#post-room-hdx-house-clock",
+  "room_id": "post-atmos-mix-room-medium",
+  "difficulty": 2,
+  "unmapped_nodes": [],
+  "unresolved_edges": [
+   "hdio → mon (aes3)"
+  ]
+ }
+}

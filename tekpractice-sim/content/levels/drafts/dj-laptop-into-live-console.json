@@ -1,0 +1,74 @@
+{
+ "id": "draft-dj-laptop-into-live-console",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Ordinateur DJ vers une console live",
+ "brief": "Un DJ arrive avec un ordinateur (sortie mini-jack grand public) entre deux sets live. La console de façade est à 25 m. Raccorder la source proprement : DI stéréo active près du DJ, deux XLR vers deux entrées micro du stagebox, fantôme activé, gain réglé sans saturation, pas de ronflette.",
+ "devices": [
+  {
+   "instanceId": "pc",
+   "deviceId": "playout-pc"
+  },
+  {
+   "instanceId": "rio",
+   "deviceId": "yamaha-rio3224-d2"
+  },
+  {
+   "instanceId": "desk",
+   "deviceId": "yamaha-ql1"
+  },
+  {
+   "instanceId": "spkl",
+   "deviceId": "qsc-k12-2"
+  },
+  {
+   "instanceId": "spkr",
+   "deviceId": "qsc-k12-2"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "rio",
+    "port": "dante-primary"
+   },
+   "to": {
+    "instance": "desk",
+    "port": "dante-primary"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-main-l"
+   },
+   "to": {
+    "instance": "spkl",
+    "port": "in-line-a"
+   }
+  },
+  {
+   "from": {
+    "instance": "desk",
+    "port": "out-main-r"
+   },
+   "to": {
+    "instance": "spkr",
+    "port": "in-line-a"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/electricity-levels.json#dj-laptop-into-live-console",
+  "room_id": "bar-club-stage-small",
+  "difficulty": 2,
+  "unmapped_nodes": [
+   "DI stéréo JPC"
+  ],
+  "unresolved_edges": []
+ }
+}

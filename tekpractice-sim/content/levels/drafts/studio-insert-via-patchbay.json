@@ -1,0 +1,52 @@
+{
+ "id": "draft-studio-insert-via-patchbay",
+ "version": 1,
+ "domain": "live",
+ "title": "[BROUILLON] Studio : insérer un compresseur matériel via la baie de brassage",
+ "brief": "En régie, les sorties de l'interface passent par une baie TT semi-normalisée avant de revenir à ses entrées. Insérer un compresseur 1176 sur la voix en patchant l'envoi (jack du haut) vers le compresseur et la sortie du compresseur vers le retour (jack du bas), puis expliquer pourquoi la voie ne serait plus muette en semi-normalisé si l'on ne patchait que l'envoi.",
+ "devices": [
+  {
+   "instanceId": "io",
+   "deviceId": "avid-hd-io"
+  },
+  {
+   "instanceId": "bay",
+   "deviceId": "switchcraft-studiopatch-9625"
+  }
+ ],
+ "requiredChain": [
+  {
+   "from": {
+    "instance": "io",
+    "port": "analog-out-db25"
+   },
+   "to": {
+    "instance": "bay",
+    "port": "rear-in-db25"
+   }
+  },
+  {
+   "from": {
+    "instance": "bay",
+    "port": "rear-out-db25"
+   },
+   "to": {
+    "instance": "io",
+    "port": "analog-in-db25"
+   }
+  }
+ ],
+ "logicChecks": [],
+ "successMessage": "Chaîne câblée — à relire par Oscar avant publication.",
+ "draft": {
+  "status": "draft — needs Oscar's review",
+  "generated": "2026-10-22",
+  "from_scenario": "knowledge-base/tek-brain/scenarios/consoles-signal-flow.json#studio-insert-via-patchbay",
+  "room_id": "studio-control-room-small",
+  "difficulty": 3,
+  "unmapped_nodes": [
+   "Compresseur"
+  ],
+  "unresolved_edges": []
+ }
+}
