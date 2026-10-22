@@ -437,6 +437,71 @@
       @keyframes db-in { from { opacity: 0; transform: translateY(6px); } }
       .shelf-item img { object-fit: contain; background: var(--tk-bg, #f5f6f8); }
 
+      /* ── Explore view (ADR-0010): toolbar, crosshair, panels ───────────── */
+      #explore-toolbar {
+        position: absolute; top: var(--tk-space-lg, 20px); left: 50%; transform: translateX(-50%);
+        display: flex; gap: 6px; pointer-events: auto;
+      }
+      #explore-toolbar button, .ex-panel button, .ex-pause a {
+        font: inherit; font-size: var(--tk-text-sm, 12.5px); font-weight: var(--tk-weight-medium, 550);
+        color: var(--tk-ink, #1b2129); background: var(--tk-surface, #fff);
+        border: 1px solid var(--tk-surface-border, #e6e8ee); border-radius: var(--tk-radius-sm, 7px);
+        padding: 6px 11px; cursor: pointer; box-shadow: var(--tk-elev-card);
+        transition: border-color var(--tk-motion-fast, 140ms) var(--tk-motion-ease, ease);
+      }
+      #explore-toolbar button:hover, .ex-panel button:hover { border-color: var(--tk-accent, #2e5fe6); }
+      #explore-toolbar button[aria-pressed='true'] { border-color: var(--tk-accent, #2e5fe6); color: var(--tk-accent, #2e5fe6); }
+      kbd {
+        font: inherit; font-size: var(--tk-text-xs, 11px); font-weight: var(--tk-weight-bold, 650);
+        border: 1px solid var(--tk-surface-border, #e6e8ee); border-bottom-width: 2px; border-radius: 5px;
+        padding: 0 5px; background: var(--tk-bg, #f5f6f8); color: var(--tk-ink, #1b2129);
+      }
+      #explore-crosshair {
+        position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; transform: translate(-50%, -50%);
+        border: 2px solid var(--tk-ink, #1b2129); border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.8);
+      }
+      #explore-crosshair[hidden] { display: none; }
+      .ex-panel {
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        width: min(560px, calc(100vw - 32px)); max-height: min(80vh, 720px); overflow-y: auto;
+        background: var(--tk-surface, #fff); border: 1px solid var(--tk-surface-border, #e6e8ee);
+        border-radius: var(--tk-radius-lg, 18px); box-shadow: var(--tk-elev-raised);
+        padding: var(--tk-space-lg, 20px); pointer-events: auto;
+        animation: toast-in var(--tk-motion-base, 240ms) var(--tk-motion-ease, ease);
+      }
+      .ex-panel-wide { width: min(920px, calc(100vw - 32px)); }
+      .ex-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--tk-space-md, 14px); }
+      .ex-head h2 { font-size: var(--tk-text-lg, 16px); font-weight: var(--tk-weight-bold, 650); }
+      .ex-panel h3 { font-size: var(--tk-text-xs, 11px); font-weight: var(--tk-weight-medium, 550); color: var(--tk-ink-muted, #5a6372); text-transform: uppercase; letter-spacing: 0.06em; margin: var(--tk-space-md, 14px) 0 6px; }
+      .ex-panel .ex-close { box-shadow: none; font-size: 18px; line-height: 1; padding: 2px 9px; }
+      .ex-muted { color: var(--tk-ink-muted, #5a6372); font-size: var(--tk-text-sm, 12.5px); line-height: 1.45; }
+      .ex-primary { background: var(--tk-accent, #2e5fe6) !important; color: var(--tk-accent-ink, #fff) !important; border-color: var(--tk-accent, #2e5fe6) !important; }
+      .ex-inv { display: grid; grid-template-columns: 1fr 1fr; gap: var(--tk-space-lg, 20px); }
+      .ex-inv-groups { max-height: 52vh; overflow-y: auto; }
+      .ex-item { display: inline-block; margin: 0 5px 5px 0; box-shadow: none !important; }
+      .ex-search input, .ex-settings select {
+        width: 100%; font: inherit; font-size: var(--tk-text-sm, 12.5px); color: var(--tk-ink, #1b2129);
+        border: 1px solid var(--tk-surface-border, #e6e8ee); border-radius: var(--tk-radius-sm, 7px); padding: 7px 10px;
+      }
+      .ex-inv-sheet dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; font-size: var(--tk-text-sm, 12.5px); margin: 8px 0; }
+      .ex-inv-sheet dt { color: var(--tk-ink-muted, #5a6372); text-transform: capitalize; }
+      .ex-inv-sheet p { margin: 6px 0; font-size: var(--tk-text-sm, 12.5px); }
+      .ex-inv-sheet a { color: var(--tk-accent, #2e5fe6); }
+      .ex-help { display: grid; grid-template-columns: 1fr 1fr; gap: var(--tk-space-lg, 20px); }
+      .ex-panel table { width: 100%; border-collapse: collapse; font-size: var(--tk-text-sm, 12.5px); }
+      .ex-panel td { padding: 4px 6px; border-bottom: 1px solid var(--tk-surface-border, #e6e8ee); vertical-align: top; }
+      .ex-pause { display: flex; flex-direction: column; gap: 8px; }
+      .ex-pause a { text-align: center; text-decoration: none; box-shadow: none; }
+      .ex-settings label { display: grid; grid-template-columns: 1fr 1.2fr auto; gap: 8px; align-items: center; font-size: var(--tk-text-sm, 12.5px); margin-bottom: 8px; }
+      .ex-settings .ex-check { grid-template-columns: auto 1fr; }
+      .ex-settings output { min-width: 3em; text-align: right; color: var(--tk-ink-muted, #5a6372); }
+      .ex-capture { margin: 8px 0; color: var(--tk-accent, #2e5fe6); font-size: var(--tk-text-sm, 12.5px); }
+      .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+      @media (max-width: 760px) {
+        .ex-inv, .ex-help { grid-template-columns: 1fr; }
+        #explore-toolbar { top: auto; bottom: var(--tk-space-md, 14px); flex-wrap: wrap; justify-content: center; width: calc(100vw - 32px); }
+      }
+
       /* Accessibility: kill ALL motion under prefers-reduced-motion (the 3D
          pulses/scales check motionEnabled() on the JS side). */
       @media (prefers-reduced-motion: reduce) {

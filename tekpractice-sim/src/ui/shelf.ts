@@ -113,6 +113,8 @@ export interface SavedRig {
   instances: { instanceId: string; deviceId: string }[]
   connections: { a: { instance: string; port: string }; b: { instance: string; port: string } }[]
   controls: Record<string, Record<string, import('../engine/types').ControlValue>>
+  /** Explore placement (ADR-0010): [x, y, z, yawDeg] per instance. Optional — older rigs use the grid. */
+  positions?: Record<string, [number, number, number, number]>
 }
 interface RigFile {
   version: number

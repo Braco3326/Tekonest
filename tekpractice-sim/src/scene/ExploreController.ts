@@ -37,6 +37,8 @@ export interface ExploreUi {
   /** Click while placing: drop the ghost at the aimed floor point. */
   confirmPlacement(): void
   pickUp(instanceId: string): void
+  /** True while the settings panel waits for a key to remap (the controller must not react). */
+  capturingKey(): boolean
 }
 
 /** The FocusPatch handles the controller needs (ADR-0008 stays the patch grammar). */
@@ -217,7 +219,7 @@ export class ExploreController implements Walker {
 
   // ── keyboard ────────────────────────────────────────────────────────────────
   private onKeyDown = (e: KeyboardEvent): void => {
-    if (!this.ui) return
+    if (!this.ui || this.ui.capturingKey()) return
     const actions = actionsForCode(this.deps.settings().bindings, e.code)
     if (actions.includes('CANCEL')) {
       this.handleEsc(e)

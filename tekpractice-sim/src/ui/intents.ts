@@ -9,8 +9,13 @@ export type Intent =
   | { type: 'CONNECT'; a: PortRef; b: PortRef }
   | { type: 'DISCONNECT'; connectionId: string }
   | { type: 'SET_CONTROL'; instance: string; control: string; value: ControlValue }
-  /** Sandbox (ADR-0004): grab a device from the shelves, drop it on stage. */
-  | { type: 'SPAWN'; deviceId: string }
+  /**
+   * Sandbox (ADR-0004): grab a device from the shelves, drop it on stage.
+   * Explore placement (ADR-0010) adds the floor point and yaw (degrees).
+   */
+  | { type: 'SPAWN'; deviceId: string; position?: [number, number, number]; rotationY?: number }
+  /** Sandbox (ADR-0010): pick a placed device back up (its cables are unplugged). */
+  | { type: 'REMOVE'; instanceId: string }
   /** Sandbox (ADR-0005): rebuild a saved rig — clear stage, respawn, rewire. */
   | { type: 'LOAD_RIG'; name: string }
 

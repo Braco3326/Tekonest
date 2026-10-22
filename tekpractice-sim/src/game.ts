@@ -48,7 +48,10 @@ import { motionEnabled, setMotionOverride } from './design/tokens'
 import { ExploreController, type BaseView, type ExploreUi } from './scene/ExploreController'
 import { ViewDirector } from './scene/ViewDirector'
 import { roomWalls, type Box } from './explore/collision'
-import { loadSettings, type ExploreSettings } from './ui/exploreSettings'
+import { loadSettings, saveSettings, type ExploreSettings } from './ui/exploreSettings'
+import { ExploreHud } from './ui/exploreHud'
+import { Placement } from './scene/Placement'
+import { detectLayout } from './input/layoutLabels'
 import { askCoach, createAiCoach } from './ai'
 import { buildGrounding } from './ai/grounding'
 
@@ -354,16 +357,25 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     console.warn(`[rejected ${e.code}${e.ruleId ? ` ${e.ruleId}` : ''}] ${e.message}`)
   }
 
-  // Sandbox spawns land on a simple grid rows-of-5, centered, front of stage.
+  // Sandbox spawns land on a simple grid rows-of-5, centered, front of stage —
+  // unless Explore placement (ADR-0010) gives an exact floor point and yaw.
   let spawnCount = 0
-  const spawnExact = (instanceId: string, deviceId: string, index: number): boolean => {
+  const spawnExact = (
+    instanceId: string,
+    deviceId: string,
+    index: number,
+    at?: { position: [number, number, number]; rotationY?: number },
+  ): boolean => {
     const r = graph.addInstance(instanceId, deviceId)
     if (!r.ok) {
       hud.toast('error', 'Spawn impossible', r.message)
       return false
     }
-    const pos = new Vector3(((index % 5) - 2) * 1.6, 0, -1.2 - Math.floor(index / 5) * 1.6)
+    const pos = at
+      ? Vector3.FromArray(at.position)
+      : new Vector3(((index % 5) - 2) * 1.6, 0, -1.2 - Math.floor(index / 5) * 1.6)
     const inst = spawner.spawn(deviceId, pos, instanceId)
+    if (at?.rotationY) inst.root.rotation.y = (at.rotationY * Math.PI) / 180
     instances.push(inst)
     scene.render() // compute absolute positions for the new markers
     for (const [portId, marker] of inst.portMarkers) {
@@ -378,7 +390,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     invalidateObstacles()
     return true
   }
-  const spawnDevice = (deviceId: string): void => {
+  const spawnDevice = (deviceId: string, at?: { position: [number, number, number]; rotationY?: number }): void => {
     // Perf budget: sandbox spawn is uncapped input — a low-end PC degrades fast
     // past a couple dozen placeholder bodies + markers + shadows.
     if (instances.length >= MAX_SANDBOX_DEVICES) {
@@ -386,7 +398,52 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       return
     }
     const instanceId = `${deviceId}-s${++spawnCount}`
-    if (spawnExact(instanceId, deviceId, level.devices.length + spawnCount - 1)) refresh()
+    if (spawnExact(instanceId, deviceId, level.devices.length + spawnCount - 1, at)) refresh()
+  }
+
+  /** Where an instance stands (rig save, undo of a pick-up). */
+  const poseOf = (instanceId: string): { position: [number, number, number]; rotationY: number } | null => {
+    const inst = instances.find((i) => i.instanceId === instanceId)
+    if (!inst) return null
+    const p = inst.root.position
+    return { position: [p.x, p.y, p.z], rotationY: Math.round((inst.root.rotation.y * 180) / Math.PI) }
+  }
+
+  // Pick-up (ADR-0010 Décision 8): the device leaves the stage with its cables;
+  // the toast offers to undo (device, cables and controls come back).
+  const removeDevice = (instanceId: string): void => {
+    const inst = instances.find((i) => i.instanceId === instanceId)
+    if (!inst) return
+    const pose = poseOf(instanceId)!
+    const snap = graph.snapshot()
+    const wires = snap.connections.filter((c) => c.a.instance === instanceId || c.b.instance === instanceId)
+    const controls = snap.instances.find((i) => i.instanceId === instanceId)?.controls ?? {}
+    focusPatch.releaseInstance(instanceId)
+    for (const w of wires) {
+      const id = graph.connectionAt(w.a)
+      if (id) cables.removeCable(id)
+    }
+    if (!graph.removeInstance(instanceId).ok) return
+    inst.dispose()
+    instances.splice(instances.indexOf(inst), 1)
+    for (let i = portPoints.length - 1; i >= 0; i--) if (portPoints[i].ref.instance === instanceId) portPoints.splice(i, 1)
+    invalidateObstacles()
+    refresh()
+    const label = registry.deviceById.get(inst.deviceId)?.label ?? inst.deviceId
+    hud.toast('info', 'Appareil ramassé', `${label} est retourné dans l’inventaire${wires.length ? ` (${wires.length} câble(s) débranché(s))` : ''}.`, {
+      label: 'Annuler',
+      onClick: (toastEl) => {
+        toastEl.remove()
+        if (instances.some((i) => i.instanceId === instanceId)) return
+        if (!spawnExact(instanceId, inst.deviceId, 0, pose)) return
+        for (const w of wires) {
+          const r = graph.connect(w.a, w.b)
+          if (r.ok && r.connectionId) cables.addCable(r.connectionId, portPos(w.a), portPos(w.b))
+        }
+        for (const [controlId, value] of Object.entries(controls)) graph.setControl(instanceId, controlId, value)
+        refresh()
+      },
+    })
   }
 
   // Rig reload (ADR-0005): clear stage → respawn exact ids → rewire → restate.
@@ -402,7 +459,9 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     spawnCount = rig.instances.length
     let allOk = true
     rig.instances.forEach((s, i) => {
-      if (!spawnExact(s.instanceId, s.deviceId, i)) allOk = false
+      const saved = rig.positions?.[s.instanceId]
+      const at = saved ? { position: [saved[0], saved[1], saved[2]] as [number, number, number], rotationY: saved[3] } : undefined
+      if (!spawnExact(s.instanceId, s.deviceId, i, at)) allOk = false
     })
     for (const c of rig.connections) {
       const r = graph.connect(c.a, c.b)
@@ -440,7 +499,12 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         break
       }
       case 'SPAWN': {
-        if (sandboxMode) spawnDevice(intent.deviceId)
+        if (sandboxMode)
+          spawnDevice(intent.deviceId, intent.position ? { position: intent.position, rotationY: intent.rotationY } : undefined)
+        break
+      }
+      case 'REMOVE': {
+        if (sandboxMode) removeDevice(intent.instanceId)
         break
       }
       case 'LOAD_RIG': {
@@ -540,19 +604,53 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     clickFocuses: () => explore.clickFocuses(),
     inputEnabled: () => explore.pointerFree(),
   })
-  // Panels arrive with the inventory/help/pause UI; until then nothing is open.
-  const exploreUi: ExploreUi = {
-    panelCount: () => 0,
-    closeTopPanel: () => undefined,
-    toggleInventory: () => undefined,
-    toggleHelp: () => undefined,
-    openPause: () => undefined,
-    placing: () => false,
-    cancelPlacement: () => undefined,
-    rotatePlacement: () => undefined,
-    confirmPlacement: () => undefined,
-    pickUp: () => undefined,
-  }
+  // Inventory, help, settings, pause + placement ghost (ADR-0010 Décisions 8–9).
+  const placement = new Placement({
+    scene,
+    aim: () => explore.aimPoint(),
+    halfWidth: floorW / 2,
+    halfDepth: floorD / 2,
+    dispatch: (intent) => dispatch(intent),
+  })
+  let layoutMap: ReadonlyMap<string, string> | undefined
+  const exploreHud = new ExploreHud({
+    root: document.getElementById('hud')!,
+    devices: [...registry.deviceById.values()],
+    sandbox: sandboxMode,
+    settings: () => settings,
+    onSettings: (next) => {
+      settings = next
+      saveSettings(window.localStorage, settings)
+      applyMotionPref()
+      explore.settingsChanged()
+    },
+    layout: detectLayout(navigator.language ?? 'fr-FR'),
+    get layoutMap() {
+      return layoutMap
+    },
+    placement,
+    ensureExplore: () => {
+      if (!explore.exploreView) explore.toggleView()
+    },
+    pickUp: (instanceId) => {
+      if (!sandboxMode) {
+        hud.toast('info', 'Ramasser', 'Dans un niveau, le matériel reste en place. Le ramassage est disponible dans la Sandbox.')
+        return
+      }
+      dispatch({ type: 'REMOVE', instanceId })
+    },
+    toggleView: () => explore.toggleView(),
+    currentView: () => explore.snapshot().view,
+  })
+  const exploreUi: ExploreUi = exploreHud
+  // Chromium exposes the real layout map: refine key labels when it resolves.
+  const kb = (navigator as Navigator & { keyboard?: { getLayoutMap?: () => Promise<ReadonlyMap<string, string>> } }).keyboard
+  void kb?.getLayoutMap?.()
+    .then((m) => {
+      layoutMap = m
+      exploreHud.refresh()
+    })
+    .catch(() => undefined)
   explore.connect(focusPatch, exploreUi)
 
   const exam = examMode
@@ -579,6 +677,12 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
           instances: snap.instances.map((i) => ({ instanceId: i.instanceId, deviceId: i.deviceId })),
           connections: snap.connections,
           controls: Object.fromEntries(snap.instances.map((i) => [i.instanceId, i.controls])),
+          positions: Object.fromEntries(
+            snap.instances.flatMap((i) => {
+              const pose = poseOf(i.instanceId)
+              return pose ? [[i.instanceId, [...pose.position, pose.rotationY] as [number, number, number, number]]] : []
+            }),
+          ),
         })
         // Clean rig = positive readiness signal (ADR-0005): ≥2 connections and
         // zero violations. A messy rig still saves — no shame, just no credit.
