@@ -1,0 +1,870 @@
+{
+  "file": "loudspeakers.json",
+  "category": "loudspeakers",
+  "generated": "2026-10-22",
+  "selection_rationale": "Covers the main loudspeaker families found in French venues and schools. The French makers L-Acoustics (K2, Kara II, A15 Focus, KS28, X15 HiQ, X8) and NEXO (GEO M10, P12, 45N-12) are weighted heavily, alongside d&b (V8, V-SUB, Y10P), the main touring brands driven by external DSP amplifiers (LA12X, NXAMP, D80). Self-powered contrasts (Meyer LINA, RCF HDL 30-A), entry-level active boxes already in TekPractice (QSC K12.2, Yamaha DBR12) and two column systems (EV EVOLVE 50M G2, Bose L1 Pro32) cover the remaining wiring lessons: speakON NL4 pin usage (1+/1- vs 2+/2-), multi-way 8-point feeds, and XLR + powerCON daisy-chains.",
+  "not_found_log": [
+    { "device_id": "yamaha-dbr12", "what": "Official owner's manual URL (EN or FR)", "searched": "fr.yamaha.com DBR downloads page (403); usa.yamaha.com specs (403); search found only third-party mirrors (manualowl, manualzz), which are not used. Search budget then exhausted." },
+    { "device_id": "yamaha-dbr12", "what": "Power inlet connector type", "searched": "DBR technical specifications PDF (not stated)" },
+    { "device_id": "l-acoustics-k2", "what": "French owner's manual; year introduced", "searched": "L-Acoustics documentation centre (EN owner's manual only; FR only for preset guide / amplification reference)" },
+    { "device_id": "l-acoustics-kara-ii", "what": "French owner's manual; year introduced", "searched": "L-Acoustics documentation centre ?choice=Kara II" },
+    { "device_id": "l-acoustics-ks28", "what": "French owner's manual; year introduced", "searched": "L-Acoustics documentation centre ?choice=KS28" },
+    { "device_id": "l-acoustics-x15-hiq", "what": "French owner's manual; product spec sheet", "searched": "L-Acoustics documentation centre ?choice=X15 HiQ (owner's manual + system spec sheet only)" },
+    { "device_id": "db-audiotechnik-v8", "what": "English V8/V12 manual", "searched": "d&b French product page lists FR manual only; search budget exhausted" },
+    { "device_id": "db-audiotechnik-v-sub", "what": "English manual; reliable dimensions", "searched": "d&b French product page (dimensions garbled); search budget exhausted" },
+    { "device_id": "ev-evolve-50m-g2", "what": "Connector panel, weight, dimensions, owner's manual, spec sheet", "searched": "electrovoice.com product page and /product-documents/evolve-50m-g2 (JS-rendered, 0 files); products.electrovoice.com (TLS error); search budget exhausted" },
+    { "device_id": "jbl-srx835p", "what": "Whole device (candidate dropped)", "searched": "jblpro.com/products/srx835p (TLS certificate error); search budget exhausted" },
+    { "device_id": "meyer-sound-leopard", "what": "Current status (candidate replaced by LINA)", "searched": "docs-prod.meyersound.com line-array page lists LEOPARD under Legacy" },
+    { "device_id": "meyer-sound-upj-1p", "what": "Documentation (candidate dropped)", "searched": "docs-prod.meyersound.com line-array/point-source listing shows no UPJ-1P; search budget exhausted" },
+    { "device_id": "nexo-ps15-r2", "what": "Documentation (candidate replaced by P12)", "searched": "nexo-sa.com P+ series docs page (not listed); search budget exhausted" },
+    { "device_id": "all", "what": "year_introduced", "searched": "Manufacturer pages and spec sheets do not state launch years; search budget exhausted before secondary sources could be checked" }
+  ],
+  "devices": [
+    {
+      "id": "qsc-k12-2",
+      "brand": "QSC",
+      "model": "K12.2",
+      "category": "loudspeakers",
+      "sub_type": "active-powered",
+      "technology": "2-way powered loudspeaker, 12-inch LF cone + 1.4-inch titanium-diaphragm compression driver, Class D 2000 W power module (per QSC)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A very widespread 12-inch powered PA box for small venues, schools and rental fleets. It shows the all-in-one active loudspeaker principle: mic/line preamp, DSP and amplifier inside the cabinet, mains power plus a balanced line signal in.",
+      "typical_uses": ["small-venue PA", "stage monitor", "conference / speech reinforcement", "school and rehearsal PA"],
+      "key_specs": {
+        "frequency_response": "50 Hz to 20 kHz (-6 dB); 45 Hz to 20 kHz (-10 dB)",
+        "max_spl": "132 dB @ 1 m peak; 126 dB @ 1 m continuous",
+        "coverage": "75° nominal, axisymmetric",
+        "drivers": "305 mm (12-inch) cone LF; 35.6 mm (1.4-inch) titanium diaphragm compression driver HF",
+        "amplifier": "Class D, 2000 W power module; peak output 1800 W (LF) and 225 W (HF)",
+        "power_supply": "universal 100–240 VAC, 50–60 Hz, locking IEC",
+        "weight": "Net 17.7 kg (39 lb)",
+        "dimensions": "602 × 356 × 350 mm (23.7 × 14 × 13.8 in) (H × W × D)"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "Input 1/2 combo XLR/F + 1/4-inch (Mic/Line, Hi-Z/Line)", "dir": "in", "signal": "mic-level", "count": 2 },
+        { "connector": "trs-quarter", "role": "Input 1/2 combo jack part (line / Hi-Z)", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "trs-35mm", "role": "3.5 mm TRS stereo input", "dir": "in", "signal": "line-level-consumer", "count": 1 },
+        { "connector": "xlr3-m", "role": "loop-thru outputs", "dir": "out", "signal": "line-level-pro", "count": 2 },
+        { "connector": "xlr3-m", "role": "mix output", "dir": "out", "signal": "line-level-pro", "count": 1 },
+        { "connector": "iec-c14", "role": "mains in (locking IEC)", "dir": "in", "signal": "mains-power", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "instrument-hiz", "mains-power"],
+      "manual_url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k.2_usermanual_fr.pdf",
+      "datasheet_url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_specs.pdf",
+      "product_page_url": "https://www.qscaudio.com/live-sound/products/loudspeakers/powered-loudspeakers/k2-series/k122",
+      "manual_languages": ["fr", "en"],
+      "manuals": [
+        { "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k.2_usermanual_fr.pdf", "title": "K.2 Series User Manual (French)", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_usermanual.pdf", "title": "K.2 Series User Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_specs.pdf", "title": "K.2 Spec Sheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" },
+        { "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_specs_fr.pdf", "title": "K.2 Fiche technique", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" },
+        { "url": "https://www.qscaudio.com/resource-files/productresources/spk/k.2/q_spk_k2_quickstartguide_en_de_fr_es_ch.pdf", "title": "K.2 Quick Start Guide (EN/DE/FR/ES/ZH)", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" }
+      ],
+      "sources": [
+        { "url": "https://www.qscaudio.com/live-sound/products/loudspeakers/powered-loudspeakers/k2-series/k122", "publisher": "QSC", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.max_spl", "key_specs.coverage", "key_specs.drivers", "key_specs.amplifier", "key_specs.power_supply", "key_specs.weight", "key_specs.dimensions", "connectors", "manuals"] }
+      ],
+      "notes": "Single-source specs (QSC product page); retailer cross-check not performed. Combo inputs counted both as xlr3-f and trs-quarter because the TekPractice ids have no combo connector id.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": true, "catalog_id": "qsc-k12-2", "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Already in catalog; teaches active speaker = line in + mains, no speaker cable." }
+    },
+    {
+      "id": "yamaha-dbr12",
+      "brand": "Yamaha",
+      "model": "DBR12",
+      "category": "loudspeakers",
+      "sub_type": "active-powered",
+      "technology": "2-way, bi-amp powered speaker, bass-reflex type, Class-D amplifier with FIR-X tuning DSP (per Yamaha)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Entry-level 12-inch powered box common in schools, small venues and rental stock. Its 2-channel built-in mixer, THRU/MIX output and 50° wedge angle make it a good teaching example of a self-powered speaker used as FOH or monitor.",
+      "typical_uses": ["small-venue PA", "floor monitor", "side fill", "school and rehearsal PA"],
+      "key_specs": {
+        "frequency_range": "52 Hz–20 kHz (-10dB)",
+        "max_spl": "131 dB SPL (Measured Maximum SPL (Peak) IEC noise@1m)",
+        "coverage": "H90° x V60° Constant Directivity Horn",
+        "crossover": "2.1 kHz, FIR-X Tuning (Linear Phase FIR Filter)",
+        "drivers": "LF 12\" cone, 2\" voice coil, ferrite; HF 1\" throat compression driver (1.4\" diaphragm per Yamaha USA spec)",
+        "amplifier": "Class-D; Dynamic 1000 W (LF: 800 W, HF: 200 W); Continuous 465 W (LF: 400 W, HF: 65 W)",
+        "input_sensitivity": "INPUT1: LINE: 0 dBu, MIC: -32 dBu, INPUT2: 0 dBu (LEVEL: Maximum)",
+        "max_input_level": "INPUT1: LINE: +24 dBu, MIC: -8 dBu, INPUT2: +24 dBu",
+        "floor_monitor_angle": "50° Symmetrical",
+        "rigging": "Pole socket 35mm; Rigging points Bottom x 2 (Fit for M8 x 15mm Eyebolts)",
+        "weight": "15.8 kg (34.8 lbs)",
+        "dimensions": "376 x 601 x 348 mm (14.8\" x 23.7\" x 13.7\") (WxHxD, with rubber feet)"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "Input1 / Input2 combo (XLR part)", "dir": "in", "signal": "mic-level", "count": 2 },
+        { "connector": "trs-quarter", "role": "Input1 / Input2 combo (phone part)", "dir": "in", "signal": "line-level-pro", "count": 2 },
+        { "connector": "rca", "role": "Input2 RCA PIN x2 (unbalanced)", "dir": "in", "signal": "line-level-consumer", "count": 2 },
+        { "connector": "xlr3-m", "role": "Output XLR3-32 (CH1 parallel through or CH1+CH2 mix)", "dir": "out", "signal": "line-level-pro", "count": 1 },
+        { "connector": "iec-c14", "role": "mains in", "dir": "in", "signal": "mains-power", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "line-level-pro", "line-level-consumer", "mains-power"],
+      "manual_url": "not found",
+      "datasheet_url": "https://data.yamaha.com/download/files/2082568",
+      "product_page_url": "https://usa.yamaha.com/products/proaudio/speakers/dbr/index.html",
+      "manual_languages": [],
+      "manuals": [
+        { "url": "https://data.yamaha.com/download/files/2082568", "title": "DBR15 DBR12 DBR10 Technical Specifications", "language": "en", "file_type": "pdf", "version_or_date": "Published 03/2024", "official": true, "kind": "spec-sheet" }
+      ],
+      "sources": [
+        { "url": "https://data.yamaha.com/download/files/2082568", "publisher": "Yamaha", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_range", "key_specs.max_spl", "key_specs.coverage", "key_specs.crossover", "key_specs.drivers", "key_specs.amplifier", "key_specs.input_sensitivity", "key_specs.max_input_level", "key_specs.floor_monitor_angle", "key_specs.rigging", "key_specs.weight", "key_specs.dimensions", "connectors"] },
+        { "url": "https://usa.yamaha.com/products/proaudio/speakers/dbr/specs.html", "publisher": "Yamaha USA", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["key_specs.frequency_range", "key_specs.max_spl", "key_specs.coverage", "key_specs.amplifier", "key_specs.weight", "key_specs.drivers"] },
+        { "url": "https://www.adorama.com/yadbr12.html", "publisher": "Adorama", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.frequency_range", "key_specs.amplifier"] }
+      ],
+      "notes": "Yamaha USA specs page returned 403 on fetch; values taken from search snippet only, which match the PDF. Power-inlet type is not stated in the spec PDF (iec-c14 assumed as the generic mains inlet; verify). PDF lists HF diaphragm as 1.4\" for DBR15 and 1\" shared cell is ambiguous; Yamaha USA snippet says 1.4\" diaphragm, 1\" throat.",
+      "conflicts": [
+        { "field": "key_specs.max_spl", "values": [ { "value": "131 dB SPL", "source_url": "https://data.yamaha.com/download/files/2082568" }, { "value": "132 dB", "source_url": "https://www.adorama.com/yadbr12.html" } ], "note": "Retailer listing cites 132 dB (the DBR15 figure in Yamaha's table); manufacturer PDF gives 131 dB for DBR12." }
+      ],
+      "tekpractice": { "in_catalog": true, "catalog_id": "yamaha-dbr12", "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Already in catalog; THRU vs MIX output switch is a good daisy-chain lesson." }
+    },
+    {
+      "id": "l-acoustics-k2",
+      "brand": "L-Acoustics",
+      "model": "K2",
+      "category": "loudspeakers",
+      "sub_type": "line-array",
+      "technology": "3-way active WST line source element, quad-amplified by external LA4X / LA8 / LA12X amplified controllers; Panflex variable horizontal directivity (per L-Acoustics)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Large-format touring line source from the French manufacturer L-Acoustics; the spec sheet says it is designed upon the K1, which L-Acoustics calls the industry-reference touring system. A typical festival and arena main PA.",
+      "typical_uses": ["arena and stadium main PA", "festival main PA", "national / international touring"],
+      "key_specs": {
+        "usable_bandwidth": "35 Hz - 20 kHz ([K2_70]) (-10 dB)",
+        "max_spl": "147 dB ([K2_70]) (peak level at 1 m, free field, pink noise crest factor 4)",
+        "directivity": "Vertical: depending on number of elements and array curvature; Horizontal: 70°/110° symmetric or 90° asymmetric",
+        "transducers": "LF: 2 × 12'' cone drivers; MF: 4 x 6,5'' cone drivers; HF: 2 × 3'' diaphragm compression drivers",
+        "nominal_impedance": "LF/MF/HF : 2 x 8 Ω / 8 Ω / 16 Ω",
+        "amplification": "quad-amplified by LA4X/LA8/LA12X",
+        "rigging": "4-point captive rigging system; inter-enclosure angles [deg]: 0.25, 1, 2, 3, 4, 5, 7.5, 10",
+        "weight": "56 kg/123.2 lb",
+        "dimensions": "1338 mm (52.7 in) / 354 mm (13.9 in) / 400 mm (15.8 in) (W x H x D)",
+        "ip_rating": "IP55"
+      },
+      "connectors": [
+        { "connector": "speakon-nl8", "role": "8-point PA-COM input / link (multi-way amplifier feed)", "dir": "in", "signal": "speaker-level", "count": 2 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/K2/EN/Owner's%20Manual/K2_OM_EN.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/K2/EN/Product%20Spec%20Sheet/K2_SP_EN_3.1.pdf",
+      "product_page_url": "https://l-acoustics.com/products/k2/",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/K2/EN/Owner's%20Manual/K2_OM_EN.pdf", "title": "K2 - Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/K2/EN/Product%20Spec%20Sheet/K2_SP_EN_3.1.pdf", "title": "K2 - Product Spec Sheet", "language": "en", "file_type": "pdf", "version_or_date": "K2_SPS_EN_3.1/07-24", "official": true, "kind": "spec-sheet" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/GLOBAL/EN/Guide%20des%20Presets/preset_guide_FR.pdf", "title": "Guide des Presets (L-Acoustics, all products)", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "other" }
+      ],
+      "sources": [
+        { "url": "https://l-acoustics.com/products/k2/", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usable_bandwidth", "key_specs.max_spl", "key_specs.directivity", "key_specs.transducers", "key_specs.nominal_impedance", "key_specs.amplification", "key_specs.rigging", "key_specs.weight", "key_specs.dimensions", "key_specs.ip_rating", "connectors"] },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/K2/EN/Product%20Spec%20Sheet/K2_SP_EN_3.1.pdf", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usable_bandwidth", "key_specs.max_spl", "key_specs.directivity", "key_specs.transducers", "key_specs.nominal_impedance", "key_specs.amplification", "key_specs.rigging", "key_specs.weight", "key_specs.dimensions", "key_specs.ip_rating", "connectors"] },
+        { "url": "https://www.l-acoustics.com/result-documentation-center/?choice=K2", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] },
+        { "url": "https://pssl.com/products/l-acoustics-k2-3-way-full-range-active-wst-enclosure", "publisher": "PSSL", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.usable_bandwidth"] }
+      ],
+      "notes": "Passive cabinet in the electrical sense (no built-in amp): 'active' means each way gets its own amp channel from an LA amplified controller over one multi-pole cable. The connector is L-Acoustics' 8-point PA-COM, not a Neutrik speakON NL8; speakon-nl8 is used as the closest TekPractice id. The product page states Panflex was introduced with K2 in 2014, but no K2 launch year is stated. No French owner's manual found.",
+      "conflicts": [
+        { "field": "key_specs.usable_bandwidth", "values": [ { "value": "35 Hz - 20 kHz (-10 dB, [K2_70])", "source_url": "https://l-acoustics.com/products/k2/" }, { "value": "38 Hz - 20 kHz (-6 dB), 40 Hz - 20 kHz (-3 dB) (search snippet)", "source_url": "https://pssl.com/products/l-acoustics-k2-3-way-full-range-active-wst-enclosure" } ], "note": "Different reference levels (-10 dB vs -6/-3 dB), not a true contradiction." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["speakon-nl8"], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Multi-way 8-point amp feed vs 4-point speakON is a distinctive wiring lesson." }
+    },
+    {
+      "id": "l-acoustics-kara-ii",
+      "brand": "L-Acoustics",
+      "model": "Kara II",
+      "category": "loudspeakers",
+      "sub_type": "line-array",
+      "technology": "2-way active WST line source element, amplified by external LA4X / LA8 / LA12X; Panflex horizontal directivity (per L-Acoustics)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Medium-format successor of Kara, a line source very common in French theatres, concert halls and rental fleets. Shows the 2-way active principle on two 4-point speakON connectors.",
+      "typical_uses": ["theatre and concert hall main PA", "corporate events", "medium festival stages", "side fill for K-series systems"],
+      "key_specs": {
+        "usable_bandwidth": "55 Hz - 20 kHz ([KARA II 70]) (-10 dB)",
+        "max_spl": "142 dB ([KARA II 70]) (peak level at 1 m, free field, pink noise crest factor 4)",
+        "directivity": "Vertical: depending on number of elements and array curvature; Horizontal: 70° / 110° symmetric or 90° asymmetric (-6 dB)",
+        "transducers": "LF: 2 × 8'' neodymium cone driver; HF: 1 × 3'' neodymium diaphragm compression driver",
+        "nominal_impedance": "LF: 8 Ω; HF: 8 Ω",
+        "amplification": "amplified by LA4X / LA8 / LA12X",
+        "rigging": "4-point captive rigging system; 2 side handles, 2 rear handles; inter-enclosure angles [deg]: 0, 1, 2, 3, 4, 5, 7.5, 10",
+        "weight": "26 kg / 57 lb",
+        "ip_rating": "IP55"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "IN: 1 × 4-point speakON (LF on 1+/1-, HF on 2+/2-)", "dir": "in", "signal": "speaker-level", "count": 1 },
+        { "connector": "speakon-nl4", "role": "LINK: 1 × 4-point speakON", "dir": "out", "signal": "speaker-level", "count": 1 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KARA%20II/EN/Owner's%20Manual/Kara_II_OM_EN.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KARA%20II/EN/Product%20Spec%20Sheet/KARA_II_SP_EN_1.1.pdf",
+      "product_page_url": "https://l-acoustics.com/products/Kara-II",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KARA%20II/EN/Owner's%20Manual/Kara_II_OM_EN.pdf", "title": "Kara II - Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "01/11/2024 (upload date)", "official": true, "kind": "user-manual" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KARA%20II/EN/Product%20Spec%20Sheet/KARA_II_SP_EN_1.1.pdf", "title": "Kara II - Product Spec Sheet", "language": "en", "file_type": "pdf", "version_or_date": "1.1", "official": true, "kind": "spec-sheet" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KARA%20II/EN/System%20Spec%20Sheet/Kara%20II_SPS_EN_1.1.pdf", "title": "Kara II - System Spec Sheet", "language": "en", "file_type": "pdf", "version_or_date": "1.1", "official": true, "kind": "datasheet" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/GLOBAL/EN/R%C3%A9f%C3%A9rence%20Amplification/Amplification_Reference_TB_FR.pdf", "title": "Référence Amplification (all L-Acoustics products)", "language": "fr", "file_type": "pdf", "version_or_date": "21/05/2026 (upload date)", "official": true, "kind": "other" }
+      ],
+      "sources": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KARA%20II/EN/Product%20Spec%20Sheet/KARA_II_SP_EN_1.1.pdf", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usable_bandwidth", "key_specs.max_spl", "key_specs.directivity", "key_specs.transducers", "key_specs.nominal_impedance", "key_specs.amplification", "key_specs.rigging", "key_specs.weight", "key_specs.ip_rating", "connectors"] },
+        { "url": "https://www.l-acoustics.com/result-documentation-center/?choice=Kara II", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+      ],
+      "notes": "Single manufacturer document for specs (product page not fetched). Needs an external LA amplified controller: connect amp speaker-level output via speakON NL4 cable.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "2-way active over one NL4 (1+/- LF, 2+/- HF) is a key speakON pinout lesson." }
+    },
+    {
+      "id": "l-acoustics-a15-focus",
+      "brand": "L-Acoustics",
+      "model": "A15 Focus",
+      "category": "loudspeakers",
+      "sub_type": "passive",
+      "technology": "2-way passive constant curvature WST 10° enclosure with Panflex, amplified by LA4X / LA8 / LA12X (per L-Acoustics)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A passive 15-inch box that L-Acoustics markets as usable either as a small line source (with A15 Wide) or as a point source for fills and delays. Good example of a passive cabinet that still depends on a manufacturer amplified controller and preset.",
+      "typical_uses": ["small/medium venue main PA", "front fill", "delay", "side fill"],
+      "key_specs": {
+        "usable_bandwidth": "41 Hz - 20 kHz ([A15]) (-10 dB)",
+        "max_spl": "144 dB ([A15]) (peak level at 1 m, free field, pink noise crest factor 4)",
+        "directivity": "Enclosure: 10°; Panflex: 70°/110° symmetric or 90° asymmetric",
+        "transducers": "LF: 1 × 15'' neodymium cone driver; HF: 1 × 3'' diaphragm neodymium compression driver",
+        "nominal_impedance": "8 Ω",
+        "amplification": "amplified by LA4X / LA8 / LA12X",
+        "rigging": "Flush-fitting two-point rigging system; 2 handles, 8 corner stops and 2 ground runners; safety: 1 DIN580-compatible M8 insert",
+        "weight": "35 kg/77 lb",
+        "ip_rating": "IP55"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "IN: 1 × 4-point speakON", "dir": "in", "signal": "speaker-level", "count": 1 },
+        { "connector": "speakon-nl4", "role": "LINK: 1 × 4-point speakON", "dir": "out", "signal": "speaker-level", "count": 1 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/A15%20Focus/EN/Owner's%20Manual/A15_OM_EN.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/A15%20Focus/EN/Product%20Spec%20Sheet/A15_SP_EN_1.2.pdf",
+      "product_page_url": "https://www.l-acoustics.com/products/a15-focus/",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/A15%20Focus/EN/Owner's%20Manual/A15_OM_EN.pdf", "title": "A15 Focus - Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "06/07/2026 (upload date)", "official": true, "kind": "user-manual" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/A15%20Focus/EN/Product%20Spec%20Sheet/A15_SP_EN_1.2.pdf", "title": "A15 Focus - Product Spec Sheet (A15 Focus + A15 Wide)", "language": "en", "file_type": "pdf", "version_or_date": "1.2", "official": true, "kind": "spec-sheet" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/A15%20Focus/EN/System%20Spec%20Sheet/A15_SPS_EN_1.2.pdf", "title": "A15 Focus - System Spec Sheet", "language": "en", "file_type": "pdf", "version_or_date": "1.2", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/A15%20Focus/EN/Product%20Spec%20Sheet/A15_SP_EN_1.2.pdf", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usable_bandwidth", "key_specs.max_spl", "key_specs.directivity", "key_specs.transducers", "key_specs.nominal_impedance", "key_specs.amplification", "key_specs.rigging", "key_specs.weight", "key_specs.ip_rating", "connectors"] },
+        { "url": "https://www.l-acoustics.com/products/a15-focus/", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["key_specs.usable_bandwidth", "key_specs.max_spl", "key_specs.weight", "key_specs.ip_rating", "connectors"] }
+      ],
+      "notes": "Product page values seen in search snippet only (144 dB, 41 Hz-20 kHz, 35 kg, IP55, 4-point speakON), matching the spec sheet. Sister model A15 Wide: 30° enclosure, 42 Hz - 20 kHz, 141 dB, 33 kg (same spec sheet).",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Classic passive cabinet: amp speaker-level out -> speakON NL4 IN, LINK to next cabinet." }
+    },
+    {
+      "id": "l-acoustics-ks28",
+      "brand": "L-Acoustics",
+      "model": "KS28",
+      "category": "loudspeakers",
+      "sub_type": "subwoofer",
+      "technology": "High power 2 × 18'' bass-reflex subwoofer (L-Vents), standard or cardioid, amplified by LA12X (per L-Acoustics)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Reference dual-18 subwoofer of L-Acoustics K-series systems, used ground-stacked or flown, often in cardioid arrays. Good for teaching cardioid sub arrays and 4 Ω loads.",
+      "typical_uses": ["festival / arena subwoofer", "cardioid sub arrays", "flown sub arrays", "club installs"],
+      "key_specs": {
+        "low_frequency_limit": "25 Hz ([KS28_100]) (-10 dB)",
+        "max_spl": "143 dB ([KS28_100]) (peak level at 1 m, half space, pink noise crest factor 4)",
+        "directivity": "Standard or cardioid",
+        "transducers": "2 x 18'' neodymium, aluminium die cast basket",
+        "nominal_impedance": "4 Ω",
+        "amplification": "amplified by LA12X",
+        "rigging": "Flush-fitting 2-point rigging system; 6 ergonomic handles; 2 ground runners; 8 side runners",
+        "weight": "79 kg / 174 lbs",
+        "ip_rating": "IP55"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "IN: 4-point speakON", "dir": "in", "signal": "speaker-level", "count": 1 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KS28/EN/Owner's%20Manual/KS28_OM_EN.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KS28/EN/Product%20Spec%20Sheet/KS28_SP_EN_3.0.pdf",
+      "product_page_url": "https://www.l-acoustics.com/products/ks28/",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KS28/EN/Owner's%20Manual/KS28_OM_EN.pdf", "title": "KS28 - Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "01/11/2024 (upload date)", "official": true, "kind": "user-manual" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KS28/EN/Product%20Spec%20Sheet/KS28_SP_EN_3.0.pdf", "title": "KS28 - Product Spec Sheet", "language": "en", "file_type": "pdf", "version_or_date": "KS28_SPS_EN_3.0/05-21", "official": true, "kind": "spec-sheet" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KS28/EN/System%20Spec%20Sheet/KS28_SPS_EN_3.0.pdf", "title": "KS28 - System Spec Sheet", "language": "en", "file_type": "pdf", "version_or_date": "3.0", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KS28/EN/Product%20Spec%20Sheet/KS28_SP_EN_3.0.pdf", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.low_frequency_limit", "key_specs.max_spl", "key_specs.directivity", "key_specs.transducers", "key_specs.nominal_impedance", "key_specs.amplification", "key_specs.rigging", "key_specs.weight", "key_specs.ip_rating", "connectors"] },
+        { "url": "https://www.l-acoustics.com/products/ks28/", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["key_specs.low_frequency_limit", "key_specs.max_spl", "key_specs.nominal_impedance", "key_specs.amplification", "key_specs.weight", "key_specs.ip_rating", "key_specs.directivity"] },
+        { "url": "https://www.l-acoustics.com/result-documentation-center/?choice=KS28", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+      ],
+      "notes": "Product page values seen via search snippet only; they match the spec sheet.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Single NL4 input; useful for amp load / impedance and cardioid sub lessons." }
+    },
+    {
+      "id": "l-acoustics-x15-hiq",
+      "brand": "L-Acoustics",
+      "model": "X15 HiQ",
+      "category": "loudspeakers",
+      "sub_type": "stage-monitor-wedge",
+      "technology": "2-way active coaxial enclosure (15'' LF + 3'' compression driver), ellipsoid waveguide, amplified by LA4X / LA8 / LA12X (per L-Acoustics)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "L-Acoustics presents it as its reference stage monitor; the coaxial design and narrow 40° x 60° pattern aim at high feedback rejection. A common wedge on festival riders and in French venues equipped with L-Acoustics.",
+      "typical_uses": ["stage monitor wedge", "narrow fill", "drum fill (with sub)"],
+      "key_specs": {
+        "usable_bandwidth": "55 Hz – 20 kHz (-10 dB)",
+        "max_spl": "138 dB ([X15]) (peak at 1 m, free field, pink noise crest factor 4)",
+        "directivity": "vertical 60° symmetric; horizontal 40° symmetric (-6 dB)",
+        "monitor_angle": "without risers: 35°; with risers: 55°",
+        "transducers": "LF 1 × 15″ cone driver; HF 1 × 3″ diaphragm compression driver, neodymium",
+        "nominal_impedance": "LF 8 Ω; HF 8 Ω",
+        "amplification": "amplified by LA4X / LA8 / LA12X",
+        "rigging": "2 handles; 1 DIN580-compatible M8 threaded insert; 4 M10 threaded inserts; 2 × 35 mm pole sockets",
+        "weight": "21 kg / 46.3 lb",
+        "dimensions": "430 mm (16.9 in) / 580 mm (22.8 in) / 375 mm (14.8 in) (W x H x D)",
+        "ip_rating": "IP43"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "IN: 1 × 4-point speakON", "dir": "in", "signal": "speaker-level", "count": 1 },
+        { "connector": "speakon-nl4", "role": "LINK: 1 × 4-point speakON (interchangeable with IN)", "dir": "out", "signal": "speaker-level", "count": 1 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X15%20HiQ/EN/Owners'%20Manual/X15_HiQ_OM_EN.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X15%20HiQ/EN/System%20Spec%20Sheet/X15%20HiQ_SPS_EN_3.0.pdf",
+      "product_page_url": "https://www.l-acoustics.com/?p=956",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X15%20HiQ/EN/Owners'%20Manual/X15_HiQ_OM_EN.pdf", "title": "X15 HiQ owner's manual (EN)", "language": "en", "file_type": "pdf", "version_or_date": "version 2.0", "official": true, "kind": "user-manual" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X15%20HiQ/EN/System%20Spec%20Sheet/X15%20HiQ_SPS_EN_3.0.pdf", "title": "X15 HiQ - System Spec Sheet", "language": "en", "file_type": "pdf", "version_or_date": "3.0", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://www.l-acoustics.com/?p=956", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usable_bandwidth", "key_specs.max_spl", "key_specs.directivity", "key_specs.monitor_angle", "key_specs.transducers", "key_specs.nominal_impedance", "key_specs.amplification", "key_specs.rigging", "key_specs.weight", "key_specs.dimensions", "key_specs.ip_rating", "connectors"] },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X15%20HiQ/EN/Owners'%20Manual/X15_HiQ_OM_EN.pdf", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.directivity", "key_specs.amplification", "connectors"] },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X15%20HiQ/EN/System%20Spec%20Sheet/X15%20HiQ_SPS_EN_3.0.pdf", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usable_bandwidth", "key_specs.directivity", "key_specs.monitor_angle", "key_specs.weight"] },
+        { "url": "https://www.pssl.com/products/l-acoustics-x15-hiq-stage-monitor-loudspeaker", "publisher": "PSSL", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.max_spl"] },
+        { "url": "https://london.novelty.fr/products/sound/diffusion/enceinte-non-amplifiee/l-acoustics/x15-hiq-3147", "publisher": "Novelty (rental company)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "other", "covers": ["key_specs.max_spl"] }
+      ],
+      "notes": "The owner's manual states the H/V pattern is 40° x 60°, which matches the spec table (horizontal 40°, vertical 60°). Owner's manual describes 8-point PA-COM to 2 × 4-point speakON breakout cables for driving active 2-way enclosures from LA amps.",
+      "conflicts": [
+        { "field": "key_specs.directivity", "values": [ { "value": "vertical 60°, horizontal 40° (spec table, owner's manual 40° x 60° H/V)", "source_url": "https://www.l-acoustics.com/?p=956" }, { "value": "H: 60°, V: 40° (overview section of the same page)", "source_url": "https://www.l-acoustics.com/?p=956" } ], "note": "Overview section swaps the angles; spec table and owner's manual agree on H 40° x V 60°." },
+        { "field": "key_specs.max_spl", "values": [ { "value": "138 dB", "source_url": "https://www.l-acoustics.com/?p=956" }, { "value": "136 dB (search snippet)", "source_url": "https://london.novelty.fr/products/sound/diffusion/enceinte-non-amplifiee/l-acoustics/x15-hiq-3147" } ], "note": "Rental-company listing gives 136 dB; possibly an older figure." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Wedge fed by amp via NL4 with 2-way active pinout; monitor-send lesson." }
+    },
+    {
+      "id": "l-acoustics-x8",
+      "brand": "L-Acoustics",
+      "model": "X8",
+      "category": "loudspeakers",
+      "sub_type": "point-source",
+      "technology": "Passive 2-way coaxial enclosure (8'' LF + 1.5'' compression driver), internal passive crossover, controlled and amplified by LA4X / LA8 (per L-Acoustics spec sheet)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Compact coaxial point source used for front fill, under-balcony fill and FOH live monitoring; a small passive cabinet that still relies on an LA amplified controller preset.",
+      "typical_uses": ["front fill", "under-balcony fill", "FOH / control room monitoring", "small stage monitor"],
+      "key_specs": {
+        "usable_bandwidth": "60 Hz - 20 kHz ([X8] preset) (-10 dB)",
+        "max_spl": "129 dB ([X8] preset) (peak at 1 m, free field, 12 dB crest factor pink noise)",
+        "directivity": "Axisymmetric 100°",
+        "monitoring_angle": "35° (with regard to vertical)",
+        "transducers": "LF: 1 × 8\", bass-reflex, laminar vents; HF: 1 × 1.5\" neodymium compression driver",
+        "nominal_impedance": "8 Ω",
+        "amplification": "controlled and amplified by LA4X / LA8",
+        "rigging": "1 × handle; DIN580-compatible M8 threaded insert; 4 × M10 threaded inserts; 35 mm pole socket",
+        "weight": "12 kg / 26.5 lb",
+        "ip_rating": "IP43"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "IN: speakON", "dir": "in", "signal": "speaker-level", "count": 1 },
+        { "connector": "speakon-nl4", "role": "LINK: speakON", "dir": "out", "signal": "speaker-level", "count": 1 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/Owner's%20Manual/X8_OM_EN.pdf",
+      "datasheet_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/System%20Spec%20Sheet/X8_SPS_EN_3.0.pdf",
+      "product_page_url": "https://www.l-acoustics.com/products/x8/",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/Owner's%20Manual/X8_OM_EN.pdf", "title": "X8 - Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "01/11/2024 (upload date)", "official": true, "kind": "user-manual" },
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/System%20Spec%20Sheet/X8_SPS_EN_3.0.pdf", "title": "X8 - System Spec Sheet", "language": "en", "file_type": "pdf", "version_or_date": "X8_SPS_EN_3.0/02-17", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/System%20Spec%20Sheet/X8_SPS_EN_3.0.pdf", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usable_bandwidth", "key_specs.max_spl", "key_specs.directivity", "key_specs.monitoring_angle", "key_specs.transducers", "key_specs.nominal_impedance", "key_specs.amplification", "key_specs.rigging", "key_specs.weight", "key_specs.ip_rating", "connectors"] },
+        { "url": "https://www.l-acoustics.com/products/x8/", "publisher": "L-Acoustics", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["key_specs.usable_bandwidth", "key_specs.max_spl", "key_specs.directivity", "key_specs.nominal_impedance", "key_specs.ip_rating", "key_specs.amplification"] }
+      ],
+      "notes": "Product page values seen via search snippet only. The 2017 spec sheet lists LA4X / LA8; the current product page (snippet) lists LA2Xi, LA4X, LA8 or LA12X.",
+      "conflicts": [
+        { "field": "key_specs.amplification", "values": [ { "value": "LA4X / LA8", "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X8/EN/System%20Spec%20Sheet/X8_SPS_EN_3.0.pdf" }, { "value": "LA2Xi, LA4X, LA8 or LA12X (search snippet)", "source_url": "https://www.l-acoustics.com/products/x8/" } ], "note": "Older spec sheet (02-17) predates later amplifier compatibility." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Simple passive NL4 cabinet; good for fill/delay wiring." }
+    },
+    {
+      "id": "nexo-geo-m10",
+      "brand": "NEXO",
+      "model": "GEO M10 (GEO M1012 / GEO M1025)",
+      "category": "loudspeakers",
+      "sub_type": "line-array",
+      "technology": "Compact 2-way passive line array element, 10\" LF with PDD + 1.4\" throat HF on Hyperbolic Reflective Wavesource; driven by NEXO NXAMP / DTD TDcontroller (per NEXO)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Compact line array from the French manufacturer NEXO (Plailly), aimed at mid-size venues; NEXO says arrays of up to 12 boxes cover audiences of up to 1000. Common in French theatres and rental fleets, and it needs an NXAMP processor-amplifier.",
+      "typical_uses": ["theatre / mid-size venue main PA", "side fill", "front fill", "stacked small PA with MSUB15"],
+      "key_specs": {
+        "frequency_response": "59 Hz to 20 kHz (@-6 dB)",
+        "sensitivity": "100 dB SPL Nominal (1W@1m)",
+        "peak_spl": "136 dB (Peak SPL@1m)",
+        "vertical_dispersion": "12° (GEO M1012) / 25° (GEO M1025)",
+        "horizontal_dispersion": "80° (default) / 120° (with CDD)",
+        "passive_crossover": "1.3 kHz",
+        "nominal_impedance": "8 Ohms",
+        "recommended_power": "750 Watts",
+        "components": "1 x 10\" 8 Ohms long excursion Neodymium driver with PDD; 1 x 1.4\" throat driver on a BEA/FEA optimized HR Wavesource",
+        "recommended_powering": "NXAMP4x2mk2 Powered TDcontroller: up to 3 x GEO M10 per channel; NXAMP4x4: up to 4 per channel; NXAMP4x1mk2: 1 per channel",
+        "dimensions": "288mm x 531mm x 355 mm (11.3\" x 20.9\" x14.0\") (H x W x D)",
+        "weight": "21 kg (47 lbs)",
+        "rigging": "Integrated rigging hardware with AutoRig (touring version); 9 angles between boxes"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "2 x NL4 (1+/1- Through, 2+/2- GEO M10), touring version", "dir": "bidir", "signal": "speaker-level", "count": 2 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-FR.pdf",
+      "datasheet_url": "https://www.nexo-sa.com/wp-content/uploads/GeoM10_datasheet_v1.7.pdf",
+      "product_page_url": "https://www.nexo-sa.com/systems/geo-m/",
+      "manual_languages": ["fr", "en"],
+      "manuals": [
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-FR.pdf", "title": "GEO M10 User Manual (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "Rev03b", "official": true, "kind": "user-manual" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf", "title": "GEO M10 User Manual (EN)", "language": "en", "file_type": "pdf", "version_or_date": "Rev03b", "official": true, "kind": "user-manual" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/GeoM10_datasheet_v1.7.pdf", "title": "GEO M10 Datasheet (EN)", "language": "en", "file_type": "pdf", "version_or_date": "v1.7", "official": true, "kind": "datasheet" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/GeoM10_datasheet_p1_v1.7-FR.pdf", "title": "GEO M10 Datasheet (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "v1.7", "official": true, "kind": "datasheet" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10_MSUB15-Manuel-Systeme-Rev07.pdf", "title": "GEO M10 MSUB15 Manuel Système (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "Rev07", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/GeoM10_datasheet_v1.7.pdf", "publisher": "NEXO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.sensitivity", "key_specs.peak_spl", "key_specs.vertical_dispersion", "key_specs.horizontal_dispersion", "key_specs.passive_crossover", "key_specs.nominal_impedance", "key_specs.recommended_power", "key_specs.components", "key_specs.recommended_powering", "key_specs.dimensions", "key_specs.weight", "key_specs.rigging", "connectors"] },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-FR.pdf", "publisher": "NEXO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.sensitivity", "key_specs.peak_spl", "key_specs.passive_crossover", "key_specs.nominal_impedance", "key_specs.weight", "connectors"] },
+        { "url": "https://www.nexo-sa.com/systems/geo-m/docs-downloads/", "publisher": "NEXO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+      ],
+      "notes": "Install version (GEO M10-I) uses a cable gland with 2-core cable instead of NL4. On the NL4, only 2+/2- feeds the box; 1+/1- is a pass-through, which matters when sharing a cable with an active sub feed.",
+      "conflicts": [
+        { "field": "key_specs.weight", "values": [ { "value": "21 kg (47 lbs)", "source_url": "https://www.nexo-sa.com/wp-content/uploads/GeoM10_datasheet_v1.7.pdf" }, { "value": "21 kg – 46.3 lb", "source_url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-FR.pdf" } ], "note": "Same kg value, different pound rounding." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "NL4 pin 2+/2- vs 1+/1- pass-through is a distinctive speakON lesson; needs NXAMP." }
+    },
+    {
+      "id": "nexo-p12",
+      "brand": "NEXO",
+      "model": "P12",
+      "category": "loudspeakers",
+      "sub_type": "point-source",
+      "technology": "2-way coaxial point source (12\" LF + 3\" diaphragm HF), switchable passive / active (touring version), interchangeable horn flanges; powered by NEXO NXAMP TDcontroller (per NEXO)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "NEXO P+ series point source usable as FOH box or wedge. Its passive/active switch and swappable 60x60 / 90x40 / PS flanges make it a good teaching box for point-source directivity and NL4 pin usage.",
+      "typical_uses": ["small/medium FOH", "stage monitor", "fills", "installed sound"],
+      "key_specs": {
+        "frequency_response": "60 Hz to 20 kHz (@-6 dB)",
+        "sensitivity": "107 dB (1W@1m)",
+        "peak_spl": "138 dB Peak (Passive mode) / 140 dB Peak (Active mode)",
+        "hf_dispersion": "60°x60° (Default) - 90°x40° (with 90x40 flange) - 60°~100°x40° (with PS flange)",
+        "nominal_impedance": "Active: (8 Ω LF + 8 Ω HF) / Passive: 8 Ω",
+        "recommended_power": "Active: (800 to 1270 W LF + 400 to 630 W HF) / Passive: 800 to 1270 W",
+        "components": "1 x Coaxial Neodymium LF 12\" 8 Ohms long excursion & HF 3\" 8 Ohms",
+        "ways": "2 ways passive (2+/2- P12) or 2 ways active (1+/1- LF, 2+/2- HF) switchable (Touring version)",
+        "recommended_powering": "NXAMP4x2mk2 Powered TDcontroller: up to 2 x P12 per channel",
+        "dimensions": "534mm x 432mm x 314 mm (21.0\" x 17.0\" x 12.3\") (H x W x D)",
+        "weight": "20 kg (44 lbs)"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "4 x NL4 (1 per handle + 2 at the back), touring version", "dir": "bidir", "signal": "speaker-level", "count": 4 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://www.nexo-sa.com/wp-content/uploads/P12_P12-TIS-Manuel-utilisateur_Rev02c-FR.pdf",
+      "datasheet_url": "https://www.nexo-sa.com/wp-content/uploads/P12_datasheet_v1.9.pdf",
+      "product_page_url": "https://www.nexo-sa.com/systems/p-series/",
+      "manual_languages": ["fr", "en"],
+      "manuals": [
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/P12_P12-TIS-Manuel-utilisateur_Rev02c-FR.pdf", "title": "P12 / P12-TIS Manuel utilisateur (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "Rev02c", "official": true, "kind": "user-manual" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/P12_P12-TIS-User-Manual_Rev02c-EN.pdf", "title": "P12 / P12-TIS User Manual (EN)", "language": "en", "file_type": "pdf", "version_or_date": "Rev02c", "official": true, "kind": "user-manual" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/P12_datasheet_v1.9.pdf", "title": "P12 Datasheet (EN)", "language": "en", "file_type": "pdf", "version_or_date": "v1.9", "official": true, "kind": "datasheet" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/P12_datasheet_v1.9-FR.pdf", "title": "P12 Datasheet (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "v1.9", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/P12_datasheet_v1.9.pdf", "publisher": "NEXO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.sensitivity", "key_specs.peak_spl", "key_specs.hf_dispersion", "key_specs.nominal_impedance", "key_specs.recommended_power", "key_specs.components", "key_specs.ways", "key_specs.recommended_powering", "key_specs.dimensions", "key_specs.weight", "connectors"] },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/P12_P12-TIS-Manuel-utilisateur_Rev02c-FR.pdf", "publisher": "NEXO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.peak_spl", "key_specs.nominal_impedance", "key_specs.components", "key_specs.weight", "connectors"] },
+        { "url": "https://www.nexo-sa.com/systems/p-series/docs-downloads/", "publisher": "NEXO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals"] }
+      ],
+      "notes": "Chosen instead of the older PS15-R2 because NEXO's current P+ docs page lists P12 (PS15-R2 not found there; not searched further, search budget exhausted). Install version (P12-I) is passive-only with a cable gland.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Passive/active switch changes which NL4 pins are used: strong speakON pinout lesson." }
+    },
+    {
+      "id": "nexo-45n12",
+      "brand": "NEXO",
+      "model": "45N-12",
+      "category": "loudspeakers",
+      "sub_type": "stage-monitor-wedge",
+      "technology": "Stage monitor with 12\" LF + 1.4\" throat compression driver on a 22.5° hyperboloid reflective wavesource; arrayable 'line monitor', active or passive (internally configurable), used with NEXO TDcontroller (per NEXO)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "NEXO calls it the world's first line monitor: several units lock together magnetically to widen coverage. A low-profile wedge often seen in French venues and live TV.",
+      "typical_uses": ["stage monitor wedge", "live TV production monitoring", "arrayed wedge for wide coverage"],
+      "key_specs": {
+        "frequency_response": "55Hz - 19kHz ±3dB",
+        "usable_range": "50Hz - 20kHz (@-6dB)",
+        "sensitivity": "106dB SPL Nominal / 104dB SPL Wideband (1W @ 1m)",
+        "peak_spl": "1 unit: 137 to 140dB Peak / 2 units: 140 to 143dB Peak",
+        "hf_dispersion": "30° Horizontal (scalable 30° steps when arrayed); 60° Vertical (Asymmetrical -45° / +15°)",
+        "crossover": "LF-HF: 1kHz Active or Passive (internally configurable)",
+        "nominal_impedance": "Active LF 8Ω, HF 16Ω. Passive 8Ω.",
+        "recommended_amplifiers": "Active LF 1000 to 1500 W 8Ω / HF 250 to 500 W 16Ω. Passive 1200 to 2000 W 8Ω.",
+        "components": "LF 1 x 12\" (30 cm) high excursion Neodymium 8Ω driver; HF 1 x 3\" voice coil, 1.4\" throat Neodymium 16Ω compression driver",
+        "dimensions": "392 x 492 x 576 mm (15.43\" x 19.37\" x 22.67\") (H x W x D)",
+        "weight": "24 kg (53 lbs)"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "2 x NL4MP speakON 4 pole (Active: 1+/1- LF, 2+/2- HF; Passive: 2+/2- LF+HF)", "dir": "bidir", "signal": "speaker-level", "count": 2 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://www.nexo-sa.com/wp-content/uploads/45N12-User-Manual-Rev01-FR.pdf",
+      "datasheet_url": "https://www.nexo-sa.com/wp-content/uploads/nexo_45-b0n-12-monitor_datasheet.pdf",
+      "product_page_url": "https://www.nexo-sa.com/systems/45n_monitor/docs-downloads/",
+      "manual_languages": ["fr", "en"],
+      "manuals": [
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/45N12-User-Manual-Rev01-FR.pdf", "title": "45N12 Manual (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "Rev01", "official": true, "kind": "user-manual" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/45N12-User-Manual-Rev01EN.pdf", "title": "45N12 Manual (EN)", "language": "en", "file_type": "pdf", "version_or_date": "Rev01", "official": true, "kind": "user-manual" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/nexo_45-b0n-12-monitor_datasheet.pdf", "title": "45N-12 Stage Monitor Preliminary Data Sheet (EN)", "language": "en", "file_type": "pdf", "version_or_date": "E&OE September 2010", "official": true, "kind": "datasheet" },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/45N12_Data_Sheet_FR.pdf", "title": "45N12 Datasheet (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/nexo_45-b0n-12-monitor_datasheet.pdf", "publisher": "NEXO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.usable_range", "key_specs.sensitivity", "key_specs.peak_spl", "key_specs.hf_dispersion", "key_specs.crossover", "key_specs.nominal_impedance", "key_specs.recommended_amplifiers", "key_specs.components", "key_specs.dimensions", "key_specs.weight", "connectors"] },
+        { "url": "https://www.nexo-sa.com/wp-content/uploads/45N12-User-Manual-Rev01-FR.pdf", "publisher": "NEXO", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.usable_range", "key_specs.peak_spl", "key_specs.nominal_impedance", "key_specs.components", "key_specs.weight", "connectors"] }
+      ],
+      "notes": "Datasheet is marked 'Preliminary' (Sept 2010). French manual gives 140dB peak and 50Hz-20kHz (±6dB). Product page URL is the NEXO docs page for the model (product overview page not fetched).",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Same wedge wired active (1+/1- LF, 2+/2- HF) or passive (2+/2-): pinout lesson." }
+    },
+    {
+      "id": "meyer-sound-lina",
+      "brand": "Meyer Sound",
+      "model": "LINA",
+      "category": "loudspeakers",
+      "sub_type": "line-array",
+      "technology": "Self-powered compact line array element: 2 x 6.5\" LF + 3\" compression driver on REM manifold, internal 3-channel Class-D amplifier and processing (per Meyer Sound)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Contrasts with L-Acoustics / NEXO / d&b: Meyer Sound line arrays are self-powered, so each box takes mains (powerCON) and balanced line audio (XLR) instead of a speaker cable. LINA sits in the compact line array slot of Meyer's current range (LEOPARD is now listed as legacy).",
+      "typical_uses": ["theatre and concert hall main PA", "corporate events", "houses of worship", "fills for larger systems"],
+      "key_specs": {
+        "operating_frequency_range": "65 Hz – 18 kHz",
+        "phase_response": "100 Hz – 18 kHz ±45°",
+        "max_spl": "138 dB",
+        "linear_peak_spl": "132 dB with 19 dB crest factor (M-noise), 128 dB (Pink noise), 130 dB (B-noise)",
+        "coverage": "Horizontal 100°; Vertical: Varies, depending on array length and configuration",
+        "transducers": "LF: Two 6.5-inch long-excursion cone drivers, 4 Ω nominal; HF: One 3-inch diaphragm compression driver coupled to a constant-directivity horn through a patented REM manifold, 8 Ω nominal",
+        "amplifier": "3-channel, Class-D; Total output power 1950 W peak",
+        "audio_input": "Differential, electronically balanced",
+        "ac_power": "powerCON 20 input with loop output; Automatic voltage selection 90–265 V AC, 50–60 Hz",
+        "weight": "43 lb (19.5 kg)",
+        "dimensions": "W: 20.27 in (515 mm) x H: 8.38 in (213 mm) x D: 15.32 in (389 mm)",
+        "rigging": "End frames with captive GuideALinks; 0° to 11° splay angles"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "audio input (optional XLR 5-pin for audio + RMS)", "dir": "in", "signal": "line-level-pro", "count": 1 },
+        { "connector": "xlr3-m", "role": "audio loop output", "dir": "out", "signal": "line-level-pro", "count": 1 },
+        { "connector": "powercon-blue", "role": "powerCON 20 AC input", "dir": "in", "signal": "mains-power", "count": 1 },
+        { "connector": "powercon-grey", "role": "powerCON 20 AC loop output", "dir": "out", "signal": "mains-power", "count": 1 }
+      ],
+      "signal_types": ["line-level-pro", "mains-power"],
+      "manual_url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+      "datasheet_url": "https://docs-prod.meyersound.com/products/en/datasheet---lina.html",
+      "product_page_url": "https://docs.meyersound.com/products/en/lina.html",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html", "title": "Operating Instructions — LINA", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://docs-prod.meyersound.com/products/en/datasheet---lina.html", "title": "Datasheet — LINA", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://docs-prod.meyersound.com/products/en/datasheet---lina.html", "publisher": "Meyer Sound", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.operating_frequency_range", "key_specs.phase_response", "key_specs.max_spl", "key_specs.linear_peak_spl", "key_specs.coverage", "key_specs.transducers", "key_specs.amplifier", "key_specs.audio_input", "key_specs.ac_power", "key_specs.weight", "key_specs.dimensions", "key_specs.rigging", "connectors"] },
+        { "url": "https://docs-prod.meyersound.com/products/en/line-array.html", "publisher": "Meyer Sound", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manuals", "status"] }
+      ],
+      "notes": "Swapped in for LEOPARD, which Meyer's documentation site now files under Legacy. Single-source specs. The datasheet says 'powerCON 20 input with loop output' without colour; blue input / grey loop is the standard powerCON 20 convention (assumption, verify). Optional two-conductor RMS remote-monitoring network not listed as a connector.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["powercon-grey"], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Self-powered line array: XLR in/loop + powerCON in/loop, contrast with amp-driven arrays." }
+    },
+    {
+      "id": "db-audiotechnik-y10p",
+      "brand": "d&b audiotechnik",
+      "model": "Y10P",
+      "category": "loudspeakers",
+      "sub_type": "passive",
+      "technology": "Passive 2-way high-performance point source (2 x 8\" neodymium + 1.4\" compression driver, rotatable horn), passive crossover, driven by d&b D40/D80/D90/D25 amplifiers (per d&b)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "d&b passive point sources are standard rental-fleet stock; the Y10P shows that a 'passive' cabinet still needs a matched d&b DSP amplifier, and that max SPL depends on which amplifier drives it.",
+      "typical_uses": ["small/medium FOH", "front fill", "delay", "side fill", "theatre"],
+      "key_specs": {
+        "frequency_response": "59 Hz - 18 kHz (-5 dB, mode normal); 118 Hz - 18 kHz (-5 dB, mode CUT)",
+        "max_spl": "131 dB (avec 10D), 134 dB (avec D25/25D), 136 dB (avec D40/D80/D90/40D)",
+        "dispersion": "110° x 40° (h x v)",
+        "drivers": "2 x 8\" (20,3 cm) à aimant néodyme; 1 x haut-parleur d'aigus à chambre de compression de 1,4\"",
+        "crossover": "Passif",
+        "nominal_impedance": "8 Ω",
+        "power_handling": "400 W / 1600 W (RMS / crête 10 ms)",
+        "cabinets_per_amp_channel": "2",
+        "compatible_amplifiers": "Mobiles: D40, D80, D90, D25; Installation: 40D, 25D, 10D",
+        "dimensions": "580 x 257 x 341 mm (22,8 x 10 x 13,4\") (h x l x p)",
+        "weight": "18 kg (40 lb)"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "2 x NLT4 F/M (option 2 x NL4 M or EP5); pins 1+/1-", "dir": "bidir", "signal": "speaker-level", "count": 2 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/y-series/dbaudio-manual-y7p-y10p-1.3-fr.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-y/y10p/",
+      "manual_languages": ["fr", "en"],
+      "manuals": [
+        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/y-series/dbaudio-manual-y7p-y10p-1.3-fr.pdf", "title": "Y7P/Y10P Manuel 1.3 (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "1.3, 03/2023", "official": true, "kind": "user-manual" },
+        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/y-series/dbaudio-manual-y7p-y10p-1.3-en.pdf", "title": "Y7P/Y10P Manual 1.3 (EN)", "language": "en", "file_type": "pdf", "version_or_date": "1.3", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-y/y10p/", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.max_spl", "key_specs.dispersion", "key_specs.drivers", "key_specs.crossover", "key_specs.nominal_impedance", "key_specs.power_handling", "key_specs.cabinets_per_amp_channel", "key_specs.compatible_amplifiers", "key_specs.dimensions", "key_specs.weight", "connectors", "manuals"] },
+        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/y-series/dbaudio-manual-y7p-y10p-1.3-fr.pdf", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.max_spl", "key_specs.weight", "connectors"] }
+      ],
+      "notes": "NLT4 F/M is Neutrik's speakON-compatible chassis that accepts NL4 cable plugs; mapped to speakon-nl4. The manual's max-SPL table names amplifiers D6 (131 dB), D12/D20 (134 dB), D80/D40 (136 dB), while the current web page names 10D, D25/25D, D40/D80/D90/40D for the same values. Product page notes the HF driver size inconsistently (3,6 cm vs 3,3 cm). d&b gives specs on the web page; no separate datasheet PDF.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Textbook passive box: D80 speaker-level out -> NL4 (1+/1-) -> Y10P, link to second box (2 per channel)." }
+    },
+    {
+      "id": "db-audiotechnik-v8",
+      "brand": "d&b audiotechnik",
+      "model": "V8",
+      "category": "loudspeakers",
+      "sub_type": "line-array",
+      "technology": "Passive 3-way high-performance line array element (2 x 10\", 1 x 8\", 2 x 1.4\" compression drivers), passive crossover, driven by d&b D40/D80 (per d&b)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "d&b V-Series is a widespread touring and venue line array in Europe. Unlike K2 (multi-way active), V8 is a passive line array element on a single NL4 pair, two boxes per amp channel.",
+      "typical_uses": ["concert hall / venue main PA", "touring", "festival second stage"],
+      "key_specs": {
+        "frequency_response": "67 Hz - 18 kHz (-5 dB, mode normal); 100 Hz - 18 kHz (-5 dB, mode CUT)",
+        "max_spl": "142 dB (avec D40/D80/D90/40D) (crête à 1 m, champ libre, bruit rose facteur de crête 4)",
+        "horizontal_dispersion": "80° (à partir de 250 Hz)",
+        "splay_angles": "0 à 14° (pas de 1°)",
+        "drivers": "2 × 10\" (25,4 cm); 1 × 8\" (20,3 cm); 2 × chambres de compression aiguës 1,4\" (3,6 cm)",
+        "crossover": "Passif",
+        "nominal_impedance": "8 Ω",
+        "power_handling": "500 W RMS / 2000 W crête (10 ms)",
+        "cabinets_per_amp_channel": "2",
+        "compatible_amplifiers": "Mobiles: D40, D80; Installation: 40D",
+        "dimensions": "310 × 700 × 460 mm (12,2 × 27,5 × 18\") (H × L × P)",
+        "weight": "34 kg (75 lb)",
+        "rigging": "Suspension en colonne jusqu'à 24 enceintes"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "2 × NLT4 F/M (option 2 × NL4); pins 1+/1-", "dir": "bidir", "signal": "speaker-level", "count": 2 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-v/v8/",
+      "manual_languages": ["fr"],
+      "manuals": [
+        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf", "title": "V8/V12 Manuel 1.8 (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "1.8, 12/2022", "official": true, "kind": "user-manual" },
+        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf", "title": "V-Series Rigging manual 1.12 (EN)", "language": "en", "file_type": "pdf", "version_or_date": "1.12", "official": true, "kind": "other" }
+      ],
+      "sources": [
+        { "url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-v/v8/", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.max_spl", "key_specs.horizontal_dispersion", "key_specs.splay_angles", "key_specs.drivers", "key_specs.crossover", "key_specs.nominal_impedance", "key_specs.power_handling", "key_specs.cabinets_per_amp_channel", "key_specs.compatible_amplifiers", "key_specs.dimensions", "key_specs.weight", "key_specs.rigging", "connectors", "manuals"] },
+        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.max_spl", "key_specs.weight", "connectors"] }
+      ],
+      "notes": "English V8/V12 manual not listed on the French product page (not searched further, search budget exhausted). Manual SPL table shows 139 dB / 142 dB depending on amplifier.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Passive line array on NL4 1+/1-; pairs with V-SUB on 2+/2- in the same cable." }
+    },
+    {
+      "id": "db-audiotechnik-v-sub",
+      "brand": "d&b audiotechnik",
+      "model": "V-SUB",
+      "category": "loudspeakers",
+      "sub_type": "subwoofer",
+      "technology": "Cardioid subwoofer: front-facing 18\" bass-reflex + rear-facing 12\" in two-chamber resonator, passive, driven by d&b D40/D80/D90 (per d&b)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Single-box cardioid subwoofer of the d&b V-Series, flown above V8/V12 or ground-stacked. Notably wired on speakON pins 2+/2-, unlike d&b tops on 1+/1-.",
+      "typical_uses": ["flown sub with V-Series", "ground-stacked sub", "venue LF extension"],
+      "key_specs": {
+        "frequency_response": "37 - 115 Hz (-5 dB, mode normal); 37 - 95 Hz (-5 dB, mode 100 Hz)",
+        "max_spl": "137 dB avec D40, D80, D90 ou 40D (1 m, champ libre, bruit rose facteur de crête 4)",
+        "directivity": "cardioïde",
+        "drivers": "1 x 18\" (45,7 cm) bass-reflex vers l'avant; 1 x 12\" dans un résonateur à deux chambres vers l'arrière",
+        "nominal_impedance": "8 Ω",
+        "power_handling": "800 W RMS / 3200 W crête (10 ms)",
+        "cabinets_per_amp_channel": "2",
+        "compatible_amplifiers": "Mobiles: D40, D80, D90; Installation: 40D",
+        "weight": "64 kg (141 lb)",
+        "rigging": "Accrochable (en haut d'un array V8/V12 ou colonne distincte) ou empilable; insert fileté M20 sur le dessus"
+      },
+      "connectors": [
+        { "connector": "speakon-nl4", "role": "2 x NLT4 F/M (option 2 x NL4 M or EP5); pins 2+/2-", "dir": "bidir", "signal": "speaker-level", "count": 2 }
+      ],
+      "signal_types": ["speaker-level"],
+      "manual_url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-v/v-sub/",
+      "manual_languages": ["fr"],
+      "manuals": [
+        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf", "title": "V-SUB Manuel 1.5 (FR)", "language": "fr", "file_type": "pdf", "version_or_date": "1.5, 01/2023", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-v/v-sub/", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.max_spl", "key_specs.directivity", "key_specs.drivers", "key_specs.nominal_impedance", "key_specs.power_handling", "key_specs.cabinets_per_amp_channel", "key_specs.compatible_amplifiers", "key_specs.weight", "key_specs.rigging", "connectors", "manuals"] },
+        { "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf", "publisher": "d&b audiotechnik", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.max_spl", "key_specs.nominal_impedance", "key_specs.weight", "connectors"] }
+      ],
+      "notes": "Manual confirms pin assignment 2+/2- (NLT4 F/M and NL4 M). Dimensions on the web page were garbled ('606 x 700 x 7283 / 830 mm', footnote 3 = without wheels) so not recorded. English manual not listed on the French product page.",
+      "conflicts": [
+        { "field": "key_specs.drivers", "values": [ { "value": "12\" (38,1 cm) in spec table", "source_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-v/v-sub/" }, { "value": "12\" (30,5 cm) in highlights", "source_url": "https://www.dbaudio.com/fr/fr/produits/serie/serie-v/v-sub/" } ], "note": "Metric conversion inconsistent on the same page; 12\" = 30,5 cm arithmetically, but no conversion is recorded here." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Sub on NL4 pins 2+/2- vs tops on 1+/1-: classic 'no sound from sub' troubleshooting lesson." }
+    },
+    {
+      "id": "rcf-hdl-30-a",
+      "brand": "RCF",
+      "model": "HDL 30-A",
+      "category": "loudspeakers",
+      "sub_type": "active-powered",
+      "technology": "Active 2-way line array module (2 x 10\" + 1.4\" compression driver), internal amplifier 2200 W peak and DSP, RDNet networked control (per RCF)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Self-powered line array popular with small and mid-size rental companies; each module takes XLR audio, powerCON mains and an RDNet etherCON control link, which makes it a clear example of an active line array.",
+      "typical_uses": ["active line array for mid-size events", "festival second stage", "corporate events"],
+      "key_specs": {
+        "frequency_response": "50 Hz - 20000 Hz",
+        "max_spl": "137 dB (Max SPL @ 1m)",
+        "coverage": "Horizontal 100°; Vertical 15°",
+        "drivers": "Compression driver 1 x 1.4'' neo, 4.0'' v.c; Woofer 2 x 10'' neo, 2.5'' v.c",
+        "amplifier": "Total 2200 W Peak, 1100 W RMS (HF 600 W Peak, 300 W RMS; LF 1600 W Peak, 800 W RMS)",
+        "crossover": "680 Hz",
+        "input_sensitivity": "+4 dBu",
+        "dimensions": "Height 293 mm; Width 705 mm; Depth 502 mm",
+        "weight": "25 kg / 55.12 lbs",
+        "rigging": "Up to 20 HDL 30-A modules on a single flybar; J-shaped and spiral arrays starting with 0.2° angles"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "audio input (bal/unbal)", "dir": "in", "signal": "line-level-pro", "count": 1 },
+        { "connector": "xlr3-m", "role": "audio output (link)", "dir": "out", "signal": "line-level-pro", "count": 1 },
+        { "connector": "ethercon", "role": "RDNet input (control/monitoring)", "dir": "in", "signal": "RDNet control (proprietary RS-485-type network, not audio)", "count": 1 },
+        { "connector": "ethercon", "role": "RDNet output", "dir": "out", "signal": "RDNet control", "count": 1 },
+        { "connector": "powercon-blue", "role": "powerCON IN", "dir": "in", "signal": "mains-power", "count": 1 },
+        { "connector": "powercon-grey", "role": "powerCON OUT (link)", "dir": "out", "signal": "mains-power", "count": 1 }
+      ],
+      "signal_types": ["line-level-pro", "mains-power"],
+      "manual_url": "https://www.rcf.it/en/products/product-detail/hdl-30-a?p_p_id=it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=downloadProductFileEntry&p_p_cacheability=cacheLevelPage&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_productCode=STP0691&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_profileId=409719",
+      "datasheet_url": "https://www.rcf.it/en/products/product-detail/hdl-30-a?p_p_id=it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=downloadProductFileEntry&p_p_cacheability=cacheLevelPage&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_productCode=STP0691&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_profileId=237234",
+      "product_page_url": "https://www.rcf.it/en/products/product-detail/hdl-30-a/",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://www.rcf.it/en/products/product-detail/hdl-30-a?p_p_id=it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=downloadProductFileEntry&p_p_cacheability=cacheLevelPage&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_productCode=STP0691&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_profileId=409719", "title": "HDL 30-A User Manual (ENG)", "language": "en", "file_type": "pdf", "version_or_date": "20-10-2025", "official": true, "kind": "user-manual" },
+        { "url": "https://www.rcf.it/en/products/product-detail/hdl-30-a?p_p_id=it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=downloadProductFileEntry&p_p_cacheability=cacheLevelPage&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_productCode=STP0691&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_profileId=237234", "title": "HDL 30-A Specsheet (ENG)", "language": "en", "file_type": "pdf", "version_or_date": "20-10-2025", "official": true, "kind": "spec-sheet" },
+        { "url": "https://www.rcf.it/en/products/product-detail/hdl-30-a?p_p_id=it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=downloadProductFileEntry&p_p_cacheability=cacheLevelPage&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_productCode=STP0691&_it_dvel_rcf_products_frontend_web_portlet_ProductInformationsPortlet_profileId=268311", "title": "HDL 30-A Specsheet (FRA)", "language": "fr", "file_type": "pdf", "version_or_date": "20-10-2025", "official": true, "kind": "spec-sheet" }
+      ],
+      "sources": [
+        { "url": "https://www.rcf.it/en/products/product-detail/hdl-30-a/", "publisher": "RCF", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.max_spl", "key_specs.coverage", "key_specs.drivers", "key_specs.amplifier", "key_specs.crossover", "key_specs.input_sensitivity", "key_specs.dimensions", "key_specs.weight", "key_specs.rigging", "connectors", "manuals"] }
+      ],
+      "notes": "Single-source specs (RCF product page); PDFs not opened. Sub_type set to active-powered (it is also a line array). powerCON colour/type (blue/grey vs TRUE1) not stated on the page: blue in / grey out assumed. RDNet on etherCON is control only; no TekPractice signal id fits, so it is left out of signal_types.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["powercon-grey"], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Active line array: XLR + powerCON daisy-chain + etherCON control, all distinct connectors." }
+    },
+    {
+      "id": "ev-evolve-50m-g2",
+      "brand": "Electro-Voice",
+      "model": "EVOLVE 50M G2",
+      "category": "loudspeakers",
+      "sub_type": "column",
+      "technology": "Portable powered column system: 12\" woofer + 8 x 3.5\" neodymium column drivers, 1,500 W Class-D, built-in 8-channel digital mixer (per Electro-Voice)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Second generation of the EVOLVE 50 column system, a common all-in-one PA for small venues, bars and conferences; the M version adds a built-in digital mixer with switchable phantom power.",
+      "typical_uses": ["small-venue PA", "singer-songwriter / DJ", "conference and speech", "school events"],
+      "key_specs": {
+        "frequency_response": "43 Hz to 20 kHz",
+        "frequency_range": "37 Hz to 20 kHz (-10 dB)",
+        "max_spl": "129 dB",
+        "coverage": "120 × 40 (120° horizontal by 40° down-tilted vertical)",
+        "lf_driver": "(1) 12-inch woofer",
+        "hf_drivers": "(8) 3.5-inch neodymium drivers",
+        "amplifier": "1,500 W Class-D",
+        "mixer": "built-in 8-channel digital mixer",
+        "phantom_power": "switchable 48 V"
+      },
+      "connectors": [],
+      "signal_types": ["mic-level", "line-level-pro", "phantom-48v", "mains-power"],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.electrovoice.com/product/evolve-50m-g2",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://www.electrovoice.com/product/evolve-50m-g2", "publisher": "Electro-Voice", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.frequency_range", "key_specs.max_spl", "key_specs.coverage", "key_specs.lf_driver", "key_specs.hf_drivers", "key_specs.amplifier", "key_specs.mixer", "key_specs.phantom_power", "status"] },
+        { "url": "https://www.electrovoice.com/product/evolve-50-g2", "publisher": "Electro-Voice", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.frequency_range", "key_specs.max_spl", "key_specs.coverage", "key_specs.amplifier"] }
+      ],
+      "notes": "Connector list left empty: EV's full spec table and documents page are rendered by JavaScript and returned no data (documents page showed 0 files); not searched further (search budget exhausted). Signal types are inferred from the mixer and 48 V phantom features only. Sister model EVOLVE 50 G2 (no mixer) has the same acoustic figures on its page.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Column with built-in mixer and phantom power; connector panel still to be sourced." }
+    },
+    {
+      "id": "bose-l1-pro32",
+      "brand": "Bose Professional",
+      "model": "L1 Pro32",
+      "category": "loudspeakers",
+      "sub_type": "column",
+      "technology": "Self-powered portable line array (column) with 32 articulated 2\" drivers, 2-channel Class D amplification, onboard 3-channel digital mixer; used with Sub1 or Sub2 bass module via SubMatch (per Bose)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "The Bose L1 family popularised the portable column PA with 180° horizontal coverage; the Pro32 is Bose's top model of the current L1 Pro range and pairs with a separate bass module.",
+      "typical_uses": ["singer-songwriter / band PA", "mobile DJ", "weddings and corporate events", "conference"],
+      "key_specs": {
+        "frequency_range": "30 Hz – 18 kHz (-10 dB) (product page)",
+        "max_spl": "128 dB (Calculated Maximum SPL @ 1 m, product page)",
+        "coverage": "Horizontal 180°; Vertical 0°",
+        "crossover": "200 Hz",
+        "array_drivers": "32 × 2 in (51 mm) drivers",
+        "amplification": "2 channels, Class D; Power Handling, Peak: 480 W (product page); with Sub1: LF amp channel 480 W, high/mid amp channel 480 W (technical data)",
+        "mixer_inputs": "(1) XLR-1/4-in TRS combo, (1) 1/4-in TRS, (1) 1/8-in TRS, Bluetooth audio streaming; 3 input channels (product page)",
+        "phantom_power": "48 VDC, Channels 1 & 2",
+        "ac_power": "100–240 VAC (±15%, 50/60 Hz) (product page); IEC",
+        "weight": "28.9 lb (13.1 kg) net",
+        "dimensions": "83.5 in × 13.8 in × 22.5 in (2120 mm × 351 mm × 573 mm) (H×W×D)"
+      },
+      "connectors": [
+        { "connector": "xlr3-f", "role": "Channel 1 & 2 combo XLR/TRS input (mic/instrument/line), XLR part", "dir": "in", "signal": "mic-level", "count": 2 },
+        { "connector": "trs-quarter", "role": "Channel 1 & 2 combo input, 1/4\" TRS part (2 MΩ)", "dir": "in", "signal": "instrument-hiz", "count": 2 },
+        { "connector": "trs-quarter", "role": "Channel 3 1/4\" TRS line input", "dir": "in", "signal": "line-level-pro", "count": 1 },
+        { "connector": "trs-35mm", "role": "Channel 3 1/8\" TRS (stereo-summed, line)", "dir": "in", "signal": "line-level-consumer", "count": 1 },
+        { "connector": "xlr3-m", "role": "line output, full-frequency bandwidth", "dir": "out", "signal": "line-level-pro", "count": 1 },
+        { "connector": "rj45", "role": "ToneMatch port (digital audio + power to optional T4S/T8S mixer)", "dir": "bidir", "signal": "ToneMatch proprietary digital audio + power", "count": 1 },
+        { "connector": "usb-c", "role": "computer interface (USB Type-C)", "dir": "bidir", "signal": "USB service/control", "count": 1 },
+        { "connector": "iec-c14", "role": "AC power inlet (IEC)", "dir": "in", "signal": "mains-power", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "instrument-hiz", "line-level-pro", "line-level-consumer", "phantom-48v", "mains-power"],
+      "manual_url": "https://assets.boseprofessional.com/m/7e899d7e691aeaab/original/og_l1_pro32_ml.pdf",
+      "datasheet_url": "https://assets.boseprofessional.com/m/13c094483942315f/original/tds_L1Pro32_Sub1.pdf",
+      "product_page_url": "https://boseprofessional.com/products/portable-pa/powered-loudspeakers/l1-powered-loudspeakers/l1-pro32-portable-line-array-system",
+      "manual_languages": ["multi"],
+      "manuals": [
+        { "url": "https://assets.boseprofessional.com/m/7e899d7e691aeaab/original/og_l1_pro32_ml.pdf", "title": "L1 Pro32 Owner's Manual (multilingual)", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://assets.boseprofessional.com/m/1257225519efd25e/original/qsg_l1_pro32_ml.pdf", "title": "L1 Pro32 Quick Start Guide (multilingual)", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
+        { "url": "https://assets.boseprofessional.com/m/13c094483942315f/original/tds_L1Pro32_Sub1.pdf", "title": "Technical Data Sheet, L1 Pro32 + Sub1", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" },
+        { "url": "https://assets.boseprofessional.com/m/53a011e0ccb59791/original/tds_L1Pro32_Sub2.pdf", "title": "Technical Data Sheet, L1 Pro32 + Sub2", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://boseprofessional.com/products/portable-pa/powered-loudspeakers/l1-powered-loudspeakers/l1-pro32-portable-line-array-system", "publisher": "Bose Professional", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_range", "key_specs.max_spl", "key_specs.coverage", "key_specs.crossover", "key_specs.array_drivers", "key_specs.amplification", "key_specs.mixer_inputs", "key_specs.phantom_power", "key_specs.ac_power", "key_specs.weight", "key_specs.dimensions", "manuals"] },
+        { "url": "https://assets.boseprofessional.com/m/13c094483942315f/original/tds_L1Pro32_Sub1.pdf", "publisher": "Bose Professional", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.coverage", "key_specs.crossover", "key_specs.array_drivers", "key_specs.amplification", "key_specs.mixer_inputs", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] }
+      ],
+      "notes": "Bass comes from a separate Sub1 or Sub2 powered bass module linked by the included SubMatch cable (SubMatch connector type not specified, so not listed). The French product page exists (boseprofessional.com/fr/...), and the owner's manual is multilingual (French content assumed, not checked).",
+      "conflicts": [
+        { "field": "key_specs.max_spl", "values": [ { "value": "128 dB (calculated max SPL @ 1 m, product page)", "source_url": "https://boseprofessional.com/products/portable-pa/powered-loudspeakers/l1-powered-loudspeakers/l1-pro32-portable-line-array-system" }, { "value": "117 dB continuous / 123 dB peak (L1 Pro32 + Sub1)", "source_url": "https://assets.boseprofessional.com/m/13c094483942315f/original/tds_L1Pro32_Sub1.pdf" } ], "note": "System-dependent: the product page figure likely refers to the Sub2 configuration; not stated." },
+        { "field": "key_specs.frequency_range", "values": [ { "value": "30 Hz – 18 kHz (-10 dB)", "source_url": "https://boseprofessional.com/products/portable-pa/powered-loudspeakers/l1-powered-loudspeakers/l1-pro32-portable-line-array-system" }, { "value": "32 Hz to 18 kHz (-10 dB) with Sub1", "source_url": "https://assets.boseprofessional.com/m/13c094483942315f/original/tds_L1Pro32_Sub1.pdf" } ], "note": "Depends on which bass module is used." },
+        { "field": "key_specs.ac_power", "values": [ { "value": "100–240 VAC (±15%, 50/60 Hz)", "source_url": "https://boseprofessional.com/products/portable-pa/powered-loudspeakers/l1-powered-loudspeakers/l1-pro32-portable-line-array-system" }, { "value": "100–240 VAC (±20%, 50/60 Hz)", "source_url": "https://assets.boseprofessional.com/m/13c094483942315f/original/tds_L1Pro32_Sub1.pdf" } ], "note": "Tolerance differs between documents." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Column with mixer, phantom, ToneMatch RJ45 and separate powered sub link." }
+    }
+  ]
+}

@@ -1,0 +1,829 @@
+{
+  "file": "microphones-specialty.json",
+  "category": "microphones",
+  "generated": "2026-10-22",
+  "selection_rationale": "Specialty microphones chosen to teach powering and connector differences rather than tone: RF condenser and battery/phantom shotguns for film/ENG (MKH 416, CMIT 5, NTG2, NTG5), lavalier/headset/electret capsules on P48, transmitter bias or plug-in power with TA4/LEMO/3.5 mm plugs (Sanken COS-11D, COS-11D HWM, RØDE Lavalier II), XLR5 stereo and binaural systems including the French ORTF reference (SCHOEPS MSTC 74, MKH 418-S, RØDE NT4, Neumann USM 69 i and KU 100), a boundary capsule with separate amplifier, measurement mics, a condenser contact pickup and a USB-C mic. Candidates on sites that could not be read (DPA, Shure, Audio-Technica, Behringer, Crown, Schertler, Sennheiser AMBEO / MKE 2) were swapped for equivalent, fully sourced models after the shared search budget ran out.",
+  "not_found_log": [
+    { "device_id": "dpa-4060 / dpa-4088", "what": "Specs and manuals (lavalier / headset candidates)", "searched": "dpamicrophones.com product pages fetched: spec and download tabs are script-rendered and empty; search budget exhausted" },
+    { "device_id": "shure-beta-91a / shure-mv7-plus", "what": "Specs and user guides (boundary / USB candidates)", "searched": "shure.com product page (no numeric specs), shure.com/en-US/docs/guide/BETA91A and MV7PLUS (script-rendered), pubs.shure.com PDF redirects; search budget exhausted" },
+    { "device_id": "audio-technica-at8022", "what": "Specs (stereo X/Y candidate)", "searched": "audio-technica.com/en-us/at8022 returned 403; search budget exhausted" },
+    { "device_id": "behringer-ecm8000 / crown-pzm-30d", "what": "Specs (measurement / PZM candidates)", "searched": "search budget exhausted; behringer.com model page guess returned 404" },
+    { "device_id": "schertler / k-and-k-pure-mini", "what": "Piezo pickup specs", "searched": "schertler.com homepage had no product links in HTML; kksound.com returned 403; search budget exhausted" },
+    { "device_id": "sennheiser-ambeo-vr-mic / sennheiser-mke-2-gold / sennheiser-mke-600", "what": "Product pages and specs", "searched": "sennheiser.com catalog URLs returned 404 or closed connection; search budget exhausted" },
+    { "device_id": "sennheiser-mkh-416", "what": "Product page", "searched": "sennheiser.com/en-in catalog URL from search returned 404; docs.cloud.sennheiser.com specs page returned 404" },
+    { "device_id": "sanken-cos-11d", "what": "User manual (only spec sheet found)", "searched": "sanken-mic.com/en/download/index.cfm" },
+    { "device_id": "neumann-ku-100 / neumann-usm-69-i", "what": "Operating manuals", "searched": "neumann.com product pages (Downloads tab is script-loaded, no PDF links in HTML)" },
+    { "device_id": "schoeps-mstc-74", "what": "MSTC 74-specific manual and French manual", "searched": "schoeps.de MSTC 74 page links only an MSTC (64 Ug) user guide; documents-and-downloads pages" },
+    { "device_id": "akg-c411-pp", "what": "Official manual on akg.com / harman", "searched": "search 'AKG C411 user instructions pdf akg.com' returned only third-party copies; Harman support page and cut sheet returned HTTP 500" },
+    { "device_id": "all", "what": "French manuals", "searched": "Found only for Sennheiser MKH 416; others: search budget exhausted" },
+    { "device_id": "all", "what": "year_introduced", "searched": "Only SCHOEPS CMIT 5 states it (2005); others not stated on pages read; search budget exhausted" }
+  ],
+  "devices": [
+    {
+      "id": "sennheiser-mkh-416",
+      "brand": "Sennheiser",
+      "model": "MKH 416 (MKH 416-P48U3)",
+      "category": "microphones",
+      "sub_type": "shotgun-interference-tube",
+      "technology": "RF condenser short shotgun: pressure-gradient microphone with short interference tube, transformerless, fully floating balanced output (per Sennheiser product specification).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Sennheiser itself calls the MKH 416 'venerable' and positions it for difficult exterior filming and reporting. Its RF condenser design is described by the maker as highly immune to humidity, which is why it is a long-standing boom and ENG mic.",
+      "typical_uses": ["film and TV boom dialogue", "ENG / outdoor reportage", "voice-over", "broadcast"],
+      "key_specs": {
+        "polar_pattern": ["lobar-shotgun", "supercardioid"],
+        "polar_pattern_as_stated": "super-cardioid/lobar",
+        "transducer": "RF condenser microphone",
+        "frequency_response": "40 - 20,000 Hz",
+        "sensitivity": "25 mV/PA ± 1 dB (free field, no load, 1 kHz)",
+        "nominal_impedance": "25 Ω",
+        "min_terminating_impedance": "approx. 800 Ω",
+        "equivalent_noise": "approx. 24 dB CCIR-weighted (CCIR468-3); approx. 13 dB A-weighted",
+        "max_spl": "130 dB SPL",
+        "phantom_power": "48 V ± 4 V phantom powering (P48 only; no battery option)",
+        "current_consumption": "approx. 2 mA",
+        "connector": "3-pol. XLR connector",
+        "pin_assignment": "1: Ground, housing; supply (–) / 2: NF (+); supply (+) / 3: NF (-); supply (-)",
+        "temperature_range": "-10 °C to + 70 °C",
+        "dimensions": "Ø 19 x 250 mm",
+        "weight": "175 g"
+      },
+      "connectors": [
+        { "connector": "xlr3-m", "role": "mic output (balanced, P48 in)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://www.sennheiser.com/globalassets/digizuite/41138-en-mkh_416_manual_03_2024.pdf",
+      "datasheet_url": "https://www.sennheiser.com/globalassets/digizuite/41790-en-sp_1303_v1.0_mkh_416_product_specification_en.pdf",
+      "product_page_url": "not found",
+      "manual_languages": ["fr", "en"],
+      "manuals": [
+        { "url": "https://www.sennheiser.com/globalassets/digizuite/41138-en-mkh_416_manual_03_2024.pdf", "title": "MKH 416 instruction manual (French; redirect target file named MKH_416_Manual_10_2025_FR.pdf)", "language": "fr", "file_type": "pdf", "version_or_date": "URL says 03_2024; served file named 10_2025_FR", "official": true, "kind": "user-manual" },
+        { "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s_instruction_manual_02_2026_en.pdf", "title": "MKH 416 | MKH 418-S instruction manual", "language": "en", "file_type": "pdf", "version_or_date": "02/2026", "official": true, "kind": "user-manual" },
+        { "url": "https://www.sennheiser.com/globalassets/digizuite/41790-en-sp_1303_v1.0_mkh_416_product_specification_en.pdf", "title": "SP 1303 v1.0 MKH 416 Product Specification", "language": "en", "file_type": "pdf", "version_or_date": "v1.0", "official": true, "kind": "spec-sheet" }
+      ],
+      "sources": [
+        { "url": "https://www.sennheiser.com/globalassets/digizuite/41790-en-sp_1303_v1.0_mkh_416_product_specification_en.pdf", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.current_consumption", "key_specs.weight", "key_specs.dimensions", "connectors", "why_it_is_a_classic"] },
+        { "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s_instruction_manual_02_2026_en.pdf", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.current_consumption", "key_specs.weight", "key_specs.dimensions", "connectors", "status"] },
+        { "url": "https://recordinghacks.com/microphones/sennheiser/mkh-416", "publisher": "Recordinghacks", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "other", "covers": ["key_specs.frequency_response", "key_specs.max_spl", "key_specs.weight", "key_specs.polar_pattern"] }
+      ],
+      "notes": "Phantom-only (P48 ± 4 V); the RF principle means it will not run on 12 V or battery. The French manual URL (from search results) redirects to a file named MKH_416_Manual_10_2025_FR.pdf. Sennheiser product page from search (sennheiser.com/en-in/...) returned 404, so product_page_url is 'not found'. A French retailer (DC Audiovisuel, seen only in search snippet) listed 165 g and 48 ±12 V; not recorded as a conflict because the page was not read.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Standard XLR3 + P48, but a good 'phantom-only RF condenser' lesson for boom/ENG scenarios." }
+    },
+    {
+      "id": "sennheiser-mkh-418-s",
+      "brand": "Sennheiser",
+      "model": "MKH 418-S",
+      "category": "microphones",
+      "sub_type": "stereo-ambisonic",
+      "technology": "RF condenser M/S stereo shotgun: M = pressure gradient / interference tube receiver (super-cardioid/lobar), S = pressure gradient receiver (figure-of-eight), per Sennheiser manual.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "It puts an M/S stereo pair inside a shotgun body, so a boom operator can record dialogue plus a decodable stereo image on one 5-pin XLR. It shares its manual and RF principle with the MKH 416.",
+      "typical_uses": ["M/S stereo for film/TV location", "sports and nature ambience", "ENG stereo"],
+      "key_specs": {
+        "polar_pattern": ["lobar-shotgun", "figure-8"],
+        "polar_pattern_as_stated": "M: super-cardioid/lobar; S: figure-of-eight",
+        "frequency_response": "40 - 20,000 Hz",
+        "sensitivity": "M: 25 mV/Pa (-32 dBV); S: 10 mV/Pa (-40 dBV) (1 kHz)",
+        "output_impedance": "< 25 Ω (1 kHz)",
+        "min_load_impedance": "1 kΩ",
+        "equivalent_noise": "M: 14 dB-A / 26 dB-CCIR; S: 22 dB-A / 34 dB-CCIR",
+        "max_spl": "130 dB SPL (63 Pa)",
+        "phantom_power": "P48: 48 ± 4 V / 2 x 2.3 mA (one phantom feed per channel through the 5-pin XLR)",
+        "max_output_voltage": "max. 1.5 V",
+        "connector": "5-pin XLR, male",
+        "temperature_range": "Operation: -20 to +60 °C",
+        "dimensions": "Ø 19 mm x 280 mm",
+        "weight": "220 g"
+      },
+      "connectors": [
+        { "connector": "xlr5-m", "role": "stereo M/S output (M and S channels, P48 on both)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s_instruction_manual_02_2026_en.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s_instruction_manual_02_2026_en.pdf", "title": "MKH 416 | MKH 418-S instruction manual", "language": "en", "file_type": "pdf", "version_or_date": "02/2026", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://docs.cloud.sennheiser.com/en-us/mkh-416-mkh-418-s/mkh-416-mkh-418-s_instruction_manual_02_2026_en.pdf", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors", "status"] }
+      ],
+      "notes": "Output is M/S, not L/R: the S channel must be decoded (M+S / M-S) at the console or recorder. Needs a 5-pin XLR to 2 x XLR3 split cable to reach two preamp inputs, each supplying P48. Only one source read (the shared manual); no second-source cross-check. The French MKH 416 manual found does not state it covers the 418-S.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "XLR5 stereo output + M/S decoding is a distinctive wiring and signal-flow lesson." }
+    },
+    {
+      "id": "schoeps-cmit-5",
+      "brand": "SCHOEPS",
+      "model": "CMIT 5 (CMIT 5 U)",
+      "category": "microphones",
+      "sub_type": "shotgun-interference-tube",
+      "technology": "Condenser shotgun microphone with short interference tube; supercardioid / lobe-shaped pattern, rotationally symmetrical, with three switchable filters (per SCHOEPS).",
+      "year_introduced": 2005,
+      "status": "current",
+      "why_it_is_a_classic": "SCHOEPS describes it as suitable for both dialogue and music, with low off-axis coloration compared with typical shotguns. Resolution Magazine reviewed it in 2006 (review hosted on schoeps.de), and it remains a reference boom mic on film sets.",
+      "typical_uses": ["film boom dialogue", "TV drama", "sports broadcast effects", "M/S mid channel"],
+      "key_specs": {
+        "polar_pattern": ["lobar-shotgun", "supercardioid"],
+        "polar_pattern_as_stated": "Supercardioid / lobe-shaped",
+        "frequency_response": "40 Hz - 22 kHz (product page); 40 Hz – 20 kHz (2013 user guide)",
+        "sensitivity": "-35 dB (V/Pa), 17 mV/Pa",
+        "equivalent_noise": "14 dB (A-weighted); 24 dB (CCIR)",
+        "signal_to_noise": "80 dB (A-weighted)",
+        "max_spl": "132 dB-SPL (P48) (THD < 0.5 %)",
+        "max_output_voltage": "1.3 V (2.5 dBV) with 1 kΩ load",
+        "filters": "High shelf +5 dB at 10 kHz; low cut 80 Hz, 18 dB/oct.; proximity 300 Hz, 6 dB/oct. (all switchable)",
+        "output_impedance": "50 Ω",
+        "min_load_impedance": "1 kΩ (product page); 600 Ohms or greater (2013 user guide)",
+        "phantom_power": "P48 / >34 V (P48 only)",
+        "current_consumption": "4.4 mA (P48)",
+        "connector": "XLR-3M, analog, 1 channel",
+        "dimensions": "Length 251 mm, diameter 21 mm",
+        "weight": "95 g (product page); 89 g (2013 user guide)"
+      },
+      "connectors": [
+        { "connector": "xlr3-m", "role": "mic output (balanced, P48 in)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/Schoeps_Manual_CMIT_d_e_131202_1388735716.pdf",
+      "datasheet_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Kataloge_und_Broschueren/Prospektblaetter/CMITseries_and_windscreens_1478268942.pdf",
+      "product_page_url": "https://schoeps.de/en/products/shotgun-microphones/cmit-series/cmit-5.html",
+      "manual_languages": ["de", "en"],
+      "manuals": [
+        { "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/Schoeps_Manual_CMIT_d_e_131202_1388735716.pdf", "title": "CMIT 5 U user guide (German + English)", "language": "multi", "file_type": "pdf", "version_or_date": "131202 in filename", "official": true, "kind": "user-manual" },
+        { "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Kataloge_und_Broschueren/Prospektblaetter/CMITseries_and_windscreens_1478268942.pdf", "title": "CMIT Shotgun Microphone Series product sheet", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" }
+      ],
+      "sources": [
+        { "url": "https://schoeps.de/en/products/shotgun-microphones/cmit-series/cmit-5.html", "publisher": "SCHOEPS", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "year_introduced", "status", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.current_consumption", "key_specs.weight", "key_specs.dimensions", "connectors", "why_it_is_a_classic"] },
+        { "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/Schoeps_Manual_CMIT_d_e_131202_1388735716.pdf", "publisher": "SCHOEPS", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.current_consumption", "key_specs.weight", "key_specs.dimensions"] }
+      ],
+      "notes": "Product history on schoeps.de: '2005: Generation A0: First version'; a 2021 generation (D0) added humidity resistance. The older user guide figures (20 kHz, 89 g, 600 Ω) likely reflect an earlier generation; both values are kept. No French manual found on the product page.",
+      "conflicts": [
+        { "field": "key_specs.frequency_response", "values": [ { "value": "40 Hz - 22 kHz", "source_url": "https://schoeps.de/en/products/shotgun-microphones/cmit-series/cmit-5.html" }, { "value": "40 Hz – 20 kHz", "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/Schoeps_Manual_CMIT_d_e_131202_1388735716.pdf" } ], "note": "Current web page vs 2013 user guide; possibly a generation change." },
+        { "field": "key_specs.weight", "values": [ { "value": "95 g", "source_url": "https://schoeps.de/en/products/shotgun-microphones/cmit-series/cmit-5.html" }, { "value": "Only 89 g (3-1/8 ounces)", "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/Schoeps_Manual_CMIT_d_e_131202_1388735716.pdf" } ], "note": "Web page vs 2013 user guide." },
+        { "field": "key_specs.min_load_impedance", "values": [ { "value": "1 kΩ", "source_url": "https://schoeps.de/en/products/shotgun-microphones/cmit-series/cmit-5.html" }, { "value": "600 Ohms or greater", "source_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/Schoeps_Manual_CMIT_d_e_131202_1388735716.pdf" } ], "note": "Web page vs 2013 user guide." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "XLR3 + P48 only; useful for boom/ENG scenarios and filter-switch lessons." }
+    },
+    {
+      "id": "schoeps-mstc-74",
+      "brand": "SCHOEPS",
+      "model": "MSTC 74 (ORTF stereo microphone)",
+      "category": "microphones",
+      "sub_type": "stereo-ambisonic",
+      "technology": "ORTF stereo microphone: two MK 4 cardioid condenser capsules on a fixed T-bar, 17 cm spacing at 110°, two-channel amplifier with 5-pin XLR output (per SCHOEPS).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "ORTF is the near-coincident technique developed around 1962 by French broadcasters with SCHOEPS microphones, according to SCHOEPS' own history. The MSTC line, first introduced in 1976 per SCHOEPS, fixes the ORTF geometry in one body, which makes it a staple of French radio and concert recording.",
+      "typical_uses": ["ORTF stereo of orchestras and ensembles", "radio drama and ambience", "stereo atmos for film"],
+      "key_specs": {
+        "polar_pattern": ["cardioid"],
+        "polar_pattern_as_stated": "Cardioid (2× MK 4)",
+        "capsule_distance": "17 cm",
+        "angle_between_capsules": "110°",
+        "recording_angle": "95°",
+        "frequency_response": "40 Hz - 26 kHz",
+        "sensitivity": "-36,5 dB (V/Pa), 15 mV/Pa",
+        "equivalent_noise": "14 dB (A-weighted); 24 dB (CCIR)",
+        "signal_to_noise": "80 dB (A-weighted)",
+        "max_spl": "135 dB-SPL (THD < 0.5 %)",
+        "max_output_voltage": "1,8 V (5 dBV) with 1 kΩ load",
+        "low_cut": "20 Hz, 12 dB/oct.",
+        "output_impedance": "50 Ω",
+        "phantom_power": "P48 / 30-52 V; P12 / 11-13 V",
+        "current_consumption": "2 mA per channel (P48)",
+        "connector": "XLR-5M, analog, 2 channels",
+        "weight": "232 g (with capsules)"
+      },
+      "connectors": [
+        { "connector": "xlr5-m", "role": "stereo L/R output (2 channels, phantom on each)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/Schoeps_Manual_MSTC_1435248420.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html",
+      "manual_languages": ["de", "en"],
+      "manuals": [
+        { "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/Schoeps_Manual_MSTC_1435248420.pdf", "title": "MSTC user guide (linked from the MSTC 74 page; content is for the predecessor MSTC 64 Ug)", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://schoeps.de/en/products/stereo/stereo-microphones/mstc-74.html", "publisher": "SCHOEPS", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "why_it_is_a_classic", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.current_consumption", "key_specs.weight", "connectors"] },
+        { "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/Schoeps_Manual_MSTC_1435248420.pdf", "publisher": "SCHOEPS", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["connectors", "key_specs.phantom_power"] }
+      ],
+      "notes": "The product page calls the MSTC 74 a 'New 2022 model' but its history lists the MSTC 7 in 2021, so year_introduced is left 'not found'. The linked user guide describes the MSTC 64 Ug (XLR-5 output, 12 V or 48 V phantom), so it only cross-checks the connector and powering concept, not the MSTC 74 figures. A French product category page exists (schoeps.de/fr/produits/stereo/microphones-stereo.html) but no French manual was found. Dimensions not listed.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "XLR5 stereo out needing a 5-pin to 2x XLR3 split, plus P12/P48 phantom: strong wiring lesson, and ORTF is a French reference technique." }
+    },
+    {
+      "id": "schoeps-blm-03-c",
+      "brand": "SCHOEPS",
+      "model": "BLM 03 C (with Colette CMC amplifier)",
+      "category": "microphones",
+      "sub_type": "boundary-pzm",
+      "technology": "Boundary layer (half-space) condenser capsule with active electronics and fixed 5 m cable; it becomes a complete microphone only when connected to a Colette CMC amplifier (CMC 1 U / CMC 1 L / CMC 6), per SCHOEPS.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A flat boundary capsule for floor, table or wall mounting, made by the same maker as the CMIT and the ORTF microphones. Its modular design (capsule + Colette amplifier) is a good example of how a boundary mic is powered and connected.",
+      "typical_uses": ["theatre stage floor", "conference table", "piano lid", "film set hidden plant"],
+      "key_specs": {
+        "polar_pattern": ["omnidirectional"],
+        "polar_pattern_as_stated": "Half-space",
+        "frequency_response": "20 Hz - 26 kHz; 20 Hz - 43 kHz with CMC 6xt",
+        "sensitivity": "-36 dB (V/Pa), 16 mV/Pa",
+        "equivalent_noise": "12 dB (A-weighted); 23 dB (CCIR)",
+        "signal_to_noise": "82 dB (A-weighted)",
+        "max_spl": "130 dB-SPL with CMC 6; 134 dB-SPL with CMC 6 (as printed on the product page; THD < 0.5 %)",
+        "dimensions": "Diameter 80 mm, height 8,6 mm",
+        "weight": "233 g",
+        "cable": "5 m / 16.40 ft fixed cable to the amplifier",
+        "phantom_power": "Via the CMC 6 amplifier: P48 / 20-52 V; P12 / 10-13 V; 4 mA (P48) 8 mA (P12)",
+        "amplifier_output": "CMC 6: XLR-3M, analog, 1 channel; output impedance 42 Ω"
+      },
+      "connectors": [
+        { "connector": "xlr3-m", "role": "mic output on the CMC 6 amplifier (capsule plugs into the amplifier)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf",
+      "datasheet_url": "https://schoeps.de/fileadmin/user_upload/user_upload/Grafiken/Colette/Grenzflaechen/BLM_03_C_dimensions.jpg",
+      "product_page_url": "https://schoeps.de/en/products/colette/capsules/boundary-layer-microphones/blm-03-c.html",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Downloads/Bedienungsanleitungen/SCHOEPS_Manual_CMC_MK_E_2015-10-03_1444311033__1_.pdf", "title": "CMC 6 / MK (Colette amplifier) manual", "language": "en", "file_type": "pdf", "version_or_date": "2015-10-03 in filename", "official": true, "kind": "user-manual" },
+        { "url": "https://schoeps.de/fileadmin/user_upload/user_upload/Grafiken/Colette/Grenzflaechen/BLM_03_C_dimensions.jpg", "title": "BLM 03 C dimensional drawing", "language": "multi", "file_type": "jpg", "version_or_date": "not shown", "official": true, "kind": "other" }
+      ],
+      "sources": [
+        { "url": "https://schoeps.de/en/products/colette/capsules/boundary-layer-microphones/blm-03-c.html", "publisher": "SCHOEPS", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.weight", "key_specs.dimensions"] },
+        { "url": "https://schoeps.de/en/products/colette/microphone-amplifiers/cmc-6.html", "publisher": "SCHOEPS", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.phantom_power", "key_specs.amplifier_output", "connectors"] },
+        { "url": "https://schoeps.de/en/knowledge/documents-and-downloads/user-guides-manuals.html", "publisher": "SCHOEPS", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["manual_url"] }
+      ],
+      "notes": "The capsule has no XLR of its own: the phantom-powered CMC amplifier supplies the XLR-3M output. The product page prints the max SPL line with 'CMC 6' twice (130 / 134 dB-SPL); recorded as printed. The page lists 'User guides, manuals de | en' without exposing a BLM-specific file. Crown PZM-30D (the classic PZM) was a candidate but could not be researched after the search budget ran out. Specs are from one manufacturer page per item; no independent cross-check.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Capsule + separate amplifier chain teaches where phantom is consumed; output is a standard XLR3." }
+    },
+    {
+      "id": "sanken-cos-11d",
+      "brand": "Sanken",
+      "model": "COS-11D",
+      "category": "microphones",
+      "sub_type": "lavalier",
+      "technology": "Ultra-miniature omnidirectional self-polarized (electret) condenser lavalier with vertical diaphragm; offered with a 48 V XLR interface, AA battery XLR PSU, pigtail or wireless-transmitter connectors (per Sanken).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Sanken presents the COS-11D as the new version of the popular COS-11, redesigned to resist digital transmitter RFI and moisture. It is widely sold pre-wired for the main wireless bodypacks, which shows how common it is on film and broadcast sets.",
+      "typical_uses": ["film and TV dialogue on wireless bodypacks", "broadcast presenters", "hidden plant mic", "interviews"],
+      "key_specs": {
+        "polar_pattern": ["omnidirectional"],
+        "transducer": "Self-polarized condenser",
+        "frequency_response": "50Hz - 20kHz",
+        "sensitivity": "17.8mV/Pa (-35dB,0dB=1V/Pa) (COS-11D XLR version); 8.9mV/Pa (-41dB,0dB=1V/Pa) (COS-11D R- connector version)",
+        "equivalent_noise": "28dB-A",
+        "max_spl": "127dB SPL (1% THD, XLR version); 123dB SPL (R- connector version)",
+        "output_impedance": "180 ohms (XLR version); 700 ohms (R- connector version)",
+        "phantom_power": "XLR version: +48±4V phantom, less than 2.2mA",
+        "bias_voltage": "Connector (R-) version for wireless transmitters: Powering +3V to +10V, less than 0.5mA (bias supplied by the transmitter)",
+        "battery_option": "COS-11D BP: Lavalier Microphone with AA battery PSU XLR-M",
+        "capsule_dimensions": "16.1mm X 4.0mm (diameter)",
+        "cable_length": "3.0m (XLR version); 1.8m (R- version)",
+        "weight": "82g (XLR version); 24g (R- version)",
+        "connector": "XLR-3M (COS-11D); R- version connectors: Hirose KMC4p (Sony, Ramsa), locking 3.5mm mini plug (Sony V1, Sennheiser V1), Lemo 3-pin, TA5F (Lectrosonics), TA4F (Shure)"
+      },
+      "connectors": [
+        { "connector": "xlr3-m", "role": "mic output on the 48 V interface (COS-11D-*)", "dir": "out", "signal": "mic-level", "count": 1 },
+        { "connector": "mini-xlr-ta4", "role": "bodypack input plug (COS-11D R- TA4F version, Shure transmitters)", "dir": "out", "signal": "mic-level", "count": "variant" },
+        { "connector": "lemo-3pin", "role": "bodypack input plug (COS-11D R- LEMO version, Sennheiser/Zaxcom/Sony/Trantec)", "dir": "out", "signal": "mic-level", "count": "variant" },
+        { "connector": "trs-35mm", "role": "locking 3.5 mm plug (Sennheiser V1 / Sony V1 versions)", "dir": "out", "signal": "mic-level", "count": "variant" }
+      ],
+      "signal_types": ["mic-level", "phantom-48v", "dc-power"],
+      "manual_url": "not found",
+      "datasheet_url": "https://sanken-mic.com/upload/pdf/en/cos-11d.pdf",
+      "product_page_url": "https://sanken-mic.com/en/product/product.cfm/5.1105900",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://sanken-mic.com/upload/pdf/en/cos-11d.pdf", "title": "Lavalier Microphone COS-11D series (spec sheet / brochure)", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" }
+      ],
+      "sources": [
+        { "url": "https://sanken-mic.com/en/product/spec.cfm/5.1105900", "publisher": "Sanken", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.output_impedance", "key_specs.phantom_power", "key_specs.weight", "key_specs.capsule_dimensions", "connectors"] },
+        { "url": "https://sanken-mic.com/en/product/spec.cfm/5.1107400", "publisher": "Sanken", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.bias_voltage", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.output_impedance"] },
+        { "url": "https://sanken-mic.com/en/product/product.cfm/5.1107400", "publisher": "Sanken", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["connectors"] },
+        { "url": "https://sanken-mic.com/upload/pdf/en/cos-11d.pdf", "publisher": "Sanken", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "why_it_is_a_classic", "key_specs.frequency_response", "key_specs.polar_pattern"] },
+        { "url": "https://www.markertek.com/product/cos-11d-bp-bk/sanken-cos-11d-bp-bk-omni-directional-miniature-electret-lav-mic-black", "publisher": "Markertek", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.max_spl", "key_specs.output_impedance", "key_specs.weight", "key_specs.battery_option"] }
+      ],
+      "notes": "Shows three powering schemes for one capsule: P48 via the XLR interface, AA battery (BP version), or a low DC bias (+3 V to +10 V) from the wireless transmitter through TA4/TA5/LEMO/Hirose/3.5 mm plugs. Markertek lists the BP version as '+12V to +52V, AA Battery', which differs from the XLR version's '+48±4V' on Sanken's site because they are different variants. TA5F (Lectrosonics) and Hirose KMC4p have no taxonomy id; mini-xlr-ta4 and lemo-3pin are listed, the others are mentioned here only. No user manual found on sanken-mic.com download page (only the COS-11D PDF and a range brochure).",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["mini-xlr-ta4", "lemo-3pin"], "proposed_new_signals": ["dc-power"], "sim_value": "high", "sim_value_reason": "Same capsule on XLR/P48, AA battery, or bodypack bias via TA4/LEMO: an ideal lesson on lavalier powering and connectors." }
+    },
+    {
+      "id": "sanken-cos-11d-hwm",
+      "brand": "Sanken",
+      "model": "COS-11D HWM-R (headworn)",
+      "category": "microphones",
+      "sub_type": "headset",
+      "technology": "Headworn omnidirectional self-polarized condenser using the same capsule as the COS-11D, on a stainless dual-ear frame, terminated for wireless bodypacks (per Sanken).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Sanken describes it as the headworn version of the 'very popular' COS-11D, so it brings the reference film lavalier capsule to theatre and live headset use. The boom can be moved to either side.",
+      "typical_uses": ["theatre and musicals on wireless bodypacks", "live presenters", "conference speakers", "fitness / moving talent"],
+      "key_specs": {
+        "polar_pattern": ["omnidirectional"],
+        "transducer": "Self-polarized condenser",
+        "frequency_response": "50～20kHz",
+        "sensitivity": "7.1mV/Pa (-43dB,0dB=1V/Pa) Vcc=3.3V Load resister=8.2kΩ",
+        "equivalent_noise": "28dB-A",
+        "max_spl": "136dB SPL (1% THD)",
+        "bias_voltage": "Powering +2.5V ～ +12V, current 0.5mA (supplied by the wireless transmitter; no phantom version listed)",
+        "weight": "8g (without cable); 19g (with cable)",
+        "cable_length": "1.8m",
+        "connector": "SONY: HIROSE KMC4p; TA5F: mini cannon5p (Lectrosonics); LEMO: Lemo3p (Sennheiser, Zaxcom, Sony, Trantec)"
+      },
+      "connectors": [
+        { "connector": "lemo-3pin", "role": "bodypack input plug (LEMO version)", "dir": "out", "signal": "mic-level", "count": "variant" }
+      ],
+      "signal_types": ["mic-level", "dc-power"],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://sanken-mic.com/en/product/product.cfm/5.1012800",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://sanken-mic.com/en/product/spec.cfm/5.1012800", "publisher": "Sanken", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.bias_voltage", "key_specs.weight", "connectors"] },
+        { "url": "https://sanken-mic.com/en/product/product.cfm/5.1012800", "publisher": "Sanken", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "why_it_is_a_classic", "connectors", "status"] }
+      ],
+      "notes": "Low-voltage bias powering only (+2.5 V to +12 V from the transmitter), so it cannot plug straight into a phantom-powered XLR input. TA5F and Hirose 4-pin have no taxonomy id (closest would be mini-xlr-ta4, which is a different pin count), so only the LEMO 3-pin version is listed as a connector. Only one beige colour listed. No separate manual or datasheet on the Sanken download page; no second-source cross-check.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["lemo-3pin"], "proposed_new_signals": ["dc-power"], "sim_value": "medium", "sim_value_reason": "Headset-to-bodypack wiring with transmitter bias instead of phantom; connector choice depends on the wireless brand." }
+    },
+    {
+      "id": "rode-lavalier-ii",
+      "brand": "RØDE",
+      "model": "Lavalier II",
+      "category": "microphones",
+      "sub_type": "electret",
+      "technology": "Permanently polarised (electret) 6 mm omnidirectional capsule with JFET impedance converter, powered by 1.8 V to 5 V plug-in power over a locking 3.5 mm TRS (per RØDE).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A clear, current example of a plug-in-power electret: it runs on the few volts supplied by a camera, recorder or RØDE Wireless GO input instead of 48 V phantom. RØDE lists it as compatible with the Wireless GO, Wireless GO II, AI-Micro and RØDELink series.",
+      "typical_uses": ["vlogging and video with wireless kits", "interviews", "content creation", "lavalier on cameras / recorders with plug-in power"],
+      "key_specs": {
+        "polar_pattern": ["omnidirectional"],
+        "acoustic_principle": "Permanently polarised",
+        "capsule": "6mm",
+        "frequency_response": "20Hz – 20KHz",
+        "output_impedance": "2K2Ω",
+        "signal_to_noise": "67 dB",
+        "equivalent_noise": "27dBA Typical (A-weighted)",
+        "max_spl": "106 dB SPL RMS (Plug-In Power, 1% THD); 120 dB SPL RMS (Plug-In Power, 10% THD)",
+        "max_output_level": "50mV (@ 1kHz, 1% THD into 1KΩ load)",
+        "sensitivity": "-38 dB re 1 Volt/Pascal (12.59 mV @ 94 dB SPL) +/- 3 dB @ 1kHz",
+        "dynamic_range": "79 dB Typical",
+        "phantom_power": "No phantom: 1.8v to 5v Plugin Power",
+        "connector": "3.5mm TRS locking connector",
+        "weight": "Body: 9 g; Clip: 2 g",
+        "cable_length": "1200 mm"
+      },
+      "connectors": [
+        { "connector": "trs-35mm", "role": "locking 3.5 mm TRS mic plug (audio + plug-in power)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "dc-power"],
+      "manual_url": "not found",
+      "datasheet_url": "https://edge.rode.com//pdf/products/890/Lavalier_II_ds_V08.pdf",
+      "product_page_url": "https://rode.com/en-au/products/lavalier-ii",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://edge.rode.com//pdf/products/890/Lavalier_II_ds_V08.pdf", "title": "Lavalier II datasheet", "language": "en", "file_type": "pdf", "version_or_date": "V08 (filename)", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://rode.com/en-au/products/lavalier-ii", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.phantom_power", "key_specs.weight", "key_specs.output_impedance"] },
+        { "url": "https://edge.rode.com//pdf/products/890/Lavalier_II_ds_V08.pdf", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.output_impedance", "connectors", "why_it_is_a_classic"] }
+      ],
+      "notes": "Filed under 'electret' rather than 'lavalier' because it is this file's clearest example of a permanently polarised capsule on plug-in power (the lavalier slot is covered by the Sanken COS-11D). Plug-in power (a few volts on the 3.5 mm tip/ring) is not phantom: connecting it to a 48 V XLR input needs a powered adapter. The product page JSON carries an internal launch_date of 2021-11-17, which is not an explicit introduction statement, so year_introduced is 'not found'. Product page was read as raw HTML (spec values embedded in page data). The datasheet lists 'Length: 1200' under body dimensions, which matches the page's cable length.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dc-power"], "sim_value": "high", "sim_value_reason": "Plug-in power vs phantom on a 3.5 mm TRS is a common beginner trap and a clear signal lesson." }
+    },
+    {
+      "id": "rode-ntg2",
+      "brand": "RØDE",
+      "model": "NTG2",
+      "category": "microphones",
+      "sub_type": "shotgun-interference-tube",
+      "technology": "Line-gradient (shotgun) condenser, supercardioid, JFET impedance converter with balanced transformer output; P48 phantom or 1.5 V AA battery (per RØDE).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "An affordable shotgun that runs on either P48 or a single AA battery, which makes it common on student and low-budget shoots. RØDE's datasheet lists the dual powering as a headline feature.",
+      "typical_uses": ["student film boom", "on-camera shotgun", "ENG", "podcast/video voice"],
+      "key_specs": {
+        "polar_pattern": ["lobar-shotgun", "supercardioid"],
+        "acoustic_principle": "Line Gradient",
+        "frequency_response": "20Hz - 20kHz (selectable HPF@80Hz)",
+        "sensitivity": "-36.0dB re 1 Volt/Pascal (15.00mV @ 94 dB SPL) +/- 2 dB @ 1kHz",
+        "output_impedance": "250Ω (phantom power); 350Ω (battery power) per datasheet",
+        "equivalent_noise": "18dBA",
+        "max_spl": "131dB SPL",
+        "max_output_level": "6.9mV (@ 1kHz, 1% THD into 1KΩ load) on product page; +6.9dBu (@ 1% THD into 1kΩ) on datasheet",
+        "phantom_power": "AA Battery and P48 (datasheet: 48V Phantom Power or 1.5 AA battery)",
+        "connector": "3 pin XLR, balanced output between Pin 2 (+), Pin 3 (-) and Pin 1 (ground)",
+        "dimensions": "280 (H) x 22 (W) x 22 (D) mm",
+        "weight": "161 g"
+      },
+      "connectors": [
+        { "connector": "xlr3-m", "role": "mic output (balanced; P48 optional)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://edge.rode.com/pdf/page/342/modules/1186/ntg-2_product_manual.pdf",
+      "datasheet_url": "https://edge.rode.com/pdf/page/342/modules/1186/ntg2_datasheet.pdf",
+      "product_page_url": "https://rode.com/en-au/products/ntg2",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://edge.rode.com/pdf/page/342/modules/1186/ntg-2_product_manual.pdf", "title": "NTG-2 product manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
+        { "url": "https://edge.rode.com/pdf/page/342/modules/1186/ntg2_datasheet.pdf", "title": "NTG-2 datasheet", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://rode.com/en-au/products/ntg2", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
+        { "url": "https://edge.rode.com/pdf/page/342/modules/1186/ntg2_datasheet.pdf", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors", "why_it_is_a_classic"] }
+      ],
+      "notes": "Good battery-vs-phantom lesson: the output impedance changes with the powering mode (250 Ω phantom, 350 Ω battery, per datasheet). Product page read as raw HTML (spec values embedded in page data). The product manual PDF was downloaded but its text was not used for spec values.",
+      "conflicts": [
+        { "field": "key_specs.max_output_level", "values": [ { "value": "6.9mV (@ 1kHz, 1% THD into 1KΩ load)", "source_url": "https://rode.com/en-au/products/ntg2" }, { "value": "+6.9dBu (@ 1% THD into 1kΩ)", "source_url": "https://edge.rode.com/pdf/page/342/modules/1186/ntg2_datasheet.pdf" } ], "note": "Unit differs (mV vs dBu); the web value is probably a unit error, but both are kept." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "XLR3 with a P48-or-battery choice: shows that phantom is optional for some condensers." }
+    },
+    {
+      "id": "rode-ntg5",
+      "brand": "RØDE",
+      "model": "NTG5",
+      "category": "microphones",
+      "sub_type": "shotgun-interference-tube",
+      "technology": "RF-bias condenser short shotgun with RF-bias demodulation, supercardioid, conformal-coated electronics (per RØDE datasheet).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "RØDE's broadcast-grade short shotgun uses the same RF-bias principle as the Sennheiser MKH series and weighs 76 g, which suits long boom takes. It is a modern alternative to the MKH 416 on location.",
+      "typical_uses": ["film boom dialogue", "ENG", "location sound"],
+      "key_specs": {
+        "polar_pattern": ["lobar-shotgun", "supercardioid"],
+        "polar_pattern_as_stated": "Supercardioid shotgun",
+        "acoustic_principle": "RF-bias condenser",
+        "frequency_response": "20 Hz – 20 kHz (range); 80 Hz - 20 kHz ±3 dB (response)",
+        "output_impedance": "25 Ω",
+        "signal_to_noise": "84 dB",
+        "equivalent_noise": "10 dB SPL (A-weighted, as per IEC651)",
+        "max_spl": "130 dB SPL (1kHz @ 1% THD, 600 Ω load)",
+        "phantom_power": "2 mA @ 48V phantom power",
+        "sensitivity": "-23.5 dB re. 1 Volt/Pascal or Better (66 mV @ 94 dB SPL @ 1 kHz)",
+        "weight": "NTG5: 76 g; PG2-R pistol grip: 224 g",
+        "dimensions": "NTG5: 203 (H) x 19 (W) x 19 (D) mm",
+        "connector": "not found (not stated in the page data or datasheet text read)"
+      },
+      "connectors": [],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://edge.rode.com//pdf/products/90/ntg5_quickstart_guide.pdf",
+      "datasheet_url": "https://edge.rode.com//pdf/products/90/NTG5_DS_V02.pdf",
+      "product_page_url": "https://rode.com/en-au/products/ntg5",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://edge.rode.com//pdf/products/90/ntg5_quickstart_guide.pdf", "title": "NTG5 quickstart guide", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
+        { "url": "https://edge.rode.com//pdf/products/90/NTG5_DS_V02.pdf", "title": "NTG5 datasheet", "language": "en", "file_type": "pdf", "version_or_date": "V02 (filename)", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://rode.com/en-au/products/ntg5", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions"] },
+        { "url": "https://edge.rode.com//pdf/products/90/NTG5_DS_V02.pdf", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "why_it_is_a_classic"] }
+      ],
+      "notes": "Neither the page data nor the datasheet text names the output connector, so connectors[] is left empty rather than inferred (P48 powering implies an XLR-type balanced output, to be confirmed). The quickstart PDF has no text layer. Phantom only (no battery). Product page read as raw HTML (spec values embedded in page data).",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Same XLR3/P48 lesson as the MKH 416." }
+    },
+    {
+      "id": "rode-nt4",
+      "brand": "RØDE",
+      "model": "NT4",
+      "category": "microphones",
+      "sub_type": "stereo-ambisonic",
+      "technology": "X/Y stereo microphone: two 1/2-inch cardioid pressure-gradient condenser capsules fixed at 90° near-coincident, JFET impedance converter with bipolar output buffer; 5-pin XLR output; P48 or 9 V battery (per RØDE).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A fixed X/Y stereo pair in one body that runs on a 9 V battery when no phantom is available. RØDE ships it with both a dual-XLR lead and a 3.5 mm lead, so it works with consoles and with cameras.",
+      "typical_uses": ["X/Y stereo ambience and atmos", "drum overheads", "choir and ensemble", "field recording"],
+      "key_specs": {
+        "polar_pattern": ["cardioid"],
+        "polar_pattern_as_stated": "Cardioid, Paired cardioid capsules in X-Y stereo pattern",
+        "acoustic_principle": "Pressure Gradient",
+        "frequency_response": "20Hz - 20kHz",
+        "output_impedance": "200Ω (manual: 200 per side)",
+        "max_spl": "143dB SPL (manual: 143dB @ 1% THD into 1k)",
+        "max_output_level": "13.9mV (@ 1kHz, 1% THD into 1KΩ load) on product page; +13.9dBu (@ 1kHz, 1% THD into 1K load) in manual",
+        "sensitivity": "-38.0dB re 1 Volt/Pascal (12.00mV @ 94 dB SPL) +/- 2 dB @ 1kHz",
+        "equivalent_noise": "16dBA (manual: <16 dB SPL A-weighted per IEC651)",
+        "phantom_power": "P48 (48V) phantom supply or 9V battery; P48: 4.50mA (per channel); 9V: 2.50mA",
+        "battery_life": "in excess of 400 hours with a high quality alkaline battery (manual)",
+        "connector": "5 Pin XLR on the mic (manual); supplied leads: NT4-DXLR stereo XLR lead and NT4-MJ XLR to 3.5mm stereo cable",
+        "weight": "480 g",
+        "dimensions": "231 (H) x 61 (W) x 33 (D) mm"
+      },
+      "connectors": [
+        { "connector": "xlr5-m", "role": "stereo output (L/R) on the mic body", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://edge.rode.com//pdf/products/75/nt4_product_manual.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://rode.com/en-au/products/nt4",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://edge.rode.com//pdf/products/75/nt4_product_manual.pdf", "title": "NT4 product manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://rode.com/en-au/products/nt4", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
+        { "url": "https://edge.rode.com//pdf/products/75/nt4_product_manual.pdf", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "connectors", "why_it_is_a_classic"] }
+      ],
+      "notes": "Product page data lists 'Output Connection: Minijack/3.5mm TRS, Dual-XLR', which describes the supplied leads; the manual gives the mic's own socket as 5 Pin XLR. Product page read as raw HTML (spec values embedded in page data); its internal launch_date field (2000-01-01) looks like a placeholder and was not used.",
+      "conflicts": [
+        { "field": "key_specs.max_output_level", "values": [ { "value": "13.9mV (@ 1kHz, 1% THD into 1KΩ load)", "source_url": "https://rode.com/en-au/products/nt4" }, { "value": "+13.9dBu (@ 1kHz, 1% THD into 1K load)", "source_url": "https://edge.rode.com//pdf/products/75/nt4_product_manual.pdf" } ], "note": "Unit differs (mV vs dBu)." },
+        { "field": "connectors", "values": [ { "value": "Minijack/3.5mm TRS, Dual-XLR", "source_url": "https://rode.com/en-au/products/nt4" }, { "value": "5 Pin XLR", "source_url": "https://edge.rode.com//pdf/products/75/nt4_product_manual.pdf" } ], "note": "Web lists the cable terminations; the manual lists the socket on the mic." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "XLR5 stereo output split to dual XLR3 or 3.5 mm, plus 9 V battery vs P48: a rich wiring exercise." }
+    },
+    {
+      "id": "neumann-ku-100",
+      "brand": "Neumann",
+      "model": "KU 100 (dummy head)",
+      "category": "microphones",
+      "sub_type": "stereo-ambisonic",
+      "technology": "Binaural dummy head: two omnidirectional pressure-transducer condenser capsules in artificial ears, transformerless, diffuse-field equalised; balanced XLR 5 stereo output plus unbalanced BNC outputs; P48, internal battery or external PSU (per Neumann).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neumann presents it as its binaural stereo microphone for 3D audio over headphones that stays loudspeaker-compatible. It is the reference dummy head for audio drama and immersive recording, and Neumann also cites industrial noise measurement uses.",
+      "typical_uses": ["binaural radio drama and podcasts", "immersive / 3D music recording", "VR and headphone content", "acoustic and noise documentation"],
+      "key_specs": {
+        "polar_pattern": ["omnidirectional"],
+        "polar_pattern_as_stated": "Ear",
+        "acoustic_principle": "Pressure transducer",
+        "frequency_response": "20 Hz ... 20 kHz",
+        "sensitivity": "20 mV/Pa (at 1 kHz into 1 kohm)",
+        "rated_impedance": "50 ohms balanced, 200 ohms unbalanced",
+        "rated_load_impedance": "1 kohms",
+        "equivalent_noise": "29 dB CCIR (23 dB lt. BA); 16 dB-A",
+        "max_spl": "135 dB (THD 0.5%); 145 dB with preattenuation",
+        "signal_to_noise": "65 dB CCIR; 78 dB A-weighted (re. 94 dB SPL)",
+        "max_output_voltage": "8 dBu",
+        "phantom_power": "Supply voltage (P48, IEC 61938): 48 V ± 4 V / 6 x 1.5 V; current 2 x 3.5 mA",
+        "battery_option": "6 x 1.5 V (AA) round cell",
+        "external_psu": "9 V (supplied)",
+        "switches": "-10 dB preattenuation; low cut 150 Hz / 40 Hz / linear (both affect both channels)",
+        "connector": "Matching connector XLR 3 F / XLR 5 F; balanced XLR 5 stereo output and unbalanced BNC outputs",
+        "weight": "approx. 3500 g without batteries; approx. 9500 g with carrying case",
+        "dimensions": "Height 280 mm, width 180 mm, depth 220 mm (case 360 x 390 x 260 mm)"
+      },
+      "connectors": [
+        { "connector": "xlr5-m", "role": "balanced stereo output (L/R)", "dir": "out", "signal": "mic-level", "count": 1 },
+        { "connector": "bnc", "role": "unbalanced outputs", "dir": "out", "signal": "mic-level", "count": "not stated" }
+      ],
+      "signal_types": ["mic-level", "phantom-48v", "dc-power"],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-gb/products/microphones/ku-100",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://www.neumann.com/en-gb/products/microphones/ku-100", "publisher": "Neumann", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "why_it_is_a_classic", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
+        { "url": "https://www.neumann.com/fr-fr/products/microphones/ku-100", "publisher": "Neumann", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status"] }
+      ],
+      "notes": "The page lists 'Matching connector XLR 3 F / XLR 5 F' while the description gives an XLR 5 stereo output and BNC outputs; the XLR 3 F probably relates to the external PSU or another socket, which the page does not explain. The Downloads tab is loaded by script and exposed no manual link, so manual_url is 'not found'. Specs come from one manufacturer page (the fr-fr page was fetched but not compared value by value).",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": ["dc-power"], "sim_value": "high", "sim_value_reason": "XLR5 balanced plus BNC unbalanced outputs and three powering modes (P48, AA, 9 V PSU) make it a unique wiring case." }
+    },
+    {
+      "id": "neumann-usm-69-i",
+      "brand": "Neumann",
+      "model": "USM 69 i",
+      "category": "microphones",
+      "sub_type": "stereo-ambisonic",
+      "technology": "One-point stereo microphone: two dual-diaphragm large-diaphragm pressure-gradient condenser capsules stacked vertically, upper one rotatable over 270°, each with its own 5-position pattern switch and head amplifier feeding separate pins of an XLR 5 output (per Neumann).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "It lets one stand and one cable do coincident X/Y, M/S and Blumlein stereo, which Neumann highlights for ensembles, piano and radio drama. Neumann compares its spoken-word sound to the U 87 Ai with a stereo perspective added.",
+      "typical_uses": ["M/S and X/Y stereo of ensembles", "radio drama and audiobooks", "piano, harp, drum overheads", "dual-pattern mono with built-in backup"],
+      "key_specs": {
+        "polar_pattern": ["omnidirectional", "subcardioid", "cardioid", "hypercardioid", "figure-8", "multi-pattern"],
+        "polar_pattern_as_stated": "Omnidirectional, wide-angle cardioid, cardioid, hypercardioid, figure-8 (per capsule)",
+        "acoustic_principle": "Pressure gradient transducer",
+        "frequency_response": "20 Hz ... 20 kHz",
+        "sensitivity": "13 mV/Pa (at 1 kHz into 1 kohm)",
+        "rated_impedance": "150 ohms",
+        "rated_load_impedance": "1 kohms",
+        "equivalent_noise": "24 dB CCIR; 13 dB-A",
+        "max_spl": "132 dB (THD 0.5%)",
+        "signal_to_noise": "70 dB CCIR; 81 dB A-weighted (re. 94 dB SPL)",
+        "max_output_voltage": "3 dBu",
+        "phantom_power": "Supply voltage (P48, IEC 61938): 48 V ± 4 V; current 2 x 0.7 mA",
+        "connector": "Description: XLR 5 output connector; data table: Matching connector XLR 3 F",
+        "weight": "510 g",
+        "dimensions": "Diameter 30 + 48 mm; length 293 mm"
+      },
+      "connectors": [
+        { "connector": "xlr5-m", "role": "stereo output (two independent channels)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-gb/products/microphones/usm-69-i",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        { "url": "https://www.neumann.com/en-gb/products/microphones/usm-69-i", "publisher": "Neumann", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "why_it_is_a_classic", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] }
+      ],
+      "notes": "Each capsule draws its own phantom feed, so both channels of the XLR 5 to 2 x XLR3 split must have P48 on. If the capsule-bias DC converter fails, Neumann says both systems fall back to cardioid with slightly lower sensitivity. Downloads tab is script-loaded; no manual link found. Single source only.",
+      "conflicts": [
+        { "field": "connectors", "values": [ { "value": "XLR 5 output connector (description text)", "source_url": "https://www.neumann.com/en-gb/products/microphones/usm-69-i" }, { "value": "Matching connector XLR 3 F (data table)", "source_url": "https://www.neumann.com/en-gb/products/microphones/usm-69-i" } ], "note": "Same page, two statements. The description (two heads on separate pins of an XLR 5) is more specific; the table value may refer to each leg of the split cable." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "XLR5 split to two phantom-powered inputs, plus M/S vs X/Y set-up choices." }
+    },
+    {
+      "id": "earthworks-m23",
+      "brand": "Earthworks",
+      "model": "M23",
+      "category": "microphones",
+      "sub_type": "measurement",
+      "technology": "Omnidirectional measurement condenser microphone, 23 kHz free-field response, individually hand-tuned and tested with printed frequency-response chart; electronic calibration file downloadable after registration (per Earthworks).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Earthworks markets it for room measurement and sound-system setup and lists compatibility with SMAART, SIM, REW and similar FFT tools. Its data sheet claims it meets or exceeds Type 1 and applicable IEC 61094 requirements.",
+      "typical_uses": ["PA system alignment with SMAART / REW", "room acoustics measurement", "loudspeaker design and QC", "RTA"],
+      "key_specs": {
+        "polar_pattern": ["omnidirectional"],
+        "frequency_response": "3Hz -23kHz (web); 3Hz to 23kHz ± 1/-3dB (data sheet)",
+        "sensitivity": "36mV/Pa (-28.9dBV/Pa) (web); 34mV/Pa (data sheet)",
+        "phantom_power": "24-48V Phantom, 10mA",
+        "max_spl": "140dB SPL",
+        "connector": "XLR (pin 2+) (web); XLR-3 (pin 2+) (data sheet)",
+        "output_impedance": "65Ω balanced (between pins 2 & 3)",
+        "min_load_impedance": "600Ω between pins 2 & 3",
+        "equivalent_noise": "20dB SPL equivalent (A weighted)",
+        "operating_temperature": "-20 to +60 °C",
+        "dimensions": "165mm x 22mm (6.5 x .860 inches)",
+        "weight": ".36 lb. (160g) (web); 0.35 lb. (1.60kg) (data sheet, unit as printed)"
+      },
+      "connectors": [
+        { "connector": "xlr3-m", "role": "mic output (balanced, P48 in)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://earthworksaudio.com/wp-content/uploads/2022/05/Earthworks_Audio_M23_may2022.pdf",
+      "datasheet_url": "https://earthworksaudio.com/wp-content/uploads/2020/11/Earthworks-Audio-M23-Data-Sheet-V1-1.pdf",
+      "product_page_url": "https://earthworksaudio.com/measurement-microphones/m23/",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://earthworksaudio.com/wp-content/uploads/2022/05/Earthworks_Audio_M23_may2022.pdf", "title": "M23 user guide", "language": "en", "file_type": "pdf", "version_or_date": "May 2022 (filename)", "official": true, "kind": "user-manual" },
+        { "url": "https://earthworksaudio.com/wp-content/uploads/2020/11/Earthworks-Audio-M23-Data-Sheet-V1-1.pdf", "title": "M23 data sheet (labelled Quick Start on the page)", "language": "en", "file_type": "pdf", "version_or_date": "V1-1 (filename)", "official": true, "kind": "datasheet" }
+      ],
+      "sources": [
+        { "url": "https://earthworksaudio.com/measurement-microphones/m23/", "publisher": "Earthworks Audio", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "why_it_is_a_classic", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
+        { "url": "https://earthworksaudio.com/wp-content/uploads/2020/11/Earthworks-Audio-M23-Data-Sheet-V1-1.pdf", "publisher": "Earthworks Audio", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["why_it_is_a_classic", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] }
+      ],
+      "notes": "Needs 24-48 V phantom at 10 mA, more current than most mics, which matters with weak phantom supplies. The user guide PDF was downloaded but its text was not used for spec values. The sibling M30 extends to 30 kHz (Earthworks M30 page).",
+      "conflicts": [
+        { "field": "key_specs.sensitivity", "values": [ { "value": "36mV/Pa (-28.9dBV/Pa)", "source_url": "https://earthworksaudio.com/measurement-microphones/m23/" }, { "value": "34mV/Pa", "source_url": "https://earthworksaudio.com/wp-content/uploads/2020/11/Earthworks-Audio-M23-Data-Sheet-V1-1.pdf" } ], "note": "Web page vs data sheet V1-1." },
+        { "field": "key_specs.weight", "values": [ { "value": ".36 lb. (160g)", "source_url": "https://earthworksaudio.com/measurement-microphones/m23/" }, { "value": "0.35 lb. (1.60kg)", "source_url": "https://earthworksaudio.com/wp-content/uploads/2020/11/Earthworks-Audio-M23-Data-Sheet-V1-1.pdf" } ], "note": "Data sheet metric value appears to be a typo (kg for g)." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Standard XLR3/P48 but central to a 'measure the PA' scenario (mic -> interface -> SMAART)." }
+    },
+    {
+      "id": "neumann-ma-1",
+      "brand": "Neumann",
+      "model": "MA 1 (measurement microphone for Automatic Monitor Alignment)",
+      "category": "microphones",
+      "sub_type": "measurement",
+      "technology": "Omnidirectional pressure-transducer measurement microphone, individually calibrated, supplied for Neumann's MA 1 Automatic Monitor Alignment software (per Neumann).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Neumann calls it a Class I measurement microphone developed for its MA 1 software, which aligns KH monitors and subwoofers in the room. Trade press reviewed the system (Professional Audio 03/2021, Studio Magazin 02/2023, per Neumann's page).",
+      "typical_uses": ["studio monitor calibration with KH DSP monitors", "control-room alignment", "third-party measurement with the downloadable correction curve"],
+      "key_specs": {
+        "polar_pattern": ["omnidirectional"],
+        "acoustic_principle": "Pressure transducer",
+        "frequency_response": "20 Hz - 20 kHz",
+        "sensitivity": "30 mV/Pa -30 dBV +/- 3 dB uncalibrated; 30 mV/Pa -30 dBV +/- 0,5 dB calibrated (via software)",
+        "rated_impedance": "50 Ohms",
+        "rated_load_impedance": "1000 Ohms",
+        "equivalent_noise": "39 dB CCIR; 27 dB-A",
+        "max_spl": "132 dB (THD 0.5%)",
+        "signal_to_noise": "55 dB CCIR; 67 dB A-weighted (re. 94 dB SPL)",
+        "max_output_voltage": "10 dBu",
+        "phantom_power": "Supply voltage (P48, IEC 61938): 48 V ± 4 V; current 3 mA",
+        "connector": "Matching connector XLR3F",
+        "operating_conditions": "0 °C - +70 °C; max. 90 % at +20 °C",
+        "weight": "37 g",
+        "dimensions": "Diameter 23 mm; length 117 mm"
+      },
+      "connectors": [
+        { "connector": "xlr3-m", "role": "mic output (mates with XLR3F; P48 in)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "https://ma1.neumann.com/manual",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.neumann.com/en-gb/products/monitor-accessories/ma-1",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://ma1.neumann.com/manual", "title": "MA 1 user manual (online)", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://www.neumann.com/en-gb/products/monitor-accessories/ma-1", "publisher": "Neumann", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "why_it_is_a_classic", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors", "manual_url"] }
+      ],
+      "notes": "The page requires an audio interface with one balanced mic input with 48 V phantom for the MA 1 mic. The online manual URL was taken from the product page and not opened, so its language is assumed from the English page. Single source; the Behringer ECM8000 (a common budget measurement mic) was a candidate but could not be researched after the search budget ran out.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Mic -> interface (P48) plus network-connected monitors: a calibration-chain scenario." }
+    },
+    {
+      "id": "rode-nt-usb-plus",
+      "brand": "RØDE",
+      "model": "NT-USB+",
+      "category": "microphones",
+      "sub_type": "usb",
+      "technology": "USB-C studio condenser microphone (pressure gradient, cardioid) with built-in converter, 3.5 mm headphone output and onboard processing (compressor, noise gate, APHEX Aural Exciter and Big Bottom) per RØDE.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "It shows the USB-mic model: capsule, preamp, converter and headphone monitoring in one bus-powered body, with no XLR or phantom involved. RØDE's user guide documents the onboard APHEX processing and zero-setup use as a computer input.",
+      "typical_uses": ["podcasting", "streaming", "home voice-over", "video calls"],
+      "key_specs": {
+        "polar_pattern": ["cardioid"],
+        "acoustic_principle": "Pressure gradient",
+        "frequency_response": "20Hz – 20kHz",
+        "dynamic_range": "97dB (@10% THD)",
+        "max_spl": "118.0dB (Input SPL @10% THD, as per IEC 60268)",
+        "bit_depth": "24-bit",
+        "sample_rate": "48 kHz",
+        "computer_connectivity": "USB-C",
+        "analogue_outputs": "3.5mm headphone jack",
+        "phantom_power": "Not applicable: 5V @ 500mA (USB Bus Power)",
+        "os_requirements": "MacOS 10.14, Windows 10, iOS 14, Android 11",
+        "weight": "NT USB+: 540g; total with all accessories: 730g",
+        "dimensions": "Length 184, width 62, depth 50 (mm)"
+      },
+      "connectors": [
+        { "connector": "usb-c", "role": "USB audio + bus power to computer", "dir": "bidir", "signal": "usb-audio", "count": 1 },
+        { "connector": "trs-35mm", "role": "headphone output", "dir": "out", "signal": "headphone-level", "count": 1 }
+      ],
+      "signal_types": ["usb-audio", "headphone-level"],
+      "manual_url": "https://rode.com/en-au/user-guides/nt-usb-plus",
+      "datasheet_url": "not found",
+      "product_page_url": "https://rode.com/fr-fr/products/nt-usb-plus",
+      "manual_languages": ["en"],
+      "manuals": [
+        { "url": "https://rode.com/en-au/user-guides/nt-usb-plus", "title": "NT-USB+ user guide (online)", "language": "en", "file_type": "html", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+      ],
+      "sources": [
+        { "url": "https://rode.com/fr-fr/products/nt-usb-plus", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "status", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.max_spl", "key_specs.bit_depth", "key_specs.sample_rate", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
+        { "url": "https://rode.com/en-au/user-guides/nt-usb-plus", "publisher": "RØDE", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "why_it_is_a_classic", "connectors"] }
+      ],
+      "notes": "Requested URL rode.com/en/microphones/usb/nt-usb-plus resolved to the French product page (canonical rode.com/fr-fr/products/nt-usb-plus); spec values were read from the page's embedded data. The user guide confirms the headphone output, the USB connection and the APHEX / compressor / noise gate processing but was not used for numeric specs, so numbers rest on one source. The page data has an internal launch_date (2022-07-05) that is not an explicit introduction statement. Shure MV7+ was the other candidate but Shure's spec pages are script-rendered and could not be read.",
+      "conflicts": [],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Contrasts USB-C digital audio + bus power with XLR/phantom; headphone out on the mic." }
+    },
+    {
+      "id": "akg-c411-pp",
+      "brand": "AKG",
+      "model": "C411 PP (C411III PP)",
+      "category": "microphones",
+      "sub_type": "contact-piezo",
+      "technology": "Miniature pre-polarized condenser vibration pickup (contact transducer) with figure-8 pattern, attached to the instrument with an adhesive pad; PP version has a 3 m cable with phantom adapter and 3-pin XLR (per AKG manual).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Unlike a piezo, it is a condenser element that senses body vibration, so it suits violin, guitar and mandolin on loud stages. The L version feeds AKG wireless bodypacks through a mini-XLR, so the same pickup covers wired and wireless use.",
+      "typical_uses": ["violin / viola / cello live", "acoustic guitar and mandolin on stage", "harp and other string instruments", "wireless instrument pickup (C411 L)"],
+      "key_specs": {
+        "polar_pattern": ["figure-8"],
+        "transducer": "pre-polarized condenser transducer",
+        "frequency_response": "10 – 18,000 Hz",
+        "sensitivity": "1 mV/ms-2 (vibration pickup) per manual",
+        "impedance": "200 Ω, unbalanced (at 1,000 Hz)",
+        "recommended_load": "≥1,000 ohms",
+        "max_spl": "96 dB / 103 dB (1%/3% THD)",
+        "phantom_power": "C411III PP: 9 to 52 V universal phantom power; current approx. 2.2 mA",
+        "bias_voltage": "C411III L: B 29 L battery power supply, MPA V L phantom adapter, or AKG WMS bodypack transmitters",
+        "connector": "C411III PP: 3 m (10 ft.) / 3-pin male XLR; C411III L: 1.5 m (5 ft.) / 3-pin mini XLR",
+        "dimensions": "27 x 14 x 9.5 mm (1 x 0.6 x 0.4 in.)",
+        "weight": "C411III PP: 98 g (3.5 oz.) net / 225 g shipping; C411III L: 18 g net / 150 g shipping (manual)"
+      },
+      "connectors": [
+        { "connector": "xlr3-m", "role": "output on the MPA V phantom adapter (PP version)", "dir": "out", "signal": "mic-level", "count": 1 }
+      ],
+      "signal_types": ["mic-level", "phantom-48v"],
+      "manual_url": "not found",
+      "datasheet_url": "https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwa17ec60d/pdfs/AKG_CutSheet_C411PP Mic.pdf",
+      "product_page_url": "https://support.harmanaudio.com/in/en/microphones/microphones-condenser-microphones/C411PP.html",
+      "manual_languages": [],
+      "manuals": [
+        { "url": "https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwa17ec60d/pdfs/AKG_CutSheet_C411PP Mic.pdf", "title": "AKG CutSheet C411PP (Harman)", "language": "en", "file_type": "pdf", "version_or_date": "© 2017 per search snippet", "official": true, "kind": "spec-sheet" }
+      ],
+      "sources": [
+        { "url": "https://r2.gear4music.com/media/46/465372/download_465372.pdf", "publisher": "AKG (manual copy hosted by Gear4music)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["technology", "key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.max_spl", "key_specs.phantom_power", "key_specs.weight", "key_specs.dimensions", "connectors"] },
+        { "url": "https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwa17ec60d/pdfs/AKG_CutSheet_C411PP Mic.pdf", "publisher": "Harman / AKG", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.polar_pattern", "key_specs.sensitivity", "key_specs.weight"] },
+        { "url": "https://support.harmanaudio.com/in/en/microphones/microphones-condenser-microphones/C411PP.html", "publisher": "Harman", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["key_specs.phantom_power", "connectors", "key_specs.weight", "status"] }
+      ],
+      "notes": "Contact pickups are usually piezo; the C411 is the condenser alternative and still needs 9-52 V phantom through its adapter. The Harman support page and cut sheet both returned HTTP 500 when fetched, so their values come only from search snippets (hence verified-secondary). The full manual (German/English/other, AKG content, Version 1.0 August 2015 per search snippet) was read from a Gear4music-hosted copy, which is not listed as an official manual. No akg.com product page was found in search results. Schertler / K&K piezo pickups were candidates but their sites blocked fetches (403 / no product links).",
+      "conflicts": [
+        { "field": "key_specs.sensitivity", "values": [ { "value": "1 mV/ms-2 (vibration pickup)", "source_url": "https://r2.gear4music.com/media/46/465372/download_465372.pdf" }, { "value": "2 mV/Pa", "source_url": "https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwa17ec60d/pdfs/AKG_CutSheet_C411PP Mic.pdf" } ], "note": "Different units; an acoustic mV/Pa rating is unusual for a contact pickup. Cut-sheet value seen in search snippet only." },
+        { "field": "key_specs.weight", "values": [ { "value": "C411III PP: 98 g net / 225 g shipping", "source_url": "https://r2.gear4music.com/media/46/465372/download_465372.pdf" }, { "value": "18 g net", "source_url": "https://support.harmanaudio.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwa17ec60d/pdfs/AKG_CutSheet_C411PP Mic.pdf" }, { "value": "225 g net", "source_url": "https://support.harmanaudio.com/in/en/microphones/microphones-condenser-microphones/C411PP.html" } ], "note": "18 g matches the L version / pickup alone; 225 g matches the PP shipping weight in the manual. Harman values from search snippets only." }
+      ],
+      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["mini-xlr-ta3"], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Contact transducer on an XLR phantom adapter; the L version shows mini-XLR into a bodypack." }
+    }
+  ]
+}
