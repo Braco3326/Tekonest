@@ -100,6 +100,13 @@ export function injectTokens(root: HTMLElement = document.documentElement): void
 
 const kebab = (s: string): string => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
 
+/** Explore settings "reduced motion: on/off" override the system preference (null = follow the system). */
+let motionOverride: boolean | null = null
+export const setMotionOverride = (enabled: boolean | null): void => {
+  motionOverride = enabled
+}
+
 /** Accessibility: 3D-side animations must respect prefers-reduced-motion (CSS side is handled by a media query). */
 export const motionEnabled = (): boolean =>
-  typeof window.matchMedia !== 'function' || !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  motionOverride ??
+  (typeof window.matchMedia !== 'function' || !window.matchMedia('(prefers-reduced-motion: reduce)').matches)

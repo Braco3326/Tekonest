@@ -21,12 +21,21 @@ export interface FrameTarget {
   boundingRadius: number
 }
 
+/**
+ * What FocusPatch needs from "the camera" (ADR-0010 Décision 1): CameraRig in
+ * orbit view, ViewDirector when the learner walks in Explore view.
+ */
+export interface CameraDirector {
+  flyToDevice(frame: FrameTarget): void
+  flyToEnsemble(): void
+}
+
 const FPS = 60
 /** Placeholder port panels face −Z (DeviceSpawner) — arrive looking at them. */
 const FOCUS_ALPHA = -Math.PI / 2
 const FOCUS_BETA = 1.15
 
-export class CameraRig {
+export class CameraRig implements CameraDirector {
   private ensemble: CameraPose
 
   constructor(private camera: ArcRotateCamera) {
@@ -54,6 +63,12 @@ export class CameraRig {
 
   flyToEnsemble(): void {
     this.fly(this.ensemble)
+  }
+
+  /** Fly to an arbitrary pose (ViewDirector: back to the walker's eye). Returns the flight time in ms (0 = cut). */
+  flyToPose(to: CameraPose): number {
+    this.fly(to)
+    return motionEnabled() ? TOKENS.focus.flyMs : 0
   }
 
   private fly(to: CameraPose): void {

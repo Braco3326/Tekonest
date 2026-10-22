@@ -51,7 +51,9 @@ export function resolveMove(
   obstacles: readonly Box[],
   stepHeight = STEP_HEIGHT,
 ): XZ {
-  const solid = obstacles.filter((b) => b.height > stepHeight)
+  // Boxes already overlapping the start (a device dropped on the player) are
+  // ignored so the player can always walk out instead of being frozen.
+  const solid = obstacles.filter((b) => b.height > stepHeight && !circleHitsBox(from.x, from.z, radius, b))
   const dx = to.x - from.x
   const dz = to.z - from.z
   const steps = Math.max(1, Math.ceil(Math.hypot(dx, dz) / MAX_SUBSTEP))
