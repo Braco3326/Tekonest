@@ -13,6 +13,7 @@
 | [Status map](brand/03-status-map.md) | What is existing, under development, proposed or historical |
 | [Decisions & questions](brand/04-decisions-and-questions.md) | Founder decisions, open decisions, dated conflicts, top questions |
 | [Sources & evidence](brand/05-sources-and-evidence.md) | Source inventory, evidence labels, founder briefs, links to the detailed registers |
+| [Art direction & website prototype](design/README.md) | Draft brand directions, logo concepts, design system, French copy and a responsive umbrella-site prototype ([`website-prototype/`](website-prototype/)) |
 
 ## Services
 
@@ -32,6 +33,8 @@ The [status map](brand/03-status-map.md) is the canonical source for status; the
 
 ```
 brand/                     canonical overview docs (start here)
+design/                    art direction, logos, design system, review (draft)
+website-prototype/         static umbrella-site prototype (draft, not deployed)
   services/                one vision per service
   evidence/                detailed evidence registers (audit notes)
 event-project/             event programme: pilot overview, legal guide, plan, deck, model

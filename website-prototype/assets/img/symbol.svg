@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="t">
+  <title id="t">Tekonest — symbole Bobine</title>
+  <desc>Draft concept, pending founder review (2026-10-22).</desc>
+  <path d="M33.86 17.46 A21.00 21.00 0 1 1 24.00 15.00" fill="none" stroke="#16163F" stroke-width="4.2" stroke-linecap="round"/>
+  <circle cx="24.00" cy="30.50" r="15.50" fill="none" stroke="#16163F" stroke-width="4.2"/>
+  <circle cx="24.00" cy="25.00" r="10.00" fill="none" stroke="#16163F" stroke-width="4.2"/>
+  <path d="M24.00 15.00 C34.00 13.00 44.00 11.00 54.00 19.00" fill="none" stroke="#16163F" stroke-width="4.2" stroke-linecap="round"/>
+  <circle cx="54.00" cy="19.00" r="3.60" fill="#E8590C"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-labelledby="t">
+  <title id="t">Tekonest</title>
+  <desc>Draft concept, pending founder review (2026-10-22).</desc>
+  <path d="M17.00 16.00 Q10.50 18.34 4.00 16.00" fill="none" stroke="#16163F" stroke-width="3.2" stroke-linecap="round"/>
+  <circle cx="4.00" cy="16.00" r="1.60" fill="#16163F"/>
+  <path d="M17.00 16.00 Q18.23 9.21 23.50 4.75" fill="none" stroke="#16163F" stroke-width="3.2" stroke-linecap="round"/>
+  <circle cx="23.50" cy="4.75" r="1.60" fill="#16163F"/>
+  <path d="M17.00 16.00 Q22.27 20.45 23.50 27.25" fill="none" stroke="#16163F" stroke-width="3.2" stroke-linecap="round"/>
+  <circle cx="23.50" cy="27.25" r="1.60" fill="#16163F"/>
+  <circle cx="17.00" cy="16.00" r="4.00" fill="#E8590C"/>
+</svg>

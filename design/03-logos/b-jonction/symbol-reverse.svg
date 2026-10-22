@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="t">
+  <title id="t">Tekonest — symbole Jonction</title>
+  <desc>Draft concept, pending founder review (2026-10-22).</desc>
+  <path d="M34.00 32.00 Q21.00 36.68 8.00 32.00" fill="none" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round"/>
+  <circle cx="8.00" cy="32.00" r="3.20" fill="#FFFFFF"/>
+  <path d="M34.00 32.00 Q36.45 18.41 47.00 9.50" fill="none" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round"/>
+  <circle cx="47.00" cy="9.50" r="3.20" fill="#FFFFFF"/>
+  <path d="M34.00 32.00 Q44.55 40.91 47.00 54.50" fill="none" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round"/>
+  <circle cx="47.00" cy="54.50" r="3.20" fill="#FFFFFF"/>
+  <circle cx="34.00" cy="32.00" r="8.00" fill="#FFB547"/>
+</svg>

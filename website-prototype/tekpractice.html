@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TekPractice — Tekonest</title>
+<meta name="description" content="TekPractice, un simulateur 3D dans le navigateur pour apprendre à câbler du vrai matériel son. En développement.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/site.js"></script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<div class="proto-banner"><div class="wrap"><p>Prototype de site (brouillon). Rien n'est en vente et aucune donnée n'est collectée.</p></div></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/img/lockup.svg" alt="Tekonest, accueil" width="190" height="30"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Navigation principale">
+      <ul>
+        <li><a href="soirees.html">Soirées</a></li>
+        <li><a href="reseau.html">Réseau</a></li>
+        <li><a href="organiser.html">Organiser</a></li>
+        <li><a href="apprendre.html">Apprendre</a></li>
+        <li><a href="tekpractice.html" aria-current="page">TekPractice</a></li>
+        <li><a href="histoire.html">L'histoire</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="contenu">
+<section class="branch-hero" style="--cable: var(--cable-tekpractice)">
+  <div class="wrap">
+    <div class="cable" aria-hidden="true"></div>
+    <span class="status status--dev">En développement</span>
+    <h1>TekPractice : câbler du vrai matériel, sans risque.</h1>
+    <p class="lead">Un simulateur 3D dans le navigateur. Vous branchez micros, consoles, boîtiers de scène et enceintes, et TekPractice vous explique chaque erreur : alimentation fantôme, retour N-1, horloge…</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="niveaux">
+  <div class="wrap">
+    <div class="products">
+      <div class="product">
+        <div class="product-preview preview-tekpractice" role="img" aria-label="Aperçu du visuel de TekPractice : studio blanc, matériel sombre, câble bleu.">
+          <span class="p-kicker">TekPractice · Niveau A1</span>
+          <span class="p-title">Première sono</span>
+          <span class="p-cable" aria-hidden="true"></span>
+          <span class="p-rig" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+        <p class="endorse">TekPractice garde son studio blanc et son bleu, signé « TekPractice, par Tekonest ».</p>
+      </div>
+      <div>
+        <h2 id="niveaux" style="font-size: var(--text-2xl); margin-bottom: var(--space-5);">Ce qui existe déjà</h2>
+        <p>Quatre niveaux jouables en local, avec du matériel réel :</p>
+        <ol class="steps" style="--cable-text: var(--cable-tekpractice-text)">
+          <li><span><strong>Première sono.</strong> Un plateau simple.</span></li>
+          <li><span><strong>Studio radio.</strong> Voyant ON AIR et coupure des écoutes.</span></li>
+          <li><span><strong>Duplex.</strong> Un reporter en retour N-1.</span></li>
+          <li><span><strong>Post-production.</strong> Horloge et fréquence d'échantillonnage.</span></li>
+        </ol>
+        <p style="margin-top: var(--space-5);">S'y ajoutent un bac à sable, un mode examen et un tableau qui montre votre préparation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunken" aria-labelledby="suite">
+  <div class="wrap">
+    <div class="cols">
+      <div class="col"><h3 id="suite">Ce qui se prépare</h3><ul><li>Une version publique stable en ligne.</li><li>Se déplacer librement dans les salles, au clavier ou à la souris.</li><li>Les conseils écrits par l'équipe, à la place des textes provisoires.</li></ul></div>
+      <div class="col"><h3>Ce qui reste à décider</h3><ul><li>Le modèle d'accès : gratuit, ou une partie payante.</li><li>Les licences des modèles 3D avant tout usage commercial.</li></ul></div>
+      <div class="col"><h3>Pour qui</h3><ul><li>Les étudiantes et étudiants du BTS Son.</li><li>Toute personne qui veut comprendre le câblage avant d'arriver sur scène.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="acces">
+  <div class="wrap">
+    <div class="section-head"><h2 id="acces">Essayer TekPractice</h2><p>Le lien sera publié ici dès qu'une version stable sera en ligne.</p></div>
+    <p><span class="btn" aria-disabled="true" role="link">Version publique bientôt disponible</span></p>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <img src="assets/img/lockup-reverse.svg" alt="Tekonest" width="178" height="28">
+      <p>Tekonest relie cultures et métiers du son : soirées métissées à Paris, réseau créatif équitable, outils pour apprendre.</p>
+    </div>
+    <nav aria-label="Pied de page">
+      <ul>
+        <li><a href="soirees.html">Soirées</a></li>
+        <li><a href="reseau.html">Réseau</a></li>
+        <li><a href="organiser.html">Organiser</a></li>
+        <li><a href="apprendre.html">Apprendre</a></li>
+        <li><a href="tekpractice.html">TekPractice</a></li>
+        <li><a href="histoire.html">L'histoire</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="accessibilite.html">Accessibilité</a></li>
+      </ul>
+    </nav>
+    <p class="fine">Prototype de conception, 22 octobre 2026. Tekonest n'a pas encore de structure juridique ; les services marqués « en préparation », « en développement » ou « en réflexion » ne sont pas proposés aujourd'hui. Polices : Bricolage Grotesque et IBM Plex Sans (licence SIL OFL 1.1), hébergées sur ce site.</p>
+  </div>
+</footer>
+</body>
+</html>

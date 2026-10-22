@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="t">
+  <title id="t">Tekonest — symbole Étiquette</title>
+  <desc>Draft concept, pending founder review (2026-10-22).</desc>
+  <path d="M-4.00 32.00 H20.00" stroke="#FFB547" stroke-width="3.6" stroke-linecap="round"/>
+  <rect x="10.00" y="15.00" width="52.00" height="34.00" rx="7.00" fill="#FFFFFF"/>
+  <circle cx="20.00" cy="32.00" r="3.40" fill="#16163F"/>
+  <path d="M35.8 39.0Q34.2 39.0 33.42 38.16Q32.64 37.32 32.64 36.02V30.98H29.84V28.68H31.66Q32.32 28.68 32.6 28.42Q32.88 28.16 32.88 27.46V25.04H35.6V28.68H39.620000000000005V30.98H35.6V36.7H39.620000000000005V39.0Z M42.3 24.2H45.26V32.6H45.4L46.78 30.98L48.94 28.68H52.34L48.34 32.76L52.76 39.0H49.24L46.24 34.44L45.26 35.42V39.0H42.3Z" fill="#16163F"/>
+</svg>
