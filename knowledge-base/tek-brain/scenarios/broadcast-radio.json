@@ -1,0 +1,606 @@
+{
+ "entity": "scenario",
+ "domain": "broadcast-radio",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "radio-morning-show-phone-guest",
+   "name_fr": "Matinale radio avec invité au téléphone",
+   "name_en": "Radio morning show with a phone guest",
+   "domain": "broadcast-radio",
+   "brief": "Petit studio en self-op : l'animateur mixe lui-même sa matinale. Un invité appelle sur une ligne téléphonique analogique via un hybride. À réaliser : chaîne micro → console → sortie programme vers le processeur ; ON-AIR commandé par le GPIO ; écoutes régie coupées quand le micro est ouvert ; hybride avec N-1 dédié (bus téléphone vers SEND IN, RCV OUT sur une tranche) ; voix et appelant calés autour de −23 LUFS (0 LU) en court terme.",
+   "room_id": "radio-studio-self-op-small",
+   "required_gear": [
+    {
+     "equipment_id": "axia-iq",
+     "qty": 1,
+     "role": "console d'antenne"
+    },
+    {
+     "equipment_id": "ev-re20",
+     "qty": 1,
+     "role": "micro animateur"
+    },
+    {
+     "equipment_id": "telos-hx2",
+     "qty": 1,
+     "role": "hybride téléphonique"
+    },
+    {
+     "equipment_id": "yellowtec-litt",
+     "qty": 1,
+     "role": "voyant ON-AIR"
+    },
+    {
+     "equipment_id": "genelec-8030c",
+     "qty": 2,
+     "role": "écoutes régie"
+    },
+    {
+     "equipment_id": "beyerdynamic-dt-770-pro",
+     "qty": 1,
+     "role": "casque animateur"
+    },
+    {
+     "equipment_id": "playout-pc",
+     "qty": 1,
+     "role": "diffusion automatisée"
+    },
+    {
+     "equipment_id": "rtw-touchmonitor-tm7",
+     "qty": 1,
+     "role": "sonomètre de sonie"
+    },
+    {
+     "equipment_id": "omnia-11",
+     "qty": 1,
+     "role": "processeur de diffusion"
+    }
+   ],
+   "signal_flow": {
+    "nodes": [
+     {
+      "id": "mic1",
+      "equipment_id": "ev-re20",
+      "label": "Micro animateur"
+     },
+     {
+      "id": "desk",
+      "equipment_id": "axia-iq",
+      "label": "Console d'antenne"
+     },
+     {
+      "id": "hyb",
+      "equipment_id": "telos-hx2",
+      "label": "Hybride (SEND IN / RCV OUT)"
+     },
+     {
+      "id": "litt",
+      "equipment_id": "yellowtec-litt",
+      "label": "Voyant ON-AIR"
+     },
+     {
+      "id": "monL",
+      "equipment_id": "genelec-8030c",
+      "label": "Écoute G"
+     },
+     {
+      "id": "monR",
+      "equipment_id": "genelec-8030c",
+      "label": "Écoute D"
+     },
+     {
+      "id": "play",
+      "equipment_id": "playout-pc",
+      "label": "Playout"
+     },
+     {
+      "id": "proc",
+      "equipment_id": "omnia-11",
+      "label": "Processeur FM"
+     },
+     {
+      "id": "meter",
+      "equipment_id": "rtw-touchmonitor-tm7",
+      "label": "Sonomètre"
+     }
+    ],
+    "edges": [
+     {
+      "from": "mic1",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "play",
+      "to": "desk",
+      "signal": "aoip",
+      "connector": "rj45"
+     },
+     {
+      "from": "desk",
+      "to": "hyb",
+      "signal": "line-level-pro",
+      "connector": "xlr3-f"
+     },
+     {
+      "from": "hyb",
+      "to": "desk",
+      "signal": "line-level-pro",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "desk",
+      "to": "litt",
+      "signal": "gpio-tally",
+      "connector": "gpio-terminal"
+     },
+     {
+      "from": "desk",
+      "to": "monL",
+      "signal": "line-level-pro",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "desk",
+      "to": "monR",
+      "signal": "line-level-pro",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "desk",
+      "to": "proc",
+      "signal": "aes3",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "desk",
+      "to": "meter",
+      "signal": "aes3",
+      "connector": "xlr3-m"
+     }
+    ]
+   },
+   "procedure_ids": [
+    "on-air-chain-check",
+    "phone-in-hybrid-setup",
+    "mix-minus-setup-remote-guest",
+    "on-air-tally-wiring"
+   ],
+   "rule_ids": [
+    "on-air-tally-light",
+    "mix-minus-n1-echo",
+    "mix-minus-loop",
+    "loudness-out-of-tolerance"
+   ],
+   "difficulty": 3,
+   "estimated_time_min": 60,
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+     "publisher": "Telos Alliance",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "brief",
+      "signal_flow"
+     ]
+    },
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+     "publisher": "Yellowtec",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "signal_flow"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "remote-live-report-ip-codec",
+   "name_fr": "Reportage en direct par codec IP",
+   "name_en": "Remote live report via IP codec",
+   "domain": "broadcast-radio",
+   "brief": "Un reporter en extérieur intervient en direct dans le journal. Son micro entre dans un codec portable ; la liaison passe en 4G/5G ou Ethernet vers le codec du studio. Les deux codecs sont de marques différentes : connexion en mode EBU Tech 3326 / SIP, G.722 en secours. Le studio renvoie au reporter son N-1 ; le reporter le vérifie au casque. Prévoir un second réseau et tester la liaison avant l'antenne.",
+   "room_id": "eng-outdoor-reportage",
+   "required_gear": [
+    {
+     "equipment_id": "ev-re50",
+     "qty": 1,
+     "role": "micro reporter"
+    },
+    {
+     "equipment_id": "comrex-access-nx",
+     "qty": 1,
+     "role": "codec portable terrain"
+    },
+    {
+     "equipment_id": "sennheiser-hd-25",
+     "qty": 1,
+     "role": "casque reporter"
+    },
+    {
+     "equipment_id": "tieline-gateway",
+     "qty": 1,
+     "role": "codec studio"
+    },
+    {
+     "equipment_id": "axia-iq",
+     "qty": 1,
+     "role": "console studio"
+    }
+   ],
+   "signal_flow": {
+    "nodes": [
+     {
+      "id": "mic",
+      "equipment_id": "ev-re50",
+      "label": "Micro main reporter"
+     },
+     {
+      "id": "field",
+      "equipment_id": "comrex-access-nx",
+      "label": "Codec terrain"
+     },
+     {
+      "id": "hp",
+      "equipment_id": "sennheiser-hd-25",
+      "label": "Casque reporter (retour N-1)"
+     },
+     {
+      "id": "studio",
+      "equipment_id": "tieline-gateway",
+      "label": "Codec studio"
+     },
+     {
+      "id": "desk",
+      "equipment_id": "axia-iq",
+      "label": "Console studio"
+     }
+    ],
+    "edges": [
+     {
+      "from": "mic",
+      "to": "field",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "field",
+      "to": "studio",
+      "signal": "aoip",
+      "connector": "rj45"
+     },
+     {
+      "from": "studio",
+      "to": "desk",
+      "signal": "aoip",
+      "connector": "rj45"
+     },
+     {
+      "from": "desk",
+      "to": "studio",
+      "signal": "aoip",
+      "connector": "rj45"
+     },
+     {
+      "from": "field",
+      "to": "hp",
+      "signal": "headphone-level",
+      "connector": "trs-quarter"
+     }
+    ]
+   },
+   "procedure_ids": [
+    "ip-codec-remote-connection",
+    "mix-minus-setup-remote-guest"
+   ],
+   "rule_ids": [
+    "mix-minus-n1-echo",
+    "mix-minus-loop"
+   ],
+   "difficulty": 4,
+   "estimated_time_min": 45,
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://www.comrex.com/products/access-nx/",
+     "publisher": "Comrex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "brief",
+      "required_gear"
+     ]
+    },
+    {
+     "url": "https://www.tieline.com/via/",
+     "publisher": "Tieline",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "brief"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "talk-show-four-guests",
+   "name_fr": "Talk-show avec quatre invités",
+   "name_en": "Talk show with four guests",
+   "domain": "broadcast-radio",
+   "brief": "Émission de débat en studio : un animateur et quatre invités, chacun avec son micro et son casque, mixés par un technicien en régie. Points clés : une tranche par micro, distribution casque pour le studio, talkback du technicien vers les invités hors antenne, ON-AIR, coupure des écoutes de studio quand les micros sont ouverts, sonie de la parole calée en court terme (un automixeur, proposé par exemple sur l'Axia iQ, peut aider à gérer plusieurs micros ouverts). Un auditeur peut intervenir au téléphone (N-1 dédié). Vérifier le nombre d'entrées micro disponibles sur la console choisie.",
+   "room_id": "radio-talk-studio-medium",
+   "required_gear": [
+    {
+     "equipment_id": "dhd-rx2",
+     "qty": 1,
+     "role": "console d'antenne (technicien)"
+    },
+    {
+     "equipment_id": "ev-re20",
+     "qty": 5,
+     "role": "micros animateur et invités"
+    },
+    {
+     "equipment_id": "behringer-ha400",
+     "qty": 1,
+     "role": "distribution casque"
+    },
+    {
+     "equipment_id": "beyerdynamic-dt-770-pro",
+     "qty": 5,
+     "role": "casques studio"
+    },
+    {
+     "equipment_id": "telos-hx2",
+     "qty": 1,
+     "role": "hybride auditeurs"
+    },
+    {
+     "equipment_id": "yellowtec-litt",
+     "qty": 1,
+     "role": "voyant ON-AIR"
+    },
+    {
+     "equipment_id": "rtw-touchmonitor-tm7",
+     "qty": 1,
+     "role": "sonomètre de sonie"
+    }
+   ],
+   "signal_flow": {
+    "nodes": [
+     {
+      "id": "m1",
+      "equipment_id": "ev-re20",
+      "label": "Micro animateur"
+     },
+     {
+      "id": "m2",
+      "equipment_id": "ev-re20",
+      "label": "Micro invité 1"
+     },
+     {
+      "id": "m3",
+      "equipment_id": "ev-re20",
+      "label": "Micro invité 2"
+     },
+     {
+      "id": "m4",
+      "equipment_id": "ev-re20",
+      "label": "Micro invité 3"
+     },
+     {
+      "id": "m5",
+      "equipment_id": "ev-re20",
+      "label": "Micro invité 4"
+     },
+     {
+      "id": "desk",
+      "equipment_id": "dhd-rx2",
+      "label": "Console"
+     },
+     {
+      "id": "hpa",
+      "equipment_id": "behringer-ha400",
+      "label": "Distribution casque"
+     },
+     {
+      "id": "hyb",
+      "equipment_id": "telos-hx2",
+      "label": "Hybride"
+     },
+     {
+      "id": "litt",
+      "equipment_id": "yellowtec-litt",
+      "label": "Voyant ON-AIR"
+     }
+    ],
+    "edges": [
+     {
+      "from": "m1",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "m2",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "m3",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "m4",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "m5",
+      "to": "desk",
+      "signal": "mic-level",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "desk",
+      "to": "hpa",
+      "signal": "line-level-pro",
+      "connector": "trs-quarter"
+     },
+     {
+      "from": "desk",
+      "to": "hyb",
+      "signal": "line-level-pro",
+      "connector": "xlr3-f"
+     },
+     {
+      "from": "hyb",
+      "to": "desk",
+      "signal": "line-level-pro",
+      "connector": "xlr3-m"
+     },
+     {
+      "from": "desk",
+      "to": "litt",
+      "signal": "gpio-tally",
+      "connector": "gpio-terminal"
+     }
+    ]
+   },
+   "procedure_ids": [
+    "on-air-chain-check",
+    "phone-in-hybrid-setup",
+    "mix-minus-setup-remote-guest",
+    "programme-loudness-measurement"
+   ],
+   "rule_ids": [
+    "on-air-tally-light",
+    "mix-minus-n1-echo",
+    "shared-mix-minus-multiple-remotes",
+    "loudness-out-of-tolerance"
+   ],
+   "difficulty": 4,
+   "estimated_time_min": 90,
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+     "publisher": "Telos Alliance",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "brief"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "brief"
+     ]
+    }
+   ],
+   "review": "needs-oscar-review"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Nombre d'entrées micro de la DHD RX2 dans une configuration donnée (dépend des modules d'E/S)",
+   "searched": "fiche équipement dhd-rx2 (modules XLR séparés, nombre non fixé)"
+  },
+  {
+   "what": "Signal id pour une ligne téléphonique analogique (pots-telephone-line) absent de taxonomy.json ; liaison ligne → hybride non tracée dans signal_flow",
+   "searched": "knowledge-base/taxonomy.json proposed_signal_ids"
+  }
+ ]
+}

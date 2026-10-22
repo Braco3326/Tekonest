@@ -1,0 +1,1443 @@
+{
+ "entity": "concept",
+ "domain": "broadcast-radio",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "on-air-chain",
+   "name_fr": "Chaîne d'antenne",
+   "name_en": "On-air chain",
+   "domain": "broadcast-radio",
+   "definition": "Suite des maillons qui mènent la voix de l'animateur jusqu'à l'auditeur : micro, console d'antenne, traitement de diffusion (processing), liaison studio-émetteur (STL) ou encodeur de streaming, puis émetteur ou serveur.",
+   "explanation": "En studio, le micro entre dans la console d'antenne (on-air console), qui mélange voix, playout, téléphone et codecs sur un bus programme. Le programme part ensuite vers un processeur de diffusion (par exemple un Omnia.11) qui règle la dynamique et génère le signal multiplex FM (MPX) [Omnia]. Comme le meilleur site d'antenne est souvent loin du studio, une liaison studio-émetteur (STL) transporte le signal jusqu'à l'émetteur [Wikipedia]. Pour le DAB+ et le streaming, l'EBU recommande un conditionnement du signal séparé du traitement FM [R 128 s3]. Chaque maillon doit être surveillé : un défaut sur la chaîne se traduit directement par un « blanc » à l'antenne.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "on-air-console",
+    "on-air-processing",
+    "studio-transmitter-link",
+    "silence-detection",
+    "broadcast-redundancy",
+    "loudness-ebu-r128"
+   ],
+   "equipment_ids": [
+    "ev-re20",
+    "axia-iq",
+    "omnia-11",
+    "orban-optimod-5950-hd"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Studio_transmitter_link",
+     "publisher": "Wikipedia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
+     "publisher": "Telos Alliance / Omnia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "on-air-console",
+   "name_fr": "Console d'antenne",
+   "name_en": "On-air console",
+   "domain": "broadcast-radio",
+   "definition": "Console de mixage radio pensée pour la sécurité de l'antenne : bus programme, pré-écoute (preview/cue) par tranche, talkback, mix-minus automatiques et logique de commande (GPIO).",
+   "explanation": "L'Axia iQ offre 3 bus programme stéréo et un bus utilitaire stéréo utilisable pour le téléphone, l'enregistrement hors antenne ou comme quatrième bus programme ; chaque tranche a un mix-minus automatique (jusqu'à 8 utilisés en même temps) et une pré-écoute stéréo [Axia]. Le moteur fait tout le mixage, la surface n'est qu'une télécommande, ce qui évite qu'un incident sur la surface coupe l'antenne [Axia]. Quand la tranche micro passe sur On, les haut-parleurs de la régie se coupent et l'animateur passe au casque [Axia QSG]. Des touches programmables envoient des contacts (contact closures) ou des commandes GPIO vers le playout et les appareils du studio [Axia].",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "mix-minus-n1",
+    "tally-on-air",
+    "talkback-ifb",
+    "self-op-studio",
+    "pfl-afl-solo"
+   ],
+   "equipment_ids": [
+    "axia-iq",
+    "dhd-rx2",
+    "lawo-ruby"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "self-op-studio",
+   "name_fr": "Studio en auto-commande (self-op)",
+   "name_en": "Self-op studio",
+   "domain": "broadcast-radio",
+   "definition": "Studio où l'animateur manipule lui-même la console d'antenne, sans technicien ; s'oppose au studio où un technicien (chargé de réalisation) mixe depuis une régie séparée.",
+   "explanation": "Dans un self-op, la console sert à la fois d'outil de mixage et de sécurité : coupure des écoutes, ON-AIR, niveaux. L'EBU cite l'exemple de la NRK, où seuls quelques directs quotidiens sont confiés à des ingénieurs du son et où la plupart des directs sont « self-op » ; une sonie normalisée y est jugée indispensable [Tech 3401]. Pour ces studios, l'EBU recommande l'affichage de la sonie court terme (3 s), plus stable et plus lisible d'un coup d'œil [Tech 3401]. Dans un studio avec technicien, la console offre une section d'écoute et de talkback pour le studio d'antenne associé, et le technicien parle aux invités et aux sources téléphone ou codec via leur retour [Axia].",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "on-air-console",
+    "loudness-metering-ebu-mode",
+    "tally-on-air",
+    "talkback-ifb"
+   ],
+   "equipment_ids": [
+    "axia-iq"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "mix-minus-n1",
+   "name_fr": "Mix-minus (N-1)",
+   "name_en": "Mix-minus (N-1)",
+   "domain": "broadcast-radio",
+   "definition": "Retour envoyé à un intervenant distant (téléphone, codec) contenant tout le programme qu'il doit entendre, sauf sa propre voix.",
+   "explanation": "Telos le définit comme le mélange de toutes les sources que l'appelant doit entendre, moins l'appelant ; au téléphone, l'appelant s'entend déjà dans son combiné (effet local, side-tone), donc lui renvoyer sa voix est inutile et gênant [Telos]. Avec un codec IP, la voix reviendrait avec la latence de la liaison : c'est l'écho que la règle R7 de TekPractice détecte. Il faut un N-1 par intervenant distant ; les consoles d'antenne le génèrent automatiquement par tranche [Axia]. Si la console n'en a pas, un boîtier comme le Sonifex RB-MM1 soustrait la tranche téléphone/codec du programme pour fabriquer le retour [Sonifex]. Le Telos Hx2 peut créer un mix-minus interne quand la console n'en fournit qu'un [Telos].",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "telephone-hybrid",
+    "audio-codec-ip",
+    "talkback-ifb",
+    "aux-send",
+    "on-air-console"
+   ],
+   "equipment_ids": [
+    "axia-iq",
+    "telos-hx2",
+    "sonifex-rb-mm1",
+    "aeta-scoop5-s"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+     "publisher": "Telos Alliance",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://sonifex.co.uk/product/rb-mm1/",
+     "publisher": "Sonifex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "telephone-hybrid",
+   "name_fr": "Hybride téléphonique",
+   "name_en": "Telephone hybrid",
+   "domain": "broadcast-radio",
+   "definition": "Interface qui passe d'une ligne téléphonique analogique 2 fils (émission et réception mêlées) à deux signaux séparés 4 fils : l'envoi vers l'appelant et la voix de l'appelant vers la console.",
+   "explanation": "Sur un Telos Hx1/Hx2, la ligne de l'opérateur arrive sur la prise LINE, un poste téléphonique se branche sur PHONE pour filtrer les appels, l'entrée SEND IN reçoit le mix-minus de la console et la sortie RCV OUT va sur la tranche « appelant » [Telos QSG]. La qualité d'un hybride se juge à sa capacité à ne pas renvoyer l'envoi dans la réception (affaiblissement trans-hybride, trans-hybrid loss) : Telos annonce plus de 55 dB pour le Hx [Telos]. En Europe on parle aussi de TBU (telephone balance unit) : le Sonifex DHY-04S annonce une annulation d'écho adaptative jusqu'à 127 ms et une bande passante vers la ligne de 250 Hz à 4 kHz [Sonifex]. La voix téléphonique reste donc une voix « bande étroite », à niveler avant l'antenne.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "mix-minus-n1",
+    "audio-codec-ip",
+    "on-air-console"
+   ],
+   "equipment_ids": [
+    "telos-hx2",
+    "sonifex-dhy-04s"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+     "publisher": "Telos Alliance",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.telosalliance.com/broadcast-phone-systems/telos-hx1-hx2-digital-hybrids",
+     "publisher": "Telos Alliance",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://sonifex.co.uk/product/dhy-04s/",
+     "publisher": "Sonifex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "audio-codec-ip",
+   "name_fr": "Codec audio sur IP",
+   "name_en": "IP audio codec",
+   "domain": "broadcast-radio",
+   "definition": "Appareil qui compresse (ou non) l'audio, l'envoie sur un réseau IP (Ethernet, 4G/5G, Wi-Fi) et reçoit en même temps un retour : c'est l'outil des duplex et reportages.",
+   "explanation": "L'EBU distingue trois usages : liaison unidirectionnelle sans retour (satellite), bidirectionnelle avec un retour bande étroite pour le cue (concert, commentaire sportif) où la latence compte peu, et bidirectionnelle large bande (interview, débat) où la latence devient un problème [Tech 3326]. Pour que deux marques se comprennent, la spécification EBU Tech 3326 (dite N/ACIP) impose RTP sur UDP, SIP pour la signalisation et une liste de codecs obligatoires [Tech 3326]. L'AETA Scoop5 S, codec studio full duplex, en est un exemple : IP/SIP ou RTP direct, G.711, G.722, MPEG Layer II, AAC et Opus [AETA] ; AETA le classe désormais parmi ses « anciens produits ». Le retour envoyé au codec doit toujours être un N-1.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "acip-ebu-tech-3326",
+    "sip-signalling",
+    "opus-codec",
+    "g722-codec",
+    "ip-link-resilience",
+    "mix-minus-n1",
+    "latency",
+    "audio-over-ip"
+   ],
+   "equipment_ids": [
+    "aeta-scoop5-s",
+    "aeta-scoopy-plus-s",
+    "comrex-access-nx",
+    "tieline-via",
+    "tieline-gateway"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.aeta-audio.com/products/scoop5s/",
+     "publisher": "AETA Audio Systems",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "acip-ebu-tech-3326",
+   "name_fr": "EBU Tech 3326 (N/ACIP)",
+   "name_en": "EBU Tech 3326 (N/ACIP)",
+   "domain": "broadcast-radio",
+   "definition": "Spécification EBU (Rev. 4, novembre 2014) des exigences minimales d'interopérabilité pour la contribution audio sur IP : transport, codecs, encapsulation et signalisation.",
+   "explanation": "Le texte impose IPv4, recommande le multicast et IPv6, et exige RTP sur UDP (RFC 3550/3551), avec les ports 5004 (RTP) et 5005 (RTCP) par défaut [Tech 3326]. Les codecs obligatoires sont G.711, G.722 à 64 kbit/s, MPEG-1/2 Layer II et le PCM 16 bits ; AAC/AAC-LD et apt-X sont « recommandés » ; MPEG Layer III, HE-AACv2, Opus et AMR-WB ne sont qu'« optionnels » dans cette révision [Tech 3326]. Les flux sont décrits en SDP et, pour une liaison bidirectionnelle, établis en SIP sur le port 5060 par défaut, avec négociation offre/réponse (RFC 3264) [Tech 3326]. La FEC (RFC 5109, port 5006) et la retransmission (RFC 4588) sont prévues pour les pertes de paquets [Tech 3326]. En pratique, choisir G.722 en secours garantit une liaison entre deux codecs conformes de marques différentes.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "audio-codec-ip",
+    "sip-signalling",
+    "g722-codec",
+    "opus-codec",
+    "ip-link-resilience"
+   ],
+   "equipment_ids": [
+    "aeta-scoop5-s",
+    "comrex-access-nx",
+    "tieline-via"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "sip-signalling",
+   "name_fr": "Signalisation SIP",
+   "name_en": "SIP signalling",
+   "domain": "broadcast-radio",
+   "definition": "Protocole (RFC 3261) qui établit, modifie et termine une session entre deux appareils ; en radio, il « appelle » un codec distant comme un téléphone.",
+   "explanation": "SIP est un protocole applicatif : l'invitation (INVITE) transporte une description de session qui permet aux deux bouts de s'accorder sur un format audio commun, BYE termine l'appel et REGISTER déclare au serveur où se trouve l'utilisateur [RFC 3261]. L'EBU Tech 3326 rend SIP obligatoire pour les liaisons bidirectionnelles, avec INVITE, ACK, BYE, OPTIONS et REGISTER, le port 5060 par défaut et une option « outbound proxy » [Tech 3326]. Un serveur SIP (registrar) permet de joindre un codec par son nom même si son adresse IP change, ce qui est utile en 4G. L'AETA Scoop5 S peut s'enregistrer en même temps sur deux serveurs SIP, ou fonctionner en RTP direct sans SIP [AETA].",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "acip-ebu-tech-3326",
+    "audio-codec-ip",
+    "ip-link-resilience"
+   ],
+   "equipment_ids": [
+    "aeta-scoop5-s",
+    "tieline-via"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.rfc-editor.org/rfc/rfc3261",
+     "publisher": "IETF / RFC Editor",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.aeta-audio.com/products/scoop5s/",
+     "publisher": "AETA Audio Systems",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "opus-codec",
+   "name_fr": "Codec Opus",
+   "name_en": "Opus codec",
+   "domain": "broadcast-radio",
+   "definition": "Codec audio interactif ouvert (RFC 6716) qui couvre de la parole bande étroite à 6 kbit/s jusqu'à la musique stéréo pleine bande à 510 kbit/s.",
+   "explanation": "Opus combine une couche à prédiction linéaire dérivée de SILK (efficace sur la parole) et une couche MDCT dérivée de CELT (musique, aigus), avec un mode hybride [RFC 6716]. Les trames vont de 2,5 à 60 ms et la bande passante va du bande étroite (8 kHz d'échantillonnage) au pleine bande (48 kHz) [RFC 6716]. Les petites trames donnent une faible latence, utile en duplex. Attention : dans l'EBU Tech 3326 Rev. 4, Opus n'est qu'un codec optionnel, alors que G.722 est obligatoire [Tech 3326]. Les codecs récents l'intègrent quand même : l'AETA Scoop5 S liste Opus parmi ses algorithmes IP [AETA].",
+   "formulas": [],
+   "units": [
+    "kbit/s",
+    "ms",
+    "kHz"
+   ],
+   "related_concepts": [
+    "audio-codec-ip",
+    "acip-ebu-tech-3326",
+    "g722-codec",
+    "latency"
+   ],
+   "equipment_ids": [
+    "aeta-scoop5-s",
+    "comrex-access-nx",
+    "tieline-via"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.rfc-editor.org/rfc/rfc6716",
+     "publisher": "IETF / RFC Editor",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.aeta-audio.com/products/scoop5s/",
+     "publisher": "AETA Audio Systems",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "g722-codec",
+   "name_fr": "Codec G.722",
+   "name_en": "G.722 codec",
+   "domain": "broadcast-radio",
+   "definition": "Recommandation UIT-T « 7 kHz audio-coding within 64 kbit/s » : voix en bande élargie (7 kHz) à 64 kbit/s, codec obligatoire de l'EBU Tech 3326.",
+   "explanation": "G.722 donne une voix plus naturelle que le téléphone classique (G.711) pour un débit de 64 kbit/s [UIT-T]. L'EBU Tech 3326 l'impose à 64 kbit/s, en RTP avec le type de charge utile 9 et des paquets de 20 ms par défaut [Tech 3326]. Détail piège : son horloge RTP est déclarée à 8 kHz alors que l'échantillonnage est de 16 kHz, une erreur historique conservée pour la compatibilité [Tech 3326]. Comme tous les codecs conformes le savent décoder, G.722 est le profil de secours classique quand deux codecs de marques différentes ne trouvent pas d'algorithme commun plus riche.",
+   "formulas": [],
+   "units": [
+    "kbit/s",
+    "kHz"
+   ],
+   "related_concepts": [
+    "audio-codec-ip",
+    "acip-ebu-tech-3326",
+    "opus-codec"
+   ],
+   "equipment_ids": [
+    "aeta-scoop5-s",
+    "comrex-access-nx",
+    "tieline-via"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.itu.int/rec/T-REC-G.722",
+     "publisher": "ITU-T",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "ip-link-resilience",
+   "name_fr": "Fiabilité d'une liaison codec IP",
+   "name_en": "IP codec link resilience",
+   "domain": "broadcast-radio",
+   "definition": "Ensemble des techniques qui maintiennent un duplex IP malgré les pertes de paquets ou la chute d'un réseau : correction d'erreurs (FEC), retransmission, double flux, agrégation de réseaux, double enregistrement SIP.",
+   "explanation": "L'EBU Tech 3326 prévoit une FEC selon RFC 5109 (port 5006 par défaut) et une retransmission selon RFC 4588 [Tech 3326]. Comrex décrit CrossLock comme une couche de fiabilité qui utilise plusieurs réseaux IP en même temps, répartit le flux selon la bande passante, la latence et la gigue mesurées, et écarte automatiquement un réseau inutilisable [Comrex]. AETA propose sur le Scoop5 S la duplication de paquets (FEC), le « double streaming », l'enregistrement sur deux serveurs SIP et la voix HD/VoLTE en secours quand les autres réseaux tombent [AETA]. Chaque protection ajoute du débit ou de la latence : on la choisit selon le réseau disponible sur le terrain.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "audio-codec-ip",
+    "sip-signalling",
+    "broadcast-redundancy",
+    "network-redundancy",
+    "latency"
+   ],
+   "equipment_ids": [
+    "comrex-access-nx",
+    "aeta-scoop5-s",
+    "tieline-via"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.comrex.com/products/access-nx/",
+     "publisher": "Comrex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.aeta-audio.com/products/scoop5s/",
+     "publisher": "AETA Audio Systems",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "talkback-ifb",
+   "name_fr": "Talkback et retour d'ordres (IFB)",
+   "name_en": "Talkback and IFB",
+   "domain": "broadcast-radio",
+   "definition": "Liaison d'ordres qui permet au technicien ou au réalisateur de parler aux invités du studio ou à un intervenant distant, dans leur casque ou dans leur retour, sans passer à l'antenne.",
+   "explanation": "Sur l'Axia iQ, le système de talkback permet à l'opérateur de parler aux invités du studio ou à toute source téléphone ou codec qui a un retour associé (backfeed) ; une touche de tranche peut activer le talkback [Axia]. Le retour d'ordres vers un intervenant distant passe donc par son N-1 : on lui parle « hors antenne » avant de lui ouvrir l'antenne. En intercom de type partyline, la station principale Clear-Com MS-702 dispose d'une entrée programme et d'une sortie IFB/Hot Mic [Clear-Com]. L'IFB (interruptible foldback) mélange le programme et les ordres dans l'oreillette de l'intervenant.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "mix-minus-n1",
+    "intercom-partyline",
+    "on-air-console",
+    "talkback"
+   ],
+   "equipment_ids": [
+    "axia-iq",
+    "clear-com-ms-702"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+     "publisher": "Clear-Com",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "intercom-partyline",
+   "name_fr": "Intercom partyline",
+   "name_en": "Party-line intercom",
+   "domain": "broadcast-radio",
+   "definition": "Système d'ordres filaire où tous les postes d'un même canal s'entendent et se parlent, alimentés par une station principale.",
+   "explanation": "La station principale Clear-Com Encore MS-702 gère 2 canaux et peut alimenter jusqu'à 55 boîtiers ceinture RS-701 répartis sur les deux canaux ; elle fournit 30 V DC sur la ligne partyline [Clear-Com]. Une entrée programme permet d'injecter le son de l'antenne dans les casques d'intercom [Clear-Com]. En radio, l'intercom relie la régie, le studio, une régie finale ou un car régie ; en reportage, le retour d'ordres passe plutôt par le codec et son N-1.",
+   "formulas": [],
+   "units": [
+    "V"
+   ],
+   "related_concepts": [
+    "talkback-ifb"
+   ],
+   "equipment_ids": [
+    "clear-com-ms-702",
+    "clear-com-rs-701"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+     "publisher": "Clear-Com",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "tally-on-air",
+   "name_fr": "Voyant ON-AIR et tally",
+   "name_en": "On-air light and tally",
+   "domain": "broadcast-radio",
+   "definition": "Signalisation lumineuse commandée par la console (GPIO) qui indique qu'un micro est ouvert à l'antenne ; c'est une consigne de sécurité pour toute personne qui entre.",
+   "explanation": "La console d'antenne fournit des sorties logiques (GPIO, contacts secs) ; l'Axia iQ peut envoyer des contacts ou des commandes GPIO vers les appareils du studio [Axia]. Le voyant Yellowtec litt reçoit une entrée de commande par couleur (2,4 à 24 V DC), sur un bornier 8 points, et demande une alimentation permanente de 9 à 24 V : le port USB ne sert qu'à la configuration et ne peut pas l'alimenter [Yellowtec]. TekPractice vérifie cette chaîne avec la règle R5 : fader micro ouvert = sortie tally de la console reliée à l'entrée tally du voyant. Sans ce voyant, quelqu'un risque d'entrer en parlant pendant le direct.",
+   "formulas": [],
+   "units": [
+    "V"
+   ],
+   "related_concepts": [
+    "on-air-console",
+    "self-op-studio"
+   ],
+   "equipment_ids": [
+    "axia-iq",
+    "yellowtec-litt",
+    "yellowtec-mika"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+     "publisher": "Yellowtec",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "loudness-ebu-r128",
+   "name_fr": "Sonie selon EBU R 128",
+   "name_en": "EBU R 128 loudness",
+   "domain": "broadcast-radio",
+   "definition": "Recommandation EBU qui normalise les programmes sur leur sonie moyenne (Programme Loudness) à −23,0 LUFS, avec une crête vraie maximale de −1 dBTP en production.",
+   "explanation": "L'EBU constate que la normalisation par les crêtes a créé de gros écarts de sonie entre programmes et entre chaînes, principale cause de plaintes [R 128]. Elle recommande donc de mesurer la sonie intégrée de tout le programme, selon ITU-R BS.1770 avec fenêtrage (gating), et de la normaliser à −23,0 LUFS ; quand la cible n'est pas atteignable, par exemple en direct, une tolérance de ±1,0 LU est admise, et ±0,2 LU en contrôle qualité pour l'erreur de mesure [R 128]. La crête vraie ne doit pas dépasser −1 dBTP en production [R 128]. La sonie se mesure sur tout le signal, sans privilégier la parole ou la musique [R 128]. Pour la radio, le supplément R 128 s3 demande de produire et d'échanger à −23,0 LUFS et −1 dBTP [R 128 s3]. En France, la délibération Arcom n° 2011-29 fixe −23 LUFS pour la télévision uniquement [Arcom].",
+   "formulas": [],
+   "units": [
+    "LUFS",
+    "LU",
+    "dBTP"
+   ],
+   "related_concepts": [
+    "true-peak",
+    "loudness-metering-ebu-mode",
+    "loudness-range-lra",
+    "distribution-loudness-level",
+    "streaming-loudness"
+   ],
+   "equipment_ids": [
+    "rtw-touchmonitor-tm7",
+    "nugen-audio-vislm"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    },
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.arcom.fr/en/find-out-more/legal-area/legal-resources/deliberation-july-19-2011-technical-characteristics-loudness-television-programs-and-commercials",
+     "publisher": "Arcom",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "regulator",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "true-peak",
+   "name_fr": "Crête vraie (true peak)",
+   "name_en": "True peak",
+   "domain": "broadcast-radio",
+   "definition": "Valeur maximale de la forme d'onde reconstituée en temps continu, entre les échantillons ; exprimée en dBTP.",
+   "explanation": "Un crête-mètre échantillon par échantillon peut rater les crêtes situées entre deux échantillons, qui apparaissent après conversion ou encodage. L'EBU R 128 fixe la crête vraie maximale à −1 dBTP en production, mesurée par un appareil conforme à ITU-R BS.1770 et EBU Tech 3341, avec une tolérance de mesure de ±0,3 dB [R 128]. Les maxima permis peuvent être plus bas selon les systèmes de distribution et les débits de compression ; l'EBU renvoie à Tech 3344 [R 128]. Exemples réels cités par l'EBU : rbb limite son signal FM à −6,3 dBTP pour raisons légales et le DAB+ à −3,0 dBTP [Tech 3401].",
+   "formulas": [],
+   "units": [
+    "dBTP"
+   ],
+   "related_concepts": [
+    "loudness-ebu-r128",
+    "loudness-metering-ebu-mode",
+    "limiter",
+    "dbfs",
+    "headroom"
+   ],
+   "equipment_ids": [
+    "rtw-touchmonitor-tm7",
+    "nugen-audio-vislm"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "loudness-metering-ebu-mode",
+   "name_fr": "Mesure de sonie « EBU Mode »",
+   "name_en": "EBU Mode loudness metering",
+   "domain": "broadcast-radio",
+   "definition": "Comportement normalisé d'un sonomètre de sonie (EBU Tech 3341) : trois échelles de temps (momentanée, court terme, intégrée), fenêtrage et deux échelles d'affichage.",
+   "explanation": "La sonie momentanée (M) utilise une fenêtre glissante de 0,4 s, la sonie court terme (S) une fenêtre de 3 s, toutes deux sans fenêtrage ; la sonie intégrée (I) applique le fenêtrage de ITU-R BS.1770 : seuil absolu à −70 LUFS, puis seuil relatif 10 LU sous le niveau obtenu, sur des blocs de 400 ms qui se chevauchent à 75 % [Tech 3341]. L'appareil propose l'échelle « EBU +9 » (−18 à +9 LU) et l'échelle « EBU +18 » (−36 à +18 LU), en relatif (LU, 0 = cible) ou en absolu (LUFS) [Tech 3341]. Pour la radio, l'EBU conseille l'échelle relative +9 et une zone colorée de ±2 LU en court terme (±3 LU en momentané) pour caler la voix [Tech 3401].",
+   "formulas": [],
+   "units": [
+    "LUFS",
+    "LU",
+    "s"
+   ],
+   "related_concepts": [
+    "loudness-ebu-r128",
+    "loudness-range-lra",
+    "true-peak",
+    "self-op-studio"
+   ],
+   "equipment_ids": [
+    "rtw-touchmonitor-tm7",
+    "nugen-audio-vislm"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "loudness-range-lra",
+   "name_fr": "Plage de sonie (LRA)",
+   "name_en": "Loudness Range (LRA)",
+   "domain": "broadcast-radio",
+   "definition": "Mesure (EBU Tech 3342) de la variation de sonie d'un programme : écart entre les 10e et 95e centiles de la distribution des sonies court terme, en LU.",
+   "explanation": "On calcule la sonie court terme (fenêtre de 3 s) tout au long du programme, on écarte les valeurs sous le seuil absolu de −70 LUFS, puis celles situées plus de 20 LU sous le niveau ainsi obtenu ; le LRA est l'écart entre le 10e et le 95e centile du reste [Tech 3342]. Le centile bas évite qu'un fondu de fin domine la mesure et le centile haut qu'un seul son très fort la fausse [Tech 3342]. L'EBU déconseille le LRA pour les programmes de moins d'une minute, faute de données [R 128]. En radio, il sert d'indicateur de dynamique à long terme et révèle un traitement dynamique non voulu [Tech 3401].",
+   "formulas": [
+    {
+     "expr": "LRA = L95 − L10",
+     "vars": {
+      "L95": "95e centile des sonies court terme fenêtrées (LUFS)",
+      "L10": "10e centile (LUFS)"
+     },
+     "source_url": "https://tech.ebu.ch/docs/tech/tech3342.pdf"
+    }
+   ],
+   "units": [
+    "LU"
+   ],
+   "related_concepts": [
+    "loudness-ebu-r128",
+    "loudness-metering-ebu-mode"
+   ],
+   "equipment_ids": [
+    "rtw-touchmonitor-tm7"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3342.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation",
+      "formulas[0]"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "distribution-loudness-level",
+   "name_fr": "Niveau de sonie de distribution",
+   "name_en": "Distribution loudness level",
+   "domain": "broadcast-radio",
+   "definition": "Sonie à laquelle une station diffuse réellement ses programmes, distincte de la sonie de production (−23 LUFS) ; l'EBU vise −23 LUFS par défaut, sinon entre −20 et −16 LUFS.",
+   "explanation": "Le supplément R 128 s3 sépare production et distribution : on produit et échange à −23,0 LUFS et −1 dBTP, puis la station diffuse par défaut à −23,0 LUFS ; si elle choisit un autre niveau, il devrait se situer entre −20,0 et −16,0 LUFS [R 128 s3]. Pour la FM, on peut soit adapter le calage studio/excursion de la porteuse, soit garder ce calage et changer le niveau de distribution [R 128 s3]. L'EBU note que les stations soumises à la limitation de puissance MPX (ITU-R BS.412) se situaient souvent autour de −18 LUFS, avec un calage de −9 dBTP pour une excursion de ±40 kHz [Tech 3401]. Exemple : SWR diffuse en DAB et sur internet à −16 LUFS / −1 dBTP [Tech 3401].",
+   "formulas": [],
+   "units": [
+    "LUFS",
+    "dBTP",
+    "kHz"
+   ],
+   "related_concepts": [
+    "loudness-ebu-r128",
+    "streaming-loudness",
+    "on-air-processing",
+    "true-peak"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "streaming-loudness",
+   "name_fr": "Sonie en streaming",
+   "name_en": "Streaming loudness",
+   "domain": "broadcast-radio",
+   "definition": "Recommandation EBU R 128 s2 : diffuser les flux sans changement à −23,0 LUFS avec métadonnées de sonie, ou, à titre transitoire, entre −20,0 et −16,0 LUFS.",
+   "explanation": "Les plateformes de streaming utilisent souvent une cible plus forte que la diffusion [R 128 s2]. L'EBU recommande de produire selon R 128, de diffuser le flux inchangé à −23,0 LUFS et d'indiquer la vraie sonie par métadonnées [R 128 s2]. Si le diffuseur veut maîtriser lui-même le traitement dynamique, il peut monter le niveau de distribution, de préférence entre −20,0 et −16,0 LUFS, puis revenir à −23 LUFS quand les appareils mobiles auront assez de gain [R 128 s2]. Pour la radio, R 128 s3 renvoie à ce supplément pour le streaming [R 128 s3]. Les cibles des plateformes musicales (Spotify, etc.) ne sont pas des normes EBU : elles ne sont pas reprises ici.",
+   "formulas": [],
+   "units": [
+    "LUFS"
+   ],
+   "related_concepts": [
+    "distribution-loudness-level",
+    "loudness-ebu-r128"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": "BC01",
+     "note": "Notions de transfert / canal de diffusion (sonie, codage, IP) attendues en PTES — jugement, non vérifié sur eduscol",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/r/r128s2.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "on-air-processing",
+   "name_fr": "Traitement de diffusion (processing)",
+   "name_en": "On-air processing",
+   "domain": "broadcast-radio",
+   "definition": "Chaîne de traitement placée juste avant l'émetteur ou l'encodeur : contrôle automatique de gain, compression/limitation multibande, écrêteur final et, en FM, codeur stéréo/MPX.",
+   "explanation": "Sur l'Omnia.11, les AGC s'adaptent au programme, un limiteur multibande ajuste son action selon l'AGC multibande, un écrêteur final FM (« Pepino ») contrôle les crêtes, et un codeur stéréo intégré fournit deux sorties MPX avec une référence 19 kHz pour le RDS [Omnia]. En FM, certains pays appliquent une limitation de puissance MPX selon ITU-R BS.412, ce qui crée de gros écarts de sonie entre stations européennes [R 128 s3]. L'EBU montre qu'en normalisant la sonie dès la production, le processeur a besoin de moins de compression et de limitation, d'où un son plus ouvert [R 128 s3]. Pour le DAB+ et l'IP, elle recommande un traitement séparé du traitement FM [R 128 s3].",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "on-air-chain",
+    "distribution-loudness-level",
+    "compressor",
+    "limiter",
+    "true-peak"
+   ],
+   "equipment_ids": [
+    "omnia-11",
+    "orban-optimod-5950-hd"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
+     "publisher": "Telos Alliance / Omnia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+     "publisher": "EBU",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "studio-transmitter-link",
+   "name_fr": "Liaison studio-émetteur (STL)",
+   "name_en": "Studio-transmitter link (STL)",
+   "domain": "broadcast-radio",
+   "definition": "Liaison qui transporte le programme du studio jusqu'au site de l'émetteur, souvent éloigné : faisceau hertzien, fibre, circuit de données ou IP.",
+   "explanation": "Le meilleur site d'antenne est souvent loin du studio : le STL relie les deux par un faisceau hertzien point à point ou par une liaison filaire (fibre, circuit numérique dédié) [Wikipedia]. Les liaisons radio peuvent être analogiques, numériques ou hybrides ; les anciens systèmes analogiques transportaient plusieurs voies audio et de données par sous-porteuses [Wikipedia]. Une liaison retour émetteur-studio (TSL) renvoie la télémesure de l'émetteur (puissance, température, ROS, modulation) [Wikipedia]. C'est un maillon critique de la chaîne d'antenne, à doubler ou à surveiller.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "on-air-chain",
+    "broadcast-redundancy",
+    "silence-detection"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Studio_transmitter_link",
+     "publisher": "Wikipedia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "silence-detection",
+   "name_fr": "Détection de silence",
+   "name_en": "Silence detection",
+   "domain": "broadcast-radio",
+   "definition": "Surveillance automatique du programme qui déclenche une alarme et/ou bascule sur une source de secours si le niveau reste sous un seuil pendant une durée réglée.",
+   "explanation": "Le Sonifex RB-SD1 surveille une entrée principale et une entrée auxiliaire ; si la principale passe sous le seuil pendant la durée choisie, il bascule sur la source de secours (message enregistré, autre programme) [Sonifex]. Le seuil se règle de −60 à −15 dBu par pas de 3 dB et la durée de 2 à 30 s par pas de 2 s, plus une position de 125 s [Sonifex]. Des contacts relais signalent la panne et une sortie de commande peut lancer un autre appareil [Sonifex]. Le chemin principal est passif : l'audio passe même si l'appareil perd son alimentation, ce qui convient aux sites d'émission [Sonifex]. Le réglage est un compromis : une durée trop courte bascule pendant un silence voulu.",
+   "formulas": [],
+   "units": [
+    "dBu",
+    "s"
+   ],
+   "related_concepts": [
+    "on-air-chain",
+    "broadcast-redundancy"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://sonifex.co.uk/product/rb-sd1/",
+     "publisher": "Sonifex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "broadcast-redundancy",
+   "name_fr": "Redondance en diffusion",
+   "name_en": "Broadcast redundancy",
+   "domain": "broadcast-radio",
+   "definition": "Doublement des éléments critiques de la chaîne d'antenne (alimentations, liens réseau, serveurs SIP, sources) pour qu'une seule panne ne coupe pas l'antenne.",
+   "explanation": "Exemples relevés chez les constructeurs : alimentation de secours optionnelle pour la console Axia iQ [Axia] ; double lien IP avec fusion sans coupure SMPTE 2022-7 (« hitless merge ») sur le moteur Lawo Power Core [Lawo] ; double enregistrement SIP et alimentation redondante optionnelle sur l'AETA Scoop5 S [AETA] ; détecteur de silence qui bascule sur une source de secours, avec un chemin audio passif en cas de coupure secteur [Sonifex]. La redondance ne sert que si la bascule est testée régulièrement et si l'opérateur sait laquelle des deux voies est à l'antenne.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "silence-detection",
+    "ip-link-resilience",
+    "studio-transmitter-link",
+    "network-redundancy"
+   ],
+   "equipment_ids": [
+    "axia-iq",
+    "lawo-ruby",
+    "aeta-scoop5-s"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": "BC02",
+     "note": "Mise en œuvre d'une exploitation radio (duplex, antenne, codage pour la diffusion) ; BC02 cité d'après la fiche RNCP37196 (France Compétences) dans la fiche 17, référentiel eduscol non consulté — jugement, non vérifié",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+     "publisher": "Telos Alliance / Axia",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://lawo.com/products/power-core/",
+     "publisher": "Lawo",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.aeta-audio.com/products/scoop5s/",
+     "publisher": "AETA Audio Systems",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://sonifex.co.uk/product/rb-sd1/",
+     "publisher": "Sonifex",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Cibles de sonie des plateformes de streaming musical (Spotify, Apple Music, YouTube)",
+   "searched": "EBU R 128 s2 (mentionne seulement que les plateformes ont une cible plus élevée) ; pages officielles des plateformes non ouvertes"
+  },
+  {
+   "what": "Contenu de EBU Tech 3368 (citée par Tieline avec Tech 3326)",
+   "searched": "page Tieline ViA ; document Tech 3368 non ouvert"
+  },
+  {
+   "what": "EBU Tech 3344 (true peak de distribution par plateforme)",
+   "searched": "référencée par R 128 et R 128 s3, PDF non ouvert"
+  },
+  {
+   "what": "Règle française (Arcom) de sonie spécifique à la radio",
+   "searched": "1 WebSearch + délibération Arcom 2011-29 : télévision uniquement"
+  },
+  {
+   "what": "Tolérance de R 128 v5 pour les programmes non-direct (l'historique cite ±0,5 LU en v3)",
+   "searched": "R 128 (2023) texte principal : seule la tolérance ±1,0 LU (direct) et ±0,2 LU (QC) est énoncée"
+  },
+  {
+   "what": "Définition sourcée de la mémoire tampon de gigue (jitter buffer) d'un codec",
+   "searched": "EBU Tech 3326, page Comrex ACCESS NX (gigue seulement citée comme critère) ; manuel Comrex > 10 Mo non lu"
+  }
+ ]
+}
