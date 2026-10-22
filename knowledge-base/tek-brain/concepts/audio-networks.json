@@ -1,0 +1,1543 @@
+{
+  "entity": "concept",
+  "domain": "audio-networks",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "audio-over-ip",
+      "name_fr": "Audio sur IP (AoIP)",
+      "name_en": "Audio over IP",
+      "domain": "audio-networks",
+      "definition": "Transport de nombreux canaux audio numériques sous forme de paquets sur un réseau Ethernet/IP standard, avec une horloge distribuée par le réseau (PTP) au lieu d'un câble de synchronisation dédié.",
+      "explanation": "Au lieu d'un multipaire analogique ou d'une liaison point à point (AES3, MADI), un seul câble réseau porte des dizaines voire des centaines de canaux. On distingue les technologies de couche 3 (IP routable : Dante, RAVENNA, Livewire, Q-LAN), rendues interopérables par AES67, et l'AVB/Milan, de couche 2. Dans tous les cas l'horloge passe par un protocole (PTP, IEEE 1588) : un appareil devient leader et les autres s'y calent. Sur le terrain, cela veut dire que le « patch » devient logiciel (Dante Controller, par exemple) et que le switch fait désormais partie de la chaîne audio : un switch mal réglé produit des clics comme un mauvais câble.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "dante",
+        "aes67",
+        "avb-milan",
+        "ptp-clock",
+        "ravenna",
+        "network-switch-requirements"
+      ],
+      "equipment_ids": [
+        "yamaha-rio3224-d2",
+        "luminex-gigacore-16t"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
+          "publisher": "ALC NetworX (A. Hildebrand), AES67 and RAVENNA in a Nutshell",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+          "publisher": "H. Kaltheuner, G. Kronauer, M. Lave, E. Corteel, AES Int. Acoustics & Sound Reinforcement Conf., Le Mans 2024 (hosted by L-Acoustics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dante",
+      "name_fr": "Dante (Audinate)",
+      "name_en": "Dante",
+      "domain": "audio-networks",
+      "definition": "Technologie propriétaire d'audio sur IP de la société Audinate : les appareils échangent des canaux sur un réseau Ethernet, se synchronisent en PTP et sont routés dans le logiciel Dante Controller.",
+      "explanation": "Chaque appareil Dante annonce ses canaux d'émission (Tx) et de réception (Rx) ; on « abonne » un canal Rx à un canal Tx (notation canal@appareil) et Dante crée les flux nécessaires. Par défaut les appareils prennent une adresse IP automatiquement (link-local 169.254.x.x sans serveur DHCP). Beaucoup d'appareils ont deux ports, primaire et secondaire, utilisés soit en mode redondant (deux réseaux séparés), soit en mode commuté (daisy-chain). L'horloge est en PTPv1 par défaut ; les appareils compatibles AES67/ST 2110-30 utilisent aussi PTPv2. Exemple : une stagebox Yamaha Rio3224-D2 envoie ses 32 préamplis à une console CL ou QL par un câble etherCON.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "audio-over-ip",
+        "dante-controller",
+        "dante-subscription",
+        "ptp-clock",
+        "dante-device-latency",
+        "dante-redundant-switched-mode",
+        "dante-ip-addressing"
+      ],
+      "equipment_ids": [
+        "yamaha-rio3224-d2",
+        "yamaha-ql1",
+        "yamaha-cl5",
+        "focusrite-rednet-mp8r",
+        "rme-digiface-dante"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
+          "publisher": "Yamaha, R series (Rio3224-D2) specifications",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "aes67",
+      "name_fr": "AES67",
+      "name_en": "AES67",
+      "domain": "audio-networks",
+      "definition": "Norme AES (2013) d'interopérabilité entre systèmes d'audio sur IP : elle fixe la synchronisation (PTPv2, IEEE 1588-2008), le transport (RTP/UDP sur IPv4), les formats audio et le temps de paquet, mais pas la découverte des appareils.",
+      "explanation": "AES67 n'est pas un produit mais un dénominateur commun que Dante, RAVENNA, Livewire ou Q-LAN savent parler. Valeurs obligatoires : 48 kHz, L16/L24, 1 à 8 canaux par flux, temps de paquet de 1 ms (48 échantillons). Les flux multicast doivent être dans la plage 239.0.0.0-239.255.255.255 et le réseau doit gérer IGMPv2. Comme la découverte n'est pas normalisée, il faut souvent échanger à la main des descriptions SDP (Dante Controller permet d'ajouter des sessions SDP externes). Le domaine PTP AES67 est fixé à 0 dans Dante Controller.",
+      "formulas": [
+        {
+          "expr": "t_paquet = N_échantillons / fe  (48 / 48 000 Hz = 1 ms)",
+          "vars": {
+            "N_échantillons": "échantillons par paquet",
+            "fe": "fréquence d'échantillonnage (Hz)"
+          },
+          "source_url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf"
+        }
+      ],
+      "units": [
+        "ms",
+        "kHz"
+      ],
+      "related_concepts": [
+        "audio-over-ip",
+        "ptp-clock",
+        "smpte-st-2110-30",
+        "ravenna",
+        "multicast-unicast"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
+          "publisher": "ALC NetworX (A. Hildebrand), AES67 and RAVENNA in a Nutshell",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
+          "publisher": "RAVENNA (Lawo), RAVENNA, AES67 & SMPTE ST 2110 - Standards Comparison V03",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "formulas[0]"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/aes67_and_smpte_st2110-30_audio.htm",
+          "publisher": "Audinate, Dante Controller help: AES67 and SMPTE ST 2110-30 Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "smpte-st-2110-30",
+      "name_fr": "SMPTE ST 2110-30",
+      "name_en": "SMPTE ST 2110-30",
+      "domain": "audio-networks",
+      "definition": "Partie audio de la suite SMPTE ST 2110 (médias professionnels sur IP), fondée sur AES67 avec des exigences supplémentaires d'horloge et de réseau.",
+      "explanation": "ST 2110-30 définit des niveaux de conformité (A, B, C, AX, BX, CX). Le niveau A correspond pour l'essentiel à AES67 ; B et C utilisent des paquets de 6 échantillons (125 µs), et C monte à 64 canaux par flux. ST 2110 impose le profil PTP SMPTE ST 2059-2 et IGMPv3 (AES67 demande IGMPv2) et n'impose pas la plage multicast 239.x. Audinate déconseille de mélanger les modes AES67 et ST 2110-30 sur un même réseau sans maîtriser les conséquences sur l'horloge.",
+      "formulas": [],
+      "units": [
+        "µs"
+      ],
+      "related_concepts": [
+        "aes67",
+        "ptp-clock",
+        "igmp-snooping"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
+          "publisher": "RAVENNA (Lawo), RAVENNA, AES67 & SMPTE ST 2110 - Standards Comparison V03",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/aes67_and_smpte_st2110-30_audio.htm",
+          "publisher": "Audinate, Dante Controller help: AES67 and SMPTE ST 2110-30 Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "ravenna",
+      "name_fr": "RAVENNA",
+      "name_en": "RAVENNA",
+      "domain": "audio-networks",
+      "definition": "Technologie ouverte et sans licence d'audio sur IP de couche 3, synchronisée en PTPv2 et transportée en RTP/UDP (unicast ou multicast), dont AES67 est un profil.",
+      "explanation": "RAVENNA, portée par ALC NetworX/Lawo, est très présente en broadcast (consoles Lawo). Elle prend en charge la protection sans coupure SMPTE ST 2022-7 (deux réseaux portant les mêmes flux). Ses documents de référence donnent des réglages de switch concrets (DSCP, IGMP) utiles pour tout réseau AoIP.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "audio-over-ip",
+        "aes67",
+        "network-redundancy",
+        "qos-dscp"
+      ],
+      "equipment_ids": [
+        "lawo-ruby"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.ravenna-network.com/technology/",
+          "publisher": "RAVENNA, Technology",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://ravenna-network.com/wp-content/uploads/2020/02/AES67-and-RAVENNA-in-a-nutshell.pdf",
+          "publisher": "ALC NetworX (A. Hildebrand), AES67 and RAVENNA in a Nutshell",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+          "publisher": "ALC NetworX, RAVENNA Network Requirements V1.4b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "avb-milan",
+      "name_fr": "AVB / Milan",
+      "name_en": "AVB / Milan",
+      "domain": "audio-networks",
+      "definition": "AVB est une suite de normes IEEE 802.1 de couche 2 (gPTP 802.1AS, mise en forme 802.1Qav, réservation SRP 802.1Qat) ; Milan est le profil d'interopérabilité défini sous l'égide de l'Avnu Alliance pour l'audio professionnel.",
+      "explanation": "Les switches AVB réservent la bande passante de bout en bout et participent eux-mêmes à la synchronisation, ce qui donne une horloge très précise. Milan (lancé en 2016 par des fabricants comme d&b, L-Acoustics et Meyer Sound) fixe les détails : format AAF 32 bits, flux de 1, 2, 4, 6 ou 8 canaux, redondance, domaines d'horloge. Budget usuel : 2 ms de tampon côté récepteur, soit jusqu'à environ 14 sauts. AVB ne traverse pas un routeur (adresses MAC seulement) : il faut une passerelle. On le rencontre surtout côté diffusion (contrôleurs d'amplis, processeurs comme le d&b DS10).",
+      "formulas": [],
+      "units": [
+        "ms"
+      ],
+      "related_concepts": [
+        "audio-over-ip",
+        "ptp-clock",
+        "network-switch-requirements"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-ds10",
+        "l-acoustics-la12x",
+        "luminex-gigacore-16t"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+          "publisher": "H. Kaltheuner, G. Kronauer, M. Lave, E. Corteel, AES Int. Acoustics & Sound Reinforcement Conf., Le Mans 2024 (hosted by L-Acoustics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "university",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "ptp-clock",
+      "name_fr": "Horloge PTP (IEEE 1588)",
+      "name_en": "Precision Time Protocol (PTP)",
+      "domain": "audio-networks",
+      "definition": "Protocole IEEE 1588 par lequel les appareils d'un réseau échangent des messages horodatés pour aligner leur horloge sur une horloge leader élue automatiquement.",
+      "explanation": "Le PTP remplace le câble word clock : chaque suiveur (follower) mesure le délai de transport et corrige sa fréquence. Il existe PTPv1 (utilisé par défaut par Dante) et PTPv2 (IEEE 1588-2008, exigé par AES67 et ST 2110-30) ; un appareil qui parle les deux peut faire le pont. Le numéro de domaine PTPv2 sépare des groupes d'horloges indépendants. Les switches PTPv2 peuvent intégrer des horloges boundary ou transparent qui corrigent leur temps de traversée. Si un suiveur ne peut plus suivre (offset hors de sa plage de rattrapage), l'appareil Dante perd la synchro et se met en sourdine.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "ptp-leader-election",
+        "clock-master",
+        "word-clock",
+        "jitter",
+        "aes67",
+        "avb-milan"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf",
+          "publisher": "H. Kaltheuner, G. Kronauer, M. Lave, E. Corteel, AES Int. Acoustics & Sound Reinforcement Conf., Le Mans 2024 (hosted by L-Acoustics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "university",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "PTPv1 jusqu'à ±2500 µs d'écart au 6e saut sous fort trafic contre ±4 à ±4,5 µs en PTPv2 et ±0,063 µs en gPTP (essai publié par des fabricants membres de Milan)",
+              "source_url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-Requirements_and_Solutions_for_Audio_Networking_in_Sound.pdf"
+            },
+            {
+              "value": "Sur Dante, les horloges entre deux appareils sont annoncées à moins de 100 ns (vérifié sur 10 appareils)",
+              "source_url": "https://docs.symetrix.co/hardware/networking/dante/dante-technology.html"
+            }
+          ],
+          "note": "Conditions de mesure différentes (réseau chargé vs système nominal) ; les deux sources sont liées à des fabricants."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "ptp-leader-election",
+      "name_fr": "Élection de l'horloge leader (Preferred Leader)",
+      "name_en": "PTP leader clock election",
+      "domain": "audio-networks",
+      "definition": "Processus automatique qui désigne un seul appareil comme horloge leader PTP du réseau ; on peut le forcer avec l'option « Preferred Leader » dans Dante Controller.",
+      "explanation": "Dans Dante, les appareils ayant une entrée d'horloge externe (word clock, AES3) sont favorisés, un appareil en Gigabit est préféré à un appareil en 100 Mbit/s, et en cas d'égalité l'adresse MAC la plus basse gagne. Un appareil en « Preferred Leader » est toujours choisi ; si plusieurs le sont, la MAC la plus basse l'emporte, et Audinate précise que ce n'est pas une pratique normale d'en régler plus d'un par domaine d'horloge. Piège classique : un appareil A est réglé sur « Enable Sync To External » (word clock) tandis qu'un appareil B est Preferred Leader : A finit par perdre la synchro et se mettre en sourdine, sauf si B suit la même horloge externe. En AES67/ST 2110 l'élection suit l'algorithme BMCA (Best Master Clock Algorithm) et les priorités PTPv2.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "ptp-clock",
+        "clock-master",
+        "word-clock",
+        "dante-controller"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/processor/dme7/en/12_dante_en.html",
+          "publisher": "Yamaha, DME7 reference manual: Dante Settings",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_10.3/Content/Networking/Dante_Audio.htm",
+          "publisher": "QSC, Q-SYS Help 10.3: Dante Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2024/04/RAVENNA_RAVENNA-AES67-ST-2110-Comparison_V03.pdf",
+          "publisher": "RAVENNA (Lawo), RAVENNA, AES67 & SMPTE ST 2110 - Standards Comparison V03",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "multicast-unicast",
+      "name_fr": "Unicast et multicast",
+      "name_en": "Unicast and multicast",
+      "domain": "audio-networks",
+      "definition": "En unicast, un flux va d'un émetteur vers un seul récepteur ; en multicast, un seul flux est envoyé à un groupe de récepteurs.",
+      "explanation": "Dante est en unicast par défaut : un flux point à point par couple émetteur/récepteur, qui réserve en général la place de 4 canaux audio. Le multicast se crée sur l'émetteur ; il consomme de la bande passante même sans récepteur, mais un récepteur de plus ne coûte rien. Les récepteurs Dante préfèrent automatiquement un flux multicast disponible. Sans IGMP snooping, le multicast est diffusé (flooded) sur tous les ports, y compris vers un point d'accès Wi-Fi qu'il peut saturer. Exemple : une même stagebox écoutée par la console façade, la console retours et un enregistreur est un bon cas de multicast.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "dante-subscription",
+        "igmp-snooping",
+        "dante",
+        "aes67"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "network-redundancy",
+      "name_fr": "Redondance réseau (primaire / secondaire)",
+      "name_en": "Network redundancy",
+      "domain": "audio-networks",
+      "definition": "Doublement du réseau audio en deux infrastructures physiquement séparées, primaire et secondaire, qui transportent simultanément les mêmes flux pour qu'une panne sur l'une ne coupe pas l'audio.",
+      "explanation": "Sur un appareil Dante redondant, le port primaire va au réseau primaire et le port secondaire à un second réseau séparé ; les deux interfaces ne communiquent jamais entre elles et doivent avoir la même vitesse de lien (1 Gbit/s des deux côtés, ou 100 Mbit/s des deux côtés). Un appareil non redondant se branche uniquement sur le primaire. Relier les deux réseaux, ou brancher un câble secondaire dans un switch primaire, détruit la redondance et crée des problèmes d'adressage. En RAVENNA/ST 2110, le principe équivalent est SMPTE ST 2022-7. En redondance, l'horloge PTP circule sur les deux réseaux, avec en général le même leader.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "dante-redundant-switched-mode",
+        "network-topology",
+        "dante-ip-addressing"
+      ],
+      "equipment_ids": [
+        "yamaha-rio3224-d2",
+        "luminex-gigacore-16t"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+          "publisher": "ALC NetworX, RAVENNA Network Requirements V1.4b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dante-redundant-switched-mode",
+      "name_fr": "Mode redondant ou commuté (daisy-chain) du port secondaire",
+      "name_en": "Redundant vs switched (daisy-chain) mode",
+      "domain": "audio-networks",
+      "definition": "Réglage d'un appareil Dante à deux ports : en mode redondant le port secondaire porte une copie des flux vers un réseau séparé ; en mode commuté (switched) il devient un simple port de switch permettant de chaîner les appareils.",
+      "explanation": "Le réglage se fait dans Dante Controller (onglet Network Config) ou sur l'appareil (Yamaha : Redundant / Daisy Chain) et demande souvent un redémarrage. Le daisy-chain évite un switch mais une coupure de câble isole tout ce qui suit, et chaque appareil ajouté augmente le délai jusqu'au dernier. Yamaha recommande, à la latence par défaut de 0,5 ms de ses amplis PC-D, de ne pas dépasser cinq appareils en chaîne, sinon augmenter la latence ou passer par un switch Gigabit. En mode chaîné, ne jamais relier deux ports du même appareil au même switch (boucle réseau).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "network-redundancy",
+        "network-topology",
+        "dante-device-latency"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/processor/dme7/en/12_dante_en.html",
+          "publisher": "Yamaha, DME7 reference manual: Dante Settings",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "network-topology",
+      "name_fr": "Topologies : étoile, daisy-chain, double étoile",
+      "name_en": "Network topologies",
+      "domain": "audio-networks",
+      "definition": "Organisation physique des liens d'un réseau audio : en étoile autour d'un switch, en chaîne (daisy-chain) d'appareil à appareil, ou en double étoile redondante (primaire et secondaire).",
+      "explanation": "L'étoile est la base des réseaux AoIP : chaque appareil a son lien vers un switch, et la panne d'un câble n'affecte qu'un appareil. Le daisy-chain est simple mais fragile. La double étoile redondante utilise deux switches indépendants. AES50 et MADI, eux, sont des liaisons point à point : AES50 n'est pas commutable par un switch Ethernet, seules des matrices spécialisées permettent une étoile. Le temps de traversée dépend du nombre de sauts (switches) entre émetteur et récepteur, ce qui guide le réglage de latence.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "network-redundancy",
+        "dante-redundant-switched-mode",
+        "aes50",
+        "dante-device-latency"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/AES50",
+          "publisher": "Wikipedia, AES50",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "qos-dscp",
+      "name_fr": "Qualité de service (QoS) et DSCP",
+      "name_en": "Quality of Service and DSCP",
+      "domain": "audio-networks",
+      "definition": "Mécanisme par lequel les paquets IP sont marqués d'une classe de priorité (champ DSCP, DiffServ) que les switches respectent pour faire passer horloge et audio avant le reste du trafic.",
+      "explanation": "Pour Dante, Audinate (repris par Focusrite et Shure) utilise : CS7 (DSCP 56) pour les événements PTP critiques, priorité haute ; EF (46) pour l'audio et le PTP, priorité moyenne ; CS1 (8) réservé, priorité basse ; le reste en best effort. Le switch doit avoir au moins 4 files, une priorité stricte (strict priority) et faire confiance au DSCP (trust mode DSCP). Attention aux réseaux mixtes : l'audio AES67 des appareils Dante 4.x et de la plupart des appareils AES67 est marqué AF41 (34), et RAVENNA recommande CS6 pour les événements PTP. Il faut donc vérifier le mapping des files quand Dante et AES67 cohabitent.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "network-switch-requirements",
+        "ptp-clock",
+        "aes67"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
+          "publisher": "Focusrite, Configuring a switch for Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://service.shure.com/articles/en_US/Knowledge/QOS-In-Depth",
+          "publisher": "Shure, QoS In Depth (knowledge base)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+          "publisher": "ALC NetworX, RAVENNA Network Requirements V1.4b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs.symetrix.co/hardware/networking/dante/dante-technology.html",
+          "publisher": "Symetrix, Dante Network Audio Technology",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Événements PTP en CS7 (DSCP 56) pour Dante ; Audinate recommande CS7 pour les flux Dante, EF étant la valeur par défaut PTPv2 (dictée par AES67)",
+              "source_url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/"
+            },
+            {
+              "value": "Événements PTP en CS6, audio en EF ou AF41 (recommandation RAVENNA)",
+              "source_url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf"
+            }
+          ],
+          "note": "Les deux écosystèmes ne marquent pas le PTP de la même façon ; sur un réseau mixte, régler les files du switch pour couvrir CS7, CS6, EF et AF41."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "igmp-snooping",
+      "name_fr": "IGMP snooping et querier",
+      "name_en": "IGMP snooping",
+      "domain": "audio-networks",
+      "definition": "Fonction d'un switch qui écoute les messages IGMP pour n'envoyer un flux multicast qu'aux ports dont un appareil a demandé à rejoindre le groupe, au lieu de l'inonder partout.",
+      "explanation": "Sans IGMP snooping, tout flux multicast part sur tous les ports : un ordinateur ou un point d'accès Wi-Fi peut être saturé. Avec IGMP snooping, le multicast ne suit que les liens nécessaires. Il faut au moins un querier IGMP actif sur le réseau pour que le snooping fonctionne. Audinate impose l'IGMP snooping pour la vidéo Dante sur des liens à 1 Gbit/s. Certains switches de tournée (Luminex GigaCore) l'activent par défaut.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "multicast-unicast",
+        "network-switch-requirements",
+        "aes67"
+      ],
+      "equipment_ids": [
+        "luminex-gigacore-16t",
+        "netgear-m4250-10g2xf-poe-plus"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.ravenna-network.com/wp-content/uploads/2023/01/RAVENNA-Network-Requirements-V1.4b.pdf",
+          "publisher": "ALC NetworX, RAVENNA Network Requirements V1.4b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.luminex.be/products/gigacore/gigacore-16t/",
+          "publisher": "Luminex, GigaCore 16t product page",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "energy-efficient-ethernet",
+      "name_fr": "Ethernet économe en énergie (EEE, IEEE 802.3az)",
+      "name_en": "Energy Efficient Ethernet (EEE)",
+      "domain": "audio-networks",
+      "definition": "Fonction d'économie d'énergie des switches (« Green Ethernet », IEEE 802.3az) qui met les liens en veille entre les paquets et perturbe la synchronisation PTP des réseaux audio.",
+      "explanation": "Audinate cite l'EEE parmi les causes d'instabilité des horloges Dante : un suiveur doit sans cesse corriger son offset, risque de perdre la synchro et d'être mis en sourdine. Yamaha demande de couper l'EEE sur tous les ports Dante d'un switch administrable, et de ne pas utiliser de switch non administrable qui supporte l'EEE, car on ne peut pas le désactiver. Focusrite liste la possibilité de désactiver l'EEE parmi les critères d'achat d'un switch.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "network-switch-requirements",
+        "ptp-clock"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
+          "publisher": "Focusrite, Configuring a switch for Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "network-switch-requirements",
+      "name_fr": "Exigences d'un switch pour l'audio sur IP",
+      "name_en": "Switch requirements for AoIP",
+      "domain": "audio-networks",
+      "definition": "Ensemble des caractéristiques qu'un switch doit offrir pour transporter de l'audio Dante/AES67 sans pertes : Gigabit, QoS DSCP à priorité stricte, EEE désactivable, IGMP snooping, idéalement administrable.",
+      "explanation": "Focusrite demande des ports Gigabit non bloquants, une QoS à 4 files avec DSCP en priorité stricte et la possibilité de couper l'EEE ; un switch administrable permet en plus de lire vitesses de lien et compteurs d'erreurs. Un 100 Mbit/s là où il faut du Gigabit déstabilise l'horloge (Audinate). Yamaha conseille de ne pas dépasser 80 appareils Dante sur un même réseau et de découper au-delà en sous-réseaux. Focusrite recommande aussi un switch à alimentation interne, les blocs secteur externes bon marché pouvant créer des artefacts.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "qos-dscp",
+        "igmp-snooping",
+        "energy-efficient-ethernet",
+        "ethernet-cable-length-limit"
+      ],
+      "equipment_ids": [
+        "luminex-gigacore-16t",
+        "netgear-m4250-10g2xf-poe-plus"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
+          "publisher": "Focusrite, Configuring a switch for Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dante-device-latency",
+      "name_fr": "Latence de réception Dante",
+      "name_en": "Dante device latency",
+      "domain": "audio-networks",
+      "definition": "Délai réglé sur le récepteur Dante entre l'horodatage des échantillons reçus et leur restitution ; il doit couvrir le temps de traversée du réseau, sinon les paquets arrivent trop tard et sont jetés.",
+      "explanation": "Audinate indique une valeur par défaut typique de 1 ms, suffisante pour un très grand réseau (cœur Gigabit jusqu'à 10 sauts, liens 100 Mbit/s vers les appareils) ; un réseau Gigabit plus petit peut descendre jusqu'à 150 µs pour les appareils rapides. Si émetteur et récepteur diffèrent, la valeur la plus haute s'applique ; les flux multicast utilisent toujours 1 ms. Sur un port 100 Mbit/s, le minimum est 1 ms, sinon erreur « Tx Scheduler Failure ». Une latence trop basse produit des clics ; trop haute, elle gêne le retour casque d'un chanteur. La valeur ne s'additionne pas à chaque saut : elle doit seulement couvrir le chemin complet. L'onglet Latency de Dante Controller montre si les paquets arrivent dans la fenêtre.",
+      "formulas": [],
+      "units": [
+        "ms",
+        "µs"
+      ],
+      "related_concepts": [
+        "latency",
+        "dante",
+        "network-topology",
+        "dante-controller"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/processor/dme7/en/12_dante_en.html",
+          "publisher": "Yamaha, DME7 reference manual: Dante Settings",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://docs.symetrix.co/hardware/networking/dante/dante-technology.html",
+          "publisher": "Symetrix, Dante Network Audio Technology",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Latence par défaut typique d'un appareil Dante : 1 ms",
+              "source_url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/"
+            },
+            {
+              "value": "Latence par défaut 0,5 ms sur les amplificateurs Yamaha PC-D/DI",
+              "source_url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html"
+            }
+          ],
+          "note": "La valeur par défaut dépend du fabricant et du module ; toujours lire la valeur réelle dans Dante Controller."
+        },
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Valeurs proposées sur les appareils Yamaha : 0,25 / 0,5 / 1 / 2 / 5 ms",
+              "source_url": "https://manual.yamaha.com/pa/processor/dme7/en/12_dante_en.html"
+            },
+            {
+              "value": "Tableau Symetrix : 1 saut .015 ms, 3 sauts .025 ms, 5 sauts .5 ms, 10 sauts 1 ms, plus de 10 sauts 5 ms",
+              "source_url": "https://docs.symetrix.co/hardware/networking/dante/dante-technology.html"
+            }
+          ],
+          "note": "Les valeurs .015 et .025 ms du tableau Symetrix ne correspondent à aucune valeur Dante documentée par Audinate (minimum cité 150 µs) : probablement une coquille, à ne pas enseigner telle quelle."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "dante-controller",
+      "name_fr": "Dante Controller",
+      "name_en": "Dante Controller",
+      "domain": "audio-networks",
+      "definition": "Logiciel gratuit d'Audinate pour découvrir les appareils Dante, router les canaux (abonnements), régler horloge, latence, fréquence d'échantillonnage et mode réseau, et surveiller l'état du réseau.",
+      "explanation": "La vue réseau présente une matrice : émetteurs (Dante Transmitters) en colonnes, récepteurs (Dante Receivers) en lignes ; un clic à l'intersection crée l'abonnement. Les onglets Routing, Device Info, Clock Status, Network Status et Events permettent de vérifier adresses IP, leader d'horloge, latence et erreurs. Un nom d'appareil en rouge signale une erreur (IP, mode failsafe). La moniteur d'état d'horloge (Clock Status Monitor) passe au rouge quand un appareil perd la synchro et à l'orange en cas d'instabilité (surveillance active). Les noms d'appareils doivent être uniques sur le réseau.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "dante",
+        "dante-subscription",
+        "ptp-leader-election",
+        "dante-device-latency",
+        "dante-ip-addressing"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dante-subscription",
+      "name_fr": "Abonnement et flux Dante",
+      "name_en": "Dante subscription and flows",
+      "domain": "audio-networks",
+      "definition": "Un abonnement associe un canal de réception (Rx) à un canal d'émission (Tx) d'un autre appareil ; Dante crée alors les flux (flows) réseau qui transportent ces canaux.",
+      "explanation": "On note l'abonnement canal@appareil (par exemple « Audio L@Source »). Un abonnement n'est possible qu'entre canaux ayant un format commun : des appareils à des fréquences d'échantillonnage différentes apparaissent grisés et ne sont pas routables. Un flux unicast réserve généralement 4 canaux ; si l'on dépasse le nombre de canaux par flux, plusieurs flux sont créés, et un émetteur a un nombre maximal de flux. Le statut de chaque Rx indique s'il est abonné, en unicast ou multicast, et s'il est en erreur.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "multicast-unicast",
+        "dante-controller",
+        "sample-rate-conversion"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dante-ip-addressing",
+      "name_fr": "Adressage IP des appareils Dante",
+      "name_en": "Dante IP addressing",
+      "domain": "audio-networks",
+      "definition": "Les appareils Dante prennent automatiquement une adresse : link-local 169.254.x.x sur le primaire (172.31.x.x sur le secondaire) sans serveur DHCP, ou une adresse fournie par un serveur DHCP.",
+      "explanation": "L'ordinateur qui lance Dante Controller doit être sur le même réseau et le même sous-réseau, de préférence en adressage automatique ; sur un secondaire en link-local, son interface doit être réglée à la main dans 172.31.x.x. Erreurs courantes : deux interfaces de l'ordinateur dans le même sous-réseau, deux serveurs DHCP, une adresse statique hors du sous-réseau, ou un mélange DHCP / link-local. Un appareil en statique dans un autre sous-réseau reste souvent visible (annonces mDNS) mais en rouge et inutilisable.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "dante",
+        "dante-controller",
+        "network-redundancy"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://help.qsys.com/q-sys_10.3/Content/Networking/Dante_Audio.htm",
+          "publisher": "QSC, Q-SYS Help 10.3: Dante Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "dante-domain-manager",
+      "name_fr": "Dante Domain Manager (DDM) et domaines Dante",
+      "name_en": "Dante Domain Manager",
+      "domain": "audio-networks",
+      "definition": "Logiciel serveur d'Audinate qui regroupe les appareils Dante en domaines indépendants (par salle, bâtiment, site), ajoute authentification et rôles, et permet à un domaine de s'étendre sur plusieurs sous-réseaux IP.",
+      "explanation": "Sans DDM, Dante Controller ne découvre en général que les appareils de son sous-réseau. Avec DDM, un domaine qui couvre plusieurs sous-réseaux a un leader d'horloge principal, un leader par sous-réseau et des horloges boundary en PTPv2 unicast entre sous-réseaux. Les appareils inscrits dans un domaine peuvent proposer des latences supplémentaires pour les grandes topologies. C'est surtout un outil d'installation fixe (campus, salles de conférence), rarement utilisé en tournée légère.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "dante",
+        "ptp-clock",
+        "dante-ip-addressing"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "aes50",
+      "name_fr": "AES50",
+      "name_en": "AES50",
+      "domain": "audio-networks",
+      "definition": "Liaison audio numérique point à point normalisée par l'AES (AES50-2011, HRMAI), issue du protocole SuperMAC de Sony, qui transporte 48 canaux bidirectionnels à 48 kHz et l'horloge sur un câble catégorie 5.",
+      "explanation": "AES50 utilise la couche physique Fast Ethernet (100 Mbit/s) mais un protocole de liaison propriétaire : ce n'est pas un réseau IP, il ne passe pas dans un switch Ethernet. L'horloge circule sur les paires non utilisées par les données, ce qui donne une synchronisation en phase et un faible jitter. Latence : 3 échantillons à 48 kHz par liaison (62,5 µs) selon Wikipedia ; Midas annonce 2x3 échantillons (1/8 ms) par nœud pour la DL16, câble Cat5 blindé (STP), jusqu'à trois DL16 en chaîne et une provision pour la redondance. C'est le format des consoles Midas M32 / Behringer X32 et de leurs stageboxes. HyperMAC (Klark Teknik) en est une version à plus haut débit.",
+      "formulas": [],
+      "units": [
+        "µs",
+        "kHz"
+      ],
+      "related_concepts": [
+        "network-topology",
+        "madi",
+        "word-clock",
+        "ethernet-cable-length-limit"
+      ],
+      "equipment_ids": [
+        "midas-dl16",
+        "behringer-x32"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/AES50",
+          "publisher": "Wikipedia, AES50",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.midasconsoles.com/en/products/0606-ACJ",
+          "publisher": "Midas, DL16 product page",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "Latence AES50 minimale 62,5 µs (3 échantillons à 48 kHz)",
+              "source_url": "https://en.wikipedia.org/wiki/AES50"
+            },
+            {
+              "value": "2x3 échantillons = 1/8 ms par nœud (DL16)",
+              "source_url": "https://www.midasconsoles.com/en/products/0606-ACJ"
+            }
+          ],
+          "note": "Probablement liaison simple contre aller-retour par nœud ; formulations différentes, non contradictoires sur le fond."
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "ethernet-cable-length-limit",
+      "name_fr": "Longueurs de câble : cuivre 100 m, MADI, fibre",
+      "name_en": "Cable length limits",
+      "domain": "audio-networks",
+      "definition": "Un segment Ethernet cuivre en 100BASE-TX ou 1000BASE-T est limité à 100 m ; au-delà il faut un switch intermédiaire ou de la fibre. MADI va jusqu'à 100 m en coaxial 75 ohms et 2000 m en fibre multimode.",
+      "explanation": "La limite de 100 m (catégorie 5 minimum) vient d'IEEE 802.3 (100BASE-TX, 1000BASE-T) et s'applique aussi à Dante, qui utilise de l'Ethernet standard. Focusrite accepte Cat 5e et Cat 6 et préfère du Cat 6 blindé (STP) avec connecteurs etherCON ou RJ45 métalliques, blindage relié au connecteur. Pour HyperMAC, Wikipedia indique jusqu'à 100 m en Cat 5e et 500 m en fibre OM2 ; aucune longueur maximale officielle AES50 n'a été trouvée. En tournée, une liaison façade-plateau de plus de 100 m passe donc en fibre (switch avec SFP) ou par un switch relais.",
+      "formulas": [],
+      "units": [
+        "m"
+      ],
+      "related_concepts": [
+        "network-switch-requirements",
+        "madi",
+        "aes50"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E3",
+          "bloc": "BC02",
+          "note": "Transports numériques et horloge réseau dans la chaîne technique (PTES) - jugement, non vérifié sur eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ethernet_over_twisted_pair",
+          "publisher": "Wikipedia, Ethernet over twisted pair",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ]
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/AES50",
+          "publisher": "Wikipedia, AES50",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Pages FAQ Audinate (audinate.com/faq, support.getdante.com, my.audinate.com) sur DSCP, EEE, switches",
+      "searched": "WebFetch : 403 / 522 ; valeurs DSCP reprises via Focusrite et Shure, guide Dante Controller (PDF Audinate) lu en entier"
+    },
+    {
+      "what": "Longueur maximale officielle d'un câble AES50 (souvent citée à 100 m)",
+      "searched": "Page produit Midas DL16 (pas de longueur), Wikipedia AES50 (longueur seulement pour HyperMAC) ; manuels Behringer/Midas non ouverts"
+    },
+    {
+      "what": "Page officielle Avnu / Milan et texte des normes IEEE 802.1 / 1588",
+      "searched": "avnu.org 403 lors de la session précédente ; AVB/Milan sourcé par l'article Kaltheuner et al. 2024"
+    },
+    {
+      "what": "Texte de la norme AES67 et AES50 sur aes.org",
+      "searched": "aes.org renvoie souvent 403 ; faits pris dans les documents RAVENNA et Wikipedia"
+    }
+  ]
+}

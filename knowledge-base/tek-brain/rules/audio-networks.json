@@ -1,0 +1,364 @@
+{
+  "entity": "rule",
+  "domain": "audio-networks",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "primary-secondary-same-switch",
+      "name_fr": "Primaire et secondaire sur le même switch",
+      "name_en": "Primary and secondary on the same switch",
+      "domain": "audio-networks",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "graph",
+      "condition": {
+        "all": [
+          {
+            "path": "graph.count(device.category == 'network-switch' AND device.ports[connected].flags includes 'isDantePrimary' AND device.ports[connected].flags includes 'isDanteSecondary')",
+            "op": "gt",
+            "value": 0
+          }
+        ]
+      },
+      "explanation": "Un même switch relie à la fois des ports Dante primaires et secondaires : les deux réseaux sont joints, la redondance disparaît et des conflits d'adressage apparaissent (Audinate).",
+      "fix": "Deux switches physiquement séparés : tous les primaires sur l'un, tous les secondaires sur l'autre, sans lien entre eux.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isDanteSecondary",
+        "device.category:network-switch",
+        "graph.count over connected ports"
+      ],
+      "concept_ids": [
+        "network-redundancy"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "dante-redundancy-crossed",
+      "name_fr": "Redondance Dante croisée (primaire vers secondaire)",
+      "name_en": "Crossed Dante redundancy",
+      "domain": "audio-networks",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "any": [
+          {
+            "all": [
+              {
+                "path": "src.port.flags",
+                "op": "includes",
+                "value": "isDantePrimary"
+              },
+              {
+                "path": "dst.port.flags",
+                "op": "includes",
+                "value": "isDanteSecondary"
+              }
+            ]
+          },
+          {
+            "all": [
+              {
+                "path": "src.port.flags",
+                "op": "includes",
+                "value": "isDanteSecondary"
+              },
+              {
+                "path": "dst.port.flags",
+                "op": "includes",
+                "value": "isDantePrimary"
+              }
+            ]
+          }
+        ]
+      },
+      "explanation": "Les interfaces secondaires ne peuvent pas communiquer avec les interfaces primaires : un câble direct primaire-secondaire ne transporte aucun audio et peut ponter les deux réseaux.",
+      "fix": "Relier primaire à primaire et secondaire à secondaire (ou chaque port à son switch dédié).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isDanteSecondary"
+      ],
+      "concept_ids": [
+        "network-redundancy"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "eee-enabled-switch",
+      "name_fr": "EEE actif sur un switch du réseau audio",
+      "name_en": "EEE enabled on an audio network switch",
+      "domain": "audio-networks",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "device",
+      "condition": {
+        "all": [
+          {
+            "path": "device.category",
+            "op": "eq",
+            "value": "network-switch"
+          },
+          {
+            "path": "device.controls.eee",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "path": "device.ports[connected].signal",
+            "op": "includes",
+            "value": "aoip"
+          }
+        ]
+      },
+      "explanation": "L'Ethernet économe en énergie (IEEE 802.3az) déstabilise les horloges PTP : risque de perte de synchro, de coupures et de mise en sourdine des appareils Dante.",
+      "fix": "Désactiver l'EEE sur tous les ports Dante ; ne pas utiliser de switch non administrable qui supporte l'EEE.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.controls:eee",
+        "device.category:network-switch"
+      ],
+      "concept_ids": [
+        "energy-efficient-ethernet"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "dante-latency-too-low-100mbps",
+      "name_fr": "Latence Dante inférieure à 1 ms sur un lien 100 Mbit/s",
+      "name_en": "Dante latency below 1 ms on a 100 Mbps link",
+      "domain": "audio-networks",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.signal",
+            "op": "eq",
+            "value": "aoip"
+          },
+          {
+            "path": "dst.port.linkSpeedMbps",
+            "op": "lte",
+            "value": 100
+          },
+          {
+            "path": "dst.device.controls.danteLatencyMs",
+            "op": "lt",
+            "value": 1
+          }
+        ]
+      },
+      "explanation": "Audinate : la latence minimale d'un appareil relié à un port 100 Mbit/s est 1 ms ; en dessous, l'abonnement échoue (« Tx Scheduler Failure »).",
+      "fix": "Monter la latence à 1 ms ou plus, ou relier l'appareil en Gigabit.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.linkSpeedMbps",
+        "device.controls:danteLatencyMs"
+      ],
+      "concept_ids": [
+        "dante-device-latency"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "multiple-preferred-leaders",
+      "name_fr": "Plusieurs Preferred Leader ou leader en conflit avec une sync externe",
+      "name_en": "Multiple preferred leaders",
+      "domain": "audio-networks",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "graph",
+      "condition": {
+        "any": [
+          {
+            "path": "graph.count(device.controls.dantePreferredLeader == true)",
+            "op": "gt",
+            "value": 1
+          },
+          {
+            "all": [
+              {
+                "path": "graph.count(device.controls.danteSyncToExternal == true)",
+                "op": "gte",
+                "value": 1
+              },
+              {
+                "path": "graph.count(device.controls.dantePreferredLeader == true AND device.controls.danteSyncToExternal == false)",
+                "op": "gte",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "explanation": "Avec plusieurs Preferred Leader, la MAC la plus basse l'emporte de façon peu lisible ; un appareil en « Sync To External » face à un Preferred Leader qui ne suit pas la même horloge perd la synchro et finit en sourdine.",
+      "fix": "Un seul Preferred Leader par domaine d'horloge ; si une horloge externe est utilisée, c'est l'appareil qui la reçoit qui doit être leader.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.controls:dantePreferredLeader",
+        "device.controls:danteSyncToExternal"
+      ],
+      "concept_ids": [
+        "ptp-leader-election",
+        "clock-master"
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "ethernet-copper-run-over-100m",
+      "name_fr": "Segment Ethernet cuivre de plus de 100 m",
+      "name_en": "Copper Ethernet run over 100 m",
+      "domain": "audio-networks",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "error",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.connector",
+            "op": "in",
+            "value": [
+              "rj45",
+              "ethercon"
+            ]
+          },
+          {
+            "path": "src.cable.length_m",
+            "op": "gt",
+            "value": 100
+          }
+        ]
+      },
+      "explanation": "100BASE-TX et 1000BASE-T spécifient au maximum 100 m de câble (catégorie 5 minimum) ; au-delà, pertes de paquets et liens instables.",
+      "fix": "Ajouter un switch relais ou passer en fibre (SFP).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "connection.cable.length_m"
+      ],
+      "concept_ids": [
+        "ethernet-cable-length-limit"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ethernet_over_twisted_pair",
+          "publisher": "Wikipedia, Ethernet over twisted pair",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Champs catalogue nécessaires : isDanteSecondary, linkSpeedMbps, controls eee/danteLatencyMs/dantePreferredLeader/danteSyncToExternal, longueur de câble",
+      "searched": "catalog.json ne contient que isDantePrimary, isClockMaster, isClockSlave"
+    }
+  ]
+}

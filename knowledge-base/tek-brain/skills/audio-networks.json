@@ -1,0 +1,248 @@
+{
+  "entity": "skill",
+  "domain": "audio-networks",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "design-dante-network-live",
+      "name_fr": "Concevoir un petit réseau Dante de sonorisation",
+      "name_en": "Design a small live Dante network",
+      "domain": "audio-networks",
+      "description": "Choisir la topologie (étoile, redondante ou chaînée), les switches, le câblage et l'adressage d'un réseau Dante reliant stagebox et consoles, en respectant les limites de longueur et la séparation primaire / secondaire.",
+      "level": "bts",
+      "concept_ids": [
+        "network-topology",
+        "network-redundancy",
+        "network-switch-requirements",
+        "ethernet-cable-length-limit",
+        "dante-ip-addressing"
+      ],
+      "procedure_ids": [
+        "setup-dante-stagebox-console",
+        "build-redundant-dante-network"
+      ],
+      "success_criteria": [
+        "Le synoptique montre deux réseaux primaire et secondaire sans aucun lien entre eux",
+        "Aucun segment cuivre ne dépasse 100 m",
+        "Tous les appareils Dante ont une adresse dans le même sous-réseau (169.254.x.x ou plan DHCP) visible dans Device Info"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ethernet_over_twisted_pair",
+          "publisher": "Wikipedia, Ethernet over twisted pair",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "configure-switch-for-aoip",
+      "name_fr": "Configurer un switch pour l'audio sur IP",
+      "name_en": "Configure a switch for AoIP",
+      "domain": "audio-networks",
+      "description": "Régler un switch administrable pour Dante : QoS DSCP en priorité stricte, EEE désactivé, IGMP snooping avec querier si du multicast est utilisé.",
+      "level": "pro",
+      "concept_ids": [
+        "qos-dscp",
+        "energy-efficient-ethernet",
+        "igmp-snooping",
+        "network-switch-requirements"
+      ],
+      "procedure_ids": [
+        "configure-switch-for-dante"
+      ],
+      "success_criteria": [
+        "Trust mode DSCP actif, CS7 et EF mappés sur les deux files les plus hautes",
+        "EEE désactivé sur tous les ports Dante",
+        "Aucun avertissement d'instabilité dans le Clock Status Monitor après 30 min de surveillance active"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://us.focusrite.com/articles/configuring-a-switch-for-dante/",
+          "publisher": "Focusrite, Configuring a switch for Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://manual.yamaha.com/pa/power_amps/pc-d_di/en/11_dante_en.html",
+          "publisher": "Yamaha, PC-D/DI series manual: About Dante",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "route-and-monitor-dante-flows",
+      "name_fr": "Router et surveiller des flux Dante",
+      "name_en": "Route and monitor Dante flows",
+      "domain": "audio-networks",
+      "description": "Créer les abonnements dans Dante Controller, choisir unicast ou multicast, régler la latence et vérifier horloge et arrivée des paquets.",
+      "level": "bts",
+      "concept_ids": [
+        "dante-controller",
+        "dante-subscription",
+        "multicast-unicast",
+        "dante-device-latency",
+        "ptp-leader-election"
+      ],
+      "procedure_ids": [
+        "patch-dante-flows-controller",
+        "set-dante-latency-from-latency-tab"
+      ],
+      "success_criteria": [
+        "Chaque canal Rx de la liste de patch affiche un abonnement OK (coche verte)",
+        "Un seul leader d'horloge est affiché dans Clock Status",
+        "L'onglet Latency ne montre aucune barre rouge sur 10 minutes de jeu"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description",
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/rednet-system-user-guide_0.pdf",
+          "publisher": "Focusrite, RedNet System User Guide 1.0",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "troubleshoot-aoip-network",
+      "name_fr": "Dépanner un réseau audio sur IP",
+      "name_en": "Troubleshoot an AoIP network",
+      "domain": "audio-networks",
+      "description": "Partir d'un symptôme (appareil invisible, clics, coupures) et isoler méthodiquement la cause : adressage, horloge, latence, switch, câblage.",
+      "level": "bts",
+      "concept_ids": [
+        "dante-ip-addressing",
+        "ptp-clock",
+        "dante-device-latency",
+        "energy-efficient-ethernet",
+        "network-redundancy"
+      ],
+      "procedure_ids": [
+        "patch-dante-flows-controller",
+        "set-dante-latency-from-latency-tab"
+      ],
+      "success_criteria": [
+        "Le symptôme est relié à une cause vérifiée (onglet, compteur ou mesure cités)",
+        "La correction est faite sans couper l'audio des autres appareils quand c'est possible",
+        "La cause et la correction sont notées dans le cahier d'exploitation"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en oeuvre d'un réseau audio (patch Dante, horloge, switch) - jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/pdf/latest/",
+          "publisher": "Audinate, Dante Controller User Guide (v4.18.x, doc 1.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        },
+        {
+          "url": "https://dev.audinate.com/GA/dante-controller/userguide/webhelp/content/troubleshooting_dante_ip_address_configuration.htm",
+          "publisher": "Audinate, Dante Controller help: Troubleshooting Dante IP Address Configuration",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "description"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": []
+}
