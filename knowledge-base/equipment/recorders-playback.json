@@ -17,7 +17,7 @@
     {
       "device_id": "sound-devices-mixpre-6-ii",
       "what": "Official manual URL on sounddevices.com and year_introduced",
-      "searched": "fullcompass spec sheet (403); only a Boston University-hosted copy of the v9.01 guide was readable; search budget exhausted"
+      "searched": "fullcompass spec sheet (403); only a Boston University-hosted copy of the v9.01 guide was readable; search budget exhausted; gap-fill pass 2026-10-22: sounddevices.com/product/mixpre-6-ii/ and sitemap.xml both HTTP 403, search budget exhausted, official PDF manual not reached"
     },
     {
       "device_id": "zoom-f8n-pro",
@@ -55,39 +55,44 @@
       "searched": "search budget exhausted"
     },
     {
-      "device_id": "zoom-f6",
-      "what": "Device not researched",
-      "searched": "search budget exhausted"
-    },
-    {
       "device_id": "joeco-blackbox",
       "what": "Device and company status not researched",
       "searched": "search budget exhausted"
     },
     {
       "device_id": "rcs-zetta",
-      "what": "Playout system not researched",
-      "searched": "search budget exhausted"
-    },
-    {
-      "device_id": "enco-dad",
-      "what": "Playout system not researched",
-      "searched": "search budget exhausted"
-    },
-    {
-      "device_id": "winmedia",
-      "what": "French radio playout not researched (vendor/product unverified)",
-      "searched": "WebSearch 'WinMedia radio automation playout software AoIP' blocked: search budget exhausted"
-    },
-    {
-      "device_id": "netia-radio-assist",
-      "what": "French playout; current status/owner not verified",
-      "searched": "search budget exhausted"
+      "what": "RCS primary sources (product page, datasheet, manual), AoIP list (Livewire/Dante/AES67), OS, status, year; record added from Wheatstone secondary source only",
+      "searched": "rcsworks.com home, /zetta/, rcsworks.com/zetta and sitemap.xml all HTTP 403; WebSearch (allowed_domains rcsworks.com) refused: search budget exhausted"
     },
     {
       "device_id": "360-systems-instant-replay",
       "what": "Status not verified",
       "searched": "search budget exhausted"
+    },
+    {
+      "device_id": "zoom-f6",
+      "what": "French manual; year_introduced; frequency response",
+      "searched": "zoomcorp.com F6 support page (English documents only); manual and product page specs do not list frequency response"
+    },
+    {
+      "device_id": "enco-dad",
+      "what": "Datasheet / manual; AoIP protocols; OS",
+      "searched": "enco.com DAD page and radio-automation-software page (none stated or linked)"
+    },
+    {
+      "device_id": "winmedia-playout",
+      "what": "Manual (customer-only), datasheet, year_introduced, AES67 support",
+      "searched": "winmedia.fr home, /winmedia/, /technique/, /faq-et-manuels/"
+    },
+    {
+      "device_id": "netia-radio-assist",
+      "what": "AoIP / OS / sound-card requirements; year_introduced; owner",
+      "searched": "netia.com home, nos-solutions, guides-utilisateurs, Doc_fr AirDDO_9 (first 100k chars); release PDF read only as binary text"
+    },
+    {
+      "device_id": "mairlist / radiodj",
+      "what": "Not added",
+      "searched": "Not researched: lower priority than the French and US broadcast vendors; search budget exhausted"
     }
   ],
   "devices": [
@@ -2782,6 +2787,573 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Balanced XLR vs unbalanced RCA, AES vs S/PDIF and parallel GPIO remote on one rack unit: strong level/format lesson."
+      }
+    },
+    {
+      "id": "zoom-f6",
+      "brand": "Zoom",
+      "model": "F6",
+      "category": "recorders-playback",
+      "sub_type": "field-recorder",
+      "technology": "Portable 6-input multitrack field recorder with dual A/D converters per input (two converters with different input gains), recording 16/24-bit linear or 32-bit float WAV; also works as a USB audio interface.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Compact, low-cost 6-input recorder with timecode and 32-bit float recording, listed by Zoom alongside the F8n Pro in its current field recorder range. Its dual-converter 32-bit float design lets students record without fine gain setting, a good lesson on headroom.",
+      "typical_uses": [
+        "location sound for film and documentary",
+        "on-camera / bag recording",
+        "multitrack ISO recording with timecode",
+        "USB audio interface"
+      ],
+      "key_specs": {
+        "inputs": "Inputs 1-6: XLR (page: locking Neutrik connectors)",
+        "mic_input_gain": "+12 to +75 dB (product page)",
+        "line_input_gain": "-8 dB – +55 dB",
+        "max_input_level_line": "+24 dBu",
+        "phantom_power": "+24/+48V 10mA maximum for each channel",
+        "equivalent_input_noise": "−127 dBu or less (A-weighted, +75 dB input gain, 150Ω input)",
+        "recording_formats": "44.1/47.952/48/48.048/88.2/96/192 kHz, 16/24-bit/32-bit float, mono/stereo/2-8ch poly, BWF/iXML supported; MP3 128/192/320kbps",
+        "max_simultaneous_tracks": "14 (6 inputs x 2 (Liner and Floating) + LR mix); 6 at 192kHz",
+        "line_output": "3.5 mm stereo mini unbalanced output; –10 dBV reference, +10 dBV max (10kΩ load)",
+        "headphone_output": "3.5 mm stereo mini unbalanced output; 100 mW + 100 mW (32Ω load)",
+        "timecode": "3.5 mm stereo mini (Tip: IN, Ring: OUT); ±0.2 ppm; 23.976 ND, 24 ND, 25 ND, 29.97 ND, 29.97 D, 30 ND, 30 D",
+        "media": "SD, SDHC, SDXC cards (page: up to 1 TB)",
+        "usb_interface": "USB 2.0 High Speed multitrack interface 6 in/4 out (44.1/48/88.2/96 kHz); stereo mix 2 in/2 out; AIF with Rec 8 in/4 out (44.1/48 kHz)",
+        "power": "AC adapter (ZOOM AD-17): DC 5V/1A (supports USB bus power); Sony® L-Series battery; 4 AA batteries (alkaline, lithium or rechargeable NiMH batteries)",
+        "display": "1.54\" full-color LCD (240 × 240)",
+        "dimensions": "100 mm (W) × 119.8 mm (D) × 62.9 mm (H)",
+        "weight": "520 g",
+        "frequency_response": "not found (not listed on product page or in manual specifications)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-6 (phantom +24/+48 V)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 6
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "line output (stereo, unbalanced)",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "headphone output",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "timecode in/out (tip in, ring out)",
+          "dir": "bidir",
+          "signal": "ltc-timecode",
+          "count": 1
+        },
+        {
+          "connector": "usb-c",
+          "role": "USB Type-C: mass storage, audio interface, bus power",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "headphone-level",
+        "phantom-48v",
+        "ltc-timecode",
+        "usb-audio",
+        "dc-power"
+      ],
+      "manual_url": "https://zoomcorp.com/media/documents/E_F6.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://zoomcorp.com/en/us/field-recorders/field-recorders/f6/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://zoomcorp.com/media/documents/E_F6.pdf",
+          "title": "F6 Operation Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "© 2022 ZOOM CORPORATION; Z2I-3741-05",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://zoomcorp.com/media/documents/E_F6_v2.0_Supplementary.pdf",
+          "title": "F6 V2.0 Supplementary Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V2.0",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://zoomcorp.com/media/documents/E_F6_QuickGuide_2.pdf",
+          "title": "F6 Quick Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://zoomcorp.com/en/us/field-recorders/field-recorders/f6/",
+          "publisher": "Zoom Corporation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.inputs",
+            "key_specs.mic_input_gain",
+            "key_specs.phantom_power",
+            "key_specs.equivalent_input_noise",
+            "key_specs.recording_formats",
+            "key_specs.timecode",
+            "key_specs.media",
+            "key_specs.usb_interface",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://zoomcorp.com/media/documents/E_F6.pdf",
+          "publisher": "Zoom Corporation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manual",
+          "covers": [
+            "key_specs.line_input_gain",
+            "key_specs.phantom_power",
+            "key_specs.equivalent_input_noise",
+            "key_specs.recording_formats",
+            "key_specs.max_simultaneous_tracks",
+            "key_specs.line_output",
+            "key_specs.headphone_output",
+            "key_specs.timecode",
+            "key_specs.usb_interface",
+            "key_specs.power",
+            "key_specs.display",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://zoomcorp.com/en/us/field-recorders/field-recorders/f6/f6-support/",
+          "publisher": "Zoom Corporation",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ]
+        }
+      ],
+      "notes": "The support page lists English documents only (no French manual). The product page mentions both a 12 V adapter (AD-17) and DC 5 V in different places; the manual specs state 'AC adapter (ZOOM AD-17): DC 5V/1A'. Sony L-Series is the NP-F battery family per common usage, but Zoom's wording is kept. The SD card slot is listed under key_specs.media, not as a signal connector. Timecode uses a 3.5 mm jack, mapped to trs-35mm with the proposed ltc-timecode signal.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "ltc-timecode"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "6 XLR inputs with phantom and timecode on a 3.5 mm jack: a contrast with LEMO-5 timecode on pro recorders."
+      }
+    },
+    {
+      "id": "enco-dad",
+      "brand": "ENCO Systems",
+      "model": "DAD (Digital Audio Delivery)",
+      "category": "recorders-playback",
+      "sub_type": "playout-system",
+      "technology": "Radio playout and automation software with a module-based architecture (ingest, scheduling, logging, playout, control); hardware is a PC workstation, not a dedicated device.",
+      "year_introduced": 1991,
+      "status": "current",
+      "why_it_is_a_classic": "ENCO calls DAD its flagship automation system, in use since 1991 and, by ENCO's own claim, 'trusted by thousands of broadcasters worldwide'. It is a typical example of a US-style modular radio automation system with music-scheduler interfaces.",
+      "typical_uses": [
+        "radio automation and playout",
+        "voice tracking",
+        "satellite / multi-station radio",
+        "newsroom (MOS) integration"
+      ],
+      "key_specs": {
+        "functions": "Automate content ingest, scheduling, logging, playout, programming, control (vendor wording)",
+        "playback": "DAD workstations include up to 16 playback modules, multi-channel audio outputs",
+        "scheduler_interfaces": "ListGen interfaces with MusicMaster, PowerGold, Marketron, Wedel, Amily; Ensemble Music Scheduling; Scheduling Wizard",
+        "voice_tracking": "FastTRAK module",
+        "newsroom_integration": "MOS: AP ENPS, AVID iNews, Octopus",
+        "logging_recording": "SideCAR offered separately as 'Radio Logging & Recording'",
+        "multi_site": "Gateway: rules-based multi-site file replication and backups",
+        "aoip": "not found (not stated on the pages read)",
+        "operating_system": "not found (not stated on the pages read)"
+      },
+      "connectors": [],
+      "signal_types": [],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.enco.com/products/dad",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.enco.com/products/dad",
+          "publisher": "ENCO Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.functions",
+            "key_specs.playback",
+            "key_specs.scheduler_interfaces",
+            "key_specs.voice_tracking",
+            "key_specs.newsroom_integration",
+            "key_specs.logging_recording",
+            "key_specs.multi_site"
+          ]
+        },
+        {
+          "url": "https://www.enco.com/industries/radio-automation-software",
+          "publisher": "ENCO Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "status"
+          ]
+        }
+      ],
+      "notes": "Software product: no physical connectors. The DAD page and ENCO's radio automation page give no AoIP protocol, OS or redundancy details and link no datasheet or manual (documentation goes through ENCO's customer support portal).",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Software playout; in TekPractice it maps to the generic playout-pc device rather than distinct wiring."
+      }
+    },
+    {
+      "id": "winmedia-playout",
+      "brand": "winMedia (win-Group)",
+      "model": "winMedia Playout",
+      "category": "recorders-playback",
+      "sub_type": "playout-system",
+      "technology": "Radio/TV automation and playout software suite from Paris-based win-Group (winMedia Playout, cartridge, scheduler; companion products winLogger, winNews, winSales). Runs on PC/servers; cloud deployment possible per vendor.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "French playout vendor (Paris, founded 1995 per its site) covering radio and visual radio, so it is relevant for French radio students. The vendor lists AoIP compatibility with Dante, Livewire+, RAVENNA and WheatNet-IP.",
+      "typical_uses": [
+        "radio automation and playout",
+        "visual radio / TV playout",
+        "jingle cartridge (hotkey players)",
+        "scheduling with GPI start"
+      ],
+      "key_specs": {
+        "operating_system": "Windows 11 Pro (64 bits) recommended; Windows 10 Pro 22H2+, Windows Server 2022/2025; Debian 12 (Bookworm) 64-bit for the Docker-based apps (WinNews, WinSales, WinMam, WinAI)",
+        "audio_interfaces": "Compatible WDM ou carte son virtuelle",
+        "aoip": "Dante: routage et enregistrement audio sur IP; Livewire+™, RAVENNA, WheatNet-IP — compatibilité AoIP professionnelle",
+        "control": "RS-232 / TCP / UDP / GPI/O — contrôle et automatisation pour les appareils externes",
+        "scheduler_start_modes": "à l'heure, manuel, GPI",
+        "video_outputs": "SDI, NDI et SMPTE 2110",
+        "continuity": "precharges audio locally to ride through network failures; disaster recovery options (vendor wording paraphrased)",
+        "recommended_hardware": "32 GB RAM minimum (64 GB recommended for video/multi-channel); NVMe SSD 1 TB or more; Ethernet 1 Gbps (10 Gbps recommended for video); redundant PSU and UPS",
+        "logging": "separate product winLogger (no details on the pages read)"
+      },
+      "connectors": [],
+      "signal_types": [
+        "aoip",
+        "dante",
+        "gpio-tally",
+        "sdi-embedded-audio"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://winmedia.fr/winmedia/",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://winmedia.fr/winmedia/",
+          "publisher": "winMedia (win-Group)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.scheduler_start_modes",
+            "key_specs.video_outputs",
+            "key_specs.continuity"
+          ]
+        },
+        {
+          "url": "https://winmedia.fr/technique/",
+          "publisher": "winMedia (win-Group)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.operating_system",
+            "key_specs.audio_interfaces",
+            "key_specs.aoip",
+            "key_specs.control",
+            "key_specs.recommended_hardware"
+          ]
+        },
+        {
+          "url": "https://winmedia.fr/",
+          "publisher": "winMedia (win-Group)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.logging",
+            "status"
+          ]
+        },
+        {
+          "url": "https://winmedia.fr/faq-et-manuels/",
+          "publisher": "winMedia (win-Group)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ]
+        }
+      ],
+      "notes": "The old domain winmedia.org now redirects visitors to winmedia.fr. Online manuals exist (manuals.winmedia.support, written without the colon on the page) but are restricted to customers with a maintenance contract, so no manual URL is recorded. The vendor's AoIP list is a compatibility statement on its technical page, not a detailed integration spec; AES67 is not named. 1995 is the company founding year, not the product's.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Lets a lesson contrast WDM sound-card output with AoIP (Dante/Livewire+/RAVENNA) playout and GPI start from the console."
+      }
+    },
+    {
+      "id": "netia-radio-assist",
+      "brand": "NETIA",
+      "model": "RadioAssist (with AirDDO / AirPlaylist playout)",
+      "category": "recorders-playback",
+      "sub_type": "playout-system",
+      "technology": "Radio production and playout software suite from Montpellier-based NETIA: RadioAssist (production + broadcast in one application), AirDDO (manual/live on-air playout), AirPlaylist (automatic playout, e.g. web radios), with scheduling (GridEditor, Federall) and supervision tools.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "French radio software publisher (NETIA, Montpellier) that states about 30 years of experience and 30,000 users. Its live playout tool AirDDO shows classic studio features such as fader start and GPI-triggered starts.",
+      "typical_uses": [
+        "live on-air playout (AirDDO)",
+        "unattended automation / web radio (AirPlaylist)",
+        "radio production and editing",
+        "feed recording and archiving"
+      ],
+      "key_specs": {
+        "modules": "Ingest: Import/Export, Record, Feeds; Production: RadioAssist Online; Scheduling: GridEditor, Federall, Cartstack Prep; Playout: AirDDO, AirPlaylist, AirCart, Air Monitor",
+        "playout_modes": "AirDDO: diffusion manuelle; AirPlaylist: diffusion automatique",
+        "console_integration": "fader start (lancement depuis la console); pause on fader close, resume from playhead on reopen (AirDDO 9)",
+        "gpi": "GPI can trigger screen start (Sync OnTime mode); GPI tab in 'Infos son' (AirDDO 9)",
+        "supervision_logging": "AirSupervision (channel status), AirRun (items played on air), ActivityWatcher (user and scheduled actions)",
+        "automation": "FeedPlan (scheduled recording), FeedIn (analog, digital and IP feed ingest), Dispatcher, Archives (LAN, LTFS, CD), WorkflowAssist",
+        "remote_work": "RadioAssistOnline web platform; Kit@Home (with or without internet connection)",
+        "software_versions": "release PDF text: RadioAssist 8.7.1 and AirPlaylist 9.2.1; documentation for AirDDO 9",
+        "aoip": "not found (not stated on the pages read)",
+        "operating_system": "not found (not stated on the pages read)"
+      },
+      "connectors": [],
+      "signal_types": [
+        "gpio-tally"
+      ],
+      "manual_url": "https://netia.com/wp-content/uploads/documentations/Doc_fr/index.html",
+      "datasheet_url": "not found",
+      "product_page_url": "https://netia.com/nos-solutions/",
+      "manual_languages": [
+        "fr"
+      ],
+      "manuals": [
+        {
+          "url": "https://netia.com/wp-content/uploads/documentations/Doc_fr/index.html",
+          "title": "Documentation (manuel utilisateur en ligne: Administrator, AirDDO_9, RadioAssist, RadioAssistSetup...)",
+          "language": "fr",
+          "file_type": "html",
+          "version_or_date": "not shown (AirDDO 9 section)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://netia.com/wp-content/uploads/2023/05/diff_fr_web.pdf",
+          "title": "Memento 'Mettre à l'antenne' (AirDDO)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "upload path 2023/05",
+          "official": true,
+          "kind": "quick-start"
+        },
+        {
+          "url": "https://netia.com/wp-content/uploads/2023/07/Release-NETIA-FR_8.8.pdf",
+          "title": "Release NETIA FR 8.8",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "PDF modified 2023-07-25",
+          "official": true,
+          "kind": "release-notes"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.netia.com/",
+          "publisher": "NETIA",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.modules",
+            "status"
+          ]
+        },
+        {
+          "url": "https://netia.com/nos-solutions/",
+          "publisher": "NETIA",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.playout_modes",
+            "key_specs.supervision_logging",
+            "key_specs.automation",
+            "key_specs.remote_work"
+          ]
+        },
+        {
+          "url": "https://netia.com/guides-utilisateurs/",
+          "publisher": "NETIA",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals",
+            "key_specs.software_versions"
+          ]
+        },
+        {
+          "url": "https://netia.com/wp-content/uploads/documentations/Doc_fr/AirDDO_9/index.html",
+          "publisher": "NETIA",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manual",
+          "covers": [
+            "key_specs.console_integration",
+            "key_specs.gpi"
+          ]
+        }
+      ],
+      "notes": "The NETIA site does not name an owner. The release page text says RadioAssist 8.7.1 / AirPlaylist 9.2.1 while the PDF file name says 8.8, an inconsistency on the vendor page. An English user-guides page (https://netia.com/en/user-guides/) exists but was not reviewed. No AoIP, OS or sound-card driver information was found in the pages read.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Fader-start and GPI behaviour between console and playout is a good radio-studio logic lesson."
+      }
+    },
+    {
+      "id": "rcs-zetta",
+      "brand": "RCS",
+      "model": "Zetta",
+      "category": "recorders-playback",
+      "sub_type": "playout-system",
+      "technology": "Radio automation/playout software from RCS. Per Wheatstone, a Zetta PC can join a WheatNet-IP AoIP network through the WheatNet-IP PC Driver, which acts as a WheatNet-IP BLADE over one Ethernet cable instead of sound cards and logic wiring.",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "Zetta is RCS's radio automation system, and Wheatstone (an AoIP console maker) publishes an integration note for it. It illustrates the move from sound cards plus logic wiring to a single AoIP Ethernet link.",
+      "typical_uses": [
+        "radio automation and playout",
+        "AoIP studio integration (WheatNet-IP)"
+      ],
+      "key_specs": {
+        "aoip_wheatnet_ip": "Integration via WheatNet-IP PC Driver; 'The driver effectively acts as a WheatNet-IP BLADE'; single Ethernet cable replaces sound card, audio wiring, logic interface and control cabling (Wheatstone)",
+        "aoip_other": "not found (RCS pages blocked; Livewire/Dante/AES67 support not verified)",
+        "operating_system": "not found",
+        "logging": "not found"
+      },
+      "connectors": [
+        {
+          "connector": "rj45",
+          "role": "Ethernet to WheatNet-IP network (via PC Driver on the automation PC)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "aoip"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://support.wheatstone.com/portal/en/kb/articles/integration-of-rcs-zetta-with-wheatnet-ip",
+          "publisher": "Wheatstone (support knowledge base)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade",
+          "covers": [
+            "technology",
+            "key_specs.aoip_wheatnet_ip",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://radioinfo.asia/news/wheatstone-and-rcs-enter-unique-dealership-agreement/",
+          "publisher": "radioinfo.asia (search snippet only)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "technology"
+          ]
+        }
+      ],
+      "notes": "Every rcsworks.com URL tried (home, /zetta/, sitemap) returned HTTP 403, and the search budget ran out, so no RCS primary source was read. Status and year are left 'not found'. The RJ45 connector is that of the host PC's network port, not of RCS hardware.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Shows playout-to-console over AoIP (one RJ45) versus sound card + GPIO wiring."
       }
     }
   ]
