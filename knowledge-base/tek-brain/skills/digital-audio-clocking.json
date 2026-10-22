@@ -1,0 +1,220 @@
+{
+ "entity": "skill",
+ "domain": "digital-audio-clocking",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "clock-a-digital-studio",
+   "name_fr": "Synchroniser les horloges d'un studio numérique",
+   "name_en": "Clock a digital studio",
+   "domain": "digital-audio-clocking",
+   "description": "Choisir un maître unique, régler tous les autres appareils en esclave à la même fréquence d'échantillonnage, câbler et terminer correctement le word clock, puis vérifier l'état sync de chaque appareil.",
+   "level": "bts",
+   "concept_ids": [
+    "word-clock",
+    "clock-master",
+    "lock-vs-sync",
+    "word-clock-termination",
+    "sample-rate"
+   ],
+   "procedure_ids": [
+    "word-clock-distribution-studio",
+    "diagnose-digital-clicks"
+   ],
+   "success_criteria": [
+    "Un seul appareil est réglé en horloge interne ; tous les autres affichent une source externe",
+    "Tous les voyants sync (et non seulement lock) sont fixes",
+    "Une seule terminaison 75 Ω par ligne word clock",
+    "Aucun clic sur 5 minutes de lecture et d'enregistrement simultanés"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "description",
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "manage-latency-tracking-mixing",
+   "name_fr": "Gérer la latence en prise et au mixage",
+   "name_en": "Manage latency for tracking and mixing",
+   "domain": "digital-audio-clocking",
+   "description": "Régler la taille du tampon selon la phase de travail, utiliser l'écoute directe de l'interface et tenir compte de la compensation de latence des plug-ins.",
+   "level": "bts",
+   "concept_ids": [
+    "latency",
+    "buffer-size",
+    "converter-latency",
+    "plugin-delay-compensation",
+    "direct-monitoring"
+   ],
+   "procedure_ids": [
+    "buffer-size-tracking-vs-mixing"
+   ],
+   "success_criteria": [
+    "Calculer la latence d'un tampon donné (N/fe) à 0,1 ms près",
+    "Le musicien s'entend sans retard gênant pendant la prise (écoute directe ou petit tampon)",
+    "Pas de craquement pendant la prise ; tampon augmenté pour le mixage",
+    "Aucun plug-in à forte latence sur le bus master pendant les prises"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "description",
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://puremix.com/blog/understanding-plug-in-delay-compensation",
+     "publisher": "Puremix, A. Rizzo Schettino, Understanding Plug-In Delay Compensation (2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "expand-inputs-adat",
+   "name_fr": "Étendre les entrées d'une interface en ADAT",
+   "name_en": "Expand interface inputs over ADAT",
+   "domain": "digital-audio-clocking",
+   "description": "Relier un préampli à sortie ADAT à une interface, choisir qui est maître, régler la fréquence et anticiper la perte de canaux en S/MUX.",
+   "level": "bts",
+   "concept_ids": [
+    "adat",
+    "smux",
+    "clock-master",
+    "self-clocking-interfaces"
+   ],
+   "procedure_ids": [
+    "adat-expansion-setup"
+   ],
+   "success_criteria": [
+    "Les 8 canaux ADAT apparaissent dans le DAW à 48 kHz",
+    "L'élève annonce correctement le nombre de canaux disponibles à 96 kHz (4) et à 192 kHz (2)",
+    "Le voyant d'horloge de l'interface est au vert/sync"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "success_criteria"
+     ]
+    },
+    {
+     "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+     "publisher": "Audient, iD14 MKII manual v1.3",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "description",
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "reduce-bit-depth-correctly",
+   "name_fr": "Réduire la résolution d'un mix correctement",
+   "name_en": "Reduce bit depth correctly",
+   "domain": "digital-audio-clocking",
+   "description": "Exporter un master 16 bits depuis une session 24 bits / 32 bits flottants avec un seul dither, en dernière étape.",
+   "level": "bts",
+   "concept_ids": [
+    "dither",
+    "bit-depth",
+    "quantization-noise",
+    "noise-shaping",
+    "floating-point-processing"
+   ],
+   "procedure_ids": [
+    "export-with-dither"
+   ],
+   "success_criteria": [
+    "Un seul dither est appliqué, après tout réglage de gain et toute conversion de fréquence",
+    "Aucun dither ajouté pour un export 32 bits flottants",
+    "L'élève explique pourquoi la fin d'une réverbération reste audible avec dither"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "sources": [
+    {
+     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "description",
+      "success_criteria"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": []
+}

@@ -1,0 +1,1608 @@
+{
+ "entity": "concept",
+ "domain": "digital-audio-clocking",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "sampling",
+   "name_fr": "Échantillonnage",
+   "name_en": "Sampling",
+   "domain": "digital-audio-clocking",
+   "definition": "Prélèvement de la valeur d'un signal analogique à intervalles de temps réguliers, à la fréquence d'échantillonnage fe.",
+   "explanation": "Numériser un son, c'est d'abord le découper dans le temps : à chaque période 1/fe, le convertisseur A/N mesure l'amplitude et la transforme en nombre (c'est ensuite la quantification qui arrondit ce nombre). Le théorème d'échantillonnage dit qu'un signal sans énergie au-delà de fe/2 peut être reconstruit exactement à partir de ses échantillons. En pratique, on choisit fe selon l'usage : 44,1 kHz pour le CD, 48 kHz en broadcast et vidéo. Tous les appareils reliés en numérique doivent partager la même fe et la même horloge.",
+   "formulas": [],
+   "units": [
+    "Hz",
+    "kHz"
+   ],
+   "related_concepts": [
+    "sample-rate",
+    "nyquist-theorem",
+    "aliasing",
+    "quantization-noise",
+    "word-clock"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html",
+     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Sampling Theorem",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "university",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "sample-rate",
+   "name_fr": "Fréquence d'échantillonnage",
+   "name_en": "Sample rate",
+   "domain": "digital-audio-clocking",
+   "definition": "Nombre d'échantillons par seconde (fe), exprimé en hertz ; valeurs courantes 44,1, 48, 88,2, 96, 176,4 et 192 kHz.",
+   "explanation": "La spécification AES/EBU de l'UER indique que l'interface est surtout utilisée à 48 kHz, fréquence recommandée pour les studios de radiodiffusion. RME regroupe les fréquences en trois familles : Single Speed (32 à 48 kHz), Double Speed (88,2/96 kHz) et Quad Speed (176,4/192 kHz). Passer en Double ou Quad Speed réduit le nombre de canaux sur ADAT et MADI. Une session DAW, l'interface et les appareils externes doivent être réglés sur la même fréquence, sinon le récepteur ne se synchronise pas ou la lecture change de vitesse.",
+   "formulas": [],
+   "units": [
+    "Hz",
+    "kHz"
+   ],
+   "related_concepts": [
+    "sampling",
+    "nyquist-theorem",
+    "smux",
+    "clock-master"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 1,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "nyquist-theorem",
+   "name_fr": "Théorème de Shannon-Nyquist",
+   "name_en": "Nyquist-Shannon sampling theorem",
+   "domain": "digital-audio-clocking",
+   "definition": "Un signal est exactement reconstructible à partir de ses échantillons s'il ne contient aucune énergie à fe/2 ou au-dessus ; fe/2 est la fréquence de Nyquist.",
+   "explanation": "Le théorème fixe la bande passante maximale d'un système numérique : à 48 kHz, on ne peut transmettre correctement que les fréquences inférieures à 24 kHz. Toute composante au-dessus de fe/2 présente à l'entrée du convertisseur ne disparaît pas : elle se replie dans la bande audible (aliasing). C'est pourquoi le convertisseur A/N est précédé d'un filtre anti-repliement. En E3, on utilise la condition fe > 2·fmax pour vérifier qu'une fréquence d'échantillonnage convient à un signal donné.",
+   "formulas": [
+    {
+     "expr": "fe > 2·f_max",
+     "vars": {
+      "fe": "fréquence d'échantillonnage (Hz)",
+      "f_max": "plus haute fréquence du signal (Hz)"
+     },
+     "source_url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html"
+    }
+   ],
+   "units": [
+    "Hz"
+   ],
+   "related_concepts": [
+    "sampling",
+    "aliasing",
+    "anti-aliasing-filter",
+    "sample-rate"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html",
+     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Sampling Theorem",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "university",
+     "covers": [
+      "definition",
+      "formulas[0]"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "aliasing",
+   "name_fr": "Repliement de spectre",
+   "name_en": "Aliasing",
+   "domain": "digital-audio-clocking",
+   "definition": "Une composante de fréquence supérieure à fe/2 réapparaît, après échantillonnage, à une fréquence « miroir » située sous fe/2, indiscernable d'un vrai signal.",
+   "explanation": "Si une fréquence f = fe/2 + ε entre dans le convertisseur, elle ressort à fe/2 − ε, c'est-à-dire à fe − f. L'exemple de la source : avec fe = 1000 Hz, une sinusoïde à 700 Hz apparaît à 300 Hz. Ce son parasite n'a aucun lien harmonique avec la musique et ne peut plus être retiré une fois enregistré. On l'évite en filtrant avant la conversion (filtre anti-repliement) et, en traitement numérique, en suréchantillonnant les traitements non linéaires.",
+   "formulas": [
+    {
+     "expr": "f_alias = fe − f   (pour fe/2 < f ≤ fe)",
+     "vars": {
+      "f": "fréquence du signal (Hz)",
+      "fe": "fréquence d'échantillonnage (Hz)"
+     },
+     "source_url": "https://www.dsprelated.com/freebooks/mdft/Aliasing_Sampled_Signals.html"
+    }
+   ],
+   "units": [
+    "Hz"
+   ],
+   "related_concepts": [
+    "nyquist-theorem",
+    "anti-aliasing-filter",
+    "sampling"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dsprelated.com/freebooks/mdft/Aliasing_Sampled_Signals.html",
+     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Aliasing of Sampled Signals",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "university",
+     "covers": [
+      "definition",
+      "explanation",
+      "formulas[0]"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "anti-aliasing-filter",
+   "name_fr": "Filtre anti-repliement",
+   "name_en": "Anti-aliasing filter",
+   "domain": "digital-audio-clocking",
+   "definition": "Filtre passe-bas placé avant (ou intégré à) la conversion A/N pour supprimer l'énergie au-dessus de fe/2.",
+   "explanation": "Le théorème d'échantillonnage exige l'absence d'énergie au-dessus de fe/2 : le filtre anti-repliement garantit cette condition. Les convertisseurs modernes travaillent en suréchantillonnage (64 ou 128 fois selon RME) et réalisent l'essentiel du filtrage en numérique. Ce filtrage numérique a un coût : il ajoute un retard, typiquement de l'ordre d'une milliseconde par conversion sur les générations de convertisseurs décrites par RME. Monter en fréquence d'échantillonnage donne plus de marge à ce filtre.",
+   "formulas": [],
+   "units": [
+    "Hz"
+   ],
+   "related_concepts": [
+    "aliasing",
+    "nyquist-theorem",
+    "converter-latency"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.dsprelated.com/freebooks/mdft/Sampling_Theorem.html",
+     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Sampling Theorem",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "university",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "bit-depth",
+   "name_fr": "Résolution (profondeur de bits)",
+   "name_en": "Bit depth",
+   "domain": "digital-audio-clocking",
+   "definition": "Nombre de bits n utilisés pour coder chaque échantillon ; chaque bit ajoute environ 6 dB de dynamique (20·log10 2 ≈ 6,02 dB).",
+   "explanation": "Avec n bits, on dispose de 2^n paliers d'amplitude. Doubler le nombre de paliers divise par deux le pas de quantification, soit environ 6 dB de bruit en moins par bit ajouté. Le CD utilise 16 bits ; l'enregistrement se fait en général en 24 bits, ce qui laisse de la marge (headroom) pour régler les niveaux sans approcher du plancher de bruit. La valeur théorique d'un convertisseur n bits n'est jamais atteinte en pratique à cause des imperfections analogiques et des non-linéarités.",
+   "formulas": [
+    {
+     "expr": "dynamique par bit = 20·log10(2) ≈ 6,02 dB",
+     "vars": {},
+     "source_url": "https://www.dsprelated.com/freebooks/mdft/How_Many_Bits_Enough.html"
+    }
+   ],
+   "units": [
+    "bit",
+    "dB"
+   ],
+   "related_concepts": [
+    "quantization-noise",
+    "dither",
+    "floating-point-processing",
+    "dbfs"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.dsprelated.com/freebooks/mdft/How_Many_Bits_Enough.html",
+     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), How Many Bits are Enough for Digital Audio?",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "university",
+     "covers": [
+      "definition",
+      "formulas[0]"
+     ]
+    },
+    {
+     "url": "https://www.ti.com/lit/an/slaa013/slaa013.pdf",
+     "publisher": "Texas Instruments, Application Report SLAA013",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "quantization-noise",
+   "name_fr": "Bruit de quantification",
+   "name_en": "Quantization noise",
+   "domain": "digital-audio-clocking",
+   "definition": "Erreur d'arrondi de chaque échantillon au palier le plus proche, modélisée comme un bruit uniforme entre −q/2 et +q/2, de puissance q²/12.",
+   "explanation": "Le convertisseur arrondit la valeur mesurée au palier le plus proche, de pas q. L'erreur commise est traitée comme un bruit de moyenne nulle, indépendant d'un échantillon à l'autre. Pour une sinusoïde pleine échelle et un convertisseur idéal de n bits, on obtient un rapport signal/bruit de 6,02·n + 1,76 dB : environ 98 dB en 16 bits et 146 dB en 24 bits (valeur théorique). Sur les signaux très faibles, l'erreur devient corrélée au signal et sonne comme une distorsion ; le dither sert à corriger ce défaut.",
+   "formulas": [
+    {
+     "expr": "σ² = q²/12",
+     "vars": {
+      "q": "pas de quantification",
+      "σ²": "puissance du bruit de quantification"
+     },
+     "source_url": "https://www.dsprelated.com/freebooks/mdft/Round_Off_Error_Variance.html"
+    },
+    {
+     "expr": "SNR = 6,02·n + 1,76 dB",
+     "vars": {
+      "n": "nombre de bits (convertisseur idéal, sinusoïde pleine échelle)"
+     },
+     "source_url": "https://www.ti.com/lit/an/slaa013/slaa013.pdf"
+    }
+   ],
+   "units": [
+    "dB",
+    "bit"
+   ],
+   "related_concepts": [
+    "bit-depth",
+    "dither",
+    "signal-to-noise-ratio"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.dsprelated.com/freebooks/mdft/Round_Off_Error_Variance.html",
+     "publisher": "J. O. Smith III, Mathematics of the DFT (CCRMA Stanford), Round-Off Error Variance",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "university",
+     "covers": [
+      "definition",
+      "formulas[0]"
+     ]
+    },
+    {
+     "url": "https://www.ti.com/lit/an/slaa013/slaa013.pdf",
+     "publisher": "Texas Instruments, Application Report SLAA013",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "manufacturer",
+     "covers": [
+      "formulas[1]",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "dither",
+   "name_fr": "Dither",
+   "name_en": "Dither",
+   "domain": "digital-audio-clocking",
+   "definition": "Bruit de très faible niveau ajouté volontairement avant une réduction de résolution, pour remplacer la distorsion de troncature par un souffle régulier.",
+   "explanation": "Quand on passe de 24 à 16 bits (export CD), tronquer simplement les bits produit des produits de distorsion, et les signaux très faibles (fins de réverbération, fondus) peuvent tomber dans le silence. Ajouter un dither juste avant la réduction décorrèle l'erreur du signal. Règles pratiques : dither une seule fois, en toute dernière étape, après tout changement de gain ou de fréquence d'échantillonnage. Un export en 32 bits flottants n'a pas besoin de dither ; un export en 24 bits fixe depuis un DAW en flottant peut en recevoir un.",
+   "formulas": [],
+   "units": [
+    "dB",
+    "bit"
+   ],
+   "related_concepts": [
+    "quantization-noise",
+    "bit-depth",
+    "noise-shaping"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "noise-shaping",
+   "name_fr": "Mise en forme du bruit",
+   "name_en": "Noise shaping",
+   "domain": "digital-audio-clocking",
+   "definition": "Filtrage du bruit (de dither ou de quantification) qui le déplace vers des fréquences où l'oreille est moins sensible.",
+   "explanation": "Associée au dither, la mise en forme rend le souffle moins audible, surtout utile en 16 bits ou moins ; en 24 bits, un dither plat suffit en général. Les convertisseurs A/N delta-sigma utilisent aussi ce principe : RME explique que leurs convertisseurs repoussent bruit et distorsion au-dessus de 24 kHz. Conséquence pratique : en 96 ou 192 kHz, un afficheur qui mesure le bruit sur toute la bande montre un plancher plus élevé, alors que le bruit audible (20 Hz à 20 kHz) ne change pas.",
+   "formulas": [],
+   "units": [
+    "dB"
+   ],
+   "related_concepts": [
+    "dither",
+    "quantization-noise"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "floating-point-processing",
+   "name_fr": "Calcul en virgule flottante dans le DAW",
+   "name_en": "Floating-point processing",
+   "domain": "digital-audio-clocking",
+   "definition": "Représentation des échantillons sous forme mantisse + exposant (32 bits flottants dans la plupart des DAW), qui donne au mélangeur interne une marge très importante au-dessus de 0 dBFS.",
+   "explanation": "Additionner des pistes consomme de la marge : deux signaux pleine échelle dépassent ce que la même résolution peut coder. Les mélangeurs travaillent donc à une résolution supérieure à celle des fichiers (32, 48 ou 64 bits). Sound On Sound explique que Pro Tools LE calculait en 32 bits flottants, avec une grande marge interne, alors que les puces TDM de Pro Tools HD imposaient un mélangeur 48 bits. Dans l'exemple de l'article, la saturation venait de l'étage de sortie et non du bus : baisser le master fader suffisait. La conversion vers un format fixe (fichier 16/24 bits, convertisseur N/A) reste le point où l'écrêtage se produit.",
+   "formulas": [],
+   "units": [
+    "dBFS",
+    "bit"
+   ],
+   "related_concepts": [
+    "bit-depth",
+    "headroom",
+    "dbfs",
+    "dither"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/node/4908184",
+     "publisher": "Sound On Sound, M. Thornton, Headroom & Master Fader (2010)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "needs-oscar-review"
+  },
+  {
+   "id": "latency",
+   "name_fr": "Latence",
+   "name_en": "Latency",
+   "domain": "digital-audio-clocking",
+   "definition": "Retard entre l'entrée d'un signal dans le système et sa sortie ; en audionumérique, il s'additionne entre conversions A/N et N/A, tampons (buffers), traitements et compensation des plug-ins.",
+   "explanation": "Un tampon de N échantillons retarde le signal de N/fe : 64 échantillons à 44,1 kHz donnent environ 1,5 ms, à l'enregistrement comme à la lecture. S'y ajoutent les convertisseurs (de quelques échantillons à environ 1 ms selon la génération), d'éventuels tampons de sécurité du pilote et le retard des plug-ins. Pour un musicien qui s'écoute au casque pendant la prise, une latence élevée gêne le jeu ; on la réduit avec un petit tampon ou avec l'écoute directe dans l'interface. Les liaisons numériques elles-mêmes (ADAT, S/PDIF) n'ajoutent que quelques échantillons.",
+   "formulas": [
+    {
+     "expr": "t = N / fe",
+     "vars": {
+      "N": "taille du tampon (échantillons)",
+      "fe": "fréquence d'échantillonnage (Hz)",
+      "t": "latence d'un tampon (s)"
+     },
+     "source_url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf"
+    }
+   ],
+   "units": [
+    "ms",
+    "échantillons"
+   ],
+   "related_concepts": [
+    "buffer-size",
+    "converter-latency",
+    "plugin-delay-compensation",
+    "direct-monitoring"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation",
+      "formulas[0]"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "buffer-size",
+   "name_fr": "Taille du tampon (buffer)",
+   "name_en": "Buffer size",
+   "domain": "digital-audio-clocking",
+   "definition": "Nombre d'échantillons que le pilote et le DAW traitent par bloc ; il fixe la latence liée à l'ordinateur et la charge processeur.",
+   "explanation": "Un petit tampon (par exemple 64 échantillons) donne une latence faible mais demande au processeur de répondre plus souvent ; si l'ordinateur est bloqué un instant, des paquets de données sont perdus et l'on entend des craquements. Le seul remède à ces pertes est d'augmenter le tampon, donc la latence. En prise de son, on cherche le tampon le plus petit qui reste stable ; au mixage, où la latence importe peu et où les plug-ins sont nombreux, on l'augmente. Le DAW connaît la taille du tampon et recale les prises en conséquence.",
+   "formulas": [],
+   "units": [
+    "échantillons",
+    "ms"
+   ],
+   "related_concepts": [
+    "latency",
+    "plugin-delay-compensation",
+    "direct-monitoring"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "converter-latency",
+   "name_fr": "Latence des convertisseurs A/N et N/A",
+   "name_en": "AD/DA converter latency",
+   "domain": "digital-audio-clocking",
+   "definition": "Retard propre aux convertisseurs, dû au suréchantillonnage et au filtrage numérique.",
+   "explanation": "RME indique que les convertisseurs à suréchantillonnage 64 ou 128 fois avec filtrage numérique génèrent typiquement environ 1 ms de retard, soit environ 2 ms pour une boucle N/A puis A/N. Les puces plus récentes de la Babyface Pro FS réduisent ce retard à 5 échantillons en A/N et 7 en N/A (environ 0,1 et 0,15 ms à 48 kHz). Les pilotes ASIO et Core Audio signalent ce décalage au logiciel, qui recale les enregistrements. Ce retard s'ajoute à celui du tampon et ne dépend pas de lui.",
+   "formulas": [],
+   "units": [
+    "ms",
+    "échantillons"
+   ],
+   "related_concepts": [
+    "latency",
+    "anti-aliasing-filter",
+    "buffer-size"
+   ],
+   "equipment_ids": [
+    "rme-babyface-pro-fs"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "plugin-delay-compensation",
+   "name_fr": "Compensation de latence des plug-ins",
+   "name_en": "Plug-in delay compensation (PDC)",
+   "domain": "digital-audio-clocking",
+   "definition": "Fonction du DAW qui mesure le retard ajouté par les traitements de chaque piste et retarde les autres pistes pour que tout reste aligné.",
+   "explanation": "Certains plug-ins (limiteurs à anticipation, égaliseurs à phase linéaire) ont besoin de temps pour calculer : une piste traitée arrive plus tard que les autres. La compensation (ADC dans Pro Tools) retarde les pistes plus rapides pour garder l'alignement temporel et de phase. Revers : pendant une prise, cette compensation peut faire entendre le musicien en retard. Pro Tools active par défaut un mode basse latence sur les pistes armées en enregistrement, qui contourne la compensation pour ces pistes. Pendant la prise, on évite donc les plug-ins à forte latence sur le bus master.",
+   "formulas": [],
+   "units": [
+    "ms",
+    "échantillons"
+   ],
+   "related_concepts": [
+    "latency",
+    "buffer-size"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://puremix.com/blog/understanding-plug-in-delay-compensation",
+     "publisher": "Puremix, A. Rizzo Schettino, Understanding Plug-In Delay Compensation (2018)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "direct-monitoring",
+   "name_fr": "Écoute directe (monitoring sans latence)",
+   "name_en": "Direct / zero-latency monitoring",
+   "domain": "digital-audio-clocking",
+   "definition": "Renvoi du signal d'entrée vers les sorties casque directement dans l'interface, sans passer par l'ordinateur et ses tampons.",
+   "explanation": "RME a introduit le terme Zero Latency Monitoring en 1998. Le chemin numérique interne d'une interface (récepteur, mélangeur, émetteur) ne retarde le signal que de quelques échantillons : environ 3 échantillons, soit environ 68 µs à 44,1 kHz selon RME. Cela permet au musicien de s'entendre sans retard perceptible pendant la prise, quelle que soit la taille du tampon du DAW. Il ne reste que le retard des convertisseurs A/N et N/A.",
+   "formulas": [],
+   "units": [
+    "µs",
+    "échantillons"
+   ],
+   "related_concepts": [
+    "latency",
+    "buffer-size",
+    "converter-latency"
+   ],
+   "equipment_ids": [
+    "rme-babyface-pro-fs"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "word-clock",
+   "name_fr": "Word clock (horloge de mot)",
+   "name_en": "Word clock",
+   "domain": "digital-audio-clocking",
+   "definition": "Signal carré à la fréquence d'échantillonnage, distribué sur câble coaxial 75 Ω (BNC), qui synchronise tous les appareils numériques sur une horloge commune.",
+   "explanation": "Un signal numérique ne peut être traité que si tous les appareils partagent la même horloge ; sinon on obtient des échantillons faux, de la distorsion, des craquements et des décrochages. Dans un studio, un appareil maître envoie son word clock à tous les autres, réglés en esclave. Idéalement c'est une onde carrée de 5 V. Le récepteur multiplie cette horloge lente (par exemple ×256 pour atteindre environ 11,2 MHz à 44,1 kHz) avec une PLL, ce qui la rend plus sensible à la gigue qu'un quartz local. Chez RME, l'option Single Speed maintient la sortie word clock entre 32 et 48 kHz : à 96 kHz, elle sort alors 48 kHz.",
+   "formulas": [],
+   "units": [
+    "Hz",
+    "Ω",
+    "V"
+   ],
+   "related_concepts": [
+    "clock-master",
+    "jitter",
+    "pll",
+    "word-clock-termination",
+    "self-clocking-interfaces"
+   ],
+   "equipment_ids": [
+    "antelope-ocx-hd",
+    "mutec-mc-3-plus",
+    "avid-hd-io",
+    "rme-fireface-ufx-iii"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "clock-master",
+   "name_fr": "Horloge maître et esclaves",
+   "name_en": "Clock master / slave",
+   "domain": "digital-audio-clocking",
+   "definition": "Dans un système numérique, un seul appareil fournit l'horloge (maître, internal) ; tous les autres s'y verrouillent (esclaves, external).",
+   "explanation": "RME le résume ainsi : un système numérique ne peut avoir qu'un seul maître ; si un appareil est en Master, tous les autres doivent être en Slave. Le maître peut être l'interface elle-même ou une horloge dédiée (par exemple Antelope OCX HD, qui offre dix sorties word clock BNC, des sorties AES/EBU et S/PDIF). Beaucoup d'interfaces repassent automatiquement sur leur horloge interne si la référence externe disparaît (AutoSync chez RME, retour à l'horloge interne chez Audient). Le réglage de la source d'horloge se fait dans le panneau de contrôle de chaque appareil.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "word-clock",
+    "lock-vs-sync",
+    "self-clocking-interfaces"
+   ],
+   "equipment_ids": [
+    "antelope-ocx-hd",
+    "rme-hdspe-madi-fx",
+    "audient-id14-mkii"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
+     "publisher": "Antelope Audio, OCX HD user manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+     "publisher": "Audient, iD14 MKII manual v1.3",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "self-clocking-interfaces",
+   "name_fr": "Interfaces auto-synchronisantes",
+   "name_en": "Self-clocking digital interfaces",
+   "domain": "digital-audio-clocking",
+   "definition": "AES3, S/PDIF, ADAT et MADI transportent leur horloge avec les données : un récepteur peut se caler sur le flux entrant sans câble word clock.",
+   "explanation": "Avec deux appareils, relier la sortie numérique du maître à l'entrée de l'esclave suffit : l'esclave se règle sur l'horloge du flux. Avec plusieurs appareils, les problèmes arrivent : un câblage en boucle sans maître dans la boucle ne fonctionne pas, et un lecteur sans entrée numérique ne peut pas se caler. D'où la distribution d'un word clock central dans un studio. Le codage biphase-mark de l'AES3 fournit justement la récupération d'horloge et rend la liaison insensible à la polarité.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "word-clock",
+    "clock-master",
+    "aes3",
+    "adat",
+    "madi",
+    "spdif"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "lock-vs-sync",
+   "name_fr": "Verrouillage (lock) et synchronisme (sync)",
+   "name_en": "Lock vs sync",
+   "domain": "digital-audio-clocking",
+   "definition": "Lock : le récepteur a trouvé la fréquence du signal entrant. Sync : ce signal est en plus parfaitement synchrone avec l'horloge qui lit les données ; seul l'état sync garantit l'absence de clics.",
+   "explanation": "Le récepteur se cale sur la porteuse grâce à une PLL : c'est le lock. Mais un appareil en lock peut quand même produire des clics : l'exemple de RME est une interface en Master à 44,1 kHz qui reçoit l'ADAT d'une console elle aussi en Master. Les deux horloges internes sont légèrement différentes, d'où des erreurs de lecture régulières (clics, décrochages). Les voyants SyncCheck de RME clignotent dans ce cas ; chez Audient, un voyant ambre signale une horloge détectée mais à une autre fréquence, vert une horloge correcte.",
+   "formulas": [],
+   "units": [],
+   "related_concepts": [
+    "pll",
+    "clock-master",
+    "word-clock"
+   ],
+   "equipment_ids": [
+    "rme-babyface-pro-fs",
+    "audient-id14-mkii"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+     "publisher": "Audient, iD14 MKII manual v1.3",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "pll",
+   "name_fr": "Boucle à verrouillage de phase (PLL)",
+   "name_en": "Phase-locked loop (PLL)",
+   "domain": "digital-audio-clocking",
+   "definition": "Circuit qui asservit un oscillateur local sur la fréquence d'un signal entrant et la suit lorsqu'elle varie légèrement.",
+   "explanation": "Pour lire un flux numérique, le récepteur doit se synchroniser sur l'horloge de la porteuse : la PLL assure ce verrouillage et le maintient malgré de petites variations de fréquence. Elle sert aussi à multiplier un word clock lent jusqu'à l'horloge rapide dont ont besoin les convertisseurs. Une bonne PLL filtre la gigue de la source : RME annonce par exemple qu'un signal MADI, qui porte environ 80 ns de gigue, en ressort à environ 1 ns après son circuit SteadyClock.",
+   "formulas": [],
+   "units": [
+    "ns",
+    "Hz"
+   ],
+   "related_concepts": [
+    "jitter",
+    "word-clock",
+    "lock-vs-sync"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "jitter",
+   "name_fr": "Gigue d'horloge",
+   "name_en": "Jitter",
+   "domain": "digital-audio-clocking",
+   "definition": "Variations temporelles des fronts d'une horloge ou d'un signal numérique par rapport à leur position idéale.",
+   "explanation": "Une horloge reconstruite à partir d'un word clock lent multiplié par une PLL est plus gigueuse qu'un quartz local. La gigue n'empêche pas forcément le transfert des données, mais elle dégrade la conversion si elle atteint l'horloge des convertisseurs. La spécification AES/EBU de l'UER limite la gigue intrinsèque crête d'une sortie à 0,025 UI et exige qu'un récepteur tolère 0,25 UI crête à crête aux hautes fréquences. Les interfaces modernes atténuent la gigue de la référence (RME annonce une réjection de plus de 50 dB à 2,4 kHz).",
+   "formulas": [],
+   "units": [
+    "UI",
+    "ns"
+   ],
+   "related_concepts": [
+    "pll",
+    "word-clock",
+    "clock-master"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "word-clock-termination",
+   "name_fr": "Terminaison du word clock",
+   "name_en": "Word clock termination",
+   "domain": "digital-audio-clocking",
+   "definition": "Résistance de 75 Ω placée en bout de chaîne word clock pour adapter l'impédance du câble ; une seule terminaison par ligne.",
+   "explanation": "Le word clock se distribue sur câble coaxial 75 Ω, en guirlande avec des T BNC, et se termine par une résistance de 75 Ω sur le dernier appareil. Si deux appareils terminent la même ligne, la charge tombe à 37,5 Ω et le signal s'affaiblit (RME mesure encore 3,3 V crête à crête sur ses sorties, mais d'autres appareils s'effondrent davantage). Certains appareils ont une terminaison commutable (option dans les réglages RME, entrée 75 Ω désactivable sur le MUTEC MC-3+). Pour un grand studio, RME recommande un distributeur word clock, une sortie par appareil.",
+   "formulas": [],
+   "units": [
+    "Ω",
+    "V"
+   ],
+   "related_concepts": [
+    "word-clock",
+    "impedance"
+   ],
+   "equipment_ids": [
+    "mutec-mc-3-plus",
+    "rme-hdspe-madi-fx"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+     "publisher": "MUTEC, MC-3+ Smart Clock manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "sample-rate-conversion",
+   "name_fr": "Conversion de fréquence d'échantillonnage (SRC)",
+   "name_en": "Sample-rate conversion",
+   "domain": "digital-audio-clocking",
+   "definition": "Recalcul d'un flux audio d'une fréquence d'échantillonnage vers une autre ; un SRC asynchrone accepte une entrée et une sortie pilotées par des horloges indépendantes.",
+   "explanation": "Quand une source ne peut pas être synchronisée (lecteur grand public, liaison venant d'un autre site), un convertisseur asynchrone (ASRC) détecte lui-même le rapport entre fréquences d'entrée et de sortie et recalcule les échantillons. Le SRC4392 de Texas Instruments, par exemple, convertit en continu entre 16:1 et 1:16 jusqu'à 216 kHz et atténue la gigue de l'entrée. Le SRC n'est pas neutre : il recalcule tous les échantillons et ajoute du retard. Côté ordinateur, RME signale que le pilote WDM de Windows peut effectuer des conversions de fréquence à l'insu de l'utilisateur, contrairement à ASIO.",
+   "formulas": [],
+   "units": [
+    "Hz"
+   ],
+   "related_concepts": [
+    "sample-rate",
+    "clock-master",
+    "jitter"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://www.ti.com/product/SRC4392",
+     "publisher": "Texas Instruments, SRC4392 product page",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "aes3",
+   "name_fr": "AES3 (AES/EBU)",
+   "name_en": "AES3 (AES/EBU)",
+   "domain": "digital-audio-clocking",
+   "definition": "Interface numérique professionnelle 2 canaux, symétrique 110 Ω sur XLR, codage biphase-mark, mots audio jusqu'à 24 bits.",
+   "explanation": "Chaque sous-trame compte 32 intervalles (préambule, jusqu'à 24 bits audio, bits V, U, C et parité) ; deux sous-trames forment une trame et 192 trames un bloc d'état de canal (channel status). L'émetteur sort 2 à 7 V crête à crête sur 110 Ω ± 20 %, le récepteur doit décoder un signal de 200 mV minimum. Le codage biphase-mark rend la liaison insensible à la polarité et permet la récupération d'horloge. On utilise du câble 110 Ω et non du câble micro ordinaire.",
+   "formulas": [],
+   "units": [
+    "Ω",
+    "V",
+    "bit"
+   ],
+   "related_concepts": [
+    "spdif",
+    "channel-status",
+    "self-clocking-interfaces",
+    "jitter"
+   ],
+   "equipment_ids": [
+    "avid-hd-io",
+    "audinate-dante-avio-aes3"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES et E4 câblage (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "spdif",
+   "name_fr": "S/PDIF",
+   "name_en": "S/PDIF",
+   "domain": "digital-audio-clocking",
+   "definition": "Variante grand public (IEC 60958, « consumer ») de l'interface AES3 : 2 canaux, coaxial RCA 75 Ω ou optique TOSLINK.",
+   "explanation": "S/PDIF reprend la structure de trame de l'AES3 mais avec un état de canal « consumer » et une tension plus faible : MUTEC spécifie 0,5 V crête à crête sur 75 Ω pour sa sortie coaxiale, contre 2 à 7 V sur 110 Ω en AES3. RME note que la plupart des appareils grand public n'acceptent que l'état de canal « consumer » et que, en mode Consumer, la tension de sortie de l'interface baisse aussi. Sur beaucoup d'interfaces, le port optique TOSLINK fonctionne au choix en ADAT ou en S/PDIF.",
+   "formulas": [],
+   "units": [
+    "Ω",
+    "V"
+   ],
+   "related_concepts": [
+    "aes3",
+    "channel-status",
+    "adat"
+   ],
+   "equipment_ids": [
+    "rme-babyface-pro-fs",
+    "audient-id14-mkii"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition"
+     ]
+    },
+    {
+     "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+     "publisher": "MUTEC, MC-3+ Smart Clock manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/fface_802fs_e.pdf",
+     "publisher": "RME, Fireface 802 FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "channel-status",
+   "name_fr": "État de canal (channel status)",
+   "name_en": "Channel status",
+   "domain": "digital-audio-clocking",
+   "definition": "Bloc de métadonnées (192 bits par canal) transporté dans le flux AES3/S/PDIF : usage pro ou grand public, emphase, fréquence d'échantillonnage, etc.",
+   "explanation": "Le bit 0 de l'octet 0 distingue l'usage professionnel (AES3) de l'usage grand public (IEC 60958-3). L'UER prévient que relier un émetteur « professional » à un récepteur « consumer », ou l'inverse, peut donner un fonctionnement imprévisible. Les interfaces RME permettent de choisir l'état de canal de leur sortie AES (Professional ou Consumer) pour alimenter un appareil grand public. Le bloc indique aussi l'emphase et peut indiquer 32, 44,1 ou 48 kHz.",
+   "formulas": [],
+   "units": [
+    "bit"
+   ],
+   "related_concepts": [
+    "aes3",
+    "spdif"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 4,
+   "sources": [
+    {
+     "url": "https://tech.ebu.ch/docs/tech/tech3250.pdf",
+     "publisher": "EBU Tech 3250 (AES/EBU interface specification, 3rd ed. 2004)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "standard",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/fface_802fs_e.pdf",
+     "publisher": "RME, Fireface 802 FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "adat",
+   "name_fr": "ADAT optique (Lightpipe)",
+   "name_en": "ADAT optical",
+   "domain": "digital-audio-clocking",
+   "definition": "Liaison optique TOSLINK transportant 8 canaux à 44,1/48 kHz ; 4 canaux à 88,2/96 kHz et 2 canaux à 176,4/192 kHz par multiplexage d'échantillons (S/MUX).",
+   "explanation": "L'ADAT est le moyen courant d'ajouter 8 entrées micro à une interface avec un préampli externe. Le matériel ADAT ne dépasse pas 48 kHz ; au-delà, les interfaces répartissent un canal sur deux (S/MUX) ou quatre (S/MUX4) canaux ADAT, ce qui réduit le nombre de canaux utiles. Le flux ADAT est auto-synchronisant : l'interface peut se caler dessus (source d'horloge ADAT/optique) ou bien tous deux reçoivent le word clock d'un maître commun. Un câble TOSLINK ordinaire suffit.",
+   "formulas": [],
+   "units": [
+    "canaux",
+    "kHz"
+   ],
+   "related_concepts": [
+    "smux",
+    "self-clocking-interfaces",
+    "clock-master",
+    "spdif"
+   ],
+   "equipment_ids": [
+    "rme-babyface-pro-fs",
+    "rme-fireface-ufx-iii",
+    "audient-id14-mkii",
+    "motu-828"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+     "publisher": "Audient, iD14 MKII manual v1.3",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "smux",
+   "name_fr": "S/MUX (multiplexage d'échantillons)",
+   "name_en": "S/MUX (sample multiplexing)",
+   "domain": "digital-audio-clocking",
+   "definition": "Technique qui répartit les échantillons d'un canal haute fréquence sur deux (Double Speed) ou quatre (Quad Speed) canaux d'une liaison restée à 44,1/48 kHz.",
+   "explanation": "Avant 1998, aucun récepteur ne dépassait 48 kHz : on transportait un canal à 96 kHz sur une liaison AES en répartissant échantillons pairs et impairs sur les canaux gauche et droit (Double Wire). Le même principe, appelé S/MUX pour l'ADAT, divise le nombre de canaux par deux à 88,2/96 kHz et par quatre à 176,4/192 kHz. La liaison physique continue de tourner à 44,1 ou 48 kHz. TDIF et MADI utilisent aussi ce procédé (MADI : 32 canaux à 96 kHz).",
+   "formulas": [],
+   "units": [
+    "canaux"
+   ],
+   "related_concepts": [
+    "adat",
+    "madi",
+    "sample-rate",
+    "tdif"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "madi",
+   "name_fr": "MADI (AES10)",
+   "name_en": "MADI (AES10)",
+   "domain": "digital-audio-clocking",
+   "definition": "Interface multicanal série (AES10) : jusqu'à 64 canaux à 48 kHz (56 sur les appareils anciens), 32 à 96 kHz, sur coaxial BNC 75 Ω ou fibre optique.",
+   "explanation": "Définie en 1989 comme une extension de l'AES3, la MADI met en série l'équivalent de 28 liaisons AES3 dans un débit utile limité à 100 Mbit/s (125 Mbit/s en ligne après codage). Le mode 64 canaux, officialisé en 2001, permet 32 canaux à 96 kHz (S/MUX ou trame 96k). RME donne jusqu'à 100 m en coaxial et jusqu'à environ 2 km en fibre multimode avec connecteurs SC. Le flux MADI porte une gigue d'environ 80 ns ; mieux vaut synchroniser les convertisseurs via une bonne PLL ou un word clock.",
+   "formulas": [],
+   "units": [
+    "canaux",
+    "Mbit/s",
+    "m"
+   ],
+   "related_concepts": [
+    "aes3",
+    "smux",
+    "jitter",
+    "self-clocking-interfaces"
+   ],
+   "equipment_ids": [
+    "rme-hdspe-madi-fx",
+    "rme-m-32-ad",
+    "directout-prodigy-mc",
+    "rme-fireface-ufx-iii"
+   ],
+   "bts_mapping": [
+    {
+     "epreuve": "E4",
+     "bloc": null,
+     "note": "Mise en œuvre pratique d'une chaîne numérique (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 3,
+   "sources": [
+    {
+     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+     "publisher": "RME, HDSPe MADI FX User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  },
+  {
+   "id": "tdif",
+   "name_fr": "TDIF (Tascam Digital Interface)",
+   "name_en": "TDIF",
+   "domain": "digital-audio-clocking",
+   "definition": "Format propriétaire Tascam : 8 canaux numériques bidirectionnels sur un seul câble D-sub 25 broches, asymétrique.",
+   "explanation": "Le premier appareil équipé fut l'enregistreur DA-88. Un seul câble relie entrées et sorties des deux appareils. Le DA-88 ne savait pas se synchroniser par le TDIF : il fallait un câble word clock BNC séparé. La version 2.0 ajoute le Double et le Quad Speed à nombre de canaux réduit. Format surtout présent sur du matériel ancien et des cartes d'extension de consoles.",
+   "formulas": [],
+   "units": [
+    "canaux"
+   ],
+   "related_concepts": [
+    "adat",
+    "smux",
+    "word-clock"
+   ],
+   "equipment_ids": [],
+   "bts_mapping": [
+    {
+     "epreuve": "E3",
+     "bloc": null,
+     "note": "Audionumérique, notions PTES (jugement, non vérifié sur eduscol)",
+     "verified": false
+    }
+   ],
+   "difficulty": 2,
+   "sources": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Tascam_Digital_Interface",
+     "publisher": "Wikipedia, Tascam Digital Interface",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "definition",
+      "explanation"
+     ]
+    },
+    {
+     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+     "publisher": "RME, Babyface Pro FS User's Guide",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "explanation"
+     ]
+    }
+   ],
+   "conflicts": [],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Définition sourcée d'un SRC synchrone (rapport fixe, horloges liées) par opposition à l'asynchrone",
+   "searched": "WebSearch SRC manuals (RME, Mutec, Benchmark), TI SRC4392 page ; seule la conversion asynchrone est décrite"
+  },
+  {
+   "what": "Valeur de marge interne en dB du 32 bits flottant (les sources forum divergent : ~770 dB vs ~1680 dB)",
+   "searched": "WebSearch floating point headroom ; seules des sources forum/blog donnent un chiffre, non retenu"
+  },
+  {
+   "what": "Spécification officielle TDIF-1 (Tascam) : brochage, longueur de câble",
+   "searched": "WebSearch TDIF manual ; seulement Wikipedia et revendeurs"
+  },
+  {
+   "what": "Textes AES10 / AES11 / IEC 60958 eux-mêmes (payants ou aes.org 403)",
+   "searched": "Utilisation de l'EBU Tech 3250 et des manuels RME/MUTEC à la place"
+  }
+ ]
+}
