@@ -268,7 +268,8 @@
           "file_type": "pdf",
           "version_or_date": "v11.00",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://cdn.sounddevices.com/wp-content/uploads/2024/12/833-v10.10-User-Guide.pdf",
@@ -277,7 +278,8 @@
           "file_type": "pdf",
           "version_or_date": "v10.10",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -310,7 +312,8 @@
             "key_specs.mic_preamps",
             "key_specs.channels_buses_tracks",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sounddevices.com/product/833/",
@@ -324,7 +327,8 @@
             "key_specs.media",
             "key_specs.power",
             "status"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.sounddevices.com/sound-devices-unveils-the-833-portable-compact-mixer-recorder-at-ibc-2019/",
@@ -334,7 +338,8 @@
           "kind": "manufacturer",
           "covers": [
             "year_introduced"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.trewaudio.com/product/sound-devices-833/",
@@ -344,7 +349,8 @@
           "kind": "retailer",
           "covers": [
             "key_specs.frequency_response"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.adorama.com/sd833.html",
@@ -355,7 +361,8 @@
           "covers": [
             "key_specs.media",
             "key_specs.file_formats"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "DC input is a locking TA4 (not Hirose); the guide warns against Hirose-to-TA4 adapters because the 8-Series can draw up to 5 A. TA5 connectors (headphone+mic, slate mic) have no taxonomy id; mini-xlr-ta4 used as closest. Optional +4 plugin expands to 12 channels / 16 tracks. No French user guide found.",
@@ -369,7 +376,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Mix of XLR, TA3, TA4 power, TA5 headset and LEMO 5-pin timecode makes it a strong location-sound wiring lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "sound-devices-888",
@@ -539,7 +548,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://productiongear.co.uk/products/sound-devices-888-mixer-recorder",
@@ -562,7 +572,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.prosoundweb.com/sound-devices-announces-new-888-portable-production-mixer-recorder-with-dante/",
@@ -576,7 +587,8 @@
             "key_specs.media",
             "key_specs.dante",
             "key_specs.power"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Official Sound Devices pages could not be retrieved this session (403 on sounddevices.com and web-search budget exhausted), so all specs are from two agreeing dealer pages plus ProSoundWeb. The retailer pages give timecode electrical specs only; one web-search summary mentioned a LEMO jack for timecode/word clock but this was not confirmed on a page read, so no timecode connector is listed. TA5 has no taxonomy id.",
@@ -691,7 +703,7 @@
       ],
       "manual_url": "not found",
       "datasheet_url": "not found",
-      "product_page_url": "not found",
+      "product_page_url": "https://www.sounddevices.com/product/mixpre-6-ii/",
       "manual_languages": [],
       "manuals": [],
       "sources": [
@@ -721,7 +733,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://productiongear.co.uk/products/sound-devices-mixpre-6-ii-audio-recorder",
@@ -743,7 +756,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "key_specs.usb_interface"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.fullcompass.com/common/files/39279-MixPre6IISpecificationsSheet.pdf",
@@ -754,10 +768,11 @@
           "covers": [
             "key_specs.frequency_response",
             "key_specs.mic_gain"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
-      "notes": "The official user guide was read from a copy hosted by Boston University (not a manufacturer URL), so it is used as a secondary source and not listed as the official manual; the sounddevices.com download page returned 403. Inputs are XLR/¼-inch combo jacks (xlr3-f id used). Aux input doubles as LTC timecode input.",
+      "notes": "The official user guide was read from a copy hosted by Boston University (not a manufacturer URL), so it is used as a secondary source and not listed as the official manual; the sounddevices.com download page returned 403. Inputs are XLR/¼-inch combo jacks (xlr3-f id used). Aux input doubles as LTC timecode input. [QA 2026-10-22] product page found by the spot-check agent (opened OK); manual link is a third-party university copy, official manual still not found.",
       "conflicts": [
         {
           "field": "key_specs.inputs (aux input impedance)",
@@ -781,7 +796,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Shows timecode carried on a 3.5 mm jack and a recorder doubling as USB interface; simple connector set."
-      }
+      },
+      "product_page_url_status": "blocked"
     },
     {
       "id": "zoom-f8n-pro",
@@ -919,7 +935,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.andertons.co.uk/zoom-f8npro-field-recorder",
@@ -941,7 +958,8 @@
             "key_specs.weight",
             "year_introduced",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://bigbearsound.com/products/zoom-f8n-pro-multitrack-field-recorder",
@@ -952,7 +970,8 @@
           "covers": [
             "key_specs.weight",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "zoomcorp.com could not be searched this session (web-search budget exhausted), so no official manual or product page is linked; specs come from two agreeing UK dealer pages. year_introduced 2022 from Andertons ('available in Q2 2022'). Andertons describes the 1200 g weight as including batteries; Production Gear does not say. The F8n Pro is a 2022 update of the F8/F8n; Zoom documents French manuals for many products but none was located here.",
@@ -1104,7 +1123,8 @@
           "file_type": "pdf",
           "version_or_date": "V3.20",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/NVI_Manual_VI_EN_V320.pdf",
@@ -1113,7 +1133,8 @@
           "file_type": "pdf",
           "version_or_date": "V3.20",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/files/Nagra_vi_man_3.pdf",
@@ -1122,7 +1143,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Brochure_8p_Nagra_VI_8track_eng1.pdf",
@@ -1131,7 +1153,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Nagra_VI_fra_.pdf",
@@ -1140,7 +1163,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1171,7 +1195,8 @@
             "key_specs.dimensions",
             "status",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/files/Nagra_vi_man_3.pdf",
@@ -1186,7 +1211,8 @@
             "key_specs.external_power_out",
             "key_specs.analog_inputs",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/historical-products/",
@@ -1197,7 +1223,8 @@
           "covers": [
             "year_introduced",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Product page states 'Manufactured from 2008 to 2018'. A web-search summary described 8 channels as 4 mic + 2 line + 2 mix; the product page wording (4 mic/line XLR + 2 AES shared with inputs 5+6) is used. Compact Flash slot mapped to sd-card-slot (closest media id). The manual also describes a 3-pole LEMO mains-supply connector, not modelled here.",
@@ -1209,7 +1236,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "XLR4 DC input, Hirose DC outputs for receivers, LEMO 5-pin timecode and AES on XLR: classic location-recorder wiring."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "nagra-4-2",
@@ -1299,7 +1329,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Instruction-Manual-4_2-English.pdf",
@@ -1308,7 +1339,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Bedienungsanleitung-4_2-Deutsch.pdf",
@@ -1317,7 +1349,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Service-Manual-4_2.pdf",
@@ -1326,7 +1359,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "service"
+          "kind": "service",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1344,7 +1378,8 @@
             "key_specs.line_input",
             "key_specs.line_output",
             "key_specs.power"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Instruction-Manual-4_2-English.pdf",
@@ -1364,7 +1399,8 @@
             "key_specs.dimensions",
             "key_specs.tape_speeds",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/historical-products/",
@@ -1375,7 +1411,8 @@
           "covers": [
             "year_introduced",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Listed by Nagra under historical products (1971). Tuchel DIN-type connectors have no taxonomy id; multipin-harting used as closest; banana sockets mapped to binding-post. External supply is negative voltage with positive ground per the manual. Preamplifiers are plug-in modules (QPSE/QPUT/QPAUT types) so mic powering depends on fitted preamps.",
@@ -1391,7 +1428,9 @@
         ],
         "sim_value": "medium",
         "sim_value_reason": "Historic lesson: banana line I/O, Tuchel power, Neopilot sync; less relevant to modern wiring."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "nagra-seven",
@@ -1509,7 +1548,8 @@
           "file_type": "pdf",
           "version_or_date": "V2101",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Manual_Seven_EN_V2101.pdf",
@@ -1518,7 +1558,8 @@
           "file_type": "pdf",
           "version_or_date": "V2101",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Brochure_8p_Nagra_7_eng_.pdf",
@@ -1527,7 +1568,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1555,7 +1597,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/product/nagra-vii-anniversary/",
@@ -1579,7 +1622,8 @@
             "key_specs.weight",
             "key_specs.dimensions",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Manual_Seven_EN_V2101.pdf",
@@ -1590,7 +1634,8 @@
           "covers": [
             "key_specs.timecode",
             "key_specs.power"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nagraaudio.com/historical-products/",
@@ -1600,7 +1645,8 @@
           "kind": "manufacturer",
           "covers": [
             "year_introduced"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The Nagra Seven (2013) appears in Nagra's historical list, while the Nagra VII Anniversary is sold on the Pro Audio page and is stated to be electronically identical, hence status 'current'. Timecode is an option. The page describes the external supply as 15V but not the connector type.",
@@ -1614,7 +1660,10 @@
         ],
         "sim_value": "medium",
         "sim_value_reason": "Good AES-42 digital mic and IP file-transfer example for radio reportage."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "aaton-cantar-x",
@@ -1709,7 +1758,8 @@
             "key_specs.other_io",
             "key_specs.price_at_launch",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Aaton_Digital",
@@ -1721,7 +1771,8 @@
             "year_introduced",
             "status",
             "brand"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.newsshooter.com/2025/04/06/atomos-enters-into-agreement-with-club-cantar-for-ongoing-aaton-support/",
@@ -1732,7 +1783,8 @@
           "covers": [
             "status",
             "year_introduced"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://clubcantar.com/documentation/",
@@ -1742,7 +1794,8 @@
           "kind": "other",
           "covers": [
             "status"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Aaton Digital (Grenoble) was ended by court judgment on 15 Feb 2024; assets went to Atomos, and Club Cantar (founded by Gilles Deshays, with former Aaton engineers) supports the recorders. aaton.com now redirects to an Atomos page (403 when fetched). Club Cantar links a Google Drive documentation folder (subfolders MINI, X3, Dante, Options...) at https://drive.google.com/drive/folders/1lZY0EbyzdEiGcSNeWexR4W8iSW0erliM?usp=sharing, but individual files could not be listed, and it is not a manufacturer source. The Cantar-X was chosen over the X3 / Mini because only the X had a readable spec source; Cantar-X3 (March 2014) and CantarMini (March 2017) dates are from Wikipedia. Mic connector types not stated in the review.",
@@ -1851,7 +1904,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1877,7 +1931,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.digitec.ch/en/s1/product/zoom-h6essential-multitrack-recorder-audio-recorders-42502295",
@@ -1891,7 +1946,8 @@
             "key_specs.media",
             "key_specs.usb",
             "key_specs.capsule"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "Only the German web manual was reachable from search results; English/French versions and the product page could not be located (search budget exhausted, and Zoom URL patterns not guessed). Zoom's help page zoomcorp.com/help/h6essential was cited in a Quick Tour but its URL form was not confirmed in a tool result. No manual gain control: dual A/D converters. Combo inputs mapped to xlr3-f.",
@@ -1903,7 +1959,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Typical school recorder: combo inputs, phantom power and 32-bit float gain-staging lesson."
-      }
+      },
+      "manual_url_status": "ok"
     },
     {
       "id": "tascam-dr-40x",
@@ -1997,7 +2054,8 @@
           "file_type": "pdf",
           "version_or_date": "D01354081D",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/dr-40x/e_dr-40x_rm_vd.pdf",
@@ -2006,7 +2064,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/dr-40x/7l_dr-40x_om_vc_b6.pdf",
@@ -2015,7 +2074,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/wp-content/uploads/downloads/catalogs/tascam/english/us/dr-40x_leaflet.pdf",
@@ -2024,7 +2084,8 @@
           "file_type": "pdf",
           "version_or_date": "2019-04-25",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2051,7 +2112,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/us/product/dr-40x",
@@ -2068,7 +2130,8 @@
             "key_specs.media",
             "key_specs.usb",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://proplugin.com/en/product/tascam-dr-40x",
@@ -2083,7 +2146,8 @@
             "key_specs.channels",
             "key_specs.media",
             "key_specs.usb"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://clemi.site.ac-lille.fr/wp-content/uploads/sites/41/2024/11/TUTO-RADIO_Prise-de-son-Tascam.pdf",
@@ -2093,7 +2157,8 @@
           "kind": "education-official",
           "covers": [
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "error:URLError"
         }
       ],
       "notes": "TASCAM now also lists a DR-40XP; the DR-40X is still listed as current (firmware V1.08). The DR-40X also has built-in adjustable stereo mics (not detailed here). USB micro-B mapped to usb-b; 2.5 mm remote jack mapped to trs-35mm (closest).",
@@ -2134,7 +2199,10 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Simple school recorder: combo XLR/TRS inputs with phantom, 3.5 mm out."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "tascam-portacapture-x8",
@@ -2241,7 +2309,8 @@
           "file_type": "pdf",
           "version_or_date": "ve2",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://manual.tascam.jp/portacapture_x8/rm/en/",
@@ -2250,7 +2319,8 @@
           "file_type": "html",
           "version_or_date": "V2.00",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/portacapture_x8/portacapture_comparison_chart_e.pdf",
@@ -2259,7 +2329,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2282,7 +2353,8 @@
             "key_specs.weight",
             "status",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/portacapture_x8/portacapture_x8_om_efsgiruj_ve2.pdf",
@@ -2295,7 +2367,8 @@
             "key_specs.mic_input",
             "key_specs.inputs",
             "manual_languages"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The owner's manual PDF contains a FRANÇAIS section (checked in the text). Combo inputs mapped to xlr3-f. Bluetooth only via AK-BT1 adapter.",
@@ -2307,7 +2380,10 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Connector set largely duplicates other handhelds."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "tascam-da-6400",
@@ -2453,7 +2529,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/da-6400/e_da-6400_add_vk.pdf",
@@ -2462,7 +2539,8 @@
           "file_type": "pdf",
           "version_or_date": "V3.20",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/wp-content/uploads/downloads/products/old/891/da-6400%2Bda-6400dp_e-spec.pdf",
@@ -2471,7 +2549,8 @@
           "file_type": "pdf",
           "version_or_date": "Dec, 2015",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2496,7 +2575,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/us/product/da-6400",
@@ -2517,7 +2597,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "AC mains inlet (two on the dp version) is not modelled because the inlet type is not stated. RS-422 DB-9 and parallel DB-15 mapped to dsub25 (closest id). French regional page exists (https://www.tascam.eu/fr/product/da-6400) but no French manual was found (tascam.eu returned 403).",
@@ -2551,7 +2632,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "BNC timecode, word/video sync and MADI/Dante card options make it a good digital-transport and sync lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "tascam-ss-cdr250n",
@@ -2710,7 +2794,8 @@
           "file_type": "pdf",
           "version_or_date": "V2.00",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/ss-cdr250n_ss-r250n_rc-ss150/ss-cdr250n_add-v217_ej_va.pdf",
@@ -2719,7 +2804,8 @@
           "file_type": "pdf",
           "version_or_date": "V2.17",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/ss-cdr250n_ss-r250n_rc-ss150/ss-cdr250n_e-spec_om_vb.pdf",
@@ -2728,7 +2814,8 @@
           "file_type": "pdf",
           "version_or_date": "May, 2023",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2753,7 +2840,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tascam.com/us/product/ss-cdr250n",
@@ -2773,7 +2861,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Two manufacturer documents (product page + spec sheet) agree. The 'why' claim about the system design guide is based on the guide being linked from the product page. French regional page https://www.tascam.eu/fr/product/ss-cdr250n exists but returned 403; no French manual found.",
@@ -2787,7 +2876,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Balanced XLR vs unbalanced RCA, AES vs S/PDIF and parallel GPIO remote on one rack unit: strong level/format lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "zoom-f6",
@@ -2886,7 +2978,8 @@
           "file_type": "pdf",
           "version_or_date": "© 2022 ZOOM CORPORATION; Z2I-3741-05",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://zoomcorp.com/media/documents/E_F6_v2.0_Supplementary.pdf",
@@ -2895,7 +2988,8 @@
           "file_type": "pdf",
           "version_or_date": "V2.0",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://zoomcorp.com/media/documents/E_F6_QuickGuide_2.pdf",
@@ -2904,7 +2998,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2929,7 +3024,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://zoomcorp.com/media/documents/E_F6.pdf",
@@ -2952,7 +3048,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://zoomcorp.com/en/us/field-recorders/field-recorders/f6/f6-support/",
@@ -2962,7 +3059,8 @@
           "kind": "manufacturer",
           "covers": [
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The support page lists English documents only (no French manual). The product page mentions both a 12 V adapter (AD-17) and DC 5 V in different places; the manual specs state 'AC adapter (ZOOM AD-17): DC 5V/1A'. Sony L-Series is the NP-F battery family per common usage, but Zoom's wording is kept. The SD card slot is listed under key_specs.media, not as a signal connector. Timecode uses a 3.5 mm jack, mapped to trs-35mm with the proposed ltc-timecode signal.",
@@ -2976,7 +3074,9 @@
         ],
         "sim_value": "medium",
         "sim_value_reason": "6 XLR inputs with phantom and timecode on a 3.5 mm jack: a contrast with LEMO-5 timecode on pro recorders."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "enco-dad",
@@ -3029,7 +3129,8 @@
             "key_specs.newsroom_integration",
             "key_specs.logging_recording",
             "key_specs.multi_site"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.enco.com/industries/radio-automation-software",
@@ -3040,7 +3141,8 @@
           "covers": [
             "year_introduced",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Software product: no physical connectors. The DAD page and ENCO's radio automation page give no AoIP protocol, OS or redundancy details and link no datasheet or manual (documentation goes through ENCO's customer support portal).",
@@ -3052,7 +3154,8 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Software playout; in TekPractice it maps to the generic playout-pc device rather than distinct wiring."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "winmedia-playout",
@@ -3106,7 +3209,8 @@
             "key_specs.scheduler_start_modes",
             "key_specs.video_outputs",
             "key_specs.continuity"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://winmedia.fr/technique/",
@@ -3120,7 +3224,8 @@
             "key_specs.aoip",
             "key_specs.control",
             "key_specs.recommended_hardware"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://winmedia.fr/",
@@ -3132,7 +3237,8 @@
             "technology",
             "key_specs.logging",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://winmedia.fr/faq-et-manuels/",
@@ -3142,7 +3248,8 @@
           "kind": "manufacturer",
           "covers": [
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The old domain winmedia.org now redirects visitors to winmedia.fr. Online manuals exist (manuals.winmedia.support, written without the colon on the page) but are restricted to customers with a maintenance contract, so no manual URL is recorded. The vendor's AoIP list is a compatibility statement on its technical page, not a detailed integration spec; AES67 is not named. 1995 is the company founding year, not the product's.",
@@ -3154,7 +3261,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Lets a lesson contrast WDM sound-card output with AoIP (Dante/Livewire+/RAVENNA) playout and GPI start from the console."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "netia-radio-assist",
@@ -3202,7 +3310,8 @@
           "file_type": "html",
           "version_or_date": "not shown (AirDDO 9 section)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://netia.com/wp-content/uploads/2023/05/diff_fr_web.pdf",
@@ -3211,7 +3320,8 @@
           "file_type": "pdf",
           "version_or_date": "upload path 2023/05",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         },
         {
           "url": "https://netia.com/wp-content/uploads/2023/07/Release-NETIA-FR_8.8.pdf",
@@ -3220,7 +3330,8 @@
           "file_type": "pdf",
           "version_or_date": "PDF modified 2023-07-25",
           "official": true,
-          "kind": "release-notes"
+          "kind": "release-notes",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -3234,7 +3345,8 @@
             "technology",
             "key_specs.modules",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://netia.com/nos-solutions/",
@@ -3248,7 +3360,8 @@
             "key_specs.supervision_logging",
             "key_specs.automation",
             "key_specs.remote_work"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://netia.com/guides-utilisateurs/",
@@ -3259,7 +3372,8 @@
           "covers": [
             "manuals",
             "key_specs.software_versions"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://netia.com/wp-content/uploads/documentations/Doc_fr/AirDDO_9/index.html",
@@ -3270,7 +3384,8 @@
           "covers": [
             "key_specs.console_integration",
             "key_specs.gpi"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "The NETIA site does not name an owner. The release page text says RadioAssist 8.7.1 / AirPlaylist 9.2.1 while the PDF file name says 8.8, an inconsistency on the vendor page. An English user-guides page (https://netia.com/en/user-guides/) exists but was not reviewed. No AoIP, OS or sound-card driver information was found in the pages read.",
@@ -3282,7 +3397,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Fader-start and GPI behaviour between console and playout is a good radio-studio logic lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "rcs-zetta",
@@ -3332,7 +3449,8 @@
             "technology",
             "key_specs.aoip_wheatnet_ip",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://radioinfo.asia/news/wheatstone-and-rcs-enter-unique-dealership-agreement/",
@@ -3342,7 +3460,8 @@
           "kind": "trade-press",
           "covers": [
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Every rcsworks.com URL tried (home, /zetta/, sitemap) returned HTTP 403, and the search budget ran out, so no RCS primary source was read. Status and year are left 'not found'. The RJ45 connector is that of the host PC's network port, not of RCS hardware.",

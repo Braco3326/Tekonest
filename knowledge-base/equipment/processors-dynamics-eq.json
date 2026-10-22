@@ -257,7 +257,8 @@
           "file_type": "pdf",
           "version_or_date": "1.1",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/isaoneuserguide-french0.pdf",
@@ -266,7 +267,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/isa_one_user_guide_v1.3_en.pdf",
@@ -275,7 +277,8 @@
           "file_type": "pdf",
           "version_or_date": "v1.3 (file name); 'Version 1.2' printed on cover",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://userguides.focusrite.com/hc/en-gb/sections/17525669476114-ISA-One-User-Guide",
@@ -284,7 +287,8 @@
           "file_type": "html",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "blocked"
         },
         {
           "url": "https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/ISA%20ADN2-8%20%28French%29.pdf",
@@ -293,7 +297,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -324,7 +329,8 @@
             "key_specs.weight",
             "key_specs.digital_option",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://us.focusrite.com/mic-pres/isa-one/specifications",
@@ -340,7 +346,8 @@
             "key_specs.mic_ein",
             "status",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://downloads.focusrite.com/focusrite/isa/isa-one",
@@ -351,7 +358,8 @@
           "covers": [
             "manuals",
             "manual_languages"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.markertek.com/product/fcsr-ams-isa-one/focusrite-ams-isa-one-classic-mic-preamp-with-independent-di",
@@ -365,7 +373,8 @@
             "key_specs.instrument_gain_range",
             "key_specs.mic_input_impedance",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.thomann.co.uk/focusrite_isa_one_analog_b_stock.htm",
@@ -378,7 +387,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "year_introduced"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.soundonsound.com/node/4907097",
@@ -389,7 +399,8 @@
           "covers": [
             "year_introduced",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Values from Thomann, Markertek and Sound On Sound were read from search-result snippets only. year_introduced 2008 rests on a SOS news item dated 20/1/08 and Thomann's 'available since July 2008'. The English PDF file is named v1.3 but its cover reads 'Version 1.2'. No maximum output level is published.",
@@ -430,7 +441,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Already in catalog; mic/line/DI inputs, balanced TRS insert, DI thru and cue inputs cover gain staging, phantom and insert lessons."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "ams-neve-1073spx",
@@ -543,7 +556,8 @@
           "file_type": "pdf",
           "version_or_date": "Issue 1.2 (© 2026)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -574,7 +588,8 @@
             "key_specs.weight",
             "key_specs.metering",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ams-neve.com/outboard/1073spx/",
@@ -595,7 +610,8 @@
             "key_specs.weight",
             "key_specs.insert_level",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ams-neve.com/product-resource",
@@ -605,7 +621,8 @@
           "kind": "manufacturer",
           "covers": [
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.thomann.co.uk/ams_neve_1073spx_mono_preamp_eq.htm",
@@ -620,7 +637,8 @@
             "key_specs.rack_units",
             "connectors",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Chose the 1073SPX (current single-channel 1U unit). The 1073DPX (2-channel), 1073OPX (8-channel) and 1073SPX-D (with digital option) are also current on ams-neve.com. The external 48 V DC PSU connector type is not specified. Thomann lists it 'available since November 2017', which is a retail date, so year_introduced is left 'not found'. Manual Issue 1.1 found only as a retailer mirror (kmraudio.com) and is not used.",
@@ -647,7 +665,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Separate rear mic/line XLRs, front combi, balanced TRS pre/post-EQ insert and transformer XLR out show signal flow and insert routing well."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "api-512c",
@@ -712,7 +732,8 @@
           "file_type": "pdf",
           "version_or_date": "2019-05-26 (file name)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "blocked"
         },
         {
           "url": "https://apiaudio.com/docs/files/setup512c.pdf",
@@ -721,7 +742,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -745,7 +767,8 @@
             "connectors",
             "manuals",
             "status"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://bigbearsound.com/products/api-512c-discrete-mic-line-pre",
@@ -762,7 +785,8 @@
             "key_specs.clip_level",
             "key_specs.phantom_power",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "Output and a parallel mic input are on the 500-series edge connector (rear), which the rack or lunchbox turns into XLR/TRS. There is no TekPractice connector id for the edge connector, so only front-panel connectors are listed. The official manual PDF uses an embedded font encoding that would not text-extract, so specs come from the product page. One Reverb listing (search snippet) gave line gain as 50 dB versus 45 dB elsewhere. That listing is not used.",
@@ -774,7 +798,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Teaches 500-series format (I/O lives on the rack) plus front XLR/Hi-Z input and pad; fewer distinct connectors on the module itself."
-      }
+      },
+      "manual_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "universal-audio-solo-610",
@@ -886,7 +912,8 @@
             "key_specs.weight",
             "connectors",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://bigbearsound.com/products/universal-audio-solo-610-tube-preamp-di-box",
@@ -905,7 +932,8 @@
             "key_specs.frequency_response",
             "key_specs.dimensions",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.markertek.com/product/ua-solo610/universal-audio-solo610-classic-tube-single-channel-mic-pre-di",
@@ -921,7 +949,8 @@
             "key_specs.max_mic_input_level",
             "key_specs.frequency_response",
             "key_specs.phantom_power"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "No uaudio.com product page or official-host manual appeared in this session's results (web search budget ran out), so the manual text was read from a retailer-hosted copy of UA document 65-00055 Rev B and is marked secondary. Status cannot be confirmed from a manufacturer page. The manual says the 115/230 V configuration is fixed (not auto-sensing).",
@@ -1052,7 +1081,8 @@
           "file_type": "pdf",
           "version_or_date": "Release 2.0, (c)2025 Avalon Design USA, LLC (also (c) 2016 Avalon Industries)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1077,7 +1107,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.avalondesign.com/s/737_Manual.pdf",
@@ -1106,7 +1137,8 @@
             "key_specs.weight",
             "connectors",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Key specs quoted from the manual's spec page; product page values differ in places (see conflicts). XLR genders follow the usual input-female/output-male convention; the manual only says 'balanced XLR'. Rear stereo-link cable for the compressor exists, but its connector type is not stated, so it is left out. Power connector type is not stated. The manual says the Vt-737sp replaced the original Vt-737 (discontinued January 1999) but gives no launch year for the sp. Searching stopped once the session's web-search budget ran out, so no retailer cross-check was done.",
@@ -1189,7 +1221,9 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Three input types (mic/line/front Hi-Z) with an input selector teach source-to-input matching; I/O is plain XLR."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "universal-audio-6176",
@@ -1305,7 +1339,8 @@
           "file_type": "pdf",
           "version_or_date": "PN 65-40634 Rev 01, (c)2009",
           "official": false,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1320,7 +1355,8 @@
             "status",
             "key_specs.pad",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://kmraudio.com/cdn/shop/files/6176_Manual.pdf",
@@ -1355,7 +1391,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.markertek.com/product/ua-6176/universal-audio-6176-vintage-channel-strip-tube-microphone-preamp-and-1176ln-compressor",
@@ -1379,7 +1416,8 @@
             "key_specs.rack_units",
             "key_specs.dimensions",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.uaudio.com/hc/en-us/articles/206007836-6176-Vintage-Channel-Strip",
@@ -1393,7 +1431,8 @@
             "key_specs.hi_z_input_impedance",
             "key_specs.max_mic_input_level",
             "key_specs.preamp_max_output_level"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "UA's help-center page probably links the official manual, but it returned 403. The manual used here is UA's own document (PN 65-40634) hosted by a retailer, so it is marked official:false. The UA product page gives no numeric specs. XLR genders follow the usual input-female/output-male convention; the manual says 'balanced XLR'. In JOIN mode the rear Preamp LINE OUT and Compressor LINE IN are disconnected internally. A notice-facile listing gives different values (+0 dBu max mic in, 600 ohm); it is unofficial and was not used.",
@@ -1405,7 +1444,8 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Split/Join routing (internal link vs separate rear I/O), phantom switch, pad and three input types make a good gain-staging and routing lesson."
-      }
+      },
+      "product_page_url_status": "blocked"
     },
     {
       "id": "rupert-neve-designs-shelford-channel",
@@ -1529,7 +1569,8 @@
           "file_type": "pdf",
           "version_or_date": "775-00027 Rev C4",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://www.adorama.com/col/productManuals/RND5035.pdf",
@@ -1538,7 +1579,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": false,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1568,7 +1610,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://rupertneve.com/s/775-000275035-Manual_RevC4.pdf",
@@ -1587,7 +1630,8 @@
             "key_specs.thd_n",
             "key_specs.hpf",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.adorama.com/col/productManuals/RND5035.pdf",
@@ -1605,7 +1649,8 @@
             "key_specs.compressor",
             "key_specs.power",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "RND's product page links an official user guide only as a relative path (/s/Shelford-Channel-User-Guide-web.pdf). The Adorama-hosted copy was read instead. Rear LINK and side-chain jacks are TS per the user guide. Number of LINK jacks not stated. XLR genders follow the usual input-female/output-male convention.",
@@ -1632,7 +1677,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Rear side-chain send/return, -6dB output, DI THRU and stereo link jacks give rich wiring scenarios beyond plain XLR."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "universal-audio-1176ln",
@@ -1716,7 +1763,8 @@
           "file_type": "pdf",
           "version_or_date": "PN 65-00046, (c)2009",
           "official": false,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1748,7 +1796,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
@@ -1770,7 +1819,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.uaudio.com/hc/en-us/articles/206007816-1176LN-Classic-Limiting-Amplifier",
@@ -1786,7 +1836,8 @@
             "key_specs.rack_units",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://kmraudio.com/cdn/shop/files/6176_Manual.pdf",
@@ -1797,7 +1848,8 @@
           "covers": [
             "year_introduced",
             "technology"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "year_introduced = 2000, the date UA's product page gives for the reissue (the original 1176 was 1967). Ratio of 'all buttons' is not on the reissue page but the 6176 manual describes ALL mode. Barrier strip mapped to euroblock-phoenix (closest screw-terminal id). XLR genders follow convention. UA official manual PDF not found on uaudio.com (help center returned 403).",
@@ -1866,7 +1918,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Line-level insert device; XLR vs barrier-strip alternative inputs ('use only one') is a useful wiring lesson."
-      }
+      },
+      "product_page_url_status": "blocked"
     },
     {
       "id": "universal-audio-teletronix-la-2a",
@@ -1949,7 +2002,8 @@
           "file_type": "pdf",
           "version_or_date": "Revision 1.3, (c)2000",
           "official": false,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -1978,7 +2032,8 @@
             "key_specs.rack_units",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
@@ -1995,7 +2050,8 @@
             "key_specs.release",
             "key_specs.tubes",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.uaudio.com/hc/en-us/articles/206356233-Teletronix-LA-2A-Classic-Leveling-Amplifier",
@@ -2010,7 +2066,8 @@
             "key_specs.output_level",
             "key_specs.noise",
             "key_specs.input_impedance"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://en.wikipedia.org/wiki/LA-2A_Leveling_Amplifier",
@@ -2021,7 +2078,8 @@
           "covers": [
             "year_introduced",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "year_introduced = 1999, the year UA reissued it (Wikipedia); the original Teletronix LA-2A was released commercially in 1962. Specs are from UA's current product page. The 2000 manual (Rev 1.3) gives older figures; see conflicts. The barrier strip is mapped to euroblock-phoenix, the closest screw-terminal id. XLR genders follow the usual convention. A scan of the original 1966 Teletronix manual exists on steampoweredradio.com but was not used.",
@@ -2104,7 +2162,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Barrier-strip impedance taps (600/250 ohm) and stereo link terminal show impedance matching and legacy wiring."
-      }
+      },
+      "product_page_url_status": "blocked"
     },
     {
       "id": "dbx-160a",
@@ -2216,7 +2275,8 @@
           "file_type": "pdf",
           "version_or_date": "18-2040V-E (page listing: updated Apr 2026)",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf",
@@ -2225,7 +2285,8 @@
           "file_type": "pdf",
           "version_or_date": "18-1659-C 01/99",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2252,7 +2313,8 @@
             "key_specs.dimensions",
             "connectors",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf",
@@ -2270,7 +2332,8 @@
             "key_specs.dynamic_range",
             "connectors",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx160a-18-2040v-cpdf",
@@ -2297,7 +2360,8 @@
             "key_specs.rack_units",
             "key_specs.dimensions",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://images.static-thomann.de/pics/atg/atgdata/document/specs/106584.pdf",
@@ -2318,7 +2382,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "dbx product page flags the 160A as Discontinued. The cut sheet and manual state only 'XLR' for the input; female input / male output gender is assumed from the standard convention. The rear panel also has a ground-lift switch and a meter calibration trimmer. No French manual is listed on the dbx product page.",
@@ -2405,7 +2470,10 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Detector (sidechain) input and stereo strapping jack teach sidechain/link wiring; XLR+TRS I/O with separate balanced and unbalanced outputs."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "dbx-166xs",
@@ -2520,7 +2588,8 @@
           "file_type": "pdf",
           "version_or_date": "PN: 5055035-A, © 2015",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
@@ -2529,7 +2598,8 @@
           "file_type": "pdf",
           "version_or_date": "PN: 5055035-C, © 2020",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx166xs-ownermanual-spanishpdf",
@@ -2538,7 +2608,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/166xs_manual_5055035-a_-german-pdf",
@@ -2547,7 +2618,8 @@
           "file_type": "pdf",
           "version_or_date": "5055035-A",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx166xsdatasheetpdf",
@@ -2556,7 +2628,8 @@
           "file_type": "pdf",
           "version_or_date": "Part number: 18-0841",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2591,7 +2664,8 @@
             "key_specs.weight",
             "connectors",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx166xsdatasheetpdf",
@@ -2626,7 +2700,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
@@ -2643,7 +2718,8 @@
             "key_specs.rack_units",
             "key_specs.dimensions",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
@@ -2655,7 +2731,8 @@
             "technology",
             "key_specs.operating_level",
             "key_specs.rack_units"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/news/dbx-introduces-new-s-series-graphic-equalizers-compressors-and-crossovers",
@@ -2665,7 +2742,8 @@
           "kind": "manufacturer",
           "covers": [
             "year_introduced"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.adorama.com/us1670772.html",
@@ -2677,7 +2755,8 @@
             "key_specs.input_impedance",
             "key_specs.max_input_level",
             "key_specs.dimensions"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "Although filed under compressor-limiter, each channel also has a program-adaptive expander/gate, so the unit also illustrates the gate-expander sub_type. year_introduced 2011 = debut of the S-Series 166xs per dbx's 12 January 2011 announcement (earlier 166/166XL models existed). Sidechain jack mapped to proposed id trs-quarter-unbalanced-insert (one TRS carrying send on ring and return on tip).",
@@ -2718,7 +2797,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Sidechain insert on one TRS (tip return / ring send), -10dBV/+4dBu switch and XLR+TRS I/O give strong wiring and level-matching lessons."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "ssl-the-bus-plus",
@@ -2809,7 +2891,8 @@
           "file_type": "pdf",
           "version_or_date": "1.1",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_Quickstart_Guide.pdf",
@@ -2818,7 +2901,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "quick-start"
+          "kind": "quick-start",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -2844,7 +2928,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.solidstatelogic.com/products/the-bus-plus",
@@ -2857,7 +2942,8 @@
             "key_specs.max_input_output_level",
             "key_specs.operating_level",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.frontendaudio.com/copy-of-solid-state-logic-500-series-stereo-buss-compressor/",
@@ -2872,7 +2958,8 @@
             "key_specs.noise",
             "key_specs.dynamic_range",
             "key_specs.rack_units"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.thomann.co.uk/ssl_bus.htm",
@@ -2885,7 +2972,8 @@
             "key_specs.rack_units",
             "key_specs.weight",
             "key_specs.sidechain_hpf"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/solid-state-logic-introduces-the-bus-compressor/",
@@ -2897,7 +2985,8 @@
             "year_introduced",
             "technology",
             "key_specs.rack_units"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Chosen as the current rack G-series-lineage SSL bus compressor. Front End Audio prints the compressor-in frequency response as one line ('±0.01 dB < 2 Hz to > 180 kHz'), merging the in-band tolerance and -3 dB points that the SSL guide lists separately. The SSL PDF downloads ask for EULA consent before access. No French manual found.",
@@ -2924,7 +3013,9 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Stereo insert across a mix bus plus separate external side-chain in/send XLRs: a good lesson on insert wiring and side-chain keying."
-      }
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "empirical-labs-distressor-el8",
@@ -3004,7 +3095,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -3024,7 +3116,8 @@
             "key_specs.power",
             "connectors",
             "status"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.fullcompass.com/prod/184747-empirical-labs-el8-distressor-compressor-single-channel",
@@ -3041,7 +3134,8 @@
             "key_specs.output_impedance_unverified",
             "key_specs.chassis_unverified",
             "key_specs.attack"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.empiricallabs.com/wp-content/uploads/distrecall.pdf",
@@ -3051,7 +3145,8 @@
           "kind": "manufacturer",
           "covers": [
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Weakest-sourced device in this fragment: the Empirical Labs site and manual could not be reached (web-search budget exhausted; Full Compass, Reverb and UA help pages returned 403). Keys suffixed _unverified come from a search-results summary of retailer listings (Full Compass/Reverb/PSSL) whose exact page could not be opened. Thomann data is for the EL8X-S (stereo pair of EL8X units); its listing says 2U for the pair. The unbalanced jack is modelled as ts-quarter (6.3 mm). Mains connector type not confirmed.",
@@ -3141,7 +3236,8 @@
           "file_type": "pdf",
           "version_or_date": "Rev 5.2 ZF 2016",
           "official": false,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -3170,7 +3266,8 @@
             "key_specs.rack_units",
             "key_specs.dimensions",
             "key_specs.shipping_weight"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://r2.gear4music.com/media/20/203949/download_203949.pdf",
@@ -3198,7 +3295,8 @@
             "key_specs.dimensions",
             "key_specs.shipping_weight",
             "key_specs.fuse"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Manley's page says the output tube is 12BH7 in current production since 4/2016; older units and some retailer listings show 7044 or 5687, so tube complement depends on build date. A separate Mastering version exists (stepped controls). The manufacturer page links no manual; the only manual copy found is retailer-hosted, so manual_url is left 'not found'. No French manual found.",
@@ -3210,7 +3308,8 @@
         "proposed_new_signals": [],
         "sim_value": "medium",
         "sim_value_reason": "Classic transformer-balanced 600 Ohm XLR stereo insert; useful for a stereo bus insert lesson but no unusual connectors."
-      }
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "api-550a",
@@ -3263,7 +3362,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "datasheet"
+          "kind": "datasheet",
+          "url_status": "blocked"
         },
         {
           "url": "https://apiaudio.com/wp-content/uploads/2025/03/550A_recall-sheet_2025.pdf",
@@ -3272,7 +3372,8 @@
           "file_type": "pdf",
           "version_or_date": "2025",
           "official": true,
-          "kind": "other"
+          "kind": "other",
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -3300,7 +3401,8 @@
             "key_specs.dimensions",
             "status",
             "manuals"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://apiaudio.com/docs/brochures/br550a.pdf",
@@ -3315,7 +3417,8 @@
             "key_specs.shelf_peak",
             "key_specs.clip_level",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://woodbrass.shop/products/api-audio-550a-3-band-eq-149970",
@@ -3328,7 +3431,8 @@
             "key_specs.boost_cut",
             "key_specs.clip_level",
             "key_specs.format"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "A 500-series module with no front-panel audio connectors. All I/O is on the edge connector and reaches the user through the 500-series rack's XLR/TRS, so connectors[] is empty. The product page says production resumed in 2004 and the design dates from the late '60s, so no exact year is stated. Vintage Digital (search snippet) gives 'Released in 2015'. Not used.",
@@ -3369,7 +3473,10 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "No connectors on the module itself; useful only together with a 500-series rack device."
-      }
+      },
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "dbx-231s",
@@ -3466,7 +3573,8 @@
           "file_type": "pdf",
           "version_or_date": "18-0804V-A",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx215s_131s_231s_ownersmanualpdf--3",
@@ -3475,7 +3583,8 @@
           "file_type": "pdf",
           "version_or_date": "18-0804V-A",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbxsilverserieseqs-ownersmanual-spanishpdf--3",
@@ -3484,7 +3593,8 @@
           "file_type": "pdf",
           "version_or_date": "not shown",
           "official": true,
-          "kind": "user-manual"
+          "kind": "user-manual",
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx231sdatasheetpdf",
@@ -3493,7 +3603,8 @@
           "file_type": "pdf",
           "version_or_date": "Part number: 18-0845",
           "official": true,
-          "kind": "spec-sheet"
+          "kind": "spec-sheet",
+          "url_status": "ok"
         }
       ],
       "sources": [
@@ -3523,7 +3634,8 @@
             "key_specs.weight",
             "connectors",
             "manuals"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx231sdatasheetpdf",
@@ -3553,7 +3665,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/product_documents/dbx215s_131s_231s_ownersmanualpdf--3",
@@ -3564,7 +3677,8 @@
           "covers": [
             "key_specs.channels",
             "key_specs.nominal_level"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://dbxpro.com/en/news/dbx-introduces-new-s-series-graphic-equalizers-compressors-and-crossovers",
@@ -3576,7 +3690,8 @@
             "year_introduced",
             "key_specs.channels",
             "key_specs.boost_cut_range"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.pbtech.com/product/AUDDBX1002/DBX-231S-DUAL-31-BAND-GRAPHIC-EQ",
@@ -3589,7 +3704,8 @@
             "key_specs.output_impedance",
             "key_specs.bandwidth",
             "key_specs.dynamic_range"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "notes": "Height 3.5 in corresponds to a 2U rack unit (rack-unit count not stated explicitly in sources read). year_introduced 2011 = debut of the S-Series 231s per dbx's 12 January 2011 announcement; the earlier non-'s' 231 existed before. The 231s FAQ says dynamic range improved from 108dB (previous 2 Series) to 112dB.",
@@ -3616,7 +3732,10 @@
         "proposed_new_signals": [],
         "sim_value": "high",
         "sim_value_reason": "Classic insert between console matrix/aux and amps for FOH or wedges; XLR/TRS balanced line I/O wiring lesson."
-      }
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "pulse-techniques-eqp-1a",
@@ -3679,7 +3798,8 @@
             "key_specs.tubes",
             "key_specs.rack_units",
             "year_introduced"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://pulsetechniques.com/products/eqp-1a",
@@ -3694,7 +3814,8 @@
             "key_specs.output_impedance",
             "key_specs.tubes",
             "key_specs.rack_units"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://wrdtunes.com/products/pultec-eqp-1a-program-equalizer",
@@ -3715,7 +3836,8 @@
             "key_specs.amplifier_frequency_response",
             "key_specs.tubes",
             "key_specs.rack_units"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Pultec_EQP-1",
@@ -3727,7 +3849,8 @@
             "year_introduced",
             "technology",
             "why_it_is_a_classic"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "year_introduced is the original 1961 EQP-1A launch. A manufacturer-page search snippet said the 3U EQP-1A returned to production in 2014 after the 2U EQP-1A3; Wikipedia dates the Pulse Techniques revival to 2000 onward (EQP-1A3 first). Weight and power were seen only in an unattributed search summary (6.8 kg; 117 V AC, 50/60 Hz, 25W) and are omitted from key_specs. Connectors (rear I/O type) not stated on any page read; Wikipedia lists one input and one output only. No official manual found.",
@@ -3754,7 +3877,8 @@
         "proposed_new_signals": [],
         "sim_value": "low",
         "sim_value_reason": "Mono line-level in/out only and connector type unconfirmed; value is in EQ/gain-staging theory rather than wiring."
-      }
+      },
+      "product_page_url_status": "blocked"
     },
     {
       "id": "drawmer-ds201",
@@ -3853,7 +3977,8 @@
             "key_specs.dimensions",
             "key_specs.weight",
             "connectors"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://markertek.com/product/drwm-ds201/drawmer-ds201-gate-variable-speed-frequency-2-ch",
@@ -3871,7 +3996,8 @@
             "key_specs.power",
             "key_specs.dimensions",
             "key_specs.weight"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "notes": "Manual content is Drawmer's official operator's manual, but it was only found on a retailer's server (Gear4music), so it is not listed as an official manual URL. drawmer.com product/download page could not be located (web search budget exhausted). Markertek says 'This item is no longer available' (retailer-specific; discontinuation not confirmed by Drawmer), hence status 'not found'. XLR gender assumed by convention (manual says 'balanced XLRs'); key inputs are ¼\" mono jacks. Mains inlet type not stated in the manual (so omitted from connectors).",

@@ -27,4 +27,24 @@ Times are local (Europe/Paris). Run started 2026-10-22.
 - `3d-models.json/.md`: 80 link-only candidates with licences read from the Sketchfab API, the Poly Haven API and Poly Pizza pages. 11 are marked "no", including NC/ND/Standard licences, L-Acoustics CAD with no stated terms, and a CC-BY copy of a real broadcaster's set.
 - `3d-models/`: 20 glb files (16 MB; 15 CC0, 5 CC-BY 3.0) with CREDITS.md. A Poly Pizza CC-BY server rack was downloaded, then deleted because its textures carried OVH and Tripp Lite logos. The orchestrator re-checked two CC-BY licences on poly.pizza.
 
+
+## Gap-fill pass (commits `e06b1c8`, `45e981d`)
+- Playout systems added (ENCO DAD, WinMedia, Netia Radio-Assist, RCS Zetta), along with Zoom F6 and the class-AB QSC RMX 850/1450. The class-A sub-type is still empty: no pro product page explicitly states class A.
+- 15 reference mics added (DPA 4011/4060/4088, Rode NT1/NT5/NT-SF1, AT4040/4050, Shure KSM32C/Beta 91A/MV7+, AKG C451 B, Sennheiser MKE 2/MD 441-U, Behringer ECM8000). Total: 357 devices.
+
+## Phase 4: fundamentals (commit `7e98335`)
+- 19 files, about 180 numbered sources. The BTS savoir codes could not be verified: `sti.eduscol.education.fr` and `eduscol.education.fr` reset every connection from this PC (WebFetch, PowerShell and Python all failed). All mappings are `verified: false`.
+- Two possible errors in existing `learning-platform` course content were found and logged in OPEN_QUESTIONS #10–11. They were not edited.
+
+## Phase 5: learning resources (commit `3d5c692`)
+- 56 entries. Audinate, AES, Avid, Allen & Heath, Yamaha and ENS Louis-Lumière returned 403, so they are not included and are logged.
+
+## Phase 7: QA
+- `validate.py`: 0 errors, 20 warnings (no primary source).
+- `check_urls.py`: the first run misreported URLs containing spaces as errors (a checker bug, fixed by percent-encoding as browsers do) and treated prose in not_found_logs as URLs (now classed `not-a-url`). Final result: 1,508 ok, 121 blocked, 8 dead, 5 server/connection errors.
+- Independent spot-check of 36 devices: 175 fields, 170 match, no contradicted spec. 1 fail (`lawo-ruby` status) was fixed, and 4 minor fixes were applied with `[QA 2026-10-22]` notes. 1 dead `manual_url` (Sennheiser e 906) was repointed.
+
+## Phase 8: delivery
+- README, OPEN_QUESTIONS, QUALITY_REPORT written. One row added to the root README (diff checked: +1 line).
+
 - Process note: the brainstorming skill normally asks for approval before implementation. Oscar asked for an unattended run, so the decisions are recorded in `docs/DESIGN.md` and the open points in `OPEN_QUESTIONS.md`.

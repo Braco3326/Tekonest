@@ -4,17 +4,61 @@
   "generated": "2026-10-22",
   "selection_rationale": "Closed and open studio headphones that are standard in French studios, schools and broadcast (beyerdynamic DT 770/990/1990, Sennheiser HD 25/HD 600, Sony MDR-7506, Neumann NDH 20, ATH-M50x), two broadcast headsets with documented XLR3/XLR4/XLR5 cable options (beyerdynamic DT 297 PV, Sennheiser HMD 26), three in-ear monitors used with wireless IEM systems (Shure SE215/SE846, Sennheiser IE 100 PRO), and three headphone amplifiers from budget distribution to high-end (Behringer HA400, PreSonus HP4, SPL Phonitor x). IE 100 PRO replaced IE 400 PRO, which no longer appears in Sennheiser's IE family; AKG K240 MKII was dropped because no source could be read.",
   "not_found_log": [
-    { "device_id": "akg-k240-mkii", "what": "Whole device (specs, manual)", "searched": "akg.com product page returned 503; Thomann URL 404; search budget exhausted" },
-    { "device_id": "sennheiser-ie-400-pro", "what": "Product page (candidate swapped for IE 100 PRO)", "searched": "sennheiser.com IE series family page lists only IE 100 PRO, IE 100 PRO Wireless, IE 4; search budget exhausted" },
-    { "device_id": "sennheiser-hd-600", "what": "Official manual / datasheet PDF and second source", "searched": "us.sennheiser-hearing.com product page (download section lists languages but no links); Thomann URL 404; search budget exhausted" },
-    { "device_id": "neumann-ndh-20", "what": "Operating manual and datasheet", "searched": "neumann.com product page and file finder (JavaScript, no PDF links exposed)" },
-    { "device_id": "sony-mdr-7506", "what": "Readable manufacturer page and official operating instructions", "searched": "electronics.sony.com (blocked), pro.sony PDFs (403), sony.com.tw / sony.co.th spec pages (403); one search" },
-    { "device_id": "audio-technica-ath-m50x", "what": "Readable manufacturer page and official manual", "searched": "audio-technica.com/ath-m50x and /en-us/ath-m50x (403); scan.co.uk (403)" },
-    { "device_id": "behringer-ha400", "what": "Official manual / product page on behringer.com", "searched": "One search found only retailer-hosted copies (Gear4music, Bax-shop FR PDFs, manualslib); no behringer.com URL found; search budget exhausted" },
-    { "device_id": "presonus-hp4", "what": "French owner's manual", "searched": "presonus.com product page lists EN owner's manual and multilingual quick start only" },
-    { "device_id": "spl-phonitor-x", "what": "French owner's manual", "searched": "spl.audio product page lists EN and DE manuals only" },
-    { "device_id": "shure-se215", "what": "Standalone English spec sheet", "searched": "shure.com product page, pubs.shure.com guides; one search found only a Japanese SE215 Special Edition spec sheet" },
-    { "device_id": "all", "what": "year_introduced for every device", "searched": "no source read stated an introduction year; search budget exhausted" }
+    {
+      "device_id": "akg-k240-mkii",
+      "what": "Whole device (specs, manual)",
+      "searched": "akg.com product page returned 503; Thomann URL 404; search budget exhausted"
+    },
+    {
+      "device_id": "sennheiser-ie-400-pro",
+      "what": "Product page (candidate swapped for IE 100 PRO)",
+      "searched": "sennheiser.com IE series family page lists only IE 100 PRO, IE 100 PRO Wireless, IE 4; search budget exhausted"
+    },
+    {
+      "device_id": "sennheiser-hd-600",
+      "what": "Official manual / datasheet PDF and second source",
+      "searched": "us.sennheiser-hearing.com product page (download section lists languages but no links); Thomann URL 404; search budget exhausted"
+    },
+    {
+      "device_id": "neumann-ndh-20",
+      "what": "Operating manual and datasheet",
+      "searched": "neumann.com product page and file finder (JavaScript, no PDF links exposed)"
+    },
+    {
+      "device_id": "sony-mdr-7506",
+      "what": "Readable manufacturer page and official operating instructions",
+      "searched": "electronics.sony.com (blocked), pro.sony PDFs (403), sony.com.tw / sony.co.th spec pages (403); one search"
+    },
+    {
+      "device_id": "audio-technica-ath-m50x",
+      "what": "Readable manufacturer page and official manual",
+      "searched": "audio-technica.com/ath-m50x and /en-us/ath-m50x (403); scan.co.uk (403)"
+    },
+    {
+      "device_id": "behringer-ha400",
+      "what": "Official manual / product page on behringer.com",
+      "searched": "One search found only retailer-hosted copies (Gear4music, Bax-shop FR PDFs, manualslib); no behringer.com URL found; search budget exhausted"
+    },
+    {
+      "device_id": "presonus-hp4",
+      "what": "French owner's manual",
+      "searched": "presonus.com product page lists EN owner's manual and multilingual quick start only"
+    },
+    {
+      "device_id": "spl-phonitor-x",
+      "what": "French owner's manual",
+      "searched": "spl.audio product page lists EN and DE manuals only"
+    },
+    {
+      "device_id": "shure-se215",
+      "what": "Standalone English spec sheet",
+      "searched": "shure.com product page, pubs.shure.com guides; one search found only a Japanese SE215 Special Edition spec sheet"
+    },
+    {
+      "device_id": "all",
+      "what": "year_introduced for every device",
+      "searched": "no source read stated an introduction year; search budget exhausted"
+    }
   ],
   "devices": [
     {
@@ -27,7 +71,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A long-running closed studio headphone offered in three impedances, with all parts replaceable according to beyerdynamic. Common for tracking and monitoring where isolation matters.",
-      "typical_uses": ["tracking / recording", "studio monitoring", "live-room cue mixes", "broadcast and post monitoring"],
+      "typical_uses": [
+        "tracking / recording",
+        "studio monitoring",
+        "live-room cue mixes",
+        "broadcast and post monitoring"
+      ],
       "key_specs": {
         "driver": "Dynamic",
         "operating_principle": "Closed",
@@ -44,32 +93,156 @@
         "connector": "Gold-plated 3.5 mm mini stereo jack with 1/4\" (6.35 mm) adapter"
       },
       "connectors": [
-        { "connector": "trs-35mm", "role": "headphone input plug (fixed single-sided cable)", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "6.35 mm screw-on adapter", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-35mm",
+          "role": "headphone input plug (fixed single-sided cable)",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "6.35 mm screw-on adapter",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "https://api.beyerdynamic.de/amfile/file/download/file/1672/",
       "datasheet_url": "https://api.beyerdynamic.de/amfile/file/download/file/865/",
       "product_page_url": "https://europe.beyerdynamic.com/p/dt-770-pro",
-      "manual_languages": ["en", "de", "fr", "es", "it", "sv", "nl", "ru", "ko", "ja", "zh"],
+      "manual_languages": [
+        "en",
+        "de",
+        "fr",
+        "es",
+        "it",
+        "sv",
+        "nl",
+        "ru",
+        "ko",
+        "ja",
+        "zh"
+      ],
       "manuals": [
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/1672/", "title": "DT 770 PRO manual (multilingual, filename lists EN/DE/FR/ES/IT/SV/NL/RU/KO/JA/ZH)", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/865/", "title": "DT 770 PRO – Dynamic Headphones product sheet", "language": "en", "file_type": "pdf", "version_or_date": "08.22", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/1672/",
+          "title": "DT 770 PRO manual (multilingual, filename lists EN/DE/FR/ES/IT/SV/NL/RU/KO/JA/ZH)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/865/",
+          "title": "DT 770 PRO – Dynamic Headphones product sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "08.22",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/865/", "publisher": "beyerdynamic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.driver", "key_specs.operating_principle", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.thd", "key_specs.power_handling", "key_specs.ambient_noise_isolation", "key_specs.weight", "key_specs.cable", "key_specs.connector", "connectors"] },
-        { "url": "https://europe.beyerdynamic.com/p/dt-770-pro", "publisher": "beyerdynamic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.operating_principle", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.headband_pressure", "key_specs.weight", "key_specs.connector", "connectors", "manuals"] },
-        { "url": "https://www.thomann.co.uk/beyerdynamic_dt770_pro80_ohm.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.operating_principle", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.cable", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/865/",
+          "publisher": "beyerdynamic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.driver",
+            "key_specs.operating_principle",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.thd",
+            "key_specs.power_handling",
+            "key_specs.ambient_noise_isolation",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://europe.beyerdynamic.com/p/dt-770-pro",
+          "publisher": "beyerdynamic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.operating_principle",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.headband_pressure",
+            "key_specs.weight",
+            "key_specs.connector",
+            "connectors",
+            "manuals"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomann.co.uk/beyerdynamic_dt770_pro80_ohm.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.operating_principle",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.cable",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Specs per datasheet are stated acc. to EN 60268-7. Weight differs between sources (see conflicts); the datasheet does not say whether its weights include the cable.",
       "conflicts": [
-        { "field": "key_specs.weight", "values": [
-          { "value": "345 g (80 Ω version)", "source_url": "https://api.beyerdynamic.de/amfile/file/download/file/865/" },
-          { "value": "375 grams, including the cable", "source_url": "https://europe.beyerdynamic.com/p/dt-770-pro" },
-          { "value": "Weight with cable: 346 g / without cable: 284 g (80 Ω)", "source_url": "https://www.thomann.co.uk/beyerdynamic_dt770_pro80_ohm.htm" }
-        ], "note": "Different measurement basis (with/without cable) not always stated." }
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "345 g (80 Ω version)",
+              "source_url": "https://api.beyerdynamic.de/amfile/file/download/file/865/"
+            },
+            {
+              "value": "375 grams, including the cable",
+              "source_url": "https://europe.beyerdynamic.com/p/dt-770-pro"
+            },
+            {
+              "value": "Weight with cable: 346 g / without cable: 284 g (80 Ω)",
+              "source_url": "https://www.thomann.co.uk/beyerdynamic_dt770_pro80_ohm.htm"
+            }
+          ],
+          "note": "Different measurement basis (with/without cable) not always stated."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Good lesson on headphone impedance choice (32/80/250 Ω) vs. amplifier output; connector side is a plain 3.5 mm + 6.35 mm adapter." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Good lesson on headphone impedance choice (32/80/250 Ω) vs. amplifier output; connector side is a plain 3.5 mm + 6.35 mm adapter."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "beyerdynamic-dt-990-pro",
@@ -81,7 +254,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "The open-back sibling of the DT 770 PRO, sharing its parts philosophy; widely used for mixing and critical listening where isolation is not needed.",
-      "typical_uses": ["mixing", "editing", "critical listening", "mastering reference"],
+      "typical_uses": [
+        "mixing",
+        "editing",
+        "critical listening",
+        "mastering reference"
+      ],
       "key_specs": {
         "driver": "Dynamic",
         "operating_principle": "Open",
@@ -97,32 +275,154 @@
         "connector": "Gold-plated 3.5 mm mini stereo jack with 1/4\" (6.35 mm) adapter"
       },
       "connectors": [
-        { "connector": "trs-35mm", "role": "headphone input plug (fixed cable)", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "6.35 mm adapter", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-35mm",
+          "role": "headphone input plug (fixed cable)",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "6.35 mm adapter",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "https://api.beyerdynamic.de/amfile/file/download/file/994/",
       "datasheet_url": "https://api.beyerdynamic.de/amfile/file/download/file/862/",
       "product_page_url": "https://europe.beyerdynamic.com/p/dt-990-pro",
-      "manual_languages": ["en", "de", "fr", "es", "it", "sv", "nl", "ru", "ko", "ja", "zh"],
+      "manual_languages": [
+        "en",
+        "de",
+        "fr",
+        "es",
+        "it",
+        "sv",
+        "nl",
+        "ru",
+        "ko",
+        "ja",
+        "zh"
+      ],
       "manuals": [
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/994/", "title": "MAN_DT-990-PRO_EN-DE-FR-ES-IT-SV-NL-RU-KO-JA-ZH", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/862/", "title": "DAT_DT-990-PRO_EN (product datasheet)", "language": "en", "file_type": "pdf", "version_or_date": "08.22", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/994/",
+          "title": "MAN_DT-990-PRO_EN-DE-FR-ES-IT-SV-NL-RU-KO-JA-ZH",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/862/",
+          "title": "DAT_DT-990-PRO_EN (product datasheet)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "08.22",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/862/", "publisher": "beyerdynamic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.driver", "key_specs.operating_principle", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.thd", "key_specs.power_handling", "key_specs.headband_pressure", "key_specs.weight", "key_specs.cable", "key_specs.connector", "connectors"] },
-        { "url": "https://europe.beyerdynamic.com/p/dt-990-pro", "publisher": "beyerdynamic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.operating_principle", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.connector", "connectors", "manuals"] },
-        { "url": "https://www.thomann.co.uk/beyerdynamic_dt990pro.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.operating_principle", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.cable", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/862/",
+          "publisher": "beyerdynamic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.driver",
+            "key_specs.operating_principle",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.thd",
+            "key_specs.power_handling",
+            "key_specs.headband_pressure",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://europe.beyerdynamic.com/p/dt-990-pro",
+          "publisher": "beyerdynamic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.operating_principle",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.connector",
+            "connectors",
+            "manuals"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomann.co.uk/beyerdynamic_dt990pro.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.operating_principle",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.cable",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Thomann page documents the 250 Ω version. The manufacturer page itself is inconsistent on weight (250 g without cable in the spec table vs 375 g with cable in the text).",
       "conflicts": [
-        { "field": "key_specs.weight", "values": [
-          { "value": "340 g (80 Ω); 370 g (250 Ω)", "source_url": "https://api.beyerdynamic.de/amfile/file/download/file/862/" },
-          { "value": "250 g without cable", "source_url": "https://europe.beyerdynamic.com/p/dt-990-pro" },
-          { "value": "364 g (including cable) / 271 g (without cable), 250 Ω", "source_url": "https://www.thomann.co.uk/beyerdynamic_dt990pro.htm" }
-        ], "note": "Cable inclusion not stated on the datasheet." }
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "340 g (80 Ω); 370 g (250 Ω)",
+              "source_url": "https://api.beyerdynamic.de/amfile/file/download/file/862/"
+            },
+            {
+              "value": "250 g without cable",
+              "source_url": "https://europe.beyerdynamic.com/p/dt-990-pro"
+            },
+            {
+              "value": "364 g (including cable) / 271 g (without cable), 250 Ω",
+              "source_url": "https://www.thomann.co.uk/beyerdynamic_dt990pro.htm"
+            }
+          ],
+          "note": "Cable inclusion not stated on the datasheet."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Same connection as DT 770 PRO; mainly useful for an open vs closed (bleed into mic) lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Same connection as DT 770 PRO; mainly useful for an open vs closed (bleed into mic) lesson."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "beyerdynamic-dt-1990-pro-mkii",
@@ -134,7 +434,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "beyerdynamic's open reference headphone for mixing and mastering, now in a second generation; it introduces the detachable mini-XLR cable and two sets of ear pads with different voicings.",
-      "typical_uses": ["mixing", "mastering", "critical listening"],
+      "typical_uses": [
+        "mixing",
+        "mastering",
+        "critical listening"
+      ],
       "key_specs": {
         "driver": "Dynamic, TESLA.45, 45 mm (product page)",
         "operating_principle": "Open",
@@ -151,31 +455,140 @@
         "ear_pads": "Two sets included: 'Producing' and 'Mixing & Mastering' velours"
       },
       "connectors": [
-        { "connector": "mini-xlr-ta3", "role": "detachable cable socket on headphone", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-35mm", "role": "cable plug to amplifier", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "6.35 mm adapter", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "mini-xlr-ta3",
+          "role": "detachable cable socket on headphone",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "cable plug to amplifier",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "6.35 mm adapter",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "https://api.beyerdynamic.de/amfile/file/download/file/1783/",
       "datasheet_url": "https://api.beyerdynamic.de/amfile/file/download/file/1787/",
       "product_page_url": "https://europe.beyerdynamic.com/p/dt-1990-pro",
-      "manual_languages": ["en", "de", "fr", "es", "it", "sv", "ja", "zh"],
+      "manual_languages": [
+        "en",
+        "de",
+        "fr",
+        "es",
+        "it",
+        "sv",
+        "ja",
+        "zh"
+      ],
       "manuals": [
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/1783/", "title": "MAN_DT1990PROMKII_EN-DE-FR-ES-IT-SV-JA-ZH", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/1787/", "title": "DAT_DT1990PROMKII_EN (technical sheet)", "language": "en", "file_type": "pdf", "version_or_date": "PDF metadata 2024-10-24", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/1783/",
+          "title": "MAN_DT1990PROMKII_EN-DE-FR-ES-IT-SV-JA-ZH",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/1787/",
+          "title": "DAT_DT1990PROMKII_EN (technical sheet)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "PDF metadata 2024-10-24",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/1787/", "publisher": "beyerdynamic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.operating_principle", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.thd", "key_specs.power_handling", "key_specs.headband_pressure", "key_specs.weight", "key_specs.cable", "key_specs.connector", "connectors"] },
-        { "url": "https://europe.beyerdynamic.com/p/dt-1990-pro", "publisher": "beyerdynamic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "technology", "key_specs.driver", "key_specs.operating_principle", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.weight", "key_specs.cable", "key_specs.connector", "key_specs.ear_pads", "connectors", "manuals"] }
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/1787/",
+          "publisher": "beyerdynamic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.operating_principle",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.thd",
+            "key_specs.power_handling",
+            "key_specs.headband_pressure",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://europe.beyerdynamic.com/p/dt-1990-pro",
+          "publisher": "beyerdynamic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "technology",
+            "key_specs.driver",
+            "key_specs.operating_principle",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector",
+            "key_specs.ear_pads",
+            "connectors",
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The URL /p/dt-1990-pro now shows the MKII (second generation); the page says the original DT 1990 PRO is its predecessor. Two-source check is two manufacturer documents only; no retailer page was read. The product page noted online ordering was unavailable on the access date.",
       "conflicts": [
-        { "field": "key_specs.connector", "values": [
-          { "value": "Cable end: 3.5 mm mini stereo jack + 1/4\" (6.35 mm) adapter", "source_url": "https://api.beyerdynamic.de/amfile/file/download/file/1787/" },
-          { "value": "\"3-pin XLR plug, 6.35 mm (1/4\") stereo jack plug, 3 m straight cable & 5 m coiled cable\"", "source_url": "https://europe.beyerdynamic.com/p/dt-1990-pro" }
-        ], "note": "Product page wording likely refers to the mini-XLR at the headphone end and the jack at the amp end; the datasheet is more specific." }
+        {
+          "field": "key_specs.connector",
+          "values": [
+            {
+              "value": "Cable end: 3.5 mm mini stereo jack + 1/4\" (6.35 mm) adapter",
+              "source_url": "https://api.beyerdynamic.de/amfile/file/download/file/1787/"
+            },
+            {
+              "value": "\"3-pin XLR plug, 6.35 mm (1/4\") stereo jack plug, 3 m straight cable & 5 m coiled cable\"",
+              "source_url": "https://europe.beyerdynamic.com/p/dt-1990-pro"
+            }
+          ],
+          "note": "Product page wording likely refers to the mini-XLR at the headphone end and the jack at the amp end; the datasheet is more specific."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Detachable mini-XLR (TA3) headphone cable is a distinctive connector worth teaching." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Detachable mini-XLR (TA3) headphone cable is a distinctive connector worth teaching."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "beyerdynamic-dt-297-pv-mkii",
@@ -187,7 +600,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A broadcast headset family (DT 287 single-ear / DT 297 double-ear) that beyerdynamic says was developed for professional broadcasting; its microphone response follows IRT recommendations according to the datasheet.",
-      "typical_uses": ["radio and TV commentary", "sports commentary", "intercom / talkback with on-air mic", "OB vans"],
+      "typical_uses": [
+        "radio and TV commentary",
+        "sports commentary",
+        "intercom / talkback with on-air mic",
+        "OB vans"
+      ],
       "key_specs": {
         "headphone_driver": "Dynamic",
         "operating_principle": "Closed",
@@ -209,28 +627,145 @@
         "variants": "DT 297 V.11 (integrated mic preamp); DT 287 single-sided; LTD versions with limiter"
       },
       "connectors": [
-        { "connector": "xlr3-m", "role": "microphone output (K 190.40 cable)", "dir": "out", "signal": "mic-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "headphone input (K 190.40 cable)", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "xlr4", "role": "combined mic/headphone (K 190.28 cable, 4-pin XLR socket)", "dir": "bidir", "signal": "mic-level", "count": "optional" },
-        { "connector": "xlr5-m", "role": "combined mic/headphone (K 190.41 cable, 5-pin XLR plug)", "dir": "bidir", "signal": "mic-level", "count": "optional" }
+        {
+          "connector": "xlr3-m",
+          "role": "microphone output (K 190.40 cable)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone input (K 190.40 cable)",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr4",
+          "role": "combined mic/headphone (K 190.28 cable, 4-pin XLR socket)",
+          "dir": "bidir",
+          "signal": "mic-level",
+          "count": "optional"
+        },
+        {
+          "connector": "xlr5-m",
+          "role": "combined mic/headphone (K 190.41 cable, 5-pin XLR plug)",
+          "dir": "bidir",
+          "signal": "mic-level",
+          "count": "optional"
+        }
       ],
-      "signal_types": ["mic-level", "headphone-level", "phantom-48v"],
+      "signal_types": [
+        "mic-level",
+        "headphone-level",
+        "phantom-48v"
+      ],
       "manual_url": "https://api.beyerdynamic.de/amfile/file/download/file/637/",
       "datasheet_url": "https://api.beyerdynamic.de/amfile/file/download/file/367/",
       "product_page_url": "https://europe.beyerdynamic.com/p/dt-297-pv",
-      "manual_languages": ["de", "en", "fr"],
+      "manual_languages": [
+        "de",
+        "en",
+        "fr"
+      ],
       "manuals": [
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/637/", "title": "MAN_DT250_28x_29x_DE-EN-FR (operating instructions DT 250 / DT 28x / DT 29x)", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/367/", "title": "DT 287 / DT 297 Headsets with Condenser Microphone (EN datasheet)", "language": "en", "file_type": "pdf", "version_or_date": "E6/DT 287/297 (07.10)", "official": true, "kind": "datasheet" },
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/9/", "title": "DAT_DT287-297_DE (German datasheet)", "language": "de", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "datasheet" }
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/637/",
+          "title": "MAN_DT250_28x_29x_DE-EN-FR (operating instructions DT 250 / DT 28x / DT 29x)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/367/",
+          "title": "DT 287 / DT 297 Headsets with Condenser Microphone (EN datasheet)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "E6/DT 287/297 (07.10)",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/9/",
+          "title": "DAT_DT287-297_DE (German datasheet)",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://api.beyerdynamic.de/amfile/file/download/file/367/", "publisher": "beyerdynamic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.headphone_driver", "key_specs.operating_principle", "key_specs.headphone_frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.thd", "key_specs.ambient_noise_insulation", "key_specs.headband_pressure", "key_specs.weight", "key_specs.mic_type", "key_specs.mic_polar_pattern", "key_specs.mic_frequency_response", "key_specs.mic_sensitivity", "key_specs.mic_max_spl", "key_specs.mic_impedance", "key_specs.phantom_power", "key_specs.cable_options", "key_specs.variants", "connectors"] },
-        { "url": "https://europe.beyerdynamic.com/p/dt-297-pv", "publisher": "beyerdynamic", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.operating_principle", "key_specs.headphone_frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.weight", "key_specs.mic_type", "key_specs.mic_polar_pattern", "key_specs.cable_options", "manuals"] }
+        {
+          "url": "https://api.beyerdynamic.de/amfile/file/download/file/367/",
+          "publisher": "beyerdynamic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.headphone_driver",
+            "key_specs.operating_principle",
+            "key_specs.headphone_frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.thd",
+            "key_specs.ambient_noise_insulation",
+            "key_specs.headband_pressure",
+            "key_specs.weight",
+            "key_specs.mic_type",
+            "key_specs.mic_polar_pattern",
+            "key_specs.mic_frequency_response",
+            "key_specs.mic_sensitivity",
+            "key_specs.mic_max_spl",
+            "key_specs.mic_impedance",
+            "key_specs.phantom_power",
+            "key_specs.cable_options",
+            "key_specs.variants",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://europe.beyerdynamic.com/p/dt-297-pv",
+          "publisher": "beyerdynamic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.operating_principle",
+            "key_specs.headphone_frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.weight",
+            "key_specs.mic_type",
+            "key_specs.mic_polar_pattern",
+            "key_specs.cable_options",
+            "manuals"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Cable connector pinouts are shown only as diagrams in the datasheet (not extracted). 'xlr4' used for the K 190.28 4-pin XLR socket (female); taxonomy has no gender-specific xlr4 id. The product page was marked 'SOLD OUT' on the access date. Datasheet dated 07.10, so specs may predate later production changes.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Teaches headset split cable (XLR3 mic out + 6.35 mm phones in), phantom-powered electret mic, and XLR4/XLR5 headset termination variants." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Teaches headset split cable (XLR3 mic out + 6.35 mm phones in), phantom-powered electret mic, and XLR4/XLR5 headset termination variants."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sennheiser-hd-25",
@@ -242,7 +777,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Light on-ear closed headphone that Sennheiser positions for ENG, sound reinforcement, studio monitoring and DJ use; the rotatable capsule allows single-ear listening. A familiar sight on film sets and at FOH.",
-      "typical_uses": ["ENG / location sound monitoring", "DJ monitoring", "live sound / FOH", "camera operator monitoring"],
+      "typical_uses": [
+        "ENG / location sound monitoring",
+        "DJ monitoring",
+        "live sound / FOH",
+        "camera operator monitoring"
+      ],
       "key_specs": {
         "driver": "dynamic",
         "operating_principle": "closed",
@@ -258,28 +798,164 @@
         "connector": "3.5 mm, with screw-on jack adapter 3.5 to 6.3 mm"
       },
       "connectors": [
-        { "connector": "trs-35mm", "role": "headphone input plug (detachable cable)", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "screw-on 6.3 mm adapter", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-35mm",
+          "role": "headphone input plug (detachable cable)",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "screw-on 6.3 mm adapter",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "https://assets.sennheiser.com/download/assets/HD+25_Quick_Guide_03_2026.pdf/1a3a92fce7d311f08c892a34179bc91d?attachment=true",
       "datasheet_url": "https://assets.sennheiser.com/download/assets/HD_25_Product_Specification_EN.pdf/db57421ae7cd11f09469ce3d75c40f07?attachment=true",
       "product_page_url": "https://www.sennheiser.com/en-de/catalog/products/headphones/hd-25/hd-25-506909",
-      "manual_languages": ["en", "de", "fr", "it", "es", "pt", "nl", "pl", "sv", "da", "fi", "el", "tr", "ru", "zh", "ja", "ko"],
+      "manual_languages": [
+        "en",
+        "de",
+        "fr",
+        "it",
+        "es",
+        "pt",
+        "nl",
+        "pl",
+        "sv",
+        "da",
+        "fi",
+        "el",
+        "tr",
+        "ru",
+        "zh",
+        "ja",
+        "ko"
+      ],
       "manuals": [
-        { "url": "https://assets.sennheiser.com/download/assets/HD+25_Quick_Guide_03_2026.pdf/1a3a92fce7d311f08c892a34179bc91d?attachment=true", "title": "HD 25 | HD 25 Plus Quick Guide (multilingual incl. 'Guide de démarrage rapide')", "language": "multi", "file_type": "pdf", "version_or_date": "Publ. 03/26, 402230/A02", "official": true, "kind": "quick-start" },
-        { "url": "https://assets.sennheiser.com/download/assets/HD_25_Product_Specification_EN.pdf/db57421ae7cd11f09469ce3d75c40f07?attachment=true", "title": "HD 25 Product Specification (V1.0)", "language": "en", "file_type": "pdf", "version_or_date": "V1.0", "official": true, "kind": "spec-sheet" },
-        { "url": "https://assets.sennheiser.com/download/assets/HD_25_Product_Specification_DE.pdf/daace0f4e7cd11f0aa98ea55b5d2fb86?attachment=true", "title": "HD 25 Produktdatenblatt", "language": "de", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" },
-        { "url": "https://assets.sennheiser.com/download/assets/HD_25_cable_replacement_07_2016.pdf/0da251c2e7b711f08cbd2a34179bc91d?attachment=true", "title": "Instructions for replacing cable, HD 25", "language": "not shown", "file_type": "pdf", "version_or_date": "07/2016 (filename)", "official": true, "kind": "other" }
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HD+25_Quick_Guide_03_2026.pdf/1a3a92fce7d311f08c892a34179bc91d?attachment=true",
+          "title": "HD 25 | HD 25 Plus Quick Guide (multilingual incl. 'Guide de démarrage rapide')",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "Publ. 03/26, 402230/A02",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HD_25_Product_Specification_EN.pdf/db57421ae7cd11f09469ce3d75c40f07?attachment=true",
+          "title": "HD 25 Product Specification (V1.0)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V1.0",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HD_25_Product_Specification_DE.pdf/daace0f4e7cd11f0aa98ea55b5d2fb86?attachment=true",
+          "title": "HD 25 Produktdatenblatt",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HD_25_cable_replacement_07_2016.pdf/0da251c2e7b711f08cbd2a34179bc91d?attachment=true",
+          "title": "Instructions for replacing cable, HD 25",
+          "language": "not shown",
+          "file_type": "pdf",
+          "version_or_date": "07/2016 (filename)",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://assets.sennheiser.com/download/assets/HD_25_Product_Specification_EN.pdf/db57421ae7cd11f09469ce3d75c40f07?attachment=true", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.driver", "key_specs.operating_principle", "key_specs.ear_coupling", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.load_rating", "key_specs.thd", "key_specs.contact_pressure", "key_specs.weight", "key_specs.cable", "key_specs.connector", "connectors", "typical_uses"] },
-        { "url": "https://www.sennheiser.com/en-de/catalog/products/headphones/hd-25/hd-25-506909", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.driver", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.thd", "key_specs.weight", "key_specs.cable", "key_specs.connector", "manuals"] },
-        { "url": "https://assets.sennheiser.com/download/assets/HD+25_Quick_Guide_03_2026.pdf/1a3a92fce7d311f08c892a34179bc91d?attachment=true", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.impedance", "key_specs.thd", "key_specs.weight", "key_specs.cable", "manual_languages"] }
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HD_25_Product_Specification_EN.pdf/db57421ae7cd11f09469ce3d75c40f07?attachment=true",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.driver",
+            "key_specs.operating_principle",
+            "key_specs.ear_coupling",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.load_rating",
+            "key_specs.thd",
+            "key_specs.contact_pressure",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector",
+            "connectors",
+            "typical_uses"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.sennheiser.com/en-de/catalog/products/headphones/hd-25/hd-25-506909",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.driver",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.thd",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector",
+            "manuals"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HD+25_Quick_Guide_03_2026.pdf/1a3a92fce7d311f08c892a34179bc91d?attachment=true",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.thd",
+            "key_specs.weight",
+            "key_specs.cable",
+            "manual_languages"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Documents the base HD 25 (art. no. 506909). Sennheiser gives max. SPL, not a sensitivity figure. Cross-check is between three Sennheiser documents; no retailer page was read (search budget exhausted).",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Typical recorder / camera / console headphone output check on location; simple 3.5 mm + adapter wiring." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Typical recorder / camera / console headphone output check on location; simple 3.5 mm + adapter wiring."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sennheiser-hd-600",
@@ -291,7 +967,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A long-standing open-back reference headphone used for mixing and critical listening; its high 300 Ω impedance makes it a useful example of why a capable headphone amplifier matters.",
-      "typical_uses": ["mixing", "mastering reference", "critical listening", "editing"],
+      "typical_uses": [
+        "mixing",
+        "mastering reference",
+        "critical listening",
+        "editing"
+      ],
       "key_specs": {
         "driver": "dynamic",
         "operating_principle": "open",
@@ -306,26 +987,81 @@
         "magnetic_field": "1.8 mT"
       },
       "connectors": [
-        { "connector": "trs-quarter", "role": "headphone cable plug (6.3 mm per product description)", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-35mm", "role": "3.5 mm plug / adapter", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-quarter",
+          "role": "headphone cable plug (6.3 mm per product description)",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "3.5 mm plug / adapter",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://us.sennheiser-hearing.com/products/hd-600",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://us.sennheiser-hearing.com/products/hd-600", "publisher": "Sennheiser (Sennheiser Hearing)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "technology", "key_specs.driver", "key_specs.operating_principle", "key_specs.ear_coupling", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.thd", "key_specs.weight", "key_specs.cable", "key_specs.connector", "key_specs.magnetic_field", "connectors"] }
+        {
+          "url": "https://us.sennheiser-hearing.com/products/hd-600",
+          "publisher": "Sennheiser (Sennheiser Hearing)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "technology",
+            "key_specs.driver",
+            "key_specs.operating_principle",
+            "key_specs.ear_coupling",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.thd",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector",
+            "key_specs.magnetic_field",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Consumer/audiophile headphones are now sold under sennheiser-hearing.com. The product page lists 29 download languages (incl. French) but exposed no download links. Single-source entry; no second source could be reached (search budget exhausted).",
       "conflicts": [
-        { "field": "key_specs.connector", "values": [
-          { "value": "Connector: 3.5 mm stereo jack plug; Adapter: 3.5 mm stereo jack plug (spec table)", "source_url": "https://us.sennheiser-hearing.com/products/hd-600" },
-          { "value": "6.3 mm (¼\") stereo plug with 3.5 mm adapter (description / what's included)", "source_url": "https://us.sennheiser-hearing.com/products/hd-600" }
-        ], "note": "Internal inconsistency on the manufacturer page." }
+        {
+          "field": "key_specs.connector",
+          "values": [
+            {
+              "value": "Connector: 3.5 mm stereo jack plug; Adapter: 3.5 mm stereo jack plug (spec table)",
+              "source_url": "https://us.sennheiser-hearing.com/products/hd-600"
+            },
+            {
+              "value": "6.3 mm (¼\") stereo plug with 3.5 mm adapter (description / what's included)",
+              "source_url": "https://us.sennheiser-hearing.com/products/hd-600"
+            }
+          ],
+          "note": "Internal inconsistency on the manufacturer page."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Simple jack connection; mainly an impedance / amplifier-drive lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Simple jack connection; mainly an impedance / amplifier-drive lesson."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "neumann-ndh-20",
@@ -337,7 +1073,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Neumann's closed studio headphone, designed to accompany its studio monitor line; high isolation figures make it suited to tracking as well as monitoring.",
-      "typical_uses": ["tracking", "studio monitoring", "editing", "location monitoring"],
+      "typical_uses": [
+        "tracking",
+        "studio monitoring",
+        "editing",
+        "location monitoring"
+      ],
       "key_specs": {
         "driver": "38 mm (1 1/2\"); neodymium magnet; Duofol diaphragm",
         "operating_principle": "Dynamic Closed",
@@ -354,22 +1095,86 @@
         "connector": "Plug end: 3.5 mm (1/8\") TRS jack plug (straight), 6.3 mm (1/4\") adapter included; headphone-end connector type not specified"
       },
       "connectors": [
-        { "connector": "trs-35mm", "role": "cable plug to amplifier", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "6.3 mm screw-on adapter", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-35mm",
+          "role": "cable plug to amplifier",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "6.3 mm screw-on adapter",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://www.neumann.com/en-en/products/headphones/ndh-20/",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://www.neumann.com/en-en/products/headphones/ndh-20/", "publisher": "Georg Neumann GmbH", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "technology", "key_specs.driver", "key_specs.operating_principle", "key_specs.ear_coupling", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.thd", "key_specs.power_handling", "key_specs.isolation", "key_specs.contact_pressure", "key_specs.weight", "key_specs.cable", "key_specs.connector", "connectors"] },
-        { "url": "https://assets.sennheiser.com/download/assets/NDH-20-Dealer-Description_english.txt/588726e2dc1111f083e34a591c6843d5", "publisher": "Neumann (dealer description, hosted on Sennheiser group assets)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.driver", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.power_handling", "key_specs.weight", "key_specs.cable", "key_specs.connector"] }
+        {
+          "url": "https://www.neumann.com/en-en/products/headphones/ndh-20/",
+          "publisher": "Georg Neumann GmbH",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "technology",
+            "key_specs.driver",
+            "key_specs.operating_principle",
+            "key_specs.ear_coupling",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.thd",
+            "key_specs.power_handling",
+            "key_specs.isolation",
+            "key_specs.contact_pressure",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/NDH-20-Dealer-Description_english.txt/588726e2dc1111f083e34a591c6843d5",
+          "publisher": "Neumann (dealer description, hosted on Sennheiser group assets)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.driver",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.power_handling",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Neumann's download centre (file finder) is rendered by JavaScript and exposed no PDF links, so no manual or datasheet URL could be recorded. Cross-check is between two Neumann texts. A separate 'NDH 20 Black Edition' exists.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Plain 3.5 mm + adapter; useful only for sensitivity-unit comparison (dB SPL @ 1 Vrms vs dB/mW)." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Plain 3.5 mm + adapter; useful only for sensitivity-unit comparison (dB SPL @ 1 Vrms vs dB/mW)."
+      },
+      "product_page_url_status": "ok"
     },
     {
       "id": "sony-mdr-7506",
@@ -381,7 +1186,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A foldable closed headphone described as designed for professional studio and live/broadcast applications; very common in broadcast, film location and radio work.",
-      "typical_uses": ["broadcast monitoring", "location / ENG monitoring", "voice-over and podcast", "studio tracking"],
+      "typical_uses": [
+        "broadcast monitoring",
+        "location / ENG monitoring",
+        "voice-over and podcast",
+        "studio tracking"
+      ],
       "key_specs": {
         "driver": "Dynamic, 4 cm (40 mm), neodymium (aggregator spec sheet)",
         "operating_principle": "Closed",
@@ -395,35 +1205,143 @@
         "weight": "230 g / 8.1 oz"
       },
       "connectors": [
-        { "connector": "trs-35mm", "role": "headphone plug (fixed cable)", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "6.35 mm adapter", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-35mm",
+          "role": "headphone plug (fixed cable)",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "6.35 mm adapter",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "not found",
       "datasheet_url": "https://pro.sony/fr_BE/pdf/mdr-7506",
       "product_page_url": "https://www.sony.com.tw/en/electronics/headband-headphones/mdr-7506",
       "manual_languages": [],
       "manuals": [
-        { "url": "https://pro.sony/fr_BE/pdf/mdr-7506", "title": "MDR-7506 product PDF (pro.sony, French/Belgium locale; seen in search results only, fetch returned 403)", "language": "fr", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" },
-        { "url": "https://pro.sony/en_AU/pdf/mdr-7506", "title": "MDR-7506 product PDF (pro.sony, Australia; search results only)", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "spec-sheet" }
+        {
+          "url": "https://pro.sony/fr_BE/pdf/mdr-7506",
+          "title": "MDR-7506 product PDF (pro.sony, French/Belgium locale; seen in search results only, fetch returned 403)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://pro.sony/en_AU/pdf/mdr-7506",
+          "title": "MDR-7506 product PDF (pro.sony, Australia; search results only)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "blocked"
+        }
       ],
       "sources": [
-        { "url": "https://pro.sony/en_AU/pdf/mdr-7506", "publisher": "Sony (via search-result snippet only; page returned 403)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["key_specs.impedance", "key_specs.sensitivity", "key_specs.power_handling", "key_specs.weight"] },
-        { "url": "https://www.sony.com.tw/en/electronics/headband-headphones/mdr-7506/specifications", "publisher": "Sony Taiwan (via search-result snippet only; page returned 403)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["status", "key_specs.impedance", "key_specs.sensitivity"] },
-        { "url": "https://ik.imagekit.io/pimberly/65707b38e31f5a94719d7ba0/33880559/681bc819d136b76df8ff5fc7/product-pdf", "publisher": "Product-data aggregator PDF (Icecat-style, publication date 07-MAY-2025)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "other", "covers": ["technology", "typical_uses", "key_specs.driver", "key_specs.operating_principle", "key_specs.ear_coupling", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.power_handling", "key_specs.cable", "key_specs.connector", "key_specs.weight", "connectors"] }
+        {
+          "url": "https://pro.sony/en_AU/pdf/mdr-7506",
+          "publisher": "Sony (via search-result snippet only; page returned 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.power_handling",
+            "key_specs.weight"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.sony.com.tw/en/electronics/headband-headphones/mdr-7506/specifications",
+          "publisher": "Sony Taiwan (via search-result snippet only; page returned 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.impedance",
+            "key_specs.sensitivity"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://ik.imagekit.io/pimberly/65707b38e31f5a94719d7ba0/33880559/681bc819d136b76df8ff5fc7/product-pdf",
+          "publisher": "Product-data aggregator PDF (Icecat-style, publication date 07-MAY-2025)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "technology",
+            "typical_uses",
+            "key_specs.driver",
+            "key_specs.operating_principle",
+            "key_specs.ear_coupling",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.power_handling",
+            "key_specs.cable",
+            "key_specs.connector",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "All Sony pages (electronics.sony.com, pro.sony, sony.com.tw, sony.co.th) blocked fetching (403), so values come from search snippets and a third-party aggregator sheet; no verified-primary source. Treat as needing re-verification. No official operating instructions found.",
       "conflicts": [
-        { "field": "key_specs.impedance", "values": [
-          { "value": "63 ohms", "source_url": "https://pro.sony/en_AU/pdf/mdr-7506" },
-          { "value": "24 ohm (1KHz)", "source_url": "https://www.sony.com.tw/en/electronics/headband-headphones/mdr-7506/specifications" }
-        ], "note": "Both from Sony sites as seen in search snippets; 63 Ω is also given by the aggregator sheet." },
-        { "field": "key_specs.sensitivity", "values": [
-          { "value": "106 dB/W/m", "source_url": "https://pro.sony/en_AU/pdf/mdr-7506" },
-          { "value": "106dB/mW", "source_url": "https://www.sony.com.tw/en/electronics/headband-headphones/mdr-7506/specifications" }
-        ], "note": "Same number, different unit label." }
+        {
+          "field": "key_specs.impedance",
+          "values": [
+            {
+              "value": "63 ohms",
+              "source_url": "https://pro.sony/en_AU/pdf/mdr-7506"
+            },
+            {
+              "value": "24 ohm (1KHz)",
+              "source_url": "https://www.sony.com.tw/en/electronics/headband-headphones/mdr-7506/specifications"
+            }
+          ],
+          "note": "Both from Sony sites as seen in search snippets; 63 Ω is also given by the aggregator sheet."
+        },
+        {
+          "field": "key_specs.sensitivity",
+          "values": [
+            {
+              "value": "106 dB/W/m",
+              "source_url": "https://pro.sony/en_AU/pdf/mdr-7506"
+            },
+            {
+              "value": "106dB/mW",
+              "source_url": "https://www.sony.com.tw/en/electronics/headband-headphones/mdr-7506/specifications"
+            }
+          ],
+          "note": "Same number, different unit label."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Standard broadcast/radio studio headphone; 3.5 mm plug with 6.35 mm adapter on a fixed coiled cable." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Standard broadcast/radio studio headphone; 3.5 mm plug with 6.35 mm adapter on a fixed coiled cable."
+      },
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "audio-technica-ath-m50x",
@@ -435,7 +1353,11 @@
       "year_introduced": "not found",
       "status": "not found",
       "why_it_is_a_classic": "One of the most widely sold closed studio headphones of the last decade, with three interchangeable cables (coiled and straight); common in home and project studios.",
-      "typical_uses": ["tracking", "home / project studio monitoring", "DJ and content creation"],
+      "typical_uses": [
+        "tracking",
+        "home / project studio monitoring",
+        "DJ and content creation"
+      ],
       "key_specs": {
         "driver": "Dynamic, 45 mm",
         "operating_principle": "Closed-back",
@@ -448,27 +1370,91 @@
         "connector": "Gold-plated stereo 1/8\" (3.5 mm) with 6.3 mm (1/4\") screw-on adapter"
       },
       "connectors": [
-        { "connector": "trs-35mm", "role": "cable plug to amplifier", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "6.3 mm screw-on adapter", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-35mm",
+          "role": "cable plug to amplifier",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "6.3 mm screw-on adapter",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "https://audio-technica.com/ath-m50x",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://audio-technica.com/ath-m50x", "publisher": "Audio-Technica (via search-result snippet only; fetch returned 403)", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "manufacturer", "covers": ["key_specs.driver", "key_specs.impedance", "key_specs.sensitivity"] },
-        { "url": "https://audio46.com/products/audio-technica-ath-m50x-professional-monitor-headphones", "publisher": "Audio46", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["technology", "key_specs.driver", "key_specs.operating_principle", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.max_input_power", "key_specs.weight", "key_specs.cable", "key_specs.connector", "connectors"] }
+        {
+          "url": "https://audio-technica.com/ath-m50x",
+          "publisher": "Audio-Technica (via search-result snippet only; fetch returned 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.driver",
+            "key_specs.impedance",
+            "key_specs.sensitivity"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://audio46.com/products/audio-technica-ath-m50x-professional-monitor-headphones",
+          "publisher": "Audio46",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "key_specs.driver",
+            "key_specs.operating_principle",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.max_input_power",
+            "key_specs.weight",
+            "key_specs.cable",
+            "key_specs.connector",
+            "connectors"
+          ],
+          "url_status": "blocked"
+        }
       ],
       "notes": "Audio-Technica's site blocked fetching (403); manufacturer values seen only in a search snippet. The headphone-end connector of the detachable cable is not described in the sources read. No official manual found. Status not confirmed from a readable manufacturer page.",
       "conflicts": [
-        { "field": "key_specs.sensitivity", "values": [
-          { "value": "99 dB", "source_url": "https://audio46.com/products/audio-technica-ath-m50x-professional-monitor-headphones" },
-          { "value": "98 dB (comparison table on the same page)", "source_url": "https://audio46.com/products/audio-technica-ath-m50x-professional-monitor-headphones" }
-        ], "note": "Audio-Technica's page (snippet) gives 99 dB." }
+        {
+          "field": "key_specs.sensitivity",
+          "values": [
+            {
+              "value": "99 dB",
+              "source_url": "https://audio46.com/products/audio-technica-ath-m50x-professional-monitor-headphones"
+            },
+            {
+              "value": "98 dB (comparison table on the same page)",
+              "source_url": "https://audio46.com/products/audio-technica-ath-m50x-professional-monitor-headphones"
+            }
+          ],
+          "note": "Audio-Technica's page (snippet) gives 99 dB."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Plain 3.5 mm + adapter connection." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Plain 3.5 mm + adapter connection."
+      },
+      "product_page_url_status": "blocked"
     },
     {
       "id": "sennheiser-hmd-26",
@@ -480,7 +1466,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Sennheiser presents the HMD/HME 26 as its outdoor TV and radio broadcast headset, with switchable ActiveGard hearing protection; the HMD 26 family is a common commentary headset in sports broadcasting.",
-      "typical_uses": ["sports and outdoor commentary", "OB / TV broadcast", "radio reporting", "intercom with on-air mic"],
+      "typical_uses": [
+        "sports and outdoor commentary",
+        "OB / TV broadcast",
+        "radio reporting",
+        "intercom with on-air mic"
+      ],
       "key_specs": {
         "headphone_driver": "dynamic, closed",
         "ear_coupling": "supra-aural",
@@ -503,35 +1494,197 @@
         "x4f_pinout": "XLR-4F: 1 mic screen, 2 mic +, 3 audio −, 4 audio + (cable overview notes no P48 supply for the microphone)"
       },
       "connectors": [
-        { "connector": "xlr3-m", "role": "microphone output (CABLE-X3K1)", "dir": "out", "signal": "mic-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "headphone input (CABLE-X3K1, 6.3 mm stereo plug)", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "xlr4", "role": "combined mic + mono headphone (CABLE-X4F, XLR 4 female)", "dir": "bidir", "signal": "mic-level", "count": "optional" },
-        { "connector": "xlr5-m", "role": "combined mic + stereo headphone (CABLE-X5)", "dir": "bidir", "signal": "mic-level", "count": "optional" }
+        {
+          "connector": "xlr3-m",
+          "role": "microphone output (CABLE-X3K1)",
+          "dir": "out",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone input (CABLE-X3K1, 6.3 mm stereo plug)",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr4",
+          "role": "combined mic + mono headphone (CABLE-X4F, XLR 4 female)",
+          "dir": "bidir",
+          "signal": "mic-level",
+          "count": "optional"
+        },
+        {
+          "connector": "xlr5-m",
+          "role": "combined mic + stereo headphone (CABLE-X5)",
+          "dir": "bidir",
+          "signal": "mic-level",
+          "count": "optional"
+        }
       ],
-      "signal_types": ["mic-level", "headphone-level"],
+      "signal_types": [
+        "mic-level",
+        "headphone-level"
+      ],
       "manual_url": "https://assets.sennheiser.com/download/assets/HMD_E_26_26-S_Quick_Guide_03_2024.pdf/b229d7d2e7cc11f0a8807aeaa9c3764a?attachment=true",
       "datasheet_url": "https://assets.sennheiser.com/download/assets/HMD_HME_26_26-S_Product_Specification_v.1.0_EN.pdf/f169d600e7da11f09f172a34179bc91d?attachment=true",
       "product_page_url": "https://www.sennheiser.com/en-de/catalog/products/headphones/hmd-26-s-a4e1cd2a/hmd-26-700318",
-      "manual_languages": ["en", "de", "fr", "it", "es", "pt", "nl", "pl", "sv", "da", "fi", "el", "tr", "ru", "zh", "ja", "ko"],
+      "manual_languages": [
+        "en",
+        "de",
+        "fr",
+        "it",
+        "es",
+        "pt",
+        "nl",
+        "pl",
+        "sv",
+        "da",
+        "fi",
+        "el",
+        "tr",
+        "ru",
+        "zh",
+        "ja",
+        "ko"
+      ],
       "manuals": [
-        { "url": "https://assets.sennheiser.com/download/assets/HMD_E_26_26-S_Quick_Guide_03_2024.pdf/b229d7d2e7cc11f0a8807aeaa9c3764a?attachment=true", "title": "HMD 26 | HMD 26-S | HME 26 | HME 26-S Quick Guide (multilingual incl. 'Guide rapide')", "language": "multi", "file_type": "pdf", "version_or_date": "Publ. 03/24, 597288/A01", "official": true, "kind": "quick-start" },
-        { "url": "https://assets.sennheiser.com/download/assets/HMD_HME_26_26-S_Product_Specification_v.1.0_EN.pdf/f169d600e7da11f09f172a34179bc91d?attachment=true", "title": "HMD 26/HMD 26-S | HME 26/HME 26-S Product Specification (V1.0)", "language": "en", "file_type": "pdf", "version_or_date": "V1.0", "official": true, "kind": "spec-sheet" },
-        { "url": "https://assets.sennheiser.com/download/assets/Broadcast_Headsets_cable_and_connector_overview.pdf/2d91ea58e7d311f08cbd2a34179bc91d?attachment=true", "title": "Broadcast headsets – Cable and connector overview", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "other" },
-        { "url": "https://assets.sennheiser.com/download/assets/HMD_26_26-S_HME_26_-26-S_Safety_Guide_06_2024.pdf/b17791c6e7cc11f0afd1ea55b5d2fb86?attachment=true", "title": "Safety Guide – HMD 26|26-S & HME 26|26-S", "language": "not shown", "file_type": "pdf", "version_or_date": "06/2024 (filename)", "official": true, "kind": "other" }
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HMD_E_26_26-S_Quick_Guide_03_2024.pdf/b229d7d2e7cc11f0a8807aeaa9c3764a?attachment=true",
+          "title": "HMD 26 | HMD 26-S | HME 26 | HME 26-S Quick Guide (multilingual incl. 'Guide rapide')",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "Publ. 03/24, 597288/A01",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HMD_HME_26_26-S_Product_Specification_v.1.0_EN.pdf/f169d600e7da11f09f172a34179bc91d?attachment=true",
+          "title": "HMD 26/HMD 26-S | HME 26/HME 26-S Product Specification (V1.0)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V1.0",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/Broadcast_Headsets_cable_and_connector_overview.pdf/2d91ea58e7d311f08cbd2a34179bc91d?attachment=true",
+          "title": "Broadcast headsets – Cable and connector overview",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HMD_26_26-S_HME_26_-26-S_Safety_Guide_06_2024.pdf/b17791c6e7cc11f0afd1ea55b5d2fb86?attachment=true",
+          "title": "Safety Guide – HMD 26|26-S & HME 26|26-S",
+          "language": "not shown",
+          "file_type": "pdf",
+          "version_or_date": "06/2024 (filename)",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://assets.sennheiser.com/download/assets/HMD_HME_26_26-S_Product_Specification_v.1.0_EN.pdf/f169d600e7da11f09f172a34179bc91d?attachment=true", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "typical_uses", "key_specs.headphone_driver", "key_specs.ear_coupling", "key_specs.headphone_frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.activegard_level", "key_specs.max_spl", "key_specs.thd", "key_specs.contact_pressure", "key_specs.weight", "key_specs.mic_type", "key_specs.mic_polar_pattern", "key_specs.mic_frequency_response", "key_specs.mic_sensitivity", "key_specs.mic_impedance", "key_specs.mic_interface", "key_specs.cable_options"] },
-        { "url": "https://www.sennheiser.com/en-de/catalog/products/headphones/hmd-26-s-a4e1cd2a/hmd-26-700318", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.headphone_driver", "key_specs.headphone_frequency_response", "key_specs.impedance", "key_specs.thd", "key_specs.weight", "key_specs.mic_type", "key_specs.mic_polar_pattern", "key_specs.mic_frequency_response", "key_specs.mic_impedance", "manuals"] },
-        { "url": "https://assets.sennheiser.com/download/assets/Broadcast_Headsets_cable_and_connector_overview.pdf/2d91ea58e7d311f08cbd2a34179bc91d?attachment=true", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.cable_options", "key_specs.x3k1_pinout", "key_specs.x4f_pinout", "connectors"] }
+        {
+          "url": "https://assets.sennheiser.com/download/assets/HMD_HME_26_26-S_Product_Specification_v.1.0_EN.pdf/f169d600e7da11f09f172a34179bc91d?attachment=true",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "typical_uses",
+            "key_specs.headphone_driver",
+            "key_specs.ear_coupling",
+            "key_specs.headphone_frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.activegard_level",
+            "key_specs.max_spl",
+            "key_specs.thd",
+            "key_specs.contact_pressure",
+            "key_specs.weight",
+            "key_specs.mic_type",
+            "key_specs.mic_polar_pattern",
+            "key_specs.mic_frequency_response",
+            "key_specs.mic_sensitivity",
+            "key_specs.mic_impedance",
+            "key_specs.mic_interface",
+            "key_specs.cable_options"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.sennheiser.com/en-de/catalog/products/headphones/hmd-26-s-a4e1cd2a/hmd-26-700318",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.headphone_driver",
+            "key_specs.headphone_frequency_response",
+            "key_specs.impedance",
+            "key_specs.thd",
+            "key_specs.weight",
+            "key_specs.mic_type",
+            "key_specs.mic_polar_pattern",
+            "key_specs.mic_frequency_response",
+            "key_specs.mic_impedance",
+            "manuals"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/Broadcast_Headsets_cable_and_connector_overview.pdf/2d91ea58e7d311f08cbd2a34179bc91d?attachment=true",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.cable_options",
+            "key_specs.x3k1_pinout",
+            "key_specs.x4f_pinout",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "HME 26 variant: pre-polarized condenser BKE 10-4, cardioid, 40 to 20,000 Hz, 16 mV/Pa @ 1 kHz, phantom powered 48 V (same spec sheet). 'xlr4' used for CABLE-X4F (female). Two-source cross-check is between Sennheiser documents only.",
       "conflicts": [
-        { "field": "key_specs.mic_polar_pattern", "values": [
-          { "value": "hyper cardioid (spec table)", "source_url": "https://assets.sennheiser.com/download/assets/HMD_HME_26_26-S_Product_Specification_v.1.0_EN.pdf/f169d600e7da11f09f172a34179bc91d?attachment=true" },
-          { "value": "Supercardioid", "source_url": "https://www.sennheiser.com/en-de/catalog/products/headphones/hmd-26-s-a4e1cd2a/hmd-26-700318" }
-        ], "note": "The spec sheet's own description text also says 'super-cardioid'; only its table says hyper cardioid." }
+        {
+          "field": "key_specs.mic_polar_pattern",
+          "values": [
+            {
+              "value": "hyper cardioid (spec table)",
+              "source_url": "https://assets.sennheiser.com/download/assets/HMD_HME_26_26-S_Product_Specification_v.1.0_EN.pdf/f169d600e7da11f09f172a34179bc91d?attachment=true"
+            },
+            {
+              "value": "Supercardioid",
+              "source_url": "https://www.sennheiser.com/en-de/catalog/products/headphones/hmd-26-s-a4e1cd2a/hmd-26-700318"
+            }
+          ],
+          "note": "The spec sheet's own description text also says 'super-cardioid'; only its table says hyper cardioid."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Documented pinouts for XLR3 + 6.3 mm split, XLR4F and XLR5 headset cables; dynamic vs condenser (P48) mic variants." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Documented pinouts for XLR3 + 6.3 mm split, XLR4F and XLR5 headset cables; dynamic vs condenser (P48) mic variants."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "sennheiser-ie-100-pro",
@@ -543,7 +1696,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Sennheiser's entry-level professional in-ear monitor, positioned by the manufacturer for live stage monitoring, mixing and production; a common first IEM paired with wireless IEM bodypacks.",
-      "typical_uses": ["stage in-ear monitoring", "wireless IEM bodypack earphone", "DJ monitoring", "rehearsal"],
+      "typical_uses": [
+        "stage in-ear monitoring",
+        "wireless IEM bodypack earphone",
+        "DJ monitoring",
+        "rehearsal"
+      ],
       "key_specs": {
         "driver": "dynamic, 10 mm broadband transducer (single driver)",
         "frequency_response": "20 - 18,000 Hz",
@@ -556,28 +1714,149 @@
         "weight": "160 g (product page)"
       },
       "connectors": [
-        { "connector": "trs-35mm", "role": "headphone input plug (type not stated in sources read; see notes)", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-35mm",
+          "role": "headphone input plug (type not stated in sources read; see notes)",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_FR.pdf/eb36d85ce7ba11f0aa98ea55b5d2fb86?attachment=true",
       "datasheet_url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_EN.pdf/e812edc8e7ba11f088db768ee8e97aea?attachment=true",
       "product_page_url": "https://www.sennheiser.com/en-de/catalog/products/headphones/ie-100-pro/ie-100-pro-clear-508941",
-      "manual_languages": ["fr", "en", "de", "es"],
+      "manual_languages": [
+        "fr",
+        "en",
+        "de",
+        "es"
+      ],
       "manuals": [
-        { "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_FR.pdf/eb36d85ce7ba11f0aa98ea55b5d2fb86?attachment=true", "title": "Fiche technique du produit IE 100 PRO", "language": "fr", "file_type": "pdf", "version_or_date": "SP 1293 v1.0", "official": true, "kind": "spec-sheet" },
-        { "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_EN.pdf/e812edc8e7ba11f088db768ee8e97aea?attachment=true", "title": "IE 100 PRO Product Specification", "language": "en", "file_type": "pdf", "version_or_date": "SP 1293 v1.0", "official": true, "kind": "spec-sheet" },
-        { "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_DE.pdf/e7d6cd2ae7ba11f0aa98ea55b5d2fb86?attachment=true", "title": "IE 100 PRO Produktdatenblatt", "language": "de", "file_type": "pdf", "version_or_date": "SP 1293 v1.0", "official": true, "kind": "spec-sheet" },
-        { "url": "https://assets.sennheiser.com/download/assets/IE_100_PRO_Quick_Guide_03_2024.pdf/384cd69ae7b711f0a354ea55b5d2fb86?attachment=true", "title": "Quick guide IE 100 PRO | IE 100 PRO Wireless (multilingual incl. 'Guide de démarrage rapide')", "language": "multi", "file_type": "pdf", "version_or_date": "Publ. 03/24, 587443/A04", "official": true, "kind": "quick-start" }
+        {
+          "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_FR.pdf/eb36d85ce7ba11f0aa98ea55b5d2fb86?attachment=true",
+          "title": "Fiche technique du produit IE 100 PRO",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "SP 1293 v1.0",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_EN.pdf/e812edc8e7ba11f088db768ee8e97aea?attachment=true",
+          "title": "IE 100 PRO Product Specification",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "SP 1293 v1.0",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_DE.pdf/e7d6cd2ae7ba11f0aa98ea55b5d2fb86?attachment=true",
+          "title": "IE 100 PRO Produktdatenblatt",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "SP 1293 v1.0",
+          "official": true,
+          "kind": "spec-sheet",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/IE_100_PRO_Quick_Guide_03_2024.pdf/384cd69ae7b711f0a354ea55b5d2fb86?attachment=true",
+          "title": "Quick guide IE 100 PRO | IE 100 PRO Wireless (multilingual incl. 'Guide de démarrage rapide')",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "Publ. 03/24, 587443/A04",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_EN.pdf/e812edc8e7ba11f088db768ee8e97aea?attachment=true", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.driver", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.thd", "key_specs.noise_attenuation", "typical_uses"] },
-        { "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_FR.pdf/eb36d85ce7ba11f0aa98ea55b5d2fb86?attachment=true", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.thd", "key_specs.noise_attenuation"] },
-        { "url": "https://www.sennheiser.com/en-de/catalog/products/headphones/ie-100-pro/ie-100-pro-clear-508941", "publisher": "Sennheiser", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.driver", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.cable", "key_specs.weight", "manuals"] },
-        { "url": "https://www.thomann.co.uk/sennheiser_ie_100_pro_clear.htm", "publisher": "Thomann", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.driver", "key_specs.frequency_response", "key_specs.impedance", "key_specs.sensitivity", "key_specs.cable"] }
+        {
+          "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_EN.pdf/e812edc8e7ba11f088db768ee8e97aea?attachment=true",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.driver",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.thd",
+            "key_specs.noise_attenuation",
+            "typical_uses"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://assets.sennheiser.com/download/assets/SP_1293_v1.0_IE_100_PRO_Product_Specification_FR.pdf/eb36d85ce7ba11f0aa98ea55b5d2fb86?attachment=true",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.thd",
+            "key_specs.noise_attenuation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.sennheiser.com/en-de/catalog/products/headphones/ie-100-pro/ie-100-pro-clear-508941",
+          "publisher": "Sennheiser",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.driver",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.cable",
+            "key_specs.weight",
+            "manuals"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.thomann.co.uk/sennheiser_ie_100_pro_clear.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.driver",
+            "key_specs.frequency_response",
+            "key_specs.impedance",
+            "key_specs.sensitivity",
+            "key_specs.cable"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Chosen instead of the suggested IE 400 PRO, which no longer appears in Sennheiser's IE family page (IE 100 PRO, IE 100 PRO Wireless, IE 4 listed). The cable plug type (assumed 3.5 mm for trs-35mm) and the earpiece connector type were not stated in any source read; treat the connector entry as unverified. The product page spec table mixes in wireless-version fields (Bluetooth), so its 160 g weight figure is uncertain. 'Sensitivity' here is Sennheiser's SPL at 1 V rms.",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "Earphone end of a wireless IEM chain (bodypack headphone out → IEM)." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Earphone end of a wireless IEM chain (bodypack headphone out → IEM)."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "shure-se215",
@@ -589,7 +1868,12 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Shure's entry-level sound-isolating earphone, widely used as a first in-ear monitor on stage and with wireless IEM bodypacks; its detachable MMCX cable is a common replaceable-cable format.",
-      "typical_uses": ["stage in-ear monitoring", "wireless IEM bodypack earphone", "drummer click / cue", "travel monitoring"],
+      "typical_uses": [
+        "stage in-ear monitoring",
+        "wireless IEM bodypack earphone",
+        "drummer click / cue",
+        "travel monitoring"
+      ],
       "key_specs": {
         "driver": "Single High-Definition MicroDriver",
         "sensitivity": "107 dB SPL/mW at 1 kHz",
@@ -602,36 +1886,168 @@
         "weight": "Net weight 20.8 g (.7 oz.)"
       },
       "connectors": [
-        { "connector": "trs-35mm", "role": "cable plug to IEM receiver / headphone output", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-35mm",
+          "role": "cable plug to IEM receiver / headphone output",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "https://pubs.shure.com/view/guide/SE215/fr-FR.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://www.shure.com/en-US/products/earphones/se215",
-      "manual_languages": ["fr", "en", "de", "es", "it", "ja", "pt", "id"],
+      "manual_languages": [
+        "fr",
+        "en",
+        "de",
+        "es",
+        "it",
+        "ja",
+        "pt",
+        "id"
+      ],
       "manuals": [
-        { "url": "https://pubs.shure.com/view/guide/SE215/fr-FR.pdf", "title": "SE215 Écouteurs Sound Isolating – guide d'utilisation", "language": "fr", "file_type": "pdf", "version_or_date": "Version: 1.0 (2023-A)", "official": true, "kind": "user-manual" },
-        { "url": "https://pubs.shure.com/view/guide/SE215/en-US.pdf", "title": "SE215 Sound Isolating Earphones user guide", "language": "en", "file_type": "pdf", "version_or_date": "Version: 1.1 (2024-I)", "official": true, "kind": "user-manual" },
-        { "url": "https://pubs.shure.com/view/guide/SE215/de-DE.pdf", "title": "SE215 Sound Isolating-Ohrhörer", "language": "de", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://pubs.shure.com/view/guide/SE215/es-ES.pdf", "title": "SE215 Auriculares Sound Isolating", "language": "es", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://pubs.shure.com/view/guide/SE215/fr-FR.pdf",
+          "title": "SE215 Écouteurs Sound Isolating – guide d'utilisation",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "Version: 1.0 (2023-A)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://pubs.shure.com/view/guide/SE215/en-US.pdf",
+          "title": "SE215 Sound Isolating Earphones user guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Version: 1.1 (2024-I)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://pubs.shure.com/view/guide/SE215/de-DE.pdf",
+          "title": "SE215 Sound Isolating-Ohrhörer",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://pubs.shure.com/view/guide/SE215/es-ES.pdf",
+          "title": "SE215 Auriculares Sound Isolating",
+          "language": "es",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://pubs.shure.com/view/guide/SE215/en-US.pdf", "publisher": "Shure", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.driver", "key_specs.sensitivity", "key_specs.impedance", "key_specs.frequency_response", "key_specs.noise_attenuation", "key_specs.max_input_power", "key_specs.connector", "key_specs.weight", "connectors"] },
-        { "url": "https://www.shure.com/en-US/products/earphones/se215", "publisher": "Shure", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.noise_attenuation", "key_specs.connector", "key_specs.cable", "connectors"] },
-        { "url": "https://www.musik-produktiv.com/gr/shure-se215-cl.html", "publisher": "Musik Produktiv", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.driver", "key_specs.sensitivity", "key_specs.impedance", "key_specs.frequency_response", "key_specs.noise_attenuation", "key_specs.connector", "key_specs.cable"] }
+        {
+          "url": "https://pubs.shure.com/view/guide/SE215/en-US.pdf",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.driver",
+            "key_specs.sensitivity",
+            "key_specs.impedance",
+            "key_specs.frequency_response",
+            "key_specs.noise_attenuation",
+            "key_specs.max_input_power",
+            "key_specs.connector",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-US/products/earphones/se215",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.noise_attenuation",
+            "key_specs.connector",
+            "key_specs.cable",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.musik-produktiv.com/gr/shure-se215-cl.html",
+          "publisher": "Musik Produktiv",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.driver",
+            "key_specs.sensitivity",
+            "key_specs.impedance",
+            "key_specs.frequency_response",
+            "key_specs.noise_attenuation",
+            "key_specs.connector",
+            "key_specs.cable"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "MMCX (earphone-side cable connector) has no TekPractice or proposed id, so only the 3.5 mm plug is listed in connectors[]; propose 'mmcx' if needed. The user guide says 'MicroDriver' without naming the principle; the retailer calls it 'Single Dynamic MicroDriver' but also 'Balanced-Armature' elsewhere on the same page.",
       "conflicts": [
-        { "field": "key_specs.impedance", "values": [
-          { "value": "17 Ω at 1 kHz", "source_url": "https://pubs.shure.com/view/guide/SE215/en-US.pdf" },
-          { "value": "20 ohms (at 1 kHz) and 17 Ohm (both on the same page)", "source_url": "https://www.musik-produktiv.com/gr/shure-se215-cl.html" }
-        ], "note": "Shure's own user guide gives 17 Ω; the 20 Ω figure appears only at retailers." },
-        { "field": "key_specs.cable", "values": [
-          { "value": "64\" (about 1.63 m)", "source_url": "https://www.shure.com/en-US/products/earphones/se215" },
-          { "value": "1,62 m", "source_url": "https://www.musik-produktiv.com/gr/shure-se215-cl.html" }
-        ], "note": "Minor rounding difference." }
+        {
+          "field": "key_specs.impedance",
+          "values": [
+            {
+              "value": "17 Ω at 1 kHz",
+              "source_url": "https://pubs.shure.com/view/guide/SE215/en-US.pdf"
+            },
+            {
+              "value": "20 ohms (at 1 kHz) and 17 Ohm (both on the same page)",
+              "source_url": "https://www.musik-produktiv.com/gr/shure-se215-cl.html"
+            }
+          ],
+          "note": "Shure's own user guide gives 17 Ω; the 20 Ω figure appears only at retailers."
+        },
+        {
+          "field": "key_specs.cable",
+          "values": [
+            {
+              "value": "64\" (about 1.63 m)",
+              "source_url": "https://www.shure.com/en-US/products/earphones/se215"
+            },
+            {
+              "value": "1,62 m",
+              "source_url": "https://www.musik-produktiv.com/gr/shure-se215-cl.html"
+            }
+          ],
+          "note": "Minor rounding difference."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["mmcx"], "proposed_new_signals": [], "sim_value": "medium", "sim_value_reason": "End point of a wireless IEM chain; MMCX detachable cable is a distinctive connector." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "mmcx"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "End point of a wireless IEM chain; MMCX detachable cable is a distinctive connector."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "shure-se846",
@@ -643,7 +2059,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "Shure's flagship universal-fit in-ear monitor; its four balanced-armature drivers and swappable sound-signature nozzles make it a reference point for multi-driver IEMs.",
-      "typical_uses": ["stage in-ear monitoring", "critical listening on the road", "wireless IEM bodypack earphone"],
+      "typical_uses": [
+        "stage in-ear monitoring",
+        "critical listening on the road",
+        "wireless IEM bodypack earphone"
+      ],
       "key_specs": {
         "driver": "Quad balanced-armature drivers (guide); 'Four high-definition drivers' in a three-way system (product page)",
         "sensitivity": "114 dB SPL/mW at 1 kHz",
@@ -655,26 +2075,120 @@
         "weight": "Net weight 27.6 g (.9 oz.)"
       },
       "connectors": [
-        { "connector": "trs-35mm", "role": "cable plug", "dir": "in", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "1/4\" adapter", "dir": "in", "signal": "headphone-level", "count": 1 }
+        {
+          "connector": "trs-35mm",
+          "role": "cable plug",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "1/4\" adapter",
+          "dir": "in",
+          "signal": "headphone-level",
+          "count": 1
+        }
       ],
-      "signal_types": ["headphone-level"],
+      "signal_types": [
+        "headphone-level"
+      ],
       "manual_url": "https://pubs.shure.com/view/guide/SE846/fr-FR.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://www.shure.com/en-US/products/earphones/se846",
-      "manual_languages": ["fr", "en"],
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
       "manuals": [
-        { "url": "https://pubs.shure.com/view/guide/SE846/fr-FR.pdf", "title": "SE846 Écouteurs Sound Isolating – guide d'utilisation", "language": "fr", "file_type": "pdf", "version_or_date": "Version: 1.0 (2022-I)", "official": true, "kind": "user-manual" },
-        { "url": "https://pubs.shure.com/view/guide/SE846/en-US.pdf", "title": "SE846 Sound Isolating Earphones user guide", "language": "en", "file_type": "pdf", "version_or_date": "Version: 1.0 (2022-I)", "official": true, "kind": "user-manual" }
+        {
+          "url": "https://pubs.shure.com/view/guide/SE846/fr-FR.pdf",
+          "title": "SE846 Écouteurs Sound Isolating – guide d'utilisation",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "Version: 1.0 (2022-I)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://pubs.shure.com/view/guide/SE846/en-US.pdf",
+          "title": "SE846 Sound Isolating Earphones user guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Version: 1.0 (2022-I)",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://pubs.shure.com/view/guide/SE846/en-US.pdf", "publisher": "Shure", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.driver", "key_specs.sensitivity", "key_specs.impedance", "key_specs.frequency_response", "key_specs.noise_attenuation", "key_specs.connector", "key_specs.weight"] },
-        { "url": "https://pubs.shure.com/view/guide/SE846/fr-FR.pdf", "publisher": "Shure", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.sensitivity", "key_specs.impedance", "key_specs.frequency_response", "key_specs.noise_attenuation", "key_specs.connector", "key_specs.weight"] },
-        { "url": "https://www.shure.com/en-US/products/earphones/se846", "publisher": "Shure", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "model", "key_specs.driver", "key_specs.noise_attenuation", "key_specs.connector", "key_specs.nozzle_filters", "connectors"] }
+        {
+          "url": "https://pubs.shure.com/view/guide/SE846/en-US.pdf",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.driver",
+            "key_specs.sensitivity",
+            "key_specs.impedance",
+            "key_specs.frequency_response",
+            "key_specs.noise_attenuation",
+            "key_specs.connector",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://pubs.shure.com/view/guide/SE846/fr-FR.pdf",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.sensitivity",
+            "key_specs.impedance",
+            "key_specs.frequency_response",
+            "key_specs.noise_attenuation",
+            "key_specs.connector",
+            "key_specs.weight"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.shure.com/en-US/products/earphones/se846",
+          "publisher": "Shure",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "model",
+            "key_specs.driver",
+            "key_specs.noise_attenuation",
+            "key_specs.connector",
+            "key_specs.nozzle_filters",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The product page shows 'SE846 Gen 2' (SKU SE846G2GT); the user guide (2022) does not state which generation it covers. Specs cross-checked between the EN and FR guides only (same publisher); no independent retailer page was read. MMCX has no taxonomy id (see SE215).",
       "conflicts": [],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": ["mmcx"], "proposed_new_signals": [], "sim_value": "low", "sim_value_reason": "Same wiring as SE215; value is mainly in impedance/sensitivity comparison (9 Ω, 114 dB SPL/mW)." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "mmcx"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Same wiring as SE215; value is mainly in impedance/sensitivity comparison (9 Ω, 114 dB SPL/mW)."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     },
     {
       "id": "behringer-ha400",
@@ -686,7 +2200,11 @@
       "year_introduced": "not found",
       "status": "not found",
       "why_it_is_a_classic": "A very low-cost way to feed four headphones from one line source, found in many home studios, rehearsal rooms and schools for cue/headphone distribution.",
-      "typical_uses": ["headphone distribution for recording sessions", "classroom / training listening", "podcast multi-headphone feed"],
+      "typical_uses": [
+        "headphone distribution for recording sessions",
+        "classroom / training listening",
+        "podcast multi-headphone feed"
+      ],
       "key_specs": {
         "inputs": "Line input: ¼\" TS connector, stereo; impedance 100 kΩ; max. input level +15 dBu (specifications table)",
         "outputs": "4 headphone outputs: ¼\" TRS connector, stereo; impedance approx. 80 Ω; max. output level approx. 40 mW in 100 Ω",
@@ -696,33 +2214,114 @@
         "weight": "approx. 0.37 kg (0.8 lbs)"
       },
       "connectors": [
-        { "connector": "trs-quarter", "role": "stereo line input", "dir": "in", "signal": "line-level-consumer", "count": 1 },
-        { "connector": "trs-quarter", "role": "headphone outputs", "dir": "out", "signal": "headphone-level", "count": 4 },
-        { "connector": "dc-barrel", "role": "12 V DC power input", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "trs-quarter",
+          "role": "stereo line input",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone outputs",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 4
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "12 V DC power input",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-consumer", "headphone-level", "dc-power"],
+      "signal_types": [
+        "line-level-consumer",
+        "headphone-level",
+        "dc-power"
+      ],
       "manual_url": "not found",
       "datasheet_url": "not found",
       "product_page_url": "not found",
       "manual_languages": [],
       "manuals": [],
       "sources": [
-        { "url": "https://r2.gear4music.com/media/20/203959/download_203959.pdf", "publisher": "Behringer (MUSIC Group) manual, hosted by Gear4music", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["technology", "key_specs.inputs", "key_specs.outputs", "key_specs.controls", "key_specs.power", "key_specs.dimensions", "key_specs.weight", "connectors"] },
-        { "url": "https://www.bax-shop.co.uk/headphone-amplifier/behringer-microamp-ha400-headphone-amplifier", "publisher": "Bax Music", "accessed": "2026-10-22", "confidence": "verified-secondary", "kind": "retailer", "covers": ["key_specs.outputs", "key_specs.power", "status"] }
+        {
+          "url": "https://r2.gear4music.com/media/20/203959/download_203959.pdf",
+          "publisher": "Behringer (MUSIC Group) manual, hosted by Gear4music",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "key_specs.inputs",
+            "key_specs.outputs",
+            "key_specs.controls",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.bax-shop.co.uk/headphone-amplifier/behringer-microamp-ha400-headphone-amplifier",
+          "publisher": "Bax Music",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.outputs",
+            "key_specs.power",
+            "status"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "The Behringer quick-start text read is a manufacturer document (© MUSIC Group 2015) but was only found on a retailer server, so it is not listed as an official manual. In the same document the body text calls the input a ¼\" TRS connector while the spec table says ¼\" TS stereo. Bax Music lists it as discontinued at their shop and gives conflicting weights; manufacturer status was not confirmed. line-level-consumer used for the unbalanced stereo line input.",
       "conflicts": [
-        { "field": "key_specs.inputs", "values": [
-          { "value": "¼\" TS connector, stereo (spec table)", "source_url": "https://r2.gear4music.com/media/20/203959/download_203959.pdf" },
-          { "value": "¼\" TRS connector (INPUT) (control description)", "source_url": "https://r2.gear4music.com/media/20/203959/download_203959.pdf" },
-          { "value": "Unbalanced stereo line in (TRS mini-jack)", "source_url": "https://www.bax-shop.co.uk/headphone-amplifier/behringer-microamp-ha400-headphone-amplifier" }
-        ], "note": "Same document is internally inconsistent; retailer says mini-jack." },
-        { "field": "key_specs.weight", "values": [
-          { "value": "approx. 0.37 kg", "source_url": "https://r2.gear4music.com/media/20/203959/download_203959.pdf" },
-          { "value": "190 g (spec list) / 530 gr incl. packaging", "source_url": "https://www.bax-shop.co.uk/headphone-amplifier/behringer-microamp-ha400-headphone-amplifier" }
-        ], "note": "" }
+        {
+          "field": "key_specs.inputs",
+          "values": [
+            {
+              "value": "¼\" TS connector, stereo (spec table)",
+              "source_url": "https://r2.gear4music.com/media/20/203959/download_203959.pdf"
+            },
+            {
+              "value": "¼\" TRS connector (INPUT) (control description)",
+              "source_url": "https://r2.gear4music.com/media/20/203959/download_203959.pdf"
+            },
+            {
+              "value": "Unbalanced stereo line in (TRS mini-jack)",
+              "source_url": "https://www.bax-shop.co.uk/headphone-amplifier/behringer-microamp-ha400-headphone-amplifier"
+            }
+          ],
+          "note": "Same document is internally inconsistent; retailer says mini-jack."
+        },
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "approx. 0.37 kg",
+              "source_url": "https://r2.gear4music.com/media/20/203959/download_203959.pdf"
+            },
+            {
+              "value": "190 g (spec list) / 530 gr incl. packaging",
+              "source_url": "https://www.bax-shop.co.uk/headphone-amplifier/behringer-microamp-ha400-headphone-amplifier"
+            }
+          ],
+          "note": ""
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Simple 1-in/4-out headphone distribution: teaches line out → headphone amp → several headphones and DC adapter power." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Simple 1-in/4-out headphone distribution: teaches line out → headphone amp → several headphones and DC adapter power."
+      }
     },
     {
       "id": "presonus-hp4",
@@ -734,7 +2333,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "A compact, widely sold 4-channel headphone amp; its balanced inputs and monitor output let it sit between an interface and speakers as a small monitoring hub.",
-      "typical_uses": ["headphone distribution for tracking", "monitor output pass-through to speakers", "mono compatibility check"],
+      "typical_uses": [
+        "headphone distribution for tracking",
+        "monitor output pass-through to speakers",
+        "mono compatibility check"
+      ],
       "key_specs": {
         "inputs": "2 x ¼\" TRS, balanced; input impedance 10 kΩ; max input level +18 dBu, <0.5% THD+N, unity gain; THD+N 0.0025%, 1 kHz, unity gain",
         "monitor_outputs": "2 x ¼\" TRS, impedance-balanced (manual) / balanced (product page); output impedance 51Ω; max output level +18 dBu, <0.5% THD+N",
@@ -744,38 +2347,172 @@
         "dimensions": "5.5\" (139.7 mm) W x 5.5\" (139.7 mm) D x 1.75\" (44.45 mm) H"
       },
       "connectors": [
-        { "connector": "trs-quarter", "role": "balanced line inputs L/R", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "monitor outputs L/R", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "trs-quarter", "role": "stereo headphone outputs (front)", "dir": "out", "signal": "headphone-level", "count": 4 },
-        { "connector": "dc-barrel", "role": "+12 VDC power input", "dir": "in", "signal": "dc-power", "count": 1 }
+        {
+          "connector": "trs-quarter",
+          "role": "balanced line inputs L/R",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "monitor outputs L/R",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "stereo headphone outputs (front)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 4
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "+12 VDC power input",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "headphone-level", "dc-power"],
+      "signal_types": [
+        "line-level-pro",
+        "headphone-level",
+        "dc-power"
+      ],
       "manual_url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_EN.pdf",
       "datasheet_url": "https://www.fmicassets.com/Damroot/Original/10001/HP-Family-Info-Sheet_EN.pdf",
       "product_page_url": "https://www.presonus.com/products/HP4",
-      "manual_languages": ["en", "de", "fr", "es"],
+      "manual_languages": [
+        "en",
+        "de",
+        "fr",
+        "es"
+      ],
       "manuals": [
-        { "url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_EN.pdf", "title": "HP4 Owner's Manual", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_Quick-Start-Guide_Multi.pdf", "title": "HP4 Quick Start Guide (multilingual: EN/DE/FR/ES)", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
-        { "url": "https://www.fmicassets.com/Damroot/Original/10001/HP-Family-Info-Sheet_EN.pdf", "title": "HP family info sheet (unlabelled on product page; not opened)", "language": "en", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "other" }
+        {
+          "url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_EN.pdf",
+          "title": "HP4 Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_Quick-Start-Guide_Multi.pdf",
+          "title": "HP4 Quick Start Guide (multilingual: EN/DE/FR/ES)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.fmicassets.com/Damroot/Original/10001/HP-Family-Info-Sheet_EN.pdf",
+          "title": "HP family info sheet (unlabelled on product page; not opened)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_EN.pdf", "publisher": "PreSonus", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.inputs", "key_specs.monitor_outputs", "key_specs.headphone_outputs", "key_specs.frequency_response", "key_specs.power", "connectors"] },
-        { "url": "https://www.presonus.com/products/HP4", "publisher": "PreSonus", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["status", "key_specs.inputs", "key_specs.monitor_outputs", "key_specs.headphone_outputs", "key_specs.frequency_response", "key_specs.power", "key_specs.dimensions", "connectors", "manuals"] },
-        { "url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_Quick-Start-Guide_Multi.pdf", "publisher": "PreSonus", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "manual_languages"] }
+        {
+          "url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_EN.pdf",
+          "publisher": "PreSonus",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.monitor_outputs",
+            "key_specs.headphone_outputs",
+            "key_specs.frequency_response",
+            "key_specs.power",
+            "connectors"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.presonus.com/products/HP4",
+          "publisher": "PreSonus",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "key_specs.inputs",
+            "key_specs.monitor_outputs",
+            "key_specs.headphone_outputs",
+            "key_specs.frequency_response",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "connectors",
+            "manuals"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_Quick-Start-Guide_Multi.pdf",
+          "publisher": "PreSonus",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "manual_languages"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Product page (120V NA SKU) showed 'Sold out' on the access date but is still listed, so status is set to current. Cross-check is between PreSonus page and PreSonus manual (no independent retailer read). No French full manual found; the quick-start guide includes French. The HP family info sheet was not opened.",
       "conflicts": [
-        { "field": "key_specs.power", "values": [
-          { "value": "+12 VDC, 1000 mA, Center Pin Positive", "source_url": "https://www.presonus.com/products/HP4" },
-          { "value": "External 16 VAC power supply (feature list)", "source_url": "https://www.presonus.com/products/HP4" }
-        ], "note": "Product page internally inconsistent; the owner's manual agrees with +12 VDC." },
-        { "field": "key_specs.monitor_outputs", "values": [
-          { "value": "¼\" TRS, impedance-balanced", "source_url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_EN.pdf" },
-          { "value": "1/4\" TRS, Balanced", "source_url": "https://www.presonus.com/products/HP4" }
-        ], "note": "Wording difference; relevant when teaching balanced vs impedance-balanced outputs." }
+        {
+          "field": "key_specs.power",
+          "values": [
+            {
+              "value": "+12 VDC, 1000 mA, Center Pin Positive",
+              "source_url": "https://www.presonus.com/products/HP4"
+            },
+            {
+              "value": "External 16 VAC power supply (feature list)",
+              "source_url": "https://www.presonus.com/products/HP4"
+            }
+          ],
+          "note": "Product page internally inconsistent; the owner's manual agrees with +12 VDC."
+        },
+        {
+          "field": "key_specs.monitor_outputs",
+          "values": [
+            {
+              "value": "¼\" TRS, impedance-balanced",
+              "source_url": "https://www.fmicassets.com/Damroot/Original/10001/OM_2777400203_HP4_EN.pdf"
+            },
+            {
+              "value": "1/4\" TRS, Balanced",
+              "source_url": "https://www.presonus.com/products/HP4"
+            }
+          ],
+          "note": "Wording difference; relevant when teaching balanced vs impedance-balanced outputs."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Balanced TRS in/thru-out plus four headphone outs: good routing lesson (interface → HP4 → speakers + headphones)." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Balanced TRS in/thru-out plus four headphone outs: good routing lesson (interface → HP4 → speakers + headphones)."
+      },
+      "manual_url_status": "ok",
+      "datasheet_url_status": "ok",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "spl-phonitor-x",
@@ -787,7 +2524,11 @@
       "year_introduced": "not found",
       "status": "current",
       "why_it_is_a_classic": "SPL's Phonitor line is built around the Phonitor Matrix crossfeed, intended to make headphone stereo imaging closer to loudspeaker listening; the high internal operating voltage is SPL's headline technology.",
-      "typical_uses": ["mixing / mastering on headphones", "studio reference headphone monitoring", "line preamp for active monitors"],
+      "typical_uses": [
+        "mixing / mastering on headphones",
+        "studio reference headphone monitoring",
+        "line preamp for active monitors"
+      ],
       "key_specs": {
         "inputs": "Analog XLR (balanced) and RCA; input impedance 20 kΩ; optional DAC768xs: coaxial S/PDIF (RCA), optical TOSLINK, USB (B)",
         "line_outputs": "XLR balanced (pin 2 +) and RCA unbalanced; output impedance 75 Ω",
@@ -803,48 +2544,236 @@
         "weight": "4.4 kg (product page) / 4.3 kg unit only (manual)"
       },
       "connectors": [
-        { "connector": "xlr3-f", "role": "balanced analog line inputs L/R", "dir": "in", "signal": "line-level-pro", "count": 2 },
-        { "connector": "rca", "role": "unbalanced analog inputs L/R", "dir": "in", "signal": "line-level-consumer", "count": 2 },
-        { "connector": "xlr3-m", "role": "balanced line outputs L/R", "dir": "out", "signal": "line-level-pro", "count": 2 },
-        { "connector": "rca", "role": "unbalanced line outputs L/R", "dir": "out", "signal": "line-level-consumer", "count": 2 },
-        { "connector": "xlr4", "role": "balanced headphone output (4-pin XLR)", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "trs-quarter", "role": "standard headphone output", "dir": "out", "signal": "headphone-level", "count": 1 },
-        { "connector": "rca", "role": "coaxial S/PDIF input (optional DAC768xs)", "dir": "in", "signal": "spdif", "count": 1 },
-        { "connector": "toslink", "role": "optical S/PDIF input (optional DAC768xs)", "dir": "in", "signal": "spdif", "count": 1 },
-        { "connector": "usb-b", "role": "USB audio input (optional DAC768xs)", "dir": "in", "signal": "usb-audio", "count": 1 },
-        { "connector": "iec-c14", "role": "mains inlet", "dir": "in", "signal": "mains-power", "count": 1 }
+        {
+          "connector": "xlr3-f",
+          "role": "balanced analog line inputs L/R",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "unbalanced analog inputs L/R",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "balanced line outputs L/R",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "unbalanced line outputs L/R",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "xlr4",
+          "role": "balanced headphone output (4-pin XLR)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "standard headphone output",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "rca",
+          "role": "coaxial S/PDIF input (optional DAC768xs)",
+          "dir": "in",
+          "signal": "spdif",
+          "count": 1
+        },
+        {
+          "connector": "toslink",
+          "role": "optical S/PDIF input (optional DAC768xs)",
+          "dir": "in",
+          "signal": "spdif",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB audio input (optional DAC768xs)",
+          "dir": "in",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains inlet",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
       ],
-      "signal_types": ["line-level-pro", "line-level-consumer", "headphone-level", "spdif", "usb-audio", "mains-power"],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "headphone-level",
+        "spdif",
+        "usb-audio",
+        "mains-power"
+      ],
       "manual_url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf",
       "datasheet_url": "not found",
       "product_page_url": "https://spl.audio/en/spl-produkt/phonitor-x/",
-      "manual_languages": ["en", "de"],
+      "manual_languages": [
+        "en",
+        "de"
+      ],
       "manuals": [
-        { "url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf", "title": "Phonitor x Owner's manual", "language": "en", "file_type": "pdf", "version_or_date": "Version 1.7 – 03/2020", "official": true, "kind": "user-manual" },
-        { "url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_DE.pdf", "title": "Phonitor x Bedienungsanleitung", "language": "de", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "user-manual" },
-        { "url": "https://spl.audio/wp-content/uploads/Quickstart-Phonitor-x.pdf", "title": "Quickstart Phonitor x (EN/DE)", "language": "multi", "file_type": "pdf", "version_or_date": "not shown", "official": true, "kind": "quick-start" },
-        { "url": "https://spl.audio/wp-content/uploads/Folder-Professional-Fidelity_2025-NB_FR_web.pdf", "title": "Professional Fidelity brochure (French)", "language": "fr", "file_type": "pdf", "version_or_date": "2025 (filename)", "official": true, "kind": "other" }
+        {
+          "url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf",
+          "title": "Phonitor x Owner's manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Version 1.7 – 03/2020",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_DE.pdf",
+          "title": "Phonitor x Bedienungsanleitung",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://spl.audio/wp-content/uploads/Quickstart-Phonitor-x.pdf",
+          "title": "Quickstart Phonitor x (EN/DE)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start",
+          "url_status": "ok"
+        },
+        {
+          "url": "https://spl.audio/wp-content/uploads/Folder-Professional-Fidelity_2025-NB_FR_web.pdf",
+          "title": "Professional Fidelity brochure (French)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "2025 (filename)",
+          "official": true,
+          "kind": "other",
+          "url_status": "ok"
+        }
       ],
       "sources": [
-        { "url": "https://spl.audio/en/spl-produkt/phonitor-x/", "publisher": "SPL electronics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["technology", "key_specs.inputs", "key_specs.line_outputs", "key_specs.headphone_out_balanced", "key_specs.headphone_out_jack", "key_specs.damping_factor", "key_specs.frequency_response", "key_specs.thd_n", "key_specs.operating_voltage", "key_specs.crossfeed", "key_specs.power", "key_specs.dimensions", "key_specs.weight", "connectors", "manuals"] },
-        { "url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf", "publisher": "SPL electronics", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["key_specs.headphone_out_balanced", "key_specs.headphone_out_jack", "key_specs.damping_factor", "key_specs.frequency_response", "key_specs.operating_voltage", "key_specs.power", "key_specs.dimensions", "key_specs.weight", "key_specs.line_outputs", "connectors"] }
+        {
+          "url": "https://spl.audio/en/spl-produkt/phonitor-x/",
+          "publisher": "SPL electronics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.inputs",
+            "key_specs.line_outputs",
+            "key_specs.headphone_out_balanced",
+            "key_specs.headphone_out_jack",
+            "key_specs.damping_factor",
+            "key_specs.frequency_response",
+            "key_specs.thd_n",
+            "key_specs.operating_voltage",
+            "key_specs.crossfeed",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "manuals"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf",
+          "publisher": "SPL electronics",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.headphone_out_balanced",
+            "key_specs.headphone_out_jack",
+            "key_specs.damping_factor",
+            "key_specs.frequency_response",
+            "key_specs.operating_voltage",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.line_outputs",
+            "connectors"
+          ],
+          "url_status": "ok"
+        }
       ],
       "notes": "Output power figures per impedance come from the product page only. Shop stock status was not stated; the product is listed in the current range. Mains inlet type (IEC C14) and XLR input/output genders are assumed from standard practice, not stated in sources read. No French manual found; only a French range brochure. Cross-check is two SPL documents.",
       "conflicts": [
-        { "field": "key_specs.dimensions", "values": [
-          { "value": "278 x 100 x 300 mm", "source_url": "https://spl.audio/en/spl-produkt/phonitor-x/" },
-          { "value": "278 x 100 x 330 mm", "source_url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf" }
-        ], "note": "" },
-        { "field": "key_specs.weight", "values": [
-          { "value": "4.4 kg", "source_url": "https://spl.audio/en/spl-produkt/phonitor-x/" },
-          { "value": "4.3 kg, unit only", "source_url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf" }
-        ], "note": "" },
-        { "field": "key_specs.standby_power", "values": [
-          { "value": "< 0.3 W", "source_url": "https://spl.audio/en/spl-produkt/phonitor-x/" },
-          { "value": "0.7 W", "source_url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf" }
-        ], "note": "Manual is v1.7 (03/2020); the page may reflect later revisions." }
+        {
+          "field": "key_specs.dimensions",
+          "values": [
+            {
+              "value": "278 x 100 x 300 mm",
+              "source_url": "https://spl.audio/en/spl-produkt/phonitor-x/"
+            },
+            {
+              "value": "278 x 100 x 330 mm",
+              "source_url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "4.4 kg",
+              "source_url": "https://spl.audio/en/spl-produkt/phonitor-x/"
+            },
+            {
+              "value": "4.3 kg, unit only",
+              "source_url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "field": "key_specs.standby_power",
+          "values": [
+            {
+              "value": "< 0.3 W",
+              "source_url": "https://spl.audio/en/spl-produkt/phonitor-x/"
+            },
+            {
+              "value": "0.7 W",
+              "source_url": "https://spl.audio/wp-content/uploads/Phonitor_x_2003_BA_EN.pdf"
+            }
+          ],
+          "note": "Manual is v1.7 (03/2020); the page may reflect later revisions."
+        }
       ],
-      "tekpractice": { "in_catalog": false, "catalog_id": null, "proposed_new_connectors": [], "proposed_new_signals": [], "sim_value": "high", "sim_value_reason": "Balanced XLR4 headphone output with documented pinout, XLR/RCA inputs and optional digital inputs: rich connector lesson." }
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Balanced XLR4 headphone output with documented pinout, XLR/RCA inputs and optional digital inputs: rich connector lesson."
+      },
+      "manual_url_status": "ok",
+      "product_page_url_status": "ok"
     }
   ]
 }

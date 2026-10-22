@@ -61,7 +61,8 @@
       "quality_notes": "21k faces, no brand in title; decimate ~5x.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic broadcast dynamic (large end-address body on yoke). Closer stand-in for the RE20 than the current SM7B mesh; reshape to the RE20 long cylindrical body.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "ev-re20",
@@ -84,7 +85,8 @@
       "quality_notes": "91k faces, \"game-ready\" per author. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Author says \"retro microphone ElectroVoice\": likely a vintage EV model, NOT confirmed to be an RE20. Inspect before use; reference for EV styling only.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "shure-sm7b",
@@ -107,7 +109,8 @@
       "quality_notes": "99.8k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Named SM7B replica; CC BY. Would free the current SM7B mesh from being mis-used for ev-re20.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "shure-sm7b",
@@ -130,7 +133,8 @@
       "quality_notes": "139k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Alternative SM7B replica.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "neumann-tlm-103",
@@ -153,7 +157,8 @@
       "quality_notes": "21k faces, PBR; part of Kyler Michaelson studio series (consistent style with studio monitors + compressor below).",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Generic large-diaphragm condenser from a custom studio-asset series; unbranded so it can stand in for tlm-103 / m-149 / ela-m-251e after scaling.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:large-diaphragm-condenser",
@@ -176,7 +181,8 @@
       "quality_notes": "243k faces (author says 98k for mic). High poly: needs decimation to the 800-4000 tri device budget.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic LDC with studio foam backdrop; foam must be removed.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:ldc-on-broadcast-arm",
@@ -199,7 +205,8 @@
       "quality_notes": "153k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "LDC on desk arm: useful prop for radio booth / podcast desks. Rode NT1-A replica.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "sennheiser-mkh-416",
@@ -222,7 +229,8 @@
       "quality_notes": "23.5k faces; \"studio shotgun mic\" per author.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic shotgun tube; scale to MKH 416 length (~250 mm) and add XLR port empty.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "rode-ntg2",
@@ -245,7 +253,8 @@
       "quality_notes": "137k faces. High poly: needs decimation to the 800-4000 tri device budget.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic shotgun, baked PBR textures; usable for rode-ntg2 / mkh-418-s variants.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:boom-pole-with-shotgun",
@@ -268,7 +277,8 @@
       "quality_notes": "6.2k faces, light.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly boom pole + mic, ideal ENG / film location prop.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:handheld-wireless-mic",
@@ -291,7 +301,8 @@
       "quality_notes": "22.7k faces; decimate.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Generic handheld wireless transmitter (separate power switch) for ew-100 / slx-d handhelds.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:mic-stand-straight",
@@ -314,7 +325,8 @@
       "quality_notes": "2.9k faces, within budget.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Straight round-base mic stand; complements the boom stand already used for km-210-9.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "sony-mdr-7506",
@@ -337,7 +349,8 @@
       "quality_notes": "10.8k faces, good shape. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Exact model match.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "beyerdynamic-dt-770-pro",
@@ -360,7 +373,8 @@
       "quality_notes": "20.6k faces. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "DT 900 PRO X shares the beyerdynamic family silhouette; usable as DT 770 stand-in after closing the cups.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "sennheiser-hd-600",
@@ -383,7 +397,8 @@
       "quality_notes": "49k faces. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Drop HD 6XX is the HD 650 body, very close to HD 600 shape.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "behringer-ha400",
@@ -406,7 +421,8 @@
       "quality_notes": "102k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Exact model match (HA400 MicroAMP).",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "yamaha-mg10xu",
@@ -429,7 +445,8 @@
       "quality_notes": "3.8k faces - already in budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Yamaha MG06 low-poly: same MG family styling; widen to 10-channel layout.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "behringer-xenyx-x1204usb",
@@ -452,7 +469,8 @@
       "quality_notes": "165k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Xenyx 802 (same Xenyx family); needs widening to 12 channels.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:analog-mixing-console",
@@ -475,7 +493,8 @@
       "quality_notes": "6.6k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Light generic console; base for mackie-1604vlz4 / allen-heath-zed-22fx / soundcraft-gb4 generic look.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "ssl-origin",
@@ -498,7 +517,8 @@
       "quality_notes": "257k faces, no textures by design. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Large-format in-line console (SSL 9000 J/K); untextured low-poly-ish; reference / generic large-format desk for recording-studio room.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:rack-mount-mixer",
@@ -521,7 +541,8 @@
       "quality_notes": "107k faces. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "19-inch rack mixer (Yamaha MV1602) - generic rackmount mixer prop.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "focusrite-scarlett-2i2-4th-gen",
@@ -544,7 +565,8 @@
       "quality_notes": "4k faces - in budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Scarlett Solo 4th Gen: same enclosure family; add 2nd combo input.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "audient-id14-mkii",
@@ -567,7 +589,8 @@
       "quality_notes": "3.6k faces. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Desktop 2-in interface (MOTU M2) with near real-world dimensions; generic desktop-interface stand-in only.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "shure-scm820",
@@ -590,7 +613,8 @@
       "quality_notes": "418k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Audio-Technica ATDM-0604 automatic mixer: same product class (conference auto-mixer); generic stand-in.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "yamaha-hs8",
@@ -613,7 +637,8 @@
       "quality_notes": "20k faces. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Exact model match (HS8).",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "neumann-kh-120-ii",
@@ -636,7 +661,8 @@
       "quality_notes": "11.6k faces, PBR.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Custom-designed unbranded 2-way monitor (author). Good generic stand-in for kh-120-ii / genelec-8341a / adam-audio-a7v.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:studio-monitor-2way",
@@ -659,7 +685,8 @@
       "quality_notes": "17k faces, PBR.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Modern generic studio speaker, arch-viz quality.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "focal-shape-65",
@@ -682,7 +709,8 @@
       "quality_notes": "402k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Focal CMS-50: Focal pro monitor; family look only.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:monitor-stand",
@@ -705,7 +733,8 @@
       "quality_notes": "5.5k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Studio monitor floor stand prop.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "l-acoustics-k2",
@@ -728,7 +757,8 @@
       "quality_notes": "117k faces. High poly: needs decimation to the 800-4000 tri device budget.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic line-array cluster; needs per-box rigging + K2 proportions.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "l-acoustics-kara-ii",
@@ -751,7 +781,8 @@
       "quality_notes": "8k faces.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Low-poly generic line array; good base for Kara II-sized elements.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "l-acoustics-ks28",
@@ -774,7 +805,8 @@
       "quality_notes": "24k faces.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Stage subwoofer cabinet; resize to 2x18 KS28 proportions.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:pa-subwoofer",
@@ -797,7 +829,8 @@
       "quality_notes": "1.5k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "\"Clean\" unbranded PA sub, very light.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:pa-top",
@@ -820,7 +853,8 @@
       "quality_notes": "5.3k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "\"Clean\" unbranded PA top, stackable with the sub above (same author).",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:stage-speaker",
@@ -843,7 +877,8 @@
       "quality_notes": "6.9k faces, 4K PBR.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Generic dirty stage speaker, same author as the yamaha-dbr12 mesh already used.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "crown-xls-2502",
@@ -866,7 +901,8 @@
       "quality_notes": "137k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Travel rack with Crown amps: extract one amp for crown-xls-2502 or keep as amp-rack prop for concert scenes.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "universal-audio-teletronix-la-2a",
@@ -889,7 +925,8 @@
       "quality_notes": "453k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Warm Audio WA-2A is an LA-2A-style clone: same faceplate layout.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:rack-compressor",
@@ -912,7 +949,8 @@
       "quality_notes": "337k faces. High poly: needs decimation to the 800-4000 tri device budget.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Minimal generic 19-inch compressor (Kyler Michaelson series); stand-in for dbx-166xs / ssl-the-bus-plus.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "zoom-h6essential",
@@ -935,7 +973,8 @@
       "quality_notes": "43k faces, photogrammetry. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Zoom H2n 3D scan; handheld recorder class only (H6 already used for aeta-scoopy-plus-s).",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "nagra-4-2",
@@ -958,7 +997,8 @@
       "quality_notes": "24.5k faces. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Tascam 32-2B reel-to-reel: tape-machine stand-in for a heritage/ tape scene, not a portable Nagra.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "sennheiser-ew-100-g4",
@@ -981,7 +1021,8 @@
       "quality_notes": "166k faces. High poly: needs decimation to the 800-4000 tri device budget. Branded real product: genericize (strip logos/text, alter trade dress) before any commercial ship (CLAUDE.md Trademark rule).",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Audio-Technica ATW-R3210N half-rack receiver: same class (UHF receiver, antennas); generic stand-in.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:recording-studio",
@@ -1004,7 +1045,8 @@
       "quality_notes": "96k faces.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Full studio with piano and mixer; usable as backdrop.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:recording-studio",
@@ -1027,7 +1069,8 @@
       "quality_notes": "400k faces. High poly: needs decimation to the 800-4000 tri device budget.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Home/band studio room, dense.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:post-production-room",
@@ -1050,7 +1093,8 @@
       "quality_notes": "199k faces.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Studio desk furniture for control room / post room.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:radio-booth",
@@ -1073,7 +1117,8 @@
       "quality_notes": "132k faces. Check for station branding.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Radio studio set.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:tv-set",
@@ -1096,7 +1141,8 @@
       "quality_notes": "17.8k faces.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Talk-show set, light. Uploaded by an account named after a broadcaster (RIK Cyprus): check for channel logos.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:tv-set",
@@ -1119,7 +1165,8 @@
       "quality_notes": "94k faces; stylised Gravity Sketch geometry.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Quiz-show studio (VR sketch, WIP).",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:tv-set",
@@ -1142,7 +1189,8 @@
       "quality_notes": "6.2k faces.",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Replica of the ARD Tagesschau news set: real broadcaster trade dress/marks. Reference only even though licence is CC BY.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:tv-studio-camera",
@@ -1165,7 +1213,8 @@
       "quality_notes": "1.2k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly TV camera for tv-set / gallery.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:theatre",
@@ -1188,7 +1237,8 @@
       "quality_notes": "21k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Theatre stage (Sakhalin theatre), light.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:theatre",
@@ -1211,7 +1261,8 @@
       "quality_notes": "15k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Opened stage curtains, three layers: dress a stage box.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:concert-open-air",
@@ -1234,7 +1285,8 @@
       "quality_notes": "6.5k faces; author warns UVs overlap.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly VR concert stage, 4K PBR.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:concert-open-air",
@@ -1257,7 +1309,8 @@
       "quality_notes": "10k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Concert stage, light.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:concert-open-air",
@@ -1280,7 +1333,8 @@
       "quality_notes": "594 faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Custom very-low-poly festival stage.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:truss",
@@ -1303,7 +1357,8 @@
       "quality_notes": "24k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Truss structure built from author modular truss; for flown PA / lighting.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:conference-installed",
@@ -1326,7 +1381,8 @@
       "quality_notes": "742 faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Mozilla Hubs low-poly conference room - ideal web budget.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:conference-installed",
@@ -1349,7 +1405,8 @@
       "quality_notes": "49k faces.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Press conference room (lectern + backdrop); check backdrop for logos.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:eng-outdoor-reportage",
@@ -1372,7 +1429,8 @@
       "quality_notes": "14.7k faces.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Low-poly news/OB van for ENG scene.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:cable-reels",
@@ -1395,7 +1453,8 @@
       "quality_notes": "331k faces, scan. High poly: needs decimation to the 800-4000 tri device budget.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Photogrammetry cable reels (industrial); decor for outdoor/stage.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:dj-mixer",
@@ -1418,7 +1477,8 @@
       "quality_notes": "High quality Rodec Mixetta, 50.6k faces. Reference only.",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "NonCommercial licence.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:concert-open-air",
@@ -1441,7 +1501,8 @@
       "quality_notes": "5.8k faces. Reference only.",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "NonCommercial licence.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:closed-headphones",
@@ -1464,7 +1525,8 @@
       "quality_notes": "Sennheiser HD 280 scan, 246k faces.",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "NoDerivs licence: cannot be modified (rig pass impossible).",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:recording-studio",
@@ -1487,7 +1549,8 @@
       "quality_notes": "106k faces. Reference only.",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "NonCommercial-ShareAlike licence.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:digital-rack-mixer",
@@ -1510,7 +1573,8 @@
       "quality_notes": "Behringer X Air 18, 100k faces. Reference only.",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Sketchfab Free Standard licence (store licence, no stand-alone redistribution).",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:recording-flight-case",
@@ -1533,7 +1597,8 @@
       "quality_notes": "Mobile 16-input recording rack (Focusrite gear), 5.2k faces. Reference only.",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Sketchfab Free Standard licence.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:studio-monitor-2way",
@@ -1556,7 +1621,8 @@
       "quality_notes": "PreSonus 3.5 in monitors, 147k faces. Reference only.",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Sketchfab Free Standard licence.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "l-acoustics-x15-hiq",
@@ -1577,7 +1643,8 @@
       "quality_notes": "Low-poly floor wedge.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic coaxial wedge shape; reproportion to X15 HiQ (and reusable for any wedge).",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:portable-recorder",
@@ -1598,7 +1665,8 @@
       "quality_notes": "Low-poly portable recorder.",
       "suitable_for_tekpractice": "with work",
       "suitability_reason": "Generic stand-in for sound-devices-833 / zoom-f8n-pro class bags recorders.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:speaker-stand",
@@ -1619,7 +1687,8 @@
       "quality_notes": "Low-poly rolling stand.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Light prop, same author style as wedge/recorder.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:small-speaker",
@@ -1640,7 +1709,8 @@
       "quality_notes": "Kenney low-poly kit style.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "CC0, trivial to ship; good for conference-room ceiling/wall speaker placeholder.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:eng-outdoor-reportage",
@@ -1663,7 +1733,8 @@
       "quality_notes": "Photoreal PBR.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Power for ENG/outdoor scene; CC0.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:power-distro-box",
@@ -1686,7 +1757,8 @@
       "quality_notes": "Rigged (door).",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Stage/outdoor power distro prop; CC0.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:conference-installed",
@@ -1709,7 +1781,8 @@
       "quality_notes": "Photoreal PBR.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Conference room dressing; CC0.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:megaphone",
@@ -1732,7 +1805,8 @@
       "quality_notes": "Photoreal PBR.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Outdoor / reportage prop; CC0.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:radio-booth",
@@ -1755,7 +1829,8 @@
       "quality_notes": "Photoreal PBR.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Neutral desk for radio booth / gallery; CC0.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "generic:cables",
@@ -1778,7 +1853,8 @@
       "quality_notes": "Modular cable runs.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Scene-dressing cable runs (not interactive patch cables); CC0.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "room:tv-set",
@@ -1801,7 +1877,8 @@
       "quality_notes": "Photoreal PBR.",
       "suitable_for_tekpractice": "yes",
       "suitability_reason": "Ceiling lighting for gallery / control room; CC0.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "l-acoustics-k2",
@@ -1823,7 +1900,8 @@
       "quality_notes": "Files: https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/K2/EN/CAD Files/k2-cad-files.zip | https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/K2/EN/Revit Files/K2 Revit Files.zip | https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/K2/EN/Sketchup Files/l-acoustics.skp",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Exact dimensions: use as REFERENCE for proportions / port positions only. No licence granted; shipping would also reproduce trade dress.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "l-acoustics-x15-hiq",
@@ -1845,7 +1923,8 @@
       "quality_notes": "Files: https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X15 HiQ/EN/CAD Files/X15 HiQ CAD Files.zip | https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/X15 HiQ/EN/Revit Files/X15HiQ Revit Files.zip",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Exact dimensions: use as REFERENCE for proportions / port positions only. No licence granted; shipping would also reproduce trade dress.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     },
     {
       "device_id": "l-acoustics-ks28",
@@ -1867,7 +1946,8 @@
       "quality_notes": "Files: https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KS28/EN/CAD Files/KS28 CAD Files.zip | https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/documentation/LOUDSPEAKERS/KS28/EN/Revit Files/KS28 Revit Files.zip",
       "suitable_for_tekpractice": "no",
       "suitability_reason": "Exact dimensions: use as REFERENCE for proportions / port positions only. No licence granted; shipping would also reproduce trade dress.",
-      "accessed": "2026-10-22"
+      "accessed": "2026-10-22",
+      "model_url_status": "ok"
     }
   ],
   "not_found_log": [

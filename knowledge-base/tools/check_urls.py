@@ -14,6 +14,7 @@ import json
 import re
 import ssl
 import urllib.error
+import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -25,7 +26,11 @@ BLOCKED = {401, 403, 405, 406, 429, 451, 503, 999}
 
 
 def fetch(url):
+    if "://" not in url or " " in url.split("://", 1)[1].split("/", 1)[0] or re.search(r"\s(returned|and|not)\s", url):
+        return "not-a-url"  # prose from a not_found_log, e.g. "https://x returned 403"
     ctx = ssl.create_default_context()
+    # browsers percent-encode spaces and non-ASCII; do the same, keeping existing escapes
+    url = urllib.parse.quote(url, safe=":/?#[]@!$&'()*+,;=%~")
     for method in ("HEAD", "GET"):
         req = urllib.request.Request(url, method=method, headers={"User-Agent": UA, "Accept": "*/*", "Accept-Language": "fr,en;q=0.8"})
         try:
