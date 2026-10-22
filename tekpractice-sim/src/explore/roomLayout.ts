@@ -98,6 +98,17 @@ export function roomLayout(room: RoomTemplate): RoomLayout {
         height,
       })
 
+  // Outer ring 1.5 m beyond the walls: a doorway leads to a landing, not into the void.
+  const M = 1.5
+  const ow = hw + M
+  const ol = hl + M
+  colliders.push(
+    { minX: -ow - THICK, maxX: ow + THICK, minZ: ol, maxZ: ol + THICK, height },
+    { minX: -ow - THICK, maxX: ow + THICK, minZ: -ol - THICK, maxZ: -ol, height },
+    { minX: ow, maxX: ow + THICK, minZ: -ol, maxZ: ol, height },
+    { minX: -ow - THICK, maxX: -ow, minZ: -ol, maxZ: ol, height },
+  )
+
   const zones = room.zones.map((z) => ({
     id: z.id,
     kind: z.kind,

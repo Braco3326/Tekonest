@@ -79,8 +79,11 @@ export class ViewDirector implements CameraDirector {
     this.fromExplore = false
     const handBack = (): void => {
       this.returnTimer = null
-      this.arc.detachControl()
       this.arc.lowerRadiusLimit = 2
+      // The learner may have switched to Orbit (V) during the flight: then the
+      // orbit camera keeps control and the walker stays parked (review #4).
+      if (!this.walker.exploreView) return
+      this.arc.detachControl()
       this.walker.resume()
     }
     if (ms === 0) handBack()

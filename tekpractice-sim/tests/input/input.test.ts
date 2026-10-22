@@ -5,6 +5,8 @@ import {
   DEFAULT_BINDINGS,
   parseBindings,
   rebind,
+  REMAPPABLE,
+  RESERVED_CODES,
   serializeBindings,
 } from '../../src/input/bindings'
 import { KeyboardState } from '../../src/input/keyboardState'
@@ -37,6 +39,20 @@ describe('bindings (KeyboardEvent.code = physical position)', () => {
     expect(actionsForCode(b, 'KeyW')).toEqual([])
     expect(actionsForCode(b, 'ArrowUp')).toEqual(['MOVE_FORWARD'])
     expect(DEFAULT_BINDINGS.MOVE_FORWARD).toContain('KeyW') // pure: input untouched
+  })
+
+  it('never remaps CANCEL and never gives a reserved key (Esc, Tab, Enter) to an action', () => {
+    expect(REMAPPABLE).not.toContain('CANCEL')
+    expect(rebind(DEFAULT_BINDINGS, 'CANCEL', ['KeyP'])).toEqual(DEFAULT_BINDINGS)
+    for (const code of RESERVED_CODES) expect(rebind(DEFAULT_BINDINGS, 'RUN', [code])).toEqual(DEFAULT_BINDINGS)
+  })
+
+  it('keeps an action emptied by a stolen key empty after reload (no ghost duplicate)', () => {
+    const b = rebind(DEFAULT_BINDINGS, 'MOVE_FORWARD', ['Space'])
+    expect(b.TOGGLE_INVENTORY).toEqual([])
+    const reloaded = parseBindings(serializeBindings(b))
+    expect(reloaded.TOGGLE_INVENTORY).toEqual([])
+    expect(actionsForCode(reloaded, 'Space')).toEqual(['MOVE_FORWARD'])
   })
 
   it('round-trips through serialize/parse and repairs unknown or missing actions', () => {

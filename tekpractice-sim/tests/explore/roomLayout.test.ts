@@ -52,6 +52,13 @@ describe('room layout (procedural rooms from TEK Brain templates)', () => {
     expect(throughWall.z).toBeLessThan(16)
   })
 
+  it('a doorway is not an exit into the void: an outer boundary stops the walker just outside', () => {
+    const l = roomLayout(hall)
+    const out = resolveMove({ x: -5, z: 14 }, { x: -5, z: 30 }, 0.3, l.colliders)
+    expect(out.z).toBeGreaterThan(16) // through the door…
+    expect(out.z).toBeLessThan(16 + 2.5) // …but not far
+  })
+
   it('raises the floor on stage zones (walk up onto the stage)', () => {
     const l = roomLayout(hall)
     expect(l.floorAt(0, -11)).toBeCloseTo(1.3)

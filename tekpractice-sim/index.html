@@ -445,7 +445,7 @@
       /* ── Explore view (ADR-0010): toolbar, crosshair, panels ───────────── */
       #explore-toolbar {
         position: absolute; top: var(--tk-space-lg, 20px); left: 50%; transform: translateX(-50%);
-        display: flex; gap: 6px; pointer-events: auto;
+        display: flex; gap: 6px; pointer-events: auto; z-index: 21;
       }
       #explore-toolbar button, .ex-panel button, .ex-pause a {
         font: inherit; font-size: var(--tk-text-sm, 12.5px); font-weight: var(--tk-weight-medium, 550);
@@ -472,8 +472,12 @@
         background: var(--tk-surface, #fff); border: 1px solid var(--tk-surface-border, #e6e8ee);
         border-radius: var(--tk-radius-lg, 18px); box-shadow: var(--tk-elev-raised);
         padding: var(--tk-space-lg, 20px); pointer-events: auto;
-        animation: toast-in var(--tk-motion-base, 240ms) var(--tk-motion-ease, ease);
+        z-index: 20; /* dialogs above every HUD card (shelf, objectives, controls) */
+        /* Own keyframe: toast-in animates `transform` and would drop the centring
+           translate(-50%, -50%) mid-animation (panel slid in from a corner). */
+        animation: ex-panel-in var(--tk-motion-base, 240ms) var(--tk-motion-ease, ease);
       }
+      @keyframes ex-panel-in { from { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); } }
       .ex-panel-wide { width: min(920px, calc(100vw - 32px)); }
       .ex-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--tk-space-md, 14px); }
       .ex-head h2 { font-size: var(--tk-text-lg, 16px); font-weight: var(--tk-weight-bold, 650); }

@@ -55,7 +55,7 @@ import { detectLayout } from './input/layoutLabels'
 import type { RoomLayout } from './explore/roomLayout'
 import type { RoomFileT } from './explore/roomSchema'
 import { askCoach, createAiCoach } from './ai'
-import { buildGrounding, type KbPack } from './ai/grounding'
+import { buildGrounding, KbPackSchema, type KbPack } from './ai/grounding'
 
 declare global {
   interface Window {
@@ -298,7 +298,11 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         // fetched only when the learner asks. No pack → the coach works as before.
         const question = { ruleId, errorCode, subjects }
         const reply = import('../content/coach/kb-chunks.json')
-          .then((m) => m.default as unknown as KbPack)
+          .then((m) => {
+            const parsed = KbPackSchema.safeParse(m.default)
+            if (!parsed.success) console.warn('[coach] pack TEK Brain invalide — coach sans fiches', parsed.error.issues[0])
+            return parsed.success ? (parsed.data as KbPack) : undefined
+          })
           .catch(() => undefined)
           .then((kb) => askCoach(aiCoach, buildGrounding(registry, graph.snapshot(), question, undefined, kb), { examMode }))
         void hud.showCoachReply(toastEl, reply)
@@ -459,6 +463,10 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       onClick: (toastEl) => {
         toastEl.remove()
         if (instances.some((i) => i.instanceId === instanceId)) return
+        if (instances.length >= MAX_SANDBOX_DEVICES) {
+          hud.toast('warning', 'Rack plein', `Maximum ${MAX_SANDBOX_DEVICES} appareils — retire-en un pour annuler.`)
+          return
+        }
         if (!spawnExact(instanceId, inst.deviceId, 0, pose)) return
         for (const w of wires) {
           const r = graph.connect(w.a, w.b)
@@ -484,7 +492,9 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     let allOk = true
     rig.instances.forEach((s, i) => {
       const saved = rig.positions?.[s.instanceId]
-      const at = saved ? { position: [saved[0], saved[1], saved[2]] as [number, number, number], rotationY: saved[3] } : undefined
+      // Stored data is untrusted: only 4 finite numbers count as a position.
+      const valid = Array.isArray(saved) && saved.length === 4 && saved.every((v) => Number.isFinite(v))
+      const at = valid ? { position: [saved[0], saved[1], saved[2]] as [number, number, number], rotationY: saved[3] } : undefined
       if (!spawnExact(s.instanceId, s.deviceId, i, at)) allOk = false
     })
     for (const c of rig.connections) {
@@ -579,10 +589,13 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   // body (cached; re-derived when the stage changes).
   const walls = room ? room.layout.colliders : roomWalls(floorW, floorD, 4)
   let deviceBoxes: Box[] | null = null
+  let allObstacles: Box[] | null = null
   const invalidateObstacles = (): void => {
     deviceBoxes = null
+    allObstacles = null
   }
   const obstacles = (): readonly Box[] => {
+    if (allObstacles) return allObstacles // per-frame call: no allocation (review)
     if (!deviceBoxes) {
       deviceBoxes = []
       for (const inst of instances) {
@@ -598,7 +611,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         if (min && max) deviceBoxes.push({ minX: min.x, maxX: max.x, minZ: min.z, maxZ: max.z, height: max.y })
       }
     }
-    return [...walls, ...deviceBoxes]
+    allObstacles = [...walls, ...deviceBoxes]
+    return allObstacles
   }
   for (const inst of instances) void inst.modelReady.then(invalidateObstacles)
 
@@ -622,6 +636,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     floorAt: room ? (x, z) => room.layout.floorAt(x, z) : undefined,
   })
   const director = new ViewDirector(scene, camera, rig, explore)
+  // Assigned just below (it needs focusPatch); FocusPatch's view hook refreshes it.
+  let exploreHud: ExploreToolbar | undefined
   const focusPatch = new FocusPatch(scene, camera, director, cables, instances, portPoints, {
     canConnect: (a, b) => graph.canConnect(a, b),
     dispatch,
@@ -629,6 +645,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     onCandidate: markerScale,
     clickFocuses: () => explore.clickFocuses(),
     inputEnabled: () => explore.pointerFree(),
+    onViewChange: () => exploreHud?.refresh(),
   })
   // Inventory, help, settings, pause + placement ghost (ADR-0010 Décisions 8–9).
   const placement = new Placement({
@@ -637,12 +654,15 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     halfWidth: floorW / 2,
     halfDepth: floorD / 2,
     dispatch: (intent) => dispatch(intent),
+    floorAt: room ? (x, z) => room.layout.floorAt(x, z) : undefined,
   })
   let layoutMap: ReadonlyMap<string, string> | undefined
-  const exploreHud = new ExploreToolbar({
+  exploreHud = new ExploreToolbar({
     root: document.getElementById('hud')!,
     devices: [...registry.deviceById.values()],
     sandbox: sandboxMode,
+    inventoryEnabled: !examMode,
+    focusedInstance: () => (focusPatch.view.mode === 'focus' ? focusPatch.view.focused : null),
     settings: () => settings,
     onSettings: (next) => {
       settings = next
@@ -656,6 +676,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     },
     placement,
     ensureExplore: () => {
+      // Placement aims while walking: leave focus first (review #3), then walk.
+      focusPatch.leaveFocus()
       if (!explore.exploreView) explore.toggleView()
     },
     pickUp: (instanceId) => {
@@ -674,7 +696,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   void kb?.getLayoutMap?.()
     .then((m) => {
       layoutMap = m
-      exploreHud.refresh()
+      exploreHud?.refresh()
     })
     .catch(() => undefined)
   explore.connect(focusPatch, exploreUi)

@@ -5,6 +5,7 @@
  * validateReply() rejette toute réponse qui cite une règle inconnue, du
  * matériel hors contexte, ou qui ne cite aucune source.
  */
+import { z } from 'zod'
 import type { Registry } from '../engine/CatalogLoader'
 import type { RigSnapshot } from '../engine/types'
 import type { CoachQuestion } from './AiCoach'
@@ -42,6 +43,12 @@ export interface KbPack {
   byRule: Record<string, string[]>
   chunks: Record<string, { title: string; text: string; sourceUrls: string[] }>
 }
+
+/** zod fail-fast for the shipped pack (CLAUDE.md: content is validated, never just cast). */
+export const KbPackSchema = z.object({
+  byRule: z.record(z.array(z.string())),
+  chunks: z.record(z.object({ title: z.string(), text: z.string(), sourceUrls: z.array(z.string()).min(1) })),
+})
 
 export function buildGrounding(
   registry: Registry,

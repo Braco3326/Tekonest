@@ -229,6 +229,111 @@ test('settings: remap "Avancer" to another key and walk with it', async ({ page 
   expect(saved.settings.bindings.MOVE_FORWARD).toEqual(['KeyI'])
 })
 
+// ── review fixes (code review 2026-10-22) ────────────────────────────────────
+
+/** Place a console (big enough to click reliably — tiny mics are a known flaky target). */
+async function placeConsole(page: Page): Promise<string> {
+  await page.keyboard.press('Space')
+  const panel = page.locator('.ex-panel[data-panel="inventory"]')
+  await panel.locator('input[type="search"]').fill('ql1')
+  await panel.locator('.ex-item').click()
+  await panel.locator('[data-place]').click()
+  const size = page.viewportSize()!
+  await page.mouse.click(size.width / 2, size.height / 2 + 150)
+  await expect.poll(async () => page.evaluate(() => window.__audioSim!.assets().length)).toBe(1)
+  return page.evaluate(() => window.__audioSim!.assets()[0].instanceId)
+}
+
+async function focusFromExplore(page: Page, id: string): Promise<void> {
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const pos = await page.evaluate((i) => window.__audioSim!.deviceScreen(i), id)
+    await page.mouse.click(pos!.x, pos!.y - attempt * 10)
+    const ok = await page
+      .waitForFunction(() => window.__audioSim!.view().mode === 'focus', undefined, { timeout: 1000 })
+      .then(() => true)
+      .catch(() => false)
+    if (ok) {
+      await page.waitForTimeout(500)
+      return
+    }
+    if (await page.evaluate(() => window.__audioSim!.view().held !== null)) await page.keyboard.press('Escape')
+  }
+  throw new Error(`could not focus ${id}`)
+}
+
+test('settings: closing the panel while waiting for a key disarms the capture', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  await page.locator('#explore-toolbar [data-act="settings"]').click()
+  const panel = page.locator('.ex-panel[data-panel="settings"]')
+  await panel.locator('[data-bind="MOVE_FORWARD"]').click()
+  await panel.locator('.ex-close').click()
+  await expect(panel).toHaveCount(0)
+  // A still-armed capture would swallow H (and bind it to "Avancer"): H must open the help.
+  await page.keyboard.press('h')
+  await expect(page.locator('.ex-panel[data-panel="help"]')).toBeVisible()
+  const saved = await page.evaluate(() => window.localStorage.getItem('audio-sim/explore-settings'))
+  expect(saved === null || JSON.parse(saved).settings.bindings.MOVE_FORWARD[0] === 'KeyW').toBe(true)
+})
+
+test('settings: Esc (Annuler) is not remappable', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  await page.locator('#explore-toolbar [data-act="settings"]').click()
+  await expect(page.locator('.ex-panel[data-panel="settings"] [data-bind="CANCEL"]')).toHaveCount(0)
+})
+
+test('focus returns to the toolbar button after closing the panel it opened', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  await page.locator('#explore-toolbar [data-act="help"]').click()
+  await expect(page.locator('.ex-panel[data-panel="help"]')).toBeVisible()
+  await page.keyboard.press('Escape')
+  expect(await page.evaluate(() => (document.activeElement as HTMLElement | null)?.dataset.act)).toBe('help')
+})
+
+test('V during the return flight from focus leaves a live orbit camera', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  const id = await placeConsole(page)
+  await focusFromExplore(page, id)
+  await page.keyboard.press('Escape') // leave focus → flight back to the walker's eye…
+  await page.keyboard.press('v') // …and switch to orbit DURING the flight
+  await page.waitForTimeout(700)
+  const s = await ex(page)
+  expect(s.view).toBe('orbit')
+  expect(s.camera).toBe('cam') // the orbit camera renders, not the parked walker camera
+})
+
+test('focus: the "Ramasser" button picks the focused device up (mouse-only path)', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  const id = await placeConsole(page)
+  await focusFromExplore(page, id)
+  await page.locator('#explore-toolbar [data-act="pickup"]').click()
+  await expect.poll(async () => page.evaluate(() => window.__audioSim!.assets().length)).toBe(0)
+  await expect.poll(async () => page.evaluate(() => window.__audioSim!.view().mode)).toBe('ensemble')
+})
+
+test('focus: "Placer dans le monde" leaves focus and the ghost can be dropped with F (keyboard)', async ({ page }) => {
+  await boot(page, '?level=sandbox')
+  const id = await placeConsole(page)
+  await focusFromExplore(page, id)
+  await page.keyboard.press('Space')
+  const panel = page.locator('.ex-panel[data-panel="inventory"]')
+  await panel.locator('input[type="search"]').fill('sm58')
+  await panel.locator('.ex-item').click()
+  await panel.locator('[data-place]').click()
+  await expect.poll(async () => page.evaluate(() => window.__audioSim!.view().mode)).toBe('ensemble')
+  expect((await ex(page)).placing).toBe(true)
+  await page.waitForTimeout(500)
+  await page.keyboard.press('f') // keyboard confirm
+  await expect.poll(async () => page.evaluate(() => window.__audioSim!.assets().length)).toBe(2)
+})
+
+test('exam: no inventory (no hints of any kind in the exam)', async ({ page }) => {
+  await boot(page, '?level=a1&mode=exam')
+  await page.keyboard.press('Space')
+  await page.waitForTimeout(500)
+  await expect(page.locator('.ex-panel')).toHaveCount(0)
+  await expect(page.locator('#explore-toolbar [data-act="inventory"]')).toHaveCount(0)
+})
+
 test('walls stop the walker (collision)', async ({ page }) => {
   await boot(page, '?level=sandbox')
   await page.keyboard.down('s') // walk backwards into the rear wall for 6 s
