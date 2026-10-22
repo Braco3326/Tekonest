@@ -1,0 +1,17 @@
+{
+ "generated": "2026-10-22",
+ "total": 1832,
+ "max_chars": 1200,
+ "by_kind": {
+  "concept": 420,
+  "skill": 60,
+  "procedure": 192,
+  "rule": 82,
+  "fault": 104,
+  "scenario": 41,
+  "glossary": 780,
+  "fundamentals": 153
+ },
+ "sha256": "cfa7ac93db57f529c8118f929e7ab23294fb49c3d7758a6f1c4163e0e84d6a5e",
+ "note": "Own-words KB content only. Cite chunk ids; see tek-brain/AI_USAGE.md."
+}
