@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "note": "Frozen domain ids for TEK Brain. Each research agent owns one domain and writes tek-brain/<entity>/<domain>.json. seed_concepts are concept ids other domains may reference before they exist; the owner domain must create them.",
+  "planned_rooms_note": "Room template ids that A3 will create (tek-brain/rooms/<id>.json). Scenarios may reference them before they exist.",
+  "planned_rooms": [
+    "studio-control-room-small", "studio-control-room-large", "studio-live-room-medium", "studio-vocal-booth-small",
+    "mastering-room-medium", "post-atmos-mix-room-medium", "foley-dubbing-stage-medium", "podcast-room-small",
+    "radio-studio-self-op-small", "radio-talk-studio-medium", "tv-studio-plateau-large", "tv-gallery-regie-medium",
+    "ob-van-small", "bar-club-stage-small", "concert-hall-medium", "arena-large", "festival-open-air-large",
+    "dj-booth-small", "theatre-italian-medium", "theatre-black-box-small", "opera-house-pit-large",
+    "scoring-stage-large", "church-worship-medium", "conference-room-small", "auditorium-amphitheatre-medium",
+    "interpretation-booth-small", "hybrid-meeting-room-small", "classroom-lab-small", "eng-outdoor-reportage",
+    "wedding-event-hall-medium", "sports-venue-pa-large", "museum-installed-sound-medium"
+  ],
+  "domains": [
+    { "id": "acoustics-psychoacoustics", "name_fr": "Acoustique et psychoacoustique", "seed_concepts": ["sound-wave", "sound-pressure", "frequency", "wavelength", "speed-of-sound", "inverse-square-law", "reverberation-time-rt60", "critical-distance", "room-modes", "comb-filtering", "equal-loudness-contours", "masking", "haas-precedence-effect", "harmonics", "phase"] },
+    { "id": "electricity-levels", "name_fr": "Électricité et niveaux", "seed_concepts": ["decibel", "dbu", "dbv", "dbfs", "db-spl", "gain-staging", "headroom", "impedance", "impedance-bridging", "balanced-line", "unbalanced-line", "ohms-law", "electrical-power", "ground-loop", "signal-to-noise-ratio"] },
+    { "id": "microphones-miking", "name_fr": "Microphones et prise de son", "seed_concepts": ["dynamic-microphone", "condenser-microphone", "ribbon-microphone", "polar-pattern", "proximity-effect", "phantom-power", "microphone-sensitivity", "max-spl-microphone", "stereo-xy", "stereo-ortf", "stereo-ab", "stereo-ms", "decca-tree", "three-to-one-rule"] },
+    { "id": "consoles-signal-flow", "name_fr": "Consoles et flux de signal", "seed_concepts": ["signal-flow", "input-channel", "aux-send", "pre-post-fader", "subgroup", "vca-dca", "matrix-output", "insert-point", "direct-out", "pfl-afl-solo", "patchbay-normalling"] },
+    { "id": "dynamics-eq-effects", "name_fr": "Dynamique, égalisation et effets", "seed_concepts": ["compressor", "threshold-ratio", "attack-release", "limiter", "noise-gate", "equalizer-parametric", "high-pass-filter", "reverb", "delay-effect", "de-esser", "sidechain"] },
+    { "id": "digital-audio-clocking", "name_fr": "Audio numérique et horloge", "seed_concepts": ["sampling", "nyquist-theorem", "aliasing", "bit-depth", "quantization-noise", "dither", "latency", "word-clock", "jitter", "clock-master", "sample-rate-conversion", "aes3", "adat", "spdif", "madi"] },
+    { "id": "audio-networks", "name_fr": "Réseaux audio", "seed_concepts": ["audio-over-ip", "dante", "aes67", "avb-milan", "ptp-clock", "multicast-unicast", "network-redundancy", "qos-dscp", "igmp-snooping", "aes50"] },
+    { "id": "loudspeakers-system-tuning", "name_fr": "Haut-parleurs, systèmes et calage", "seed_concepts": ["loudspeaker-sensitivity", "crossover", "line-array", "point-source", "subwoofer-alignment", "cardioid-subwoofer", "speaker-delay-alignment", "system-tuning", "amplifier-power-rating", "speaker-impedance-load", "coverage-angle"] },
+    { "id": "monitoring", "name_fr": "Retours (wedges, ear monitors)", "seed_concepts": ["stage-monitor-mix", "in-ear-monitoring", "monitor-engineer-role", "ringing-out", "acoustic-feedback"] },
+    { "id": "wireless-rf", "name_fr": "Liaisons HF", "seed_concepts": ["rf-frequency-coordination", "intermodulation", "squelch", "diversity-reception", "antenna-distribution", "pmse-regulation-france"] },
+    { "id": "live-sound", "name_fr": "Sonorisation live", "seed_concepts": ["line-check", "soundcheck", "foh-mix", "stage-plot-input-list", "changeover"] },
+    { "id": "studio-recording", "name_fr": "Enregistrement studio", "seed_concepts": ["recording-session", "overdub", "talkback", "cue-mix", "comping", "mixdown", "mastering"] },
+    { "id": "orchestra-classical", "name_fr": "Orchestre et musique classique", "seed_concepts": ["main-microphone-array", "spot-microphones", "orchestra-layout", "concert-hall-acoustics"] },
+    { "id": "broadcast-radio", "name_fr": "Radio et broadcast", "seed_concepts": ["mix-minus-n1", "audio-codec-ip", "loudness-ebu-r128", "true-peak", "on-air-chain", "telephone-hybrid", "tally-on-air"] },
+    { "id": "post-immersive", "name_fr": "Post-production et immersif", "seed_concepts": ["dialogue-editing", "foley", "adr-dubbing", "stems", "timecode", "dolby-atmos", "ambisonics", "binaural", "object-based-audio"] },
+    { "id": "installation-conference", "name_fr": "Installation et conférence", "seed_concepts": ["speech-intelligibility", "speech-transmission-index", "conference-system", "interpretation-system", "hearing-loop", "distributed-sound-100v"] },
+    { "id": "safety", "name_fr": "Sécurité", "seed_concepts": ["noise-induced-hearing-loss", "sound-exposure-limits-france", "electrical-safety-earthing", "rigging-safety", "cable-management-safety"] }
+  ]
+}
