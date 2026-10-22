@@ -1,1248 +1,1310 @@
 {
- "entity": "glossary",
- "domain": "broadcast-radio",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "lufs",
-   "term_fr": "LUFS",
-   "term_en": "LUFS (Loudness Units relative to Full Scale)",
-   "domain": "broadcast-radio",
-   "definition": "Unité de sonie absolue référencée à la pleine échelle numérique, définie par ITU-R BS.1770 ; équivalente à LKFS.",
-   "see_also": [
-    "loudness-ebu-r128"
-   ],
-   "sources": [
+  "entity": "glossary",
+  "domain": "broadcast-radio",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "lu",
-   "term_fr": "LU (unité de sonie)",
-   "term_en": "LU (Loudness Unit)",
-   "domain": "broadcast-radio",
-   "definition": "Unité d'écart de sonie ; 1 LU correspond à 1 dB. En échelle relative EBU, 0 LU = la cible (−23 LUFS).",
-   "see_also": [
-    "loudness-metering-ebu-mode"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "lufs",
+      "term_fr": "LUFS",
+      "term_en": "LUFS (Loudness Units relative to Full Scale)",
+      "domain": "broadcast-radio",
+      "definition": "Unité de sonie absolue référencée à la pleine échelle numérique, définie par ITU-R BS.1770 ; équivalente à LKFS.",
+      "see_also": [
+        "loudness-ebu-r128"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "lkfs",
-   "term_fr": "LKFS",
-   "term_en": "LKFS",
-   "domain": "broadcast-radio",
-   "definition": "Nom utilisé par ITU-R BS.1770 pour l'unité que l'EBU appelle LUFS ; les deux sont équivalents.",
-   "see_also": [
-    "loudness-ebu-r128"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "dbtp",
-   "term_fr": "dBTP",
-   "term_en": "dBTP (decibel true peak)",
-   "domain": "broadcast-radio",
-   "definition": "Niveau de crête vraie exprimé en dB par rapport à la pleine échelle ; R 128 fixe −1 dBTP maximum en production.",
-   "see_also": [
-    "true-peak"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "programme-loudness",
-   "term_fr": "Sonie de programme",
-   "term_en": "Programme loudness",
-   "domain": "broadcast-radio",
-   "definition": "Sonie intégrée sur toute la durée d'un programme ; sa valeur en LUFS est le Programme Loudness Level.",
-   "see_also": [
-    "loudness-ebu-r128"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "momentary-loudness",
-   "term_fr": "Sonie momentanée (M)",
-   "term_en": "Momentary loudness",
-   "domain": "broadcast-radio",
-   "definition": "Sonie mesurée sur une fenêtre glissante de 0,4 s, sans fenêtrage (gating).",
-   "see_also": [
-    "loudness-metering-ebu-mode"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "short-term-loudness",
-   "term_fr": "Sonie court terme (S)",
-   "term_en": "Short-term loudness",
-   "domain": "broadcast-radio",
-   "definition": "Sonie mesurée sur une fenêtre glissante de 3 s, sans fenêtrage ; recommandée par l'EBU pour l'affichage en studio self-op.",
-   "see_also": [
-    "loudness-metering-ebu-mode",
-    "self-op-studio"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "lu",
+      "term_fr": "LU (unité de sonie)",
+      "term_en": "LU (Loudness Unit)",
+      "domain": "broadcast-radio",
+      "definition": "Unité d'écart de sonie ; 1 LU correspond à 1 dB. En échelle relative EBU, 0 LU = la cible (−23 LUFS).",
+      "see_also": [
+        "loudness-metering-ebu-mode"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "integrated-loudness",
-   "term_fr": "Sonie intégrée (I)",
-   "term_en": "Integrated loudness",
-   "domain": "broadcast-radio",
-   "definition": "Sonie moyenne d'un programme ou d'un segment, calculée avec le fenêtrage de ITU-R BS.1770.",
-   "see_also": [
-    "loudness-metering-ebu-mode"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "loudness-gating",
-   "term_fr": "Fenêtrage de sonie (gating)",
-   "term_en": "Loudness gating",
-   "domain": "broadcast-radio",
-   "definition": "Exclusion des blocs trop faibles du calcul de la sonie intégrée : seuil absolu à −70 LUFS puis seuil relatif 10 LU sous le niveau obtenu.",
-   "see_also": [
-    "loudness-metering-ebu-mode"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ebu-mode",
-   "term_fr": "EBU Mode",
-   "term_en": "EBU Mode",
-   "domain": "broadcast-radio",
-   "definition": "Comportement normalisé d'un sonomètre de sonie défini par EBU Tech 3341 (échelles M/S/I, échelles +9 et +18).",
-   "see_also": [
-    "loudness-metering-ebu-mode"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "loudness-range",
-   "term_fr": "Plage de sonie (LRA)",
-   "term_en": "Loudness Range",
-   "domain": "broadcast-radio",
-   "definition": "Écart entre les 10e et 95e centiles des sonies court terme d'un programme, en LU (EBU Tech 3342).",
-   "see_also": [
-    "loudness-range-lra"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3342.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "peak-to-loudness-ratio",
-   "term_fr": "Rapport crête/sonie (PLR)",
-   "term_en": "Peak-to-Loudness Ratio (PLR)",
-   "domain": "broadcast-radio",
-   "definition": "Écart entre la sonie du programme et sa crête vraie maximale ; indicateur de micro-dynamique, donc de la compression appliquée.",
-   "see_also": [
-    "true-peak",
-    "loudness-ebu-r128"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/r/r128s2.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "lkfs",
+      "term_fr": "LKFS",
+      "term_en": "LKFS",
+      "domain": "broadcast-radio",
+      "definition": "Nom utilisé par ITU-R BS.1770 pour l'unité que l'EBU appelle LUFS ; les deux sont équivalents.",
+      "see_also": [
+        "loudness-ebu-r128"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "distribution-loudness",
-   "term_fr": "Niveau de sonie de distribution",
-   "term_en": "Distribution Loudness Level",
-   "domain": "broadcast-radio",
-   "definition": "Sonie à laquelle une station diffuse ; −23 LUFS par défaut selon l'EBU, sinon entre −20 et −16 LUFS.",
-   "see_also": [
-    "distribution-loudness-level"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "mix-minus",
-   "term_fr": "Mix-minus (N-1)",
-   "term_en": "Mix-minus",
-   "domain": "broadcast-radio",
-   "definition": "Mélange de toutes les sources que l'intervenant distant doit entendre, moins lui-même.",
-   "see_also": [
-    "mix-minus-n1"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "clean-feed",
-   "term_fr": "Clean feed",
-   "term_en": "Clean feed",
-   "domain": "broadcast-radio",
-   "definition": "Autre nom du mix-minus (N-1) utilisé notamment par Lawo pour sa logique de conférence intégrée.",
-   "see_also": [
-    "mix-minus-n1"
-   ],
-   "sources": [
-    {
-     "url": "https://lawo.com/products/ruby/",
-     "publisher": "Lawo",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "side-tone",
-   "term_fr": "Effet local (side-tone)",
-   "term_en": "Side-tone",
-   "domain": "broadcast-radio",
-   "definition": "Retour de sa propre voix dans le combiné téléphonique ; c'est pourquoi on ne renvoie jamais sa voix à l'appelant.",
-   "see_also": [
-    "mix-minus-n1",
-    "telephone-hybrid"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "backfeed",
-   "term_fr": "Retour (backfeed)",
-   "term_en": "Backfeed",
-   "domain": "broadcast-radio",
-   "definition": "Signal de retour associé à une source téléphone ou codec, par lequel le technicien peut aussi lui parler en talkback.",
-   "see_also": [
-    "talkback-ifb",
-    "mix-minus-n1"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "trans-hybrid-loss",
-   "term_fr": "Affaiblissement trans-hybride",
-   "term_en": "Trans-hybrid loss",
-   "domain": "broadcast-radio",
-   "definition": "Atténuation de l'envoi qui repasse dans la réception d'un hybride téléphonique ; plus elle est grande, meilleure est la séparation (plus de 55 dB annoncés pour le Telos Hx).",
-   "see_also": [
-    "telephone-hybrid"
-   ],
-   "sources": [
-    {
-     "url": "https://www.telosalliance.com/broadcast-phone-systems/telos-hx1-hx2-digital-hybrids",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "telephone-balance-unit",
-   "term_fr": "TBU (telephone balance unit)",
-   "term_en": "Telephone balance unit",
-   "domain": "broadcast-radio",
-   "definition": "Terme européen pour un hybride téléphonique ; exemple : Sonifex DHY-04S, avec annulation d'écho adaptative.",
-   "see_also": [
-    "telephone-hybrid"
-   ],
-   "sources": [
-    {
-     "url": "https://sonifex.co.uk/product/dhy-04s/",
-     "publisher": "Sonifex",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pots-line",
-   "term_fr": "Ligne téléphonique analogique (POTS)",
-   "term_en": "POTS line",
-   "domain": "broadcast-radio",
-   "definition": "Ligne téléphonique analogique classique de l'opérateur, branchée sur la prise LINE d'un hybride.",
-   "see_also": [
-    "telephone-hybrid"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "call-screening",
-   "term_fr": "Filtrage des appels",
-   "term_en": "Call screening",
-   "domain": "broadcast-radio",
-   "definition": "Prise de l'appel sur le poste téléphonique hors antenne avant de le passer sur l'hybride (bouton ON).",
-   "see_also": [
-    "telephone-hybrid"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "n-acip",
-   "term_fr": "N/ACIP",
-   "term_en": "N/ACIP",
-   "domain": "broadcast-radio",
-   "definition": "Nom usuel de la spécification d'interopérabilité EBU Tech 3326 pour la contribution audio sur IP.",
-   "see_also": [
-    "acip-ebu-tech-3326"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "dbtp",
+      "term_fr": "dBTP",
+      "term_en": "dBTP (decibel true peak)",
+      "domain": "broadcast-radio",
+      "definition": "Niveau de crête vraie exprimé en dB par rapport à la pleine échelle ; R 128 fixe −1 dBTP maximum en production.",
+      "see_also": [
+        "true-peak"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://www.aeta-audio.com/products/scoop5s/",
-     "publisher": "AETA Audio Systems",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "rtcp",
-   "term_fr": "RTCP",
-   "term_en": "RTP Control Protocol",
-   "domain": "broadcast-radio",
-   "definition": "Protocole de contrôle associé à RTP (rapports d'émission et de réception), recommandé par Tech 3326 ; port 5005 par défaut.",
-   "see_also": [
-    "acip-ebu-tech-3326"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "sip",
-   "term_fr": "SIP",
-   "term_en": "Session Initiation Protocol",
-   "domain": "broadcast-radio",
-   "definition": "Protocole (RFC 3261) qui établit, modifie et termine des sessions ; obligatoire pour les liaisons codec bidirectionnelles.",
-   "see_also": [
-    "sip-signalling"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rfc-editor.org/rfc/rfc3261",
-     "publisher": "IETF / RFC Editor",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "programme-loudness",
+      "term_fr": "Sonie de programme",
+      "term_en": "Programme loudness",
+      "domain": "broadcast-radio",
+      "definition": "Sonie intégrée sur toute la durée d'un programme ; sa valeur en LUFS est le Programme Loudness Level.",
+      "see_also": [
+        "loudness-ebu-r128"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "sip-registrar",
-   "term_fr": "Serveur d'enregistrement SIP",
-   "term_en": "SIP registrar",
-   "domain": "broadcast-radio",
-   "definition": "Serveur auprès duquel un codec déclare sa position (REGISTER) pour être joignable par son identifiant SIP.",
-   "see_also": [
-    "sip-signalling"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rfc-editor.org/rfc/rfc3261",
-     "publisher": "IETF / RFC Editor",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "momentary-loudness",
+      "term_fr": "Sonie momentanée (M)",
+      "term_en": "Momentary loudness",
+      "domain": "broadcast-radio",
+      "definition": "Sonie mesurée sur une fenêtre glissante de 0,4 s, sans fenêtrage (gating).",
+      "see_also": [
+        "loudness-metering-ebu-mode"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "rtp-direct",
-   "term_fr": "RTP direct",
-   "term_en": "Direct RTP",
-   "domain": "broadcast-radio",
-   "definition": "Mode de liaison codec sans signalisation SIP, où l'on règle à la main adresses et ports RTP.",
-   "see_also": [
-    "audio-codec-ip"
-   ],
-   "sources": [
-    {
-     "url": "https://www.aeta-audio.com/products/scoop5s/",
-     "publisher": "AETA Audio Systems",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "fec",
-   "term_fr": "FEC (correction d'erreurs directe)",
-   "term_en": "Forward Error Correction",
-   "domain": "broadcast-radio",
-   "definition": "Ajout de paquets de redondance qui permettent au récepteur de reconstituer des paquets perdus ; RFC 5109, port 5006 selon Tech 3326.",
-   "see_also": [
-    "ip-link-resilience"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "payload-type",
-   "term_fr": "Type de charge utile RTP",
-   "term_en": "RTP payload type",
-   "domain": "broadcast-radio",
-   "definition": "Numéro qui identifie le format audio d'un paquet RTP (0 = PCMU, 8 = PCMA, 9 = G.722).",
-   "see_also": [
-    "acip-ebu-tech-3326"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "g711",
-   "term_fr": "G.711",
-   "term_en": "G.711",
-   "domain": "broadcast-radio",
-   "definition": "Codec téléphonique MIC loi A (PCMA) ou loi µ (PCMU), obligatoire dans Tech 3326.",
-   "see_also": [
-    "acip-ebu-tech-3326"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "g722",
-   "term_fr": "G.722",
-   "term_en": "G.722",
-   "domain": "broadcast-radio",
-   "definition": "Codage audio 7 kHz à 64 kbit/s (UIT-T), obligatoire dans Tech 3326.",
-   "see_also": [
-    "g722-codec"
-   ],
-   "sources": [
-    {
-     "url": "https://www.itu.int/rec/T-REC-G.722",
-     "publisher": "ITU-T",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "short-term-loudness",
+      "term_fr": "Sonie court terme (S)",
+      "term_en": "Short-term loudness",
+      "domain": "broadcast-radio",
+      "definition": "Sonie mesurée sur une fenêtre glissante de 3 s, sans fenêtrage ; recommandée par l'EBU pour l'affichage en studio self-op.",
+      "see_also": [
+        "loudness-metering-ebu-mode",
+        "self-op-studio"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "mpeg-layer-ii",
-   "term_fr": "MPEG-1/2 Layer II",
-   "term_en": "MPEG-1/2 Layer II",
-   "domain": "broadcast-radio",
-   "definition": "Codec audio perceptif obligatoire dans Tech 3326, très utilisé historiquement en contribution radio.",
-   "see_also": [
-    "acip-ebu-tech-3326"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "opus",
-   "term_fr": "Opus",
-   "term_en": "Opus",
-   "domain": "broadcast-radio",
-   "definition": "Codec interactif ouvert (RFC 6716), 6 à 510 kbit/s, trames de 2,5 à 60 ms ; optionnel dans Tech 3326 Rev. 4.",
-   "see_also": [
-    "opus-codec"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rfc-editor.org/rfc/rfc6716",
-     "publisher": "IETF / RFC Editor",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "integrated-loudness",
+      "term_fr": "Sonie intégrée (I)",
+      "term_en": "Integrated loudness",
+      "domain": "broadcast-radio",
+      "definition": "Sonie moyenne d'un programme ou d'un segment, calculée avec le fenêtrage de ITU-R BS.1770.",
+      "see_also": [
+        "loudness-metering-ebu-mode"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "network-bonding",
-   "term_fr": "Agrégation de réseaux",
-   "term_en": "Network bonding",
-   "domain": "broadcast-radio",
-   "definition": "Utilisation simultanée de plusieurs réseaux IP pour une même liaison codec (exemple : CrossLock de Comrex).",
-   "see_also": [
-    "ip-link-resilience"
-   ],
-   "sources": [
-    {
-     "url": "https://www.comrex.com/products/access-nx/",
-     "publisher": "Comrex",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "talkback-radio",
-   "term_fr": "Talkback (ordres)",
-   "term_en": "Talkback",
-   "domain": "broadcast-radio",
-   "definition": "Liaison qui permet au technicien de parler aux invités ou aux sources téléphone/codec sans passer à l'antenne.",
-   "see_also": [
-    "talkback-ifb"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "partyline",
-   "term_fr": "Partyline",
-   "term_en": "Party-line",
-   "domain": "broadcast-radio",
-   "definition": "Intercom filaire où tous les postes d'un canal partagent la même conversation, alimentés par une station principale.",
-   "see_also": [
-    "intercom-partyline"
-   ],
-   "sources": [
-    {
-     "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
-     "publisher": "Clear-Com",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "beltpack",
-   "term_fr": "Boîtier ceinture",
-   "term_en": "Beltpack",
-   "domain": "broadcast-radio",
-   "definition": "Poste d'intercom portable porté à la ceinture, relié au canal partyline (exemple Clear-Com RS-701).",
-   "see_also": [
-    "intercom-partyline"
-   ],
-   "sources": [
-    {
-     "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
-     "publisher": "Clear-Com",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ifb",
-   "term_fr": "IFB",
-   "term_en": "Interruptible foldback",
-   "domain": "broadcast-radio",
-   "definition": "Retour d'oreillette dans lequel le programme peut être interrompu par les ordres de la régie ; la MS-702 a une sortie IFB/Hot Mic.",
-   "see_also": [
-    "talkback-ifb"
-   ],
-   "sources": [
-    {
-     "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
-     "publisher": "Clear-Com",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "on-air-light",
-   "term_fr": "Voyant ON-AIR",
-   "term_en": "On-air light",
-   "domain": "broadcast-radio",
-   "definition": "Signal lumineux, souvent rouge, allumé par la console quand un micro est à l'antenne.",
-   "see_also": [
-    "tally-on-air"
-   ],
-   "sources": [
-    {
-     "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
-     "publisher": "Yellowtec",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "loudness-gating",
+      "term_fr": "Fenêtrage de sonie (gating)",
+      "term_en": "Loudness gating",
+      "domain": "broadcast-radio",
+      "definition": "Exclusion des blocs trop faibles du calcul de la sonie intégrée : seuil absolu à −70 LUFS puis seuil relatif 10 LU sous le niveau obtenu.",
+      "see_also": [
+        "loudness-metering-ebu-mode"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "gpio",
-   "term_fr": "GPIO",
-   "term_en": "General-purpose input/output",
-   "domain": "broadcast-radio",
-   "definition": "Entrées/sorties logiques (contacts) qui permettent à la console de commander ou de lire l'état d'autres appareils.",
-   "see_also": [
-    "tally-on-air",
-    "on-air-console"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "contact-closure",
-   "term_fr": "Contact sec (fermeture de contact)",
-   "term_en": "Contact closure",
-   "domain": "broadcast-radio",
-   "definition": "Commande logique par fermeture d'un contact, envoyée par la console vers un appareil du studio.",
-   "see_also": [
-    "tally-on-air"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "program-bus",
-   "term_fr": "Bus programme (PGM)",
-   "term_en": "Program bus",
-   "domain": "broadcast-radio",
-   "definition": "Bus de sortie principal d'une console d'antenne ; l'Axia iQ en a 3 stéréo plus un bus utilitaire.",
-   "see_also": [
-    "on-air-console"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "utility-bus",
-   "term_fr": "Bus utilitaire",
-   "term_en": "Utility bus",
-   "domain": "broadcast-radio",
-   "definition": "Bus stéréo supplémentaire utilisable pour le téléphone, l'enregistrement hors antenne ou comme 4e bus programme.",
-   "see_also": [
-    "on-air-console"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "preview-cue",
-   "term_fr": "Pré-écoute (preview / cue)",
-   "term_en": "Preview (cue)",
-   "domain": "broadcast-radio",
-   "definition": "Écoute d'une source avant de la passer à l'antenne, disponible sur chaque tranche d'une console d'antenne.",
-   "see_also": [
-    "on-air-console",
-    "pfl-afl-solo"
-   ],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "self-op",
-   "term_fr": "Self-op",
-   "term_en": "Self-op",
-   "domain": "broadcast-radio",
-   "definition": "Mode d'exploitation où l'animateur manipule lui-même la console d'antenne, sans technicien.",
-   "see_also": [
-    "self-op-studio"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "mpx",
-   "term_fr": "Signal multiplex FM (MPX)",
-   "term_en": "MPX (multiplex) signal",
-   "domain": "broadcast-radio",
-   "definition": "Signal composite qui module l'émetteur FM (stéréo, pilote 19 kHz, RDS) ; produit par le codeur stéréo du processeur.",
-   "see_also": [
-    "on-air-processing"
-   ],
-   "sources": [
-    {
-     "url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
-     "publisher": "Telos Alliance / Omnia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "ebu-mode",
+      "term_fr": "EBU Mode",
+      "term_en": "EBU Mode",
+      "domain": "broadcast-radio",
+      "definition": "Comportement normalisé d'un sonomètre de sonie défini par EBU Tech 3341 (échelles M/S/I, échelles +9 et +18).",
+      "see_also": [
+        "loudness-metering-ebu-mode"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "mpx-power-limit",
-   "term_fr": "Limitation de puissance MPX",
-   "term_en": "MPX power limiting",
-   "domain": "broadcast-radio",
-   "definition": "Limitation de la puissance du signal multiplex FM selon ITU-R BS.412, appliquée dans certains pays.",
-   "see_also": [
-    "on-air-processing",
-    "distribution-loudness-level"
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "loudness-range",
+      "term_fr": "Plage de sonie (LRA)",
+      "term_en": "Loudness Range",
+      "domain": "broadcast-radio",
+      "definition": "Écart entre les 10e et 95e centiles des sonies court terme d'un programme, en LU (EBU Tech 3342).",
+      "see_also": [
+        "loudness-range-lra"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3342.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     },
     {
-     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "final-clipper",
-   "term_fr": "Écrêteur final",
-   "term_en": "Final clipper",
-   "domain": "broadcast-radio",
-   "definition": "Dernier étage d'un processeur FM qui contrôle les crêtes avant le codeur stéréo (exemple : écrêteur « Pepino » de l'Omnia.11).",
-   "see_also": [
-    "on-air-processing"
-   ],
-   "sources": [
+      "id": "peak-to-loudness-ratio",
+      "term_fr": "Rapport crête/sonie (PLR)",
+      "term_en": "Peak-to-Loudness Ratio (PLR)",
+      "domain": "broadcast-radio",
+      "definition": "Écart entre la sonie du programme et sa crête vraie maximale ; indicateur de micro-dynamique, donc de la compression appliquée.",
+      "see_also": [
+        "true-peak",
+        "loudness-ebu-r128"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/r/r128s2.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
-     "publisher": "Telos Alliance / Omnia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "stl",
-   "term_fr": "STL (liaison studio-émetteur)",
-   "term_en": "Studio-transmitter link",
-   "domain": "broadcast-radio",
-   "definition": "Liaison qui transporte le programme du studio vers le site d'émission.",
-   "see_also": [
-    "studio-transmitter-link"
-   ],
-   "sources": [
+      "id": "distribution-loudness",
+      "term_fr": "Niveau de sonie de distribution",
+      "term_en": "Distribution Loudness Level",
+      "domain": "broadcast-radio",
+      "definition": "Sonie à laquelle une station diffuse ; −23 LUFS par défaut selon l'EBU, sinon entre −20 et −16 LUFS.",
+      "see_also": [
+        "distribution-loudness-level"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://en.wikipedia.org/wiki/Studio_transmitter_link",
-     "publisher": "Wikipedia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "tsl",
-   "term_fr": "TSL (liaison émetteur-studio)",
-   "term_en": "Transmitter-studio link",
-   "domain": "broadcast-radio",
-   "definition": "Liaison retour qui renvoie au studio la télémesure de l'émetteur.",
-   "see_also": [
-    "studio-transmitter-link"
-   ],
-   "sources": [
+      "id": "mix-minus",
+      "term_fr": "Mix-minus (N-1)",
+      "term_en": "Mix-minus",
+      "domain": "broadcast-radio",
+      "definition": "Mélange de toutes les sources que l'intervenant distant doit entendre, moins lui-même.",
+      "see_also": [
+        "mix-minus-n1"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://en.wikipedia.org/wiki/Studio_transmitter_link",
-     "publisher": "Wikipedia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "silence-detector",
-   "term_fr": "Détecteur de silence",
-   "term_en": "Silence detector",
-   "domain": "broadcast-radio",
-   "definition": "Appareil qui alarme et bascule sur une source de secours quand le programme reste sous un seuil pendant une durée réglée.",
-   "see_also": [
-    "silence-detection"
-   ],
-   "sources": [
+      "id": "clean-feed",
+      "term_fr": "Clean feed",
+      "term_en": "Clean feed",
+      "domain": "broadcast-radio",
+      "definition": "Autre nom du mix-minus (N-1) utilisé notamment par Lawo pour sa logique de conférence intégrée.",
+      "see_also": [
+        "mix-minus-n1"
+      ],
+      "sources": [
+        {
+          "url": "https://lawo.com/products/ruby/",
+          "publisher": "Lawo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://sonifex.co.uk/product/rb-sd1/",
-     "publisher": "Sonifex",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "hitless-merge",
-   "term_fr": "Fusion sans coupure (SMPTE 2022-7)",
-   "term_en": "Hitless merge (SMPTE 2022-7)",
-   "domain": "broadcast-radio",
-   "definition": "Réception d'un même flux par deux liens IP et reconstruction sans coupure si l'un des deux perd des paquets.",
-   "see_also": [
-    "broadcast-redundancy",
-    "network-redundancy"
-   ],
-   "sources": [
+      "id": "side-tone",
+      "term_fr": "Effet local (side-tone)",
+      "term_en": "Side-tone",
+      "domain": "broadcast-radio",
+      "definition": "Retour de sa propre voix dans le combiné téléphonique ; c'est pourquoi on ne renvoie jamais sa voix à l'appelant.",
+      "see_also": [
+        "mix-minus-n1",
+        "telephone-hybrid"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
     {
-     "url": "https://lawo.com/products/power-core/",
-     "publisher": "Lawo",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "id": "backfeed",
+      "term_fr": "Retour (backfeed)",
+      "term_en": "Backfeed",
+      "domain": "broadcast-radio",
+      "definition": "Signal de retour associé à une source téléphone ou codec, par lequel le technicien peut aussi lui parler en talkback.",
+      "see_also": [
+        "talkback-ifb",
+        "mix-minus-n1"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "trans-hybrid-loss",
+      "term_fr": "Affaiblissement trans-hybride",
+      "term_en": "Trans-hybrid loss",
+      "domain": "broadcast-radio",
+      "definition": "Atténuation de l'envoi qui repasse dans la réception d'un hybride téléphonique ; plus elle est grande, meilleure est la séparation (plus de 55 dB annoncés pour le Telos Hx).",
+      "see_also": [
+        "telephone-hybrid"
+      ],
+      "sources": [
+        {
+          "url": "https://www.telosalliance.com/broadcast-phone-systems/telos-hx1-hx2-digital-hybrids",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "telephone-balance-unit",
+      "term_fr": "TBU (telephone balance unit)",
+      "term_en": "Telephone balance unit",
+      "domain": "broadcast-radio",
+      "definition": "Terme européen pour un hybride téléphonique ; exemple : Sonifex DHY-04S, avec annulation d'écho adaptative.",
+      "see_also": [
+        "telephone-hybrid"
+      ],
+      "sources": [
+        {
+          "url": "https://sonifex.co.uk/product/dhy-04s/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "pots-line",
+      "term_fr": "Ligne téléphonique analogique (POTS)",
+      "term_en": "POTS line",
+      "domain": "broadcast-radio",
+      "definition": "Ligne téléphonique analogique classique de l'opérateur, branchée sur la prise LINE d'un hybride.",
+      "see_also": [
+        "telephone-hybrid"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "call-screening",
+      "term_fr": "Filtrage des appels",
+      "term_en": "Call screening",
+      "domain": "broadcast-radio",
+      "definition": "Prise de l'appel sur le poste téléphonique hors antenne avant de le passer sur l'hybride (bouton ON).",
+      "see_also": [
+        "telephone-hybrid"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "n-acip",
+      "term_fr": "N/ACIP",
+      "term_en": "N/ACIP",
+      "domain": "broadcast-radio",
+      "definition": "Nom usuel de la spécification d'interopérabilité EBU Tech 3326 pour la contribution audio sur IP.",
+      "see_also": [
+        "acip-ebu-tech-3326"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/products/scoop5s/",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "rtcp",
+      "term_fr": "RTCP",
+      "term_en": "RTP Control Protocol",
+      "domain": "broadcast-radio",
+      "definition": "Protocole de contrôle associé à RTP (rapports d'émission et de réception), recommandé par Tech 3326 ; port 5005 par défaut.",
+      "see_also": [
+        "acip-ebu-tech-3326"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "sip",
+      "term_fr": "SIP",
+      "term_en": "Session Initiation Protocol",
+      "domain": "broadcast-radio",
+      "definition": "Protocole (RFC 3261) qui établit, modifie et termine des sessions ; obligatoire pour les liaisons codec bidirectionnelles.",
+      "see_also": [
+        "sip-signalling"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc3261",
+          "publisher": "IETF / RFC Editor",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "sip-registrar",
+      "term_fr": "Serveur d'enregistrement SIP",
+      "term_en": "SIP registrar",
+      "domain": "broadcast-radio",
+      "definition": "Serveur auprès duquel un codec déclare sa position (REGISTER) pour être joignable par son identifiant SIP.",
+      "see_also": [
+        "sip-signalling"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc3261",
+          "publisher": "IETF / RFC Editor",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "rtp-direct",
+      "term_fr": "RTP direct",
+      "term_en": "Direct RTP",
+      "domain": "broadcast-radio",
+      "definition": "Mode de liaison codec sans signalisation SIP, où l'on règle à la main adresses et ports RTP.",
+      "see_also": [
+        "audio-codec-ip"
+      ],
+      "sources": [
+        {
+          "url": "https://www.aeta-audio.com/products/scoop5s/",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "fec",
+      "term_fr": "FEC (correction d'erreurs directe)",
+      "term_en": "Forward Error Correction",
+      "domain": "broadcast-radio",
+      "definition": "Ajout de paquets de redondance qui permettent au récepteur de reconstituer des paquets perdus ; RFC 5109, port 5006 selon Tech 3326.",
+      "see_also": [
+        "ip-link-resilience"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "payload-type",
+      "term_fr": "Type de charge utile RTP",
+      "term_en": "RTP payload type",
+      "domain": "broadcast-radio",
+      "definition": "Numéro qui identifie le format audio d'un paquet RTP (0 = PCMU, 8 = PCMA, 9 = G.722).",
+      "see_also": [
+        "acip-ebu-tech-3326"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "g711",
+      "term_fr": "G.711",
+      "term_en": "G.711",
+      "domain": "broadcast-radio",
+      "definition": "Codec téléphonique MIC loi A (PCMA) ou loi µ (PCMU), obligatoire dans Tech 3326.",
+      "see_also": [
+        "acip-ebu-tech-3326"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "g722",
+      "term_fr": "G.722",
+      "term_en": "G.722",
+      "domain": "broadcast-radio",
+      "definition": "Codage audio 7 kHz à 64 kbit/s (UIT-T), obligatoire dans Tech 3326.",
+      "see_also": [
+        "g722-codec"
+      ],
+      "sources": [
+        {
+          "url": "https://www.itu.int/rec/T-REC-G.722",
+          "publisher": "ITU-T",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "mpeg-layer-ii",
+      "term_fr": "MPEG-1/2 Layer II",
+      "term_en": "MPEG-1/2 Layer II",
+      "domain": "broadcast-radio",
+      "definition": "Codec audio perceptif obligatoire dans Tech 3326, très utilisé historiquement en contribution radio.",
+      "see_also": [
+        "acip-ebu-tech-3326"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "opus",
+      "term_fr": "Opus",
+      "term_en": "Opus",
+      "domain": "broadcast-radio",
+      "definition": "Codec interactif ouvert (RFC 6716), 6 à 510 kbit/s, trames de 2,5 à 60 ms ; optionnel dans Tech 3326 Rev. 4.",
+      "see_also": [
+        "opus-codec"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc6716",
+          "publisher": "IETF / RFC Editor",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "network-bonding",
+      "term_fr": "Agrégation de réseaux",
+      "term_en": "Network bonding",
+      "domain": "broadcast-radio",
+      "definition": "Utilisation simultanée de plusieurs réseaux IP pour une même liaison codec (exemple : CrossLock de Comrex).",
+      "see_also": [
+        "ip-link-resilience"
+      ],
+      "sources": [
+        {
+          "url": "https://www.comrex.com/products/access-nx/",
+          "publisher": "Comrex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "talkback-radio",
+      "term_fr": "Talkback (ordres)",
+      "term_en": "Talkback",
+      "domain": "broadcast-radio",
+      "definition": "Liaison qui permet au technicien de parler aux invités ou aux sources téléphone/codec sans passer à l'antenne.",
+      "see_also": [
+        "talkback-ifb"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "partyline",
+      "term_fr": "Partyline",
+      "term_en": "Party-line",
+      "domain": "broadcast-radio",
+      "definition": "Intercom filaire où tous les postes d'un canal partagent la même conversation, alimentés par une station principale.",
+      "see_also": [
+        "intercom-partyline"
+      ],
+      "sources": [
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "beltpack",
+      "term_fr": "Boîtier ceinture",
+      "term_en": "Beltpack",
+      "domain": "broadcast-radio",
+      "definition": "Poste d'intercom portable porté à la ceinture, relié au canal partyline (exemple Clear-Com RS-701).",
+      "see_also": [
+        "intercom-partyline"
+      ],
+      "sources": [
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "ifb",
+      "term_fr": "IFB",
+      "term_en": "Interruptible foldback",
+      "domain": "broadcast-radio",
+      "definition": "Retour d'oreillette dans lequel le programme peut être interrompu par les ordres de la régie ; la MS-702 a une sortie IFB/Hot Mic.",
+      "see_also": [
+        "talkback-ifb"
+      ],
+      "sources": [
+        {
+          "url": "https://www.clearcom.com/DownloadCenter/datasheets/Encore/MS-702_MainStation_Datasheet.pdf",
+          "publisher": "Clear-Com",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "on-air-light",
+      "term_fr": "Voyant ON-AIR",
+      "term_en": "On-air light",
+      "domain": "broadcast-radio",
+      "definition": "Signal lumineux, souvent rouge, allumé par la console quand un micro est à l'antenne.",
+      "see_also": [
+        "tally-on-air"
+      ],
+      "sources": [
+        {
+          "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+          "publisher": "Yellowtec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "gpio",
+      "term_fr": "GPIO",
+      "term_en": "General-purpose input/output",
+      "domain": "broadcast-radio",
+      "definition": "Entrées/sorties logiques (contacts) qui permettent à la console de commander ou de lire l'état d'autres appareils.",
+      "see_also": [
+        "tally-on-air",
+        "on-air-console"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "contact-closure",
+      "term_fr": "Contact sec (fermeture de contact)",
+      "term_en": "Contact closure",
+      "domain": "broadcast-radio",
+      "definition": "Commande logique par fermeture d'un contact, envoyée par la console vers un appareil du studio.",
+      "see_also": [
+        "tally-on-air"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "program-bus",
+      "term_fr": "Bus programme (PGM)",
+      "term_en": "Program bus",
+      "domain": "broadcast-radio",
+      "definition": "Bus de sortie principal d'une console d'antenne ; l'Axia iQ en a 3 stéréo plus un bus utilitaire.",
+      "see_also": [
+        "on-air-console"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "utility-bus",
+      "term_fr": "Bus utilitaire",
+      "term_en": "Utility bus",
+      "domain": "broadcast-radio",
+      "definition": "Bus stéréo supplémentaire utilisable pour le téléphone, l'enregistrement hors antenne ou comme 4e bus programme.",
+      "see_also": [
+        "on-air-console"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "preview-cue",
+      "term_fr": "Pré-écoute (preview / cue)",
+      "term_en": "Preview (cue)",
+      "domain": "broadcast-radio",
+      "definition": "Écoute d'une source avant de la passer à l'antenne, disponible sur chaque tranche d'une console d'antenne.",
+      "see_also": [
+        "on-air-console",
+        "pfl-afl-solo"
+      ],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "self-op",
+      "term_fr": "Self-op",
+      "term_en": "Self-op",
+      "domain": "broadcast-radio",
+      "definition": "Mode d'exploitation où l'animateur manipule lui-même la console d'antenne, sans technicien.",
+      "see_also": [
+        "self-op-studio"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "mpx",
+      "term_fr": "Signal multiplex FM (MPX)",
+      "term_en": "MPX (multiplex) signal",
+      "domain": "broadcast-radio",
+      "definition": "Signal composite qui module l'émetteur FM (stéréo, pilote 19 kHz, RDS) ; produit par le codeur stéréo du processeur.",
+      "see_also": [
+        "on-air-processing"
+      ],
+      "sources": [
+        {
+          "url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
+          "publisher": "Telos Alliance / Omnia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "mpx-power-limit",
+      "term_fr": "Limitation de puissance MPX",
+      "term_en": "MPX power limiting",
+      "domain": "broadcast-radio",
+      "definition": "Limitation de la puissance du signal multiplex FM selon ITU-R BS.412, appliquée dans certains pays.",
+      "see_also": [
+        "on-air-processing",
+        "distribution-loudness-level"
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s3.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "final-clipper",
+      "term_fr": "Écrêteur final",
+      "term_en": "Final clipper",
+      "domain": "broadcast-radio",
+      "definition": "Dernier étage d'un processeur FM qui contrôle les crêtes avant le codeur stéréo (exemple : écrêteur « Pepino » de l'Omnia.11).",
+      "see_also": [
+        "on-air-processing"
+      ],
+      "sources": [
+        {
+          "url": "https://www.telosalliance.com/radio-processing/radio-processors/omnia11",
+          "publisher": "Telos Alliance / Omnia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "stl",
+      "term_fr": "STL (liaison studio-émetteur)",
+      "term_en": "Studio-transmitter link",
+      "domain": "broadcast-radio",
+      "definition": "Liaison qui transporte le programme du studio vers le site d'émission.",
+      "see_also": [
+        "studio-transmitter-link"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Studio_transmitter_link",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "tsl",
+      "term_fr": "TSL (liaison émetteur-studio)",
+      "term_en": "Transmitter-studio link",
+      "domain": "broadcast-radio",
+      "definition": "Liaison retour qui renvoie au studio la télémesure de l'émetteur.",
+      "see_also": [
+        "studio-transmitter-link"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Studio_transmitter_link",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "silence-detector",
+      "term_fr": "Détecteur de silence",
+      "term_en": "Silence detector",
+      "domain": "broadcast-radio",
+      "definition": "Appareil qui alarme et bascule sur une source de secours quand le programme reste sous un seuil pendant une durée réglée.",
+      "see_also": [
+        "silence-detection"
+      ],
+      "sources": [
+        {
+          "url": "https://sonifex.co.uk/product/rb-sd1/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
+    },
+    {
+      "id": "hitless-merge",
+      "term_fr": "Fusion sans coupure (SMPTE 2022-7)",
+      "term_en": "Hitless merge (SMPTE 2022-7)",
+      "domain": "broadcast-radio",
+      "definition": "Réception d'un même flux par deux liens IP et reconstruction sans coupure si l'un des deux perd des paquets.",
+      "see_also": [
+        "broadcast-redundancy",
+        "network-redundancy"
+      ],
+      "sources": [
+        {
+          "url": "https://lawo.com/products/power-core/",
+          "publisher": "Lawo",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ]
     }
-   ]
-  }
- ],
- "not_found_log": []
+  ],
+  "not_found_log": []
 }

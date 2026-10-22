@@ -114,7 +114,7 @@
           "version_or_date": "12.03.2008",
           "official": true,
           "kind": "other",
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc3mxx.pdf",
@@ -124,7 +124,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/media/10098/download/01%20NEUTRIK%20Section%20XLR%20Connectors%20PG%20EN%20202202-V23_opt.pdf?v=7",
@@ -134,7 +134,7 @@
           "version_or_date": "202202-V23",
           "official": true,
           "kind": "other",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -149,7 +149,7 @@
             "connectors",
             "technology"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc3mxx.pdf",
@@ -166,7 +166,7 @@
             "key_specs.lifetime",
             "key_specs.contact_resistance"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://en.wikipedia.org/wiki/XLR_connector",
@@ -201,9 +201,9 @@
         "sim_value": "high",
         "sim_value_reason": "The basic XLR3 connector: gender, pin 2 hot, and phantom on pins 2/3 are core wiring lessons."
       },
-      "manual_url_status": "ok",
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-nc3fxx",
@@ -268,7 +268,7 @@
           "version_or_date": "12.03.2008",
           "official": true,
           "kind": "other",
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc3fxx.pdf",
@@ -278,7 +278,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/media/10098/download/01%20NEUTRIK%20Section%20XLR%20Connectors%20PG%20EN%20202202-V23_opt.pdf?v=7",
@@ -288,7 +288,7 @@
           "version_or_date": "202202-V23",
           "official": true,
           "kind": "other",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -303,7 +303,7 @@
             "connectors",
             "technology"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc3fxx.pdf",
@@ -320,7 +320,7 @@
             "key_specs.lifetime",
             "key_specs.contact_resistance"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://en.wikipedia.org/wiki/XLR_connector",
@@ -355,9 +355,9 @@
         "sim_value": "high",
         "sim_value_reason": "The basic XLR3 connector: gender, pin 2 hot, and phantom on pins 2/3 are core wiring lessons."
       },
-      "manual_url_status": "ok",
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-nc5mxx",
@@ -416,7 +416,7 @@
           "version_or_date": "12.03.2008",
           "official": true,
           "kind": "other",
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc5mxx.pdf",
@@ -426,7 +426,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -440,7 +440,7 @@
             "key_specs",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nc5mxx.pdf",
@@ -455,7 +455,7 @@
             "key_specs.locking",
             "key_specs.lifetime"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://en.wikipedia.org/wiki/XLR_connector",
@@ -479,9 +479,9 @@
         "sim_value": "medium",
         "sim_value_reason": "Shows XLR5 vs XLR3 (DMX on XLR5) and the risk of confusing audio and DMX cables."
       },
-      "manual_url_status": "ok",
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "manual_url_status": "blocked",
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-np3x",
@@ -542,7 +542,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -556,7 +556,7 @@
             "key_specs",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/np3x.pdf",
@@ -570,7 +570,7 @@
             "key_specs.lifetime",
             "key_specs.rated_voltage"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://content-files.shure.com/Pubs/audio-systems-guide-for-video-and-film-production/audio-systems-guide-for-video-and-film-production-english.pdf",
@@ -596,8 +596,8 @@
         "sim_value": "high",
         "sim_value_reason": "TRS vs TS is a key balanced/unbalanced lesson (inserts, instruments, headphones)."
       },
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-np2x",
@@ -657,7 +657,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -671,7 +671,7 @@
             "key_specs",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/np2x.pdf",
@@ -685,7 +685,7 @@
             "key_specs.lifetime",
             "key_specs.rated_voltage"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://content-files.shure.com/Pubs/audio-systems-guide-for-video-and-film-production/audio-systems-guide-for-video-and-film-production-english.pdf",
@@ -709,8 +709,8 @@
         "sim_value": "high",
         "sim_value_reason": "TRS vs TS is a key balanced/unbalanced lesson (inserts, instruments, headphones)."
       },
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-nl4fxx-w-s",
@@ -769,7 +769,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -783,7 +783,7 @@
             "key_specs",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nl4fxx-w-s.pdf",
@@ -798,7 +798,7 @@
             "key_specs.locking",
             "key_specs.lifetime"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nl4fx",
@@ -810,7 +810,7 @@
             "status",
             "notes"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "The older NL4FX (40 A rms continuous, Quick Lock latch, cable OD 7–14.5 mm) is marked discontinued on neutrik.com, which lists NL4FXX-W-S (6–12 mm) and NL4FXX-W-L (10–16 mm) as successors. No pin assignment (1+/1-/2+/2-) was found on the pages read.",
@@ -823,8 +823,8 @@
         "sim_value": "high",
         "sim_value_reason": "Speaker-level vs line-level and the 'never mains on speakON' rule."
       },
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-nl8fc",
@@ -881,7 +881,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -895,7 +895,7 @@
             "key_specs",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nl8fc.pdf",
@@ -911,7 +911,7 @@
             "key_specs.locking",
             "key_specs.lifetime"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Status set to 'not found' because the product page states no lifecycle status and lists no successor. 'speakon-nl8' is a proposed connector id.",
@@ -926,8 +926,8 @@
         "sim_value": "medium",
         "sim_value_reason": "Multi-way amp links; teaches that one 8-pole cable carries 4 speaker circuits."
       },
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-nac3f-true1-s",
@@ -985,7 +985,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -999,7 +999,7 @@
             "key_specs",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nac3f-true1-s.pdf",
@@ -1014,7 +1014,7 @@
             "key_specs.lifetime",
             "key_specs.dielectric_strength"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nac3fx-w-top",
@@ -1026,7 +1026,7 @@
             "notes",
             "why_it_is_a_classic"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "The requested candidate NAC3FX-W-TOP (powerCON TRUE1 TOP) is marked phased out on neutrik.com with NAC3F-TRUE1-S named as replacement (TOP version: 16 A EU / 20 A US, 250 V AC, IP65 only with SCNAC-FX cover). Status of NAC3F-TRUE1-S is not stated on its page.",
@@ -1039,8 +1039,8 @@
         "sim_value": "high",
         "sim_value_reason": "Mains link on powered speakers; breaking capacity vs classic blue/grey powerCON."
       },
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-ne8mx",
@@ -1097,7 +1097,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -1111,7 +1111,7 @@
             "key_specs",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/ne8mx.pdf",
@@ -1124,7 +1124,7 @@
             "key_specs.lifetime",
             "key_specs.insertion_force"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/ne8mc",
@@ -1135,7 +1135,7 @@
           "covers": [
             "notes"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Requested candidate NE8MC is marked discontinued on neutrik.com (successor NE8MX). Neutrik's page lists no Cat rating, shielding or data rate for NE8MX; these depend on the RJ45 plug and cable used. Signal ids 'dante' and 'aes50' are proposed ids.",
@@ -1151,8 +1151,8 @@
         "sim_value": "high",
         "sim_value_reason": "etherCON vs plain RJ45 and the Cat6 chassis non-intermating trap."
       },
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-no2-4fdw-a",
@@ -1217,7 +1217,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -1231,7 +1231,7 @@
             "key_specs",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/no2-4fdw-a.pdf",
@@ -1245,7 +1245,7 @@
             "key_specs.lifetime",
             "key_specs.rated_current_electrical_contacts"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Chosen as the opticalCON DUO representative because the cable-connector page could not be reached without search. Neutrik also lists an NAOBO breakout adapter kit and NAO2*-SFP-LC transceiver adapter as accessories. 'opticalcon', 'lc-fibre' and 'fibre-optical-transport' are proposed ids.",
@@ -1263,8 +1263,8 @@
         "sim_value": "medium",
         "sim_value_reason": "Introduces fibre (no electrical noise, long runs) and rugged vs bare LC connectors."
       },
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neutrik-nbnc75blp7",
@@ -1324,7 +1324,7 @@
           "version_or_date": "not shown",
           "official": true,
           "kind": "datasheet",
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "sources": [
@@ -1338,7 +1338,7 @@
             "key_specs",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://www.neutrik.com/en/product/nbnc75blp7.pdf",
@@ -1353,7 +1353,7 @@
             "key_specs.locking",
             "key_specs.lifetime"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Neutrik markets it for HD video; its use for word clock / MADI / AES-3id follows from the 75 Ω BNC interface, not from a Neutrik statement.",
@@ -1369,8 +1369,8 @@
         "sim_value": "high",
         "sim_value_reason": "Word clock / MADI on BNC; 75 Ω vs 50 Ω RF BNC confusion."
       },
-      "datasheet_url_status": "ok",
-      "product_page_url_status": "ok"
+      "datasheet_url_status": "blocked",
+      "product_page_url_status": "blocked"
     },
     {
       "id": "harting-han-e-06-f",

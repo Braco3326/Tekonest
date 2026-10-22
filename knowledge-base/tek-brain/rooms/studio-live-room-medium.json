@@ -315,7 +315,24 @@
       "piano à queue"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "objv-battery-guitar-amp-camilote",
+    "objv-guitar-amp-futaba",
+    "objv-guitar-combo-amp-lowpoly",
+    "ph-mid-century-lounge-chair",
+    "ph-modern-ceiling-lamp-01",
+    "ph-modern-coffee-table-01",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "ph-steel-frame-shelves-03",
+    "pp-acoustic-guitar",
+    "pp-grand-piano",
+    "pp-kenney-desk-chair",
+    "pp-kenney-lounge-sofa",
+    "pp-stage-keyboard",
+    "pp-zsky-drum-set",
+    "si-cowbell-nmah"
+  ],
   "sources": [
     {
       "url": "https://studios-ferber.com/studio-b/",
@@ -327,7 +344,8 @@
         "dimensions_m (85 m² × 5 m : surface et hauteur typiques)",
         "surfaces[0] (parquet chêne massif)",
         "zones (1 cabine d'isolation, 6 panneaux mobiles)"
-      ]
+      ],
+      "url_status": "blocked"
     },
     {
       "url": "https://studios-ferber.com/studio-a/",
@@ -337,7 +355,8 @@
       "kind": "other",
       "covers": [
         "description (au-delà : 187 m² × 7 m = grande salle, hors catégorie medium)"
-      ]
+      ],
+      "url_status": "blocked"
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -347,7 +366,8 @@
       "kind": "manufacturer",
       "covers": [
         "rt60_s"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

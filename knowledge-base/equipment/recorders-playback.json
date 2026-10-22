@@ -549,7 +549,7 @@
             "key_specs.weight",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         },
         {
           "url": "https://productiongear.co.uk/products/sound-devices-888-mixer-recorder",
@@ -2158,7 +2158,7 @@
           "covers": [
             "why_it_is_a_classic"
           ],
-          "url_status": "error:URLError"
+          "url_status": "ok"
         }
       ],
       "notes": "TASCAM now also lists a DR-40XP; the DR-40X is still listed as current (firmware V1.08). The DR-40X also has built-in adjustable stereo mics (not detailed here). USB micro-B mapped to usb-b; 2.5 mm remote jack mapped to trs-35mm (closest).",

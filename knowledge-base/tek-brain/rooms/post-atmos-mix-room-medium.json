@@ -356,7 +356,16 @@
       "fauteuil de mixage"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-mid-century-lounge-chair",
+    "ph-modern-ceiling-lamp-01",
+    "ph-modern-coffee-table-01",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "ph-steel-frame-shelves-03",
+    "pp-kenney-desk-chair",
+    "pp-kenney-lounge-sofa"
+  ],
   "sources": [
     {
       "url": "https://www.production-expert.com/production-expert-1/how-to-set-up-a-mix-room-for-dolby-atmos-music-definitive-guide",
@@ -367,7 +376,8 @@
       "covers": [
         "dimensions_m.*.typical (18 × 21 pieds, 10 pieds)",
         "dimensions_m.*.min (10 × 11,5 pieds, 8 pieds)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://professional.dolby.com/en-in/gaming/tutorial/atmos-design-studio/",
@@ -378,7 +388,8 @@
       "covers": [
         "gear_positions (5.1.4 minimum, 7.1.4 référence, L/R 30°, surround 110°, hautes 30–55°, séparation des hautes = moitié de la longueur)",
         "calibrage 79 dB C, LFE +10 dB"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.focal.com/en/pro/dolby-atmos",
@@ -390,7 +401,8 @@
         "volume ≥ 50 m³ (voir conflicts)",
         "distance enceintes < 4 m (max 5 m)",
         "enceintes à 1,2 m, hautes ≥ 2,4 m"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.genelec.com/monitor-placement",
@@ -400,7 +412,8 @@
       "kind": "manufacturer",
       "covers": [
         "gear_positions (surround arrière 130–150°)"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1116-3-201502-I!!PDF-E.pdf",
@@ -411,7 +424,8 @@
       "covers": [
         "rt60_s (formule Tm)",
         "dimensions_m.*.max (30–70 m² en multicanal)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "conflicts": [

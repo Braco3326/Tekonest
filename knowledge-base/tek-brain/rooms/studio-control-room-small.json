@@ -277,7 +277,19 @@
       "nuage acoustique au plafond"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "objv-home-stereo-speakers",
+    "objv-speaker-cabinet-rusov",
+    "objv-trs-jack-adapter",
+    "ph-mid-century-lounge-chair",
+    "ph-modern-ceiling-lamp-01",
+    "ph-modern-coffee-table-01",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "ph-steel-frame-shelves-03",
+    "pp-kenney-desk-chair",
+    "pp-kenney-lounge-sofa"
+  ],
   "sources": [
     {
       "url": "https://www.production-expert.com/production-expert-1/how-to-set-up-a-mix-room-for-dolby-atmos-music-definitive-guide",
@@ -289,7 +301,8 @@
         "dimensions_m.length.min",
         "dimensions_m.width.min",
         "dimensions_m.height.min"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3276.pdf",
@@ -301,7 +314,8 @@
         "dimensions_m (30 m² = surface minimale d'une régie de haute qualité : la petite régie est sous ce seuil, d'où le max)",
         "proportions l/h et w/h",
         "hauteur 1,2 m des enceintes"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -311,7 +325,8 @@
       "kind": "manufacturer",
       "covers": [
         "rt60_s"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.genelec.com/monitor-placement",
@@ -321,7 +336,8 @@
       "kind": "manufacturer",
       "covers": [
         "gear_positions (angle 60°, hauteur 1,2–1,4 m, auditeur à ≥ 1 m des murs, tiers avant)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

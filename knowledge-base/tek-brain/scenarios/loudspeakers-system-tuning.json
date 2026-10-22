@@ -17,9 +17,9 @@
           "role": "console"
         },
         {
-          "equipment_id": "dbx-driverack-pa2",
+          "equipment_id": "meyer-sound-galileo-galaxy-816",
           "qty": 1,
-          "role": "processeur de diffusion (retards, égalisation)"
+          "role": "processeur de diffusion : retard (plage 2000 ms), égalisation et gain sur chaque sortie (façades et rappels sur des sorties distinctes)"
         },
         {
           "equipment_id": "qsc-k12-2",
@@ -46,8 +46,8 @@
           },
           {
             "id": "proc",
-            "equipment_id": "dbx-driverack-pa2",
-            "label": "Processeur"
+            "equipment_id": "meyer-sound-galileo-galaxy-816",
+            "label": "Processeur (retard par sortie)"
           },
           {
             "id": "mainL",
@@ -133,7 +133,8 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
@@ -143,7 +144,8 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
@@ -153,10 +155,35 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://docs.meyersound.com/products/en/datasheet---galileo-galaxy-816.html",
+          "publisher": "Meyer Sound, Galileo GALAXY 816 datasheet",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "required_gear (processeur : 16 sorties, « Gain, 2000 ms delay range … » par sortie)",
+            "signal_flow"
+          ],
+          "url_status": "ok"
         }
       ],
-      "review": "needs-oscar-review"
+      "review": "needs-oscar-review",
+      "conflicts": [
+        {
+          "field": "required_gear/signal_flow",
+          "values": [
+            {
+              "value": "dbx-driverack-pa2 « processeur de diffusion (retards, égalisation) »",
+              "source_url": "https://dbxpro.com/en-US/products/driverack-pa2"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : la page dbx ne documente pour le PA2 que des retards d'alignement des voies et un retard d'entrée, pas de zone de rappel retardée indépendante ; remplacé par le Galileo GALAXY 816 (KB), dont la fiche Meyer (relue le 2026-10-22) donne une plage de retard de 2000 ms sur chaque sortie. Tout processeur à retard par sortie convient."
+        }
+      ]
     },
     {
       "id": "concert-hall-line-array-and-cardioid-subs",
@@ -299,7 +326,8 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
@@ -309,7 +337,8 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/global/en/arraycalc/",
@@ -319,7 +348,8 @@
           "kind": "manufacturer",
           "covers": [
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf",
@@ -329,7 +359,8 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

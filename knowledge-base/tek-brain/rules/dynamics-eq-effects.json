@@ -1,258 +1,266 @@
 {
- "entity": "rule",
- "domain": "dynamics-eq-effects",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "reverb-on-insert-instead-of-send",
-   "name_fr": "Réverbération en insert au lieu d'un départ",
-   "name_en": "Reverb on insert instead of send",
-   "domain": "dynamics-eq-effects",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "info",
-   "scope": "connection",
-   "condition": {
-    "all": [
-     {
-      "path": "src.port.signal",
-      "op": "eq",
-      "value": "insert-send-return"
-     },
-     {
-      "path": "dst.device.category",
-      "op": "in",
-      "value": [
-       "effects-reverb",
-       "effects-delay"
-      ]
-     }
-    ]
-   },
-   "explanation": "Une réverbération ou un délai branché sur l'insert d'une seule tranche fonctionne (Sound On Sound l'admet), mais l'usage courant est de l'alimenter par un départ auxiliaire : une seule réverbération sert alors plusieurs sources avec un dosage propre à chacune, et l'équilibre sec/effet suit le fader. En insert, le dosage doit se faire sur l'effet lui-même.",
-   "fix": "Alimenter l'effet par un départ auxiliaire post-fader, régler l'effet à 100 % wet et le récupérer sur un retour stéréo panoramiqué gauche/droite.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "device.category:effects-reverb",
-    "device.category:effects-delay",
-    "port.signal:insert-send-return (taxonomy proposed_signal_ids)"
-   ],
-   "concept_ids": [
-    "insert-vs-send-effects",
-    "reverb",
-    "delay-effect"
-   ],
-   "sources": [
+  "entity": "rule",
+  "domain": "dynamics-eq-effects",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
-     "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
+      "id": "reverb-on-insert-instead-of-send",
+      "name_fr": "Réverbération en insert au lieu d'un départ",
+      "name_en": "Reverb on insert instead of send",
+      "domain": "dynamics-eq-effects",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.signal",
+            "op": "eq",
+            "value": "insert-send-return"
+          },
+          {
+            "path": "dst.device.category",
+            "op": "in",
+            "value": [
+              "effects-reverb",
+              "effects-delay"
+            ]
+          }
+        ]
+      },
+      "explanation": "Une réverbération ou un délai branché sur l'insert d'une seule tranche fonctionne (Sound On Sound l'admet), mais l'usage courant est de l'alimenter par un départ auxiliaire : une seule réverbération sert alors plusieurs sources avec un dosage propre à chacune, et l'équilibre sec/effet suit le fader. En insert, le dosage doit se faire sur l'effet lui-même.",
+      "fix": "Alimenter l'effet par un départ auxiliaire post-fader, régler l'effet à 100 % wet et le récupérer sur un retour stéréo panoramiqué gauche/droite.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.category:effects-reverb",
+        "device.category:effects-delay",
+        "port.signal:insert-send-return (taxonomy proposed_signal_ids)"
+      ],
+      "concept_ids": [
+        "insert-vs-send-effects",
+        "reverb",
+        "delay-effect"
+      ],
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
+          "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/pro-tools-using-sends",
+          "publisher": "Sound On Sound — J. Rodgers, « Pro Tools: Using Sends » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+          "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://www.soundonsound.com/techniques/pro-tools-using-sends",
-     "publisher": "Sound On Sound — J. Rodgers, « Pro Tools: Using Sends » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation"
-     ]
+      "id": "effect-send-pre-fader",
+      "name_fr": "Départ d'effet pré-fader",
+      "name_en": "Effect send taken pre-fader",
+      "domain": "dynamics-eq-effects",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.flags",
+            "op": "includes",
+            "value": "isAuxSendPreFader"
+          },
+          {
+            "path": "dst.device.category",
+            "op": "in",
+            "value": [
+              "effects-reverb",
+              "effects-delay"
+            ]
+          }
+        ]
+      },
+      "explanation": "Un départ pré-fader ne suit pas le fader : quand on baisse la tranche, sa réverbération reste et l'équilibre sec/effet change. Les départs pré-fader sont faits pour les retours de scène ; les effets se prennent post-fader.",
+      "fix": "Passer le départ en post-fader (sauf effet volontaire 100 % mouillé, ou réverbération dans un retour de scène).",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isAuxSendPreFader",
+        "device.category:effects-reverb",
+        "device.category:effects-delay"
+      ],
+      "concept_ids": [
+        "insert-vs-send-effects",
+        "pre-post-fader",
+        "aux-send",
+        "reverb"
+      ],
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
+          "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/techniques/pro-tools-using-sends",
+          "publisher": "Sound On Sound — J. Rodgers, « Pro Tools: Using Sends » (2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
-     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "fix"
-     ]
-    }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "effect-send-pre-fader",
-   "name_fr": "Départ d'effet pré-fader",
-   "name_en": "Effect send taken pre-fader",
-   "domain": "dynamics-eq-effects",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "connection",
-   "condition": {
-    "all": [
-     {
-      "path": "src.port.flags",
-      "op": "includes",
-      "value": "isAuxSendPreFader"
-     },
-     {
-      "path": "dst.device.category",
-      "op": "in",
-      "value": [
-       "effects-reverb",
-       "effects-delay"
-      ]
-     }
-    ]
-   },
-   "explanation": "Un départ pré-fader ne suit pas le fader : quand on baisse la tranche, sa réverbération reste et l'équilibre sec/effet change. Les départs pré-fader sont faits pour les retours de scène ; les effets se prennent post-fader.",
-   "fix": "Passer le départ en post-fader (sauf effet volontaire 100 % mouillé, ou réverbération dans un retour de scène).",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "port.flags:isAuxSendPreFader",
-    "device.category:effects-reverb",
-    "device.category:effects-delay"
-   ],
-   "concept_ids": [
-    "insert-vs-send-effects",
-    "pre-post-fader",
-    "aux-send",
-    "reverb"
-   ],
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
-     "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation"
-     ]
+      "id": "dynamics-processor-fed-from-aux-send",
+      "name_fr": "Processeur de dynamique alimenté par un départ auxiliaire",
+      "name_en": "Dynamics processor fed from an aux send",
+      "domain": "dynamics-eq-effects",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "info",
+      "scope": "connection",
+      "condition": {
+        "all": [
+          {
+            "path": "src.port.flags",
+            "op": "includes",
+            "value": "isAuxSend"
+          },
+          {
+            "path": "dst.device.category",
+            "op": "in",
+            "value": [
+              "dynamics",
+              "equalizer"
+            ]
+          }
+        ]
+      },
+      "explanation": "Égaliseurs, compresseurs/limiteurs et portes agissent sur tout le signal : ils s'utilisent normalement en insert (Sound On Sound). Alimentés par un départ, ils ne traitent qu'une copie qui se mélange au son sec. Exceptions volontaires : compression parallèle, ou contournement d'une console sans insert (départ pré-fader, fader de la tranche baissé).",
+      "fix": "Brancher le processeur sur l'insert de la tranche ou du groupe ; garder le départ seulement pour une compression parallèle voulue.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "port.flags:isAuxSend",
+        "device.category:dynamics",
+        "device.category:equalizer"
+      ],
+      "concept_ids": [
+        "insert-vs-send-effects",
+        "compressor",
+        "parallel-compression"
+      ],
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
+          "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+          "publisher": "Wikipedia — Dynamic range compression",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://www.soundonsound.com/techniques/pro-tools-using-sends",
-     "publisher": "Sound On Sound — J. Rodgers, « Pro Tools: Using Sends » (2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation"
-     ]
+      "id": "protection-limiter-before-eq",
+      "name_fr": "Limiteur de protection placé avant l'égaliseur",
+      "name_en": "Protection limiter placed before the EQ",
+      "domain": "dynamics-eq-effects",
+      "catalog_rule": null,
+      "status": "proposed",
+      "severity": "warning",
+      "scope": "graph",
+      "condition": {
+        "path": "graph.count(path: dynamics[role=speaker-protection] -> equalizer -> amplifier)",
+        "op": "gt",
+        "value": 0
+      },
+      "explanation": "Pour protéger les haut-parleurs, dbx recommande de placer le compresseur/limiteur le plus près possible des amplificateurs. S'il est avant l'égaliseur, une accentuation potentiellement dangereuse de l'égaliseur n'est pas vue par le limiteur et les enceintes peuvent être endommagées.",
+      "fix": "Placer le limiteur de protection après l'égaliseur (et après le filtre actif, un limiteur par voie si possible), juste avant les amplificateurs.",
+      "evaluable_now": false,
+      "needs_catalog_fields": [
+        "device.category:dynamics",
+        "device.category:equalizer",
+        "device.role:speaker-protection",
+        "graph path query support"
+      ],
+      "concept_ids": [
+        "limiter",
+        "graphic-equalizer",
+        "crossover"
+      ],
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation",
+            "fix"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "dynamics-processor-fed-from-aux-send",
-   "name_fr": "Processeur de dynamique alimenté par un départ auxiliaire",
-   "name_en": "Dynamics processor fed from an aux send",
-   "domain": "dynamics-eq-effects",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "info",
-   "scope": "connection",
-   "condition": {
-    "all": [
-     {
-      "path": "src.port.flags",
-      "op": "includes",
-      "value": "isAuxSend"
-     },
-     {
-      "path": "dst.device.category",
-      "op": "in",
-      "value": [
-       "dynamics",
-       "equalizer"
-      ]
-     }
-    ]
-   },
-   "explanation": "Égaliseurs, compresseurs/limiteurs et portes agissent sur tout le signal : ils s'utilisent normalement en insert (Sound On Sound). Alimentés par un départ, ils ne traitent qu'une copie qui se mélange au son sec. Exceptions volontaires : compression parallèle, ou contournement d'une console sans insert (départ pré-fader, fader de la tranche baissé).",
-   "fix": "Brancher le processeur sur l'insert de la tranche ou du groupe ; garder le départ seulement pour une compression parallèle voulue.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "port.flags:isAuxSend",
-    "device.category:dynamics",
-    "device.category:equalizer"
-   ],
-   "concept_ids": [
-    "insert-vs-send-effects",
-    "compressor",
-    "parallel-compression"
-   ],
-   "sources": [
+  ],
+  "not_found_log": [
     {
-     "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
-     "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
-     "publisher": "Wikipedia — Dynamic range compression",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Catégories de devices (dynamics, equalizer, effects-reverb) et drapeaux de départ aux dans catalog.json",
+      "searched": "tekpractice-sim/content/catalog.json : 24 devices sans category renseignée ; flags existants sans isAuxSend"
     }
-   ],
-   "review": "ok"
-  },
-  {
-   "id": "protection-limiter-before-eq",
-   "name_fr": "Limiteur de protection placé avant l'égaliseur",
-   "name_en": "Protection limiter placed before the EQ",
-   "domain": "dynamics-eq-effects",
-   "catalog_rule": null,
-   "status": "proposed",
-   "severity": "warning",
-   "scope": "graph",
-   "condition": {
-    "path": "graph.count(path: dynamics[role=speaker-protection] -> equalizer -> amplifier)",
-    "op": "gt",
-    "value": 0
-   },
-   "explanation": "Pour protéger les haut-parleurs, dbx recommande de placer le compresseur/limiteur le plus près possible des amplificateurs. S'il est avant l'égaliseur, une accentuation potentiellement dangereuse de l'égaliseur n'est pas vue par le limiteur et les enceintes peuvent être endommagées.",
-   "fix": "Placer le limiteur de protection après l'égaliseur (et après le filtre actif, un limiteur par voie si possible), juste avant les amplificateurs.",
-   "evaluable_now": false,
-   "needs_catalog_fields": [
-    "device.category:dynamics",
-    "device.category:equalizer",
-    "device.role:speaker-protection",
-    "graph path query support"
-   ],
-   "concept_ids": [
-    "limiter",
-    "graphic-equalizer",
-    "crossover"
-   ],
-   "sources": [
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation",
-      "fix"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Catégories de devices (dynamics, equalizer, effects-reverb) et drapeaux de départ aux dans catalog.json",
-   "searched": "tekpractice-sim/content/catalog.json : 24 devices sans category renseignée ; flags existants sans isAuxSend"
-  }
- ]
+  ]
 }

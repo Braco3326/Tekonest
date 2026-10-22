@@ -1033,7 +1033,7 @@
             "key_specs.magnetic_field",
             "connectors"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Consumer/audiophile headphones are now sold under sennheiser-hearing.com. The product page lists 29 download languages (incl. French) but exposed no download links. Single-source entry; no second source could be reached (search budget exhausted).",
@@ -1061,7 +1061,7 @@
         "sim_value": "low",
         "sim_value_reason": "Simple jack connection; mainly an impedance / amplifier-drive lesson."
       },
-      "product_page_url_status": "ok"
+      "product_page_url_status": "blocked"
     },
     {
       "id": "neumann-ndh-20",
@@ -1841,7 +1841,7 @@
             "key_specs.sensitivity",
             "key_specs.cable"
           ],
-          "url_status": "ok"
+          "url_status": "blocked"
         }
       ],
       "notes": "Chosen instead of the suggested IE 400 PRO, which no longer appears in Sennheiser's IE family page (IE 100 PRO, IE 100 PRO Wireless, IE 4 listed). The cable plug type (assumed 3.5 mm for trs-35mm) and the earpiece connector type were not stated in any source read; treat the connector entry as unverified. The product page spec table mixes in wireless-version fields (Bluetooth), so its 160 g weight figure is uncertain. 'Sensitivity' here is Sennheiser's SPL at 1 V rms.",

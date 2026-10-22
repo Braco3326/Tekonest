@@ -168,7 +168,12 @@
       "patère casque"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-mid-century-lounge-chair",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "pp-kenney-lounge-sofa"
+  ],
   "sources": [
     {
       "url": "https://whisperroom.com/products/voice-over-basic",
@@ -179,7 +184,8 @@
       "covers": [
         "dimensions_m.*.min (intérieur 3'10\" × 3'10\" × 6'8\")",
         "dimensions_m.height.min"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://whisperroom.com/products/practice-basic",
@@ -190,7 +196,8 @@
       "covers": [
         "dimensions_m.*.typical (intérieur 5'10\" × 5'10\" × 6'8\")",
         "openings[1] (hublot 16\" × 30\")"
-      ]
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -200,7 +207,8 @@
       "kind": "manufacturer",
       "covers": [
         "rt60_s"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

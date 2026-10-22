@@ -225,7 +225,12 @@
       "vitrage frontal incliné"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-mid-century-lounge-chair",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "pp-kenney-lounge-sofa"
+  ],
   "conflicts": [
     {
       "field": "openings[0].height_m",
@@ -274,7 +279,8 @@
         "description",
         "surfaces"
       ],
-      "note": "Copie tierce du texte ISO 2603:1998 (§4.5.2 dimensions, §4.7 vitrages, §4.8 RT/isolement/bruit, §4.9 ventilation, §5.2 éclairage, §5.4 table, §10 casques). Le texte officiel ISO est payant."
+      "note": "Copie tierce du texte ISO 2603:1998 (§4.5.2 dimensions, §4.7 vitrages, §4.8 RT/isolement/bruit, §4.9 ventilation, §5.2 éclairage, §5.4 table, §10 casques). Le texte officiel ISO est payant.",
+      "url_status": "ok"
     },
     {
       "url": "https://aiic.org/document/4395/Checklist%20for%20simultaneous%20interpretation%20equipment%20-%20ENG.pdf",
@@ -291,7 +297,8 @@
         "openings",
         "lighting"
       ],
-      "note": "Check-list résumant ISO 2603:1998 et ISO 4043:1998 (cabines mobiles 1,60-2,40 m × 1,60 m × 2 m)."
+      "note": "Check-list résumant ISO 2603:1998 et ISO 4043:1998 (cabines mobiles 1,60-2,40 m × 1,60 m × 2 m).",
+      "url_status": "ok"
     },
     {
       "url": "https://calliope-interpreters.org/news-and-articles/standardized-booths-simultaneous-interpretation/",
@@ -303,7 +310,8 @@
         "dimensions_m.width.min",
         "dimensions_m.width.typical"
       ],
-      "note": "Largeur minimale 1,6 m (mobile) et 2,5 m (fixe), une cabine par langue active."
+      "note": "Largeur minimale 1,6 m (mobile) et 2,5 m (fixe), une cabine par langue active.",
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

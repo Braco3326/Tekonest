@@ -100,7 +100,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -110,7 +111,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/publications/r068",
@@ -120,7 +122,8 @@
           "kind": "standard",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
@@ -130,7 +133,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -221,7 +225,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
@@ -231,7 +236,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Aux-send",
@@ -241,7 +247,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
@@ -251,7 +258,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -352,7 +360,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
@@ -362,7 +371,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -372,7 +382,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -464,7 +475,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
@@ -474,7 +486,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -539,7 +552,7 @@
         {
           "n": 5,
           "preconditions": [],
-          "action": "Nommer chaque fichier selon la convention (ex. AI_Titre_Drums_MI_01_48k24.wav) et ranger dans Mixes / Stems.",
+          "action": "Nommer chaque fichier selon la convention (ex. AI_Titre_MI01_Drums_48k24.wav) et ranger dans Mixes / Stems.",
           "expected_result": "Noms uniques, sans espaces, avec fréquence et résolution.",
           "typical_mistakes": []
         }
@@ -554,7 +567,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
@@ -564,10 +578,22 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "conflicts": [],
+      "conflicts": [
+        {
+          "field": "steps[4].action",
+          "values": [
+            {
+              "value": "AI_Titre_Drums_MI_01_48k24.wav",
+              "source_url": null
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : ordre des champs aligné sur l'exemple P&E Wing (ArtistInitials_SongTitle_MixerInitials+numéro_Version/Stem_SampleRateBitDepth)."
+        }
+      ],
       "review": "ok"
     },
     {
@@ -645,7 +671,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -655,7 +682,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
@@ -665,7 +693,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

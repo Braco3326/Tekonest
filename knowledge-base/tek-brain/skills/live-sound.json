@@ -42,7 +42,8 @@
           "kind": "trade-press",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Sound_check",
@@ -52,7 +53,8 @@
           "kind": "other",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -96,7 +98,8 @@
           "kind": "trade-press",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/4/",
@@ -106,7 +109,8 @@
           "kind": "trade-press",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -152,7 +156,8 @@
           "covers": [
             "description",
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/the-beginners-guide-to-taking-charge-of-the-sound-check/5/",
@@ -162,7 +167,8 @@
           "kind": "trade-press",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://ritchames.substack.com/p/what-actually-happens-in-between",
@@ -172,7 +178,8 @@
           "kind": "other",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -216,7 +223,8 @@
           "covers": [
             "description",
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.namm.org/festival-101-tech-rider-update",
@@ -226,7 +234,8 @@
           "kind": "other",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

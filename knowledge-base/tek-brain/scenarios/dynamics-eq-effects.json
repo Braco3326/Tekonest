@@ -1,170 +1,174 @@
 {
- "entity": "scenario",
- "domain": "dynamics-eq-effects",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "club-gig-vocal-and-toms-processing",
-   "name_fr": "Concert en club : dynamique de la voix, portes sur les toms et réverbération partagée",
-   "name_en": "Club gig: vocal dynamics, tom gates and shared reverb",
-   "domain": "dynamics-eq-effects",
-   "brief": "Petit concert rock en club. À la console façade, l'élève compresse la voix lead (et la de-esse), filtre en passe-haut les tranches non graves, gate les deux toms et installe une réverbération externe en départ post-fader / retour stéréo partagée par la voix et la caisse claire.",
-   "room_id": "bar-club-stage-small",
-   "required_gear": [
+  "entity": "scenario",
+  "domain": "dynamics-eq-effects",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "equipment_id": "yamaha-ql1",
-     "qty": 1,
-     "role": "console façade (dynamique et EQ par tranche)"
-    },
-    {
-     "equipment_id": "shure-sm58",
-     "qty": 1,
-     "role": "micro voix lead"
-    },
-    {
-     "equipment_id": "shure-sm57",
-     "qty": 2,
-     "role": "micros toms"
-    },
-    {
-     "equipment_id": "lexicon-pcm96",
-     "qty": 1,
-     "role": "réverbération externe en départ/retour"
-    },
-    {
-     "equipment_id": "qsc-k12-2",
-     "qty": 2,
-     "role": "diffusion façade"
+      "id": "club-gig-vocal-and-toms-processing",
+      "name_fr": "Concert en club : dynamique de la voix, portes sur les toms et réverbération partagée",
+      "name_en": "Club gig: vocal dynamics, tom gates and shared reverb",
+      "domain": "dynamics-eq-effects",
+      "brief": "Petit concert rock en club. À la console façade, l'élève compresse la voix lead (et la de-esse), filtre en passe-haut les tranches non graves, gate les deux toms et installe une réverbération externe en départ post-fader / retour stéréo partagée par la voix et la caisse claire.",
+      "room_id": "bar-club-stage-small",
+      "required_gear": [
+        {
+          "equipment_id": "yamaha-ql1",
+          "qty": 1,
+          "role": "console façade (dynamique et EQ par tranche)"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 1,
+          "role": "micro voix lead"
+        },
+        {
+          "equipment_id": "shure-sm57",
+          "qty": 2,
+          "role": "micros toms"
+        },
+        {
+          "equipment_id": "lexicon-pcm96",
+          "qty": 1,
+          "role": "réverbération externe en départ/retour"
+        },
+        {
+          "equipment_id": "qsc-k12-2",
+          "qty": 2,
+          "role": "diffusion façade"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "vox",
+            "equipment_id": "shure-sm58",
+            "label": "Micro voix"
+          },
+          {
+            "id": "tom1",
+            "equipment_id": "shure-sm57",
+            "label": "Micro tom 1"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "yamaha-ql1",
+            "label": "Console façade"
+          },
+          {
+            "id": "rev",
+            "equipment_id": "lexicon-pcm96",
+            "label": "Réverbération (aux post-fader → retour)"
+          },
+          {
+            "id": "pa",
+            "equipment_id": "qsc-k12-2",
+            "label": "Enceinte façade"
+          }
+        ],
+        "edges": [
+          {
+            "from": "vox",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "tom1",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "rev",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "rev",
+            "to": "desk",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "pa",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "high-pass-non-bass-channels",
+        "compress-lead-vocal",
+        "de-ess-vocal-sidechain",
+        "gate-toms-live",
+        "set-up-reverb-send-return"
+      ],
+      "rule_ids": [
+        "reverb-on-insert-instead-of-send",
+        "effect-send-pre-fader",
+        "dynamics-processor-fed-from-aux-send"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 60,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en oeuvre d'une sonorisation et réglage des traitements — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
+          "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "signal_flow",
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+          "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+          "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "signal_flow"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     }
-   ],
-   "signal_flow": {
-    "nodes": [
-     {
-      "id": "vox",
-      "equipment_id": "shure-sm58",
-      "label": "Micro voix"
-     },
-     {
-      "id": "tom1",
-      "equipment_id": "shure-sm57",
-      "label": "Micro tom 1"
-     },
-     {
-      "id": "desk",
-      "equipment_id": "yamaha-ql1",
-      "label": "Console façade"
-     },
-     {
-      "id": "rev",
-      "equipment_id": "lexicon-pcm96",
-      "label": "Réverbération (aux post-fader → retour)"
-     },
-     {
-      "id": "pa",
-      "equipment_id": "qsc-k12-2",
-      "label": "Enceinte façade"
-     }
-    ],
-    "edges": [
-     {
-      "from": "vox",
-      "to": "desk",
-      "signal": "mic-level",
-      "connector": "xlr3-m"
-     },
-     {
-      "from": "tom1",
-      "to": "desk",
-      "signal": "mic-level",
-      "connector": "xlr3-m"
-     },
-     {
-      "from": "desk",
-      "to": "rev",
-      "signal": "line-level-pro",
-      "connector": "xlr3-m"
-     },
-     {
-      "from": "rev",
-      "to": "desk",
-      "signal": "line-level-pro",
-      "connector": "xlr3-m"
-     },
-     {
-      "from": "desk",
-      "to": "pa",
-      "signal": "line-level-pro",
-      "connector": "xlr3-m"
-     }
-    ]
-   },
-   "procedure_ids": [
-    "high-pass-non-bass-channels",
-    "compress-lead-vocal",
-    "de-ess-vocal-sidechain",
-    "gate-toms-live",
-    "set-up-reverb-send-return"
-   ],
-   "rule_ids": [
-    "reverb-on-insert-instead-of-send",
-    "effect-send-pre-fader",
-    "dynamics-processor-fed-from-aux-send"
-   ],
-   "difficulty": 3,
-   "estimated_time_min": 60,
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": null,
-     "note": "Mise en oeuvre d'une sonorisation et réglage des traitements — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "sources": [
-    {
-     "url": "https://www.soundonsound.com/techniques/making-most-your-mixer",
-     "publisher": "Sound On Sound — P. White, « Making The Most Of Your Mixer » (1996)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "signal_flow",
-      "brief"
-     ]
-    },
-    {
-     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
-     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
-     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
-     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "signal_flow"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": []
+  ],
+  "not_found_log": []
 }

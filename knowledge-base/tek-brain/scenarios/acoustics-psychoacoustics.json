@@ -123,7 +123,8 @@
           "kind": "standard",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/monitor-placement",
@@ -133,7 +134,8 @@
           "kind": "manufacturer",
           "covers": [
             "procedure_ids"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.genelec.com/improving-room-acoustics",
@@ -143,7 +145,8 @@
           "kind": "manufacturer",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"

@@ -6,62 +6,342 @@
   "size": "large",
   "description": "Grande salle de prise de son conçue pour enregistrer un orchestre symphonique complet (100 à 130 musiciens), souvent avec chœur, pour le cinéma, le jeu vidéo ou le disque. Références publiées : Abbey Road Studio One (4 844 pieds carrés, environ 450 m², orchestre de 100 musiciens et chœur de 100 voix) et Synchron Stage Vienna Stage A (540 m², 10,5 à 12 m de hauteur, jusqu'à 130 musiciens, construction en boîte dans la boîte, bruit de fond de 16 dB(A) climatisation en marche). La prise de son repose sur un arbre Decca suspendu au-dessus du chef, des micros d'ambiance (outriggers) et des appoints par pupitre ; les musiciens jouent au casque sur un clic. La régie est une pièce séparée, non modélisée ici. Convention des ouvertures : « front » = mur derrière l'orchestre (−z), « rear » = mur derrière le chef (+z).",
   "dimensions_m": {
-    "length": { "min": 25, "typical": 27, "max": 29 },
-    "width": { "min": 18, "typical": 20, "max": 20 },
-    "height": { "min": 10.5, "typical": 11, "max": 12 }
+    "length": {
+      "min": 25,
+      "typical": 27,
+      "max": 29
+    },
+    "width": {
+      "min": 18,
+      "typical": 20,
+      "max": 20
+    },
+    "height": {
+      "min": 10.5,
+      "typical": 11,
+      "max": 12
+    }
   },
   "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
   "surfaces": [
-    { "surface": "floor", "material": "parquet bois sur dalle flottante", "finish_note": "Sol flottant typique d'une construction en boîte dans la boîte (Synchron : jusqu'à 10 pieds d'écart entre les parois)." },
-    { "surface": "walls", "material": "panneaux bois diffusants et absorbants, panneaux réglables", "finish_note": "Mélange de diffusion et d'absorption pour une réverbération courte mais pleine (traitement non détaillé par les sources ouvertes)." },
-    { "surface": "ceiling", "material": "plafond haut avec nuages ou diffuseurs suspendus", "finish_note": "10,5 à 12 m de hauteur au Synchron Stage A." }
+    {
+      "surface": "floor",
+      "material": "parquet bois sur dalle flottante",
+      "finish_note": "Sol flottant typique d'une construction en boîte dans la boîte (Synchron : jusqu'à 10 pieds d'écart entre les parois)."
+    },
+    {
+      "surface": "walls",
+      "material": "panneaux bois diffusants et absorbants, panneaux réglables",
+      "finish_note": "Mélange de diffusion et d'absorption pour une réverbération courte mais pleine (traitement non détaillé par les sources ouvertes)."
+    },
+    {
+      "surface": "ceiling",
+      "material": "plafond haut avec nuages ou diffuseurs suspendus",
+      "finish_note": "10,5 à 12 m de hauteur au Synchron Stage A."
+    }
   ],
   "rt60_s": "not found",
   "zones": [
-    { "id": "salle", "kind": "live-room", "rect_m": [0, 0, 20, 27], "floor_y_m": 0 },
-    { "id": "orchestre", "kind": "stage", "rect_m": [0, -3, 18, 15], "floor_y_m": 0 },
-    { "id": "choeur", "kind": "stage", "rect_m": [0, -12, 18, 3], "floor_y_m": 0.6 },
-    { "id": "podium-chef", "kind": "desk", "rect_m": [0, 5.5, 2, 2], "floor_y_m": 0.3 },
-    { "id": "cabine-iso", "kind": "iso-booth", "rect_m": [7.5, 10.5, 4, 5], "floor_y_m": 0 }
+    {
+      "id": "salle",
+      "kind": "live-room",
+      "rect_m": [
+        0,
+        0,
+        20,
+        27
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "orchestre",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        -3,
+        18,
+        15
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "choeur",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        -12,
+        18,
+        3
+      ],
+      "floor_y_m": 0.6
+    },
+    {
+      "id": "podium-chef",
+      "kind": "desk",
+      "rect_m": [
+        0,
+        5.5,
+        2,
+        2
+      ],
+      "floor_y_m": 0.3
+    },
+    {
+      "id": "cabine-iso",
+      "kind": "iso-booth",
+      "rect_m": [
+        7.5,
+        10.5,
+        4,
+        5
+      ],
+      "floor_y_m": 0
+    }
   ],
   "gear_positions": [
-    { "equipment_id": "neumann-m-149-tube", "zone": "orchestre", "position_m": [0, 3.5, 3.5], "rotation_deg": 180, "note": "Micro central de l'arbre Decca, en omni, avancé par rapport aux micros gauche/droite, au-dessus du chef (écartements exacts : voir la source Decca tree)." },
-    { "equipment_id": "neumann-m-149-tube", "zone": "orchestre", "position_m": [-1.0, 3.5, 2.5], "rotation_deg": 180, "note": "Micro gauche de l'arbre Decca (omni)." },
-    { "equipment_id": "neumann-m-149-tube", "zone": "orchestre", "position_m": [1.0, 3.5, 2.5], "rotation_deg": 180, "note": "Micro droit de l'arbre Decca (omni)." },
-    { "equipment_id": "akg-c414-xls", "zone": "orchestre", "position_m": [-7.5, 3.5, 1.5], "rotation_deg": 180, "note": "Outrigger gauche, en omni, pour élargir l'image des cordes." },
-    { "equipment_id": "akg-c414-xls", "zone": "orchestre", "position_m": [7.5, 3.5, 1.5], "rotation_deg": 180, "note": "Outrigger droit." },
-    { "equipment_id": "sennheiser-mkh-8040", "zone": "orchestre", "position_m": [-4.0, 1.8, 0.5], "rotation_deg": 180, "note": "Appoint premiers violons." },
-    { "equipment_id": "neumann-km-184", "zone": "orchestre", "position_m": [0, 2.0, -3.0], "rotation_deg": 180, "note": "Appoint bois." },
-    { "equipment_id": "coles-4038", "zone": "orchestre", "position_m": [3.5, 2.2, -7.5], "rotation_deg": 180, "note": "Ruban figure 8 sur les cuivres, adoucit les aigus." },
-    { "equipment_id": "neumann-u-47-fet-i", "zone": "orchestre", "position_m": [7.0, 1.2, -4.0], "rotation_deg": 180, "note": "Appoint contrebasses." },
-    { "equipment_id": "schoeps-cmc-6-mk-4", "zone": "choeur", "position_m": [0, 2.8, -10.0], "rotation_deg": 180, "note": "Paire de cardioïdes devant le chœur." },
-    { "equipment_id": "rme-m-32-ad", "zone": "salle", "position_m": [-9.0, 0.5, -1.0], "rotation_deg": 90, "note": "Convertisseur/stagebox 32 voies en salle, liaison numérique vers la régie." },
-    { "equipment_id": "beyerdynamic-dt-770-pro", "zone": "orchestre", "position_m": [-2.0, 1.1, -1.0], "rotation_deg": 0, "note": "Casque fermé pour le clic et le retour (fermé pour limiter la fuite du clic dans les micros)." },
-    { "equipment_id": "neumann-u87-ai", "zone": "cabine-iso", "position_m": [7.5, 1.6, 10.5], "rotation_deg": 0, "note": "Soliste vocal ou instrument isolé en cabine." }
+    {
+      "equipment_id": "neumann-m-149-tube",
+      "zone": "orchestre",
+      "position_m": [
+        0,
+        3.5,
+        3.5
+      ],
+      "rotation_deg": 180,
+      "note": "Micro central de l'arbre Decca, en omni, avancé par rapport aux micros gauche/droite, au-dessus du chef (écartements exacts : voir la source Decca tree)."
+    },
+    {
+      "equipment_id": "neumann-m-149-tube",
+      "zone": "orchestre",
+      "position_m": [
+        -1.0,
+        3.5,
+        2.5
+      ],
+      "rotation_deg": 180,
+      "note": "Micro gauche de l'arbre Decca (omni)."
+    },
+    {
+      "equipment_id": "neumann-m-149-tube",
+      "zone": "orchestre",
+      "position_m": [
+        1.0,
+        3.5,
+        2.5
+      ],
+      "rotation_deg": 180,
+      "note": "Micro droit de l'arbre Decca (omni)."
+    },
+    {
+      "equipment_id": "akg-c414-xls",
+      "zone": "orchestre",
+      "position_m": [
+        -7.5,
+        3.5,
+        1.5
+      ],
+      "rotation_deg": 180,
+      "note": "Outrigger gauche, en omni, pour élargir l'image des cordes."
+    },
+    {
+      "equipment_id": "akg-c414-xls",
+      "zone": "orchestre",
+      "position_m": [
+        7.5,
+        3.5,
+        1.5
+      ],
+      "rotation_deg": 180,
+      "note": "Outrigger droit."
+    },
+    {
+      "equipment_id": "sennheiser-mkh-8040",
+      "zone": "orchestre",
+      "position_m": [
+        -4.0,
+        1.8,
+        0.5
+      ],
+      "rotation_deg": 180,
+      "note": "Appoint premiers violons."
+    },
+    {
+      "equipment_id": "neumann-km-184",
+      "zone": "orchestre",
+      "position_m": [
+        0,
+        2.0,
+        -3.0
+      ],
+      "rotation_deg": 180,
+      "note": "Appoint bois."
+    },
+    {
+      "equipment_id": "coles-4038",
+      "zone": "orchestre",
+      "position_m": [
+        3.5,
+        2.2,
+        -7.5
+      ],
+      "rotation_deg": 180,
+      "note": "Ruban figure 8 sur les cuivres, adoucit les aigus."
+    },
+    {
+      "equipment_id": "neumann-u-47-fet-i",
+      "zone": "orchestre",
+      "position_m": [
+        7.0,
+        1.2,
+        -4.0
+      ],
+      "rotation_deg": 180,
+      "note": "Appoint contrebasses."
+    },
+    {
+      "equipment_id": "schoeps-cmc-6-mk-4",
+      "zone": "choeur",
+      "position_m": [
+        0,
+        2.8,
+        -10.0
+      ],
+      "rotation_deg": 180,
+      "note": "Paire de cardioïdes devant le chœur."
+    },
+    {
+      "equipment_id": "rme-m-32-ad",
+      "zone": "salle",
+      "position_m": [
+        -9.0,
+        0.5,
+        -1.0
+      ],
+      "rotation_deg": 90,
+      "note": "Convertisseur/stagebox 32 voies en salle, liaison numérique vers la régie."
+    },
+    {
+      "equipment_id": "beyerdynamic-dt-770-pro",
+      "zone": "orchestre",
+      "position_m": [
+        -2.0,
+        1.1,
+        -1.0
+      ],
+      "rotation_deg": 0,
+      "note": "Casque fermé pour le clic et le retour (fermé pour limiter la fuite du clic dans les micros)."
+    },
+    {
+      "equipment_id": "neumann-u87-ai",
+      "zone": "cabine-iso",
+      "position_m": [
+        7.5,
+        1.6,
+        10.5
+      ],
+      "rotation_deg": 0,
+      "note": "Soliste vocal ou instrument isolé en cabine."
+    }
   ],
   "power_points": [
-    { "position_m": [-9.8, 0.4, -6.0], "type": "schuko-16a" },
-    { "position_m": [9.8, 0.4, -6.0], "type": "schuko-16a" },
-    { "position_m": [0, 0.4, 13.3], "type": "schuko-16a" }
+    {
+      "position_m": [
+        -9.8,
+        0.4,
+        -6.0
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        9.8,
+        0.4,
+        -6.0
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        0,
+        0.4,
+        13.3
+      ],
+      "type": "schuko-16a"
+    }
   ],
   "patch_points": [
-    { "position_m": [-9.8, 0.5, -1.0], "type": "wall-patch-xlr-48", "note": "Boîte murale de lignes micro vers la régie (implantation typique, non sourcée)." },
-    { "position_m": [9.8, 0.5, -1.0], "type": "wall-patch-xlr-48", "note": "Second boîtier côté opposé." },
-    { "position_m": [0, 0.5, 13.2], "type": "headphone-cue-distribution", "note": "Départ des mixages casque vers les pupitres." }
+    {
+      "position_m": [
+        -9.8,
+        0.5,
+        -1.0
+      ],
+      "type": "wall-patch-xlr-48",
+      "note": "Boîte murale de lignes micro vers la régie (implantation typique, non sourcée)."
+    },
+    {
+      "position_m": [
+        9.8,
+        0.5,
+        -1.0
+      ],
+      "type": "wall-patch-xlr-48",
+      "note": "Second boîtier côté opposé."
+    },
+    {
+      "position_m": [
+        0,
+        0.5,
+        13.2
+      ],
+      "type": "headphone-cue-distribution",
+      "note": "Départ des mixages casque vers les pupitres."
+    }
   ],
   "openings": [
-    { "wall": "rear", "kind": "door", "offset_m": -6.0, "width_m": 2.0, "height_m": 2.6 },
-    { "wall": "rear", "kind": "window", "offset_m": 0, "width_m": 4.0, "height_m": 1.5 },
-    { "wall": "left", "kind": "door", "offset_m": -10.0, "width_m": 2.4, "height_m": 3.0 }
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": -6.0,
+      "width_m": 2.0,
+      "height_m": 2.6
+    },
+    {
+      "wall": "rear",
+      "kind": "window",
+      "offset_m": 0,
+      "width_m": 4.0,
+      "height_m": 1.5
+    },
+    {
+      "wall": "left",
+      "kind": "door",
+      "offset_m": -10.0,
+      "width_m": 2.4,
+      "height_m": 3.0
+    }
   ],
-  "lighting": { "mood": "lumière neutre et uniforme pour lire les partitions, lampes de pupitre", "color_temp_k": 4000 },
+  "lighting": {
+    "mood": "lumière neutre et uniforme pour lire les partitions, lampes de pupitre",
+    "color_temp_k": 4000
+  },
   "procedural": {
     "wall_color": "#b08a5a",
     "floor_color": "#8a6a45",
     "ceiling_color": "#d8cfc0",
-    "prop_hints": ["arbre Decca sur grand pied ou suspendu", "podium de chef et écran de synchro", "pupitres et chaises d'orchestre", "praticables pour cuivres et percussions", "panneaux acoustiques mobiles (gobos)", "écran vidéo de l'image du film"]
+    "prop_hints": [
+      "arbre Decca sur grand pied ou suspendu",
+      "podium de chef et écran de synchro",
+      "pupitres et chaises d'orchestre",
+      "praticables pour cuivres et percussions",
+      "panneaux acoustiques mobiles (gobos)",
+      "écran vidéo de l'image du film"
+    ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-modern-coffee-table-01",
+    "pp-grand-piano"
+  ],
   "sources": [
     {
       "url": "https://www.synchronstage.com/stages",
@@ -69,7 +349,12 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["dimensions_m.height", "description (540 m², 130 musiciens)", "gear_positions (arbre Decca)"]
+      "covers": [
+        "dimensions_m.height",
+        "description (540 m², 130 musiciens)",
+        "gear_positions (arbre Decca)"
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.synchronstage.com/facility",
@@ -77,7 +362,10 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["description (bruit de fond 16 dB(A))"]
+      "covers": [
+        "description (bruit de fond 16 dB(A))"
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://en.wikipedia.org/wiki/Synchron_Stage_Vienna",
@@ -85,7 +373,10 @@
       "accessed": "2026-10-22",
       "confidence": "verified-secondary",
       "kind": "other",
-      "covers": ["surfaces (boîte dans la boîte, écart entre parois)"]
+      "covers": [
+        "surfaces (boîte dans la boîte, écart entre parois)"
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://www.abbeyroad.com/studio-one",
@@ -93,7 +384,11 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["description (4 844 sq ft, orchestre 100 + chœur 100)", "zones.choeur"]
+      "covers": [
+        "description (4 844 sq ft, orchestre 100 + chœur 100)",
+        "zones.choeur"
+      ],
+      "url_status": "ok"
     },
     {
       "url": "https://en.wikipedia.org/wiki/Decca_tree",
@@ -101,14 +396,33 @@
       "accessed": "2026-10-22",
       "confidence": "verified-secondary",
       "kind": "other",
-      "covers": ["gear_positions (géométrie de l'arbre Decca)"]
+      "covers": [
+        "gear_positions (géométrie de l'arbre Decca)"
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",
   "not_found_log": [
-    { "what": "Longueur et largeur : aucune des deux salles ne publie L × W. Les valeurs (typique 27 × 20 m = 540 m², min 25 × 18 m = 450 m²) sont déduites des surfaces publiées (Synchron 540 m², Abbey Road 4 844 sq ft ≈ 450 m²) avec un rapport de forme estimé.", "searched": "synchronstage.com (stages, facility), abbeyroad.com/studio-one, Wikipedia Abbey Road Studios, Synchron Stage, AIR Studios (Lyndhurst Hall : seulement « salle hexagonale »)", "review": "needs-oscar-review" },
-    { "what": "Hauteur : seule la fourchette du Synchron Stage A (10,5–12 m) est sourcée ; typique 11 m choisi dans cette fourchette.", "searched": "synchronstage.com/stages", "review": "needs-oscar-review" },
-    { "what": "RT60 d'un scoring stage : non publié par Abbey Road ni Synchron dans les pages ouvertes.", "searched": "synchronstage.com, abbeyroad.com, Wikipedia", "review": "needs-oscar-review" },
-    { "what": "Position et taille de la cabine iso, des portes, de la vitre de régie et des boîtes de patch : implantation estimée (le plan du Synchron « stage-a-floorplan-with-iso-booth » n'a pas été lu).", "searched": "synchronstage.com/stages", "review": "needs-oscar-review" }
+    {
+      "what": "Longueur et largeur : aucune des deux salles ne publie L × W. Les valeurs (typique 27 × 20 m = 540 m², min 25 × 18 m = 450 m²) sont déduites des surfaces publiées (Synchron 540 m², Abbey Road 4 844 sq ft ≈ 450 m²) avec un rapport de forme estimé.",
+      "searched": "synchronstage.com (stages, facility), abbeyroad.com/studio-one, Wikipedia Abbey Road Studios, Synchron Stage, AIR Studios (Lyndhurst Hall : seulement « salle hexagonale »)",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Hauteur : seule la fourchette du Synchron Stage A (10,5–12 m) est sourcée ; typique 11 m choisi dans cette fourchette.",
+      "searched": "synchronstage.com/stages",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "RT60 d'un scoring stage : non publié par Abbey Road ni Synchron dans les pages ouvertes.",
+      "searched": "synchronstage.com, abbeyroad.com, Wikipedia",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Position et taille de la cabine iso, des portes, de la vitre de régie et des boîtes de patch : implantation estimée (le plan du Synchron « stage-a-floorplan-with-iso-booth » n'a pas été lu).",
+      "searched": "synchronstage.com/stages",
+      "review": "needs-oscar-review"
+    }
   ]
 }

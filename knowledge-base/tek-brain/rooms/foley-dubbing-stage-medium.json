@@ -322,7 +322,11 @@
       "bac à eau"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-plastic-crate-02",
+    "ph-wooden-ladder-02",
+    "pp-quaternius-pallet"
+  ],
   "sources": [
     {
       "url": "https://www.mixonline.com/sfp/john-roesch-skywalker-sound-426269",
@@ -336,7 +340,8 @@
         "zones.dirt-pit (7 × 9 pieds, terre sans dalle)",
         "zones.water-tank (bacs à eau)",
         "gear_positions[0] (KMR 81 = standard Foley/ADR)"
-      ]
+      ],
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

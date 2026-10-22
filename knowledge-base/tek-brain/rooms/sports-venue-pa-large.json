@@ -6,66 +6,395 @@
   "size": "large",
   "description": "Grand stade couvert de type Stade de France (80 698 places en football/rugby, plus de 100 000 en concert) : aire de jeu de 119 × 75 m, tribunes sur les quatre côtés, toiture suspendue à 46 m au-dessus de la pelouse. En configuration match, la sonorisation est installée à demeure dans la toiture (au Stade de France, 36 blocs de 5 enceintes, intégrés au toit pour ne pas gêner la vue) et pilotée depuis une régie en tribune : annonces du speaker, musique d'ambiance, messages de sécurité. En configuration concert, la production pose une scène sur la pelouse, à une extrémité, avec son propre système et une régie façade sur l'aire de jeu. Les points pédagogiques : distribution du son sur de grandes distances (retards entre groupes d'enceintes, écho tardif des tribunes opposées), intelligibilité des messages de sécurité, et séparation des deux systèmes. Convention : la scène de concert est vers −z (tribune nord), les autres tribunes autour de la pelouse.",
   "dimensions_m": {
-    "length": { "min": 119, "typical": 200, "max": 260 },
-    "width": { "min": 75, "typical": 160, "max": 220 },
-    "height": { "min": 25, "typical": 46, "max": 46 }
+    "length": {
+      "min": 119,
+      "typical": 200,
+      "max": 260
+    },
+    "width": {
+      "min": 75,
+      "typical": 160,
+      "max": 220
+    },
+    "height": {
+      "min": 25,
+      "typical": 46,
+      "max": 46
+    }
   },
   "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
   "surfaces": [
-    { "surface": "floor", "material": "pelouse naturelle sur aire de jeu ; protection de pelouse en concert", "finish_note": "Aire de 15 000 m² dont environ 8 000 m² de gazon (Stade de France, Wikipédia)." },
-    { "surface": "walls", "material": "gradins béton et sièges plastique sur quatre côtés", "finish_note": "Surfaces dures quand le stade est vide : fortes réflexions et écho entre tribunes opposées (matériau estimé)." },
-    { "surface": "ceiling", "material": "toiture métallique suspendue, ouverte au-dessus de la pelouse", "finish_note": "Toit à 46 m au-dessus de la pelouse, porté par 18 mâts ; il abrite l'éclairage et la sonorisation (Stade de France)." },
-    { "surface": "stage-floor", "material": "scène de concert temporaire sur la pelouse (plancher sur structure acier)", "finish_note": "Configuration concert uniquement ; cotes estimées." }
+    {
+      "surface": "floor",
+      "material": "pelouse naturelle sur aire de jeu ; protection de pelouse en concert",
+      "finish_note": "Aire de 15 000 m² dont environ 8 000 m² de gazon (Stade de France, Wikipédia)."
+    },
+    {
+      "surface": "walls",
+      "material": "gradins béton et sièges plastique sur quatre côtés",
+      "finish_note": "Surfaces dures quand le stade est vide : fortes réflexions et écho entre tribunes opposées (matériau estimé)."
+    },
+    {
+      "surface": "ceiling",
+      "material": "toiture métallique suspendue, ouverte au-dessus de la pelouse",
+      "finish_note": "Toit à 46 m au-dessus de la pelouse, porté par 18 mâts ; il abrite l'éclairage et la sonorisation (Stade de France)."
+    },
+    {
+      "surface": "stage-floor",
+      "material": "scène de concert temporaire sur la pelouse (plancher sur structure acier)",
+      "finish_note": "Configuration concert uniquement ; cotes estimées."
+    }
   ],
   "rt60_s": "not found",
   "zones": [
-    { "id": "pelouse", "kind": "other", "rect_m": [0, 0, 75, 119], "floor_y_m": 0 },
-    { "id": "tribune-nord", "kind": "audience", "rect_m": [0, -79.75, 160, 40.5], "floor_y_m": 0 },
-    { "id": "tribune-sud", "kind": "audience", "rect_m": [0, 79.75, 160, 40.5], "floor_y_m": 0 },
-    { "id": "tribune-est", "kind": "audience", "rect_m": [58.75, 0, 42.5, 119], "floor_y_m": 0 },
-    { "id": "tribune-ouest", "kind": "audience", "rect_m": [-58.75, 0, 42.5, 119], "floor_y_m": 0 },
-    { "id": "regie-sono", "kind": "control-room", "rect_m": [-60, 0, 6, 4], "floor_y_m": 15 },
-    { "id": "local-technique", "kind": "machine-room", "rect_m": [-70, 20, 6, 4], "floor_y_m": 0 },
-    { "id": "scene-concert", "kind": "stage", "rect_m": [0, -45, 40, 15], "floor_y_m": 2 },
-    { "id": "regie-facade-concert", "kind": "foh", "rect_m": [0, 15, 8, 4], "floor_y_m": 0.5 }
+    {
+      "id": "pelouse",
+      "kind": "other",
+      "rect_m": [
+        0,
+        0,
+        75,
+        119
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "tribune-nord",
+      "kind": "audience",
+      "rect_m": [
+        0,
+        -79.75,
+        160,
+        40.5
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "tribune-sud",
+      "kind": "audience",
+      "rect_m": [
+        0,
+        79.75,
+        160,
+        40.5
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "tribune-est",
+      "kind": "audience",
+      "rect_m": [
+        58.75,
+        0,
+        42.5,
+        119
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "tribune-ouest",
+      "kind": "audience",
+      "rect_m": [
+        -58.75,
+        0,
+        42.5,
+        119
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "regie-sono",
+      "kind": "control-room",
+      "rect_m": [
+        -60,
+        0,
+        6,
+        4
+      ],
+      "floor_y_m": 15
+    },
+    {
+      "id": "local-technique",
+      "kind": "machine-room",
+      "rect_m": [
+        -70,
+        20,
+        6,
+        4
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "scene-concert",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        -45,
+        40,
+        15
+      ],
+      "floor_y_m": 2
+    },
+    {
+      "id": "regie-facade-concert",
+      "kind": "foh",
+      "rect_m": [
+        0,
+        15,
+        8,
+        4
+      ],
+      "floor_y_m": 0.5
+    }
   ],
   "gear_positions": [
-    { "equipment_id": "yamaha-ql1", "zone": "regie-sono", "position_m": [-60, 15.9, 0], "rotation_deg": 90, "note": "Console de la régie match (speaker, musique, messages), face à la pelouse." },
-    { "equipment_id": "ev-re20", "zone": "regie-sono", "position_m": [-59.2, 16.3, 1], "rotation_deg": 90, "note": "Micro du speaker du stade (dynamique, peu sensible au bruit de la foule)." },
-    { "equipment_id": "shure-ulx-d", "zone": "regie-sono", "position_m": [-61, 16, -1.2], "rotation_deg": 90, "note": "Récepteur du micro HF de l'animateur sur la pelouse." },
-    { "equipment_id": "figure53-qlab", "zone": "regie-sono", "position_m": [-61, 15.9, 1.2], "rotation_deg": 90, "note": "Lecture des jingles, hymnes et messages préenregistrés." },
-    { "equipment_id": "yamaha-rio3224-d2", "zone": "local-technique", "position_m": [-70, 0.5, 19], "rotation_deg": 90, "note": "Interface réseau entre la régie et la distribution vers la toiture." },
-    { "equipment_id": "meyer-sound-galileo-galaxy-816", "zone": "local-technique", "position_m": [-70, 1.0, 20], "rotation_deg": 90, "note": "Processeur : égalisation et retards de chaque zone d'enceintes." },
-    { "equipment_id": "db-audiotechnik-d80", "zone": "local-technique", "position_m": [-70, 1.5, 21], "rotation_deg": 90, "note": "Amplificateurs des groupes d'enceintes de toiture." },
-    { "equipment_id": "db-audiotechnik-y10p", "zone": "tribune-nord", "position_m": [0, 40, -62], "rotation_deg": 180, "note": "Bloc d'enceintes intégré au toit au-dessus d'une tribune (représente un des 36 blocs cités pour le Stade de France ; modèle non sourcé)." },
-    { "equipment_id": "db-audiotechnik-y10p", "zone": "tribune-est", "position_m": [45, 40, 0], "rotation_deg": 90, "note": "Bloc de toiture au-dessus de la tribune est (modèle non sourcé)." },
-    { "equipment_id": "db-audiotechnik-y10p", "zone": "tribune-ouest", "position_m": [-45, 40, 0], "rotation_deg": 270, "note": "Bloc de toiture au-dessus de la tribune ouest (modèle non sourcé)." },
-    { "equipment_id": "l-acoustics-k2", "zone": "scene-concert", "position_m": [-19, 16, -38], "rotation_deg": 0, "note": "Configuration concert : ligne principale gauche de la production, accrochée à la structure de scène." },
-    { "equipment_id": "l-acoustics-k2", "zone": "scene-concert", "position_m": [19, 16, -38], "rotation_deg": 0, "note": "Configuration concert : ligne principale droite." },
-    { "equipment_id": "l-acoustics-ks28", "zone": "pelouse", "position_m": [0, 0, -36], "rotation_deg": 0, "note": "Configuration concert : ligne de subs au sol devant la scène." },
-    { "equipment_id": "digico-sd12", "zone": "regie-facade-concert", "position_m": [0, 1.4, 15], "rotation_deg": 180, "note": "Configuration concert : console façade sur l'aire de jeu." }
+    {
+      "equipment_id": "yamaha-ql1",
+      "zone": "regie-sono",
+      "position_m": [
+        -60,
+        15.9,
+        0
+      ],
+      "rotation_deg": 90,
+      "note": "Console de la régie match (speaker, musique, messages), face à la pelouse."
+    },
+    {
+      "equipment_id": "ev-re20",
+      "zone": "regie-sono",
+      "position_m": [
+        -59.2,
+        16.3,
+        1
+      ],
+      "rotation_deg": 90,
+      "note": "Micro du speaker du stade (dynamique, peu sensible au bruit de la foule)."
+    },
+    {
+      "equipment_id": "shure-ulx-d",
+      "zone": "regie-sono",
+      "position_m": [
+        -61,
+        16,
+        -1.2
+      ],
+      "rotation_deg": 90,
+      "note": "Récepteur du micro HF de l'animateur sur la pelouse."
+    },
+    {
+      "equipment_id": "figure53-qlab",
+      "zone": "regie-sono",
+      "position_m": [
+        -61,
+        15.9,
+        1.2
+      ],
+      "rotation_deg": 90,
+      "note": "Lecture des jingles, hymnes et messages préenregistrés."
+    },
+    {
+      "equipment_id": "yamaha-rio3224-d2",
+      "zone": "local-technique",
+      "position_m": [
+        -70,
+        0.5,
+        19
+      ],
+      "rotation_deg": 90,
+      "note": "Interface réseau entre la régie et la distribution vers la toiture."
+    },
+    {
+      "equipment_id": "meyer-sound-galileo-galaxy-816",
+      "zone": "local-technique",
+      "position_m": [
+        -70,
+        1.0,
+        20
+      ],
+      "rotation_deg": 90,
+      "note": "Processeur : égalisation et retards de chaque zone d'enceintes."
+    },
+    {
+      "equipment_id": "db-audiotechnik-d80",
+      "zone": "local-technique",
+      "position_m": [
+        -70,
+        1.5,
+        21
+      ],
+      "rotation_deg": 90,
+      "note": "Amplificateurs des groupes d'enceintes de toiture."
+    },
+    {
+      "equipment_id": "db-audiotechnik-y10p",
+      "zone": "tribune-nord",
+      "position_m": [
+        0,
+        40,
+        -62
+      ],
+      "rotation_deg": 180,
+      "note": "Bloc d'enceintes intégré au toit au-dessus d'une tribune (représente un des 36 blocs cités pour le Stade de France ; modèle non sourcé)."
+    },
+    {
+      "equipment_id": "db-audiotechnik-y10p",
+      "zone": "tribune-est",
+      "position_m": [
+        45,
+        40,
+        0
+      ],
+      "rotation_deg": 90,
+      "note": "Bloc de toiture au-dessus de la tribune est (modèle non sourcé)."
+    },
+    {
+      "equipment_id": "db-audiotechnik-y10p",
+      "zone": "tribune-ouest",
+      "position_m": [
+        -45,
+        40,
+        0
+      ],
+      "rotation_deg": 270,
+      "note": "Bloc de toiture au-dessus de la tribune ouest (modèle non sourcé)."
+    },
+    {
+      "equipment_id": "l-acoustics-k2",
+      "zone": "scene-concert",
+      "position_m": [
+        -19,
+        16,
+        -38
+      ],
+      "rotation_deg": 0,
+      "note": "Configuration concert : ligne principale gauche de la production, accrochée à la structure de scène."
+    },
+    {
+      "equipment_id": "l-acoustics-k2",
+      "zone": "scene-concert",
+      "position_m": [
+        19,
+        16,
+        -38
+      ],
+      "rotation_deg": 0,
+      "note": "Configuration concert : ligne principale droite."
+    },
+    {
+      "equipment_id": "l-acoustics-ks28",
+      "zone": "pelouse",
+      "position_m": [
+        0,
+        0,
+        -36
+      ],
+      "rotation_deg": 0,
+      "note": "Configuration concert : ligne de subs au sol devant la scène."
+    },
+    {
+      "equipment_id": "digico-sd12",
+      "zone": "regie-facade-concert",
+      "position_m": [
+        0,
+        1.4,
+        15
+      ],
+      "rotation_deg": 180,
+      "note": "Configuration concert : console façade sur l'aire de jeu."
+    }
   ],
   "power_points": [
-    { "position_m": [-70, 0, 22], "type": "armoire-tgbt-sono-3ph" },
-    { "position_m": [-15, 0, -55], "type": "groupe-electrogene-powerlock-3ph" },
-    { "position_m": [0, 0.5, 17], "type": "p17-32a-3ph" }
+    {
+      "position_m": [
+        -70,
+        0,
+        22
+      ],
+      "type": "armoire-tgbt-sono-3ph"
+    },
+    {
+      "position_m": [
+        -15,
+        0,
+        -55
+      ],
+      "type": "groupe-electrogene-powerlock-3ph"
+    },
+    {
+      "position_m": [
+        0,
+        0.5,
+        17
+      ],
+      "type": "p17-32a-3ph"
+    }
   ],
   "patch_points": [
-    { "position_m": [-60, 15, 1.8], "type": "dante-wall-port", "note": "Réseau audio de la régie vers le local technique." },
-    { "position_m": [-37, 0, 0], "type": "wall-patch-xlr-12", "note": "Boîtier de bord de pelouse pour micros HF / interviews (implantation estimée)." }
+    {
+      "position_m": [
+        -60,
+        15,
+        1.8
+      ],
+      "type": "dante-wall-port",
+      "note": "Réseau audio de la régie vers le local technique."
+    },
+    {
+      "position_m": [
+        -37,
+        0,
+        0
+      ],
+      "type": "wall-patch-xlr-12",
+      "note": "Boîtier de bord de pelouse pour micros HF / interviews (implantation estimée)."
+    }
   ],
   "openings": [
-    { "wall": "front", "kind": "door", "offset_m": 0, "width_m": 8, "height_m": 6, "note": "Tunnel d'accès véhicules vers la pelouse (dimensions estimées)." },
-    { "wall": "left", "kind": "door", "offset_m": 0, "width_m": 4, "height_m": 3, "note": "Tunnel des joueurs (dimensions estimées)." }
+    {
+      "wall": "front",
+      "kind": "door",
+      "offset_m": 0,
+      "width_m": 8,
+      "height_m": 6,
+      "note": "Tunnel d'accès véhicules vers la pelouse (dimensions estimées)."
+    },
+    {
+      "wall": "left",
+      "kind": "door",
+      "offset_m": 0,
+      "width_m": 4,
+      "height_m": 3,
+      "note": "Tunnel des joueurs (dimensions estimées)."
+    }
   ],
-  "lighting": { "mood": "stade éclairé par projecteurs de toiture, lumière froide et uniforme ; en concert, salle plongée dans le noir et scène en lumière", "color_temp_k": 5600 },
+  "lighting": {
+    "mood": "stade éclairé par projecteurs de toiture, lumière froide et uniforme ; en concert, salle plongée dans le noir et scène en lumière",
+    "color_temp_k": 5600
+  },
   "procedural": {
     "wall_color": "#3d4a5c",
     "floor_color": "#3f7a35",
     "ceiling_color": "#c8c8c8",
-    "prop_hints": ["sièges de tribune colorés", "toiture métallique suspendue avec projecteurs", "écrans géants", "panneaux publicitaires LED en bord de pelouse", "protection de pelouse en dalles", "scène de concert à tours", "tours de délai sur la pelouse"]
+    "prop_hints": [
+      "sièges de tribune colorés",
+      "toiture métallique suspendue avec projecteurs",
+      "écrans géants",
+      "panneaux publicitaires LED en bord de pelouse",
+      "protection de pelouse en dalles",
+      "scène de concert à tours",
+      "tours de délai sur la pelouse"
+    ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-hand-truck",
+    "ph-plastic-crate-02",
+    "pp-apelab-crowd",
+    "pp-quaternius-barrier-large",
+    "pp-quaternius-man",
+    "pp-quaternius-pallet",
+    "pp-quaternius-woman-casual",
+    "pp-simple-truss"
+  ],
   "sources": [
     {
       "url": "https://fr.wikipedia.org/wiki/Stade_de_France",
@@ -73,15 +402,44 @@
       "accessed": "2026-10-22",
       "confidence": "verified-secondary",
       "kind": "other",
-      "covers": ["dimensions_m.length.min (aire de jeu 119 m)", "dimensions_m.width.min (aire de jeu 75 m)", "dimensions_m.height.typical (toit à 46 m au-dessus de la pelouse)", "zones.pelouse", "surfaces.floor", "surfaces.ceiling", "description (80 698 places, record concert 100 080, 36 blocs de 5 enceintes dans le toit)"]
+      "covers": [
+        "dimensions_m.length.min (aire de jeu 119 m)",
+        "dimensions_m.width.min (aire de jeu 75 m)",
+        "dimensions_m.height.typical (toit à 46 m au-dessus de la pelouse)",
+        "zones.pelouse",
+        "surfaces.floor",
+        "surfaces.ceiling",
+        "description (80 698 places, record concert 100 080, 36 blocs de 5 enceintes dans le toit)"
+      ],
+      "url_status": "ok"
     }
   ],
   "review": "needs-oscar-review",
   "not_found_log": [
-    { "what": "Emprise totale de la cuvette (longueur typique 200 m, max 260 m ; largeur typique 160 m, max 220 m) : estimations ; seule l'aire de jeu (119 × 75 m) est sourcée.", "searched": "Wikipédia Stade de France (pas de dimensions extérieures)", "review": "needs-oscar-review" },
-    { "what": "Hauteur min 25 m : estimation pour un stade plus petit ; seule la hauteur du toit du Stade de France (46 m) est sourcée.", "searched": "Wikipédia Stade de France", "review": "needs-oscar-review" },
-    { "what": "Marque et modèle du système installé au Stade de France, position de la régie sono et des locaux techniques : non trouvés ; les modèles d&b, Meyer et Yamaha sont des choix pédagogiques.", "searched": "Wikipédia Stade de France (« 36 blocs de 5 enceintes » sans marque)", "review": "needs-oscar-review" },
-    { "what": "RT60 / temps d'écho d'un stade : non trouvé.", "searched": "Wikipédia Stade de France", "review": "needs-oscar-review" },
-    { "what": "Profondeur des tribunes, position de la scène de concert et de la régie concert, tunnels : implantation estimée.", "searched": "—", "review": "needs-oscar-review" }
+    {
+      "what": "Emprise totale de la cuvette (longueur typique 200 m, max 260 m ; largeur typique 160 m, max 220 m) : estimations ; seule l'aire de jeu (119 × 75 m) est sourcée.",
+      "searched": "Wikipédia Stade de France (pas de dimensions extérieures)",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Hauteur min 25 m : estimation pour un stade plus petit ; seule la hauteur du toit du Stade de France (46 m) est sourcée.",
+      "searched": "Wikipédia Stade de France",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Marque et modèle du système installé au Stade de France, position de la régie sono et des locaux techniques : non trouvés ; les modèles d&b, Meyer et Yamaha sont des choix pédagogiques.",
+      "searched": "Wikipédia Stade de France (« 36 blocs de 5 enceintes » sans marque)",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "RT60 / temps d'écho d'un stade : non trouvé.",
+      "searched": "Wikipédia Stade de France",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Profondeur des tribunes, position de la scène de concert et de la régie concert, tunnels : implantation estimée.",
+      "searched": "—",
+      "review": "needs-oscar-review"
+    }
   ]
 }

@@ -1,494 +1,505 @@
 {
- "entity": "procedure",
- "domain": "digital-audio-clocking",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "word-clock-distribution-studio",
-   "name_fr": "Distribuer le word clock dans un studio",
-   "name_en": "Word clock distribution in a studio",
-   "domain": "digital-audio-clocking",
-   "context": "Studio avec plusieurs appareils numériques (interface, convertisseurs, préampli ADAT, console) à synchroniser sur une horloge unique.",
-   "duration_min": 30,
-   "equipment_ids": [
-    "antelope-ocx-hd",
-    "avid-hd-io",
-    "rme-fireface-ufx-iii",
-    "mutec-mc-3-plus"
-   ],
-   "concept_ids": [
-    "word-clock",
-    "clock-master",
-    "word-clock-termination",
-    "lock-vs-sync",
-    "sample-rate"
-   ],
-   "rule_ids": [
-    "wordclock-sync",
-    "two-clock-masters",
-    "sample-rate-mismatch"
-   ],
-   "steps": [
+  "entity": "procedure",
+  "domain": "digital-audio-clocking",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "n": 1,
-     "preconditions": [
-      "Liste des appareils numériques et de leurs entrées/sorties word clock"
-     ],
-     "action": "Choisir le maître unique : une horloge dédiée (OCX HD, MC-3+) ou l'interface principale.",
-     "expected_result": "Un seul appareil désigné maître.",
-     "typical_mistakes": [
-      "Laisser deux appareils en horloge interne"
-     ]
+      "id": "word-clock-distribution-studio",
+      "name_fr": "Distribuer le word clock dans un studio",
+      "name_en": "Word clock distribution in a studio",
+      "domain": "digital-audio-clocking",
+      "context": "Studio avec plusieurs appareils numériques (interface, convertisseurs, préampli ADAT, console) à synchroniser sur une horloge unique.",
+      "duration_min": 30,
+      "equipment_ids": [
+        "antelope-ocx-hd",
+        "avid-hd-io",
+        "rme-fireface-ufx-iii",
+        "mutec-mc-3-plus"
+      ],
+      "concept_ids": [
+        "word-clock",
+        "clock-master",
+        "word-clock-termination",
+        "lock-vs-sync",
+        "sample-rate"
+      ],
+      "rule_ids": [
+        "wordclock-sync",
+        "two-clock-masters",
+        "sample-rate-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Liste des appareils numériques et de leurs entrées/sorties word clock"
+          ],
+          "action": "Choisir le maître unique : une horloge dédiée (OCX HD, MC-3+) ou l'interface principale.",
+          "expected_result": "Un seul appareil désigné maître.",
+          "typical_mistakes": [
+            "Laisser deux appareils en horloge interne"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Régler la fréquence d'échantillonnage sur le maître, identique à celle de la session.",
+          "expected_result": "Le maître affiche la fréquence de la session (ex. 48 kHz).",
+          "typical_mistakes": [
+            "Session DAW à 44,1 kHz et maître à 48 kHz"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Câbler en étoile (une sortie BNC par appareil) ou en guirlande avec des T BNC, en câble coaxial 75 Ω.",
+          "expected_result": "Chaque esclave reçoit le word clock.",
+          "typical_mistakes": [
+            "Utiliser des T, câbles ou bouchons 50 Ω de réseau informatique"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Terminer chaque ligne une seule fois par 75 Ω, sur le dernier appareil (bouchon ou terminaison interne commutable).",
+          "expected_result": "Une seule terminaison par ligne.",
+          "typical_mistakes": [
+            "Activer la terminaison interne sur tous les appareils d'une guirlande (37,5 Ω)"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Sur chaque esclave, choisir la source d'horloge Word Clock (external).",
+          "expected_result": "Les voyants lock puis sync s'allument fixes.",
+          "typical_mistakes": [
+            "Confondre lock et sync"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [],
+          "action": "Lancer lecture et enregistrement simultanés quelques minutes et écouter au casque.",
+          "expected_result": "Aucun clic ni décrochage ; les états sync restent fixes.",
+          "typical_mistakes": [
+            "Valider à l'oreille sans regarder les voyants sync"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
+          "publisher": "Antelope Audio, OCX HD user manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "equipment_ids"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
+          "publisher": "MUTEC, MC-3+ Smart Clock manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 2,
-     "preconditions": [],
-     "action": "Régler la fréquence d'échantillonnage sur le maître, identique à celle de la session.",
-     "expected_result": "Le maître affiche la fréquence de la session (ex. 48 kHz).",
-     "typical_mistakes": [
-      "Session DAW à 44,1 kHz et maître à 48 kHz"
-     ]
+      "id": "adat-expansion-setup",
+      "name_fr": "Mettre en place une extension ADAT",
+      "name_en": "Setting up an ADAT expansion",
+      "domain": "digital-audio-clocking",
+      "context": "Ajouter 8 entrées micro à une interface grâce à un préampli 8 canaux à sortie ADAT.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "audient-id14-mkii",
+        "rme-fireface-ufx-iii",
+        "rme-babyface-pro-fs"
+      ],
+      "concept_ids": [
+        "adat",
+        "smux",
+        "clock-master",
+        "self-clocking-interfaces",
+        "lock-vs-sync"
+      ],
+      "rule_ids": [
+        "adat-smux-channel-loss",
+        "two-clock-masters",
+        "sample-rate-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Préampli et interface éteints ou sorties coupées"
+          ],
+          "action": "Relier la sortie ADAT du préampli à l'entrée optique de l'interface avec un câble TOSLINK.",
+          "expected_result": "Liaison optique en place.",
+          "typical_mistakes": [
+            "Relier deux sorties"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Dans le panneau de l'interface, régler l'entrée optique sur ADAT (et non S/PDIF).",
+          "expected_result": "8 canaux ADAT disponibles.",
+          "typical_mistakes": [
+            "Port optique laissé en S/PDIF : 2 canaux seulement"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Choisir le maître : soit l'interface ou une horloge dédiée (préampli esclave via word clock), soit le préampli (interface en source ADAT/optique).",
+          "expected_result": "Un seul maître.",
+          "typical_mistakes": [
+            "Les deux appareils en horloge interne : lock sans sync, clics"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Régler la même fréquence partout (interface, préampli, session).",
+          "expected_result": "Voyant d'horloge vert / sync.",
+          "typical_mistakes": [
+            "Indicateur ambre : horloge détectée mais à une autre fréquence"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Si la session est à 88,2/96 kHz, vérifier le mode S/MUX : seuls 4 canaux par port (2 à 176,4/192 kHz).",
+          "expected_result": "Le nombre de canaux attendu apparaît dans le DAW.",
+          "typical_mistakes": [
+            "Chercher les canaux 5 à 8 à 96 kHz"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Ne pas regarder directement l'extrémité d'une fibre optique active"
+      ],
+      "sources": [
+        {
+          "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
+          "publisher": "Audient, iD14 MKII manual v1.3",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 3,
-     "preconditions": [],
-     "action": "Câbler en étoile (une sortie BNC par appareil) ou en guirlande avec des T BNC, en câble coaxial 75 Ω.",
-     "expected_result": "Chaque esclave reçoit le word clock.",
-     "typical_mistakes": [
-      "Utiliser des T, câbles ou bouchons 50 Ω de réseau informatique"
-     ]
+      "id": "buffer-size-tracking-vs-mixing",
+      "name_fr": "Choisir la taille du tampon : prise ou mixage",
+      "name_en": "Choosing buffer size for tracking vs mixing",
+      "domain": "digital-audio-clocking",
+      "context": "Régler le pilote audio et le DAW selon la phase de travail : prise avec retour casque, puis mixage chargé en plug-ins.",
+      "duration_min": 10,
+      "equipment_ids": [
+        "rme-babyface-pro-fs"
+      ],
+      "concept_ids": [
+        "buffer-size",
+        "latency",
+        "direct-monitoring",
+        "plugin-delay-compensation",
+        "converter-latency"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Session ouverte, fréquence d'échantillonnage connue"
+          ],
+          "action": "Calculer la latence du tampon : t = N/fe (64 échantillons à 44,1 kHz ≈ 1,5 ms, par trajet).",
+          "expected_result": "Ordre de grandeur de la latence connu.",
+          "typical_mistakes": [
+            "Oublier que la latence s'applique à l'entrée et à la sortie"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Pour la prise, réduire le tampon au plus petit réglage stable, ou utiliser l'écoute directe de l'interface.",
+          "expected_result": "Le musicien s'entend sans retard gênant.",
+          "typical_mistakes": [
+            "Écouter le retour par le DAW avec un gros tampon"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Retirer ou contourner les plug-ins à forte latence (limiteur à anticipation sur le master) pendant la prise.",
+          "expected_result": "Pas de retard ajouté par la compensation des plug-ins.",
+          "typical_mistakes": [
+            "Laisser la chaîne de mastering active pendant l'enregistrement"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "En cas de craquements, augmenter le tampon d'un cran.",
+          "expected_result": "Prise propre.",
+          "typical_mistakes": [
+            "Accuser l'horloge alors que l'ordinateur perd des paquets"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Pour le mixage, augmenter nettement le tampon pour libérer le processeur.",
+          "expected_result": "Lecture stable avec tous les plug-ins.",
+          "typical_mistakes": [
+            "Garder le petit tampon de prise et saturer le processeur"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Baisser le niveau casque avant de changer de tampon : un décrochage peut produire un bruit fort"
+      ],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://puremix.com/blog/understanding-plug-in-delay-compensation",
+          "publisher": "Puremix, A. Rizzo Schettino, Understanding Plug-In Delay Compensation (2018)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 4,
-     "preconditions": [],
-     "action": "Terminer chaque ligne une seule fois par 75 Ω, sur le dernier appareil (bouchon ou terminaison interne commutable).",
-     "expected_result": "Une seule terminaison par ligne.",
-     "typical_mistakes": [
-      "Activer la terminaison interne sur tous les appareils d'une guirlande (37,5 Ω)"
-     ]
+      "id": "export-with-dither",
+      "name_fr": "Exporter un master 16 bits avec dither",
+      "name_en": "Export a 16-bit master with dither",
+      "domain": "digital-audio-clocking",
+      "context": "Fin de mastering : passage d'une session 24 bits / 32 bits flottants à un fichier 16 bits (CD).",
+      "duration_min": 10,
+      "equipment_ids": [],
+      "concept_ids": [
+        "dither",
+        "bit-depth",
+        "noise-shaping",
+        "quantization-noise"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Mix et traitements terminés"
+          ],
+          "action": "Faire tous les réglages de gain et l'éventuelle conversion de fréquence avant le dither.",
+          "expected_result": "Plus aucun traitement prévu après le dither.",
+          "typical_mistakes": [
+            "Changer le gain après le dither"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Placer un seul dither en toute fin de chaîne (dernier insert du master), mise en forme du bruit au choix pour le 16 bits.",
+          "expected_result": "Un seul dither actif.",
+          "typical_mistakes": [
+            "Dither à chaque export intermédiaire",
+            "Double dither (plug-in + dither automatique de l'export)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Exporter en 16 bits ; pour une version de travail en 32 bits flottants, désactiver le dither.",
+          "expected_result": "Fichier 16 bits sans distorsion de troncature.",
+          "typical_mistakes": [
+            "Dither sur un export 32 bits flottants"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
+          "publisher": "iZotope, What Is Dithering in Audio? (2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/node/4908184",
+          "publisher": "Sound On Sound, M. Thornton, Headroom & Master Fader (2010)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 5,
-     "preconditions": [],
-     "action": "Sur chaque esclave, choisir la source d'horloge Word Clock (external).",
-     "expected_result": "Les voyants lock puis sync s'allument fixes.",
-     "typical_mistakes": [
-      "Confondre lock et sync"
-     ]
-    },
-    {
-     "n": 6,
-     "preconditions": [],
-     "action": "Lancer lecture et enregistrement simultanés quelques minutes et écouter au casque.",
-     "expected_result": "Aucun clic ni décrochage ; les états sync restent fixes.",
-     "typical_mistakes": [
-      "Valider à l'oreille sans regarder les voyants sync"
-     ]
+      "id": "diagnose-digital-clicks",
+      "name_fr": "Diagnostiquer des clics dans une chaîne numérique",
+      "name_en": "Diagnose clicks in a digital chain",
+      "domain": "digital-audio-clocking",
+      "context": "Des clics ou craquements apparaissent pendant l'enregistrement ou la lecture dans un système à plusieurs appareils numériques.",
+      "duration_min": 15,
+      "equipment_ids": [
+        "rme-babyface-pro-fs",
+        "rme-hdspe-madi-fx"
+      ],
+      "concept_ids": [
+        "lock-vs-sync",
+        "clock-master",
+        "buffer-size",
+        "sample-rate"
+      ],
+      "rule_ids": [
+        "wordclock-sync",
+        "two-clock-masters",
+        "sample-rate-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Lire l'état de chaque entrée numérique : No Lock, Lock ou Sync.",
+          "expected_result": "Repérer les entrées en lock sans sync.",
+          "typical_mistakes": [
+            "Se fier au seul voyant lock"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Vérifier qu'un seul appareil est en horloge interne et que les autres suivent la bonne source.",
+          "expected_result": "Un maître, des esclaves.",
+          "typical_mistakes": [
+            "Câblage en boucle sans maître dans la boucle"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Vérifier que la fréquence de la session correspond à celle du signal entrant.",
+          "expected_result": "Mêmes fréquences partout.",
+          "typical_mistakes": [
+            "Session 44,1 kHz alimentée en 48 kHz"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Si l'horloge est correcte, augmenter le tampon et regarder les erreurs de transmission affichées par le pilote.",
+          "expected_result": "Les craquements dus à l'ordinateur disparaissent.",
+          "typical_mistakes": [
+            "Changer d'horloge maître alors que le problème vient de l'ordinateur"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Essayer un autre câble (optique ou coaxial) pour éliminer un câble défectueux.",
+          "expected_result": "Liaison stable.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
+          "publisher": "RME, Babyface Pro FS User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
+          "publisher": "RME, HDSPe MADI FX User's Guide",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     }
-   ],
-   "safety_notes": [],
-   "sources": [
+  ],
+  "not_found_log": [
     {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://support.antelopeaudio.com/helpdesk/attachments/42089840922",
-     "publisher": "Antelope Audio, OCX HD user manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "equipment_ids"
-     ]
-    },
-    {
-     "url": "https://www.mutec-net.com/downloads/manuals/MUTEC_MC-3plus_Manual_E_screen.pdf",
-     "publisher": "MUTEC, MC-3+ Smart Clock manual",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
+      "what": "Valeurs de tampon recommandées par un fabricant (prise vs mixage)",
+      "searched": "help.uaudio.com (403) ; sources trade-press seulement, valeurs chiffrées non retenues"
     }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "adat-expansion-setup",
-   "name_fr": "Mettre en place une extension ADAT",
-   "name_en": "Setting up an ADAT expansion",
-   "domain": "digital-audio-clocking",
-   "context": "Ajouter 8 entrées micro à une interface grâce à un préampli 8 canaux à sortie ADAT.",
-   "duration_min": 20,
-   "equipment_ids": [
-    "audient-id14-mkii",
-    "rme-fireface-ufx-iii",
-    "rme-babyface-pro-fs"
-   ],
-   "concept_ids": [
-    "adat",
-    "smux",
-    "clock-master",
-    "self-clocking-interfaces",
-    "lock-vs-sync"
-   ],
-   "rule_ids": [
-    "adat-smux-channel-loss",
-    "two-clock-masters",
-    "sample-rate-mismatch"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Préampli et interface éteints ou sorties coupées"
-     ],
-     "action": "Relier la sortie ADAT du préampli à l'entrée optique de l'interface avec un câble TOSLINK.",
-     "expected_result": "Liaison optique en place.",
-     "typical_mistakes": [
-      "Relier deux sorties"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Dans le panneau de l'interface, régler l'entrée optique sur ADAT (et non S/PDIF).",
-     "expected_result": "8 canaux ADAT disponibles.",
-     "typical_mistakes": [
-      "Port optique laissé en S/PDIF : 2 canaux seulement"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Choisir le maître : soit l'interface ou une horloge dédiée (préampli esclave via word clock), soit le préampli (interface en source ADAT/optique).",
-     "expected_result": "Un seul maître.",
-     "typical_mistakes": [
-      "Les deux appareils en horloge interne : lock sans sync, clics"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Régler la même fréquence partout (interface, préampli, session).",
-     "expected_result": "Voyant d'horloge vert / sync.",
-     "typical_mistakes": [
-      "Indicateur ambre : horloge détectée mais à une autre fréquence"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Si la session est à 88,2/96 kHz, vérifier le mode S/MUX : seuls 4 canaux par port (2 à 176,4/192 kHz).",
-     "expected_result": "Le nombre de canaux attendu apparaît dans le DAW.",
-     "typical_mistakes": [
-      "Chercher les canaux 5 à 8 à 96 kHz"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Ne pas regarder directement l'extrémité d'une fibre optique active"
-   ],
-   "sources": [
-    {
-     "url": "https://d9w4fhj63j193.cloudfront.net/2021/iD14MKII/English/iD14%20MKII%20Manual%20V1.3.pdf",
-     "publisher": "Audient, iD14 MKII manual v1.3",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "buffer-size-tracking-vs-mixing",
-   "name_fr": "Choisir la taille du tampon : prise ou mixage",
-   "name_en": "Choosing buffer size for tracking vs mixing",
-   "domain": "digital-audio-clocking",
-   "context": "Régler le pilote audio et le DAW selon la phase de travail : prise avec retour casque, puis mixage chargé en plug-ins.",
-   "duration_min": 10,
-   "equipment_ids": [
-    "rme-babyface-pro-fs"
-   ],
-   "concept_ids": [
-    "buffer-size",
-    "latency",
-    "direct-monitoring",
-    "plugin-delay-compensation",
-    "converter-latency"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Session ouverte, fréquence d'échantillonnage connue"
-     ],
-     "action": "Calculer la latence du tampon : t = N/fe (64 échantillons à 44,1 kHz ≈ 1,5 ms, par trajet).",
-     "expected_result": "Ordre de grandeur de la latence connu.",
-     "typical_mistakes": [
-      "Oublier que la latence s'applique à l'entrée et à la sortie"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Pour la prise, réduire le tampon au plus petit réglage stable, ou utiliser l'écoute directe de l'interface.",
-     "expected_result": "Le musicien s'entend sans retard gênant.",
-     "typical_mistakes": [
-      "Écouter le retour par le DAW avec un gros tampon"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Retirer ou contourner les plug-ins à forte latence (limiteur à anticipation sur le master) pendant la prise.",
-     "expected_result": "Pas de retard ajouté par la compensation des plug-ins.",
-     "typical_mistakes": [
-      "Laisser la chaîne de mastering active pendant l'enregistrement"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "En cas de craquements, augmenter le tampon d'un cran.",
-     "expected_result": "Prise propre.",
-     "typical_mistakes": [
-      "Accuser l'horloge alors que l'ordinateur perd des paquets"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Pour le mixage, augmenter nettement le tampon pour libérer le processeur.",
-     "expected_result": "Lecture stable avec tous les plug-ins.",
-     "typical_mistakes": [
-      "Garder le petit tampon de prise et saturer le processeur"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Baisser le niveau casque avant de changer de tampon : un décrochage peut produire un bruit fort"
-   ],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://puremix.com/blog/understanding-plug-in-delay-compensation",
-     "publisher": "Puremix, A. Rizzo Schettino, Understanding Plug-In Delay Compensation (2018)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "export-with-dither",
-   "name_fr": "Exporter un master 16 bits avec dither",
-   "name_en": "Export a 16-bit master with dither",
-   "domain": "digital-audio-clocking",
-   "context": "Fin de mastering : passage d'une session 24 bits / 32 bits flottants à un fichier 16 bits (CD).",
-   "duration_min": 10,
-   "equipment_ids": [],
-   "concept_ids": [
-    "dither",
-    "bit-depth",
-    "noise-shaping",
-    "quantization-noise"
-   ],
-   "rule_ids": [],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Mix et traitements terminés"
-     ],
-     "action": "Faire tous les réglages de gain et l'éventuelle conversion de fréquence avant le dither.",
-     "expected_result": "Plus aucun traitement prévu après le dither.",
-     "typical_mistakes": [
-      "Changer le gain après le dither"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Placer un seul dither en toute fin de chaîne (dernier insert du master), mise en forme du bruit au choix pour le 16 bits.",
-     "expected_result": "Un seul dither actif.",
-     "typical_mistakes": [
-      "Dither à chaque export intermédiaire",
-      "Double dither (plug-in + dither automatique de l'export)"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Exporter en 16 bits ; pour une version de travail en 32 bits flottants, désactiver le dither.",
-     "expected_result": "Fichier 16 bits sans distorsion de troncature.",
-     "typical_mistakes": [
-      "Dither sur un export 32 bits flottants"
-     ]
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://www.izotope.com/en/learn/what-is-dithering-in-audio.html",
-     "publisher": "iZotope, What Is Dithering in Audio? (2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.soundonsound.com/node/4908184",
-     "publisher": "Sound On Sound, M. Thornton, Headroom & Master Fader (2010)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "diagnose-digital-clicks",
-   "name_fr": "Diagnostiquer des clics dans une chaîne numérique",
-   "name_en": "Diagnose clicks in a digital chain",
-   "domain": "digital-audio-clocking",
-   "context": "Des clics ou craquements apparaissent pendant l'enregistrement ou la lecture dans un système à plusieurs appareils numériques.",
-   "duration_min": 15,
-   "equipment_ids": [
-    "rme-babyface-pro-fs",
-    "rme-hdspe-madi-fx"
-   ],
-   "concept_ids": [
-    "lock-vs-sync",
-    "clock-master",
-    "buffer-size",
-    "sample-rate"
-   ],
-   "rule_ids": [
-    "wordclock-sync",
-    "two-clock-masters",
-    "sample-rate-mismatch"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Lire l'état de chaque entrée numérique : No Lock, Lock ou Sync.",
-     "expected_result": "Repérer les entrées en lock sans sync.",
-     "typical_mistakes": [
-      "Se fier au seul voyant lock"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [],
-     "action": "Vérifier qu'un seul appareil est en horloge interne et que les autres suivent la bonne source.",
-     "expected_result": "Un maître, des esclaves.",
-     "typical_mistakes": [
-      "Câblage en boucle sans maître dans la boucle"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [],
-     "action": "Vérifier que la fréquence de la session correspond à celle du signal entrant.",
-     "expected_result": "Mêmes fréquences partout.",
-     "typical_mistakes": [
-      "Session 44,1 kHz alimentée en 48 kHz"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [],
-     "action": "Si l'horloge est correcte, augmenter le tampon et regarder les erreurs de transmission affichées par le pilote.",
-     "expected_result": "Les craquements dus à l'ordinateur disparaissent.",
-     "typical_mistakes": [
-      "Changer d'horloge maître alors que le problème vient de l'ordinateur"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [],
-     "action": "Essayer un autre câble (optique ou coaxial) pour éliminer un câble défectueux.",
-     "expected_result": "Liaison stable.",
-     "typical_mistakes": []
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://www.rme-audio.de/downloads/bface_pro_fs_e.pdf",
-     "publisher": "RME, Babyface Pro FS User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
-     "publisher": "RME, HDSPe MADI FX User's Guide",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Valeurs de tampon recommandées par un fabricant (prise vs mixage)",
-   "searched": "help.uaudio.com (403) ; sources trade-press seulement, valeurs chiffrées non retenues"
-  }
- ]
+  ]
 }

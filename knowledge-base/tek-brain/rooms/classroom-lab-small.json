@@ -311,7 +311,22 @@
       "armoire à câbles"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-modern-ceiling-lamp-01",
+    "ph-potted-plant-04",
+    "ph-school-chair-01",
+    "ph-school-desk-01",
+    "ph-steel-frame-shelves-03",
+    "pp-dry-erase-board",
+    "pp-kenney-desk-chair",
+    "pp-quaternius-man",
+    "pp-quaternius-woman-casual",
+    "si-chester-telegraph-relay",
+    "si-henry-trough-battery",
+    "si-morse-vail-telegraph-key",
+    "si-page-induction-coil",
+    "si-tangent-galvanometer"
+  ],
   "sources": [
     {
       "url": "https://sga-ssa.ch/docs/events//yverdon07_koller.pdf",
@@ -323,7 +338,8 @@
         "rt60_s.min",
         "rt60_s.max"
       ],
-      "note": "Tableau comparatif citant l'arrêté du 25 avril 2003 : classe 0,4-0,8 s."
+      "note": "Tableau comparatif citant l'arrêté du 25 avril 2003 : classe 0,4-0,8 s.",
+      "url_status": "ok"
     },
     {
       "url": "https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000006219354",
@@ -335,7 +351,8 @@
         "rt60_s.band_note",
         "description"
       ],
-      "note": "Moyenne 500/1000/2000 Hz, local meublé inoccupé ; tableau non reproduit en ligne (JO 28/05/2003)."
+      "note": "Moyenne 500/1000/2000 Hz, local meublé inoccupé ; tableau non reproduit en ligne (JO 28/05/2003).",
+      "url_status": "blocked"
     },
     {
       "url": "https://assets.publishing.service.gov.uk/media/5a8170d3e5274a2e8ab54012/BB93_February_2015.pdf",
@@ -346,7 +363,8 @@
       "covers": [
         "description"
       ],
-      "note": "Table 1 : salle de classe secondaire, 35 dB LAeq,30min (neuf) / 40 (rénovation)."
+      "note": "Table 1 : salle de classe secondaire, 35 dB LAeq,30min (neuf) / 40 (rénovation).",
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

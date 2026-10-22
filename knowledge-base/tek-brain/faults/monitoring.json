@@ -73,7 +73,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
@@ -84,7 +85,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
@@ -94,7 +96,8 @@
           "kind": "trade-press",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -168,7 +171,8 @@
             "symptom",
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -243,7 +247,8 @@
             "probable_causes",
             "checks",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://pubs2-api.prod.shureweb.eu/documents/public/render/6419.html.twig",
@@ -253,7 +258,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -315,7 +321,8 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ranecommercial.com/legacy/note158.html",
@@ -325,7 +332,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.prosoundweb.com/tech-tip-of-the-day-eqing-stage-monitors/",
@@ -335,7 +343,8 @@
           "kind": "trade-press",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -400,7 +409,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -455,7 +465,8 @@
           "covers": [
             "fixes",
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

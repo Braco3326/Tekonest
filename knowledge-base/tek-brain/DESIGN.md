@@ -88,6 +88,7 @@ Every entity file has the same envelope:
       { "path": "src.port.signal", "op": "in", "value": ["line-level-pro", "line-level-consumer"] } ] }
   ```
   Operators: `eq, ne, in, not_in, includes, excludes, gt, gte, lt, lte, exists`. Combinators: `all, any, not`. Paths start with `src.` / `dst.` (connection scope: `port.signal`, `port.connector`, `port.dir`, `port.flags`, `device.id`, `device.category`, `device.controls.<id>`), `device.` (device scope), `graph.` (graph scope: `graph.count(<filter>)`), `room.` (room template fields) or `session.` (e.g. `session.spl_dba_leq15`).
+- A leaf `value` may be `{ "ref": "<path>" }` to compare two fields (added during A2: the R1/R2 mirrors compare `src.port.connector` with `dst.port.connector`, and loudspeaker rules compare a load with a rating). The simulator's evaluator must resolve `ref` before comparing.
 - When a condition needs a property the catalog does not have yet (impedance, power rating, cable length, SPL), the rule lists it in `needs_catalog_fields` and sets `evaluable_now: false`. Those fields become catalog proposals for Oscar; catalog.json is never edited from the KB.
 - R1–R8 are mirrored with `status: existing` so every rule the simulator knows has a sourced explanation.
 
@@ -106,6 +107,8 @@ Every entity file has the same envelope:
 `id, name_fr, name_en, family, size (small|medium|large), description, dimensions_m ({ length, width, height } each { min, typical, max }), coordinate_system ("origin = floor centre; x = right, y = up, z = toward the audience / listener; metres"), surfaces[] ({ surface: floor|walls|ceiling|front-wall|rear-wall|stage-floor, material, finish_note }), rt60_s ({ min, max, band_note, source_url } or "not found"), zones[] ({ id, kind: stage|foh|monitor-world|control-room|live-room|iso-booth|vocal-booth|audience|backstage|gallery|booth|pit|desk, rect_m: [x, z, w, d], floor_y_m }), gear_positions[] ({ equipment_id, zone, position_m: [x, y, z], rotation_deg, note }), power_points[] ({ position_m, type }), patch_points[] ({ position_m, type, note }), openings[] ({ wall, kind: door|window, offset_m, width_m, height_m }), lighting ({ mood, color_temp_k }), procedural ({ wall_color, floor_color, ceiling_color, prop_hints[] }), licensed_dressing[] (3d-models.json ids), sources[], review`
 
 The game generates floor, walls, ceiling, zones and gear positions from `dimensions_m.typical` and the zones when no licensed model exists.
+
+Wall names (fixed during A3): **front = −z** (stage / far end), **rear = +z** (back of the hall, where the audience faces from), **left = −x**, **right = +x**. An opening's `offset_m` runs along its wall from the wall centre. Seated people and FOH desks face −z (`rotation_deg` 180); front loudspeakers face the audience (`rotation_deg` 0). JSON Schemas: `schema/tek-brain.schema.json` and `schema/room.schema.json`.
 
 ## 7. Validation and quality
 

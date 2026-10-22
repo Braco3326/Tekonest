@@ -40,21 +40,23 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-ab-stereo-mic-an-orchestra/",
           "publisher": "DPA Microphones (Mic University) — « How to AB stereo mic an orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -93,12 +95,13 @@
           "url": "https://www.dpamicrophones.com/mic-university/audio-production/multimiking-a-classical-orchestra/",
           "publisher": "DPA Microphones (Mic University) — E. B. Brixen, « Multimiking a classical orchestra »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "description",
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
@@ -108,7 +111,8 @@
           "kind": "other",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -148,21 +152,23 @@
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-choir/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a choir »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/how-to-mic/how-to-mic-a-piano/",
           "publisher": "DPA Microphones (Mic University) — « How to mic a piano »",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

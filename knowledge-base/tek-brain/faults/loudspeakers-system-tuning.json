@@ -65,7 +65,8 @@
           "covers": [
             "probable_causes",
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
@@ -75,7 +76,8 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
@@ -85,7 +87,8 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -143,7 +146,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
@@ -153,7 +157,8 @@
           "kind": "other",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -211,7 +216,8 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Subwoofer",
@@ -221,7 +227,8 @@
           "kind": "other",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
@@ -231,7 +238,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -303,7 +311,8 @@
             "probable_causes",
             "checks",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
@@ -313,7 +322,8 @@
           "kind": "manufacturer",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -381,7 +391,8 @@
           "kind": "other",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
@@ -392,7 +403,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
@@ -402,7 +414,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/global/en/arraycalc/",
@@ -412,7 +425,8 @@
           "kind": "manufacturer",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

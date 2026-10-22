@@ -71,7 +71,8 @@
           "covers": [
             "probable_causes",
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -81,7 +82,8 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
@@ -92,7 +94,8 @@
           "covers": [
             "probable_causes",
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -146,7 +149,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
@@ -156,7 +160,8 @@
           "kind": "manufacturer",
           "covers": [
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Mixing_console",
@@ -166,7 +171,8 @@
           "kind": "other",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -218,7 +224,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
@@ -228,7 +235,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://mackie.com/img/file_resources/1604VLZ4_OM.pdf",
@@ -238,7 +246,8 @@
           "kind": "manufacturer",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -291,7 +300,8 @@
           "covers": [
             "checks",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -302,7 +312,8 @@
           "covers": [
             "probable_causes",
             "checks"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Comb_filter",
@@ -312,7 +323,8 @@
           "kind": "other",
           "covers": [
             "probable_causes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -370,7 +382,8 @@
             "probable_causes",
             "checks",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -422,7 +435,8 @@
           "covers": [
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
@@ -432,7 +446,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -481,7 +496,8 @@
             "symptom",
             "probable_causes",
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://shop.ccisolutions.com/StoreFront/jsp/pdf/YAM-CL_referenceManual.pdf",
@@ -491,7 +507,8 @@
           "kind": "manufacturer",
           "covers": [
             "fixes"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

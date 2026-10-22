@@ -97,7 +97,8 @@
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
@@ -107,7 +108,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
@@ -118,7 +120,8 @@
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
@@ -129,7 +132,8 @@
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html",
@@ -139,7 +143,8 @@
           "kind": "university",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
@@ -149,7 +154,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -240,7 +246,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/white_papers/WP-HOW_TO_IMPROVE_MEASUREMENT_QUALITY_AT_LOW_FREQUENCIES.pdf",
@@ -250,7 +257,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
@@ -260,7 +268,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.rationalacoustics.com/products/smaart-suite-v9-perpetual",
@@ -270,7 +279,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Subwoofer",
@@ -280,7 +290,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -357,7 +368,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
@@ -367,7 +379,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
@@ -377,7 +390,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.l-acoustics.com/products/soundvision/",
@@ -387,7 +401,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -475,7 +490,8 @@
           "kind": "other",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
@@ -485,7 +501,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
@@ -495,7 +512,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
@@ -505,7 +523,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.rationalacoustics.com/products/smaart-suite-v9-perpetual",
@@ -515,7 +534,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "conflicts": [],
@@ -602,7 +622,8 @@
           "covers": [
             "steps",
             "safety_notes"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf",
@@ -612,7 +633,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
@@ -622,7 +644,8 @@
           "kind": "manufacturer",
           "covers": [
             "steps"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [

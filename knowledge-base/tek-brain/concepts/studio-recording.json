@@ -43,7 +43,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -54,7 +55,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -95,7 +97,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://content-files.shure.com/Pubs/introduction-to-home-recording-and-podcasting/homerecording-podcasting.pdf",
@@ -105,7 +108,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -146,7 +150,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
@@ -156,7 +161,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -202,7 +208,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.rme-audio.de/downloads/fface_ufx3_e.pdf",
@@ -212,7 +219,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
@@ -222,7 +230,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -267,7 +276,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -277,7 +287,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -318,7 +329,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Audio_mastering",
@@ -328,7 +340,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -373,7 +386,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -383,7 +397,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://support.spotify.com/us/artists/article/loudness-normalization/",
@@ -393,7 +408,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
@@ -403,7 +419,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -458,7 +475,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -498,7 +516,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -542,7 +561,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -552,7 +572,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/publications/r068",
@@ -562,7 +583,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "blocked"
         }
       ],
       "conflicts": [
@@ -620,7 +642,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -662,7 +685,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Talkback_(recording)",
@@ -672,7 +696,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -725,7 +750,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.rme-audio.de/downloads/hdspemadifx_e.pdf",
@@ -736,7 +762,8 @@
           "covers": [
             "formulas[0]",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.reaper.fm/userguide/ReaperUserGuide781c.pdf",
@@ -746,7 +773,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -787,7 +815,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -826,7 +855,8 @@
           "kind": "standard",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -836,7 +866,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -875,7 +906,8 @@
           "kind": "other",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "blocked"
         },
         {
           "url": "https://www.barryrudolph.com/recall/pdfs/delivery_recommendations_for_recorded_music_projects_10_10_17.pdf",
@@ -885,7 +917,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -927,7 +960,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -966,7 +1000,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
@@ -976,7 +1011,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1019,7 +1055,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.itu.int/rec/R-REC-BS.1770",
@@ -1029,7 +1066,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1074,7 +1112,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/en-US/insights/how-to-start-a-podcast-recording-an-episode",
@@ -1084,7 +1123,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

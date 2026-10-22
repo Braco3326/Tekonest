@@ -1606,7 +1606,7 @@
       "id": "l-acoustics-aes-audio-networking-requirements",
       "type": "white-paper",
       "title": "Requirements and Solutions for Audio Networking in Sound Reinforcement Systems (AES conference paper)",
-      "author_or_publisher": "L-Acoustics authors / AES",
+      "author_or_publisher": "Henning Kaltheuner, Genio Kronauer, Morten Lave, Etienne Corteel - AES (PDF hosted by L-Acoustics)",
       "year": 2024,
       "edition": "not found",
       "isbn": "not applicable",
@@ -2740,7 +2740,7 @@
     },
     {
       "id": "audinate-dante-over-distance-technical-dive",
-      "type": "white-paper",
+      "type": "manufacturer-guide",
       "title": "Dante Over Distance Technical Dive",
       "author_or_publisher": "Audinate Pty Ltd",
       "year": 2025,
@@ -2756,7 +2756,7 @@
       ],
       "free_or_paid": "free",
       "access_link": "https://www.getdante.com/resources/catalog/technical-guides/dante-over-distance-technical-dive/",
-      "why_recommended": "Case studies of Dante across sites (Layer 3, fibre, MPLS) with latency figures.",
+      "why_recommended": "Case studies of Dante across sites (Layer 3, fibre, MPLS) with latency figures. Slide deck (presentation), catalogued by Audinate under technical-guides.",
       "bts_relevance": "E3 PTES",
       "sources": [
         {

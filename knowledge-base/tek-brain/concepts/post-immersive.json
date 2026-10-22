@@ -1,1517 +1,1584 @@
 {
- "entity": "concept",
- "domain": "post-immersive",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "timecode",
-   "name_fr": "Timecode (code temporel SMPTE)",
-   "name_en": "SMPTE timecode",
-   "domain": "post-immersive",
-   "definition": "Adresse temporelle HH:MM:SS:FF (heures, minutes, secondes, images) attachée à chaque image ou position d'un support, normalisée par la SMPTE (ST 12-1), qui permet de caler son et image au même endroit.",
-   "explanation": "Le timecode ne fait pas tourner les machines à la bonne vitesse : il dit seulement « où » l'on est. En post-production, la session audio, la vidéo de référence et les fichiers du tournage partagent le même timecode pour que chaque son retombe à sa place. Les cadences courantes sont 23,976, 24, 25, 29,97 et 30 images/s ; en France, la télévision travaille en 25 images/s. On le transporte en LTC (longitudinal timecode), enregistré comme un signal audio et lisible seulement quand le support défile, ou en VITC, inscrit dans l'intervalle de suppression vidéo et lisible à l'arrêt. Dans un fichier BWF, la position de départ est stockée en nombre d'échantillons depuis minuit (TimeReference). Avant toute séance, on vérifie que la cadence du projet audio est identique à celle du montage image.",
-   "formulas": [],
-   "units": [
-    "images/s (fps)"
-   ],
-   "related_concepts": [
-    "drop-frame-timecode",
-    "frame-rate-pull-up-pull-down",
-    "video-reference-sync",
-    "bwf-metadata",
-    "lock-vs-sync"
-   ],
-   "equipment_ids": [
-    "avid-protools-sync-x",
-    "sound-devices-833"
-   ],
-   "bts_mapping": [
+  "entity": "concept",
+  "domain": "post-immersive",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
+      "id": "timecode",
+      "name_fr": "Timecode (code temporel SMPTE)",
+      "name_en": "SMPTE timecode",
+      "domain": "post-immersive",
+      "definition": "Adresse temporelle HH:MM:SS:FF (heures, minutes, secondes, images) attachée à chaque image ou position d'un support, normalisée par la SMPTE (ST 12-1), qui permet de caler son et image au même endroit.",
+      "explanation": "Le timecode ne fait pas tourner les machines à la bonne vitesse : il dit seulement « où » l'on est. En post-production, la session audio, la vidéo de référence et les fichiers du tournage partagent le même timecode pour que chaque son retombe à sa place. Les cadences courantes sont 23,976, 24, 25, 29,97 et 30 images/s ; en France, la télévision travaille en 25 images/s. On le transporte en LTC (longitudinal timecode), enregistré comme un signal audio et lisible seulement quand le support défile, ou en VITC, inscrit dans l'intervalle de suppression vidéo et lisible à l'arrêt. Dans un fichier BWF, la position de départ est stockée en nombre d'échantillons depuis minuit (TimeReference). Avant toute séance, on vérifie que la cadence du projet audio est identique à celle du montage image.",
+      "formulas": [],
+      "units": [
+        "images/s (fps)"
+      ],
+      "related_concepts": [
+        "drop-frame-timecode",
+        "frame-rate-pull-up-pull-down",
+        "video-reference-sync",
+        "bwf-metadata",
+        "lock-vs-sync"
+      ],
+      "equipment_ids": [
+        "avid-protools-sync-x",
+        "sound-devices-833"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+          "publisher": "Wikipedia (SMPTE timecode)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+          "publisher": "Avid (Pro Tools | Sync X Guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
-     "publisher": "Wikipedia (SMPTE timecode)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "drop-frame-timecode",
+      "name_fr": "Timecode drop frame (DF)",
+      "name_en": "Drop-frame timecode",
+      "domain": "post-immersive",
+      "definition": "Mode de comptage du timecode à 29,97 (ou 30) images/s qui saute des numéros d'image, sans supprimer d'images, pour que l'affichage reste aligné sur l'heure réelle.",
+      "explanation": "La vidéo NTSC tourne à 29,97 images/s et non 30 : en comptant 30 numéros par seconde, l'affichage prendrait du retard sur l'horloge. Le drop frame supprime les numéros 00 et 01 au début de chaque minute, sauf toutes les dix minutes, soit 18 numéros sautés par tranche de dix minutes. Aucune image n'est retirée : seule la numérotation change. On le note souvent avec un point-virgule (HH;MM;SS;FF) et l'abréviation DF, contre NDF pour le non drop. En France (25 images/s), le drop frame n'existe pas ; il apparaît sur des projets américains ou des livrables 29,97. Un mélange DF / NDF entre image et son donne un décalage croissant de l'affichage.",
+      "formulas": [],
+      "units": [
+        "images/s (fps)"
+      ],
+      "related_concepts": [
+        "timecode",
+        "frame-rate-pull-up-pull-down"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
+          "publisher": "Wikipedia (SMPTE timecode)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
-     "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation"
-     ]
+      "id": "frame-rate-pull-up-pull-down",
+      "name_fr": "Pull-up / pull-down (changement de vitesse 0,1 %)",
+      "name_en": "Pull-up / pull-down",
+      "domain": "post-immersive",
+      "definition": "Petite modification de la vitesse de lecture (et donc de la fréquence d'échantillonnage effective) appliquée au son pour suivre une image passée de 24 à 23,976 images/s (facteur 1000/1001) ou d'autres changements de cadence.",
+      "explanation": "Un film tourné à 24 images/s converti pour la vidéo NTSC est ralenti dans le rapport 1000/1001, soit 24000/1001 ≈ 23,976 images/s ; sur un film de deux heures cela allonge la durée d'environ 7,2 secondes. Le son tourné à 24 images/s doit suivre ce ralentissement (pull-down) sinon il se décale peu à peu. À l'inverse, le passage 24 → 25 images/s pour la diffusion européenne accélère l'image d'environ 4 % et monte la hauteur du son d'environ 0,7 demi-ton, corrigeable par étirement temporel. Les synchroniseurs comme le Sync X d'Avid proposent des réglages « Audio Rate Pull Up/Down » qui modifient la fréquence d'horloge distribuée. Une erreur de pull-up ou de pull-down est la cause classique d'une dérive de synchronisation qui augmente avec la durée.",
+      "formulas": [
+        {
+          "expr": "cadence NTSC = 24 × 1000/1001 = 24000/1001 ≈ 23,976 images/s",
+          "vars": {
+            "1000/1001": "facteur de ralentissement NTSC"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Telecine"
+        }
+      ],
+      "units": [
+        "images/s (fps)",
+        "%"
+      ],
+      "related_concepts": [
+        "timecode",
+        "video-reference-sync",
+        "sample-rate",
+        "sample-rate-conversion"
+      ],
+      "equipment_ids": [
+        "avid-protools-sync-x"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Telecine",
+          "publisher": "Wikipedia (Telecine)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+          "publisher": "Avid (Pro Tools | Sync X Guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
-     "publisher": "Avid (Pro Tools | Sync X Guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "drop-frame-timecode",
-   "name_fr": "Timecode drop frame (DF)",
-   "name_en": "Drop-frame timecode",
-   "domain": "post-immersive",
-   "definition": "Mode de comptage du timecode à 29,97 (ou 30) images/s qui saute des numéros d'image, sans supprimer d'images, pour que l'affichage reste aligné sur l'heure réelle.",
-   "explanation": "La vidéo NTSC tourne à 29,97 images/s et non 30 : en comptant 30 numéros par seconde, l'affichage prendrait du retard sur l'horloge. Le drop frame supprime les numéros 00 et 01 au début de chaque minute, sauf toutes les dix minutes, soit 18 numéros sautés par tranche de dix minutes. Aucune image n'est retirée : seule la numérotation change. On le note souvent avec un point-virgule (HH;MM;SS;FF) et l'abréviation DF, contre NDF pour le non drop. En France (25 images/s), le drop frame n'existe pas ; il apparaît sur des projets américains ou des livrables 29,97. Un mélange DF / NDF entre image et son donne un décalage croissant de l'affichage.",
-   "formulas": [],
-   "units": [
-    "images/s (fps)"
-   ],
-   "related_concepts": [
-    "timecode",
-    "frame-rate-pull-up-pull-down"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/SMPTE_timecode",
-     "publisher": "Wikipedia (SMPTE timecode)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "frame-rate-pull-up-pull-down",
-   "name_fr": "Pull-up / pull-down (changement de vitesse 0,1 %)",
-   "name_en": "Pull-up / pull-down",
-   "domain": "post-immersive",
-   "definition": "Petite modification de la vitesse de lecture (et donc de la fréquence d'échantillonnage effective) appliquée au son pour suivre une image passée de 24 à 23,976 images/s (facteur 1000/1001) ou d'autres changements de cadence.",
-   "explanation": "Un film tourné à 24 images/s converti pour la vidéo NTSC est ralenti dans le rapport 1000/1001, soit 24000/1001 ≈ 23,976 images/s ; sur un film de deux heures cela allonge la durée d'environ 7,2 secondes. Le son tourné à 24 images/s doit suivre ce ralentissement (pull-down) sinon il se décale peu à peu. À l'inverse, le passage 24 → 25 images/s pour la diffusion européenne accélère l'image d'environ 4 % et monte la hauteur du son d'environ 0,7 demi-ton, corrigeable par étirement temporel. Les synchroniseurs comme le Sync X d'Avid proposent des réglages « Audio Rate Pull Up/Down » qui modifient la fréquence d'horloge distribuée. Une erreur de pull-up ou de pull-down est la cause classique d'une dérive de synchronisation qui augmente avec la durée.",
-   "formulas": [
-    {
-     "expr": "cadence NTSC = 24 × 1000/1001 = 24000/1001 ≈ 23,976 images/s",
-     "vars": {
-      "1000/1001": "facteur de ralentissement NTSC"
-     },
-     "source_url": "https://en.wikipedia.org/wiki/Telecine"
-    }
-   ],
-   "units": [
-    "images/s (fps)",
-    "%"
-   ],
-   "related_concepts": [
-    "timecode",
-    "video-reference-sync",
-    "sample-rate",
-    "sample-rate-conversion"
-   ],
-   "equipment_ids": [
-    "avid-protools-sync-x"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 4,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Telecine",
-     "publisher": "Wikipedia (Telecine)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "formulas[0]",
-      "explanation"
-     ]
+      "id": "video-reference-sync",
+      "name_fr": "Référence vidéo et synchronisation son/image",
+      "name_en": "Video reference and A/V sync",
+      "domain": "post-immersive",
+      "definition": "Organisation de la synchronisation en post-production : une référence d'horloge (vidéo black burst ou tri-level, word clock) fixe la vitesse, une référence de position (LTC, timecode série) fixe l'endroit.",
+      "explanation": "Le guide du Sync X d'Avid distingue la Clock Reference (verrouillage de la fréquence d'échantillonnage), la Video Reference et la Positional Reference (LTC, timecode série, bi-phase). Quand on travaille à l'image, l'interface audio se cale sur la même référence vidéo que le lecteur ou la régie : son et image avancent alors exactement à la même vitesse. Le LTC peut servir de référence de position mais n'est pas lisible quand la machine est à l'arrêt. Le réglage Freewheel permet au transport de continuer quelques images si le timecode reçu a des trous. Une session « en ligne » sur un timecode externe sans horloge commune peut dériver même si le timecode de départ est juste.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "timecode",
+        "word-clock",
+        "clock-master",
+        "lock-vs-sync"
+      ],
+      "equipment_ids": [
+        "avid-protools-sync-x",
+        "avid-hd-io"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
+          "publisher": "Avid (Pro Tools | Sync X Guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
-     "publisher": "Avid (Pro Tools | Sync X Guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "video-reference-sync",
-   "name_fr": "Référence vidéo et synchronisation son/image",
-   "name_en": "Video reference and A/V sync",
-   "domain": "post-immersive",
-   "definition": "Organisation de la synchronisation en post-production : une référence d'horloge (vidéo black burst ou tri-level, word clock) fixe la vitesse, une référence de position (LTC, timecode série) fixe l'endroit.",
-   "explanation": "Le guide du Sync X d'Avid distingue la Clock Reference (verrouillage de la fréquence d'échantillonnage), la Video Reference et la Positional Reference (LTC, timecode série, bi-phase). Quand on travaille à l'image, l'interface audio se cale sur la même référence vidéo que le lecteur ou la régie : son et image avancent alors exactement à la même vitesse. Le LTC peut servir de référence de position mais n'est pas lisible quand la machine est à l'arrêt. Le réglage Freewheel permet au transport de continuer quelques images si le timecode reçu a des trous. Une session « en ligne » sur un timecode externe sans horloge commune peut dériver même si le timecode de départ est juste.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "timecode",
-    "word-clock",
-    "clock-master",
-    "lock-vs-sync"
-   ],
-   "equipment_ids": [
-    "avid-protools-sync-x",
-    "avid-hd-io"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://resources.avid.com/SupportFiles/PT/Pro_Tools_Sync_X_Guide_v4.pdf",
-     "publisher": "Avid (Pro Tools | Sync X Guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "aaf-omf-interchange",
-   "name_fr": "Échange AAF / OMF",
-   "name_en": "AAF / OMF interchange",
-   "domain": "post-immersive",
-   "definition": "Formats de fichier qui transmettent la timeline du montage image vers la station audio : décisions de montage, positions, fondus et, selon l'export, les médias eux-mêmes.",
-   "explanation": "L'AMWA présente l'AAF (Advanced Authoring Format) comme un format ouvert et interopérable pour l'échange de montage ; la spécification AS-01 « AAF Edit Protocol » fixe un sous-ensemble fiable pour échanger décisions de montage, timecodes source et enregistrement, noms de sources et effets de base. Les médias peuvent être intégrés au fichier (EssenceData, export « embedded ») ou rester externes, référencés par un Locator : l'application qui importe doit alors retrouver les fichiers. L'OMF (Open Media Framework) est le format plus ancien que Pro Tools importe encore. Un AAF « embedded » est autonome mais lourd ; un AAF référencé est léger mais dépend des chemins de fichiers.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "conform",
-    "bwf-metadata",
-    "timecode"
-   ],
-   "equipment_ids": [
-    "avid-pro-tools",
-    "steinberg-nuendo"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://www.amwa.tv/aaf",
-     "publisher": "AMWA (AAF)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
+      "id": "aaf-omf-interchange",
+      "name_fr": "Échange AAF / OMF",
+      "name_en": "AAF / OMF interchange",
+      "domain": "post-immersive",
+      "definition": "Formats de fichier qui transmettent la timeline du montage image vers la station audio : décisions de montage, positions, fondus et, selon l'export, les médias eux-mêmes.",
+      "explanation": "L'AMWA présente l'AAF (Advanced Authoring Format) comme un format ouvert et interopérable pour l'échange de montage ; la spécification AS-01 « AAF Edit Protocol » fixe un sous-ensemble fiable pour échanger décisions de montage, timecodes source et enregistrement, noms de sources et effets de base. Les médias peuvent être intégrés au fichier (EssenceData, export « embedded ») ou rester externes, référencés par un Locator : l'application qui importe doit alors retrouver les fichiers. L'OMF (Open Media Framework) est le format plus ancien que Pro Tools importe encore. Un AAF « embedded » est autonome mais lourd ; un AAF référencé est léger mais dépend des chemins de fichiers.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "conform",
+        "bwf-metadata",
+        "timecode"
+      ],
+      "equipment_ids": [
+        "avid-pro-tools",
+        "steinberg-nuendo"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://www.amwa.tv/aaf",
+          "publisher": "AMWA (AAF)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+          "publisher": "AMWA (AS-01 AAF Edit Protocol)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
+          "publisher": "Avid Knowledge Base (Pro Tools audio file type and session support)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
-     "publisher": "AMWA (AS-01 AAF Edit Protocol)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation"
-     ]
+      "id": "conform",
+      "name_fr": "Conformation (conform)",
+      "name_en": "Conform",
+      "domain": "post-immersive",
+      "definition": "Reconstruction de la session son à partir de la liste de montage (AAF/OMF) et des fichiers originaux du tournage, pour récupérer toutes les pistes et la qualité d'origine.",
+      "explanation": "Le montage image ne travaille souvent qu'avec une ou deux pistes de son mixées. Au moment de passer au son, on importe l'AAF puis on relie chaque clip aux fichiers BWF polyphoniques du tournage grâce au timecode, aux noms de fichiers et aux métadonnées : on récupère ainsi la perche et chaque HF séparément. Si le montage change après la conformation, on reconforme (re-conform) en appliquant les changements à la session son. Une conformation propre dépend du travail fait au tournage : métadonnées renseignées, rapport son et timecode cohérent. C'est la première étape du montage dialogues.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "aaf-omf-interchange",
+        "bwf-metadata",
+        "dialogue-editing",
+        "timecode"
+      ],
+      "equipment_ids": [
+        "avid-pro-tools",
+        "sound-devices-833"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
+          "publisher": "AMWA (AS-01 AAF Edit Protocol)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/7-points-about-working-with-sound-in-the-film-industry/",
+          "publisher": "DPA Microphones (Mic University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
-     "publisher": "Avid Knowledge Base (Pro Tools audio file type and session support)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "conform",
-   "name_fr": "Conformation (conform)",
-   "name_en": "Conform",
-   "domain": "post-immersive",
-   "definition": "Reconstruction de la session son à partir de la liste de montage (AAF/OMF) et des fichiers originaux du tournage, pour récupérer toutes les pistes et la qualité d'origine.",
-   "explanation": "Le montage image ne travaille souvent qu'avec une ou deux pistes de son mixées. Au moment de passer au son, on importe l'AAF puis on relie chaque clip aux fichiers BWF polyphoniques du tournage grâce au timecode, aux noms de fichiers et aux métadonnées : on récupère ainsi la perche et chaque HF séparément. Si le montage change après la conformation, on reconforme (re-conform) en appliquant les changements à la session son. Une conformation propre dépend du travail fait au tournage : métadonnées renseignées, rapport son et timecode cohérent. C'est la première étape du montage dialogues.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "aaf-omf-interchange",
-    "bwf-metadata",
-    "dialogue-editing",
-    "timecode"
-   ],
-   "equipment_ids": [
-    "avid-pro-tools",
-    "sound-devices-833"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://static.amwa.tv/as-01-aaf-edit-protocol-spec.pdf",
-     "publisher": "AMWA (AS-01 AAF Edit Protocol)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation"
-     ]
+      "id": "bwf-metadata",
+      "name_fr": "Métadonnées BWF (chunk bext)",
+      "name_en": "BWF metadata (bext chunk)",
+      "domain": "post-immersive",
+      "definition": "Le Broadcast Wave Format ajoute au WAV un chunk « bext » (description, auteur, date, heure, TimeReference en échantillons depuis minuit, champs de sonie) qui permet d'identifier et de recaler chaque fichier.",
+      "explanation": "La spécification EBU Tech 3285 décrit le chunk bext : le champ TimeReference donne la position du premier échantillon comptée en échantillons depuis minuit, ce qui sert à replacer le son au bon timecode lors de la conformation. La version 2 ajoute des champs de sonie (LoudnessValue, LoudnessRange, MaxTruePeakLevel…), stockés multipliés par 100. Les enregistreurs de tournage écrivent ces métadonnées automatiquement ; il reste à renseigner scène, prise et noms de pistes. Un fichier sans métadonnées oblige à recaler à l'oreille ou au clap.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "timecode",
+        "conform"
+      ],
+      "equipment_ids": [
+        "sound-devices-833",
+        "sound-devices-888"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
+          "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
-     "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation"
-     ]
+      "id": "dialogue-editing",
+      "name_fr": "Montage dialogues",
+      "name_en": "Dialogue editing",
+      "domain": "post-immersive",
+      "definition": "Assemblage, synchronisation et nettoyage de toutes les voix d'un film à partir des pistes du tournage, avec remplacement des passages inutilisables par des prises alternatives ou de la postsynchronisation.",
+      "explanation": "Le monteur dialogues part des pistes du tournage conformées et remplace, réplique par réplique, ce qui est inutilisable par des prises alternatives ou par l'ADR. Il lisse les raccords en comblant les trous avec de l'ambiance de la même pièce (room tone). Il ne faut pas laisser jouer en même temps deux micros qui captent la même voix à des distances différentes : la somme d'un signal et de sa copie retardée crée un filtrage en peigne (comb filtering) qui rend la voix creuse. Sur les grosses productions il supervise un monteur ADR et travaille avec le groupe de walla. Il livre ensuite au mixeur une piste dialogues prête à mixer avec musique et effets.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "conform",
+        "dialogue-noise-reduction",
+        "adr-dubbing",
+        "comb-filtering",
+        "stems"
+      ],
+      "equipment_ids": [
+        "avid-pro-tools",
+        "izotope-rx"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
+          "publisher": "Wikipedia (Dialogue editor)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.soundonsound.com/sound-advice/q-what-exactly-comb-filtering",
+          "publisher": "Sound On Sound (Q. What exactly is comb filtering?)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
+          "publisher": "iZotope (RX 12 Ambience Match)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "choix perche/HF ; séparation des voix sur des pistes distinctes",
+              "source_url": null
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : deux pratiques non couvertes par les sources citées, supprimées."
+        }
+      ],
+      "review": "ok"
     },
     {
-     "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/7-points-about-working-with-sound-in-the-film-industry/",
-     "publisher": "DPA Microphones (Mic University)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "bwf-metadata",
-   "name_fr": "Métadonnées BWF (chunk bext)",
-   "name_en": "BWF metadata (bext chunk)",
-   "domain": "post-immersive",
-   "definition": "Le Broadcast Wave Format ajoute au WAV un chunk « bext » (description, auteur, date, heure, TimeReference en échantillons depuis minuit, champs de sonie) qui permet d'identifier et de recaler chaque fichier.",
-   "explanation": "La spécification EBU Tech 3285 décrit le chunk bext : le champ TimeReference donne la position du premier échantillon comptée en échantillons depuis minuit, ce qui sert à replacer le son au bon timecode lors de la conformation. La version 2 ajoute des champs de sonie (LoudnessValue, LoudnessRange, MaxTruePeakLevel…), stockés multipliés par 100. Les enregistreurs de tournage écrivent ces métadonnées automatiquement ; il reste à renseigner scène, prise et noms de pistes. Un fichier sans métadonnées oblige à recaler à l'oreille ou au clap.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "timecode",
-    "conform"
-   ],
-   "equipment_ids": [
-    "sound-devices-833",
-    "sound-devices-888"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/tech/tech3285.pdf",
-     "publisher": "EBU (Tech 3285 v2, Broadcast Wave Format)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "dialogue-editing",
-   "name_fr": "Montage dialogues",
-   "name_en": "Dialogue editing",
-   "domain": "post-immersive",
-   "definition": "Assemblage, synchronisation et nettoyage de toutes les voix d'un film à partir des pistes du tournage, avec remplacement des passages inutilisables par des prises alternatives ou de la postsynchronisation.",
-   "explanation": "Le monteur dialogues part des pistes du tournage conformées et choisit, réplique par réplique, la meilleure source (perche ou HF) ; il remplace ce qui est inutilisable par des prises alternatives ou par l'ADR. Il lisse les raccords en comblant les trous avec de l'ambiance de la même pièce (room tone), et sépare les voix sur des pistes distinctes pour que le mixeur puisse les traiter. Il ne faut pas laisser jouer en même temps deux micros qui captent la même voix à des distances différentes : la somme d'un signal et de sa copie retardée crée un filtrage en peigne (comb filtering) qui rend la voix creuse. Sur les grosses productions il supervise un monteur ADR et travaille avec le groupe de walla. Il livre ensuite au mixeur une piste dialogues prête à mixer avec musique et effets.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "conform",
-    "dialogue-noise-reduction",
-    "adr-dubbing",
-    "comb-filtering",
-    "stems"
-   ],
-   "equipment_ids": [
-    "avid-pro-tools",
-    "izotope-rx"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Dialogue_editor",
-     "publisher": "Wikipedia (Dialogue editor)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "dialogue-noise-reduction",
+      "name_fr": "Débruitage des dialogues",
+      "name_en": "Dialogue noise reduction",
+      "domain": "post-immersive",
+      "definition": "Traitement qui réduit les bruits (souffle, ronflement, circulation, réverbération) d'une prise de voix tout en préservant l'intelligibilité, avec le risque d'artefacts si on pousse trop.",
+      "explanation": "Des outils comme iZotope RX séparent voix, réverbération et bruit : le module Dialogue Isolate, fondé sur un modèle d'apprentissage automatique, donne un gain séparé pour chaque composante. iZotope prévient qu'une sensibilité trop élevée peut créer des artefacts et réduire la clarté de la voix ; pour un bruit stationnaire (souffle, buzz), Spectral De-noise est conseillé. Après débruitage, les raccords d'ambiance peuvent devenir inégaux : Ambience Match apprend l'ambiance d'un passage et la recrée sur un autre, par exemple pour rendre une réplique ADR cohérente avec le direct. Règle pratique : traiter le moins possible et comparer avec la version d'origine.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "dialogue-editing",
+        "adr-dubbing",
+        "signal-to-noise-ratio"
+      ],
+      "equipment_ids": [
+        "izotope-rx"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://docs.izotope.com/rx12/en/dialogue-isolate.html",
+          "publisher": "iZotope (RX 12 Dialogue Isolate)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
+          "publisher": "iZotope (RX 12 Ambience Match)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://www.soundonsound.com/sound-advice/q-what-exactly-comb-filtering",
-     "publisher": "Sound On Sound (Q. What exactly is comb filtering?)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "explanation"
-     ]
+      "id": "adr-dubbing",
+      "name_fr": "Postsynchronisation (ADR) et doublage",
+      "name_en": "ADR and dubbing",
+      "domain": "post-immersive",
+      "definition": "Réenregistrement en studio, synchrone à l'image, de dialogues du tournage (postsynchronisation / ADR, par le même comédien) ou d'une autre langue (doublage).",
+      "explanation": "On postsynchronise une réplique quand le son direct est inutilisable (vent, circulation) ou quand le texte change. Le superviseur ADR repère les répliques à refaire, puis le comédien joue en studio face à l'image, plusieurs prises sont enregistrées et le monteur garde la meilleure ou assemble des morceaux. Les logiciels affichent les répliques, envoient des repères automatiques et peuvent recaler ou étirer légèrement une prise. Historiquement on bouclait la scène sur une boucle de film (looping). En France, le doublage s'appuie sur la bande rythmo préparée par le détecteur et sur le texte de l'adaptateur. Pour que la réplique ADR se fonde dans le direct, on peut recréer l'ambiance du lieu de tournage (Ambience Match).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "bande-rythmo",
+        "dialogue-editing",
+        "foley",
+        "music-and-effects-me"
+      ],
+      "equipment_ids": [
+        "avid-pro-tools",
+        "sennheiser-mkh-50",
+        "neumann-u87-ai"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
+          "publisher": "Wikipedia (Dubbing / ADR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
+          "publisher": "iZotope (RX 12 Ambience Match)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
-     "publisher": "iZotope (RX 12 Ambience Match)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "dialogue-noise-reduction",
-   "name_fr": "Débruitage des dialogues",
-   "name_en": "Dialogue noise reduction",
-   "domain": "post-immersive",
-   "definition": "Traitement qui réduit les bruits (souffle, ronflement, circulation, réverbération) d'une prise de voix tout en préservant l'intelligibilité, avec le risque d'artefacts si on pousse trop.",
-   "explanation": "Des outils comme iZotope RX séparent voix, réverbération et bruit : le module Dialogue Isolate, fondé sur un modèle d'apprentissage automatique, donne un gain séparé pour chaque composante. iZotope prévient qu'une sensibilité trop élevée peut créer des artefacts et réduire la clarté de la voix ; pour un bruit stationnaire (souffle, buzz), Spectral De-noise est conseillé. Après débruitage, les raccords d'ambiance peuvent devenir inégaux : Ambience Match apprend l'ambiance d'un passage et la recrée sur un autre, par exemple pour rendre une réplique ADR cohérente avec le direct. Règle pratique : traiter le moins possible et comparer avec la version d'origine.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "dialogue-editing",
-    "adr-dubbing",
-    "signal-to-noise-ratio"
-   ],
-   "equipment_ids": [
-    "izotope-rx"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://docs.izotope.com/rx12/en/dialogue-isolate.html",
-     "publisher": "iZotope (RX 12 Dialogue Isolate)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "bande-rythmo",
+      "name_fr": "Bande rythmo",
+      "name_en": "Rhythmo band",
+      "domain": "post-immersive",
+      "definition": "Bande qui défile sous l'image et porte le texte à dire, les respirations, les rires et les repères de synchronisme labial, utilisée en France pour le doublage et la postsynchronisation.",
+      "explanation": "La bande rythmo est préparée par le détecteur : à l'origine sur une bande 35 mm au crayon, aujourd'hui sous forme numérique. Il y inscrit le texte original, les respirations, les changements de plan et des signes de synchronisme labial, et découpe le film en « boucles » d'environ une minute. L'adaptateur y écrit ensuite le texte traduit en respectant le rythme et la longueur des répliques. Pendant l'enregistrement, le comédien lit le texte au moment où il passe devant une barre de référence ; l'ingénieur du son se repère dans le film grâce aux numéros de boucles. C'est une méthode française qui diffère de l'ADR américain à repères sonores.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "adr-dubbing"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E1",
+          "bloc": null,
+          "note": "Culture professionnelle du doublage — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
-     "publisher": "iZotope (RX 12 Ambience Match)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "adr-dubbing",
-   "name_fr": "Postsynchronisation (ADR) et doublage",
-   "name_en": "ADR and dubbing",
-   "domain": "post-immersive",
-   "definition": "Réenregistrement en studio, synchrone à l'image, de dialogues du tournage (postsynchronisation / ADR, par le même comédien) ou d'une autre langue (doublage).",
-   "explanation": "On postsynchronise une réplique quand le son direct est inutilisable (vent, circulation) ou quand le texte change. Le superviseur ADR repère les répliques à refaire, puis le comédien joue en studio face à l'image, plusieurs prises sont enregistrées et le monteur garde la meilleure ou assemble des morceaux. Les logiciels affichent les répliques, envoient des repères automatiques et peuvent recaler ou étirer légèrement une prise. Historiquement on bouclait la scène sur une boucle de film (looping). En France, le doublage s'appuie sur la bande rythmo préparée par le détecteur et sur le texte de l'adaptateur. Pour que la réplique ADR se fonde dans le direct, on peut recréer l'ambiance du lieu de tournage (Ambience Match).",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "bande-rythmo",
-    "dialogue-editing",
-    "foley",
-    "music-and-effects-me"
-   ],
-   "equipment_ids": [
-    "avid-pro-tools",
-    "sennheiser-mkh-50",
-    "neumann-u87-ai"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Automated_dialogue_replacement",
-     "publisher": "Wikipedia (Dubbing / ADR)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "foley",
+      "name_fr": "Bruitage (foley)",
+      "name_en": "Foley",
+      "domain": "post-immersive",
+      "definition": "Recréation en studio, synchrone à l'image, des sons du quotidien liés aux personnages (pas, vêtements, objets) pour enrichir ou remplacer le son direct.",
+      "explanation": "Le nom vient de Jack Foley, bruiteur chez Universal. Le bruiteur regarde la scène, choisit ses accessoires, répète puis joue les sons en regardant l'image, comme un comédien en postsynchronisation. On distingue trois familles : les pas (feet), joués avec différentes chaussures sur des fosses de surfaces variées (foley pits), les froissements de vêtements (moves) et les accessoires (specifics). Aujourd'hui chaque élément est enregistré sur une piste séparée. Le bruitage est indispensable à la version internationale : quand les dialogues originaux sont remplacés au doublage, les petits bruits captés avec eux disparaissent et doivent être recréés.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "music-and-effects-me",
+        "stems",
+        "adr-dubbing"
+      ],
+      "equipment_ids": [
+        "schoeps-cmc-6-mk-41",
+        "avid-pro-tools"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
+          "publisher": "Wikipedia (Foley (filmmaking))",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
+      "id": "stems",
+      "name_fr": "Stems (sous-mixages)",
+      "name_en": "Stems",
+      "domain": "post-immersive",
+      "definition": "Sous-mixages séparés par famille (dialogues, musique, effets…) livrés avec le mix complet, qui permettent de refaire des versions sans revenir à la session.",
+      "explanation": "Le mix final est livré en mix complet (printmaster) et en stems : dialogues, musique, effets (et parfois bruitages ou ambiances séparés). Additionnés à gain unité, les stems doivent redonner le mix complet. Ils servent à fabriquer la version internationale, des versions courtes, et à mesurer la sonie du dialogue : l'EBU indique que la mesure du dialogue demande une piste dialogue isolée ou une détection automatique de parole. Chaque stem garde le même format de canaux que le mix (5.1, 7.1.4…) et le même timecode de départ.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "music-and-effects-me",
+        "loudness-to-dialogue-ratio",
+        "deliverable-loudness-france",
+        "dialogue-editing"
+      ],
+      "equipment_ids": [
+        "avid-pro-tools",
+        "avid-s6"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E51",
+          "bloc": "BC03",
+          "note": "Projet avec livrable post-production — jugement, non vérifié",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+          "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://docs.izotope.com/rx12/en/ambience-match.html",
-     "publisher": "iZotope (RX 12 Ambience Match)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "bande-rythmo",
-   "name_fr": "Bande rythmo",
-   "name_en": "Rhythmo band",
-   "domain": "post-immersive",
-   "definition": "Bande qui défile sous l'image et porte le texte à dire, les respirations, les rires et les repères de synchronisme labial, utilisée en France pour le doublage et la postsynchronisation.",
-   "explanation": "La bande rythmo est préparée par le détecteur : à l'origine sur une bande 35 mm au crayon, aujourd'hui sous forme numérique. Il y inscrit le texte original, les respirations, les changements de plan et des signes de synchronisme labial, et découpe le film en « boucles » d'environ une minute. L'adaptateur y écrit ensuite le texte traduit en respectant le rythme et la longueur des répliques. Pendant l'enregistrement, le comédien lit le texte au moment où il passe devant une barre de référence ; l'ingénieur du son se repère dans le film grâce aux numéros de boucles. C'est une méthode française qui diffère de l'ADR américain à repères sonores.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "adr-dubbing"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
+      "id": "music-and-effects-me",
+      "name_fr": "Version internationale (M&E)",
+      "name_en": "Music and effects (M&E) / international version",
+      "domain": "post-immersive",
+      "definition": "Mix complet sans les dialogues originaux (ambiances, bruitages, effets, musique), livré pour être mixé avec les dialogues d'une autre langue.",
+      "explanation": "Wikipédia décrit la version internationale (VI) comme la piste qui contient tous les effets, ambiances, bruitages et musiques, mixée ensuite avec les dialogues français pour obtenir la version doublée. Une VI est dite complète quand rien ne manque une fois les dialogues retirés : pas, froissements et petits accessoires captés seulement dans le son direct doivent être refaits en bruitage, sinon des trous apparaissent. On vérifie la VI en l'écoutant seule sur toute la durée du film. En anglais on parle de M&E (music and effects).",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "stems",
+        "foley",
+        "adr-dubbing"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://fr.wikipedia.org/wiki/Doublage",
+          "publisher": "Wikipédia (Doublage)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
+          "publisher": "Wikipedia (Foley (filmmaking))",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "epreuve": "E1",
-     "bloc": null,
-     "note": "Culture professionnelle du doublage — jugement, non vérifié",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "foley",
-   "name_fr": "Bruitage (foley)",
-   "name_en": "Foley",
-   "domain": "post-immersive",
-   "definition": "Recréation en studio, synchrone à l'image, des sons du quotidien liés aux personnages (pas, vêtements, objets) pour enrichir ou remplacer le son direct.",
-   "explanation": "Le nom vient de Jack Foley, bruiteur chez Universal. Le bruiteur regarde la scène, choisit ses accessoires, répète puis joue les sons en regardant l'image, comme un comédien en postsynchronisation. On distingue trois familles : les pas (feet), joués avec différentes chaussures sur des fosses de surfaces variées (foley pits), les froissements de vêtements (moves) et les accessoires (specifics). Aujourd'hui chaque élément est enregistré sur une piste séparée. Le bruitage est indispensable à la version internationale : quand les dialogues originaux sont remplacés au doublage, les petits bruits captés avec eux disparaissent et doivent être recréés.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "music-and-effects-me",
-    "stems",
-    "adr-dubbing"
-   ],
-   "equipment_ids": [
-    "schoeps-cmc-6-mk-41",
-    "avid-pro-tools"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
-     "publisher": "Wikipedia (Foley (filmmaking))",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "loudness-to-dialogue-ratio",
+      "name_fr": "Écart sonie programme / dialogue (LDR)",
+      "name_en": "Loudness-to-Dialogue Ratio (LDR)",
+      "domain": "post-immersive",
+      "definition": "Différence, en LU, entre la sonie intégrée du programme et la sonie du dialogue ; l'EBU recommande qu'elle ne dépasse pas 5 LU pour les contenus de fiction.",
+      "explanation": "Le supplément EBU R 128 s4 traite les fictions longues (films, séries) dont la dynamique est grande. Les films peuvent atteindre un LDR de 15 LU ou plus, ce qui oblige le téléspectateur à toucher au volume. L'EBU recommande de ramener le LDR à 5 LU au maximum, sans compresser un mix déjà dans cette limite ; si le dialogue est normalisé à −23,0 LUFS avec LDR ≤ 5 LU, la sonie du programme peut monter jusqu'à −18,0 LUFS. La mesure du dialogue exige un stem dialogue ou une détection de parole.",
+      "formulas": [
+        {
+          "expr": "LDR = PL − DL",
+          "vars": {
+            "PL": "sonie intégrée du programme (LUFS)",
+            "DL": "sonie du dialogue (LUFS)",
+            "LDR": "écart (LU), recommandé ≤ 5 LU"
+          },
+          "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf"
+        }
+      ],
+      "units": [
+        "LU",
+        "LUFS"
+      ],
+      "related_concepts": [
+        "loudness-ebu-r128",
+        "stems",
+        "deliverable-loudness-france"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
+          "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "stems",
-   "name_fr": "Stems (sous-mixages)",
-   "name_en": "Stems",
-   "domain": "post-immersive",
-   "definition": "Sous-mixages séparés par famille (dialogues, musique, effets…) livrés avec le mix complet, qui permettent de refaire des versions sans revenir à la session.",
-   "explanation": "Le mix final est livré en mix complet (printmaster) et en stems : dialogues, musique, effets (et parfois bruitages ou ambiances séparés). Additionnés à gain unité, les stems doivent redonner le mix complet. Ils servent à fabriquer la version internationale, des versions courtes, et à mesurer la sonie du dialogue : l'EBU indique que la mesure du dialogue demande une piste dialogue isolée ou une détection automatique de parole. Chaque stem garde le même format de canaux que le mix (5.1, 7.1.4…) et le même timecode de départ.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "music-and-effects-me",
-    "loudness-to-dialogue-ratio",
-    "deliverable-loudness-france",
-    "dialogue-editing"
-   ],
-   "equipment_ids": [
-    "avid-pro-tools",
-    "avid-s6"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
+      "id": "deliverable-loudness-france",
+      "name_fr": "Sonie des livrables pour la télévision française (CST-RT-017 / EBU R 128)",
+      "name_en": "Loudness deliverables for French TV",
+      "domain": "post-immersive",
+      "definition": "Exigences de sonie d'un programme livré à une chaîne française : mesure ITU-R BS.1770 en LUFS, cible EBU R 128 de −23,0 LUFS, crête vraie ≤ −1 dBTP, déclinées par la recommandation CST-RT-017 cosignée par les diffuseurs.",
+      "explanation": "EBU R 128 demande de normaliser la sonie du programme entier à −23,0 LUFS, mesurée avec un appareil conforme à ITU-R BS.1770 et EBU Tech 3341 ; une tolérance de ±1,0 LU n'est admise que si la cible n'est pas atteignable en pratique (direct), et ±0,2 LU couvre les erreurs de mesure en contrôle qualité. La crête vraie ne doit pas dépasser −1 dBTP en production. En France, la recommandation CST-RT-017 v3.0, cosignée par les éditeurs, la CST, la Ficam et le HDForum, s'applique aux films publicitaires depuis le 1er janvier 2012 ; selon l'ARPP, pour les programmes courts (moins de 2 min) la valeur long terme maximale est −23 LUFS et la valeur court terme (fenêtre glissante de 3 s) ne doit pas dépasser −20 LUFS. Le document CST lui-même n'a pas pu être ouvert : la fiche technique (PAD) du diffuseur reste la référence à vérifier avant livraison.",
+      "formulas": [],
+      "units": [
+        "LUFS",
+        "LU",
+        "dBTP"
+      ],
+      "related_concepts": [
+        "loudness-ebu-r128",
+        "true-peak",
+        "loudness-to-dialogue-ratio",
+        "stems"
+      ],
+      "equipment_ids": [
+        "nugen-audio-vislm",
+        "rtw-touchmonitor-tm7"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU (R 128 v5.0, nov. 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
+          "publisher": "ARPP (fiche « En 2012 la TV change d'intensité sonore », reprend CST-RT-017 v3.0)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "R 128 : la sonie du programme est normalisée à une cible de −23,0 LUFS (tolérance ±1,0 LU seulement si non atteignable, ±0,2 LU en CQ)",
+              "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf"
+            },
+            {
+              "value": "CST-RT-017 v3.0 (programmes courts < 2 min, d'après l'ARPP) : −23 LUFS est une valeur maximale long terme, plus une limite court terme de −20 LUFS",
+              "source_url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf"
+            }
+          ],
+          "note": "Cible contre maximum, et limite court terme propre au texte français pour les programmes courts. Texte CST non consulté directement."
+        }
+      ],
+      "review": "needs-oscar-review"
     },
     {
-     "epreuve": "E51",
-     "bloc": "BC03",
-     "note": "Projet avec livrable post-production — jugement, non vérifié",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
-     "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation"
-     ]
+      "id": "surround-5-1-layout",
+      "name_fr": "Disposition surround 5.1 (ITU-R BS.775)",
+      "name_en": "5.1 surround layout (ITU-R BS.775)",
+      "domain": "post-immersive",
+      "definition": "Système multicanal de référence « 3/2 » : trois enceintes avant (L, C, R), deux enceintes latérales/arrière (LS, RS) et un canal optionnel d'effets basses fréquences (LFE).",
+      "explanation": "La Recommandation ITU-R BS.775-4 place les enceintes gauche et droite aux extrémités d'un arc de 60° vu du point d'écoute (donc ±30°), la centrale au milieu, et les deux surround dans les secteurs de 100° à 120° par rapport à l'axe avant ; leur position précise n'est pas critique. Les surround ne doivent pas être plus proches de l'auditeur que les enceintes avant, sinon il faut compenser par un retard. Les enceintes avant sont idéalement à hauteur d'oreille ; avec un écran non transparent acoustiquement, la centrale se place juste au-dessus ou au-dessous de l'image. Le canal LFE est optionnel et son usage suit l'annexe 7 de la recommandation.",
+      "formulas": [],
+      "units": [
+        "°"
+      ],
+      "related_concepts": [
+        "dolby-atmos",
+        "atmos-bed",
+        "stereo-listening-geometry"
+      ],
+      "equipment_ids": [
+        "genelec-8341a",
+        "genelec-7360a"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 2,
+      "sources": [
+        {
+          "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.775-4-202212-I!!PDF-E.pdf",
+          "publisher": "ITU-R (Recommandation BS.775-4, 12/2022)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.itu.int/rec/R-REC-BS.775/en",
+          "publisher": "ITU-R (page de la Recommandation BS.775)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "music-and-effects-me",
-   "name_fr": "Version internationale (M&E)",
-   "name_en": "Music and effects (M&E) / international version",
-   "domain": "post-immersive",
-   "definition": "Mix complet sans les dialogues originaux (ambiances, bruitages, effets, musique), livré pour être mixé avec les dialogues d'une autre langue.",
-   "explanation": "Wikipédia décrit la version internationale (VI) comme la piste qui contient tous les effets, ambiances, bruitages et musiques, mixée ensuite avec les dialogues français pour obtenir la version doublée. Une VI est dite complète quand rien ne manque une fois les dialogues retirés : pas, froissements et petits accessoires captés seulement dans le son direct doivent être refaits en bruitage, sinon des trous apparaissent. On vérifie la VI en l'écoutant seule sur toute la durée du film. En anglais on parle de M&E (music and effects).",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "stems",
-    "foley",
-    "adr-dubbing"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://fr.wikipedia.org/wiki/Doublage",
-     "publisher": "Wikipédia (Doublage)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "dolby-atmos",
+      "name_fr": "Dolby Atmos",
+      "name_en": "Dolby Atmos",
+      "domain": "post-immersive",
+      "definition": "Format audio spatial de Dolby qui combine des canaux fixes (beds) et des objets positionnés en 3D par des métadonnées, rendus en temps réel selon les haut-parleurs disponibles.",
+      "explanation": "Dolby décrit l'Atmos comme un moyen de placer et déplacer les sons en trois dimensions autour de l'auditeur. Les objets sont positionnés par des coordonnées X, Y, Z ; le Dolby Atmos Renderer, relié à la station audio, gère jusqu'à 128 entrées (beds et objets), rend le mix vers la configuration d'écoute et vers des formats à canaux, et enregistre le master Atmos (export ADM BWF utilisé par les plateformes de streaming). Le premier film en Atmos est sorti en 2012 (Rebelle / Brave). En salle de cinéma, le processeur gère 128 pistes et jusqu'à 64 sorties d'enceintes. À la maison, la notation x.y.z indique en dernier chiffre les enceintes en hauteur : 7.1.4 = un 7.1 plus quatre enceintes plafond. Le rendu binaural permet d'écouter l'Atmos au casque.",
+      "formulas": [],
+      "units": [
+        "canaux"
+      ],
+      "related_concepts": [
+        "atmos-bed",
+        "object-based-audio",
+        "audio-definition-model",
+        "binaural",
+        "surround-5-1-layout"
+      ],
+      "equipment_ids": [
+        "avid-pro-tools",
+        "steinberg-nuendo",
+        "avid-protools-mtrx-studio",
+        "genelec-8341a"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+          "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
+          "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
+          "publisher": "Wikipedia (Dolby Atmos)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
+          "publisher": "Dolby Laboratories (7.1.4 overhead speaker setup guide)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://en.wikipedia.org/wiki/Foley_(filmmaking)",
-     "publisher": "Wikipedia (Foley (filmmaking))",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "loudness-to-dialogue-ratio",
-   "name_fr": "Écart sonie programme / dialogue (LDR)",
-   "name_en": "Loudness-to-Dialogue Ratio (LDR)",
-   "domain": "post-immersive",
-   "definition": "Différence, en LU, entre la sonie intégrée du programme et la sonie du dialogue ; l'EBU recommande qu'elle ne dépasse pas 5 LU pour les contenus de fiction.",
-   "explanation": "Le supplément EBU R 128 s4 traite les fictions longues (films, séries) dont la dynamique est grande. Les films peuvent atteindre un LDR de 15 LU ou plus, ce qui oblige le téléspectateur à toucher au volume. L'EBU recommande de ramener le LDR à 5 LU au maximum, sans compresser un mix déjà dans cette limite ; si le dialogue est normalisé à −23,0 LUFS avec LDR ≤ 5 LU, la sonie du programme peut monter jusqu'à −18,0 LUFS. La mesure du dialogue exige un stem dialogue ou une détection de parole.",
-   "formulas": [
-    {
-     "expr": "LDR = PL − DL",
-     "vars": {
-      "PL": "sonie intégrée du programme (LUFS)",
-      "DL": "sonie du dialogue (LUFS)",
-      "LDR": "écart (LU), recommandé ≤ 5 LU"
-     },
-     "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf"
-    }
-   ],
-   "units": [
-    "LU",
-    "LUFS"
-   ],
-   "related_concepts": [
-    "loudness-ebu-r128",
-    "stems",
-    "deliverable-loudness-france"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
+      "id": "atmos-bed",
+      "name_fr": "Bed Dolby Atmos",
+      "name_en": "Dolby Atmos bed",
+      "domain": "post-immersive",
+      "definition": "Partie « canaux » d'un mix Atmos : un groupe de canaux à position fixe (au maximum 7.1.2, soit 10 canaux) qui reçoit ambiances, musique ou éléments non objets.",
+      "explanation": "Dolby indique que l'Atmos ajoute deux canaux plafond au 7.1, ce qui donne un bed 7.1.2. Avec 128 entrées au renderer et un bed de 10 canaux, il reste 118 entrées pour les objets (chiffre donné aussi par Wikipédia pour le cinéma, où ce bed est parfois appelé 9.1). Le canal LFE n'existe que dans le bed. On met dans le bed les éléments diffus ou liés aux enceintes (ambiances larges, prémix musique) et on réserve les objets aux sons à positionner précisément. Le bed se rend sur n'importe quelle disposition d'écoute, comme les objets.",
+      "formulas": [],
+      "units": [
+        "canaux"
+      ],
+      "related_concepts": [
+        "dolby-atmos",
+        "object-based-audio"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+          "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
+          "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
+          "publisher": "Wikipedia (Dolby Atmos)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 4,
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128s4.pdf",
-     "publisher": "EBU (R 128 s4, Loudness Normalisation of Cinematic Content, nov. 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition",
-      "formulas[0]",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "deliverable-loudness-france",
-   "name_fr": "Sonie des livrables pour la télévision française (CST-RT-017 / EBU R 128)",
-   "name_en": "Loudness deliverables for French TV",
-   "domain": "post-immersive",
-   "definition": "Exigences de sonie d'un programme livré à une chaîne française : mesure ITU-R BS.1770 en LUFS, cible EBU R 128 de −23,0 LUFS, crête vraie ≤ −1 dBTP, déclinées par la recommandation CST-RT-017 cosignée par les diffuseurs.",
-   "explanation": "EBU R 128 demande de normaliser la sonie du programme entier à −23,0 LUFS, mesurée avec un appareil conforme à ITU-R BS.1770 et EBU Tech 3341 ; une tolérance de ±1,0 LU n'est admise que si la cible n'est pas atteignable en pratique (direct), et ±0,2 LU couvre les erreurs de mesure en contrôle qualité. La crête vraie ne doit pas dépasser −1 dBTP en production. En France, la recommandation CST-RT-017 v3.0, cosignée par les éditeurs, la CST, la Ficam et le HDForum, s'applique aux films publicitaires depuis le 1er janvier 2012 ; selon l'ARPP, pour les programmes courts (moins de 2 min) la valeur long terme maximale est −23 LUFS et la valeur court terme (fenêtre glissante de 3 s) ne doit pas dépasser −20 LUFS. Le document CST lui-même n'a pas pu être ouvert : la fiche technique (PAD) du diffuseur reste la référence à vérifier avant livraison.",
-   "formulas": [],
-   "units": [
-    "LUFS",
-    "LU",
-    "dBTP"
-   ],
-   "related_concepts": [
-    "loudness-ebu-r128",
-    "true-peak",
-    "loudness-to-dialogue-ratio",
-    "stems"
-   ],
-   "equipment_ids": [
-    "nugen-audio-vislm",
-    "rtw-touchmonitor-tm7"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
+      "id": "object-based-audio",
+      "name_fr": "Audio orienté objet",
+      "name_en": "Object-based audio",
+      "domain": "post-immersive",
+      "definition": "Approche où chaque son est transmis avec des métadonnées (position, taille, gain…) et n'est assigné aux haut-parleurs qu'au moment du rendu, selon la configuration de diffusion.",
+      "explanation": "En audio par canaux, le mixeur décide quelle enceinte joue quel signal. En audio orienté objet, il décrit où doit se trouver le son ; un moteur de rendu (renderer) calcule les signaux pour la salle de cinéma, le salon 7.1.4, la barre de son ou le casque. Dolby Atmos en est l'exemple le plus courant : ses objets sont décrits par des coordonnées tridimensionnelles. Pour l'échange entre outils, le modèle de métadonnées ADM (Audio Definition Model), normalisé par l'ITU-R BS.2076, décrit le contenu des fichiers BWF ou BW64. Avantage : un seul master sert de nombreux formats de restitution.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "dolby-atmos",
+        "audio-definition-model",
+        "atmos-bed",
+        "ambisonics"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+          "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
+          "publisher": "Wikipedia (Dolby Atmos)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/publications/tech3364",
+          "publisher": "EBU (Tech 3364 v2.0, Audio Definition Model)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.itu.int/rec/R-REC-BS.2076/en",
+          "publisher": "ITU-R (page de la Recommandation BS.2076)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU (R 128 v5.0, nov. 2023)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "audio-definition-model",
+      "name_fr": "ADM (Audio Definition Model)",
+      "name_en": "Audio Definition Model (ADM)",
+      "domain": "post-immersive",
+      "definition": "Modèle de métadonnées qui décrit formellement le contenu audio d'un fichier (BWF, BW64) : canaux, objets, scènes ; normalisé par la Recommandation ITU-R BS.2076.",
+      "explanation": "L'ADM a d'abord été publié par l'EBU (Tech 3364) puis repris dans la Recommandation ITU-R BS.2076, qui le remplace de fait ; la version en vigueur est BS.2076-3 (02/2025). Concrètement, un fichier ADM BWF contient l'audio et la description qui permet à un autre outil de reconstruire le mix immersif. Le Dolby Atmos Renderer exporte ce type de fichier pour les plateformes, et Pro Tools sait importer des fichiers Dolby Atmos ADM BWF.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "object-based-audio",
+        "dolby-atmos",
+        "bwf-metadata"
+      ],
+      "equipment_ids": [
+        "avid-pro-tools"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/publications/tech3364",
+          "publisher": "EBU (Tech 3364 v2.0, Audio Definition Model)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "blocked"
+        },
+        {
+          "url": "https://www.itu.int/rec/R-REC-BS.2076/en",
+          "publisher": "ITU-R (page de la Recommandation BS.2076)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "definition"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
+          "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
+          "publisher": "Avid Knowledge Base (Pro Tools audio file type and session support)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf",
-     "publisher": "ARPP (fiche « En 2012 la TV change d'intensité sonore », reprend CST-RT-017 v3.0)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [
-    {
-     "field": "explanation",
-     "values": [
-      {
-       "value": "R 128 : la sonie du programme est normalisée à une cible de −23,0 LUFS (tolérance ±1,0 LU seulement si non atteignable, ±0,2 LU en CQ)",
-       "source_url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf"
-      },
-      {
-       "value": "CST-RT-017 v3.0 (programmes courts < 2 min, d'après l'ARPP) : −23 LUFS est une valeur maximale long terme, plus une limite court terme de −20 LUFS",
-       "source_url": "https://www.arpp.org/IMG/pdf/CONFORT_PUB_DEF.pdf"
-      }
-     ],
-     "note": "Cible contre maximum, et limite court terme propre au texte français pour les programmes courts. Texte CST non consulté directement."
-    }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "surround-5-1-layout",
-   "name_fr": "Disposition surround 5.1 (ITU-R BS.775)",
-   "name_en": "5.1 surround layout (ITU-R BS.775)",
-   "domain": "post-immersive",
-   "definition": "Système multicanal de référence « 3/2 » : trois enceintes avant (L, C, R), deux enceintes latérales/arrière (LS, RS) et un canal optionnel d'effets basses fréquences (LFE).",
-   "explanation": "La Recommandation ITU-R BS.775-4 place les enceintes gauche et droite aux extrémités d'un arc de 60° vu du point d'écoute (donc ±30°), la centrale au milieu, et les deux surround dans les secteurs de 100° à 120° par rapport à l'axe avant ; leur position précise n'est pas critique. Les surround ne doivent pas être plus proches de l'auditeur que les enceintes avant, sinon il faut compenser par un retard. Les enceintes avant sont idéalement à hauteur d'oreille ; avec un écran non transparent acoustiquement, la centrale se place juste au-dessus ou au-dessous de l'image. Le canal LFE est optionnel et son usage suit l'annexe 7 de la recommandation.",
-   "formulas": [],
-   "units": [
-    "°"
-   ],
-   "related_concepts": [
-    "dolby-atmos",
-    "atmos-bed",
-    "stereo-listening-geometry"
-   ],
-   "equipment_ids": [
-    "genelec-8341a",
-    "genelec-7360a"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
+      "id": "ambisonics",
+      "name_fr": "Ambisonie",
+      "name_en": "Ambisonics",
+      "domain": "post-immersive",
+      "definition": "Format surround « sphère complète » qui représente le champ sonore indépendamment des haut-parleurs (B-format), puis le décode vers la disposition d'écoute ou en binaural.",
+      "explanation": "Au premier ordre, le B-format comporte quatre composantes : W (pression omnidirectionnelle), X (avant-arrière), Y (gauche-droite) et Z (haut-bas), équivalentes à trois figures en huit selon les axes. Un microphone tétraédrique capte quatre capsules (A-format) converties en B-format par matriçage. Plus l'ordre ℓ augmente, plus la localisation est précise : il faut (ℓ+1)² composantes pour la sphère complète. Le décodage calcule chaque enceinte par combinaison des composantes (décodeur AllRAD) ; au casque, on applique des HRTF, et en réalité virtuelle on fait tourner le champ selon l'orientation de la tête avant le rendu binaural.",
+      "formulas": [
+        {
+          "expr": "N = (ℓ + 1)²",
+          "vars": {
+            "ℓ": "ordre ambisonique",
+            "N": "nombre de composantes (sphère complète)"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Ambisonics"
+        },
+        {
+          "expr": "N_horizontal = 2ℓ + 1",
+          "vars": {
+            "ℓ": "ordre ambisonique"
+          },
+          "source_url": "https://en.wikipedia.org/wiki/Ambisonics"
+        }
+      ],
+      "units": [
+        "canaux"
+      ],
+      "related_concepts": [
+        "ambisonic-formats-ambix-fuma",
+        "binaural",
+        "hrtf",
+        "stereo-ms"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonics",
+          "publisher": "Wikipedia (Ambisonics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "formulas[0]",
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 2,
-   "sources": [
-    {
-     "url": "https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.775-4-202212-I!!PDF-E.pdf",
-     "publisher": "ITU-R (Recommandation BS.775-4, 12/2022)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "ambisonic-formats-ambix-fuma",
+      "name_fr": "Formats ambisoniques AmbiX et FuMa",
+      "name_en": "AmbiX vs FuMa ambisonic formats",
+      "domain": "post-immersive",
+      "definition": "Deux conventions d'échange ambisonique qui diffèrent par l'ordre des canaux et leur pondération : FuMa (W X Y Z, W atténué de 3 dB) et AmbiX (ordre ACN W Y Z X, normalisation SN3D).",
+      "explanation": "FuMa (Furse-Malham) est la convention historique : ordre W, X, Y, Z au premier ordre, normalisation maxN avec un facteur −3 dB sur W. AmbiX, proposé par Nachbar et al. en 2011, utilise l'ordre ACN (W, Y, Z, X au premier ordre) et la normalisation SN3D (semi-normalisation de Schmidt) ; il monte à des ordres arbitraires. Lire un fichier FuMa comme de l'AmbiX inverse les axes et faussera l'image (gauche-droite et haut-bas mélangés). Avant tout mix, on vérifie la convention attendue par le décodeur ou la plateforme.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "ambisonics"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
+          "publisher": "Wikipedia (Ambisonic data exchange formats)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonics",
+          "publisher": "Wikipedia (Ambisonics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://www.itu.int/rec/R-REC-BS.775/en",
-     "publisher": "ITU-R (page de la Recommandation BS.775)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "dolby-atmos",
-   "name_fr": "Dolby Atmos",
-   "name_en": "Dolby Atmos",
-   "domain": "post-immersive",
-   "definition": "Format audio spatial de Dolby qui combine des canaux fixes (beds) et des objets positionnés en 3D par des métadonnées, rendus en temps réel selon les haut-parleurs disponibles.",
-   "explanation": "Dolby décrit l'Atmos comme un moyen de placer et déplacer les sons en trois dimensions autour de l'auditeur. Les objets sont positionnés par des coordonnées X, Y, Z ; le Dolby Atmos Renderer, relié à la station audio, gère jusqu'à 128 entrées (beds et objets), rend le mix vers la configuration d'écoute et vers des formats à canaux, et enregistre le master Atmos (export ADM BWF utilisé par les plateformes de streaming). Le premier film en Atmos est sorti en 2012 (Rebelle / Brave). En salle de cinéma, le processeur gère 128 pistes et jusqu'à 64 sorties d'enceintes. À la maison, la notation x.y.z indique en dernier chiffre les enceintes en hauteur : 7.1.4 = un 7.1 plus quatre enceintes plafond. Le rendu binaural permet d'écouter l'Atmos au casque.",
-   "formulas": [],
-   "units": [
-    "canaux"
-   ],
-   "related_concepts": [
-    "atmos-bed",
-    "object-based-audio",
-    "audio-definition-model",
-    "binaural",
-    "surround-5-1-layout"
-   ],
-   "equipment_ids": [
-    "avid-pro-tools",
-    "steinberg-nuendo",
-    "avid-protools-mtrx-studio",
-    "genelec-8341a"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
-     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
+      "id": "binaural",
+      "name_fr": "Binaural",
+      "name_en": "Binaural audio",
+      "domain": "post-immersive",
+      "definition": "Restitution en deux canaux pour le casque qui reproduit les indices d'écoute des deux oreilles (différences de temps et de niveau, filtrage par la tête et le pavillon) pour donner une image 3D.",
+      "explanation": "Un enregistrement binaural se fait souvent avec une tête artificielle comme la Neumann KU 100, qui place deux capsules omnidirectionnelles dans des oreilles artificielles. Chaque micro alimente un écouteur. Sur enceintes, chaque oreille entend aussi le canal destiné à l'autre (diaphonie), ce qui affaiblit l'effet ; Neumann indique toutefois que les enregistrements de la KU 100 restent compatibles enceintes. On peut aussi produire du binaural par calcul (« binaural panning ») à partir de sources mono, d'objets Atmos ou d'ambisonie. Les limites connues : confusion avant-arrière et effet variable selon les auditeurs car chaque tête est différente.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "hrtf",
+        "sound-localization-itd-ild",
+        "ambisonics",
+        "dolby-atmos"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 3,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Binaural_recording",
+          "publisher": "Wikipedia (Binaural recording)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.neumann.com/en-en/products/microphones/ku-100/",
+          "publisher": "Neumann (KU 100)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
-     "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
+      "id": "hrtf",
+      "name_fr": "Fonction de transfert relative à la tête (HRTF)",
+      "name_en": "Head-related transfer function (HRTF)",
+      "domain": "post-immersive",
+      "definition": "Description du filtrage que la tête, le torse et le pavillon appliquent à un son selon sa direction ; elle sert à calculer un rendu binaural.",
+      "explanation": "Les HRTF regroupent les indices temporels, de niveau et de timbre que le cerveau utilise pour localiser. Un moteur binaural applique à chaque source la paire de filtres correspondant à sa direction pour la placer autour de l'auditeur au casque. Les HRTF étant personnelles, un jeu générique donne des résultats variables (confusion avant-arrière, son « dans la tête »). C'est la base des rendus binauraux de l'ambisonie et du Dolby Atmos.",
+      "formulas": [],
+      "units": [],
+      "related_concepts": [
+        "binaural",
+        "sound-localization-itd-ild",
+        "ambisonics"
+      ],
+      "equipment_ids": [],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
+          "verified": false
+        }
+      ],
+      "difficulty": 4,
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Binaural_recording",
+          "publisher": "Wikipedia (Binaural recording)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "definition",
+            "explanation"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Ambisonics",
+          "publisher": "Wikipedia (Ambisonics)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "explanation"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Texte de la recommandation CST-RT-017 (v3 ou ultérieure) : valeurs pour programmes longs, tolérances, crête vraie",
+      "searched": "cst.fr (accueil, /recommandations-techniques-cst/), WebSearch ; seule une fiche ARPP qui la cite a été lue"
     },
     {
-     "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
-     "publisher": "Wikipedia (Dolby Atmos)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Texte de SMPTE ST 12-1 (accès payant)",
+      "searched": "Wikipedia SMPTE timecode utilisé comme source secondaire"
     },
     {
-     "url": "https://www.dolby.com/about/support/guide/speaker-setup-guides/7.1.4-overhead-speaker-setup-guide/",
-     "publisher": "Dolby Laboratories (7.1.4 overhead speaker setup guide)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "atmos-bed",
-   "name_fr": "Bed Dolby Atmos",
-   "name_en": "Dolby Atmos bed",
-   "domain": "post-immersive",
-   "definition": "Partie « canaux » d'un mix Atmos : un groupe de canaux à position fixe (au maximum 7.1.2, soit 10 canaux) qui reçoit ambiances, musique ou éléments non objets.",
-   "explanation": "Dolby indique que l'Atmos ajoute deux canaux plafond au 7.1, ce qui donne un bed 7.1.2. Avec 128 entrées au renderer et un bed de 10 canaux, il reste 118 entrées pour les objets (chiffre donné aussi par Wikipédia pour le cinéma, où ce bed est parfois appelé 9.1). Le canal LFE n'existe que dans le bed. On met dans le bed les éléments diffus ou liés aux enceintes (ambiances larges, prémix musique) et on réserve les objets aux sons à positionner précisément. Le bed se rend sur n'importe quelle disposition d'écoute, comme les objets.",
-   "formulas": [],
-   "units": [
-    "canaux"
-   ],
-   "related_concepts": [
-    "dolby-atmos",
-    "object-based-audio"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
-     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "definition"
-     ]
+      "what": "Angles et élévations officiels Dolby pour la disposition 7.1.4 (home / studio)",
+      "searched": "dolby.com 7.1.4 setup guide (sans angles dans le texte), professionalsupport.dolby.com (erreur de certificat)"
     },
     {
-     "url": "https://professional.dolby.com/product/dolby-atmos-content-creation/dolby-atmos-renderer/",
-     "publisher": "Dolby Laboratories (Dolby Atmos Renderer)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Nombre officiel Dolby de 118 objets / bed 7.1.2 dans un document Dolby (seul l'arithmétique 128 − 10 et Wikipédia la donnent)",
+      "searched": "professional.dolby.com renderer page, WebSearch, steinberg.help (503)"
     },
     {
-     "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
-     "publisher": "Wikipedia (Dolby Atmos)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "object-based-audio",
-   "name_fr": "Audio orienté objet",
-   "name_en": "Object-based audio",
-   "domain": "post-immersive",
-   "definition": "Approche où chaque son est transmis avec des métadonnées (position, taille, gain…) et n'est assigné aux haut-parleurs qu'au moment du rendu, selon la configuration de diffusion.",
-   "explanation": "En audio par canaux, le mixeur décide quelle enceinte joue quel signal. En audio orienté objet, il décrit où doit se trouver le son ; un moteur de rendu (renderer) calcule les signaux pour la salle de cinéma, le salon 7.1.4, la barre de son ou le casque. Dolby Atmos en est l'exemple le plus courant : ses objets sont décrits par des coordonnées tridimensionnelles. Pour l'échange entre outils, le modèle de métadonnées ADM (Audio Definition Model), normalisé par l'ITU-R BS.2076, décrit le contenu des fichiers BWF ou BW64. Avantage : un seul master sert de nombreux formats de restitution.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "dolby-atmos",
-    "audio-definition-model",
-    "atmos-bed",
-    "ambisonics"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
-     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Article AmbiX original (Nachbar, Zotter, Deleflie, Sontacchi 2011)",
+      "searched": "researchgate (403), iem.kug.ac.at (404) ; Wikipédia utilisé"
     },
     {
-     "url": "https://en.wikipedia.org/wiki/Dolby_Atmos",
-     "publisher": "Wikipedia (Dolby Atmos)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Procédure officielle Avid d'import AAF / relink dans Pro Tools",
+      "searched": "Pro Tools Reference Guide 2026.4 téléchargé mais texte non extractible (polices encodées) ; WebSearch avid.com sans résultat officiel"
     },
     {
-     "url": "https://tech.ebu.ch/publications/tech3364",
-     "publisher": "EBU (Tech 3364 v2.0, Audio Definition Model)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.itu.int/rec/R-REC-BS.2076/en",
-     "publisher": "ITU-R (page de la Recommandation BS.2076)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "explanation"
-     ]
+      "what": "Spécification Netflix sound mix (-27 LKFS dialogue gated etc.)",
+      "searched": "partnerhelp.netflixstudios.com redirige vers une page vide ; non utilisé"
     }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "audio-definition-model",
-   "name_fr": "ADM (Audio Definition Model)",
-   "name_en": "Audio Definition Model (ADM)",
-   "domain": "post-immersive",
-   "definition": "Modèle de métadonnées qui décrit formellement le contenu audio d'un fichier (BWF, BW64) : canaux, objets, scènes ; normalisé par la Recommandation ITU-R BS.2076.",
-   "explanation": "L'ADM a d'abord été publié par l'EBU (Tech 3364) puis repris dans la Recommandation ITU-R BS.2076, qui le remplace de fait ; la version en vigueur est BS.2076-3 (02/2025). Concrètement, un fichier ADM BWF contient l'audio et la description qui permet à un autre outil de reconstruire le mix immersif. Le Dolby Atmos Renderer exporte ce type de fichier pour les plateformes, et Pro Tools sait importer des fichiers Dolby Atmos ADM BWF.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "object-based-audio",
-    "dolby-atmos",
-    "bwf-metadata"
-   ],
-   "equipment_ids": [
-    "avid-pro-tools"
-   ],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 4,
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/publications/tech3364",
-     "publisher": "EBU (Tech 3364 v2.0, Audio Definition Model)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.itu.int/rec/R-REC-BS.2076/en",
-     "publisher": "ITU-R (page de la Recommandation BS.2076)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "definition"
-     ]
-    },
-    {
-     "url": "https://professional.dolby.com/content-creation/dolby-atmos/",
-     "publisher": "Dolby Laboratories (Dolby Atmos content creation)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://kb.avid.com/pkb/articles/Knowledge/Pro-Tools-Audio-File-Type-and-Session-Support",
-     "publisher": "Avid Knowledge Base (Pro Tools audio file type and session support)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "ambisonics",
-   "name_fr": "Ambisonie",
-   "name_en": "Ambisonics",
-   "domain": "post-immersive",
-   "definition": "Format surround « sphère complète » qui représente le champ sonore indépendamment des haut-parleurs (B-format), puis le décode vers la disposition d'écoute ou en binaural.",
-   "explanation": "Au premier ordre, le B-format comporte quatre composantes : W (pression omnidirectionnelle), X (avant-arrière), Y (gauche-droite) et Z (haut-bas), équivalentes à trois figures en huit selon les axes. Un microphone tétraédrique capte quatre capsules (A-format) converties en B-format par matriçage. Plus l'ordre ℓ augmente, plus la localisation est précise : il faut (ℓ+1)² composantes pour la sphère complète. Le décodage calcule chaque enceinte par combinaison des composantes (décodeur AllRAD) ; au casque, on applique des HRTF, et en réalité virtuelle on fait tourner le champ selon l'orientation de la tête avant le rendu binaural.",
-   "formulas": [
-    {
-     "expr": "N = (ℓ + 1)²",
-     "vars": {
-      "ℓ": "ordre ambisonique",
-      "N": "nombre de composantes (sphère complète)"
-     },
-     "source_url": "https://en.wikipedia.org/wiki/Ambisonics"
-    },
-    {
-     "expr": "N_horizontal = 2ℓ + 1",
-     "vars": {
-      "ℓ": "ordre ambisonique"
-     },
-     "source_url": "https://en.wikipedia.org/wiki/Ambisonics"
-    }
-   ],
-   "units": [
-    "canaux"
-   ],
-   "related_concepts": [
-    "ambisonic-formats-ambix-fuma",
-    "binaural",
-    "hrtf",
-    "stereo-ms"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 4,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonics",
-     "publisher": "Wikipedia (Ambisonics)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "formulas[0]",
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "ambisonic-formats-ambix-fuma",
-   "name_fr": "Formats ambisoniques AmbiX et FuMa",
-   "name_en": "AmbiX vs FuMa ambisonic formats",
-   "domain": "post-immersive",
-   "definition": "Deux conventions d'échange ambisonique qui diffèrent par l'ordre des canaux et leur pondération : FuMa (W X Y Z, W atténué de 3 dB) et AmbiX (ordre ACN W Y Z X, normalisation SN3D).",
-   "explanation": "FuMa (Furse-Malham) est la convention historique : ordre W, X, Y, Z au premier ordre, normalisation maxN avec un facteur −3 dB sur W. AmbiX, proposé par Nachbar et al. en 2011, utilise l'ordre ACN (W, Y, Z, X au premier ordre) et la normalisation SN3D (semi-normalisation de Schmidt) ; il monte à des ordres arbitraires. Lire un fichier FuMa comme de l'AmbiX inverse les axes et faussera l'image (gauche-droite et haut-bas mélangés). Avant tout mix, on vérifie la convention attendue par le décodeur ou la plateforme.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "ambisonics"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 4,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonic_data_exchange_formats",
-     "publisher": "Wikipedia (Ambisonic data exchange formats)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonics",
-     "publisher": "Wikipedia (Ambisonics)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "binaural",
-   "name_fr": "Binaural",
-   "name_en": "Binaural audio",
-   "domain": "post-immersive",
-   "definition": "Restitution en deux canaux pour le casque qui reproduit les indices d'écoute des deux oreilles (différences de temps et de niveau, filtrage par la tête et le pavillon) pour donner une image 3D.",
-   "explanation": "Un enregistrement binaural se fait souvent avec une tête artificielle comme la Neumann KU 100, qui place deux capsules omnidirectionnelles dans des oreilles artificielles. Chaque micro alimente un écouteur. Sur enceintes, chaque oreille entend aussi le canal destiné à l'autre (diaphonie), ce qui affaiblit l'effet ; Neumann indique toutefois que les enregistrements de la KU 100 restent compatibles enceintes. On peut aussi produire du binaural par calcul (« binaural panning ») à partir de sources mono, d'objets Atmos ou d'ambisonie. Les limites connues : confusion avant-arrière et effet variable selon les auditeurs car chaque tête est différente.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "hrtf",
-    "sound-localization-itd-ild",
-    "ambisonics",
-    "dolby-atmos"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    },
-    {
-     "epreuve": "E3",
-     "bloc": null,
-     "note": "Notion technique (PTES) — jugement, non vérifié sur eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 3,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Binaural_recording",
-     "publisher": "Wikipedia (Binaural recording)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://www.neumann.com/en-en/products/microphones/ku-100/",
-     "publisher": "Neumann (KU 100)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "hrtf",
-   "name_fr": "Fonction de transfert relative à la tête (HRTF)",
-   "name_en": "Head-related transfer function (HRTF)",
-   "domain": "post-immersive",
-   "definition": "Description du filtrage que la tête, le torse et le pavillon appliquent à un son selon sa direction ; elle sert à calculer un rendu binaural.",
-   "explanation": "Les HRTF regroupent les indices temporels, de niveau et de timbre que le cerveau utilise pour localiser. Un moteur binaural applique à chaque source la paire de filtres correspondant à sa direction pour la placer autour de l'auditeur au casque. Les HRTF étant personnelles, un jeu générique donne des résultats variables (confusion avant-arrière, son « dans la tête »). C'est la base des rendus binauraux de l'ambisonie et du Dolby Atmos.",
-   "formulas": [],
-   "units": [],
-   "related_concepts": [
-    "binaural",
-    "sound-localization-itd-ild",
-    "ambisonics"
-   ],
-   "equipment_ids": [],
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Post-production son (RNCP37196 cite « utiliser et gérer les ressources de post-production son » en BC02) — jugement, non vérifié sur le référentiel eduscol",
-     "verified": false
-    }
-   ],
-   "difficulty": 4,
-   "sources": [
-    {
-     "url": "https://en.wikipedia.org/wiki/Binaural_recording",
-     "publisher": "Wikipedia (Binaural recording)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "definition",
-      "explanation"
-     ]
-    },
-    {
-     "url": "https://en.wikipedia.org/wiki/Ambisonics",
-     "publisher": "Wikipedia (Ambisonics)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "other",
-     "covers": [
-      "explanation"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Texte de la recommandation CST-RT-017 (v3 ou ultérieure) : valeurs pour programmes longs, tolérances, crête vraie",
-   "searched": "cst.fr (accueil, /recommandations-techniques-cst/), WebSearch ; seule une fiche ARPP qui la cite a été lue"
-  },
-  {
-   "what": "Texte de SMPTE ST 12-1 (accès payant)",
-   "searched": "Wikipedia SMPTE timecode utilisé comme source secondaire"
-  },
-  {
-   "what": "Angles et élévations officiels Dolby pour la disposition 7.1.4 (home / studio)",
-   "searched": "dolby.com 7.1.4 setup guide (sans angles dans le texte), professionalsupport.dolby.com (erreur de certificat)"
-  },
-  {
-   "what": "Nombre officiel Dolby de 118 objets / bed 7.1.2 dans un document Dolby (seul l'arithmétique 128 − 10 et Wikipédia la donnent)",
-   "searched": "professional.dolby.com renderer page, WebSearch, steinberg.help (503)"
-  },
-  {
-   "what": "Article AmbiX original (Nachbar, Zotter, Deleflie, Sontacchi 2011)",
-   "searched": "researchgate (403), iem.kug.ac.at (404) ; Wikipédia utilisé"
-  },
-  {
-   "what": "Procédure officielle Avid d'import AAF / relink dans Pro Tools",
-   "searched": "Pro Tools Reference Guide 2026.4 téléchargé mais texte non extractible (polices encodées) ; WebSearch avid.com sans résultat officiel"
-  },
-  {
-   "what": "Spécification Netflix sound mix (-27 LKFS dialogue gated etc.)",
-   "searched": "partnerhelp.netflixstudios.com redirige vers une page vide ; non utilisé"
-  }
- ]
+  ]
 }

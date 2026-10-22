@@ -46,7 +46,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
@@ -56,7 +57,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -111,7 +113,8 @@
             "definition",
             "explanation",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.nti-audio.com/en/applications/room-building-acoustics/speech-intelligibility-sti",
@@ -121,7 +124,8 @@
           "kind": "manufacturer",
           "covers": [
             "definition"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -164,7 +168,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Speech_transmission_index",
@@ -174,7 +179,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -237,7 +243,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://usa.yamaha.com/products/proaudio/power_amps/xmv/specs.html#product-tabs",
@@ -247,7 +254,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs.originacoustics.com/transformers_manual",
@@ -257,7 +265,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -298,7 +307,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://avsl.com/support/100v-line-speakers",
@@ -308,7 +318,8 @@
           "kind": "retailer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -372,7 +383,8 @@
             "explanation",
             "formulas[0]",
             "formulas[1]"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://avsl.com/support/100v-line-speakers",
@@ -382,7 +394,8 @@
           "kind": "retailer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Constant-voltage_speaker_system",
@@ -392,7 +405,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -455,7 +469,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -467,7 +482,7 @@
       "name_en": "Steerable column array",
       "domain": "installation-conference",
       "definition": "Colonne dont le faisceau vertical est formé et orienté par traitement numérique, sans incliner physiquement l'enceinte.",
-      "explanation": "Renkus-Heinz décrit pour son ICONYX Gen5 des faisceaux très étroits verticalement, qu'on oriente vers l'auditoire ; on peut même diriger plusieurs faisceaux vers des niveaux différents (balcons). Diriger le son vers le public plutôt que vers les murs et le plafond réduit fortement la traîne de réverbération et peut supprimer des échos dans les architectures difficiles (églises, halls, gares). Le fabricant recommande pour ce produit une hauteur de montage de 1,6 à 2,5 m entre le sol et le bas de la colonne ; plus haut, il faut orienter le faisceau davantage vers le bas, ce qui le rend moins directif. La source ne détaille pas l'algorithme ; Wikipedia décrit le même principe de mise en forme par retards et égalisation pour des rangées de subwoofers.",
+      "explanation": "Renkus-Heinz décrit pour son ICONYX Gen5 des faisceaux très étroits verticalement, qu'on oriente vers l'auditoire ; on peut même diriger plusieurs faisceaux vers des niveaux différents (balcons). Diriger le son vers le public plutôt que vers les murs et le plafond réduit fortement la traîne de réverbération et peut supprimer des échos dans les architectures difficiles (Renkus-Heinz cite des églises, un aéroport et de grands halls). Le fabricant recommande pour ce produit une hauteur de montage de 1,6 à 2,5 m entre le sol et le bas de la colonne ; plus haut, il faut orienter le faisceau davantage vers le bas, ce qui le rend moins directif. La source ne détaille pas l'algorithme ; Wikipedia décrit le même principe de mise en forme par retards et égalisation pour des rangées de subwoofers.",
       "formulas": [],
       "units": [],
       "related_concepts": [
@@ -496,7 +511,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Line_array",
@@ -506,10 +522,22 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
-      "conflicts": [],
+      "conflicts": [
+        {
+          "field": "explanation",
+          "values": [
+            {
+              "value": "(églises, halls, gares)",
+              "source_url": "https://www.renkus-heinz.com/iconyx-gen5"
+            }
+          ],
+          "note": "QA spot-check 2026-10-22 (qa/tek-brain-spot-check.md) : « gares » non sourcé ; remplacé par les exemples de la page Renkus-Heinz (églises, aéroport LAX, Great Hall)."
+        }
+      ],
       "review": "ok"
     },
     {
@@ -548,7 +576,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
@@ -558,7 +587,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Automixer",
@@ -568,7 +598,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -612,7 +643,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://content-files.shure.com/publications/specSheet/en/scm820-spec-sheet.pdf",
@@ -622,7 +654,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -662,7 +695,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Automixer",
@@ -672,7 +706,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -713,7 +748,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
@@ -723,7 +759,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
@@ -733,7 +770,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -772,7 +810,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
@@ -782,7 +821,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
@@ -792,7 +832,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -834,7 +875,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://help.qsys.com/q-sys_9.4/Content/Application_Integration/AEC/AEC_Troubleshooting.htm",
@@ -844,7 +886,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Echo_suppression_and_cancellation",
@@ -854,7 +897,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://kms.boseprofessional.com/en-US/article/KA-01180",
@@ -864,7 +908,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -915,7 +960,8 @@
             "definition",
             "explanation",
             "formulas[0]"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -957,7 +1003,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://connect.snv.ch/en/iso-20109",
@@ -967,7 +1014,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "http-302"
         },
         {
           "url": "https://aiic.org/site/it/technicalstandards",
@@ -977,7 +1025,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://euro-trend.pl/pdf/dokumenty/HCS-5100TSeriesDigitalIRRadiatorDatasheet.pdf",
@@ -987,7 +1036,8 @@
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1041,7 +1091,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.boutique.afnor.org/en-gb/standard/iso-1765122024/simultaneous-interpreting-interpreters-working-environment-part-2-requireme/xs142896/356424",
@@ -1051,7 +1102,8 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Simultaneous_interpretation",
@@ -1061,7 +1113,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://aiic.org/site/it/technicalstandards",
@@ -1071,7 +1124,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1129,7 +1183,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1172,7 +1227,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://webstore.iec.ch/publication/798",
@@ -1182,17 +1238,19 @@
           "kind": "standard",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
           "publisher": "Ampetronic (Learning zone: Commissioning)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [
@@ -1259,17 +1317,19 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.ampetronic.com/info-centre/learning-zone/testing-and-maintaining/commissioning/",
           "publisher": "Ampetronic (Learning zone: Commissioning)",
           "accessed": "2026-10-22",
-          "confidence": "verified-secondary",
+          "confidence": "verified-primary",
           "kind": "manufacturer",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],
@@ -1308,7 +1368,8 @@
           "kind": "other",
           "covers": [
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://docs.ampetronic.com/W5-2%20Handbook/",
@@ -1319,7 +1380,8 @@
           "covers": [
             "definition",
             "explanation"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "conflicts": [],

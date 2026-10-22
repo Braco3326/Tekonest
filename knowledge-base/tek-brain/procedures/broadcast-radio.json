@@ -1,796 +1,818 @@
 {
- "entity": "procedure",
- "domain": "broadcast-radio",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "mix-minus-setup-remote-guest",
-   "name_fr": "Mettre en place un N-1 pour un invité distant",
-   "name_en": "Set up a mix-minus for a remote guest",
-   "domain": "broadcast-radio",
-   "context": "Un invité intervient par téléphone (hybride) ou par codec IP. Il doit entendre le programme et l'animateur, mais jamais sa propre voix.",
-   "duration_min": 20,
-   "equipment_ids": [
-    "axia-iq",
-    "telos-hx2",
-    "aeta-scoop5-s",
-    "sonifex-rb-mm1"
-   ],
-   "concept_ids": [
-    "mix-minus-n1",
-    "telephone-hybrid",
-    "audio-codec-ip",
-    "talkback-ifb"
-   ],
-   "rule_ids": [
-    "mix-minus-n1-echo",
-    "mix-minus-loop",
-    "shared-mix-minus-multiple-remotes"
-   ],
-   "steps": [
+  "entity": "procedure",
+  "domain": "broadcast-radio",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "n": 1,
-     "preconditions": [
-      "Liste des intervenants distants connue"
-     ],
-     "action": "Attribuer à chaque intervenant distant sa propre tranche de retour sur la console (une tranche par ligne téléphonique ou par codec).",
-     "expected_result": "Chaque retour (RCV OUT de l'hybride, sortie audio du codec) arrive sur une entrée ligne dédiée et identifiée.",
-     "typical_mistakes": [
-      "Mettre deux appelants sur la même tranche"
-     ]
+      "id": "mix-minus-setup-remote-guest",
+      "name_fr": "Mettre en place un N-1 pour un invité distant",
+      "name_en": "Set up a mix-minus for a remote guest",
+      "domain": "broadcast-radio",
+      "context": "Un invité intervient par téléphone (hybride) ou par codec IP. Il doit entendre le programme et l'animateur, mais jamais sa propre voix.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "axia-iq",
+        "telos-hx2",
+        "aeta-scoop5-s",
+        "sonifex-rb-mm1"
+      ],
+      "concept_ids": [
+        "mix-minus-n1",
+        "telephone-hybrid",
+        "audio-codec-ip",
+        "talkback-ifb"
+      ],
+      "rule_ids": [
+        "mix-minus-n1-echo",
+        "mix-minus-loop",
+        "shared-mix-minus-multiple-remotes"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Liste des intervenants distants connue"
+          ],
+          "action": "Attribuer à chaque intervenant distant sa propre tranche de retour sur la console (une tranche par ligne téléphonique ou par codec).",
+          "expected_result": "Chaque retour (RCV OUT de l'hybride, sortie audio du codec) arrive sur une entrée ligne dédiée et identifiée.",
+          "typical_mistakes": [
+            "Mettre deux appelants sur la même tranche"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Tranche de retour identifiée"
+          ],
+          "action": "Créer le N-1 de cette tranche : mix-minus automatique de la tranche sur une console d'antenne, ou bus auxiliaire dont la tranche de retour est exclue, ou boîtier de soustraction (Sonifex RB-MM1) si la console n'a pas de N-1.",
+          "expected_result": "Un bus contient tout le programme utile sauf la tranche de retour de cet intervenant.",
+          "typical_mistakes": [
+            "Envoyer le bus programme (PGM) complet au codec",
+            "Laisser la tranche retour affectée au bus qui alimente son propre envoi"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "N-1 créé"
+          ],
+          "action": "Câbler la sortie N-1 vers l'entrée d'envoi de l'appareil distant (SEND IN de l'hybride, entrée audio du codec). Un N-1 distinct par intervenant.",
+          "expected_result": "Chaque hybride ou codec reçoit son propre N-1.",
+          "typical_mistakes": [
+            "Partager un seul N-1 entre deux intervenants"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Ligne ou liaison établie"
+          ],
+          "action": "Vérifier aux vumètres de l'appareil : le vumètre d'émission (SND) ne doit montrer que le son du studio, le vumètre de réception (RCV) que l'intervenant. Avec un Telos Hx, la tonalité de ligne ne doit apparaître que sur RCV.",
+          "expected_result": "Si la tonalité ou la voix de l'invité apparaît aussi sur l'envoi, le N-1 est faux et doit être corrigé avant l'antenne.",
+          "typical_mistakes": [
+            "Se fier à l'oreille seule"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "N-1 validé aux vumètres"
+          ],
+          "action": "Parler à l'invité hors antenne par le talkback sur son retour (backfeed), puis lui demander de confirmer qu'il entend le studio sans s'entendre lui-même.",
+          "expected_result": "L'invité entend clairement le studio, sans écho de sa voix.",
+          "typical_mistakes": [
+            "Ouvrir l'antenne avant le test de retour"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [
+            "Invité confirmé"
+          ],
+          "action": "Régler le niveau du N-1 et du retour en tenant compte de la cible de sonie du studio (−23 LUFS = 0 LU).",
+          "expected_result": "Niveaux de retour cohérents avec le reste de l'antenne.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://sonifex.co.uk/product/rb-mm1/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "n": 2,
-     "preconditions": [
-      "Tranche de retour identifiée"
-     ],
-     "action": "Créer le N-1 de cette tranche : mix-minus automatique de la tranche sur une console d'antenne, ou bus auxiliaire dont la tranche de retour est exclue, ou boîtier de soustraction (Sonifex RB-MM1) si la console n'a pas de N-1.",
-     "expected_result": "Un bus contient tout le programme utile sauf la tranche de retour de cet intervenant.",
-     "typical_mistakes": [
-      "Envoyer le bus programme (PGM) complet au codec",
-      "Laisser la tranche retour affectée au bus qui alimente son propre envoi"
-     ]
+      "id": "on-air-chain-check",
+      "name_fr": "Vérifier la chaîne d'antenne avant une émission",
+      "name_en": "On-air chain check before a show",
+      "domain": "broadcast-radio",
+      "context": "Quelques minutes avant le direct, dans un studio radio (self-op ou avec technicien), vérifier chaque maillon : sources, micro, sécurité ON-AIR, sonie, liaisons, secours.",
+      "duration_min": 15,
+      "equipment_ids": [
+        "axia-iq",
+        "ev-re20",
+        "yellowtec-litt",
+        "genelec-8030c",
+        "rtw-touchmonitor-tm7",
+        "omnia-11"
+      ],
+      "concept_ids": [
+        "on-air-chain",
+        "on-air-console",
+        "tally-on-air",
+        "loudness-metering-ebu-mode",
+        "silence-detection"
+      ],
+      "rule_ids": [
+        "on-air-tally-light",
+        "loudness-out-of-tolerance",
+        "silence-detection-missing"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Console et moteur sous tension"
+          ],
+          "action": "Passer une source de test sur une tranche (par exemple la source « Sine 1 kHz −20 dBFS » de l'Axia iQ) affectée au bus PGM 1 et l'écouter sur PGM 1.",
+          "expected_result": "Le vumètre programme atteint la référence attendue et le son sort des écoutes régie.",
+          "typical_mistakes": [
+            "Tester sur un bus qui n'est pas celui de l'antenne"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Ton de test validé"
+          ],
+          "action": "Lancer une source du playout et vérifier qu'elle arrive sur sa tranche.",
+          "expected_result": "Le playout est présent sur la console.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Micro animateur branché"
+          ],
+          "action": "Ouvrir la tranche micro (On) : vérifier que les haut-parleurs de la régie se coupent et que le voyant ON-AIR s'allume.",
+          "expected_result": "Écoutes coupées, animateur au casque, voyant ON-AIR allumé.",
+          "typical_mistakes": [
+            "Faire l'essai micro avec les écoutes ouvertes (larsen)",
+            "Ignorer un voyant éteint"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Micro ouvert"
+          ],
+          "action": "Régler le gain du micro en parlant au niveau de l'émission, en lisant le sonomètre de sonie en échelle relative EBU +9, de préférence en court terme.",
+          "expected_result": "La voix se situe autour de 0 LU (±2 LU en court terme).",
+          "typical_mistakes": [
+            "Régler la voix au crête-mètre seulement"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Liaisons prévues dans le conducteur"
+          ],
+          "action": "Tester chaque hybride et chaque codec avec son N-1 (voir procédure N-1).",
+          "expected_result": "Tous les retours sont validés avant l'antenne.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 6,
+          "preconditions": [
+            "Chaîne aval en service"
+          ],
+          "action": "Vérifier que le détecteur de silence est armé et que sa source de secours est disponible.",
+          "expected_result": "En cas de blanc prolongé, la bascule sur la source de secours est possible.",
+          "typical_mistakes": [
+            "Laisser le détecteur en mode bascule désactivée"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+          "publisher": "Yellowtec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://sonifex.co.uk/product/rb-sd1/",
+          "publisher": "Sonifex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 3,
-     "preconditions": [
-      "N-1 créé"
-     ],
-     "action": "Câbler la sortie N-1 vers l'entrée d'envoi de l'appareil distant (SEND IN de l'hybride, entrée audio du codec). Un N-1 distinct par intervenant.",
-     "expected_result": "Chaque hybride ou codec reçoit son propre N-1.",
-     "typical_mistakes": [
-      "Partager un seul N-1 entre deux intervenants"
-     ]
+      "id": "ip-codec-remote-connection",
+      "name_fr": "Connecter un codec IP pour un reportage en direct",
+      "name_en": "Connect an IP codec for a remote broadcast",
+      "domain": "broadcast-radio",
+      "context": "Un reporter sur le terrain (reportage, car régie, événement) se connecte au codec du studio par IP (Ethernet, 4G/5G, Wi-Fi) pour un duplex en direct.",
+      "duration_min": 30,
+      "equipment_ids": [
+        "comrex-access-nx",
+        "tieline-via",
+        "tieline-gateway",
+        "aeta-scoop5-s",
+        "ev-re50",
+        "sennheiser-hd-25"
+      ],
+      "concept_ids": [
+        "audio-codec-ip",
+        "acip-ebu-tech-3326",
+        "sip-signalling",
+        "opus-codec",
+        "g722-codec",
+        "ip-link-resilience",
+        "mix-minus-n1"
+      ],
+      "rule_ids": [
+        "mix-minus-n1-echo"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Matériel des deux côtés connu"
+          ],
+          "action": "Choisir le mode de connexion : mode propriétaire si les deux codecs sont de la même marque, sinon mode EBU Tech 3326 / SIP pour l'interopérabilité entre marques.",
+          "expected_result": "Les deux codecs utilisent un mode qu'ils ont en commun.",
+          "typical_mistakes": [
+            "Tenter de relier deux marques en mode propriétaire"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Mode choisi"
+          ],
+          "action": "Vérifier le réseau terrain (Ethernet, 4G/5G, Wi-Fi) et, si possible, préparer un second réseau de secours.",
+          "expected_result": "Au moins un réseau fonctionne, idéalement deux.",
+          "typical_mistakes": [
+            "Partir avec un seul réseau mobile sur un lieu très fréquenté"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Réseau disponible"
+          ],
+          "action": "En SIP, vérifier que chaque codec est enregistré sur son serveur SIP ; sinon composer en direct sur l'adresse IP (port SIP 5060 par défaut, RTP 5004/RTCP 5005).",
+          "expected_result": "Les deux codecs sont joignables.",
+          "typical_mistakes": [
+            "Port SIP ou RTP filtré par un pare-feu"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Codecs joignables"
+          ],
+          "action": "Choisir le profil de codage selon le débit disponible (par exemple Opus ou AAC si les deux le proposent) et garder G.722 en secours, car il est obligatoire dans Tech 3326.",
+          "expected_result": "La négociation offre/réponse trouve un codec commun.",
+          "typical_mistakes": [
+            "Imposer un algorithme que l'autre codec ne possède pas"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Profil choisi"
+          ],
+          "action": "Lancer l'appel (INVITE) depuis le studio ou le terrain et attendre la connexion.",
+          "expected_result": "Audio bidirectionnel établi.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 6,
+          "preconditions": [
+            "Liaison établie"
+          ],
+          "action": "Côté studio, alimenter l'envoi du codec par le N-1 du reporter ; côté terrain, vérifier au casque que le reporter entend le studio sans se réentendre.",
+          "expected_result": "Le reporter reçoit le retour sans écho.",
+          "typical_mistakes": [
+            "Renvoyer le PGM complet au reporter"
+          ]
+        },
+        {
+          "n": 7,
+          "preconditions": [
+            "Retour validé"
+          ],
+          "action": "Activer si besoin une protection (FEC, double flux, agrégation de réseaux) et surveiller la liaison pendant quelques minutes avant l'antenne.",
+          "expected_result": "Liaison stable, sans coupures audibles.",
+          "typical_mistakes": [
+            "Découvrir les pertes de paquets à l'antenne"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Sur le terrain, garder le casque à un niveau raisonnable : le retour peut monter brusquement si le N-1 est mal réglé."
+      ],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.comrex.com/products/access-nx/",
+          "publisher": "Comrex",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.aeta-audio.com/products/scoop5s/",
+          "publisher": "AETA Audio Systems",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.tieline.com/via/",
+          "publisher": "Tieline",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 4,
-     "preconditions": [
-      "Ligne ou liaison établie"
-     ],
-     "action": "Vérifier aux vumètres de l'appareil : le vumètre d'émission (SND) ne doit montrer que le son du studio, le vumètre de réception (RCV) que l'intervenant. Avec un Telos Hx, la tonalité de ligne ne doit apparaître que sur RCV.",
-     "expected_result": "Si la tonalité ou la voix de l'invité apparaît aussi sur l'envoi, le N-1 est faux et doit être corrigé avant l'antenne.",
-     "typical_mistakes": [
-      "Se fier à l'oreille seule"
-     ]
+      "id": "phone-in-hybrid-setup",
+      "name_fr": "Installer un hybride pour un appel à l'antenne",
+      "name_en": "Phone-in setup with a telephone hybrid",
+      "domain": "broadcast-radio",
+      "context": "Mise en place d'un hybride téléphonique analogique (exemple Telos Hx1/Hx2) pour passer des appelants à l'antenne.",
+      "duration_min": 30,
+      "equipment_ids": [
+        "telos-hx2",
+        "sonifex-dhy-04s",
+        "axia-iq"
+      ],
+      "concept_ids": [
+        "telephone-hybrid",
+        "mix-minus-n1",
+        "loudness-ebu-r128"
+      ],
+      "rule_ids": [
+        "mix-minus-n1-echo",
+        "shared-mix-minus-multiple-remotes"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Ligne téléphonique analogique disponible"
+          ],
+          "action": "Brancher la ligne de l'opérateur sur la prise LINE et un poste téléphonique sur la prise PHONE (une paire par hybride sur un Hx2).",
+          "expected_result": "Un point s'affiche sur l'écran de l'hybride quand la tension de ligne est détectée (un signe moins indique un défaut de câblage).",
+          "typical_mistakes": [
+            "Inverser LINE et PHONE"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Ligne détectée"
+          ],
+          "action": "Relier la sortie mix-minus (bus téléphone) de la console à l'entrée SEND IN, et la sortie RCV OUT à l'entrée ligne de la tranche « appelant ». Liaisons symétriques de préférence.",
+          "expected_result": "Envoi et réception câblés séparément.",
+          "typical_mistakes": [
+            "Brancher l'hybride sur des entrées asymétriques grand public sans adaptateur"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Câblage terminé"
+          ],
+          "action": "Vérifier les réglages internes (micro-interrupteurs) : réglages d'usine, et paramètres pays si l'hybride est utilisé hors des États-Unis.",
+          "expected_result": "Hybride adapté au réseau téléphonique local.",
+          "typical_mistakes": [
+            "Oublier le réglage pays"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Hybride sous tension"
+          ],
+          "action": "Test : appuyer sur ON. La tonalité doit apparaître sur le vumètre RCV ; le vumètre SND ne doit montrer que le micro ou la source qui alimente SEND IN.",
+          "expected_result": "Tonalité uniquement sur RCV : le N-1 est correct.",
+          "typical_mistakes": [
+            "Tonalité visible sur SND et RCV : le N-1 contient l'appelant"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Test validé"
+          ],
+          "action": "Filtrer l'appel sur le poste téléphonique, puis appuyer sur ON pour que l'hybride prenne l'appel et raccrocher le poste.",
+          "expected_result": "L'appelant passe sur la console sans coupure.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 6,
+          "preconditions": [
+            "Appelant sur la console"
+          ],
+          "action": "Niveler la voix de l'appelant : les lignes téléphoniques ne sont pas conformes à R 128, l'EBU cite l'usage de niveleurs basés sur la sonie pour les appels à l'antenne.",
+          "expected_result": "La voix de l'appelant est proche de la sonie de l'animateur.",
+          "typical_mistakes": [
+            "Laisser un appelant beaucoup plus faible ou plus fort que le studio"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.telosalliance.com/broadcast-phone-systems/telos-hx1-hx2-digital-hybrids",
+          "publisher": "Telos Alliance",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
     },
     {
-     "n": 5,
-     "preconditions": [
-      "N-1 validé aux vumètres"
-     ],
-     "action": "Parler à l'invité hors antenne par le talkback sur son retour (backfeed), puis lui demander de confirmer qu'il entend le studio sans s'entendre lui-même.",
-     "expected_result": "L'invité entend clairement le studio, sans écho de sa voix.",
-     "typical_mistakes": [
-      "Ouvrir l'antenne avant le test de retour"
-     ]
+      "id": "programme-loudness-measurement",
+      "name_fr": "Mesurer la sonie d'un programme",
+      "name_en": "Programme loudness measurement",
+      "domain": "broadcast-radio",
+      "context": "Contrôler qu'un programme radio (direct ou enregistré) respecte la cible EBU R 128 : sonie intégrée, crête vraie, plage de sonie.",
+      "duration_min": null,
+      "equipment_ids": [
+        "rtw-touchmonitor-tm7",
+        "nugen-audio-vislm"
+      ],
+      "concept_ids": [
+        "loudness-ebu-r128",
+        "loudness-metering-ebu-mode",
+        "true-peak",
+        "loudness-range-lra"
+      ],
+      "rule_ids": [
+        "loudness-out-of-tolerance"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Utiliser un sonomètre conforme à ITU-R BS.1770 et EBU Tech 3341 (« EBU Mode »).",
+          "expected_result": "Mesure comparable d'un studio à l'autre.",
+          "typical_mistakes": [
+            "Utiliser un simple vumètre ou un crête-mètre QPPM"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Sonomètre conforme"
+          ],
+          "action": "Choisir l'échelle relative EBU +9 (0 LU = −23 LUFS).",
+          "expected_result": "Lecture fine autour de la cible.",
+          "typical_mistakes": []
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Début du programme"
+          ],
+          "action": "Remettre à zéro la sonie intégrée (et le LRA) au début du programme.",
+          "expected_result": "La mesure couvre exactement le programme.",
+          "typical_mistakes": [
+            "Mesurer en cumulant le programme précédent"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Mesure en cours"
+          ],
+          "action": "Mesurer le programme en entier, sans privilégier la parole, la musique ou les effets.",
+          "expected_result": "Valeur intégrée représentative de tout le programme.",
+          "typical_mistakes": [
+            "Ne mesurer que la voix"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [
+            "Fin du programme"
+          ],
+          "action": "Lire la sonie intégrée, la crête vraie maximale et le LRA.",
+          "expected_result": "Valeurs I (LUFS), TP (dBTP), LRA (LU) relevées.",
+          "typical_mistakes": [
+            "Lire le LRA d'un programme de moins d'une minute"
+          ]
+        },
+        {
+          "n": 6,
+          "preconditions": [
+            "Valeurs relevées"
+          ],
+          "action": "Comparer : −23,0 LUFS (tolérance ±1,0 LU en direct, ±0,2 LU d'erreur de mesure en contrôle qualité) et crête vraie ≤ −1 dBTP en production.",
+          "expected_result": "Conformité ou écart chiffré à corriger.",
+          "typical_mistakes": [
+            "Confondre la sonie de production et le niveau de distribution de la station"
+          ]
+        }
+      ],
+      "safety_notes": [],
+      "sources": [
+        {
+          "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
+          "publisher": "EBU",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "standard",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     },
     {
-     "n": 6,
-     "preconditions": [
-      "Invité confirmé"
-     ],
-     "action": "Régler le niveau du N-1 et du retour en tenant compte de la cible de sonie du studio (−23 LUFS = 0 LU).",
-     "expected_result": "Niveaux de retour cohérents avec le reste de l'antenne.",
-     "typical_mistakes": []
+      "id": "on-air-tally-wiring",
+      "name_fr": "Câbler un voyant ON-AIR (tally)",
+      "name_en": "Wire an ON-AIR tally light",
+      "domain": "broadcast-radio",
+      "context": "Relier la sortie logique (GPIO) d'une console d'antenne à un voyant ON-AIR (exemple Yellowtec litt) pour qu'il s'allume dès qu'un micro est ouvert.",
+      "duration_min": 45,
+      "equipment_ids": [
+        "axia-iq",
+        "yellowtec-litt"
+      ],
+      "concept_ids": [
+        "tally-on-air",
+        "on-air-console"
+      ],
+      "rule_ids": [
+        "on-air-tally-light"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [
+            "Manuel de la console et brochage GPIO disponibles"
+          ],
+          "action": "Repérer sur la console la sortie logique associée à l'état « micro à l'antenne » et la configurer dans le logiciel de la console.",
+          "expected_result": "Une sortie GPIO change d'état quand une tranche micro passe sur On.",
+          "typical_mistakes": [
+            "Utiliser une sortie liée à une seule tranche alors que plusieurs micros existent"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Sortie configurée"
+          ],
+          "action": "Alimenter le voyant litt en permanence (9 à 24 V) sur son bornier 8 points ; le port USB ne sert qu'à la configuration.",
+          "expected_result": "Le voyant est alimenté indépendamment de la console.",
+          "typical_mistakes": [
+            "Compter sur l'USB pour l'alimenter"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Voyant alimenté"
+          ],
+          "action": "Relier la sortie de la console à l'entrée de commande de la couleur rouge (commande 2,4 à 24 V DC), en suivant le brochage du manuel de la console. Le constructeur conseille son câble système à code couleur ; les bornes à ressort verrouillent les fils.",
+          "expected_result": "Le rouge est commandé par la console.",
+          "typical_mistakes": [
+            "Câbler sur l'entrée d'une autre couleur",
+            "Fils mal dénudés qui ne tiennent pas dans les bornes"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Câblage terminé"
+          ],
+          "action": "Ouvrir chaque tranche micro tour à tour, puis les refermer.",
+          "expected_result": "Le voyant s'allume pour chaque micro ouvert et s'éteint quand tous sont fermés.",
+          "typical_mistakes": [
+            "Ne tester qu'un seul micro"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Couper l'alimentation basse tension avant de câbler le bornier."
+      ],
+      "sources": [
+        {
+          "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
+          "publisher": "Yellowtec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.yellowtec.com/fileadmin/downloads/Litt_installation_Briefing.pdf",
+          "publisher": "Yellowtec",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
+          "publisher": "Telos Alliance / Axia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
     }
-   ],
-   "safety_notes": [],
-   "sources": [
+  ],
+  "not_found_log": [
     {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://sonifex.co.uk/product/rb-mm1/",
-     "publisher": "Sonifex",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
+      "what": "Brochage exact des ports GPIO de l'Axia iQ / StudioCore (sens des contacts, tension)",
+      "searched": "brochure iQ et QSG iQ (ne donnent que le nombre de ports) ; manuel complet non ouvert"
     }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "on-air-chain-check",
-   "name_fr": "Vérifier la chaîne d'antenne avant une émission",
-   "name_en": "On-air chain check before a show",
-   "domain": "broadcast-radio",
-   "context": "Quelques minutes avant le direct, dans un studio radio (self-op ou avec technicien), vérifier chaque maillon : sources, micro, sécurité ON-AIR, sonie, liaisons, secours.",
-   "duration_min": 15,
-   "equipment_ids": [
-    "axia-iq",
-    "ev-re20",
-    "yellowtec-litt",
-    "genelec-8030c",
-    "rtw-touchmonitor-tm7",
-    "omnia-11"
-   ],
-   "concept_ids": [
-    "on-air-chain",
-    "on-air-console",
-    "tally-on-air",
-    "loudness-metering-ebu-mode",
-    "silence-detection"
-   ],
-   "rule_ids": [
-    "on-air-tally-light",
-    "loudness-out-of-tolerance",
-    "silence-detection-missing"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Console et moteur sous tension"
-     ],
-     "action": "Passer une source de test sur une tranche (par exemple la source « Sine 1 kHz −20 dBFS » de l'Axia iQ) affectée au bus PGM 1 et l'écouter sur PGM 1.",
-     "expected_result": "Le vumètre programme atteint la référence attendue et le son sort des écoutes régie.",
-     "typical_mistakes": [
-      "Tester sur un bus qui n'est pas celui de l'antenne"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [
-      "Ton de test validé"
-     ],
-     "action": "Lancer une source du playout et vérifier qu'elle arrive sur sa tranche.",
-     "expected_result": "Le playout est présent sur la console.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 3,
-     "preconditions": [
-      "Micro animateur branché"
-     ],
-     "action": "Ouvrir la tranche micro (On) : vérifier que les haut-parleurs de la régie se coupent et que le voyant ON-AIR s'allume.",
-     "expected_result": "Écoutes coupées, animateur au casque, voyant ON-AIR allumé.",
-     "typical_mistakes": [
-      "Faire l'essai micro avec les écoutes ouvertes (larsen)",
-      "Ignorer un voyant éteint"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [
-      "Micro ouvert"
-     ],
-     "action": "Régler le gain du micro en parlant au niveau de l'émission, en lisant le sonomètre de sonie en échelle relative EBU +9, de préférence en court terme.",
-     "expected_result": "La voix se situe autour de 0 LU (±2 LU en court terme).",
-     "typical_mistakes": [
-      "Régler la voix au crête-mètre seulement"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [
-      "Liaisons prévues dans le conducteur"
-     ],
-     "action": "Tester chaque hybride et chaque codec avec son N-1 (voir procédure N-1).",
-     "expected_result": "Tous les retours sont validés avant l'antenne.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 6,
-     "preconditions": [
-      "Chaîne aval en service"
-     ],
-     "action": "Vérifier que le détecteur de silence est armé et que sa source de secours est disponible.",
-     "expected_result": "En cas de blanc prolongé, la bascule sur la source de secours est possible.",
-     "typical_mistakes": [
-      "Laisser le détecteur en mode bascule désactivée"
-     ]
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Axia%20Products/iQ/Support%20Files/Axia_iQ_QSG_C21116017_Web.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
-     "publisher": "Yellowtec",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://sonifex.co.uk/product/rb-sd1/",
-     "publisher": "Sonifex",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "ip-codec-remote-connection",
-   "name_fr": "Connecter un codec IP pour un reportage en direct",
-   "name_en": "Connect an IP codec for a remote broadcast",
-   "domain": "broadcast-radio",
-   "context": "Un reporter sur le terrain (reportage, car régie, événement) se connecte au codec du studio par IP (Ethernet, 4G/5G, Wi-Fi) pour un duplex en direct.",
-   "duration_min": 30,
-   "equipment_ids": [
-    "comrex-access-nx",
-    "tieline-via",
-    "tieline-gateway",
-    "aeta-scoop5-s",
-    "ev-re50",
-    "sennheiser-hd-25"
-   ],
-   "concept_ids": [
-    "audio-codec-ip",
-    "acip-ebu-tech-3326",
-    "sip-signalling",
-    "opus-codec",
-    "g722-codec",
-    "ip-link-resilience",
-    "mix-minus-n1"
-   ],
-   "rule_ids": [
-    "mix-minus-n1-echo"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Matériel des deux côtés connu"
-     ],
-     "action": "Choisir le mode de connexion : mode propriétaire si les deux codecs sont de la même marque, sinon mode EBU Tech 3326 / SIP pour l'interopérabilité entre marques.",
-     "expected_result": "Les deux codecs utilisent un mode qu'ils ont en commun.",
-     "typical_mistakes": [
-      "Tenter de relier deux marques en mode propriétaire"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [
-      "Mode choisi"
-     ],
-     "action": "Vérifier le réseau terrain (Ethernet, 4G/5G, Wi-Fi) et, si possible, préparer un second réseau de secours.",
-     "expected_result": "Au moins un réseau fonctionne, idéalement deux.",
-     "typical_mistakes": [
-      "Partir avec un seul réseau mobile sur un lieu très fréquenté"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [
-      "Réseau disponible"
-     ],
-     "action": "En SIP, vérifier que chaque codec est enregistré sur son serveur SIP ; sinon composer en direct sur l'adresse IP (port SIP 5060 par défaut, RTP 5004/RTCP 5005).",
-     "expected_result": "Les deux codecs sont joignables.",
-     "typical_mistakes": [
-      "Port SIP ou RTP filtré par un pare-feu"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [
-      "Codecs joignables"
-     ],
-     "action": "Choisir le profil de codage selon le débit disponible (par exemple Opus ou AAC si les deux le proposent) et garder G.722 en secours, car il est obligatoire dans Tech 3326.",
-     "expected_result": "La négociation offre/réponse trouve un codec commun.",
-     "typical_mistakes": [
-      "Imposer un algorithme que l'autre codec ne possède pas"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [
-      "Profil choisi"
-     ],
-     "action": "Lancer l'appel (INVITE) depuis le studio ou le terrain et attendre la connexion.",
-     "expected_result": "Audio bidirectionnel établi.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 6,
-     "preconditions": [
-      "Liaison établie"
-     ],
-     "action": "Côté studio, alimenter l'envoi du codec par le N-1 du reporter ; côté terrain, vérifier au casque que le reporter entend le studio sans se réentendre.",
-     "expected_result": "Le reporter reçoit le retour sans écho.",
-     "typical_mistakes": [
-      "Renvoyer le PGM complet au reporter"
-     ]
-    },
-    {
-     "n": 7,
-     "preconditions": [
-      "Retour validé"
-     ],
-     "action": "Activer si besoin une protection (FEC, double flux, agrégation de réseaux) et surveiller la liaison pendant quelques minutes avant l'antenne.",
-     "expected_result": "Liaison stable, sans coupures audibles.",
-     "typical_mistakes": [
-      "Découvrir les pertes de paquets à l'antenne"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Sur le terrain, garder le casque à un niveau raisonnable : le retour peut monter brusquement si le N-1 est mal réglé."
-   ],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.comrex.com/products/access-nx/",
-     "publisher": "Comrex",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.aeta-audio.com/products/scoop5s/",
-     "publisher": "AETA Audio Systems",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.tieline.com/via/",
-     "publisher": "Tieline",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "phone-in-hybrid-setup",
-   "name_fr": "Installer un hybride pour un appel à l'antenne",
-   "name_en": "Phone-in setup with a telephone hybrid",
-   "domain": "broadcast-radio",
-   "context": "Mise en place d'un hybride téléphonique analogique (exemple Telos Hx1/Hx2) pour passer des appelants à l'antenne.",
-   "duration_min": 30,
-   "equipment_ids": [
-    "telos-hx2",
-    "sonifex-dhy-04s",
-    "axia-iq"
-   ],
-   "concept_ids": [
-    "telephone-hybrid",
-    "mix-minus-n1",
-    "loudness-ebu-r128"
-   ],
-   "rule_ids": [
-    "mix-minus-n1-echo",
-    "shared-mix-minus-multiple-remotes"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Ligne téléphonique analogique disponible"
-     ],
-     "action": "Brancher la ligne de l'opérateur sur la prise LINE et un poste téléphonique sur la prise PHONE (une paire par hybride sur un Hx2).",
-     "expected_result": "Un point s'affiche sur l'écran de l'hybride quand la tension de ligne est détectée (un signe moins indique un défaut de câblage).",
-     "typical_mistakes": [
-      "Inverser LINE et PHONE"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [
-      "Ligne détectée"
-     ],
-     "action": "Relier la sortie mix-minus (bus téléphone) de la console à l'entrée SEND IN, et la sortie RCV OUT à l'entrée ligne de la tranche « appelant ». Liaisons symétriques de préférence.",
-     "expected_result": "Envoi et réception câblés séparément.",
-     "typical_mistakes": [
-      "Brancher l'hybride sur des entrées asymétriques grand public sans adaptateur"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [
-      "Câblage terminé"
-     ],
-     "action": "Vérifier les réglages internes (micro-interrupteurs) : réglages d'usine, et paramètres pays si l'hybride est utilisé hors des États-Unis.",
-     "expected_result": "Hybride adapté au réseau téléphonique local.",
-     "typical_mistakes": [
-      "Oublier le réglage pays"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [
-      "Hybride sous tension"
-     ],
-     "action": "Test : appuyer sur ON. La tonalité doit apparaître sur le vumètre RCV ; le vumètre SND ne doit montrer que le micro ou la source qui alimente SEND IN.",
-     "expected_result": "Tonalité uniquement sur RCV : le N-1 est correct.",
-     "typical_mistakes": [
-      "Tonalité visible sur SND et RCV : le N-1 contient l'appelant"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [
-      "Test validé"
-     ],
-     "action": "Filtrer l'appel sur le poste téléphonique, puis appuyer sur ON pour que l'hybride prenne l'appel et raccrocher le poste.",
-     "expected_result": "L'appelant passe sur la console sans coupure.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 6,
-     "preconditions": [
-      "Appelant sur la console"
-     ],
-     "action": "Niveler la voix de l'appelant : les lignes téléphoniques ne sont pas conformes à R 128, l'EBU cite l'usage de niveleurs basés sur la sonie pour les appels à l'antenne.",
-     "expected_result": "La voix de l'appelant est proche de la sonie de l'animateur.",
-     "typical_mistakes": [
-      "Laisser un appelant beaucoup plus faible ou plus fort que le studio"
-     ]
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.telosalliance.com/broadcast-phone-systems/telos-hx1-hx2-digital-hybrids",
-     "publisher": "Telos Alliance",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "ok"
-  },
-  {
-   "id": "programme-loudness-measurement",
-   "name_fr": "Mesurer la sonie d'un programme",
-   "name_en": "Programme loudness measurement",
-   "domain": "broadcast-radio",
-   "context": "Contrôler qu'un programme radio (direct ou enregistré) respecte la cible EBU R 128 : sonie intégrée, crête vraie, plage de sonie.",
-   "duration_min": null,
-   "equipment_ids": [
-    "rtw-touchmonitor-tm7",
-    "nugen-audio-vislm"
-   ],
-   "concept_ids": [
-    "loudness-ebu-r128",
-    "loudness-metering-ebu-mode",
-    "true-peak",
-    "loudness-range-lra"
-   ],
-   "rule_ids": [
-    "loudness-out-of-tolerance"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [],
-     "action": "Utiliser un sonomètre conforme à ITU-R BS.1770 et EBU Tech 3341 (« EBU Mode »).",
-     "expected_result": "Mesure comparable d'un studio à l'autre.",
-     "typical_mistakes": [
-      "Utiliser un simple vumètre ou un crête-mètre QPPM"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [
-      "Sonomètre conforme"
-     ],
-     "action": "Choisir l'échelle relative EBU +9 (0 LU = −23 LUFS).",
-     "expected_result": "Lecture fine autour de la cible.",
-     "typical_mistakes": []
-    },
-    {
-     "n": 3,
-     "preconditions": [
-      "Début du programme"
-     ],
-     "action": "Remettre à zéro la sonie intégrée (et le LRA) au début du programme.",
-     "expected_result": "La mesure couvre exactement le programme.",
-     "typical_mistakes": [
-      "Mesurer en cumulant le programme précédent"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [
-      "Mesure en cours"
-     ],
-     "action": "Mesurer le programme en entier, sans privilégier la parole, la musique ou les effets.",
-     "expected_result": "Valeur intégrée représentative de tout le programme.",
-     "typical_mistakes": [
-      "Ne mesurer que la voix"
-     ]
-    },
-    {
-     "n": 5,
-     "preconditions": [
-      "Fin du programme"
-     ],
-     "action": "Lire la sonie intégrée, la crête vraie maximale et le LRA.",
-     "expected_result": "Valeurs I (LUFS), TP (dBTP), LRA (LU) relevées.",
-     "typical_mistakes": [
-      "Lire le LRA d'un programme de moins d'une minute"
-     ]
-    },
-    {
-     "n": 6,
-     "preconditions": [
-      "Valeurs relevées"
-     ],
-     "action": "Comparer : −23,0 LUFS (tolérance ±1,0 LU en direct, ±0,2 LU d'erreur de mesure en contrôle qualité) et crête vraie ≤ −1 dBTP en production.",
-     "expected_result": "Conformité ou écart chiffré à corriger.",
-     "typical_mistakes": [
-      "Confondre la sonie de production et le niveau de distribution de la station"
-     ]
-    }
-   ],
-   "safety_notes": [],
-   "sources": [
-    {
-     "url": "https://tech.ebu.ch/files/live/sites/tech/files/shared/r/r128.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3341.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://tech.ebu.ch/docs/tech/tech3401.pdf",
-     "publisher": "EBU",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "standard",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "on-air-tally-wiring",
-   "name_fr": "Câbler un voyant ON-AIR (tally)",
-   "name_en": "Wire an ON-AIR tally light",
-   "domain": "broadcast-radio",
-   "context": "Relier la sortie logique (GPIO) d'une console d'antenne à un voyant ON-AIR (exemple Yellowtec litt) pour qu'il s'allume dès qu'un micro est ouvert.",
-   "duration_min": 45,
-   "equipment_ids": [
-    "axia-iq",
-    "yellowtec-litt"
-   ],
-   "concept_ids": [
-    "tally-on-air",
-    "on-air-console"
-   ],
-   "rule_ids": [
-    "on-air-tally-light"
-   ],
-   "steps": [
-    {
-     "n": 1,
-     "preconditions": [
-      "Manuel de la console et brochage GPIO disponibles"
-     ],
-     "action": "Repérer sur la console la sortie logique associée à l'état « micro à l'antenne » et la configurer dans le logiciel de la console.",
-     "expected_result": "Une sortie GPIO change d'état quand une tranche micro passe sur On.",
-     "typical_mistakes": [
-      "Utiliser une sortie liée à une seule tranche alors que plusieurs micros existent"
-     ]
-    },
-    {
-     "n": 2,
-     "preconditions": [
-      "Sortie configurée"
-     ],
-     "action": "Alimenter le voyant litt en permanence (9 à 24 V) sur son bornier 8 points ; le port USB ne sert qu'à la configuration.",
-     "expected_result": "Le voyant est alimenté indépendamment de la console.",
-     "typical_mistakes": [
-      "Compter sur l'USB pour l'alimenter"
-     ]
-    },
-    {
-     "n": 3,
-     "preconditions": [
-      "Voyant alimenté"
-     ],
-     "action": "Relier la sortie de la console à l'entrée de commande de la couleur rouge (commande 2,4 à 24 V DC), en suivant le brochage du manuel de la console. Le constructeur conseille son câble système à code couleur ; les bornes à ressort verrouillent les fils.",
-     "expected_result": "Le rouge est commandé par la console.",
-     "typical_mistakes": [
-      "Câbler sur l'entrée d'une autre couleur",
-      "Fils mal dénudés qui ne tiennent pas dans les bornes"
-     ]
-    },
-    {
-     "n": 4,
-     "preconditions": [
-      "Câblage terminé"
-     ],
-     "action": "Ouvrir chaque tranche micro tour à tour, puis les refermer.",
-     "expected_result": "Le voyant s'allume pour chaque micro ouvert et s'éteint quand tous sont fermés.",
-     "typical_mistakes": [
-      "Ne tester qu'un seul micro"
-     ]
-    }
-   ],
-   "safety_notes": [
-    "Couper l'alimentation basse tension avant de câbler le bornier."
-   ],
-   "sources": [
-    {
-     "url": "https://www.yellowtec.com/litt/litt-base-controllers/",
-     "publisher": "Yellowtec",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://www.yellowtec.com/fileadmin/downloads/Litt_installation_Briefing.pdf",
-     "publisher": "Yellowtec",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    },
-    {
-     "url": "https://telosalliance-uat.s3.us-east-1.amazonaws.com/public/Axia+Products/iQ/Brochures/Axia-iQ+Console-Brochure-C25316094.pdf",
-     "publisher": "Telos Alliance / Axia",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "steps"
-     ]
-    }
-   ],
-   "conflicts": [],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Brochage exact des ports GPIO de l'Axia iQ / StudioCore (sens des contacts, tension)",
-   "searched": "brochure iQ et QSG iQ (ne donnent que le nombre de ports) ; manuel complet non ouvert"
-  }
- ]
+  ]
 }

@@ -276,7 +276,18 @@
       "meuble technique bas"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "objv-speaker-cabinet-rusov",
+    "ph-modern-ceiling-lamp-01",
+    "ph-potted-plant-04",
+    "ph-school-chair-01",
+    "ph-school-desk-01",
+    "ph-steel-frame-shelves-03",
+    "pp-dry-erase-board",
+    "pp-kenney-desk-chair",
+    "pp-quaternius-man",
+    "pp-quaternius-woman-casual"
+  ],
   "sources": [
     {
       "url": "https://learn.microsoft.com/en-us/microsoftteams/devices/certified-hardware-android",
@@ -293,7 +304,8 @@
         "dimensions_m.length.max",
         "description"
       ],
-      "note": "Catégories de taille utilisées dans la liste des appareils Teams Rooms on Android certifiés : Huddle 3 m × 3 m, Small 4,5 m × 4,5 m, Medium 4,5 m × 6 m, Large 4,5 m × 8,5 m."
+      "note": "Catégories de taille utilisées dans la liste des appareils Teams Rooms on Android certifiés : Huddle 3 m × 3 m, Small 4,5 m × 4,5 m, Medium 4,5 m × 6 m, Large 4,5 m × 8,5 m.",
+      "url_status": "ok"
     },
     {
       "url": "https://learn.microsoft.com/en-us/microsoftteams/rooms/room-planning-guidance",
@@ -304,7 +316,8 @@
       "covers": [
         "surfaces"
       ],
-      "note": "Au moins deux murs traités, sol moquetté ou traité, occultation des fenêtres."
+      "note": "Au moins deux murs traités, sol moquetté ou traité, occultation des fenêtres.",
+      "url_status": "ok"
     }
   ],
   "not_found_log": [

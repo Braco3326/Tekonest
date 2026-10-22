@@ -43,7 +43,8 @@
           "kind": "trade-press",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
@@ -53,7 +54,8 @@
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.dpamicrophones.com/mic-university/technology/listen-to-your-polar-pattern/",
@@ -63,7 +65,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -109,7 +112,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.shure.com/damfiles/default/global/documents/publications/en/performance-production/us_pro_guidepersonalmonitor_ea.pdf-a99329954f383dc535fac48bca2396ec.pdf",
@@ -120,7 +124,8 @@
           "covers": [
             "description",
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -167,7 +172,8 @@
           "kind": "standard",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.soundonsound.com/techniques/establishing-project-studio-reference-monitoring-levels?page=2",
@@ -177,7 +183,8 @@
           "kind": "trade-press",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"
@@ -221,7 +228,8 @@
           "kind": "manufacturer",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://digico.biz/wp-content/uploads/2020/02/SD12_Getting_Started_A.pdf",
@@ -231,7 +239,8 @@
           "kind": "manufacturer",
           "covers": [
             "success_criteria"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/Foldback_(sound_engineering)",
@@ -241,7 +250,8 @@
           "kind": "other",
           "covers": [
             "description"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

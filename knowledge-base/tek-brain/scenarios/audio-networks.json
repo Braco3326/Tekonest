@@ -149,7 +149,8 @@
           "covers": [
             "brief",
             "signal_flow"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://in.yamaha.com/en/products/proaudio/interfaces/r_series_adda_2/specs.html",
@@ -159,7 +160,8 @@
           "kind": "manufacturer",
           "covers": [
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://www.luminex.be/products/gigacore/gigacore-16t/",
@@ -169,7 +171,8 @@
           "kind": "manufacturer",
           "covers": [
             "required_gear"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "needs-oscar-review"
@@ -272,7 +275,8 @@
             "brief",
             "required_gear",
             "signal_flow"
-          ]
+          ],
+          "url_status": "ok"
         },
         {
           "url": "https://en.wikipedia.org/wiki/AES50",
@@ -282,7 +286,8 @@
           "kind": "other",
           "covers": [
             "brief"
-          ]
+          ],
+          "url_status": "ok"
         }
       ],
       "review": "ok"

@@ -1,333 +1,340 @@
 {
- "entity": "scenario",
- "domain": "safety",
- "generated": "2026-10-22",
- "items": [
-  {
-   "id": "club-concert-sound-level-logging",
-   "name_fr": "Concert en club avec enregistrement des niveaux sonores",
-   "name_en": "Club concert with sound-level logging",
-   "domain": "safety",
-   "brief": "Un groupe joue dans un petit club. Avant l'ouverture, installe la mesure et l'affichage des niveaux (dB(A) et dB(C) sur 15 min), lance l'enregistrement, vérifie les protections auditives pour le public et la zone de repos, puis mixe le concert sans dépasser 102 dB(A) et 118 dB(C). Contrôle aussi la distribution électrique et l'ordre de mise sous tension.",
-   "room_id": "bar-club-stage-small",
-   "required_gear": [
+  "entity": "scenario",
+  "domain": "safety",
+  "generated": "2026-10-22",
+  "items": [
     {
-     "equipment_id": "allen-heath-sq-6",
-     "qty": 1,
-     "role": "console façade"
+      "id": "club-concert-sound-level-logging",
+      "name_fr": "Concert en club avec enregistrement des niveaux sonores",
+      "name_en": "Club concert with sound-level logging",
+      "domain": "safety",
+      "brief": "Un groupe joue dans un petit club. Avant l'ouverture, installe la mesure et l'affichage des niveaux (dB(A) et dB(C) sur 15 min), lance l'enregistrement, vérifie les protections auditives pour le public et la zone de repos, puis mixe le concert sans dépasser 102 dB(A) et 118 dB(C). Contrôle aussi la distribution électrique et l'ordre de mise sous tension.",
+      "room_id": "bar-club-stage-small",
+      "required_gear": [
+        {
+          "equipment_id": "allen-heath-sq-6",
+          "qty": 1,
+          "role": "console façade"
+        },
+        {
+          "equipment_id": "qsc-k12-2",
+          "qty": 2,
+          "role": "diffusion façade (enceintes actives)"
+        },
+        {
+          "equipment_id": "shure-sm58",
+          "qty": 2,
+          "role": "micros chant"
+        },
+        {
+          "equipment_id": "nti-audio-xl2",
+          "qty": 1,
+          "role": "sonomètre de surveillance et d'enregistrement"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "mic1",
+            "equipment_id": "shure-sm58",
+            "label": "Micro chant"
+          },
+          {
+            "id": "desk",
+            "equipment_id": "allen-heath-sq-6",
+            "label": "Console façade"
+          },
+          {
+            "id": "spk-l",
+            "equipment_id": "qsc-k12-2",
+            "label": "Façade gauche"
+          },
+          {
+            "id": "spk-r",
+            "equipment_id": "qsc-k12-2",
+            "label": "Façade droite"
+          },
+          {
+            "id": "meter",
+            "equipment_id": "nti-audio-xl2",
+            "label": "Sonomètre + afficheur à la régie"
+          },
+          {
+            "id": "distro",
+            "equipment_id": null,
+            "label": "Distribution électrique avec différentiel et terre"
+          }
+        ],
+        "edges": [
+          {
+            "from": "mic1",
+            "to": "desk",
+            "signal": "mic-level",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "spk-l",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "desk",
+            "to": "spk-r",
+            "signal": "line-level-pro",
+            "connector": "xlr3-m"
+          },
+          {
+            "from": "distro",
+            "to": "desk",
+            "signal": "mains-power"
+          },
+          {
+            "from": "distro",
+            "to": "spk-l",
+            "signal": "mains-power",
+            "connector": "iec-c13"
+          },
+          {
+            "from": "distro",
+            "to": "spk-r",
+            "signal": "mains-power",
+            "connector": "iec-c13"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "spl-monitoring-setup-decree-2017-1244",
+        "power-distro-safety-check",
+        "audio-system-power-sequencing"
+      ],
+      "rule_ids": [
+        "spl-exposure-limit",
+        "mains-earth-lifted"
+      ],
+      "difficulty": 3,
+      "estimated_time_min": 60,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        },
+        {
+          "epreuve": "E52",
+          "bloc": "BC03",
+          "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
+          "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "regulator",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+          "publisher": "ARS Île-de-France",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.prosoundweb.com/tech-tip-of-the-day-proper-pa-power-sequencing/",
+          "publisher": "ProSoundWeb (tip from Sweetwater, 2010)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "procedure_ids"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     },
     {
-     "equipment_id": "qsc-k12-2",
-     "qty": 2,
-     "role": "diffusion façade (enceintes actives)"
-    },
-    {
-     "equipment_id": "shure-sm58",
-     "qty": 2,
-     "role": "micros chant"
-    },
-    {
-     "equipment_id": "nti-audio-xl2",
-     "qty": 1,
-     "role": "sonomètre de surveillance et d'enregistrement"
+      "id": "festival-power-and-safety-check",
+      "name_fr": "Contrôle électrique et sécurité d'une scène de festival en plein air",
+      "name_en": "Outdoor festival power and safety check",
+      "domain": "safety",
+      "brief": "Sur une grande scène de festival, avant les balances : vérifie avec l'électricien habilité la distribution (coupure d'urgence, terre, différentiels, répartition des phases), protège les câbles de la pluie et des passages, contrôle l'accroche du line array (sécurité secondaire, zone dégagée, plan vent) puis mets le système sous tension dans l'ordre. Prépare aussi la surveillance des niveaux pour le public et la protection auditive de l'équipe.",
+      "room_id": "festival-open-air-large",
+      "required_gear": [
+        {
+          "equipment_id": "digico-sd12",
+          "qty": 1,
+          "role": "console façade"
+        },
+        {
+          "equipment_id": "l-acoustics-k2",
+          "qty": 12,
+          "role": "line array accroché"
+        },
+        {
+          "equipment_id": "l-acoustics-ks28",
+          "qty": 6,
+          "role": "subwoofers au sol"
+        },
+        {
+          "equipment_id": "l-acoustics-la12x",
+          "qty": 4,
+          "role": "contrôleurs amplifiés"
+        },
+        {
+          "equipment_id": "nti-audio-xl3",
+          "qty": 1,
+          "role": "sonomètre de surveillance"
+        }
+      ],
+      "signal_flow": {
+        "nodes": [
+          {
+            "id": "desk",
+            "equipment_id": "digico-sd12",
+            "label": "Console façade"
+          },
+          {
+            "id": "amp",
+            "equipment_id": "l-acoustics-la12x",
+            "label": "Contrôleurs amplifiés"
+          },
+          {
+            "id": "array",
+            "equipment_id": "l-acoustics-k2",
+            "label": "Line array accroché (avec sécurité secondaire)"
+          },
+          {
+            "id": "subs",
+            "equipment_id": "l-acoustics-ks28",
+            "label": "Subwoofers"
+          },
+          {
+            "id": "meter",
+            "equipment_id": "nti-audio-xl3",
+            "label": "Sonomètre régie"
+          },
+          {
+            "id": "distro",
+            "equipment_id": null,
+            "label": "Coffret de distribution triphasé (géré par l'électricien habilité)"
+          }
+        ],
+        "edges": [
+          {
+            "from": "desk",
+            "to": "amp",
+            "signal": "line-level-pro"
+          },
+          {
+            "from": "amp",
+            "to": "array",
+            "signal": "speaker-level"
+          },
+          {
+            "from": "amp",
+            "to": "subs",
+            "signal": "speaker-level"
+          },
+          {
+            "from": "distro",
+            "to": "amp",
+            "signal": "mains-power"
+          },
+          {
+            "from": "distro",
+            "to": "desk",
+            "signal": "mains-power"
+          }
+        ]
+      },
+      "procedure_ids": [
+        "power-distro-safety-check",
+        "flying-small-pa-safely",
+        "audio-system-power-sequencing",
+        "spl-monitoring-setup-decree-2017-1244",
+        "crew-hearing-protection-plan"
+      ],
+      "rule_ids": [
+        "mains-earth-lifted",
+        "rigging-without-safety",
+        "spl-exposure-limit"
+      ],
+      "difficulty": 4,
+      "estimated_time_min": 120,
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": "BC02",
+          "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
+          "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.inrs.fr/risques/electriques/habilitation-electrique.html",
+          "publisher": "INRS",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
+          "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        },
+        {
+          "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
+          "publisher": "ARS Île-de-France",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "regulator",
+          "covers": [
+            "brief"
+          ],
+          "url_status": "ok"
+        }
+      ],
+      "review": "needs-oscar-review"
     }
-   ],
-   "signal_flow": {
-    "nodes": [
-     {
-      "id": "mic1",
-      "equipment_id": "shure-sm58",
-      "label": "Micro chant"
-     },
-     {
-      "id": "desk",
-      "equipment_id": "allen-heath-sq-6",
-      "label": "Console façade"
-     },
-     {
-      "id": "spk-l",
-      "equipment_id": "qsc-k12-2",
-      "label": "Façade gauche"
-     },
-     {
-      "id": "spk-r",
-      "equipment_id": "qsc-k12-2",
-      "label": "Façade droite"
-     },
-     {
-      "id": "meter",
-      "equipment_id": "nti-audio-xl2",
-      "label": "Sonomètre + afficheur à la régie"
-     },
-     {
-      "id": "distro",
-      "equipment_id": null,
-      "label": "Distribution électrique avec différentiel et terre"
-     }
-    ],
-    "edges": [
-     {
-      "from": "mic1",
-      "to": "desk",
-      "signal": "mic-level",
-      "connector": "xlr3-m"
-     },
-     {
-      "from": "desk",
-      "to": "spk-l",
-      "signal": "line-level-pro",
-      "connector": "xlr3-m"
-     },
-     {
-      "from": "desk",
-      "to": "spk-r",
-      "signal": "line-level-pro",
-      "connector": "xlr3-m"
-     },
-     {
-      "from": "distro",
-      "to": "desk",
-      "signal": "mains-power"
-     },
-     {
-      "from": "distro",
-      "to": "spk-l",
-      "signal": "mains-power",
-      "connector": "iec-c13"
-     },
-     {
-      "from": "distro",
-      "to": "spk-r",
-      "signal": "mains-power",
-      "connector": "iec-c13"
-     }
-    ]
-   },
-   "procedure_ids": [
-    "spl-monitoring-setup-decree-2017-1244",
-    "power-distro-safety-check",
-    "audio-system-power-sequencing"
-   ],
-   "rule_ids": [
-    "spl-exposure-limit",
-    "mains-earth-lifted"
-   ],
-   "difficulty": 3,
-   "estimated_time_min": 60,
-   "bts_mapping": [
+  ],
+  "not_found_log": [
     {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    },
-    {
-     "epreuve": "E52",
-     "bloc": "BC03",
-     "note": "Obligations juridiques (décret 2017-1244, Code du travail) — jugement, non vérifié sur le référentiel",
-     "verified": false
+      "what": "Connecteurs secteur et haut-parleur exacts des L-Acoustics LA12X / K2",
+      "searched": "Non vérifiés dans cette tâche ; connecteurs omis sur ces arêtes."
     }
-   ],
-   "sources": [
-    {
-     "url": "https://www.grand-est.ars.sante.fr/media/58409/download",
-     "publisher": "ARS Grand Est (Synthèse des obligations R1336-1 CSP)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
-     "publisher": "ARS Île-de-France",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://www.prosoundweb.com/tech-tip-of-the-day-proper-pa-power-sequencing/",
-     "publisher": "ProSoundWeb (tip from Sweetwater, 2010)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "trade-press",
-     "covers": [
-      "procedure_ids"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  },
-  {
-   "id": "festival-power-and-safety-check",
-   "name_fr": "Contrôle électrique et sécurité d'une scène de festival en plein air",
-   "name_en": "Outdoor festival power and safety check",
-   "domain": "safety",
-   "brief": "Sur une grande scène de festival, avant les balances : vérifie avec l'électricien habilité la distribution (coupure d'urgence, terre, différentiels, répartition des phases), protège les câbles de la pluie et des passages, contrôle l'accroche du line array (sécurité secondaire, zone dégagée, plan vent) puis mets le système sous tension dans l'ordre. Prépare aussi la surveillance des niveaux pour le public et la protection auditive de l'équipe.",
-   "room_id": "festival-open-air-large",
-   "required_gear": [
-    {
-     "equipment_id": "digico-sd12",
-     "qty": 1,
-     "role": "console façade"
-    },
-    {
-     "equipment_id": "l-acoustics-k2",
-     "qty": 12,
-     "role": "line array accroché"
-    },
-    {
-     "equipment_id": "l-acoustics-ks28",
-     "qty": 6,
-     "role": "subwoofers au sol"
-    },
-    {
-     "equipment_id": "l-acoustics-la12x",
-     "qty": 4,
-     "role": "contrôleurs amplifiés"
-    },
-    {
-     "equipment_id": "nti-audio-xl3",
-     "qty": 1,
-     "role": "sonomètre de surveillance"
-    }
-   ],
-   "signal_flow": {
-    "nodes": [
-     {
-      "id": "desk",
-      "equipment_id": "digico-sd12",
-      "label": "Console façade"
-     },
-     {
-      "id": "amp",
-      "equipment_id": "l-acoustics-la12x",
-      "label": "Contrôleurs amplifiés"
-     },
-     {
-      "id": "array",
-      "equipment_id": "l-acoustics-k2",
-      "label": "Line array accroché (avec sécurité secondaire)"
-     },
-     {
-      "id": "subs",
-      "equipment_id": "l-acoustics-ks28",
-      "label": "Subwoofers"
-     },
-     {
-      "id": "meter",
-      "equipment_id": "nti-audio-xl3",
-      "label": "Sonomètre régie"
-     },
-     {
-      "id": "distro",
-      "equipment_id": null,
-      "label": "Coffret de distribution triphasé (géré par l'électricien habilité)"
-     }
-    ],
-    "edges": [
-     {
-      "from": "desk",
-      "to": "amp",
-      "signal": "line-level-pro"
-     },
-     {
-      "from": "amp",
-      "to": "array",
-      "signal": "speaker-level"
-     },
-     {
-      "from": "amp",
-      "to": "subs",
-      "signal": "speaker-level"
-     },
-     {
-      "from": "distro",
-      "to": "amp",
-      "signal": "mains-power"
-     },
-     {
-      "from": "distro",
-      "to": "desk",
-      "signal": "mains-power"
-     }
-    ]
-   },
-   "procedure_ids": [
-    "power-distro-safety-check",
-    "flying-small-pa-safely",
-    "audio-system-power-sequencing",
-    "spl-monitoring-setup-decree-2017-1244",
-    "crew-hearing-protection-plan"
-   ],
-   "rule_ids": [
-    "mains-earth-lifted",
-    "rigging-without-safety",
-    "spl-exposure-limit"
-   ],
-   "difficulty": 4,
-   "estimated_time_min": 120,
-   "bts_mapping": [
-    {
-     "epreuve": "E4",
-     "bloc": "BC02",
-     "note": "Mise en œuvre sûre lors de l'installation (BC02 installation/maintenance d'après RNCP37196) — jugement, non vérifié sur le référentiel",
-     "verified": false
-    }
-   ],
-   "sources": [
-    {
-     "url": "https://www.inrs.fr/dam/inrs/CataloguePapier/ED/TI-ED-6344.pdf",
-     "publisher": "INRS (ED 6344, Électricité : 10 règles élémentaires de sécurité, 2019)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://www.inrs.fr/risques/electriques/habilitation-electrique.html",
-     "publisher": "INRS",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "regulator",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/accessories/dbaudio-rigging-manual-v-series-1.12-en.pdf",
-     "publisher": "d&b audiotechnik (V-Series Rigging manual 1.12 en)",
-     "accessed": "2026-10-22",
-     "confidence": "verified-primary",
-     "kind": "manufacturer",
-     "covers": [
-      "brief"
-     ]
-    },
-    {
-     "url": "https://www.iledefrance.ars.sante.fr/les-lieux-diffusant-des-sons-amplifies-ldsa",
-     "publisher": "ARS Île-de-France",
-     "accessed": "2026-10-22",
-     "confidence": "verified-secondary",
-     "kind": "regulator",
-     "covers": [
-      "brief"
-     ]
-    }
-   ],
-   "review": "needs-oscar-review"
-  }
- ],
- "not_found_log": [
-  {
-   "what": "Connecteurs secteur et haut-parleur exacts des L-Acoustics LA12X / K2",
-   "searched": "Non vérifiés dans cette tâche ; connecteurs omis sur ces arêtes."
-  }
- ]
+  ]
 }
