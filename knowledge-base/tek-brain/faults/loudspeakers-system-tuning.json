@@ -1,0 +1,422 @@
+{
+  "entity": "fault",
+  "domain": "loudspeakers-system-tuning",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "no-sound-from-subwoofer",
+      "name_fr": "Pas de son dans le subwoofer",
+      "name_en": "No sound from subwoofer",
+      "domain": "loudspeakers-system-tuning",
+      "symptom": "Les tops fonctionnent, mais un ou plusieurs subs restent muets alors que tout semble branché.",
+      "contexts": [
+        "live",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Sub câblé sur la paire 2± (ex. d&b V-SUB) alors que la sortie ou le câble ne délivre que 1±",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Canal d'ampli en mode ou preset incorrect (preset top sur un sub, voie mutée)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Ampli en protection (charge trop basse, surchauffe)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Câble NL4 défectueux ou à 2 conducteurs seulement",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Lire sur le manuel du sub quelle paire speakON il utilise (V-SUB : 2+/2−)",
+        "Vérifier sur l'ampli que le canal du sub est actif, avec le bon preset, et que sa sortie porte la paire attendue",
+        "Tester le câble avec un testeur ou en le remplaçant",
+        "Regarder les voyants de l'ampli : signal, écrêtage, protection"
+      ],
+      "fixes": [
+        "Raccorder le sub sur une sortie qui délivre 2± (ou suivre le câblage du constructeur)",
+        "Charger le preset sub correct",
+        "Remplacer le câble par un NL4 4 conducteurs"
+      ],
+      "rule_ids": [
+        "speakon-pin-mismatch-sub",
+        "amp-load-impedance-too-low"
+      ],
+      "concept_ids": [
+        "speakon-pinout",
+        "passive-active-loudspeaker"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v-sub",
+        "db-audiotechnik-v8",
+        "db-audiotechnik-d80"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "checks"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
+          "publisher": "QSC, RMX Series 2RU User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "comb-filtering-two-sources",
+      "name_fr": "Filtrage en peigne entre deux sources",
+      "name_en": "Comb filtering between two sources",
+      "domain": "loudspeakers-system-tuning",
+      "symptom": "Son creux, « phasé » ou métallique qui change quand on se déplace de quelques dizaines de centimètres, dans la zone où deux enceintes se recouvrent.",
+      "contexts": [
+        "live",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Deux enceintes identiques couvrent la même zone avec un léger décalage temporel (empilement en point source)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Rappel (délai, front-fill) mal retardé ou trop fort par rapport au système principal",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Réflexion forte et proche (mur, plafond) qui rejoue le direct",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Couper une des deux sources : si le son redevient clair, c'est le recouvrement",
+        "Mesurer le décalage entre les deux arrivées (réponse impulsionnelle) ; le premier creux est à 1/(2·Δt)",
+        "Vérifier le retard et le niveau du rappel dans sa zone"
+      ],
+      "fixes": [
+        "Réduire le recouvrement : orienter ou séparer angulairement les enceintes (la coloration diminue nettement dès 10° de séparation)",
+        "Retarder correctement le rappel et baisser son niveau",
+        "Ne pas empiler deux points sources pour gagner du niveau ; passer à une enceinte plus puissante ou à un line array"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "comb-filtering",
+        "speaker-delay-alignment",
+        "point-source"
+      ],
+      "equipment_ids": [
+        "qsc-k12-2"
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
+          "publisher": "L-Acoustics (Moulin, Corteel), AES 152nd Convention 2022",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.sengpielaudio.com/calculator-combfilter.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "checks"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "thin-low-end-sub-out-of-polarity",
+      "name_fr": "Grave maigre : sub en opposition avec les tops",
+      "name_en": "Thin low end from out-of-polarity sub",
+      "domain": "loudspeakers-system-tuning",
+      "symptom": "Le grave manque de corps autour de 60 à 100 Hz alors que subs et tops sonnent bien séparément.",
+      "contexts": [
+        "live",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Polarité des subs inversée par rapport aux tops (câble ou réglage processeur)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Retard sub/top proche d'une demi-période au croisement",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Point d'écoute éloigné du point de référence de l'alignement",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Écouter et mesurer subs seuls, tops seuls, puis ensemble : la somme doit être plus forte que chaque partie",
+        "Mesurer la phase des deux sous-systèmes au croisement (fonction de transfert)",
+        "Essayer l'inversion de polarité des subs et comparer"
+      ],
+      "fixes": [
+        "Corriger la polarité puis réajuster le retard jusqu'à superposer les phases au croisement",
+        "Refaire l'alignement au bon point de référence"
+      ],
+      "rule_ids": [
+        "sub-top-polarity-misalignment"
+      ],
+      "concept_ids": [
+        "subwoofer-alignment",
+        "loudspeaker-polarity",
+        "crossover"
+      ],
+      "equipment_ids": [
+        "rational-acoustics-smaart-suite-v9"
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf",
+          "publisher": "L-Acoustics (Mouterde, Moulin, Epain, Corteel), AES 2024",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Subwoofer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "checks"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "amplifier-in-protect",
+      "name_fr": "Ampli en protection",
+      "name_en": "Amplifier in protect mode",
+      "domain": "loudspeakers-system-tuning",
+      "symptom": "L'ampli coupe le son quelques secondes ou en continu ; voyants d'écrêtage allumés fixes, ventilateur à fond ou disjoncteur déclenché.",
+      "contexts": [
+        "live",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Surchauffe : ventilation insuffisante, charge basse et écrêtage fréquent",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Charge trop basse (trop d'enceintes en parallèle, moins de 4 Ω en ponté)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Sortie en court-circuit (brin de câble, isolant abîmé)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Panne interne si l'ampli coupe de façon répétée",
+          "likelihood": "low"
+        }
+      ],
+      "checks": [
+        "Lire l'indication des voyants selon le manuel (QSC RMX : voyants CLIP fixes = protection ; CLIP qui clignote dès qu'il y a du signal = sortie possiblement en court-circuit)",
+        "Toucher le châssis et écouter le ventilateur ; vérifier l'espace de ventilation dans le rack",
+        "Recalculer la charge par canal ; vérifier le mode (stéréo, ponté)",
+        "Inspecter les câbles haut-parleur"
+      ],
+      "fixes": [
+        "Laisser refroidir et améliorer la ventilation",
+        "Réduire le nombre d'enceintes par canal ou repasser en stéréo",
+        "Remplacer le câble en défaut",
+        "Baisser le niveau pour supprimer l'écrêtage",
+        "Faire réparer l'ampli s'il coupe sans cause externe"
+      ],
+      "rule_ids": [
+        "amp-load-impedance-too-low",
+        "bridge-mode-load-too-low"
+      ],
+      "concept_ids": [
+        "speaker-impedance-load",
+        "bridge-mode-amplifier",
+        "amplifier-power-rating"
+      ],
+      "equipment_ids": [
+        "qsc-rmx-850",
+        "qsc-rmx-1450",
+        "crown-xls-2502"
+      ],
+      "sources": [
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
+          "publisher": "QSC, RMX Series 2RU User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "symptom",
+            "probable_causes",
+            "checks",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "publisher": "Crown (HARMAN), XLS DriveCore 2 Series Operation Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "checks"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "uneven-coverage",
+      "name_fr": "Couverture inégale",
+      "name_en": "Uneven coverage",
+      "domain": "loudspeakers-system-tuning",
+      "symptom": "Premiers rangs agressés, fond de salle faible ou sourd, côtés pauvres en aigus.",
+      "contexts": [
+        "live",
+        "installation"
+      ],
+      "probable_causes": [
+        {
+          "cause": "Source ponctuelle utilisée pour un public trop profond (−6 dB par doublement de distance)",
+          "likelihood": "high"
+        },
+        {
+          "cause": "Angles de line array ou inclinaison mal choisis (calcul non fait dans le logiciel du constructeur)",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Pas de compensation de l'absorption de l'air (HFC) pour les zones lointaines",
+          "likelihood": "medium"
+        },
+        {
+          "cause": "Angle horizontal de l'enceinte trop étroit ou trop large pour la salle",
+          "likelihood": "medium"
+        }
+      ],
+      "checks": [
+        "Marcher la salle au sonomètre et noter les écarts de niveau",
+        "Comparer avec la prédiction (ArrayCalc, Soundvision, MAPP)",
+        "Vérifier les angles réellement montés et l'inclinaison de la ligne"
+      ],
+      "fixes": [
+        "Ajouter des rappels retardés ou des front-fills",
+        "Recalculer les angles de couplage et le site",
+        "Activer HFC selon la distance (HFC1 > 30 m, HFC2 > 60 m)",
+        "Choisir une enceinte d'angle adapté (ex. GEO M10 80° ou 120° avec flasques)"
+      ],
+      "rule_ids": [],
+      "concept_ids": [
+        "coverage-angle",
+        "line-array",
+        "point-source",
+        "splay-angle",
+        "array-frequency-compensation",
+        "prediction-software"
+      ],
+      "equipment_ids": [
+        "db-audiotechnik-v8",
+        "nexo-geo-m10",
+        "db-audiotechnik-arraycalc",
+        "nti-audio-xl2"
+      ],
+      "sources": [
+        {
+          "url": "https://www.sengpielaudio.com/calculator-distance.htm",
+          "publisher": "sengpielaudio (E. Sengpiel)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "probable_causes"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "probable_causes",
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "fixes"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/global/en/arraycalc/",
+          "publisher": "d&b audiotechnik, ArrayCalc",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "checks"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}
