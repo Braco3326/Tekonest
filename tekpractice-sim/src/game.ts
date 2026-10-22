@@ -44,7 +44,11 @@ import { loadRigs, Shelf, saveRig } from './ui/shelf'
 import { SeenTips, tipFor, type CoachFile } from './ui/coach'
 import type { ToastAction } from './ui/hud'
 import coachJson from '../content/coach/tips.json'
-import { motionEnabled } from './design/tokens'
+import { motionEnabled, setMotionOverride } from './design/tokens'
+import { ExploreController, type BaseView, type ExploreUi } from './scene/ExploreController'
+import { ViewDirector } from './scene/ViewDirector'
+import { roomWalls, type Box } from './explore/collision'
+import { loadSettings, type ExploreSettings } from './ui/exploreSettings'
 import { askCoach, createAiCoach } from './ai'
 import { buildGrounding } from './ai/grounding'
 
@@ -65,6 +69,8 @@ declare global {
       hints: () => boolean
       /** Asset load status per instance (e2e: count glb vs placeholder). */
       assets: () => { instanceId: string; deviceId: string; status: 'glb' | 'placeholder' }[]
+      /** Explore view state (ADR-0010): base view, eye position, look angles, FOV, pointer lock, panels. */
+      explore?: () => ReturnType<ExploreController['snapshot']> & { panels: number; placing: boolean }
     }
   }
 }
@@ -365,7 +371,11 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       portPoints.push({ ref: { instance: instanceId, port: portId }, x: p.x, y: p.y, z: p.z })
     }
     // Re-anchor + redraw once (if) the glb replaces this placeholder.
-    void inst.modelReady.then((ok) => ok && resyncInstance(inst))
+    void inst.modelReady.then((ok) => {
+      invalidateObstacles()
+      if (ok) resyncInstance(inst)
+    })
+    invalidateObstacles()
     return true
   }
   const spawnDevice = (deviceId: string): void => {
@@ -388,6 +398,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     for (const inst of instances) inst.dispose()
     instances.length = 0
     portPoints.length = 0
+    invalidateObstacles()
     spawnCount = rig.instances.length
     let allOk = true
     rig.instances.forEach((s, i) => {
@@ -458,12 +469,91 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   // Replaces the drag flow entirely — the camera rig captures the env preset
   // pose as "Ensemble" and never touches the graph (spec §5).
   const rig = new CameraRig(camera)
-  const focusPatch = new FocusPatch(scene, camera, rig, cables, instances, portPoints, {
+
+  // Explore view (ADR-0010): walk the room, inventory, remappable controls.
+  // Sandbox starts walking; levels/exam keep orbit unless the learner (or
+  // ?view=) asks — their layouts and e2e are framed for the orbit camera.
+  let settings: ExploreSettings = loadSettings(window.localStorage)
+  const applyMotionPref = (): void =>
+    setMotionOverride(settings.reducedMotion === 'system' ? null : settings.reducedMotion === 'off')
+  applyMotionPref()
+  const viewParam = new URLSearchParams(location.search).get('view')
+  const initialView: BaseView =
+    viewParam === 'explore' || viewParam === 'orbit' ? viewParam : sandboxMode ? 'explore' : settings.levelView
+
+  const crosshair = document.createElement('div')
+  crosshair.id = 'explore-crosshair'
+  crosshair.hidden = true
+  crosshair.setAttribute('aria-hidden', 'true')
+  document.getElementById('hud')!.appendChild(crosshair)
+
+  // Collision world: four walls at the env floor edges + one box per device
+  // body (cached; re-derived when the stage changes).
+  const walls = roomWalls(floorW, floorD, 4)
+  let deviceBoxes: Box[] | null = null
+  const invalidateObstacles = (): void => {
+    deviceBoxes = null
+  }
+  const obstacles = (): readonly Box[] => {
+    if (!deviceBoxes) {
+      deviceBoxes = []
+      for (const inst of instances) {
+        let min: Vector3 | null = null
+        let max: Vector3 | null = null
+        for (const m of inst.root.getChildMeshes(false)) {
+          if (m.metadata?.isDeviceBody !== true || !m.isEnabled()) continue
+          m.computeWorldMatrix(true)
+          const bb = m.getBoundingInfo().boundingBox
+          min = min ? Vector3.Minimize(min, bb.minimumWorld) : bb.minimumWorld.clone()
+          max = max ? Vector3.Maximize(max, bb.maximumWorld) : bb.maximumWorld.clone()
+        }
+        if (min && max) deviceBoxes.push({ minX: min.x, maxX: max.x, minZ: min.z, maxZ: max.z, height: max.y })
+      }
+    }
+    return [...walls, ...deviceBoxes]
+  }
+  for (const inst of instances) void inst.modelReady.then(invalidateObstacles)
+
+  // The walker starts where the preset camera stands, on the floor, looking
+  // at the preset target (inside the walls).
+  const presetEye = camera.position.clone()
+  const clampIn = (v: number, half: number): number => Math.max(-half + 0.6, Math.min(half - 0.6, v))
+  const startX = clampIn(presetEye.x, floorW / 2)
+  const startZ = clampIn(presetEye.z, floorD / 2)
+  const explore = new ExploreController({
+    scene,
+    canvas,
+    arc: camera,
+    rig,
+    settings: () => settings,
+    obstacles,
+    start: { x: startX, z: startZ, yaw: Math.atan2(camera.target.x - startX, camera.target.z - startZ) },
+    initialView,
+    crosshair,
+  })
+  const director = new ViewDirector(scene, camera, rig, explore)
+  const focusPatch = new FocusPatch(scene, camera, director, cables, instances, portPoints, {
     canConnect: (a, b) => graph.canConnect(a, b),
     dispatch,
     hints,
     onCandidate: markerScale,
+    clickFocuses: () => explore.clickFocuses(),
+    inputEnabled: () => explore.pointerFree(),
   })
+  // Panels arrive with the inventory/help/pause UI; until then nothing is open.
+  const exploreUi: ExploreUi = {
+    panelCount: () => 0,
+    closeTopPanel: () => undefined,
+    toggleInventory: () => undefined,
+    toggleHelp: () => undefined,
+    openPause: () => undefined,
+    placing: () => false,
+    cancelPlacement: () => undefined,
+    rotatePlacement: () => undefined,
+    confirmPlacement: () => undefined,
+    pickUp: () => undefined,
+  }
+  explore.connect(focusPatch, exploreUi)
 
   const exam = examMode
     ? new ExamController(document.getElementById('hud')!, level.examSeconds ?? 300, {
@@ -561,6 +651,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     hints,
     assets: () =>
       instances.map((i) => ({ instanceId: i.instanceId, deviceId: i.deviceId, status: i.assetStatus })),
+    explore: () => ({ ...explore.snapshot(), panels: exploreUi.panelCount(), placing: exploreUi.placing() }),
   }
 
   babylon.runRenderLoop(() => scene.render())

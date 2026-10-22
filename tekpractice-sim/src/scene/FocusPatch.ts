@@ -21,7 +21,7 @@ import type { ConnectResult, PortRef } from '../engine/types'
 import type { Intent } from '../ui/intents'
 import type { DeviceInstance } from './DeviceSpawner'
 import type { PortPoint } from './snap'
-import { CameraRig } from './CameraRig'
+import type { CameraDirector } from './CameraRig'
 import type { CableRenderer } from './CableRenderer'
 import {
   initialState,
@@ -44,6 +44,16 @@ export interface FocusPatchDeps {
   hints(): boolean
   /** Hover candidate while a cable is held (drives the marker breathing). */
   onCandidate?(ref: PortRef | null): void
+  /**
+   * Explore view (ADR-0010 Décision 3): a single click on a device focuses it
+   * directly (you walked up to it). Orbit view keeps click = select.
+   */
+  clickFocuses?(): boolean
+  /**
+   * False while pointer lock / a panel / placement owns the mouse: Babylon taps
+   * then carry stale or foreign coordinates and must not reach the machine.
+   */
+  inputEnabled?(): boolean
 }
 
 const same = (a: PortRef, b: PortRef) => a.instance === b.instance && a.port === b.port
@@ -58,13 +68,14 @@ export class FocusPatch {
   constructor(
     private scene: Scene,
     private camera: ArcRotateCamera,
-    private rig: CameraRig,
+    private rig: CameraDirector,
     private cables: CableRenderer,
     private instances: readonly DeviceInstance[],
     private ports: readonly PortPoint[],
     private deps: FocusPatchDeps,
   ) {
     scene.onPointerObservable.add((info) => {
+      if (this.deps.inputEnabled && !this.deps.inputEnabled()) return
       switch (info.type) {
         case PointerEventTypes.POINTERTAP:
           this.onTap((info.event as PointerEvent).button)
@@ -116,10 +127,21 @@ export class FocusPatch {
     }
     const device = this.deviceUnderPointer()
     if (device) {
-      this.apply(reduce(this.state, { type: 'DEVICE_CLICK', instanceId: device }))
+      const type = this.deps.clickFocuses?.() ? 'DEVICE_DOUBLE_CLICK' : 'DEVICE_CLICK'
+      this.apply(reduce(this.state, { type, instanceId: device }))
       return
     }
     this.apply(reduce(this.state, { type: 'EMPTY_CLICK' }))
+  }
+
+  /** Focus a device programmatically (Explore: F key, crosshair click). Same path as a double-click. */
+  focusInstance(instanceId: string): void {
+    this.apply(reduce(this.state, { type: 'DEVICE_DOUBLE_CLICK', instanceId }))
+  }
+
+  /** Instance whose body is under the given screen point (Explore aim / pick-up). */
+  deviceAt(x: number, y: number): string | null {
+    return this.deviceUnder(x, y)
   }
 
   private pickupAt = 0
@@ -367,13 +389,13 @@ export class FocusPatch {
    * exactly like the dense-port disambiguation.
    */
   private deviceUnderPointer(): string | null {
-    const hits = this.scene.multiPick(
-      this.scene.pointerX,
-      this.scene.pointerY,
-      (m: AbstractMesh) => m.metadata?.isDeviceBody === true,
-    )
+    return this.deviceUnder(this.scene.pointerX, this.scene.pointerY)
+  }
+
+  private deviceUnder(px: number, py: number): string | null {
+    const hits = this.scene.multiPick(px, py, (m: AbstractMesh) => m.metadata?.isDeviceBody === true)
     if (!hits?.length) return null
-    const ray = this.scene.createPickingRay(this.scene.pointerX, this.scene.pointerY, null, this.camera)
+    const ray = this.scene.createPickingRay(px, py, null, this.scene.activeCamera)
     let best: string | null = null
     let bestD = Infinity
     for (const instanceId of new Set(

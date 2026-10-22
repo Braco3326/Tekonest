@@ -132,6 +132,11 @@ describe('collision', () => {
     expect(r.z).toBeLessThan(2)
   })
 
+  it('lets you walk out of a box you already overlap (device dropped on you)', () => {
+    const r = resolveMove({ x: 1.5, z: 0 }, { x: 1.5, z: -1 }, 0.3, [crate])
+    expect(r.z).toBeCloseTo(-1)
+  })
+
   it('builds four walls around a room so you cannot leave it', () => {
     const walls = roomWalls(10, 8, 3)
     expect(walls).toHaveLength(4)
