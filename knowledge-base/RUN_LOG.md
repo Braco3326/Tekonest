@@ -46,5 +46,6 @@ Times are local (Europe/Paris). Run started 2026-10-22.
 
 ## Phase 8: delivery
 - README, OPEN_QUESTIONS, QUALITY_REPORT written. One row added to the root README (diff checked: +1 line).
+- **Push not done.** `git push -u origin research/sound-equipment-database` failed with "could not read Username for 'https://github.com': terminal prompts disabled". The PC has no stored GitHub credentials, and the run deliberately did not open an interactive login. All commits are local on the branch in `C:\Users\brro\dev\Tekonest`. Oscar needs to push once (see the morning summary).
 
 - Process note: the brainstorming skill normally asks for approval before implementation. Oscar asked for an unattended run, so the decisions are recorded in `docs/DESIGN.md` and the open points in `OPEN_QUESTIONS.md`.
