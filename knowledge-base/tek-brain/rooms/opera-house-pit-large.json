@@ -6,17 +6,49 @@
   "size": "large",
   "description": "Grande salle d'opéra à l'italienne : cage de scène de 24 m mur à mur et 21 m sous gril, cadre de scène d'environ 10,85 × 9,45 m, rideau de fer, et fosse d'orchestre en deux parties (une partie mobile motorisée côté salle, une partie fixe qui s'enfonce sous la scène), pour un orchestre de 60 à 70 musiciens. Le modèle reprend la fiche technique de l'Opéra de Lille (1 136 places en configuration opéra, parterre et quatre galeries). Le travail du son : captation (couple principal au-dessus de la fosse, appoints en fosse, micros de plateau et HF pour les chanteurs), diffusion de complément discrète depuis les loges d'avant-scène, effets et annonces. Convention des ouvertures : « front » = mur du lointain (−z), « rear » = fond de salle (+z).",
   "dimensions_m": {
-    "length": { "min": 40, "typical": 44, "max": 50 },
-    "width": { "min": 22, "typical": 24, "max": 26 },
-    "height": { "min": 18, "typical": 21, "max": 23 }
+    "length": {
+      "min": 40,
+      "typical": 44,
+      "max": 50
+    },
+    "width": {
+      "min": 22,
+      "typical": 24,
+      "max": 26
+    },
+    "height": {
+      "min": 18,
+      "typical": 21,
+      "max": 23
+    }
   },
   "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
   "surfaces": [
-    { "surface": "stage-floor", "material": "plancher en pin teint noir mat, zone centrale démontable 15,40 × 9,90 m en trappes de 1,10 × 1,10 m", "finish_note": "Pente 0 %, charge 750 kg/m² (fiche Lille)." },
-    { "surface": "floor", "material": "parterre avec fauteuils rembourrés en velours", "finish_note": "Scène à 1,05 m au-dessus du parterre (Lille)." },
-    { "surface": "walls", "material": "quatre galeries en fer à cheval, loges, staff et dorures", "finish_note": "Les galeries profondes et le public assis constituent l'essentiel de l'absorption et de la diffusion." },
-    { "surface": "ceiling", "material": "plafond peint avec lustre ; au-dessus du plateau gril à 21 m et 70 porteuses", "finish_note": "La cage de scène est un grand volume couplé à la salle par le cadre." },
-    { "surface": "front-wall", "material": "mur du lointain nu, fonds et frises en velours noir", "finish_note": "Un rideau acoustique de 16 × 9,45 m existe dans le parc de draperie de Lille." }
+    {
+      "surface": "stage-floor",
+      "material": "plancher en pin teint noir mat, zone centrale démontable 15,40 × 9,90 m en trappes de 1,10 × 1,10 m",
+      "finish_note": "Pente 0 %, charge 750 kg/m² (fiche Lille)."
+    },
+    {
+      "surface": "floor",
+      "material": "parterre avec fauteuils rembourrés en velours",
+      "finish_note": "Scène à 1,05 m au-dessus du parterre (Lille)."
+    },
+    {
+      "surface": "walls",
+      "material": "quatre galeries en fer à cheval, loges, staff et dorures",
+      "finish_note": "Les galeries profondes et le public assis constituent l'essentiel de l'absorption et de la diffusion."
+    },
+    {
+      "surface": "ceiling",
+      "material": "plafond peint avec lustre ; au-dessus du plateau gril à 21 m et 70 porteuses",
+      "finish_note": "La cage de scène est un grand volume couplé à la salle par le cadre."
+    },
+    {
+      "surface": "front-wall",
+      "material": "mur du lointain nu, fonds et frises en velours noir",
+      "finish_note": "Un rideau acoustique de 16 × 9,45 m existe dans le parc de draperie de Lille."
+    }
   ],
   "rt60_s": {
     "min": 1.6,
@@ -25,53 +57,338 @@
     "source_url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/"
   },
   "zones": [
-    { "id": "scene", "kind": "stage", "rect_m": [0, -13.15, 24, 17.7], "floor_y_m": 1.05 },
-    { "id": "avant-scene", "kind": "stage", "rect_m": [0, -3.6, 10.85, 1.4], "floor_y_m": 1.05 },
-    { "id": "fosse-mobile", "kind": "pit", "rect_m": [0, -1.2, 12.8, 3.4], "floor_y_m": -2.0 },
-    { "id": "fosse-sous-scene", "kind": "pit", "rect_m": [0, -5.025, 12, 4.25], "floor_y_m": -2.0 },
-    { "id": "parterre", "kind": "audience", "rect_m": [0, 9.0, 20, 17], "floor_y_m": 0 },
-    { "id": "regie", "kind": "foh", "rect_m": [0, 19.5, 6, 4], "floor_y_m": 0 }
+    {
+      "id": "scene",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        -13.15,
+        24,
+        17.7
+      ],
+      "floor_y_m": 1.05
+    },
+    {
+      "id": "avant-scene",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        -3.6,
+        10.85,
+        1.4
+      ],
+      "floor_y_m": 1.05
+    },
+    {
+      "id": "fosse-mobile",
+      "kind": "pit",
+      "rect_m": [
+        0,
+        -1.2,
+        12.8,
+        3.4
+      ],
+      "floor_y_m": -2.0
+    },
+    {
+      "id": "fosse-sous-scene",
+      "kind": "pit",
+      "rect_m": [
+        0,
+        -5.025,
+        12,
+        4.25
+      ],
+      "floor_y_m": -2.0
+    },
+    {
+      "id": "parterre",
+      "kind": "audience",
+      "rect_m": [
+        0,
+        9.0,
+        20,
+        17
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "regie",
+      "kind": "foh",
+      "rect_m": [
+        0,
+        19.5,
+        6,
+        4
+      ],
+      "floor_y_m": 0
+    }
   ],
   "gear_positions": [
-    { "equipment_id": "yamaha-rivage-pm10", "zone": "regie", "position_m": [0, 0.9, 19.0], "rotation_deg": 180, "note": "Console de salle de grande capacité ; Lille liste une SSL Live300 avec stagebox MADI et une Yamaha DM2000 (non présentes dans le catalogue)." },
-    { "equipment_id": "digico-sd-rack", "zone": "scene", "position_m": [-11.0, 1.05, -6.0], "rotation_deg": 90, "note": "Rack d'entrées au plateau, côté coulisse (Lille : SSL ML32.32 au plateau)." },
-    { "equipment_id": "schoeps-mstc-74", "zone": "fosse-mobile", "position_m": [0, 4.5, 0.4], "rotation_deg": 180, "note": "Couple ORTF principal suspendu au-dessus du bord de fosse, vers la scène (Lille : Schoeps MSTC 64)." },
-    { "equipment_id": "neumann-km-184", "zone": "fosse-mobile", "position_m": [-4.0, -0.9, -1.0], "rotation_deg": 180, "note": "Appoint premiers violons ; la repisse en fosse est forte." },
-    { "equipment_id": "neumann-km-184", "zone": "fosse-mobile", "position_m": [3.5, -0.9, -1.2], "rotation_deg": 180, "note": "Appoint bois." },
-    { "equipment_id": "sennheiser-md-421-ii", "zone": "fosse-sous-scene", "position_m": [3.0, -0.8, -5.5], "rotation_deg": 180, "note": "Appoint cuivres dans la partie de fosse sous la scène (Lille : 2 MD421)." },
-    { "equipment_id": "dpa-4060", "zone": "scene", "position_m": [0.5, 2.7, -8.0], "rotation_deg": 0, "note": "Micro miniature caché dans la perruque d'un chanteur, sur émetteur de poche." },
-    { "equipment_id": "sennheiser-em-6000", "zone": "regie", "position_m": [2.2, 1.0, 20.5], "rotation_deg": 180, "note": "Récepteurs HF numériques pour les micros des chanteurs." },
-    { "equipment_id": "dpa-4088", "zone": "scene", "position_m": [-2.0, 2.7, -10.0], "rotation_deg": 0, "note": "Serre-tête pour un rôle parlé ou un effet (Lille : 1 DPA 4088)." },
-    { "equipment_id": "l-acoustics-x8", "zone": "avant-scene", "position_m": [-5.0, 4.0, -3.4], "rotation_deg": 0, "note": "Enceinte de complément en loge d'avant-scène (Lille : 4 L-Acoustics X8 et diffusion fixe en loge d'avant-scène)." },
-    { "equipment_id": "l-acoustics-x8", "zone": "avant-scene", "position_m": [5.0, 4.0, -3.4], "rotation_deg": 0, "note": "Complément côté droit." },
-    { "equipment_id": "l-acoustics-la4x", "zone": "scene", "position_m": [11.0, 1.05, -6.0], "rotation_deg": 270, "note": "Contrôleur amplifié (Lille : 4 LA4X)." },
-    { "equipment_id": "radial-j48", "zone": "fosse-mobile", "position_m": [5.5, -1.9, 0.0], "rotation_deg": 0, "note": "DI active pour un clavier ou un célesta électronique en fosse (Lille : 2 Radial J48)." }
+    {
+      "equipment_id": "yamaha-rivage-pm10",
+      "zone": "regie",
+      "position_m": [
+        0,
+        0.9,
+        19.0
+      ],
+      "rotation_deg": 180,
+      "note": "Console de salle de grande capacité ; Lille liste une SSL Live300 avec stagebox MADI et une Yamaha DM2000 (non présentes dans le catalogue)."
+    },
+    {
+      "equipment_id": "digico-sd-rack",
+      "zone": "scene",
+      "position_m": [
+        -11.0,
+        1.05,
+        -6.0
+      ],
+      "rotation_deg": 90,
+      "note": "Rack d'entrées au plateau, côté coulisse (Lille : SSL ML32.32 au plateau)."
+    },
+    {
+      "equipment_id": "schoeps-mstc-74",
+      "zone": "fosse-mobile",
+      "position_m": [
+        0,
+        4.5,
+        0.4
+      ],
+      "rotation_deg": 180,
+      "note": "Couple ORTF principal suspendu au-dessus du bord de fosse, vers la scène (Lille : Schoeps MSTC 64)."
+    },
+    {
+      "equipment_id": "neumann-km-184",
+      "zone": "fosse-mobile",
+      "position_m": [
+        -4.0,
+        -0.9,
+        -1.0
+      ],
+      "rotation_deg": 180,
+      "note": "Appoint premiers violons ; la repisse en fosse est forte."
+    },
+    {
+      "equipment_id": "neumann-km-184",
+      "zone": "fosse-mobile",
+      "position_m": [
+        3.5,
+        -0.9,
+        -1.2
+      ],
+      "rotation_deg": 180,
+      "note": "Appoint bois."
+    },
+    {
+      "equipment_id": "sennheiser-md-421-ii",
+      "zone": "fosse-sous-scene",
+      "position_m": [
+        3.0,
+        -0.8,
+        -5.5
+      ],
+      "rotation_deg": 180,
+      "note": "Appoint cuivres dans la partie de fosse sous la scène (Lille : 2 MD421)."
+    },
+    {
+      "equipment_id": "dpa-4060",
+      "zone": "scene",
+      "position_m": [
+        0.5,
+        2.7,
+        -8.0
+      ],
+      "rotation_deg": 0,
+      "note": "Micro miniature caché dans la perruque d'un chanteur, sur émetteur de poche."
+    },
+    {
+      "equipment_id": "sennheiser-em-6000",
+      "zone": "regie",
+      "position_m": [
+        2.2,
+        1.0,
+        20.5
+      ],
+      "rotation_deg": 180,
+      "note": "Récepteurs HF numériques pour les micros des chanteurs."
+    },
+    {
+      "equipment_id": "dpa-4088",
+      "zone": "scene",
+      "position_m": [
+        -2.0,
+        2.7,
+        -10.0
+      ],
+      "rotation_deg": 0,
+      "note": "Serre-tête pour un rôle parlé ou un effet (Lille : 1 DPA 4088)."
+    },
+    {
+      "equipment_id": "l-acoustics-x8",
+      "zone": "avant-scene",
+      "position_m": [
+        -5.0,
+        4.0,
+        -3.4
+      ],
+      "rotation_deg": 0,
+      "note": "Enceinte de complément en loge d'avant-scène (Lille : 4 L-Acoustics X8 et diffusion fixe en loge d'avant-scène)."
+    },
+    {
+      "equipment_id": "l-acoustics-x8",
+      "zone": "avant-scene",
+      "position_m": [
+        5.0,
+        4.0,
+        -3.4
+      ],
+      "rotation_deg": 0,
+      "note": "Complément côté droit."
+    },
+    {
+      "equipment_id": "l-acoustics-la4x",
+      "zone": "scene",
+      "position_m": [
+        11.0,
+        1.05,
+        -6.0
+      ],
+      "rotation_deg": 270,
+      "note": "Contrôleur amplifié (Lille : 4 LA4X)."
+    },
+    {
+      "equipment_id": "radial-j48",
+      "zone": "fosse-mobile",
+      "position_m": [
+        5.5,
+        -1.9,
+        0.0
+      ],
+      "rotation_deg": 0,
+      "note": "DI active pour un clavier ou un célesta électronique en fosse (Lille : 2 Radial J48)."
+    }
   ],
   "power_points": [
-    { "position_m": [-11.5, 1.5, -12.0], "type": "p17-32a-3ph" },
-    { "position_m": [11.5, 1.5, -12.0], "type": "p17-32a-3ph" },
-    { "position_m": [-6.0, -1.5, -1.0], "type": "schuko-16a" },
-    { "position_m": [0, 0.5, 21.2], "type": "schuko-16a" }
+    {
+      "position_m": [
+        -11.5,
+        1.5,
+        -12.0
+      ],
+      "type": "p17-32a-3ph"
+    },
+    {
+      "position_m": [
+        11.5,
+        1.5,
+        -12.0
+      ],
+      "type": "p17-32a-3ph"
+    },
+    {
+      "position_m": [
+        -6.0,
+        -1.5,
+        -1.0
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        0,
+        0.5,
+        21.2
+      ],
+      "type": "schuko-16a"
+    }
   ],
   "patch_points": [
-    { "position_m": [-11.0, 1.5, -6.0], "type": "stage-box-32ch", "note": "Lille : boîtier 32 entrées / 32 sorties analogiques au plateau, un second au nodal, liaison MADI vers la régie." },
-    { "position_m": [-6.2, -1.2, -1.5], "type": "wall-patch-xlr-12", "note": "Boîte de lignes en fosse (implantation typique, non sourcée)." },
-    { "position_m": [0, 0.5, 21.0], "type": "madi-coax", "note": "Arrivée MADI en régie." }
+    {
+      "position_m": [
+        -11.0,
+        1.5,
+        -6.0
+      ],
+      "type": "stage-box-32ch",
+      "note": "Lille : boîtier 32 entrées / 32 sorties analogiques au plateau, un second au nodal, liaison MADI vers la régie."
+    },
+    {
+      "position_m": [
+        -6.2,
+        -1.2,
+        -1.5
+      ],
+      "type": "wall-patch-xlr-12",
+      "note": "Boîte de lignes en fosse (implantation typique, non sourcée)."
+    },
+    {
+      "position_m": [
+        0,
+        0.5,
+        21.0
+      ],
+      "type": "madi-coax",
+      "note": "Arrivée MADI en régie."
+    }
   ],
   "openings": [
-    { "wall": "left", "kind": "door", "offset_m": -12.0, "width_m": 2.55, "height_m": 3.9 },
-    { "wall": "left", "kind": "door", "offset_m": 4.0, "width_m": 1.6, "height_m": 2.3 },
-    { "wall": "right", "kind": "door", "offset_m": 4.0, "width_m": 1.6, "height_m": 2.3 },
-    { "wall": "rear", "kind": "door", "offset_m": 0, "width_m": 2.0, "height_m": 2.4 }
+    {
+      "wall": "left",
+      "kind": "door",
+      "offset_m": -12.0,
+      "width_m": 2.55,
+      "height_m": 3.9
+    },
+    {
+      "wall": "left",
+      "kind": "door",
+      "offset_m": 4.0,
+      "width_m": 1.6,
+      "height_m": 2.3
+    },
+    {
+      "wall": "right",
+      "kind": "door",
+      "offset_m": 4.0,
+      "width_m": 1.6,
+      "height_m": 2.3
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 0,
+      "width_m": 2.0,
+      "height_m": 2.4
+    }
   ],
-  "lighting": { "mood": "salle rouge et or sous lustre, plateau en lumière de théâtre, fosse en lampes de pupitre 24 V", "color_temp_k": 3200 },
+  "lighting": {
+    "mood": "salle rouge et or sous lustre, plateau en lumière de théâtre, fosse en lampes de pupitre 24 V",
+    "color_temp_k": 3200
+  },
   "procedural": {
     "wall_color": "#8a1c22",
     "floor_color": "#151515",
     "ceiling_color": "#e6d6b0",
-    "prop_hints": ["quatre galeries en fer à cheval", "lustre", "rideau de fer", "pupitres éclairés et chaises de contrebasse en fosse", "estrade de chef au bord de fosse", "porteuses motorisées", "loges d'avant-scène"]
+    "prop_hints": [
+      "quatre galeries en fer à cheval",
+      "lustre",
+      "rideau de fer",
+      "pupitres éclairés et chaises de contrebasse en fosse",
+      "estrade de chef au bord de fosse",
+      "porteuses motorisées",
+      "loges d'avant-scène"
+    ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-hand-truck",
+    "ph-wooden-ladder-02",
+    "pp-apelab-crowd",
+    "pp-quaternius-man",
+    "pp-quaternius-woman-casual",
+    "pp-simple-truss",
+    "pp-theatre-seat"
+  ],
   "sources": [
     {
       "url": "https://www.opera-lille.fr/wp-content/uploads/2022/05/media_fichier_fr_odl_ft_22fev2021.pdf",
@@ -79,7 +396,18 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["dimensions_m.width.typical (24 m mur à mur)", "dimensions_m.height.typical (21 m sous gril)", "zones.scene (17,70 m du rideau de fer au lointain)", "zones.avant-scene (cadre 10,85 m, 1,40 m)", "zones.fosse-mobile (12,00–12,80 × 3,40 m)", "zones.fosse-sous-scene (12,00 × 4,25 m)", "zones.*.floor_y_m (scène 1,05 m au-dessus du parterre)", "surfaces", "gear_positions (choix du matériel : MSTC 64, KM, MD421, DPA 4088, X8, LA4X, J48)", "openings[0] (monte-charge 2,55 × 3,90 m)"]
+      "covers": [
+        "dimensions_m.width.typical (24 m mur à mur)",
+        "dimensions_m.height.typical (21 m sous gril)",
+        "zones.scene (17,70 m du rideau de fer au lointain)",
+        "zones.avant-scene (cadre 10,85 m, 1,40 m)",
+        "zones.fosse-mobile (12,00–12,80 × 3,40 m)",
+        "zones.fosse-sous-scene (12,00 × 4,25 m)",
+        "zones.*.floor_y_m (scène 1,05 m au-dessus du parterre)",
+        "surfaces",
+        "gear_positions (choix du matériel : MSTC 64, KM, MD421, DPA 4088, X8, LA4X, J48)",
+        "openings[0] (monte-charge 2,55 × 3,90 m)"
+      ]
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -87,7 +415,9 @@
       "accessed": "2026-10-22",
       "confidence": "verified-secondary",
       "kind": "manufacturer",
-      "covers": ["rt60_s"]
+      "covers": [
+        "rt60_s"
+      ]
     },
     {
       "url": "https://en.wikipedia.org/wiki/Orchestra_pit",
@@ -95,14 +425,32 @@
       "accessed": "2026-10-22",
       "confidence": "verified-secondary",
       "kind": "other",
-      "covers": ["description (fosse en partie sous la scène, plancher réglable, repisse)"]
+      "covers": [
+        "description (fosse en partie sous la scène, plancher réglable, repisse)"
+      ]
     }
   ],
   "review": "needs-oscar-review",
   "not_found_log": [
-    { "what": "dimensions_m.length (44 m) : la profondeur de la salle (parterre + galeries) n'est pas publiée ; on additionne la scène sourcée (19,10 m de l'avant-scène au lointain) et la fosse mobile (3,40 m) à une salle estimée à ~22 m. Min/max de longueur, largeur et hauteur sont des estimations (une seule fiche ouverte).", "searched": "Fiche technique Opéra de Lille ; la fiche de l'Opéra de Saint-Étienne (Grand Théâtre Massenet) répondait 404", "review": "needs-oscar-review" },
-    { "what": "Profondeur du plancher de fosse (floor_y_m −2,0 m) : non donnée par la fiche de Lille ; estimation.", "searched": "Fiche Opéra de Lille (section fosse : largeurs et profondeurs dans l'axe seulement)", "review": "needs-oscar-review" },
-    { "what": "RT60 mesuré de l'Opéra de Lille : non trouvé ; valeur recommandée DPA utilisée.", "searched": "Fiche technique, page DPA", "review": "needs-oscar-review" },
-    { "what": "Position de la régie son (fond de parterre) et des prises : implantation estimée, la fiche ne la précise pas dans le texte extrait.", "searched": "Fiche Opéra de Lille", "review": "needs-oscar-review" }
+    {
+      "what": "dimensions_m.length (44 m) : la profondeur de la salle (parterre + galeries) n'est pas publiée ; on additionne la scène sourcée (19,10 m de l'avant-scène au lointain) et la fosse mobile (3,40 m) à une salle estimée à ~22 m. Min/max de longueur, largeur et hauteur sont des estimations (une seule fiche ouverte).",
+      "searched": "Fiche technique Opéra de Lille ; la fiche de l'Opéra de Saint-Étienne (Grand Théâtre Massenet) répondait 404",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Profondeur du plancher de fosse (floor_y_m −2,0 m) : non donnée par la fiche de Lille ; estimation.",
+      "searched": "Fiche Opéra de Lille (section fosse : largeurs et profondeurs dans l'axe seulement)",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "RT60 mesuré de l'Opéra de Lille : non trouvé ; valeur recommandée DPA utilisée.",
+      "searched": "Fiche technique, page DPA",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Position de la régie son (fond de parterre) et des prises : implantation estimée, la fiche ne la précise pas dans le texte extrait.",
+      "searched": "Fiche Opéra de Lille",
+      "review": "needs-oscar-review"
+    }
   ]
 }

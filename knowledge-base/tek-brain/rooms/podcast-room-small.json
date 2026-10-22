@@ -231,7 +231,15 @@
       "enseigne lumineuse « on air »"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "objv-hifi-sound-system",
+    "objv-home-stereo-speakers",
+    "objv-usb-podcast-mic-generic",
+    "ph-mid-century-lounge-chair",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "pp-kenney-lounge-sofa"
+  ],
   "sources": [
     {
       "url": "https://giggster.com/listing/full-equipped-podcast-studio",

@@ -6,17 +6,49 @@
   "size": "medium",
   "description": "Grande salle de SMAC ou salle municipale polyvalente pour concerts amplifiés : fosse debout (parfois gradins rétractables), balcon, scène fixe de 12 à 14 m d'ouverture et 9 m de profondeur, ponts motorisés, régie façade dans le public et régie retours en coulisse. Le modèle s'appuie sur deux fiches techniques réelles : la Grande Salle de Paloma (SMAC de Nîmes, 1 100 au parterre + 250 au balcon) et l'Embarcadère (Aubervilliers, 1 069 debout ou 441 assis). Les deux salles ont un line array installé (Adamson à Paloma, L-Acoustics Kara à l'Embarcadère), des retours coaxiaux, une console numérique avec stagebox réseau et un limiteur de niveau sonore : c'est le cas d'école du concert de tournée avec accueil technique. Convention des ouvertures : le mur « front » est le mur derrière la scène (vers −z), « rear » le fond de salle (+z). Jardin = côté gauche vu du public (−x), cour = côté droit (+x).",
   "dimensions_m": {
-    "length": { "min": 25, "typical": 32, "max": 40 },
-    "width": { "min": 15, "typical": 18.1, "max": 22 },
-    "height": { "min": 6.22, "typical": 9, "max": 9.7 }
+    "length": {
+      "min": 25,
+      "typical": 32,
+      "max": 40
+    },
+    "width": {
+      "min": 15,
+      "typical": 18.1,
+      "max": 22
+    },
+    "height": {
+      "min": 6.22,
+      "typical": 9,
+      "max": 9.7
+    }
   },
   "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
   "surfaces": [
-    { "surface": "floor", "material": "dalle béton (fosse debout), gradins rétractables possibles", "finish_note": "Matériau estimé ; l'Embarcadère décrit des gradins amovibles (configurations 441 assis à 1 069 debout)." },
-    { "surface": "stage-floor", "material": "plancher de scène noir, tapis de danse noir", "finish_note": "Hauteur de scène 0,80 m (Embarcadère) à 1,30 m (Paloma). Embarcadère : 9 lés de tapis de danse noir mat." },
-    { "surface": "walls", "material": "murs noirs traités acoustiquement, pendrillons et frises en velours noir côté scène", "finish_note": "Pendrillons velours 1,40 × 6,40 m et frises (Embarcadère) ; 6 pendrillons et 3 frises fixes (Paloma). Traitement des murs de salle estimé." },
-    { "surface": "ceiling", "material": "gril / passerelles techniques et ponts motorisés", "finish_note": "Hauteur sous ponts 6,22 m (Embarcadère, 4 ponts de 13 m) à 9 m (Paloma, 5 ponts), hauteur 9,70 m (Paloma)." },
-    { "surface": "front-wall", "material": "rideau de fond de scène sur patience, cyclorama", "finish_note": "Cyclo 12 × 7 m (Paloma), 6,5 × 12 m (Embarcadère) ; écran LED 6 × 3,5 m à l'Embarcadère." }
+    {
+      "surface": "floor",
+      "material": "dalle béton (fosse debout), gradins rétractables possibles",
+      "finish_note": "Matériau estimé ; l'Embarcadère décrit des gradins amovibles (configurations 441 assis à 1 069 debout)."
+    },
+    {
+      "surface": "stage-floor",
+      "material": "plancher de scène noir, tapis de danse noir",
+      "finish_note": "Hauteur de scène 0,80 m (Embarcadère) à 1,30 m (Paloma). Embarcadère : 9 lés de tapis de danse noir mat."
+    },
+    {
+      "surface": "walls",
+      "material": "murs noirs traités acoustiquement, pendrillons et frises en velours noir côté scène",
+      "finish_note": "Pendrillons velours 1,40 × 6,40 m et frises (Embarcadère) ; 6 pendrillons et 3 frises fixes (Paloma). Traitement des murs de salle estimé."
+    },
+    {
+      "surface": "ceiling",
+      "material": "gril / passerelles techniques et ponts motorisés",
+      "finish_note": "Hauteur sous ponts 6,22 m (Embarcadère, 4 ponts de 13 m) à 9 m (Paloma, 5 ponts), hauteur 9,70 m (Paloma)."
+    },
+    {
+      "surface": "front-wall",
+      "material": "rideau de fond de scène sur patience, cyclorama",
+      "finish_note": "Cyclo 12 × 7 m (Paloma), 6,5 × 12 m (Embarcadère) ; écran LED 6 × 3,5 m à l'Embarcadère."
+    }
   ],
   "rt60_s": {
     "min": 0.6,
@@ -25,53 +57,350 @@
     "source_url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/"
   },
   "zones": [
-    { "id": "scene", "kind": "stage", "rect_m": [0, -11.5, 14, 9], "floor_y_m": 1.3 },
-    { "id": "regie-retours", "kind": "monitor-world", "rect_m": [8, -12, 2, 4], "floor_y_m": 1.3 },
-    { "id": "coulisse-jardin", "kind": "backstage", "rect_m": [-8, -12, 2, 6], "floor_y_m": 1.3 },
-    { "id": "fosse", "kind": "audience", "rect_m": [0, 3, 18.1, 20], "floor_y_m": 0 },
-    { "id": "regie-facade", "kind": "foh", "rect_m": [0, 8, 4, 3], "floor_y_m": 0 },
-    { "id": "balcon", "kind": "audience", "rect_m": [0, 14.5, 18.1, 3], "floor_y_m": 3.5 }
+    {
+      "id": "scene",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        -11.5,
+        14,
+        9
+      ],
+      "floor_y_m": 1.3
+    },
+    {
+      "id": "regie-retours",
+      "kind": "monitor-world",
+      "rect_m": [
+        8,
+        -12,
+        2,
+        4
+      ],
+      "floor_y_m": 1.3
+    },
+    {
+      "id": "coulisse-jardin",
+      "kind": "backstage",
+      "rect_m": [
+        -8,
+        -12,
+        2,
+        6
+      ],
+      "floor_y_m": 1.3
+    },
+    {
+      "id": "fosse",
+      "kind": "audience",
+      "rect_m": [
+        0,
+        3,
+        18.1,
+        20
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "regie-facade",
+      "kind": "foh",
+      "rect_m": [
+        0,
+        8,
+        4,
+        3
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "balcon",
+      "kind": "audience",
+      "rect_m": [
+        0,
+        14.5,
+        18.1,
+        3
+      ],
+      "floor_y_m": 3.5
+    }
   ],
   "gear_positions": [
-    { "equipment_id": "yamaha-dm7", "zone": "regie-facade", "position_m": [0, 0.9, 8], "rotation_deg": 180, "note": "Console façade (Paloma : Yamaha DM7 ; Embarcadère : Midas Pro 2 / HD96, absentes du catalogue)." },
-    { "equipment_id": "yamaha-dm7", "zone": "regie-retours", "position_m": [8, 2.2, -12], "rotation_deg": 270, "note": "Console retours en coulisse cour (Paloma : DM7 aussi en retours)." },
-    { "equipment_id": "yamaha-rio3224-d2", "zone": "regie-retours", "position_m": [8.4, 1.3, -13.6], "rotation_deg": 270, "note": "Stage rack Dante (Paloma : Rio3224-D2 + Rio1608-D2 ; Embarcadère : Midas DL251 au lointain cour)." },
-    { "equipment_id": "l-acoustics-kara-ii", "zone": "scene", "position_m": [-6.5, 6, -7.2], "rotation_deg": 0, "note": "Ligne gauche accrochée (Embarcadère : 18 Kara WST au total, génération précédente du Kara II)." },
-    { "equipment_id": "l-acoustics-kara-ii", "zone": "scene", "position_m": [6.5, 6, -7.2], "rotation_deg": 0, "note": "Ligne droite." },
-    { "equipment_id": "l-acoustics-ks28", "zone": "scene", "position_m": [-4, 0, -7.4], "rotation_deg": 0, "note": "Subs au sol sous le nez de scène (Embarcadère : 6 SB18 ; Paloma : 4 MDC3 + subs accrochés)." },
-    { "equipment_id": "l-acoustics-ks28", "zone": "scene", "position_m": [4, 0, -7.4], "rotation_deg": 0, "note": "Sub droit." },
-    { "equipment_id": "l-acoustics-x15-hiq", "zone": "scene", "position_m": [0, 1.3, -9], "rotation_deg": 180, "note": "Wedge chant (Embarcadère : 4 X15 ; Paloma : 16 Adamson M15)." },
-    { "equipment_id": "l-acoustics-la12x", "zone": "coulisse-jardin", "position_m": [-8, 1.3, -14], "rotation_deg": 90, "note": "Amplification façade (Embarcadère : LA8 + LA4 ; Paloma : Lab Gruppen PLM)." },
-    { "equipment_id": "shure-axient-digital-ad4d", "zone": "regie-retours", "position_m": [8.4, 2.2, -10.6], "rotation_deg": 270, "note": "Récepteurs HF numériques (Paloma : 2 AD4D ; Embarcadère : AD4Q)." },
-    { "equipment_id": "shure-sm58", "zone": "scene", "position_m": [0, 2.9, -9.8], "rotation_deg": 0, "note": "Micro chant sur pied." },
-    { "equipment_id": "shure-beta-91a", "zone": "scene", "position_m": [0.5, 1.4, -13], "rotation_deg": 0, "note": "Micro de surface dans la grosse caisse (présent dans les deux fiches)." },
-    { "equipment_id": "sennheiser-e-906", "zone": "scene", "position_m": [3, 1.6, -13.5], "rotation_deg": 180, "note": "Ampli guitare (Paloma : 6 e906)." }
+    {
+      "equipment_id": "yamaha-dm7",
+      "zone": "regie-facade",
+      "position_m": [
+        0,
+        0.9,
+        8
+      ],
+      "rotation_deg": 180,
+      "note": "Console façade (Paloma : Yamaha DM7 ; Embarcadère : Midas Pro 2 / HD96, absentes du catalogue)."
+    },
+    {
+      "equipment_id": "yamaha-dm7",
+      "zone": "regie-retours",
+      "position_m": [
+        8,
+        2.2,
+        -12
+      ],
+      "rotation_deg": 270,
+      "note": "Console retours en coulisse cour (Paloma : DM7 aussi en retours)."
+    },
+    {
+      "equipment_id": "yamaha-rio3224-d2",
+      "zone": "regie-retours",
+      "position_m": [
+        8.4,
+        1.3,
+        -13.6
+      ],
+      "rotation_deg": 270,
+      "note": "Stage rack Dante (Paloma : Rio3224-D2 + Rio1608-D2 ; Embarcadère : Midas DL251 au lointain cour)."
+    },
+    {
+      "equipment_id": "l-acoustics-kara-ii",
+      "zone": "scene",
+      "position_m": [
+        -6.5,
+        6,
+        -7.2
+      ],
+      "rotation_deg": 0,
+      "note": "Ligne gauche accrochée (Embarcadère : 18 Kara WST au total, génération précédente du Kara II)."
+    },
+    {
+      "equipment_id": "l-acoustics-kara-ii",
+      "zone": "scene",
+      "position_m": [
+        6.5,
+        6,
+        -7.2
+      ],
+      "rotation_deg": 0,
+      "note": "Ligne droite."
+    },
+    {
+      "equipment_id": "l-acoustics-ks28",
+      "zone": "scene",
+      "position_m": [
+        -4,
+        0,
+        -7.4
+      ],
+      "rotation_deg": 0,
+      "note": "Subs au sol sous le nez de scène (Embarcadère : 6 SB18 ; Paloma : 4 MDC3 + subs accrochés)."
+    },
+    {
+      "equipment_id": "l-acoustics-ks28",
+      "zone": "scene",
+      "position_m": [
+        4,
+        0,
+        -7.4
+      ],
+      "rotation_deg": 0,
+      "note": "Sub droit."
+    },
+    {
+      "equipment_id": "l-acoustics-x15-hiq",
+      "zone": "scene",
+      "position_m": [
+        0,
+        1.3,
+        -9
+      ],
+      "rotation_deg": 180,
+      "note": "Wedge chant (Embarcadère : 4 X15 ; Paloma : 16 Adamson M15)."
+    },
+    {
+      "equipment_id": "l-acoustics-la12x",
+      "zone": "coulisse-jardin",
+      "position_m": [
+        -8,
+        1.3,
+        -14
+      ],
+      "rotation_deg": 90,
+      "note": "Amplification façade (Embarcadère : LA8 + LA4 ; Paloma : Lab Gruppen PLM)."
+    },
+    {
+      "equipment_id": "shure-axient-digital-ad4d",
+      "zone": "regie-retours",
+      "position_m": [
+        8.4,
+        2.2,
+        -10.6
+      ],
+      "rotation_deg": 270,
+      "note": "Récepteurs HF numériques (Paloma : 2 AD4D ; Embarcadère : AD4Q)."
+    },
+    {
+      "equipment_id": "shure-sm58",
+      "zone": "scene",
+      "position_m": [
+        0,
+        2.9,
+        -9.8
+      ],
+      "rotation_deg": 0,
+      "note": "Micro chant sur pied."
+    },
+    {
+      "equipment_id": "shure-beta-91a",
+      "zone": "scene",
+      "position_m": [
+        0.5,
+        1.4,
+        -13
+      ],
+      "rotation_deg": 0,
+      "note": "Micro de surface dans la grosse caisse (présent dans les deux fiches)."
+    },
+    {
+      "equipment_id": "sennheiser-e-906",
+      "zone": "scene",
+      "position_m": [
+        3,
+        1.6,
+        -13.5
+      ],
+      "rotation_deg": 180,
+      "note": "Ampli guitare (Paloma : 6 e906)."
+    }
   ],
   "power_points": [
-    { "position_m": [-8.6, 1.3, -15.2], "type": "p17-125a-3ph" },
-    { "position_m": [-8.6, 1.3, -14.4], "type": "p17-63a-3ph" },
-    { "position_m": [8.6, 1.3, -15.2], "type": "p17-63a-3ph" },
-    { "position_m": [0, 0, 9.3], "type": "schuko-16a" }
+    {
+      "position_m": [
+        -8.6,
+        1.3,
+        -15.2
+      ],
+      "type": "p17-125a-3ph"
+    },
+    {
+      "position_m": [
+        -8.6,
+        1.3,
+        -14.4
+      ],
+      "type": "p17-63a-3ph"
+    },
+    {
+      "position_m": [
+        8.6,
+        1.3,
+        -15.2
+      ],
+      "type": "p17-63a-3ph"
+    },
+    {
+      "position_m": [
+        0,
+        0,
+        9.3
+      ],
+      "type": "schuko-16a"
+    }
   ],
   "patch_points": [
-    { "position_m": [-8.6, 1.3, -10], "type": "stage-patch-60xlr-harting", "note": "Paloma : patch de scène passif 60 XLR avec splitter, sorties Harting P20 vers façade, retours et enregistrement." },
-    { "position_m": [8.4, 1.3, -13.6], "type": "stage-box-32ch-dante", "note": "Rio3224-D2 en coulisse cour." },
-    { "position_m": [0, 0, 9.3], "type": "dante-wall-port", "note": "Arrivée réseau / multipaire en régie façade." }
+    {
+      "position_m": [
+        -8.6,
+        1.3,
+        -10
+      ],
+      "type": "stage-patch-60xlr-harting",
+      "note": "Paloma : patch de scène passif 60 XLR avec splitter, sorties Harting P20 vers façade, retours et enregistrement."
+    },
+    {
+      "position_m": [
+        8.4,
+        1.3,
+        -13.6
+      ],
+      "type": "stage-box-32ch-dante",
+      "note": "Rio3224-D2 en coulisse cour."
+    },
+    {
+      "position_m": [
+        0,
+        0,
+        9.3
+      ],
+      "type": "dante-wall-port",
+      "note": "Arrivée réseau / multipaire en régie façade."
+    }
   ],
   "openings": [
-    { "wall": "front", "kind": "door", "offset_m": -6, "width_m": 2.35, "height_m": 2.4, "note": "Porte d'accès plateau (Paloma : 2,35 × 2,40 m ; quai de déchargement 2,48 × 2,50 m)." },
-    { "wall": "rear", "kind": "door", "offset_m": -5, "width_m": 1.8, "height_m": 2.2, "note": "Entrée public gauche (estimée)." },
-    { "wall": "rear", "kind": "door", "offset_m": 5, "width_m": 1.8, "height_m": 2.2, "note": "Entrée public droite (estimée)." },
-    { "wall": "left", "kind": "door", "offset_m": 4, "width_m": 1.4, "height_m": 2.2, "note": "Issue de secours (estimée)." }
+    {
+      "wall": "front",
+      "kind": "door",
+      "offset_m": -6,
+      "width_m": 2.35,
+      "height_m": 2.4,
+      "note": "Porte d'accès plateau (Paloma : 2,35 × 2,40 m ; quai de déchargement 2,48 × 2,50 m)."
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": -5,
+      "width_m": 1.8,
+      "height_m": 2.2,
+      "note": "Entrée public gauche (estimée)."
+    },
+    {
+      "wall": "rear",
+      "kind": "door",
+      "offset_m": 5,
+      "width_m": 1.8,
+      "height_m": 2.2,
+      "note": "Entrée public droite (estimée)."
+    },
+    {
+      "wall": "left",
+      "kind": "door",
+      "offset_m": 4,
+      "width_m": 1.4,
+      "height_m": 2.2,
+      "note": "Issue de secours (estimée)."
+    }
   ],
-  "lighting": { "mood": "salle noire, plateau en lyres LED et traditionnels, face chaude, fumée de diffusion", "color_temp_k": 3200 },
+  "lighting": {
+    "mood": "salle noire, plateau en lyres LED et traditionnels, face chaude, fumée de diffusion",
+    "color_temp_k": 3200
+  },
   "procedural": {
     "wall_color": "#121212",
     "floor_color": "#3a3a3a",
     "ceiling_color": "#0c0c0c",
-    "prop_hints": ["ponts alu carrés motorisés au-dessus de la scène", "crash barrières devant la scène", "balcon avec garde-corps", "pendrillons et frises velours noir", "cyclorama ou écran LED au lointain", "praticables à pieds réglables", "racks amplis en coulisse", "passage de câbles au sol vers la régie"]
+    "prop_hints": [
+      "ponts alu carrés motorisés au-dessus de la scène",
+      "crash barrières devant la scène",
+      "balcon avec garde-corps",
+      "pendrillons et frises velours noir",
+      "cyclorama ou écran LED au lointain",
+      "praticables à pieds réglables",
+      "racks amplis en coulisse",
+      "passage de câbles au sol vers la régie"
+    ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "objv-stage-monitor-wedge-saandy",
+    "ph-hand-truck",
+    "ph-plastic-crate-02",
+    "ph-wooden-ladder-02",
+    "pp-acoustic-guitar",
+    "pp-apelab-crowd",
+    "pp-grand-piano",
+    "pp-quaternius-man",
+    "pp-quaternius-pallet",
+    "pp-quaternius-woman-casual",
+    "pp-simple-truss",
+    "pp-stage-keyboard",
+    "pp-theatre-seat",
+    "pp-zsky-drum-set"
+  ],
   "sources": [
     {
       "url": "https://paloma-nimes.fr/wp-content/uploads/2026/04/fiche-tech-gs-.pdf",
@@ -79,7 +408,17 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["dimensions_m.width.typical (18,10 m mur à mur)", "dimensions_m.height.typical (9 m sous ponts)", "dimensions_m.height.max (9,70 m)", "zones.scene (ouverture 12,20 m, hauteur 1,30 m)", "zones.balcon (250 places)", "power_points (jardin 63 A + 125 A tri, cour 63 A tri)", "patch_points.stage-patch-60xlr-harting", "openings[0]", "gear_positions (choix du matériel : DM7 façade et retours, Rio3224-D2, AD4D, Beta 91A, SM58, e906)"]
+      "covers": [
+        "dimensions_m.width.typical (18,10 m mur à mur)",
+        "dimensions_m.height.typical (9 m sous ponts)",
+        "dimensions_m.height.max (9,70 m)",
+        "zones.scene (ouverture 12,20 m, hauteur 1,30 m)",
+        "zones.balcon (250 places)",
+        "power_points (jardin 63 A + 125 A tri, cour 63 A tri)",
+        "patch_points.stage-patch-60xlr-harting",
+        "openings[0]",
+        "gear_positions (choix du matériel : DM7 façade et retours, Rio3224-D2, AD4D, Beta 91A, SM58, e906)"
+      ]
     },
     {
       "url": "https://lembarcadere.aubervilliers.fr/wp-content/uploads/2026/10/FT-auber-maj-02102026.pdf",
@@ -87,7 +426,13 @@
       "accessed": "2026-10-22",
       "confidence": "verified-primary",
       "kind": "other",
-      "covers": ["dimensions_m.height.min (6,22 m sous ponts)", "zones.scene (ouverture 13,60 m, profondeur 9 m, hauteur 0,80 m)", "surfaces", "description (441 assis à 1 069 debout, limite 105 dB)", "gear_positions (choix du matériel : Kara, SB18, X15, LA8/LA4, AD4Q, DL251)"]
+      "covers": [
+        "dimensions_m.height.min (6,22 m sous ponts)",
+        "zones.scene (ouverture 13,60 m, profondeur 9 m, hauteur 0,80 m)",
+        "surfaces",
+        "description (441 assis à 1 069 debout, limite 105 dB)",
+        "gear_positions (choix du matériel : Kara, SB18, X15, LA8/LA4, AD4Q, DL251)"
+      ]
     },
     {
       "url": "https://www.dpamicrophones.com/mic-university/background-knowledge/10-important-facts-about-acoustics-for-microphone-users/",
@@ -95,14 +440,32 @@
       "accessed": "2026-10-22",
       "confidence": "verified-secondary",
       "kind": "manufacturer",
-      "covers": ["rt60_s"]
+      "covers": [
+        "rt60_s"
+      ]
     }
   ],
   "review": "needs-oscar-review",
   "not_found_log": [
-    { "what": "Longueur de salle (min 25, typique 32, max 40 m) : estimation ; aucune des deux fiches ne donne la profondeur de la salle. Ordre de grandeur déduit de la jauge (≈ 1 100 debout + scène de 9 m).", "searched": "Fiches Paloma Grande Salle, Embarcadère ; pages La Cigale, Trabendo, La Maroquinerie (fiches derrière mot de passe ou absentes)", "review": "needs-oscar-review" },
-    { "what": "Largeur min 15 m et max 22 m : estimations (seule la largeur mur à mur de Paloma, 18,10 m, est publiée).", "searched": "Fiches Paloma, Embarcadère", "review": "needs-oscar-review" },
-    { "what": "Distance régie façade – scène : non publiée par ces deux salles ; régie placée à ~15 m du nez de scène par convention. Hauteur du balcon (3,5 m) estimée.", "searched": "Fiches Paloma, Embarcadère", "review": "needs-oscar-review" },
-    { "what": "RT60 mesuré : non publié ; valeur recommandée DPA utilisée.", "searched": "Fiches des deux salles", "review": "needs-oscar-review" }
+    {
+      "what": "Longueur de salle (min 25, typique 32, max 40 m) : estimation ; aucune des deux fiches ne donne la profondeur de la salle. Ordre de grandeur déduit de la jauge (≈ 1 100 debout + scène de 9 m).",
+      "searched": "Fiches Paloma Grande Salle, Embarcadère ; pages La Cigale, Trabendo, La Maroquinerie (fiches derrière mot de passe ou absentes)",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Largeur min 15 m et max 22 m : estimations (seule la largeur mur à mur de Paloma, 18,10 m, est publiée).",
+      "searched": "Fiches Paloma, Embarcadère",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "Distance régie façade – scène : non publiée par ces deux salles ; régie placée à ~15 m du nez de scène par convention. Hauteur du balcon (3,5 m) estimée.",
+      "searched": "Fiches Paloma, Embarcadère",
+      "review": "needs-oscar-review"
+    },
+    {
+      "what": "RT60 mesuré : non publié ; valeur recommandée DPA utilisée.",
+      "searched": "Fiches des deux salles",
+      "review": "needs-oscar-review"
+    }
   ]
 }

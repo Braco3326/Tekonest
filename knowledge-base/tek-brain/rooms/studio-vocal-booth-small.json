@@ -168,7 +168,12 @@
       "patère casque"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-mid-century-lounge-chair",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "pp-kenney-lounge-sofa"
+  ],
   "sources": [
     {
       "url": "https://whisperroom.com/products/voice-over-basic",

@@ -298,7 +298,16 @@
       "cartels"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "objv-mid-century-microphone",
+    "objv-vintage-microphone-klasy",
+    "ph-modern-coffee-table-01",
+    "si-chester-telegraph-relay",
+    "si-henry-trough-battery",
+    "si-morse-vail-telegraph-key",
+    "si-page-induction-coil",
+    "si-tangent-galvanometer"
+  ],
   "sources": [
     {
       "url": "https://www.genelec.com/museums-and-attractions",

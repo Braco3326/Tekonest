@@ -342,7 +342,16 @@
       "rack 19\" en régie"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-hand-truck",
+    "ph-school-chair-01",
+    "ph-wooden-ladder-02",
+    "pp-apelab-crowd",
+    "pp-quaternius-man",
+    "pp-quaternius-woman-casual",
+    "pp-simple-truss",
+    "pp-theatre-seat"
+  ],
   "sources": [
     {
       "url": "https://en.wikipedia.org/wiki/Lecture_hall",

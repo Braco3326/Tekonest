@@ -277,7 +277,16 @@
       "panneaux acoustiques tissu"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "ph-modern-ceiling-lamp-01",
+    "ph-potted-plant-04",
+    "ph-school-chair-01",
+    "ph-steel-frame-shelves-03",
+    "pp-dry-erase-board",
+    "pp-kenney-desk-chair",
+    "pp-quaternius-man",
+    "pp-quaternius-woman-casual"
+  ],
   "sources": [
     {
       "url": "https://learn.microsoft.com/en-us/microsoftteams/rooms/room-planning-guidance",

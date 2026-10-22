@@ -277,7 +277,19 @@
       "nuage acoustique au plafond"
     ]
   },
-  "licensed_dressing": [],
+  "licensed_dressing": [
+    "objv-home-stereo-speakers",
+    "objv-speaker-cabinet-rusov",
+    "objv-trs-jack-adapter",
+    "ph-mid-century-lounge-chair",
+    "ph-modern-ceiling-lamp-01",
+    "ph-modern-coffee-table-01",
+    "ph-potted-plant-04",
+    "ph-side-table-01",
+    "ph-steel-frame-shelves-03",
+    "pp-kenney-desk-chair",
+    "pp-kenney-lounge-sofa"
+  ],
   "sources": [
     {
       "url": "https://www.production-expert.com/production-expert-1/how-to-set-up-a-mix-room-for-dolby-atmos-music-definitive-guide",
