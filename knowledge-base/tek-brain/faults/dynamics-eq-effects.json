@@ -1,0 +1,515 @@
+{
+ "entity": "fault",
+ "domain": "dynamics-eq-effects",
+ "generated": "2026-10-22",
+ "items": [
+  {
+   "id": "compressor-pumping-breathing",
+   "name_fr": "Pompage et respiration d'un compresseur",
+   "name_en": "Compressor pumping and breathing",
+   "domain": "dynamics-eq-effects",
+   "symptom": "Le niveau du mix ou du bruit de fond monte et descend au rythme des notes fortes (grosse caisse, attaques) ; le souffle « respire » entre les phrases.",
+   "contexts": [
+    "studio",
+    "live",
+    "broadcast"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Rétablissement trop rapide : le gain remonte vite et fait ressortir le bruit de fond",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Réduction de gain trop importante (seuil trop bas, ratio élevé) sur un bus ou un mix",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Détecteur dominé par le grave (grosse caisse, basse) qui fait baisser tout le mix",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Limiteur réglé avec attaque courte et rétablissement long",
+     "likelihood": "low"
+    }
+   ],
+   "checks": [
+    "Lire la réduction de gain au vumètre GR pendant le passage concerné",
+    "Allonger le rétablissement et écouter si le pompage disparaît",
+    "Réduire la quantité de réduction (seuil plus haut ou ratio plus faible)",
+    "Activer un filtre passe-haut de side-chain / CONTOUR et comparer"
+   ],
+   "fixes": [
+    "Rétablissement plus lent ou automatique (AUTO, release dépendant du programme)",
+    "Moins de réduction de gain",
+    "Filtre de side-chain pour que le grave ne pilote plus tout le compresseur",
+    "Conserver le pompage seulement s'il est un choix artistique (musiques électroniques)"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "attack-release",
+    "compressor",
+    "sidechain",
+    "threshold-ratio"
+   ],
+   "equipment_ids": [
+    "universal-audio-1176ln",
+    "dbx-166xs",
+    "ssl-the-bus-plus"
+   ],
+   "sources": [
+    {
+     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes"
+     ]
+    },
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "symptom",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.fabfilter.com/help/pro-l/using/advancedsettings",
+     "publisher": "FabFilter — Pro-L 2 help: Advanced settings",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes"
+     ]
+    },
+    {
+     "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+     "publisher": "Solid State Logic — THE BUS+ User Guide 1.1",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "over-compressed-lifeless",
+   "name_fr": "Son sur-compressé, sans vie",
+   "name_en": "Over-compressed, lifeless sound",
+   "domain": "dynamics-eq-effects",
+   "symptom": "Le son est plat, sans impact ; les attaques de la batterie ou des consonnes sont molles ; les passages doux restent écrasés après un passage fort.",
+   "contexts": [
+    "studio",
+    "live",
+    "broadcast"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Attaque trop rapide qui écrase les transitoires",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Réduction de gain excessive ou compression en série sur trop d'étages",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Rétablissement trop lent : la réduction persiste sur le passage doux suivant",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Compression forte appliquée au mix stéréo complet, plus audible que sur les pistes séparées",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Comparer en bypass à niveau égal",
+    "Observer la réduction de gain : revient-elle à 0 entre les phrases ?",
+    "Ralentir l'attaque et écouter le retour des transitoires",
+    "Lister tous les étages de compression de la chaîne"
+   ],
+   "fixes": [
+    "Attaque plus lente pour laisser passer les transitoires",
+    "Moins de réduction, ratio plus faible ou coude doux",
+    "Remplacer une compression forte par une compression parallèle",
+    "Compresser les pistes séparément plutôt que tout le mix (dbx)"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "attack-release",
+    "compressor",
+    "parallel-compression",
+    "knee"
+   ],
+   "equipment_ids": [
+    "universal-audio-1176ln",
+    "dbx-166xs"
+   ],
+   "sources": [
+    {
+     "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+     "publisher": "Universal Audio — 1176LN Classic Limiting Amplifier manual (PDF hébergé par KMR Audio)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes"
+     ]
+    },
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "gate-chattering",
+   "name_fr": "Porte qui bat (chattering)",
+   "name_en": "Gate chattering",
+   "domain": "dynamics-eq-effects",
+   "symptom": "La porte s'ouvre et se ferme très vite sur la fin d'une note ou sur un son grave tenu : crépitement, son haché.",
+   "contexts": [
+    "live",
+    "studio"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Rétablissement (decay) plus court qu'une période de la fondamentale d'un son grave",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Signal qui oscille autour du seuil, sans hystérésis ni hold",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Seuil mal placé ou déclenchement par la repisse d'autres sources",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Observer les voyants de la porte pendant la fin de note",
+    "Allonger le decay/release et écouter",
+    "Augmenter le hold",
+    "Écouter la clé (Key Listen) pour voir ce qui déclenche la porte"
+   ],
+   "fixes": [
+    "Rétablissement plus long qu'une période complète de la fondamentale (dbx)",
+    "Hold plus long, ou hystérésis (seuil de fermeture quelques dB sous le seuil d'ouverture)",
+    "Corriger le seuil ; filtres de clé pour ignorer la repisse",
+    "Range partiel : atténuer au lieu de couper complètement (DS201)"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "noise-gate",
+    "sidechain",
+    "attack-release"
+   ],
+   "equipment_ids": [
+    "drawmer-ds201",
+    "dbx-166xs"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Noise_gate",
+     "publisher": "Wikipedia — Noise gate",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+     "publisher": "Drawmer Electronics — DS201 Dual Noise Gate Operator's Manual (PDF hébergé par Gear4music)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "checks",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "vocal-sibilance",
+   "name_fr": "Sifflantes excessives sur une voix",
+   "name_en": "Excessive vocal sibilance",
+   "domain": "dynamics-eq-effects",
+   "symptom": "Les « s », « ch » et « z » de la voix sont durs et dépassent nettement du reste du mix.",
+   "contexts": [
+    "studio",
+    "live",
+    "broadcast",
+    "post"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Sifflantes naturellement fortes du locuteur ou du chanteur",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Accentuation aiguë ou compression forte qui fait ressortir les consonnes",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Absence de de-esser sur la chaîne voix",
+     "likelihood": "high"
+    }
+   ],
+   "checks": [
+    "Isoler la bande gênante en balayant une accentuation étroite à l'égaliseur",
+    "Écouter avec et sans les traitements aigus et la compression",
+    "Vérifier si un de-esser est présent et s'il se déclenche"
+   ],
+   "fixes": [
+    "De-esser ou compresseur avec égaliseur dans le side-chain accentuant la bande des sifflantes (souvent 4–6 kHz selon dbx), attaque et rétablissement rapides",
+    "Réduire l'accentuation aiguë sur la voix"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "de-esser",
+    "sidechain",
+    "equalizer-parametric"
+   ],
+   "equipment_ids": [
+    "dbx-166xs"
+   ],
+   "sources": [
+    {
+     "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+     "publisher": "dbx Professional Products (Harman) — 166xs User Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "checks"
+     ]
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Dynamic_range_compression",
+     "publisher": "Wikipedia — Dynamic range compression",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "other",
+     "covers": [
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "muddy-low-mids",
+   "name_fr": "Grave et bas-médium confus (son boueux)",
+   "name_en": "Muddy low end and low-mids",
+   "domain": "dynamics-eq-effects",
+   "symptom": "Le mix est épais et confus dans le grave, la basse et la grosse caisse manquent de définition ; les voix proches du micro sonnent « boomy ».",
+   "contexts": [
+    "studio",
+    "live"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Aucun passe-haut sur les tranches qui n'ont pas besoin de grave : grondements et graves inutiles s'additionnent",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Effet de proximité de micros directionnels placés très près",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Résonances « carton » des micros proches de grosse caisse et toms",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Vérifier tranche par tranche si un passe-haut est actif",
+    "Écouter les voix et guitares en proximité : excès de grave ?",
+    "Balayer une accentuation étroite pour repérer la zone qui gonfle, puis la couper"
+   ],
+   "fixes": [
+    "Passe-haut sur toutes les tranches non graves, réglé à l'oreille",
+    "Filtre doux (6 dB/oct, 100–200 Hz) ou plateau grave vers 150 Hz contre l'effet de proximité",
+    "Coupe vers 500–700 Hz sur les micros de grosse caisse et toms trop « carton » (Sound On Sound)"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "high-pass-filter",
+    "proximity-effect",
+    "equalizer-parametric",
+    "shelving-equalizer"
+   ],
+   "equipment_ids": [],
+   "sources": [
+    {
+     "url": "https://www.soundonsound.com/sound-advice/eq-what-do-all-those-knobs-do",
+     "publisher": "Sound On Sound — S. Inglis, « EQ: What Do All Those Knobs Do? » (2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.soundonsound.com/sound-advice/q-will-mics-high-pass-filter-counter-proximity-effect",
+     "publisher": "Sound On Sound — H. Robjohns, « Q. Will a mic's high-pass filter counter the proximity effect? » (2022)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "fixes"
+     ]
+    },
+    {
+     "url": "https://www.soundonsound.com/sound-advice/q-what-are-filters-and-what-do-they-do",
+     "publisher": "Sound On Sound — H. Robjohns, « Q. What are filters and what do they do? » (2009)",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "trade-press",
+     "covers": [
+      "probable_causes"
+     ]
+    }
+   ],
+   "review": "ok"
+  },
+  {
+   "id": "delay-echoes-out-of-time",
+   "name_fr": "Échos du délai hors tempo",
+   "name_en": "Delay echoes out of time",
+   "domain": "dynamics-eq-effects",
+   "symptom": "Les répétitions du délai tombent à côté du temps et brouillent le rythme du morceau.",
+   "contexts": [
+    "live",
+    "studio"
+   ],
+   "probable_causes": [
+    {
+     "cause": "Temps de délai réglé en ms sans rapport avec le tempo",
+     "likelihood": "high"
+    },
+    {
+     "cause": "Tempo non mis à jour (tap tempo non frappé, source de tempo MIDI absente)",
+     "likelihood": "medium"
+    },
+    {
+     "cause": "Mauvaise valeur de note choisie (noire au lieu de croche, triolet)",
+     "likelihood": "medium"
+    }
+   ],
+   "checks": [
+    "Lire le tempo du morceau (BPM) et le temps du délai",
+    "Calculer 60 000 / BPM pour la noire et comparer",
+    "Vérifier la source de tempo (interne ou horloge MIDI) et la valeur de note"
+   ],
+   "fixes": [
+    "Frapper le bouton TAP au moins deux fois sur le temps",
+    "Régler le temps en valeur de note synchronisée au tempo",
+    "Saisir le temps calculé : noire = 60 000 / BPM (500 ms à 120 BPM)"
+   ],
+   "rule_ids": [],
+   "concept_ids": [
+    "delay-effect"
+   ],
+   "equipment_ids": [
+    "lexicon-pcm96"
+   ],
+   "sources": [
+    {
+     "url": "https://lexiconpro.com/en/product_documents/pcm96_manual_5047785-apdf",
+     "publisher": "Lexicon Pro (Harman) — PCM96 Owner's Manual",
+     "accessed": "2026-10-22",
+     "confidence": "verified-primary",
+     "kind": "manufacturer",
+     "covers": [
+      "probable_causes",
+      "fixes"
+     ]
+    },
+    {
+     "url": "http://www.sengpielaudio.com/calculator-bpmtempotime.htm",
+     "publisher": "sengpielaudio (E. Sengpiel) — Tempo BPM to delay time calculator",
+     "accessed": "2026-10-22",
+     "confidence": "verified-secondary",
+     "kind": "university",
+     "covers": [
+      "checks",
+      "fixes"
+     ]
+    }
+   ],
+   "review": "ok"
+  }
+ ],
+ "not_found_log": [
+  {
+   "what": "Plage de fréquences sourcée pour la « boue » des bas-médiums",
+   "searched": "SOS EQ 2022, SOS filters, WebSearch (blogs seulement)"
+  }
+ ]
+}
