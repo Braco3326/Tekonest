@@ -1,0 +1,365 @@
+{
+  "id": "foley-dubbing-stage-medium",
+  "name_fr": "Auditorium de bruitage (foley) et de postsynchronisation",
+  "name_en": "Foley / ADR stage",
+  "family": "post",
+  "size": "medium",
+  "description": "Plateau de bruitage : grand sol de jeu avec fosses (pits) de matières différentes (terre, gravier, béton, bois, eau), écran de projection, micros sur pieds, régie vitrée à l'avant. Sert aussi à la postsynchronisation (ADR). Surface typique : plateau foley de Skywalker Sound (1 260 pieds²) ; maximum : plateau de C5 (1 800 pieds²).",
+  "dimensions_m": {
+    "length": {
+      "min": 8.0,
+      "typical": 11.7,
+      "max": 13.0
+    },
+    "width": {
+      "min": 6.0,
+      "typical": 10.0,
+      "max": 12.86
+    },
+    "height": {
+      "min": 3.5,
+      "typical": 5.0,
+      "max": 7.3
+    }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    {
+      "surface": "stage-floor",
+      "material": "mosaïque de surfaces : parquet, béton, carrelage, moquette, pavés",
+      "finish_note": "Chaque surface donne un pas différent ; transitions pensées entre fosses."
+    },
+    {
+      "surface": "floor",
+      "material": "fosses encastrées : terre (reliée au sol naturel), gravier, sable, bac à eau",
+      "finish_note": "Skywalker : fosse de terre de 7 × 9 pieds directement sur la terre, sans dalle béton."
+    },
+    {
+      "surface": "walls",
+      "material": "absorbants épais, salle assez mate",
+      "finish_note": "Le bruitage doit pouvoir être replacé dans n'importe quelle acoustique au mixage."
+    },
+    {
+      "surface": "ceiling",
+      "material": "plafond haut absorbant",
+      "finish_note": "Volume pour les objets encombrants (portes, véhicules factices)."
+    }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    {
+      "id": "foley-floor",
+      "kind": "stage",
+      "rect_m": [
+        0,
+        1.6,
+        9.6,
+        7.2
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "dirt-pit",
+      "kind": "pit",
+      "rect_m": [
+        -3.2,
+        3.6,
+        2.13,
+        2.74
+      ],
+      "floor_y_m": -0.3
+    },
+    {
+      "id": "gravel-pit",
+      "kind": "pit",
+      "rect_m": [
+        -0.6,
+        3.9,
+        1.5,
+        1.5
+      ],
+      "floor_y_m": -0.2
+    },
+    {
+      "id": "water-tank",
+      "kind": "pit",
+      "rect_m": [
+        2.2,
+        3.9,
+        1.8,
+        1.2
+      ],
+      "floor_y_m": -0.4
+    },
+    {
+      "id": "adr-spot",
+      "kind": "other",
+      "rect_m": [
+        3.3,
+        0.2,
+        2.0,
+        2.0
+      ],
+      "floor_y_m": 0
+    },
+    {
+      "id": "control-room",
+      "kind": "control-room",
+      "rect_m": [
+        0,
+        -4.35,
+        10.0,
+        3.0
+      ],
+      "floor_y_m": 0.3
+    }
+  ],
+  "gear_positions": [
+    {
+      "equipment_id": "sennheiser-mkh-416",
+      "zone": "foley-floor",
+      "position_m": [
+        -1.0,
+        1.4,
+        1.6
+      ],
+      "rotation_deg": 180,
+      "note": "Micro principal du bruitage, à ~1 m de l'action. La source cite le Neumann KMR 81 comme standard Foley/ADR d'Hollywood ; absent du catalogue, le MKH 416 (canon court) le remplace ici. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+    },
+    {
+      "equipment_id": "schoeps-cmc-6-mk-41",
+      "zone": "foley-floor",
+      "position_m": [
+        0.5,
+        1.8,
+        2.2
+      ],
+      "rotation_deg": 180,
+      "note": "Second micro (supercardioïde) plus éloigné, pour un plan différent."
+    },
+    {
+      "equipment_id": "km-210-9",
+      "zone": "foley-floor",
+      "position_m": [
+        -1.0,
+        0,
+        1.6
+      ],
+      "rotation_deg": 180,
+      "note": "Pieds perche des micros de bruitage."
+    },
+    {
+      "equipment_id": "neumann-u87-ai",
+      "zone": "adr-spot",
+      "position_m": [
+        3.3,
+        1.7,
+        -0.2
+      ],
+      "rotation_deg": 0,
+      "note": "Micro de postsynchro (doublage), comédien face à l'écran."
+    },
+    {
+      "equipment_id": "sennheiser-mkh-50",
+      "zone": "adr-spot",
+      "position_m": [
+        3.0,
+        2.1,
+        -0.3
+      ],
+      "rotation_deg": 0,
+      "note": "Supercardioïde en perche haute pour coller au son du tournage."
+    },
+    {
+      "equipment_id": "beyerdynamic-dt-770-pro",
+      "zone": "adr-spot",
+      "position_m": [
+        3.8,
+        1.2,
+        0.4
+      ],
+      "rotation_deg": 180,
+      "note": "Casque du comédien (bips de synchro, son direct)."
+    },
+    {
+      "equipment_id": "avid-s1",
+      "zone": "control-room",
+      "position_m": [
+        0,
+        1.1,
+        -4.3
+      ],
+      "rotation_deg": 180,
+      "note": "Surface de contrôle Pro Tools, face au plateau à travers la vitre."
+    },
+    {
+      "equipment_id": "avid-hd-io",
+      "zone": "control-room",
+      "position_m": [
+        -3.5,
+        0.8,
+        -5.2
+      ],
+      "rotation_deg": 180,
+      "note": "Interface Pro Tools HD."
+    },
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "control-room",
+      "position_m": [
+        -1.2,
+        1.2,
+        -5.5
+      ],
+      "rotation_deg": 0,
+      "note": "Écoute L de la régie (L/C/R pour l'image)."
+    },
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "control-room",
+      "position_m": [
+        0,
+        1.2,
+        -5.6
+      ],
+      "rotation_deg": 0,
+      "note": "Écoute C."
+    },
+    {
+      "equipment_id": "genelec-8341a",
+      "zone": "control-room",
+      "position_m": [
+        1.2,
+        1.2,
+        -5.5
+      ],
+      "rotation_deg": 0,
+      "note": "Écoute R."
+    }
+  ],
+  "power_points": [
+    {
+      "position_m": [
+        -4.9,
+        0.3,
+        1.0
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        4.9,
+        0.3,
+        1.0
+      ],
+      "type": "schuko-16a"
+    },
+    {
+      "position_m": [
+        0,
+        0.3,
+        -5.8
+      ],
+      "type": "schuko-16a-onduleur"
+    }
+  ],
+  "patch_points": [
+    {
+      "position_m": [
+        -4.9,
+        0.4,
+        -1.0
+      ],
+      "type": "wall-patch-xlr-12",
+      "note": "Lignes micro du plateau vers la régie."
+    },
+    {
+      "position_m": [
+        4.9,
+        0.4,
+        0.2
+      ],
+      "type": "wall-patch-xlr-4",
+      "note": "Poste ADR : micro + casque + lampe cue."
+    }
+  ],
+  "openings": [
+    {
+      "wall": "front",
+      "kind": "window",
+      "offset_m": 0,
+      "width_m": 3.0,
+      "height_m": 1.2
+    },
+    {
+      "wall": "right",
+      "kind": "door",
+      "offset_m": 3.0,
+      "width_m": 2.4,
+      "height_m": 2.8
+    },
+    {
+      "wall": "front",
+      "kind": "door",
+      "offset_m": -4.0,
+      "width_m": 0.9,
+      "height_m": 2.1
+    }
+  ],
+  "lighting": {
+    "mood": "travail, assez lumineux sur le plateau, écran de projection visible",
+    "color_temp_k": 4000
+  },
+  "procedural": {
+    "wall_color": "#3b3b3e",
+    "floor_color": "#6b5a48",
+    "ceiling_color": "#2a2a2c",
+    "prop_hints": [
+      "étagères d'accessoires (chaussures, tissus, vaisselle)",
+      "porte factice sur cadre",
+      "écran de projection au-dessus de la vitre",
+      "fosses avec bordures bois",
+      "bac à eau"
+    ]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    {
+      "url": "https://www.mixonline.com/sfp/john-roesch-skywalker-sound-426269",
+      "publisher": "Mix (Mixonline), article sur John Roesch et le plateau foley de Skywalker Sound",
+      "accessed": "2026-10-22",
+      "confidence": "verified-secondary",
+      "kind": "trade-press",
+      "covers": [
+        "dimensions_m.*.typical (surface 1 260 pieds² ≈ 117 m²)",
+        "dimensions_m.*.max (C5, 1 800 pieds² ≈ 167 m²)",
+        "zones.dirt-pit (7 × 9 pieds, terre sans dalle)",
+        "zones.water-tank (bacs à eau)",
+        "gear_positions[0] (KMR 81 = standard Foley/ADR)"
+      ]
+    }
+  ],
+  "not_found_log": [
+    {
+      "field": "dimensions_m.length/width",
+      "note": "Seules les surfaces sont publiées (117 m² typique, 167 m² max) ; découpage 11,7 × 10,0 et 13,0 × 12,86 m estimé. Minimum 8 × 6 m estimé (petit plateau).",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "dimensions_m.height",
+      "note": "Hauteurs 3,5 / 5,0 / 7,3 m estimées ; aucune page ouverte ne donne la hauteur d'un plateau foley (la page Fox citant 24 pieds renvoyait une erreur 404).",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "rt60_s",
+      "note": "Non trouvé dans une source ouverte. Estimation : salle mate, environ 0,3–0,5 s à 500 Hz.",
+      "review": "needs-oscar-review"
+    },
+    {
+      "field": "zones.gravel-pit / water-tank / adr-spot / control-room",
+      "note": "Tailles et positions estimées (seule la fosse de terre 7 × 9 pieds est sourcée).",
+      "review": "needs-oscar-review"
+    }
+  ],
+  "review": "needs-oscar-review"
+}
