@@ -61,7 +61,7 @@
  "chunks": {
   "rule:connector-mate-mismatch": {
    "title": "Connecteurs incompatibles",
-   "text": "Connecteurs incompatibles (Connector mismatch). Gravité : error. Miroir de R1 : les deux connecteurs doivent s'accoupler physiquement (connectorTypes.matesWith). Une XLR mâle se branche dans une XLR femelle ; un jack TS et un jack TRS ne sont pas interchangeables électriquement même s'ils entrent : le TS court-circuite le point froid d'une liaison symétrique. Forcer ou bricoler un adaptateur casse la symétrie ou le connecteur. Correction : Utiliser le câble au bon genre et au bon format (xlr3-m ↔ xlr3-f, TRS ↔ TRS) ; pour passer d'un format à l'autre, utiliser une DI ou un adaptateur câblé selon le tableau de Rane.",
+   "text": "Connecteurs incompatibles (Connector mismatch). Gravité : error. Miroir de R1 : les deux connecteurs doivent s'accoupler physiquement (connectorTypes.matesWith). Une XLR mâle se branche dans une XLR femelle ; un jack TS et un jack TRS ne sont pas interchangeables même s'ils entrent : Rane rappelle qu'une liaison symétrique n'est pas compatible telle quelle avec une liaison asymétrique. Forcer ou bricoler un adaptateur casse la symétrie ou le connecteur. Correction : Utiliser le câble au bon genre et au bon format (xlr3-m ↔ xlr3-f, TRS ↔ TRS) ; pour passer d'un format à l'autre, utiliser une DI ou un câble d'interface symétrique/asymétrique adapté (voir RaneNote 110).",
    "sourceUrls": [
     "https://en.wikipedia.org/wiki/XLR_connector",
     "https://www.ranecommercial.com/legacy/note110.html"
@@ -316,10 +316,11 @@
   },
   "concept:audio-codec-ip": {
    "title": "Codec audio sur IP",
-   "text": "Codec audio sur IP (IP audio codec). Appareil qui compresse (ou non) l'audio, l'envoie sur un réseau IP (Ethernet, 4G/5G, Wi-Fi) et reçoit en même temps un retour : c'est l'outil des duplex et reportages. L'EBU distingue trois usages : liaison unidirectionnelle sans retour (satellite), bidirectionnelle avec un retour bande étroite pour le cue (concert, commentaire sportif) où la latence compte peu, et bidirectionnelle large bande (interview, débat) où la latence devient un problème [Tech 3326]. Pour que deux marques se comprennent, la spécification EBU Tech 3326 (dite N/ACIP) impose RTP sur UDP, SIP pour la signalisation et une liste de codecs obligatoires [Tech 3326]. L'AETA Scoop5 S, codec studio full duplex, en est un exemple : IP/SIP ou RTP direct, G.711, G.722, MPEG Layer II, AAC et Opus [AETA] ; AETA le classe désormais parmi ses « anciens produits ». Le retour envoyé au codec doit toujours être un N-1.",
+   "text": "Codec audio sur IP (IP audio codec). Appareil qui compresse (ou non) l'audio, l'envoie sur un réseau IP (Ethernet, 4G/5G, Wi-Fi) et reçoit en même temps un retour : c'est l'outil des duplex et reportages. L'EBU distingue trois usages : liaison unidirectionnelle sans retour (satellite), bidirectionnelle avec un retour bande étroite pour le cue (concert, commentaire sportif) où la latence compte peu, et bidirectionnelle large bande (interview, débat) où la latence devient un problème [Tech 3326]. Pour que deux marques se comprennent, la spécification EBU Tech 3326 (dite N/ACIP) impose RTP sur UDP, SIP pour la signalisation et une liste de codecs obligatoires [Tech 3326]. L'AETA Scoop5 S, codec studio full duplex, en est un exemple : IP/SIP ou RTP direct, G.711, G.722, MPEG Layer II, AAC et Opus [AETA] ; AETA le classe désormais parmi ses « anciens produits ». Le signal renvoyé à l'intervenant distant doit être un N-1 (mix-minus) : Telos le définit comme le mélange de toutes les sources que l'appelant doit entendre, moins l'appelant, car lui renvoyer sa propre voix est inutile et gênant (voir mix-minus-n1).",
    "sourceUrls": [
     "https://tech.ebu.ch/docs/tech/tech3326.pdf",
-    "https://www.aeta-audio.com/products/scoop5s/"
+    "https://www.aeta-audio.com/products/scoop5s/",
+    "https://telosalliance-uat.s3.amazonaws.com/public/Telos%20Products/Hx/Telos_Hx1%20Hx2_QSG_C21117016_Web.pdf"
    ]
   },
   "concept:telephone-hybrid": {

@@ -11,6 +11,7 @@
     "test:e2e": "playwright test",
     "validate:catalog": "tsx tools/validate-catalog.ts",
     "gen:schema": "tsx tools/generate-schema.ts > content/catalog.schema.json",
+    "sync:kb": "tsx tools/build-kb-sheets.ts && tsx tools/sync-rooms.ts && tsx tools/build-coach-kb.ts && tsx tools/propose-content.ts",
     "lint": "eslint src tools --ext .ts",
     "format": "prettier --write \"src/**/*.ts\" \"tools/**/*.ts\""
   },
