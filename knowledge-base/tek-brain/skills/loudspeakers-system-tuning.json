@@ -1,0 +1,298 @@
+{
+  "entity": "skill",
+  "domain": "loudspeakers-system-tuning",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "wire-passive-speakers-to-amp",
+      "name_fr": "Câbler des enceintes passives sur un amplificateur",
+      "name_en": "Wire passive loudspeakers to an amplifier",
+      "domain": "loudspeakers-system-tuning",
+      "description": "Choisir l'ampli et le preset adaptés, calculer la charge par canal, câbler les speakON sur les bonnes paires de broches et mettre sous tension dans le bon ordre.",
+      "level": "bts",
+      "concept_ids": [
+        "speaker-impedance-load",
+        "amplifier-power-rating",
+        "speakon-pinout",
+        "passive-active-loudspeaker",
+        "bridge-mode-amplifier"
+      ],
+      "procedure_ids": [
+        "connect-passive-speaker-chain-to-amp"
+      ],
+      "success_criteria": [
+        "La charge calculée par canal reste égale ou supérieure au minimum indiqué par le fabricant de l'ampli (et au moins 4 Ω en mode ponté)",
+        "Le nombre d'enceintes par canal respecte la table du constructeur (ex. 2 V8 par canal d'ampli d&b)",
+        "Chaque enceinte est raccordée sur la paire speakON qu'elle utilise réellement (ex. V-SUB sur 2±)",
+        "L'ampli est allumé en dernier et éteint en premier ; aucun voyant de protection ni d'écrêtage permanent au niveau d'exploitation"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Câblage et mise en service d'une diffusion passive (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
+          "publisher": "QSC, RMX Series 2RU User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "publisher": "Crown (HARMAN), XLS DriveCore 2 Series Operation Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "align-subwoofers-and-tops",
+      "name_fr": "Aligner subwoofers et système principal",
+      "name_en": "Align subwoofers and main system",
+      "domain": "loudspeakers-system-tuning",
+      "description": "Mesurer et régler retard et polarité entre subs et tops au croisement, en un point de référence choisi, puis vérifier le résultat dans d'autres zones du public.",
+      "level": "bts",
+      "concept_ids": [
+        "subwoofer-alignment",
+        "crossover",
+        "loudspeaker-polarity",
+        "transfer-function-measurement",
+        "cardioid-subwoofer"
+      ],
+      "procedure_ids": [
+        "align-subwoofers-to-main-system",
+        "build-cardioid-sub-stack"
+      ],
+      "success_criteria": [
+        "Le point de référence de l'alignement est choisi et noté (distance aux subs et aux tops)",
+        "À ce point, la phase des subs et des tops se superpose dans la zone de croisement et la somme dépasse chaque sous-système seul",
+        "Le retard appliqué est cohérent avec la différence de distance (Δd/c) à quelques millisecondes près",
+        "Un contrôle dans une zone latérale est fait et l'écart constaté est documenté"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Calage sub / main (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Phase et retards (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf",
+          "publisher": "L-Acoustics (Mouterde, Moulin, Epain, Corteel), AES 2024",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.rationalacoustics.com/products/smaart-suite-v9-perpetual",
+          "publisher": "Rational Acoustics, Smaart Suite v9",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "set-delay-and-fill-speakers",
+      "name_fr": "Caler des enceintes de rappel (délais, fills)",
+      "name_en": "Set delay and fill speakers",
+      "domain": "loudspeakers-system-tuning",
+      "description": "Calculer puis mesurer le retard d'un rappel par rapport au système principal, régler son niveau pour qu'il complète sans attirer l'image.",
+      "level": "bts",
+      "concept_ids": [
+        "speaker-delay-alignment",
+        "haas-precedence-effect",
+        "comb-filtering",
+        "prediction-software"
+      ],
+      "procedure_ids": [
+        "set-delay-speaker-alignment"
+      ],
+      "success_criteria": [
+        "Le retard calculé (Δd/c) est noté puis confirmé par mesure de réponse impulsionnelle à la zone de recouvrement",
+        "Dans la zone du rappel, l'image reste localisée vers la scène",
+        "Le niveau du rappel ne dépasse pas celui du système principal là où les deux se recouvrent"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Calage des rappels (jugement, non vérifié sur eduscol)",
+          "verified": false
+        },
+        {
+          "epreuve": "E3",
+          "bloc": null,
+          "note": "Calcul de retard (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speed_of_sound",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
+          "publisher": "L-Acoustics (Moulin, Corteel), AES 152nd Convention 2022",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    },
+    {
+      "id": "run-basic-pa-system-check",
+      "name_fr": "Faire le contrôle de base d'une diffusion",
+      "name_en": "Run a basic PA system check",
+      "domain": "loudspeakers-system-tuning",
+      "description": "Vérifier enceinte par enceinte la présence du signal, la polarité, le niveau et la couverture avant la balance.",
+      "level": "beginner",
+      "concept_ids": [
+        "loudspeaker-polarity",
+        "coverage-angle",
+        "system-tuning",
+        "speakon-pinout"
+      ],
+      "procedure_ids": [
+        "basic-pa-system-check"
+      ],
+      "success_criteria": [
+        "Chaque enceinte sort seule, sur la bonne voie (grave, aigu, sub) quand on l'appelle",
+        "Aucune enceinte n'est en polarité inversée par rapport à ses voisines",
+        "Les niveaux gauche et droite sont identiques à position symétrique",
+        "Le public est couvert sans trou évident en marchant la salle"
+      ],
+      "bts_mapping": [
+        {
+          "epreuve": "E4",
+          "bloc": null,
+          "note": "Mise en service d'une diffusion (jugement, non vérifié sur eduscol)",
+          "verified": false
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Speakon_connector",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "success_criteria"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "success_criteria"
+          ]
+        }
+      ],
+      "review": "ok"
+    }
+  ],
+  "not_found_log": []
+}

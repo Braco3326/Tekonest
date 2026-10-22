@@ -1,0 +1,653 @@
+{
+  "entity": "procedure",
+  "domain": "loudspeakers-system-tuning",
+  "generated": "2026-10-22",
+  "items": [
+    {
+      "id": "connect-passive-speaker-chain-to-amp",
+      "name_fr": "Raccorder une chaîne d'enceintes passives à un ampli",
+      "name_en": "Connect a passive speaker chain to an amplifier",
+      "domain": "loudspeakers-system-tuning",
+      "context": "Diffusion passive (ex. d&b Y10P ou V8 sur ampli d&b D80) : deux enceintes chaînées par canal, câbles speakON NL4.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "db-audiotechnik-d80",
+        "db-audiotechnik-y10p",
+        "db-audiotechnik-v8",
+        "db-audiotechnik-v-sub",
+        "crown-xls-2502"
+      ],
+      "concept_ids": [
+        "speaker-impedance-load",
+        "speakon-pinout",
+        "passive-active-loudspeaker",
+        "amplifier-power-rating"
+      ],
+      "rule_ids": [
+        "amp-load-impedance-too-low",
+        "speakon-pin-mismatch-sub",
+        "amplifier-power-mismatch"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Lire le manuel de l'enceinte : amplis compatibles, nombre d'enceintes par canal, paire speakON utilisée.",
+          "expected_result": "On sait par exemple que la Y10P et la V8 se branchent sur 1±, le V-SUB sur 2±, deux enceintes par canal d&b.",
+          "typical_mistakes": [
+            "Supposer que toutes les enceintes utilisent 1+/1−",
+            "Utiliser un ampli générique sur une enceinte qui exige le preset constructeur"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Impédance nominale de chaque enceinte connue"
+          ],
+          "action": "Calculer la charge par canal (1/Z = Σ 1/Zi) et la comparer au minimum de l'ampli.",
+          "expected_result": "Deux enceintes 8 Ω en parallèle donnent 4 Ω, valeur acceptée.",
+          "typical_mistakes": [
+            "Ajouter une troisième ou quatrième enceinte « pour couvrir » et descendre à 2 Ω ou moins",
+            "Oublier qu'en mode ponté la charge minimale est de 4 Ω"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Ampli hors tension"
+          ],
+          "action": "Ampli éteint, raccorder la sortie du canal à l'entrée speakON de la première enceinte, puis sa prise de recopie à la seconde.",
+          "expected_result": "Les deux embases d'une enceinte étant en parallèle, la seconde reçoit le même signal.",
+          "typical_mistakes": [
+            "Brancher une sortie d'ampli sur une entrée ligne ou une enceinte active"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Charger sur l'ampli le preset constructeur de l'enceinte (et le mode, ex. CUT, CPL selon le système).",
+          "expected_result": "Le canal applique filtrage, égalisation et protections propres à l'enceinte.",
+          "typical_mistakes": [
+            "Laisser un preset d'une autre enceinte",
+            "Régler un CPL différent sur des éléments d'une même ligne"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Mettre les sources sous tension puis l'ampli en dernier ; monter le niveau progressivement et observer les voyants.",
+          "expected_result": "Signal présent, pas de voyant de protection ni d'écrêtage permanent.",
+          "typical_mistakes": [
+            "Allumer l'ampli avant la console (bruit de mise sous tension dans les enceintes)"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Toujours brancher ou débrancher les liaisons haut-parleur ampli éteint (NEXO : connexion par un technicien qualifié, alimentation coupée)",
+        "En mode ponté, plus de 100 V efficaces peuvent être présents entre les bornes (QSC RMX 2450) : câblage adapté obligatoire",
+        "Niveaux élevés : d&b rappelle qu'environ 95 dB SPL en exposition prolongée peuvent déjà léser l'audition"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://www.qscaudio.com/resource-files/productresources/amp/discontinued/rmx/q_amp_rmx_series2ru_usermanual.pdf",
+          "publisher": "QSC, RMX Series 2RU User Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/electric/imped.html",
+          "publisher": "HyperPhysics, Georgia State University",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "university",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.crownaudio.com/en-US/product_documents/5055568_xlsdc2_mnl_print_050615-pdf",
+          "publisher": "Crown (HARMAN), XLS DriveCore 2 Series Operation Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "align-subwoofers-to-main-system",
+      "name_fr": "Aligner les subwoofers sur le système principal",
+      "name_en": "Align subwoofers to the main system",
+      "domain": "loudspeakers-system-tuning",
+      "context": "Système principal (line array ou point source) et subwoofers au sol ou accrochés ; mesure bicanal disponible.",
+      "duration_min": 30,
+      "equipment_ids": [
+        "rational-acoustics-smaart-suite-v9",
+        "minidsp-umik-1",
+        "db-audiotechnik-v-sub",
+        "db-audiotechnik-v8",
+        "db-audiotechnik-arraycalc"
+      ],
+      "concept_ids": [
+        "subwoofer-alignment",
+        "crossover",
+        "loudspeaker-polarity",
+        "transfer-function-measurement"
+      ],
+      "rule_ids": [
+        "sub-top-polarity-misalignment"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Choisir le point de référence (souvent dans l'axe, à une distance représentative du public) et y placer le micro de mesure.",
+          "expected_result": "Le point est noté ; on sait que l'alignement ne sera exact qu'ici.",
+          "typical_mistakes": [
+            "Aligner à la console sans réfléchir aux zones latérales"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [
+            "Interface 2 entrées : référence + micro"
+          ],
+          "action": "Mesurer le système principal seul (fonction de transfert), puis les subs seuls, avec la même référence.",
+          "expected_result": "On obtient amplitude et phase de chaque sous-système autour du croisement.",
+          "typical_mistakes": [
+            "Mesurer avec un seul balayage en extérieur : en basse fréquence, multiplier les moyennes (8 balayages dehors, 4 dedans)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Lire le retard d'arrivée de chaque sous-système (réponse impulsionnelle) et retarder le plus précoce ; partir de Δd/c.",
+          "expected_result": "Les arrivées coïncident au point de référence.",
+          "typical_mistakes": [
+            "Retarder le mauvais système",
+            "Confondre une inversion de polarité (180°) avec un retard"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Superposer les phases au croisement ; si elles sont opposées, essayer l'inversion de polarité des subs puis réajuster le retard.",
+          "expected_result": "Les courbes de phase se recouvrent dans la zone de croisement ; la somme est plus forte que chaque partie.",
+          "typical_mistakes": [
+            "Garder un réglage où le décalage vaut une demi-période (ex. 9,5 ms pour 52 Hz) : annulation au croisement"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Allumer les deux, vérifier la somme au point de référence puis dans une zone latérale.",
+          "expected_result": "Gain de niveau au croisement au point de référence ; écart latéral connu et accepté.",
+          "typical_mistakes": [
+            "Ne plus mesurer après le premier réglage"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Mesurer à un niveau proche de l'exploitation mais en protégeant l'audition des équipes (bouchons, durée limitée)"
+      ],
+      "sources": [
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2024-On_the_perception_of_time-alignment_between_full-range_speakers_and_subwoofers_for_sound_reinforcement.pdf",
+          "publisher": "L-Acoustics (Mouterde, Moulin, Epain, Corteel), AES 2024",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/white_papers/WP-HOW_TO_IMPROVE_MEASUREMENT_QUALITY_AT_LOW_FREQUENCIES.pdf",
+          "publisher": "L-Acoustics, How to improve measurement quality at low frequencies? (white paper)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.rationalacoustics.com/products/smaart-suite-v9-perpetual",
+          "publisher": "Rational Acoustics, Smaart Suite v9",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Subwoofer",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "needs-oscar-review"
+    },
+    {
+      "id": "set-delay-speaker-alignment",
+      "name_fr": "Régler le retard d'une enceinte de rappel",
+      "name_en": "Set delay speaker alignment",
+      "domain": "loudspeakers-system-tuning",
+      "context": "Public profond : une paire de rappels (délais) placée à mi-salle complète le système principal.",
+      "duration_min": 20,
+      "equipment_ids": [
+        "qsc-k12-2",
+        "rational-acoustics-smaart-suite-v9",
+        "minidsp-umik-1",
+        "l-acoustics-soundvision"
+      ],
+      "concept_ids": [
+        "speaker-delay-alignment",
+        "haas-precedence-effect",
+        "comb-filtering"
+      ],
+      "rule_ids": [],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Mesurer la différence de distance entre le système principal et le rappel, vue depuis la zone que couvre le rappel.",
+          "expected_result": "Δd connu (ex. 10 m).",
+          "typical_mistakes": [
+            "Mesurer depuis la console au lieu de la zone du rappel"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Calculer le retard Δt = Δd / c (c ≈ 343 m/s à 20 °C) et le régler sur la sortie du rappel.",
+          "expected_result": "Environ 29 ms pour 10 m.",
+          "typical_mistakes": [
+            "Utiliser une vitesse du son fixe sans tenir compte de la température (c ≈ 331,3 + 0,606·θ)"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [
+            "Mesure bicanal prête"
+          ],
+          "action": "Placer le micro dans la zone de recouvrement ; comparer les réponses impulsionnelles du principal et du rappel et ajuster.",
+          "expected_result": "Le pic du rappel arrive juste après celui du principal.",
+          "typical_mistakes": [
+            "Faire arriver le rappel avant le principal : l'image part vers le rappel"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Régler le niveau du rappel à l'écoute et à la mesure, sans dépasser le principal dans la zone de recouvrement.",
+          "expected_result": "L'image reste sur la scène et l'intelligibilité progresse au fond.",
+          "typical_mistakes": [
+            "Rappel trop fort : peigne audible et image déplacée"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Vérifier l'accroche et la stabilité des pieds ou des tours de rappel avant toute mesure"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speed_of_sound",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://prdstglaxxwe001.blob.core.windows.net/webapp-lacoustics/Education/scientific_resources/scientific_publications/2022-Spectral_and_spatial_perceptions_of_comb-filtering_for_sound.pdf",
+          "publisher": "L-Acoustics (Moulin, Corteel), AES 152nd Convention 2022",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.l-acoustics.com/products/soundvision/",
+          "publisher": "L-Acoustics, Soundvision",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "basic-pa-system-check",
+      "name_fr": "Contrôle de base d'une diffusion (polarité, niveau, couverture)",
+      "name_en": "Basic PA system check",
+      "domain": "loudspeakers-system-tuning",
+      "context": "Après installation et avant la balance : vérifier chaque enceinte et chaque voie.",
+      "duration_min": 25,
+      "equipment_ids": [
+        "galaxy-audio-cricket-cpts",
+        "nti-audio-xl2",
+        "rational-acoustics-smaart-suite-v9",
+        "minidsp-umik-1"
+      ],
+      "concept_ids": [
+        "loudspeaker-polarity",
+        "coverage-angle",
+        "speakon-pinout",
+        "system-tuning"
+      ],
+      "rule_ids": [
+        "speakon-pin-mismatch-sub",
+        "sub-top-polarity-misalignment"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Couper toutes les sorties, puis allumer une enceinte (ou une voie) à la fois avec un signal de test à faible niveau.",
+          "expected_result": "Chaque enceinte répond seule, sur la bonne sortie.",
+          "typical_mistakes": [
+            "Tout allumer d'un coup : impossible de repérer une enceinte muette"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Vérifier la polarité de chaque enceinte (testeur de polarité ou réponse impulsionnelle) par rapport à sa voisine.",
+          "expected_result": "Toutes les enceintes d'un même sous-système ont la même polarité.",
+          "typical_mistakes": [
+            "Se fier à l'oreille seule pour la polarité dans l'aigu"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Contrôler que les subs sont bien alimentés sur leur paire speakON (2± pour un d&b V-SUB) et que les tops sortent sur la leur.",
+          "expected_result": "Subs et tops présents chacun sur leur voie.",
+          "typical_mistakes": [
+            "Utiliser un câble ou une sortie qui ne porte que 1±"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [],
+          "action": "Comparer les niveaux gauche/droite au sonomètre en position symétrique.",
+          "expected_result": "Écart faible entre côtés à la même distance.",
+          "typical_mistakes": [
+            "Mesurer à des distances différentes"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Marcher la salle avec une musique connue pour repérer trous de couverture et zones trop fortes.",
+          "expected_result": "Liste des zones à corriger (angle, rappel, niveau).",
+          "typical_mistakes": [
+            "Rester à la régie"
+          ]
+        }
+      ],
+      "safety_notes": [
+        "Signal de test à niveau modéré ; protections auditives pour les mesures à fort niveau"
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speakon_connector",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v8-v12-1.8-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V8/V12 1.8 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://docs-prod.meyersound.com/products/en/operating-instructions---lina.html",
+          "publisher": "Meyer Sound, LINA Operating Instructions",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.rationalacoustics.com/products/smaart-suite-v9-perpetual",
+          "publisher": "Rational Acoustics, Smaart Suite v9",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [],
+      "review": "ok"
+    },
+    {
+      "id": "build-cardioid-sub-stack",
+      "name_fr": "Monter un empilement de subwoofers cardioïde",
+      "name_en": "Build a cardioid subwoofer stack",
+      "domain": "loudspeakers-system-tuning",
+      "context": "Réduire le grave sur scène et dans le champ réverbéré : subs au sol devant la scène.",
+      "duration_min": 30,
+      "equipment_ids": [
+        "db-audiotechnik-v-sub",
+        "l-acoustics-ks28",
+        "db-audiotechnik-arraycalc"
+      ],
+      "concept_ids": [
+        "cardioid-subwoofer",
+        "end-fire-subwoofer-array",
+        "loudspeaker-polarity",
+        "subwoofer-alignment"
+      ],
+      "rule_ids": [
+        "sub-top-polarity-misalignment"
+      ],
+      "steps": [
+        {
+          "n": 1,
+          "preconditions": [],
+          "action": "Choisir la solution : caisson cardioïde intégré (ex. V-SUB, un seul canal) ou empilement avec caissons arrière processés (preset constructeur).",
+          "expected_result": "Configuration et preset identifiés.",
+          "typical_mistakes": [
+            "Retourner un caisson sans appliquer retard et polarité adaptés"
+          ]
+        },
+        {
+          "n": 2,
+          "preconditions": [],
+          "action": "Respecter les distances : au moins 60 cm entre V-SUB adjacents ou avec un mur latéral ; dégagement arrière assuré par les roulettes.",
+          "expected_result": "Les caissons ont l'espace nécessaire pour l'annulation arrière.",
+          "typical_mistakes": [
+            "Coller le stack contre un mur ou une coulisse"
+          ]
+        },
+        {
+          "n": 3,
+          "preconditions": [],
+          "action": "Garder des effectifs avant/arrière équilibrés quand on processe soi-même (EAW), ou suivre la table du constructeur (NEXO MSUB15 : 1 arrière pour 2 avant).",
+          "expected_result": "Le caisson arrière ne sature pas avant les autres.",
+          "typical_mistakes": [
+            "Compenser un caisson arrière manquant par +6 dB de gain"
+          ]
+        },
+        {
+          "n": 4,
+          "preconditions": [
+            "Mesure bicanal ou sonomètre"
+          ],
+          "action": "Mesurer devant et derrière le stack à distance égale.",
+          "expected_result": "Nette baisse de niveau derrière, niveau avant conservé.",
+          "typical_mistakes": [
+            "Mesurer trop près du stack"
+          ]
+        },
+        {
+          "n": 5,
+          "preconditions": [],
+          "action": "Aligner ensuite le stack sur le système principal.",
+          "expected_result": "Voir la procédure align-subwoofers-to-main-system.",
+          "typical_mistakes": []
+        }
+      ],
+      "safety_notes": [
+        "Sangler les empilements ; caissons lourds (V-SUB : 64 kg) : manutention à deux"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dbaudio.com/assets/products/downloads/manuals-documentation/v-series/dbaudio-manual-v-sub-1.5-fr.pdf",
+          "publisher": "d&b audiotechnik, Manuel V-SUB 1.5 fr",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps",
+            "safety_notes"
+          ]
+        },
+        {
+          "url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf",
+          "publisher": "EAW, Directional Subwoofer Arrays: A Practical Approach",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        },
+        {
+          "url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf",
+          "publisher": "NEXO, GEO M10 User Manual Rev03b",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "steps"
+          ]
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "steps",
+          "values": [
+            {
+              "value": "Effectifs avant/arrière égaux recommandés",
+              "source_url": "https://eaw.com/wp-content/uploads/2020/12/Directional-Subwoofer-Arrays.pdf"
+            },
+            {
+              "value": "MSUB15 CARDIO : 1 arrière pour 2 avant",
+              "source_url": "https://www.nexo-sa.com/wp-content/uploads/GEOM10-User-Manual-Rev03b-EN.pdf"
+            }
+          ],
+          "note": "Preset constructeur vs array générique processé à la main."
+        }
+      ],
+      "review": "needs-oscar-review"
+    }
+  ],
+  "not_found_log": [
+    {
+      "what": "Manufacturer step-by-step for delay tower setup (d&b/L-Acoustics)",
+      "searched": "Meyer LINA operating instructions (MAPP delay only); procedure built from Δd/c and L-Acoustics 2022 comb/precedence paper"
+    }
+  ]
+}
