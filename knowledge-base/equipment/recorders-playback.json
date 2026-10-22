@@ -1,0 +1,2788 @@
+{
+  "file": "recorders-playback.json",
+  "category": "recorders-playback",
+  "generated": "2026-10-22",
+  "selection_rationale": "Location-sound references used on film/TV sets and taught in BTS audiovisuel: Sound Devices 833/888/MixPre-6 II, Zoom F8n Pro, and the Swiss/French heritage line (Nagra 4.2 analogue tape, Nagra VI, Nagra SEVEN/VII, Aaton Cantar-X from Grenoble). Handhelds common in French schools and media education (Zoom H6essential, TASCAM DR-40X, Portacapture X8), the TASCAM DA-6400 as the rack multitrack for live/broadcast capture, and the TASCAM SS-CDR250N as a theatre/installation playback deck. Playout systems are under-covered because the shared web-search budget ran out before vendor sites (RCS, ENCO, WinMedia, Netia) could be located; see not_found_log.",
+  "not_found_log": [
+    {
+      "device_id": "sound-devices-833",
+      "what": "French user guide; product page body (403)",
+      "searched": "sounddevices.com product + download pages (403), search results"
+    },
+    {
+      "device_id": "sound-devices-888",
+      "what": "Official user guide, product page and year_introduced",
+      "searched": "sounddevices.com (403); WebSearch 'Sound Devices 888 User Guide pdf' blocked: search budget exhausted. ProSoundWeb date read as 2019 conflicts with expectation, so not used"
+    },
+    {
+      "device_id": "sound-devices-mixpre-6-ii",
+      "what": "Official manual URL on sounddevices.com and year_introduced",
+      "searched": "fullcompass spec sheet (403); only a Boston University-hosted copy of the v9.01 guide was readable; search budget exhausted"
+    },
+    {
+      "device_id": "zoom-f8n-pro",
+      "what": "Official Zoom product page, manuals (EN/FR)",
+      "searched": "search budget exhausted before zoomcorp.com could be searched; dealer pages contain no zoomcorp links"
+    },
+    {
+      "device_id": "zoom-h6essential",
+      "what": "English and French manuals, product page, year_introduced",
+      "searched": "only zoomcorp.com/manuals/h6essential-de/ appeared in results; URL patterns for other languages not guessed; search budget exhausted"
+    },
+    {
+      "device_id": "aaton-cantar-x3",
+      "what": "Specs, manuals for Cantar-X3 and CantarMini",
+      "searched": "WebSearch 'Aaton Cantar X3 specifications manual'; aaton.com redirects to atomos.com (403); clubcantar.com documentation is a Google Drive folder whose files could not be listed"
+    },
+    {
+      "device_id": "aaton-cantar-x",
+      "what": "Official manual / manufacturer spec",
+      "searched": "Mix review 2004 and Wikipedia only; Aaton Digital liquidated 2024"
+    },
+    {
+      "device_id": "tascam-da-6400",
+      "what": "French manual",
+      "searched": "tascam.com product page (no FR docs); tascam.eu/fr returned 403"
+    },
+    {
+      "device_id": "tascam-ss-cdr250n",
+      "what": "French manual",
+      "searched": "tascam.com product page (no FR docs); tascam.eu/fr returned 403"
+    },
+    {
+      "device_id": "zaxcom-nova-2",
+      "what": "Device not researched",
+      "searched": "search budget exhausted"
+    },
+    {
+      "device_id": "zoom-f6",
+      "what": "Device not researched",
+      "searched": "search budget exhausted"
+    },
+    {
+      "device_id": "joeco-blackbox",
+      "what": "Device and company status not researched",
+      "searched": "search budget exhausted"
+    },
+    {
+      "device_id": "rcs-zetta",
+      "what": "Playout system not researched",
+      "searched": "search budget exhausted"
+    },
+    {
+      "device_id": "enco-dad",
+      "what": "Playout system not researched",
+      "searched": "search budget exhausted"
+    },
+    {
+      "device_id": "winmedia",
+      "what": "French radio playout not researched (vendor/product unverified)",
+      "searched": "WebSearch 'WinMedia radio automation playout software AoIP' blocked: search budget exhausted"
+    },
+    {
+      "device_id": "netia-radio-assist",
+      "what": "French playout; current status/owner not verified",
+      "searched": "search budget exhausted"
+    },
+    {
+      "device_id": "360-systems-instant-replay",
+      "what": "Status not verified",
+      "searched": "search budget exhausted"
+    }
+  ],
+  "devices": [
+    {
+      "id": "sound-devices-833",
+      "brand": "Sound Devices",
+      "model": "833",
+      "category": "recorders-playback",
+      "sub_type": "field-recorder",
+      "technology": "Portable digital mixer-recorder: 6 mic preamps, 8 channels, 6 buses, 12 tracks (expandable to 12 channels / 16 tracks with optional +4 plugin); multi-stage 32-bit converters, FPGA processing",
+      "year_introduced": 2019,
+      "status": "current",
+      "why_it_is_a_classic": "Compact bag mixer-recorder from Sound Devices, the US maker whose 8-Series is widely used on film and TV location sound. It packs full-size and TA3 inputs, LEMO timecode and L-mount battery power into a run-and-gun format.",
+      "typical_uses": [
+        "film location sound (bag)",
+        "documentary / ENG",
+        "TV production",
+        "multitrack ISO recording with timecode"
+      ],
+      "key_specs": {
+        "mic_preamps": "6 ultra-low noise, 8-Series microphone preamplifiers",
+        "channels_buses_tracks": "8 channels, 6 buses, 12 tracks",
+        "inputs": "Mic/Line inputs: 6 total, all fully featured; 3 on full-size XLR, 3 on TA3",
+        "phantom_power": "48V phantom: full 10 mA to all 6 inputs simultaneously",
+        "max_gain_mic_trim": "Trim stage (mic input): 76 dB",
+        "equivalent_input_noise": "-131 dBV (-129 dBu) max (mic in, A-weighting, 76 dB gain, 150-ohm source impedance)",
+        "frequency_response": "10 Hz to 80 kHz ± 0.5 dB (192 kHz sample rate, re 1 kHz)",
+        "ad_converters": "Multi-stage 32-bit converters, 140 dB A-weighted dynamic range",
+        "sample_rates": "44.1 kHz, 47.952 kHz, 48 kHz, 48.048 kHz, 96 kHz, 192 kHz",
+        "bit_depth": "16 or 24-bit fixed; 32-bit floating point (ISOs only)",
+        "file_formats": "Broadcast WAV monophonic and polyphonic file format; 64-bit WAV (RF64) monophonic and polyphonic; AAC 2 track at 48 kHz",
+        "metadata": "Project, Scene, and Take iXML/bEXT metadata",
+        "media": "Internal 256 GB SSD; two removable SD Cards (simultaneous recording, exFAT)",
+        "timecode": "LTC/Wordclock/5-pin Lemo Jack; Sample/Timecode Accuracy: 0.1 ppm (0.25 frames per 24 hours)",
+        "digital_io": "AES3 or AES42 available on XLR input 1; AES3 output in pairs on XLR-L / XLR-R",
+        "outputs": "XLR (L, R) active-balanced; TA3 (X1/X2) active-balanced; 3.5mm (X3/X4) unbalanced, stereo",
+        "headphone_outputs": "¼”, 3.5 mm; TA5 (along with mic input pins) for single connection to headset + mic",
+        "usb": "USB-C (USB 3.1 type 1) for file transfer; USB-C 2-in/2 out audio streaming; USB-A host",
+        "power": "External: 10-18 V input on locking TA4 connector, pin-4 = (+), pin-1 = (-). Dual rear-mount Sony-style L-mount batteries with chargers",
+        "dimensions": "5.1 cm x 22 cm x 17 cm (H x W x D)",
+        "weight": "1.25 kg (unpackaged, without batteries)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-3 (input 1 also AES3/AES42)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 3
+        },
+        {
+          "connector": "mini-xlr-ta3",
+          "role": "mic/line inputs 4-6",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 3
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "main outputs L/R (analog or AES3 pairs)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "mini-xlr-ta3",
+          "role": "outputs X1/X2",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "outputs X3/X4 (stereo unbalanced)",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "aux input (unbalanced 2-channel)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "mini-xlr-ta3",
+          "role": "Com Rtn input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone output",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "headphone output",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "mini-xlr-ta4",
+          "role": "TA5 headset (headphone + mic) / external slate mic - TA5 has no taxonomy id, closest used",
+          "dir": "bidir",
+          "signal": "headphone-level",
+          "count": "not shown"
+        },
+        {
+          "connector": "lemo-5pin-timecode",
+          "role": "LTC / word clock in-out",
+          "dir": "bidir",
+          "signal": "ltc-timecode",
+          "count": 1
+        },
+        {
+          "connector": "mini-xlr-ta4",
+          "role": "DC power input 10-18 V (locking TA4)",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "usb-c",
+          "role": "file transfer + 2-in/2-out USB audio",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "host for keyboard / controllers (CL-12, CL-16)",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "2x SD card media (plus internal SSD)",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 2
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "aes3",
+        "headphone-level",
+        "ltc-timecode",
+        "wordclock",
+        "usb-audio",
+        "dc-power"
+      ],
+      "manual_url": "https://cdn.sounddevices.com/wp-content/uploads/2025/09/833-v11.00-User-Guide.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.sounddevices.com/product/833/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://cdn.sounddevices.com/wp-content/uploads/2025/09/833-v11.00-User-Guide.pdf",
+          "title": "8-Series 833 8- to 12-Channel Portable Mixer-Recorder User Guide v11.00",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v11.00",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://cdn.sounddevices.com/wp-content/uploads/2024/12/833-v10.10-User-Guide.pdf",
+          "title": "833 Portable Compact Mixer-Recorder User Guide v10.10",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v10.10",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://cdn.sounddevices.com/wp-content/uploads/2025/09/833-v11.00-User-Guide.pdf",
+          "publisher": "Sound Devices",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.phantom_power",
+            "key_specs.max_gain_mic_trim",
+            "key_specs.equivalent_input_noise",
+            "key_specs.frequency_response",
+            "key_specs.ad_converters",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_formats",
+            "key_specs.metadata",
+            "key_specs.media",
+            "key_specs.timecode",
+            "key_specs.digital_io",
+            "key_specs.outputs",
+            "key_specs.headphone_outputs",
+            "key_specs.usb",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.mic_preamps",
+            "key_specs.channels_buses_tracks",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.sounddevices.com/product/833/",
+          "publisher": "Sound Devices (search snippet only, page returned 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mic_preamps",
+            "key_specs.channels_buses_tracks",
+            "key_specs.media",
+            "key_specs.power",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.sounddevices.com/sound-devices-unveils-the-833-portable-compact-mixer-recorder-at-ibc-2019/",
+          "publisher": "Sound Devices (press release title in search results)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced"
+          ]
+        },
+        {
+          "url": "https://www.trewaudio.com/product/sound-devices-833/",
+          "publisher": "Trew Audio (search snippet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.frequency_response"
+          ]
+        },
+        {
+          "url": "https://www.adorama.com/sd833.html",
+          "publisher": "Adorama (search snippet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.media",
+            "key_specs.file_formats"
+          ]
+        }
+      ],
+      "notes": "DC input is a locking TA4 (not Hirose); the guide warns against Hirose-to-TA4 adapters because the 8-Series can draw up to 5 A. TA5 connectors (headphone+mic, slate mic) have no taxonomy id; mini-xlr-ta4 used as closest. Optional +4 plugin expands to 12 channels / 16 tracks. No French user guide found.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "mini-xlr-ta5"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Mix of XLR, TA3, TA4 power, TA5 headset and LEMO 5-pin timecode makes it a strong location-sound wiring lesson."
+      }
+    },
+    {
+      "id": "sound-devices-888",
+      "brand": "Sound Devices",
+      "model": "888",
+      "category": "recorders-playback",
+      "sub_type": "field-recorder",
+      "technology": "Portable digital mixer-recorder with Dante: 8 mic preamps, 16 channels, 20 tracks, internal SSD + dual SD",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Larger sibling of the 833 in Sound Devices' 8-Series, adding eight inputs (4 XLR, 4 TA3) and built-in Dante for cart-based film and TV location sound. It is presented by its maker and the trade press as a successor-class unit to the 788T.",
+      "typical_uses": [
+        "film / drama location sound (cart or bag)",
+        "TV production",
+        "multitrack ISO recording with timecode",
+        "Dante networked production carts"
+      ],
+      "key_specs": {
+        "channels_tracks": "16 channels, 20 tracks",
+        "mic_preamps": "Eight microphone preamplifiers",
+        "inputs": "mic/line inputs: 8 total, all fully featured; 4 on full-size XLR, 4 on TA3",
+        "phantom_power": "48V phantom: full 10mA to all 8 inputs simultaneously",
+        "sample_rates": "44.1, 47.952, 48, 48.048, 88.2, 96, and 192 kHz",
+        "bit_depth": "16 and 24",
+        "file_formats": "Broadcast WAV, mono and polyphonic; 64-bit WAV (RF64), mono and polyphonic; AAC, 2-track at 48 kHz",
+        "media": "Internal 256 GB SSD plus two removable SD card slots; simultaneous recording; exFAT",
+        "dante": "Dante, AES67 compatible, 16 channels in and 16 out (up to 192 kHz); one 1 Gb/s Ethernet port, transformer-balanced",
+        "digital_io": "AES3 or AES42 available on XLR input 1; AES3 out in pairs on XLR-L / XLR-R",
+        "timecode": "Input: 20k ohm impedance; Output: 75 ohm impedance, 5 V p-p (connector not named by the sources read)",
+        "outputs": "XLR (L, R) and TA3 (X1–X4) active-balanced; 3.5 mm (X5–X8) unbalanced stereo",
+        "headphone_outputs": "¼\" and 3.5 mm, plus TA5 for combined headset and mic",
+        "power": "External input on locking TA4 connectors, 10–18 V; two rear-mount Sony-style L-mount batteries with chargers",
+        "dimensions": "5.1 cm x 24.5 cm x 18.5 cm (H x W x D)",
+        "weight": "1.83 kg (4.0 lbs), unpackaged and without batteries"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-4 (input 1 also AES3/AES42)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "mini-xlr-ta3",
+          "role": "mic/line inputs 5-8",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "mini-xlr-ta3",
+          "role": "Rtn A and Com Rtn inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "Rtn B input",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "main outputs L/R (analog or AES3 pairs)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "mini-xlr-ta3",
+          "role": "outputs X1-X4",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 4
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "outputs X5-X8 (stereo unbalanced)",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone output",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "headphone output",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "mini-xlr-ta4",
+          "role": "TA5 headset / external slate mic - TA5 has no taxonomy id, closest used",
+          "dir": "bidir",
+          "signal": "headphone-level",
+          "count": "not shown"
+        },
+        {
+          "connector": "rj45",
+          "role": "Dante / AES67 Ethernet port (connector form not stated by sources read)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": 1
+        },
+        {
+          "connector": "mini-xlr-ta4",
+          "role": "DC power input 10-18 V (locking TA4)",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": "not shown"
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "2x SD card media (plus internal SSD)",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 2
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "aes3",
+        "aoip",
+        "dante",
+        "aes67",
+        "headphone-level",
+        "ltc-timecode",
+        "dc-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.audiosense.be/en/sound-devices-888-sd-888",
+          "publisher": "Audiosense (Belgian dealer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.phantom_power",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_formats",
+            "key_specs.media",
+            "key_specs.dante",
+            "key_specs.digital_io",
+            "key_specs.timecode",
+            "key_specs.outputs",
+            "key_specs.headphone_outputs",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://productiongear.co.uk/products/sound-devices-888-mixer-recorder",
+          "publisher": "Production Gear (UK dealer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.phantom_power",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_formats",
+            "key_specs.media",
+            "key_specs.dante",
+            "key_specs.timecode",
+            "key_specs.outputs",
+            "key_specs.headphone_outputs",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/sound-devices-announces-new-888-portable-production-mixer-recorder-with-dante/",
+          "publisher": "ProSoundWeb",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "key_specs.mic_preamps",
+            "key_specs.channels_tracks",
+            "key_specs.media",
+            "key_specs.dante",
+            "key_specs.power"
+          ]
+        }
+      ],
+      "notes": "Official Sound Devices pages could not be retrieved this session (403 on sounddevices.com and web-search budget exhausted), so all specs are from two agreeing dealer pages plus ProSoundWeb. The retailer pages give timecode electrical specs only; one web-search summary mentioned a LEMO jack for timecode/word clock but this was not confirmed on a page read, so no timecode connector is listed. TA5 has no taxonomy id.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "mini-xlr-ta5"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Same connector lesson as the 833 plus a Dante port; useful for showing a recorder on an AoIP network."
+      }
+    },
+    {
+      "id": "sound-devices-mixpre-6-ii",
+      "brand": "Sound Devices",
+      "model": "MixPre-6 II",
+      "category": "recorders-playback",
+      "sub_type": "field-recorder",
+      "technology": "Compact 32-bit float recorder / mixer / USB audio interface: 4 mic-line combo inputs + 2-channel 3.5 mm aux, 8 tracks (stereo mix + 6 ISOs)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Entry point to Sound Devices preamps at a price reachable by schools, documentary crews and podcasters. It records 32-bit float, takes timecode on its aux input and doubles as a USB interface.",
+      "typical_uses": [
+        "documentary / small-crew location sound",
+        "podcast and interview recording",
+        "sound effects / ambience field recording",
+        "USB audio interface"
+      ],
+      "key_specs": {
+        "inputs": "Mic: XLR active-balanced; Line: XLR / ¼-inch TRS active-balanced; Aux/Mic in: 3.5 mm TRS, 2-channel unbalanced; 6 Total analog inputs: 4 mic-line inputs, 2 on Aux In",
+        "frequency_response": "10 Hz to 80 kHz +/- 0.5 dB re 1 kHz @ 192 kHz sample rate",
+        "mic_gain": "Mic input: +6 dB to +76 dB",
+        "phantom_power": "Mic XLRs: 48 V via 6.8k resistors, 10 mA each; Mic 3.5 mm: 3 V @ 3k source",
+        "equivalent_input_noise": "-130 dBV (-128 dBu) max (A-weighting, gain = 76 dB, 150 ohm source impedance)",
+        "adc": "32 bit precision; 142 dB dynamic range min (A weighted, gain = 10 dB, fader = 0 dB)",
+        "tracks": "8 Tracks: stereo mix + 6 ISOs",
+        "sample_rates": "44.1 kHz, 47.952 kHz, 48 kHz, 48.048 kHz, 96 kHz, 192 kHz",
+        "bit_depth": "16, 24, 32 float",
+        "file_format": "Polyphonic WAV",
+        "media": "SD, SDXC, SDHC Card, & USB thumbdrive (copy only); Max Storage Size: 512 GB (SDXC); exFAT",
+        "timecode": "Ext LTC on 3.5 mm Aux In (20k ohm, 0.3 V - 3.0 V p-p); timecode output on 3.5 mm Stereo Out; TC Reader via HDMI",
+        "outputs": "3.5 mm TRS stereo unbalanced, 500 ohm output impedance, +7.8 dBu max output level",
+        "headphone_output": "3.5 mm TRS stereo unbalanced, 300 mW + 300 mW",
+        "usb_interface": "Audio Interface (USB-C): 8-in/4-out; 44.1 to 96 kHz",
+        "power": "4x AA sled (included); 8x AA sled (optional); optional L-Mount sled; bus-powered via USB-C; MX-PSU 15 W USB-C wall adapter",
+        "dimensions": "36mm x 166 mm x 118 mm (H x W x D)",
+        "weight": ".56 kg; 19.9 oz. (unpackaged, without batteries)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-4 (XLR/¼-inch combo jacks)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "Aux / mic in (2-channel unbalanced; also LTC timecode input)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "stereo output (also timecode output)",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "headphone output",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "usb-c",
+          "role": "USB audio interface 8-in/4-out, mass storage, power",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "keyboard / thumbdrive / MIDI control surface",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "SD/SDHC/SDXC recording media",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "headphone-level",
+        "ltc-timecode",
+        "usb-audio",
+        "dc-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://sites.bu.edu/ftpc/files/2025/08/SoundDevices_MixPre368manual.pdf",
+          "publisher": "Sound Devices MixPre II Series User Guide v9.01 (copy hosted by Boston University)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.frequency_response",
+            "key_specs.mic_gain",
+            "key_specs.phantom_power",
+            "key_specs.equivalent_input_noise",
+            "key_specs.adc",
+            "key_specs.tracks",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_format",
+            "key_specs.media",
+            "key_specs.timecode",
+            "key_specs.outputs",
+            "key_specs.headphone_output",
+            "key_specs.usb_interface",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://productiongear.co.uk/products/sound-devices-mixpre-6-ii-audio-recorder",
+          "publisher": "Production Gear (UK dealer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.mic_gain",
+            "key_specs.phantom_power",
+            "key_specs.inputs",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_format",
+            "key_specs.media",
+            "key_specs.timecode",
+            "key_specs.power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "key_specs.usb_interface"
+          ]
+        },
+        {
+          "url": "https://www.fullcompass.com/common/files/39279-MixPre6IISpecificationsSheet.pdf",
+          "publisher": "Sound Devices spec sheet hosted by Full Compass (search snippet only, PDF returned 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.frequency_response",
+            "key_specs.mic_gain"
+          ]
+        }
+      ],
+      "notes": "The official user guide was read from a copy hosted by Boston University (not a manufacturer URL), so it is used as a secondary source and not listed as the official manual; the sounddevices.com download page returned 403. Inputs are XLR/¼-inch combo jacks (xlr3-f id used). Aux input doubles as LTC timecode input.",
+      "conflicts": [
+        {
+          "field": "key_specs.inputs (aux input impedance)",
+          "values": [
+            {
+              "value": "2.2k",
+              "source_url": "https://sites.bu.edu/ftpc/files/2025/08/SoundDevices_MixPre368manual.pdf"
+            },
+            {
+              "value": "100k input",
+              "source_url": "https://productiongear.co.uk/products/sound-devices-mixpre-6-ii-audio-recorder"
+            }
+          ],
+          "note": "Guide v9.01 vs dealer page; dealer may quote an older spec revision."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Shows timecode carried on a 3.5 mm jack and a recorder doubling as USB interface; simple connector set."
+      }
+    },
+    {
+      "id": "zoom-f8n-pro",
+      "brand": "Zoom",
+      "model": "F8n Pro",
+      "category": "recorders-playback",
+      "sub_type": "field-recorder",
+      "technology": "8-input / 10-track 32-bit float field recorder with dual SD and BNC timecode",
+      "year_introduced": 2022,
+      "status": "current",
+      "why_it_is_a_classic": "Affordable 8-input field recorder with timecode and Hirose DC input, widely sold to film schools and independent crews. The Pro version adds 32-bit float recording to the F8/F8n line.",
+      "typical_uses": [
+        "independent film location sound",
+        "documentary",
+        "multitrack ambience / ambisonic recording",
+        "8-in USB interface"
+      ],
+      "key_specs": {
+        "inputs": "8 discrete inputs with locking Neutrik XLR/TRS combo connectors",
+        "input_gain": "+10 – +75 dB",
+        "phantom_power": "+24/+48 V, 10 mA maximum per channel",
+        "equivalent_input_noise": "−127 dBu or less (A-weighted, +75 dB gain, 150 Ω input)",
+        "sample_rates": "44.1, 47.952, 48, 48.048, 88.2, 96, and 192 kHz",
+        "bit_depth": "16-bit linear, 24-bit linear, 32-bit float",
+        "file_formats": "WAV: BWF and iXML metadata; mono, stereo, or 2–10 channel poly; MP3: 128, 192, and 320 kbps",
+        "media": "Two SD card slots; SDHC 4–32 GB, SDXC 64 GB–1 TB",
+        "timecode": "BNC in/out; 0.2 ppm when on and up to 0.2 ppm when powered off",
+        "outputs": "Main Out 1/2: TA3 connectors, balanced; Sub Out 1/2: 3.5 mm stereo mini, unbalanced",
+        "headphone_output": "1/4\" stereo (unbalanced), 100 mW + 100 mW into 32 Ω",
+        "usb": "USB Mini-B; 8-in/4-out USB audio interface",
+        "power": "8 AA batteries; external DC battery pack 9–18 V via 4-pin HIROSE HR10A-7R-4S; AC adapter ZOOM AD-19 12 V / 2 A",
+        "dimensions": "7.0 in (W) × 5.5 in (D) × 2.1 in (H)",
+        "weight": "1200 g"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "inputs 1-8 (XLR/TRS combo, locking Neutrik)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 8
+        },
+        {
+          "connector": "mini-xlr-ta3",
+          "role": "Main Out 1/2 (balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "Sub Out 1/2 (stereo mini, unbalanced)",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone output",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "timecode input",
+          "dir": "in",
+          "signal": "ltc-timecode",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "timecode output",
+          "dir": "out",
+          "signal": "ltc-timecode",
+          "count": 1
+        },
+        {
+          "connector": "hirose-4pin",
+          "role": "external DC 9-18 V (HR10A-7R-4S)",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "dc-barrel",
+          "role": "AC adapter input (AD-19, 12 V / 2 A, center-positive per dealer page; barrel form inferred from 'center-positive')",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "dual SD card slots",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 2
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "headphone-level",
+        "ltc-timecode",
+        "usb-audio",
+        "dc-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://productiongear.co.uk/products/zoom-f8n-pro-32-bit-float-field-recorder",
+          "publisher": "Production Gear (UK dealer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.input_gain",
+            "key_specs.phantom_power",
+            "key_specs.equivalent_input_noise",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_formats",
+            "key_specs.media",
+            "key_specs.timecode",
+            "key_specs.outputs",
+            "key_specs.headphone_output",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.andertons.co.uk/zoom-f8npro-field-recorder",
+          "publisher": "Andertons Music (UK retailer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.input_gain",
+            "key_specs.phantom_power",
+            "key_specs.bit_depth",
+            "key_specs.media",
+            "key_specs.timecode",
+            "key_specs.outputs",
+            "key_specs.usb",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "year_introduced",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://bigbearsound.com/products/zoom-f8n-pro-multitrack-field-recorder",
+          "publisher": "Big Bear Sound (search snippet)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.weight",
+            "key_specs.dimensions"
+          ]
+        }
+      ],
+      "notes": "zoomcorp.com could not be searched this session (web-search budget exhausted), so no official manual or product page is linked; specs come from two agreeing UK dealer pages. year_introduced 2022 from Andertons ('available in Q2 2022'). Andertons describes the 1200 g weight as including batteries; Production Gear does not say. The F8n Pro is a 2022 update of the F8/F8n; Zoom documents French manuals for many products but none was located here.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "BNC timecode, Hirose 4-pin DC, TA3 outputs and combo inputs in one affordable school-type recorder."
+      }
+    },
+    {
+      "id": "nagra-vi",
+      "brand": "Nagra (Kudelski)",
+      "model": "Nagra VI",
+      "category": "recorders-playback",
+      "sub_type": "field-recorder",
+      "technology": "8-track linear PCM digital location recorder, 24-bit sigma-delta conversion, internal 120 GB hard disk + Compact Flash",
+      "year_introduced": 2008,
+      "status": "discontinued",
+      "why_it_is_a_classic": "The last Nagra multitrack location recorder, built for film/TV location and classical music by the Swiss maker whose tape machines defined location sound. Nagra describes it as designed for classical music and film / TV location recording, with SMPTE/EBU timecode and chase synchroniser as standard.",
+      "typical_uses": [
+        "film / TV location sound",
+        "classical music location recording",
+        "multitrack recording with timecode"
+      ],
+      "key_specs": {
+        "tracks": "8 individual",
+        "recording_method": "Linear digital PCM",
+        "analog_inputs": "4 x symmetrical XLR Microphone (Dynamic, +48V Phantom) / line",
+        "digital_inputs": "2 x XLR AES-3 shared with analogue inputs 5+6",
+        "mic_sensitivity": "2.8, 10 and 30 mV/Pa selectable",
+        "conversion": "24 Bit Sigma Delta",
+        "sample_rates": "44.1, 48 kHz, 88.2, 96, 176.4 and 192 kHz (with 0.1% pull up / down)",
+        "file_type": "16 / 24 bit Broadcast Wave File BWF (WAV) with iXML, AES 31 compatible",
+        "media": "120 GB Internal hard disk; Compact Flash type I / II (Hot Swappable); FAT 32",
+        "timecode": "5 pin LEMO (SMPTE / EBU)",
+        "line_outputs": "2 x XLR 4.4V max (+15 dBm)",
+        "digital_output": "XLR AES-3 (24 bit or 16 bit dithered)",
+        "headphones": "2 x Stereo 6.3mm (¼”) Jack 50 Ω",
+        "power": "Lithium-Ion, or external 9 – 16V (XLR 4 pole)",
+        "external_power_out": "2 Hirose 12V (max 1A)",
+        "usb": "USB 2.0 connector type \"A\" and type \"B\"",
+        "weight": "3.8 kg (8.3 lbs) (with battery pack)",
+        "dimensions": "310 x 74 x 285mm (W x H x D) (Incl. battery box)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs 1-4 (+48V phantom)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES-3 digital inputs (shared with analogue inputs 5+6)",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analogue line outputs",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES-3 digital output",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphone outputs 6.3 mm 50 Ω",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 2
+        },
+        {
+          "connector": "lemo-5pin-timecode",
+          "role": "timecode in/out (SMPTE/EBU)",
+          "dir": "bidir",
+          "signal": "ltc-timecode",
+          "count": 1
+        },
+        {
+          "connector": "xlr4",
+          "role": "external DC power input 9-16 V",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "hirose-4pin",
+          "role": "12 V DC outputs for RF receivers / digital mics (max 1A) - pin count not stated",
+          "dir": "out",
+          "signal": "dc-power",
+          "count": 2
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB 2.0 host",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB 2.0 device (file transfer)",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "Compact Flash slot (CF, not SD - closest id)",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes3",
+        "headphone-level",
+        "ltc-timecode",
+        "dc-power"
+      ],
+      "manual_url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Manuel-NAGRA-VI_V3.20_Francais.pdf",
+      "datasheet_url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Brochure_8p_Nagra_VI_8track_eng1.pdf",
+      "product_page_url": "https://www.nagraaudio.com/product/nagra-vi-film/",
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Manuel-NAGRA-VI_V3.20_Francais.pdf",
+          "title": "Manuel NAGRA VI V3.20 (Français)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "V3.20",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/NVI_Manual_VI_EN_V320.pdf",
+          "title": "Nagra VI Manual V3.20 (English)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V3.20",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nagraaudio.com/files/Nagra_vi_man_3.pdf",
+          "title": "Nagra VI Operating Instructions and Reference Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Brochure_8p_Nagra_VI_8track_eng1.pdf",
+          "title": "Nagra VI brochure (English)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Nagra_VI_fra_.pdf",
+          "title": "Nagra VI brochure (Français)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.nagraaudio.com/?p=1328",
+          "publisher": "Nagra Audio (Nagra VI product page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.tracks",
+            "key_specs.recording_method",
+            "key_specs.analog_inputs",
+            "key_specs.digital_inputs",
+            "key_specs.mic_sensitivity",
+            "key_specs.conversion",
+            "key_specs.sample_rates",
+            "key_specs.file_type",
+            "key_specs.media",
+            "key_specs.timecode",
+            "key_specs.line_outputs",
+            "key_specs.digital_output",
+            "key_specs.headphones",
+            "key_specs.power",
+            "key_specs.external_power_out",
+            "key_specs.usb",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "status",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.nagraaudio.com/files/Nagra_vi_man_3.pdf",
+          "publisher": "Nagra Audio (operating manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.media",
+            "key_specs.timecode",
+            "key_specs.file_type",
+            "key_specs.external_power_out",
+            "key_specs.analog_inputs",
+            "why_it_is_a_classic"
+          ]
+        },
+        {
+          "url": "https://www.nagraaudio.com/historical-products/",
+          "publisher": "Nagra Audio (historical products list)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "status"
+          ]
+        }
+      ],
+      "notes": "Product page states 'Manufactured from 2008 to 2018'. A web-search summary described 8 channels as 4 mic + 2 line + 2 mix; the product page wording (4 mic/line XLR + 2 AES shared with inputs 5+6) is used. Compact Flash slot mapped to sd-card-slot (closest media id). The manual also describes a 3-pole LEMO mains-supply connector, not modelled here.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "XLR4 DC input, Hirose DC outputs for receivers, LEMO 5-pin timecode and AES on XLR: classic location-recorder wiring."
+      }
+    },
+    {
+      "id": "nagra-4-2",
+      "brand": "Nagra (Kudelski)",
+      "model": "Nagra 4.2",
+      "category": "recorders-playback",
+      "sub_type": "field-recorder",
+      "technology": "Portable mono full-track ¼-inch (6.35 mm) analogue tape recorder, optional Neopilot 50/60 Hz sync with quartz generator",
+      "year_introduced": 1971,
+      "status": "discontinued",
+      "why_it_is_a_classic": "The reference analogue location recorder for film and radio reportage for decades, still a symbol of French cinema sound. It is the textbook example of Neopilot sync, confidence playback via separate record/playback heads, and battery-powered field recording.",
+      "typical_uses": [
+        "film location sound (analogue, Neopilot sync)",
+        "radio reportage",
+        "teaching analogue tape principles"
+      ],
+      "key_specs": {
+        "tape_format": "portable mono full track 6.35-mm (¼ inch) analogue audio tape recorder",
+        "tape_speeds": "38, 19 and 9.5 cm/s (15, 7 ½, 3 ¾ ips), NAB or CCIR standard",
+        "sync": "NEOPILOT 50/60 Hz sync system with a built-in quartz generator (optional)",
+        "mic_inputs": "Two mic. inputs, switchable to dynamic, T or P (48V) condenser",
+        "line_input": "One voltage or current line input (banana jack, input impedance 100 k Ohm)",
+        "line_output": "4.4V or 1.55V balanced line output, depending on the transformer installed (two 4mm banana sockets, floating)",
+        "frequency_response": "50 Hz to 20 kHz ±1 dB (200 Ohm microphone input, line output without load, QPSE-200-XOYO preamplifiers)",
+        "wow_and_flutter": "±0,05 % at 15 ips; ±0.07 % at 7½ ips; ±0.12 % at 3¾ ips (weighted peak-to-peak, DIN 45 507/ANSI 4372)",
+        "power": "–10.5 to -30 V DC (positive ground); twelve \"D\" type 1.5 V cells (R 20); external supply via 6 pin Tuchel-type T 3403 connector marked POWER PACK",
+        "max_reel": "5\" (127 mm) with lid closed",
+        "weight": "13 lb (5.89 kg) without batteries or tape; 15lb (6.8 kg) with ordinary batteries, 5\" reels of tape",
+        "dimensions": "12.6 x 8.8 x 4.4 \" (320 x 223 x 111 mm) case with lid closed"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "microphone inputs (dynamic, T or 48V phantom)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 2
+        },
+        {
+          "connector": "binding-post",
+          "role": "line input (banana jack)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "binding-post",
+          "role": "balanced floating line output (two 4 mm banana sockets) + ground banana",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 3
+        },
+        {
+          "connector": "multipin-harting",
+          "role": "POWER PACK external supply, 6 pin Tuchel T 3403 (no taxonomy id; closest multipin used)",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 1
+        },
+        {
+          "connector": "multipin-harting",
+          "role": "Neopilot pilot signal, 6 pin Tuchel socket (closest multipin id)",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "dc-power"
+      ],
+      "manual_url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Manuel-dInstruction-4_2-Francais.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.nagraaudio.com/product/nagra-4-2/",
+      "manual_languages": [
+        "fr",
+        "en",
+        "de"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Manuel-dInstruction-4_2-Francais.pdf",
+          "title": "Manuel d'instruction Nagra 4.2 (Français)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Instruction-Manual-4_2-English.pdf",
+          "title": "Nagra 4.2 Instruction Manual (English)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Bedienungsanleitung-4_2-Deutsch.pdf",
+          "title": "Nagra 4.2 Bedienungsanleitung (Deutsch)",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Service-Manual-4_2.pdf",
+          "title": "Nagra 4.2 Service Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "service"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.nagraaudio.com/product/nagra-4-2/",
+          "publisher": "Nagra Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.tape_format",
+            "key_specs.tape_speeds",
+            "key_specs.sync",
+            "key_specs.mic_inputs",
+            "key_specs.line_input",
+            "key_specs.line_output",
+            "key_specs.power"
+          ]
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2020/09/Instruction-Manual-4_2-English.pdf",
+          "publisher": "Nagra (Kudelski) instruction manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mic_inputs",
+            "key_specs.line_input",
+            "key_specs.line_output",
+            "key_specs.frequency_response",
+            "key_specs.wow_and_flutter",
+            "key_specs.power",
+            "key_specs.max_reel",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "key_specs.tape_speeds",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.nagraaudio.com/historical-products/",
+          "publisher": "Nagra Audio (historical products list)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "status"
+          ]
+        }
+      ],
+      "notes": "Listed by Nagra under historical products (1971). Tuchel DIN-type connectors have no taxonomy id; multipin-harting used as closest; banana sockets mapped to binding-post. External supply is negative voltage with positive ground per the manual. Preamplifiers are plug-in modules (QPSE/QPUT/QPAUT types) so mic powering depends on fitted preamps.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "tuchel-din"
+        ],
+        "proposed_new_signals": [
+          "neopilot-sync"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Historic lesson: banana line I/O, Tuchel power, Neopilot sync; less relevant to modern wiring."
+      }
+    },
+    {
+      "id": "nagra-seven",
+      "brand": "Nagra (Kudelski)",
+      "model": "Nagra SEVEN (Nagra VII)",
+      "category": "recorders-playback",
+      "sub_type": "field-recorder",
+      "technology": "2-track portable digital recorder for reportage / broadcast and film, SD + internal micro SD, optional timecode, Ethernet (FTP/VoIP) and optional WiFi/4G",
+      "year_introduced": 2013,
+      "status": "current",
+      "why_it_is_a_classic": "Nagra's compact 2-track successor to the ARES/LB reporter recorders, with AES-42 input, file transfer over IP and optional timecode. Nagra still sells it as the Nagra VII Anniversary, stated to be electronically identical.",
+      "typical_uses": [
+        "radio reportage",
+        "broadcast news with IP file transfer",
+        "film location 2-track / boom recording"
+      ],
+      "key_specs": {
+        "tracks": "2 individual",
+        "analog_inputs": "2 x XLR Microphone (Dynamic, +48V Phantom) / line",
+        "mic_sensitivity": "2.8, 10 and 40 mV/Pa, selectable",
+        "digital_input": "XLR 3-pole / AES 42 (10V DC for AES-42 microphones)",
+        "sample_rates": "44.1, 48, 88.2, 96, 176.4 and 192 kHz",
+        "bit_depth": "16 / 24 bit",
+        "file_type": "16 / 24 bit Broadcast Wave File BWF (WAV); MPEG-1 Layer II optional",
+        "media": "16GB micro SD flash internal; removable SD Flash memory card; FAT 16/32",
+        "timecode": "5-pole LEMO connector (time code option)",
+        "line_output": "XLR 4.4V max (+15 dBm)",
+        "digital_output": "XLR AES-3 (24 bit or 16 bit)",
+        "headphones": "Stereo 6.3mm (¼”) Jack 50 Ω",
+        "network": "Ethernet RJ 45 (FTP, VoIP); WiFi and 4G optional",
+        "usb": "USB 2.0, Micro AB connector",
+        "power": "External 15V; Lithium Polymer battery pack (N7-BB1 3.2 Ah approx. 5 hours)",
+        "weight": "800 g, including battery pack",
+        "dimensions": "165 × 175 × 65 mm (W × D × H, including battery box)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "mic/line inputs (+48V phantom); one also AES-42",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "analogue line output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": "not shown"
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES-3 digital output",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphones 6.3 mm 50 Ω",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "lemo-5pin-timecode",
+          "role": "timecode in/out (TC option)",
+          "dir": "bidir",
+          "signal": "ltc-timecode",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet (FTP / VoIP)",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB 2.0 micro-AB (no micro-USB id; closest)",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "removable SD card",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "aes3",
+        "headphone-level",
+        "ltc-timecode",
+        "dc-power"
+      ],
+      "manual_url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Manuel_Seven_FR_V2101.pdf",
+      "datasheet_url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Brochure_8p_Nagra_7_eng_.pdf",
+      "product_page_url": "https://www.nagraaudio.com/product/nagra-vii-anniversary/",
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Manuel_Seven_FR_V2101.pdf",
+          "title": "Manuel Nagra Seven V2.101 (Français)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "V2101",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Manual_Seven_EN_V2101.pdf",
+          "title": "Nagra Seven Manual V2.101 (English)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V2101",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Brochure_8p_Nagra_7_eng_.pdf",
+          "title": "Nagra 7 brochure (English)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.nagraaudio.com/product/nagra-seven-broadcast/",
+          "publisher": "Nagra Audio (Nagra Seven Broadcast page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.tracks",
+            "key_specs.analog_inputs",
+            "key_specs.mic_sensitivity",
+            "key_specs.digital_input",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_type",
+            "key_specs.media",
+            "key_specs.line_output",
+            "key_specs.digital_output",
+            "key_specs.headphones",
+            "key_specs.network",
+            "key_specs.usb",
+            "key_specs.power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.nagraaudio.com/product/nagra-vii-anniversary/",
+          "publisher": "Nagra Audio (Nagra VII Anniversary page)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.tracks",
+            "key_specs.analog_inputs",
+            "key_specs.digital_input",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_type",
+            "key_specs.media",
+            "key_specs.line_output",
+            "key_specs.digital_output",
+            "key_specs.headphones",
+            "key_specs.usb",
+            "key_specs.power",
+            "key_specs.weight",
+            "key_specs.dimensions",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.nagraaudio.com/wp-content/uploads/2018/12/Manual_Seven_EN_V2101.pdf",
+          "publisher": "Nagra Audio (user manual)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.timecode",
+            "key_specs.power"
+          ]
+        },
+        {
+          "url": "https://www.nagraaudio.com/historical-products/",
+          "publisher": "Nagra Audio (historical products list)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced"
+          ]
+        }
+      ],
+      "notes": "The Nagra Seven (2013) appears in Nagra's historical list, while the Nagra VII Anniversary is sold on the Pro Audio page and is stated to be electronically identical, hence status 'current'. Timecode is an option. The page describes the external supply as 15V but not the connector type.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [
+          "aes42"
+        ],
+        "sim_value": "medium",
+        "sim_value_reason": "Good AES-42 digital mic and IP file-transfer example for radio reportage."
+      }
+    },
+    {
+      "id": "aaton-cantar-x",
+      "brand": "Aaton (Aaton Digital, Grenoble)",
+      "model": "Cantar-X",
+      "category": "recorders-playback",
+      "sub_type": "field-recorder",
+      "technology": "Multichannel digital location recorder-mixer: 6 tracks + 2-track mix, internal 2.5-inch hard drive plus optical/removable drives",
+      "year_introduced": 2004,
+      "status": "discontinued",
+      "why_it_is_a_classic": "French-designed (Grenoble) multitrack location recorder that became a reference on French film sets, followed by the Cantar-X2, X3 (2014) and CantarMini (2017). Aaton Digital was liquidated in 2024; Club Cantar, with Atomos supplying parts, now supports the range.",
+      "typical_uses": [
+        "French film location sound",
+        "multitrack ISO recording with timecode"
+      ],
+      "key_specs": {
+        "tracks": "Six tracks, plus a 2-track stereo mix (submixes can be bounced to tracks 7 and 8)",
+        "inputs": "Three mono and two stereo mic inputs, a pair of stereo line inputs, and eight channels of digital I/O on a DB-25 connector",
+        "phantom_power": "Switchable per channel (voltage not stated)",
+        "sample_rate_bit_depth": "Multichannel 24/96 cited; reviewer tested at 48 kHz/24-bit",
+        "media": "2.5-inch internal hard drive, plus CD-R, DVD+R, or DVD-RAM drives (internal or external); up to three drives at once; FAT32",
+        "timecode": "Timecode I/O on a 5-pin Lemo connector; LTC, word clock and video reference on DB-15",
+        "power": "Two rechargeable batteries on 4-pin XLR connectors, 10 to 15 hours",
+        "other_io": "FireWire; optional Bluetooth module for Palm PDA",
+        "price_at_launch": "$15,000"
+      },
+      "connectors": [
+        {
+          "connector": "dsub25",
+          "role": "8-channel digital I/O",
+          "dir": "bidir",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "dsub25",
+          "role": "DB-15 sync connector (word clock, video ref, LTC) - no DB-15 id, closest D-sub used",
+          "dir": "bidir",
+          "signal": "wordclock",
+          "count": 1
+        },
+        {
+          "connector": "lemo-5pin-timecode",
+          "role": "timecode I/O",
+          "dir": "bidir",
+          "signal": "ltc-timecode",
+          "count": 1
+        },
+        {
+          "connector": "xlr4",
+          "role": "battery inputs",
+          "dir": "in",
+          "signal": "dc-power",
+          "count": 2
+        },
+        {
+          "connector": "ieee-firewire",
+          "role": "FireWire",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "ltc-timecode",
+        "wordclock",
+        "dc-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.mixonline.com/technology/aaton-cantar-x-field-recorder-mixer-370156",
+          "publisher": "Mix (review, 06/01/2004)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "key_specs.tracks",
+            "key_specs.inputs",
+            "key_specs.phantom_power",
+            "key_specs.sample_rate_bit_depth",
+            "key_specs.media",
+            "key_specs.timecode",
+            "key_specs.power",
+            "key_specs.other_io",
+            "key_specs.price_at_launch",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Aaton_Digital",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "year_introduced",
+            "status",
+            "brand"
+          ]
+        },
+        {
+          "url": "https://www.newsshooter.com/2025/04/06/atomos-enters-into-agreement-with-club-cantar-for-ongoing-aaton-support/",
+          "publisher": "Newsshooter",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "status",
+            "year_introduced"
+          ]
+        },
+        {
+          "url": "https://clubcantar.com/documentation/",
+          "publisher": "Club Cantar (support organisation)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "status"
+          ]
+        }
+      ],
+      "notes": "Aaton Digital (Grenoble) was ended by court judgment on 15 Feb 2024; assets went to Atomos, and Club Cantar (founded by Gilles Deshays, with former Aaton engineers) supports the recorders. aaton.com now redirects to an Atomos page (403 when fetched). Club Cantar links a Google Drive documentation folder (subfolders MINI, X3, Dante, Options...) at https://drive.google.com/drive/folders/1lZY0EbyzdEiGcSNeWexR4W8iSW0erliM?usp=sharing, but individual files could not be listed, and it is not a manufacturer source. The Cantar-X was chosen over the X3 / Mini because only the X had a readable spec source; Cantar-X3 (March 2014) and CantarMini (March 2017) dates are from Wikipedia. Mic connector types not stated in the review.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "dsub15"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Historic French reference; documentation too thin for an accurate wiring model."
+      }
+    },
+    {
+      "id": "zoom-h6essential",
+      "brand": "Zoom",
+      "model": "H6essential",
+      "category": "recorders-playback",
+      "sub_type": "handheld-recorder",
+      "technology": "Handheld 32-bit float recorder with dual A/D converters (no manual gain), interchangeable XY capsule (XYH-6e) and 4 XLR/TRS combo inputs",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Current version of Zoom's H6, a handheld 6-track recorder with interchangeable capsules that is common in schools, podcasts and reportage. The essential version records 32-bit float only, so input gain does not need setting.",
+      "typical_uses": [
+        "reportage / interviews",
+        "school radio and podcast",
+        "ambience recording",
+        "small-band and rehearsal recording",
+        "USB audio interface"
+      ],
+      "key_specs": {
+        "inputs": "4 mono inputs on XLR/TRS combo jacks (XLR pin 2 hot; TRS tip hot) + XY stereo mic capsule XYH-6e",
+        "capsule": "XYH-6e, 90° XY, sensitivity −42 dB/1 Pa at 1 kHz, max SPL 135 dB SPL",
+        "input_impedance": "MIC 3.8 kΩ or higher; LINE 39 kΩ or higher",
+        "max_input_level": "MIC +4 dBu; LINE +24 dBu",
+        "equivalent_input_noise": "MIC −120 dBu or less (IHF-A) at 150 Ω",
+        "phantom_power": "+48 V, 32 mA or less across all channels",
+        "tracks": "Simultaneous recording tracks: 8 max; playback tracks: 6 max",
+        "recording_format": "WAV, 44.1/48/96 kHz, 32-bit float, mono/stereo; BWF and iXML supported",
+        "media": "microSDHC 4–32 GB; microSDXC 64 GB–1 TB",
+        "outputs": "LINE OUT: 1 stereo mini jack, max +1 dBu; Headphones: 1 stereo mini jack, 20 mW + 20 mW into 32 Ω",
+        "usb": "USB Type-C, USB 2.0 High Speed; audio interface 6 in / 2 out (multi), 2 in / 2 out (stereo)",
+        "power": "4 AA batteries; AC adapter ZOOM AD-17 DC 5 V / 1 A; USB bus power",
+        "dimensions": "78.1 mm (W) × 160.1 mm (D) × 42.8 mm (H)",
+        "weight": "381 g including batteries (recorder)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "inputs 1-4 (XLR/TRS combo, locking)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "LINE OUT (stereo mini jack)",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "headphone output",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "usb-c",
+          "role": "USB audio interface / file transfer / bus power",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "microSD card slot",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "headphone-level",
+        "usb-audio",
+        "dc-power"
+      ],
+      "manual_url": "https://zoomcorp.com/manuals/h6essential-de/",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [
+        "de"
+      ],
+      "manuals": [
+        {
+          "url": "https://zoomcorp.com/manuals/h6essential-de/",
+          "title": "H6essential Bedienungsanleitung (web manual, Deutsch)",
+          "language": "de",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://zoomcorp.com/manuals/h6essential-de/",
+          "publisher": "Zoom Corporation (German web manual, Spezifikationen)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.capsule",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.equivalent_input_noise",
+            "key_specs.phantom_power",
+            "key_specs.tracks",
+            "key_specs.recording_format",
+            "key_specs.media",
+            "key_specs.outputs",
+            "key_specs.usb",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.digitec.ch/en/s1/product/zoom-h6essential-multitrack-recorder-audio-recorders-42502295",
+          "publisher": "Retailer listings (web-search summary incl. Digitec, Athens Pro Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.recording_format",
+            "key_specs.media",
+            "key_specs.usb",
+            "key_specs.capsule"
+          ]
+        }
+      ],
+      "notes": "Only the German web manual was reachable from search results; English/French versions and the product page could not be located (search budget exhausted, and Zoom URL patterns not guessed). Zoom's help page zoomcorp.com/help/h6essential was cited in a Quick Tour but its URL form was not confirmed in a tool result. No manual gain control: dual A/D converters. Combo inputs mapped to xlr3-f.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Typical school recorder: combo inputs, phantom power and 32-bit float gain-staging lesson."
+      }
+    },
+    {
+      "id": "tascam-dr-40x",
+      "brand": "TASCAM",
+      "model": "DR-40X",
+      "category": "recorders-playback",
+      "sub_type": "handheld-recorder",
+      "technology": "Handheld 4-channel linear PCM recorder with adjustable built-in stereo mics and 2 XLR/TRS combo inputs, USB audio interface",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Low-cost handheld recorder found in many French schools and media-education projects; the Lille académie (CLEMI) publishes a school-radio tutorial for a Tascam recorder pointing to the DR-40X French manual. It records BWF and offers XLR phantom inputs.",
+      "typical_uses": [
+        "school radio / media education",
+        "interviews and reportage",
+        "rehearsal recording",
+        "USB audio interface"
+      ],
+      "key_specs": {
+        "channels": "4 canaux (stéréo × 2)",
+        "inputs": "EXT MIC/LINE IN: XLR–3–31 (alimentation fantôme prise en charge) / Jack 6,35 mm 3 points (TRS)",
+        "mic_input": "Impédance d'entrée : 2,2 kΩ; Niveau d'entrée maximal : −3 dBV",
+        "line_input": "Impédance d'entrée : 10 kΩ ou plus; Niveau d'entrée maximal : +20 dBu",
+        "phantom_power": "+48 V, 3 mA × 2 (as stated in battery-life table)",
+        "recording_formats": "BWF : 44,1/48/96kHz, 16/24 bit; WAV : 44,1/48/96 kHz, 16/24 bit; MP3 : 44,1/48 kHz, 32–320 kbit/s",
+        "media": "Carte SD (64 Mo - 2 Go); Carte SDHC (4 Go - 32 Go); Carte SDXC (48 Go - 128 Go)",
+        "output": "/LINE OUT: mini-jack 3,5 mm stéréo; 20 mW + 20 mW (casque, charge de 32 Ω)",
+        "usb": "micro-B; USB 2.0 HIGH SPEED (stockage de masse); USB1.1 FULL SPEED, classe audio",
+        "remote": "Prise REMOTE : mini-jack 2,5 mm 3 points (TRS)",
+        "frequency_response": "20 Hz - 20 kHz, +0/−1 dB (EXT IN vers LINE OUT, F.é. 44,1 kHz, JEITA)",
+        "snr": "94 dB ou plus (EXT IN vers LINE OUT, JEITA)",
+        "power": "3 piles AA (alcalines) ou batteries Ni-MH; alimentation par le bus USB; adaptateur secteur PS-P520E",
+        "dimensions": "70 x 155 x 35mm (micros fermés)",
+        "weight": "282 g (avec pile)/213 g (sans pile)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "EXT MIC/LINE IN 1-2 (XLR/TRS combo, phantom on XLR)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "headphone / LINE OUT",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "usb-b",
+          "role": "USB micro-B (mass storage + audio class) - micro-B mapped to usb-b",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "REMOTE 2.5 mm TRS (no 2.5 mm id; closest)",
+          "dir": "in",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "SD/SDHC/SDXC card",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "phantom-48v",
+        "headphone-level",
+        "usb-audio"
+      ],
+      "manual_url": "https://tascam.jp/downloads/products/tascam/dr-40x/f_dr-40x_rm_vd.pdf",
+      "datasheet_url": "https://tascam.com/wp-content/uploads/downloads/catalogs/tascam/english/us/dr-40x_leaflet.pdf",
+      "product_page_url": "https://tascam.com/us/product/dr-40x",
+      "manual_languages": [
+        "fr",
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://tascam.jp/downloads/products/tascam/dr-40x/f_dr-40x_rm_vd.pdf",
+          "title": "DR-40X Manuel de référence (D01354081D)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "D01354081D",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/dr-40x/e_dr-40x_rm_vd.pdf",
+          "title": "DR-40X Reference Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/dr-40x/7l_dr-40x_om_vc_b6.pdf",
+          "title": "DR-40X Owner's Manual",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start"
+        },
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/catalogs/tascam/english/us/dr-40x_leaflet.pdf",
+          "title": "DR-40X Leaflet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2019-04-25",
+          "official": true,
+          "kind": "datasheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://tascam.jp/downloads/products/tascam/dr-40x/f_dr-40x_rm_vd.pdf",
+          "publisher": "TASCAM (manuel de référence FR)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.inputs",
+            "key_specs.mic_input",
+            "key_specs.line_input",
+            "key_specs.phantom_power",
+            "key_specs.recording_formats",
+            "key_specs.media",
+            "key_specs.output",
+            "key_specs.usb",
+            "key_specs.remote",
+            "key_specs.frequency_response",
+            "key_specs.snr",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://tascam.com/us/product/dr-40x",
+          "publisher": "TASCAM (TEAC) product page, SPECS tab",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.mic_input",
+            "key_specs.line_input",
+            "key_specs.phantom_power",
+            "key_specs.recording_formats",
+            "key_specs.media",
+            "key_specs.usb",
+            "status"
+          ]
+        },
+        {
+          "url": "https://proplugin.com/en/product/tascam-dr-40x",
+          "publisher": "ProPlugin (retailer)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.phantom_power",
+            "key_specs.recording_formats",
+            "key_specs.channels",
+            "key_specs.media",
+            "key_specs.usb"
+          ]
+        },
+        {
+          "url": "https://clemi.site.ac-lille.fr/wp-content/uploads/sites/41/2024/11/TUTO-RADIO_Prise-de-son-Tascam.pdf",
+          "publisher": "CLEMI, Académie de Lille (search-result description only; PDF fetch failed)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "education-official",
+          "covers": [
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "TASCAM now also lists a DR-40XP; the DR-40X is still listed as current (firmware V1.08). The DR-40X also has built-in adjustable stereo mics (not detailed here). USB micro-B mapped to usb-b; 2.5 mm remote jack mapped to trs-35mm (closest).",
+      "conflicts": [
+        {
+          "field": "key_specs.media",
+          "values": [
+            {
+              "value": "Carte SD / SDHC / SDXC (48 Go - 128 Go)",
+              "source_url": "https://tascam.jp/downloads/products/tascam/dr-40x/f_dr-40x_rm_vd.pdf"
+            },
+            {
+              "value": "microSDXC cards up to 128 GB",
+              "source_url": "https://proplugin.com/en/product/tascam-dr-40x"
+            }
+          ],
+          "note": "Retailer says microSD; manufacturer manual lists SD-family cards."
+        },
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "282 g (avec pile)/213 g (sans pile)",
+              "source_url": "https://tascam.jp/downloads/products/tascam/dr-40x/f_dr-40x_rm_vd.pdf"
+            },
+            {
+              "value": "0.5 kg",
+              "source_url": "https://proplugin.com/en/product/tascam-dr-40x"
+            }
+          ],
+          "note": "Retailer figure is probably shipping weight."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Simple school recorder: combo XLR/TRS inputs with phantom, 3.5 mm out."
+      }
+    },
+    {
+      "id": "tascam-portacapture-x8",
+      "brand": "TASCAM",
+      "model": "Portacapture X8",
+      "category": "recorders-playback",
+      "sub_type": "handheld-recorder",
+      "technology": "Handheld 32-bit float multitrack recorder: detachable A-B/X-Y condenser mic pair, 4 XLR/TRS combo inputs, touchscreen, 8 tracks (6 + stereo mix)",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "TASCAM's flagship handheld, combining four phantom-powered XLR/TRS inputs and a reconfigurable A-B/X-Y mic pair with 32-bit float recording. It doubles as an 8-in/2-out USB interface for podcasts and school studios.",
+      "typical_uses": [
+        "reportage and interviews",
+        "podcast / school radio",
+        "music and rehearsal recording",
+        "video sound with camera output"
+      ],
+      "key_specs": {
+        "inputs": "Jacks 1–2: 3.5 mm TRS with plug-in power (built-in mic pair); Jacks 3–6: XLR/TRS combo inputs; six input channels maximum",
+        "builtin_mics": "Detachable 14.6 mm condenser mics, A-B or X-Y",
+        "phantom_power": "+48V (phantom power supported by XLR only)",
+        "mic_input": "Input impedance: 2.2 kΩ or higher; Maximum input level: +2 dBu",
+        "tracks": "8 maximum (6 tracks plus a stereo mix)",
+        "formats": "WAV (BWF) 16/24-bit and 32-bit float, 44.1/48/96/192 kHz; MP3 44.1/48 kHz, 128–320 kbps",
+        "media": "microSD (64MB–2GB), microSDHC (4–32GB), microSDXC (48–512GB)",
+        "outputs": "Line out 3.5 mm stereo mini (−14 dBV nominal); headphone 3.5 mm stereo mini 45 mW + 45 mW into 32 Ω; CAMERA/LINE output with attenuation",
+        "usb": "USB Type-C, USB 2.0 High Speed; 8-in/2-out USB audio interface",
+        "power": "4 AA batteries (alkaline, Ni-MH, lithium), USB bus power, or PS-P520U AC adapter; max 7.5 W",
+        "dimensions": "83 × 205.6 × 41.5 mm (W × H × D, including protrusions)",
+        "weight": "472 g with batteries, 381 g without"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "inputs 3-6 (XLR/TRS combo, phantom on XLR)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 4
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "inputs 1-2 for detachable mic capsules (plug-in power)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 2
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "EXT IN (stereo mini)",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "CAMERA/LINE out",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 1
+        },
+        {
+          "connector": "trs-35mm",
+          "role": "headphone out",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "usb-c",
+          "role": "USB audio interface 8-in/2-out, mass storage, bus power",
+          "dir": "bidir",
+          "signal": "usb-audio",
+          "count": 1
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "microSD card",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "line-level-consumer",
+        "phantom-48v",
+        "headphone-level",
+        "usb-audio"
+      ],
+      "manual_url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/portacapture_x8/portacapture_x8_om_efsgiruj_ve2.pdf",
+      "datasheet_url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/portacapture_x8/portacapture_comparison_chart_e.pdf",
+      "product_page_url": "https://tascam.com/us/product/portacapture_x8",
+      "manual_languages": [
+        "multi",
+        "fr",
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/portacapture_x8/portacapture_x8_om_efsgiruj_ve2.pdf",
+          "title": "Portacapture X8 Owner's Manual (multilingual, includes Français section)",
+          "language": "multi",
+          "file_type": "pdf",
+          "version_or_date": "ve2",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://manual.tascam.jp/portacapture_x8/rm/en/",
+          "title": "Portacapture X8 Reference Manual V2.00 (web)",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "V2.00",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/portacapture_x8/portacapture_comparison_chart_e.pdf",
+          "title": "Portacapture Series Comparison Chart",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://tascam.com/us/product/portacapture_x8",
+          "publisher": "TASCAM (TEAC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.inputs",
+            "key_specs.builtin_mics",
+            "key_specs.tracks",
+            "key_specs.formats",
+            "key_specs.media",
+            "key_specs.outputs",
+            "key_specs.usb",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/portacapture_x8/portacapture_x8_om_efsgiruj_ve2.pdf",
+          "publisher": "TASCAM Owner's Manual",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.phantom_power",
+            "key_specs.mic_input",
+            "key_specs.inputs",
+            "manual_languages"
+          ]
+        }
+      ],
+      "notes": "The owner's manual PDF contains a FRANÇAIS section (checked in the text). Combo inputs mapped to xlr3-f. Bluetooth only via AK-BT1 adapter.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Connector set largely duplicates other handhelds."
+      }
+    },
+    {
+      "id": "tascam-da-6400",
+      "brand": "TASCAM",
+      "model": "DA-6400 / DA-6400dp",
+      "category": "recorders-playback",
+      "sub_type": "multitrack-recorder",
+      "technology": "1U 64-channel SSD multitrack recorder with two I/O card slots (MADI, Dante, AES/EBU, ST 2110), BNC timecode and word/video sync; dp version has dual power supplies",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Rack-mount 64-track backup and live-capture recorder used alongside digital consoles and in broadcast trucks, taking MADI or Dante cards. It is a modern descendant of TASCAM's DA-series multitrack recorders.",
+      "typical_uses": [
+        "live concert multitrack capture",
+        "broadcast / OB backup recording",
+        "virtual soundcheck playback",
+        "theatre show recording"
+      ],
+      "key_specs": {
+        "tracks": "64 channels maximum (44.1/48kHz sampling frequency); 32 channels maximum (88.2/96kHz sampling frequency)",
+        "sample_rates": "44.1, 48, 88.2 or 96 kHz",
+        "bit_depth": "16/24-bit",
+        "file_format": "BWF format (wav extension)",
+        "media": "SSD (AK-CC25 caddy, 240GB TSSD-240A included); FAT32",
+        "io_cards": "IF-MA64/EX (64-ch MADI optical/BNC), IF-MA64/BN (MADI BNC), IF-DA64 (64-ch Dante, RJ-45), IF-AE16 (16-ch AES/EBU, D-sub 25p ×2), IF-AN16/OUT, IF-ST2110 (ST2110-30/AES67)",
+        "timecode": "TIME CODE IN/OUT on BNC, SMPTE 12M-1999 compliant",
+        "word_video_sync": "WORD/VIDEO IN on BNC (word or NTSC/PAL black burst, HDTV tri-Level); WORD/VIDEO THRU/OUT on BNC",
+        "control": "RS-422 9-pin D-sub; PARALLEL 15-pin D-sub; ETHERNET RJ45 (100BASE-TX, 1000BASE-T); USB 2.0 A type",
+        "frequency_response": "10Hz - 45kHz ±0dB",
+        "headphones": "6.3mm (1/4\") standard stereo jack, 45 mW + 45 mW or higher",
+        "power": "AC 100-240V, 50/60Hz; 21 W (when IF-MA64/EX installed); DA-6400dp has two inlets",
+        "dimensions": "482.6 × 44.7 × 304.8 mm (width × height × depth), 1U",
+        "weight": "DA-6400: 3.9 kg; DA-6400dp: 4.0 kg (without I/O card or SSD case)"
+      },
+      "connectors": [
+        {
+          "connector": "bnc",
+          "role": "TIME CODE IN",
+          "dir": "in",
+          "signal": "ltc-timecode",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "TIME CODE OUT",
+          "dir": "out",
+          "signal": "ltc-timecode",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "WORD/VIDEO IN",
+          "dir": "in",
+          "signal": "wordclock",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "WORD/VIDEO THRU/OUT",
+          "dir": "out",
+          "signal": "wordclock",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet control (100BASE-TX / 1000BASE-T)",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "dsub25",
+          "role": "RS-422 (9-pin D-sub) - no DB-9 id, closest D-sub used",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "dsub25",
+          "role": "PARALLEL remote (15-pin D-sub) - closest D-sub id",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB 2.0 A (keyboard / control)",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "PHONES",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "bnc",
+          "role": "MADI coaxial (IF-MA64/BN or /EX card, optional)",
+          "dir": "bidir",
+          "signal": "madi",
+          "count": "card-dependent"
+        },
+        {
+          "connector": "rj45",
+          "role": "Dante (IF-DA64 card, optional)",
+          "dir": "bidir",
+          "signal": "aoip",
+          "count": "card-dependent"
+        },
+        {
+          "connector": "dsub25",
+          "role": "AES/EBU 16-ch (IF-AE16 card, D-sub 25p ×2, optional)",
+          "dir": "bidir",
+          "signal": "aes3",
+          "count": 2
+        }
+      ],
+      "signal_types": [
+        "madi",
+        "aoip",
+        "dante",
+        "aes67",
+        "aes3",
+        "ltc-timecode",
+        "wordclock",
+        "headphone-level",
+        "gpio-tally",
+        "mains-power"
+      ],
+      "manual_url": "https://tascam.com/wp-content/uploads/downloads/products/old/891/e_da-6400dp_om_va.pdf",
+      "datasheet_url": "https://tascam.com/wp-content/uploads/downloads/products/old/891/da-6400%2Bda-6400dp_e-spec.pdf",
+      "product_page_url": "https://tascam.com/us/product/da-6400",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/old/891/e_da-6400dp_om_va.pdf",
+          "title": "DA-6400/DA-6400dp Owner's Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/da-6400/e_da-6400_add_vk.pdf",
+          "title": "Owner's Manual Addendum V3.20",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V3.20",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/old/891/da-6400%2Bda-6400dp_e-spec.pdf",
+          "title": "DA-6400/DA-6400dp Product Spec Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Dec, 2015",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/old/891/da-6400%2Bda-6400dp_e-spec.pdf",
+          "publisher": "TEAC Corporation spec sheet",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.tracks",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_format",
+            "key_specs.media",
+            "key_specs.timecode",
+            "key_specs.word_video_sync",
+            "key_specs.control",
+            "key_specs.frequency_response",
+            "key_specs.headphones",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://tascam.com/us/product/da-6400",
+          "publisher": "TASCAM (TEAC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.tracks",
+            "key_specs.sample_rates",
+            "key_specs.bit_depth",
+            "key_specs.file_format",
+            "key_specs.media",
+            "key_specs.io_cards",
+            "key_specs.timecode",
+            "key_specs.word_video_sync",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ]
+        }
+      ],
+      "notes": "AC mains inlet (two on the dp version) is not modelled because the inlet type is not stated. RS-422 DB-9 and parallel DB-15 mapped to dsub25 (closest id). French regional page exists (https://www.tascam.eu/fr/product/da-6400) but no French manual was found (tascam.eu returned 403).",
+      "conflicts": [
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "3.9 kg (spec table)",
+              "source_url": "https://tascam.com/us/product/da-6400"
+            },
+            {
+              "value": "3.4 kg (Key Features section)",
+              "source_url": "https://tascam.com/us/product/da-6400"
+            },
+            {
+              "value": "3.5 kg (feature text)",
+              "source_url": "https://tascam.com/us/product/da-6400"
+            }
+          ],
+          "note": "Spec sheet says 3.9 kg without I/O card or SSD case; other figures on the same page differ."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "dsub9",
+          "dsub15"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "BNC timecode, word/video sync and MADI/Dante card options make it a good digital-transport and sync lesson."
+      }
+    },
+    {
+      "id": "tascam-ss-cdr250n",
+      "brand": "TASCAM",
+      "model": "SS-CDR250N",
+      "category": "recorders-playback",
+      "sub_type": "playback-device",
+      "technology": "1U solid-state (SD/USB) + CD recorder/player with networking (FTP, Telnet), balanced/unbalanced analog and AES/EBU / S/PDIF I/O, optional Dante card",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "Rack recorder/player used for theatre and installation playback, archive recording and radio cart-style replay, with RS-232C, parallel (GPIO-type) and network control. TASCAM lists it in its installation system design guide.",
+      "typical_uses": [
+        "theatre / event playback",
+        "conference and church recording",
+        "installation background music",
+        "radio and archive transfers"
+      ],
+      "key_specs": {
+        "media": "SD cards (512 MB – 2 GB); SDHC (4 GB – 32 GB); SDXC (64 GB – 128 GB); USB flash drives (512 MB – 128 GB); CD-R, CD-R-DA, CD-RW, CD-RW-DA",
+        "file_formats": "MP3: 44.1/48 kHz, 64/128/192/256/320 kbps; WAV: 44.1/48/96 kHz, 16/24-bit; CD-DA: 44.1 kHz, 16-bit",
+        "channels": "2 channels (stereo); 1 channel (mono)",
+        "analog_inputs": "RCA pin jacks (-10 dBV); XLR-3-31 balanced (+4 dBu nominal line; mic with phantom power supported)",
+        "analog_outputs": "RCA pin jacks (-10 dBV); XLR-3-32 balanced (+4 dBu nominal)",
+        "digital_io": "AES/EBU XLR-3-31 in / XLR-3-32 out (AES3-2003/IEC60958-4); S/PDIF RCA in/out (IEC60958-3)",
+        "dante_option": "IF-DA2 interface card (sold separately) adds Dante 2ch input and output",
+        "control": "Remote 2.5 mm TRS; RS-232C D-sub 9-pin; Parallel D-sub 25-pin; Ethernet RJ45 100BASE-TX (FTP client/server, SNTP, Telnet); USB A-type",
+        "frequency_response": "20 Hz – 20 kHz: +/-0.5 dB (Fs = 44.1/48 kHz, JEITA)",
+        "snr": "106 dB or more (LINE IN to LINE OUT, JEITA)",
+        "phones": "6.3 mm (1/4\") standard stereo jack, 45 mW + 45 mW",
+        "power": "AC 100-240 V, 50-60 Hz; 22 W",
+        "dimensions": "482.6 × 45 × 300.5 mm (W x H x D)",
+        "weight": "3.2 kg"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced analog input L/R (line or mic with phantom)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "balanced analog output L/R",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "unbalanced analog input L/R",
+          "dir": "in",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "rca",
+          "role": "unbalanced analog output L/R",
+          "dir": "out",
+          "signal": "line-level-consumer",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "AES/EBU digital input",
+          "dir": "in",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "AES/EBU digital output",
+          "dir": "out",
+          "signal": "aes3",
+          "count": 1
+        },
+        {
+          "connector": "rca",
+          "role": "S/PDIF coaxial in",
+          "dir": "in",
+          "signal": "spdif",
+          "count": 1
+        },
+        {
+          "connector": "rca",
+          "role": "S/PDIF coaxial out",
+          "dir": "out",
+          "signal": "spdif",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "PHONES",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "dsub25",
+          "role": "PARALLEL remote (D-sub 25-pin, GPIO-type)",
+          "dir": "bidir",
+          "signal": "gpio-tally",
+          "count": 1
+        },
+        {
+          "connector": "dsub25",
+          "role": "RS-232C (D-sub 9-pin) - no DB-9 id, closest",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "rj45",
+          "role": "Ethernet 100BASE-TX (FTP, Telnet, SNTP)",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "usb-a",
+          "role": "USB flash drive / keyboard",
+          "dir": "bidir",
+          "signal": "n/a",
+          "count": 1
+        },
+        {
+          "connector": "sd-card-slot",
+          "role": "SD card slot",
+          "dir": "n/a",
+          "signal": "n/a",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "mic-level",
+        "phantom-48v",
+        "aes3",
+        "spdif",
+        "headphone-level",
+        "gpio-tally",
+        "mains-power"
+      ],
+      "manual_url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/ss-cdr250n_ss-r250n_rc-ss150/e_ss-cdr250n_om_vf.pdf",
+      "datasheet_url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/ss-cdr250n_ss-r250n_rc-ss150/ss-cdr250n_e-spec_om_vb.pdf",
+      "product_page_url": "https://tascam.com/us/product/ss-cdr250n",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/ss-cdr250n_ss-r250n_rc-ss150/e_ss-cdr250n_om_vf.pdf",
+          "title": "SS-CDR250N/SS-R250N Owner's Manual V2.00",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V2.00",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/ss-cdr250n_ss-r250n_rc-ss150/ss-cdr250n_add-v217_ej_va.pdf",
+          "title": "Owner's Manual Addendum V2.17",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "V2.17",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/ss-cdr250n_ss-r250n_rc-ss150/ss-cdr250n_e-spec_om_vb.pdf",
+          "title": "SS-CDR250N Product Spec Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "May, 2023",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://tascam.com/wp-content/uploads/downloads/products/tascam/ss-cdr250n_ss-r250n_rc-ss150/ss-cdr250n_e-spec_om_vb.pdf",
+          "publisher": "TEAC Corporation spec sheet (May 2023)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.media",
+            "key_specs.file_formats",
+            "key_specs.channels",
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.digital_io",
+            "key_specs.control",
+            "key_specs.frequency_response",
+            "key_specs.snr",
+            "key_specs.phones",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://tascam.com/us/product/ss-cdr250n",
+          "publisher": "TASCAM (TEAC)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.media",
+            "key_specs.file_formats",
+            "key_specs.analog_inputs",
+            "key_specs.analog_outputs",
+            "key_specs.digital_io",
+            "key_specs.dante_option",
+            "key_specs.control",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "status"
+          ]
+        }
+      ],
+      "notes": "Two manufacturer documents (product page + spec sheet) agree. The 'why' claim about the system design guide is based on the guide being linked from the product page. French regional page https://www.tascam.eu/fr/product/ss-cdr250n exists but returned 403; no French manual found.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [
+          "dsub9"
+        ],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Balanced XLR vs unbalanced RCA, AES vs S/PDIF and parallel GPIO remote on one rack unit: strong level/format lesson."
+      }
+    }
+  ]
+}

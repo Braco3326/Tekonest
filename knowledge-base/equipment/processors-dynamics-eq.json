@@ -1,0 +1,3918 @@
+{
+  "file": "processors-dynamics-eq.json",
+  "category": "processors-outboard",
+  "generated": "2026-10-22",
+  "selection_rationale": "Reference outboard taught in BTS MAV and found in French studios and live racks: transformer-coupled preamps (Focusrite ISA, Neve 1073, API 512c, UA 610), classic channel strips (Avalon, UA 6176, RND Shelford), the canonical compressor families (FET 1176, opto LA-2A, VCA dbx 160A/166xs and SSL bus, variable-mu Manley, Distressor), EQs (API 550A, passive Pultec-style EQP-1A, dbx 231s graphic for live/theatre) and the Drawmer DS201 gate. Each covers a distinct technology or connection lesson (500-series, insert/sidechain, barrier strips, Hi-Z DI).",
+  "not_found_log": [
+    {
+      "device_id": "universal-audio-solo-610",
+      "what": "Official uaudio.com product page and manual URL (only retailer-hosted and McGill-hosted copies found; McGill copy returned 404)",
+      "searched": "WebSearch 'Universal Audio SOLO/610 tube preamp specifications manual', 'uaudio.com SOLO/610 ...'; site:uaudio.com search blocked by exhausted search budget"
+    },
+    {
+      "device_id": "universal-audio-solo-610",
+      "what": "French manual, year_introduced, current status",
+      "searched": "same searches as above"
+    },
+    {
+      "device_id": "ams-neve-1073spx",
+      "what": "French manual; year_introduced of the SPX model",
+      "searched": "ams-neve.com/product-resource (EN manuals only); Thomann listing gives only retail availability date Nov 2017"
+    },
+    {
+      "device_id": "api-512c",
+      "what": "Readable spec text in official manual PDF (font-encoded, not extractable); French manual; year",
+      "searched": "apiaudio.com/512c, 512c_user_2019-05-26.pdf"
+    },
+    {
+      "device_id": "api-550a",
+      "what": "Full user manual (product page 'Manual' link is a 2-page brochure); French manual; exact year",
+      "searched": "apiaudio.com product page, br550a.pdf"
+    },
+    {
+      "device_id": "focusrite-isa-one",
+      "what": "Maximum output level and datasheet",
+      "searched": "Focusrite spec page, EN user guide v1.3 spec pages 18-19"
+    },
+    {
+      "device_id": "universal-audio-6176",
+      "what": "Official manual URL on uaudio.com; French manual",
+      "searched": "uaudio.com downloads + analog-hardware pages (no hardware manuals listed); help.uaudio.com article 206007836 returned 403; only retailer-hosted copies found (KMR Audio, barryrudolph.com, gear4music)"
+    },
+    {
+      "device_id": "universal-audio-1176ln",
+      "what": "Official manual URL on uaudio.com; French manual",
+      "searched": "uaudio.com product page (no PDF link), downloads page; help.uaudio.com article 206007816 (manuals section) not readable; retailer copies on kmraudio.com and zzounds.com"
+    },
+    {
+      "device_id": "universal-audio-teletronix-la-2a",
+      "what": "Official manual URL on uaudio.com; French manual",
+      "searched": "uaudio.com product page (no PDF link); help.uaudio.com article 206356233 returned 403; retailer copies on adorama.com and barryrudolph.com"
+    },
+    {
+      "device_id": "avalon-vt-737sp",
+      "what": "year_introduced; French manual; retailer cross-check",
+      "searched": "avalondesign.com product page + support/manuals; manual gives no launch year for the sp version; web search budget exhausted before retailer check"
+    },
+    {
+      "device_id": "rupert-neve-designs-shelford-channel",
+      "what": "year_introduced; French manual",
+      "searched": "rupertneve.com product page, Shelford series page, manual Rev C4"
+    },
+    {
+      "device_id": "universal-audio-6176",
+      "what": "year_introduced",
+      "searched": "uaudio.com product page, 6176 manual (only 2009 copyright)"
+    },
+    {
+      "device_id": "dbx-160a",
+      "what": "French manual",
+      "searched": "dbxpro.com/en/products/160a downloads list (English owner's manual and cut sheet only)"
+    },
+    {
+      "device_id": "dbx-160a",
+      "what": "year_introduced of the 160A model (only 'mid 1970's' for the 160 series)",
+      "searched": "dbx product page, cut sheet, owner's manual"
+    },
+    {
+      "device_id": "drawmer-ds201",
+      "what": "drawmer.com product page, official manual/datasheet URL on drawmer.com, French manual, year_introduced, confirmed status",
+      "searched": "WebSearch 'Drawmer DS201 dual noise gate specifications manual'; follow-up drawmer.com search blocked by exhausted web search budget"
+    },
+    {
+      "device_id": "drawmer-ds404",
+      "what": "Whole device (optional DS404 quad gate) not researched",
+      "searched": "WebSearch 'Drawmer DS404 quad gate specifications' refused: session web search budget exhausted"
+    },
+    {
+      "device_id": "ssl-the-bus-plus",
+      "what": "French manual; standalone datasheet",
+      "searched": "SSL product page downloads section (User Guide 1.1, Quick Start, brochure only)"
+    },
+    {
+      "device_id": "empirical-labs-distressor-el8",
+      "what": "official user manual, product page, year introduced, mains connector, verified primary specs",
+      "searched": "web search 'Empirical Labs Distressor EL8 specifications manual pdf', 'empiricallabs.com Distressor EL8 manual', site:empiricallabs.com; Full Compass/Reverb/UA help pages returned 403; web-search budget then exhausted"
+    },
+    {
+      "device_id": "manley-variable-mu",
+      "what": "official manual on manley.com",
+      "searched": "manley.com Variable Mu product page (no manual link); only Gear4music-hosted Rev 5.2 copy and barryrudolph.com copy found; web-search budget exhausted before searching manley.com downloads"
+    },
+    {
+      "device_id": "pulse-techniques-eqp-1a",
+      "what": "manual, connectors, power, weight (primary)",
+      "searched": "pulsetechniques.com product pages (two URLs) and support page: none list manual, connectors, mains or weight"
+    }
+  ],
+  "devices": [
+    {
+      "id": "focusrite-isa-one",
+      "brand": "Focusrite",
+      "model": "ISA One",
+      "category": "processors-outboard",
+      "sub_type": "mic-preamp",
+      "technology": "Single-channel transformer-coupled mic preamp (transformer-balanced mic input, Lundahl input transformer per trade press/retailer) with four switchable input impedances, independent DI channel and optional ISA ADN2 A-D/Dante card",
+      "year_introduced": 2008,
+      "status": "current",
+      "why_it_is_a_classic": "Sound On Sound described it at launch as a single-channel preamp based on the ISA110 module of Focusrite's Forte console. It is an affordable route to the ISA transformer preamp and its selectable input impedance makes a good teaching tool for mic/preamp loading.",
+      "typical_uses": [
+        "vocal and voice-over recording",
+        "single-mic tracking into an interface",
+        "DI recording of bass/guitar with amp thru",
+        "teaching mic input impedance"
+      ],
+      "key_specs": {
+        "mic_gain_range": "0 to 30 dB or 30 to 60 dB (with '30-60' switch enabled), in 10 dB steps, plus 0 to 20 dB of continuous trim",
+        "line_gain_range": "-20 to +10 dB in 10 dB steps, plus 0 to 20 dB continuous trim",
+        "instrument_gain_range": "+10 to +40 dB continuous, using Trim pot",
+        "mic_max_input_level": "+7 dBu",
+        "line_max_input_level": "+25 dBu",
+        "instrument_max_input_level": "+18 dBu",
+        "mic_input_impedance": "Transformer balanced, Low: 600 Ω, ISA 110: 1.4 kΩ, Medium: 2.4 kΩ, High: 6.8 kΩ",
+        "line_input_impedance": "Electronically balanced 10 kΩ",
+        "mic_frequency_response": "20 Hz – 20 kHz ± 0.2 dB | 10 Hz – 110 kHz ± 1.5 dB",
+        "mic_thd_n": "-92 dB (0.0025%) @ -1 dBr",
+        "mic_ein": "<-123 dBu 'A'-Weighted (typical), maximum gain",
+        "high_pass_filter": "75 Hz knee frequency, 18 dB/octave",
+        "phantom_power": "+48V phantom power to the mic input XLR (front panel switch)",
+        "max_output_level": "not found",
+        "nominal_level_metering": "default VU meter lineup 0 VU = 4 dBu; LED 0 dBFS = 22 dBu default",
+        "power": "1 x Internal, 100 – 240 V, 50 / 60 Hz; Consumption 35 W",
+        "dimensions": "Height 104mm / 4.1\", Width 220mm / 8.7\", Depth 290mm / 11.4\"",
+        "weight": "3.9 kg / 8.6 lbs",
+        "rack_units": "not rack-format (half-width desktop chassis, 220 mm wide per manual dimensions)",
+        "digital_option": "Digital card slot, compatible card ISA ADN2 (44.1–192 kHz; AES3, ADAT, Dante outputs per manual)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "microphone input (rear)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "line input (rear, parallel with TRS)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "line input (rear, balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "main output (rear)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "DI output (rear, line level, post instrument gain)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "insert send (rear, balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "insert return (rear, balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "cue mix inputs L & R (rear, balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "instrument (DI) input (front)",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "amp output / instrument thru (front)",
+          "dir": "out",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "headphones (front, stereo)",
+          "dir": "out",
+          "signal": "headphone-level",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC mains inlet (IEC)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "line-level-pro",
+        "instrument-hiz",
+        "headphone-level",
+        "insert-send-return",
+        "mains-power"
+      ],
+      "manual_url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/ISA%20One%20User%20Guide%201.1%20-%20FR.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://us.focusrite.com/mic-pres/isa-one/specifications",
+      "manual_languages": [
+        "fr",
+        "en",
+        "de",
+        "it",
+        "ja"
+      ],
+      "manuals": [
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/ISA%20One%20User%20Guide%201.1%20-%20FR.pdf",
+          "title": "ISA One User Guide 1.1 - FR",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "1.1",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/isaoneuserguide-french0.pdf",
+          "title": "ISA One Mode d'emploi",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/isa_one_user_guide_v1.3_en.pdf",
+          "title": "ISA One User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "v1.3 (file name); 'Version 1.2' printed on cover",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://userguides.focusrite.com/hc/en-gb/sections/17525669476114-ISA-One-User-Guide",
+          "title": "ISA One User Guide (online)",
+          "language": "en",
+          "file_type": "html",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/ISA%20ADN2-8%20%28French%29.pdf",
+          "title": "ISA ADN2/ADN8 Installation and User Guide (Dante option card)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/isa_one_user_guide_v1.3_en.pdf",
+          "publisher": "Focusrite",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.mic_gain_range",
+            "key_specs.line_gain_range",
+            "key_specs.instrument_gain_range",
+            "key_specs.mic_max_input_level",
+            "key_specs.line_max_input_level",
+            "key_specs.instrument_max_input_level",
+            "key_specs.mic_input_impedance",
+            "key_specs.line_input_impedance",
+            "key_specs.mic_frequency_response",
+            "key_specs.mic_thd_n",
+            "key_specs.mic_ein",
+            "key_specs.high_pass_filter",
+            "key_specs.phantom_power",
+            "key_specs.nominal_level_metering",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.digital_option",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://us.focusrite.com/mic-pres/isa-one/specifications",
+          "publisher": "Focusrite",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mic_gain_range",
+            "key_specs.line_gain_range",
+            "key_specs.instrument_gain_range",
+            "key_specs.high_pass_filter",
+            "key_specs.mic_ein",
+            "status",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://downloads.focusrite.com/focusrite/isa/isa-one",
+          "publisher": "Focusrite",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals",
+            "manual_languages"
+          ]
+        },
+        {
+          "url": "https://www.markertek.com/product/fcsr-ams-isa-one/focusrite-ams-isa-one-classic-mic-preamp-with-independent-di",
+          "publisher": "Markertek",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.mic_gain_range",
+            "key_specs.line_gain_range",
+            "key_specs.instrument_gain_range",
+            "key_specs.mic_input_impedance",
+            "technology"
+          ]
+        },
+        {
+          "url": "https://www.thomann.co.uk/focusrite_isa_one_analog_b_stock.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.phantom_power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "year_introduced"
+          ]
+        },
+        {
+          "url": "https://www.soundonsound.com/node/4907097",
+          "publisher": "Sound On Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "year_introduced",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "Values from Thomann, Markertek and Sound On Sound were read from search-result snippets only. year_introduced 2008 rests on a SOS news item dated 20/1/08 and Thomann's 'available since July 2008'. The English PDF file is named v1.3 but its cover reads 'Version 1.2'. No maximum output level is published.",
+      "conflicts": [
+        {
+          "field": "key_specs.mic_ein",
+          "values": [
+            {
+              "value": "-126dB measured at 60dB of gain with 150 Ohm terminating impedance and 22Hz/22kHz band-pass filter",
+              "source_url": "https://us.focusrite.com/mic-pres/isa-one/specifications"
+            },
+            {
+              "value": "<-123 dBu 'A'-Weighted (typical), maximum gain",
+              "source_url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/isa_one_user_guide_v1.3_en.pdf"
+            }
+          ],
+          "note": "Different measurement conditions (gain, weighting)."
+        },
+        {
+          "field": "key_specs.instrument_input_impedance",
+          "values": [
+            {
+              "value": "High = greater than 1MΩ Low = greater than 300kΩ (also DI High 2.4 MΩ / Low 470 kΩ in feature list)",
+              "source_url": "https://us.focusrite.com/mic-pres/isa-one/specifications"
+            },
+            {
+              "value": "Low: 470 kHz [sic], High: 2.4 MΩ",
+              "source_url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/isa_one_user_guide_v1.3_en.pdf"
+            }
+          ],
+          "note": "Manual prints 'kHz' where kΩ is meant."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": true,
+        "catalog_id": "focusrite-isa-one",
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Already in catalog; mic/line/DI inputs, balanced TRS insert, DI thru and cue inputs cover gain staging, phantom and insert lessons."
+      }
+    },
+    {
+      "id": "ams-neve-1073spx",
+      "brand": "AMS Neve",
+      "model": "1073SPX",
+      "category": "processors-outboard",
+      "sub_type": "mic-preamp",
+      "technology": "Discrete Class-A transistor mic/line/DI preamp with inductor-based 3-band 1073 EQ; Marinair transformers on mic input (10468), line input (31267) and LO1166 gapped output transformer; transformer-balanced I/O; 1U rack",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "AMS Neve calls the 1073 one of the most influential microphone preamps ever designed, in use since the early 1970s. The 1073SPX puts the full 1073 preamp and EQ circuit in a 1U standalone unit, so it is the current single-channel way to get that circuit.",
+      "typical_uses": [
+        "vocal and instrument tracking",
+        "drum and bass DI with EQ",
+        "colouring mixes via line input",
+        "studio patchbay channel"
+      ],
+      "key_specs": {
+        "mic_gain_range": "20 to 80dB (manual); +80db to +20dB in 5dB steps (product page)",
+        "line_gain_range": "-10 to +20dB; Line: +20dB to -10dB in 5dB steps, 10 kΩ",
+        "di_gain_range": "20 – 80dB without pad",
+        "mic_input_impedance": "1200Ω / 300Ω",
+        "line_input_impedance": "10kΩ",
+        "mic_max_input_level": "+6dBu (Min Gain @ 20dB); -56dBu (Max Gain @ 80dB)",
+        "line_max_input_level": "+36dBu (Min Gain @ -10dB)",
+        "mic_frequency_response": "20Hz to 20kHz +/- 0.25dB; 10Hz to 35kHz +/-0.5dB",
+        "mic_thd": "<0.2% 20-20kHz, <0.02% 1kHz",
+        "mic_ein": "<-124.5dBu 20-20kHz unweighted, gain @ 60dB",
+        "max_output_level": ">+26dBu into 600. Output impedance is 75 @1kHz.",
+        "output_distortion": "< 0.07% from 50Hz to 10kHz at +20dBu output (80kHz bandwidth)",
+        "insert_level": "insert send and return TRS connections are balanced at +4dBu; max +26dBu",
+        "eq": "HF shelf ±16dB fixed 12kHz; LF shelf ±16dB at 35Hz, 60Hz, 110Hz & 220Hz; mid ±18dB peaking at 0.36kHz, 0.7kHz 1.6kHz, 3.2kHz, 4.8kHz & 7.2kHz; HPF 50Hz, 80Hz, 160Hz & 300Hz, 18dB/octave",
+        "phantom_power": "Switchable +48V for front & rear XLR microphone inputs",
+        "power": "External PSU Neve PS10501; 100 – 240Vac; 48V DC 250mA ±20mA, Negative Earth",
+        "rack_units": "1U, 19\"",
+        "dimensions": "Height 44mm/1.75 inches, Width 480mm/19 inches, Depth 310mm/12 inches",
+        "weight": "5Kg/11Lbs",
+        "metering": "7-stage LED PPM meter ranging from -30dB to +24dBu (I/P, EQ, O/P)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "rear mic input",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "rear line input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "front combi input, XLR part (mic)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "front combi input, jack part (line or DI, TRS/TS)",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "insert send (rear, balanced +4dBu)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "insert return (rear, balanced +4dBu)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Line O/P main analogue output (transformer balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "line-level-pro",
+        "instrument-hiz",
+        "insert-send-return",
+        "dc-power"
+      ],
+      "manual_url": "https://www.ams-neve.com/wp-content/uploads/2026/06/1073SPX_1.2_User_Manual.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.ams-neve.com/outboard/1073spx/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.ams-neve.com/wp-content/uploads/2026/06/1073SPX_1.2_User_Manual.pdf",
+          "title": "1073SPX Single Microphone Preamplifier & EQ User Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Issue 1.2 (© 2026)",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.ams-neve.com/wp-content/uploads/2026/06/1073SPX_1.2_User_Manual.pdf",
+          "publisher": "AMS Neve",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.mic_gain_range",
+            "key_specs.line_gain_range",
+            "key_specs.di_gain_range",
+            "key_specs.mic_input_impedance",
+            "key_specs.line_input_impedance",
+            "key_specs.mic_max_input_level",
+            "key_specs.line_max_input_level",
+            "key_specs.mic_frequency_response",
+            "key_specs.mic_thd",
+            "key_specs.mic_ein",
+            "key_specs.max_output_level",
+            "key_specs.output_distortion",
+            "key_specs.insert_level",
+            "key_specs.phantom_power",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.metering",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.ams-neve.com/outboard/1073spx/",
+          "publisher": "AMS Neve",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.mic_gain_range",
+            "key_specs.line_gain_range",
+            "key_specs.max_output_level",
+            "key_specs.eq",
+            "key_specs.phantom_power",
+            "key_specs.power",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "key_specs.insert_level",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.ams-neve.com/product-resource",
+          "publisher": "AMS Neve",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ]
+        },
+        {
+          "url": "https://www.thomann.co.uk/ams_neve_1073spx_mono_preamp_eq.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.mic_gain_range",
+            "key_specs.eq",
+            "key_specs.phantom_power",
+            "key_specs.rack_units",
+            "connectors",
+            "technology"
+          ]
+        }
+      ],
+      "notes": "Chose the 1073SPX (current single-channel 1U unit). The 1073DPX (2-channel), 1073OPX (8-channel) and 1073SPX-D (with digital option) are also current on ams-neve.com. The external 48 V DC PSU connector type is not specified. Thomann lists it 'available since November 2017', which is a retail date, so year_introduced is left 'not found'. Manual Issue 1.1 found only as a retailer mirror (kmraudio.com) and is not used.",
+      "conflicts": [
+        {
+          "field": "key_specs.di_input_impedance",
+          "values": [
+            {
+              "value": "10M Ohms (PAD off) / 10K Ohms (PAD on)",
+              "source_url": "https://www.ams-neve.com/outboard/1073spx/"
+            },
+            {
+              "value": "1MΩ / 10kΩ",
+              "source_url": "https://www.ams-neve.com/wp-content/uploads/2026/06/1073SPX_1.2_User_Manual.pdf"
+            }
+          ],
+          "note": "Product page and Issue 1.2 manual disagree by a factor of 10."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Separate rear mic/line XLRs, front combi, balanced TRS pre/post-EQ insert and transformer XLR out show signal flow and insert routing well."
+      }
+    },
+    {
+      "id": "api-512c",
+      "brand": "API",
+      "model": "512c",
+      "category": "processors-outboard",
+      "sub_type": "mic-preamp",
+      "technology": "Fully discrete mic/line/instrument preamp with API 2520 op-amp and API proprietary transformers; transformer-balanced output; 500-series module",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "API presents it as its classic microphone preamp design in 500-series format, built on the discrete 2520 op-amp. It is one of the reference modules for the 500-series rack format used in many studios.",
+      "typical_uses": [
+        "drums and guitar amps",
+        "vocals",
+        "DI bass/guitar",
+        "500-series lunchbox tracking rigs"
+      ],
+      "key_specs": {
+        "gain_range": "MIC: 34dB to 65dB (14dB to 45dB w/PAD). HI-Z: 14dB to 45dB (-6dB to 25dB w/PAD)",
+        "pad": "20 dB pad switch, applies to mic/line/instrument",
+        "input_impedance": "MIC Input, 1500 Ohms (150 Ohm mic), HI-Z Unbal Input, 400 K Ohms (20 K Ohms with pad)",
+        "output_impedance": "Less than 75 Ohms, Transformer Balanced",
+        "ein": "Equivalent Input Noise: -129, Mic In. -125, Un-Balanced In.",
+        "max_input_level": "MIC, +8 dBu, Unbal HI-Z Input, +36 dBu",
+        "clip_level": "+30 dBu",
+        "phantom_power": "48v Phantom switchable power",
+        "format": "500 series format (single-slot module)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "front mic input",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "front Hi-Z 1/4\" unbalanced instrument input",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "instrument-hiz",
+        "line-level-pro"
+      ],
+      "manual_url": "https://apiaudio.com/docs/manuals/512c_user_2019-05-26.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.apiaudio.com/512c",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://apiaudio.com/docs/manuals/512c_user_2019-05-26.pdf",
+          "title": "512c Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2019-05-26 (file name)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://apiaudio.com/docs/files/setup512c.pdf",
+          "title": "512c Recall Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.apiaudio.com/512c",
+          "publisher": "API (Automated Processes Inc.)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.gain_range",
+            "key_specs.pad",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.ein",
+            "key_specs.max_input_level",
+            "key_specs.clip_level",
+            "key_specs.phantom_power",
+            "key_specs.format",
+            "connectors",
+            "manuals",
+            "status"
+          ]
+        },
+        {
+          "url": "https://bigbearsound.com/products/api-512c-discrete-mic-line-pre",
+          "publisher": "Big Bear Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.gain_range",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.ein",
+            "key_specs.max_input_level",
+            "key_specs.clip_level",
+            "key_specs.phantom_power",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "Output and a parallel mic input are on the 500-series edge connector (rear), which the rack or lunchbox turns into XLR/TRS. There is no TekPractice connector id for the edge connector, so only front-panel connectors are listed. The official manual PDF uses an embedded font encoding that would not text-extract, so specs come from the product page. One Reverb listing (search snippet) gave line gain as 50 dB versus 45 dB elsewhere. That listing is not used.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Teaches 500-series format (I/O lives on the rack) plus front XLR/Hi-Z input and pad; fewer distinct connectors on the module itself."
+      }
+    },
+    {
+      "id": "universal-audio-solo-610",
+      "brand": "Universal Audio",
+      "model": "SOLO/610",
+      "category": "processors-outboard",
+      "sub_type": "mic-preamp",
+      "technology": "Vacuum-tube mic/instrument preamp and DI (12AX7 + 12AT7, two dual-triode gain stages), transformer-balanced inputs and outputs, based on the 1960 Putnam 610 console preamp",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "UA's manual says it is based on the preamp of the 610 console that Bill Putnam built in 1960. It is a compact way to get a tube console preamp with a DI, and its separate Gain and Level controls show how gain staging affects tube colouration.",
+      "typical_uses": [
+        "vocals",
+        "bass and guitar DI with amp thru",
+        "adding tube colour to line sources",
+        "mobile recording"
+      ],
+      "key_specs": {
+        "tube_complement": "(1) 12AX7, (1) 12AT7",
+        "max_gain": "61 dB",
+        "max_gain_mic_input": "55 dB (1.6K Ω input), 60 dB (450 Ω input)",
+        "max_gain_instrument_input": "37 dB",
+        "mic_input_impedance": "Selectable 450 ohms (LO-Z) or 1.6K ohms (HI-Z)",
+        "di_input_impedance": "Selectable 50K ohms (LO-Z) or 2.2M ohms (HI-Z)",
+        "output_load_impedance": "600 ohms Balanced Output from 20 Hz to 20 kHz ±1 dB",
+        "max_mic_input_level": "-12 dBu, 1.0% THD+N Ratio",
+        "max_instrument_input_level": "+4 dBu, 1.0% THD+N Ratio",
+        "frequency_response": "20 Hz to 20 kHz, ±0.1 dB",
+        "phantom_power": "+48 volts to the MIC INPUT (front panel switch)",
+        "low_cut": "frequencies below 100 Hz are attenuated",
+        "output_level_switch": "MIC/LINE switch (MIC position attenuates output to mic level)",
+        "power": "16 Watts; POWER IN 100VAC / 115VAC / 230VAC, 50-60Hz (not auto-sensing)",
+        "dimensions": "14\" L x 5 ¾\" W x 5\" H",
+        "weight": "9 lbs."
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "MIC INPUT (rear)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "OUTPUT, balanced (rear; mic/line level switchable)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "DI input (front)",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "THRU (front, unbalanced, to instrument amp)",
+          "dir": "out",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC input (IEC)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "phantom-48v",
+        "instrument-hiz",
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://cdn.shopify.com/s/files/1/2422/2859/files/solo-610-manual.pdf?7316583966405000363",
+          "publisher": "Universal Audio manual (part 65-00055 Rev B), mirrored on Big Bear Sound's Shopify CDN",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "technology",
+            "key_specs.tube_complement",
+            "key_specs.max_gain",
+            "key_specs.max_gain_mic_input",
+            "key_specs.max_gain_instrument_input",
+            "key_specs.mic_input_impedance",
+            "key_specs.di_input_impedance",
+            "key_specs.output_load_impedance",
+            "key_specs.max_mic_input_level",
+            "key_specs.max_instrument_input_level",
+            "key_specs.frequency_response",
+            "key_specs.phantom_power",
+            "key_specs.low_cut",
+            "key_specs.output_level_switch",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "why_it_is_a_classic"
+          ]
+        },
+        {
+          "url": "https://bigbearsound.com/products/universal-audio-solo-610-tube-preamp-di-box",
+          "publisher": "Big Bear Sound",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.tube_complement",
+            "key_specs.max_gain",
+            "key_specs.max_gain_mic_input",
+            "key_specs.max_gain_instrument_input",
+            "key_specs.mic_input_impedance",
+            "key_specs.max_mic_input_level",
+            "key_specs.max_instrument_input_level",
+            "key_specs.frequency_response",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://www.markertek.com/product/ua-solo610/universal-audio-solo610-classic-tube-single-channel-mic-pre-di",
+          "publisher": "Markertek",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.tube_complement",
+            "key_specs.max_gain",
+            "key_specs.max_gain_mic_input",
+            "key_specs.mic_input_impedance",
+            "key_specs.max_mic_input_level",
+            "key_specs.frequency_response",
+            "key_specs.phantom_power"
+          ]
+        }
+      ],
+      "notes": "No uaudio.com product page or official-host manual appeared in this session's results (web search budget ran out), so the manual text was read from a retailer-hosted copy of UA document 65-00055 Rev B and is marked secondary. Status cannot be confirmed from a manufacturer page. The manual says the 115/230 V configuration is fixed (not auto-sensing).",
+      "conflicts": [
+        {
+          "field": "key_specs.di_input_impedance",
+          "values": [
+            {
+              "value": "Selectable 50K ohms (LO-Z) or 2.2M ohms (HI-Z)",
+              "source_url": "https://cdn.shopify.com/s/files/1/2422/2859/files/solo-610-manual.pdf?7316583966405000363"
+            },
+            {
+              "value": "Selectable 2.2 megohms (Lo-Z) or 50 kilohms (Hi-Z)",
+              "source_url": "https://bigbearsound.com/products/universal-audio-solo-610-tube-preamp-di-box"
+            }
+          ],
+          "note": "Retailer labels are swapped compared with the UA manual. The manual is more plausible because it says 2.2M suits passive pickups."
+        },
+        {
+          "field": "key_specs.output_load_impedance",
+          "values": [
+            {
+              "value": "600 ohms Balanced Output from 20 Hz to 20 kHz ±1 dB",
+              "source_url": "https://cdn.shopify.com/s/files/1/2422/2859/files/solo-610-manual.pdf?7316583966405000363"
+            },
+            {
+              "value": "20 Hz to 20 kHz +/- 1 dB (no impedance value)",
+              "source_url": "https://www.markertek.com/product/ua-solo610/universal-audio-solo610-classic-tube-single-channel-mic-pre-di"
+            }
+          ],
+          "note": "Retailer text truncated the impedance value."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Simple mic XLR in / XLR out with mic-line output switch, DI + thru and ground lift; a good gain-staging and DI lesson."
+      }
+    },
+    {
+      "id": "avalon-vt-737sp",
+      "brand": "Avalon",
+      "model": "Vt-737sp",
+      "category": "processors-outboard",
+      "sub_type": "channel-strip",
+      "technology": "Tube channel strip: four dual-triode vacuum tubes, high-voltage discrete Class A; transformer-balanced mic input; opto compressor (optical passive attenuator with twin vacuum tubes); discrete Class A EQ (active + switched passive); DC-coupled pure Class A output (per Avalon manual and product page).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A single-rack mic pre, opto compressor and four-band EQ in one tube unit, still listed as a current Avalon product. Avalon's manual notes it replaced the original purple-knob Vt-737, discontinued in January 1999.",
+      "typical_uses": [
+        "vocal tracking",
+        "voice-over",
+        "bass DI",
+        "single-channel recording chain"
+      ],
+      "key_specs": {
+        "mic_input": "Transformer balanced, 850 ohms input impedance, 0dB to+58dB",
+        "instrument_input": "Unbalanced 1 meg ohm input impedance, 0dB to +30dB",
+        "line_input": "Balanced, 20k ohms input impedance, -27dB to +18dB",
+        "max_input_level": "Microphone: +16dB @ 25Hz, +30dB @ 1kHz; Instrument: +30dB; Line: +36dB",
+        "max_output_level": "+30dB balanced XLR 600 ohms output impedance, DC coupled, pure Class A",
+        "output_trim": "-45dB to +10dB",
+        "phantom_power": "+48 V phantom selectable (product page)",
+        "frequency_response": "10 to 40kHz +/-0.2dB",
+        "unit_bandwidth": "1 to 200kHz",
+        "noise": "-92dBu (20-20kHz unweighted)",
+        "thd": "0.5% @ 1kHz",
+        "compressor": "optical passive attenuator incorporating twin vacuum tubes and stereo link; ratio 1:1 to 20:1; threshold -30dB to +20dB; attack 2mS to 200 mS; release 100mS to 5 seconds",
+        "eq": "Treble switched 10/15/20/32kHz +/-20dB shelf; High Mid 200Hz-2k8Hz and 2kHz-28kHz +/-16dB; Low Mid 30Hz-450Hz +/-16dB; Bass switched 15/30/60/150Hz +/-24dB shelf",
+        "hi_cut_filter_hpf": "Variable 6dB per octave 40Hz to 200Hz",
+        "metering": "0VU=+4dBu and gain reduction to -20dB",
+        "power": "Internal toroidal 100V to 240V, 50-60Hz selectable, 60 watts maximum",
+        "rack_units": "2U",
+        "dimensions": "19 x 12 x 3.5 inches (482 x 305 x 89mm)",
+        "weight": "22 lbs. (10kg)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "mic input (balanced, pin 2 hot)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "line input (balanced, pin 2 hot)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "front-panel instrument input (unbalanced jack)",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line output (balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "instrument-hiz",
+        "phantom-48v",
+        "mains-power"
+      ],
+      "manual_url": "https://www.avalondesign.com/s/737_Manual.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.avalondesign.com/vt-737-sp",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.avalondesign.com/s/737_Manual.pdf",
+          "title": "Avalon Vt-737sp Operation Manual",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Release 2.0, (c)2025 Avalon Design USA, LLC (also (c) 2016 Avalon Industries)",
+          "official": true,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.avalondesign.com/vt-737-sp",
+          "publisher": "Avalon Design",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.mic_input",
+            "key_specs.instrument_input",
+            "key_specs.max_output_level",
+            "key_specs.phantom_power",
+            "key_specs.frequency_response",
+            "key_specs.compressor",
+            "key_specs.eq",
+            "key_specs.power",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.avalondesign.com/s/737_Manual.pdf",
+          "publisher": "Avalon Design",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.mic_input",
+            "key_specs.instrument_input",
+            "key_specs.line_input",
+            "key_specs.max_input_level",
+            "key_specs.max_output_level",
+            "key_specs.output_trim",
+            "key_specs.frequency_response",
+            "key_specs.unit_bandwidth",
+            "key_specs.noise",
+            "key_specs.thd",
+            "key_specs.compressor",
+            "key_specs.eq",
+            "key_specs.hi_cut_filter_hpf",
+            "key_specs.metering",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "Key specs quoted from the manual's spec page; product page values differ in places (see conflicts). XLR genders follow the usual input-female/output-male convention; the manual only says 'balanced XLR'. Rear stereo-link cable for the compressor exists, but its connector type is not stated, so it is left out. Power connector type is not stated. The manual says the Vt-737sp replaced the original Vt-737 (discontinued January 1999) but gives no launch year for the sp. Searching stopped once the session's web-search budget ran out, so no retailer cross-check was done.",
+      "conflicts": [
+        {
+          "field": "key_specs.line_input",
+          "values": [
+            {
+              "value": "-27dB to +18dB",
+              "source_url": "https://www.avalondesign.com/s/737_Manual.pdf"
+            },
+            {
+              "value": "-27 to +28 dB",
+              "source_url": "https://www.avalondesign.com/vt-737-sp"
+            }
+          ],
+          "note": "line gain range differs between manual and product page"
+        },
+        {
+          "field": "key_specs.max_input_level",
+          "values": [
+            {
+              "value": "Microphone: +16dB @ 25Hz",
+              "source_url": "https://www.avalondesign.com/s/737_Manual.pdf"
+            },
+            {
+              "value": "mic 26 dB at 25 Hz",
+              "source_url": "https://www.avalondesign.com/vt-737-sp"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "field": "key_specs.power",
+          "values": [
+            {
+              "value": "60 watts maximum",
+              "source_url": "https://www.avalondesign.com/s/737_Manual.pdf"
+            },
+            {
+              "value": "75 W maximum",
+              "source_url": "https://www.avalondesign.com/vt-737-sp"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "field": "key_specs.hi_cut_filter_hpf",
+          "values": [
+            {
+              "value": "Variable 6dB per octave 40Hz to 200Hz",
+              "source_url": "https://www.avalondesign.com/s/737_Manual.pdf"
+            },
+            {
+              "value": "variable, 6 dB/octave, 30-140 Hz",
+              "source_url": "https://www.avalondesign.com/vt-737-sp"
+            }
+          ],
+          "note": "the control is labelled hi-cut in both but acts on low frequencies (a high-pass filter)"
+        },
+        {
+          "field": "key_specs.eq",
+          "values": [
+            {
+              "value": "Low Mid ... 3kHz to 4k5Hz",
+              "source_url": "https://www.avalondesign.com/s/737_Manual.pdf"
+            },
+            {
+              "value": "Low mid ... 300 Hz-4.5 kHz",
+              "source_url": "https://www.avalondesign.com/vt-737-sp"
+            }
+          ],
+          "note": "the manual's second low-mid range looks like a typo"
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Three input types (mic/line/front Hi-Z) with an input selector teach source-to-input matching; I/O is plain XLR."
+      }
+    },
+    {
+      "id": "universal-audio-6176",
+      "brand": "Universal Audio",
+      "model": "6176 Vintage Channel Strip",
+      "category": "processors-outboard",
+      "sub_type": "channel-strip",
+      "technology": "Vacuum tube mic/instrument/line preamplifier (from the 2-610/610 console design) followed by a solid-state FET-based 1176LN limiter/compressor; transformer design with custom windings; Class A FET compressor section; Split/Join switch runs the sections separately or in series.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "UA puts its 610 tube preamp and 1176LN compressor, both reissues of Bill Putnam designs, into one box. In Split mode it works as two separate units.",
+      "typical_uses": [
+        "vocal tracking",
+        "bass DI",
+        "drum room mic",
+        "split mode: separate preamp + compressor"
+      ],
+      "key_specs": {
+        "mic_input_impedance": "Selectable, 500 Ohms or 2K Ohms",
+        "line_input_impedance": "20K Ohms",
+        "hi_z_input_impedance": "Selectable between 2.2M Ohms or 47K Ohms",
+        "max_mic_input_level": "+18 dBu (2K input impedance and 15 dB Pad in)",
+        "preamp_max_output_level": "+20 dBm",
+        "preamp_max_gain": "65 dB (500 Ohms input impedance)",
+        "preamp_gain_control": "Gain switch in 5 dB increments plus Level control",
+        "pad": "-15 dB (mic input only)",
+        "phantom_power": "+48V switch (front panel)",
+        "preamp_frequency_response": "20 Hz to 20 kHz +0 dB, -1 dB",
+        "preamp_snr": "Greater than 90 dB (@ maximum gain)",
+        "eq": "High shelf 4.5K, 7K, 10K; Low shelf 70 Hz, 100 Hz, 200 Hz",
+        "compressor_input_impedance": "Selectable, 15K Ohms or 600 Ohms",
+        "compressor_gain": "40 dB, ± 1 dB",
+        "compressor_output": "Output of +22 dBm with no greater than 0.5% T.H.D.",
+        "compressor_attack": "Adjustable, from 20 to 800 microseconds",
+        "compressor_release": "Adjustable, from 50 milliseconds to 1.1 seconds",
+        "compressor_ratios": "4, 8, 12, 20, ALL (plus BP and 1)",
+        "metering": "0 = +4 dBm at output",
+        "tubes": "(1) 12AX7A, (1) 12AT7A",
+        "power": "115V/230V; Detachable IEC power cable",
+        "rack_units": "two rack unit",
+        "dimensions": "19\" W x 3.5\" H x 12.25\" D",
+        "weight": "12 lb."
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "Preamp MIC INPUT (rear, pin 2 hot)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "Preamp LINE INPUT (rear, balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "Hi-Z input (front, unbalanced 1/4\" jack)",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Preamp LINE OUTPUT (rear, balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "Limiter/Compressor LINE INPUT (rear, balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "Limiter/Compressor LINE OUTPUT (rear, balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC power inlet (IEC)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "instrument-hiz",
+        "phantom-48v",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.uaudio.com/products/6176-vintage-channel-strip",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/6176_Manual.pdf",
+          "title": "Model 6176 Channel Strip manual (Universal Audio PN 65-40634 Rev 01), retailer-hosted copy",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "PN 65-40634 Rev 01, (c)2009",
+          "official": false,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.uaudio.com/products/6176-vintage-channel-strip",
+          "publisher": "Universal Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.pad",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/6176_Manual.pdf",
+          "publisher": "Universal Audio (manual hosted by KMR Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "key_specs.mic_input_impedance",
+            "key_specs.line_input_impedance",
+            "key_specs.hi_z_input_impedance",
+            "key_specs.max_mic_input_level",
+            "key_specs.preamp_max_output_level",
+            "key_specs.preamp_max_gain",
+            "key_specs.preamp_gain_control",
+            "key_specs.pad",
+            "key_specs.phantom_power",
+            "key_specs.preamp_frequency_response",
+            "key_specs.preamp_snr",
+            "key_specs.eq",
+            "key_specs.compressor_input_impedance",
+            "key_specs.compressor_gain",
+            "key_specs.compressor_output",
+            "key_specs.compressor_attack",
+            "key_specs.compressor_release",
+            "key_specs.compressor_ratios",
+            "key_specs.metering",
+            "key_specs.tubes",
+            "key_specs.power",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.markertek.com/product/ua-6176/universal-audio-6176-vintage-channel-strip-tube-microphone-preamp-and-1176ln-compressor",
+          "publisher": "Markertek",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.mic_input_impedance",
+            "key_specs.line_input_impedance",
+            "key_specs.hi_z_input_impedance",
+            "key_specs.max_mic_input_level",
+            "key_specs.preamp_max_output_level",
+            "key_specs.preamp_max_gain",
+            "key_specs.preamp_frequency_response",
+            "key_specs.compressor_gain",
+            "key_specs.compressor_attack",
+            "key_specs.compressor_release",
+            "key_specs.tubes",
+            "key_specs.power",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://help.uaudio.com/hc/en-us/articles/206007836-6176-Vintage-Channel-Strip",
+          "publisher": "Universal Audio (help center; search snippet only, page returned 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mic_input_impedance",
+            "key_specs.line_input_impedance",
+            "key_specs.hi_z_input_impedance",
+            "key_specs.max_mic_input_level",
+            "key_specs.preamp_max_output_level"
+          ]
+        }
+      ],
+      "notes": "UA's help-center page probably links the official manual, but it returned 403. The manual used here is UA's own document (PN 65-40634) hosted by a retailer, so it is marked official:false. The UA product page gives no numeric specs. XLR genders follow the usual input-female/output-male convention; the manual says 'balanced XLR'. In JOIN mode the rear Preamp LINE OUT and Compressor LINE IN are disconnected internally. A notice-facile listing gives different values (+0 dBu max mic in, 600 ohm); it is unofficial and was not used.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Split/Join routing (internal link vs separate rear I/O), phantom switch, pad and three input types make a good gain-staging and routing lesson."
+      }
+    },
+    {
+      "id": "rupert-neve-designs-shelford-channel",
+      "brand": "Rupert Neve Designs",
+      "model": "Shelford Channel (5035)",
+      "category": "processors-outboard",
+      "sub_type": "channel-strip",
+      "technology": "Transformer-based class-A mic preamplifier, 3-band inductor EQ, diode bridge compressor, SILK harmonic saturation, custom transformer-coupled output stage; double the operating voltage of Rupert's vintage designs (per RND user guide).",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "RND's modern take on the vintage Neve channel: transformer mic pre, inductor EQ and diode-bridge compressor in 1U. RND calls it the culmination of over 50 years of Rupert Neve's design work.",
+      "typical_uses": [
+        "vocal tracking",
+        "DI instruments",
+        "line-level processing",
+        "mix-bus/stem colour"
+      ],
+      "key_specs": {
+        "mic_input_impedance": "2200 ohms",
+        "mic_gain": "12 position rotary switch that controls the microphone preamp gain in 6dB steps; TRIM +/- 6dB (front-panel legend 0dB to 66)",
+        "mic_max_input_level": "+21.5 dBu from 150Hz to 22kHz; +8dBu from 20Hz to 22kHz",
+        "di_max_input_level": "+8 dBu from 20Hz to 120kHz",
+        "line_max_input_level": "+30.5 dBu from 20Hz to 30kHz",
+        "max_output_level": "+26 dBu @ 16Hz to 20kHz",
+        "phantom_power": "48V push-button",
+        "frequency_response": "<10Hz to 110 kHz +/- 0.25 dB (line); mic pre 17Hz to 45 kHz +/- 0.25 dB",
+        "ein": "-121.37 dBu",
+        "thd_n": "@ 1kHz, +20 dBu output level, no load: Better than 0.002%",
+        "hpf": "20Hz to 250Hz, 12 dB/Octave",
+        "eq": "LF/MID/HF +/- 15dB; HF 8K/16K; LF and HF shelf/peak switch",
+        "compressor": "Diode bridge; ratio 1.5:1 to 8:1; threshold +20dBu to -25dBu; make-up gain -6dB to +20dB; blend 0-100%",
+        "power": "100-240VAC 50/60Hz, 35 Watts Max",
+        "rack_units": "1RU",
+        "dimensions": "19\" (48.3 cm) x 10.5\" (26.7 cm) x 1.75\" (4.5 cm) (W x D x H)",
+        "weight": "9.5 lbs. (4.3 kg)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "MIC IN (rear, balanced)",
+          "dir": "in",
+          "signal": "mic-level",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "LINE IN (rear, balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "LINE OUT (rear, transformer-coupled)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "-6dB LINE OUT (rear, balanced, transformer)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "DI input (front 1/4\" jack)",
+          "dir": "in",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "THRU (front, passive loop of DI input)",
+          "dir": "out",
+          "signal": "instrument-hiz",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "SIDE CHAIN SEND / RETURN (rear TS jacks)",
+          "dir": "bidir",
+          "signal": "insert-send-return",
+          "count": 2
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "LINK (rear TS jacks, stereo side-chain link)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": "not stated"
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC power inlet (IEC 3-pin)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "mic-level",
+        "line-level-pro",
+        "instrument-hiz",
+        "phantom-48v",
+        "insert-send-return",
+        "mains-power"
+      ],
+      "manual_url": "https://rupertneve.com/s/775-000275035-Manual_RevC4.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.rupertneve.com/products/shelford-channel",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://rupertneve.com/s/775-000275035-Manual_RevC4.pdf",
+          "title": "Shelford Channel manual (775-00027 Rev C4)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "775-00027 Rev C4",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://www.adorama.com/col/productManuals/RND5035.pdf",
+          "title": "Shelford Channel User Guide (retailer-hosted copy)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": false,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.rupertneve.com/products/shelford-channel",
+          "publisher": "Rupert Neve Designs",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.mic_input_impedance",
+            "key_specs.mic_gain",
+            "key_specs.mic_max_input_level",
+            "key_specs.di_max_input_level",
+            "key_specs.line_max_input_level",
+            "key_specs.max_output_level",
+            "key_specs.phantom_power",
+            "key_specs.frequency_response",
+            "key_specs.ein",
+            "key_specs.thd_n",
+            "key_specs.hpf",
+            "key_specs.compressor",
+            "key_specs.power",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://rupertneve.com/s/775-000275035-Manual_RevC4.pdf",
+          "publisher": "Rupert Neve Designs",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.mic_input_impedance",
+            "key_specs.mic_max_input_level",
+            "key_specs.di_max_input_level",
+            "key_specs.line_max_input_level",
+            "key_specs.max_output_level",
+            "key_specs.frequency_response",
+            "key_specs.ein",
+            "key_specs.thd_n",
+            "key_specs.hpf",
+            "key_specs.dimensions"
+          ]
+        },
+        {
+          "url": "https://www.adorama.com/col/productManuals/RND5035.pdf",
+          "publisher": "Rupert Neve Designs user guide (hosted by Adorama)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "key_specs.mic_gain",
+            "key_specs.phantom_power",
+            "key_specs.hpf",
+            "key_specs.eq",
+            "key_specs.compressor",
+            "key_specs.power",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "RND's product page links an official user guide only as a relative path (/s/Shelford-Channel-User-Guide-web.pdf). The Adorama-hosted copy was read instead. Rear LINK and side-chain jacks are TS per the user guide. Number of LINK jacks not stated. XLR genders follow the usual input-female/output-male convention.",
+      "conflicts": [
+        {
+          "field": "key_specs.dimensions",
+          "values": [
+            {
+              "value": "19\" (48.3 cm) x 10.5\" (26.7 cm) x 1.75\" (4.5 cm)",
+              "source_url": "https://rupertneve.com/s/775-000275035-Manual_RevC4.pdf"
+            },
+            {
+              "value": "19\" W x 10.25\" D x 1.75\" H (48.3 cm W x 26 cm D x 4.5 cm H)",
+              "source_url": "https://www.rupertneve.com/products/shelford-channel"
+            }
+          ],
+          "note": "depth differs by 0.25 in between manual and product page"
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Rear side-chain send/return, -6dB output, DI THRU and stereo link jacks give rich wiring scenarios beyond plain XLR."
+      }
+    },
+    {
+      "id": "universal-audio-1176ln",
+      "brand": "Universal Audio",
+      "model": "1176LN Classic Limiting Amplifier",
+      "category": "processors-outboard",
+      "sub_type": "compressor-limiter",
+      "technology": "FET compressor/limiter (all-discrete solid state), transformer input stage, low-noise (LN) circuitry, Class A line-level output amplifier with custom transformer-balanced floating output; reissue patterned on the D/E (and C) revisions.",
+      "year_introduced": 2000,
+      "status": "current",
+      "why_it_is_a_classic": "UA says the original 1176 dates from 1967 and the 1176LN reissue was the relaunched company's first product. Engineers quoted in UA's own manuals call it 'the workhorse compressor'.",
+      "typical_uses": [
+        "vocals",
+        "bass",
+        "drums / room 'all buttons' crush",
+        "peak limiting"
+      ],
+      "key_specs": {
+        "input_impedance": "600 Ω, bridged T-control, floating",
+        "output_impedance": "600 Ω, transformer-balanced, floating",
+        "frequency_response": "20 Hz – 20 kHz, ±1 dB",
+        "gain": "45 dB, ±1 dB",
+        "max_input_level": "+30 dBu",
+        "max_output_level": "+24 dBu",
+        "thd": "Less than 0.5%, 50 Hz to 15 kHz with limiting, at 1.1 seconds release setting and +22.5 dBu output",
+        "snr": "Greater than 81 dB, 30 Hz – 18 kHz with input signal at threshold of limiting",
+        "attack": "20 to 800 microseconds",
+        "release": "50 milliseconds to 1.1 seconds",
+        "ratios": "4:1, 8:1 (compression); 12:1, 20:1 (limiting)",
+        "stereo_link": "via optional 1176-SA accessory",
+        "power": "115V or 230V (switchable); Maximum Power Consumption 13 Watts; Standard detachable IEC",
+        "rack_units": "2U",
+        "dimensions": "19\" W x 3.5\" H x 12.25\" D",
+        "weight": "11 lbs (bare unit)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "line input (balanced, pin 2 hot)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line output (balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "euroblock-phoenix",
+          "role": "Jones barrier terminal strip (alternative input/output)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC power inlet (IEC)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.uaudio.com/hardware/compressors/1176ln.html",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+          "title": "Model 1176LN manual (Universal Audio Part Number 65-00046), retailer-hosted copy",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "PN 65-00046, (c)2009",
+          "official": false,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.uaudio.com/hardware/compressors/1176ln.html",
+          "publisher": "Universal Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "year_introduced",
+            "why_it_is_a_classic",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.frequency_response",
+            "key_specs.gain",
+            "key_specs.max_input_level",
+            "key_specs.max_output_level",
+            "key_specs.thd",
+            "key_specs.snr",
+            "key_specs.attack",
+            "key_specs.release",
+            "key_specs.ratios",
+            "key_specs.stereo_link",
+            "key_specs.power",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf",
+          "publisher": "Universal Audio (manual hosted by KMR Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "key_specs.input_impedance",
+            "key_specs.frequency_response",
+            "key_specs.gain",
+            "key_specs.snr",
+            "key_specs.attack",
+            "key_specs.release",
+            "key_specs.stereo_link",
+            "key_specs.power",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://help.uaudio.com/hc/en-us/articles/206007816-1176LN-Classic-Limiting-Amplifier",
+          "publisher": "Universal Audio (help center; search snippet only)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.input_impedance",
+            "key_specs.frequency_response",
+            "key_specs.attack",
+            "key_specs.release",
+            "key_specs.rack_units",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://kmraudio.com/cdn/shop/files/6176_Manual.pdf",
+          "publisher": "Universal Audio 6176 manual (hosted by KMR Audio)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "year_introduced",
+            "technology"
+          ]
+        }
+      ],
+      "notes": "year_introduced = 2000, the date UA's product page gives for the reissue (the original 1176 was 1967). Ratio of 'all buttons' is not on the reissue page but the 6176 manual describes ALL mode. Barrier strip mapped to euroblock-phoenix (closest screw-terminal id). XLR genders follow convention. UA official manual PDF not found on uaudio.com (help center returned 403).",
+      "conflicts": [
+        {
+          "field": "key_specs.gain",
+          "values": [
+            {
+              "value": "45 dB, ±1 dB",
+              "source_url": "https://www.uaudio.com/hardware/compressors/1176ln.html"
+            },
+            {
+              "value": "50 dB",
+              "source_url": "https://help.uaudio.com/hc/en-us/articles/206007816-1176LN-Classic-Limiting-Amplifier"
+            }
+          ],
+          "note": "manual PN 65-00046 also says 45 dB; help-center value seen in search snippet only"
+        },
+        {
+          "field": "key_specs.snr",
+          "values": [
+            {
+              "value": "Greater than 81 dB, 30 Hz – 18 kHz",
+              "source_url": "https://www.uaudio.com/hardware/compressors/1176ln.html"
+            },
+            {
+              "value": "greater than 70 dB at +10 dBm",
+              "source_url": "https://help.uaudio.com/hc/en-us/articles/206007816-1176LN-Classic-Limiting-Amplifier"
+            }
+          ],
+          "note": "different measurement reference"
+        },
+        {
+          "field": "year_introduced",
+          "values": [
+            {
+              "value": "reissued in 2000",
+              "source_url": "https://www.uaudio.com/hardware/compressors/1176ln.html"
+            },
+            {
+              "value": "our 2001 reissue",
+              "source_url": "https://kmraudio.com/cdn/shop/files/6176_Manual.pdf"
+            }
+          ],
+          "note": "6176 manual letter from Bill Putnam Jr. says 2001"
+        },
+        {
+          "field": "key_specs.thd",
+          "values": [
+            {
+              "value": "Less than 0.5% ... +22.5 dBu output",
+              "source_url": "https://www.uaudio.com/hardware/compressors/1176ln.html"
+            },
+            {
+              "value": "> 0.5% T.H.D. from 50 Hz – 15 kHz ... Output of +22 dBm with no greater than 0.5% T.H.D.",
+              "source_url": "https://kmraudio.com/cdn/shop/files/1176ln_manual.pdf"
+            }
+          ],
+          "note": "manual's '>' is likely a typo for '<'"
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Line-level insert device; XLR vs barrier-strip alternative inputs ('use only one') is a useful wiring lesson."
+      }
+    },
+    {
+      "id": "universal-audio-teletronix-la-2a",
+      "brand": "Universal Audio",
+      "model": "Teletronix LA-2A Classic Leveling Amplifier",
+      "category": "processors-outboard",
+      "sub_type": "compressor-limiter",
+      "technology": "Tube-driven electro-optical (T4 cell: electro-luminescent panel + photo-cell) leveling amplifier; input and output transformers; tube complement (2) 12AX7A, (1) 12BH7A, (1) 6AQ5; point-to-point hand-wired reissue.",
+      "year_introduced": 1999,
+      "status": "current",
+      "why_it_is_a_classic": "The original optical leveler came out in 1962 (Wikipedia), and UA reissued it in 1999. UA says it has been 'revered for over 50 years'.",
+      "typical_uses": [
+        "vocals",
+        "bass",
+        "smooth leveling of voice-over",
+        "mix bus (stereo-linked)"
+      ],
+      "key_specs": {
+        "gain": "40 dB ±1dB",
+        "gain_reduction": "0 to 40 dB",
+        "frequency_response": "+0/-1 dB 30 Hz to 15kHz",
+        "input_level": "+16 dB maximum",
+        "output_level": "+10 dB nominal, +16 dB maximum",
+        "thd": "Less than 0.5% THD (0.25% typical) at ±10 dBm",
+        "noise": "70 dB below +10 dBm output level",
+        "input_impedance": "50, 150, 250, 600 ohms",
+        "output_load_impedance": "50, 150, 250, 600 ohms",
+        "attack": "10 milliseconds",
+        "release": "0.06 seconds for 50% release; 0.5 to 5 seconds for complete release",
+        "tubes": "(2) 12AX7A, (1) 12BH7A, (1) 6AQ5",
+        "power": "35 watts, 120/240 volts, 50/60 Hz",
+        "rack_units": "3U",
+        "weight": "13 lbs."
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "line input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "line output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "euroblock-phoenix",
+          "role": "Jones barrier terminal strip (alternative I/O, impedance taps, stereo link)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "AC power inlet (IEC, per rear-panel diagram)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+          "title": "Teletronix LA-2A manual (Universal Audio Part Number LA2A-M01), retailer-hosted copy",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Revision 1.3, (c)2000",
+          "official": false,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier",
+          "publisher": "Universal Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "why_it_is_a_classic",
+            "key_specs.gain",
+            "key_specs.gain_reduction",
+            "key_specs.frequency_response",
+            "key_specs.input_level",
+            "key_specs.output_level",
+            "key_specs.thd",
+            "key_specs.noise",
+            "key_specs.input_impedance",
+            "key_specs.output_load_impedance",
+            "key_specs.attack",
+            "key_specs.release",
+            "key_specs.power",
+            "key_specs.rack_units",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf",
+          "publisher": "Universal Audio (manual hosted by Adorama)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "key_specs.gain",
+            "key_specs.gain_reduction",
+            "key_specs.input_level",
+            "key_specs.output_level",
+            "key_specs.release",
+            "key_specs.tubes",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://help.uaudio.com/hc/en-us/articles/206356233-Teletronix-LA-2A-Classic-Leveling-Amplifier",
+          "publisher": "Universal Audio (help center; search snippet only, page returned 403)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.gain",
+            "key_specs.frequency_response",
+            "key_specs.thd",
+            "key_specs.output_level",
+            "key_specs.noise",
+            "key_specs.input_impedance"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/LA-2A_Leveling_Amplifier",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "year_introduced",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "year_introduced = 1999, the year UA reissued it (Wikipedia); the original Teletronix LA-2A was released commercially in 1962. Specs are from UA's current product page. The 2000 manual (Rev 1.3) gives older figures; see conflicts. The barrier strip is mapped to euroblock-phoenix, the closest screw-terminal id. XLR genders follow the usual convention. A scan of the original 1966 Teletronix manual exists on steampoweredradio.com but was not used.",
+      "conflicts": [
+        {
+          "field": "key_specs.frequency_response",
+          "values": [
+            {
+              "value": "+0/-1 dB 30 Hz to 15kHz",
+              "source_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier"
+            },
+            {
+              "value": "+/- 0.1 dB, 30 cycles to 15 kilocycles",
+              "source_url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "field": "key_specs.thd",
+          "values": [
+            {
+              "value": "Less than 0.5% THD (0.25% typical) at ±10 dBm",
+              "source_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier"
+            },
+            {
+              "value": "less than 0.35% total harmonics at +10 dBm, and less than 0.75% total harmonics at +16 dBm output",
+              "source_url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "field": "key_specs.noise",
+          "values": [
+            {
+              "value": "70 dB below +10 dBm output level",
+              "source_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier"
+            },
+            {
+              "value": "75 dB below +10 dBm output level",
+              "source_url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf"
+            }
+          ],
+          "note": ""
+        },
+        {
+          "field": "key_specs.input_impedance",
+          "values": [
+            {
+              "value": "50, 150, 250, 600 ohms",
+              "source_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier"
+            },
+            {
+              "value": "600 ohms balanced",
+              "source_url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf"
+            }
+          ],
+          "note": "the manual's barrier strip shows 600 and 250 ohm taps"
+        },
+        {
+          "field": "key_specs.attack",
+          "values": [
+            {
+              "value": "10 milliseconds",
+              "source_url": "https://www.uaudio.com/products/teletronix-la-2a-classic-leveling-amplifier"
+            },
+            {
+              "value": "Very fast attack time",
+              "source_url": "https://www.adorama.com/col/productManuals/UALA2AD.pdf"
+            }
+          ],
+          "note": "manual gives no number"
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Barrier-strip impedance taps (600/250 ohm) and stereo link terminal show impedance matching and legacy wiring."
+      }
+    },
+    {
+      "id": "dbx-160a",
+      "brand": "dbx",
+      "model": "160A",
+      "category": "processors-outboard",
+      "sub_type": "compressor-limiter",
+      "technology": "Single-channel analog compressor/limiter with true RMS level detection, switchable OverEasy (soft knee) or hard-knee curve, program-dependent attack/release, ratio from 1:1 through infinity:1 to negative compression (-1:1). Electronically floating balanced input and output; output transformer optional (not fitted as standard).",
+      "year_introduced": "not found",
+      "status": "discontinued",
+      "why_it_is_a_classic": "dbx describes the 160 series (from the mid-1970s) as the world's most popular line of audio compressors, and the 160A as the latest generation of that family. It is a reference teaching example of an RMS 'OverEasy' compressor with a detector (sidechain) input and stereo strapping.",
+      "typical_uses": [
+        "vocal and instrument level control",
+        "bass and drum compression",
+        "peak limiting for PA and broadcast",
+        "de-essing via detector input with an EQ",
+        "stereo bus compression with two strapped units"
+      ],
+      "key_specs": {
+        "channels": "1 (two units strappable for stereo, True RMS Power Summing)",
+        "input": "1/4\" TRS and XLR, Floating Balanced; XLR: Pin 2 hot, Phone: Tip Hot",
+        "input_impedance": "40kΩ (cut sheet / product page); 100kΩ balanced, 50kΩ unbalanced (owner's manual) – see conflicts",
+        "max_input_level": "+24dBu, Balanced or Unbalanced",
+        "detector_input": "1/4\" TRS phone, Floating Balanced; >200kΩ; +28dBu max",
+        "output_balanced": "XLR, Floating Balanced; Pin 2 Hot; 30Ω; +24dBm; <0.3% THD",
+        "output_unbalanced": "1/4\" TRS phone, Unbalanced; 20Ω; +24dBm",
+        "nominal_level": "+4dBu into 600Ω (manual); compatible with +4/-10dB systems (cut sheet)",
+        "frequency_response": "20Hz — 20kHz, +0, -0.5dB; +0, -3dB 0.5Hz and 90kHz",
+        "thd": "<0.2%, Typical, any amount of compression up to 40dB @ 1kHz",
+        "noise": "<-90dBu, Unweighted (20Hz — 20kHz)",
+        "dynamic_range": ">113dB",
+        "threshold_range": "-40dBu to +20dBu",
+        "ratio": "Variable 1:1 to ∞:1 thru to -1:1; >60dB maximum compression",
+        "attack_time": "Program dependent; typically 15ms for 10dB, 5ms for 20dB, 3ms for 30dB",
+        "release_time": "Program Dependent; Typically 8ms for 1dB, 80ms for 10dB, 400ms for 50dB; 125dB/sec rate",
+        "gain_adjustment": "Variable from -20dB to +20dB",
+        "power": "DO: 90-130VAC, 50/60Hz; EU: 200-250VAC, 50/60Hz (cut sheet); IEC-Type connector",
+        "rack_units": "1 Rack Unit (1U High)",
+        "dimensions": "1.75\" x 19\" x 6.5\" (4.45cm x 48.2cm x 16.51cm)",
+        "weight": "4.45 lbs (1.99 kg) net (cut sheet)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "audio input (balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "audio input (balanced, paralleled with XLR)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "balanced output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "unbalanced output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "detector (sidechain) input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "stereo strapping link (160A to 160A only)",
+          "dir": "bidir",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (IEC)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "mains-power"
+      ],
+      "manual_url": "https://dbxpro.com/en/product_documents/dbx160a-18-2040v-cpdf",
+      "datasheet_url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf",
+      "product_page_url": "https://dbxpro.com/en/products/160a",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx160a-18-2040v-cpdf",
+          "title": "160A Owner's Manual-English",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "18-2040V-E (page listing: updated Apr 2026)",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf",
+          "title": "160A Cut Sheet-English",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "18-1659-C 01/99",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/products/160a",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "technology",
+            "key_specs.input",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.detector_input",
+            "key_specs.frequency_response",
+            "key_specs.threshold_range",
+            "key_specs.ratio",
+            "key_specs.attack_time",
+            "key_specs.release_time",
+            "key_specs.dynamic_range",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "connectors",
+            "manuals"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.input",
+            "key_specs.max_input_level",
+            "key_specs.frequency_response",
+            "key_specs.threshold_range",
+            "key_specs.ratio",
+            "key_specs.dynamic_range",
+            "connectors",
+            "why_it_is_a_classic"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx160a-18-2040v-cpdf",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.input",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.output_balanced",
+            "key_specs.output_unbalanced",
+            "key_specs.nominal_level",
+            "key_specs.frequency_response",
+            "key_specs.thd",
+            "key_specs.noise",
+            "key_specs.threshold_range",
+            "key_specs.ratio",
+            "key_specs.attack_time",
+            "key_specs.release_time",
+            "key_specs.dynamic_range",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://images.static-thomann.de/pics/atg/atgdata/document/specs/106584.pdf",
+          "publisher": "dbx cut sheet (earlier edition) hosted by Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.input",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.output_balanced",
+            "key_specs.output_unbalanced",
+            "key_specs.frequency_response",
+            "key_specs.thd",
+            "key_specs.dynamic_range",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        }
+      ],
+      "notes": "dbx product page flags the 160A as Discontinued. The cut sheet and manual state only 'XLR' for the input; female input / male output gender is assumed from the standard convention. The rear panel also has a ground-lift switch and a meter calibration trimmer. No French manual is listed on the dbx product page.",
+      "conflicts": [
+        {
+          "field": "key_specs.input_impedance",
+          "values": [
+            {
+              "value": "40kΩ",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf"
+            },
+            {
+              "value": "100kΩ balanced, 50kΩ unbalanced",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx160a-18-2040v-cpdf"
+            }
+          ],
+          "note": "Cut sheet and product page say 40kΩ; owner's manual (later revision 18-2040V-E) says 100k/50k."
+        },
+        {
+          "field": "key_specs.output_impedance",
+          "values": [
+            {
+              "value": "30Ω balanced (XLR), 20Ω unbalanced (TRS)",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx160a-18-2040v-cpdf"
+            },
+            {
+              "value": "Balanced 200 ohm, unbalanced 100 ohm",
+              "source_url": "https://dbxpro.com/en/products/160a"
+            }
+          ],
+          "note": "Web spec table disagrees with both the cut sheet and the manual."
+        },
+        {
+          "field": "key_specs.power",
+          "values": [
+            {
+              "value": "DO: 90-130VAC, 50/60Hz; EU: 200-250VAC, 50/60Hz",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf"
+            },
+            {
+              "value": "100-120VAC or 220-240VAC 50/60Hz or 120V 60Hz",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx160a-18-2040v-cpdf"
+            }
+          ],
+          "note": "Different document revisions."
+        },
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "4.45 lbs (1.99 kg)",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx160acutsheeta2pdf"
+            },
+            {
+              "value": "4.42 lbs (2.00 kg)",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx160a-18-2040v-cpdf"
+            },
+            {
+              "value": "4.452 lbs (1.99 kg)",
+              "source_url": "https://dbxpro.com/en/products/160a"
+            }
+          ],
+          "note": "Minor rounding differences; the Thomann-hosted cut sheet also states 4.41lbs in its text and 4.45 lbs in its table."
+        },
+        {
+          "field": "key_specs.operating_temperature",
+          "values": [
+            {
+              "value": "0°C to 45°C (32°F to 113°F)",
+              "source_url": "https://images.static-thomann.de/pics/atg/atgdata/document/specs/106584.pdf"
+            },
+            {
+              "value": "0°C to 35°C (32°F to 95°F)",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx160a-18-2040v-cpdf"
+            }
+          ],
+          "note": "Cut sheet vs manual."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Detector (sidechain) input and stereo strapping jack teach sidechain/link wiring; XLR+TRS I/O with separate balanced and unbalanced outputs."
+      }
+    },
+    {
+      "id": "dbx-166xs",
+      "brand": "dbx",
+      "model": "166xs",
+      "category": "processors-outboard",
+      "sub_type": "compressor-limiter",
+      "technology": "Two-channel (stereo or dual-mono) analog compressor/limiter/gate: VCA gain control (French manual refers to the VCA control circuit), true RMS power summing, selectable OverEasy or hard-knee compression, AutoDynamic program-dependent attack/release, program-adaptive expander/gate per channel and PeakStop limiter. Electronically balanced/unbalanced, RF-filtered I/O; -10dBV / +4dBu operating level switch.",
+      "year_introduced": 2011,
+      "status": "current",
+      "why_it_is_a_classic": "dbx calls itself the inventor of the compressor and presents the 166xs as the latest in its long line of compressors; the 166 family is a very common rack compressor/gate in live and project-studio racks. It combines compressor, expander/gate and limiter in 1U, so it also covers the gate-expander function.",
+      "typical_uses": [
+        "vocal and bass compression in live sound",
+        "drum gating",
+        "stereo bus or mix compression",
+        "speaker/amp protection with PeakStop limiter",
+        "ducking or de-essing via sidechain insert"
+      ],
+      "key_specs": {
+        "channels": "2 (stereo or dual-mono)",
+        "inputs": "1/4\" TRS, female XLR (pin 2 hot); Electronically balanced/unbalanced, RF filtered",
+        "input_impedance": ">50kΩ balanced, >25kΩ unbalanced",
+        "max_input_level": ">+24dBu balanced or unbalanced",
+        "outputs": "1/4\" TRS, male XLR (pin 2 hot)",
+        "output_impedance": "120Ω balanced, >60Ω unbalanced",
+        "max_output_level": ">+21dBu balanced/unbalanced into 2kΩ or greater; see conflicts for 600Ω figure",
+        "operating_level": "switchable -10dBV / +4dBu",
+        "sidechain_insert": "1/4\" TRS, Normalled: Tip is Input, Ring is Output; Tip >10kΩ, Ring 2kΩ",
+        "frequency_response": "20Hz - 20kHz, +0/-0.5dB, Typical 3dB points are 0.35Hz and 110kHz, unity gain",
+        "noise": "<-90dBu, 22Hz to 22kHz, no weighting, unity gain",
+        "thd_n": "Typically <0.04%; Any Amount of Compression Up to 40dB@1kHz",
+        "dynamic_range": ">115dB, unweighted",
+        "compressor_threshold": "-40dBu to +20dBu",
+        "compressor_ratio": "Variable; 1:1 to Infinity:1; 60dB Maximum Compression",
+        "compressor_attack": "Variable program-dependent; 3ms to 340ms for 15dB gain reduction",
+        "compressor_release": "Variable program-dependent; 200dB/Sec to 3dB/Sec",
+        "gate_threshold": "OFF to +15dBu",
+        "gate_ratio": "10:1",
+        "gate_max_depth": ">60dB",
+        "gate_attack": "<500μSec (from Maximum Depth)",
+        "gate_release": "Adjustable, 30ms to 3sec (to 30dB attenuation)",
+        "limiter_threshold": "0dBu to +20dBu",
+        "power": "15 Watts; 100 VAC 50/60Hz; 120VAC 60Hz; 230 VAC 50/60 Hz; IEC",
+        "rack_units": "1 Rack Unit (1U High)",
+        "dimensions": "1.75\" x 19\" x 6.75\" (4.45 cm x 48.2 cm x 17.15 cm)",
+        "weight": "5.05 lb (2.29 kg)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "audio input ch1/ch2",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "audio input ch1/ch2",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "audio output ch1/ch2",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "audio output ch1/ch2",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter-unbalanced-insert",
+          "role": "sidechain insert ch1/ch2 (tip = return/input, ring = send/output)",
+          "dir": "bidir",
+          "signal": "insert-send-return",
+          "count": 2
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (IEC)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "line-level-consumer",
+        "insert-send-return",
+        "mains-power"
+      ],
+      "manual_url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
+      "datasheet_url": "https://dbxpro.com/en/product_documents/dbx166xsdatasheetpdf",
+      "product_page_url": "https://dbxpro.com/en/products/166xs",
+      "manual_languages": [
+        "fr",
+        "en",
+        "es",
+        "de"
+      ],
+      "manuals": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
+          "title": "166xs Owner's Manual-French (Mode d'emploi)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "PN: 5055035-A, © 2015",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "title": "166xs Owner's Manual-English",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "PN: 5055035-C, © 2020",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xs-ownermanual-spanishpdf",
+          "title": "166xs Owner's Manual-Spanish",
+          "language": "es",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/166xs_manual_5055035-a_-german-pdf",
+          "title": "166xs Owner's Manual-German",
+          "language": "de",
+          "file_type": "pdf",
+          "version_or_date": "5055035-A",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsdatasheetpdf",
+          "title": "166xs Cut Sheet-English",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Part number: 18-0841",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/products/166xs",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "technology",
+            "key_specs.inputs",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.outputs",
+            "key_specs.output_impedance",
+            "key_specs.max_output_level",
+            "key_specs.sidechain_insert",
+            "key_specs.frequency_response",
+            "key_specs.compressor_threshold",
+            "key_specs.compressor_ratio",
+            "key_specs.compressor_attack",
+            "key_specs.compressor_release",
+            "key_specs.gate_threshold",
+            "key_specs.gate_ratio",
+            "key_specs.gate_release",
+            "key_specs.limiter_threshold",
+            "key_specs.dynamic_range",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "manuals"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsdatasheetpdf",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.inputs",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.outputs",
+            "key_specs.output_impedance",
+            "key_specs.max_output_level",
+            "key_specs.sidechain_insert",
+            "key_specs.frequency_response",
+            "key_specs.noise",
+            "key_specs.thd_n",
+            "key_specs.compressor_threshold",
+            "key_specs.compressor_ratio",
+            "key_specs.compressor_attack",
+            "key_specs.compressor_release",
+            "key_specs.gate_threshold",
+            "key_specs.gate_ratio",
+            "key_specs.gate_max_depth",
+            "key_specs.gate_attack",
+            "key_specs.gate_release",
+            "key_specs.limiter_threshold",
+            "key_specs.dynamic_range",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xsownersmanualpdf",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.operating_level",
+            "key_specs.compressor_ratio",
+            "key_specs.compressor_attack",
+            "key_specs.gate_threshold",
+            "key_specs.gate_ratio",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx166xs_ownersmanual-frenchpdf--2",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.operating_level",
+            "key_specs.rack_units"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/news/dbx-introduces-new-s-series-graphic-equalizers-compressors-and-crossovers",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced"
+          ]
+        },
+        {
+          "url": "https://www.adorama.com/us1670772.html",
+          "publisher": "Adorama (search result snippet only)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.dimensions"
+          ]
+        }
+      ],
+      "notes": "Although filed under compressor-limiter, each channel also has a program-adaptive expander/gate, so the unit also illustrates the gate-expander sub_type. year_introduced 2011 = debut of the S-Series 166xs per dbx's 12 January 2011 announcement (earlier 166/166XL models existed). Sidechain jack mapped to proposed id trs-quarter-unbalanced-insert (one TRS carrying send on ring and return on tip).",
+      "conflicts": [
+        {
+          "field": "key_specs.max_output_level",
+          "values": [
+            {
+              "value": ">+20dBm balanced/unbalanced (into 600Ω)",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx166xsdatasheetpdf"
+            },
+            {
+              "value": ">+18 dBm balanced/unbalanced (into 600Ω)",
+              "source_url": "https://dbxpro.com/en/products/166xs"
+            }
+          ],
+          "note": "600Ω figure differs; the 2kΩ figure (>+21dBu) agrees."
+        },
+        {
+          "field": "key_specs.sidechain_insert",
+          "values": [
+            {
+              "value": "Maximum Level >+24dBu (tip and ring)",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx166xsdatasheetpdf"
+            },
+            {
+              "value": ">+20dBu (tip/input); >+20dBu (ring/output)",
+              "source_url": "https://dbxpro.com/en/products/166xs"
+            }
+          ],
+          "note": "Sidechain maximum level differs between cut sheet and web spec table."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Sidechain insert on one TRS (tip return / ring send), -10dBV/+4dBu switch and XLR+TRS I/O give strong wiring and level-matching lessons."
+      }
+    },
+    {
+      "id": "ssl-the-bus-plus",
+      "brand": "Solid State Logic (SSL)",
+      "model": "THE BUS+",
+      "category": "processors-outboard",
+      "sub_type": "compressor-limiter",
+      "technology": "Analogue VCA stereo bus compressor (2181 THAT VCAs) based on the SSL console centre-section Bus Compressor, plus 2-band analogue dynamic EQ (D-EQ); 100% analogue audio path with stepped pots read by a microcontroller and electronic switching. Modes: Classic Stereo, S/C Stereo, Dual Mono, Mid-Side; colour options LOW THD, F/B (feedback side-chain), 4K MODE.",
+      "year_introduced": 2022,
+      "status": "current",
+      "why_it_is_a_classic": "SSL's user guide traces the Bus Compressor from the 4000 B console (1976) through the FX G384 rack unit (1991), X-Rack and 500-series versions; THE BUS+ is the current 2U rack incarnation. SSL itself calls it the de facto choice for gluing a mix together.",
+      "typical_uses": [
+        "mix bus / stereo bus compression",
+        "mastering",
+        "mid-side processing",
+        "parallel compression",
+        "dual-mono tracking"
+      ],
+      "key_specs": {
+        "input_impedance": "10 kΩ",
+        "output_impedance": "60 Ω",
+        "max_input_output_level": "+27.5 dBu (Operating Level Modes 0 dB/-5 dB, 1% THD)",
+        "operating_level": "0 dB (nominal), +10 dB or -5 dB selectable",
+        "frequency_response": "±0.025 dB 20 Hz to 20 kHz bypassed (< 1 Hz / > 200 kHz -3 dB); ±0.01 dB 20 Hz to 20 kHz compressor in (< 2 Hz / > 180 kHz -3 dB)",
+        "thd_n": "-95 dB / 0.0017% typical (bypassed, 1 kHz @ 0 dBu); -88 dB / 0.004% typical (compressor in, 1 kHz @ 0 dBu)",
+        "noise": "-95 dBu typical bypassed; -90 dBu typical compressor in; -89 dBu typical 4K Mode in",
+        "dynamic_range": "122.5 dB bypassed; 117.5 dB compressor in",
+        "sidechain_hpf": "variable high-pass up to 300 Hz in 10 Hz steps",
+        "power_supply": "Auto-Ranging 100-240 VAC",
+        "power_consumption": "38 Watts operating; < 1 Watt sleep; 10 Watts auto-sleep",
+        "rack_units": "2 RU",
+        "dimensions": "480 mm / 19 inches W x 88.9 mm / 3.5 inches H x 303 mm / 11.9 inches D (chassis only)",
+        "weight": "5.92 kg / 13.1 lbs",
+        "channels": "2"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "main audio inputs CH1/CH2",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "main audio outputs CH1/CH2",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-f",
+          "role": "EXT S/C IN external side-chain inputs",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "EXT SEND side-chain sends",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (auto-ranging PSU, rocker switch)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.solidstatelogic.com/products/the-bus-plus",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "title": "THE BUS+ User Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "1.1",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_Quickstart_Guide.pdf",
+          "title": "THE BUS+ Quick Start Guide",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "quick-start"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf",
+          "publisher": "Solid State Logic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.max_input_output_level",
+            "key_specs.frequency_response",
+            "key_specs.thd_n",
+            "key_specs.noise",
+            "key_specs.dynamic_range",
+            "key_specs.power_supply",
+            "key_specs.power_consumption",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://www.solidstatelogic.com/products/the-bus-plus",
+          "publisher": "Solid State Logic",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.max_input_output_level",
+            "key_specs.operating_level",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.frontendaudio.com/copy-of-solid-state-logic-500-series-stereo-buss-compressor/",
+          "publisher": "Front End Audio",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.thd_n",
+            "key_specs.noise",
+            "key_specs.dynamic_range",
+            "key_specs.rack_units"
+          ]
+        },
+        {
+          "url": "https://www.thomann.co.uk/ssl_bus.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "key_specs.rack_units",
+            "key_specs.weight",
+            "key_specs.sidechain_hpf"
+          ]
+        },
+        {
+          "url": "https://www.prosoundweb.com/solid-state-logic-introduces-the-bus-compressor/",
+          "publisher": "ProSoundWeb",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "trade-press",
+          "covers": [
+            "year_introduced",
+            "technology",
+            "key_specs.rack_units"
+          ]
+        }
+      ],
+      "notes": "Chosen as the current rack G-series-lineage SSL bus compressor. Front End Audio prints the compressor-in frequency response as one line ('±0.01 dB < 2 Hz to > 180 kHz'), merging the in-band tolerance and -3 dB points that the SSL guide lists separately. The SSL PDF downloads ask for EULA consent before access. No French manual found.",
+      "conflicts": [
+        {
+          "field": "key_specs.weight",
+          "values": [
+            {
+              "value": "5.92 kg / 13.1 lbs",
+              "source_url": "https://solidstatelogic.com/assets/uploads/downloads/The_Bus_User_Guide_1.1.pdf"
+            },
+            {
+              "value": "approx. 7 kg",
+              "source_url": "https://www.thomann.co.uk/ssl_bus.htm"
+            }
+          ],
+          "note": "Thomann figure may include packaging (SSL boxed weight 8.68 kg); SSL guide is primary."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Stereo insert across a mix bus plus separate external side-chain in/send XLRs: a good lesson on insert wiring and side-chain keying."
+      }
+    },
+    {
+      "id": "empirical-labs-distressor-el8",
+      "brand": "Empirical Labs",
+      "model": "Distressor EL8 / EL8X",
+      "category": "processors-outboard",
+      "sub_type": "compressor-limiter",
+      "technology": "Single-channel analogue compressor with eight selectable curves (the 10:1 curve approximates an LA-2A per the retailer), three distortion modes (Audio button), detector HPF, band emphasis, opto mode; EL8X adds British mode and image (stereo) link. Gain-element type not confirmed in a source read this session.",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "A single-rack-space compressor that can imitate several classic compressor types through its eight curves and three distortion modes, sold as single units or stereo-linked pairs.",
+      "typical_uses": [
+        "vocals",
+        "drums / room mics",
+        "bass",
+        "parallel/aggressive compression",
+        "stereo-linked bus use (pair)"
+      ],
+      "key_specs": {
+        "attack": "50 µs to 50 ms",
+        "release": "50 ms to 20 s",
+        "curves": "eight distressor curves, selected with the ratio button",
+        "distortion_modes": "three, selected with the Audio button",
+        "connectors_summary": "XLR (balanced) and 6.3 mm jack (unbalanced) inputs and outputs; balanced link in/out for stereo image link",
+        "power": "230 V operation (EU retail version)",
+        "frequency_response_unverified": "2 Hz to 160 kHz (+0, -3 dB) in clean audio mode",
+        "dynamic_range_unverified": "110 dB (max output to min output in 1:1 mode)",
+        "signal_to_noise_unverified": "Greater than 100 dB in distort 3 mode",
+        "distortion_unverified": "between .02% and 20% depending on distortion mode and release times",
+        "input_impedance_unverified": "20K Ohms",
+        "output_impedance_unverified": "< 75 ohms",
+        "chassis_unverified": "single height 1.75\" high, 10\" deep, 19\" wide"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "balanced audio input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "balanced audio output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "unbalanced 6.3 mm jack input",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 1
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "unbalanced 6.3 mm jack output",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [
+        {
+          "url": "https://www.empiricallabs.com/wp-content/uploads/distrecall.pdf",
+          "title": "Distressor Recall Sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.thomannmusic.com/empirical_labs_el8xs_distressor.htm",
+          "publisher": "Thomann",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "key_specs.attack",
+            "key_specs.release",
+            "key_specs.curves",
+            "key_specs.distortion_modes",
+            "key_specs.connectors_summary",
+            "key_specs.power",
+            "connectors",
+            "status"
+          ]
+        },
+        {
+          "url": "https://www.fullcompass.com/prod/184747-empirical-labs-el8-distressor-compressor-single-channel",
+          "publisher": "Full Compass (search-result snippet only; page returned 403)",
+          "accessed": "2026-10-22",
+          "confidence": "unverified",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.frequency_response_unverified",
+            "key_specs.dynamic_range_unverified",
+            "key_specs.signal_to_noise_unverified",
+            "key_specs.distortion_unverified",
+            "key_specs.input_impedance_unverified",
+            "key_specs.output_impedance_unverified",
+            "key_specs.chassis_unverified",
+            "key_specs.attack"
+          ]
+        },
+        {
+          "url": "https://www.empiricallabs.com/wp-content/uploads/distrecall.pdf",
+          "publisher": "Empirical Labs",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "manuals"
+          ]
+        }
+      ],
+      "notes": "Weakest-sourced device in this fragment: the Empirical Labs site and manual could not be reached (web-search budget exhausted; Full Compass, Reverb and UA help pages returned 403). Keys suffixed _unverified come from a search-results summary of retailer listings (Full Compass/Reverb/PSSL) whose exact page could not be opened. Thomann data is for the EL8X-S (stereo pair of EL8X units); its listing says 2U for the pair. The unbalanced jack is modelled as ts-quarter (6.3 mm). Mains connector type not confirmed.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Parallel balanced XLR and unbalanced jack I/O plus a stereo link port illustrate balanced vs unbalanced insert wiring."
+      }
+    },
+    {
+      "id": "manley-variable-mu",
+      "brand": "Manley Laboratories",
+      "model": "Stereo Variable Mu Limiter Compressor",
+      "category": "processors-outboard",
+      "sub_type": "compressor-limiter",
+      "technology": "Variable-mu (remote cut-off tube) limiter/compressor; fully differential all-tube circuitry, Manley input and output transformers (nickel laminations, mu-metal cases), balanced 600 Ohm I/O; independently regulated B+ and heater supplies; hard-wire bypass.",
+      "year_introduced": 1994,
+      "status": "current",
+      "why_it_is_a_classic": "Manley states the Variable Mu has defined professional stereo buss compression since 1994; it is a reference tube bus/mastering compressor still in production.",
+      "typical_uses": [
+        "stereo bus compression",
+        "mastering",
+        "tube colouration on mix bus"
+      ],
+      "key_specs": {
+        "tubes": "one each 5670, 5751, 12BH7, & 12AL5 per channel (T-BAR mod replaced 5670's with 2 pairs of 6BA6's)",
+        "input_output_impedance": "BALANCED INPUTS & OUTPUTS (600 Ohms)",
+        "ratio": "LIMIT (4:1 to 20:1) or COMPRESS (1.5 to 1)",
+        "attack": "Variable ATTACK: 25msec-70msec",
+        "release": "RECOVERY 5 steps: 0.2s, 0.4s, 0.6s, 4sec., 8sec.",
+        "input_level_switch": "-8, -4, -2, -1, 0, +1, +2, +4, +8dB",
+        "sidechain_hpf": "6dB per octave, approximately -3dB at 70Hz",
+        "max_gain": "35dB",
+        "max_output": "+30dBu (26Vrms) 26dB Headroom",
+        "frequency_response": "20 Hz – 25 kHz, ±0.1 dB",
+        "thd": "<0.1% THD @ 1kHz",
+        "noise_floor": "-85dB typical",
+        "power_consumption": "80 watts (120/240VAC)",
+        "mains": "factory set for 100V, 120V or 220-240VAC; 50~60Hz",
+        "rack_units": "2U",
+        "dimensions": "19\" x 3 1/2\" x 10\"; power transformer protrudes 3.5\" from the rear",
+        "shipping_weight": "23 lbs.",
+        "fuse": "2 Amp SLO-BLO"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "input L/R (transformer-coupled balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "output L/R (balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "iec-c14",
+          "role": "IEC mains socket",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.manley.com/products/pro-audio/dynamics/variable-mu",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://r2.gear4music.com/media/20/203949/download_203949.pdf",
+          "title": "Manley Stereo Variable Mu Limiter Compressor owner's manual (retailer-hosted copy)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Rev 5.2 ZF 2016",
+          "official": false,
+          "kind": "user-manual"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.manley.com/products/pro-audio/dynamics/variable-mu",
+          "publisher": "Manley Laboratories",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "year_introduced",
+            "status",
+            "key_specs.tubes",
+            "key_specs.input_output_impedance",
+            "key_specs.ratio",
+            "key_specs.attack",
+            "key_specs.release",
+            "key_specs.max_gain",
+            "key_specs.max_output",
+            "key_specs.frequency_response",
+            "key_specs.thd",
+            "key_specs.noise_floor",
+            "key_specs.power_consumption",
+            "key_specs.mains",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.shipping_weight"
+          ]
+        },
+        {
+          "url": "https://r2.gear4music.com/media/20/203949/download_203949.pdf",
+          "publisher": "Manley Laboratories (manual, hosted by Gear4music)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "connectors",
+            "key_specs.tubes",
+            "key_specs.input_output_impedance",
+            "key_specs.ratio",
+            "key_specs.attack",
+            "key_specs.release",
+            "key_specs.input_level_switch",
+            "key_specs.sidechain_hpf",
+            "key_specs.max_gain",
+            "key_specs.max_output",
+            "key_specs.thd",
+            "key_specs.noise_floor",
+            "key_specs.power_consumption",
+            "key_specs.mains",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.shipping_weight",
+            "key_specs.fuse"
+          ]
+        }
+      ],
+      "notes": "Manley's page says the output tube is 12BH7 in current production since 4/2016; older units and some retailer listings show 7044 or 5687, so tube complement depends on build date. A separate Mastering version exists (stepped controls). The manufacturer page links no manual; the only manual copy found is retailer-hosted, so manual_url is left 'not found'. No French manual found.",
+      "conflicts": [],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "Classic transformer-balanced 600 Ohm XLR stereo insert; useful for a stereo bus insert lesson but no unusual connectors."
+      }
+    },
+    {
+      "id": "api-550a",
+      "brand": "API",
+      "model": "550A",
+      "category": "processors-outboard",
+      "sub_type": "equalizer",
+      "technology": "Fully discrete 3-band stepped (reciprocal) equaliser with 2520 op-amp and 'Proportional Q'; transformer-isolated output; 500-series module",
+      "year_introduced": "not found",
+      "status": "current",
+      "why_it_is_a_classic": "API says the 550A, designed by Saul Walker in the late '60s, became its standard channel EQ when it began building consoles in 1971. API's own brochure calls it the standard against which other EQs are measured.",
+      "typical_uses": [
+        "drum and snare shaping",
+        "tracking EQ in 500-series racks",
+        "mix bus and stem tone shaping",
+        "teaching stepped/proportional-Q EQ"
+      ],
+      "key_specs": {
+        "bands": "3 bands of classic API equalization; Each band offers 7 API selected frequency centers",
+        "lf_frequencies": "30, 40, 50, 100, 200, 300, 400 Hz",
+        "mf_frequencies": "200, 400, 600, 800, 1500, 3000, 5000 Hz",
+        "hf_frequencies": "2500, 5000, 7000, 10,000, 12,500, 15,000, 20,000 Hz",
+        "boost_cut": "Maximum 12 dB of boost/cut per band; steps of 2, 4, 6, 9 and 12 dB either plus or minus",
+        "shelf_peak": "EQ Band 1 and 3 offer shelf/peak switching",
+        "input_impedance": "66 kΩ high level, 17 kΩ low level",
+        "output_impedance": "Less than 85Ω (transformer isolated)",
+        "nominal_operating_level": "–15 dBm to +12 dBm",
+        "clip_level": "+30 dBm (3% THD)",
+        "frequency_response": "±0.5 dB 30 Hz to 20 kHz (unequalized)",
+        "thd": ".05% THD max, 30 Hz to 20 kHz @ +4 dBm; .07% THD max, 30 Hz to 20 kHz @ +18 dBm",
+        "power": "±15 volts to ±18 volts @ 70 ma",
+        "dimensions": "1.5\" X 5.25\" X 7.75\" Deep",
+        "format": "500 series (single-slot module)"
+      },
+      "connectors": [],
+      "signal_types": [
+        "line-level-pro"
+      ],
+      "manual_url": "https://apiaudio.com/docs/brochures/br550a.pdf",
+      "datasheet_url": "https://apiaudio.com/docs/brochures/br550a.pdf",
+      "product_page_url": "https://apiaudio.com/product/550a-discrete-3-band-eq/",
+      "manual_languages": [
+        "en"
+      ],
+      "manuals": [
+        {
+          "url": "https://apiaudio.com/docs/brochures/br550a.pdf",
+          "title": "550A Discrete 3 Band EQ (listed as Manual on product page; content is a brochure)",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "datasheet"
+        },
+        {
+          "url": "https://apiaudio.com/wp-content/uploads/2025/03/550A_recall-sheet_2025.pdf",
+          "title": "550A recall sheet",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "2025",
+          "official": true,
+          "kind": "other"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://apiaudio.com/product/550a-discrete-3-band-eq/",
+          "publisher": "API (Automated Processes Inc.)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.bands",
+            "key_specs.lf_frequencies",
+            "key_specs.mf_frequencies",
+            "key_specs.hf_frequencies",
+            "key_specs.boost_cut",
+            "key_specs.shelf_peak",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.nominal_operating_level",
+            "key_specs.clip_level",
+            "key_specs.frequency_response",
+            "key_specs.thd",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "status",
+            "manuals"
+          ]
+        },
+        {
+          "url": "https://apiaudio.com/docs/brochures/br550a.pdf",
+          "publisher": "API (Automated Processes Inc.)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.bands",
+            "key_specs.boost_cut",
+            "key_specs.shelf_peak",
+            "key_specs.clip_level",
+            "why_it_is_a_classic"
+          ]
+        },
+        {
+          "url": "https://woodbrass.shop/products/api-audio-550a-3-band-eq-149970",
+          "publisher": "Woodbrass",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.bands",
+            "key_specs.boost_cut",
+            "key_specs.clip_level",
+            "key_specs.format"
+          ]
+        }
+      ],
+      "notes": "A 500-series module with no front-panel audio connectors. All I/O is on the edge connector and reaches the user through the 500-series rack's XLR/TRS, so connectors[] is empty. The product page says production resumed in 2004 and the design dates from the late '60s, so no exact year is stated. Vintage Digital (search snippet) gives 'Released in 2015'. Not used.",
+      "conflicts": [
+        {
+          "field": "key_specs.clip_level",
+          "values": [
+            {
+              "value": "+30 dB clip level",
+              "source_url": "https://apiaudio.com/docs/brochures/br550a.pdf"
+            },
+            {
+              "value": "+30 dBm (3% THD)",
+              "source_url": "https://apiaudio.com/product/550a-discrete-3-band-eq/"
+            }
+          ],
+          "note": "Same number, unit reference differs (dB vs dBm)."
+        },
+        {
+          "field": "key_specs.bands",
+          "values": [
+            {
+              "value": "reciprocal equalization at 21 points ... The fifteen equalization points are divided into three overlapping ranges",
+              "source_url": "https://apiaudio.com/docs/brochures/br550a.pdf"
+            },
+            {
+              "value": "5 API selected frequency centers (per search snippet)",
+              "source_url": "https://www.barryrudolph.com/recall/manuals/api550a.pdf"
+            }
+          ],
+          "note": "API's brochure is internally inconsistent (21 vs 15 points; 15 matches the original 5-per-band 550A). The 7-per-band count (21 points) matches the current product page frequency lists."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "No connectors on the module itself; useful only together with a 500-series rack device."
+      }
+    },
+    {
+      "id": "dbx-231s",
+      "brand": "dbx",
+      "model": "231s",
+      "category": "processors-outboard",
+      "sub_type": "equalizer",
+      "technology": "Dual-channel analog 31-band, 1/3-octave constant-Q graphic equalizer with 20mm sliders, switchable ±6/±12 dB boost/cut range, ±12 dB input gain, 50Hz 12dB/octave low-cut filter; impedance-balanced/unbalanced RF-filtered outputs; universal 100-240VAC switch-mode supply.",
+      "year_introduced": 2011,
+      "status": "current",
+      "why_it_is_a_classic": "dbx states its EQs are the industry standard for touring, studios and installations; the 231-series dual 31-band graphic is a very common FOH and monitor-wedge EQ. It is the standard example of a 1/3-octave graphic EQ inserted in a PA or monitor chain.",
+      "typical_uses": [
+        "FOH system tuning",
+        "monitor wedge ringing-out / feedback control",
+        "installed sound room EQ",
+        "studio and broadcast tonal correction"
+      ],
+      "key_specs": {
+        "channels": "2 x 31 bands, 1/3-octave, Constant Q",
+        "inputs": "1/4\" TRS, female XLR (pin 2 hot); Electronically balanced/unbalanced, RF filtered",
+        "input_impedance": "Balanced 40kΩ, unbalanced 20kΩ",
+        "max_input_level": ">+21dBu balanced or unbalanced",
+        "outputs": "1/4\" TRS, male XLR (pin 2 hot); Impedance-balanced/unbalanced, RF filtered",
+        "output_impedance": "Balanced 100Ω, unbalanced 50Ω",
+        "max_output_level": ">+21dBu balanced/unbalanced into 2kΩ or greater; >+18dBm balanced/unbalanced (into 600Ω)",
+        "nominal_level": "designed for nominal +4 dBu levels",
+        "bandwidth": "20Hz to 20kHz, +0.5/-1dB",
+        "frequency_response": "<10Hz to >50kHz, +0.5/-3dB",
+        "dynamic_range": "Typically >112dB",
+        "signal_to_noise": "Typically >95dB",
+        "thd_n": "<0.003%",
+        "crosstalk": "<-90dB, 20Hz to 20kHz",
+        "boost_cut_range": "±6 or ±12 dB (switchable)",
+        "input_gain": "±12 dB",
+        "low_cut": "50Hz 12dB/octave high-pass filter",
+        "power": "100-240VAC 50/60Hz; 15W; IEC receptacle",
+        "dimensions": "3.5\" (8.9cm) H x 6\"(15.24cm) D x 19\" (48.26cm) W",
+        "weight": "6.2 lbs.(2.81 kg)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "audio input ch1/ch2",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "audio input ch1/ch2",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "audio output ch1/ch2",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "trs-quarter",
+          "role": "audio output ch1/ch2",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "iec-c14",
+          "role": "mains in (IEC)",
+          "dir": "in",
+          "signal": "mains-power",
+          "count": 1
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "https://dbxpro.com/en/product_documents/dbxs-serieseq_ownersmanual-frenchpdf--3",
+      "datasheet_url": "https://dbxpro.com/en/product_documents/dbx231sdatasheetpdf",
+      "product_page_url": "https://dbxpro.com/en/products/231s",
+      "manual_languages": [
+        "fr",
+        "en",
+        "es"
+      ],
+      "manuals": [
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbxs-serieseq_ownersmanual-frenchpdf--3",
+          "title": "Mode d'emploi – Égaliseurs graphiques 2-Series 131s 215s 231s (231s Owner's Manual-French)",
+          "language": "fr",
+          "file_type": "pdf",
+          "version_or_date": "18-0804V-A",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx215s_131s_231s_ownersmanualpdf--3",
+          "title": "User Manual 2-Series Graphic Equalizers 131s 215s 231s",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "18-0804V-A",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbxsilverserieseqs-ownersmanual-spanishpdf--3",
+          "title": "231s Owner's Manual-Spanish",
+          "language": "es",
+          "file_type": "pdf",
+          "version_or_date": "not shown",
+          "official": true,
+          "kind": "user-manual"
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx231sdatasheetpdf",
+          "title": "231s Cut Sheet-English",
+          "language": "en",
+          "file_type": "pdf",
+          "version_or_date": "Part number: 18-0845",
+          "official": true,
+          "kind": "spec-sheet"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://dbxpro.com/en/products/231s",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "status",
+            "technology",
+            "why_it_is_a_classic",
+            "key_specs.inputs",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.outputs",
+            "key_specs.output_impedance",
+            "key_specs.max_output_level",
+            "key_specs.bandwidth",
+            "key_specs.dynamic_range",
+            "key_specs.signal_to_noise",
+            "key_specs.low_cut",
+            "key_specs.boost_cut_range",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors",
+            "manuals"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx231sdatasheetpdf",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "key_specs.channels",
+            "key_specs.inputs",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.outputs",
+            "key_specs.output_impedance",
+            "key_specs.max_output_level",
+            "key_specs.bandwidth",
+            "key_specs.frequency_response",
+            "key_specs.dynamic_range",
+            "key_specs.signal_to_noise",
+            "key_specs.thd_n",
+            "key_specs.crosstalk",
+            "key_specs.boost_cut_range",
+            "key_specs.input_gain",
+            "key_specs.low_cut",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/product_documents/dbx215s_131s_231s_ownersmanualpdf--3",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.channels",
+            "key_specs.nominal_level"
+          ]
+        },
+        {
+          "url": "https://dbxpro.com/en/news/dbx-introduces-new-s-series-graphic-equalizers-compressors-and-crossovers",
+          "publisher": "dbx Professional (Harman)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "year_introduced",
+            "key_specs.channels",
+            "key_specs.boost_cut_range"
+          ]
+        },
+        {
+          "url": "https://www.pbtech.com/product/AUDDBX1002/DBX-231S-DUAL-31-BAND-GRAPHIC-EQ",
+          "publisher": "PB Tech (search result snippet only)",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.bandwidth",
+            "key_specs.dynamic_range"
+          ]
+        }
+      ],
+      "notes": "Height 3.5 in corresponds to a 2U rack unit (rack-unit count not stated explicitly in sources read). year_introduced 2011 = debut of the S-Series 231s per dbx's 12 January 2011 announcement; the earlier non-'s' 231 existed before. The 231s FAQ says dynamic range improved from 108dB (previous 2 Series) to 112dB.",
+      "conflicts": [
+        {
+          "field": "key_specs.dynamic_range",
+          "values": [
+            {
+              "value": "Typically >112dB",
+              "source_url": "https://dbxpro.com/en/product_documents/dbx231sdatasheetpdf"
+            },
+            {
+              "value": "Dynamic range of greater than 108dB",
+              "source_url": "https://dbxpro.com/en/products/231s"
+            }
+          ],
+          "note": "Both figures appear on dbx's own page and datasheet (spec table vs feature bullet); the FAQ attributes 108dB to the previous 2 Series model."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "high",
+        "sim_value_reason": "Classic insert between console matrix/aux and amps for FOH or wedges; XLR/TRS balanced line I/O wiring lesson."
+      }
+    },
+    {
+      "id": "pulse-techniques-eqp-1a",
+      "brand": "Pulse Techniques",
+      "model": "EQP-1A Program Equalizer",
+      "category": "processors-outboard",
+      "sub_type": "equalizer",
+      "technology": "Passive program equalizer (passive filter network, custom-wound transformers) with a tube make-up/line amplifier (12AX7 input, 12AU7 output, 6X4 rectifier); mono, 3U rack.",
+      "year_introduced": 1961,
+      "status": "current",
+      "why_it_is_a_classic": "The original Pultec EQP-1A was launched in 1961 and the EQP-1 line ran until 1981; Pulse Techniques of Fort Collins now builds the EQP-1A again from the same components, per the manufacturer.",
+      "typical_uses": [
+        "mastering",
+        "mix bus tone shaping",
+        "kick and bass low-end shaping",
+        "vocal air / high boost"
+      ],
+      "key_specs": {
+        "low_shelf_boost": "20, 30, 60, 100 CPS (Hz), 0–13.5 dB",
+        "low_shelf_attenuate": "20, 30, 60, 100 CPS, 0–17.5 dB",
+        "high_peak_boost": "3, 4, 5, 8, 10, 12, 16 kHz, 0–18 dB",
+        "high_shelf_attenuate": "5, 10, 20 kHz, 0–16 dB",
+        "input_impedance": "~600 Ohms",
+        "output_impedance": "~50 Ohms",
+        "noise": "92 dB below +10 dBm",
+        "distortion": "0.15% or less at +10 dBm into 600 ohms",
+        "amplifier_frequency_response": "flat from 20 CPS to 20 kHz, ±0.5 dB",
+        "tubes": "1 ea 12AU7, 12AX7, 6X4",
+        "rack_units": "3U / 19 in"
+      },
+      "connectors": [],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "https://www.pulsetechniques.com/products/tube-equalizers/eqp-1a/",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://www.pulsetechniques.com/products/tube-equalizers/eqp-1a/",
+          "publisher": "Pulse Techniques",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "technology",
+            "status",
+            "key_specs.low_shelf_boost",
+            "key_specs.low_shelf_attenuate",
+            "key_specs.high_peak_boost",
+            "key_specs.high_shelf_attenuate",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.noise",
+            "key_specs.distortion",
+            "key_specs.amplifier_frequency_response",
+            "key_specs.tubes",
+            "key_specs.rack_units",
+            "year_introduced"
+          ]
+        },
+        {
+          "url": "https://pulsetechniques.com/products/eqp-1a",
+          "publisher": "Pulse Techniques",
+          "accessed": "2026-10-22",
+          "confidence": "verified-primary",
+          "kind": "manufacturer",
+          "covers": [
+            "key_specs.low_shelf_boost",
+            "key_specs.high_peak_boost",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.tubes",
+            "key_specs.rack_units"
+          ]
+        },
+        {
+          "url": "https://wrdtunes.com/products/pultec-eqp-1a-program-equalizer",
+          "publisher": "WRD Tunes",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "key_specs.low_shelf_boost",
+            "key_specs.low_shelf_attenuate",
+            "key_specs.high_peak_boost",
+            "key_specs.high_shelf_attenuate",
+            "key_specs.input_impedance",
+            "key_specs.output_impedance",
+            "key_specs.noise",
+            "key_specs.distortion",
+            "key_specs.amplifier_frequency_response",
+            "key_specs.tubes",
+            "key_specs.rack_units"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Pultec_EQP-1",
+          "publisher": "Wikipedia",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "other",
+          "covers": [
+            "year_introduced",
+            "technology",
+            "why_it_is_a_classic"
+          ]
+        }
+      ],
+      "notes": "year_introduced is the original 1961 EQP-1A launch. A manufacturer-page search snippet said the 3U EQP-1A returned to production in 2014 after the 2U EQP-1A3; Wikipedia dates the Pulse Techniques revival to 2000 onward (EQP-1A3 first). Weight and power were seen only in an unattributed search summary (6.8 kg; 117 V AC, 50/60 Hz, 25W) and are omitted from key_specs. Connectors (rear I/O type) not stated on any page read; Wikipedia lists one input and one output only. No official manual found.",
+      "conflicts": [
+        {
+          "field": "reissue_year",
+          "values": [
+            {
+              "value": "2014 (3U EQP-1A back in production, per manufacturer page search snippet)",
+              "source_url": "https://www.pulsetechniques.com/products/tube-equalizers/eqp-1a/"
+            },
+            {
+              "value": "2000–present revival (Wikipedia infobox; work started 2000, company founded about 10 years later)",
+              "source_url": "https://en.wikipedia.org/wiki/Pultec_EQP-1"
+            }
+          ],
+          "note": "Different events: start of the revival project vs return of the 3U EQP-1A model."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "low",
+        "sim_value_reason": "Mono line-level in/out only and connector type unconfirmed; value is in EQ/gain-staging theory rather than wiring."
+      }
+    },
+    {
+      "id": "drawmer-ds201",
+      "brand": "Drawmer",
+      "model": "DS201",
+      "category": "processors-outboard",
+      "sub_type": "gate-expander",
+      "technology": "Analog dual-channel noise gate (stereo-linkable) with variable high-pass/low-pass 'frequency conscious' key filters, attack/hold/decay/range envelope, internal/external key, gate/duck switch, key listen and 'traffic light' status display; balanced XLR I/O. Gain-element type not stated in the manual.",
+      "year_introduced": "not found",
+      "status": "not found",
+      "why_it_is_a_classic": "Drawmer's own manual says the DS201's features and ease of use made it the worldwide 'industry standard' noise gate. Its side-chain filters and traffic-light display make it the textbook gate for drum miking.",
+      "typical_uses": [
+        "kick and snare drum gating",
+        "keyed gating (e.g. triggering bass from kick)",
+        "ducking music under voice",
+        "removing clicks and pops / noise between phrases"
+      ],
+      "key_specs": {
+        "channels": "2 (independent or stereo linked)",
+        "input_impedance": "20KΩ",
+        "max_input_level": "+17dB (manual); +17dBu (Markertek)",
+        "output_impedance": "50Ω (bal) 100Ω (unbal)",
+        "max_output_level": "+17dB",
+        "bandwidth": "23Hz to 31KHz -1dB",
+        "noise": "Wideband 22Hz - 22KHz: -90dB AV, -88dB RMS (unity gain, gate open)",
+        "distortion": "< 0.025% (100Hz, 1KHz, 10KHz at 0dB input)",
+        "threshold": "-50dBFs - infinate (as printed)",
+        "attack": "10uS - 1 Second",
+        "hold": "2mS - 2 Second",
+        "decay": "2mS - 4 Second",
+        "range": "0dB - 90dB",
+        "key_filters": "L.F. 25Hz - 4kHz; H.F. 250Hz - 35kHz",
+        "power": "93-125Volt or 185-250Volt at 50-60Hz, 9 Watts",
+        "rack_units": "1U",
+        "dimensions": "482mm (w) x 44mm (h) x 200mm (d)",
+        "weight": "3.4 Kgs (incl packaging)"
+      },
+      "connectors": [
+        {
+          "connector": "xlr3-f",
+          "role": "audio input ch1/ch2 (balanced)",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "xlr3-m",
+          "role": "audio output ch1/ch2 (balanced)",
+          "dir": "out",
+          "signal": "line-level-pro",
+          "count": 2
+        },
+        {
+          "connector": "ts-quarter",
+          "role": "key (external sidechain) input ch1/ch2",
+          "dir": "in",
+          "signal": "line-level-pro",
+          "count": 2
+        }
+      ],
+      "signal_types": [
+        "line-level-pro",
+        "mains-power"
+      ],
+      "manual_url": "not found",
+      "datasheet_url": "not found",
+      "product_page_url": "not found",
+      "manual_languages": [],
+      "manuals": [],
+      "sources": [
+        {
+          "url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf",
+          "publisher": "Drawmer Electronics Ltd. operator's manual (© 2008) hosted by Gear4music",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "technology",
+            "why_it_is_a_classic",
+            "key_specs.channels",
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.output_impedance",
+            "key_specs.max_output_level",
+            "key_specs.bandwidth",
+            "key_specs.noise",
+            "key_specs.distortion",
+            "key_specs.threshold",
+            "key_specs.attack",
+            "key_specs.hold",
+            "key_specs.decay",
+            "key_specs.range",
+            "key_specs.key_filters",
+            "key_specs.power",
+            "key_specs.rack_units",
+            "key_specs.dimensions",
+            "key_specs.weight",
+            "connectors"
+          ]
+        },
+        {
+          "url": "https://markertek.com/product/drwm-ds201/drawmer-ds201-gate-variable-speed-frequency-2-ch",
+          "publisher": "Markertek",
+          "accessed": "2026-10-22",
+          "confidence": "verified-secondary",
+          "kind": "retailer",
+          "covers": [
+            "key_specs.input_impedance",
+            "key_specs.max_input_level",
+            "key_specs.output_impedance",
+            "key_specs.max_output_level",
+            "key_specs.bandwidth",
+            "key_specs.distortion",
+            "key_specs.power",
+            "key_specs.dimensions",
+            "key_specs.weight"
+          ]
+        }
+      ],
+      "notes": "Manual content is Drawmer's official operator's manual, but it was only found on a retailer's server (Gear4music), so it is not listed as an official manual URL. drawmer.com product/download page could not be located (web search budget exhausted). Markertek says 'This item is no longer available' (retailer-specific; discontinuation not confirmed by Drawmer), hence status 'not found'. XLR gender assumed by convention (manual says 'balanced XLRs'); key inputs are ¼\" mono jacks. Mains inlet type not stated in the manual (so omitted from connectors).",
+      "conflicts": [
+        {
+          "field": "key_specs.noise",
+          "values": [
+            {
+              "value": "Wideband 22Hz - 22KHz: -90dB AV / -88dB RMS; CCIR ARM -95dB AV / -93dB RMS",
+              "source_url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf"
+            },
+            {
+              "value": "22Hz-2KHz: -95dB (AV), -93dB(RMS)",
+              "source_url": "https://markertek.com/product/drwm-ds201/drawmer-ds201-gate-variable-speed-frequency-2-ch"
+            }
+          ],
+          "note": "Retailer appears to quote a different weighting column/bandwidth than the manual's wideband figure."
+        },
+        {
+          "field": "key_specs.power",
+          "values": [
+            {
+              "value": "93-125Volt or 185-250Volt at 50-60Hz, 9 Watts",
+              "source_url": "https://r2.gear4music.com/media/18/182269/download_182269.pdf"
+            },
+            {
+              "value": "230Volt or 115V at 50-60hZ: 9VA",
+              "source_url": "https://markertek.com/product/drwm-ds201/drawmer-ds201-gate-variable-speed-frequency-2-ch"
+            }
+          ],
+          "note": "Same rating expressed differently."
+        }
+      ],
+      "tekpractice": {
+        "in_catalog": false,
+        "catalog_id": null,
+        "proposed_new_connectors": [],
+        "proposed_new_signals": [],
+        "sim_value": "medium",
+        "sim_value_reason": "External key (sidechain) input on ¼\" jack teaches keyed gating/ducking; balanced XLR I/O and unbalanced-use pin-3-to-ground rule."
+      }
+    }
+  ]
+}
