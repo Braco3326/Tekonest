@@ -1,0 +1,125 @@
+{
+ "name": "A-refined-bobine",
+ "label": "A · Bobine affinée (minimal change)",
+ "tokens": {
+  "--focus-ring": "3px solid var(--color-ink)",
+  "--cable-apprendre": "#7A5200",
+  "--cable-apprendre-text": "#7A5200",
+  "--cable-organiser": "#8A3FA8",
+  "--cable-organiser-text": "#8A3FA8",
+  "--status-now": "var(--color-ink)",
+  "--status-dev": "var(--color-ink)",
+  "--status-prep": "var(--color-ink)",
+  "--status-later": "var(--color-ink)",
+  "--poster-bg": "#16163F",
+  "--poster-ink": "#FAFAF7",
+  "--poster-ink-2": "#D2D2E4",
+  "--poster-accent": "#E8590C",
+  "--poster-loop": "#FAFAF7"
+ },
+ "extra_css": "\n.status::before{width:11px;height:11px;box-sizing:border-box;border:2px solid var(--color-ink);background:transparent}\n.status--now::before{background:var(--color-ink)}\n.status--dev::before{background:linear-gradient(90deg,var(--color-ink) 50%,transparent 50%)}\n.status--prep::before{}\n.status--later::before{border:2px dotted var(--color-ink)}\n",
+ "logo": {
+  "ink": "#16163F",
+  "signal": "#E8590C"
+ },
+ "poster": {
+  "logo": "lockup-reverse.svg"
+ },
+ "semantic": {
+  "ground": "#FAFAF7",
+  "branches": {
+   "soirees": "#E8590C",
+   "reseau": "#12775A",
+   "organiser": "#8A3FA8",
+   "apprendre": "#7A5200",
+   "tekpractice": "#2E5FE6"
+  },
+  "status": {},
+  "contrast_checks": [
+   [
+    "Body text ink on paper",
+    "#16163F",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Secondary text",
+    "#4A4A6E",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Captions",
+    "#6B6B8A",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Sodium as text",
+    "#B4430A",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Focus ring (ink) vs paper",
+    "#16163F",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Sodium strand / plug vs paper (non-text)",
+    "#E8590C",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Input border",
+    "#8E8EA8",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "White on ink (primary button)",
+    "#FFFFFF",
+    "#16163F",
+    4.5
+   ],
+   [
+    "Réseau cable",
+    "#12775A",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Organiser cable (prune)",
+    "#8A3FA8",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Apprendre cable (bronze)",
+    "#7A5200",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "TekPractice cable",
+    "#2E5FE6",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Poster text on ink",
+    "#FAFAF7",
+    "#16163F",
+    4.5
+   ],
+   [
+    "Sodium on ink (poster)",
+    "#E8590C",
+    "#16163F",
+    3
+   ]
+  ]
+ }
+}

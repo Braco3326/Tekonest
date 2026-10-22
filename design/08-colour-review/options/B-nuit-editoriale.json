@@ -1,0 +1,153 @@
+{
+ "name": "B-nuit-editoriale",
+ "label": "B · Nuit éditoriale (warmer, cultural)",
+ "tokens": {
+  "--color-paper": "#F7F4EE",
+  "--color-surface": "#FFFDF9",
+  "--color-sunken": "#F2EEE7",
+  "--color-ink": "#1B1736",
+  "--color-ink-2": "#4D4560",
+  "--color-ink-3": "#6B6480",
+  "--color-line": "#E2DCD0",
+  "--color-line-strong": "#8A8399",
+  "--focus-ring": "3px solid var(--color-ink)",
+  "--cable-reseau": "#0F6B6B",
+  "--cable-reseau-text": "#0F6B6B",
+  "--cable-organiser": "#B0306A",
+  "--cable-organiser-text": "#B0306A",
+  "--cable-apprendre": "#7A5200",
+  "--cable-apprendre-text": "#7A5200",
+  "--status-now": "var(--color-ink)",
+  "--status-dev": "var(--color-ink)",
+  "--status-prep": "var(--color-ink)",
+  "--status-later": "var(--color-ink)",
+  "--poster-bg": "#1B1736",
+  "--poster-ink": "#F4F0EA",
+  "--poster-ink-2": "#B9B2CC",
+  "--poster-accent": "#FF8A4C",
+  "--poster-loop": "#F4F0EA"
+ },
+ "extra_css": "\n.status::before{width:11px;height:11px;box-sizing:border-box;border:2px solid var(--color-ink);background:transparent}\n.status--now::before{background:var(--color-ink)}\n.status--dev::before{background:linear-gradient(90deg,var(--color-ink) 50%,transparent 50%)}\n.status--prep::before{}\n.status--later::before{border:2px dotted var(--color-ink)}\n\n.btn-primary:hover{background:#2C2550}\n.site-footer p{color:#B9B2CC} .site-footer .fine{border-top-color:#3A3358}\n/* Soirées = the night: full-bleed Nuit de salle hero, sodium clair as the light source */\n.branch-hero[style*=\"--cable-soirees\"]{background:#1B1736;color:#F4F0EA;padding-block:72px;--color-ink:#F4F0EA;--color-ink-2:#B9B2CC;--color-ink-3:#B9B2CC;\n  --color-signal:#FF8A4C;--cable:#FF8A4C;--color-line-strong:#7E7699}\n.branch-hero[style*=\"--cable-soirees\"] .btn-primary{background:#F4F0EA;color:#1B1736}\n.branch-hero[style*=\"--cable-soirees\"] .btn:disabled{background:#2C2550;color:#B9B2CC;border-color:#7E7699}\n",
+ "logo": {
+  "ink": "#1B1736",
+  "signal": "#E8590C"
+ },
+ "poster": {
+  "logo": "lockup-reverse.svg"
+ },
+ "semantic": {
+  "ground": "#F7F4EE",
+  "branches": {
+   "soirees": "#E8590C",
+   "reseau": "#0F6B6B",
+   "organiser": "#B0306A",
+   "apprendre": "#7A5200",
+   "tekpractice": "#2E5FE6"
+  },
+  "status": {},
+  "contrast_checks": [
+   [
+    "Body text ink on paper",
+    "#1B1736",
+    "#F7F4EE",
+    4.5
+   ],
+   [
+    "Secondary text",
+    "#4D4560",
+    "#F7F4EE",
+    4.5
+   ],
+   [
+    "Captions",
+    "#6B6480",
+    "#F7F4EE",
+    4.5
+   ],
+   [
+    "Sodium as text",
+    "#B4430A",
+    "#F7F4EE",
+    4.5
+   ],
+   [
+    "Focus ring (ink) vs paper",
+    "#1B1736",
+    "#F7F4EE",
+    3
+   ],
+   [
+    "Sodium strand / plug vs paper (non-text)",
+    "#E8590C",
+    "#F7F4EE",
+    3
+   ],
+   [
+    "Input border",
+    "#8A8399",
+    "#F7F4EE",
+    3
+   ],
+   [
+    "White on ink (primary button)",
+    "#FFFFFF",
+    "#1B1736",
+    4.5
+   ],
+   [
+    "Sodium vs sunken band",
+    "#E8590C",
+    "#F2EEE7",
+    3
+   ],
+   [
+    "Réseau cable (sarcelle)",
+    "#0F6B6B",
+    "#F7F4EE",
+    3
+   ],
+   [
+    "Organiser cable (framboise)",
+    "#B0306A",
+    "#F7F4EE",
+    3
+   ],
+   [
+    "Apprendre cable (bronze)",
+    "#7A5200",
+    "#F7F4EE",
+    3
+   ],
+   [
+    "TekPractice cable",
+    "#2E5FE6",
+    "#F7F4EE",
+    3
+   ],
+   [
+    "Night text on Nuit",
+    "#F4F0EA",
+    "#1B1736",
+    4.5
+   ],
+   [
+    "Brume (secondary) on Nuit",
+    "#B9B2CC",
+    "#1B1736",
+    4.5
+   ],
+   [
+    "Sodium clair on Nuit (text-capable)",
+    "#FF8A4C",
+    "#1B1736",
+    4.5
+   ],
+   [
+    "Sodium on Nuit (logo plug)",
+    "#E8590C",
+    "#1B1736",
+    3
+   ]
+  ]
+ }
+}

@@ -44,7 +44,7 @@ def comparison(rd, out, opts):
         d.text((x, head - 6), t, font=font(18, False), fill=(74, 74, 110)); x += w + pad
     y = head + 24
     for o in opts:
-        d.text((pad, y + 8), labels_for(rd, o), font=font(22), fill=(22, 22, 63))
+        for i, part in enumerate(labels_for(rd, o).replace(" (", "\n(").split("\n")): d.text((pad, y + 8 + i * 30), part, font=font(22 if i == 0 else 17, i == 0), fill=(22, 22, 63))
         x = left + pad
         for (f, _, _), w in zip(VIEWS, cw):
             board.paste(fit(Image.open(rd / o / f), w, ch), (x, y)); x += w + pad
@@ -60,7 +60,7 @@ def vision(rd, out, opts):
     for i, k in enumerate(kinds): d.text((left + pad + i * (cw + pad), head - 26), k, font=font(18, False), fill=(74, 74, 110))
     y = head
     for o in opts:
-        d.text((pad, y + 8), labels_for(rd, o), font=font(20), fill=(22, 22, 63))
+        for i, part in enumerate(labels_for(rd, o).replace(" (", "\n(").split("\n")): d.text((pad, y + 8 + i * 28), part, font=font(20 if i == 0 else 16, i == 0), fill=(22, 22, 63))
         src = Image.open(rd / o / "6-semantics.png").convert("RGB")
         src = src.crop((110, 300, 690, 720))
         for i, k in enumerate(kinds):

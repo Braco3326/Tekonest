@@ -1,0 +1,119 @@
+{
+ "name": "C-encre-invitee",
+ "label": "C · Encre + couleur invitée (council alternative)",
+ "tokens": {
+  "--focus-ring": "3px solid var(--color-ink)",
+  "--cable-soirees": "#16163F",
+  "--cable-reseau": "#16163F",
+  "--cable-organiser": "#16163F",
+  "--cable-apprendre": "#16163F",
+  "--cable-tekpractice": "#16163F",
+  "--cable-soirees-text": "#16163F",
+  "--cable-reseau-text": "#16163F",
+  "--cable-organiser-text": "#16163F",
+  "--cable-apprendre-text": "#16163F",
+  "--cable-tekpractice-text": "#16163F",
+  "--status-now": "var(--color-ink)",
+  "--status-dev": "var(--color-ink)",
+  "--status-prep": "var(--color-ink)",
+  "--status-later": "var(--color-ink)",
+  "--poster-bg": "#5B2A4E",
+  "--poster-ink": "#F4F0EA",
+  "--poster-ink-2": "#E6D6E0",
+  "--poster-accent": "#FF8A4C",
+  "--poster-loop": "#F4F0EA"
+ },
+ "extra_css": "\n.status::before{width:11px;height:11px;box-sizing:border-box;border:2px solid var(--color-ink);background:transparent}\n.status--now::before{background:var(--color-ink)}\n.status--dev::before{background:linear-gradient(90deg,var(--color-ink) 50%,transparent 50%)}\n.status--prep::before{}\n.status--later::before{border:2px dotted var(--color-ink)}\n/* branch = name + ink cable PATTERN (solid · double · dashed · dotted · dash-dot); colour is reserved for sodium and the one guest colour per event */\n[style*=\"--cable-soirees\"]{--pat:linear-gradient(#16163F,#16163F)}\n[style*=\"--cable-reseau\"]{--pat:linear-gradient(#16163F 0 2px,transparent 2px 4px,#16163F 4px 6px)}\n[style*=\"--cable-organiser\"]{--pat:repeating-linear-gradient(90deg,#16163F 0 16px,transparent 16px 24px)}\n[style*=\"--cable-apprendre\"]{--pat:repeating-linear-gradient(90deg,#16163F 0 5px,transparent 5px 11px)}\n[style*=\"--cable-tekpractice\"]{--pat:repeating-linear-gradient(90deg,#16163F 0 18px,transparent 18px 24px,#16163F 24px 29px,transparent 29px 35px)}\n\n.door{border-top:none;padding-top:calc(var(--space-5) + 6px);background:var(--pat,linear-gradient(#16163F,#16163F)) top left/100% 6px no-repeat}\n.branch-hero .cable{height:6px;width:96px;background:var(--pat,#16163F)}\n.board tbody th a{border-bottom:none;padding-bottom:8px;background:var(--pat,linear-gradient(#16163F,#16163F)) bottom left/100% 6px no-repeat}\n",
+ "logo": {
+  "ink": "#16163F",
+  "signal": "#E8590C"
+ },
+ "poster": {
+  "logo": "lockup-reverse.svg"
+ },
+ "semantic": {
+  "ground": "#FAFAF7",
+  "branches": {},
+  "status": {},
+  "contrast_checks": [
+   [
+    "Body text ink on paper",
+    "#16163F",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Secondary text",
+    "#4A4A6E",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Captions",
+    "#6B6B8A",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Sodium as text",
+    "#B4430A",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Focus ring (ink) vs paper",
+    "#16163F",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Sodium strand / plug vs paper (non-text)",
+    "#E8590C",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Input border",
+    "#8E8EA8",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "White on ink (primary button)",
+    "#FFFFFF",
+    "#16163F",
+    4.5
+   ],
+   [
+    "Ink cable patterns vs paper",
+    "#16163F",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Guest text on guest (Prune invitée)",
+    "#F4F0EA",
+    "#5B2A4E",
+    4.5
+   ],
+   [
+    "Guest secondary",
+    "#E6D6E0",
+    "#5B2A4E",
+    4.5
+   ],
+   [
+    "Sodium clair on guest (accent)",
+    "#FF8A4C",
+    "#5B2A4E",
+    3
+   ],
+   [
+    "Sodium on ink (dark mode plug)",
+    "#E8590C",
+    "#16163F",
+    3
+   ]
+  ]
+ }
+}
