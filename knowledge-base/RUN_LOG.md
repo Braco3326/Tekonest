@@ -98,3 +98,108 @@ Master prompt: `knowledge-base/docs/prompts/tekbrain-and-explore-controls.md` (v
   - stale coach pack in TekPractice → `npm run sync:kb`
 - Final: `validate_tekbrain.py --strict` gives 0 errors, 0 warnings, 0 unresolved references.
 - Pushes: credentials became available this run, so `research/tekbrain` is pushed and no bundle was needed.
+---
+
+# Morning summary — run 2 (2026-10-22)
+
+## What was built
+
+**Track A, TEK Brain** (`knowledge-base/tek-brain/`, branch `research/tekbrain`)
+
+| Entity | Count (target) |
+|---|---|
+| Concepts | 414 (≥ 300) |
+| Skills | 60 |
+| Procedures | 96 (≥ 80) |
+| Rules | 82 (≥ 60): 9 mirror R1–R8, 73 proposed, 15 evaluable with today's catalog |
+| Faults | 101 (≥ 80) |
+| Scenarios | 41 (≥ 40) |
+| Glossary FR↔EN | 780 (≥ 600) |
+| Parametric room templates | 32 (every planned venue type) |
+| Curriculum | 24 modules, all 414 concepts placed |
+| Retrieval index | 1,832 own-words chunks with source URLs + `AI_USAGE.md` |
+| 3D catalogue | 983 candidates (≥ 400); **64 committed glb** (44 new, CC0/CC-BY, 26.2 MB, ≤ 2.74 MB each) |
+| Learning resources | 315 (≥ 200); **260 legally free** (≥ 80); 75 in French |
+
+Quality:
+- `validate_tekbrain.py --strict`: 0 errors, 0 unresolved references.
+- JSON Schemas checked: 151 files, 0 errors.
+- Independent spot-check of 207 records: 157 pass, 49 minor, 1 fail, and all 57 findings were fixed.
+- URL check: 3,161 URLs, 16 really dead. 52 placeholder URLs were caught and fixed.
+
+**Track B, TekPractice Explore** (`tekpractice-sim/`, branch `feature/tekpractice-explore-controls`)
+- **Explore view (ADR-0010)**:
+  - Walking with WASD/ZQSD (physical keys, AZERTY labels), Shift, Q/E, arrow keys and PageUp/PageDown.
+  - Mouse only: left-drag looks, right-drag moves, click interacts, wheel zooms the FOV.
+  - Automatic pointer lock with a crosshair.
+  - Esc chain, collisions (slide along walls, step over cables, door landings), V toggles Explore ⇄ Orbit.
+  - ADR-0008 Focus & Patch unchanged.
+- **Inventory (Space)**:
+  - Catalog grouped by taxonomy, with search and KB sheets (specs, connectors, official manual).
+  - Sandbox placement with ghost, 0.25 m grid, R to rotate, click or F to place.
+  - Pick up with X or the "Ramasser" button, with undo.
+  - No inventory in exams.
+- **Help, settings and pause**:
+  - Help (H) in French; settings with key remapping (Esc, Tab and Enter fixed); pause menu.
+  - Reduced motion, FOV, sensitivity, invert Y.
+- **Generated rooms**: `?level=sandbox&room=<id>` builds any of the 32 rooms from the TEK Brain templates (raised stages, FOH spawn).
+- **Data pipeline**:
+  - The coach cites TEK Brain fiches (`[kb:id]`, validated, silent in exams).
+  - 134 catalog proposals and 15 level drafts, in separate files (`catalog.json` untouched).
+  - `npm run sync:kb` regenerates them.
+- **Docs**: `docs/CONTROLS.md` (FR + EN, diagrams), ADR-0010, a plan, REVIEW-ME §13 (12 items).
+
+## Test results
+
+| Check | Result |
+|---|---|
+| Unit tests (vitest) | **301 pass** (164 before this run) |
+| tsc | clean |
+| `validate:catalog` | OK |
+| e2e (Playwright) | 54 pass, 16 skipped (opt-in QA crawl), **1 pre-existing flaky**: `focusPatch` "A1 wired…". It double-clicks a small device and fails the same way on the starting commit 9d9d021; it passes 6/6 when run alone. |
+| New e2e | 23 explore/rooms tests: WASD walk, mouse-only look and move, Space inventory, place a device, focus and patch a cable, back to Explore, rooms, review fixes. A1 is still winnable (existing spec). |
+| QA web crawl | 8 pages × 2 viewports: 0 findings after fixing one real visual bug |
+| Frame rate | 24.5 fps on a calm machine, 13–16 fps on a loaded one, in a medium room. This is headless Chromium with software rendering on this PC, so the ≥ 50 fps target on a mid laptop with integrated GPU **is not measured**. |
+| Startup bundle | 328.95 → 365.47 kB (+11.1 %), gzip 95.6 → 107.9 kB (+12.8 %); budget +15 %. Rooms, panels, KB sheets and the coach pack load on demand. |
+
+## The 10 most important findings
+
+1. **The worker peak noise limit is 140 dB(C)** (137 is the upper action value); thresholds are 80/85/87 dB(A). Décret 2017-1244 sets 102 dB(A) / 118 dB(C) over 15 min, or 94/104 with children under 6. Both are sourced via INRS, ARS and DGS (Légifrance would not render for scripts).
+2. **There is no single dBu ↔ dBFS alignment**: EBU uses 0 dBu = −18 dBFS, while French broadcast practice has 0 dBFS = +22 dBu. This confirms the course error flagged in OPEN_QUESTIONS #10.
+3. **Mains hum** is 50 Hz at the fundamental but often heard at 100 Hz (Wikipedia sources disagree), so "hum = 50 Hz" should not be taught as an absolute.
+4. **French PMSE (ARCEP decision 2015-0830)**: 470–694 MHz at 50 mW ERP, licence-free but without protection; 694–790 MHz closed since 2019-07-01. Intermodulation formulas and spacing margins are sourced from Shure.
+5. **speakON pin pairs differ by manufacturer**: d&b subs use 2±, tops 1±, and NEXO GEO M10 passes 1± through. This is the classic "no sub" fault, now a proposed rule.
+6. **EBU Tech 3326**: G.722 is the safe common codec between brands (Opus is optional). Loudness: −23 LUFS, ±1 LU live only, otherwise ±0.2 LU in QC.
+7. **"Lock is not sync"** (RME): two clocks left on internal still click. ADAT halves its channels at 96 kHz.
+8. **Gain before feedback is mostly geometry** (Shure PAG): ringing out adds only 3–9 dB, and only in-ears break the loop.
+9. **Interpretation booth standards changed in 2024**: ISO 2603 and 4043 were replaced by ISO 17651-1/-2.
+10. **Agents can invent quietly**: 52 template URLs (`<shard>`) and some unsourced "field practice" sentences were caught only by QA. The validator now rejects placeholder URLs, and a second QA pass on unsampled procedures and faults is recommended.
+
+## What is missing
+
+- **BTS savoir codes** are still unverified: eduscol refuses every connection from this PC.
+- **The ≥ 50 fps check** needs a real GPU browser.
+- **Pointer lock** (crosshair click, Esc grace) needs a manual test; it can't be automated headless.
+- **The flaky `focusPatch` A1 test** is pre-existing and should be stabilised.
+- **Sketchfab**: 525 catalogue licences come from the search API (re-check before download); there is no token, so no Sketchfab downloads.
+- **Rooms**: about half the templates use estimates (all logged).
+- **Equipment gaps**: no DJ gear, AEC conference DSP, IR interpretation system, loop driver or small-diaphragm omni in the equipment KB.
+- **Proposed rules**: 67 need catalog fields that don't exist yet.
+- **Not this run** (seams ready): touch and gamepad controls.
+
+## Top questions for Oscar
+
+- OPEN_QUESTIONS #23–25: which proposed rules, catalog fields, catalog proposals and level drafts to adopt first.
+- REVIEW-ME §13.3: should levels default to Explore?
+- REVIEW-ME §13.11: allow KB sheets in the exam?
+- OPEN_QUESTIONS #29–31: confirm the regulatory figures on Légifrance; choose the monitor-calibration convention and how to teach null angles.
+- OPEN_QUESTIONS #12/#20: send or open the BTS référentiel so the BTS mappings can be verified.
+
+## Branches
+
+The branches are `research/tekbrain` and `feature/tekpractice-explore-controls`. Both were created from `research/sound-equipment-database`, both are **pushed to GitHub**, and neither is merged. The feature branch merges `research/tekbrain` (it needs the room templates and the index). Last commits: see the final line of this summary, and `git log -1` on each branch.
+
+Credentials worked this run, so no push command is needed. To re-push by hand from `C:\Users\brro\dev\Tekonest`:
+```
+& "$env:LOCALAPPDATA\MinGit\cmd\git.exe" push -u origin research/tekbrain feature/tekpractice-explore-controls
+```
