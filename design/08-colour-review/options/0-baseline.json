@@ -1,0 +1,120 @@
+{
+ "name": "0-baseline",
+ "label": "Current Bobine (baseline, unchanged)",
+ "tokens": {
+  "--poster-bg": "#16163F",
+  "--poster-ink": "#FAFAF7",
+  "--poster-ink-2": "#D2D2E4",
+  "--poster-accent": "#E8590C",
+  "--poster-loop": "#FAFAF7"
+ },
+ "logo": {
+  "ink": "#16163F",
+  "signal": "#E8590C"
+ },
+ "poster": {
+  "logo": "lockup-reverse.svg"
+ },
+ "semantic": {
+  "ground": "#FAFAF7",
+  "branches": {
+   "soirees": "#E8590C",
+   "reseau": "#12775A",
+   "organiser": "#6A4BC4",
+   "apprendre": "#E8B04B",
+   "tekpractice": "#2E5FE6"
+  },
+  "status": {
+   "existe": "#12775A",
+   "dev": "#2E5FE6",
+   "projet": "#B4430A",
+   "later": "#6B6B8A"
+  },
+  "contrast_checks": [
+   [
+    "Body text ink on paper",
+    "#16163F",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Secondary text",
+    "#4A4A6E",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Captions",
+    "#6B6B8A",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Sodium as text",
+    "#B4430A",
+    "#FAFAF7",
+    4.5
+   ],
+   [
+    "Sodium focus ring vs paper (non-text)",
+    "#E8590C",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Soirées cable (non-text)",
+    "#E8590C",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Réseau cable",
+    "#12775A",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Organiser cable",
+    "#6A4BC4",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Apprendre cable",
+    "#E8B04B",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "TekPractice cable",
+    "#2E5FE6",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "White on ink (primary button)",
+    "#FFFFFF",
+    "#16163F",
+    4.5
+   ],
+   [
+    "Input border",
+    "#8E8EA8",
+    "#FAFAF7",
+    3
+   ],
+   [
+    "Poster text on ink",
+    "#FAFAF7",
+    "#16163F",
+    4.5
+   ],
+   [
+    "Sodium on ink (poster accent)",
+    "#E8590C",
+    "#16163F",
+    3
+   ]
+  ]
+ }
+}
