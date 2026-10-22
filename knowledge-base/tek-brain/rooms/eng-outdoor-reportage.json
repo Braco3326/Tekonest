@@ -1,0 +1,57 @@
+{
+  "id": "eng-outdoor-reportage",
+  "name_fr": "Reportage extérieur (zone de travail ENG / radio)",
+  "name_en": "Outdoor news-gathering (ENG) working zone",
+  "family": "broadcast",
+  "size": "small",
+  "description": "Zone de travail en extérieur pour un direct ou un reportage : un angle de rue avec trottoir, le point d'interview, le coffre du véhicule servant de base technique et le flux des passants. Le journaliste ou le technicien travaille sur batterie : micro main dynamique, perche avec bonnette anti-vent, enregistreur-mélangeur portable, codec IP sur réseau cellulaire/Wi-Fi pour le direct, casque fermé. Pas de murs : la « salle » est un rectangle borné par les façades et la chaussée ; le vent, la circulation et les passants sont les vraies contraintes acoustiques.",
+  "dimensions_m": {
+    "length": { "min": 10.0, "typical": 20.0, "max": 40.0 },
+    "width": { "min": 8.0, "typical": 15.0, "max": 30.0 },
+    "height": { "min": 6.0, "typical": 12.0, "max": 25.0 }
+  },
+  "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+  "surfaces": [
+    { "surface": "floor", "material": "bitume (chaussée) et dalles / pavés (trottoir)", "finish_note": "Surface réfléchissante ; bruit de roulement des véhicules." },
+    { "surface": "walls", "material": "façades maçonnées et vitrines sur deux côtés, chaussée ouverte sur les deux autres", "finish_note": "Réflexions franches sur les façades, échos de rue ; pas de traitement possible." },
+    { "surface": "ceiling", "material": "ciel ouvert", "finish_note": "Pas de plafond : la hauteur donnée correspond à celle des façades environnantes." }
+  ],
+  "rt60_s": "not found",
+  "zones": [
+    { "id": "interview-spot", "kind": "other", "rect_m": [-2.0, 1.0, 4.0, 4.0], "floor_y_m": 0 },
+    { "id": "vehicle-tech-base", "kind": "other", "rect_m": [5.0, -5.0, 2.2, 5.0], "floor_y_m": 0 },
+    { "id": "passers-by", "kind": "audience", "rect_m": [-3.0, 6.5, 9.0, 4.0], "floor_y_m": 0 }
+  ],
+  "gear_positions": [
+    { "equipment_id": "ev-re50", "zone": "interview-spot", "position_m": [-2.0, 1.4, 1.0], "rotation_deg": 90, "note": "Micro main dynamique omnidirectionnel du journaliste, tendu vers l'interviewé." },
+    { "equipment_id": "sennheiser-mkh-416", "zone": "interview-spot", "position_m": [-1.5, 2.3, 0.2], "rotation_deg": 0, "note": "Micro canon en perche au-dessus du champ caméra." },
+    { "equipment_id": "rycote-cyclone-medium", "zone": "interview-spot", "position_m": [-1.5, 2.3, 0.2], "rotation_deg": 0, "note": "Suspension + bonnette anti-vent autour du canon (indispensable dehors)." },
+    { "equipment_id": "rode-boompole-pro", "zone": "interview-spot", "position_m": [-0.6, 1.6, 0.0], "rotation_deg": 0, "note": "Perche tenue par le preneur de son." },
+    { "equipment_id": "sound-devices-mixpre-6-ii", "zone": "interview-spot", "position_m": [-0.4, 1.0, -0.5], "rotation_deg": 0, "note": "Enregistreur-mélangeur portable en sacoche." },
+    { "equipment_id": "sennheiser-hd-25", "zone": "interview-spot", "position_m": [-0.4, 1.7, -0.5], "rotation_deg": 0, "note": "Casque fermé, isole du bruit de rue." },
+    { "equipment_id": "sennheiser-ew-dp-ek", "zone": "interview-spot", "position_m": [-3.5, 1.5, -0.5], "rotation_deg": 0, "note": "Récepteur HF monté sur la caméra (cravate de l'invité)." },
+    { "equipment_id": "comrex-access-nx", "zone": "vehicle-tech-base", "position_m": [5.0, 0.9, -3.0], "rotation_deg": 0, "note": "Codec IP portable sur batterie (cellulaire/Wi-Fi/Ethernet) pour le direct vers la station." },
+    { "equipment_id": "tieline-via", "zone": "vehicle-tech-base", "position_m": [5.0, 0.9, -4.5], "rotation_deg": 0, "note": "Codec de secours (double liaison)." }
+  ],
+  "power_points": [
+    { "position_m": [5.0, 0.6, -6.5], "type": "batteries-internes-et-convertisseur-12v-vehicule" }
+  ],
+  "patch_points": [],
+  "openings": [],
+  "lighting": { "mood": "Lumière du jour variable, réverbères le soir ; torche LED caméra", "color_temp_k": 5600 },
+  "procedural": {
+    "wall_color": "#b8ad9c",
+    "floor_color": "#4a4a4c",
+    "ceiling_color": "#a9c4dc",
+    "prop_hints": ["angle de rue", "trottoir et passage piéton", "voiture de reportage coffre ouvert", "vitrines", "mobilier urbain", "passants"]
+  },
+  "licensed_dressing": [],
+  "sources": [
+    { "url": "https://www.comrex.com/products/access-nx/", "publisher": "Comrex (ACCESS NX)", "accessed": "2026-10-22", "confidence": "verified-primary", "kind": "manufacturer", "covers": ["gear_positions.comrex-access-nx (codec IP portable, Wi-Fi/Ethernet/4G-5G, batterie jusqu'à 6,5 h)", "power_points (travail sur batterie)"] }
+  ],
+  "not_found_log": [
+    { "what": "Zone extérieure : toutes les dimensions (emprise d'angle de rue, hauteur des façades) sont des estimations illustratives, sans source.", "searched": "aucune norme ni guide ne définit une « zone de reportage » ; budget de recherche épuisé", "review": "needs-oscar-review" },
+    { "what": "RT60 : sans objet en extérieur (pas de champ diffus) ; noté « not found ».", "searched": "—", "review": "needs-oscar-review" }
+  ],
+  "review": "needs-oscar-review"
+}
