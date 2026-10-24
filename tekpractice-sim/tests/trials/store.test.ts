@@ -3,6 +3,7 @@
  * Storage is injected; it deliberately has NO removeItem.
  */
 import { describe, expect, it } from 'vitest'
+import { sha256hex } from '../../src/trials/fingerprint'
 import { createTrial, type Trial } from '../../src/trials/trial'
 import {
   QUARANTINE_CAP,
@@ -84,6 +85,58 @@ describe('TrialStore: basics', () => {
     const t = JSON.parse(JSON.stringify(await trialA()))
     t.fingerprint = 'fp1:' + '0'.repeat(64)
     expect(await store.append(t)).toEqual({ ok: false, reason: 'invalid' })
+  })
+})
+
+describe('TrialStore: concurrency (one serial queue)', () => {
+  it('a write started during load() never clobbers the stored trials', async () => {
+    const s = new MemStorage()
+    const seed = new TrialStore(s)
+    await seed.load()
+    const a = await trialA()
+    await seed.append(a)
+    const b = await trialB(a)
+
+    // The first hash (load's re-verification) is slow: it opens the race window.
+    let calls = 0
+    const slowFirst = async (text: string) => {
+      await new Promise((r) => setTimeout(r, calls++ === 0 ? 30 : 0))
+      return sha256hex(text)
+    }
+    const store = new TrialStore(s, { hash: slowFirst })
+    const loading = store.load() // not awaited
+    const appending = store.append(b) // not awaited
+    await Promise.all([loading, appending])
+    expect((await appending).ok).toBe(true)
+    expect((await new TrialStore(s).load()).trials.map((t) => t.id)).toEqual(['tr_a', 'tr_b'])
+  })
+
+  it('a write with no prior load() loads first', async () => {
+    const s = new MemStorage()
+    const seed = new TrialStore(s)
+    await seed.load()
+    const a = await trialA()
+    await seed.append(a)
+    const store = new TrialStore(s)
+    await store.append(await trialB(a))
+    expect(store.list().map((t) => t.id)).toEqual(['tr_a', 'tr_b'])
+  })
+
+  it('append() then load() without awaiting: no deadlock, load sees the write', async () => {
+    const store = new TrialStore(new MemStorage())
+    const a = await trialA()
+    const [w, r] = await Promise.all([store.append(a), store.load()])
+    expect(w.ok).toBe(true)
+    expect(r.trials.map((t) => t.id)).toEqual(['tr_a'])
+  })
+
+  it('two concurrent appends of the same id: one stored, the other duplicate-id', async () => {
+    const s = new MemStorage()
+    const store = new TrialStore(s)
+    const a = await trialA()
+    const [r1, r2] = await Promise.all([store.append(a), store.append(a)])
+    expect([r1.ok, r2]).toEqual([true, { ok: false, reason: 'duplicate-id' }])
+    expect((await new TrialStore(s).load()).trials).toHaveLength(1)
   })
 })
 

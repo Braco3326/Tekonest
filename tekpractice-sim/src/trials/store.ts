@@ -128,6 +128,9 @@ export class TrialStore {
   private bytes = 0
   private loaded = false
   private readOnly = false
+  private queue: Promise<unknown> = Promise.resolve()
+  /** The latest load (public load() calls); writes queued after it wait for it. */
+  loading: Promise<LoadResult> | null = null
   private quarantineItems: readonly QuarantineItem[] = deepFreeze([])
   private readonly now: () => Date | string
   private readonly hash: Hasher
@@ -141,7 +144,24 @@ export class TrialStore {
     this.hash = opts.hash ?? sha256hex
   }
 
-  async load(): Promise<LoadResult> {
+  /**
+   * Every public operation runs on ONE serial queue: a write can never land
+   * between load()'s reset and its re-verification (which would commit a
+   * partial list over the stored file), and concurrent appends see each other.
+   */
+  private serial<T>(fn: () => Promise<T>): Promise<T> {
+    const run = this.queue.then(fn, fn)
+    this.queue = run.catch(() => undefined)
+    return run
+  }
+
+  load(): Promise<LoadResult> {
+    const p = this.serial(() => this.doLoad())
+    this.loading = p
+    return p
+  }
+
+  private async doLoad(): Promise<LoadResult> {
     this.loaded = true
     this.readOnly = false
     this.trials = deepFreeze([])
@@ -181,7 +201,11 @@ export class TrialStore {
     return this.bytes
   }
 
-  async append(trial: Trial): Promise<WriteResult> {
+  append(trial: Trial): Promise<WriteResult> {
+    return this.serial(() => this.doAppend(trial))
+  }
+
+  private async doAppend(trial: Trial): Promise<WriteResult> {
     await this.ensureLoaded()
     if (this.readOnly) return { ok: false, reason: 'read-only' }
     if (this.trials.some((t) => t.id === trial.id)) return { ok: false, reason: 'duplicate-id' }
@@ -192,34 +216,43 @@ export class TrialStore {
     return this.commit([...this.trials, deepFreeze(cloneData(parsed.data) as Trial)])
   }
 
-  async rename(id: string, name: string): Promise<WriteResult> {
+  rename(id: string, name: string): Promise<WriteResult> {
     const clean = name.trim()
-    if (!clean) return { ok: false, reason: 'empty' }
-    return this.replace(id, (t) => ({ ...t, name: clean }))
+    if (!clean) return Promise.resolve({ ok: false, reason: 'empty' })
+    return this.serial(() => this.replace(id, (t) => ({ ...t, name: clean })))
   }
 
-  /** Append-only amendment; the note itself is never rewritten (locked for good, and a fortiori once a child exists). */
-  async amendNote(id: string, text: string, now: Date | string): Promise<WriteResult> {
-    if (!text.trim()) return { ok: false, reason: 'empty' }
+  /** Append-only amendment; the note itself is never rewritten (locked from creation). */
+  amendNote(id: string, text: string, now: Date | string): Promise<WriteResult> {
+    if (!text.trim()) return Promise.resolve({ ok: false, reason: 'empty' })
     const at = toIso(now)
-    return this.replace(id, (t) => ({
-      ...t,
-      evidence: { ...t.evidence, noteAmendments: [...t.evidence.noteAmendments, { text, at }] },
-    }))
+    return this.serial(() =>
+      this.replace(id, (t) => ({
+        ...t,
+        evidence: { ...t.evidence, noteAmendments: [...t.evidence.noteAmendments, { text, at }] },
+      })),
+    )
   }
 
   /** Explicit learner action (the UI confirms first). */
-  async remove(id: string): Promise<WriteResult> {
-    await this.ensureLoaded()
-    if (this.readOnly) return { ok: false, reason: 'read-only' }
-    if (!this.trials.some((t) => t.id === id)) return { ok: false, reason: 'not-found' }
-    return this.commit(this.trials.filter((t) => t.id !== id))
+  remove(id: string): Promise<WriteResult> {
+    return this.serial(async () => {
+      await this.ensureLoaded()
+      if (this.readOnly) return { ok: false, reason: 'read-only' }
+      if (!this.trials.some((t) => t.id === id)) return { ok: false, reason: 'not-found' }
+      return this.commit(this.trials.filter((t) => t.id !== id))
+    })
   }
 
-  // ---- internals ----
+  // ---- internals (always called from inside the serial queue) ----
 
+  /**
+   * A queued load() has already finished by the time this runs (queue order).
+   * Deliberately NOT `await this.loading` here: a load queued *after* this
+   * write would wait on the write, which would wait on it (deadlock).
+   */
   private async ensureLoaded(): Promise<void> {
-    if (!this.loaded) await this.load()
+    if (!this.loaded) await this.doLoad()
   }
 
   private async replace(id: string, edit: (t: Trial) => Trial): Promise<WriteResult> {
