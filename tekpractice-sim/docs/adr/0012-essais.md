@@ -43,12 +43,13 @@ Un apprenant de BTS doit apprendre une **méthode** : changer une seule chose à
 
 - `fingerprint(design) = 'fp1:' + sha256hex(canonicalize(design))` via `crypto.subtle`.
 - `canonicalize` :
-  - clés triées ; tableaux gardés dans l'ordre, **sauf** les listes de connexions, triées par une clé normalisée (chaque câble écrit `a < b`, puis la liste triée) : brancher A→B ou B→A, dans n'importe quel ordre, donne la même empreinte. **Tous les champs** du câble sont conservés (pas seulement `a`/`b`), pour qu'un futur attribut de câble entre dans l'empreinte ;
+  - `instances` et `placements` triés par `instanceId` (l'ordre d'insertion n'a pas de sens physique) ; dans `controls`, une table vide pour une instance est supprimée (= aucun contrôle) ;
+  - clés triées ; autres tableaux gardés dans l'ordre, **sauf** les listes de connexions, triées par une clé normalisée (chaque câble écrit `a < b`, puis la liste triée) : brancher A→B ou B→A, dans n'importe quel ordre, donne la même empreinte. **Tous les champs** du câble sont conservés (pas seulement `a`/`b`), pour qu'un futur attribut de câble entre dans l'empreinte ;
   - nombres quantifiés selon le nom du champ : positions → 0,001 m ; angles en degrés → 0,1° ; `delayMs` → 0,01 ms ; autres → 1e-6 ;
   - le lacet (`yawDeg`) est d'abord **normalisé dans [0, 360)** : 0° ≡ 360° ≡ −360° ;
   - `-0` → `0`, jamais de notation exponentielle.
 - Le design figé est **stocké déjà quantifié** (1 mm, 0,1°) ; la re-quantification est idempotente, l'empreinte ne change pas.
-- `diffDesign` (→ `changedSinceParent`) compare **les mêmes valeurs quantifiées** que l'empreinte (`quantField`, `canonicalCable`) : empreintes égales ⇔ diff vide (à l'ordre des tableaux près), vérifié par un test de propriété sur 400 paires aléatoires. Clés : `room`, `instance:+id`, `instance:-id`, `instance:~id` (deviceId changé), `placement:id`, `connection:+N`, `connection:-N`, `control:<instance>.<contrôle>`.
+- `diffDesign` (→ `changedSinceParent`) compare **les mêmes valeurs quantifiées** que l'empreinte (`quantField`, `canonicalCable`) : empreintes égales ⇔ diff vide, **sans exception** (réordonner instances/placements ou ajouter une table de contrôles vide ne change ni l'un ni l'autre), vérifié par un test de propriété sur 400 paires aléatoires. Clés : `room`, `instance:+id`, `instance:-id`, `instance:~id` (deviceId changé), `placement:id`, `connection:+N`, `connection:-N`, `control:<instance>.<contrôle>`.
 - L'empreinte est **revérifiée au chargement** ; un écart envoie le stockage en quarantaine.
 - Le préfixe `fp1:` est versionné : toute évolution de la canonisation crée `fp2:`, jamais une réécriture silencieuse.
 
@@ -57,10 +58,12 @@ Un apprenant de BTS doit apprendre une **méthode** : changer une seule chose à
 - L'API de stockage injectée est `Pick<Storage, 'getItem' | 'setItem'>` : **`removeItem` n'existe pas** dans le module.
 - Au chargement : parse zod strict + empreinte revérifiée par essai. En cas d'échec, la chaîne brute est **ajoutée** à `audio-sim/trials.quarantine` = `{ version: 1, items: { at, raw, reason }[] }`, la liste chargée est vide et `quarantined: true` est renvoyé (l'UI le signale).
 - La quarantaine est en lecture seule et exportable. Elle est **plafonnée à 5 éléments** : au-delà, le plus ancien est retiré, avec l'avertissement `quarantine-evicted`. C'est la **seule suppression bornée** du système, documentée ici volontairement : une boucle de corruption ne doit pas remplir le stockage.
-- Chaque `raw` est **tronqué à 200 000 caractères** (drapeau `truncated: true`) : la quarantaine reste sous ~1 Mo. Un même contenu n'est mis en quarantaine qu'une fois. Une quarantaine illisible (dont un `at` non ISO) est elle-même conservée comme élément (`quarantine-unreadable`).
+- Chaque `raw` est **tronqué à 200 000 caractères** (drapeau `truncated: true`) : la quarantaine reste sous ~1 Mo. Une copie tronquée est **incomplète** : le store passe alors en **lecture seule** (`quarantine-truncated`) et la clé principale reste intacte (seule copie complète) jusqu'à ce que l'apprenant l'exporte.
+- **Récupérer l'espace de la quarantaine** : seulement par « Exporter puis acquitter » (l'apprenant exporte, puis acquitte, ce qui libère les éléments). **Décision ouverte pour Oscar, non implémentée ce soir** (consignée dans le rapport de nuit). D'ici là, la quarantaine ne se vide que par le plafond de 5. Un même contenu n'est mis en quarantaine qu'une fois. Une quarantaine illisible (dont un `at` non ISO) est elle-même conservée comme élément (`quarantine-unreadable`).
 - Si la copie en quarantaine échoue, le store passe en **lecture seule** (`quarantine-failed`) : aucune écriture ultérieure ne peut écraser la seule copie.
 - Si `crypto.subtle` manque, rien n'est vérifiable : **lecture seule** (`crypto-unavailable`) et **pas** de quarantaine (les données sont probablement saines, c'est le navigateur qui manque).
 - Toutes les opérations du store (chargement compris) passent par **une seule file série** : une écriture ne peut pas s'intercaler pendant un chargement, et deux ajouts concurrents du même id donnent un ajout et un `duplicate-id`.
+- **Limite connue : plusieurs onglets.** La file série protège un seul onglet. Deux onglets ouverts sur TekPractice ont chacun leur copie en mémoire ; le dernier qui écrit écrase les Essais ajoutés par l'autre. Pistes (non faites ce soir) : relire et fusionner avant chaque écriture, écouter l'événement `storage`, ou un verrou `navigator.locks`.
 - Ceci remplace, pour les Essais, la règle générale « version mismatch → reset + notice » de `CLAUDE.md`.
 
 ## Décision 7 — Budget global en octets (D3)
@@ -77,6 +80,7 @@ Un apprenant de BTS doit apprendre une **méthode** : changer une seule chose à
 | `quarantined: true` | Chargement : données illisibles mises de côté | les Essais ont été mis de côté, exportables |
 | `quarantine-evicted` | Le plafond de 5 a retiré le plus ancien élément | une ancienne copie de secours a été retirée |
 | `quarantine-failed` | La copie de secours n'a pas pu être écrite | lecture seule, rien n'a été effacé |
+| `quarantine-truncated` | La copie de secours est tronquée (> 200 000 car.) | lecture seule jusqu'à l'export des données d'origine |
 | `read-only` | Écriture refusée (store en lecture seule) | rien n'est enregistré pour l'instant |
 | `crypto-unavailable` | Navigateur sans `crypto.subtle` | Essais en lecture seule sur ce navigateur |
 | `storage-unavailable` | Stockage bloqué (navigation privée…) | Essais indisponibles |
@@ -102,4 +106,4 @@ Un apprenant de BTS doit apprendre une **méthode** : changer une seule chose à
 
 - Nouveau module pur `src/trials/` (`fingerprint.ts`, `trial.ts`, `store.ts`), sans Babylon ni DOM, jamais importé par `src/engine/`.
 - Les Essais ne portent aucun nombre acoustique. La phase 2 rouvrira cet ADR (directivité, `engineVersion`, fixtures dorées, `consumed` étendu).
-- Questions ouvertes pour Oscar : validation de cet ADR ; taille réelle d'un Essai ; politique d'examen définitive (D2 était contesté au conseil).
+- Questions ouvertes pour Oscar : validation de cet ADR ; politique d'examen définitive (D2 était contesté au conseil) ; « Exporter puis acquitter » pour libérer la quarantaine (non implémenté) ; traitement du multi-onglet.
