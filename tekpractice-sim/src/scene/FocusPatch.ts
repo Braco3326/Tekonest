@@ -24,6 +24,7 @@ import type { PortPoint } from './snap'
 import type { CameraDirector, CameraPose, FrameTarget } from './CameraRig'
 import type { CableRenderer } from './CableRenderer'
 import { needsReframe } from '../camera/tween'
+import { requestRender } from '../creation/renderScheduler'
 
 type Vec3 = [number, number, number]
 import {
@@ -117,6 +118,7 @@ export class FocusPatch {
   /** Re-derive glow/dim after any graph change (occupancy moved). Called by refresh(). */
   refreshHints(): void {
     this.applyHints()
+    requestRender() // glow / dim changed from DOM code (Indices toggle, refresh): one frame
   }
 
   // ── input → machine events ──────────────────────────────────────────────────

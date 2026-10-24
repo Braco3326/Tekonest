@@ -100,16 +100,16 @@ export class CableRenderer {
     }
   }
 
-  /**
-   * A small accent dot travelling out→in along the cable: the signal flow made
-   * visible (pedagogical motion, VISION §6). Skipped entirely under
-   * prefers-reduced-motion and beyond the pulse cap.
-   */
   /** Live signal-flow pulses (they animate every frame; the render scheduler treats them as busy). */
   get pulseCount(): number {
     return this.pulses.size
   }
 
+  /**
+   * A small accent dot travelling out→in along the cable: the signal flow made
+   * visible (pedagogical motion, VISION §6). Skipped entirely under
+   * prefers-reduced-motion, beyond the pulse cap, and with `{ pulses: false }`.
+   */
   private addPulse(connectionId: string, path: P3[]): void {
     if (this.opts.pulses === false || !motionEnabled() || this.pulses.size >= CableRenderer.PULSE_CAP) return
     const dot = MeshBuilder.CreateSphere(`pulse:${connectionId}`, { diameter: 0.024, segments: 8 }, this.scene)

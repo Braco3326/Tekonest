@@ -47,7 +47,7 @@ export function isSoftwareRenderer(rendererString: string): boolean {
   return /swiftshader|llvmpipe|software|basic render/i.test(rendererString)
 }
 
-const PREF_KEY ='audio-sim/render'
+const PREF_KEY = 'audio-sim/render'
 
 function hasWebGL(): boolean {
   try {

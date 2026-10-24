@@ -1,5 +1,73 @@
 import { describe, expect, it, vi } from 'vitest'
-import { hasInertia, RenderScheduler, type InertiaSource } from '../../src/creation/renderScheduler'
+import {
+  cameraSignature, hasInertia, registerScheduler, RenderScheduler, requestRender,
+  type InertiaSource, type SignatureCamera,
+} from '../../src/creation/renderScheduler'
+
+const arc = (over: Partial<SignatureCamera> = {}): SignatureCamera => ({
+  uniqueId: 1, alpha: 1, beta: 1, radius: 5, target: { x: 0, y: 0, z: 0 }, ...over,
+})
+
+describe('cameraSignature', () => {
+  it('is equal for an unchanged camera and "none" without one', () => {
+    expect(cameraSignature(arc())).toBe(cameraSignature(arc()))
+    expect(cameraSignature(null)).toBe('none')
+  })
+  it('changes with each arc channel and with the camera identity', () => {
+    const base = cameraSignature(arc())
+    for (const over of [
+      { alpha: 1.1 }, { beta: 1.1 }, { radius: 5.1 }, { target: { x: 0.1, y: 0, z: 0 } },
+      { target: { x: 0, y: 0.1, z: 0 } }, { target: { x: 0, y: 0, z: 0.1 } }, { uniqueId: 2 },
+    ]) expect(cameraSignature(arc(over))).not.toBe(base)
+  })
+  it('covers position / rotation of a non-arc (walk) camera', () => {
+    const walk = (p: number, r: number): SignatureCamera => ({ uniqueId: 9, position: { x: p, y: 1, z: 0 }, rotation: { x: 0, y: r, z: 0 } })
+    expect(cameraSignature(walk(0, 0))).toBe(cameraSignature(walk(0, 0)))
+    expect(cameraSignature(walk(0.1, 0))).not.toBe(cameraSignature(walk(0, 0)))
+    expect(cameraSignature(walk(0, 0.1))).not.toBe(cameraSignature(walk(0, 0)))
+  })
+})
+
+describe('RenderScheduler camera signature (instant writes, camera switch)', () => {
+  function makeCam() {
+    const render = vi.fn()
+    const state = { cam: arc() as SignatureCamera | null }
+    const s = new RenderScheduler({ render, camera: () => null, tweening: () => false, activeCamera: () => state.cam })
+    return { s, render, state }
+  }
+  it('an instant pose write renders exactly one frame, then idles', () => {
+    const { s, render, state } = makeCam(); s.tick()
+    for (let i = 0; i < 10; i++) expect(s.tick()).toBe(false)
+    state.cam!.alpha = 2 // a cut (reduced motion), nothing else signals
+    expect(s.tick()).toBe(true)
+    expect(s.tick()).toBe(false)
+    expect(render).toHaveBeenCalledTimes(2)
+  })
+  it('switching the active camera renders', () => {
+    const { s, state } = makeCam(); s.tick()
+    state.cam = arc({ uniqueId: 7 })
+    expect(s.tick()).toBe(true)
+    expect(s.tick()).toBe(false)
+  })
+  it('without an activeCamera hook nothing changes (legacy hooks keep working)', () => {
+    const render = vi.fn()
+    const s = new RenderScheduler({ render, camera: () => null, tweening: () => false })
+    s.tick(); expect(s.tick()).toBe(false)
+  })
+})
+
+describe('requestRender', () => {
+  it('is a no-op until a scheduler is registered, then invalidates it', () => {
+    registerScheduler(null)
+    expect(() => requestRender()).not.toThrow()
+    const { s } = make(); s.tick()
+    registerScheduler(s)
+    expect(s.shouldRender()).toBe(false)
+    requestRender()
+    expect(s.shouldRender()).toBe(true)
+    registerScheduler(null)
+  })
+})
 
 const still = (): InertiaSource => ({ inertialAlphaOffset: 0, inertialBetaOffset: 0, inertialRadiusOffset: 0, inertialPanningX: 0, inertialPanningY: 0 })
 function make(over: Partial<{ cam: InertiaSource | null; tween: boolean; busy: boolean }> = {}) {

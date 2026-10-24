@@ -33,7 +33,7 @@ import { clockCheck } from './logic/clock'
 import { DeviceSpawner, type DeviceInstance } from './scene/DeviceSpawner'
 import { CableRenderer } from './scene/CableRenderer'
 import { CameraRig } from './scene/CameraRig'
-import { attachRenderScheduler, RenderScheduler } from './creation/renderScheduler'
+import { attachRenderScheduler, RenderScheduler, requestRender } from './creation/renderScheduler'
 import { isSoftwareRenderer } from './render/detect'
 import { bodyCenter, FocusPatch } from './scene/FocusPatch'
 import type { PortPoint } from './scene/snap'
@@ -399,6 +399,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     hud.update(state)
     controlsPanel.update(graph.snapshot())
     focusPatch.refreshHints() // occupancy moved → recompute glow/dim (spec §3)
+    requestRender() // DOM/intent-driven change (SET_CONTROL, restore, preview): one frame
     console.info(
       `[${level.id}] ${state.connectedRequired}/${state.totalRequired} required — ${state.won ? 'WIN' : 'in progress'}`,
     )
@@ -1217,6 +1218,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     },
     camera: () => (scene.activeCamera === camera ? camera : null),
     tweening: () => rig.tweening,
+    activeCamera: () => scene.activeCamera,
     // Legacy keeps its continuous animations: walking, placing, cable pulses.
     busy: () => explore.exploreView || exploreUi.placing() || cables.pulseCount > 0,
   })
