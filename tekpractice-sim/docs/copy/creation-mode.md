@@ -23,10 +23,6 @@ Status column:
 | `shell.propsCollapse` | Replier le panneau Propriétés | brief | Bouton, panneau ouvert |
 | `shell.propsExpand` | Déplier le panneau Propriétés | brief | Bouton, panneau replié |
 | `shell.canvas` | Vue 3D : flèches = orbiter, [ ] = appareil suivant/précédent, Entrée = cadrer | brief | `aria-label` du canvas (touches livrées en Task 8) |
-| `shell.treePlace` | Lieu | à valider (tekuxwriter) | Arbre : en-tête du groupe lieu |
-| `shell.treeGear` | Matériel | à valider (tekuxwriter) | Arbre : en-tête du groupe matériel |
-| `shell.treeNoPlace` | Aucun lieu choisi | à valider (tekuxwriter) | Arbre : avant le premier lieu |
-| `shell.treeNoGear` | Aucun appareil installé | à valider (tekuxwriter) | Arbre : état vide du matériel (l'inventaire arrive plus tard ; ajouter alors « Ouvrez l'inventaire pour en ajouter. ») |
 | `shell.propsEmpty` | Sélectionnez un appareil pour voir ses réglages. | à valider (tekuxwriter) | Propriétés : état vide |
 | `shell.statusNoPlace` | Choisissez un lieu pour commencer. | à valider (tekuxwriter) | Barre d'état, avant le premier lieu |
 | `shell.statusLoading` | Chargement du lieu… | à valider (tekuxwriter) | Barre d'état pendant un changement de lieu (`role="status"`) |
@@ -74,6 +70,26 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.siteBack` | Retour au site Tekonest | validé | Aide ; même libellé que `shell.siteBack` |
 
 Lieu also lists the places offered by the temporary picker, with their room names from `content/rooms/index.json` (`name_fr`) and `picker.blank`.
+
+## tree
+
+Arbre « Projet » (Task 9, modèle WAI-ARIA tree). Remplace les clés `shell.treePlace`, `shell.treeGear`, `shell.treeNoPlace` et `shell.treeNoGear` (Task 7), supprimées. Les lignes d'appareil s'affichent « {nom catalogue} ({id}) », ex. « Yamaha QL1 (ql1) » ; les câbles « {id} {port} → {id} {port} », ex. « ql1 out-main-l → k12-g in-line-a » (nom de port français quand le catalogue en aura un) ; les zones par leur id de salle (« scene », « fosse »…).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `tree.place` | Lieu : {place} | à valider (tekuxwriter) | Première ligne de l'arbre ; Entrée = retour à la vue d'ensemble ; `{place}` = nom du lieu |
+| `tree.noPlace` | aucun lieu choisi | à valider (tekuxwriter) | `{place}` avant le premier lieu (« Lieu : aucun lieu choisi ») |
+| `tree.zones` | Zones | brief | Groupe (brief §3) |
+| `tree.gear` | Matériel | brief | Groupe (brief §3) |
+| `tree.cables` | Câbles | brief | Groupe (brief §3) |
+| `tree.points` | Points d’écoute | brief | Groupe (brief §3) ; vide jusqu'à l'acoustique |
+| `tree.hide` | Masquer {item} | brief | Nom du bouton œil (Task 9) ; `{item}` = libellé de la ligne |
+| `tree.show` | Afficher {item} | brief | Idem, élément masqué |
+| `tree.hiddenState` | masqué | à valider (tekuxwriter) | Lu après le nom d'une ligne masquée (lecteur d'écran ; à l'écran : texte barré) |
+| `tree.help` | Flèches pour parcourir, Entrée pour sélectionner et cadrer, flèche droite sur un élément pour atteindre son bouton Masquer. | à valider (tekuxwriter) | Description de l'arbre (`aria-describedby`, lue à l'entrée dans l'arbre) |
+| `tree.statusHidden` | Masqué : {item} | à valider (tekuxwriter) | Barre d'état (annoncé) après le bouton œil |
+| `tree.statusShown` | Affiché : {item} | à valider (tekuxwriter) | Idem |
+| `tree.statusFramed` | Cadré : {item} | à valider (tekuxwriter) | Barre d'état (annoncé) après Entrée sur une zone ou un câble |
 
 ## picker
 

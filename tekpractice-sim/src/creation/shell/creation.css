@@ -225,18 +225,43 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr[data-tree='collapsed'] .cr-tree .cr-panel-body,
 .cr[data-props='collapsed'] .cr-props .cr-panel-body { display: none; }
 
-/* tree rows */
-.cr-tree-group { list-style: none; margin: 0; padding: 0; }
-.cr-tree-label {
-  padding: 8px 12px 4px;
-  font: 600 11px/1 var(--cr-font-title);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+/* « Projet » tree (Task 9, WAI-ARIA tree): rows 28 px, indent 14 px per level */
+.cr-tree-root, .cr-tree-root ul { list-style: none; margin: 0; padding: 0; }
+/* a treeitem wraps its children: the ring goes on its own row (below), not around the group */
+.cr .cr-tree-root [role='treeitem']:focus-visible { outline: none; box-shadow: none; }
+.cr-tree-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 0 4px 0 calc(8px + var(--cr-tree-level, 0) * 14px);
+  cursor: default;
+  user-select: none;
+}
+.cr-tree-item:hover { background: var(--cr-nuit); }
+/* the focused row: the shell's ring, drawn inside the scrolling panel */
+.cr-tree-root [role='treeitem']:focus-visible > .cr-tree-item { outline: 2px solid var(--cr-ambre); outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
+/* the selected row: an Ambre bar + Papier text (not colour alone: the bar is a shape) */
+.cr-tree-root [aria-selected='true'] > .cr-tree-item { background: var(--cr-nuit); box-shadow: inset 3px 0 0 var(--cr-ambre); }
+.cr-tree-root [aria-selected='true']:focus-visible > .cr-tree-item { box-shadow: inset 3px 0 0 var(--cr-ambre), inset 0 0 0 3px var(--cr-nuit); }
+.cr-twisty { flex: 0 0 16px; width: 16px; height: 16px; display: grid; place-items: center; color: var(--cr-ink-muted); }
+.cr-twisty svg { width: 12px; height: 12px; }
+.cr-tree-root [aria-expanded='true'] > .cr-tree-item .cr-twisty svg { transform: rotate(90deg); }
+.cr-tree-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cr-tree-root [aria-level='1'] > .cr-tree-item .cr-tree-text { font-weight: 500; }
+.cr-tree-count { flex: 0 0 auto; padding: 0 4px; color: var(--cr-ink-muted); font-variant-numeric: tabular-nums; }
+.cr-tree-root [data-hidden='true'] > .cr-tree-item .cr-tree-text { color: var(--cr-ink-muted); text-decoration: line-through; }
+.cr-eye {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
   color: var(--cr-ink-muted);
 }
-.cr-tree-row { display: flex; align-items: flex-start; gap: 8px; min-height: 28px; padding: 4px 12px; }
-.cr-tree-row::before { content: ''; flex: 0 0 6px; height: 6px; margin-top: 6px; border: 1px solid var(--cr-ink-muted); }
-.cr-tree-row[data-active='true']::before { background: var(--cr-ambre); border-color: var(--cr-ambre); }
+.cr-eye svg { width: 16px; height: 16px; }
+.cr-eye:hover { color: var(--cr-ambre); }
+.cr .cr-eye:focus-visible { outline-offset: -2px; box-shadow: none; color: var(--cr-papier); }
 .cr-empty { padding: 4px 12px; color: var(--cr-ink-muted); }
 
 /* ── viewport ────────────────────────────────────────────────────────── */

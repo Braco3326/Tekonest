@@ -17,12 +17,6 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     propsCollapse: 'Replier le panneau Propriétés',
     propsExpand: 'Déplier le panneau Propriétés',
     canvas: 'Vue 3D : flèches = orbiter, [ ] = appareil suivant/précédent, Entrée = cadrer',
-    /** Tree: the place row label (followed by the place name). */
-    treePlace: 'Lieu',
-    /** Tree: the gear group. */
-    treeGear: 'Matériel',
-    treeNoPlace: 'Aucun lieu choisi',
-    treeNoGear: 'Aucun appareil installé',
     propsEmpty: 'Sélectionnez un appareil pour voir ses réglages.',
     statusNoPlace: 'Choisissez un lieu pour commencer.',
     statusLoading: 'Chargement du lieu…',
@@ -66,6 +60,27 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     panelProps: 'Panneau Propriétés',
     shortcuts: 'Raccourcis clavier',
     siteBack: 'Retour au site Tekonest',
+  },
+  tree: {
+    /** Root row; {place} = the place name, or `tree.noPlace`. */
+    place: 'Lieu : {place}',
+    noPlace: 'aucun lieu choisi',
+    zones: 'Zones',
+    gear: 'Matériel',
+    cables: 'Câbles',
+    points: 'Points d’écoute',
+    /** Eye button names; {item} = the row's label. */
+    hide: 'Masquer {item}',
+    show: 'Afficher {item}',
+    /** Read after a hidden row's name (visually: struck through). */
+    hiddenState: 'masqué',
+    /** The tree's keyboard help (aria-describedby). */
+    help: 'Flèches pour parcourir, Entrée pour sélectionner et cadrer, flèche droite sur un élément pour atteindre son bouton Masquer.',
+    /** Status bar after the eye button. */
+    statusHidden: 'Masqué : {item}',
+    statusShown: 'Affiché : {item}',
+    /** Status bar after Entrée on a zone or a cable row. */
+    statusFramed: 'Cadré : {item}',
   },
   picker: {
     title: 'Choisir un lieu',

@@ -21,7 +21,12 @@ import { SceneHost } from './sceneHost'
 import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
 import { createPlaceController } from './placeController'
-import { bodyCentreOf, frameOf } from './debug'
+import { bodyCentreOf } from './debug'
+import { debugBodyCenter } from '../scene/debugBody'
+import { cableKey } from './sceneDiff'
+import { attachCanvasPicking, createSelection, pickDevice } from './selection'
+import { mountProjectTree } from './shell/projectTree'
+import { buildTree, hideKeyOf, type TreeNode } from './shell/treeModel'
 import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
 import { bindingLabel, loadCreationBindings, type CreationAction } from './input/creationActions'
@@ -76,18 +81,102 @@ export async function bootCreation(): Promise<void> {
   let canvasShown = false
   const showStatus = (): void => {
     if (!canvasShown) return shell.setStatus('', COPY.shell!.statusNoPlace!)
-    const label = placeLabel(store.design().roomId)
-    shell.setStatus(label, COPY.shell!.statusReady!, 'ready')
-    shell.setTreePlace(label)
+    shell.setStatus(placeLabel(store.design().roomId), COPY.shell!.statusReady!, 'ready')
   }
+  const placeNow = (): string => (canvasShown ? placeLabel(store.design().roomId) : '')
   const deviceIds = (): string[] => store.design().rig.instances.map((i) => i.instanceId)
+  const deviceLabel = (id: string): string => {
+    const deviceId = store.design().rig.instances.find((i) => i.instanceId === id)?.deviceId
+    return (deviceId && registry.deviceById.get(deviceId)?.label) || id
+  }
+
+  // ── Selection (Task 9): one state for the tree, a click in the 3D view and [ / ].
+  const selection = createSelection({
+    viewState,
+    host,
+    invalidate: () => scheduler.invalidate(),
+    onSelect: (id) =>
+      shell.setStatus(placeNow(), id ? COPY.shell!.statusSelected!.replace('{device}', deviceLabel(id)) : COPY.shell!.statusNoSelection!, 'ready', true),
+  })
+
+  // ── « Projet » tree (Task 9, C10): rebuilt on store / view-state / place changes, never polled.
+  /** A zone or cable row last activated (aria-selected while no device is selected). */
+  let treeActive: string | null = null
+  const zones = (): { id: string; kind: string }[] => (canvasShown ? (host.layout?.zones ?? []).map((z) => ({ id: z.id, kind: z.kind })) : [])
+  const treeNodes = (): TreeNode[] =>
+    buildTree({
+      placeLabel: placeNow(),
+      zones: zones(),
+      design: store.design(),
+      deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
+      points: [],
+    })
+  const nodeLabel = (key: string): string => {
+    const find = (list: TreeNode[]): TreeNode | undefined => list.flatMap((n) => [n, ...(n.children ?? [])]).find((n) => hideKeyOf(n) === key)
+    return find(treeNodes())?.label ?? key
+  }
+  const tree = mountProjectTree({
+    doc: document,
+    container: shell.treeBody,
+    nodes: treeNodes,
+    selectedId: () => {
+      const sel = viewState.get().selection
+      return sel ? `device:${sel}` : treeActive
+    },
+    isHidden: (key) => viewState.get().hidden.includes(key),
+    activate: (node) => {
+      if (node.kind === 'device') {
+        treeActive = null
+        selection.select(node.target!.instanceId!)
+      } else if (node.kind === 'zone' || node.kind === 'cable') {
+        if (!selection.flyToKey(node.id)) return
+        treeActive = node.id
+        tree.render()
+        shell.setStatus(placeNow(), COPY.tree!.statusFramed!.replace('{item}', node.label), 'ready', true)
+      } else if (node.kind === 'lieu' && host.rig) {
+        // The place row: back to the overview.
+        treeActive = null
+        selection.select(null)
+        host.rig.flyToEnsemble()
+        scheduler.invalidate()
+      }
+    },
+    toggleHidden: (_node, key) => {
+      const hidden = viewState.get().hidden
+      const now = !hidden.includes(key)
+      viewState.set({ hidden: now ? [...hidden, key] : hidden.filter((k) => k !== key) })
+      shell.setStatus(placeNow(), (now ? COPY.tree!.statusHidden! : COPY.tree!.statusShown!).replace('{item}', nodeLabel(key)), 'ready', true)
+    },
+  })
+  viewState.subscribe(() => {
+    const v = viewState.get()
+    if (v.selection !== null) treeActive = null
+    host.setSelected(v.selection)
+    host.setHidden(v.hidden)
+    tree.render()
+  })
+  host.onPlaceShown = () => {
+    // Hidden zones of the previous place do not carry over.
+    const ids = new Set(zones().map((z) => `zone:${z.id}`))
+    const hidden = viewState.get().hidden.filter((k) => !k.startsWith('zone:') || ids.has(k))
+    viewState.set({ hidden })
+    tree.render()
+  }
+
   store.subscribe(() => {
     host.apply(store.design())
     scheduler.invalidate()
     showStatus()
     // A selected device that left the rig (REMOVE, undo of its SPAWN) is no longer selected.
-    const sel = viewState.get().selection
-    if (sel !== null && !deviceIds().includes(sel)) viewState.set({ selection: null })
+    const v = viewState.get()
+    const ids = deviceIds()
+    const sel = v.selection !== null && !ids.includes(v.selection) ? null : v.selection
+    // Hidden devices / cables that left the rig are forgotten (a new one with the same id shows).
+    const cables = new Set(store.design().rig.connections.map((c) => `cable:${cableKey(c.a, c.b)}`))
+    const hidden = v.hidden.filter((k) => (k.startsWith('cable:') ? cables.has(k) : k.startsWith('zone:') || ids.includes(k)))
+    if (treeActive?.startsWith('cable:') && !cables.has(treeActive)) treeActive = null
+    viewState.set({ selection: sel, hidden }) // notifies (and re-renders the tree) only on a change
+    tree.render()
   })
 
   // Panels fold / unfold and the window resizes: the canvas follows its box.
@@ -134,40 +223,27 @@ export async function bootCreation(): Promise<void> {
     storage = null // blocked storage: the default key map
   }
   const keys = mountCreationKeyboard({ bag: shellBag, bindings: loadCreationBindings(storage), canvas })
-  const placeNow = (): string => (canvasShown ? placeLabel(store.design().roomId) : '')
-  const deviceLabel = (id: string): string => {
-    const deviceId = store.design().rig.instances.find((i) => i.instanceId === id)?.deviceId
-    return (deviceId && registry.deviceById.get(deviceId)?.label) || id
-  }
   const cycle = (dir: 1 | -1): boolean => {
     const next = nextDevice(deviceIds(), viewState.get().selection, dir)
     if (next === null) {
-      shell.setStatus(placeNow(), COPY.shell!.statusNothingToSelect!, 'idle')
+      shell.setStatus(placeNow(), COPY.shell!.statusNothingToSelect!, 'idle', true)
       return true
     }
-    viewState.set({ selection: next })
-    shell.setStatus(placeNow(), COPY.shell!.statusSelected!.replace('{device}', deviceLabel(next)), 'ready')
-    return true // the camera follows in Task 9 (focus flight)
-  }
-  const frameSelection = (): boolean => {
-    const sel = viewState.get().selection
-    const inst = sel ? host.instance(sel) : undefined
-    if (!inst || !host.rig) return false
-    host.rig.flyToDevice(frameOf(inst))
-    scheduler.invalidate()
+    selection.select(next) // the camera follows (a cut under reduced motion)
     return true
   }
   keys.onAction('UNDO', () => history.undo())
   keys.onAction('REDO', () => history.redo())
   keys.onAction('NEXT_DEVICE', () => cycle(1))
   keys.onAction('PREV_DEVICE', () => cycle(-1))
-  keys.onAction('FRAME_SELECTION', frameSelection)
+  keys.onAction('FRAME_SELECTION', () => selection.frameSelection())
   keys.onAction('CANCEL', (e) => {
     if (e.target !== canvas || viewState.get().selection === null) return false
-    viewState.set({ selection: null })
-    shell.setStatus(placeNow(), COPY.shell!.statusNoSelection!, 'ready')
+    selection.select(null)
     return true
   })
+  // A click on a device body in the 3D view selects it and flies to it.
+  attachCanvasPicking(canvas, shellBag, (x, y) => pickDevice(host.scene, x, y), selection)
   /** Menu item ids → the key map (the menus show the live labels). */
   const MENU_KEYS: Record<string, CreationAction | undefined> = {
     undo: 'UNDO',
@@ -209,6 +285,14 @@ export async function bootCreation(): Promise<void> {
     undo: () => history.undo(),
     redo: () => history.redo(),
     historySize: () => history.sizes.undo,
+    deviceBodyCenter: (id) => {
+      const inst = host.instance(id)
+      return inst ? debugBodyCenter(inst) : null
+    },
+    visible: (id) => host.visible(id),
+    outlined: () => host.outlined(),
+    hidden: () => viewState.get().hidden,
+    pickAt: (x, y) => pickDevice(host.scene, x, y),
     renders: () => scheduler.renders,
     camera: () => {
       const c = host.camera

@@ -12,7 +12,8 @@ test('from a fresh load, Tab walks skip link → menubar → tree → canvas →
       // The region, not a control's own test id (the collapse buttons carry `tree-collapse` / `props-collapse`).
       const regions = ['skip-link', 'menubar', 'project-tree', 'viewport', 'properties', 'status-bar']
       const zone = el.closest(regions.map((r) => `[data-testid="${r}"]`).join(','))?.getAttribute('data-testid') ?? el.id
-      const cs = getComputedStyle(el)
+      // A tree row's ring is drawn on its own row box (a treeitem wraps its children, Task 9).
+      const cs = getComputedStyle(el.getAttribute('role') === 'treeitem' ? (el.querySelector(':scope > .cr-tree-item') as HTMLElement) : el)
       return { zone, out: !el || el === document.body, ring: cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 2 }
     })
     // Past the last stop the browser takes focus out of the page (to its own UI): the walk is over.

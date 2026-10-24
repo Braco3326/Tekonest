@@ -7,6 +7,7 @@
  */
 import './creation.css'
 import { COPY } from '../copy'
+import { createLiveText } from './liveText'
 
 export type PanelId = 'tree' | 'props'
 
@@ -26,10 +27,11 @@ export interface ShellDom {
   isPanelOpen(p: PanelId): boolean
   /** Collapse / expand a side panel (toggles when `open` is omitted). */
   setPanel(p: PanelId, open?: boolean): void
-  /** Status bar: the place on screen ('' = none) and the state message. */
-  setStatus(place: string, message: string, state?: 'idle' | 'busy' | 'ready'): void
-  /** Tree: the place row ('' = none chosen). */
-  setTreePlace(label: string): void
+  /**
+   * Status bar: the place on screen ('' = none) and the state message.
+   * `reannounce`: an answer to a learner action, read again even when the text did not change.
+   */
+  setStatus(place: string, message: string, state?: 'idle' | 'busy' | 'ready', reannounce?: boolean): void
 }
 
 const S = (): Readonly<Record<string, string>> => COPY.shell!
@@ -119,14 +121,7 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   const tree = panel('tree', 'nav', S().tree!)
   const props = panel('props', 'aside', S().props!)
 
-  // tree content: the place, then the gear (filled by later tasks)
-  const placeLabel = el(doc, 'div', 'cr-tree-label', S().treePlace)
-  const placeList = el(doc, 'ul', 'cr-tree-group')
-  const placeRow = el(doc, 'li', 'cr-tree-row')
-  placeList.appendChild(placeRow)
-  const gearLabel = el(doc, 'div', 'cr-tree-label', S().treeGear)
-  const gearEmpty = el(doc, 'p', 'cr-empty', S().treeNoGear)
-  tree.body.append(placeLabel, placeList, gearLabel, gearEmpty)
+  // tree content: mounted by the owner (projectTree.ts, Task 9)
   props.body.appendChild(el(doc, 'p', 'cr-empty', S().propsEmpty))
 
   // ── viewport (main): the existing canvas moves in
@@ -176,17 +171,13 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   setPanel('tree', true)
   setPanel('props', !(win && win.innerWidth < 1200))
 
-  const setStatus = (place: string, message: string, state: 'idle' | 'busy' | 'ready' = 'idle'): void => {
+  const liveMsg = createLiveText(statusMsg, (fn) => (win ? win.requestAnimationFrame(() => fn()) : fn()))
+  const setStatus = (place: string, message: string, state: 'idle' | 'busy' | 'ready' = 'idle', reannounce = false): void => {
     statusPlace.textContent = place
-    statusMsg.textContent = message
+    liveMsg(message, reannounce)
     statusMsg.dataset.state = state
   }
-  const setTreePlace = (label: string): void => {
-    placeRow.textContent = label || S().treeNoPlace!
-    placeRow.dataset.active = String(!!label)
-  }
   setStatus('', S().statusNoPlace!)
-  setTreePlace('')
 
   return {
     root,
@@ -203,6 +194,5 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
     isPanelOpen,
     setPanel,
     setStatus,
-    setTreePlace,
   }
 }

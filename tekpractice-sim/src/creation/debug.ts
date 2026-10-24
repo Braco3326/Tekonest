@@ -19,6 +19,16 @@ export interface CreationDebug {
   redo(): boolean
   /** Undo entries. */
   historySize(): number
+  /** Body-mesh box centre of a device (independent oracle, src/scene/debugBody.ts), null when unknown / hidden. */
+  deviceBodyCenter(id: string): [number, number, number] | null
+  /** The device's root is enabled (not hidden by the tree's eye). */
+  visible(id: string): boolean
+  /** Devices drawn with the Ambre selection outline. */
+  outlined(): string[]
+  /** `viewState.hidden` keys. */
+  hidden(): string[]
+  /** The device under a canvas point (CSS px), as a click would pick it. */
+  pickAt(x: number, y: number): string | null
   renders(): number
   camera(): { alpha: number; beta: number; radius: number; target: [number, number, number] } | null
   /** `engine.scenes.length`. */
