@@ -334,7 +334,12 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     selectionNone: 'Aucune sélection',
     snapping: 'Aimantation : 0,25 m · 15°',
     snappingFree: 'Aimantation : libre',
+    /** Only when the signal path can truly play (`playbackReady`, L5). */
     signalOk: 'Signal OK',
+    /** 0 errors, but the chain is not known to play (L5): neutral, never « OK ». */
+    signalNoError: 'Aucune erreur détectée',
+    /** The rig has no cable yet (L5). */
+    signalNothing: 'Rien de branché',
     errorsOne: '1 erreur',
     /** {n} ≥ 2. */
     errorsMany: '{n} erreurs',
@@ -391,7 +396,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     R2Title: 'Types de signal incompatibles',
     R2Detail: 'La source et la destination doivent transporter des signaux compatibles : micro vers préampli micro, ligne vers ligne, numérique vers le même format numérique.',
     R3Title: 'Sens de connexion incorrect',
-    R3Detail: 'Une sortie doit être reliée à une entrée (sortie → entrée). Sortie vers sortie ou entrée vers entrée n’est pas valide.',
+    R3Detail: 'Une sortie doit être reliée à une entrée (sortie → entrée). Sortie vers sortie ou entrée vers entrée n’est pas valide. Une prise bidirectionnelle accepte l’un ou l’autre sens.',
     R4Title: 'Alimentation fantôme (+48 V)',
     R4Detail: 'Un appareil qui demande le +48 V doit arriver sur une entrée qui le fournit, avec le +48 V activé.',
     R5Title: 'Voyant ON-AIR (tally)',

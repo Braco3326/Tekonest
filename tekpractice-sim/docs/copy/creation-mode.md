@@ -330,9 +330,11 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 |---|---|---|---|
 | `status.selection` | Sélection : {device} | brief | Barre d'état, texte fixe ; `{device}` = « Yamaha QL1 (ql1) » |
 | `status.selectionNone` | Aucune sélection | brief | Barre d'état, rien de sélectionné |
-| `status.snapping` | Aimantation : 0,25 m · 15° | brief | Barre d'état : pas de placement (grille, rotation R) |
-| `status.snappingFree` | Aimantation : libre | brief | Barre d'état : placement libre (Maj) |
-| `status.signalOk` | Signal OK | brief | Bouton signal, 0 erreur (couleur ok + glyphe ✓) |
+| `status.snapping` | Aimantation : 0,25 m · 15° | brief | Barre d'état : pas de placement (grille, rotation R) ; masqué tant que l'aimantation de placement n'existe pas |
+| `status.snappingFree` | Aimantation : libre | brief | Barre d'état : placement libre (Maj) ; masqué tant que l'aimantation de placement n'existe pas |
+| `status.signalOk` | Signal OK | brief | Bouton signal, couleur ok + glyphe ✓, UNIQUEMENT quand le chemin du signal peut jouer (`playbackReady`, décision L5) |
+| `status.signalNoError` | Aucune erreur détectée | à valider (tekuxwriter) | Bouton signal, 0 erreur mais lecture non prouvée (L5) : couleur neutre (ink-muted), glyphe ○ |
+| `status.signalNothing` | Rien de branché | à valider (tekuxwriter) | Bouton signal, aucun câble dans le montage (L5) : neutre, glyphe ○ |
 | `status.errorsOne` | 1 erreur | brief | Bouton signal (couleur danger + glyphe ⚠) |
 | `status.errorsMany` | {n} erreurs | brief | Idem, `{n}` ≥ 2 |
 | `status.warningsOne` | 1 avertissement | à valider (tekuxwriter) | À côté du bouton signal (les avertissements ne comptent pas comme erreurs) |
@@ -376,7 +378,7 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 | `rule.R2Title` | Types de signal incompatibles | à valider (tekuxwriter) | Source : catalog.json `rules[R2].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
 | `rule.R2Detail` | La source et la destination doivent transporter des signaux compatibles : micro vers préampli micro, ligne vers ligne, numérique vers le même format numérique. | à valider (tekuxwriter) | Source : catalog.json `rules[R2].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
 | `rule.R3Title` | Sens de connexion incorrect | à valider (tekuxwriter) | Source : catalog.json `rules[R3].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
-| `rule.R3Detail` | Une sortie doit être reliée à une entrée (sortie → entrée). Sortie vers sortie ou entrée vers entrée n’est pas valide. | à valider (tekuxwriter) | Source : catalog.json `rules[R3].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R3Detail` | Une sortie doit être reliée à une entrée (sortie → entrée). Sortie vers sortie ou entrée vers entrée n’est pas valide. Une prise bidirectionnelle accepte l’un ou l’autre sens. | à valider (tekuxwriter) | Source : catalog.json `rules[R3].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
 | `rule.R4Title` | Alimentation fantôme (+48 V) | à valider (tekuxwriter) | Source : catalog.json `rules[R4].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
 | `rule.R4Detail` | Un appareil qui demande le +48 V doit arriver sur une entrée qui le fournit, avec le +48 V activé. | à valider (tekuxwriter) | Source : catalog.json `rules[R4].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
 | `rule.R5Title` | Voyant ON-AIR (tally) | à valider (tekuxwriter) | Source : catalog.json `rules[R5].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |

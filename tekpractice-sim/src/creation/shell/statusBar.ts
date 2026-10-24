@@ -36,7 +36,7 @@ const S = (): Readonly<Record<string, string>> => COPY.status!
 const ACTION_LABEL = (a: NonNullable<AutosaveView['action']>): string =>
   a === 'export' ? S().actionExport! : a === 'checked' ? COPY.project!.checkedFile! : COPY.project!.resumeHere!
 /** Glyphs beside the words (never colour alone). */
-const GLYPH: Record<StatusError['severity'] | 'ok', string> = { ok: '✓', error: '⚠', warning: 'ⓘ', rejection: '⊘' }
+const GLYPH: Record<StatusError['severity'] | 'ok' | 'neutral', string> = { ok: '✓', neutral: '○', error: '⚠', warning: 'ⓘ', rejection: '⊘' }
 
 function el<K extends keyof HTMLElementTagNameMap>(doc: Document, tag: K, cls?: string, text?: string): HTMLElementTagNameMap[K] {
   const e = doc.createElement(tag)
@@ -44,9 +44,15 @@ function el<K extends keyof HTMLElementTagNameMap>(doc: Document, tag: K, cls?: 
   if (text !== undefined) e.textContent = text
   return e
 }
-/** Writes only when the text changes (no needless DOM churn on every store change). */
+/** Writes only on a change (no needless DOM churn on every store change). */
 const setText = (e: HTMLElement, t: string): void => {
   if (e.textContent !== t) e.textContent = t
+}
+const setData = (e: HTMLElement, k: string, v: string): void => {
+  if (e.dataset[k] !== v) e.dataset[k] = v
+}
+const setHidden = (e: HTMLElement, h: boolean): void => {
+  if (e.hidden !== h) e.hidden = h
 }
 
 export function mountStatusBar(d: StatusBarDeps): StatusBar {
@@ -74,7 +80,7 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
   signal.dataset.testid = 'signal-status'
   signal.setAttribute('aria-haspopup', 'dialog')
   signal.setAttribute('aria-expanded', 'false')
-  signal.setAttribute('aria-controls', 'cr-error-list')
+  // aria-controls only while the list exists (it is in the DOM only while open).
   signal.title = S().signalHint!
   const glyph = el(doc, 'span', 'cr-signal-glyph')
   glyph.setAttribute('aria-hidden', 'true')
@@ -157,23 +163,25 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
   const render = (v: StatusView): void => {
     view = v
     setText(selection, v.selection)
+    // No snapping text until placement snapping exists.
     setText(snapping, v.snapping)
-    setText(glyph, v.signal.kind === 'ok' ? GLYPH.ok : GLYPH.error)
+    setHidden(snapping, v.snapping === '')
+    setText(glyph, v.signal.kind === 'errors' ? GLYPH.error : GLYPH[v.signal.kind])
     setText(label, v.signal.label)
     setText(extra, v.extra ? ` · ${v.extra}` : '')
-    signal.dataset.kind = v.signal.kind
+    setData(signal, 'kind', v.signal.kind)
     if (isOpen) renderRows()
   }
 
   const renderAutosave = (a: AutosaveView): void => {
     setText(save, a.label)
-    save.dataset.state = a.state
+    setData(save, 'state', a.state)
     // The persistent line replaces the short state while paused (same fact, said once).
-    save.hidden = a.label === '' || a.line !== ''
-    pause.hidden = a.line === ''
+    setHidden(save, a.label === '' || a.line !== '')
+    setHidden(pause, a.line === '')
     setText(pauseText, a.line)
     pauseAction = a.action
-    pauseBtn.hidden = a.action === null
+    setHidden(pauseBtn, a.action === null)
     if (a.action) setText(pauseBtn, ACTION_LABEL(a.action))
   }
 
@@ -199,6 +207,7 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
     isOpen = true
     d.root.appendChild(pop)
     pop.hidden = false
+    signal.setAttribute('aria-controls', pop.id)
     signal.setAttribute('aria-expanded', 'true')
     renderRows()
     ;(list.querySelector<HTMLElement>('button') ?? x).focus()
@@ -209,6 +218,7 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
     isOpen = false
     pop.hidden = true
     pop.remove()
+    signal.removeAttribute('aria-controls')
     signal.setAttribute('aria-expanded', 'false')
     doc.removeEventListener('pointerdown', onDocDown, true)
     if (returnFocus) signal.focus()

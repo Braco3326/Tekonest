@@ -647,6 +647,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr .cr-status-action:hover { background: var(--cr-ambre); color: var(--cr-nuit); }
 .cr .cr-signal { display: flex; align-items: center; gap: 6px; min-height: 24px; padding: 0 8px; border: 1px solid var(--cr-panel-line); font-weight: 500; }
 .cr .cr-signal[data-kind='ok'] { color: var(--cr-ok); }
+.cr .cr-signal[data-kind='neutral'] { color: var(--cr-ink-muted); }
 .cr .cr-signal[data-kind='errors'] { color: var(--cr-danger); border-color: var(--cr-danger); }
 .cr .cr-signal:hover, .cr .cr-signal[aria-expanded='true'] { background: var(--cr-nuit); }
 .cr-signal-extra { color: var(--cr-papier); font-weight: 400; }

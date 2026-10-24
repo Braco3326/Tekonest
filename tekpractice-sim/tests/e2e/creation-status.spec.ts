@@ -12,8 +12,10 @@ const boot = async (page: Page): Promise<void> => {
 }
 const label = (page: Page) => page.getByTestId('signal-label')
 const expectCountMatchesEvents = async (page: Page): Promise<void> => {
-  const n = await page.evaluate(() => window.__creation!.events().filter((e) => e.severity === 'error').length)
-  await expect(label(page)).toHaveText(n === 0 ? 'Signal OK' : n === 1 ? '1 erreur' : `${n} erreurs`)
+  const { n, cables } = await page.evaluate(() => ({ n: window.__creation!.events().filter((e) => e.severity === 'error').length, cables: window.__creation!.design().rig.connections.length }))
+  // L5: « Signal OK » only for a playable chain (playbackReady, Task 34); until then 0 errors is neutral.
+  await expect(label(page)).toHaveText(n === 1 ? '1 erreur' : n > 1 ? `${n} erreurs` : cables === 0 ? 'Rien de branché' : 'Aucune erreur détectée')
+  await expect(page.getByTestId('signal-status')).toHaveAttribute('data-kind', n > 0 ? 'errors' : 'neutral')
 }
 const REFUSED = { a: { instance: 'k12-g', port: 'power-in' }, b: { instance: 'ql1', port: 'in-mic-2' } }
 
@@ -21,7 +23,7 @@ test('(a) the signal label always equals the RuleEvaluator error count', async (
   await boot(page)
   await expect(page.getByRole('contentinfo')).toHaveAttribute('data-testid', 'status-bar')
   await expectCountMatchesEvents(page)
-  await expect(label(page)).toHaveText('Signal OK')
+  await expect(label(page)).toHaveText('Aucune erreur détectée') // the template has 1 cable, playbackReady is not fed yet
   // A condenser without +48 V (R4): one error.
   await page.evaluate(() => {
     const c = window.__creation!
@@ -36,9 +38,14 @@ test('(a) the signal label always equals the RuleEvaluator error count', async (
   // Undo the cable: back to no error.
   await page.evaluate(() => window.__creation!.undo())
   await expectCountMatchesEvents(page)
-  // Selection and snapping lines (brief wording).
+  await expect(page.getByRole('status')).toHaveText('Signal : Aucune erreur détectée')
+  await expect(page.getByTestId('signal-status')).not.toContainText('Signal OK')
+  // Selection line (brief wording); no snapping text until placement snapping exists.
   await expect(page.getByTestId('status-selection')).toHaveText('Aucune sélection')
-  await expect(page.getByTestId('status-snapping')).toHaveText('Aimantation : 0,25 m · 15°')
+  await expect(page.getByTestId('status-snapping')).toBeHidden()
+  // Empty rig → « Rien de branché ».
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }))
+  await expect(label(page)).toHaveText('Rien de branché')
 })
 
 test('(b)(c) a refused CONNECT is listed first, persists, selects its device; a later valid CONNECT clears it', async ({ page }) => {
@@ -50,7 +57,9 @@ test('(b)(c) a refused CONNECT is listed first, persists, selects its device; a 
   await expect(page.getByTestId('signal-extra')).toContainText('connexion refusée')
 
   const btn = page.getByTestId('signal-status')
+  await expect(btn).not.toHaveAttribute('aria-controls', /.+/) // only while the list exists
   await btn.click()
+  await expect(btn).toHaveAttribute('aria-controls', 'cr-error-list')
   const dialog = page.getByRole('dialog', { name: 'Erreurs et avertissements' })
   await expect(dialog).toBeVisible()
   const rows = dialog.locator('.cr-errlist-row')

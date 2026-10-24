@@ -63,7 +63,7 @@ import { openNameDialog, openProjectList } from './shell/projectDialogs'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
-import { autosaveView, rejectionOf, ruleTextFor, statusView, type AutosavePause, type Rejection, type RuleRow } from './shell/statusModel'
+import { autosaveView, rejectionOf, ruleTextFor, statusView, type AutosavePause, type Rejection, type RuleRow, type StatusView } from './shell/statusModel'
 // Self-hosted fonts (P12, OFL), bundled same-origin.
 import '@fontsource/tektur/600.css'
 import '@fontsource/ibm-plex-sans/400.css'
@@ -113,6 +113,8 @@ export async function bootCreation(): Promise<void> {
   const ruleText = ruleTextFor(registry.catalog.rules as readonly RuleRow[])
   /** The rule events of the last store change (the count changes on store changes only). */
   let events = store.events()
+  /** Cables in the rig at the last store change (0 → « Rien de branché »). */
+  let connections = 0
   /** The last refused connection: listed first until a valid connection, a new design, or its device leaves. */
   let lastRejection: Rejection | null = null
   const statusBar = mountStatusBar({
@@ -126,17 +128,20 @@ export async function bootCreation(): Promise<void> {
     },
     autosaveAction: (a) => (a === 'export' ? exportKept() : a === 'checked' ? checkedFile() : resumeHere()),
   })
-  const refreshSignal = (): void => {
+  const refreshSignal = (): StatusView => {
     const sel = viewState.get().selection
-    statusBar.render(
-      statusView({
-        selectionLabel: sel === null ? null : `${deviceLabel(sel)} (${sel})`,
-        snapFree: false, // free placement (Shift) arrives with the placement drag
-        events,
-        lastRejection,
-        ruleText,
-      }),
-    )
+    const v = statusView({
+      selectionLabel: sel === null ? null : `${deviceLabel(sel)} (${sel})`,
+      // snapFree: omitted until placement snapping exists (no « Aimantation » text meanwhile).
+      events,
+      lastRejection,
+      ruleText,
+      connections,
+      // playbackReady: false until the signal path feeds it (Task 34): « Signal OK » only for a playable chain (L5).
+      playbackReady: false,
+    })
+    statusBar.render(v)
+    return v
   }
   history.onRefused((intent, r) => {
     if (intent.type !== 'CONNECT') return
@@ -380,14 +385,15 @@ export async function bootCreation(): Promise<void> {
     const before = events.filter((e) => e.severity === 'error').length
     events = store.events()
     const after = events.filter((e) => e.severity === 'error').length
-    // The count is said, not only shown, when a change adds or clears an error (never on a refresh with the same count).
-    if (after !== before) shell.setStatus(placeNow(), `${COPY.status!.signalAnnounce} ${after === 0 ? COPY.status!.signalOk : after === 1 ? COPY.status!.errorsOne : COPY.status!.errorsMany!.replace('{n}', String(after))}`, 'ready')
+    connections = store.design().rig.connections.length
     if (lastRejection) {
       const present = new Set(deviceIds())
       const cleared = change.intents.some((i) => i.type === 'CONNECT' || i.type === 'APPLY_DESIGN')
       if (cleared || !lastRejection.ports.every((p) => present.has(p.instance))) lastRejection = null
     }
-    refreshSignal()
+    const sv = refreshSignal()
+    // The count is said, not only shown, when a change adds or clears an error (never on a refresh with the same count).
+    if (after !== before) shell.setStatus(placeNow(), `${COPY.status!.signalAnnounce} ${sv.signal.label}`, 'ready')
     // A selected device that left the rig (REMOVE, undo of its SPAWN) is no longer selected.
     const v = viewState.get()
     const ids = deviceIds()
