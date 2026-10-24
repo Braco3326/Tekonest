@@ -43,11 +43,16 @@ export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(
 
 const CHARACTER_CODE = /^(Key[A-Z]|Digit\d|Numpad\d|BracketLeft|BracketRight|Minus|Equal|Semicolon|Quote|Comma|Period|Slash|Backslash|Backquote|IntlBackslash)$/
 
-/** A chord that is one letter / digit / punctuation key with no modifier (WCAG 2.1.4 « character key shortcut »). */
+/**
+ * A chord that is one letter / digit / punctuation key with no modifier, or with
+ * Shift only (it still types a character: « V », « ? »): a WCAG 2.1.4 « character key shortcut ».
+ */
 export function isPlainCharacterChord(chord: string): boolean {
-  if (chord.includes('+')) return false
-  if (chord.startsWith('key:')) return chord.length === 5
-  return CHARACTER_CODE.test(chord)
+  const parts = chord.split('+')
+  const key = parts.pop()!
+  if (parts.some((m) => m !== 'Shift')) return false
+  if (key.startsWith('key:')) return key.length === 5
+  return CHARACTER_CODE.test(key)
 }
 const CONTROL_ROLES = new Set(['button', 'link', 'menuitem', 'menuitemcheckbox', 'menuitemradio', 'checkbox', 'radio', 'switch', 'tab', 'option', 'treeitem'])
 

@@ -22,8 +22,9 @@ for (const f of files(root)) for (const m of readFileSync(f, 'utf8').matchAll(/o
 
 describe('character-key shortcuts act only on the canvas (WCAG 2.1.4)', () => {
   it('recognises plain character chords, not modified ones nor named keys', () => {
-    for (const c of ['KeyF', 'KeyH', 'Digit1', 'BracketLeft', 'BracketRight', 'Comma', 'key:f']) expect(isPlainCharacterChord(c), c).toBe(true)
-    for (const c of ['Ctrl+key:z', 'Shift+KeyV', 'Alt+KeyH', 'Delete', 'Escape', 'Space', 'Enter', 'ArrowLeft']) expect(isPlainCharacterChord(c), c).toBe(false)
+    // Shift alone still types a character (upper case, « ? »…): WCAG 2.1.4 covers it.
+    for (const c of ['KeyF', 'KeyH', 'Digit1', 'BracketLeft', 'BracketRight', 'Comma', 'key:f', 'Shift+KeyV', 'Shift+KeyR', 'Shift+key:v']) expect(isPlainCharacterChord(c), c).toBe(true)
+    for (const c of ['Ctrl+key:z', 'Ctrl+Shift+key:z', 'Alt+KeyH', 'Shift+Delete', 'Delete', 'Escape', 'Space', 'Enter', 'ArrowLeft']) expect(isPlainCharacterChord(c), c).toBe(false)
   })
   it('the scan sees the shell handlers', () => {
     expect(handled.has('UNDO')).toBe(true)
