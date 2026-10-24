@@ -89,9 +89,11 @@ export class CameraRig implements CameraDirector {
   }
 }
 
-/** Structural view of the Babylon camera (its setTarget wants a Vector3, the tween speaks plain x/y/z). */
-function asTweenCamera(cam: ArcRotateCamera): TweenCamera {
-  const scratch = new Vector3() // reused: no per-frame allocation while a tween runs
+/**
+ * Structural view of the Babylon camera (its setTarget wants a Vector3, the tween speaks plain x/y/z).
+ * Exported for the headless test (tests/scene/cameraRig.test.ts).
+ */
+export function asTweenCamera(cam: ArcRotateCamera): TweenCamera {
   return {
     get alpha() { return cam.alpha },
     set alpha(v) { cam.alpha = v },
@@ -100,10 +102,12 @@ function asTweenCamera(cam: ArcRotateCamera): TweenCamera {
     get radius() { return cam.radius },
     set radius(v) { cam.radius = v },
     get target() { return cam.target },
-    setTarget: (t) => {
-      scratch.set(t.x, t.y, t.z)
-      cam.setTarget(scratch)
-    },
+    // A FRESH Vector3 per call, on purpose. Babylon's setTarget(Vector3) stores
+    // the reference: a reused scratch made cam._target === scratch from the
+    // second frame on, so setTarget saw "same position" and early-returned,
+    // skipping rebuildAnglesAndRadius and onMeshTargetChangedObservable. One
+    // small allocation per frame, only while a 450 ms flight runs: negligible.
+    setTarget: (t) => cam.setTarget(new Vector3(t.x, t.y, t.z)),
     get lowerRadiusLimit() { return cam.lowerRadiusLimit },
     get upperRadiusLimit() { return cam.upperRadiusLimit },
     get lowerBetaLimit() { return cam.lowerBetaLimit },
