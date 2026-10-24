@@ -106,4 +106,4 @@ Un apprenant de BTS doit apprendre une **méthode** : changer une seule chose à
 
 - Nouveau module pur `src/trials/` (`fingerprint.ts`, `trial.ts`, `store.ts`), sans Babylon ni DOM, jamais importé par `src/engine/`.
 - Les Essais ne portent aucun nombre acoustique. La phase 2 rouvrira cet ADR (directivité, `engineVersion`, fixtures dorées, `consumed` étendu).
-- Questions ouvertes pour Oscar : validation de cet ADR ; politique d'examen définitive (D2 était contesté au conseil) ; « Exporter puis acquitter » pour libérer la quarantaine (non implémenté) ; traitement du multi-onglet.
+- Questions ouvertes pour Oscar : validation de cet ADR ; politique d'examen définitive (D2 était contesté au conseil) ; « Exporter puis acquitter » pour libérer la quarantaine (non implémenté). Suivi technique : un intent `APPLY_DESIGN` (aujourd'hui `applyDesign` est appelé directement par le panneau et le rechargement de rig, hors `dispatch`).

@@ -262,25 +262,28 @@ export class FocusPatch {
     // Never hijack keys while the learner is inside HUD controls (a11y).
     const active = document.activeElement
     const inHud = active && active !== document.body && active.tagName !== 'CANVAS'
+    // Same gate as the pointer (an Essais compare is read-only, Explore owns the
+    // keys while walking): Tab / Enter must not select or focus a device either.
+    const blocked = this.deps.inputEnabled ? !this.deps.inputEnabled() : false
     switch (e.key) {
       case 'Escape':
         this.emptyClick.cancel()
         this.apply(reduce(this.state, { type: 'ESC' }))
         break
       case 'Tab':
-        if (inHud) return
+        if (inHud || blocked) return
         e.preventDefault()
         this.apply(reduce(this.state, { type: 'TAB', instanceIds: this.instances.map((i) => i.instanceId) }))
         break
       case 'Enter':
-        if (inHud) return
+        if (inHud || blocked) return
         this.apply(reduce(this.state, { type: 'ENTER' }))
         break
       case 'ArrowLeft':
       case 'ArrowRight':
       case 'ArrowUp':
       case 'ArrowDown': {
-        if (inHud || this.state.mode !== 'focus') return
+        if (inHud || blocked || this.state.mode !== 'focus') return
         e.preventDefault()
         // Keyboard orbit (spec §2) — same camera the mouse drags, small steps.
         if (e.key === 'ArrowLeft') this.camera.alpha -= 0.09

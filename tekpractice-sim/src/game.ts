@@ -71,6 +71,12 @@ import type { RoomFileT } from './explore/roomSchema'
 import { askCoach, createAiCoach } from './ai'
 import { buildGrounding, KbPackSchema, type KbPack } from './ai/grounding'
 
+/** The lazy Essais chunk failed to load (deck: essais.load.failed, à valider (tekuxwriter)). */
+const ESSAIS_LOAD_FAILED = {
+  title: "Le panneau Essais n'a pas pu se charger.",
+  body: 'Rechargez la page pour réessayer. Vos essais déjà figés sont gardés dans ce navigateur.',
+} as const
+
 declare global {
   interface Window {
     __audioSim?: {
@@ -546,7 +552,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         dispatch({ type: 'RESTORE_INSTANCE', instanceId, deviceId: inst.deviceId, pose, wires, controls })
       },
     })
-    undo.classList.add('toast-undo') // an Essais compare dismisses pending undos
+    undo.classList.add('toast-undo') // applyDesign (compare, restore, rig load) dismisses pending undos
   }
 
   /** RESTORE_INSTANCE: the pick-up undo (device, cables, controls come back). */
@@ -599,6 +605,9 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   const applyDesign = (design: DeepReadonly<DesignState>, mode: 'normal' | 'preview' | 'restore'): boolean => {
     // Drop a held cable / leave a focus on a device that is about to disappear.
     for (const inst of [...instances]) focusPatch.releaseInstance(inst.instanceId)
+    // A pending pick-up « Annuler » belongs to the stage being replaced (compare,
+    // restore, rig load): it would bring a device back into the new design.
+    document.querySelectorAll('#hud .toast-undo').forEach((t) => t.remove())
     graph.clear()
     cables.clear()
     for (const inst of instances) inst.dispose()
@@ -811,7 +820,9 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     canToggleView: () => viewToggleAllowed(),
     onEssaiKey: (a) => {
       if (!essaisEnabled) return
-      void ensureEssais().then((p) => (a === 'FREEZE_ESSAI' ? void p.freeze() : p.compareKey()))
+      void ensureEssais()
+        .then((p) => (a === 'FREEZE_ESSAI' ? void p.freeze() : p.compareKey()))
+        .catch(() => undefined) // the failure toast is already shown
     },
     settings: () => settings,
     obstacles,
@@ -882,7 +893,10 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     essais: essaisEnabled
       ? {
           isOpen: () => essais?.isOpen() ?? false,
-          open: () => void ensureEssais().then((p) => p.open()),
+          open: () =>
+            void ensureEssais()
+              .then((p) => p.open())
+              .catch(() => undefined), // the failure toast is already shown
           close: () => essais?.close(),
           comparing,
           closeCompare: () => essais?.closeCompare(),
@@ -1112,11 +1126,18 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   })
   let essaisLoad: Promise<EssaisPanel> | null = null
   function ensureEssais(): Promise<EssaisPanel> {
-    essaisLoad ??= import('./ui/essaisPanel').then(({ EssaisPanel: Panel }) => {
-      essais = new Panel(essaisHost())
-      essais.liveChanged()
-      return essais
-    })
+    essaisLoad ??= import('./ui/essaisPanel')
+      .then(({ EssaisPanel: Panel }) => {
+        essais = new Panel(essaisHost())
+        essais.liveChanged()
+        return essais
+      })
+      .catch((err: unknown) => {
+        // A failed chunk (offline, new deploy) must not stay cached: the next key / click retries.
+        essaisLoad = null
+        hud.toast('error', ESSAIS_LOAD_FAILED.title, ESSAIS_LOAD_FAILED.body)
+        throw err
+      })
     return essaisLoad
   }
   // Loaded at boot, off the critical path, so the live fingerprint is known before the first freeze.
