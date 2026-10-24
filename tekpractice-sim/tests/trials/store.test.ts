@@ -224,6 +224,18 @@ describe('TrialStore: two tabs on one storage (final review #2)', () => {
     expect(JSON.parse(item.raw)).toMatchObject({ id: 'tr_a', name: 'Nom onglet 1' })
   })
 
+  it('documented (ADR-0012 D6): a delete made in another tab reappears after this tab’s next write — union, nothing lost', async () => {
+    const s = new MemStorage()
+    const tab1 = new TrialStore(s)
+    await tab1.append(await trialA())
+    const tab2 = new TrialStore(s)
+    await tab2.load() // tab 2 holds tr_a and gets no reload
+    await tab1.remove('tr_a')
+    expect(stored(s)).toEqual([])
+    await tab2.append(await trialC())
+    expect(stored(s).sort()).toEqual(['tr_a', 'tr_c'])
+  })
+
   it('a merge conflict at the quarantine cap returns quarantine-evicted (re-review 2a)', async () => {
     const s = new MemStorage()
     const full = Array.from({ length: QUARANTINE_CAP }, (_, i) => ({ at: NOW, raw: `old-${i}`, reason: 'json' }))
