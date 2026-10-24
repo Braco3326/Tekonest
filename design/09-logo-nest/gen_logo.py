@@ -4,7 +4,7 @@ import math, sys
 from fontTools.ttLib import TTFont
 from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.transformPen import TransformPen
-INK, PAPER = "#141414", "#F4F1EA"
+INK, PAPER, AMBER, PLUM = "#131114", "#F3EDE3", "#DD9349", "#612D45"
 FONT = sys.argv[1] if len(sys.argv) > 1 else "Tektur-Medium.ttf"
 CX, CY = 150, 125
 
@@ -37,6 +37,10 @@ files = {
  "tekonest-mark.svg": svg(512, 512, nest(INK), (20, -5, 260, 260)),
  "tekonest-mark-reverse.svg": svg(512, 512, nest(PAPER), (20, -5, 260, 260), INK),
  "tekonest-favicon.svg": svg(64, 64, nest(INK, 9), (20, -5, 260, 260)),
+ "TEKONEST-lockup.svg": svg(600, 660, nest(INK, 6) + word("TEKONEST", 40, 150, 304, INK, 1), (0, 0, 300, 330)),
+ "TEKONEST-lockup-reverse.svg": svg(600, 660, nest(PAPER, 6) + word("TEKONEST", 40, 150, 304, PAPER, 1), (0, 0, 300, 330), INK),
+ "TEKONEST-lockup-amber-on-night.svg": svg(600, 660, nest(AMBER, 6) + word("TEKONEST", 40, 150, 304, PAPER, 1), (0, 0, 300, 330), INK),
+ "TEKONEST-wordmark.svg": svg(560, 90, word("TEKONEST", 40, 140, 34, INK, 1), (0, 0, 280, 45)),
  "tekonest-wordmark.svg": svg(560, 90, word("tekonest", 46, 140, 34, INK), (0, 0, 280, 45)),
 }
 for name, data in files.items(): open(name, "w").write(data)
