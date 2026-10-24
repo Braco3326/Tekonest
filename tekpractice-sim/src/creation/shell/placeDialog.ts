@@ -1,7 +1,7 @@
 /**
  * « Changer de lieu » dialog (C3): shown when the rig has gear. Modal
- * (role="dialog", aria-modal), focus trapped on its buttons, Esc = Annuler,
- * focus given back to where it was. Square corners, Nuit / Papier / Ambre.
+ * (role="dialog", aria-modal), the page behind it `inert`, focus trapped on
+ * its buttons, Esc = Annuler, focus given back to where it was. Square corners, Nuit / Papier / Ambre.
  */
 import { COPY } from '../copy'
 
@@ -34,9 +34,21 @@ export function openPlaceDialog(parent: HTMLElement = document.body): Promise<Pl
   row.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;'
 
   return new Promise<PlaceChoice>((resolve) => {
+    // Everything behind the dialog is inert while it is open (siblings of the
+    // overlay up to <body>); each element's own inert state is restored on close.
+    const inerted: { el: HTMLElement; was: boolean }[] = []
+    const makeInert = (): void => {
+      for (let node: HTMLElement | null = overlay; node && node !== document.documentElement; node = node.parentElement)
+        for (const sib of Array.from(node.parentElement?.children ?? []))
+          if (sib !== node && sib instanceof HTMLElement && sib.tagName !== 'SCRIPT') {
+            inerted.push({ el: sib, was: sib.inert })
+            sib.inert = true
+          }
+    }
     const close = (c: PlaceChoice): void => {
       if (open !== handle) return
       open = null
+      for (const { el, was } of inerted) el.inert = was
       overlay.remove()
       back?.focus()
       resolve(c)
@@ -72,6 +84,7 @@ export function openPlaceDialog(parent: HTMLElement = document.body): Promise<Pl
     box.append(title, body, row)
     overlay.appendChild(box)
     parent.appendChild(overlay)
+    makeInert()
     buttons[0].focus()
   })
 }

@@ -43,6 +43,10 @@ test('the change-place dialog: Esc cancels, « Repartir à vide » empties the r
   const dialog = page.getByRole('dialog')
   await expect(dialog).toBeVisible()
   await expect(dialog).toHaveAttribute('aria-modal', 'true')
+  // everything behind the dialog is inert while it is open
+  await expect(page.getByTestId('place-picker')).toHaveAttribute('inert', '')
+  await expect(page.locator('#renderCanvas')).toHaveAttribute('inert', '')
+  expect(await page.evaluate(() => !!document.querySelector('[role="dialog"]')!.closest('[inert]'))).toBe(false)
   // focus starts inside and Tab stays inside (trap)
   for (let i = 0; i < 4; i++) {
     expect(await page.evaluate(() => !!document.activeElement?.closest('[role="dialog"]'))).toBe(true)
@@ -50,6 +54,8 @@ test('the change-place dialog: Esc cancels, « Repartir à vide » empties the r
   }
   await page.keyboard.press('Escape')
   await expect(dialog).toHaveCount(0)
+  await expect(page.getByTestId('place-picker')).not.toHaveAttribute('inert')
+  await expect(page.locator('#renderCanvas')).not.toHaveAttribute('inert')
   expect(await page.evaluate(() => window.__creation!.place())).toBe('room:concert-hall-medium')
   expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(1)
 
