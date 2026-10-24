@@ -60,6 +60,7 @@ import {
   type SaveResult,
 } from './persistence'
 import { openNameDialog, openProjectList } from './shell/projectDialogs'
+import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 // Self-hosted fonts (P12, OFL), bundled same-origin.
 import '@fontsource/tektur/600.css'
@@ -118,13 +119,19 @@ export async function bootCreation(): Promise<void> {
   let savedFp: string | null = null
   /** The stamp of `projectName`'s stored row when this tab last read or wrote it (two-tab check); null = not stored. */
   let projectStamp: string | null = null
-  /** The project identity travels with the rig through undo / redo of « Ouvrir » / « Nouveau » (review CRITICAL). */
-  type ProjectMeta = { name: string | null; savedFp: string | null; stamp: string | null }
-  const projectMeta = (): ProjectMeta => ({ name: projectName, savedFp, stamp: projectStamp })
-  const setProject = (m: ProjectMeta): void => {
-    projectName = m.name
-    savedFp = m.savedFp
-    projectStamp = m.stamp
+  /**
+   * The project name travels with the rig through undo / redo of « Ouvrir » / « Nouveau » (review CRITICAL);
+   * its fingerprint and stamp come from this tab's latest save / open of that name (re-review), never from the entry.
+   */
+  type ProjectMeta = { name: string | null }
+  const session = new ProjectSession()
+  const projectMeta = (): ProjectMeta => ({ name: projectName })
+  const sync = (): void => {
+    ;({ name: projectName, savedFp, stamp: projectStamp } = session.state)
+  }
+  const setProject = (m: ProjectState): void => {
+    session.set(m)
+    sync()
   }
   /** Unreadable data that could not be set aside (quarantine full): held here until the learner exports it. */
   const pending: QuarantineItem[] = []
@@ -553,7 +560,8 @@ export async function bootCreation(): Promise<void> {
   }
   // Undo / redo of « Ouvrir » / « Nouveau » brings the project identity back with the rig (review CRITICAL).
   history.onMeta((m) => {
-    setProject(m as ProjectMeta)
+    session.restoreName((m as ProjectMeta).name)
+    sync()
     refreshTitle()
     autosave.schedule()
   })
@@ -561,14 +569,13 @@ export async function bootCreation(): Promise<void> {
   const newProject = async (): Promise<void> => {
     props.flush()
     if (!(await confirmDiscard(PJ.newTitle!, PJ.newConfirm!))) return
-    const after: ProjectMeta = { name: null, savedFp: null, stamp: null }
     const roomId = store.design().roomId
     if (roomId !== null)
       history.do({ type: 'APPLY_DESIGN', design: { roomId, rig: { instances: [], connections: [], controls: {} }, placements: [] } }, PJ.newEntry!, {
         before: projectMeta(),
-        after,
+        after: { name: null } satisfies ProjectMeta,
       })
-    setProject(after)
+    setProject({ name: null, savedFp: null, stamp: null })
     refreshTitle()
     autosave.schedule()
     picker.show({ closable: canvasShown, focus: true })
@@ -586,8 +593,11 @@ export async function bootCreation(): Promise<void> {
     if (!design || design.roomId === null) return failed()
     const first = store.design().roomId === null
     // anything the store drops shows as « * » (the fingerprint is the stored design's)
-    const after: ProjectMeta = { name, savedFp: designFingerprint(design), stamp: projects.find((p) => p.name === name)?.stamp ?? null }
-    const r = history.do({ type: 'APPLY_DESIGN', design }, PJ.openEntry!.replace('{name}', name), { before: projectMeta(), after })
+    const after: ProjectState = { name, savedFp: designFingerprint(design), stamp: projects.find((p) => p.name === name)?.stamp ?? null }
+    const r = history.do({ type: 'APPLY_DESIGN', design }, PJ.openEntry!.replace('{name}', name), {
+      before: projectMeta(),
+      after: { name } satisfies ProjectMeta,
+    })
     if (!r.ok) return failed()
     if (first) history.clear() // the session starts at its first place (as placeController)
     setProject(after)
@@ -610,13 +620,26 @@ export async function bootCreation(): Promise<void> {
     a.click()
     a.remove()
     setTimeout(() => URL.revokeObjectURL(url), 0)
-    // What was held is now with the learner: the autosave may write again.
+    // What was held is in the file: the autosave may write over it once the learner says the file is good.
     if (pending.length) {
-      exportedList = pending.filter((p) => p.key === PROJECTS_KEY).pop()?.raw ?? exportedList
-      if (pendingStoppedAutosave && storage) autosaveOn = true
-      pendingStoppedAutosave = false
-      notes.dismiss('kept-full')
-      autosave.schedule()
+      const held = [...pending]
+      notes.show({
+        id: 'kept-full',
+        title: PJ.keptFullTitle!,
+        body: PJ.keptFullExported!,
+        actions: [
+          {
+            label: PJ.checkedFile!,
+            run: () => {
+              exportedList = held.filter((p) => p.key === PROJECTS_KEY).pop()?.raw ?? exportedList
+              if (pendingStoppedAutosave && storage) autosaveOn = true
+              pendingStoppedAutosave = false
+              notes.dismiss('kept-full')
+              autosave.schedule()
+            },
+          },
+        ],
+      })
     }
     shell.setStatus(placeNow(), PJ.exported!.replace('{file}', file), 'ready', true)
   }
@@ -625,7 +648,21 @@ export async function bootCreation(): Promise<void> {
     if (!isForeignWrite(e as StorageEvent) || autosave.paused) return
     autosave.pause()
     const body = PJ.otherTab!.replace('{save}', bindingLabel(keys.bindings, 'SAVE') || 'Ctrl+S')
-    notes.show({ id: 'other-tab', title: PJ.otherTabTitle!, body })
+    notes.show({
+      id: 'other-tab',
+      title: PJ.otherTabTitle!,
+      body,
+      actions: [
+        {
+          label: PJ.resumeHere!,
+          run: () => {
+            notes.dismiss('other-tab')
+            autosave.resume()
+            shell.setStatus(placeNow(), COPY.shell!.statusReady!, 'ready')
+          },
+        },
+      ],
+    })
     shell.setStatus(placeNow(), body, 'ready', true)
   })
   // Leaving the page: the pending autosave is written now (never mid-transaction).

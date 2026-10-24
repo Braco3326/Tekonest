@@ -611,6 +611,9 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-note-list { margin: 6px 0 0; padding-left: 18px; max-height: 132px; overflow-y: auto; }
 .cr .cr-note-close { position: absolute; top: 4px; right: 4px; width: 28px; height: 28px; font-size: 18px; line-height: 1; color: var(--cr-ink-muted); }
 .cr .cr-note-close:hover { color: var(--cr-papier); background: var(--cr-nuit); }
+.cr-note-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.cr .cr-note-action { min-height: 28px; padding: 4px 10px; border: 1px solid var(--cr-ambre); color: var(--cr-papier); }
+.cr .cr-note-action:hover { background: var(--cr-ambre); color: var(--cr-nuit); }
 
 /* ── status bar ──────────────────────────────────────────────────────── */
 .cr-status {

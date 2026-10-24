@@ -216,6 +216,38 @@ test('review CRITICAL: open B, undo → the rig AND the name are A again; Ctrl+S
   expect((await storedProject(page, 'A')).design.rig.instances).toHaveLength(2)
 })
 
+test('re-review: open B, edit, Ctrl+S, undo past Ouvrir, redo all → clean B, and the next Ctrl+S is no false conflict', async ({ page }) => {
+  await boot(page)
+  await placeTwo(page)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+s')
+  await nameAndEnter(page, 'A')
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'k12-g' }))
+  await menu(page, 'Enregistrer sous…')
+  await nameAndEnter(page, 'B')
+  await menu(page, /^Ouvrir/)
+  await page.getByRole('button', { name: /^A, enregistré le / }).click()
+  await menu(page, /^Ouvrir/)
+  await page.getByRole('button', { name: /^B, enregistré le / }).click()
+  await expect(page).toHaveTitle('B · Mode Création · TekPractice')
+  // edit + Ctrl+S (B gets a new stamp)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SET_POSE', instanceId: 'ql1', position: [1, 0, 7], yawDeg: 0, tiltDeg: 0, mount: 'floor' }))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+s')
+  await expect(page.locator('.cr-status-msg')).toContainText('Projet « B » enregistré')
+  await expect(page).toHaveTitle('B · Mode Création · TekPractice')
+  // undo the edit and Ouvrir B, then redo both
+  await page.keyboard.press('Control+z')
+  await page.keyboard.press('Control+z')
+  await expect(page).toHaveTitle(/A · Mode Création/)
+  await page.keyboard.press('Control+y')
+  await page.keyboard.press('Control+y')
+  await expect(page).toHaveTitle('B · Mode Création · TekPractice') // no « * »
+  await page.keyboard.press('Control+s')
+  await expect(page.locator('.cr-status-msg')).toHaveText('Projet « B » enregistré')
+  expect(await page.evaluate(() => window.__creation!.quarantine())).toEqual([]) // no false « other tab » conflict
+})
+
 test('« Ouvrir… » with unsaved changes asks first; an unreadable project list is said, never « no project »', async ({ page }) => {
   await page.addInitScript(() => {
     if (!sessionStorage.getItem('seeded')) {
@@ -263,7 +295,13 @@ test('quarantine full (5): the unreadable autosave is not dropped; autosave wait
   const file = JSON.parse(readFileSync((await download.path())!, 'utf8'))
   expect(file.pending.map((p: { raw: string }) => p.raw)).toEqual(['{sixth'])
   expect(file.quarantine).toHaveLength(5)
-  await expect(page.getByTestId('note-kept-full')).toHaveCount(0)
+  // the note stays until the learner says the file is good; autosave still waits
+  const note = page.getByTestId('note-kept-full')
+  await expect(note).toContainText('vérifier')
+  await page.waitForTimeout(1300)
+  expect(await page.evaluate(() => localStorage.getItem('audio-sim/creation.v1'))).toBe('{sixth')
+  await note.getByRole('button', { name: 'J’ai vérifié le fichier' }).click()
+  await expect(note).toHaveCount(0)
   await page.waitForTimeout(1300)
   expect(JSON.parse((await page.evaluate(() => localStorage.getItem('audio-sim/creation.v1')))!).design.rig.instances).toHaveLength(2)
 })
@@ -291,6 +329,26 @@ test('two tabs: when the other tab autosaves, this one pauses (said) and writes 
   await expect(tab2.getByTestId('note-other-tab')).toHaveCount(0)
   await tab2.waitForTimeout(300)
   expect(await ids()).toEqual(['k12-g']) // tab 2's own rig (it never saw tab 1's sm58)
+  await tab2.close()
+})
+
+test('two tabs: « Reprendre ici » in the note resumes this tab’s autosave', async ({ page, context }) => {
+  await boot(page)
+  await placeTwo(page)
+  await page.waitForTimeout(1300)
+  const tab2 = await context.newPage()
+  await boot(tab2)
+  await tab2.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'k12-g' }))
+  await page.waitForTimeout(1300)
+  const note = tab2.getByTestId('note-other-tab')
+  await expect(note).toContainText('« Reprendre ici »')
+  await note.getByRole('button', { name: 'Reprendre ici' }).click()
+  await expect(note).toHaveCount(0)
+  await tab2.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [1, 0, 6] }))
+  await tab2.waitForTimeout(1300)
+  const ids = JSON.parse((await tab2.evaluate(() => localStorage.getItem('audio-sim/creation.v1')))!).design.rig.instances.map((i: { instanceId: string }) => i.instanceId).sort()
+  expect(ids).toEqual(['k12-g', 'ql1', 'sm58']) // tab 2's rig written
   await tab2.close()
 })
 

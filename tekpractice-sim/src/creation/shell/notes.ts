@@ -14,6 +14,8 @@ export interface Note {
   title: string
   body: string
   items?: string[]
+  /** Named buttons under the body (Task 13: « Reprendre ici », « J’ai vérifié le fichier »). */
+  actions?: { label: string; run(): void }[]
 }
 
 export interface Notes {
@@ -65,6 +67,19 @@ export function mountNotes(doc: Document, parent: HTMLElement): Notes {
           ul.appendChild(li)
         }
         box.appendChild(ul)
+      }
+      if (n.actions?.length) {
+        const row = doc.createElement('div')
+        row.className = 'cr-note-actions'
+        for (const a of n.actions) {
+          const b = doc.createElement('button')
+          b.type = 'button'
+          b.className = 'cr-note-action'
+          b.textContent = a.label
+          b.addEventListener('click', () => a.run())
+          row.appendChild(b)
+        }
+        box.appendChild(row)
       }
       stack.appendChild(box)
       open.set(n.id, box)
