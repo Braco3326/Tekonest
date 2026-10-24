@@ -36,7 +36,7 @@ LAYOUT = """<!doctype html>
 <div class="proto-banner"><div class="wrap"><p>Prototype de site (brouillon). Rien n'est en vente et aucune donnée n'est collectée.</p></div></div>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="index.html"><img src="assets/img/lockup.svg" alt="Tekonest, accueil" width="190" height="30"></a>
+    <a class="brand" href="index.html"><img src="assets/img/lockup.svg" alt="Tekonest, accueil" width="150" height="32"></a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav id="site-nav" class="site-nav" aria-label="Navigation principale">
       <ul>
@@ -51,7 +51,7 @@ LAYOUT = """<!doctype html>
 <footer class="site-footer">
   <div class="wrap">
     <div>
-      <img src="assets/img/lockup-reverse.svg" alt="Tekonest" width="178" height="28">
+      <img src="assets/img/lockup-reverse.svg" alt="Tekonest" width="140" height="30">
       <p>Tekonest relie cultures et métiers du son : soirées métissées à Paris, réseau créatif équitable, outils pour apprendre.</p>
     </div>
     <nav aria-label="Pied de page">

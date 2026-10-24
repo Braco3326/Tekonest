@@ -16,11 +16,11 @@ def nest(col, sw=4.5):
         out.append(f'<ellipse cx="{ox:.2f}" cy="{oy:.2f}" rx="100" ry="82" transform="rotate({rot:.2f} {ox:.2f} {oy:.2f})" fill="none" stroke="{col}" stroke-width="{sw}"/>')
     return "".join(out)
 
-def word(text, size, cx, baseline, col, tracking=-1):
+def word(text, size, cx, baseline, col, tracking=-1, left=None):
     f = TTFont(FONT); gs = f.getGlyphSet(); cmap = f.getBestCmap(); upm = f["head"].unitsPerEm
     s = size / upm; names = [cmap[ord(c)] for c in text]
     width = sum(f["hmtx"][n][0] * s + tracking for n in names) - tracking
-    x = cx - width / 2; paths = []
+    x = (cx - width / 2) if left is None else left; paths = []
     for n in names:
         pen = SVGPathPen(gs)
         gs[n].draw(TransformPen(pen, (s, 0, 0, -s, x, baseline)))
@@ -31,7 +31,15 @@ def svg(w, h, body, vb, bg=None):
     b = f'<rect x="{vb[0]}" y="{vb[1]}" width="{vb[2]}" height="{vb[3]}" fill="{bg}"/>' if bg else ""
     return f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="{" ".join(map(str, vb))}">{b}{body}</svg>\n'
 
+def horiz(nest_col, word_col, sw=9):
+    s = 32 / 260
+    mark = f'<g transform="translate({-20*s:.3f} {5*s:.3f}) scale({s:.4f})">{nest(nest_col, sw)}</g>'
+    return mark + word("TEKONEST", 21, 0, 23.5, word_col, 0.6, left=42)
+
 files = {
+ "TEKONEST-horizontal.svg": svg(300, 64, horiz(INK, INK), (0, 0, 150, 32)),
+ "TEKONEST-horizontal-reverse.svg": svg(300, 64, horiz(PAPER, PAPER), (0, 0, 150, 32)),
+ "TEKONEST-horizontal-amber.svg": svg(300, 64, horiz(AMBER, PAPER), (0, 0, 150, 32)),
  "tekonest-lockup.svg": svg(600, 660, nest(INK) + word("tekonest", 46, 150, 304, INK), (0, 0, 300, 330)),
  "tekonest-lockup-reverse.svg": svg(600, 660, nest(PAPER) + word("tekonest", 46, 150, 304, PAPER), (0, 0, 300, 330), INK),
  "tekonest-mark.svg": svg(512, 512, nest(INK), (20, -5, 260, 260)),
