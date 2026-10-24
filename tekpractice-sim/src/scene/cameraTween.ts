@@ -27,7 +27,8 @@ export interface TweenCamera {
 export interface TweenScene {
   onBeforeRenderObservable: {
     add(cb: () => void): unknown
-    remove(observer: any): unknown
+    /** Takes back the handle `add` returned (method syntax: Babylon's typed `remove(Observer)` still fits). */
+    remove(observer: unknown): unknown
   }
 }
 

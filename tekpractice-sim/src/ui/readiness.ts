@@ -165,7 +165,7 @@ export function computeStreak(activity: readonly string[], todayIso: string): St
   let cursor = active.has(todayIso) ? todayIso : day(todayIso, -1)
   let days = 0
   let forgivenessUsed = false
-  while (true) {
+  for (;;) {
     if (active.has(cursor)) {
       days += 1
       cursor = day(cursor, -1)

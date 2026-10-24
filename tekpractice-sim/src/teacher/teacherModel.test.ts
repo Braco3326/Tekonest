@@ -10,8 +10,10 @@ const load = async (): Promise<Trial[]> => {
   if (!r.ok) throw new Error('fixture')
   return r.trials as Trial[]
 }
-const mut = (t: Trial, patch: (d: any) => void): Trial => {
-  const c = JSON.parse(JSON.stringify(t))
+/** A JSON clone is a fresh object: the test may write fields the model declares readonly. */
+type Mutable<T> = { -readonly [K in keyof T]: T[K] extends object ? Mutable<T[K]> : T[K] }
+const mut = (t: Trial, patch: (d: Mutable<Trial>) => void): Trial => {
+  const c = JSON.parse(JSON.stringify(t)) as Mutable<Trial>
   patch(c)
   return c as Trial
 }
