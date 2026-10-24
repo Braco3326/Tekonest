@@ -6,9 +6,13 @@
  *
  * canonicalize():
  * - object keys sorted, undefined fields dropped;
- * - arrays kept in order, EXCEPT a `connections` list: each cable is written
- *   with its two ends ordered (a < b) and the list is sorted, so the same
- *   wiring always gives the same string whatever the patch order or direction;
+ * - arrays kept in order, EXCEPT:
+ *   - a `connections` list: each cable is written with its two ends ordered
+ *     (a < b) and the list is sorted, so the same wiring always gives the same
+ *     string whatever the patch order or direction;
+ *   - `instances` and `placements`: sorted by instanceId (insertion order has
+ *     no physical meaning);
+ * - inside `controls`, an empty per-instance map is dropped (= no controls);
  * - numbers quantised by field name (positions 1 mm, degrees 0.1°, delayMs
  *   0.01 ms, anything else 1e-6), -0 → 0, plain decimals (never an exponent);
  *   yawDeg is first normalised to [0, 360).
@@ -54,6 +58,14 @@ export function quantField(key: string | null, value: number): string {
   return formatQuantised(value, placesFor(key))
 }
 
+const idOf = (v: unknown): string =>
+  typeof v === 'object' && v !== null && typeof (v as { instanceId?: unknown }).instanceId === 'string'
+    ? (v as { instanceId: string }).instanceId
+    : ''
+
+const isEmptyMap = (v: unknown): boolean =>
+  typeof v === 'object' && v !== null && !Array.isArray(v) && Object.values(v).every((x) => x === undefined)
+
 function isCable(v: unknown): v is { a: unknown; b: unknown } {
   return typeof v === 'object' && v !== null && 'a' in v && 'b' in v
 }
@@ -90,11 +102,19 @@ function canon(value: unknown, key: string | null): string {
       cables.sort()
       return `[${cables.join(',')}]`
     }
+    if (key === 'instances' || key === 'placements') {
+      // Insertion order has no physical meaning: sort by instanceId (code-unit order), then by content.
+      const items = value.map((v) => ({ id: idOf(v), s: canon(v, null) }))
+      items.sort((x, y) => (x.id < y.id ? -1 : x.id > y.id ? 1 : x.s < y.s ? -1 : x.s > y.s ? 1 : 0))
+      return `[${items.map((x) => x.s).join(',')}]`
+    }
     return `[${value.map((v) => canon(v, key)).join(',')}]`
   }
   const obj = value as Record<string, unknown>
   const parts = Object.keys(obj)
     .filter((k) => obj[k] !== undefined)
+    // controls: an empty per-instance map means "no controls" and is dropped.
+    .filter((k) => !(key === 'controls' && isEmptyMap(obj[k])))
     .sort()
     .map((k) => `${JSON.stringify(k)}:${canon(obj[k], k)}`)
   return `{${parts.join(',')}}`

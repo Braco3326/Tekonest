@@ -74,6 +74,23 @@ describe('TrialStore: basics', () => {
     expect(Object.isFrozen(r.trials[0].design)).toBe(true)
   })
 
+  it('round-trip with sub-mm values: createTrial → append → fresh load() verifies, nothing quarantined', async () => {
+    const s = new MemStorage()
+    const i = input()
+    i.design.placements[0].position_m = [0.0004999, 1.2004, -2.9996]
+    i.design.placements[1].yawDeg = 370.049
+    i.design.rig.controls['spk-l'] = {}
+    i.design.rig.instances.reverse()
+    const t = await createTrial(i, NOW, 'tr_sub')
+    expect((await new TrialStore(s).append(t)).ok).toBe(true)
+    const r = await new TrialStore(s).load()
+    expect(r.quarantined).toBe(false)
+    expect(r.trials).toHaveLength(1)
+    expect(r.trials[0].fingerprint).toBe(t.fingerprint)
+    expect(r.trials[0].fingerprint).toBe((await createTrial(input(), NOW, 'tr_ref')).fingerprint)
+    expect(s.getItem(QUARANTINE_KEY)).toBeNull()
+  })
+
   it('refuses a duplicate id (append-only, never overwrite)', async () => {
     const store = new TrialStore(new MemStorage())
     await store.load()

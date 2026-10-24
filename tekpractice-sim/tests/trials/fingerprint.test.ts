@@ -31,6 +31,25 @@ describe('canonicalize', () => {
     expect(() => canonicalize({ yawDeg: Infinity })).toThrow(RangeError)
   })
 
+  it('drops empty inner controls maps (no control = no entry)', () => {
+    expect(canonicalize({ controls: { a: {}, b: { x: true } } })).toBe(canonicalize({ controls: { b: { x: true } } }))
+    expect(canonicalize({ controls: { a: {} } })).toBe('{"controls":{}}')
+  })
+
+  it('sorts instances and placements by instanceId (insertion order has no physical meaning)', () => {
+    const i = [
+      { instanceId: 'b', deviceId: 'x' },
+      { instanceId: 'a', deviceId: 'y' },
+    ]
+    expect(canonicalize({ instances: i })).toBe(canonicalize({ instances: [...i].reverse() }))
+    const p = [
+      { instanceId: 'z', position_m: [0, 0, 0] },
+      { instanceId: 'k', position_m: [1, 0, 0] },
+    ]
+    expect(canonicalize({ placements: p })).toBe(canonicalize({ placements: [...p].reverse() }))
+    expect(canonicalize({ instances: i })).toBe('{"instances":[{"deviceId":"y","instanceId":"a"},{"deviceId":"x","instanceId":"b"}]}')
+  })
+
   it('keeps every cable field (not just a/b) in the canonical cable', () => {
     const base = { a: { instance: 'mic', port: 'out' }, b: { instance: 'mix', port: 'in-1' } }
     const withKind = canonicalize({ connections: [{ ...base, kind: 'xlr' }] })

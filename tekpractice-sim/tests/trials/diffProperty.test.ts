@@ -1,7 +1,7 @@
 /**
  * Essais: property-style check over seeded random designs.
- * Equal fp1 fingerprints ⇔ empty diffDesign (array order kept identical;
- * control maps are never empty, see report).
+ * Equal fp1 fingerprints ⇔ empty diffDesign, with no exception: mutations
+ * include reordering instances/placements and adding empty controls maps.
  */
 import { describe, expect, it } from 'vitest'
 import { fingerprint } from '../../src/trials/fingerprint'
@@ -46,7 +46,7 @@ function randomDesign(r: () => number): DesignState {
 function mutate(d: DesignState, r: () => number): DesignState {
   const m = cloneData(d)
   const p = m.placements[Math.floor(r() * m.placements.length)]
-  switch (Math.floor(r() * 12)) {
+  switch (Math.floor(r() * 14)) {
     case 0:
       break
     case 1:
@@ -83,6 +83,17 @@ function mutate(d: DesignState, r: () => number): DesignState {
       break
     case 11:
       m.rig.connections.push({ a: { instance: 'i0', port: 'out' }, b: { instance: 'i1', port: 'in' } })
+      break
+    case 12: {
+      // an empty controls map is "no controls": must not change the fp
+      const free = m.rig.instances.find((x) => !(x.instanceId in m.rig.controls))
+      if (free) m.rig.controls[free.instanceId] = {}
+      break
+    }
+    case 13:
+      // insertion order of instances / placements has no physical meaning
+      m.rig.instances.reverse()
+      m.placements.reverse()
       break
   }
   return m
