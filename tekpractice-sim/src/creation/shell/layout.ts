@@ -171,7 +171,7 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   setPanel('tree', true)
   setPanel('props', !(win && win.innerWidth < 1200))
 
-  const liveMsg = createLiveText(statusMsg, (fn) => (win ? win.requestAnimationFrame(() => fn()) : fn()))
+  const liveMsg = createLiveText(statusMsg, (fn, ms) => (win ? win.setTimeout(fn, ms) : fn()))
   const setStatus = (place: string, message: string, state: 'idle' | 'busy' | 'ready' = 'idle', reannounce = false): void => {
     statusPlace.textContent = place
     liveMsg(message, reannounce)

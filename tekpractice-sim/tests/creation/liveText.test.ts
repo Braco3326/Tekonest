@@ -6,10 +6,20 @@ describe('live region text (status bar re-announce)', () => {
   const setup = () => {
     const el = { textContent: '' as string | null }
     const frames: (() => void)[] = []
-    const set = createLiveText(el, (fn) => void frames.push(fn))
+    const delays: number[] = []
+    const set = createLiveText(el, (fn, ms) => {
+      frames.push(fn)
+      delays.push(ms)
+    })
     const flush = () => frames.splice(0).forEach((f) => f())
-    return { el, set, frames, flush }
+    return { el, set, frames, flush, delays }
   }
+  it('the re-set waits ~100 ms (one frame is too short for some screen readers to see the clear)', () => {
+    const { set, delays } = setup()
+    set('A', true)
+    set('A', true)
+    expect(delays).toEqual([100])
+  })
   it('a new text is set at once', () => {
     const { el, set, frames } = setup()
     set('Sélectionné : Yamaha QL1')

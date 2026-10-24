@@ -2,11 +2,14 @@
  * Text setter for a `role="status"` live region. Screen readers announce a
  * CHANGE only, so setting the same text twice (select the same device again,
  * « Aucun appareil à sélectionner » on every missed key) would stay silent:
- * the region is cleared now and the text set again on the next frame — only
- * when `reannounce` (an answer to the learner's key); a background refresh
- * with the same text (« Prêt » after every edit) stays silent.
+ * the region is cleared now and the text set again ~100 ms later (one frame is
+ * too short for some screen readers to notice the clear) — only when
+ * `reannounce` (an answer to the learner's key); a background refresh with the
+ * same text (« Prêt » after every edit) stays silent.
  */
-export function createLiveText(el: { textContent: string | null }, nextFrame: (fn: () => void) => void): (text: string, reannounce?: boolean) => void {
+export const REANNOUNCE_MS = 100
+
+export function createLiveText(el: { textContent: string | null }, later: (fn: () => void, ms: number) => void): (text: string, reannounce?: boolean) => void {
   let wanted = el.textContent ?? ''
   let seq = 0
   return (text: string, reannounce = false): void => {
@@ -19,8 +22,8 @@ export function createLiveText(el: { textContent: string | null }, nextFrame: (f
       return
     }
     el.textContent = ''
-    nextFrame(() => {
+    later(() => {
       if (mine === seq) el.textContent = text
-    })
+    }, REANNOUNCE_MS)
   }
 }
