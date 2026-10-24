@@ -97,6 +97,43 @@ test('« Augmenter Lacet » clicked 5 times quickly = one undo entry (stepper bu
   expect((await pose(page, 'ql1'))!.yawDeg).toBe(0)
 })
 
+test('review fixes 1-2: a foreign command during a burst is its own entry; an undo right after a burst undoes it', async ({ page }) => {
+  await boot(page)
+  await select(page, 'ql1')
+  const up = page.getByTestId('properties').getByRole('button', { name: 'Augmenter Lacet' })
+  const u0 = await undoSize(page)
+  await up.click()
+  await up.click()
+  // within the 600 ms burst, another edit that leaves the panel as it is (focus stays on the stepper)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [1, 0, 6] }))
+  await expect(up).toBeFocused()
+  await page.waitForTimeout(800)
+  expect(await undoSize(page)).toBe(u0 + 2)
+  // undo the SPAWN only: the burst is untouched
+  await page.evaluate(() => window.__creation!.undo())
+  expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(2)
+  expect((await pose(page, 'ql1'))!.yawDeg).toBe(30)
+
+  await up.click() // 45
+  expect(await page.evaluate(() => window.__creation!.undo())).toBe(true) // at once, inside the 600 ms
+  expect((await pose(page, 'ql1'))!.yawDeg).toBe(30)
+})
+
+test('review fix 3: a held stepper stops when its device leaves the panel (no step lands on the next selection)', async ({ page }) => {
+  await boot(page)
+  await select(page, 'ql1')
+  const up = page.getByTestId('properties').getByRole('button', { name: 'Augmenter Lacet' })
+  // A press that does not focus the button (Safari, touch): no blur will ever stop it.
+  await up.dispatchEvent('pointerdown', { button: 0, isPrimary: true, pointerType: 'touch' })
+  await expect.poll(async () => (await pose(page, 'ql1'))!.yawDeg, { timeout: 3000 }).toBeGreaterThan(15) // repeating
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'ql1' })) // the panel empties under the pointer
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press(']')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('k12-g')
+  await page.waitForTimeout(700)
+  expect((await pose(page, 'k12-g'))!.yawDeg).toBe(0)
+})
+
 test('mount: « Pied » unlocks the height, « Sol » puts it back on the floor; tilt clamps to 90', async ({ page }) => {
   await boot(page)
   await select(page, 'k12-g')

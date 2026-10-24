@@ -34,14 +34,39 @@ export class History {
   private tx: HistoryEntry | null = null
   private depth = 0
   private listeners = new Set<() => void>()
+  private beforeCommand = new Set<(kind: 'do' | 'undo' | 'redo') => void>()
 
   constructor(
     private store: HistoryStore,
     private limit = DEFAULT_HISTORY_LIMIT,
   ) {}
 
+  /**
+   * Called first by every `do` / `undo` / `redo` (Task 10 review). A UI that
+   * keeps a transaction open across events (the Propriétés stepper burst)
+   * closes it here when the command is not its own, so a foreign edit never
+   * joins the burst and an undo right after a burst undoes it.
+   */
+  onBeforeCommand(fn: (kind: 'do' | 'undo' | 'redo') => void): () => void {
+    this.beforeCommand.add(fn)
+    return () => {
+      this.beforeCommand.delete(fn)
+    }
+  }
+
+  private before(kind: 'do' | 'undo' | 'redo'): void {
+    for (const fn of [...this.beforeCommand]) {
+      try {
+        fn(kind)
+      } catch (e) {
+        console.error('[creation] history before-command hook failed', e)
+      }
+    }
+  }
+
   /** Dispatch and record. A failed dispatch records nothing and keeps the redo stack. */
   do(intent: Intent, label: string = intent.type): DispatchResult {
+    this.before('do')
     const r = this.store.dispatch(intent)
     if (!r.ok) return r
     const step: HistoryEntry = { label, forward: [r.normalized], inverse: [...r.inverse] }
@@ -75,6 +100,7 @@ export class History {
 
   /** False when there is nothing to undo, a transaction is open, or the inverse no longer applies (nothing changes). */
   undo(): boolean {
+    this.before('undo')
     const e = this.undoStack[this.undoStack.length - 1]
     if (!e || this.tx) return false
     const r = this.applyGroup(e.inverse)
@@ -90,6 +116,7 @@ export class History {
 
   /** Replays the forward intents; the inverse is recomputed (ids may differ). */
   redo(): boolean {
+    this.before('redo')
     const e = this.redoStack[this.redoStack.length - 1]
     if (!e || this.tx) return false
     const r = this.applyGroup(e.forward)

@@ -218,3 +218,44 @@ describe('History: undo/redo command stack', () => {
     expect(history.undo()).toBe(true)
   })
 })
+
+describe('History.onBeforeCommand (Task 10 review): a foreign command closes an open burst first', () => {
+  it('fires before do / undo / redo; a listener that commits the open transaction keeps the next do a separate entry', () => {
+    const { history } = setup()
+    history.do({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm', position: [0, 0, 0] })
+    const calls: string[] = []
+    let own = false
+    let open = false
+    const off = history.onBeforeCommand((kind) => {
+      calls.push(kind)
+      if (!own && open) {
+        open = false
+        history.commit()
+      }
+    })
+    const burstStep = (x: number) => {
+      if (!open) {
+        history.begin('Régler X')
+        open = true
+      }
+      own = true
+      history.do(pose('m', x))
+      own = false
+    }
+    const u0 = history.sizes.undo
+    burstStep(1)
+    burstStep(2)
+    history.do({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'n' }) // a foreign command (e.g. Suppr) during the burst
+    expect(history.sizes.undo).toBe(u0 + 2)
+    expect(history.peekUndo()!.label).toBe('SPAWN')
+    // an undo right after a burst undoes the burst (it is closed first, not refused)
+    burstStep(5)
+    expect(history.undo()).toBe(true)
+    expect(history.peekUndo()!.label).toBe('SPAWN')
+    expect(history.redo()).toBe(true)
+    expect(calls).toEqual(['do', 'do', 'do', 'do', 'undo', 'redo'])
+    off()
+    history.do(pose('m', 9))
+    expect(calls).toHaveLength(6)
+  })
+})

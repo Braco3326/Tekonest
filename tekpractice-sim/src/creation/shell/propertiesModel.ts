@@ -90,22 +90,32 @@ function shortName(registry: Registry, deviceId: string): string {
   return d.label.startsWith(`${brand} `) ? d.label.slice(brand.length + 1) : d.label
 }
 
-/** The device's pose; an unplaced device stands at the origin, yaw 0 (as SceneHost shows it). */
-function poseOf(design: DesignState, instanceId: string): { position: [number, number, number]; yawDeg: number; tiltDeg: number; mount: Mount } {
+/** Above the floor by more than this (m), a placement with no mount reads as « Pied ». */
+const ON_FLOOR_EPS = 0.005
+
+/**
+ * The device's pose; an unplaced device stands at the origin, yaw 0 (as SceneHost shows it).
+ * A placement with no `mount` (legacy, templates) that stands above the floor
+ * reads as 'stand' (review fix 4): its height stays editable and an edit never
+ * drops it to the floor.
+ */
+function poseOf(design: DesignState, instanceId: string, opts: FieldOpts = {}): { position: [number, number, number]; yawDeg: number; tiltDeg: number; mount: Mount } {
   const p: Placement | undefined = design.placements.find((q) => q.instanceId === instanceId)
+  const position: [number, number, number] = p ? [p.position_m[0], p.position_m[1], p.position_m[2]] : [0, 0, 0]
+  const floor = opts.floorAt?.(position[0], position[2]) ?? 0
   return {
-    position: p ? [p.position_m[0], p.position_m[1], p.position_m[2]] : [0, 0, 0],
+    position,
     yawDeg: p?.yawDeg ?? 0,
     tiltDeg: p?.tiltDeg ?? 0,
-    mount: p?.mount ?? 'floor',
+    mount: p?.mount ?? (position[1] > floor + ON_FLOOR_EPS ? 'stand' : 'floor'),
   }
 }
 
-export function propsView(design: DesignState, registry: Registry, instanceId: string): PropsView | null {
+export function propsView(design: DesignState, registry: Registry, instanceId: string, opts: FieldOpts = {}): PropsView | null {
   const inst = design.rig.instances.find((i) => i.instanceId === instanceId)
   const device = inst && registry.deviceById.get(inst.deviceId)
   if (!inst || !device) return null
-  const pose = poseOf(design, instanceId)
+  const pose = poseOf(design, instanceId, opts)
   const onFloor = pose.mount === 'floor'
   const fields: PropField[] = [
     { id: 'name', label: P().name!, value: instanceId, readOnly: true },
@@ -175,7 +185,7 @@ function poseIntent(instanceId: string, p: Pose): Intent {
 /** The pose with one numeric field set (wrapped / clamped), as a SET_POSE; null for a read-only field. */
 function withNumber(view: PropsView, design: DesignState, field: 'x' | 'y' | 'z' | 'yaw' | 'tilt', v: number, opts: FieldOpts): Intent | null {
   if (view.fields.find((f) => f.id === field)?.readOnly) return null
-  const p = poseOf(design, view.instanceId)
+  const p = poseOf(design, view.instanceId, opts)
   const floor = (x: number, z: number): number => opts.floorAt?.(x, z) ?? 0
   if (field === 'x') p.position[0] = v
   else if (field === 'z') p.position[2] = v
@@ -192,7 +202,7 @@ export function fieldIntent(view: PropsView, design: DesignState, field: FieldId
   if (field === 'name') return null // instance ids are fixed (undo and cables refer to them)
   if (field === 'mount') {
     if (!(MOUNTS as readonly string[]).includes(raw)) return null
-    const p = poseOf(design, view.instanceId)
+    const p = poseOf(design, view.instanceId, opts)
     p.mount = raw as Mount
     if (p.mount === 'floor') p.position[1] = opts.floorAt?.(p.position[0], p.position[2]) ?? 0
     return poseIntent(view.instanceId, p)
@@ -204,16 +214,16 @@ export function fieldIntent(view: PropsView, design: DesignState, field: FieldId
 
 /** One ± stepper press from the store value (X ± 0,1 m, yaw ± 15°, tilt ± 1°); null for a read-only field. */
 export function stepIntent(view: PropsView, design: DesignState, field: 'x' | 'y' | 'z' | 'yaw' | 'tilt', dir: 1 | -1, opts: FieldOpts = {}): Intent | null {
-  const p = poseOf(design, view.instanceId)
+  const p = poseOf(design, view.instanceId, opts)
   const now = field === 'x' ? p.position[0] : field === 'y' ? p.position[1] : field === 'z' ? p.position[2] : field === 'yaw' ? p.yawDeg : p.tiltDeg
   return withNumber(view, design, field, now + dir * STEP[field], opts)
 }
 
 /** False when the intent is a SET_POSE that leaves the device exactly where it is (nothing to record). */
-export function poseChanged(design: DesignState, intent: Intent): boolean {
+export function poseChanged(design: DesignState, intent: Intent, opts: FieldOpts = {}): boolean {
   if (intent.type !== 'SET_POSE') return true
   if (!design.placements.some((q) => q.instanceId === intent.instanceId)) return true
-  const p = poseOf(design, intent.instanceId)
+  const p = poseOf(design, intent.instanceId, opts)
   return (
     p.position.some((v, i) => mm(v) !== intent.position[i]) || p.yawDeg !== intent.yawDeg || p.tiltDeg !== intent.tiltDeg || p.mount !== intent.mount
   )

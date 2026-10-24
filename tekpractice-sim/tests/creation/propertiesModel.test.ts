@@ -75,6 +75,23 @@ describe('propsView', () => {
     expect(back.state).toMatchObject({ kind: 'connected', toLabel: 'QL1 (ql1) · out-main-l' })
   })
 
+  it('a placement with no mount above the floor reads as « Pied » with an editable height (review fix 4); on the floor, « Sol »', () => {
+    const d = design()
+    d.placements = d.placements.map((p) => (p.instanceId === 'isa' ? { instanceId: 'isa', deviceId: p.deviceId, position_m: [0, 1.2, 0], yawDeg: 0 } : p))
+    const v = view(d, 'isa')
+    expect(field(v, 'mount').value).toBe('stand')
+    expect(field(v, 'y').readOnly).toBeFalsy()
+    expect(field(v, 'y').value).toBe('1,20')
+    // an edit keeps the device where it is (no silent drop to the floor)
+    expect(fieldIntent(v, d, 'x', '2')).toMatchObject({ position: [2, 1.2, 0], mount: 'stand' })
+    // the place's floor is at 1.2 m there: it stands on the floor
+    const raised = { floorAt: () => 1.2 }
+    const onFloor = propsView(d, registry, 'isa', raised)!
+    expect(field(onFloor, 'mount').value).toBe('floor')
+    expect(field(onFloor, 'y').readOnly).toBe(true)
+    expect(fieldIntent(onFloor, d, 'x', '2', raised)).toMatchObject({ position: [2, 1.2, 0], mount: 'floor' })
+  })
+
   it('an unplaced device stands at the origin; an unknown instance has no view', () => {
     const d = design()
     d.placements = d.placements.filter((p) => p.instanceId !== 'isa')

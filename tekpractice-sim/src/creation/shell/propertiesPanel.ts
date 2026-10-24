@@ -27,7 +27,7 @@ export interface PropertiesPanelDeps {
   doc: Document
   container: HTMLElement
   registry: Registry
-  history: Pick<History, 'do' | 'begin' | 'commit'>
+  history: Pick<History, 'do' | 'begin' | 'commit' | 'onBeforeCommand'>
   design(): DesignState
   selection(): string | null
   floorAt?: FieldOpts['floorAt']
@@ -101,8 +101,20 @@ export function mountPropertiesPanel(d: PropertiesPanelDeps): PropertiesPanel {
     clearError(field)
     const design = d.design()
     const intent = stepIntent(view, design, field, dir, opts())
-    if (intent && poseChanged(design, intent)) d.history.do(intent, fill(P().adjust!, 'field', labelOf(field)))
+    if (!intent || !poseChanged(design, intent, opts())) return
+    stepping = true
+    try {
+      d.history.do(intent, fill(P().adjust!, 'field', labelOf(field)))
+    } finally {
+      stepping = false
+    }
   }
+  // Review fixes 1-2: any other command (Suppr, menu or debug undo, the tree…) closes the burst
+  // first, so it never joins it and an undo right after a burst undoes the burst.
+  let stepping = false
+  d.history.onBeforeCommand(() => {
+    if (!stepping) flush()
+  })
 
   // ── field commit / revert ─────────────────────────────────────────────────
   /** `again`: an answer to Entrée (read again even when unchanged); leaving the field is not. */
@@ -131,7 +143,7 @@ export function mountPropertiesPanel(d: PropertiesPanelDeps): PropertiesPanel {
     if (!intent) return setError(id, !fromBlur)
     drafts.delete(id)
     clearError(id)
-    if (!poseChanged(design, intent)) {
+    if (!poseChanged(design, intent, opts())) {
       input.value = storeValue(id) // same pose: show it formatted, record nothing
       return
     }
@@ -248,13 +260,18 @@ export function mountPropertiesPanel(d: PropertiesPanelDeps): PropertiesPanel {
       win.clearTimeout(hold)
       win.clearInterval(repeat)
       hold = repeat = 0
+      holds.delete(stop)
     }
     b.addEventListener('pointerdown', (e) => {
       if (e.button !== 0) return
       repeated = false
       stop()
+      const owner = view?.instanceId
+      holds.add(stop)
       hold = win.setTimeout(() => {
         repeat = win.setInterval(() => {
+          // Review fix 3: never step another device than the one pressed for.
+          if (view?.instanceId !== owner) return stop()
           repeated = true
           step(field, dir)
         }, HOLD_REPEAT_MS)
@@ -276,7 +293,14 @@ export function mountPropertiesPanel(d: PropertiesPanelDeps): PropertiesPanel {
     })
   }
 
+  /** Held-pointer repeats in flight (review fix 3): stopped whenever their buttons go away. */
+  const holds = new Set<() => void>()
+  const stopHolds = (): void => {
+    for (const stop of [...holds]) stop()
+  }
+
   const build = (v: PropsView | null): void => {
+    stopHolds() // the pressed button is about to leave the DOM: no pointerup / blur will come
     inputs = new Map()
     steppers = new Map()
     errorOut = new Map()
@@ -325,7 +349,7 @@ export function mountPropertiesPanel(d: PropertiesPanelDeps): PropertiesPanel {
       if (!view) return
       const design = d.design()
       const intent = fieldIntent(view, design, 'mount', sel.value, opts())
-      if (intent && poseChanged(design, intent)) {
+      if (intent && poseChanged(design, intent, opts())) {
         flush()
         d.history.do(intent, fill(P().adjust!, 'field', mf.label))
       }
@@ -455,9 +479,10 @@ export function mountPropertiesPanel(d: PropertiesPanelDeps): PropertiesPanel {
   const render = (): void => {
     renders++
     const sel = d.selection()
-    const next = sel ? propsView(d.design(), d.registry, sel) : null
+    const next = sel ? propsView(d.design(), d.registry, sel, opts()) : null
     if ((next?.instanceId ?? null) !== (view?.instanceId ?? null)) {
-      // Another device: a burst, drafts and errors belong to the previous one.
+      // Another device: a burst, held repeats, drafts and errors belong to the previous one.
+      stopHolds()
       flush()
       drafts.clear()
       errors.clear()
