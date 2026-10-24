@@ -33,7 +33,8 @@ import {
   type FocusCommand,
   type FocusState,
 } from './focusMachine'
-import { TOKENS } from '../design/tokens'
+import { motionEnabled, TOKENS } from '../design/tokens'
+import { confirmWindowMs, DeferredEmptyClick } from './deferredEmptyClick'
 
 export interface FocusPatchDeps {
   /** Dry-run verdict — ConnectionGraph.canConnect, injected by the bootstrap. */
@@ -120,6 +121,8 @@ export class FocusPatch {
   // ── input → machine events ──────────────────────────────────────────────────
 
   private onTap(button: number): void {
+    // Any new tap supersedes a deferred empty click (it re-schedules below if empty again).
+    this.emptyClick.cancel()
     if (button === 2) {
       this.apply(reduce(this.state, { type: 'RIGHT_CLICK' }))
       return
@@ -127,8 +130,9 @@ export class FocusPatch {
     // N1: a click DURING the flight a click-focus started aims at a moving view
     // (often the 2nd half of a double-click that a busy frame split into two
     // taps). It confirms that focus — never a pick through the moving scene.
+    // Reduced motion = no flight = no window.
     const first = this.clickFocus
-    if (first && performance.now() - first.at < TOKENS.focus.flyMs) {
+    if (first && performance.now() - first.at < confirmWindowMs(TOKENS.focus.flyMs, motionEnabled())) {
       this.clickFocus = null
       this.apply(reduce(this.state, { type: 'DEVICE_DOUBLE_CLICK', instanceId: first.id }))
       return
@@ -151,35 +155,29 @@ export class FocusPatch {
     if (this.state.mode === 'focus') {
       // Leaving focus waits out the double-click window: if this click is the
       // first half of a floor double-click (re-pivot), the camera must not
-      // start flying home first.
-      this.cancelPendingEmpty()
-      this.pendingEmpty = setTimeout(() => {
-        this.pendingEmpty = null
-        this.apply(reduce(this.state, { type: 'EMPTY_CLICK' }))
-      }, Scene.DoubleClickDelay)
+      // start flying home first. Dropped if the view changes meanwhile.
+      this.emptyClick.schedule()
       return
     }
     this.apply(reduce(this.state, { type: 'EMPTY_CLICK' }))
   }
 
-  /** A deferred "empty click leaves focus" (see onTap). */
-  private pendingEmpty: ReturnType<typeof setTimeout> | null = null
-
-  private cancelPendingEmpty(): boolean {
-    if (!this.pendingEmpty) return false
-    clearTimeout(this.pendingEmpty)
-    this.pendingEmpty = null
-    return true
-  }
+  /** The deferred "empty click leaves focus" (see onTap, deferredEmptyClick.ts). */
+  private emptyClick = new DeferredEmptyClick(
+    Scene.DoubleClickDelay,
+    () => this.state,
+    () => this.apply(reduce(this.state, { type: 'EMPTY_CLICK' })),
+  )
 
   /** Alt+H / « Vue d'ensemble » (Task 4): fly home, cable kept. */
   home(): void {
-    this.cancelPendingEmpty()
+    this.emptyClick.cancel()
     this.apply(reduce(this.state, { type: 'HOME' }))
   }
 
   /** Focus a device programmatically (Explore: F key, crosshair click). Same path as a double-click. */
   focusInstance(instanceId: string): void {
+    this.emptyClick.cancel()
     this.apply(reduce(this.state, { type: 'DEVICE_DOUBLE_CLICK', instanceId }))
   }
 
@@ -188,6 +186,7 @@ export class FocusPatch {
    * leave its focus first, through the same ESC transitions a learner uses.
    */
   releaseInstance(instanceId: string): void {
+    this.emptyClick.cancel()
     if (this.state.held?.instance === instanceId) this.apply(reduce(this.state, { type: 'ESC' }))
     if (this.state.focused === instanceId) {
       if (this.state.held) this.apply(reduce(this.state, { type: 'ESC' }))
@@ -207,14 +206,15 @@ export class FocusPatch {
   private clickFocus: { id: string; at: number } | null = null
 
   private onDoubleTap(): void {
-    const leftFocusPending = this.cancelPendingEmpty()
+    const leftFocusPending = this.emptyClick.cancel()
     // N1: the first click of a double-click already started the flight, so the
     // view under the cursor is MOVING — re-picking now could hit the stand, a
     // neighbour or the floor. The double-click confirms the device the first
     // click chose (and re-issues the flight its 2nd pointerdown cancelled).
+    // Reduced motion = a cut, nothing moves = re-pick normally.
     const first = this.clickFocus
     this.clickFocus = null
-    if (first && performance.now() - first.at < 600) {
+    if (first && performance.now() - first.at < confirmWindowMs(600, motionEnabled())) {
       this.apply(reduce(this.state, { type: 'DEVICE_DOUBLE_CLICK', instanceId: first.id }))
       return
     }
@@ -256,6 +256,7 @@ export class FocusPatch {
     const inHud = active && active !== document.body && active.tagName !== 'CANVAS'
     switch (e.key) {
       case 'Escape':
+        this.emptyClick.cancel()
         this.apply(reduce(this.state, { type: 'ESC' }))
         break
       case 'Tab':
@@ -320,6 +321,8 @@ export class FocusPatch {
   private apply(t: { state: FocusState; commands: FocusCommand[] }): void {
     const before = `${this.state.mode}|${this.state.focused}`
     this.state = t.state
+    // Out of focus, a pending "click-focus confirm" has nothing left to confirm.
+    if (this.state.mode !== 'focus') this.clickFocus = null
     for (const cmd of t.commands) this.exec(cmd)
     this.applyHints()
     if (`${this.state.mode}|${this.state.focused}` !== before) this.deps.onViewChange?.()
@@ -327,6 +330,7 @@ export class FocusPatch {
 
   /** Back out of focus the way Esc does: drop a held cable first, then leave (placement from focus). */
   leaveFocus(): void {
+    this.emptyClick.cancel()
     if (this.state.mode !== 'focus') return
     if (this.state.held) this.apply(reduce(this.state, { type: 'ESC' }))
     this.apply(reduce(this.state, { type: 'ESC' }))
