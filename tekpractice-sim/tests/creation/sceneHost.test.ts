@@ -14,6 +14,7 @@ import { History } from '../../src/creation/history'
 import { placeFromKey } from '../../src/creation/places'
 import { DisposableBag } from '../../src/util/disposable'
 import type { DesignState } from '../../src/trials/trial'
+import { CREATION_TOKENS, contrastRatio } from '../../src/design/creationTokens'
 
 /** Review fix 1: a room builder that throws half-way (after adding a mesh) when armed. */
 const roomBoom = vi.hoisted(() => ({ on: false }))
@@ -114,6 +115,21 @@ const settle = () => new Promise((r) => setTimeout(r, 0))
 const cableMeshes = (host: SceneHost) => host.scene!.meshes.filter((m) => m.name.startsWith('cable:')).length
 
 describe('SceneHost', () => {
+  it('the blank room floor reads against the Nuit background, with a 1 m grid (Task 7)', async () => {
+    const { host } = makeHost()
+    await host.load(placeFromKey('blank'), emptyIn('blank'))
+    const scene = host.scene!
+    const floor = scene.getMeshByName('stage')!
+    const floorHex = (floor.material as unknown as { diffuseColor: { toHexString(): string } }).diffuseColor.toHexString()
+    const clearHex = `#${[scene.clearColor.r, scene.clearColor.g, scene.clearColor.b].map((c) => Math.round(c * 255).toString(16).padStart(2, '0')).join('').toUpperCase()}`
+    expect(clearHex).toBe(CREATION_TOKENS.color.nuit)
+    expect(floorHex).toBe(CREATION_TOKENS.scene.floor)
+    expect(contrastRatio(floorHex, clearHex)).toBeGreaterThanOrEqual(1.3)
+    const grid = scene.getMeshByName('stage:grid')
+    expect(grid).not.toBeNull()
+    expect(grid!.isPickable).toBe(false)
+    host.dispose()
+  })
   it('load() builds one scene with the place, its camera active, and the design', async () => {
     const { engine, host } = makeHost()
     await host.load(placeFromKey('blank'), rig('blank'))

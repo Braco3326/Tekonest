@@ -38,9 +38,9 @@ import { attachRenderScheduler, type RenderScheduler } from './renderScheduler'
 import { cableKey, planSceneOps } from './sceneDiff'
 import { placeFromKey, placeKey, type PlaceRef } from './places'
 import { blankData, loadPlaceData, type PlaceData } from './placeData'
+import { CREATION_TOKENS } from '../design/creationTokens'
 
-/** Nuit (brief §2) until CREATION_TOKENS land (Task 7). */
-const NUIT = '#131114'
+const NUIT = CREATION_TOKENS.color.nuit
 const DEG = Math.PI / 180
 type RoomBuild = (scene: Scene, file: Extract<PlaceData, { kind: 'room' }>['file'], layout: RoomLayout) => unknown
 
@@ -261,11 +261,12 @@ export class SceneHost {
     } else {
       const ground = MeshBuilder.CreateGround('stage', { width: data.width, height: data.length }, scene)
       const mat = new StandardMaterial('mat:stage', scene)
-      mat.diffuseColor = Color3.FromHexString(env ? env.backdrop.floorColor : NUIT)
+      mat.diffuseColor = Color3.FromHexString(env ? env.backdrop.floorColor : CREATION_TOKENS.scene.floor)
       mat.specularColor = Color3.Black()
       ground.material = mat
       ground.isPickable = false
       ground.metadata = { pivotSurface: true }
+      if (!env) this.buildGrid(scene, data.width, data.length)
     }
 
     const bag = new DisposableBag()
@@ -277,6 +278,26 @@ export class SceneHost {
     attachRenderScheduler(this.engine, scene, camera, this.canvas, this.scheduler, bag)
     this.scheduler.invalidate()
     return scene
+  }
+
+  /** Blank room: a 1 m grid (every 5 m from the centre stronger), one line-system mesh, never picked. */
+  private buildGrid(scene: Scene, width: number, length: number): void {
+    const y = 0.003 // above the floor, no z-fighting
+    const hw = width / 2
+    const hl = length / 2
+    const minor = Color4.FromColor3(Color3.FromHexString(CREATION_TOKENS.scene.gridMinor))
+    const major = Color4.FromColor3(Color3.FromHexString(CREATION_TOKENS.scene.gridMajor))
+    const lines: Vector3[][] = []
+    const colors: Color4[][] = []
+    const add = (a: Vector3, b: Vector3, i: number): void => {
+      lines.push([a, b])
+      const c = i % 5 === 0 ? major : minor
+      colors.push([c, c])
+    }
+    for (let i = -Math.floor(hw); i <= Math.floor(hw); i++) add(new Vector3(i, y, -hl), new Vector3(i, y, hl), i)
+    for (let j = -Math.floor(hl); j <= Math.floor(hl); j++) add(new Vector3(-hw, y, j), new Vector3(hw, y, j), j)
+    const grid = MeshBuilder.CreateLineSystem('stage:grid', { lines, colors }, scene)
+    grid.isPickable = false
   }
 
   /** The venue set .glb (as game.ts): non-blocking, a failure keeps the plain floor. */

@@ -25,6 +25,12 @@ export const CREATION_TOKENS = {
     /** Success text, ≥ 4.5:1 on panel. */
     ok: '#8CCB9B',
   },
+  /** 3D look of the neutral blank room (« Salle vide neutre »): a raised floor that reads on the Nuit clear colour, a quiet 1 m grid. */
+  scene: {
+    floor: '#2E2830',
+    gridMinor: '#463E47',
+    gridMajor: '#7A5A6A',
+  },
   font: {
     title: "'Tektur', 'IBM Plex Sans', system-ui, sans-serif",
     ui: "'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif",
