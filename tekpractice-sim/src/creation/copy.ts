@@ -327,4 +327,80 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     opened: 'Projet « {name} » ouvert. {undo} pour revenir en arrière.',
     openFailed: '« {name} » n’a pas pu être ouvert. Rien n’a changé.',
   },
+  /** Status bar (Task 14, C17): selection, snapping, autosave state, signal button and its error list. */
+  status: {
+    /** {device} = « Yamaha QL1 (ql1) ». */
+    selection: 'Sélection : {device}',
+    selectionNone: 'Aucune sélection',
+    snapping: 'Aimantation : 0,25 m · 15°',
+    snappingFree: 'Aimantation : libre',
+    signalOk: 'Signal OK',
+    errorsOne: '1 erreur',
+    /** {n} ≥ 2. */
+    errorsMany: '{n} erreurs',
+    warningsOne: '1 avertissement',
+    warningsMany: '{n} avertissements',
+    /** Next to the signal label while the last refused connection is listed. */
+    refusedMark: 'connexion refusée',
+    /** Announced before the new label when a change adds or clears an error (« Signal : 1 erreur »). */
+    signalAnnounce: 'Signal :',
+    /** The signal button's tooltip. */
+    signalHint: 'Afficher la liste des erreurs',
+    /** The pop-over (role="dialog"). */
+    listTitle: 'Erreurs et avertissements',
+    listEmpty: 'Aucune erreur ni avertissement pour l’instant.',
+    listClose: 'Fermer la liste',
+    listHint: 'Cliquez une ligne pour sélectionner l’appareil concerné.',
+    /** Row tags (with a glyph: never colour alone). */
+    tagRefused: 'Connexion refusée',
+    tagError: 'Erreur',
+    tagWarning: 'Avertissement',
+    /** {ports} = « K12.2 (k12-g) · power-in → Yamaha QL1 (ql1) · in-mic-2 ». */
+    ports: 'Prises : {ports}',
+    /** Announced when a connection is refused; {title} = the reason. */
+    statusRefused: 'Connexion refusée : {title}',
+    /** A refused connection that is not one of the rules. */
+    occupiedTitle: 'Prise déjà utilisée',
+    occupiedDetail: 'Cette prise a déjà un câble. Débranchez-le d’abord.',
+    selfTitle: 'Même prise aux deux bouts',
+    selfDetail: 'Une prise ne peut pas être reliée à elle-même.',
+    otherTitle: 'Connexion impossible',
+    otherDetail: 'Ces deux prises ne peuvent pas être reliées.',
+    /** Rule without any text (never expected). {id} = the rule id. */
+    unknownRule: 'Règle {id}',
+    /** Autosave state: visible prefix, then one of the three states. */
+    autosave: 'Sauvegarde auto :',
+    autosaveSaved: 'Enregistré',
+    autosaveModified: 'Modifié',
+    autosavePaused: 'En pause',
+    /** Persistent lines while the autosave is off, each with its action button. */
+    pausedKept: 'Sauvegarde automatique en pause — exportez les données mises de côté pour la reprendre.',
+    pausedKeptExported: 'Sauvegarde automatique en pause — vérifiez le fichier exporté, puis confirmez.',
+    pausedOtherTab: 'Sauvegarde automatique en pause : ce projet est ouvert dans un autre onglet.',
+    pausedFull: 'Sauvegarde automatique en pause : stockage du navigateur plein.',
+    pausedBlocked: 'Sauvegarde automatique impossible : le navigateur la bloque.',
+    actionExport: 'Exporter…',
+  },
+  /**
+   * Rule titles / descriptions in French until the catalog has `title_fr` / `teach_fr` (Task 29).
+   * Faithful renderings of catalog.json `rules[].title` / `rules[].check` — no new technical claim.
+   */
+  rule: {
+    R1Title: 'Connecteurs incompatibles',
+    R1Detail: 'Les deux connecteurs doivent pouvoir s’emboîter physiquement. Si ça ne rentre pas, ce n’est pas le bon câble : ne forcez jamais.',
+    R2Title: 'Types de signal incompatibles',
+    R2Detail: 'La source et la destination doivent transporter des signaux compatibles : micro vers préampli micro, ligne vers ligne, numérique vers le même format numérique.',
+    R3Title: 'Sens de connexion incorrect',
+    R3Detail: 'Une sortie doit être reliée à une entrée (sortie → entrée). Sortie vers sortie ou entrée vers entrée n’est pas valide.',
+    R4Title: 'Alimentation fantôme (+48 V)',
+    R4Detail: 'Un appareil qui demande le +48 V doit arriver sur une entrée qui le fournit, avec le +48 V activé.',
+    R5Title: 'Voyant ON-AIR (tally)',
+    R5Detail: 'Quand un fader micro est ouvert sur une console de diffusion, sa sortie GPIO (tally) doit allumer un voyant ON-AIR.',
+    R6Title: 'Écoutes non coupées, micro ouvert (larsen)',
+    R6Detail: 'Ouvrir un micro dans la même pièce que des écoutes actives doit couper ces écoutes ; sinon une boucle de larsen est détectée.',
+    R7Title: 'Mix-minus (N-1) : écho du retour',
+    R7Detail: 'Le départ vers un codec distant doit être le programme moins le retour de ce codec (N-1). Si ce retour est dans son propre départ, il y a écho.',
+    R8Title: 'Word clock maître/esclave et fréquence d’échantillonnage',
+    R8Detail: 'Chaque liaison audio numérique a besoin d’une seule horloge maître en amont. Deux maîtres, aucun maître ou des fréquences différentes sur une liaison sont des erreurs.',
+  },
 }

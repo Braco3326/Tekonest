@@ -322,6 +322,72 @@ Sauvegarde automatique, marque « * », Ctrl+S et projets nommés (Task 13, C16,
 | `project.opened` | Projet « {name} » ouvert. {undo} pour revenir en arrière. | à valider (tekuxwriter) | Barre d'état (annoncé) |
 | `project.openFailed` | « {name} » n’a pas pu être ouvert. Rien n’a changé. | à valider (tekuxwriter) | Barre d'état : projet illisible ou refusé |
 
+Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1–R8 (`rule.*`) sont des rendus fidèles du catalogue (`title` / `check`), sans nouvelle affirmation technique.
+
+## status
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `status.selection` | Sélection : {device} | brief | Barre d'état, texte fixe ; `{device}` = « Yamaha QL1 (ql1) » |
+| `status.selectionNone` | Aucune sélection | brief | Barre d'état, rien de sélectionné |
+| `status.snapping` | Aimantation : 0,25 m · 15° | brief | Barre d'état : pas de placement (grille, rotation R) |
+| `status.snappingFree` | Aimantation : libre | brief | Barre d'état : placement libre (Maj) |
+| `status.signalOk` | Signal OK | brief | Bouton signal, 0 erreur (couleur ok + glyphe ✓) |
+| `status.errorsOne` | 1 erreur | brief | Bouton signal (couleur danger + glyphe ⚠) |
+| `status.errorsMany` | {n} erreurs | brief | Idem, `{n}` ≥ 2 |
+| `status.warningsOne` | 1 avertissement | à valider (tekuxwriter) | À côté du bouton signal (les avertissements ne comptent pas comme erreurs) |
+| `status.warningsMany` | {n} avertissements | à valider (tekuxwriter) | Idem, `{n}` ≥ 2 |
+| `status.refusedMark` | connexion refusée | à valider (tekuxwriter) | À côté du bouton signal tant que la dernière connexion refusée est listée |
+| `status.signalAnnounce` | Signal : | à valider (tekuxwriter) | Annoncé (`role="status"`) avant le nouveau libellé quand une modification ajoute ou retire une erreur (« Signal : 1 erreur ») |
+| `status.signalHint` | Afficher la liste des erreurs | à valider (tekuxwriter) | Infobulle (`title`) du bouton signal |
+| `status.listTitle` | Erreurs et avertissements | à valider (tekuxwriter) | Titre de la liste (pop-over `role="dialog"`) |
+| `status.listEmpty` | Aucune erreur ni avertissement pour l’instant. | à valider (tekuxwriter) | Liste vide |
+| `status.listClose` | Fermer la liste | à valider (tekuxwriter) | Bouton × (nom accessible) |
+| `status.listHint` | Cliquez une ligne pour sélectionner l’appareil concerné. | à valider (tekuxwriter) | Sous le titre (description du dialogue) |
+| `status.tagRefused` | Connexion refusée | à valider (tekuxwriter) | Étiquette de ligne + glyphe ⊘ (suivie de « : ») |
+| `status.tagError` | Erreur | à valider (tekuxwriter) | Étiquette de ligne + glyphe ⚠ |
+| `status.tagWarning` | Avertissement | à valider (tekuxwriter) | Étiquette de ligne + glyphe ⓘ |
+| `status.ports` | Prises : {ports} | à valider (tekuxwriter) | Ligne des prises ; `{ports}` = « appareil (id) · prise » séparés par → |
+| `status.statusRefused` | Connexion refusée : {title} | à valider (tekuxwriter) | Annoncé (`role="status"`) quand une connexion est refusée ; `{title}` = la raison |
+| `status.occupiedTitle` | Prise déjà utilisée | à valider (tekuxwriter) | Refus PORT_OCCUPIED |
+| `status.occupiedDetail` | Cette prise a déjà un câble. Débranchez-le d’abord. | à valider (tekuxwriter) | Idem (explication) |
+| `status.selfTitle` | Même prise aux deux bouts | à valider (tekuxwriter) | Refus SELF_CONNECTION |
+| `status.selfDetail` | Une prise ne peut pas être reliée à elle-même. | à valider (tekuxwriter) | Idem |
+| `status.otherTitle` | Connexion impossible | à valider (tekuxwriter) | Autre refus sans règle |
+| `status.otherDetail` | Ces deux prises ne peuvent pas être reliées. | à valider (tekuxwriter) | Idem |
+| `status.unknownRule` | Règle {id} | à valider (tekuxwriter) | Règle sans texte (jamais attendu) ; `{id}` |
+| `status.autosave` | Sauvegarde auto : | à valider (tekuxwriter) | Préfixe visible de l'état de la sauvegarde automatique |
+| `status.autosaveSaved` | Enregistré | à valider (tekuxwriter) | État : écrite |
+| `status.autosaveModified` | Modifié | à valider (tekuxwriter) | État : modification en attente d'écriture (1 s) |
+| `status.autosavePaused` | En pause | à valider (tekuxwriter) | État : en pause |
+| `status.pausedKept` | Sauvegarde automatique en pause — exportez les données mises de côté pour la reprendre. | à valider (tekuxwriter) | Ligne persistante (la note peut être fermée) ; bouton « Exporter… » |
+| `status.pausedKeptExported` | Sauvegarde automatique en pause — vérifiez le fichier exporté, puis confirmez. | à valider (tekuxwriter) | Ligne persistante après l’export ; bouton « J’ai vérifié le fichier » |
+| `status.pausedOtherTab` | Sauvegarde automatique en pause : ce projet est ouvert dans un autre onglet. | à valider (tekuxwriter) | Ligne persistante ; bouton « Reprendre ici » |
+| `status.pausedFull` | Sauvegarde automatique en pause : stockage du navigateur plein. | à valider (tekuxwriter) | Ligne persistante, quota plein |
+| `status.pausedBlocked` | Sauvegarde automatique impossible : le navigateur la bloque. | à valider (tekuxwriter) | Ligne persistante, stockage bloqué |
+| `status.actionExport` | Exporter… | à valider (tekuxwriter) | Bouton de la ligne « en pause » (même action que Projet > Exporter les données mises de côté…) |
+
+## rule
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `rule.R1Title` | Connecteurs incompatibles | à valider (tekuxwriter) | Source : catalog.json `rules[R1].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R1Detail` | Les deux connecteurs doivent pouvoir s’emboîter physiquement. Si ça ne rentre pas, ce n’est pas le bon câble : ne forcez jamais. | à valider (tekuxwriter) | Source : catalog.json `rules[R1].check` + `teach` (« never force it »), traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R2Title` | Types de signal incompatibles | à valider (tekuxwriter) | Source : catalog.json `rules[R2].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R2Detail` | La source et la destination doivent transporter des signaux compatibles : micro vers préampli micro, ligne vers ligne, numérique vers le même format numérique. | à valider (tekuxwriter) | Source : catalog.json `rules[R2].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R3Title` | Sens de connexion incorrect | à valider (tekuxwriter) | Source : catalog.json `rules[R3].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R3Detail` | Une sortie doit être reliée à une entrée (sortie → entrée). Sortie vers sortie ou entrée vers entrée n’est pas valide. | à valider (tekuxwriter) | Source : catalog.json `rules[R3].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R4Title` | Alimentation fantôme (+48 V) | à valider (tekuxwriter) | Source : catalog.json `rules[R4].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R4Detail` | Un appareil qui demande le +48 V doit arriver sur une entrée qui le fournit, avec le +48 V activé. | à valider (tekuxwriter) | Source : catalog.json `rules[R4].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R5Title` | Voyant ON-AIR (tally) | à valider (tekuxwriter) | Source : catalog.json `rules[R5].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R5Detail` | Quand un fader micro est ouvert sur une console de diffusion, sa sortie GPIO (tally) doit allumer un voyant ON-AIR. | à valider (tekuxwriter) | Source : catalog.json `rules[R5].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R6Title` | Écoutes non coupées, micro ouvert (larsen) | à valider (tekuxwriter) | Source : catalog.json `rules[R6].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R6Detail` | Ouvrir un micro dans la même pièce que des écoutes actives doit couper ces écoutes ; sinon une boucle de larsen est détectée. | à valider (tekuxwriter) | Source : catalog.json `rules[R6].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R7Title` | Mix-minus (N-1) : écho du retour | à valider (tekuxwriter) | Source : catalog.json `rules[R7].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R7Detail` | Le départ vers un codec distant doit être le programme moins le retour de ce codec (N-1). Si ce retour est dans son propre départ, il y a écho. | à valider (tekuxwriter) | Source : catalog.json `rules[R7].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R8Title` | Word clock maître/esclave et fréquence d’échantillonnage | à valider (tekuxwriter) | Source : catalog.json `rules[R8].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+| `rule.R8Detail` | Chaque liaison audio numérique a besoin d’une seule horloge maître en amont. Deux maîtres, aucun maître ou des fréquences différentes sur une liaison sont des erreurs. | à valider (tekuxwriter) | Source : catalog.json `rules[R8].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
+
 ## Glossaire
 
 - **lieu** : la salle (modèle TEK Brain), le décor .glb ou la salle vide. Jamais « scène » pour le lieu (la scène = le plateau).
