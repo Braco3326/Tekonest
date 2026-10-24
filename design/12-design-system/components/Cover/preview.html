@@ -1,0 +1,38 @@
+<!-- @dsCard height=288 -->
+<style>
+body{margin:0}
+.cv{position:relative;width:960px;height:288px;background:var(--ground);overflow:hidden}
+.nuit{fill:var(--ink)}
+.slab{fill:#131114}
+.ambre{fill:var(--ambre)}
+.prune{fill:var(--prune)}
+.noyer{fill:var(--noyer)}
+.sunk{fill:var(--ink-3)}
+.nacre-line{fill:none;stroke:var(--ground);stroke-width:1.5}
+.cv .txt{position:absolute;left:48px;bottom:44px;max-width:440px}
+.cv h1{margin:0;font:600 88px/.92 "Tektur","IBM Plex Sans",system-ui,sans-serif;letter-spacing:.01em;color:var(--ink)}
+.cv p{margin:14px 0 0;font:14px/1.4 "IBM Plex Sans",system-ui,sans-serif;color:var(--ink-2)}
+</style>
+<div class="cv">
+  <svg width="960" height="288" viewBox="0 0 960 288" aria-hidden="true" style="position:absolute;inset:0">
+    <!-- blocks: Nuit slab 304×288 (x 656, bleeds top/bottom), ambre 96×144, prune 96×96, noyer 64×288 strip, ink-3 48×96 — radius-0 (inlay is square-cut)
+         arrangement: one tall dark slab with satellites, like the centre panel of an inlay box framed by wood strips
+         pattern row: "a literal motif" — the inlaid band: 11 lozenges cut out of the slab in the ground colour on a 24px pitch down the Nuit slab, the brand's Bande component
+         scales: space-6 (24px) pitch, space-8 (48px) block steps, radius-0 everywhere -->
+    <rect class="noyer" x="560" y="0" width="64" height="288"/>
+    <rect class="ambre" x="560" y="96" width="96" height="144"/>
+    <rect class="prune" x="512" y="240" width="96" height="48"/>
+    <rect class="sunk" x="512" y="0" width="48" height="96"/>
+    <rect class="nuit" x="656" y="0" width="304" height="288"/>
+    <g>
+      <path class="nacre-line" d="M902 18 L911 30 L902 42 L893 30Z"/><path class="nacre-line" d="M902 42 L911 54 L902 66 L893 54Z"/>
+      <path class="nacre-line" d="M902 66 L911 78 L902 90 L893 78Z"/><path class="nacre-line" d="M902 90 L911 102 L902 114 L893 102Z"/>
+      <path class="nacre-line" d="M902 114 L911 126 L902 138 L893 126Z"/><path class="nacre-line" d="M902 138 L911 150 L902 162 L893 150Z"/>
+      <path class="nacre-line" d="M902 162 L911 174 L902 186 L893 174Z"/><path class="nacre-line" d="M902 186 L911 198 L902 210 L893 198Z"/>
+      <path class="nacre-line" d="M902 210 L911 222 L902 234 L893 222Z"/><path class="nacre-line" d="M902 234 L911 246 L902 258 L893 246Z"/>
+      <path class="nacre-line" d="M902 258 L911 270 L902 282 L893 270Z"/>
+      <rect class="ambre" x="899" y="51" width="6" height="6"/><rect class="ambre" x="899" y="123" width="6" height="6"/><rect class="ambre" x="899" y="195" width="6" height="6"/><rect class="ambre" x="899" y="267" width="6" height="6"/>
+    </g>
+  </svg>
+  <div class="txt"><h1>Tekonest</h1><p>Un nid pour les cultures et les métiers du son.</p></div>
+</div>

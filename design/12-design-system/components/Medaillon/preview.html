@@ -1,0 +1,16 @@
+<!-- @dsCard group="Motifs damascènes" height=280 subtitle="Étoile à 12 branches {12/5}" -->
+<div style="display:flex;gap:24px;align-items:center;padding:16px;background:#131114">
+  <svg id="m" viewBox="0 0 400 400" width="240" height="240" role="img" aria-label="Médaillon"></svg>
+  <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;color:#F3EDE3;font:15px 'IBM Plex Sans',system-ui,sans-serif">
+    <li style="display:flex;gap:10px;align-items:center"><svg class="b" viewBox="0 0 40 40" width="16" height="16" aria-hidden="true"></svg>Puce médaillon</li>
+    <li style="display:flex;gap:10px;align-items:center"><svg class="b" viewBox="0 0 40 40" width="16" height="16" aria-hidden="true"></svg>Une seule grande étoile par page</li>
+  </ul>
+</div>
+<script>
+const NS="http://www.w3.org/2000/svg";
+function star(s,cx,cy,R,c,w,frame){let d="";for(let k=0;k<12;k++){const j=(k*5)%12,a=-Math.PI/2+j*Math.PI/6;d+=(k?"L":"M")+(cx+R*Math.cos(a)).toFixed(2)+" "+(cy+R*Math.sin(a)).toFixed(2);}
+const p=document.createElementNS(NS,"path");p.setAttribute("d",d+"Z");p.setAttribute("fill","none");p.setAttribute("stroke",c);p.setAttribute("stroke-width",w);p.setAttribute("stroke-linejoin","round");s.appendChild(p);
+if(frame){const ci=document.createElementNS(NS,"circle");ci.setAttribute("cx",cx);ci.setAttribute("cy",cy);ci.setAttribute("r",R*1.06);ci.setAttribute("fill","none");ci.setAttribute("stroke",c);ci.setAttribute("stroke-width",w*.6);ci.setAttribute("opacity",".7");s.appendChild(ci);}}
+star(document.getElementById("m"),200,200,170,"#DD9349",1.6,true);
+document.querySelectorAll(".b").forEach(s=>star(s,20,20,17,"#DD9349",3,false));
+</script>

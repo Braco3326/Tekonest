@@ -1,0 +1,11 @@
+{"v":3,"layout":"files","createdOnFiles":{"v":1,"at":"2026-10-24T02:54:24Z"},"title":"Tekonest Design System","namespace":"Tekonest","libraries":[],"sections":{},"groups":["Logos"],
+"assetGroups":{"Logos":{"name":"Logos","tile":"l","order":["TEKONEST-lockup.svg","TEKONEST-lockup-reverse.svg","TEKONEST-lockup-amber-on-night.svg","TEKONEST-horizontal.svg","tekonest-mark.svg","tekonest-favicon.svg"],
+"files":{
+"TEKONEST-lockup.svg":{"name":"TEKONEST-lockup.svg","blob":"7d253d020eaa96d0dace6334eed98586","size":2123,"type":"image/svg+xml"},
+"TEKONEST-lockup-reverse.svg":{"name":"TEKONEST-lockup-reverse.svg","blob":"0f61491142899ddfa58739c34836f774","size":2188,"type":"image/svg+xml"},
+"TEKONEST-lockup-amber-on-night.svg":{"name":"TEKONEST-lockup-amber-on-night.svg","blob":"026069f3791721d91b979f6cc7cbb966","size":2188,"type":"image/svg+xml"},
+"TEKONEST-horizontal.svg":{"name":"TEKONEST-horizontal.svg","blob":"77b3bbda427fb144dcdbc826e3f7ca06","size":2387,"type":"image/svg+xml"},
+"tekonest-mark.svg":{"name":"tekonest-mark.svg","blob":"3526fcd438496d552714f4741f877cb7","size":1135,"type":"image/svg+xml"},
+"tekonest-favicon.svg":{"name":"tekonest-favicon.svg","blob":"fb652b5095be794a90e66097b47228e1","size":1119,"type":"image/svg+xml"}}}},
+"blobs":{},"docs":{"sections":[]},
+"lastChange":{"by":"Oscar","at":"2026-10-24T02:54:24Z","via":"Claude (cowork)","note":"First version: moodboard palette, Tektur, nest logo L4, Damascene motifs (Cadre, Médaillon, Bande, Onde)."}}

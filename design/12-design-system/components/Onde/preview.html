@@ -1,0 +1,13 @@
+<!-- @dsCard group="Motifs damascènes" height=260 subtitle="L'onde de l'acier de Damas" -->
+<canvas id="c" width="900" height="240" style="display:block;width:100%;height:240px;background:#131114" aria-label="Onde de Damas" role="img"></canvas>
+<script>
+const c=document.getElementById("c"),x=c.getContext("2d"),W=900,H=240;
+const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function draw(t){x.fillStyle="#131114";x.fillRect(0,0,W,H);
+ for(let i=0;i<46;i++){const y0=i*(H/40)-20;x.beginPath();
+  for(let X=0;X<=W;X+=6){const f=Math.sin(X*0.006+t*0.0003+i*0.05)*18+Math.sin(X*0.017-i*0.21+t*0.0005)*9+Math.sin((X+i*30)*0.0025)*26;
+   const Y=y0+f; X?x.lineTo(X,Y):x.moveTo(X,Y);}
+  x.strokeStyle=i%9===4?"rgba(221,147,73,.55)":"rgba(138,106,79,.45)";x.lineWidth=i%9===4?1.4:1;x.stroke();}
+ if(!still)requestAnimationFrame(draw);}
+requestAnimationFrame(draw);
+</script>

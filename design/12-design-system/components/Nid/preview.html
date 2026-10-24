@@ -1,0 +1,9 @@
+<!-- @dsCard group="Marque" height=260 subtitle="Le nid tressé, sur Papier et sur Nuit" -->
+<div style="display:flex;gap:16px;padding:16px;background:var(--ground)">
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#F3EDE3;padding:16px"><svg id="a" viewBox="20 -5 260 260" width="180" height="180" aria-label="Nid sur Papier" role="img"></svg></div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#131114;padding:16px"><svg id="b" viewBox="20 -5 260 260" width="180" height="180" aria-label="Nid ambre sur Nuit" role="img"></svg></div>
+</div>
+<script>
+function nest(s,c){for(let i=0;i<7;i++){const r=i*360/7,ox=150+8*Math.cos(r*Math.PI/180),oy=125+8*Math.sin(r*Math.PI/180);const e=document.createElementNS("http://www.w3.org/2000/svg","ellipse");e.setAttribute("cx",ox);e.setAttribute("cy",oy);e.setAttribute("rx",100);e.setAttribute("ry",82);e.setAttribute("transform",`rotate(${r} ${ox} ${oy})`);e.setAttribute("fill","none");e.setAttribute("stroke",c);e.setAttribute("stroke-width",4.5);s.appendChild(e);}}
+nest(document.getElementById("a"),"#131114");nest(document.getElementById("b"),"#DD9349");
+</script>
