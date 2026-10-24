@@ -4,15 +4,20 @@
  * scratch vector made every later setTarget early-return (equals → return),
  * skipping rebuildAnglesAndRadius and onMeshTargetChangedObservable.
  */
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { ArcRotateCamera, NullEngine, Scene, Vector3 } from '@babylonjs/core'
-import { asTweenCamera } from '../../src/scene/CameraRig'
+import { asTweenCamera, CameraRig } from '../../src/scene/CameraRig'
+import { ENSEMBLE_LOWER_RADIUS, radiusLimitFor } from '../../src/camera/orbitFeel'
+import { setMotionOverride } from '../../src/design/tokens'
 
 function cam(): ArcRotateCamera {
   const engine = new NullEngine()
   const scene = new Scene(engine)
   return new ArcRotateCamera('c', 0, 1, 10, Vector3.Zero(), scene)
 }
+
+/** Let the rig's flight-completion microtasks run (reduced motion = instant cut). */
+const settle = () => new Promise((r) => setTimeout(r, 0))
 
 describe('asTweenCamera (carry-over: per-frame setTarget must really reach Babylon)', () => {
   it('every frame of a flight notifies onMeshTargetChangedObservable', () => {
@@ -35,5 +40,44 @@ describe('asTweenCamera (carry-over: per-frame setTarget must really reach Babyl
     tc.setTarget({ x: 2, y: 0, z: 0 })
     expect(c.target).not.toBe(first)
     expect(first.x).toBe(1) // the previous frame's vector is left untouched
+  })
+})
+
+describe('CameraRig dolly floor (Task 3: focus lets you come close, Ensemble does not)', () => {
+  beforeEach(() => setMotionOverride(false)) // cuts: deterministic, no render loop needed
+  afterEach(() => setMotionOverride(null))
+
+  it('focus sets lowerRadiusLimit = radiusLimitFor(boundingRadius)', async () => {
+    const c = cam()
+    c.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
+    const rig = new CameraRig(c)
+    rig.flyToDevice({ center: new Vector3(1, 0.5, 0), boundingRadius: 0.2 })
+    await settle()
+    expect(c.lowerRadiusLimit).toBeCloseTo(radiusLimitFor(0.2), 9)
+  })
+
+  it('back to Ensemble restores the env default (2)', async () => {
+    const c = cam()
+    c.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
+    const rig = new CameraRig(c)
+    rig.flyToDevice({ center: new Vector3(1, 0.5, 0), boundingRadius: 0.2 })
+    await settle()
+    rig.flyToEnsemble()
+    await settle()
+    expect(c.lowerRadiusLimit).toBe(ENSEMBLE_LOWER_RADIUS)
+  })
+
+  it('never clamps the camera mid-way: the limit never exceeds the radius it is leaving', async () => {
+    const c = cam()
+    const rig = new CameraRig(c)
+    rig.flyToDevice({ center: new Vector3(0, 0.3, 0), boundingRadius: 0.1 }) // close-up, radius 0.9
+    await settle()
+    expect(c.radius).toBeCloseTo(0.9, 6)
+    rig.flyToDevice({ center: new Vector3(3, 1, 0), boundingRadius: 2 }) // big device: limit 2.4
+    // At the start of the new flight the floor must not exceed where the camera stood (0.9).
+    expect(c.lowerRadiusLimit).not.toBeNull()
+    expect(c.lowerRadiusLimit!).toBeLessThanOrEqual(0.9 + 1e-6)
+    await settle()
+    expect(c.lowerRadiusLimit).toBeCloseTo(radiusLimitFor(2), 9)
   })
 })

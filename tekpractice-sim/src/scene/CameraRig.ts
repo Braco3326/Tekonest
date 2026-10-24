@@ -6,6 +6,7 @@
  */
 import { Vector3, type ArcRotateCamera } from '@babylonjs/core'
 import { shortestAngle } from '../camera/tween'
+import { ENSEMBLE_LOWER_RADIUS, radiusLimitFor } from '../camera/orbitFeel'
 import { motionEnabled, TOKENS } from '../design/tokens'
 import { CameraTween, type TweenCamera } from './cameraTween'
 
@@ -59,18 +60,25 @@ export class CameraRig implements CameraDirector {
     }
   }
 
-  /** Auto-frame the device's active panel (spec §2): ports face you, orbit free. */
+  /**
+   * Auto-frame the device's active panel (spec §2): ports face you, orbit free.
+   * The dolly may then come as close as radiusLimitFor(boundingRadius) (Task 3).
+   */
   flyToDevice(frame: FrameTarget): void {
-    this.fly({
-      alpha: FOCUS_ALPHA,
-      beta: FOCUS_BETA,
-      radius: Math.min(6, Math.max(0.9, frame.boundingRadius * 2.6)),
-      target: frame.center,
-    })
+    this.fly(
+      {
+        alpha: FOCUS_ALPHA,
+        beta: FOCUS_BETA,
+        radius: Math.min(6, Math.max(0.9, frame.boundingRadius * 2.6)),
+        target: frame.center,
+      },
+      radiusLimitFor(frame.boundingRadius),
+    )
   }
 
+  /** Back to the env/room overview pose captured at construction; dolly floor back to the env default. */
   flyToEnsemble(): void {
-    this.fly(this.ensemble)
+    this.fly(this.ensemble, ENSEMBLE_LOWER_RADIUS)
   }
 
   /** Fly to an arbitrary pose (ViewDirector: back to the walker's eye). Returns the flight time in ms (0 = cut). */
@@ -79,13 +87,31 @@ export class CameraRig implements CameraDirector {
     return motionEnabled() ? TOKENS.focus.flyMs : 0
   }
 
-  private fly(to: CameraPose): void {
-    void this.tween.to({
-      alpha: to.alpha,
-      beta: to.beta,
-      radius: to.radius,
-      target: [to.target.x, to.target.y, to.target.z],
-    })
+  /** Bumped by every flight: only the latest one may set the dolly floor when it ends. */
+  private flightSeq = 0
+
+  /**
+   * `lowerRadius` (optional) = the dolly floor for the destination. At take-off
+   * the floor never exceeds where the camera stands nor where it goes (Babylon
+   * would otherwise clamp the radius = a visible jump); the full floor applies
+   * when the flight ends (or the learner takes over).
+   */
+  private fly(to: CameraPose, lowerRadius?: number): void {
+    const seq = ++this.flightSeq
+    if (lowerRadius !== undefined) {
+      this.camera.lowerRadiusLimit = Math.min(lowerRadius, this.camera.radius, to.radius)
+    }
+    void this.tween
+      .to({
+        alpha: to.alpha,
+        beta: to.beta,
+        radius: to.radius,
+        target: [to.target.x, to.target.y, to.target.z],
+      })
+      .then(() => {
+        if (lowerRadius === undefined || seq !== this.flightSeq) return
+        this.camera.lowerRadiusLimit = Math.min(lowerRadius, this.camera.radius)
+      })
   }
 }
 

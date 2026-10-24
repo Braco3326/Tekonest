@@ -207,6 +207,8 @@ export function bootGame2D(registry: Registry, rawLevel: unknown): void {
     // 2D board renders no glb — every device is a low-fidelity fallback tile.
     assets: () =>
       level.devices.map((d) => ({ instanceId: d.instanceId, deviceId: d.deviceId, status: 'placeholder' as const })),
+    // 2D board has no orbit camera: a fixed stub keeps the hook shape.
+    camera: () => ({ alpha: 0, beta: 0, radius: 0, target: [0, 0, 0] }),
   }
 
   refresh()

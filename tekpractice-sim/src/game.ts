@@ -47,6 +47,8 @@ import coachJson from '../content/coach/tips.json'
 import { motionEnabled, setMotionOverride } from './design/tokens'
 import { ExploreController, type BaseView, type ExploreUi } from './scene/ExploreController'
 import { ViewDirector } from './scene/ViewDirector'
+import { applyOrbitFeel, ENSEMBLE_LOWER_RADIUS } from './camera/orbitFeel'
+import { installDesignerOrbitInput } from './scene/designerOrbitInput'
 import { roomWalls, type Box } from './explore/collision'
 import { loadSettings, saveSettings, type ExploreSettings } from './ui/exploreSettings'
 import { ExploreToolbar } from './ui/exploreToolbar'
@@ -76,6 +78,8 @@ declare global {
       assets: () => { instanceId: string; deviceId: string; status: 'glb' | 'placeholder' }[]
       /** Explore view state (ADR-0010): base view, eye position, look angles, FOV, pointer lock, panels. */
       explore?: () => ReturnType<ExploreController['snapshot']> & { panels: number; placing: boolean }
+      /** Orbit camera pose (designer nav e2e): angles in rad, radius and target in m. */
+      camera: () => { alpha: number; beta: number; radius: number; target: [number, number, number] }
     }
   }
 }
@@ -169,10 +173,13 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     room ? new Vector3(0, 1, 0) : Vector3.FromArray(env.camera.target),
     scene,
   )
+  // Designer-grade orbit feel (Task 3): inertia, wheel dolly toward the cursor,
+  // right-drag / Shift+left-drag pan, beta kept above the floor.
+  installDesignerOrbitInput(camera)
   camera.attachControl(true)
-  camera.lowerRadiusLimit = 2
+  camera.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
   camera.upperRadiusLimit = room ? Math.max(40, roomRadius * 1.5) : 40
-  camera.wheelDeltaPercentage = 0.02
+  applyOrbitFeel(camera) // upper radius: at least 60 m, more if the room needs it
 
   const hemi = new HemisphericLight('light', new Vector3(0.2, 1, 0.3), scene)
   hemi.intensity = 0.95
@@ -806,6 +813,12 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     assets: () =>
       instances.map((i) => ({ instanceId: i.instanceId, deviceId: i.deviceId, status: i.assetStatus })),
     explore: () => ({ ...explore.snapshot(), panels: exploreUi.panelCount(), placing: exploreUi.placing() }),
+    camera: () => ({
+      alpha: camera.alpha,
+      beta: camera.beta,
+      radius: camera.radius,
+      target: [camera.target.x, camera.target.y, camera.target.z],
+    }),
   }
 
   babylon.runRenderLoop(() => scene.render())

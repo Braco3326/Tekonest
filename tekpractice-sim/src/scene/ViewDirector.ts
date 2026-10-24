@@ -8,6 +8,7 @@
  */
 import { ArcRotateCamera, Scene, Vector3 } from '@babylonjs/core'
 import type { CameraDirector, CameraPose, CameraRig, FrameTarget } from './CameraRig'
+import { ENSEMBLE_LOWER_RADIUS, ORBIT_FEEL } from '../camera/orbitFeel'
 
 /** What the director needs from the walking camera (ExploreController). */
 export interface Walker {
@@ -56,8 +57,11 @@ export class ViewDirector implements CameraDirector {
     }
     if (this.walker.exploreView && !this.fromExplore) {
       const pose = poseFromEye(this.walker.eyePosition(), frame.center)
-      // Arc limits must not snap the parked pose (the walker can be far / low).
+      // Arc limits must not snap the parked pose (the walker can be far / low,
+      // or look UP at gear on a stand: beta past the orbit feel's floor guard).
       this.arc.lowerRadiusLimit = 0.05
+      this.arc.lowerBetaLimit = 0.01
+      this.arc.upperBetaLimit = Math.PI - 0.01
       this.arc.alpha = pose.alpha
       this.arc.beta = pose.beta
       this.arc.radius = pose.radius
@@ -79,7 +83,10 @@ export class ViewDirector implements CameraDirector {
     this.fromExplore = false
     const handBack = (): void => {
       this.returnTimer = null
-      this.arc.lowerRadiusLimit = 2
+      // Hand back to orbit with the designer feel's limits (Task 3).
+      this.arc.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
+      this.arc.lowerBetaLimit = ORBIT_FEEL.lowerBetaLimit
+      this.arc.upperBetaLimit = ORBIT_FEEL.upperBetaLimit
       // The learner may have switched to Orbit (V) during the flight: then the
       // orbit camera keeps control and the walker stays parked (review #4).
       if (!this.walker.exploreView) return

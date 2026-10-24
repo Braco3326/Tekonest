@@ -1,0 +1,74 @@
+/**
+ * orbitFeel — designer-grade orbit "feel" for the ArcRotateCamera (Task 3).
+ * Inspired by pro acoustic-design and 3D modelling tools: soft inertia, a wheel
+ * that dollies toward the cursor, a pan that follows the cursor at any distance,
+ * and beta limits that never let the camera slip under the floor.
+ * Pure config + pure maths: a structural camera type, no Babylon import.
+ */
+
+export const ORBIT_FEEL = {
+  inertia: 0.85,
+  panningInertia: 0.85,
+  wheelDeltaPercentage: 0.02,
+  zoomToMouseLocation: true,
+  upperBetaLimit: Math.PI / 2 - 0.02,
+  lowerBetaLimit: 0.05,
+  upperRadiusLimit: 60,
+} as const
+
+/** Ensemble (env/room overview) dolly floor — the env default the game always used. */
+export const ENSEMBLE_LOWER_RADIUS = 2
+
+/** Minimum dolly distance while focusing a device. */
+const MIN_FOCUS_RADIUS = 0.3
+
+/** The subset of ArcRotateCamera the feel touches (structural: testable headless). */
+export interface OrbitCam {
+  inertia: number
+  panningInertia: number
+  wheelDeltaPercentage: number
+  zoomToMouseLocation: boolean
+  upperBetaLimit: number | null
+  lowerBetaLimit: number | null
+  upperRadiusLimit: number | null
+  panningSensibility: number
+}
+
+/** Focus: the dolly may come to 1.2 × the device's bounding radius, never under 0.3 m. */
+export function radiusLimitFor(boundingRadius: number): number {
+  const r = Number.isFinite(boundingRadius) ? boundingRadius : 0
+  return Math.max(MIN_FOCUS_RADIUS, r * 1.2)
+}
+
+/**
+ * Babylon panningSensibility (higher = slower) such that one pixel of drag moves
+ * the target by one pixel's worth of world at the target depth, once the pan
+ * inertia has played out. Babylon's total pan per pixel is
+ * 1 / (sensibility · (1 − panningInertia)) world units; one pixel at distance r
+ * spans 2 · r · tan(fov / 2) / heightPx. Computed once per drag (no per-frame work).
+ */
+export function panningSensibilityFor(radius: number, viewportHeightPx: number, fov: number): number {
+  const r = Math.max(0.05, Number.isFinite(radius) ? radius : 0)
+  const h = Math.max(1, Number.isFinite(viewportHeightPx) ? viewportHeightPx : 0)
+  const f = Math.max(0.05, Number.isFinite(fov) ? fov : 0)
+  const worldPerPx = (2 * r * Math.tan(f / 2)) / h
+  return 1 / (worldPerPx * (1 - ORBIT_FEEL.panningInertia))
+}
+
+/** Default pan speed before the first drag re-tunes it (radius 10 m, 800 px, fov 0.8). */
+const DEFAULT_PANNING_SENSIBILITY = panningSensibilityFor(10, 800, 0.8)
+
+/**
+ * Apply the feel. The upper radius limit is a FLOOR of 60 m: a big room whose
+ * overview already needs more reach keeps it.
+ */
+export function applyOrbitFeel(cam: OrbitCam): void {
+  cam.inertia = ORBIT_FEEL.inertia
+  cam.panningInertia = ORBIT_FEEL.panningInertia
+  cam.wheelDeltaPercentage = ORBIT_FEEL.wheelDeltaPercentage
+  cam.zoomToMouseLocation = ORBIT_FEEL.zoomToMouseLocation
+  cam.upperBetaLimit = ORBIT_FEEL.upperBetaLimit
+  cam.lowerBetaLimit = ORBIT_FEEL.lowerBetaLimit
+  cam.upperRadiusLimit = Math.max(cam.upperRadiusLimit ?? 0, ORBIT_FEEL.upperRadiusLimit)
+  cam.panningSensibility = DEFAULT_PANNING_SENSIBILITY
+}
