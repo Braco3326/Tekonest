@@ -44,6 +44,8 @@ export type FocusEvent =
   | { type: 'FLOOR_DOUBLE_CLICK'; point: readonly [number, number, number] }
   /** Alt+H or the « Vue d'ensemble » button: back to the Ensemble pose. */
   | { type: 'HOME' }
+  /** A saved camera view was recalled (N12): leave focus, no fly-home; the held cable and selection stay. */
+  | { type: 'PRESET_RECALL' }
 
 export type FocusCommand =
   | { kind: 'flyToDevice'; instanceId: string }
@@ -106,6 +108,11 @@ export function reduce(state: FocusState, event: FocusEvent): Transition {
         state: { ...state, mode: 'ensemble', focused: null },
         commands: [{ kind: 'flyToEnsemble' }],
       }
+
+    case 'PRESET_RECALL':
+      // The recall flight itself is the camera move: no command, only the state change.
+      if (state.mode !== 'focus') return keep(state)
+      return { state: { ...state, mode: 'ensemble', focused: null }, commands: [] }
 
     case 'PORT_CLICK': {
       if (!state.held) {

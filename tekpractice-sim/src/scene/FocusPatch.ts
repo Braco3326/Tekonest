@@ -21,7 +21,7 @@ import type { ConnectResult, PortRef } from '../engine/types'
 import type { Intent } from '../ui/intents'
 import type { DeviceInstance } from './DeviceSpawner'
 import type { PortPoint } from './snap'
-import type { CameraDirector, FrameTarget } from './CameraRig'
+import type { CameraDirector, CameraPose, FrameTarget } from './CameraRig'
 import type { CableRenderer } from './CableRenderer'
 import { needsReframe } from '../camera/tween'
 
@@ -174,6 +174,13 @@ export class FocusPatch {
   home(): void {
     this.emptyClick.cancel()
     this.apply(reduce(this.state, { type: 'HOME' }))
+  }
+
+  /** A saved view was recalled (N12): leave focus without flying home, keep the cable, then tween to the pose. */
+  recallPreset(pose: CameraPose): void {
+    this.emptyClick.cancel()
+    this.apply(reduce(this.state, { type: 'PRESET_RECALL' }))
+    this.rig.flyToPreset(pose)
   }
 
   /** Focus a device programmatically (Explore: F key, crosshair click). Same path as a double-click. */

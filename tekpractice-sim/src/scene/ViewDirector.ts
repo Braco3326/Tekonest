@@ -111,6 +111,10 @@ export class ViewDirector implements CameraDirector {
     this.rig.repivot(point, focusRadius)
   }
 
+  flyToPreset(pose: CameraPose): number {
+    return this.rig.flyToPreset(pose) // presets are an orbit-view feature (the UI hides them while walking)
+  }
+
   flyToEnsemble(): void {
     if (!this.fromExplore) {
       // Walking (HOME from Explore with nothing framed): the orbit camera is

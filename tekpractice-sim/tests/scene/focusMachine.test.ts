@@ -237,3 +237,27 @@ describe('discipline: the machine never mutates anything but its own state', () 
     ).toBe(true)
   })
 })
+
+describe('PRESET_RECALL (N12: a recalled view leaves focus, no fly-home, cable kept)', () => {
+  it('from focus: ensemble, focused null, no commands', () => {
+    const s = reduce(initialState(), { type: 'DEVICE_CLICK', instanceId: 'ql1-1' }).state
+    const t = reduce(s, { type: 'PRESET_RECALL' })
+    expect(t.state).toMatchObject({ mode: 'ensemble', focused: null })
+    expect(t.commands).toEqual([])
+  })
+  it('from ensemble: state unchanged', () => {
+    const s = initialState()
+    const t = reduce(s, { type: 'PRESET_RECALL' })
+    expect(t.state).toEqual(s)
+    expect(t.commands).toEqual([])
+  })
+  it('keeps the held cable and the selection', () => {
+    const s0 = reduce(initialState(), { type: 'DEVICE_CLICK', instanceId: 'ql1-1' }).state
+    const s = reduce(s0, { type: 'PORT_CLICK', ref: P1 }).state
+    const t = reduce(s, { type: 'PRESET_RECALL' })
+    expect(t.state.held).toEqual(P1)
+    expect(t.state.selected).toBe('ql1-1')
+    expect(t.state.mode).toBe('ensemble')
+    expect(t.commands).toEqual([])
+  })
+})

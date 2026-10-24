@@ -31,6 +31,8 @@ export interface FrameTarget {
 export interface CameraDirector {
   flyToDevice(frame: FrameTarget): void
   flyToEnsemble(): void
+  /** Recall a saved view (Task 5). */
+  flyToPreset(pose: CameraPose): number
   /**
    * Orbit around `point` from now on: tween the target only (alpha, beta, radius kept).
    * `focusRadius` = the focused device's bounding radius when re-framing a focus

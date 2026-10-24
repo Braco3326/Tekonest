@@ -729,15 +729,17 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   // Camera presets « Vue 1 / 2 / 3 » (Task 5): per-room slots, orbit view only.
   const presetRoom = roomKeyFor(room?.file.id, level.id)
   const presetKey = (slot: number): Action => `CAMERA_PRESET_${slot + 1}` as Action
+  const presetLayout = detectLayout(navigator.language ?? 'fr-FR')
   presetsUi = new CameraPresets({
     root: document.getElementById('hud')!,
     slots: () => loadPresets(window.localStorage, presetRoom),
     keyLabel: (slot) =>
-      labelFor(settings.bindings[presetKey(slot)][0] ?? '', detectLayout(navigator.language ?? 'fr-FR'), layoutMap) || '—',
-    available: () => !(explore.exploreView && focusPatch.view.mode !== 'focus'),
+      labelFor(settings.bindings[presetKey(slot)][0] ?? '', presetLayout, layoutMap) || '—',
+    // Orbit only: from Explore-focus the walker owns the return flight (ViewDirector).
+    available: () => !explore.exploreView,
     recall: (slot) => {
       const p = loadPresets(window.localStorage, presetRoom)[slot]
-      if (p) rig.flyToPreset({ alpha: p.alpha, beta: p.beta, radius: p.radius, target: Vector3.FromArray(p.target) })
+      if (p) focusPatch.recallPreset({ alpha: p.alpha, beta: p.beta, radius: p.radius, target: Vector3.FromArray(p.target) })
     },
     save: (slot) => {
       const n = slot + 1

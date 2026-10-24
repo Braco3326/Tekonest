@@ -110,3 +110,20 @@ describe('CameraRig dolly floor (Task 3: focus lets you come close, Ensemble doe
     expect(c.lowerRadiusLimit).toBeCloseTo(radiusLimitFor(2), 9)
   })
 })
+
+describe('CameraRig.flyToPreset (Task 5)', () => {
+  beforeEach(() => setMotionOverride(false))
+  afterEach(() => setMotionOverride(null))
+
+  it('under reduced motion it is a cut: the pose lands at once and the flight time is 0', async () => {
+    const c = cam()
+    const rig = new CameraRig(c)
+    const ms = rig.flyToPreset({ alpha: 1.2, beta: 0.9, radius: 4, target: new Vector3(1, 0.5, -2) })
+    await settle()
+    expect(ms).toBe(0)
+    expect(c.alpha).toBeCloseTo(1.2, 9)
+    expect(c.beta).toBeCloseTo(0.9, 9)
+    expect(c.radius).toBeCloseTo(4, 9)
+    expect(c.target.asArray()).toEqual([1, 0.5, -2])
+  })
+})
