@@ -86,7 +86,8 @@ const design = z
     placements: z.array(z.object({ instanceId: z.string(), deviceId: z.string(), position_m: vec3, yawDeg: finite }).strict()),
   })
   .strict()
-const trialSchema = z
+/** Strict Trial schema, shared with export.ts (import). */
+export const trialSchema = z
   .object({
     formatVersion: z.literal(1),
     id: z.string().min(1),
@@ -118,7 +119,8 @@ const trialSchema = z
   .strict()
   .refine((t) => Date.parse(t.evidence.prediction.writtenAt) <= Date.parse(t.frozenAt), 'prediction written after freeze')
 const fileSchema = z.object({ version: z.literal(TRIALS_VERSION), trials: z.array(trialSchema) }).strict()
-const quarantineSchema = z
+/** Shared with export.ts (exportQuarantine). */
+export const quarantineSchema = z
   .object({
     version: z.literal(1),
     items: z.array(z.object({ at: iso, raw: z.string(), reason: z.string(), truncated: z.literal(true).optional() }).strict()),
