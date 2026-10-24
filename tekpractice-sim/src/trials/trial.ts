@@ -15,6 +15,9 @@ export type DeepReadonly<T> = T extends (infer U)[]
     ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
     : T
 
+/** How a device stands (Mode Création, P6): on the floor, on a stand, or flown. */
+export type Mount = 'floor' | 'stand' | 'flown'
+
 export interface Placement {
   instanceId: string
   deviceId: string
@@ -22,6 +25,13 @@ export interface Placement {
   position_m: [number, number, number]
   /** Degrees; quantised to 0.1° in the fingerprint. */
   yawDeg: number
+  /**
+   * Degrees, Mode Création only (P6). Optional: undefined fields are dropped by
+   * canonicalize, so legacy fingerprints are unchanged.
+   */
+  tiltDeg?: number
+  /** Mode Création only (P6); optional for the same reason as tiltDeg. */
+  mount?: Mount
 }
 
 export interface DesignState {

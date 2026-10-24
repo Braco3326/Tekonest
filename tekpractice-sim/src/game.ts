@@ -55,6 +55,7 @@ import type { CameraPose } from './scene/CameraRig'
 // Types only: the Essais panel and the trials modules are a lazy chunk (Task 14).
 import type { EssaisHost, EssaisPanel } from './ui/essaisPanel'
 import type { DeepReadonly, DesignState } from './trials/trial'
+import { rigToDesign, sanitizePlacements } from './scene/designApplier'
 import { applyOrbitFeel, ENSEMBLE_LOWER_RADIUS, orbitMotion } from './camera/orbitFeel'
 import { installDesignerOrbitInput } from './scene/designerOrbitInput'
 import { roomWalls, type Box } from './explore/collision'
@@ -619,13 +620,12 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     instances.length = 0
     portPoints.length = 0
     invalidateObstacles()
-    const placed = new Map(design.placements.map((p) => [p.instanceId, p]))
+    // Stored data is untrusted: only finite numbers count as a position (designApplier).
+    const placed = new Map(sanitizePlacements(design).map((p) => [p.instanceId, p]))
     let allOk = true
     design.rig.instances.forEach((s, i) => {
       const p = placed.get(s.instanceId)
-      // Stored data is untrusted: only finite numbers count as a position.
-      const valid = !!p && p.position_m.length === 3 && p.position_m.every((v) => Number.isFinite(v)) && Number.isFinite(p.yawDeg)
-      const at = valid ? { position: [p.position_m[0], p.position_m[1], p.position_m[2]] as [number, number, number], rotationY: p.yawDeg } : undefined
+      const at = p ? { position: [p.position_m[0], p.position_m[1], p.position_m[2]] as [number, number, number], rotationY: p.yawDeg } : undefined
       if (!spawnExact(s.instanceId, s.deviceId, i, at)) allOk = false
       // Sandbox ids are <deviceId>-s<n>: later spawns must never reuse one.
       const n = /-s(\d+)$/.exec(s.instanceId)
@@ -651,19 +651,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       hud.toast('warning', 'Montage introuvable', `${RIG_COPY.missing(name)}${why ? ` ${why}` : ''}`)
       return
     }
-    const design: DesignState = {
-      roomId: rig.roomId ?? null,
-      rig: { instances: rig.instances, connections: rig.connections, controls: rig.controls },
-      placements: rig.instances.flatMap((s) => {
-        const saved = rig.positions?.[s.instanceId]
-        // Stored data is untrusted: only 4 finite numbers count as a position.
-        const valid = Array.isArray(saved) && saved.length === 4 && saved.every((v) => Number.isFinite(v))
-        return valid
-          ? [{ instanceId: s.instanceId, deviceId: s.deviceId, position_m: [saved[0], saved[1], saved[2]] as [number, number, number], yawDeg: saved[3] }]
-          : []
-      }),
-    }
-    const allOk = applyDesign(design, 'normal')
+    // Stored data is untrusted: only 4 finite numbers count as a position (designApplier).
+    const allOk = applyDesign(rigToDesign(rig), 'normal')
     if (!allOk)
       hud.toast('warning', 'Rig partiellement chargé', 'Un appareil de ce rig n’existe plus dans le catalog.')
   }
