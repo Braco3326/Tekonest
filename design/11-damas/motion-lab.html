@@ -1,0 +1,239 @@
+<title>Tekonest Motion Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tektur:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one night stage (the hero animation), concept switcher under it, three nest-doors, reference list. Single dark look by choice (the brand's night). */
+:root{
+  --nuit:#131114; --nuit-2:#1C181B; --line:#3A3337;
+  --papier:#F3EDE3; --brume:#C9BFB4; --ambre:#DD9349; --prune:#8A4466;
+  --display:"Tektur","IBM Plex Sans",system-ui,sans-serif;
+  --text:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+body{background:var(--nuit);color:var(--papier);font-family:var(--text);font-size:16px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px;display:flex;flex-direction:column;gap:40px}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:600;letter-spacing:.04em;font-size:18px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ambre)}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(30px,4.6vw,56px);line-height:1.04;margin:0;text-wrap:balance;max-width:16ch}
+h2{font-family:var(--display);font-weight:500;font-size:24px;margin:0}
+p{margin:0}
+.stage{position:relative;border:1px solid var(--line);background:radial-gradient(120% 90% at 70% 40%,#1E191C 0%,var(--nuit) 60%);overflow:hidden}
+canvas{display:block;width:100%;height:auto}
+.stage-copy{position:absolute;left:clamp(16px,4vw,48px);bottom:clamp(16px,4vw,44px);display:flex;flex-direction:column;gap:10px;max-width:min(520px,60%);pointer-events:none}
+.stage-copy p{color:var(--brume);font-size:clamp(14px,1.4vw,17px)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.chip{font:500 15px var(--text);color:var(--papier);background:transparent;border:1px solid var(--line);padding:10px 16px;min-height:44px;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--ambre);color:var(--ambre)}
+.chip:focus-visible,.door:focus-visible{outline:3px solid var(--papier);outline-offset:3px}
+.replay{margin-left:auto}
+.desc{color:var(--brume);max-width:65ch}
+.doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.doors{grid-template-columns:1fr}.stage-copy{max-width:88%}.replay{margin-left:0}}
+.door{display:flex;flex-direction:column;gap:8px;border:1px solid var(--line);padding:22px;color:inherit;text-decoration:none;background:var(--nuit-2);min-width:0}
+.door canvas{width:110px;height:110px}
+.door .st{font-size:13px;font-weight:600;color:var(--brume)}
+.door p{color:var(--brume);font-size:15px}
+.refs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 32px}
+@media (max-width:760px){.refs{grid-template-columns:1fr}}
+.refs a{color:var(--papier);text-decoration-color:var(--line);text-underline-offset:3px}
+.refs a:hover{text-decoration-color:var(--ambre)}
+.refs span{display:block;color:var(--brume);font-size:14px}
+.note{font-size:13px;color:var(--brume)}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="brand">TEKONEST</span>
+    <span class="eyebrow">Motion lab · propositions pour l'accueil</span>
+  </header>
+
+  <section class="stage" aria-label="Animation du nid">
+    <canvas id="stage" width="1180" height="620" role="img" aria-label="Le nid Tekonest se forme à partir de points, comme une onde sonore"></canvas>
+    <div class="stage-copy">
+      <span class="eyebrow">Un nid pour les cultures et le son</span>
+      <h1>Chaque fil, une personne du réseau.</h1>
+    </div>
+  </section>
+
+  <div class="controls" role="group" aria-label="Choisir la cinématique">
+    <button class="chip" id="m1" data-mode="dust" aria-pressed="true">1 · Poussière → nid</button>
+    <button class="chip" id="m3" data-mode="pulse" aria-pressed="false">2 · Le nid qui bat</button>
+    <button class="chip replay" id="replay">Rejouer</button>
+  </div>
+  <p class="desc" id="desc"></p>
+
+  <section style="display:flex;flex-direction:column;gap:16px" aria-labelledby="t-doors">
+    <h2 id="t-doors">Les trois entrées (survolez)</h2>
+    <div class="doors">
+      <a class="door" href="#entrees"><canvas width="220" height="220" data-door="0" aria-hidden="true"></canvas><h2>Se former</h2><p>Apprendre le son et s'entraîner sur TekPractice.</p><span class="st">○ En développement</span></a>
+      <a class="door" href="#entrees"><canvas width="220" height="220" data-door="1" aria-hidden="true"></canvas><h2>Créer avec nous</h2><p>Organiser, accompagner, produire un projet.</p><span class="st">○ Nom à choisir · en projet</span></a>
+      <a class="door" href="#entrees"><canvas width="220" height="220" data-door="2" aria-hidden="true"></canvas><h2>Rejoindre le réseau</h2><p>Artistes, techniciennes et techniciens, payés correctement.</p><span class="st">○ En projet</span></a>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:16px" aria-labelledby="t-refs">
+    <h2 id="t-refs">Références trouvées</h2>
+    <div class="refs">
+      <p><a href="https://www.framer.com/marketplace/components/particle-reveal-pro/" target="_blank" rel="noopener">Particle Reveal Pro (Framer)</a><span>Un logo qui se compose à partir de particules : base de l'idée 1.</span></p>
+      <p><a href="https://www.framer.com/marketplace/components/interactive-logo/" target="_blank" rel="noopener">Interactive Logo (Framer)</a><span>Le logo réagit à la souris : piste pour le survol des entrées.</span></p>
+      <p><a href="https://github.com/jerosoler/waveform-path" target="_blank" rel="noopener">waveform-path (GitHub)</a><span>Dessiner une vraie forme d'onde à partir d'un fichier audio.</span></p>
+      <p><a href="https://www.awwwards.com/inspiration/hero-intro-animation-life-of-a-busker" target="_blank" rel="noopener">Hero intro — Life of a Busker (Awwwards)</a><span>Ouverture cinématique liée à la musique de rue.</span></p>
+      <p><a href="https://baxterandbailey.co.uk/work/london-soundtrack-festival-website/" target="_blank" rel="noopener">London Soundtrack Festival (Baxter &amp; Bailey)</a><span>Site de festival où la musique pilote l'identité.</span></p>
+      <p><a href="https://www.abduzeedo.com/delirium-2026-motion-design-berkay-tas" target="_blank" rel="noopener">Delirium 2026 — Berkay Taş (Abduzeedo)</a><span>Motion design de festival, rythme et typographie.</span></p>
+      <p><a href="https://www.schoolofmotion.com/blog/10-websites-with-great-animation-in-2026" target="_blank" rel="noopener">10 sites très animés en 2026 (School of Motion)</a><span>Panorama récent des animations web.</span></p>
+    </div>
+    <p class="note">Les animations de cette page sont du code original : aucune n'est copiée de ces références.</p>
+  </section>
+</div>
+
+<script>
+(function(){
+  const C = { nuit:"#131114", papier:"#F3EDE3", ambre:"#DD9349", prune:"#8A4466", brume:"#C9BFB4" };
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const DESC = {
+    dust: "Des points dispersés, comme de la poussière dans la lumière d'une scène, convergent et tissent les sept fils du nid. Ensuite les fils vibrent légèrement, comme une corde qui résonne.",
+    wave: "Une onde sonore traverse l'écran, puis s'enroule sur elle-même pour devenir le nid. Le son devient le nid : c'est l'idée la plus « cinématique du son ».",
+    pulse: "Le nid se dessine fil par fil, puis bat comme une membrane de haut-parleur : à chaque battement, une onde ambre part du nid."
+  };
+
+  // Nest geometry: 7 ellipses (rx 100, ry 82) rotated by 360/7, centres offset 8 units — same as the logo.
+  function nestPoints(cx, cy, s, perEll){
+    const ells = [];
+    for(let i=0;i<7;i++){
+      const rot = i*2*Math.PI/7, ox = cx + 8*s*Math.cos(rot), oy = cy + 8*s*Math.sin(rot);
+      const pts = [];
+      for(let k=0;k<perEll;k++){
+        const t = k/perEll*2*Math.PI, x = 100*s*Math.cos(t), y = 82*s*Math.sin(t);
+        pts.push({x: ox + x*Math.cos(rot) - y*Math.sin(rot), y: oy + x*Math.sin(rot) + y*Math.cos(rot), t, i});
+      }
+      ells.push(pts);
+    }
+    return ells;
+  }
+  const ease = t => t<0?0:t>1?1:1-Math.pow(1-t,4);
+
+  // ---------- main stage ----------
+  const cv = document.getElementById("stage"), ctx = cv.getContext("2d");
+  let W=0,H=0,dpr=1, mode="dust", t0=0, parts=[], ells=[], geom={};
+  function size(){
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    const w = cv.parentElement.clientWidth; W = w; H = Math.max(360, Math.min(620, Math.round(w*0.56)));
+    cv.width = W*dpr; cv.height = H*dpr; cv.style.height = H+"px"; ctx.setTransform(dpr,0,0,dpr,0,0);
+    const narrow = W < 700;
+    const s = narrow ? Math.min(W,H)/320 : Math.min(H/300, W/560);
+    geom = { cx: narrow ? W/2 : W*0.70, cy: narrow ? H*0.40 : H*0.47, s };
+    build();
+  }
+  function build(){
+    ells = nestPoints(geom.cx, geom.cy, geom.s, 170);
+    parts = [];
+    ells.forEach((pts,ei)=>pts.forEach((p,k)=>{
+      const a = Math.random()*Math.PI*2, r = Math.max(W,H)*(0.25+Math.random()*0.6);
+      parts.push({ tx:p.x, ty:p.y, ei, k, t:p.t,
+        sx: geom.cx + Math.cos(a)*r, sy: geom.cy + Math.sin(a)*r*0.7,
+        delay: Math.random()*0.9 + ei*0.06, wavePos: (ei*170 + k)/(7*170) });
+    }));
+    t0 = performance.now();
+  }
+  function vib(p, time, amp){ // radial "string" vibration travelling along each ellipse
+    const n = amp * Math.sin(p.t*6 + time*0.004 + p.ei) * Math.sin(time*0.0021 + p.ei*0.9);
+    const dx = p.tx - geom.cx, dy = p.ty - geom.cy, L = Math.hypot(dx,dy)||1;
+    return [p.tx + dx/L*n, p.ty + dy/L*n];
+  }
+  function strokeEll(ei, getXY, alpha, color, width){
+    const pts = parts.filter(q=>q.ei===ei);
+    ctx.beginPath();
+    pts.forEach((q,j)=>{ const [x,y] = getXY(q); j?ctx.lineTo(x,y):ctx.moveTo(x,y); });
+    ctx.closePath(); ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  function frame(now){
+    const el = (now - t0)/1000, time = now;
+    ctx.clearRect(0,0,W,H);
+    const lw = Math.max(1.4, 3.2*geom.s/1.6);
+    if(mode==="dust"){
+      const settle = reduce ? 1 : Math.min(1, Math.max(0,(el-1.6)/0.9));
+      parts.forEach(p=>{
+        const k = reduce ? 1 : ease((el - p.delay)/1.6);
+        p.x = p.sx + (p.tx - p.sx)*k; p.y = p.sy + (p.ty - p.sy)*k; p.k = k;
+      });
+      ctx.fillStyle = C.papier;
+      parts.forEach(p=>{ ctx.globalAlpha = 0.25 + 0.75*p.k*(1-settle*0.9); ctx.fillRect(p.x-1,p.y-1,2,2); });
+      ctx.globalAlpha = 1;
+      if(settle>0) for(let e=0;e<7;e++) strokeEll(e, q=>vib(q,time,reduce?0:1.6*geom.s), settle, C.papier, lw);
+    } else if(mode==="wave"){
+      const launch = reduce ? 1 : Math.min(1, Math.max(0,(el-1.2)/2.2));
+      const amp = H*0.10;
+      parts.forEach(p=>{
+        const wx = W*0.06 + p.wavePos*W*0.88;
+        const wy = H*0.5 + Math.sin(p.wavePos*28 + time*0.006)*amp*Math.sin(p.wavePos*Math.PI) * (0.6+0.4*Math.sin(time*0.002));
+        const k = reduce ? 1 : ease((launch*1.4 - p.wavePos*0.4));
+        // curl: move along an arc from wave point to target
+        const mx = (wx + p.tx)/2 + (p.ty - wy)*0.25*(1-k), my = (wy + p.ty)/2 - (p.tx - wx)*0.25*(1-k);
+        const a = 1-k;
+        p.x = a*a*wx + 2*a*k*mx + k*k*p.tx; p.y = a*a*wy + 2*a*k*my + k*k*p.ty; p.k = k;
+      });
+      // draw as a continuous line through all particles (one thread), then the 7 loops once settled
+      ctx.beginPath(); parts.forEach((p,j)=>{ j?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y); });
+      const done = parts.every(p=>p.k>0.999);
+      ctx.strokeStyle = C.ambre; ctx.globalAlpha = done?0:0.9; ctx.lineWidth = 1.4; ctx.stroke(); ctx.globalAlpha=1;
+      const fin = reduce?1:Math.min(1, Math.max(0,(el-3.6)/0.8));
+      for(let e=0;e<7;e++) strokeEll(e, q=> fin>=1 ? vib(q,time,reduce?0:1.4*geom.s) : [q.x,q.y], 0.35+0.65*fin, C.papier, lw*(0.5+0.5*fin));
+    } else { // pulse
+      const draw = reduce ? 1 : Math.min(1, el/2.4);
+      const beat = 60/112; const ph = reduce?0:((el-2.4)/beat); const env = (!reduce && el>2.4) ? Math.exp(-((ph%1))*5) : 0;
+      const sc = 1 + 0.035*env;
+      for(let e=0;e<7;e++){
+        const pts = parts.filter(q=>q.ei===e); const n = Math.floor(pts.length*Math.min(1, Math.max(0, draw*1.25 - e*0.035)));
+        ctx.beginPath();
+        for(let j=0;j<n;j++){ const q=pts[j]; const x=geom.cx+(q.tx-geom.cx)*sc, y=geom.cy+(q.ty-geom.cy)*sc; j?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+        if(n===pts.length) ctx.closePath();
+        ctx.strokeStyle=C.papier; ctx.lineWidth=lw; ctx.stroke();
+      }
+      if(!reduce && el>2.4){ // rings leaving the nest on each beat
+        for(let r=0;r<3;r++){
+          const age = ((ph - r) % 3 + 3) % 3; if(ph < r) continue;
+          const grow = 1 + age*0.28, a = Math.max(0, 0.55 - age*0.2);
+          ctx.beginPath(); ctx.ellipse(geom.cx, geom.cy, 108*geom.s*grow, 108*geom.s*grow, 0, 0, Math.PI*2);
+          ctx.strokeStyle = r%2? C.prune : C.ambre; ctx.globalAlpha = a; ctx.lineWidth = 2; ctx.stroke(); ctx.globalAlpha=1;
+        }
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function setMode(m){
+    mode = m; document.getElementById("desc").textContent = DESC[m];
+    document.querySelectorAll("[data-mode]").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.mode===m)));
+    build();
+  }
+  document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+  document.getElementById("replay").addEventListener("click",()=>build());
+  let rt; window.addEventListener("resize",()=>{clearTimeout(rt); rt=setTimeout(size,120);});
+  size(); setMode("dust"); requestAnimationFrame(frame);
+
+  // ---------- doors: small nests that loosen and turn on hover ----------
+  document.querySelectorAll("canvas[data-door]").forEach(c=>{
+    const x = c.getContext("2d"), d = +c.dataset.door, link = c.closest("a");
+    const colors = [C.ambre, C.papier, C.ambre];
+    let hover = 0, target = 0;
+    link.addEventListener("mouseenter",()=>target=1); link.addEventListener("mouseleave",()=>target=0);
+    link.addEventListener("focus",()=>target=1); link.addEventListener("blur",()=>target=0);
+    function draw(now){
+      hover += (target-hover)*0.08;
+      x.setTransform(1,0,0,1,0,0); x.clearRect(0,0,220,220);
+      const spin = reduce?0:now*0.00012*(d%2?-1:1) + hover*0.6;
+      for(let i=0;i<7;i++){
+        const rot = i*2*Math.PI/7 + spin*(1+i*0.05), off = 8 + hover*10;
+        const ox = 110 + off*Math.cos(rot), oy = 110 + off*Math.sin(rot);
+        x.beginPath(); x.ellipse(ox, oy, 72 + hover*4, 59 - hover*6, rot, 0, Math.PI*2);
+        x.strokeStyle = colors[d]; x.lineWidth = 4.2; x.globalAlpha = 0.95; x.stroke();
+      }
+      x.globalAlpha = 1; requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  });
+})();
+</script>
