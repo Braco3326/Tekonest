@@ -41,6 +41,10 @@ import { blankData, loadPlaceData, type PlaceData } from './placeData'
 import { CREATION_TOKENS } from '../design/creationTokens'
 
 const NUIT = CREATION_TOKENS.color.nuit
+const AMBRE = Color3.FromHexString(CREATION_TOKENS.color.ambre)
+/** Selection outline (world units) + overlay wash: the outline alone is sub-pixel from the room overview. */
+const SELECT_OUTLINE_WIDTH = 0.015
+const SELECT_OVERLAY_ALPHA = 0.22
 const DEG = Math.PI / 180
 type RoomBuild = (scene: Scene, file: Extract<PlaceData, { kind: 'room' }>['file'], layout: RoomLayout) => unknown
 
@@ -116,6 +120,79 @@ export class SceneHost {
     return marker.getAbsolutePosition().clone()
   }
 
+  // ── view decor (Task 9): view state, never in the store, never undoable ──
+
+  /** The device drawn with the Ambre selection outline (null = none). */
+  private selected: string | null = null
+  /** `viewState.hidden` keys: instance ids, 'cable:<key>', 'zone:<id>'. */
+  private hidden = new Set<string>()
+
+  /** Outline the selected device (Ambre, brief §2); survives respawns and place reloads. */
+  setSelected(id: string | null): void {
+    this.selected = id
+    this.applyDecor()
+  }
+
+  /** Hide devices (root disabled), cables and zones; the rig is untouched. */
+  setHidden(keys: readonly string[]): void {
+    this.hidden = new Set(keys)
+    this.applyDecor()
+  }
+
+  /** A device is on screen (its root enabled); false when unknown. */
+  visible(id: string): boolean {
+    return this.instances.get(id)?.root.isEnabled() ?? false
+  }
+
+  /** Devices currently drawn with the selection outline (e2e / tests). */
+  outlined(): string[] {
+    return [...this.instances].filter(([, inst]) => inst.root.getChildMeshes(false).some((m) => m.metadata?.isDeviceBody === true && m.renderOutline)).map(([id]) => id)
+  }
+
+  /** What the camera frames for a tree row: a 'zone:<id>' or 'cable:<key>' mesh (world bounds), or null. */
+  frameOfKey(key: string): { center: Vector3; boundingRadius: number } | null {
+    const scene = this._scene
+    if (!scene) return null
+    const zone = /^zone:(.+)$/.exec(key)
+    const name = zone ? `room:zone:${zone[1]}` : key
+    const meshes = scene.meshes.filter((m) => m.name === name)
+    if (!meshes.length) return null
+    let lo: Vector3 | null = null
+    let hi: Vector3 | null = null
+    for (const m of meshes) {
+      m.computeWorldMatrix(true)
+      const b = m.getBoundingInfo().boundingBox
+      lo = lo ? Vector3.Minimize(lo, b.minimumWorld) : b.minimumWorld.clone()
+      hi = hi ? Vector3.Maximize(hi, b.maximumWorld) : b.maximumWorld.clone()
+    }
+    return { center: lo!.add(hi!).scale(0.5), boundingRadius: Math.max(0.25, hi!.subtract(lo!).length() / 2) }
+  }
+
+  private applyDecor(): void {
+    const scene = this._scene
+    if (!scene) return
+    for (const [id, inst] of this.instances) {
+      inst.root.setEnabled(!this.hidden.has(id))
+      const on = id === this.selected
+      for (const m of inst.root.getChildMeshes(false)) {
+        if (m.metadata?.isDeviceBody !== true) continue
+        m.renderOutline = on
+        m.renderOverlay = on
+        if (on) {
+          m.outlineColor = AMBRE
+          m.outlineWidth = SELECT_OUTLINE_WIDTH
+          m.overlayColor = AMBRE
+          m.overlayAlpha = SELECT_OVERLAY_ALPHA
+        }
+      }
+    }
+    for (const m of scene.meshes) {
+      if (m.name.startsWith('cable:')) m.setEnabled(!this.hidden.has(m.name))
+      else if (m.name.startsWith('room:zone:')) m.setEnabled(!this.hidden.has(`zone:${m.name.slice('room:zone:'.length)}`))
+    }
+    this.scheduler.invalidate()
+  }
+
   /** Dispose the current scene, build `place` and show `design` in it. Resolves when shown (or superseded). */
   async load(place: PlaceRef, design: DesignState): Promise<void> {
     const token = ++this.loadSeq
@@ -161,7 +238,11 @@ export class SceneHost {
     const latest = this.pending ?? design
     this.pending = null
     this.reconcile(latest)
+    this.onPlaceShown?.()
   }
+
+  /** Called when a place finished loading and shows its design (the tree reads its zones). */
+  onPlaceShown: (() => void) | null = null
 
   /**
    * Show `design`. Another place (roomId) → load it; a load in flight → this
@@ -352,7 +433,7 @@ export class SceneHost {
       void inst.modelReady.then((ok) => {
         if (this.instances.get(p.instanceId) !== inst) return // removed or place changed meanwhile
         if (ok) this.redrawCablesOf(new Set([p.instanceId]))
-        this.scheduler.invalidate()
+        this.applyDecor() // the .glb body meshes take the outline / hidden state too
       })
     }
     for (const p of ops.move) {
@@ -365,7 +446,7 @@ export class SceneHost {
     for (const c of ops.cablesAdd) this.drawCable(c.key, c.a, c.b)
     // Endpoints follow moved / respawned devices.
     this.redrawCablesOf(touched)
-    this.scheduler.invalidate()
+    this.applyDecor() // invalidates
   }
 
   private pose(inst: DeviceInstance, p: Placement): void {
