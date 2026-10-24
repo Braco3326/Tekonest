@@ -11,21 +11,18 @@ import { Vector3 } from '@babylonjs/core'
 import { loadCatalog } from '../engine/CatalogLoader'
 import { projectToScreen } from '../scene/project'
 import { DisposableBag } from '../util/disposable'
-import type { DesignState } from '../trials/trial'
 import { COPY } from './copy'
 import { CreationStore, creationEvaluator } from './store'
 import { History } from './history'
 import { ViewState } from './viewState'
 import { RenderScheduler, renderSceneOnce } from './renderScheduler'
 import { SceneHost } from './sceneHost'
-import { placeFromKey, placeKey } from './places'
+import { placeKey } from './places'
 import { loadPlaceData } from './placeData'
-import { fitPlacementsToRoom } from './fitToRoom'
+import { createPlaceController } from './placeController'
 import { bodyCentreOf } from './debug'
 import { mountPlacePickerStub } from './shell/placePickerStub'
 import { openPlaceDialog } from './shell/placeDialog'
-
-const emptyDesign = (roomId: string): DesignState => ({ roomId, rig: { instances: [], connections: [], controls: {} }, placements: [] })
 
 const roomName = (id: string): string => (roomIndexJson as { rooms: { id: string; name_fr: string }[] }).rooms.find((r) => r.id === id)?.name_fr ?? id
 
@@ -64,31 +61,14 @@ export async function bootCreation(): Promise<void> {
     picker.compact()
   }
 
-  /** Commit a place: « Garder le matériel » fits the rig into it, « Repartir à vide » empties it. */
-  const commitPlace = async (key: string, mode: 'keep' | 'empty'): Promise<void> => {
-    const place = placeFromKey(key)
-    const k = placeKey(place)
-    const current = store.design()
-    const same = current.roomId !== null && placeKey(placeFromKey(current.roomId)) === k
-    if (same && (mode === 'keep' || current.rig.instances.length === 0)) return
-    showCanvas()
-    let next: DesignState
-    if (mode === 'empty') next = emptyDesign(k)
-    else {
-      const data = await loadPlaceData(place)
-      next = fitPlacementsToRoom({ ...store.design(), roomId: k }, data, data.floorAt)
-    }
-    const r = history.do({ type: 'APPLY_DESIGN', design: next }, COPY.place!.dialogTitle!)
-    if (!r.ok) console.warn('[creation] changement de lieu refusé', r.error)
-  }
-  const choosePlace = (key: string): Promise<void> => commitPlace(key, 'empty')
-  const requestPlace = async (key: string): Promise<void> => {
-    const current = store.design()
-    if (current.roomId !== null && placeKey(placeFromKey(current.roomId)) === placeKey(placeFromKey(key))) return
-    if (current.rig.instances.length === 0) return commitPlace(key, 'empty')
-    const choice = await openPlaceDialog()
-    if (choice !== 'cancel') await commitPlace(key, choice)
-  }
+  const { choosePlace, requestPlace } = createPlaceController({
+    store,
+    history,
+    bounds: (place) => loadPlaceData(place),
+    confirm: () => openPlaceDialog(),
+    onCommit: showCanvas,
+    label: COPY.place!.dialogTitle!,
+  })
 
   // Temporary until Task 12: three hard-coded places.
   const picker = mountPlacePickerStub(
