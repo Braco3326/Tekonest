@@ -12,7 +12,6 @@ NAV = [
     ("apprendre.html", "Se former"),
     ("organiser.html", "Créer avec nous"),
     ("reseau.html", "Réseau"),
-    ("index.html#notre-direction", "Notre direction"),
     ("histoire.html", "L'histoire"),
     ("contact.html", "Contact"),
 ]
@@ -51,7 +50,7 @@ LAYOUT = """<!doctype html>
   <div class="wrap">
     <div>
       <img src="assets/img/lockup-reverse.svg" alt="Tekonest" width="140" height="30">
-      <p>Un nid pour les cultures et les métiers du son : se former, créer ensemble, rejoindre un réseau payé correctement.</p>
+      <p>Un nid pour les métiers du son : se former, créer ensemble, rejoindre un réseau payé correctement.</p>
     </div>
     <nav aria-label="Pied de page">
       <ul>

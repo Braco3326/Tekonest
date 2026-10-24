@@ -196,7 +196,6 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 @media (max-width: 720px) { .site-footer .wrap { grid-template-columns: 1fr; } }
 
 /* ── Identity pass (24 Oct 2026): branches by cable STYLE, dark areas, focus per ground ── */
-[style*="--cable-soirees"] { --cable-style: solid; }
 [style*="--cable-reseau"] { --cable-style: double; }
 [style*="--cable-organiser"] { --cable-style: dashed; }
 [style*="--cable-apprendre"], [style*="--cable-tekpractice"] { --cable-style: dotted; }
@@ -206,11 +205,6 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 .board tbody th a { border-bottom: 4px var(--cable-style, solid) var(--color-ink); padding-bottom: 4px; }
 .site-footer { --focus-color: var(--color-paper); }
 .proto-banner { --focus-color: var(--color-paper); }
-/* Soirées = the night: Nuit ground, amber light */
-.branch-hero[style*="--cable-soirees"] { background: var(--color-ink); color: var(--color-on-dark); padding-block: 72px; --focus-color: var(--color-paper); --cable: var(--color-amber); }
-.branch-hero[style*="--cable-soirees"] .lead, .branch-hero[style*="--cable-soirees"] p { color: var(--color-on-dark-2); }
-.branch-hero[style*="--cable-soirees"] h1, .branch-hero[style*="--cable-soirees"] .status { color: var(--color-on-dark); }
-.branch-hero[style*="--cable-soirees"] .cable { border-top-color: var(--color-amber); }
 
 /* ===== Home v2 — nid + marqueterie de Damas (design system Tekonest) ===== */
 :root { --noyer: #6B4A33; --noyer-dark: #8A6A4F; --nacre: #FBF8F3; }

@@ -30,7 +30,6 @@
   --color-on-dark-2: #C9BFB4;      /* secondary text on Nuit — 10.4:1 */
 
   /* ── Branch "cables": one ink colour; branches differ by line STYLE + name (never colour alone) ── */
-  --cable-soirees: var(--color-ink);   --cable-soirees-text: var(--color-ink);
   --cable-reseau: var(--color-ink);    --cable-reseau-text: var(--color-ink);
   --cable-organiser: var(--color-ink); --cable-organiser-text: var(--color-ink);
   --cable-apprendre: var(--color-ink); --cable-apprendre-text: var(--color-ink);
