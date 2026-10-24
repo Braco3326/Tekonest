@@ -33,7 +33,7 @@ import { clockCheck } from './logic/clock'
 import { DeviceSpawner, type DeviceInstance } from './scene/DeviceSpawner'
 import { CableRenderer } from './scene/CableRenderer'
 import { CameraRig } from './scene/CameraRig'
-import { bodyCenter, FocusPatch, focusFrame } from './scene/FocusPatch'
+import { bodyCenter, FocusPatch } from './scene/FocusPatch'
 import type { PortPoint } from './scene/snap'
 import type { Intent } from './ui/intents'
 import { Hud } from './ui/hud'
@@ -80,8 +80,11 @@ declare global {
       explore?: () => ReturnType<ExploreController['snapshot']> & { panels: number; placing: boolean }
       /** Orbit camera pose (designer nav e2e): angles in rad, radius and target in m. */
       camera: () => { alpha: number; beta: number; radius: number; target: [number, number, number] }
-      /** Focus pivot of a device: world bounding-box centre of its hierarchy (Task 4). 2D: null. */
-      deviceCenter: (instanceId: string) => [number, number, number] | null
+      /**
+       * World centre of a device's body meshes (N9), computed by its OWN loop
+       * (debugBodyCenter) so the e2e checks the focus pivot non-circularly. 2D: null.
+       */
+      deviceBodyCenter: (instanceId: string) => [number, number, number] | null
       /** Screen point of a world point through the current camera (e2e aims at the floor). 2D: null. */
       worldScreen: (p: [number, number, number]) => { x: number; y: number } | null
     }
@@ -826,9 +829,9 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       instances.map((i) => ({ instanceId: i.instanceId, deviceId: i.deviceId, status: i.assetStatus })),
     explore: () => ({ ...explore.snapshot(), panels: exploreUi.panelCount(), placing: exploreUi.placing() }),
     worldScreen: (p) => project(Vector3.FromArray(p)),
-    deviceCenter: (instanceId) => {
+    deviceBodyCenter: (instanceId) => {
       const inst = instances.find((i) => i.instanceId === instanceId)
-      return inst ? (focusFrame(inst).center.asArray() as [number, number, number]) : null
+      return inst ? debugBodyCenter(inst) : null
     },
     camera: () => ({
       alpha: camera.alpha,
@@ -841,6 +844,29 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   babylon.runRenderLoop(() => scene.render())
   window.addEventListener('resize', () => babylon.resize())
   refresh()
+}
+
+/**
+ * e2e oracle for the focus pivot (N9 review): the body-mesh box centre, written
+ * independently of FocusPatch.bodyBounds/focusFrame on purpose (mesh min/max
+ * corners, not the bounding-box helpers) so a regression there cannot hide.
+ */
+function debugBodyCenter(inst: { root: { getChildMeshes(direct: boolean): import('@babylonjs/core').AbstractMesh[] } }): [number, number, number] | null {
+  const lo = [Infinity, Infinity, Infinity]
+  const hi = [-Infinity, -Infinity, -Infinity]
+  for (const m of inst.root.getChildMeshes(false)) {
+    if (m.metadata?.isDeviceBody !== true || !m.isEnabled()) continue
+    const { minimum, maximum } = m.getBoundingInfo()
+    const w = m.computeWorldMatrix(true)
+    for (const x of [minimum.x, maximum.x])
+      for (const y of [minimum.y, maximum.y])
+        for (const z of [minimum.z, maximum.z]) {
+          const p = Vector3.TransformCoordinates(new Vector3(x, y, z), w)
+          lo[0] = Math.min(lo[0], p.x); lo[1] = Math.min(lo[1], p.y); lo[2] = Math.min(lo[2], p.z)
+          hi[0] = Math.max(hi[0], p.x); hi[1] = Math.max(hi[1], p.y); hi[2] = Math.max(hi[2], p.z)
+        }
+  }
+  return lo[0] === Infinity ? null : [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2]
 }
 
 export { loadCatalog }

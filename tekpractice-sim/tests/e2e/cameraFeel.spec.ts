@@ -111,16 +111,17 @@ async function clickFocus(page: Page, instanceId: string): Promise<void> {
   throw new Error(`could not focus ${instanceId} with a single click`)
 }
 
-test('Task 4: one click focuses the console, pivot = its bbox centre; a drag orbits around it; Alt+H flies home', async ({
+test('Task 4: one click focuses the console, pivot = its body centre; a drag orbits around it; Alt+H flies home', async ({
   page,
 }) => {
   await boot(page)
   const home = await settledCamera(page)
 
-  // 1. Single click → focus, target on the console's world bbox centre (± 5 cm).
+  // 1. Single click → focus, target on the console's BODY centre (N9, ± 5 cm).
   await clickFocus(page, 'ql1-1')
   const focused = await settledCamera(page)
-  const centre = (await page.evaluate(() => window.__audioSim!.deviceCenter('ql1-1')))!
+  // Independent oracle (game.ts debugBodyCenter), never the code under test (focusFrame).
+  const centre = (await page.evaluate(() => window.__audioSim!.deviceBodyCenter('ql1-1')))!
   expect(dist(focused.target, centre)).toBeLessThan(0.05)
 
   // 2. Horizontal drag: the pivot stays, the angle turns. (Start on bare canvas:

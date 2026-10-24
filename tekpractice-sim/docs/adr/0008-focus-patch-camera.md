@@ -82,8 +82,10 @@ l'architecture des trois modules restent tels quels.
   un port ne doit pas annuler l'angle choisi par l'élève). La dep `clickFocuses()` de
   FocusPatch (ADR-0010) disparaît : la machine décide seule.
 - **N2 — le vol de focus garde le cadrage de la Décision 4** (`FOCUS_ALPHA`, ports face à
-  la caméra) ; seul le pivot change. Pivot = **centre de la boîte englobante monde** de la
-  hiérarchie (`root.getHierarchyBoundingVectors()`). Quand le `.glb` arrive après le vol
+  la caméra) ; seul le pivot change. Pivot (**N9**, revue) = **centre de la boîte monde du
+  CORPS** de l'appareil (meshes `isDeviceBody` actifs ; étiquettes et ombre exclues),
+  `FocusPatch.bodyBounds` partagé avec `bodyCenter` ; repli sur la hiérarchie entière
+  seulement si l'appareil n'a aucun mesh corps. Quand le `.glb` arrive après le vol
   (`modelReady`), seul le pivot est recadré, et seulement si le centre bouge d'au moins
   2 cm (pendant le vol : le même cadrage repart sur le bon centre).
 - **Re-pivot au sol** : nouvel event `FLOOR_DOUBLE_CLICK { point }` → commande `repivot`

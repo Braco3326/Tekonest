@@ -543,21 +543,12 @@ export class FocusPatch {
 }
 
 /**
- * The focus pivot: the device's WORLD bounding-box centre over its whole
- * hierarchy (Task 4, getHierarchyBoundingVectors) and its half-diagonal.
- * Shared with the __audioSim.deviceCenter() e2e hook.
+ * World bounds of a device's enabled BODY meshes only (`isDeviceBody`): shadow
+ * blob, label billboards and port pick-spheres pollute hierarchy bounds (a mic
+ * on a stand would otherwise "center" halfway down the pole). null = no body.
+ * The one loop shared by bodyCenter and focusFrame (N9).
  */
-export function focusFrame(inst: DeviceInstance): FrameTarget {
-  const { min, max } = inst.root.getHierarchyBoundingVectors()
-  return { center: min.add(max).scale(0.5), boundingRadius: max.subtract(min).length() / 2 }
-}
-
-/**
- * World center of a device's VISIBLE body meshes only — shadow blob, label
- * billboards and port markers pollute hierarchy bounds (a mic on a stand would
- * otherwise "center" halfway down the pole). Shared with game.ts deviceScreen.
- */
-export function bodyCenter(inst: DeviceInstance): Vector3 | null {
+export function bodyBounds(inst: DeviceInstance): { min: Vector3; max: Vector3 } | null {
   let min: Vector3 | null = null
   let max: Vector3 | null = null
   for (const m of inst.root.getChildMeshes(false)) {
@@ -567,5 +558,20 @@ export function bodyCenter(inst: DeviceInstance): Vector3 | null {
     min = min ? Vector3.Minimize(min, bb.minimumWorld) : bb.minimumWorld.clone()
     max = max ? Vector3.Maximize(max, bb.maximumWorld) : bb.maximumWorld.clone()
   }
-  return min && max ? min.add(max).scale(0.5) : null
+  return min && max ? { min, max } : null
+}
+
+/**
+ * The focus pivot (N9): centre and half-diagonal of the device BODY bounds.
+ * Falls back to the whole hierarchy only when the device has no body mesh.
+ */
+export function focusFrame(inst: DeviceInstance): FrameTarget {
+  const { min, max } = bodyBounds(inst) ?? inst.root.getHierarchyBoundingVectors()
+  return { center: min.add(max).scale(0.5), boundingRadius: max.subtract(min).length() / 2 }
+}
+
+/** World centre of the device body (deviceScreen aims here). */
+export function bodyCenter(inst: DeviceInstance): Vector3 | null {
+  const b = bodyBounds(inst)
+  return b ? b.min.add(b.max).scale(0.5) : null
 }
