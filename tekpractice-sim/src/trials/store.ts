@@ -14,7 +14,7 @@
  *   freeze; `remove` is an explicit learner action (confirmed in the UI).
  */
 import { z } from 'zod'
-import { fingerprint, sha256hex, type Hasher } from './fingerprint'
+import { canonicalize, FP_PREFIX, sha256hex, type Hasher } from './fingerprint'
 import { cloneData, deepFreeze, type Trial } from './trial'
 
 export const TRIALS_KEY = 'audio-sim/trials'
@@ -28,7 +28,7 @@ export const QUARANTINE_CAP = 5
 /** Deliberately no removeItem: the store can quarantine, never erase. */
 export type TrialStorage = Pick<Storage, 'getItem' | 'setItem'>
 
-export type StoreWarning = 'near-budget' | 'quarantine-failed' | 'storage-unavailable'
+export type StoreWarning = 'near-budget' | 'quarantine-failed' | 'storage-unavailable' | 'crypto-unavailable'
 export type WriteFailure = 'quota' | 'storage' | 'budget' | 'not-found' | 'duplicate-id' | 'invalid' | 'empty' | 'read-only'
 export type WriteResult = { ok: true; warnings: StoreWarning[] } | { ok: false; reason: WriteFailure }
 export interface LoadResult {
@@ -174,9 +174,21 @@ export class TrialStore {
       this.readOnly = true
       return { trials: this.trials, quarantined: false, warnings: ['storage-unavailable'] }
     }
+    // Without a hasher nothing can be verified: read-only, and NOT quarantined
+    // (the data is probably fine; the browser is the problem).
+    try {
+      await this.hash('')
+    } catch {
+      this.readOnly = true
+      return { trials: this.trials, quarantined: false, warnings: ['crypto-unavailable'] }
+    }
     if (raw === null) return { trials: this.trials, quarantined: false, warnings: [] }
 
     const problem = await this.check(raw)
+    if (problem.ok === 'crypto') {
+      this.readOnly = true
+      return { trials: this.trials, quarantined: false, warnings: ['crypto-unavailable'] }
+    }
     if (problem.ok) {
       this.trials = deepFreeze(problem.trials)
       this.bytes = raw.length
@@ -210,9 +222,13 @@ export class TrialStore {
     if (this.readOnly) return { ok: false, reason: 'read-only' }
     if (this.trials.some((t) => t.id === trial.id)) return { ok: false, reason: 'duplicate-id' }
     const parsed = trialSchema.safeParse(trial)
-    if (!parsed.success || (await fingerprint(parsed.data.design, this.hash)) !== parsed.data.fingerprint) {
-      return { ok: false, reason: 'invalid' }
+    if (!parsed.success) return { ok: false, reason: 'invalid' }
+    const v = await this.verify(parsed.data.design, parsed.data.fingerprint)
+    if (v === 'crypto') {
+      this.readOnly = true
+      return { ok: false, reason: 'read-only' }
     }
+    if (v !== 'ok') return { ok: false, reason: 'invalid' }
     return this.commit([...this.trials, deepFreeze(cloneData(parsed.data) as Trial)])
   }
 
@@ -282,7 +298,7 @@ export class TrialStore {
     return bytes >= this.budget * NEAR_BUDGET_RATIO ? ['near-budget'] : []
   }
 
-  private async check(raw: string): Promise<{ ok: true; trials: Trial[] } | { ok: false; reason: string }> {
+  private async check(raw: string): Promise<{ ok: true; trials: Trial[] } | { ok: false; reason: string } | { ok: 'crypto' }> {
     let json: unknown
     try {
       json = JSON.parse(raw)
@@ -298,9 +314,29 @@ export class TrialStore {
     for (const t of file.data.trials) {
       if (seen.has(t.id)) return { ok: false, reason: `duplicate-id:${t.id}` }
       seen.add(t.id)
-      if ((await fingerprint(t.design, this.hash)) !== t.fingerprint) return { ok: false, reason: `fingerprint:${t.id}` }
+      const v = await this.verify(t.design, t.fingerprint)
+      if (v === 'crypto') return { ok: 'crypto' }
+      if (v === 'canon') return { ok: false, reason: `canonicalize:${t.id}` }
+      if (v === 'mismatch') return { ok: false, reason: `fingerprint:${t.id}` }
     }
     return { ok: true, trials: file.data.trials as Trial[] }
+  }
+
+  /** Re-derives fp1 without ever throwing: a bad number is 'canon', a hasher failure is 'crypto'. */
+  private async verify(design: unknown, expected: string): Promise<'ok' | 'mismatch' | 'canon' | 'crypto'> {
+    let canon: string
+    try {
+      canon = canonicalize(design)
+    } catch {
+      return 'canon'
+    }
+    let fp: string
+    try {
+      fp = FP_PREFIX + (await this.hash(canon))
+    } catch {
+      return 'crypto'
+    }
+    return fp === expected ? 'ok' : 'mismatch'
   }
 
   private readQuarantine(): { items: QuarantineItem[] } {

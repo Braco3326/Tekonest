@@ -46,6 +46,21 @@ describe('createTrial', () => {
     await expect(createTrial(ok, NOW, 'tr_x')).resolves.toBeTruthy()
   })
 
+  it('an unquantisable design → TrialError("invalid-design"), never a raw RangeError', async () => {
+    for (const bad of [[Number.NaN, 0, 0], [1e300, 0, 0]] as [number, number, number][]) {
+      const i = input()
+      i.design.placements[0].position_m = bad
+      await expect(createTrial(i, NOW, 'tr_x')).rejects.toMatchObject({ name: 'TrialError', code: 'invalid-design' })
+    }
+  })
+
+  it('a failing hasher → TrialError("crypto-unavailable")', async () => {
+    const failing = async (): Promise<string> => {
+      throw new Error('no crypto')
+    }
+    await expect(createTrial(input(), NOW, 'tr_x', failing)).rejects.toMatchObject({ code: 'crypto-unavailable' })
+  })
+
   it('returns a deep-frozen object (mutation throws in strict mode)', async () => {
     const t = await createTrial(input(), NOW, 'tr_x')
     expect(Object.isFrozen(t)).toBe(true)

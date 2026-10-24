@@ -2,8 +2,8 @@
  * Essais (Task 11): write-once store, quarantine (never removeItem), byte budget.
  * Storage is injected; it deliberately has NO removeItem.
  */
-import { describe, expect, it } from 'vitest'
-import { sha256hex } from '../../src/trials/fingerprint'
+import { describe, expect, it, vi } from 'vitest'
+import { CryptoUnavailableError, sha256hex } from '../../src/trials/fingerprint'
 import { createTrial, type Trial } from '../../src/trials/trial'
 import {
   QUARANTINE_CAP,
@@ -321,6 +321,53 @@ describe('TrialStore: quarantine (never removeItem)', () => {
     await store.load()
     expect(store.quarantine().map((i) => i.raw)).toEqual(['garbage'])
     expect(Object.isFrozen(store.quarantine())).toBe(true)
+  })
+})
+
+describe('TrialStore: thrown errors never escape', () => {
+  const failingHash = async (): Promise<string> => {
+    throw new Error('no crypto')
+  }
+
+  it('a canonicalise RangeError on load → quarantine', async () => {
+    const s = new MemStorage()
+    const t = JSON.parse(JSON.stringify(await trialA()))
+    t.design.placements[0].position_m = [1e300, 0, 0] // finite, valid JSON, but cannot be quantised
+    s.data.set(TRIALS_KEY, JSON.stringify({ version: 1, trials: [t] }))
+    const r = await new TrialStore(s).load()
+    expect(r.quarantined).toBe(true)
+    expect(quarantineItems(s)[0].reason).toBe('canonicalize:tr_a')
+  })
+
+  it('a canonicalise RangeError on append → {ok:false, reason:"invalid"}', async () => {
+    const store = new TrialStore(new MemStorage())
+    const t = JSON.parse(JSON.stringify(await trialA()))
+    t.design.placements[0].position_m = [1e300, 0, 0]
+    expect(await store.append(t)).toEqual({ ok: false, reason: 'invalid' })
+  })
+
+  it('no hasher (crypto.subtle missing) → read-only, crypto-unavailable, no quarantine', async () => {
+    const s = new MemStorage()
+    const seed = new TrialStore(s)
+    await seed.append(await trialA())
+    const before = s.getItem(TRIALS_KEY)
+    const store = new TrialStore(s, { hash: failingHash })
+    const r = await store.load()
+    expect(r).toEqual({ trials: [], quarantined: false, warnings: ['crypto-unavailable'] })
+    expect(s.getItem(QUARANTINE_KEY)).toBeNull()
+    expect(await store.append(await trialA())).toEqual({ ok: false, reason: 'read-only' })
+    expect(s.getItem(TRIALS_KEY)).toBe(before)
+  })
+
+  it('the default hasher with crypto.subtle stubbed away → crypto-unavailable', async () => {
+    vi.stubGlobal('crypto', {})
+    try {
+      await expect(sha256hex('x')).rejects.toBeInstanceOf(CryptoUnavailableError)
+      const r = await new TrialStore(new MemStorage()).load()
+      expect(r.warnings).toEqual(['crypto-unavailable'])
+    } finally {
+      vi.unstubAllGlobals()
+    }
   })
 })
 

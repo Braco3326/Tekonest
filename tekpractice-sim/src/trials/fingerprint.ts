@@ -84,10 +84,20 @@ export function canonicalize(value: unknown): string {
   return canon(value, null)
 }
 
+/** WebCrypto is missing (very old browser, insecure context). Callers degrade to read-only, never quarantine. */
+export class CryptoUnavailableError extends Error {
+  constructor() {
+    super('crypto.subtle is unavailable')
+    this.name = 'CryptoUnavailableError'
+  }
+}
+
 /** SHA-256 as lowercase hex via WebCrypto (browsers, Node 20+). */
 export async function sha256hex(text: string): Promise<string> {
+  const subtle = (globalThis as { crypto?: Crypto }).crypto?.subtle
+  if (!subtle) throw new CryptoUnavailableError()
   const bytes = new TextEncoder().encode(text)
-  const digest = await crypto.subtle.digest('SHA-256', bytes)
+  const digest = await subtle.digest('SHA-256', bytes)
   return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('')
 }
 

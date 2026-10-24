@@ -7,7 +7,7 @@
  */
 import type { CameraPoseJSON } from '../camera/presets'
 import type { ControlValue, LevelState, PortRef, TeachingEvent } from '../engine/types'
-import { canonicalize, fingerprint, sha256hex, type Hasher } from './fingerprint'
+import { canonicalize, FP_PREFIX, sha256hex, type Hasher } from './fingerprint'
 
 export type DeepReadonly<T> = T extends (infer U)[]
   ? readonly DeepReadonly<U>[]
@@ -76,7 +76,14 @@ export interface TrialInput {
   levelId?: string
 }
 
-export type TrialErrorCode = 'prediction-required' | 'prediction-after-freeze' | 'invalid-date'
+export type TrialErrorCode =
+  | 'prediction-required'
+  | 'prediction-after-freeze'
+  | 'invalid-date'
+  /** A number that cannot be canonicalised (NaN, ±Infinity, out of quantisation range). */
+  | 'invalid-design'
+  /** The hasher failed (crypto.subtle missing). */
+  | 'crypto-unavailable'
 
 export class TrialError extends Error {
   constructor(public readonly code: TrialErrorCode) {
@@ -121,21 +128,36 @@ export async function createTrial(input: TrialInput, now: Date | string, id: str
   if (Number.isNaN(writtenMs)) throw new TrialError('invalid-date')
   if (writtenMs > Date.parse(frozenAt)) throw new TrialError('prediction-after-freeze')
 
-  const design = cloneData(input.design)
+  // Canonicalise the ORIGINAL input: a JSON clone would silently turn NaN into null.
+  let canon: string
+  let changedSinceParent: string[]
   const parent = input.parent ?? null
+  try {
+    canon = canonicalize(input.design)
+    changedSinceParent = parent ? diffDesign(parent.design, input.design) : []
+  } catch {
+    throw new TrialError('invalid-design')
+  }
+  let fp: string
+  try {
+    fp = FP_PREFIX + (await hash(canon))
+  } catch {
+    throw new TrialError('crypto-unavailable')
+  }
+  const design = cloneData(input.design)
   const trial = {
     formatVersion: 1 as const,
     id,
     name: input.name,
     frozenAt,
     parentId: parent ? parent.id : null,
-    fingerprint: await fingerprint(design, hash),
+    fingerprint: fp,
     design,
     consumed: cloneData(input.consumed),
     evidence: {
       ...cloneData(input.evidence),
       noteAmendments: [],
-      changedSinceParent: parent ? diffDesign(parent.design, design) : [],
+      changedSinceParent,
     },
     view: cloneData(input.view),
     ...(input.levelId !== undefined ? { levelId: input.levelId } : {}),
