@@ -63,13 +63,24 @@ import { openNameDialog, openProjectList } from './shell/projectDialogs'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
 import { mountStatusBar } from './shell/statusBar'
-import { autosaveView, rejectionOf, ruleTextFor, statusView, type AutosavePause, type Rejection, type RuleRow, type StatusView } from './shell/statusModel'
+import {
+  autosaveView,
+  rejectionOf,
+  ruleTextFor,
+  statusView,
+  type AutosavePause,
+  type Rejection,
+  type RuleRow,
+  type StatusView,
+} from './shell/statusModel'
 // Self-hosted fonts (P12, OFL), bundled same-origin.
 import '@fontsource/tektur/600.css'
 import '@fontsource/ibm-plex-sans/400.css'
 import '@fontsource/ibm-plex-sans/500.css'
 
-const roomName = (id: string): string => (roomIndexJson as { rooms: { id: string; name_fr: string }[] }).rooms.find((r) => r.id === id)?.name_fr ?? id
+const roomName = (id: string): string =>
+  (roomIndexJson as { rooms: { id: string; name_fr: string }[] }).rooms.find((r) => r.id === id)
+    ?.name_fr ?? id
 
 export async function bootCreation(): Promise<void> {
   injectCreationTokens()
@@ -95,17 +106,24 @@ export async function bootCreation(): Promise<void> {
   })
   host = new SceneHost(canvas, registry, scheduler)
   // « Choisir un lieu » (Task 12): its own lazy chunk (cards, grid keys) and the templates, fetched together.
-  const [{ placeCards, templateCards, mountPlacePicker, placeSummary }, allTemplates] = await Promise.all([import('./shell/placePicker'), loadTemplates()])
+  const [{ placeCards, templateCards, mountPlacePicker, placeSummary }, allTemplates] =
+    await Promise.all([import('./shell/placePicker'), loadTemplates()])
   const summary = placeSummary()
   const cards = placeCards({ rooms: summary.rooms, sets: summary.sets })
   const placeKeys = new Set(cards.map((c) => c.key))
   // A template whose place is not a card is left out (warned), as parseTemplate does with `placeKeys`.
-  const templates = allTemplates.filter((t) => placeKeys.has(t.roomId) || (console.warn(`[creation] modèle ${t.id} ignoré : lieu inconnu ${t.roomId}`), false))
+  const templates = allTemplates.filter(
+    (t) =>
+      placeKeys.has(t.roomId) ||
+      (console.warn(`[creation] modèle ${t.id} ignoré : lieu inconnu ${t.roomId}`), false)
+  )
   const placeLabel = (key: string | null): string => {
     const k = placeKey(placeFromKey(key))
     const room = /^room:(.+)$/.exec(k)
     // a key that is not a card (an unknown room) still reads as its id
-    return cards.find((p) => p.key === k)?.title ?? (room ? roomName(room[1]) : k.replace(/^set:/, ''))
+    return (
+      cards.find((p) => p.key === k)?.title ?? (room ? roomName(room[1]) : k.replace(/^set:/, ''))
+    )
   }
   const notes = mountNotes(document, shell.viewport)
 
@@ -126,7 +144,8 @@ export async function bootCreation(): Promise<void> {
       const id = e.ports.map((p) => p.instance).find((i) => deviceIds().includes(i))
       if (id) selection.select(id)
     },
-    autosaveAction: (a) => (a === 'export' ? exportKept() : a === 'checked' ? checkedFile() : resumeHere()),
+    autosaveAction: (a) =>
+      a === 'export' ? exportKept() : a === 'checked' ? checkedFile() : resumeHere(),
   })
   const refreshSignal = (): StatusView => {
     const sel = viewState.get().selection
@@ -147,7 +166,12 @@ export async function bootCreation(): Promise<void> {
     if (intent.type !== 'CONNECT') return
     lastRejection = rejectionOf(r.error, r.subjects, ruleText)
     refreshSignal()
-    shell.setStatus(placeNow(), COPY.status!.statusRefused!.replace('{title}', lastRejection.title), 'ready', true)
+    shell.setStatus(
+      placeNow(),
+      COPY.status!.statusRefused!.replace('{title}', lastRejection.title),
+      'ready',
+      true
+    )
   })
 
   // ── Project (Task 13, C16): per-origin localStorage, name, dirty marker, autosave.
@@ -187,7 +211,8 @@ export async function bootCreation(): Promise<void> {
   const dirty = (): boolean => isDirty(store.design(), savedFp)
   const refreshTitle = (): void => {
     const d = dirty()
-    document.title = (d ? '* ' : '') + PJ.docTitle!.replace('{name}', projectName ?? PJ.untitledDoc!)
+    document.title =
+      (d ? '* ' : '') + PJ.docTitle!.replace('{name}', projectName ?? PJ.untitledDoc!)
     shell.title.textContent = (d ? '* ' : '') + (projectName ?? COPY.shell!.untitled!)
     shell.title.dataset.dirty = String(d)
     if (d) {
@@ -197,10 +222,12 @@ export async function bootCreation(): Promise<void> {
       shell.title.appendChild(sr)
     }
   }
-  const blockedNote = (): void => notes.show({ id: 'storage', title: PJ.blockedTitle!, body: PJ.blocked! })
+  const blockedNote = (): void =>
+    notes.show({ id: 'storage', title: PJ.blockedTitle!, body: PJ.blocked! })
   /** Data that could not be set aside: held for the export, never silently dropped; a note asks for the export. */
   const holdPending = (key: string, reason: string, raw: string, stopsAutosave: boolean): void => {
-    if (!pending.some((p) => p.raw === raw)) pending.push({ at: new Date().toISOString(), key, reason, raw })
+    if (!pending.some((p) => p.raw === raw))
+      pending.push({ at: new Date().toISOString(), key, reason, raw })
     if (stopsAutosave) {
       autosaveOn = false
       pendingStoppedAutosave = true
@@ -226,14 +253,24 @@ export async function bootCreation(): Promise<void> {
     if (autosaveFull) return 'full'
     return null
   }
-  const refreshAutosave = (): void => statusBar.renderAutosave(autosaveView({ place: canvasShown, pending: autosavePending, pause: autosavePause() }))
+  const refreshAutosave = (): void =>
+    statusBar.renderAutosave(
+      autosaveView({ place: canvasShown, pending: autosavePending, pause: autosavePause() })
+    )
   const rawAutosave = createAutosave({
     storage,
     busy: () => history.inTransaction,
     snapshot: () => {
       const design = store.design()
       if (!autosaveOn || design.roomId === null) return null // nothing worth keeping before a place
-      return { version: 1, savedAt: new Date().toISOString(), name: projectName, design, savedFingerprint: savedFp, stamp: projectStamp }
+      return {
+        version: 1,
+        savedAt: new Date().toISOString(),
+        name: projectName,
+        design,
+        savedFingerprint: savedFp,
+        stamp: projectStamp,
+      }
     },
     onResult: (r: SaveResult) => {
       if (r === 'ok') {
@@ -297,13 +334,21 @@ export async function bootCreation(): Promise<void> {
     host,
     invalidate: () => scheduler.invalidate(),
     onSelect: (id) =>
-      shell.setStatus(placeNow(), id ? COPY.shell!.statusSelected!.replace('{device}', deviceLabel(id)) : COPY.shell!.statusNoSelection!, 'ready', true),
+      shell.setStatus(
+        placeNow(),
+        id
+          ? COPY.shell!.statusSelected!.replace('{device}', deviceLabel(id))
+          : COPY.shell!.statusNoSelection!,
+        'ready',
+        true
+      ),
   })
 
   // ── « Projet » tree (Task 9, C10): rebuilt on store / view-state / place changes, never polled.
   /** A zone or cable row last activated (aria-selected while no device is selected). */
   let treeActive: string | null = null
-  const zones = (): { id: string; kind: string }[] => (canvasShown ? (host.layout?.zones ?? []).map((z) => ({ id: z.id, kind: z.kind })) : [])
+  const zones = (): { id: string; kind: string }[] =>
+    canvasShown ? (host.layout?.zones ?? []).map((z) => ({ id: z.id, kind: z.kind })) : []
   const treeNodes = (): TreeNode[] =>
     buildTree({
       placeLabel: placeNow(),
@@ -313,7 +358,8 @@ export async function bootCreation(): Promise<void> {
       points: [],
     })
   const nodeLabel = (key: string): string => {
-    const find = (list: TreeNode[]): TreeNode | undefined => list.flatMap((n) => [n, ...(n.children ?? [])]).find((n) => hideKeyOf(n) === key)
+    const find = (list: TreeNode[]): TreeNode | undefined =>
+      list.flatMap((n) => [n, ...(n.children ?? [])]).find((n) => hideKeyOf(n) === key)
     return find(treeNodes())?.label ?? key
   }
   const tree = mountProjectTree({
@@ -333,7 +379,12 @@ export async function bootCreation(): Promise<void> {
         if (!selection.flyToKey(node.id)) return
         treeActive = node.id
         tree.render()
-        shell.setStatus(placeNow(), COPY.tree!.statusFramed!.replace('{item}', node.label), 'ready', true)
+        shell.setStatus(
+          placeNow(),
+          COPY.tree!.statusFramed!.replace('{item}', node.label),
+          'ready',
+          true
+        )
       } else if (node.kind === 'lieu' && host.rig) {
         // The place row: back to the overview.
         treeActive = null
@@ -346,7 +397,15 @@ export async function bootCreation(): Promise<void> {
       const hidden = viewState.get().hidden
       const now = !hidden.includes(key)
       viewState.set({ hidden: now ? [...hidden, key] : hidden.filter((k) => k !== key) })
-      shell.setStatus(placeNow(), (now ? COPY.tree!.statusHidden! : COPY.tree!.statusShown!).replace('{item}', nodeLabel(key)), 'ready', true)
+      shell.setStatus(
+        placeNow(),
+        (now ? COPY.tree!.statusHidden! : COPY.tree!.statusShown!).replace(
+          '{item}',
+          nodeLabel(key)
+        ),
+        'ready',
+        true
+      )
     },
   })
   // ── « Propriétés » (Task 10): the selection's pose, controls and cables, edited through history.do only.
@@ -389,21 +448,26 @@ export async function bootCreation(): Promise<void> {
     if (lastRejection) {
       const present = new Set(deviceIds())
       const cleared = change.intents.some((i) => i.type === 'CONNECT' || i.type === 'APPLY_DESIGN')
-      if (cleared || !lastRejection.ports.every((p) => present.has(p.instance))) lastRejection = null
+      if (cleared || !lastRejection.ports.every((p) => present.has(p.instance)))
+        lastRejection = null
     }
     const sv = refreshSignal()
     // The count is said, not only shown, when a change adds or clears an error (never on a refresh with the same count).
-    if (after !== before) shell.setStatus(placeNow(), `${COPY.status!.signalAnnounce} ${sv.signal.label}`, 'ready')
+    if (after !== before)
+      shell.setStatus(placeNow(), `${COPY.status!.signalAnnounce} ${sv.signal.label}`, 'ready')
     // A selected device that left the rig (REMOVE, undo of its SPAWN) is no longer selected.
     const v = viewState.get()
     const ids = deviceIds()
     const sel = v.selection !== null && !ids.includes(v.selection) ? null : v.selection
     // Hidden devices / cables that left the rig are forgotten (a new one with the same id shows).
     const cables = new Set(store.design().rig.connections.map((c) => `cable:${cableKey(c.a, c.b)}`))
-    const hidden = v.hidden.filter((k) => (k.startsWith('cable:') ? cables.has(k) : k.startsWith('zone:') || ids.includes(k)))
+    const hidden = v.hidden.filter((k) =>
+      k.startsWith('cable:') ? cables.has(k) : k.startsWith('zone:') || ids.includes(k)
+    )
     if (treeActive?.startsWith('cable:') && !cables.has(treeActive)) treeActive = null
     const viewChanged = sel !== v.selection || hidden.length !== v.hidden.length
-    if (viewChanged) viewState.set({ selection: sel, hidden }) // its subscriber rebuilds the tree and Propriétés
+    if (viewChanged)
+      viewState.set({ selection: sel, hidden }) // its subscriber rebuilds the tree and Propriétés
     else {
       tree.render() // one rebuild per store change, never two
       props.render()
@@ -462,7 +526,11 @@ export async function bootCreation(): Promise<void> {
 
   /** The picker's choice → the place change; the picker stays open on cancel / busy / failure. */
   const pick = async (card: PlaceCard, mode: 'empty' | 'gear'): Promise<void> => {
-    shell.setStatus(canvasShown ? placeLabel(store.design().roomId) : '', COPY.shell!.statusLoading!, 'busy')
+    shell.setStatus(
+      canvasShown ? placeLabel(store.design().roomId) : '',
+      COPY.shell!.statusLoading!,
+      'busy'
+    )
     picker.setBusy(true)
     let missing: string[] = []
     let result: PlaceResult = 'failed'
@@ -500,11 +568,18 @@ export async function bootCreation(): Promise<void> {
       const n = String(store.design().rig.instances.length)
       // The note is announced too (status bar, role="status"), not only shown.
       const more = missing.length ? ` ${N.unavailableTitle} : ${missing.join(', ')}.` : ''
-      const head = hadGear ? COPY.shell!.statusReplaced!.replace('{n}', n).replace('{undo}', undoLabel()) : COPY.shell!.statusGearLoaded!.replace('{n}', n)
+      const head = hadGear
+        ? COPY.shell!.statusReplaced!.replace('{n}', n).replace('{undo}', undoLabel())
+        : COPY.shell!.statusGearLoaded!.replace('{n}', n)
       shell.setStatus(placeNow(), head + more, 'ready', true)
     }
     if (missing.length)
-      notes.show({ id: 'unavailable', title: N.unavailableTitle!, body: N.unavailableBody!.replace('{n}', String(missing.length)), items: missing })
+      notes.show({
+        id: 'unavailable',
+        title: N.unavailableTitle!,
+        body: N.unavailableBody!.replace('{n}', String(missing.length)),
+        items: missing,
+      })
   }
   const picker = mountPlacePicker({
     doc: document,
@@ -512,8 +587,13 @@ export async function bootCreation(): Promise<void> {
     covers: [shell.tree, shell.viewport, shell.props],
     places: cards,
     templates: templateCards(
-      templates.map((t) => ({ id: t.id, name_fr: t.name_fr, roomId: t.roomId, devices: t.instances.length })),
-      cards,
+      templates.map((t) => ({
+        id: t.id,
+        name_fr: t.name_fr,
+        roomId: t.roomId,
+        devices: t.instances.length,
+      })),
+      cards
     ),
     thumbBase: `${import.meta.env.BASE_URL}room-thumbs/`,
     onChoose: (card, mode) => void pick(card, mode),
@@ -531,7 +611,8 @@ export async function bootCreation(): Promise<void> {
     }
     if (loaded.status === 'reset') {
       // Kept in the quarantine → start fresh. Not kept → held for the export, the autosave waits (never overwrites it).
-      if (loaded.kept === 'kept') notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
+      if (loaded.kept === 'kept')
+        notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
       else if (loaded.kept === 'full') holdPending(AUTOSAVE_KEY, loaded.reason, loaded.raw, true)
       else {
         autosaveOn = false
@@ -549,7 +630,8 @@ export async function bootCreation(): Promise<void> {
     // What the store could not restore is set aside (or held for the export), never overwritten by the next autosave.
     if (lost) {
       const aside = setAsideAutosave(storage, r.ok ? 'dropped' : 'refused')
-      if (aside.kept === 'full' && aside.raw !== null) holdPending(AUTOSAVE_KEY, r.ok ? 'dropped' : 'refused', aside.raw, true)
+      if (aside.kept === 'full' && aside.raw !== null)
+        holdPending(AUTOSAVE_KEY, r.ok ? 'dropped' : 'refused', aside.raw, true)
       else if (aside.kept === 'blocked') {
         autosaveOn = false
         storageBlocked = true
@@ -559,7 +641,11 @@ export async function bootCreation(): Promise<void> {
       notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
       return false
     }
-    setProject({ name: loaded.data.name, savedFp: loaded.data.savedFingerprint, stamp: loaded.data.stamp ?? null })
+    setProject({
+      name: loaded.data.name,
+      savedFp: loaded.data.savedFingerprint,
+      stamp: loaded.data.stamp ?? null,
+    })
     refreshTitle()
     showCanvas()
     showStatus()
@@ -570,16 +656,22 @@ export async function bootCreation(): Promise<void> {
   refreshAutosave()
   if (!restore()) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
   // While the picker covers the workspace, « Aller à la vue 3D » lands on its highlighted card.
-  document.querySelector<HTMLAnchorElement>('[data-testid="skip-link"]')?.addEventListener('click', (e) => {
-    if (!picker.isOpen) return
-    e.preventDefault()
-    e.stopImmediatePropagation()
-    picker.focus()
-  })
+  document
+    .querySelector<HTMLAnchorElement>('[data-testid="skip-link"]')
+    ?.addEventListener('click', (e) => {
+      if (!picker.isOpen) return
+      e.preventDefault()
+      e.stopImmediatePropagation()
+      picker.focus()
+    })
 
   // ── Keyboard (Task 8, C10, P3): one window listener for the page's lifetime.
   const shellBag = new DisposableBag()
-  const keys = mountCreationKeyboard({ bag: shellBag, bindings: loadCreationBindings(storage), canvas })
+  const keys = mountCreationKeyboard({
+    bag: shellBag,
+    bindings: loadCreationBindings(storage),
+    canvas,
+  })
   const cycle = (dir: 1 | -1): boolean => {
     const next = nextDevice(deviceIds(), viewState.get().selection, dir)
     if (next === null) {
@@ -604,11 +696,16 @@ export async function bootCreation(): Promise<void> {
     blocked: PJ.blocked!,
     'quarantine-full': PJ.quarantineFull!,
   }
-  const saveDone: Record<'ok' | 'conflict-kept' | 'list-reset', string> = { ok: PJ.saved!, 'conflict-kept': PJ.conflictKept!, 'list-reset': PJ.listReset! }
+  const saveDone: Record<'ok' | 'conflict-kept' | 'list-reset', string> = {
+    ok: PJ.saved!,
+    'conflict-kept': PJ.conflictKept!,
+    'list-reset': PJ.listReset!,
+  }
   /** The stored project list; an unreadable one that could not be set aside is held for the export. */
   const projectList = (): ProjectList => {
     const list = readProjectList(storage)
-    if (list.status === 'unreadable' && list.kept !== 'kept' && list.raw !== exportedList) holdPending(PROJECTS_KEY, 'corrupt', list.raw, false)
+    if (list.status === 'unreadable' && list.kept !== 'kept' && list.raw !== exportedList)
+      holdPending(PROJECTS_KEY, 'corrupt', list.raw, false)
     return list
   }
   let saving = false
@@ -618,7 +715,8 @@ export async function bootCreation(): Promise<void> {
     saving = true
     try {
       props.flush() // a stepper burst still open is part of what is saved
-      if (!canvasShown || store.design().roomId === null) return shell.setStatus(placeNow(), PJ.saveNoPlace!, 'idle', true)
+      if (!canvasShown || store.design().roomId === null)
+        return shell.setStatus(placeNow(), PJ.saveNoPlace!, 'idle', true)
       let name = projectName
       /** The stored row this save may replace, as this tab knows it (another tab's newer copy is set aside). */
       let expectStamp = projectStamp
@@ -626,7 +724,8 @@ export async function bootCreation(): Promise<void> {
         name = await openNameDialog({ saveAs, initial: projectName ?? '' })
         if (name === null) return
         const list = projectList()
-        const existing = list.status === 'ok' ? list.projects.find((p) => p.name === name) : undefined
+        const existing =
+          list.status === 'ok' ? list.projects.find((p) => p.name === name) : undefined
         if (name !== projectName) expectStamp = existing?.stamp ?? null
         if (name !== projectName && existing) {
           const ok = await openChoiceDialog<'replace' | 'cancel'>({
@@ -643,7 +742,11 @@ export async function bootCreation(): Promise<void> {
       } else projectList() // an unreadable list is held for the export before the save says so
       const design = store.design()
       const stamp = newStamp()
-      const r = saveProject(storage, name, design, { expectStamp, stamp, unreadableExported: exportedList })
+      const r = saveProject(storage, name, design, {
+        expectStamp,
+        stamp,
+        unreadableExported: exportedList,
+      })
       if (r === 'blocked' || r === 'full' || r === 'quarantine-full') {
         if (r === 'blocked') blockedNote()
         return shell.setStatus(placeNow(), saveFailed[r], 'ready', true)
@@ -693,10 +796,17 @@ export async function bootCreation(): Promise<void> {
     if (!(await confirmDiscard(PJ.newTitle!, PJ.newConfirm!))) return
     const roomId = store.design().roomId
     if (roomId !== null)
-      history.do({ type: 'APPLY_DESIGN', design: { roomId, rig: { instances: [], connections: [], controls: {} }, placements: [] } }, PJ.newEntry!, {
-        before: projectMeta(),
-        after: { name: null } satisfies ProjectMeta,
-      })
+      history.do(
+        {
+          type: 'APPLY_DESIGN',
+          design: { roomId, rig: { instances: [], connections: [], controls: {} }, placements: [] },
+        },
+        PJ.newEntry!,
+        {
+          before: projectMeta(),
+          after: { name: null } satisfies ProjectMeta,
+        }
+      )
     setProject({ name: null, savedFp: null, stamp: null })
     refreshTitle()
     autosave.schedule()
@@ -711,11 +821,16 @@ export async function bootCreation(): Promise<void> {
     const name = await openProjectList({ projects, unreadable: list.status === 'unreadable' })
     if (name === null) return
     const design = loadProject(storage, name)
-    const failed = (): void => shell.setStatus(placeNow(), PJ.openFailed!.replace('{name}', name), 'ready', true)
+    const failed = (): void =>
+      shell.setStatus(placeNow(), PJ.openFailed!.replace('{name}', name), 'ready', true)
     if (!design || design.roomId === null) return failed()
     const first = store.design().roomId === null
     // anything the store drops shows as « * » (the fingerprint is the stored design's)
-    const after: ProjectState = { name, savedFp: designFingerprint(design), stamp: projects.find((p) => p.name === name)?.stamp ?? null }
+    const after: ProjectState = {
+      name,
+      savedFp: designFingerprint(design),
+      stamp: projects.find((p) => p.name === name)?.stamp ?? null,
+    }
     const r = history.do({ type: 'APPLY_DESIGN', design }, PJ.openEntry!.replace('{name}', name), {
       before: projectMeta(),
       after: { name } satisfies ProjectMeta,
@@ -726,14 +841,22 @@ export async function bootCreation(): Promise<void> {
     refreshTitle()
     autosave.schedule()
     showCanvas()
-    shell.setStatus(placeNow(), PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()), 'ready', true)
+    shell.setStatus(
+      placeNow(),
+      PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()),
+      'ready',
+      true
+    )
   }
   /** « Exporter les données mises de côté… »: one JSON file; nothing is removed (clearing is Oscar's call, N19). */
   const exportKept = (): void => {
     const kept = readQuarantine(storage)
-    if (!kept.length && !pending.length) return shell.setStatus(placeNow(), PJ.exportNothing!, 'idle', true)
+    if (!kept.length && !pending.length)
+      return shell.setStatus(placeNow(), PJ.exportNothing!, 'idle', true)
     const file = `tekpractice-donnees-mises-de-cote-${new Date().toISOString().slice(0, 10)}.json`
-    const url = URL.createObjectURL(new Blob([exportBundle(storage, pending)], { type: 'application/json' }))
+    const url = URL.createObjectURL(
+      new Blob([exportBundle(storage, pending)], { type: 'application/json' })
+    )
     const a = document.createElement('a')
     a.href = url
     a.download = file
@@ -804,7 +927,12 @@ export async function bootCreation(): Promise<void> {
   // A click on a device body in the 3D view selects it and flies to it.
   attachCanvasPicking(canvas, shellBag, (x, y) => pickDevice(host.scene, x, y), selection)
   // Hover (Task 14b): a thin Papier outline on the device under the pointer, never the Ambre selection.
-  attachCanvasHover(canvas, shellBag, (x, y) => pickDevice(host.scene, x, y), (id) => host.setHovered(id))
+  attachCanvasHover(
+    canvas,
+    shellBag,
+    (x, y) => pickDevice(host.scene, x, y),
+    (id) => host.setHovered(id)
+  )
   /** Menu item ids → the key map (the menus show the live labels). */
   const MENU_KEYS: Record<string, CreationAction | undefined> = {
     undo: 'UNDO',
@@ -837,12 +965,14 @@ export async function bootCreation(): Promise<void> {
       history,
       actions,
       bindingLabel: menuShortcut,
-    }),
+    })
   )
 
   const screen = (world: Vector3 | null): { x: number; y: number } | null => {
     const { scene, camera } = host
-    return world && scene && camera ? projectToScreen(world, scene, camera, host.engine, canvas) : null
+    return world && scene && camera
+      ? projectToScreen(world, scene, camera, host.engine, canvas)
+      : null
   }
   window.__creation = {
     dispatch: (intent) => history.do(intent),
@@ -864,7 +994,14 @@ export async function bootCreation(): Promise<void> {
     renders: () => scheduler.renders,
     camera: () => {
       const c = host.camera
-      return c ? { alpha: c.alpha, beta: c.beta, radius: c.radius, target: [c.target.x, c.target.y, c.target.z] } : null
+      return c
+        ? {
+            alpha: c.alpha,
+            beta: c.beta,
+            radius: c.radius,
+            target: [c.target.x, c.target.y, c.target.z],
+          }
+        : null
     },
     scenes: () => host.engine.scenes.length,
     meshCount: () => host.scene?.meshes.length ?? 0,
