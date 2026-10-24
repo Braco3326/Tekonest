@@ -61,6 +61,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     open: 'Ouvrir…',
     save: 'Enregistrer',
     saveAs: 'Enregistrer sous…',
+    exportKept: 'Exporter les données mises de côté…',
     choosePlace: 'Choisir un lieu…',
     inventory: 'Ouvrir l’inventaire',
     connectTo: 'Connecter à…',
@@ -265,10 +266,30 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Ctrl+S before any place is chosen. */
     saveNoPlace: 'Choisissez un lieu avant d’enregistrer.',
     saveFull: 'Plus de place pour enregistrer : 20 projets au maximum, ou stockage du navigateur plein. Rien n’a été enregistré.',
-    blocked: 'Le navigateur bloque la sauvegarde : ton travail ne sera pas gardé.',
+    blocked: 'Le navigateur bloque la sauvegarde : votre travail ne sera pas gardé.',
     blockedTitle: 'Sauvegarde impossible',
     reset: 'Sauvegarde incompatible, on repart de zéro.',
-    resetBody: 'L’ancienne sauvegarde n’est pas effacée : elle est gardée à part dans ce navigateur.',
+    resetBody: 'L’ancienne sauvegarde n’est pas effacée : elle est gardée à part dans ce navigateur. Projet > Exporter les données mises de côté… la télécharge.',
+    /** Unreadable data could not be set aside (5 items at most, or quota): autosave waits for the export. */
+    keptFullTitle: 'Données mises de côté : plus de place',
+    keptFull: 'Des données illisibles n’ont pas pu être mises de côté. Exportez-les avec Projet > Exporter les données mises de côté… : la sauvegarde automatique reprendra ensuite.',
+    /** A named save that needed to set an older copy aside first, without room for it. */
+    quarantineFull: 'Rien n’a été enregistré : l’ancienne version doit d’abord être mise de côté, et la place est pleine. Exportez les données mises de côté, ou enregistrez sous un autre nom.',
+    /** Saved; the unreadable project list was kept aside. {name}. */
+    listReset: 'Projet « {name} » enregistré. L’ancienne liste de projets, illisible, est gardée à part.',
+    /** Saved; the copy another tab had saved under this name was kept aside. {name}. */
+    conflictKept: 'Projet « {name} » enregistré. La version enregistrée depuis un autre onglet est gardée à part.',
+    /** Another tab wrote: this tab's autosave pauses. {save} = the save key label. */
+    otherTabTitle: 'Projet ouvert dans un autre onglet',
+    otherTab: 'Ce projet est ouvert dans un autre onglet : la sauvegarde automatique est en pause ici. {save} dans cet onglet la reprend.',
+    /** « Exporter les données mises de côté… ». {file} = the downloaded file name. */
+    exported: 'Données mises de côté exportées : {file}',
+    exportNothing: 'Aucune donnée mise de côté.',
+    /** « Ouvrir… » when the stored list cannot be read. */
+    openUnreadable: 'La liste des projets enregistrés est illisible. Elle n’est pas effacée : Projet > Exporter les données mises de côté… la télécharge.',
+    /** « Ouvrir… » with unsaved changes; body = `newBody`. */
+    openDirtyTitle: 'Ouvrir un autre projet ?',
+    openDirtyConfirm: 'Choisir un projet',
     autosaveFull: 'Stockage du navigateur plein : la sauvegarde automatique est en pause. Enregistrez sous un autre nom ou libérez de la place.',
     /** Status bar after the autosave was reopened at start. */
     restored: 'Travail de la dernière séance rouvert.',

@@ -60,7 +60,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     {
       id: 'projet',
       label: M.projet!,
-      items: [act('new', M.newProject!), act('open', M.open!), act('save', M.save!), act('save-as', M.saveAs!), undo, redo],
+      items: [act('new', M.newProject!), act('open', M.open!), act('save', M.save!), act('save-as', M.saveAs!), act('export-kept', M.exportKept!), undo, redo],
     },
     {
       id: 'lieu',

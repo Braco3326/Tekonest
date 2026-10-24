@@ -73,8 +73,16 @@ describe('menu model (Task 7)', () => {
   it('Projet: Nouveau · Ouvrir… · Enregistrer · Enregistrer sous… · Annuler · Rétablir (Task 13), Enregistrer shows the save key', () => {
     const menus = buildMenus(ctx({ bindingLabel: (a) => ({ save: 'Ctrl+S' })[a] }))
     const projet = menus.find((m) => m.id === 'projet')!
-    expect(projet.items.map((i) => i.id)).toEqual(['new', 'open', 'save', 'save-as', 'undo', 'redo'])
-    expect(projet.items.map((i) => i.label)).toEqual(['Nouveau', 'Ouvrir…', 'Enregistrer', 'Enregistrer sous…', 'Annuler', 'Rétablir'])
+    expect(projet.items.map((i) => i.id)).toEqual(['new', 'open', 'save', 'save-as', 'export-kept', 'undo', 'redo'])
+    expect(projet.items.map((i) => i.label)).toEqual([
+      'Nouveau',
+      'Ouvrir…',
+      'Enregistrer',
+      'Enregistrer sous…',
+      'Exporter les données mises de côté…',
+      'Annuler',
+      'Rétablir',
+    ])
     expect(find(menus, 'save').shortcut).toBe('Ctrl+S')
     let ran = ''
     const live = buildMenus(ctx({ actions: { new: () => (ran += 'n'), open: () => (ran += 'o'), save: () => (ran += 's'), 'save-as': () => (ran += 'a') } }))

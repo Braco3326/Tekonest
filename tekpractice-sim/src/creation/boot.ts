@@ -41,15 +41,22 @@ import { mountMenuBar } from './shell/menuBar'
 import { buildMenus } from './shell/menuModel'
 import { injectCreationTokens } from '../design/creationTokens'
 import {
+  AUTOSAVE_KEY,
+  PROJECTS_KEY,
   createAutosave,
   designFingerprint,
+  exportBundle,
   isDirty,
-  listProjects,
+  isForeignWrite,
   loadAutosave,
   loadProject,
+  newStamp,
+  readProjectList,
   readQuarantine,
   saveProject,
   setAsideAutosave,
+  type ProjectList,
+  type QuarantineItem,
   type SaveResult,
 } from './persistence'
 import { openNameDialog, openProjectList } from './shell/projectDialogs'
@@ -109,8 +116,24 @@ export async function bootCreation(): Promise<void> {
   const PJ = COPY.project!
   let projectName: string | null = null
   let savedFp: string | null = null
-  /** Autosave may write: false when storage is blocked or unreadable data could not be set aside. */
+  /** The stamp of `projectName`'s stored row when this tab last read or wrote it (two-tab check); null = not stored. */
+  let projectStamp: string | null = null
+  /** The project identity travels with the rig through undo / redo of « Ouvrir » / « Nouveau » (review CRITICAL). */
+  type ProjectMeta = { name: string | null; savedFp: string | null; stamp: string | null }
+  const projectMeta = (): ProjectMeta => ({ name: projectName, savedFp, stamp: projectStamp })
+  const setProject = (m: ProjectMeta): void => {
+    projectName = m.name
+    savedFp = m.savedFp
+    projectStamp = m.stamp
+  }
+  /** Unreadable data that could not be set aside (quarantine full): held here until the learner exports it. */
+  const pending: QuarantineItem[] = []
+  /** Autosave may write: false when storage is blocked, or while `pending` data would be overwritten. */
   let autosaveOn = true
+  /** The autosave is off only until the learner exports `pending`. */
+  let pendingStoppedAutosave = false
+  /** The unreadable project list this tab exported (a save may then start a new list). */
+  let exportedList: string | undefined
   const dirty = (): boolean => isDirty(store.design(), savedFp)
   const refreshTitle = (): void => {
     const d = dirty()
@@ -125,13 +148,22 @@ export async function bootCreation(): Promise<void> {
     }
   }
   const blockedNote = (): void => notes.show({ id: 'storage', title: PJ.blockedTitle!, body: PJ.blocked! })
+  /** Data that could not be set aside: held for the export, never silently dropped; a note asks for the export. */
+  const holdPending = (key: string, reason: string, raw: string, stopsAutosave: boolean): void => {
+    if (!pending.some((p) => p.raw === raw)) pending.push({ at: new Date().toISOString(), key, reason, raw })
+    if (stopsAutosave) {
+      autosaveOn = false
+      pendingStoppedAutosave = true
+    }
+    notes.show({ id: 'kept-full', title: PJ.keptFullTitle!, body: PJ.keptFull! })
+  }
   const autosave = createAutosave({
     storage,
     busy: () => history.inTransaction,
     snapshot: () => {
       const design = store.design()
       if (!autosaveOn || design.roomId === null) return null // nothing worth keeping before a place
-      return { version: 1, savedAt: new Date().toISOString(), name: projectName, design, savedFingerprint: savedFp }
+      return { version: 1, savedAt: new Date().toISOString(), name: projectName, design, savedFingerprint: savedFp, stamp: projectStamp }
     },
     onResult: (r: SaveResult) => {
       if (r === 'ok') return notes.dismiss('autosave-full')
@@ -376,23 +408,31 @@ export async function bootCreation(): Promise<void> {
       return false
     }
     if (loaded.status === 'reset') {
-      // The unreadable data is kept in the quarantine; if it could not be, it is never overwritten.
-      autosaveOn = loaded.kept
-      if (loaded.kept) notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
-      else blockedNote()
+      // Kept in the quarantine → start fresh. Not kept → held for the export, the autosave waits (never overwrites it).
+      if (loaded.kept === 'kept') notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
+      else if (loaded.kept === 'full') holdPending(AUTOSAVE_KEY, loaded.reason, loaded.raw, true)
+      else {
+        autosaveOn = false
+        blockedNote()
+      }
       return false
     }
     if (loaded.status === 'empty' || loaded.data.design.roomId === null) return false
     const r = store.dispatch({ type: 'APPLY_DESIGN', design: loaded.data.design })
+    // Reopening writes nothing (another tab with this project open must not hear a write).
+    autosave.cancel()
     const lost = !r.ok || (r.dropped && Object.values(r.dropped).some((l) => l.length > 0))
-    // What the store could not restore stays in the quarantine, never overwritten by the next autosave.
-    if (lost && !setAsideAutosave(storage, r.ok ? 'dropped' : 'refused')) autosaveOn = false
+    // What the store could not restore is set aside (or held for the export), never overwritten by the next autosave.
+    if (lost) {
+      const aside = setAsideAutosave(storage, r.ok ? 'dropped' : 'refused')
+      if (aside.kept === 'full' && aside.raw !== null) holdPending(AUTOSAVE_KEY, r.ok ? 'dropped' : 'refused', aside.raw, true)
+      else if (aside.kept === 'blocked') autosaveOn = false
+    }
     if (!r.ok) {
       notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
       return false
     }
-    projectName = loaded.data.name
-    savedFp = loaded.data.savedFingerprint
+    setProject({ name: loaded.data.name, savedFp: loaded.data.savedFingerprint, stamp: loaded.data.stamp ?? null })
     refreshTitle()
     showCanvas()
     showStatus()
@@ -430,7 +470,18 @@ export async function bootCreation(): Promise<void> {
     return history.redo()
   })
   // ── Save / named projects (Task 13, C16).
-  const saveMessage: Record<Exclude<SaveResult, 'ok'>, string> = { full: PJ.saveFull!, blocked: PJ.blocked! }
+  const saveFailed: Record<'blocked' | 'full' | 'quarantine-full', string> = {
+    full: PJ.saveFull!,
+    blocked: PJ.blocked!,
+    'quarantine-full': PJ.quarantineFull!,
+  }
+  const saveDone: Record<'ok' | 'conflict-kept' | 'list-reset', string> = { ok: PJ.saved!, 'conflict-kept': PJ.conflictKept!, 'list-reset': PJ.listReset! }
+  /** The stored project list; an unreadable one that could not be set aside is held for the export. */
+  const projectList = (): ProjectList => {
+    const list = readProjectList(storage)
+    if (list.status === 'unreadable' && list.kept !== 'kept' && list.raw !== exportedList) holdPending(PROJECTS_KEY, 'corrupt', list.raw, false)
+    return list
+  }
   let saving = false
   /** Ctrl+S / Enregistrer (asks a name the first time) / Enregistrer sous… (always asks). */
   const save = async (saveAs: boolean): Promise<void> => {
@@ -440,10 +491,15 @@ export async function bootCreation(): Promise<void> {
       props.flush() // a stepper burst still open is part of what is saved
       if (!canvasShown || store.design().roomId === null) return shell.setStatus(placeNow(), PJ.saveNoPlace!, 'idle', true)
       let name = projectName
+      /** The stored row this save may replace, as this tab knows it (another tab's newer copy is set aside). */
+      let expectStamp = projectStamp
       if (saveAs || name === null) {
         name = await openNameDialog({ saveAs, initial: projectName ?? '' })
         if (name === null) return
-        if (name !== projectName && listProjects(storage).some((p) => p.name === name)) {
+        const list = projectList()
+        const existing = list.status === 'ok' ? list.projects.find((p) => p.name === name) : undefined
+        if (name !== projectName) expectStamp = existing?.stamp ?? null
+        if (name !== projectName && existing) {
           const ok = await openChoiceDialog<'replace' | 'cancel'>({
             title: PJ.overwriteTitle!.replace('{name}', name),
             body: PJ.overwriteBody!,
@@ -455,19 +511,22 @@ export async function bootCreation(): Promise<void> {
           })
           if (ok !== 'replace') return
         }
-      }
+      } else projectList() // an unreadable list is held for the export before the save says so
       const design = store.design()
-      const r = saveProject(storage, name, design)
-      if (r !== 'ok') {
+      const stamp = newStamp()
+      const r = saveProject(storage, name, design, { expectStamp, stamp, unreadableExported: exportedList })
+      if (r === 'blocked' || r === 'full' || r === 'quarantine-full') {
         if (r === 'blocked') blockedNote()
-        return shell.setStatus(placeNow(), saveMessage[r], 'ready', true)
+        return shell.setStatus(placeNow(), saveFailed[r], 'ready', true)
       }
-      projectName = name
-      savedFp = designFingerprint(design)
+      setProject({ name, savedFp: designFingerprint(design), stamp })
       refreshTitle()
+      // Ctrl+S here: this tab is the active one again (its autosave resumes).
+      notes.dismiss('other-tab')
+      autosave.resume()
       autosave.schedule()
       autosave.flush() // the name and the clean state survive a reload at once
-      shell.setStatus(placeNow(), PJ.saved!.replace('{name}', name), 'ready', true)
+      shell.setStatus(placeNow(), saveDone[r].replace('{name}', name), 'ready', true)
     } finally {
       saving = false
     }
@@ -478,47 +537,97 @@ export async function bootCreation(): Promise<void> {
     return true
   })
   /** « Nouveau »: asks when there are unsaved changes; an undoable empty rig, then the picker over the place. */
+  /** Unsaved changes: ask before replacing them (« Nouveau », « Ouvrir… »); undo still brings them back. */
+  const confirmDiscard = async (title: string, confirm: string): Promise<boolean> => {
+    if (!dirty()) return true
+    const c = await openChoiceDialog<'go' | 'cancel'>({
+      title,
+      body: PJ.newBody!.replace('{undo}', undoLabel()),
+      choices: [
+        { id: 'go', label: confirm },
+        { id: 'cancel', label: PJ.nameCancel! },
+      ],
+      cancel: 'cancel',
+    })
+    return c === 'go'
+  }
+  // Undo / redo of « Ouvrir » / « Nouveau » brings the project identity back with the rig (review CRITICAL).
+  history.onMeta((m) => {
+    setProject(m as ProjectMeta)
+    refreshTitle()
+    autosave.schedule()
+  })
+  /** « Nouveau »: asks when there are unsaved changes; an undoable empty rig, then the picker over the place. */
   const newProject = async (): Promise<void> => {
     props.flush()
-    if (dirty()) {
-      const c = await openChoiceDialog<'new' | 'cancel'>({
-        title: PJ.newTitle!,
-        body: PJ.newBody!.replace('{undo}', undoLabel()),
-        choices: [
-          { id: 'new', label: PJ.newConfirm! },
-          { id: 'cancel', label: PJ.nameCancel! },
-        ],
-        cancel: 'cancel',
-      })
-      if (c !== 'new') return
-    }
+    if (!(await confirmDiscard(PJ.newTitle!, PJ.newConfirm!))) return
+    const after: ProjectMeta = { name: null, savedFp: null, stamp: null }
     const roomId = store.design().roomId
-    if (roomId !== null) history.do({ type: 'APPLY_DESIGN', design: { roomId, rig: { instances: [], connections: [], controls: {} }, placements: [] } }, PJ.newEntry!)
-    projectName = null
-    savedFp = null
+    if (roomId !== null)
+      history.do({ type: 'APPLY_DESIGN', design: { roomId, rig: { instances: [], connections: [], controls: {} }, placements: [] } }, PJ.newEntry!, {
+        before: projectMeta(),
+        after,
+      })
+    setProject(after)
     refreshTitle()
     autosave.schedule()
     picker.show({ closable: canvasShown, focus: true })
   }
-  /** « Ouvrir… »: the saved list; the chosen project replaces the rig as one undoable snapshot entry (C5). */
+  /** « Ouvrir… »: the saved list; the chosen project replaces the rig as one undoable snapshot entry (C5), its name with it. */
   const openProject = async (): Promise<void> => {
     props.flush()
-    const name = await openProjectList(listProjects(storage))
+    if (!(await confirmDiscard(PJ.openDirtyTitle!, PJ.openDirtyConfirm!))) return
+    const list = projectList()
+    const projects = list.status === 'ok' ? list.projects : []
+    const name = await openProjectList({ projects, unreadable: list.status === 'unreadable' })
     if (name === null) return
     const design = loadProject(storage, name)
     const failed = (): void => shell.setStatus(placeNow(), PJ.openFailed!.replace('{name}', name), 'ready', true)
     if (!design || design.roomId === null) return failed()
     const first = store.design().roomId === null
-    const r = history.do({ type: 'APPLY_DESIGN', design }, PJ.openEntry!.replace('{name}', name))
+    // anything the store drops shows as « * » (the fingerprint is the stored design's)
+    const after: ProjectMeta = { name, savedFp: designFingerprint(design), stamp: projects.find((p) => p.name === name)?.stamp ?? null }
+    const r = history.do({ type: 'APPLY_DESIGN', design }, PJ.openEntry!.replace('{name}', name), { before: projectMeta(), after })
     if (!r.ok) return failed()
     if (first) history.clear() // the session starts at its first place (as placeController)
-    projectName = name
-    savedFp = designFingerprint(design) // anything the store dropped shows as « * »
+    setProject(after)
     refreshTitle()
     autosave.schedule()
     showCanvas()
     shell.setStatus(placeNow(), PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()), 'ready', true)
   }
+  /** « Exporter les données mises de côté… »: one JSON file; nothing is removed (clearing is Oscar's call, N19). */
+  const exportKept = (): void => {
+    const kept = readQuarantine(storage)
+    if (!kept.length && !pending.length) return shell.setStatus(placeNow(), PJ.exportNothing!, 'idle', true)
+    const file = `tekpractice-donnees-mises-de-cote-${new Date().toISOString().slice(0, 10)}.json`
+    const url = URL.createObjectURL(new Blob([exportBundle(storage, pending)], { type: 'application/json' }))
+    const a = document.createElement('a')
+    a.href = url
+    a.download = file
+    a.hidden = true
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    setTimeout(() => URL.revokeObjectURL(url), 0)
+    // What was held is now with the learner: the autosave may write again.
+    if (pending.length) {
+      exportedList = pending.filter((p) => p.key === PROJECTS_KEY).pop()?.raw ?? exportedList
+      if (pendingStoppedAutosave && storage) autosaveOn = true
+      pendingStoppedAutosave = false
+      notes.dismiss('kept-full')
+      autosave.schedule()
+    }
+    shell.setStatus(placeNow(), PJ.exported!.replace('{file}', file), 'ready', true)
+  }
+  // Another tab writes the autosave or the projects: this tab stops autosaving (said), Ctrl+S here resumes it.
+  shellBag.listen(window, 'storage', (e) => {
+    if (!isForeignWrite(e as StorageEvent) || autosave.paused) return
+    autosave.pause()
+    const body = PJ.otherTab!.replace('{save}', bindingLabel(keys.bindings, 'SAVE') || 'Ctrl+S')
+    notes.show({ id: 'other-tab', title: PJ.otherTabTitle!, body })
+    shell.setStatus(placeNow(), body, 'ready', true)
+  })
   // Leaving the page: the pending autosave is written now (never mid-transaction).
   const leave = (): void => {
     props.flush()
@@ -561,6 +670,7 @@ export async function bootCreation(): Promise<void> {
     open: () => void openProject(),
     save: () => void save(false),
     'save-as': () => void save(true),
+    'export-kept': exportKept,
   }
   mountMenuBar(shell.menus, () =>
     buildMenus({

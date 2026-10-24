@@ -40,6 +40,70 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 
 .cr button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 
+/* ── Dialogs (modal.ts): under <body>, outside `.cr`; tokens only, square corners ── */
+.cr-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--cr-nuit) 60%, transparent);
+}
+.cr-dialog {
+  box-sizing: border-box;
+  width: min(440px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  padding: 24px;
+  background: var(--cr-nuit);
+  color: var(--cr-papier);
+  border: 1px solid var(--cr-prune);
+  font-family: var(--cr-font-ui);
+}
+.cr-dialog-title { margin: 0 0 8px; font-size: 20px; }
+.cr-dialog-body { margin: 0 0 16px; }
+.cr-dialog-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.cr-dialog-body + .cr-dialog-row { margin-top: 0; }
+.cr-dialog-btn {
+  padding: 8px 14px;
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--cr-ambre);
+  background: transparent;
+  color: var(--cr-papier);
+}
+.cr-dialog-btn-primary { background: var(--cr-ambre); color: var(--cr-nuit); }
+.cr-dialog-label { display: block; margin: 0 0 6px; }
+.cr-dialog-input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px;
+  font: inherit;
+  background: var(--cr-panel);
+  color: var(--cr-papier);
+  border: 1px solid var(--cr-ink-muted);
+}
+.cr-dialog-error { margin: 6px 0 0; color: var(--cr-danger); font-size: 14px; }
+.cr-dialog-error:empty { display: none; }
+.cr-project-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.cr-project-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 10px;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
+  color: var(--cr-papier);
+  border: 1px solid var(--cr-prune);
+}
+.cr-project-row:hover { border-color: var(--cr-ambre); }
+.cr-project-date { color: var(--cr-ink-muted); font-variant-numeric: tabular-nums; }
+
 /* visually hidden, still read (the page h1) — out of the grid flow */
 .cr-sr-only {
   position: absolute;

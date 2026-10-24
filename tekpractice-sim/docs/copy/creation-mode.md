@@ -66,6 +66,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.open` | Ouvrir… | brief | Task 13 : Projet ; liste des projets enregistrés, Entrée ouvre |
 | `menu.save` | Enregistrer | brief | Projet ; Ctrl+S (Task 13, C16) ; demande un nom la première fois |
 | `menu.saveAs` | Enregistrer sous… | brief | Task 13 : Projet ; demande toujours un nom |
+| `menu.exportKept` | Exporter les données mises de côté… | à valider (tekuxwriter) | Task 13 (revue) : Projet ; télécharge en JSON les données illisibles gardées à part (rien n'est supprimé, N19) |
 | `menu.choosePlace` | Choisir un lieu… | à valider (tekuxwriter) | Lieu ; ouvre l'écran « Choisir un lieu » par-dessus le lieu affiché (Task 12) |
 | `menu.inventory` | Ouvrir l’inventaire | à valider (tekuxwriter) | Matériel ; inactif jusqu'au tiroir d'inventaire |
 | `menu.connectTo` | Connecter à… | à valider (tekuxwriter) | Câblage ; même libellé que l'action Propriétés « Connecter à… » (C10) |
@@ -269,7 +270,7 @@ Dialogue « Changer de lieu » (C3), ouvert quand du matériel est déjà instal
 
 ## project
 
-Sauvegarde automatique, marque « * », Ctrl+S et projets nommés (Task 13, C16, CA-14). Les textes « brief » sont repris tels quels du plan ; tekuxwriter : `project.blocked` tutoie (« ton travail ») alors que le reste du shell vouvoie, à trancher.
+Sauvegarde automatique, marque « * », Ctrl+S et projets nommés (Task 13, C16, CA-14). Les textes « brief » sont repris tels quels du plan, sauf `project.blocked` passé au vouvoiement (revue).
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
@@ -279,10 +280,22 @@ Sauvegarde automatique, marque « * », Ctrl+S et projets nommés (Task 13, C16,
 | `project.saved` | Projet « {name} » enregistré | brief | Barre d'état (annoncé) après Ctrl+S / Enregistrer |
 | `project.saveNoPlace` | Choisissez un lieu avant d’enregistrer. | à valider (tekuxwriter) | Barre d'état : Ctrl+S avant le premier lieu (le dialogue d'enregistrement du navigateur ne s'ouvre jamais) |
 | `project.saveFull` | Plus de place pour enregistrer : 20 projets au maximum, ou stockage du navigateur plein. Rien n’a été enregistré. | à valider (tekuxwriter) | Barre d'état : 21e projet ou quota du navigateur atteint |
-| `project.blocked` | Le navigateur bloque la sauvegarde : ton travail ne sera pas gardé. | brief | Note persistante + barre d'état quand localStorage est bloqué (navigation privée stricte, cookies bloqués) |
+| `project.blocked` | Le navigateur bloque la sauvegarde : votre travail ne sera pas gardé. | à valider (tekuxwriter) | Note persistante + barre d'état quand localStorage est bloqué (navigation privée stricte, cookies bloqués). Revue Task 13 : brief « ton travail » passé au vouvoiement du shell |
 | `project.blockedTitle` | Sauvegarde impossible | à valider (tekuxwriter) | Titre (h3) de cette note |
 | `project.reset` | Sauvegarde incompatible, on repart de zéro. | brief | Titre de la note quand la sauvegarde automatique est illisible ou d'une autre version |
-| `project.resetBody` | L’ancienne sauvegarde n’est pas effacée : elle est gardée à part dans ce navigateur. | à valider (tekuxwriter) | Corps de cette note (données mises en quarantaine, jamais supprimées) |
+| `project.resetBody` | L’ancienne sauvegarde n’est pas effacée : elle est gardée à part dans ce navigateur. Projet > Exporter les données mises de côté… la télécharge. | à valider (tekuxwriter) | Corps de cette note (données mises en quarantaine, jamais supprimées) |
+| `project.keptFullTitle` | Données mises de côté : plus de place | à valider (tekuxwriter) | Titre de la note quand des données illisibles n'ont pas pu être mises de côté (5 au maximum, ADR-0012) |
+| `project.keptFull` | Des données illisibles n’ont pas pu être mises de côté. Exportez-les avec Projet > Exporter les données mises de côté… : la sauvegarde automatique reprendra ensuite. | à valider (tekuxwriter) | Corps de cette note ; l'autosave attend l'export (rien n'est jamais jeté sans le dire) |
+| `project.quarantineFull` | Rien n’a été enregistré : l’ancienne version doit d’abord être mise de côté, et la place est pleine. Exportez les données mises de côté, ou enregistrez sous un autre nom. | à valider (tekuxwriter) | Barre d'état : Ctrl+S refusé (conflit d'onglets ou liste illisible, quarantaine pleine) |
+| `project.listReset` | Projet « {name} » enregistré. L’ancienne liste de projets, illisible, est gardée à part. | à valider (tekuxwriter) | Barre d'état : enregistré, la liste illisible a été mise de côté |
+| `project.conflictKept` | Projet « {name} » enregistré. La version enregistrée depuis un autre onglet est gardée à part. | à valider (tekuxwriter) | Barre d'état : un autre onglet avait enregistré ce projet entre-temps (ADR-0012 §6) |
+| `project.otherTabTitle` | Projet ouvert dans un autre onglet | à valider (tekuxwriter) | Titre de la note quand un autre onglet écrit la sauvegarde ou les projets |
+| `project.otherTab` | Ce projet est ouvert dans un autre onglet : la sauvegarde automatique est en pause ici. {save} dans cet onglet la reprend. | à valider (tekuxwriter) | Corps de cette note ; `{save}` = libellé de la touche Enregistrer (« Ctrl+S ») |
+| `project.exported` | Données mises de côté exportées : {file} | à valider (tekuxwriter) | Barre d'état après l'export ; `{file}` = nom du fichier JSON téléchargé |
+| `project.exportNothing` | Aucune donnée mise de côté. | à valider (tekuxwriter) | Barre d'état : rien à exporter |
+| `project.openUnreadable` | La liste des projets enregistrés est illisible. Elle n’est pas effacée : Projet > Exporter les données mises de côté… la télécharge. | à valider (tekuxwriter) | Dialogue « Ouvrir… » quand la liste est illisible (jamais « aucun projet ») |
+| `project.openDirtyTitle` | Ouvrir un autre projet ? | à valider (tekuxwriter) | « Ouvrir… » avec des modifications non enregistrées (corps : `project.newBody`) |
+| `project.openDirtyConfirm` | Choisir un projet | à valider (tekuxwriter) | Bouton principal de ce dialogue |
 | `project.autosaveFull` | Stockage du navigateur plein : la sauvegarde automatique est en pause. Enregistrez sous un autre nom ou libérez de la place. | à valider (tekuxwriter) | Note + barre d'état quand l'écriture automatique dépasse le quota |
 | `project.restored` | Travail de la dernière séance rouvert. | à valider (tekuxwriter) | Barre d'état au démarrage quand la sauvegarde automatique est rouverte (le sélecteur de lieu ne s'affiche pas) |
 | `project.nameTitle` | Enregistrer le projet | à valider (tekuxwriter) | Titre du dialogue de nom (Ctrl+S la première fois) |
