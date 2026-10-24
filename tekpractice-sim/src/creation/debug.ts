@@ -27,6 +27,8 @@ export interface CreationDebug {
   visible(id: string): boolean
   /** Devices drawn with the Ambre selection outline. */
   outlined(): string[]
+  /** The device drawn with the Papier hover outline (Task 14b), or null. */
+  hovered(): string | null
   /** `viewState.hidden` keys. */
   hidden(): string[]
   /** The device under a canvas point (CSS px), as a click would pick it. */

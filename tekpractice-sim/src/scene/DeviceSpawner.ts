@@ -146,6 +146,8 @@ export interface DeviceTheme {
   port: { in: string; out: string; bidir: string }
   /** Port marker self-illumination, share of its colour (legacy: 0.25). */
   portGlow: number
+  /** Body self-illumination, share of its face colour (legacy: 0.25 of the body). */
+  bodyGlow: number
   labelInk: string
   labelBg: string
   /** Canvas font family for labels (falls back to the UA sans-serif when not loaded). */
@@ -387,7 +389,8 @@ export class DeviceSpawner {
       const top = Color3.FromHexString(theme.accentOf(device.realWorld.category) ?? theme.body).toColor4(1)
       const faceColors = [side, side, side, side, top, side] // Babylon box faces: 4 = top
       box = MeshBuilder.CreateBox(`box:${instanceId}`, { width: w, height: h, depth: d, faceColors }, this.scene)
-      box.material = this.material('body:themed', undefined, Color3.White(), 0.06)
+      // Emissive is scaled by the vertex colour in the standard shader: a lift per face colour.
+      box.material = this.material('body:themed', undefined, Color3.White(), theme.bodyGlow)
     } else {
       box = MeshBuilder.CreateBox(`box:${instanceId}`, { width: w, height: h, depth: d }, this.scene)
       box.material = this.material('body', TOKENS.color.deviceBody)
@@ -497,13 +500,31 @@ export class DeviceSpawner {
     const texW = 512
     const texH = Math.round((texW * hPlane) / wPlane)
     const tex = new DynamicTexture(`tex:${name}`, { width: texW, height: texH }, this.scene, false)
-    // Ink on OPAQUE white — a tiny gallery label card. No alpha pipeline at
-    // all: dark glyphs die in luminance-derived opacity (learned the hard way).
     const t = this.theme
-    if (t) tex.drawText(text, null, null, `600 ${fontPx}px ${t.labelFont}`, t.labelInk, t.labelBg, true)
-    else tex.drawText(text, null, null, `bold ${fontPx}px sans-serif`, TOKENS.color.ink, TOKENS.color.floor, true)
-
     const mat = new StandardMaterial(`mat:${name}`, this.scene)
+    if (t) {
+      // Themed: LIGHT ink with a dark halo on a transparent texture (alpha = glyph
+      // coverage, not luminance): no card, so neighbouring port labels never stack
+      // into dark slabs, and the halo keeps the ink readable over any surface.
+      const ctx = tex.getContext() as CanvasRenderingContext2D
+      ctx.clearRect(0, 0, texW, texH)
+      ctx.font = `bold ${fontPx}px ${t.labelFont}`
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.lineJoin = 'round'
+      ctx.lineWidth = Math.max(3, Math.round(fontPx * 0.24))
+      ctx.strokeStyle = t.labelBg
+      ctx.strokeText(text, texW / 2, texH / 2)
+      ctx.fillStyle = t.labelInk
+      ctx.fillText(text, texW / 2, texH / 2)
+      tex.hasAlpha = true
+      tex.update(true)
+      mat.opacityTexture = tex
+    } else {
+      // Ink on OPAQUE white — a tiny gallery label card. No alpha pipeline at
+      // all: dark glyphs die in luminance-derived opacity (learned the hard way).
+      tex.drawText(text, null, null, `bold ${fontPx}px sans-serif`, TOKENS.color.ink, TOKENS.color.floor, true)
+    }
     mat.emissiveTexture = tex
     mat.disableLighting = true
     mat.backFaceCulling = false

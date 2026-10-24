@@ -4,7 +4,7 @@
  * theme passed) keep the old colours exactly. NullEngine, as sceneHost.test.ts.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Color3, DirectionalLight, HemisphericLight, Mesh, NullEngine, Scene, StandardMaterial, Vector3, VertexBuffer } from '@babylonjs/core'
+import { Color3, DirectionalLight, DynamicTexture, HemisphericLight, Mesh, NullEngine, Scene, StandardMaterial, Vector3, VertexBuffer } from '@babylonjs/core'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { DeviceSpawner } from '../../src/scene/DeviceSpawner'
@@ -22,8 +22,16 @@ const S = CREATION_TOKENS.scene
 const g = globalThis as Record<string, unknown>
 const saved: Record<string, unknown> = {}
 const target = () => ({ addEventListener() {}, removeEventListener() {} })
+/** Every 2D-context property write (font, fillStyle, …) the label / shadow code makes. */
+const ctxWrites: [string, unknown][] = []
 function fakeCanvas2d() {
-  const ctx: unknown = new Proxy({}, { get: (_t, k) => (k === 'canvas' ? el : () => ({ width: 10, addColorStop() {} })), set: () => true })
+  const ctx: unknown = new Proxy(
+    {},
+    {
+      get: (_t, k) => (k === 'canvas' ? el : () => ({ width: 10, addColorStop() {} })),
+      set: (_t, k, v) => (ctxWrites.push([String(k), v]), true),
+    },
+  )
   const el = { width: 1, height: 1, style: {}, getContext: () => ctx }
   return el
 }
@@ -106,11 +114,15 @@ describe('DeviceSpawner placeholders: legacy default unchanged, creation theme f
     expect(box(scene, 'ql1').getVerticesData(VertexBuffer.ColorKind)).toBeNull()
     const port = registry.deviceById.get('yamaha-ql1')!.ports.find((p) => p.dir === 'out')!
     expect(diffuse(marker(scene, 'ql1', port.portId))).toBe(TOKENS.color.portOut.toUpperCase())
+    // the gallery label card: opaque, ink on white
+    expect((scene.getMeshByName('label:ql1')!.material as StandardMaterial).opacityTexture).toBeNull()
     scene.dispose()
   })
 
   it('the creation theme: token body, a subtle family tint on the top face only, token port markers', () => {
     const scene = new Scene(new NullEngine())
+    const drawText = vi.spyOn(DynamicTexture.prototype, 'drawText')
+    ctxWrites.length = 0
     const sp = new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME)
     sp.spawn('yamaha-ql1', Vector3.Zero(), 'ql1') // console → mixing family
     const b = box(scene, 'ql1')
@@ -126,6 +138,16 @@ describe('DeviceSpawner placeholders: legacy default unchanged, creation theme f
     }
     expect([...topHex]).toEqual([S.accentMixing])
     expect([...faceHex]).toEqual([S.deviceBody])
+    // labels: Papier ink + dark halo on a transparent texture (no card), in Plex
+    expect(drawText).not.toHaveBeenCalled()
+    // (string writes only: the contact shadow's fillStyle is a gradient object)
+    const writes = (k: string) => ctxWrites.filter(([key, v]) => key === k && typeof v === 'string').map(([, v]) => v)
+    expect(writes('font').length).toBeGreaterThan(0)
+    for (const f of writes('font')) expect(String(f)).toMatch(/^bold \d+px 'IBM Plex Sans'/)
+    expect(new Set(writes('fillStyle'))).toEqual(new Set([S.labelInk]))
+    expect(new Set(writes('strokeStyle'))).toEqual(new Set([S.labelBg]))
+    const label = scene.getMeshByName('label:ql1')!.material as StandardMaterial
+    expect(label.opacityTexture).toBe(label.emissiveTexture)
     const ports = registry.deviceById.get('yamaha-ql1')!.ports
     const want = { in: S.portIn, out: S.portOut, bidir: S.portBidir } as const
     for (const p of ports) expect(diffuse(marker(scene, 'ql1', p.portId))).toBe(want[p.dir as keyof typeof want])
@@ -172,32 +194,29 @@ describe('SceneHost uses the creation look (Task 14b)', () => {
     host.dispose()
   })
 
-  it('hover: a thin Papier outline without wash; selection (Ambre + wash) wins; outlined() lists the selection only', async () => {
+  it('hover: a Papier stroke without wash; selection (Ambre stroke + wash) wins; outlined() lists the selection only', async () => {
     const { host, scheduler } = makeHost()
     await host.load(placeFromKey('blank'), design('blank'))
     const bodies = (id: string) => host.instance(id)!.root.getChildMeshes(false).filter((m) => m.metadata?.isDeviceBody === true)
     const inv = vi.spyOn(scheduler, 'invalidate')
     host.setHovered('k12')
     expect(inv).toHaveBeenCalledTimes(1)
-    for (const m of bodies('k12')) {
-      expect(m.renderOutline).toBe(true)
-      expect(m.renderOverlay).toBe(false)
-      expect(m.outlineColor.toHexString()).toBe(S.hover)
-    }
+    expect(host.strokeOf('k12')).toBe(S.hover)
+    for (const m of bodies('k12')) expect(m.renderOverlay).toBe(false)
     expect(host.outlined()).toEqual([])
     expect(host.hovered()).toBe('k12')
     host.setHovered('k12') // unchanged: no frame asked
     expect(inv).toHaveBeenCalledTimes(1)
     host.setSelected('k12')
-    for (const m of bodies('k12')) {
-      expect(m.outlineColor.toHexString()).toBe(S.selection)
-      expect(m.renderOverlay).toBe(true)
-    }
+    expect(host.strokeOf('k12')).toBe(S.selection)
+    for (const m of bodies('k12')) expect(m.renderOverlay).toBe(true)
     expect(host.outlined()).toEqual(['k12'])
     host.setSelected(null)
-    for (const m of bodies('k12')) expect(m.outlineColor.toHexString()).toBe(S.hover)
+    expect(host.strokeOf('k12')).toBe(S.hover)
     host.setHovered(null)
-    for (const m of bodies('k12')) expect(m.renderOutline).toBe(false)
+    expect(host.strokeOf('k12')).toBeNull()
+    // no legacy mesh outline (it grew fins on split-normal .glb meshes)
+    for (const m of bodies('k12')) expect(m.renderOutline).toBeFalsy()
     host.dispose()
   })
 })

@@ -55,10 +55,11 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout, the
   const wallMat = mat('wall', theme ? theme.wall : room.procedural.wall_color)
   const floorMat = mat('floor', theme ? theme.floor : room.procedural.floor_color)
   const ceilMat = mat('ceiling', theme ? theme.ceiling : room.procedural.ceiling_color)
-  // Themed zones share two materials (deck, flat mark); the flat mark is depth-biased as below.
-  const deckMat = theme ? mat('zone:deck', theme.zoneFill, 1) : null
-  const markMatThemed = theme ? mat('zone:mark', theme.zoneFill, 1) : null
-  if (markMatThemed) markMatThemed.zOffset = -2
+  // Themed zones (decks and flat marks) share one opaque material.
+  const zoneMat = theme ? mat('zone', theme.zoneFill, 1) : null
+  // Themed: the FLOOR is depth-biased back instead of the mark forward, so lines drawn
+  // over the marks (grid, outlines; polygon offset never applies to lines) still win.
+  if (theme) floorMat.zOffset = 2
   const edgeColor = theme ? Color3.FromHexString(theme.zoneEdge) : null
   const own = (m: Mesh): Mesh => {
     m.isPickable = false
@@ -103,11 +104,11 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout, the
     if (raised) {
       const deck = surface(own(MeshBuilder.CreateBox(`room:zone:${z.id}`, { width: z.w, depth: z.d, height: z.y }, scene)))
       deck.position = new Vector3(z.x, z.y / 2, z.z)
-      deck.material = deckMat ?? mat(`zone:${z.id}`, tint, 1)
+      deck.material = zoneMat ?? mat(`zone:${z.id}`, tint, 1)
     } else {
       const mark = surface(own(MeshBuilder.CreateGround(`room:zone:${z.id}`, { width: z.w, height: z.d }, scene)))
       mark.position = new Vector3(z.x, 0.005, z.z)
-      if (markMatThemed) mark.material = markMatThemed
+      if (zoneMat) mark.material = zoneMat
       else {
         const markMat = mat(`zone:${z.id}`, tint, 0.12)
         // y stays 0.005: with the orbit minZ at 0.05 the mark could z-fight the floor at overview distance, so bias it forward in depth.
@@ -117,7 +118,7 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout, the
     }
     if (edgeColor) {
       // One closed line loop just above the zone's top: 1 px, no per-frame work, never picked.
-      const y = (raised ? z.y : 0.005) + 0.004
+      const y = raised ? z.y + 0.004 : 0.016 // flat: over the mark (5 mm) and the creation grid (12 mm)
       const hw = z.w / 2
       const hd = z.d / 2
       const loop = [

@@ -48,11 +48,11 @@ export const CREATION_TOKENS = {
     zoneEdge: '#8C6E7E',
     /** Placeholder device body (a loaded .glb keeps its own materials). */
     deviceBody: '#5F5766',
-    /** Placeholder top-face tint per gear family: subtle, never a saturated box. */
-    accentMixing: '#B08A60',
-    accentSource: '#7FA08C',
-    accentSpeaker: '#8090B0',
-    accentInfra: '#977D9E',
+    /** Placeholder top-face tint per gear family: the body shifted ~35 % towards a hue, never a saturated box. */
+    accentMixing: '#7A6960',
+    accentSource: '#677A6E',
+    accentSpeaker: '#67708A',
+    accentInfra: '#776479',
     /** Port markers by direction (in / out / bidir), legible on the body and the floor. */
     portIn: '#9BC3EC',
     portOut: '#E6CF7A',
@@ -71,13 +71,16 @@ export const CREATION_TOKENS = {
   light: {
     fill: 0.62,
     fillSky: '#F3EDE3',
-    fillGround: '#2A242B',
+    /** Bounce from below: light enough that vertical device faces separate from the floor (floors face up, unaffected). */
+    fillGround: '#7A7280',
     key: 0.6,
     keyColor: '#FFF4E8',
     /** Contact-shadow core opacity (0…1). */
     shadowAlpha: 0.6,
     /** Port marker self-illumination (share of its colour), so markers read in the dark room. */
     portGlow: 0.55,
+    /** Placeholder body self-illumination (share of its face colour): faces turned away from the key never sink into the floor. */
+    bodyGlow: 0.3,
   },
   font: {
     title: "'Tektur', 'IBM Plex Sans', system-ui, sans-serif",

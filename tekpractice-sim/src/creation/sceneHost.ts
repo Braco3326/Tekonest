@@ -16,6 +16,8 @@ import {
   DirectionalLight,
   Engine,
   HemisphericLight,
+  HighlightLayer,
+  Mesh,
   MeshBuilder,
   Scene,
   SceneLoader,
@@ -46,11 +48,8 @@ const NUIT = CREATION_TOKENS.color.nuit
 const SELECTION = Color3.FromHexString(CREATION_TOKENS.scene.selection)
 const HOVER = Color3.FromHexString(CREATION_TOKENS.scene.hover)
 const LIGHT = CREATION_TOKENS.light
-/** Selection outline (world units) + overlay wash: the outline alone is sub-pixel from the room overview. */
-const SELECT_OUTLINE_WIDTH = 0.015
+/** Selection = Ambre screen-space stroke + a light Ambre wash; hover = a Papier stroke, no wash. */
 const SELECT_OVERLAY_ALPHA = 0.22
-/** Hover: thinner, no wash, never mistaken for the selection. */
-const HOVER_OUTLINE_WIDTH = 0.008
 const DEG = Math.PI / 180
 type RoomBuild = (scene: Scene, file: Extract<PlaceData, { kind: 'room' }>['file'], layout: RoomLayout, theme?: RoomTheme) => unknown
 
@@ -164,12 +163,24 @@ export class SceneHost {
     return this.hoveredId
   }
 
-  /** Devices currently drawn with the SELECTION outline (e2e / tests); the hover outline has no wash. */
+  /** Devices currently drawn as SELECTED (Ambre stroke + wash; e2e / tests). A hovered device has no wash. */
   outlined(): string[] {
     return [...this.instances]
-      .filter(([, inst]) => inst.root.getChildMeshes(false).some((m) => m.metadata?.isDeviceBody === true && m.renderOutline && m.renderOverlay))
+      .filter(([, inst]) => inst.root.getChildMeshes(false).some((m) => m.metadata?.isDeviceBody === true && m.renderOverlay))
       .map(([id]) => id)
   }
+
+  /** The stroke colour drawn around a device's bodies ('#RRGGBB'), or null when none (tests). */
+  strokeOf(id: string): string | null {
+    const inst = this.instances.get(id)
+    const hl = this.highlight
+    if (!inst || !hl) return null
+    const body = inst.root.getChildMeshes(false).find((m): m is Mesh => m instanceof Mesh && m.metadata?.isDeviceBody === true && hl.hasMesh(m))
+    return body ? this.strokeColor.get(body.uniqueId) ?? null : null
+  }
+  /** Screen-space stroke for selection / hover (Task 14b): crisp at any distance, no fins on split-normal .glb meshes. */
+  private highlight: HighlightLayer | null = null
+  private strokeColor = new Map<number, string>()
 
   /** What the camera frames for a tree row: a 'zone:<id>' or 'cable:<key>' mesh (world bounds), or null. */
   frameOfKey(key: string): { center: Vector3; boundingRadius: number } | null {
@@ -193,22 +204,23 @@ export class SceneHost {
   private applyDecor(): void {
     const scene = this._scene
     if (!scene) return
+    const hl = this.highlight
+    hl?.removeAllMeshes()
+    this.strokeColor.clear()
     for (const [id, inst] of this.instances) {
       inst.root.setEnabled(!this.hidden.has(id))
       const on = id === this.selected
       const hover = !on && id === this.hoveredId
       for (const m of inst.root.getChildMeshes(false)) {
         if (m.metadata?.isDeviceBody !== true) continue
-        m.renderOutline = on || hover
         m.renderOverlay = on
         if (on) {
-          m.outlineColor = SELECTION
-          m.outlineWidth = SELECT_OUTLINE_WIDTH
           m.overlayColor = SELECTION
           m.overlayAlpha = SELECT_OVERLAY_ALPHA
-        } else if (hover) {
-          m.outlineColor = HOVER
-          m.outlineWidth = HOVER_OUTLINE_WIDTH
+        }
+        if ((on || hover) && hl && m instanceof Mesh && m.getTotalVertices() > 0) {
+          hl.addMesh(m, on ? SELECTION : HOVER)
+          this.strokeColor.set(m.uniqueId, on ? CREATION_TOKENS.scene.selection : CREATION_TOKENS.scene.hover)
         }
       }
     }
@@ -330,6 +342,8 @@ export class SceneHost {
     this.bag = null
     this.controllers = null
     this.applied = null
+    this.highlight = null // disposed with its scene
+    this.strokeColor.clear()
   }
 
   private buildScene(data: PlaceData, buildRoom: RoomBuild | null): Scene {
@@ -338,6 +352,10 @@ export class SceneHost {
     this._scene = scene
     const nuit = Color3.FromHexString(NUIT)
     scene.clearColor = new Color4(nuit.r, nuit.g, nuit.b, 1)
+    // Selection / hover stroke (Task 14b): only drawn when a frame renders; empty = no cost.
+    const hl = new HighlightLayer('cr:stroke', scene, { isStroke: true, mainTextureRatio: 1, blurHorizontalSize: 1, blurVerticalSize: 1 })
+    hl.innerGlow = false
+    this.highlight = hl
 
     // Overview from the audience side (+z) looking at the stage end (−z), as the legacy room boot.
     const roomRadius = Math.min(55, Math.max(8, Math.max(data.width, data.length) * 0.8))
@@ -373,7 +391,8 @@ export class SceneHost {
     if (data.kind === 'room' && buildRoom) {
       buildRoom(scene, data.file, data.layout, CREATION_ROOM_THEME)
       this._layout = data.layout
-      this.buildGrid(scene, data.layout.width, data.layout.length)
+      // Above the flat zone marks (5 mm; the themed floor is depth-biased back, RoomBuilder), under the raised decks.
+      this.buildGrid(scene, data.layout.width, data.layout.length, 0.012)
     } else {
       const ground = MeshBuilder.CreateGround('stage', { width: data.width, height: data.length }, scene)
       const mat = new StandardMaterial('mat:stage', scene)
@@ -396,9 +415,8 @@ export class SceneHost {
     return scene
   }
 
-  /** Blank room: a 1 m grid (every 5 m from the centre stronger), one line-system mesh, never picked. */
-  private buildGrid(scene: Scene, width: number, length: number): void {
-    const y = 0.003 // above the floor, no z-fighting
+  /** A 1 m grid (every 5 m from the centre stronger), one line-system mesh, never picked. */
+  private buildGrid(scene: Scene, width: number, length: number, y = 0.003 /* above the floor, no z-fighting */): void {
     const hw = width / 2
     const hl = length / 2
     const minor = Color4.FromColor3(Color3.FromHexString(CREATION_TOKENS.scene.gridMinor))
@@ -413,8 +431,7 @@ export class SceneHost {
     for (let i = -Math.floor(hw); i <= Math.floor(hw); i++) add(new Vector3(i, y, -hl), new Vector3(i, y, hl), i)
     for (let j = -Math.floor(hl); j <= Math.floor(hl); j++) add(new Vector3(-hw, y, j), new Vector3(hw, y, j), j)
     const grid = MeshBuilder.CreateLineSystem('stage:grid', { lines, colors }, scene)
-    grid.isPickable = false
-  }
+    grid.isPickable = false  }
 
   /** The venue set .glb (as game.ts): non-blocking, a failure keeps the plain floor. */
   private async importSet(scene: Scene, set: NonNullable<Extract<PlaceData, { kind: 'set' }>['env']['set']>): Promise<void> {

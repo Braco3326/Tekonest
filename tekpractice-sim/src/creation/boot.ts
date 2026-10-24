@@ -857,6 +857,7 @@ export async function bootCreation(): Promise<void> {
     },
     visible: (id) => host.visible(id),
     outlined: () => host.outlined(),
+    hovered: () => host.hovered(),
     hidden: () => viewState.get().hidden,
     pickAt: (x, y) => pickDevice(host.scene, x, y),
     treeRenders: () => tree.renders,

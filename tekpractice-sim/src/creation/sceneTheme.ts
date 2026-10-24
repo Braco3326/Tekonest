@@ -42,6 +42,7 @@ export const CREATION_DEVICE_THEME: DeviceTheme = {
   accentOf: (category) => FAMILY[category] ?? null,
   port: { in: S.portIn, out: S.portOut, bidir: S.portBidir },
   portGlow: L.portGlow,
+  bodyGlow: L.bodyGlow,
   labelInk: S.labelInk,
   labelBg: S.labelBg,
   labelFont: CREATION_TOKENS.font.ui,

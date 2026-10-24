@@ -46,7 +46,7 @@ describe('creation tokens (brief §2, P11)', () => {
     expect(L.fillSky).toMatch(/^#[0-9A-Fa-f]{6}$/)
     expect(L.fillGround).toMatch(/^#[0-9A-Fa-f]{6}$/)
     expect(L.keyColor).toMatch(/^#[0-9A-Fa-f]{6}$/)
-    for (const v of [L.fill, L.key, L.shadowAlpha, L.portGlow]) expect(v).toBeGreaterThan(0)
+    for (const v of [L.fill, L.key, L.shadowAlpha, L.portGlow, L.bodyGlow]) expect(v).toBeGreaterThan(0)
   })
   it('Task 14b: scene contrast (dark, low-saturation, devices and ports stand out)', () => {
     const S = CREATION_TOKENS.scene
@@ -60,6 +60,11 @@ describe('creation tokens (brief §2, P11)', () => {
     expect(contrastRatio(S.labelInk, S.labelBg)).toBeGreaterThanOrEqual(4.5)
     expect(contrastRatio(S.labelInk, S.floor)).toBeGreaterThanOrEqual(4.5)
     expect(contrastRatio(S.zoneEdge, S.zoneFill)).toBeGreaterThanOrEqual(2.5)
+    // family tints stay subtle: close to the body, never a saturated box
+    for (const a of [S.accentMixing, S.accentSource, S.accentSpeaker, S.accentInfra]) {
+      expect(a).not.toBe(S.deviceBody)
+      expect(contrastRatio(a, S.deviceBody)).toBeLessThanOrEqual(1.6)
+    }
     // selection = the shell's Ambre, readable on the floor, distinguishable from hover
     expect(S.selection).toBe(C.ambre)
     expect(contrastRatio(S.selection, S.floor)).toBeGreaterThanOrEqual(3)

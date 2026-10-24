@@ -297,13 +297,16 @@ describe('SceneHost view decor (Task 9): selection outline and hidden objects', 
     await host.load(placeFromKey('blank'), rig('blank'))
     host.setSelected('ql1')
     expect(bodies(host, 'ql1').length).toBeGreaterThan(0)
+    // Task 14b: a screen-space Ambre stroke (HighlightLayer) + the Ambre wash
+    expect(host.strokeOf('ql1')).toBe(CREATION_TOKENS.color.ambre)
     for (const m of bodies(host, 'ql1')) {
-      expect(m.renderOutline).toBe(true)
-      expect(m.outlineColor.toHexString()).toBe(CREATION_TOKENS.color.ambre)
+      expect(m.renderOverlay).toBe(true)
+      expect(m.overlayColor.toHexString()).toBe(CREATION_TOKENS.color.ambre)
     }
     expect(host.outlined()).toEqual(['ql1'])
     host.setSelected('k12-g')
-    expect(bodies(host, 'ql1').some((m) => m.renderOutline)).toBe(false)
+    expect(host.strokeOf('ql1')).toBeNull()
+    expect(bodies(host, 'ql1').some((m) => m.renderOverlay)).toBe(false)
     expect(host.outlined()).toEqual(['k12-g'])
     host.setSelected(null)
     expect(host.outlined()).toEqual([])
