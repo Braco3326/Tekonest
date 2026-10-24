@@ -28,6 +28,8 @@ export interface PlaceControllerDeps {
   bounds(place: PlaceRef): Promise<PlaceBounds>
   /** « Garder le matériel » / « Repartir à vide » / « Annuler ». */
   confirm(): Promise<PlaceChoice>
+  /** A model over a rig with gear: « Remplacer le matériel » / « Annuler ». */
+  confirmReplace(): Promise<'replace' | 'cancel'>
   /** Called once a change is about to be dispatched (the shell shows the canvas). */
   onCommit?(): void
   /** History entry label. */
@@ -39,7 +41,7 @@ export interface PlaceController {
   choosePlace(key: string): Promise<PlaceResult>
   /** The user path: asks keep / empty / cancel when the rig has gear. */
   requestPlace(key: string): Promise<PlaceResult>
-  /** A whole design for `key` (a template, « Avec le matériel du modèle »): replaces the rig, undoable after the first place. */
+  /** A whole design for `key` (a template, « Avec le matériel du modèle »): replaces the rig (asked first when it has gear), undoable after the first place. */
   loadDesign(key: string, build: () => Promise<DesignState>): Promise<PlaceResult>
 }
 
@@ -97,7 +99,10 @@ export function createPlaceController(d: PlaceControllerDeps): PlaceController {
       }),
     loadDesign: (key, build) =>
       guarded(async () => {
-        const first = d.store.design().roomId === null
+        const current = d.store.design()
+        const first = current.roomId === null
+        // Gear on stage: a model replaces it only when the learner says so (undoable afterwards).
+        if (current.rig.instances.length > 0 && (await d.confirmReplace()) !== 'replace') return 'cancelled'
         let next: DesignState
         try {
           next = await build()

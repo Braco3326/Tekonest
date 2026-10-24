@@ -19,6 +19,8 @@ function setup(choice: PlaceChoice = 'keep') {
     gate = new Promise<void>((r) => (release = r))
   }
   const confirm = vi.fn(async () => choice)
+  let replace: 'replace' | 'cancel' = 'replace'
+  const confirmReplace = vi.fn(async () => replace)
   const ctrl = createPlaceController({
     store,
     history,
@@ -27,9 +29,11 @@ function setup(choice: PlaceChoice = 'keep') {
       return { width: 10, length: 8, floorAt: () => 0 }
     },
     confirm,
+    confirmReplace,
     label: 'Changer de lieu',
   })
-  return { store, history, ctrl, applies, confirm, hold, release: () => release() }
+  const setReplace = (r: 'replace' | 'cancel') => (replace = r)
+  return { store, history, ctrl, applies, confirm, confirmReplace, setReplace, hold, release: () => release() }
 }
 
 describe('place controller (Task 6 review)', () => {
@@ -107,10 +111,29 @@ describe('place controller (Task 6 review)', () => {
     expect(store.design().rig.instances).toHaveLength(2)
     expect(history.sizes.undo).toBe(0)
     expect(await ctrl.loadDesign('blank', async () => design('blank', 1))).toBe('done')
-    expect(confirm).not.toHaveBeenCalled() // an explicit model choice replaces the rig (undoable)
+    expect(confirm).not.toHaveBeenCalled() // the keep / empty dialog is for place changes, not models
     expect(history.sizes.undo).toBe(1)
     history.undo()
     expect(store.design().rig.instances).toHaveLength(2)
+  })
+  it('loadDesign over a rig with gear asks « Remplacer le matériel / Annuler » first (review fix 1)', async () => {
+    const { store, ctrl, confirmReplace, setReplace, history } = setup()
+    const one = { roomId: 'blank', rig: { instances: [{ instanceId: 'q', deviceId: 'yamaha-ql1' }], connections: [], controls: {} }, placements: [] }
+    // empty rig: no question
+    expect(await ctrl.loadDesign('blank', async () => one)).toBe('done')
+    expect(confirmReplace).not.toHaveBeenCalled()
+    // gear on stage, « Annuler »: nothing built, nothing changed
+    setReplace('cancel')
+    const build = vi.fn(async () => ({ ...one, roomId: 'room:concert-hall-medium' }))
+    expect(await ctrl.loadDesign('room:concert-hall-medium', build)).toBe('cancelled')
+    expect(confirmReplace).toHaveBeenCalledTimes(1)
+    expect(build).not.toHaveBeenCalled()
+    expect(store.design().roomId).toBe('blank')
+    // « Remplacer le matériel »: applied, undoable
+    setReplace('replace')
+    expect(await ctrl.loadDesign('room:concert-hall-medium', build)).toBe('done')
+    expect(store.design().roomId).toBe('room:concert-hall-medium')
+    expect(history.canUndo).toBe(true)
   })
   it('loadDesign: a failing build changes nothing and reports « failed »', async () => {
     const { store, ctrl } = setup()
