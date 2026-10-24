@@ -34,7 +34,14 @@ export const QUARANTINE_RAW_CAP = 200_000
 /** Deliberately no removeItem: the store can quarantine, never erase. */
 export type TrialStorage = Pick<Storage, 'getItem' | 'setItem'>
 
-export type StoreWarning = 'near-budget' | 'quarantine-failed' | 'quarantine-evicted' | 'storage-unavailable' | 'crypto-unavailable'
+export type StoreWarning =
+  | 'near-budget'
+  | 'quarantine-failed'
+  | 'quarantine-evicted'
+  /** The corrupt payload was longer than QUARANTINE_RAW_CAP: read-only, main key kept intact. */
+  | 'quarantine-truncated'
+  | 'storage-unavailable'
+  | 'crypto-unavailable'
 export type WriteFailure = 'quota' | 'storage' | 'budget' | 'not-found' | 'duplicate-id' | 'invalid' | 'empty' | 'read-only'
 export type WriteResult = { ok: true; warnings: StoreWarning[] } | { ok: false; reason: WriteFailure }
 export interface LoadResult {
@@ -213,6 +220,12 @@ export class TrialStore {
       return { trials: this.trials, quarantined: true, warnings: ['quarantine-failed'] }
     }
     const warnings: StoreWarning[] = evicted ? ['quarantine-evicted'] : []
+    if (raw.length > QUARANTINE_RAW_CAP) {
+      // The quarantine copy is incomplete: the main key is now the only full
+      // copy, so nothing may overwrite it until the learner exports it.
+      this.readOnly = true
+      warnings.push('quarantine-truncated')
+    }
     return { trials: this.trials, quarantined: true, warnings: [...warnings, ...this.budgetWarnings(this.bytesUsed())] }
   }
 

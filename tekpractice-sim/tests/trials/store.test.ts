@@ -330,6 +330,24 @@ describe('TrialStore: quarantine (never removeItem)', () => {
     expect(quarantineItems(s)).toHaveLength(1)
   })
 
+  it('a truncated quarantine copy is incomplete → read-only, quarantine-truncated, main key untouched', async () => {
+    const s = new MemStorage()
+    const big = '{' + 'x'.repeat(QUARANTINE_RAW_CAP + 10)
+    s.data.set(TRIALS_KEY, big)
+    const store = new TrialStore(s)
+    const r = await store.load()
+    expect(r.quarantined).toBe(true)
+    expect(r.warnings).toContain('quarantine-truncated')
+    expect(await store.append(await trialA())).toEqual({ ok: false, reason: 'read-only' })
+    expect(await store.remove('anything')).toEqual({ ok: false, reason: 'read-only' })
+    expect(s.getItem(TRIALS_KEY)).toBe(big)
+    // still protected on the next session
+    const again = new TrialStore(s)
+    expect((await again.load()).warnings).toContain('quarantine-truncated')
+    expect(await again.append(await trialA())).toEqual({ ok: false, reason: 'read-only' })
+    expect(s.getItem(TRIALS_KEY)).toBe(big)
+  })
+
   it('warns quarantine-evicted when the cap drops the oldest item', async () => {
     const s = new MemStorage()
     const warnings: string[][] = []
