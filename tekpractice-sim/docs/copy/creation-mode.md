@@ -115,6 +115,69 @@ Types de zones des salles (`content/rooms/*.json`, `zones[].kind`), nommés dans
 | `zoneKind.gallery` | Galerie | à valider (tekuxwriter) | Idem |
 | `zoneKind.other` | Autre zone | à valider (tekuxwriter) | Idem |
 
+## props
+
+Panneau « Propriétés » (Task 10) : l'appareil sélectionné. Tous les libellés sont de tekfrontenddesigner, en attente de tekuxwriter.
+
+**Convention d'inclinaison (lue par l'acoustique, Task 36)** : `tiltDeg` positif = l'avant de l'appareil (son axe acoustique, z local +, P9 / ADR-0015) vise **vers le haut** ; négatif = vise vers le bas (vers le public). Bornée à [−90°, 90°]. Le lacet est ramené dans [0°, 360°). Voir `src/creation/shell/propertiesModel.ts` et l'addendum d'ADR-0013.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `props.none` | Aucune sélection | à valider (tekuxwriter) | Propriétés vide : titre (h3) |
+| `props.noneHint` | Choisissez un appareil dans le panneau Projet, ou parcourez-les avec [ et ] dans la vue 3D. | à valider (tekuxwriter) | Propriétés vide : indication sous le titre |
+| `props.sectionPosition` | Position | brief | Légende de la section (fieldset) |
+| `props.sectionOrientation` | Orientation | brief | Idem |
+| `props.sectionMount` | Montage | brief | Idem |
+| `props.sectionControls` | Réglages | brief | Idem (contrôles du catalogue : +48V, mute, fader…) |
+| `props.sectionConnections` | Connexions | brief | Idem (liste des prises, lecture seule + « Débrancher ») |
+| `props.name` | Nom | à valider (tekuxwriter) | Champ en lecture seule : l'identifiant de l'appareil (ql1, k12-g) |
+| `props.x` | X | à valider (tekuxwriter) | Champ, en m |
+| `props.y` | Hauteur | à valider (tekuxwriter) | Champ, en m ; lecture seule quand le montage est « Sol » |
+| `props.z` | Z | à valider (tekuxwriter) | Champ, en m |
+| `props.yaw` | Lacet | brief | Champ, en ° (pas 15°, comme la touche R) |
+| `props.tilt` | Inclinaison | à valider (tekuxwriter) | Champ, en ° (pas 1°), voir la convention ci-dessus |
+| `props.mount` | Montage | à valider (tekuxwriter) | Liste déroulante |
+| `props.mountFloor` | Sol | brief | Option ; force la hauteur au niveau du sol |
+| `props.mountStand` | Pied | brief | Option |
+| `props.mountFlown` | Accroché | brief | Option |
+| `props.positionHint` | En mètres, depuis le centre du lieu. La hauteur se règle quand l’appareil est sur pied ou accroché. | à valider (tekuxwriter) | Description de la section Position (`aria-describedby`) |
+| `props.orientationHint` | Lacet : rotation autour de la verticale. Inclinaison positive : l’avant vise vers le haut. | à valider (tekuxwriter) | Description de la section Orientation |
+| `props.decrease` | Diminuer {field} | brief | Nom du bouton − ; `{field}` = libellé du champ (« Diminuer X ») |
+| `props.increase` | Augmenter {field} | brief | Nom du bouton + (« Augmenter Lacet ») |
+| `props.adjust` | Régler {field} | brief | Libellé de l'entrée d'historique (saisie ou rafale de ±) |
+| `props.invalidNumber` | Valeur non valide : entrez un nombre, par exemple 2,5. | à valider (tekuxwriter) | Erreur sous le champ (`aria-invalid`, `aria-describedby`, annoncée) ; rien n'est appliqué |
+| `props.toggleOn` | Activé | à valider (tekuxwriter) | État visible d'un interrupteur (`aria-pressed` le dit au lecteur d'écran) |
+| `props.toggleOff` | Désactivé | à valider (tekuxwriter) | Idem |
+| `props.noControls` | Aucun réglage sur cet appareil. | à valider (tekuxwriter) | Section Réglages vide |
+| `props.noPorts` | Aucune prise sur cet appareil. | à valider (tekuxwriter) | Section Connexions vide (pied de micro…) |
+| `props.portFree` | libre | à valider (tekuxwriter) | Prise sans câble |
+| `props.unplug` | Débrancher | à valider (tekuxwriter) | Texte visible du bouton par câble |
+| `props.unplugName` | Débrancher {port} de {other} | à valider (tekuxwriter) | Nom complet du bouton ; `{other}` = « K12.2 (k12-g) · in-line-a » |
+| `props.statusUnplugged` | Débranché : {port} de {other} | à valider (tekuxwriter) | Barre d'état (annoncé) après « Débrancher » |
+
+## signal
+
+Types de signal du catalogue (`signalTypes[].id`), tels que Propriétés les nomme. Termes techniques anglais gardés (AES3, MADI, Word clock, GPIO).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `signal.mic-level` | Niveau micro | à valider (tekuxwriter) | Connexions |
+| `signal.line-level-pro` | Niveau ligne pro (+4 dBu) | à valider (tekuxwriter) | Idem |
+| `signal.line-level-consumer` | Niveau ligne grand public (−10 dBV) | à valider (tekuxwriter) | Idem |
+| `signal.instrument-hiz` | Instrument (Hi-Z) | à valider (tekuxwriter) | Idem |
+| `signal.speaker-level` | Niveau haut-parleur | à valider (tekuxwriter) | Idem |
+| `signal.headphone-level` | Niveau casque | à valider (tekuxwriter) | Idem |
+| `signal.aes3` | AES3 numérique | à valider (tekuxwriter) | Idem |
+| `signal.spdif` | S/PDIF numérique | à valider (tekuxwriter) | Idem |
+| `signal.madi` | MADI multicanal | à valider (tekuxwriter) | Idem |
+| `signal.aoip` | Audio sur IP (Dante) | à valider (tekuxwriter) | Idem |
+| `signal.wordclock` | Word clock | à valider (tekuxwriter) | Idem |
+| `signal.usb-audio` | Liaison audio ordinateur (USB) | à valider (tekuxwriter) | Idem |
+| `signal.gpio-tally` | GPIO / tally | à valider (tekuxwriter) | Idem |
+| `signal.dmx512` | DMX512 | à valider (tekuxwriter) | Idem |
+| `signal.phantom-48v` | Alimentation fantôme +48 V | à valider (tekuxwriter) | Idem |
+| `signal.mains-power` | Secteur 230 V | à valider (tekuxwriter) | Idem |
+
 ## picker
 
 | Key | Texte | Statut | Où / notes |
