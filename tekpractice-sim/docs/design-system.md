@@ -47,6 +47,25 @@ directement (Color3.FromHexString).
   les ports incompatibles reculent à `dimVisibility` (0.35) ; le vol caméra dure `flyMs` (300 ms).
 - Labels 3D : cartels encre-sur-blanc (texture opaque). ⚠️ Piège appris : l'opacityTexture Babylon dérive l'alpha de la LUMINANCE → texte sombre sur transparent = invisible. On n'utilise PLUS d'alpha pour les labels. Police canvas : `bold Npx sans-serif` uniquement (`500 … system-ui` ne parse pas dans le canvas headless).
 
+## Scène 3D — Mode Création (Task 14b, tokens `CREATION_TOKENS.scene` / `.light`)
+
+Le viewport du Mode Création suit le chrome (Nuit / Papier / Ambre / Prune), pas la galerie blanche
+ci-dessus, qui reste le look legacy (`?legacy=1`, `?level=`). Thème opt-in : `src/creation/sceneTheme.ts`
+passe `RoomTheme` à `buildRoom` et `DeviceTheme` à `DeviceSpawner` ; sans thème, sortie legacy identique (testé).
+
+- Sol `#2E2830` sur clear Nuit, grille 1 m (`gridMinor`, majeure tous les 5 m `gridMajor`) aussi dans les salles,
+  au-dessus des zones plates. Murs `#221E23`, plafond `#1A171B` : ils cadrent sans concurrencer.
+- Zones : un seul remplissage opaque `zoneFill` + un liseré 1 px `zoneEdge` (Prune-gris) ; plus de teintes saturées par type.
+- Placeholders : corps `deviceBody`, dessus teinté par famille (mixage / sources / diffusion / infra), ~35 % vers une teinte ;
+  auto-illumination `bodyGlow` pour que les faces à l'ombre ne se fondent pas dans le sol. Les .glb ne sont jamais recolorés.
+- Ports : `portIn` bleu / `portOut` jaune / `portBidir` lilas, ≥ 3:1 sur le corps et le sol, `portGlow` 0.55.
+- Labels : encre Papier + halo `labelBg` sur texture transparente (alpha = couverture du glyphe), IBM Plex Sans bold.
+  ⚠️ `DynamicTexture.drawText(y = null)` lit la taille comme TOUS les chiffres de la police : jamais de graisse numérique.
+- Lumière : une hémisphérique `fill` 0.62 (sol `fillGround` assez clair pour décoller les faces verticales) + une clé 0.6
+  légèrement chaude ; pas de shadow map, aucun travail par frame (render on demand inchangé, idle = 0 rendu).
+- Sélection : trait écran Ambre (`HighlightLayer` isStroke, net à toute distance, sans les « ailettes » du mesh outline
+  sur les normales éclatées des .glb) + lavis Ambre 0.22. Survol : trait Papier, sans lavis (≠ sélection, contraste 2.2:1 entre eux).
+
 ## HUD
 
 Cartes blanches `surface` + bord `surfaceBorder` + `elev-card`, rayon `md`.
