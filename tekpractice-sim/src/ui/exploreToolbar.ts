@@ -17,9 +17,20 @@ export interface ExploreToolbarDeps extends Omit<ExploreHudDeps, 'onPanelsChange
   focusedInstance(): string | null
   /** « Vue d'ensemble » (CAMERA_HOME, Task 4): fly back to the Ensemble pose. */
   home(): void
+  /** Essais side panel (Task 14): absent in exam mode unless the level declares Essais (D2). */
+  essais?: EssaisToolbarHooks
 }
 
-type Act = 'home' | 'inventory' | 'view' | 'help' | 'settings' | 'pickup'
+/** The Essais side panel as the toolbar sees it (the panel module is a lazy chunk). */
+export interface EssaisToolbarHooks {
+  isOpen(): boolean
+  open(): void
+  close(): void
+  comparing(): boolean
+  closeCompare(): void
+}
+
+type Act = 'home' | 'inventory' | 'essais' | 'view' | 'help' | 'settings' | 'pickup'
 
 export class ExploreToolbar implements ExploreUi {
   private el: HTMLElement
@@ -33,7 +44,14 @@ export class ExploreToolbar implements ExploreUi {
     this.el = document.createElement('nav')
     this.el.id = 'explore-toolbar'
     this.el.setAttribute('aria-label', 'Contrôles du monde 3D')
-    const acts: Act[] = ['home', ...(deps.inventoryEnabled ? (['inventory'] as Act[]) : []), 'view', 'help', 'settings']
+    const acts: Act[] = [
+      'home',
+      ...(deps.inventoryEnabled ? (['inventory'] as Act[]) : []),
+      ...(deps.essais ? (['essais'] as Act[]) : []),
+      'view',
+      'help',
+      'settings',
+    ]
     if (deps.sandbox) acts.push('pickup')
     for (const act of acts) {
       const b = document.createElement('button')
@@ -50,7 +68,14 @@ export class ExploreToolbar implements ExploreUi {
   private panels(): Promise<ExploreHud> {
     this.loading ??= import('./exploreHud')
       .then(({ ExploreHud: Hud }) => {
-        this.hud = new Hud({ ...this.deps, onPanelsChanged: () => this.render() })
+        this.hud = new Hud({
+          ...this.deps,
+          onPanelsChanged: () => {
+            // One side panel at a time: a dialog (inventory, help…) closes the Essais panel.
+            if ((this.hud?.panelCount() ?? 0) > 0 && this.deps.essais?.isOpen()) this.deps.essais.close()
+            this.render()
+          },
+        })
         return this.hud
       })
       .catch((err: unknown) => {
@@ -114,6 +139,31 @@ export class ExploreToolbar implements ExploreUi {
   capturingKey(): boolean {
     return this.hud?.capturingKey() ?? false
   }
+  comparing(): boolean {
+    return this.deps.essais?.comparing() ?? false
+  }
+  closeCompare(): void {
+    this.deps.essais?.closeCompare()
+  }
+  sidePanelOpen(): boolean {
+    return this.deps.essais?.isOpen() ?? false
+  }
+  closeSidePanel(): void {
+    this.deps.essais?.close()
+    this.render()
+  }
+
+  /** Essais toggle: dialogs it would overlap close first (one side panel at a time). */
+  toggleEssais(): void {
+    const e = this.deps.essais
+    if (!e) return
+    if (e.isOpen()) e.close()
+    else {
+      while (this.panelCount() > 0) this.closeTopPanel()
+      e.open()
+    }
+    this.render()
+  }
 
   /** Re-render labels/states after a view switch, a focus change or a settings change. */
   refresh(): void {
@@ -124,6 +174,7 @@ export class ExploreToolbar implements ExploreUi {
   private onClick(act: Act): void {
     if (act === 'home') this.deps.home()
     else if (act === 'inventory') this.toggleInventory()
+    else if (act === 'essais') this.toggleEssais()
     else if (act === 'help') this.toggleHelp()
     else if (act === 'settings') this.withPanels((h) => h.toggleSettings())
     else if (act === 'view') {
@@ -164,6 +215,17 @@ export class ExploreToolbar implements ExploreUi {
       home.setAttribute('aria-label', "Revenir à la vue d'ensemble de la salle")
     }
     this.set('inventory', `Inventaire ${kbd('TOGGLE_INVENTORY')}`, this.open('inventory'))
+    const essais = this.buttons.get('essais')
+    if (essais && this.deps.essais) {
+      // Copy deck essais.panel.title / .open.aria / .close.aria. The label stays
+      // « Essais »; the state is aria-expanded (no aria-pressed on a disclosure).
+      const open = this.deps.essais.isOpen()
+      this.set('essais', 'Essais')
+      essais.id = 'essais-toggle'
+      essais.setAttribute('aria-expanded', String(open))
+      essais.setAttribute('aria-controls', 'essais-panel')
+      essais.title = open ? 'Fermer le panneau des essais' : 'Ouvrir le panneau des essais'
+    }
     // The label says the state; no aria-pressed on a button whose label changes.
     this.set('view', `Vue : ${view === 'explore' ? 'Exploration' : 'Orbite'} ${kbd('TOGGLE_VIEW')}`)
     this.buttons.get('view')?.setAttribute('title', 'Exploration : marcher dans la salle. Orbite : tourner autour du matériel.')

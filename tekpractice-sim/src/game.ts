@@ -47,7 +47,11 @@ import type { ToastAction } from './ui/hud'
 import coachJson from '../content/coach/tips.json'
 import { motionEnabled, setMotionOverride } from './design/tokens'
 import { ExploreController, type BaseView, type ExploreUi } from './scene/ExploreController'
-import { ViewDirector } from './scene/ViewDirector'
+import { poseFromEye, ViewDirector } from './scene/ViewDirector'
+import type { CameraPose } from './scene/CameraRig'
+// Types only: the Essais panel and the trials modules are a lazy chunk (Task 14).
+import type { EssaisHost, EssaisPanel } from './ui/essaisPanel'
+import type { DeepReadonly, DesignState } from './trials/trial'
 import { applyOrbitFeel, ENSEMBLE_LOWER_RADIUS } from './camera/orbitFeel'
 import { installDesignerOrbitInput } from './scene/designerOrbitInput'
 import { roomWalls, type Box } from './explore/collision'
@@ -152,6 +156,11 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   // the green/red tint of the held cable — never the cable itself.
   let hintsOn = !examMode
   const hints = (): boolean => !examMode && hintsOn
+  // Essais (ADR-0012 D2, Task 14): the sandbox, and levels that declare them.
+  // Never in exam mode unless the level declares them (a sandbox is never an exam).
+  const essaisEnabled = sandboxMode || level.essais === true
+  let essais: EssaisPanel | null = null
+  const comparing = (): boolean => essais?.comparing() ?? false
 
   // ── engine ────────────────────────────────────────────────────────────────
   const graph = new ConnectionGraph(registry, level.devices)
@@ -353,7 +362,13 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     hud.toast('coach', 'Conseil d’Oscar', tip.text)
   }
 
-  const refresh = (): LevelState => {
+  /**
+   * `mode` (Task 14): 'normal' = a learner action; 'preview' = an Essais
+   * compare shows a frozen design (read-only: no toast, no mistake, no win, the
+   * live fingerprint is not recomputed); 'restore' = a design re-applied as the
+   * live setup (no toast, no mistake: the learner did not make them now).
+   */
+  const refresh = (mode: 'normal' | 'preview' | 'restore' = 'normal'): LevelState => {
     const state = runner.check(graph)
     hud.update(state)
     controlsPanel.update(graph.snapshot())
@@ -361,6 +376,13 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     console.info(
       `[${level.id}] ${state.connectedRequired}/${state.totalRequired} required — ${state.won ? 'WIN' : 'in progress'}`,
     )
+    if (mode !== 'normal') {
+      // Re-sync the "already taught" set silently, so the next real change teaches only what is new.
+      activeViolations.clear()
+      for (const v of state.violations) activeViolations.add(v.ruleId)
+    }
+    if (mode !== 'preview') essais?.liveChanged()
+    if (mode === 'preview') return state
     // Logic violations (R4–R8 sweeps) — recorded ALWAYS (play = assessment),
     // but taught (toasted) only outside exam mode.
     for (const v of state.violations) {
@@ -509,7 +531,69 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     })
   }
 
-  // Rig reload (ADR-0005): clear stage → respawn exact ids → rewire → restate.
+  /**
+   * The live setup as an Essai design (Task 14): graph snapshot + placements
+   * (exact floats; the fingerprint quantises) + the room id.
+   */
+  const captureDesign = (): DesignState => {
+    const snap = graph.snapshot()
+    const ids = new Set(snap.instances.map((i) => i.instanceId))
+    return {
+      roomId: room?.file.id ?? null,
+      rig: {
+        instances: snap.instances.map((i) => ({ instanceId: i.instanceId, deviceId: i.deviceId })),
+        connections: snap.connections,
+        controls: Object.fromEntries(snap.instances.map((i) => [i.instanceId, { ...i.controls }])),
+      },
+      placements: instances
+        .filter((inst) => ids.has(inst.instanceId))
+        .map((inst) => ({
+          instanceId: inst.instanceId,
+          deviceId: inst.deviceId,
+          position_m: [inst.root.position.x, inst.root.position.y, inst.root.position.z] as [number, number, number],
+          yawDeg: (inst.root.rotation.y * 180) / Math.PI,
+        })),
+    }
+  }
+
+  /**
+   * Clear stage → respawn exact ids at their placements → rewire → restate.
+   * Shared by the rig reload (ADR-0005) and the Essais (compare preview,
+   * « Repartir de cet essai », compare close). Returns false when a device of
+   * the design no longer exists in the catalog. The room itself never changes.
+   */
+  const applyDesign = (design: DeepReadonly<DesignState>, mode: 'normal' | 'preview' | 'restore'): boolean => {
+    // Drop a held cable / leave a focus on a device that is about to disappear.
+    for (const inst of [...instances]) focusPatch.releaseInstance(inst.instanceId)
+    graph.clear()
+    cables.clear()
+    for (const inst of instances) inst.dispose()
+    instances.length = 0
+    portPoints.length = 0
+    invalidateObstacles()
+    const placed = new Map(design.placements.map((p) => [p.instanceId, p]))
+    let allOk = true
+    design.rig.instances.forEach((s, i) => {
+      const p = placed.get(s.instanceId)
+      // Stored data is untrusted: only finite numbers count as a position.
+      const valid = !!p && p.position_m.length === 3 && p.position_m.every((v) => Number.isFinite(v)) && Number.isFinite(p.yawDeg)
+      const at = valid ? { position: [p.position_m[0], p.position_m[1], p.position_m[2]] as [number, number, number], rotationY: p.yawDeg } : undefined
+      if (!spawnExact(s.instanceId, s.deviceId, i, at)) allOk = false
+      // Sandbox ids are <deviceId>-s<n>: later spawns must never reuse one.
+      const n = /-s(\d+)$/.exec(s.instanceId)
+      spawnCount = Math.max(spawnCount, n ? Number(n[1]) : 0, design.rig.instances.length)
+    })
+    for (const c of design.rig.connections) {
+      const r = graph.connect(c.a, c.b)
+      if (r.ok && r.connectionId) cables.addCable(r.connectionId, portPos(c.a), portPos(c.b))
+    }
+    for (const [instId, ctrls] of Object.entries(design.rig.controls))
+      for (const [controlId, value] of Object.entries(ctrls)) graph.setControl(instId, controlId, value)
+    refresh(mode)
+    return allOk
+  }
+
+  // Rig reload (ADR-0005): a saved rig becomes a design, applied like an Essai.
   const loadRigByName = (name: string): void => {
     const loaded = loadRigs(window.localStorage)
     const rig = loaded.rigs.find((r) => r.name === name)
@@ -519,34 +603,31 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       hud.toast('warning', 'Montage introuvable', `${RIG_COPY.missing(name)}${why ? ` ${why}` : ''}`)
       return
     }
-    graph.clear()
-    cables.clear()
-    for (const inst of instances) inst.dispose()
-    instances.length = 0
-    portPoints.length = 0
-    invalidateObstacles()
-    spawnCount = rig.instances.length
-    let allOk = true
-    rig.instances.forEach((s, i) => {
-      const saved = rig.positions?.[s.instanceId]
-      // Stored data is untrusted: only 4 finite numbers count as a position.
-      const valid = Array.isArray(saved) && saved.length === 4 && saved.every((v) => Number.isFinite(v))
-      const at = valid ? { position: [saved[0], saved[1], saved[2]] as [number, number, number], rotationY: saved[3] } : undefined
-      if (!spawnExact(s.instanceId, s.deviceId, i, at)) allOk = false
-    })
-    for (const c of rig.connections) {
-      const r = graph.connect(c.a, c.b)
-      if (r.ok && r.connectionId) cables.addCable(r.connectionId, portPos(c.a), portPos(c.b))
+    const design: DesignState = {
+      roomId: rig.roomId ?? null,
+      rig: { instances: rig.instances, connections: rig.connections, controls: rig.controls },
+      placements: rig.instances.flatMap((s) => {
+        const saved = rig.positions?.[s.instanceId]
+        // Stored data is untrusted: only 4 finite numbers count as a position.
+        const valid = Array.isArray(saved) && saved.length === 4 && saved.every((v) => Number.isFinite(v))
+        return valid
+          ? [{ instanceId: s.instanceId, deviceId: s.deviceId, position_m: [saved[0], saved[1], saved[2]] as [number, number, number], yawDeg: saved[3] }]
+          : []
+      }),
     }
-    for (const [instId, ctrls] of Object.entries(rig.controls))
-      for (const [controlId, value] of Object.entries(ctrls)) graph.setControl(instId, controlId, value)
+    const allOk = applyDesign(design, 'normal')
     if (!allOk)
       hud.toast('warning', 'Rig partiellement chargé', 'Un appareil de ce rig n’existe plus dans le catalog.')
-    refresh()
   }
 
   const dispatch = (intent: Intent): void => {
     if (exam?.isFinished) return // the exam is over — the report owns the screen
+    if (comparing()) {
+      // An Essais compare is a read-only preview of a frozen design (Task 14):
+      // no intent may mutate it. Copy deck compare.readonly.
+      hud.toast('info', "Comparaison en lecture seule : rien n'est modifié.", 'Échap ferme la comparaison et rend votre montage.')
+      return
+    }
     switch (intent.type) {
       case 'CONNECT': {
         const r = graph.connect(intent.a, intent.b)
@@ -678,6 +759,10 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     onViewChange: () => refreshNavUi(), // « Vue d'ensemble » and the presets show in Orbit only
     onPreset: (slot) => presetsUi?.press(slot),
     onViewKey: (a) => onViewKey(a),
+    onEssaiKey: (a) => {
+      if (!essaisEnabled) return
+      void ensureEssais().then((p) => (a === 'FREEZE_ESSAI' ? void p.freeze() : p.compareKey()))
+    },
     settings: () => settings,
     obstacles,
     start: { x: startX, z: startZ, yaw: startYaw },
@@ -692,7 +777,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     hints,
     onCandidate: markerScale,
     floorPivot: () => !explore.exploreView, // walking has no orbit pivot (ADR-0010)
-    inputEnabled: () => explore.pointerFree(),
+    // An Essais compare is read-only: no focus, no patching (Task 14).
+    inputEnabled: () => explore.pointerFree() && !comparing(),
     onViewChange: () => refreshNavUi(),
   })
   // Inventory, help, settings, pause + placement ghost (ADR-0010 Décisions 8–9).
@@ -740,6 +826,15 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     },
     toggleView: () => explore.toggleView(),
     currentView: () => explore.snapshot().view,
+    essais: essaisEnabled
+      ? {
+          isOpen: () => essais?.isOpen() ?? false,
+          open: () => void ensureEssais().then((p) => p.open()),
+          close: () => essais?.close(),
+          comparing,
+          closeCompare: () => essais?.closeCompare(),
+        }
+      : undefined,
   })
   const exploreUi: ExploreUi = exploreHud
   // View cube + camera presets dock (Task 8): top-left of the 3D view, just
@@ -900,6 +995,76 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     })
     document.getElementById('hud-shelf')!.appendChild(hintsBtn)
   }
+
+  // ── Essais (Task 14, ADR-0012 phase 1): side panel, lazy chunk ─────────────
+  const hudRoot = document.getElementById('hud')!
+  const controlsEl = document.getElementById('hud-controls')
+  /** Where the learner was before a compare: the base view comes back on close. */
+  let compareBase: { view: BaseView; pose: CameraPose | null } | null = null
+  const arcPose = (): CameraPose => ({ alpha: camera.alpha, beta: camera.beta, radius: camera.radius, target: camera.target.clone() })
+  const essaisHost = (): EssaisHost => ({
+    root: hudRoot,
+    anchor: document.getElementById('hud-objectives'),
+    storage: window.localStorage,
+    levelId: level.id,
+    year: () => settings.year,
+    captureDesign,
+    rules: registry.catalog.rules,
+    room: { roomId: room?.file.id ?? null, geometryRev: null },
+    evidence: () => ({ ruleResults: evaluator.evaluate(graph), levelState: runner.check(graph) }),
+    cameraPose: () => {
+      // Walking: the eye and what it looks at, as an orbit pose (the panel clamps it to the orbit guard).
+      if (explore.exploreView && scene.activeCamera !== camera) {
+        const p = poseFromEye(explore.eyePosition(), explore.lookPoint())
+        return { alpha: p.alpha, beta: p.beta, radius: p.radius, target: [p.target.x, p.target.y, p.target.z] }
+      }
+      return { alpha: camera.alpha, beta: camera.beta, radius: camera.radius, target: [camera.target.x, camera.target.y, camera.target.z] }
+    },
+    ruleTitle: (id) => registry.ruleById.get(id)?.title ?? id,
+    applyDesign: (d, mode) => void applyDesign(d, mode === 'preview' ? 'preview' : 'restore'),
+    flyTo: (v) => focusPatch.recallPreset({ alpha: v.pose.alpha, beta: v.pose.beta, radius: v.pose.radius, target: Vector3.FromArray([...v.pose.target]) }),
+    enterCompare: () => {
+      if (placement.active) placement.cancel()
+      focusPatch.leaveFocus()
+      compareBase = { view: explore.exploreView ? 'explore' : 'orbit', pose: explore.exploreView ? null : arcPose() }
+      // The stored views are orbit poses: compare in Orbit (the cube and presets stay usable).
+      if (explore.exploreView) explore.toggleView()
+      hudRoot.classList.add('essais-comparing')
+      if (controlsEl) controlsEl.inert = true
+      refreshNavUi()
+    },
+    exitCompare: () => {
+      hudRoot.classList.remove('essais-comparing')
+      if (controlsEl) controlsEl.inert = false
+      const base = compareBase
+      compareBase = null
+      if (base?.view === 'explore' && !explore.exploreView) {
+        focusPatch.leaveFocus()
+        explore.toggleView() // back to walking, where the walker stood
+      } else if (base?.pose) focusPatch.recallPreset(base.pose)
+      refreshNavUi()
+    },
+    toast: (kind, title, body = '') => void hud.toast(kind, title, body),
+    keyLabel: (a) => {
+      const code = settings.bindings[a][0]
+      return code ? labelFor(code, presetLayout, layoutMap) : '—'
+    },
+    onOpenChange: (open) => {
+      hudRoot.classList.toggle('essais-open', open)
+      refreshNavUi()
+    },
+  })
+  let essaisLoad: Promise<EssaisPanel> | null = null
+  function ensureEssais(): Promise<EssaisPanel> {
+    essaisLoad ??= import('./ui/essaisPanel').then(({ EssaisPanel: Panel }) => {
+      essais = new Panel(essaisHost())
+      essais.liveChanged()
+      return essais
+    })
+    return essaisLoad
+  }
+  // Loaded at boot, off the critical path, so the live fingerprint is known before the first freeze.
+  if (essaisEnabled) void ensureEssais().catch((err: unknown) => console.warn('[essais] panneau indisponible', err))
 
   // Debug/e2e hook (Playwright drives the same REAL clicks a mouse would:
   // deviceScreen() aims double-clicks, portScreen() aims port clicks, both

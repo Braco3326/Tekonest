@@ -415,6 +415,39 @@ Added by tekdeveloper after the Tasks 3–4 review (no tekuxwriter string existe
 | `nav.help.home.gesture` | Alt + H ou bouton « Vue d'ensemble » | Alt + H or the "Vue d'ensemble" button | Help overlay | Shows the remapped key in the key table |
 | `nav.help.home.action` | Revenir à la vue d'ensemble | Go back to the overview | Help overlay | Same words as `viewCube.home.label` |
 
+## 14. Essais panel, Task 14 additions — à valider (tekuxwriter)
+
+Added by tekfrontenddesigner / tekdeveloper while wiring the panel (night build 2026-10-24): the deck had no string for these. Shipped as written below, **à valider (tekuxwriter)**. Code: `src/trials/essaisViewModel.ts` (`COPY` and the notice functions), `src/game.ts`, `src/ui/exploreHud.ts`.
+
+| key | FR | EN gloss | where it shows | notes |
+|---|---|---|---|---|
+| `essais.prediction.required` | Écrivez votre prédiction avant de figer. | Write your prediction before freezing. | Panel notice when G / Figer is pressed with an empty prediction | **à valider (tekuxwriter)**. Followed by `essais.prediction.help` |
+| `export.button.teacher` | Exporter pour l'enseignant (.essai.json) | Export for the teacher (.essai.json) | Panel button | **à valider (tekuxwriter)**. Brief Task 14 label; `export.button` (« Exporter ») kept for shorter places |
+| `caption.none` | Affiché : Montage actuel · pas encore figé | Displayed: current setup · not frozen yet | Caption bar, no Essai displayed | **à valider (tekuxwriter)**. Built from `essais.current.title` + `essais.current.state.none` |
+| `caption.compare` | Affiché : Essai {name} · comparaison en lecture seule | Displayed: Trial {name} · read-only comparison | Caption bar during a compare | **à valider (tekuxwriter)** |
+| `compare.diff.controls` | Réglages | Settings | Compare table row (device controls, e.g. +48 V) | **à valider (tekuxwriter)** |
+| `compare.room.none` | sans salle | no room | Compare table cell (level without a room) | **à valider (tekuxwriter)** |
+| `compare.count.devices` | {n} appareil(s) | {n} device(s) | Compare table cell | **à valider (tekuxwriter)**. A count, not a measurement |
+| `compare.count.cables` | {n} câble(s) | {n} cable(s) | Compare table cell | **à valider (tekuxwriter)** |
+| `compare.count.controls` | {n} réglage(s) | {n} setting(s) | Compare table cell | **à valider (tekuxwriter)** |
+| `compare.locked.hint` | Échap ferme la comparaison et rend votre montage. | Esc closes the comparison and gives your setup back. | Toast body when an edit is tried during a compare (title: `compare.readonly`) | **à valider (tekuxwriter)** |
+| `essais.restore.otherRoom` | Cet essai a été figé dans une autre salle : le matériel est replacé ici, sans changer de salle. | This trial was frozen in another room: the gear is put back here, without changing room. | Toast on « Repartir de cet essai » | **à valider (tekuxwriter)** |
+| `limit.deleted.toast` | Essai {name} supprimé. | Trial {name} deleted. | Toast | **à valider (tekuxwriter)** |
+| `quarantine.export.empty` | Aucune donnée mise de côté n'a pu être lue dans ce navigateur. | No set-aside data could be read in this browser. | Panel notice | **à valider (tekuxwriter)** |
+| `storage.archive.confirm.ok` | Archiver | Archive | Confirm button after « Exporter puis archiver » | **à valider (tekuxwriter)** |
+| `storage.readOnly` | Les essais sont en lecture seule dans ce navigateur. | Trials are read-only in this browser. | Panel notice (write refused: read-only store) | **à valider (tekuxwriter)** |
+| `storage.readOnly.truncated` | Les essais sont en lecture seule tant que ces données n'ont pas été exportées. | Trials stay read-only until this data is exported. | Under `quarantine.notice` (quarantine copy truncated) | **à valider (tekuxwriter)**. « Acquitter » is not implemented (open decision, ADR-0012) |
+| `storage.readOnly.failed` | Les essais sont en lecture seule : la copie de côté n'a pas pu être enregistrée. | Trials are read-only: the set-aside copy could not be saved. | Under `quarantine.notice` | **à valider (tekuxwriter)** |
+| `storage.readOnly.crypto` | Ce navigateur ne peut pas vérifier les essais : ils sont en lecture seule. | This browser cannot verify trials: they are read-only. | Panel notice (no WebCrypto) | **à valider (tekuxwriter)** |
+| `storage.notFound` | Cet essai n'est plus dans ce navigateur. | This trial is no longer in this browser. | Panel notice | **à valider (tekuxwriter)** |
+| `storage.invalid` | Cet essai n'a pas pu être enregistré. | This trial could not be saved. | Panel notice, followed by `eval.failed.kept` | **à valider (tekuxwriter)** |
+| `import.done.rejected` | {m} essai(s) illisible(s) ignoré(s). | {m} unreadable trial(s) skipped. | After `import.done.toast` / `.partial` | **à valider (tekuxwriter)**. Rejected = schema or fingerprint check failed |
+| `settings.year.label` | Essais : année de formation | Trials: year of study | Settings panel select | **à valider (tekuxwriter)** |
+| `settings.year.1` | 1re année (3 essais, liste simple) | 1st year (3 trials, flat list) | Settings option | **à valider (tekuxwriter)** |
+| `settings.year.2` | 2e année (arbre des essais) | 2nd year (trial tree) | Settings option | **à valider (tekuxwriter)**. Default |
+
+Not shown on purpose: `essais.current.autosaved` (« Enregistré automatiquement dans ce navigateur. »). The live setup is not autosaved yet, so the line would be false.
+
 ## Open points for Oscar / reviewers
 
 1. **Cour = droite** is common theatre usage, not in TEK Brain; jardin = gauche is backed by `american-seating`. Consider a glossary term.
