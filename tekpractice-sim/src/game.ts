@@ -101,6 +101,11 @@ declare global {
       worldScreen: (p: [number, number, number]) => { x: number; y: number } | null
       /** Where an instance stands (rig save/reload e2e): metres + yaw in whole degrees. 3D only. */
       pose?: (instanceId: string) => { position: [number, number, number]; rotationY: number } | null
+      /**
+       * Every imported glb root in the scene (final review #1, ghost devices):
+       * `live` = parented to a live instance root, `visible` = enabled. 3D only.
+       */
+      glbRoots?: () => { name: string; live: boolean; visible: boolean }[]
     }
   }
 }
@@ -475,7 +480,10 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     const inst = spawner.spawn(deviceId, pos, instanceId)
     if (at?.rotationY) inst.root.rotation.y = (at.rotationY * Math.PI) / 180
     instances.push(inst)
-    scene.render() // compute absolute positions for the new markers
+    // Absolute marker positions without a full synchronous frame per device
+    // (an applyDesign respawns every device: N renders mid-flip — final review #1).
+    inst.root.computeWorldMatrix(true)
+    for (const m of inst.root.getChildMeshes(false)) m.computeWorldMatrix(true)
     for (const [portId, marker] of inst.portMarkers) {
       const p = marker.getAbsolutePosition()
       portPoints.push({ ref: { instance: instanceId, port: portId }, x: p.x, y: p.y, z: p.z })
@@ -1143,6 +1151,14 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     explore: () => ({ ...explore.snapshot(), panels: exploreUi.panelCount(), placing: exploreUi.placing() }),
     worldScreen: (p) => project(Vector3.FromArray(p)),
     pose: poseOf,
+    glbRoots: () =>
+      scene.meshes
+        .filter((m) => m.name.startsWith('glb:'))
+        .map((m) => ({
+          name: m.name,
+          live: instances.some((i) => i.root === m.parent && !i.root.isDisposed()),
+          visible: m.isEnabled(),
+        })),
     deviceBodyCenter: (instanceId) => {
       const inst = instances.find((i) => i.instanceId === instanceId)
       return inst ? debugBodyCenter(inst) : null

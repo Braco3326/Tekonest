@@ -190,6 +190,13 @@ export class DeviceSpawner {
     const deviceId = device.id
     return SceneLoader.ImportMeshAsync(null, assetUrl('assets/'), `${deviceId}.glb`, this.scene)
       .then(({ meshes }) => {
+        // The instance was disposed while the model loaded (fast Essais compare
+        // flips, rig load, pick-up): drop the import, never parent it to a dead
+        // root (an orphan "ghost" device that nothing tracks) — final review #1.
+        if (root.isDisposed()) {
+          for (const m of meshes) m.dispose(false, true)
+          return false
+        }
         const glbRoot = meshes[0]
         glbRoot.name = `glb:${instanceId}`
         glbRoot.parent = root
@@ -202,7 +209,8 @@ export class DeviceSpawner {
         const scale = this.normalizeModel(deviceId, glbRoot)
         this.reanchorPorts(device, instanceId, glbRoot, portMarkers)
 
-        this.scene.getMeshByName(`box:${instanceId}`)?.setEnabled(false)
+        // THIS instance's box: a global name lookup could hit a respawned twin with the same id.
+        root.getChildMeshes(true, (n) => n.name === `box:${instanceId}`)[0]?.setEnabled(false)
         instance.assetStatus = 'glb'
         console.info(`[assets] ${deviceId}: glb chargé (${meshes.length} meshes, scale ×${scale.toFixed(3)})`)
         return true
@@ -292,6 +300,7 @@ export class DeviceSpawner {
     portMarkers: Map<string, Mesh>,
   ): void {
     if (device.ports.length === 0) return
+    const root = glbRoot.parent as TransformNode
     const real = REAL_SIZE_M[device.id]
     let w: number, h: number, d: number
     if (real) {
@@ -321,12 +330,14 @@ export class DeviceSpawner {
         marker.position = local.clone()
         marker.computeWorldMatrix(true)
       }
-      const pick = this.scene.getMeshByName(`pick:${instanceId}:${port.portId}`)
+      // Looked up under THIS instance's root (never a same-id twin elsewhere in the scene).
+      const own = (name: string) => root.getChildMeshes(true, (n) => n.name === name)[0]
+      const pick = own(`pick:${instanceId}:${port.portId}`)
       if (pick) {
         pick.position = local.clone()
         pick.computeWorldMatrix(true)
       }
-      const label = this.scene.getMeshByName(`portlabel:${instanceId}:${port.portId}`)
+      const label = own(`portlabel:${instanceId}:${port.portId}`)
       if (label) {
         label.position = local.add(PORT_LABEL_OFFSET)
         label.computeWorldMatrix(true)

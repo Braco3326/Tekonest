@@ -7,7 +7,14 @@ import { readFile } from 'node:fs/promises'
 import { expect, test, type Page } from '@playwright/test'
 
 type Pose = { alpha: number; beta: number; radius: number; target: [number, number, number] }
-type StoredTrial = { id: string; name: string; parentId: string | null; view: { pose: Pose }; design: { placements: { instanceId: string; position_m: number[] }[] } }
+type StoredTrial = {
+  id: string
+  name: string
+  parentId: string | null
+  view: { pose: Pose }
+  design: { placements: { instanceId: string; position_m: number[] }[] }
+  evidence: { prediction: { text: string } }
+}
 
 const trials = (page: Page): Promise<StoredTrial[]> =>
   page.evaluate(() => {
@@ -288,6 +295,32 @@ test('freezing without a prediction asks for one and creates nothing', async ({ 
   await expect(page.locator('.es-notice')).toContainText('Écrivez votre prédiction avant de figer.')
   await expect(page.locator('#es-prediction')).toBeFocused()
   expect(await trials(page)).toHaveLength(0)
+})
+
+test('final review #1: two compare flips within 200 ms leave no ghost device (one glb root per instance)', async ({ page }) => {
+  await twoEssais(page) // shure-sm58, yamaha-ql1, yamaha-rio3224-d2: all three have a real .glb
+  await page.locator('#es-prediction').blur()
+  await page.keyboard.press('KeyB')
+  await expect(page.locator('#essais-caption')).toHaveText('Affiché : Essai B · comparaison en lecture seule')
+  // two flips, ~50 ms apart: each one disposes and respawns every device while the previous glbs still load
+  await page.keyboard.press('KeyB')
+  await page.waitForTimeout(50)
+  await page.keyboard.press('KeyB')
+  await expect(page.locator('#essais-caption')).toHaveText('Affiché : Essai B · comparaison en lecture seule')
+  // every live instance gets its model…
+  await expect
+    .poll(() => page.evaluate(() => window.__audioSim!.assets().every((a) => a.status === 'glb')), { timeout: 20_000 })
+    .toBe(true)
+  // …and the imports started for the disposed instances have all settled too
+  await page.waitForTimeout(1500)
+  const { roots, instances } = await page.evaluate(() => ({
+    roots: window.__audioSim!.glbRoots!(),
+    instances: window.__audioSim!.assets().length,
+  }))
+  expect(roots.filter((r) => !r.live), JSON.stringify(roots)).toEqual([])
+  expect(roots).toHaveLength(instances)
+  await page.keyboard.press('Escape')
+  await expect(page.locator('.es-compare')).toBeHidden()
 })
 
 test('exam mode has no Essais panel (D2)', async ({ page }) => {
