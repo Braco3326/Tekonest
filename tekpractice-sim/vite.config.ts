@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -7,6 +8,11 @@ export default defineConfig({
   build: {
     target: 'es2020',
     rollupOptions: {
+      // Multi-page: the game (index.html) and the DOM-only teacher page (no Babylon).
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        teacher: fileURLToPath(new URL('./teacher.html', import.meta.url)),
+      },
       output: {
         manualChunks: {
           // Babylon in its own long-cached chunk; app code iterates without
