@@ -251,6 +251,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-tree-root [aria-level='1'] > .cr-tree-item .cr-tree-text { font-weight: 500; }
 .cr-tree-count { flex: 0 0 auto; padding: 0 4px; color: var(--cr-ink-muted); font-variant-numeric: tabular-nums; }
 .cr-tree-root [data-hidden='true'] > .cr-tree-item .cr-tree-text { color: var(--cr-ink-muted); text-decoration: line-through; }
+.cr-tree-empty { margin: 0; padding: 2px 8px 6px calc(28px + (var(--cr-tree-level, 1) - 1) * 14px); color: var(--cr-ink-muted); font-size: 12px; }
 .cr-eye {
   flex: 0 0 24px;
   width: 24px;

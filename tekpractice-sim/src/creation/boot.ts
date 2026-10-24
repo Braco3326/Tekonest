@@ -175,8 +175,9 @@ export async function bootCreation(): Promise<void> {
     const cables = new Set(store.design().rig.connections.map((c) => `cable:${cableKey(c.a, c.b)}`))
     const hidden = v.hidden.filter((k) => (k.startsWith('cable:') ? cables.has(k) : k.startsWith('zone:') || ids.includes(k)))
     if (treeActive?.startsWith('cable:') && !cables.has(treeActive)) treeActive = null
-    viewState.set({ selection: sel, hidden }) // notifies (and re-renders the tree) only on a change
-    tree.render()
+    const viewChanged = sel !== v.selection || hidden.length !== v.hidden.length
+    if (viewChanged) viewState.set({ selection: sel, hidden }) // its subscriber rebuilds the tree
+    else tree.render() // one rebuild per store change, never two
   })
 
   // Panels fold / unfold and the window resizes: the canvas follows its box.
@@ -293,6 +294,7 @@ export async function bootCreation(): Promise<void> {
     outlined: () => host.outlined(),
     hidden: () => viewState.get().hidden,
     pickAt: (x, y) => pickDevice(host.scene, x, y),
+    treeRenders: () => tree.renders,
     renders: () => scheduler.renders,
     camera: () => {
       const c = host.camera

@@ -114,22 +114,68 @@ test('Home / End, Left to the parent; a zone row frames the zone; hidden zone an
   await page.keyboard.press('ArrowDown') // Zones
   await page.keyboard.press('ArrowRight')
   await page.keyboard.press('ArrowRight') // first zone
-  const zone = tree.getByRole('treeitem', { name: 'scene' })
+  // zones read in French by kind, never the room file's raw id (Task 9 review)
+  await expect(tree.getByRole('treeitem', { name: 'scene' })).toHaveCount(0)
+  const zone = tree.getByRole('treeitem', { name: 'Scène' })
   await expect(zone).toBeFocused()
+  await expect(tree.getByRole('treeitem', { name: 'Public 2' })).toHaveCount(1)
   await page.keyboard.press('Enter')
   await expect(zone).toHaveAttribute('aria-selected', 'true')
-  await expect(page.getByRole('status')).toHaveText('Cadré : scene')
+  await expect(page.getByRole('status')).toHaveText('Cadré : Scène')
   await page.keyboard.press('ArrowLeft')
   await expect(tree.getByRole('treeitem', { name: /^Zones/ })).toBeFocused()
 
   const undo0 = await page.evaluate(() => window.__creation!.historySize())
-  await tree.getByRole('treeitem', { name: /^Câbles/ }).click() // opens the group
+  await tree.getByRole('treeitem', { name: /^Câbles/ }).click() // opens the group (Câbles is the roving row)
   await tree.getByRole('button', { name: 'Masquer ql1 out-main-l → k12-g in-line-a' }).click()
-  await tree.getByRole('button', { name: 'Masquer scene' }).click()
+  // the clicked eye keeps focus, on ITS row (not the roving one)
+  await expect(tree.getByRole('button', { name: 'Afficher ql1 out-main-l → k12-g in-line-a' })).toBeFocused()
+  await tree.getByRole('button', { name: 'Masquer Scène' }).click()
+  await expect(tree.getByRole('button', { name: 'Afficher Scène' })).toBeFocused()
   expect(await page.evaluate(() => window.__creation!.hidden())).toEqual(['cable:k12-g in-line-a|ql1 out-main-l', 'zone:scene'])
-  await expect(tree.getByRole('treeitem', { name: 'scene masqué' })).toHaveCount(1) // the hidden state is read, not only struck through
+  await expect(tree.getByRole('treeitem', { name: 'Scène masqué' })).toHaveCount(1) // the hidden state is read, not only struck through
   expect(await page.evaluate(() => window.__creation!.historySize())).toBe(undo0)
   // undo of the CONNECT drops the cable: its hidden key goes with it
   await page.evaluate(() => window.__creation!.undo())
   expect(await page.evaluate(() => window.__creation!.hidden())).toEqual(['zone:scene'])
+})
+
+test('an empty « Matériel » says so; one store change rebuilds the tree once', async ({ page }) => {
+  await boot(page)
+  const tree = page.getByRole('tree', { name: 'Projet' })
+  const gear = tree.getByRole('treeitem', { name: /^Matériel/ })
+  await expect(gear).toHaveAccessibleDescription('Aucun appareil installé')
+  await expect(tree.getByText('Aucun appareil installé')).toBeVisible()
+  const r0 = await page.evaluate(() => window.__creation!.treeRenders())
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
+  expect(await page.evaluate(() => window.__creation!.treeRenders())).toBe(r0 + 1)
+  await expect(tree.getByText('Aucun appareil installé')).toHaveCount(0)
+  // a REMOVE of the selected device also clears the selection: still one rebuild
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [1, 0, 8] }))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press(']')
+  const sel = await page.evaluate(() => window.__creation!.selection())
+  const r1 = await page.evaluate(() => window.__creation!.treeRenders())
+  await page.evaluate((id) => window.__creation!.dispatch({ type: 'REMOVE', instanceId: id }), sel!)
+  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
+  expect(await page.evaluate(() => window.__creation!.treeRenders())).toBe(r1 + 1)
+})
+
+test('idle = 0 renders in 2 s with a device selected (the Ambre outline costs no frame)', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press(']')
+  expect(await page.evaluate(() => window.__creation!.outlined())).toEqual(['ql1'])
+  // let the .glb arrive and the last invalidations drain
+  await expect.poll(async () => {
+    const a = await page.evaluate(() => window.__creation!.renders())
+    await page.waitForTimeout(500)
+    return (await page.evaluate(() => window.__creation!.renders())) - a
+  }, { timeout: 15000 }).toBe(0)
+  await page.mouse.move(5, 5) // the pointer off the canvas
+  const r0 = await page.evaluate(() => window.__creation!.renders())
+  await page.waitForTimeout(2000)
+  expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
+  expect(await page.evaluate(() => window.__creation!.outlined())).toEqual(['ql1'])
 })

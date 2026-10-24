@@ -29,6 +29,8 @@ export interface CreationDebug {
   hidden(): string[]
   /** The device under a canvas point (CSS px), as a click would pick it. */
   pickAt(x: number, y: number): string | null
+  /** « Projet » tree rebuilds so far. */
+  treeRenders(): number
   renders(): number
   camera(): { alpha: number; beta: number; radius: number; target: [number, number, number] } | null
   /** `engine.scenes.length`. */

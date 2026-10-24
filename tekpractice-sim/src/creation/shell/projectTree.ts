@@ -25,6 +25,8 @@ export interface ProjectTreeDeps {
 
 export interface ProjectTree {
   readonly element: HTMLElement
+  /** Rebuilds so far (e2e: one per store change). */
+  readonly renders: number
   render(): void
   /** Focus a row (default: the roving one). */
   focus(id?: string): void
@@ -143,11 +145,23 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
         eye.appendChild(icon(doc, hidden ? 'eye-off' : 'eye'))
         eye.addEventListener('click', (e) => {
           e.stopPropagation()
+          focused = n.id // the rebuild puts focus back on THIS row's eye
           d.toggleHidden(n, key)
         })
         row.appendChild(eye)
       }
       li.appendChild(row)
+      if (n.emptyHint) {
+        // Shown under the row; read as the row's description (aria-hidden: not read twice in browse mode).
+        const hint = doc.createElement('p')
+        hint.className = 'cr-tree-empty'
+        hint.id = `${labelId}-e`
+        hint.textContent = n.emptyHint
+        hint.setAttribute('aria-hidden', 'true')
+        hint.style.setProperty('--cr-tree-level', String(level))
+        li.setAttribute('aria-describedby', hint.id)
+        li.appendChild(hint)
+      }
       if (hasKids && expanded.has(n.id)) {
         const group = doc.createElement('ul')
         group.setAttribute('role', 'group')
@@ -158,7 +172,9 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
     })
   }
 
+  let renders = 0
   const render = (): void => {
+    renders++
     // Where the keyboard was, to put it back after the rebuild.
     const active = doc.activeElement
     const had = active instanceof HTMLElement && tree.contains(active)
@@ -260,6 +276,9 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
   render()
   return {
     element: tree,
+    get renders() {
+      return renders
+    },
     render,
     focus(id) {
       moveTo(id ?? focused)
