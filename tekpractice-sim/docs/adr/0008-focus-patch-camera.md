@@ -105,3 +105,32 @@ l'architecture des trois modules restent tels quels.
 - Mise à jour du tableau Décision 5 : Focus device = **clic** (ou double-clic) ; pan =
   drag droit, Maj + drag gauche (ou Ctrl + drag gauche) ; re-pivot = double-clic au sol ;
   Retour Ensemble = Esc / clic droit / clic vide / Alt+H.
+
+## Addendum 2026-10-24 — « Mode Création » (Task 8, C10, P3 ; ferme CA-01)
+
+Statut : accepté. Portée : la nouvelle coquille `src/creation/` uniquement. **Le mode
+legacy (`?legacy=1`, `?level=`) garde Tab** pour parcourir appareils et ports comme décrit
+plus haut ; rien n'y change.
+
+- **Tab n'est jamais pris en Mode Création.** Aucun gestionnaire sous `src/creation/` n'appelle
+  `preventDefault()` sur Tab (test statique `tests/creation/noTabTrap.test.ts`). Le menu se ferme
+  sur `focusout` ; le dialogue « Changer de lieu » garde le focus avec deux sentinelles de bord
+  (la page derrière est `inert`), sans intercepter la touche.
+- **Ordre Tab** : lien d'évitement « Aller à la vue 3D » → barre de menus (un seul arrêt, roving
+  tabindex) → panneau Projet → **canvas 3D (un seul arrêt, `role="application"`)** → panneau
+  Propriétés → barre d'état. Landmarks `header` / `nav` / `main` / `aside` / `footer`, un `h1`
+  visuellement masqué. Le lien d'évitement pose le focus directement sur le canvas.
+- **Cycle des appareils = `[` / `]`** (codes `BracketLeft` / `BracketRight`, position physique ;
+  les caractères `[` et `]` tapés avec AltGr sur AZERTY marchent aussi tant que la touche par
+  défaut est gardée), **seulement quand le canvas a le focus**. La sélection (jamais annulable)
+  est annoncée dans la barre d'état (`role="status"`). **Entrée** (fixe) ou **F** (remappable)
+  cadre la sélection ; **Échap** sur le canvas vide la sélection ; les flèches orbitent (entrée
+  clavier Babylon).
+- **Carte des touches** : `src/creation/input/creationActions.ts` (les `ACTIONS` legacy sont
+  intactes). Touches spatiales par `KeyboardEvent.code` (AZERTY-safe) ; raccourcis
+  mnémoniques Ctrl+Z / Y / S / D par `e.key` (chords `key:`), donc sur la touche **étiquetée**.
+  Maj est un préfixe de chord (Maj+V, Maj+R). Tab, Entrée, Échap jamais réassignables.
+  Stockage `audio-sim/creation-bindings.v1`, lecture tolérante. Un seul écouteur `keydown`
+  (`src/creation/input/keyboard.ts`) : rien dans un champ texte sauf Échap et Ctrl+S, rien
+  dans un dialogue modal, Espace reste la touche d'activation d'un bouton focalisé,
+  `preventDefault()` seulement pour une action réellement traitée.
