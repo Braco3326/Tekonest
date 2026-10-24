@@ -29,3 +29,7 @@ Date: 2026-10-24. Brief: Oscar (founder) clarified that Tekonest is a Paris umbr
 ## Branches
 
 No branch is only about the idea. `docs/tekonest-brand-foundation` and `design/tekonest-umbrella-brand` contain event material but are brand/site branches. The `feature/*` and `research/*` branches only inherit `event-project/` from `main`; when they next merge `main`, git will follow the rename.
+
+## Live check (2026-10-24)
+
+After the push, tekonest.com home, organiser, histoire, reseau, contact, apprendre, tekpractice and accessibilite contain none of: arabe, afro, métiss, mélange culturel, Rebels (except the one partner line on organiser), soirees, Notre direction. **Open:** `/soirees` is still served from the Cloudflare cache (age about 10.8 h, old Soirées page). The origin already answers with the home page, so a cache purge of `/soirees` is needed.
