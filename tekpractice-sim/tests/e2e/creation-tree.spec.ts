@@ -167,13 +167,13 @@ test('idle = 0 renders in 2 s with a device selected (the Ambre outline costs no
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press(']')
   expect(await page.evaluate(() => window.__creation!.outlined())).toEqual(['ql1'])
+  await page.mouse.move(5, 5) // the pointer off the canvas, BEFORE measuring (pointer events invalidate)
   // let the .glb arrive and the last invalidations drain
   await expect.poll(async () => {
     const a = await page.evaluate(() => window.__creation!.renders())
     await page.waitForTimeout(500)
     return (await page.evaluate(() => window.__creation!.renders())) - a
   }, { timeout: 15000 }).toBe(0)
-  await page.mouse.move(5, 5) // the pointer off the canvas
   const r0 = await page.evaluate(() => window.__creation!.renders())
   await page.waitForTimeout(2000)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
