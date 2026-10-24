@@ -34,7 +34,7 @@ import { buildTree, hideKeyOf, type TreeNode } from './shell/treeModel'
 import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
 import { bindingLabel, loadCreationBindings, type CreationAction } from './input/creationActions'
-import { openPlaceDialog } from './shell/placeDialog'
+import { openPlaceDialog, openReplaceDialog } from './shell/placeDialog'
 import type { PlaceCard } from './shell/placePicker'
 import { mountShell } from './shell/layout'
 import { mountMenuBar } from './shell/menuBar'
@@ -70,11 +70,13 @@ export async function bootCreation(): Promise<void> {
     activeCamera: () => host.scene?.activeCamera ?? null,
   })
   host = new SceneHost(canvas, registry, scheduler)
-  // « Choisir un lieu » (Task 12): its own lazy chunk (cards, grid keys) + the templates.
-  const { placeCards, templateCards, mountPlacePicker, placeSummary } = await import('./shell/placePicker')
+  // « Choisir un lieu » (Task 12): its own lazy chunk (cards, grid keys) and the templates, fetched together.
+  const [{ placeCards, templateCards, mountPlacePicker, placeSummary }, allTemplates] = await Promise.all([import('./shell/placePicker'), loadTemplates()])
   const summary = placeSummary()
   const cards = placeCards({ rooms: summary.rooms, sets: summary.sets })
-  const templates = await loadTemplates(new Set(cards.map((c) => c.key)))
+  const placeKeys = new Set(cards.map((c) => c.key))
+  // A template whose place is not a card is left out (warned), as parseTemplate does with `placeKeys`.
+  const templates = allTemplates.filter((t) => placeKeys.has(t.roomId) || (console.warn(`[creation] modèle ${t.id} ignoré : lieu inconnu ${t.roomId}`), false))
   const placeLabel = (key: string | null): string => {
     const k = placeKey(placeFromKey(key))
     const room = /^room:(.+)$/.exec(k)
@@ -225,15 +227,20 @@ export async function bootCreation(): Promise<void> {
     history,
     bounds: (place) => loadPlaceData(place),
     confirm: () => openPlaceDialog(),
+    confirmReplace: () => openReplaceDialog(undoLabel()),
     onCommit: showCanvas,
     label: COPY.place!.dialogTitle!,
   })
+  /** The live label of the undo key (« Ctrl+Z »), for the replace dialog and its status line. */
+  const undoLabel = (): string => bindingLabel(keys.bindings, 'UNDO') || 'Ctrl+Z'
 
   // Not only the console (Task 12): a place that fell back to the blank room says so on screen.
   const N = COPY.note!
   const fallbackNote = (key: string): void => {
-    notes.show({ id: 'fallback', title: N.fallbackTitle!, body: N.fallbackBody!.replace('{place}', placeLabel(key)) })
-    shell.setStatus(placeNow(), N.fallbackBody!.replace('{place}', placeLabel(key)), 'ready', true)
+    const msg = N.fallbackBody!.replace('{place}', placeLabel(key))
+    notes.show({ id: 'fallback', title: N.fallbackTitle!, body: msg })
+    if (picker.isOpen) picker.showError(msg) // the note sits under the picker while it is open
+    shell.setStatus(placeNow(), msg, 'ready', true)
   }
   host.onFallback = fallbackNote
 
@@ -244,6 +251,7 @@ export async function bootCreation(): Promise<void> {
     let missing: string[] = []
     let result: PlaceResult = 'failed'
     const isTemplate = card.key.startsWith('template:')
+    const hadGear = store.design().rig.instances.length > 0
     try {
       const tpl = isTemplate ? templates.find((t) => `template:${t.id}` === card.key) : undefined
       if (tpl) result = await loadDesign(tpl.roomId, async () => templateToDesign(tpl))
@@ -252,7 +260,7 @@ export async function bootCreation(): Promise<void> {
           const data = await loadPlaceData(placeFromKey(card.key))
           if (data.kind !== 'room') throw new Error('salle indisponible')
           const plan = designFromRoomGear(data.file, registry)
-          missing = unavailableList(plan.unavailable)
+          missing = unavailableList(plan.unavailable, summary.gearNames)
           return plan.design
         })
       else result = await requestPlace(card.key)
@@ -263,18 +271,21 @@ export async function bootCreation(): Promise<void> {
     }
     if (result === 'busy') return shell.setStatus(placeNow(), COPY.shell!.statusBusy!, 'busy', true)
     if (result === 'failed') {
-      notes.show({ id: 'fallback', title: N.fallbackTitle!, body: N.fallbackBody!.replace('{place}', card.title) })
-      return showStatus()
+      // Said where the learner is: the picker stays open over an inert viewport (review fix 2).
+      const msg = COPY.picker!.openFailed!.replace('{place}', card.title)
+      if (picker.isOpen) picker.showError(msg)
+      return shell.setStatus(placeNow(), msg, 'ready', true)
     }
     if (result === 'cancelled') return showStatus()
     showCanvas() // 'done' / 'same'
     showStatus()
     notes.dismiss('unavailable')
     if (result === 'done' && (isTemplate || mode === 'gear')) {
-      const n = store.design().rig.instances.length
+      const n = String(store.design().rig.instances.length)
       // The note is announced too (status bar, role="status"), not only shown.
       const more = missing.length ? ` ${N.unavailableTitle} : ${missing.join(', ')}.` : ''
-      shell.setStatus(placeNow(), COPY.shell!.statusGearLoaded!.replace('{n}', String(n)) + more, 'ready', true)
+      const head = hadGear ? COPY.shell!.statusReplaced!.replace('{n}', n).replace('{undo}', undoLabel()) : COPY.shell!.statusGearLoaded!.replace('{n}', n)
+      shell.setStatus(placeNow(), head + more, 'ready', true)
     }
     if (missing.length)
       notes.show({ id: 'unavailable', title: N.unavailableTitle!, body: N.unavailableBody!.replace('{n}', String(missing.length)), items: missing })

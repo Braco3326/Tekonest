@@ -43,6 +43,13 @@ describe('designFromRoomGear', () => {
     expect(unavailableList([])).toEqual([])
   })
 
+  it('unavailableList shows the KB display name when known, else the id (review fix 4)', () => {
+    const names = { 'dhd-rx2': 'DHD audio RX2 (Series 52)', a: 'Alpha' }
+    expect(unavailableList(plan.unavailable, names)).toContain('DHD audio RX2 (Series 52)')
+    expect(unavailableList(plan.unavailable, names)).toContain('telos-hx2')
+    expect(unavailableList([{ equipmentId: 'a', zone: 'z' }, { equipmentId: 'a', zone: 'y' }], names)).toEqual(['Alpha × 2'])
+  })
+
   it('a room without gear_positions yields an empty plan', () => {
     const r = { ...room('radio-talk-studio-medium'), gear_positions: undefined }
     const empty = designFromRoomGear(r, makeRegistry())

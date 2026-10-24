@@ -24,12 +24,10 @@ export function parseTemplate(raw: unknown, file: string, placeKeys?: ReadonlySe
 
 /** Every valid template (see `parseTemplate`); an invalid file is skipped with a warning. */
 export async function loadTemplates(placeKeys?: ReadonlySet<string>): Promise<TemplateT[]> {
-  const out: TemplateT[] = []
-  for (const [path, load] of Object.entries(loaders).sort(([a], [b]) => a.localeCompare(b))) {
-    const t = parseTemplate((await load()).default, path, placeKeys)
-    if (t) out.push(t)
-  }
-  return out
+  // Every file fetched at once; parsed in file order (deterministic list).
+  const entries = Object.entries(loaders).sort(([a], [b]) => a.localeCompare(b))
+  const mods = await Promise.all(entries.map(([, load]) => load()))
+  return entries.map(([path], i) => parseTemplate(mods[i].default, path, placeKeys)).filter((t): t is TemplateT => t !== null)
 }
 
 export function templateToDesign(t: TemplateT): DesignState {

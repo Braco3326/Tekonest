@@ -34,6 +34,7 @@ Status column:
 | `shell.statusNoSelection` | Aucun appareil sélectionné | à valider (tekuxwriter) | Task 8 : barre d'état, Échap dans la vue 3D a vidé la sélection |
 | `shell.statusNothingToSelect` | Aucun appareil à sélectionner. Ajoutez-en depuis l’inventaire. | à valider (tekuxwriter) | Task 8 : barre d'état, `[` / `]` pressé sans matériel installé (retour sur chaque touche manquée) |
 | `shell.statusBusy` | Un lieu est déjà en cours d’ouverture. Patientez un instant. | à valider (tekuxwriter) | Task 12 : barre d'état (annoncé) quand un lieu est demandé pendant qu'un autre s'ouvre (résultat « busy ») |
+| `shell.statusReplaced` | Matériel remplacé : {n} appareils installés. {undo} pour revenir en arrière. | à valider (tekuxwriter) | Task 12 (revue) : barre d'état (annoncé) après « Remplacer le matériel » ; `{undo}` = libellé de la touche Annuler (« Ctrl+Z ») |
 | `shell.statusGearLoaded` | {n} appareils installés. | à valider (tekuxwriter) | Task 12 : barre d'état (annoncé) après un modèle ou « Avec le matériel du modèle » |
 
 ## keys
@@ -212,6 +213,7 @@ Types de signal du catalogue (`signalTypes[].id`), tels que Propriétés les nom
 | `picker.confirmGearHint` | {n} appareils du jeu sont installés à leur place. | à valider (tekuxwriter) | Task 12 : description du bouton radio ; `{n}` = appareils du modèle présents au catalogue |
 | `picker.confirmOpen` | Ouvrir | à valider (tekuxwriter) | Task 12 : bouton principal du dialogue (Entrée) |
 | `picker.confirmCancel` | Annuler | à valider (tekuxwriter) | Task 12 : retour à la carte ; Échap fait pareil |
+| `picker.openFailed` | {place} n’a pas pu être ouvert. Rien n’a changé. | à valider (tekuxwriter) | Task 12 (revue) : ligne d'erreur dans l'en-tête du sélecteur (`role="alert"`) et barre d'état, quand une carte n'a pas pu être ouverte ; le sélecteur reste ouvert |
 
 ## placeType
 
@@ -258,6 +260,9 @@ Dialogue « Changer de lieu » (C3), ouvert quand du matériel est déjà instal
 | `place.keep` | Garder le matériel | brief | Bouton principal (C3) |
 | `place.empty` | Repartir à vide | brief | Bouton (C3) |
 | `place.cancel` | Annuler | validé | Bouton ; Échap fait pareil |
+| `place.replaceTitle` | Remplacer le matériel ? | à valider (tekuxwriter) | Task 12 (revue) : titre du dialogue quand un modèle (carte « Modèles » ou « Avec le matériel du modèle ») est ouvert alors que du matériel est installé |
+| `place.replaceBody` | Ce modèle installe son propre matériel : celui déjà en place sera retiré. {undo} permet de revenir en arrière. | à valider (tekuxwriter) | Idem, corps ; `{undo}` = libellé de la touche Annuler |
+| `place.replace` | Remplacer le matériel | à valider (tekuxwriter) | Idem, bouton principal ; « Annuler » (`place.cancel`) et Échap ne changent rien |
 
 ## Glossaire
 

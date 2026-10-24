@@ -4,10 +4,11 @@
  *   public/room-thumbs/<room id>.svg  (32 rooms, drawn from content/rooms)
  *   public/room-thumbs/set-<env>.svg  (the 3 .glb sets: their floor)
  *   public/room-thumbs/blank.svg      (« Salle vide neutre »)
- *   src/creation/placeSummary.json    (what the cards show: names, sizes, matched gear)
+ *   src/creation/placeSummary.json    (what the cards show: names, sizes, matched gear;
+ *                                      KB names of the room gear the catalog lacks)
  * Fails (exit 1) with the zod JSON path on any invalid room or set.
  */
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { RoomFile } from '../src/explore/roomSchema'
@@ -29,7 +30,21 @@ const fail = (file: string, issues: { path: (string | number)[]; message: string
 const catalog = JSON.parse(readFileSync(join(root, 'content/catalog.json'), 'utf8')) as { devices: { id: string }[] }
 const catalogIds = new Set(catalog.devices.map((d) => d.id))
 
-const summary: PlaceSummary = { rooms: [], sets: [] }
+/** KB display names (brand + model), when the knowledge base sits next to the app; ids otherwise. */
+const kbNames = new Map<string, string>()
+const kbDir = join(root, '../knowledge-base/equipment')
+if (existsSync(kbDir)) {
+  for (const f of readdirSync(kbDir).filter((x) => x.endsWith('.json')).sort()) {
+    const j = JSON.parse(readFileSync(join(kbDir, f), 'utf8')) as { devices?: { id?: string; brand?: string; model?: string }[] }
+    for (const d of j.devices ?? []) {
+      const name = [d.brand, d.model].filter(Boolean).join(' ').trim()
+      if (d.id && name && !kbNames.has(d.id)) kbNames.set(d.id, name)
+    }
+  }
+} else console.warn('[room-thumbs] knowledge-base/equipment absent: unavailable gear will show by id')
+
+const summary: PlaceSummary = { rooms: [], sets: [], gearNames: {} }
+const gearIds = new Set<string>()
 let bytes = 0
 const write = (name: string, svg: string): void => {
   writeFileSync(join(outDir, name), svg + '\n', 'utf8')
@@ -42,6 +57,11 @@ for (const f of readdirSync(roomsDir).filter((x) => x.endsWith('.json') && x !==
   const room = parsed.data!
   write(`${room.id}.svg`, roomPlanSvg(room))
   summary.rooms.push(summarizeRoom(room, catalogIds))
+  for (const g of room.gear_positions ?? []) if (!catalogIds.has(g.equipment_id)) gearIds.add(g.equipment_id)
+}
+for (const id of [...gearIds].sort()) {
+  const name = kbNames.get(id)
+  if (name) summary.gearNames[id] = name
 }
 for (const envId of SET_ENV_IDS) {
   const f = `content/environments/${envId}.json`

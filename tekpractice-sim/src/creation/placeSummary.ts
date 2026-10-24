@@ -27,6 +27,8 @@ export interface SetSummary {
 export interface PlaceSummary {
   rooms: RoomSummary[]
   sets: SetSummary[]
+  /** KB display names (brand + model) of the room gear the catalog lacks: the « non disponible » note shows them. */
+  gearNames: Record<string, string>
 }
 
 export function summarizeRoom(room: RoomFileT, catalogIds: ReadonlySet<string>): RoomSummary {
@@ -41,4 +43,5 @@ export function summarizeRoom(room: RoomFileT, catalogIds: ReadonlySet<string>):
   }
 }
 
-export const placeSummary = (): PlaceSummary => summaryJson as PlaceSummary
+// Generated JSON: its tuples widen to number[] on import (the drift test checks the shape).
+export const placeSummary = (): PlaceSummary => summaryJson as unknown as PlaceSummary

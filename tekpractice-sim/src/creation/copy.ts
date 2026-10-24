@@ -36,6 +36,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusBusy: 'Un lieu est déjà en cours d’ouverture. Patientez un instant.',
     /** Status bar after « Avec le matériel du modèle » / a template; {n} = devices installed. */
     statusGearLoaded: '{n} appareils installés.',
+    /** Status bar after « Remplacer le matériel »; {n} = devices now installed, {undo} = the undo key label. */
+    statusReplaced: 'Matériel remplacé : {n} appareils installés. {undo} pour revenir en arrière.',
   },
   keys: {
     /** Key names shown next to menu items (French keyboard labels). */
@@ -204,6 +206,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     confirmGearHint: '{n} appareils du jeu sont installés à leur place.',
     confirmOpen: 'Ouvrir',
     confirmCancel: 'Annuler',
+    /** A chosen card could not be opened (the picker stays open); {place} = card name. */
+    openFailed: '{place} n’a pas pu être ouvert. Rien n’a changé.',
   },
   /** Card type labels: room families (content/rooms `family`), sets, blank room, templates. */
   placeType: {
@@ -241,5 +245,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     keep: 'Garder le matériel',
     empty: 'Repartir à vide',
     cancel: 'Annuler',
+    /** A model (template / « Avec le matériel du modèle ») over installed gear. {undo} = the undo key label. */
+    replaceTitle: 'Remplacer le matériel ?',
+    replaceBody: 'Ce modèle installe son propre matériel : celui déjà en place sera retiré. {undo} permet de revenir en arrière.',
+    replace: 'Remplacer le matériel',
   },
 }

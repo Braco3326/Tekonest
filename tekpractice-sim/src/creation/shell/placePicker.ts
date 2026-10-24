@@ -43,6 +43,8 @@ export interface PlacePicker {
   focus(): void
   /** While a chosen place opens: `aria-busy`, clicks ignored. */
   setBusy(on: boolean): void
+  /** An error line in the picker head (`role="alert"`); null clears it. */
+  showError(message: string | null): void
 }
 
 const P = (): Readonly<Record<string, string>> => COPY.picker!
@@ -82,7 +84,12 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
     const item = el(doc, 'span', `cr-pick-key cr-pick-key--${cls}`, P()[k])
     legend0.appendChild(item)
   }
-  titles.append(h2, hint, legend0)
+  // A card that could not be opened: said here, where the learner is (the viewport behind is inert).
+  const error = el(doc, 'p', 'cr-pick-error')
+  error.setAttribute('role', 'alert')
+  error.dataset.testid = 'place-picker-error'
+  error.hidden = true
+  titles.append(h2, hint, legend0, error)
   const tools = el(doc, 'div', 'cr-pick-tools')
   const filterLabel = el(doc, 'label', 'cr-pick-filter')
   const filterText = el(doc, 'span', undefined, P().filter)
@@ -345,6 +352,7 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
     show({ closable: c, focus }) {
       closable = c
       close.hidden = !c
+      error.hidden = true
       open = true
       root.hidden = false
       for (const cov of d.covers) cov.inert = true
@@ -357,6 +365,11 @@ export function mountPlacePicker(d: PlacePickerDeps): PlacePicker {
     setBusy(on) {
       busy = on
       root.setAttribute('aria-busy', String(on))
+      if (on) error.hidden = true
+    },
+    showError(message) {
+      error.textContent = message ?? ''
+      error.hidden = message === null
     },
   }
 }

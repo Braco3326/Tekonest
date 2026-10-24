@@ -41,11 +41,16 @@ test('arrows only move the highlight (CA-13); Enter commits the highlighted card
   const hi = page.getByTestId('place-grid').locator('[aria-selected="true"]')
   await expect(hi).toHaveCount(1)
   await expect(hi).toBeFocused()
-  const key = (await hi.getAttribute('data-place'))!
-  expect(key).not.toBe(await first.getAttribute('data-place'))
+  expect(await hi.getAttribute('data-place')).not.toBe(await first.getAttribute('data-place'))
+  // A pinned target without the L2 badge (deterministic: no mode dialog): Home → blank, → « Plateau live ».
+  await page.keyboard.press('Home')
+  await page.keyboard.press('ArrowRight')
+  await expect(hi).toHaveAttribute('data-place', 'set:plateau')
+  await expect(hi.locator('.cr-card-badge')).toHaveCount(0)
+  expect(await page.evaluate(() => window.__creation!.place())).toBeNull()
+  const key = 'set:plateau'
   await page.keyboard.press('Enter')
-  // a card with the L2 badge asks first: Enter again keeps « Salle vide »
-  if (await page.getByTestId('place-mode-dialog').isVisible()) await page.keyboard.press('Enter')
+  await expect(page.getByTestId('place-mode-dialog')).toBeHidden()
   await page.waitForFunction((k) => window.__creation!.place() === k, key)
   await expect(page.getByTestId('place-picker')).toBeHidden()
   await expect(page.locator('#renderCanvas')).toBeFocused()
@@ -67,9 +72,11 @@ test('« Avec le matériel du modèle » on the radio talk studio: 9 devices, an
   await expect(note).toBeVisible()
   await expect(note).toContainText('Matériel non disponible dans le jeu')
   await expect(note.getByRole('listitem')).toHaveCount(5)
-  await expect(note.getByRole('listitem').first()).toHaveText('behringer-ha400')
+  // KB display names (brand + model), not ids (review fix 4)
+  await expect(note.getByRole('listitem').first()).toHaveText('Behringer MicroAMP HA400')
+  await expect(note.getByRole('listitem').nth(2)).toHaveText('DHD audio RX2 (Series 52)')
   // announced, not only shown
-  await expect(page.locator('.cr-status-msg')).toContainText('9 appareils installés. Matériel non disponible dans le jeu : behringer-ha400')
+  await expect(page.locator('.cr-status-msg')).toContainText('9 appareils installés. Matériel non disponible dans le jeu : Behringer MicroAMP HA400')
   // the first place of the session is not undoable into « no place »
   expect(await page.evaluate(() => window.__creation!.historySize())).toBe(0)
   await note.getByRole('button', { name: 'Fermer la note' }).click()
@@ -127,6 +134,57 @@ test('Lieu → « Choisir un lieu… » reopens the picker over the place; Ferme
   await expect(page.getByTestId('place-picker')).toBeHidden()
 })
 
+test('a model over installed gear asks « Remplacer le matériel » first: Annuler keeps the rig, Remplacer replaces (undoable)', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.choosePlace('blank'))
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 0] }))
+  const openTemplate = async () => {
+    await page.getByRole('menuitem', { name: 'Lieu' }).click()
+    await page.getByRole('menuitem', { name: 'Choisir un lieu…' }).click()
+    await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
+  }
+  await openTemplate()
+  const dialog = page.getByRole('dialog', { name: 'Remplacer le matériel ?' })
+  await expect(dialog).toBeVisible()
+  await expect(dialog).toContainText('Ctrl+Z permet de revenir en arrière')
+  await dialog.getByRole('button', { name: 'Annuler' }).click()
+  await expect(dialog).toHaveCount(0)
+  await expect(page.getByTestId('place-picker')).toBeVisible() // still choosing
+  expect(await page.evaluate(() => window.__creation!.place())).toBe('blank')
+  expect(await page.evaluate(() => window.__creation!.design().rig.instances.map((i) => i.instanceId))).toEqual(['ql1'])
+
+  await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
+  await page.getByRole('dialog', { name: 'Remplacer le matériel ?' }).getByRole('button', { name: 'Remplacer le matériel' }).click()
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
+  expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(4)
+  await expect(page.locator('.cr-status-msg')).toContainText('Matériel remplacé : 4 appareils installés. Ctrl+Z pour revenir en arrière.')
+  await page.evaluate(() => window.__creation!.undo())
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  expect(await page.evaluate(() => window.__creation!.design().rig.instances.map((i) => i.instanceId))).toEqual(['ql1'])
+})
+
+test('a card that cannot be opened says so in the picker (and the status bar); nothing changes', async ({ page }) => {
+  // The radio talk studio's room chunk fails to load: « Avec le matériel du modèle » cannot be built.
+  await page.route('**/assets/radio-talk-studio-medium-*.js', (r) => r.abort())
+  await boot(page)
+  await page.locator('[data-place="room:radio-talk-studio-medium"]').click()
+  const dialog = page.getByTestId('place-mode-dialog')
+  await dialog.getByRole('radio', { name: 'Avec le matériel du modèle' }).check()
+  await dialog.getByRole('button', { name: 'Ouvrir' }).click()
+  const err = page.getByTestId('place-picker-error')
+  await expect(err).toBeVisible()
+  await expect(err).toHaveText('Studio radio de débat + régie (moyen) n’a pas pu être ouvert. Rien n’a changé.')
+  await expect(err).toHaveAttribute('role', 'alert')
+  await expect(page.locator('.cr-status-msg')).toContainText('Rien n’a changé.')
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  expect(await page.evaluate(() => window.__creation!.place())).toBeNull()
+  // the next choice clears it
+  await page.locator('[data-place="blank"]').click()
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await expect(err).toBeHidden()
+})
+
 test('the type filter narrows the grid; arrows walk only the shown cards', async ({ page }) => {
   await boot(page)
   await page.getByTestId('place-filter').selectOption('Décor 3D')
@@ -182,6 +240,8 @@ test('1366×768: no horizontal scroll, axe clean, reduced motion = no transition
   await page.screenshot({ path: 'docs/creative/screens/task-12-picker-keyboard-1366x768.png' })
   await page.locator('[data-place="room:radio-talk-studio-medium"]').click()
   await expect(page.getByTestId('place-mode-dialog')).toBeVisible()
+  // accented place names in the dialog title use Plex (Tektur's 18 px acute reads as a macron)
+  expect(await page.locator('.cr-pick-confirm-title').evaluate((e) => getComputedStyle(e).fontFamily)).toMatch(/^'?"?IBM Plex Sans/)
   const axe2 = await new AxeBuilder({ page }).analyze()
   expect(axe2.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical')).toEqual([])
   await page.screenshot({ path: 'docs/creative/screens/task-12-picker-dialog-1366x768.png' })
