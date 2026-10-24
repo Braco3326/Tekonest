@@ -25,11 +25,59 @@ export const CREATION_TOKENS = {
     /** Success text, ≥ 4.5:1 on panel. */
     ok: '#8CCB9B',
   },
-  /** 3D look of the neutral blank room (« Salle vide neutre »): a raised floor that reads on the Nuit clear colour, a quiet 1 m grid. */
+  /**
+   * 3D look of the creation viewport (Task 14b), the single source for every
+   * scene colour in Mode Création: dark, low-saturation, Nuit-based with a
+   * Prune hint, so the viewport reads as one product with the chrome. Applied
+   * through `src/creation/sceneTheme.ts`; the legacy scene (`TOKENS`) is untouched.
+   * Contrast (tests/creation/creationTokens.test.ts): floor/Nuit ≥ 1.3, device
+   * body/floor ≥ 2, port markers/body ≥ 3 (WCAG 1.4.11), label ink/label card
+   * and label ink/floor ≥ 4.5, selection/floor ≥ 3, selection vs hover ≥ 1.5.
+   */
   scene: {
+    /** Floor of the blank room and of every procedural room. */
     floor: '#2E2830',
+    /** 1 m grid; every 5 m from the centre the stronger major line. */
     gridMinor: '#463E47',
     gridMajor: '#7A5A6A',
+    /** Room walls (inner faces) and ceiling: just above Nuit, they frame without competing. */
+    wall: '#221E23',
+    ceiling: '#1A171B',
+    /** Zones (stage deck, régie, public): a quiet raised fill and a thin Prune-grey outline. */
+    zoneFill: '#3A323B',
+    zoneEdge: '#8C6E7E',
+    /** Placeholder device body (a loaded .glb keeps its own materials). */
+    deviceBody: '#5F5766',
+    /** Placeholder top-face tint per gear family: subtle, never a saturated box. */
+    accentMixing: '#B08A60',
+    accentSource: '#7FA08C',
+    accentSpeaker: '#8090B0',
+    accentInfra: '#977D9E',
+    /** Port markers by direction (in / out / bidir), legible on the body and the floor. */
+    portIn: '#9BC3EC',
+    portOut: '#E6CF7A',
+    portBidir: '#D2B3E3',
+    /** Device / port labels: Papier ink on a raised-Nuit card. */
+    labelInk: '#F3EDE3',
+    labelBg: '#1C191D',
+    /** Contact shadow core colour (fades to transparent). */
+    shadow: '#050405',
+    /** Selected device: Ambre outline + wash (as the tree / Propriétés selection). */
+    selection: '#DD9349',
+    /** Hovered device: a thin Papier outline, no wash. */
+    hover: '#F3EDE3',
+  },
+  /** Creation viewport lighting: one calm hemispheric fill + one key, no shadow maps (no per-frame cost). */
+  light: {
+    fill: 0.62,
+    fillSky: '#F3EDE3',
+    fillGround: '#2A242B',
+    key: 0.6,
+    keyColor: '#FFF4E8',
+    /** Contact-shadow core opacity (0…1). */
+    shadowAlpha: 0.6,
+    /** Port marker self-illumination (share of its colour), so markers read in the dark room. */
+    portGlow: 0.55,
   },
   font: {
     title: "'Tektur', 'IBM Plex Sans', system-ui, sans-serif",
