@@ -21,6 +21,7 @@ Brief: Oscar's "Mode Création only" prompt (2026-10-24). Autonomous run; defaul
 - **L2.** Template gear matches the game catalog only 22 % (77/350). "Avec le matériel du modèle" therefore places only the matched devices; the others are listed as « matériel non disponible dans le jeu ».
 - **L4 (after Task 7).** Rooms and placeholder devices still use the old 3D look (pale grey floor, saturated boxes), which clashes with the dark Tekonest interface. The plan had no task for this, so **Task 14b « Look 3D Mode Création »** (tekdesigner) is added before the Phase 1 gate.
 - **L5 (Task 14 review).** The brief's status bar reads "Signal OK / X erreurs". « Signal OK » with a green ✓ is shown **only when the signal path really reaches a powered speaker** (`playbackReady`, from Task 34). Until then, 0 errors reads « Aucune erreur détectée » in neutral ink, and an empty rig reads « Rien de branché ». **Why:** the brief's honesty rule; an empty rig must never show « Signal OK ».
+- **L6 (Task 14b review).** The 3D canvas focus ring is **Papier**, not Ambre: inside the viewport Ambre means "selected", so an Ambre frame around the whole canvas read as "everything selected". Every other control keeps the plan's 2 px Ambre + 1 px Nuit ring. Deferred from 14b: cables keep the legacy palette; the project title (`.cr-title`) stays Tektur until its e2e is updated.
 - **L3.** The reference setup QL1 + SM58 + 2 active speakers exists in no template, so it gets its own starter template, « Concert simple (référence) ».
 
 ## Progress
