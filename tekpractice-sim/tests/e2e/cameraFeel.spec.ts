@@ -314,8 +314,17 @@ test('settle oracle: cameraMoving() covers drag inertia and a recall flight from
   await page.mouse.up()
   expect(await page.evaluate(() => window.__audioSim!.cameraMoving!())).toBe(true) // inertia left
   await settledCamera(page)
-  await page.keyboard.press('Digit1')
-  expect(await page.evaluate(() => window.__audioSim!.cameraMoving!())).toBe(true) // the flight runs
+  // Read the oracle in the same task as the key press: no frame has run yet (camera
+  // unmoved), yet the flight is already reported. (A round trip after page.keyboard.press
+  // can outlast the whole 450 ms flight.)
+  const atPress = await page.evaluate(() => {
+    const before = window.__audioSim!.camera().alpha
+    document.body.dispatchEvent(new KeyboardEvent('keydown', { code: 'Digit1', key: '1', bubbles: true }))
+    const r = { moving: window.__audioSim!.cameraMoving!(), unmoved: window.__audioSim!.camera().alpha === before }
+    document.body.dispatchEvent(new KeyboardEvent('keyup', { code: 'Digit1', key: '1', bubbles: true }))
+    return r
+  })
+  expect(atPress).toEqual({ moving: true, unmoved: true })
   const back = await settledCamera(page)
   expect(await page.evaluate(() => window.__audioSim!.cameraMoving!())).toBe(false)
   expect(angleDiff(back.alpha, saved.alpha)).toBeLessThan(0.02)
