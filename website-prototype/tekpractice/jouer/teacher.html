@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parcours d'essais : lecture enseignant</title>
+    <style>
+      /* Values come from src/design/tokens.ts (injectTokens); fallbacks mirror them for the pre-JS frame. */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background: var(--tk-bg, #f5f6f8);
+        color: var(--tk-ink, #1b2129);
+        font-family: var(--tk-font, system-ui, sans-serif);
+        font-weight: var(--tk-weight-regular, 450);
+        font-size: var(--tk-text-md, 14px);
+        line-height: 1.5;
+      }
+      main { max-width: 960px; margin: 0 auto; padding: var(--tk-space-lg, 20px) var(--tk-space-md, 14px) var(--tk-space-xl, 32px); }
+      h1 { font-size: var(--tk-text-xl, 21px); font-weight: var(--tk-weight-bold, 650); }
+      h2 { font-size: var(--tk-text-lg, 16px); font-weight: var(--tk-weight-bold, 650); margin-bottom: var(--tk-space-sm, 8px); }
+      h3 { font-size: var(--tk-text-md, 14px); font-weight: var(--tk-weight-bold, 650); }
+      .sub { color: var(--tk-ink-muted, #5a6372); margin: var(--tk-space-xs, 4px) 0 var(--tk-space-lg, 20px); }
+      .drop {
+        background: var(--tk-surface, #fff); border: 2px dashed var(--tk-surface-border, #e6e8ee);
+        border-radius: var(--tk-radius-md, 12px); padding: var(--tk-space-lg, 20px);
+        display: flex; flex-wrap: wrap; gap: var(--tk-space-md, 14px); align-items: center;
+      }
+      .drop.over { border-color: var(--tk-accent, #2e5fe6); }
+      button, .btn {
+        font: inherit; font-size: var(--tk-text-sm, 12.5px); font-weight: var(--tk-weight-medium, 550);
+        background: var(--tk-accent, #2e5fe6); color: var(--tk-accent-ink, #fff); border: 0;
+        border-radius: var(--tk-radius-sm, 7px); padding: 8px 14px; cursor: pointer;
+      }
+      button.quiet { background: var(--tk-surface, #fff); color: var(--tk-ink, #1b2129); border: 1px solid var(--tk-surface-border, #e6e8ee); }
+      :focus-visible { outline: 2px solid var(--tk-accent, #2e5fe6); outline-offset: 2px; }
+      /* The native input stays focusable and operable (keyboard); only the button look is shared. */
+      /* Visually hidden but focusable: Tab reaches it, Enter/Space opens the picker; the label shows the focus ring. */
+      #file { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+      .drop:has(#file:focus-visible) #chooseLabel { outline: 2px solid var(--tk-ink, #1b2129); outline-offset: 2px; }
+      #status { margin-top: var(--tk-space-md, 14px); }
+      .msg { padding: 10px 14px; border-radius: var(--tk-radius-sm, 7px); border: 1px solid var(--tk-surface-border, #e6e8ee); background: var(--tk-surface, #fff); }
+      .msg.error { border-color: var(--tk-error, #d93a47); color: var(--tk-error, #d93a47); }
+      .msg.warn { border-color: var(--tk-warning, #d98324); color: var(--tk-warning-ink, #a85a00); }
+      section.block { margin-top: var(--tk-space-xl, 32px); }
+      ol.trail { list-style: none; display: grid; gap: var(--tk-space-md, 14px); }
+      .card { background: var(--tk-surface, #fff); border: 1px solid var(--tk-surface-border, #e6e8ee); border-radius: var(--tk-radius-md, 12px); box-shadow: var(--tk-elev-card, none); padding: var(--tk-space-md, 14px); }
+      .card header { display: flex; flex-wrap: wrap; gap: 4px var(--tk-space-md, 14px); align-items: baseline; margin-bottom: var(--tk-space-sm, 8px); }
+      .meta { color: var(--tk-ink-muted, #5a6372); font-size: var(--tk-text-sm, 12.5px); }
+      .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 280px); gap: var(--tk-space-md, 14px); }
+      @media (max-width: 700px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+      dl.fields dt { font-size: var(--tk-text-sm, 12.5px); font-weight: var(--tk-weight-bold, 650); color: var(--tk-ink-muted, #5a6372); margin-top: var(--tk-space-sm, 8px); }
+      dl.fields dd { overflow-wrap: anywhere; }
+      dl.fields ul { padding-left: 18px; }
+      .pill { font-size: var(--tk-text-xs, 11px); font-weight: var(--tk-weight-bold, 650); border-radius: 99px; padding: 1px 8px; border: 1px solid currentColor; }
+      .pill.error, .bad { color: var(--tk-error, #d93a47); }
+      .pill.warning { color: var(--tk-warning-ink, #a85a00); }
+      .good { color: var(--tk-success-ink, #0b3a21); }
+      svg.map { width: 100%; height: auto; max-height: 260px; background: var(--tk-floor, #fcfcfd); border: 1px solid var(--tk-surface-border, #e6e8ee); border-radius: var(--tk-radius-sm, 7px); }
+      svg.map .room { fill: none; stroke: var(--tk-ink-muted, #5a6372); stroke-width: 0.04; }
+      svg.map .dot { fill: var(--tk-device-body, #465064); }
+      svg.map .lbl { fill: var(--tk-ink, #1b2129); font-size: 0.2px; font-family: var(--tk-font, sans-serif); }
+      .rubric { list-style: none; display: grid; gap: var(--tk-space-sm, 8px); }
+      .rubric label { display: flex; gap: 10px; align-items: flex-start; }
+      .rubric input { margin-top: 4px; width: 16px; height: 16px; flex: none; }
+      .draft { font-size: var(--tk-text-sm, 12.5px); color: var(--tk-warning-ink, #a85a00); margin-bottom: var(--tk-space-sm, 8px); }
+      footer.disclaimer { margin-top: var(--tk-space-xl, 32px); padding-top: var(--tk-space-md, 14px); border-top: 1px solid var(--tk-surface-border, #e6e8ee); color: var(--tk-ink-muted, #5a6372); }
+      /* Back to the Tekonest site (key site.back.*); top-right, clear of the page title. */
+      #site-link {
+        position: absolute; top: var(--tk-space-md, 14px); right: var(--tk-space-md, 14px);
+        font-size: var(--tk-text-sm, 12.5px); font-weight: var(--tk-weight-medium, 550);
+        color: var(--tk-ink, #1b2129); background: var(--tk-surface, #fff); text-decoration: none; white-space: nowrap;
+        border: 1px solid var(--tk-surface-border, #e6e8ee); border-radius: var(--tk-radius-sm, 7px); padding: 6px 11px;
+      }
+      #site-link:hover { border-color: var(--tk-accent, #2e5fe6); }
+      @media (max-width: 700px) { h1 { margin-top: 36px; } }
+      @media print { #site-link { display: none; } }
+      @media print { .drop, #print { display: none; } body { background: #fff; } .card { break-inside: avoid; box-shadow: none; } }
+    </style>
+    <script type="module" crossorigin src="/tekpractice/jouer/assets/teacher-DPnrR7wG.js"></script>
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/index-DnqJoJRJ.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/arena-large-DCXsTi7G.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/auditorium-amphitheatre-medium-CD2Ql4P2.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/bar-club-stage-small-Ce617xPs.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/church-worship-medium-_bxBel7k.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/classroom-lab-small-DaId5K74.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/concert-hall-medium-DPeoyZfW.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/conference-room-small-DPYPBmNr.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/dj-booth-small-CDAo7K2I.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/eng-outdoor-reportage-BU-yyaiK.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/festival-open-air-large-CXVaAXlQ.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/foley-dubbing-stage-medium-Dl22BaKh.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/hybrid-meeting-room-small-J6lOE2Ca.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/interpretation-booth-small-DCRHpjVy.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/mastering-room-medium-CVjGGKFu.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/museum-installed-sound-medium-BFoDCLzw.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/ob-van-small-CkA_vMIm.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/opera-house-pit-large-BTXa7WZu.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/podcast-room-small-BhPaBcMy.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/post-atmos-mix-room-medium-CefkLFcC.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/radio-studio-self-op-small-DGNz9r01.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/radio-talk-studio-medium-C8iI6CpV.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/scoring-stage-large-D4P_42Sh.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/sports-venue-pa-large-BW0OiI7w.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/studio-control-room-large-DvK2jCEm.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/studio-control-room-small-DUsy9LRn.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/studio-live-room-medium-DTFFro5B.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/studio-vocal-booth-small-B9Kr08f6.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/theatre-black-box-small-C7MvaYIE.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/theatre-italian-medium-CIn9KH9L.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/tv-gallery-regie-medium-CEl9xNpf.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/tv-studio-plateau-large-rsGq8ZI2.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/wedding-event-hall-medium-CDjy8dkL.js">
+    <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/compare-D_TXbS4k.js">
+  </head>
+  <body>
+    <a id="site-link" href="/" aria-label="Retour au site Tekonest">← tekonest.com</a>
+    <main id="app">
+      <h1 id="title">Parcours d'essais : lecture enseignant</h1>
+      <p class="sub" id="subtitle"></p>
+      <div class="drop" id="drop">
+        <p id="dropText"></p>
+        <label class="btn" id="chooseLabel" for="file"><span id="chooseText"></span></label>
+        <input type="file" id="file" multiple accept=".json,application/json" aria-describedby="dropText" />
+      </div>
+      <div id="status" role="status" aria-live="polite"></div>
+      <div id="result"></div>
+    </main>
+  </body>
+</html>
