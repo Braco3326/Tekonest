@@ -137,9 +137,9 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   // ── status bar (footer): place + a polite live message
   const status = el(doc, 'footer', 'cr-status')
   status.dataset.testid = 'status-bar'
-  // One focusable summary line (the status bar is a tab stop until it gets controls, Task 14).
+  status.setAttribute('role', 'contentinfo')
+  // Plain text (not a tab stop): the bar's controls (signal button, autosave action) are its tab stops (Task 14).
   const summary = el(doc, 'div', 'cr-status-summary')
-  summary.tabIndex = 0
   const statusPlace = el(doc, 'span', 'cr-status-place')
   const statusMsg = el(doc, 'span', 'cr-status-msg')
   statusMsg.setAttribute('role', 'status')
@@ -173,9 +173,10 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
 
   const liveMsg = createLiveText(statusMsg, (fn, ms) => (win ? win.setTimeout(fn, ms) : fn()))
   const setStatus = (place: string, message: string, state: 'idle' | 'busy' | 'ready' = 'idle', reannounce = false): void => {
-    statusPlace.textContent = place
+    // Writes only on a change; the message itself goes through liveText (re-announced only for a learner's action).
+    if (statusPlace.textContent !== place) statusPlace.textContent = place
     liveMsg(message, reannounce)
-    statusMsg.dataset.state = state
+    if (statusMsg.dataset.state !== state) statusMsg.dataset.state = state
   }
   setStatus('', S().statusNoPlace!)
 

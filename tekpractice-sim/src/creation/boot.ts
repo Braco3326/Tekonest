@@ -62,6 +62,8 @@ import {
 import { openNameDialog, openProjectList } from './shell/projectDialogs'
 import { ProjectSession, type ProjectState } from './projectSession'
 import { openChoiceDialog } from './shell/placeDialog'
+import { mountStatusBar } from './shell/statusBar'
+import { autosaveView, rejectionOf, ruleTextFor, statusView, type AutosavePause, type Rejection, type RuleRow } from './shell/statusModel'
 // Self-hosted fonts (P12, OFL), bundled same-origin.
 import '@fontsource/tektur/600.css'
 import '@fontsource/ibm-plex-sans/400.css'
@@ -106,6 +108,42 @@ export async function bootCreation(): Promise<void> {
     return cards.find((p) => p.key === k)?.title ?? (room ? roomName(room[1]) : k.replace(/^set:/, ''))
   }
   const notes = mountNotes(document, shell.viewport)
+
+  // ── Status bar (Task 14, CA-15, C17): selection, snapping, autosave state, signal + the persistent error list.
+  const ruleText = ruleTextFor(registry.catalog.rules as readonly RuleRow[])
+  /** The rule events of the last store change (the count changes on store changes only). */
+  let events = store.events()
+  /** The last refused connection: listed first until a valid connection, a new design, or its device leaves. */
+  let lastRejection: Rejection | null = null
+  const statusBar = mountStatusBar({
+    doc: document,
+    bar: shell.status,
+    root: shell.root,
+    portLabel: (p) => `${deviceLabel(p.instance)} (${p.instance}) · ${p.port}`,
+    pick: (e) => {
+      const id = e.ports.map((p) => p.instance).find((i) => deviceIds().includes(i))
+      if (id) selection.select(id)
+    },
+    autosaveAction: (a) => (a === 'export' ? exportKept() : a === 'checked' ? checkedFile() : resumeHere()),
+  })
+  const refreshSignal = (): void => {
+    const sel = viewState.get().selection
+    statusBar.render(
+      statusView({
+        selectionLabel: sel === null ? null : `${deviceLabel(sel)} (${sel})`,
+        snapFree: false, // free placement (Shift) arrives with the placement drag
+        events,
+        lastRejection,
+        ruleText,
+      }),
+    )
+  }
+  history.onRefused((intent, r) => {
+    if (intent.type !== 'CONNECT') return
+    lastRejection = rejectionOf(r.error, r.subjects, ruleText)
+    refreshSignal()
+    shell.setStatus(placeNow(), COPY.status!.statusRefused!.replace('{title}', lastRejection.title), 'ready', true)
+  })
 
   // ── Project (Task 13, C16): per-origin localStorage, name, dirty marker, autosave.
   let storage: Storage | null = null
@@ -161,10 +199,30 @@ export async function bootCreation(): Promise<void> {
     if (stopsAutosave) {
       autosaveOn = false
       pendingStoppedAutosave = true
+      keptExported = false
     }
     notes.show({ id: 'kept-full', title: PJ.keptFullTitle!, body: PJ.keptFull! })
+    // The note can be closed: the status bar keeps saying the autosave is paused, with « Exporter… » (Task 14).
+    refreshAutosave()
   }
-  const autosave = createAutosave({
+  // Autosave state shown in the status bar (Task 14): « Enregistré » / « Modifié » / « En pause ».
+  /** A change is waiting for the autosave (scheduled, not yet written). */
+  let autosavePending = false
+  /** The browser refuses storage: the autosave cannot write at all. */
+  let storageBlocked = storage === null
+  /** The last autosave hit the quota (cleared by the next successful write). */
+  let autosaveFull = false
+  /** The held data was exported: the line now waits for « J’ai vérifié le fichier ». */
+  let keptExported = false
+  const autosavePause = (): AutosavePause => {
+    if (pendingStoppedAutosave && !autosaveOn) return keptExported ? 'kept-exported' : 'kept'
+    if (storageBlocked) return 'blocked'
+    if (rawAutosave.paused) return 'other-tab'
+    if (autosaveFull) return 'full'
+    return null
+  }
+  const refreshAutosave = (): void => statusBar.renderAutosave(autosaveView({ place: canvasShown, pending: autosavePending, pause: autosavePause() }))
+  const rawAutosave = createAutosave({
     storage,
     busy: () => history.inTransaction,
     snapshot: () => {
@@ -173,13 +231,48 @@ export async function bootCreation(): Promise<void> {
       return { version: 1, savedAt: new Date().toISOString(), name: projectName, design, savedFingerprint: savedFp, stamp: projectStamp }
     },
     onResult: (r: SaveResult) => {
-      if (r === 'ok') return notes.dismiss('autosave-full')
+      if (r === 'ok') {
+        autosavePending = false
+        autosaveFull = false
+        refreshAutosave()
+        return notes.dismiss('autosave-full')
+      }
       if (r === 'full') {
+        autosaveFull = true
         notes.show({ id: 'autosave-full', title: PJ.blockedTitle!, body: PJ.autosaveFull! })
         shell.setStatus(placeNow(), PJ.autosaveFull!, 'ready', true)
-      } else blockedNote()
+      } else {
+        storageBlocked = true
+        blockedNote()
+      }
+      refreshAutosave()
     },
   })
+  /** The autosave, with its state kept in the status bar. */
+  const autosave = {
+    schedule: (): void => {
+      autosavePending = true
+      rawAutosave.schedule()
+      refreshAutosave()
+    },
+    flush: (): void => rawAutosave.flush(),
+    cancel: (): void => {
+      autosavePending = false
+      rawAutosave.cancel()
+      refreshAutosave()
+    },
+    pause: (): void => {
+      rawAutosave.pause()
+      refreshAutosave()
+    },
+    resume: (): void => {
+      rawAutosave.resume()
+      refreshAutosave()
+    },
+    get paused(): boolean {
+      return rawAutosave.paused
+    },
+  }
 
   let canvasShown = false
   const showStatus = (): void => {
@@ -269,6 +362,7 @@ export async function bootCreation(): Promise<void> {
     host.setHidden(v.hidden)
     tree.render()
     props.render()
+    refreshSignal()
   })
   host.onPlaceShown = () => {
     // Hidden zones of the previous place do not carry over.
@@ -278,10 +372,22 @@ export async function bootCreation(): Promise<void> {
     tree.render()
   }
 
-  store.subscribe(() => {
+  store.subscribe((change) => {
     host.apply(store.design())
     scheduler.invalidate()
     showStatus()
+    // The error list follows the rig: the rule events now; the refused connection until a valid one (or a new design, or its device leaves).
+    const before = events.filter((e) => e.severity === 'error').length
+    events = store.events()
+    const after = events.filter((e) => e.severity === 'error').length
+    // The count is said, not only shown, when a change adds or clears an error (never on a refresh with the same count).
+    if (after !== before) shell.setStatus(placeNow(), `${COPY.status!.signalAnnounce} ${after === 0 ? COPY.status!.signalOk : after === 1 ? COPY.status!.errorsOne : COPY.status!.errorsMany!.replace('{n}', String(after))}`, 'ready')
+    if (lastRejection) {
+      const present = new Set(deviceIds())
+      const cleared = change.intents.some((i) => i.type === 'CONNECT' || i.type === 'APPLY_DESIGN')
+      if (cleared || !lastRejection.ports.every((p) => present.has(p.instance))) lastRejection = null
+    }
+    refreshSignal()
     // A selected device that left the rig (REMOVE, undo of its SPAWN) is no longer selected.
     const v = viewState.get()
     const ids = deviceIds()
@@ -318,6 +424,7 @@ export async function bootCreation(): Promise<void> {
       canvasShown = true
       canvas.style.display = ''
       host.engine.resize()
+      refreshAutosave()
     }
     if (!picker.isOpen) return
     const fromPicker = picker.root.contains(document.activeElement)
@@ -410,6 +517,8 @@ export async function bootCreation(): Promise<void> {
     const loaded = loadAutosave(storage)
     if (loaded.status === 'blocked') {
       autosaveOn = false
+      storageBlocked = true
+      refreshAutosave()
       blockedNote()
       shell.setStatus('', PJ.blocked!, 'idle', true)
       return false
@@ -420,6 +529,8 @@ export async function bootCreation(): Promise<void> {
       else if (loaded.kept === 'full') holdPending(AUTOSAVE_KEY, loaded.reason, loaded.raw, true)
       else {
         autosaveOn = false
+        storageBlocked = true
+        refreshAutosave()
         blockedNote()
       }
       return false
@@ -433,7 +544,10 @@ export async function bootCreation(): Promise<void> {
     if (lost) {
       const aside = setAsideAutosave(storage, r.ok ? 'dropped' : 'refused')
       if (aside.kept === 'full' && aside.raw !== null) holdPending(AUTOSAVE_KEY, r.ok ? 'dropped' : 'refused', aside.raw, true)
-      else if (aside.kept === 'blocked') autosaveOn = false
+      else if (aside.kept === 'blocked') {
+        autosaveOn = false
+        storageBlocked = true
+      }
     }
     if (!r.ok) {
       notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
@@ -446,6 +560,8 @@ export async function bootCreation(): Promise<void> {
     shell.setStatus(placeNow(), PJ.restored!, 'ready', true)
     return true
   }
+  refreshSignal()
+  refreshAutosave()
   if (!restore()) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
   // While the picker covers the workspace, « Aller à la vue 3D » lands on its highlighted card.
   document.querySelector<HTMLAnchorElement>('[data-testid="skip-link"]')?.addEventListener('click', (e) => {
@@ -622,26 +738,34 @@ export async function bootCreation(): Promise<void> {
     setTimeout(() => URL.revokeObjectURL(url), 0)
     // What was held is in the file: the autosave may write over it once the learner says the file is good.
     if (pending.length) {
-      const held = [...pending]
+      heldExport = [...pending]
+      keptExported = true
       notes.show({
         id: 'kept-full',
         title: PJ.keptFullTitle!,
         body: PJ.keptFullExported!,
-        actions: [
-          {
-            label: PJ.checkedFile!,
-            run: () => {
-              exportedList = held.filter((p) => p.key === PROJECTS_KEY).pop()?.raw ?? exportedList
-              if (pendingStoppedAutosave && storage) autosaveOn = true
-              pendingStoppedAutosave = false
-              notes.dismiss('kept-full')
-              autosave.schedule()
-            },
-          },
-        ],
+        actions: [{ label: PJ.checkedFile!, run: checkedFile }],
       })
+      refreshAutosave()
     }
     shell.setStatus(placeNow(), PJ.exported!.replace('{file}', file), 'ready', true)
+  }
+  /** What the last export held (the autosave may overwrite it once the learner checked the file). */
+  let heldExport: QuarantineItem[] = []
+  /** « J’ai vérifié le fichier » (note or status bar): the autosave resumes. */
+  const checkedFile = (): void => {
+    exportedList = heldExport.filter((p) => p.key === PROJECTS_KEY).pop()?.raw ?? exportedList
+    if (pendingStoppedAutosave && storage) autosaveOn = true
+    pendingStoppedAutosave = false
+    keptExported = false
+    notes.dismiss('kept-full')
+    autosave.schedule()
+  }
+  /** « Reprendre ici » (note or status bar): this tab writes again. */
+  const resumeHere = (): void => {
+    notes.dismiss('other-tab')
+    autosave.resume()
+    shell.setStatus(placeNow(), COPY.shell!.statusReady!, 'ready')
   }
   // Another tab writes the autosave or the projects: this tab stops autosaving (said), Ctrl+S here resumes it.
   shellBag.listen(window, 'storage', (e) => {
@@ -652,16 +776,7 @@ export async function bootCreation(): Promise<void> {
       id: 'other-tab',
       title: PJ.otherTabTitle!,
       body,
-      actions: [
-        {
-          label: PJ.resumeHere!,
-          run: () => {
-            notes.dismiss('other-tab')
-            autosave.resume()
-            shell.setStatus(placeNow(), COPY.shell!.statusReady!, 'ready')
-          },
-        },
-      ],
+      actions: [{ label: PJ.resumeHere!, run: resumeHere }],
     })
     shell.setStatus(placeNow(), body, 'ready', true)
   })
