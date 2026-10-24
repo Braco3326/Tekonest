@@ -40,7 +40,8 @@ import { Hud } from './ui/hud'
 import { ControlsPanel } from './ui/controlsPanel'
 import { LocalStorageProgressStore } from './ui/ProgressStore'
 import { ExamController } from './ui/exam'
-import { loadRigs, Shelf, saveRig } from './ui/shelf'
+import { Shelf } from './ui/shelf'
+import { loadRigs, saveRig } from './ui/rigStore'
 import { SeenTips, tipFor, type CoachFile } from './ui/coach'
 import type { ToastAction } from './ui/hud'
 import coachJson from '../content/coach/tips.json'
@@ -92,6 +93,8 @@ declare global {
       deviceBodyCenter: (instanceId: string) => [number, number, number] | null
       /** Screen point of a world point through the current camera (e2e aims at the floor). 2D: null. */
       worldScreen: (p: [number, number, number]) => { x: number; y: number } | null
+      /** Where an instance stands (rig save/reload e2e): metres + yaw in whole degrees. 3D only. */
+      pose?: (instanceId: string) => { position: [number, number, number]; rotationY: number } | null
     }
   }
 }
@@ -508,7 +511,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
 
   // Rig reload (ADR-0005): clear stage → respawn exact ids → rewire → restate.
   const loadRigByName = (name: string): void => {
-    const rig = loadRigs(window.localStorage).find((r) => r.name === name)
+    const rig = loadRigs(window.localStorage).rigs.find((r) => r.name === name)
     if (!rig) return
     graph.clear()
     cables.clear()
@@ -827,6 +830,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         getMistakes: () => sessionMistakes,
         // The report overlay takes the screen; the dispatch guard freezes intents.
         onFinished: () => undefined,
+        onScored: (s) => void progress.recordExam(level.id, s.score20),
       })
     : null
 
@@ -837,11 +841,12 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       registry,
       opts.sandboxGuided ?? true,
       dispatch,
-      (name) => {
+      (name, overwrite) => {
         const snap = graph.snapshot()
-        saveRig(window.localStorage, {
+        const rig = {
           name,
           savedAt: new Date().toISOString(),
+          roomId: room?.file.id ?? null,
           instances: snap.instances.map((i) => ({ instanceId: i.instanceId, deviceId: i.deviceId })),
           connections: snap.connections,
           controls: Object.fromEntries(snap.instances.map((i) => [i.instanceId, i.controls])),
@@ -851,7 +856,9 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
               return pose ? [[i.instanceId, [...pose.position, pose.rotationY] as [number, number, number, number]]] : []
             }),
           ),
-        })
+        }
+        const result = saveRig(window.localStorage, rig, { overwrite })
+        if (!result.ok) return result // the shelf shows the reason / the confirm
         // Clean rig = positive readiness signal (ADR-0005): ≥2 connections and
         // zero violations. A messy rig still saves — no shame, just no credit.
         const state = runner.check(graph)
@@ -859,6 +866,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
           progress.recordWin('sandbox')
           hud.toast('info', 'Rig propre', 'Deux connexions ou plus, zéro faute — ta readiness en profite.')
         }
+        return result
       },
       Object.keys(ENVIRONMENTS),
       room ? '' : env.id,
@@ -927,6 +935,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       instances.map((i) => ({ instanceId: i.instanceId, deviceId: i.deviceId, status: i.assetStatus })),
     explore: () => ({ ...explore.snapshot(), panels: exploreUi.panelCount(), placing: exploreUi.placing() }),
     worldScreen: (p) => project(Vector3.FromArray(p)),
+    pose: poseOf,
     deviceBodyCenter: (instanceId) => {
       const inst = instances.find((i) => i.instanceId === instanceId)
       return inst ? debugBodyCenter(inst) : null

@@ -189,6 +189,7 @@ export function bootGame2D(registry: Registry, rawLevel: unknown): void {
         getState: () => runner.check(graph),
         getMistakes: () => sessionMistakes,
         onFinished: () => undefined,
+        onScored: (s) => void progress.recordExam(level.id, s.score20),
       })
     : null
 

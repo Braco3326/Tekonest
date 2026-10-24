@@ -47,6 +47,8 @@ export interface ExamHooks {
   getState(): LevelState
   getMistakes(): number
   onFinished(): void // freeze interactions upstream if desired
+  /** Persists the score (ADR-0012 D2: ExamScore is persisted → ProgressStore.recordExam). */
+  onScored?(score: ExamScore): void
 }
 
 export class ExamController {
@@ -86,6 +88,7 @@ export class ExamController {
     window.clearInterval(this.interval)
     const state = this.hooks.getState()
     const score = examScore(state, this.hooks.getMistakes(), this.elapsedSeconds, this.budgetSeconds)
+    this.hooks.onScored?.(score)
     this.renderReport(score, state)
     this.hooks.onFinished()
   }

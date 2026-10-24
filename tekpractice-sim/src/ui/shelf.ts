@@ -4,10 +4,12 @@
  *  - guided (low readiness): a 3-item palette + a one-line brief — the Beat 1
  *    "taste" of freedom;
  *  - free: every device, grouped by realWorld.category.
- * Clicks dispatch SPAWN intents; the rig save box writes a named snapshot.
+ * Clicks dispatch SPAWN intents; the rig save box saves a named rig through
+ * the pure rigStore (rigs v2, ADR-0012 Décision 9), confirming a same-name replace.
  */
 import type { Registry } from '../engine/CatalogLoader'
 import type { Intent } from './intents'
+import { loadRigs, type RigSaveFailure, type RigSaveResult, type RigWarning } from './rigStore'
 
 export const GUIDED_PALETTE = ['shure-sm58', 'yamaha-rio3224-d2', 'yamaha-ql1']
 export const GUIDED_BRIEF =
@@ -21,7 +23,8 @@ export class Shelf {
     registry: Registry,
     guided: boolean,
     dispatch: (intent: Intent) => void,
-    onSaveRig: (name: string) => void,
+    /** Saves through rigStore; `overwrite` only after the learner confirmed a same-name replace. */
+    onSaveRig: (name: string, overwrite: boolean) => RigSaveResult,
     environments: readonly string[] = [],
     currentEnv = '',
     /** TEK Brain procedural rooms (B3): generated from data, loaded on demand. */
@@ -67,15 +70,8 @@ export class Shelf {
             .join('')}</select></label>`
       : ''
 
-    const saved = loadRigs(window.localStorage)
-    const rigList = saved.length
-      ? `<div class="shelf-rigs">${saved
-          .map(
-            (r) =>
-              `<button class="shelf-rig" data-rig="${esc(r.name)}" title="${r.instances.length} appareil(s)">▶ ${esc(r.name)}</button>`,
-          )
-          .join('')}</div>`
-      : ''
+    const { rigs: saved, warnings } = loadRigs(window.localStorage)
+    const notices = [...new Set(warnings.map((w) => RIG_COPY.warning[w]))]
 
     root.innerHTML = `
       <h2>Étagères${guided ? ' · palette guidée' : ''}</h2>
@@ -83,18 +79,75 @@ export class Shelf {
       ${roomPicker}
       ${guided ? `<p class="shelf-brief">${GUIDED_BRIEF}</p>` : ''}
       <div class="shelf-scroll">${sections}</div>
-      ${rigList}
+      <p class="shelf-rig-notice" role="status"${notices.length ? '' : ' hidden'}>${notices.map(esc).join('<br>')}</p>
+      <div class="shelf-rigs"></div>
       <div class="shelf-save">
         <input id="rig-name" type="text" placeholder="Nom du rig…" maxlength="40" />
         <button id="rig-save">Sauver</button>
-        <span id="rig-saved" hidden>✓ sauvegardé</span>
+        <span id="rig-saved" role="status" hidden></span>
+      </div>
+      <div class="shelf-confirm" id="rig-overwrite" role="alertdialog" aria-labelledby="rig-ow-title" aria-describedby="rig-ow-body" hidden>
+        <strong id="rig-ow-title">${esc(RIG_COPY.overwriteTitle)}</strong>
+        <p id="rig-ow-body"></p>
+        <div class="shelf-confirm-actions">
+          <button type="button" id="rig-ow-replace">${esc(RIG_COPY.replace)}</button>
+          <button type="button" id="rig-ow-rename">${esc(RIG_COPY.rename)}</button>
+          <button type="button" id="rig-ow-cancel">${esc(RIG_COPY.cancel)}</button>
+        </div>
       </div>`
     root.hidden = false
+    const rigsEl = root.querySelector<HTMLElement>('.shelf-rigs')!
+    const renderRigs = (rigs: { name: string; instances: unknown[] }[]): void => {
+      rigsEl.hidden = rigs.length === 0
+      rigsEl.innerHTML = rigs
+        .map(
+          (r) =>
+            `<button class="shelf-rig" data-rig="${esc(r.name)}" title="${r.instances.length} appareil(s)">▶ ${esc(r.name)}</button>`,
+        )
+        .join('')
+    }
+    renderRigs(saved)
 
     root.querySelector<HTMLSelectElement>('#room-pick')?.addEventListener('change', (e) => {
       const id = (e.target as HTMLSelectElement).value
       location.href = id ? `?level=sandbox&room=${encodeURIComponent(id)}` : '?level=sandbox'
     })
+
+    const input = root.querySelector<HTMLInputElement>('#rig-name')!
+    const status = root.querySelector<HTMLElement>('#rig-saved')!
+    const confirmEl = root.querySelector<HTMLElement>('#rig-overwrite')!
+    let statusTimer = 0
+    let pending = ''
+    const showStatus = (text: string, ok: boolean): void => {
+      window.clearTimeout(statusTimer)
+      status.textContent = text
+      status.classList.toggle('rig-error', !ok)
+      status.hidden = false
+      // Failures stay on screen (every failure is shown); successes fade.
+      if (ok) statusTimer = window.setTimeout(() => (status.hidden = true), 2500)
+    }
+    const closeConfirm = (focus: HTMLElement): void => {
+      confirmEl.hidden = true
+      pending = ''
+      focus.focus()
+    }
+    const attempt = (name: string, overwrite: boolean): void => {
+      const r = onSaveRig(name, overwrite)
+      if (r.ok) {
+        showStatus(r.replaced ? RIG_COPY.replaced(name) : RIG_COPY.saved(name), true)
+        renderRigs(loadRigs(window.localStorage).rigs)
+        return
+      }
+      if (r.reason === 'exists') {
+        // Non-blocking in-page confirm; the safe choice (rename) has the focus.
+        pending = name
+        root.querySelector<HTMLElement>('#rig-ow-body')!.textContent = RIG_COPY.overwriteBody(name)
+        confirmEl.hidden = false
+        root.querySelector<HTMLButtonElement>('#rig-ow-rename')!.focus()
+        return
+      }
+      showStatus(RIG_COPY.failure[r.reason], false)
+    }
 
     root.addEventListener('click', (e) => {
       const item = (e.target as HTMLElement).closest<HTMLButtonElement>('.shelf-item')
@@ -107,65 +160,58 @@ export class Shelf {
         dispatch({ type: 'LOAD_RIG', name: rig.dataset.rig! })
         return
       }
-      if ((e.target as HTMLElement).id === 'rig-save') {
-        const input = root.querySelector<HTMLInputElement>('#rig-name')!
-        const name = input.value.trim()
-        if (!name) return
-        onSaveRig(name)
-        const ok = root.querySelector<HTMLElement>('#rig-saved')!
-        ok.hidden = false
-        setTimeout(() => (ok.hidden = true), 2500)
+      switch ((e.target as HTMLElement).id) {
+        case 'rig-save': {
+          const name = input.value.trim()
+          if (name) attempt(name, false)
+          break
+        }
+        case 'rig-ow-replace': {
+          const name = pending
+          closeConfirm(input)
+          if (name) attempt(name, true)
+          break
+        }
+        case 'rig-ow-rename':
+          closeConfirm(input)
+          input.select()
+          break
+        case 'rig-ow-cancel':
+          closeConfirm(root.querySelector<HTMLButtonElement>('#rig-save')!)
+          break
       }
     })
   }
 }
 
-// ── named rig snapshots (localStorage, versioned) ───────────────────────────
-
-export interface SavedRig {
-  name: string
-  savedAt: string
-  instances: { instanceId: string; deviceId: string }[]
-  connections: { a: { instance: string; port: string }; b: { instance: string; port: string } }[]
-  controls: Record<string, Record<string, import('../engine/types').ControlValue>>
-  /** Explore placement (ADR-0010): [x, y, z, yawDeg] per instance. Optional — older rigs use the grid. */
-  positions?: Record<string, [number, number, number, number]>
-}
-interface RigFile {
-  version: number
-  rigs: SavedRig[]
-}
-
-const RIGS_KEY = 'audio-sim/rigs'
-const RIGS_VERSION = 1
-
-export function loadRigs(storage: Pick<Storage, 'getItem'>): SavedRig[] {
-  try {
-    const raw = storage.getItem(RIGS_KEY)
-    if (!raw) return []
-    const parsed = JSON.parse(raw) as RigFile
-    return parsed.version === RIGS_VERSION && Array.isArray(parsed.rigs) ? parsed.rigs : []
-  } catch {
-    return []
-  }
-}
-
-export function saveRig(storage: Pick<Storage, 'getItem' | 'setItem'>, rig: SavedRig): void {
-  let file: RigFile = { version: RIGS_VERSION, rigs: [] }
-  try {
-    const raw = storage.getItem(RIGS_KEY)
-    if (raw) {
-      const parsed = JSON.parse(raw) as RigFile
-      if (parsed.version === RIGS_VERSION && Array.isArray(parsed.rigs)) file = parsed
-    }
-  } catch {
-    // corrupt file → start fresh (rigs are conveniences, not learning history)
-  }
-  file.rigs = [...file.rigs.filter((r) => r.name !== rig.name), rig]
-  try {
-    storage.setItem(RIGS_KEY, JSON.stringify(file))
-  } catch (err) {
-    // Storage full/blocked must not throw into the save-rig click handler.
-    console.warn('[rigs] could not persist saved rig (storage full or blocked)', err)
-  }
+/**
+ * Rig save copy. Overwrite / saved / replaced / migrated strings are verbatim
+ * from the copy deck (docs/copy/designer-nav-essais.md §7 and
+ * `quarantine.migration.toast`). The failure / quarantine lines have NO deck
+ * key yet: provisional, adapted from `storage.writeFailed` and
+ * `quarantine.notice` — tekuxwriter to confirm.
+ */
+export const RIG_COPY = {
+  overwriteTitle: 'Un montage porte déjà ce nom.',
+  overwriteBody: (name: string): string => `Remplacer « ${name} » ? L'ancienne version sera perdue.`,
+  replace: 'Remplacer',
+  rename: 'Choisir un autre nom',
+  cancel: 'Annuler',
+  saved: (name: string): string => `Montage « ${name} » enregistré.`,
+  replaced: (name: string): string => `Montage « ${name} » remplacé.`,
+  warning: {
+    migrated: 'Vos montages enregistrés ont été copiés vers le nouveau format. Les anciens sont conservés.',
+    'migration-failed': "Vos montages n'ont pas pu être copiés vers le nouveau format. Les anciens sont conservés.",
+    quarantined: 'Montages enregistrés illisibles — mis de côté (quarantaine). Rien n’est effacé.',
+    'quarantine-evicted': 'Une ancienne copie de secours des montages a été retirée.',
+    'quarantine-failed': 'Montages illisibles : rien n’a été effacé, mais aucun montage ne peut être enregistré pour l’instant.',
+    'storage-unavailable': 'Les montages ne peuvent pas être lus dans ce navigateur (navigation privée ?).',
+  } satisfies Record<RigWarning, string>,
+  failure: {
+    invalid: 'Ce montage contient une position invalide : il n’a pas été enregistré.',
+    empty: 'Donnez un nom au montage.',
+    'read-only': 'Les montages ne peuvent pas être enregistrés pour l’instant. Rien n’a été effacé.',
+    quota: 'L’enregistrement dans ce navigateur a échoué : la mémoire est pleine.',
+    storage: 'L’enregistrement dans ce navigateur a échoué.',
+  } satisfies Record<Exclude<RigSaveFailure, 'exists'>, string>,
 }

@@ -19,11 +19,12 @@ const map = JSON.parse(
 ) as ReadinessMap
 const levels = ['a1', 'b1', 'c1', 'd1'].map(makeLevel)
 
-const empty = (): ProgressData => ({ version: 2, levels: {}, activity: [] })
+const empty = (): ProgressData => ({ version: 3, levels: {}, activity: [], exams: [] })
 const withData = (partial: ProgressData['levels']): ProgressData => ({
-  version: 2,
+  version: 3,
   levels: partial,
   activity: [],
+  exams: [],
 })
 
 describe('rulesOfLevel', () => {

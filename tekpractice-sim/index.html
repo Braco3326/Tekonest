@@ -379,6 +379,19 @@
         color: #fff; font-size: var(--tk-text-xs, 11px); font-family: inherit; padding: 7px 12px; cursor: pointer;
       }
       #rig-saved { font-size: var(--tk-text-xs, 11px); color: var(--tk-success, #1f9d5b); }
+      #rig-saved.rig-error { color: var(--tk-error, #d93a47); }
+      .shelf-rig-notice { font-size: var(--tk-text-xs, 11px); color: var(--tk-ink-muted, #5a6372); margin: var(--tk-space-sm, 8px) 0 0; }
+      .shelf-confirm {
+        margin-top: var(--tk-space-sm, 8px); padding: 8px 10px; font-size: var(--tk-text-xs, 11px);
+        border: 1px solid var(--tk-surface-border, #e6e8ee); border-radius: var(--tk-radius-sm, 7px);
+      }
+      .shelf-confirm p { margin: 4px 0 8px; }
+      .shelf-confirm-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+      .shelf-confirm-actions button {
+        border: 1px solid var(--tk-surface-border, #e6e8ee); border-radius: var(--tk-radius-sm, 7px); background: none;
+        font-size: var(--tk-text-xs, 11px); font-family: inherit; color: var(--tk-ink, #1b2129); padding: 6px 10px; cursor: pointer;
+      }
+      .shelf-confirm-actions button:focus-visible { outline: 2px solid var(--tk-accent, #2e5fe6); outline-offset: 2px; }
       .db-sandbox { border-style: dashed; }
       .db-coach {
         margin-bottom: var(--tk-space-lg, 20px); padding: 12px 16px;

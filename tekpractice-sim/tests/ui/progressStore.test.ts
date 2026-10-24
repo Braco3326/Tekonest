@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  EXAM_CAP,
   LocalStorageProgressStore,
   MISTAKE_CAP,
   PROGRESS_VERSION,
@@ -20,7 +21,7 @@ describe('LocalStorageProgressStore', () => {
   it('fresh storage → empty data, no reset notice', () => {
     const store = new LocalStorageProgressStore(fakeStorage())
     expect(store.load()).toEqual({
-      data: { version: PROGRESS_VERSION, levels: {}, activity: [] },
+      data: { version: PROGRESS_VERSION, levels: {}, activity: [], exams: [] },
       wasReset: false,
     })
   })
@@ -103,6 +104,68 @@ describe('LocalStorageProgressStore', () => {
     const store = new LocalStorageProgressStore(throwing)
     expect(() => store.recordWin('a1')).not.toThrow()
     expect(() => store.recordMistake('a1', 'R2')).not.toThrow()
+  })
+
+  it('v2 payload MIGRATES to v3: levels, wins, mistakes and activity kept; exams start empty', () => {
+    const v2 = {
+      version: 2,
+      levels: {
+        a1: { completedAt: '2026-07-01T10:00:00Z', wins: 3, mistakes: [{ ruleId: 'R2', at: '2026-07-01T09:00:00Z' }] },
+        sandbox: { wins: 1, mistakes: [] },
+      },
+      activity: ['2026-07-01', '2026-07-02'],
+    }
+    const storage = fakeStorage({ 'audio-sim/progress': JSON.stringify(v2) })
+    const { data, wasReset } = new LocalStorageProgressStore(storage).load()
+    expect(wasReset).toBe(false)
+    expect(PROGRESS_VERSION).toBe(3)
+    expect(data).toEqual({ ...v2, version: 3, exams: [] })
+    // persisted as v3 (the migration is written back, nothing dropped)
+    expect(JSON.parse(storage.dump()['audio-sim/progress']!)).toEqual({ ...v2, version: 3, exams: [] })
+  })
+
+  it('v1 payload migrates all the way to v3', () => {
+    const storage = fakeStorage({
+      'audio-sim/progress': JSON.stringify({ version: 1, levels: { a1: { completedAt: '2026-07-01T10:00:00Z', mistakes: [] } } }),
+    })
+    const { data } = new LocalStorageProgressStore(storage).load()
+    expect(data).toEqual({
+      version: 3,
+      levels: { a1: { completedAt: '2026-07-01T10:00:00Z', wins: 1, mistakes: [] } },
+      activity: [],
+      exams: [],
+    })
+  })
+
+  it('recordExam stores { levelId, score20, at } and touches the activity day', () => {
+    const store = new LocalStorageProgressStore(fakeStorage())
+    const data = store.recordExam('a1', 14.5, new Date('2026-10-24T10:00:00Z'))
+    expect(data.exams).toEqual([{ levelId: 'a1', score20: 14.5, at: '2026-10-24T10:00:00.000Z' }])
+    expect(data.activity).toHaveLength(1)
+    expect(store.load().data.exams).toEqual(data.exams) // persisted
+  })
+
+  it(`caps the exam history at ${EXAM_CAP} (keeps the most recent)`, () => {
+    const store = new LocalStorageProgressStore(fakeStorage())
+    let data
+    for (let i = 0; i < EXAM_CAP + 7; i++) data = store.recordExam('a1', i % 21, new Date(Date.UTC(2026, 0, 1, 0, i)))
+    expect(data!.exams).toHaveLength(EXAM_CAP)
+    expect(data!.exams.at(-1)?.score20).toBe((EXAM_CAP + 6) % 21)
+    expect(data!.exams[0]?.at).toBe(new Date(Date.UTC(2026, 0, 1, 0, 7)).toISOString())
+  })
+
+  it('recordExam ignores a score that is not a finite /20 value (nothing written)', () => {
+    const storage = fakeStorage()
+    const store = new LocalStorageProgressStore(storage)
+    expect(store.recordExam('a1', Number.NaN).exams).toEqual([])
+    expect(store.recordExam('a1', 21).exams).toEqual([])
+    expect(store.recordExam('a1', -1).exams).toEqual([])
+    expect(storage.dump()).toEqual({})
+  })
+
+  it('a v3 payload missing exams (hand-edited) loads with exams = []', () => {
+    const storage = fakeStorage({ 'audio-sim/progress': JSON.stringify({ version: 3, levels: {}, activity: [] }) })
+    expect(new LocalStorageProgressStore(storage).load().data.exams).toEqual([])
   })
 
   it('markCompleted is idempotent (first completion date wins)', () => {

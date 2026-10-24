@@ -55,10 +55,96 @@ test('a named rig can be saved', async ({ page }) => {
   await page.locator('.shelf-item[data-device="shure-sm58"]').click()
   await page.locator('#rig-name').fill('Mon premier rig')
   await page.locator('#rig-save').click()
-  await expect(page.locator('#rig-saved')).toBeVisible()
-  const rigs = await page.evaluate(() => JSON.parse(window.localStorage.getItem('audio-sim/rigs')!))
+  await expect(page.locator('#rig-saved')).toHaveText('Montage « Mon premier rig » enregistré.')
+  // rigs v2 (ADR-0012 Décision 9): new key, the v1 key is never written
+  const rigs = await page.evaluate(() => JSON.parse(window.localStorage.getItem('audio-sim/rigs.v2')!))
+  expect(rigs.version).toBe(2)
   expect(rigs.rigs[0].name).toBe('Mon premier rig')
+  expect(rigs.rigs[0].roomId).toBeNull()
   expect(rigs.rigs[0].instances[0].deviceId).toBe('shure-sm58')
+  expect(await page.evaluate(() => window.localStorage.getItem('audio-sim/rigs'))).toBeNull()
+  // the list refreshes without a reload
+  await expect(page.locator('.shelf-rig', { hasText: 'Mon premier rig' })).toBeVisible()
+})
+
+test('same name → in-page confirm (rename focused); Replace overwrites, Cancel keeps', async ({ page }) => {
+  await page.locator('.shelf-item[data-device="shure-sm58"]').click()
+  await page.locator('#rig-name').fill('Doublon')
+  await page.locator('#rig-save').click()
+  const first = await page.evaluate(() => window.localStorage.getItem('audio-sim/rigs.v2'))
+
+  await page.locator('.shelf-item[data-device="yamaha-ql1"]').click()
+  await page.locator('#rig-save').click()
+  const dialog = page.getByRole('alertdialog')
+  await expect(dialog).toBeVisible()
+  await expect(dialog).toContainText('Un montage porte déjà ce nom.')
+  await expect(dialog).toContainText('Remplacer « Doublon » ? L\'ancienne version sera perdue.')
+  await expect(page.locator('#rig-ow-rename')).toBeFocused()
+  await page.locator('#rig-ow-cancel').click()
+  await expect(dialog).toBeHidden()
+  expect(await page.evaluate(() => window.localStorage.getItem('audio-sim/rigs.v2'))).toBe(first)
+
+  await page.locator('#rig-save').click()
+  await page.getByRole('button', { name: 'Remplacer', exact: true }).click()
+  await expect(page.locator('#rig-saved')).toHaveText('Montage « Doublon » remplacé.')
+  const rigs = await page.evaluate(() => JSON.parse(window.localStorage.getItem('audio-sim/rigs.v2')!).rigs)
+  expect(rigs).toHaveLength(1)
+  expect(rigs[0].instances).toHaveLength(2)
+})
+
+test('save → reload → load: positions restored within ±1 cm', async ({ page }) => {
+  const placed: Record<string, [number, number, number]> = {
+    'shure-sm58-s1': [1.234, 0, -0.875],
+    'yamaha-ql1-s2': [-1.15, 0, 0.62],
+  }
+  await page.evaluate(() => {
+    const sim = window.__audioSim!
+    sim.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', position: [1.234, 0, -0.875], rotationY: 30 })
+    sim.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', position: [-1.15, 0, 0.62], rotationY: -90 })
+  })
+  const before = await page.evaluate(
+    (ids) => Object.fromEntries(ids.map((id) => [id, window.__audioSim!.pose!(id)])),
+    Object.keys(placed),
+  )
+  await page.locator('#rig-name').fill('Placé')
+  await page.locator('#rig-save').click()
+  await expect(page.locator('#rig-saved')).toBeVisible()
+
+  await page.reload()
+  await page.waitForFunction(() => !!window.__audioSim)
+  await page.locator('.shelf-rig', { hasText: 'Placé' }).click()
+  await expect.poll(() => page.evaluate(() => window.__audioSim!.pose!('yamaha-ql1-s2') !== null)).toBe(true)
+  const after = await page.evaluate(
+    (ids) => Object.fromEntries(ids.map((id) => [id, window.__audioSim!.pose!(id)])),
+    Object.keys(placed),
+  )
+  for (const id of Object.keys(placed)) {
+    const b = before[id]!
+    const a = after[id]!
+    expect(a).not.toBeNull()
+    for (let k = 0; k < 3; k++) expect(Math.abs(a.position[k] - b.position[k])).toBeLessThanOrEqual(0.01)
+    expect(a.rotationY).toBe(b.rotationY)
+  }
+  // and the spawn request itself was honoured in x/z (the floor sets y)
+  expect(Math.abs(after['shure-sm58-s1']!.position[0] - 1.234)).toBeLessThanOrEqual(0.01)
+  expect(Math.abs(after['shure-sm58-s1']!.position[2] - -0.875)).toBeLessThanOrEqual(0.01)
+})
+
+test('a v1 rig file is copied to v2 on first load (v1 kept) and the learner is told', async ({ page }) => {
+  const v1 = JSON.stringify({
+    version: 1,
+    rigs: [{ name: 'Ancien rig', savedAt: '2026-01-01T00:00:00Z', instances: [{ instanceId: 'shure-sm58-s1', deviceId: 'shure-sm58' }], connections: [], controls: {} }],
+  })
+  await page.evaluate((raw) => window.localStorage.setItem('audio-sim/rigs', raw), v1)
+  await page.reload()
+  await page.waitForFunction(() => !!window.__audioSim)
+  await expect(page.locator('.shelf-rig-notice')).toHaveText(
+    'Vos montages enregistrés ont été copiés vers le nouveau format. Les anciens sont conservés.',
+  )
+  await expect(page.locator('.shelf-rig', { hasText: 'Ancien rig' })).toBeVisible()
+  expect(await page.evaluate(() => window.localStorage.getItem('audio-sim/rigs'))).toBe(v1)
+  const v2 = await page.evaluate(() => JSON.parse(window.localStorage.getItem('audio-sim/rigs.v2')!))
+  expect(v2.rigs[0]).toMatchObject({ name: 'Ancien rig', roomId: null })
 })
 
 test('a saved rig reloads: instances, cables and readiness credit (ADR-0005)', async ({ page }) => {

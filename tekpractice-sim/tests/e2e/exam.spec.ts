@@ -32,6 +32,11 @@ test('winning ends the exam with a /20 report; intents freeze after', async ({ p
   await expect(page.locator('#exam-report')).toBeVisible()
   await expect(page.locator('.exam-card h2')).toContainText('/20')
   await expect(page.locator('.exam-card')).toContainText('Câblage requis : 5/5')
+  // ExamScore is persisted (ADR-0012 D2): ProgressStore v3 `exams`
+  const exams = await page.evaluate(() => JSON.parse(window.localStorage.getItem('audio-sim/progress')!).exams)
+  expect(exams).toHaveLength(1)
+  expect(exams[0]).toMatchObject({ levelId: 'a1' })
+  expect(String(exams[0].score20) + '/20').toBe((await page.locator('.exam-card h2').textContent())!.trim())
 
   // Post-exam intents are ignored (the report owns the session)
   const before = await page.evaluate(() => window.__audioSim!.state().connectedRequired)

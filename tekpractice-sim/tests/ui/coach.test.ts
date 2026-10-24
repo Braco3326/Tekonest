@@ -8,7 +8,7 @@ const coach = JSON.parse(
   readFileSync(new URL('../../content/coach/tips.json', import.meta.url), 'utf8'),
 ) as CoachFile
 
-const data = (activity: string[]): ProgressData => ({ version: 2, levels: {}, activity })
+const data = (activity: string[]): ProgressData => ({ version: 3, levels: {}, activity, exams: [] })
 const T = '2026-07-17'
 
 describe('detectLowMoment — the motivation dip (Beat 4)', () => {

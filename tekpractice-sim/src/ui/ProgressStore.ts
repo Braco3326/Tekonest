@@ -2,12 +2,16 @@
  * ProgressStore — per-level wins + mistake history + activity days: the raw
  * signal behind the readiness model (ADR-0003). Swappable interface; the
  * default implementation persists to localStorage, VERSIONED:
- *  - v1 → v2 payloads MIGRATE silently (losing a learner's history is an
- *    anti-Beat-4; reset is a last resort)
+ *  - v1 → v2 → v3 payloads MIGRATE silently (losing a learner's history is an
+ *    anti-Beat-4; reset is a last resort). v3 adds the exam scores (ADR-0012 D2:
+ *    `ExamScore` is persisted).
  *  - unknown version / corrupt payload → reset with notice (CLAUDE.md).
  */
 
-export const PROGRESS_VERSION = 2
+export const PROGRESS_VERSION = 3
+
+/** Exam history is bounded like the mistakes: the most recent N scores. */
+export const EXAM_CAP = 50
 
 /**
  * Per-level mistake history is bounded (deep-scan): the readiness model only
@@ -31,6 +35,15 @@ export interface ProgressData {
   levels: Record<string, LevelProgress>
   /** Unique active days (YYYY-MM-DD) — the streak signal (forgiving, ADR-0003). */
   activity: string[]
+  /** Finished exams, oldest first, capped at EXAM_CAP (v3). */
+  exams: ExamRecord[]
+}
+
+export interface ExamRecord {
+  levelId: string
+  /** French /20 grade, half-point precision (ui/exam.ts examScore). */
+  score20: number
+  at: string // ISO timestamp
 }
 
 export interface IProgressStore {
@@ -42,6 +55,8 @@ export interface IProgressStore {
   recordWin(levelId: string): ProgressData
   /** Sets completedAt only (idempotent) — kept for callers that only care about "done once". */
   markCompleted(levelId: string): ProgressData
+  /** Persists a finished exam's /20 score; a non-finite or out-of-range score is ignored. */
+  recordExam(levelId: string, score20: number, at?: Date): ProgressData
 }
 
 /** Minimal storage surface so tests (and future backends) can swap localStorage out. */
@@ -51,7 +66,7 @@ export interface StorageLike {
   removeItem(key: string): void
 }
 
-const fresh = (): ProgressData => ({ version: PROGRESS_VERSION, levels: {}, activity: [] })
+const fresh = (): ProgressData => ({ version: PROGRESS_VERSION, levels: {}, activity: [], exams: [] })
 
 const today = (): string => new Date().toISOString().slice(0, 10)
 
@@ -89,11 +104,18 @@ export class LocalStorageProgressStore implements IProgressStore {
         this.save(migrated)
         return { data: migrated, wasReset: false }
       }
+      if (parsed.version === 2 && typeof parsed.levels === 'object' && parsed.levels !== null) {
+        // v2 → v3: everything kept as is; the exam history starts empty.
+        const migrated: ProgressData = { ...parsed, version: PROGRESS_VERSION, activity: parsed.activity ?? [], exams: [] }
+        this.save(migrated)
+        return { data: migrated, wasReset: false }
+      }
       if (parsed.version !== PROGRESS_VERSION || typeof parsed.levels !== 'object' || parsed.levels === null) {
         this.storage.removeItem(this.key)
         return { data: fresh(), wasReset: true }
       }
       parsed.activity ??= []
+      if (!Array.isArray(parsed.exams)) parsed.exams = []
       return { data: parsed, wasReset: false }
     } catch {
       this.storage.removeItem(this.key)
@@ -135,6 +157,19 @@ export class LocalStorageProgressStore implements IProgressStore {
     const { data } = this.load()
     const level = (data.levels[levelId] ??= { wins: 0, mistakes: [] })
     level.completedAt ??= new Date().toISOString()
+    this.save(data)
+    return data
+  }
+
+  recordExam(levelId: string, score20: number, at: Date = new Date()): ProgressData {
+    const { data } = this.load()
+    if (!Number.isFinite(score20) || score20 < 0 || score20 > 20 || Number.isNaN(at.getTime())) {
+      console.warn('[progress] exam score not recorded (not a finite /20 value)', score20)
+      return data
+    }
+    data.exams.push({ levelId, score20, at: at.toISOString() })
+    if (data.exams.length > EXAM_CAP) data.exams = data.exams.slice(-EXAM_CAP)
+    this.touch(data)
     this.save(data)
     return data
   }
