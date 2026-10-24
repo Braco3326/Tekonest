@@ -99,15 +99,24 @@ export function serializeBindings(b: Bindings): Record<string, string[]> {
  * Tolerant parse: unknown actions dropped, missing/invalid ones fall back to
  * defaults. An EMPTY list is kept (its key was given to another action) so a
  * reload never resurrects a duplicate binding. CANCEL is always Escape.
+ * A default filled in for a missing action (a file saved before that action
+ * existed) never takes a key the learner already gave to another action: one
+ * key, one action (final review).
  */
 export function parseBindings(raw: unknown): Bindings {
   const out = {} as Bindings
   const obj = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {}
+  const missing: Action[] = []
+  const used = new Set<string>()
   for (const a of ACTIONS) {
     const v = obj[a]
     const valid =
       Array.isArray(v) && v.every((c) => typeof c === 'string' && (a === 'CANCEL' || !RESERVED_CODES.includes(c)))
-    out[a] = a !== 'CANCEL' && valid ? [...(v as string[])] : [...DEFAULT_BINDINGS[a]]
+    if (a !== 'CANCEL' && valid) {
+      out[a] = [...(v as string[])]
+      for (const c of out[a]) used.add(c)
+    } else missing.push(a)
   }
+  for (const a of missing) out[a] = DEFAULT_BINDINGS[a].filter((c) => a === 'CANCEL' || !used.has(c))
   return out
 }

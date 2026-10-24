@@ -72,6 +72,18 @@ describe('bindings (KeyboardEvent.code = physical position)', () => {
     expect(partial.MOVE_FORWARD).toEqual(DEFAULT_BINDINGS.MOVE_FORWARD)
     expect(parseBindings('garbage')).toEqual(DEFAULT_BINDINGS)
   })
+
+  it('a default filled in for a missing action never takes a key the learner already uses (no double firing)', () => {
+    // a file saved before the Essais keys existed, where the learner put RUN on G
+    const old = serializeBindings(rebind(DEFAULT_BINDINGS, 'RUN', ['KeyG'])) as Record<string, string[]>
+    delete old.FREEZE_ESSAI
+    const b = parseBindings(old)
+    expect(b.RUN).toEqual(['KeyG'])
+    expect(b.FREEZE_ESSAI).toEqual([]) // G stays the learner's: freeze is unbound until remapped
+    expect(actionsForCode(b, 'KeyG')).toEqual(['RUN'])
+    expect(b.COMPARE_FLIP).toEqual(['KeyB']) // a default with a free key is still filled in
+    expect(b.CANCEL).toEqual(['Escape'])
+  })
 })
 
 describe('KeyboardState', () => {
