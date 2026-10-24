@@ -166,6 +166,15 @@ describe('Esc chain (ADR-0010 Décision 5)', () => {
     [{ focused: true }, 'leave-focus'],
     [{}, 'open-pause'],
     [{ view: 'orbit' }, 'none'],
+    // Essais (Task 14): close compare is step 3b, right after "close top panel".
+    [{ openPanels: 1, comparing: true, sidePanel: true }, 'close-panel'],
+    [{ comparing: true, sidePanel: true, holdingCable: true, focused: true }, 'close-compare'],
+    [{ placing: true, comparing: true }, 'cancel-placement'],
+    // The Essais side panel closes once nothing more local is left.
+    [{ sidePanel: true, holdingCable: true, focused: true }, 'drop-cable'],
+    [{ sidePanel: true, focused: true }, 'leave-focus'],
+    [{ sidePanel: true }, 'close-side-panel'],
+    [{ sidePanel: true, view: 'orbit' }, 'close-side-panel'],
   ] as [Partial<EscContext>, string][])('%o → %s', (ctx, expected) => {
     expect(resolveEsc({ ...base, ...ctx })).toBe(expected)
   })

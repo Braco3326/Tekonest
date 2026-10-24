@@ -36,6 +36,10 @@ export const ACTIONS = [
   /** View cube 90° turns around the current pivot. */
   'VIEW_ROT_LEFT',
   'VIEW_ROT_RIGHT',
+  /** Essais (Task 14): freeze the current setup as a new Essai (button « Figer l'essai »). */
+  'FREEZE_ESSAI',
+  /** Essais compare: flip the read-only preview A ⇄ B (button « Alterner A / B »). */
+  'COMPARE_FLIP',
   'CANCEL',
 ] as const
 

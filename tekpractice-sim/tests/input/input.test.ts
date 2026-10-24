@@ -29,6 +29,15 @@ describe('bindings (KeyboardEvent.code = physical position)', () => {
     expect(actionsForCode(DEFAULT_BINDINGS, 'ShiftRight')).toContain('RUN')
   })
 
+  it('binds the Essais keys by physical code (Task 14): G freezes, B flips the compare', () => {
+    expect(actionsForCode(DEFAULT_BINDINGS, 'KeyG')).toEqual(['FREEZE_ESSAI'])
+    expect(actionsForCode(DEFAULT_BINDINGS, 'KeyB')).toEqual(['COMPARE_FLIP'])
+    expect(REMAPPABLE).toContain('FREEZE_ESSAI')
+    expect(REMAPPABLE).toContain('COMPARE_FLIP')
+    // an older settings file (no Essais keys) gets the defaults
+    expect(parseBindings({ MOVE_FORWARD: ['KeyW'] }).FREEZE_ESSAI).toEqual(['KeyG'])
+  })
+
   it('binds every action to at least one key', () => {
     for (const a of ACTIONS) expect(DEFAULT_BINDINGS[a].length, a).toBeGreaterThan(0)
   })

@@ -37,6 +37,9 @@ export const DEFAULT_BINDINGS: Bindings = {
   VIEW_DESSUS: ['Numpad7'],
   VIEW_ROT_LEFT: ['Numpad4'],
   VIEW_ROT_RIGHT: ['Numpad6'],
+  // Essais (Task 14): same physical keys on AZERTY and QWERTY.
+  FREEZE_ESSAI: ['KeyG'],
+  COMPARE_FLIP: ['KeyB'],
   CANCEL: ['Escape'],
 }
 

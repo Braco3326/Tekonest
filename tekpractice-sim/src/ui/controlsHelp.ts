@@ -39,6 +39,9 @@ export const ACTION_LABELS: Record<Action, { fr: string; en: string }> = {
   VIEW_DESSUS: { fr: 'Vue de dessus', en: 'Top view' },
   VIEW_ROT_LEFT: { fr: 'Tourner à gauche (90°)', en: 'Turn left (90°)' },
   VIEW_ROT_RIGHT: { fr: 'Tourner à droite (90°)', en: 'Turn right (90°)' },
+  // Copy deck help.action.freeze / help.action.compare (Task 14).
+  FREEZE_ESSAI: { fr: "Figer l'essai", en: 'Freeze the trial' },
+  COMPARE_FLIP: { fr: 'Comparer : alterner A et B', en: 'Compare: flip A and B' },
   CANCEL: { fr: 'Libérer la souris / fermer / revenir', en: 'Release pointer / close / back' },
 }
 

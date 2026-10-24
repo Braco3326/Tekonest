@@ -40,6 +40,12 @@ export interface ExploreUi {
   pickUp(instanceId: string): void
   /** True while the settings panel waits for a key to remap (the controller must not react). */
   capturingKey(): boolean
+  /** Essais (Task 14): a read-only compare is open (Esc step 3b closes it). */
+  comparing?(): boolean
+  closeCompare?(): void
+  /** Essais side panel (non-modal, not counted in panelCount). */
+  sidePanelOpen?(): boolean
+  closeSidePanel?(): void
 }
 
 /** The FocusPatch handles the controller needs (ADR-0008 stays the patch grammar). */
@@ -68,6 +74,8 @@ export interface ExploreDeps {
   onPreset?(slot: number): void
   /** VIEW_* (view cube keys, Task 8). Typing is already filtered; the host decides if the view allows it. */
   onViewKey?(action: Action): void
+  /** FREEZE_ESSAI / COMPARE_FLIP (Task 14). Typing is already filtered; the host decides if Essais exist here. */
+  onEssaiKey?(action: 'FREEZE_ESSAI' | 'COMPARE_FLIP'): void
 }
 
 const isTyping = (el: Element | null): boolean =>
@@ -341,6 +349,10 @@ export class ExploreController implements Walker {
       case 'VIEW_ROT_RIGHT':
         this.deps.onViewKey?.(a as Action)
         break
+      case 'FREEZE_ESSAI':
+      case 'COMPARE_FLIP':
+        this.deps.onEssaiKey?.(a)
+        break
     }
   }
 
@@ -361,6 +373,8 @@ export class ExploreController implements Walker {
       holdingCable: this.focus.view.held !== null,
       focused: this.focus.view.mode === 'focus',
       view: this.view,
+      comparing: this.ui.comparing?.() ?? false,
+      sidePanel: this.ui.sidePanelOpen?.() ?? false,
     })
     const consume = (): void => {
       e.stopPropagation()
@@ -380,6 +394,14 @@ export class ExploreController implements Walker {
         break
       case 'close-panel':
         this.ui.closeTopPanel()
+        consume()
+        break
+      case 'close-compare':
+        this.ui.closeCompare?.()
+        consume()
+        break
+      case 'close-side-panel':
+        this.ui.closeSidePanel?.()
         consume()
         break
       case 'open-pause':
