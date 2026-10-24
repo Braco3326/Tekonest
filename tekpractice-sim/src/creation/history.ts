@@ -130,6 +130,11 @@ export class History {
     return true
   }
 
+  /** A `begin` is still open (a drag or a stepper burst): autosave waits for its commit. */
+  get inTransaction(): boolean {
+    return this.depth > 0
+  }
+
   get canUndo(): boolean {
     return this.undoStack.length > 0
   }

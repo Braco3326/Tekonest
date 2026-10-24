@@ -58,6 +58,21 @@ describe('History: undo/redo command stack', () => {
     expect(store.design().placements[0].position_m).toEqual([29, 0, 0])
   })
 
+  it('inTransaction is true between the outer begin and its commit / rollback (autosave waits on it, Task 13)', () => {
+    const { history } = setup()
+    expect(history.inTransaction).toBe(false)
+    history.begin('a')
+    history.begin('b')
+    expect(history.inTransaction).toBe(true)
+    history.commit()
+    expect(history.inTransaction).toBe(true)
+    history.commit()
+    expect(history.inTransaction).toBe(false)
+    history.begin('c')
+    history.rollback()
+    expect(history.inTransaction).toBe(false)
+  })
+
   it('consecutive SET_POSE of one instance in a transaction keep the first inverse and the last forward', () => {
     const { history } = setup()
     history.do({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm', position: [1, 0, 2] })

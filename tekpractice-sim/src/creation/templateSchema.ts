@@ -4,8 +4,8 @@
  */
 import { z } from 'zod'
 
-const PortRef = z.object({ instance: z.string(), port: z.string() })
-const PlacementSchema = z.object({
+export const PortRef = z.object({ instance: z.string(), port: z.string() })
+export const PlacementSchema = z.object({
   instanceId: z.string(),
   deviceId: z.string(),
   position_m: z.tuple([z.number(), z.number(), z.number()]),
