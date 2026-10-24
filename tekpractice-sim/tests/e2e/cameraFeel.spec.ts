@@ -21,6 +21,22 @@ async function boot(page: Page, url = '/?level=a1&view=orbit'): Promise<void> {
   await page.waitForTimeout(300)
 }
 
+/**
+ * Boot with an EMPTY preset store without an extra reload: the init script clears it
+ * once per tab (sessionStorage flag), so a later page.reload() keeps what the test saved.
+ * Each load of the 3D scene costs seconds on software GL; the old goto + reload + goto
+ * sequence made the test slow enough to hit the 60 s limit when specs run in parallel.
+ */
+async function bootClean(page: Page, url = '/?level=a1&view=orbit'): Promise<void> {
+  await page.addInitScript(() => {
+    if (!window.sessionStorage.getItem('presets-cleared')) {
+      window.sessionStorage.setItem('presets-cleared', '1')
+      window.localStorage.removeItem('audio-sim/camera-presets')
+    }
+  })
+  await boot(page, url)
+}
+
 /** Sample the camera on consecutive animation frames (inside the page: no IPC gaps). */
 function sampleFrames(page: Page, frames: number): Promise<Cam[]> {
   return page.evaluate(
@@ -234,10 +250,7 @@ test('Task 3: a wheel notch dollies in over several frames (inertia, not an inst
 test('Task 5: right-click saves Vue 1, a drag moves the camera, Digit1 flies back within 0.02 rad; empty slot teaches', async ({
   page,
 }) => {
-  await boot(page, '/?level=a1&view=orbit')
-  await page.evaluate(() => window.localStorage.removeItem('audio-sim/camera-presets'))
-  await page.reload()
-  await boot(page, '/?level=a1&view=orbit')
+  await bootClean(page)
   const saved = await settledCamera(page)
 
   const slot1 = page.locator('#camera-presets [data-slot="1"]')
@@ -256,7 +269,7 @@ test('Task 5: right-click saves Vue 1, a drag moves the camera, Digit1 flies bac
   ])
   await page.mouse.move(start.x, start.y)
   await page.mouse.down()
-  await page.mouse.move(start.x + 240, start.y + 40, { steps: 12 })
+  await page.mouse.move(start.x + 240, start.y + 40, { steps: 4 })
   await page.mouse.up()
   const moved = await settledCamera(page)
   expect(angleDiff(moved.alpha, saved.alpha)).toBeGreaterThan(0.1)
@@ -268,26 +281,30 @@ test('Task 5: right-click saves Vue 1, a drag moves the camera, Digit1 flies bac
   expect(Math.abs(back.radius - saved.radius)).toBeLessThan(0.05)
   expect(dist(back.target, saved.target)).toBeLessThan(0.05)
 
-  // The slot survives a reload (per level key) and the button recalls it.
-  await page.reload()
-  await boot(page, '/?level=a1&view=orbit')
-  await page.mouse.move(start.x, start.y)
-  await page.mouse.down()
-  await page.mouse.move(start.x - 200, start.y, { steps: 10 })
-  await page.mouse.up()
+})
+
+test('Task 5: a saved view survives a reload (per level key) and its button recalls it', async ({ page }) => {
+  await bootClean(page)
+  const saved = await settledCamera(page)
+  await page.locator('#camera-presets [data-slot="1"]').click({ button: 'right' })
+  expect(await page.evaluate(() => window.localStorage.getItem('audio-sim/camera-presets'))).not.toBeNull()
+  await page.reload() // bootClean's init script must NOT clear the store again
+  await boot(page)
+  expect(await page.evaluate(() => window.localStorage.getItem('audio-sim/camera-presets'))).not.toBeNull()
+  const box = (await page.locator('#renderCanvas').boundingBox())!
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
+  await page.mouse.wheel(0, -240)
   await settledCamera(page)
   await page.locator('#camera-presets [data-slot="1"]').click()
   const again = await settledCamera(page)
   expect(angleDiff(again.alpha, saved.alpha)).toBeLessThan(0.02)
+  expect(Math.abs(again.radius - saved.radius)).toBeLessThan(0.05)
 })
 
 test('Task 5: Digit1 never fires while a text field has focus; presets are hidden while walking in Explore', async ({
   page,
 }) => {
-  await boot(page, '/?level=a1&view=orbit')
-  await page.evaluate(() => window.localStorage.removeItem('audio-sim/camera-presets'))
-  await page.reload()
-  await boot(page, '/?level=a1&view=orbit')
+  await bootClean(page)
   const before = await settledCamera(page)
   await page.locator('#camera-presets [data-slot="1"]').click({ button: 'right' })
   // Typing "1" in a text field must not recall (nor toast an empty slot): park a field and type.
@@ -310,10 +327,7 @@ test('Task 5: Digit1 never fires while a text field has focus; presets are hidde
 })
 
 test('Task 5 (N12): recalling a view from focus leaves focus, keeps the held cable, and does not fly home', async ({ page }) => {
-  await boot(page, '/?level=a1&view=orbit')
-  await page.evaluate(() => window.localStorage.removeItem('audio-sim/camera-presets'))
-  await page.reload()
-  await boot(page, '/?level=a1&view=orbit')
+  await bootClean(page)
   const saved = await settledCamera(page)
   await page.locator('#camera-presets [data-slot="1"]').click({ button: 'right' })
 
@@ -344,10 +358,7 @@ test('Task 5 (N12): recalling a view from focus leaves focus, keeps the held cab
 })
 
 test('Task 5: the named « Enregistrer ici » buttons save a view (keyboard and pointer path)', async ({ page }) => {
-  await boot(page, '/?level=a1&view=orbit')
-  await page.evaluate(() => window.localStorage.removeItem('audio-sim/camera-presets'))
-  await page.reload()
-  await boot(page, '/?level=a1&view=orbit')
+  await bootClean(page)
   const toggle = page.getByRole('button', { name: 'Enregistrer ici', exact: true })
   await toggle.click()
   const save3 = page.getByRole('button', { name: 'Enregistrer ici : Vue 3' })
