@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" font-family="Inter, 'Segoe UI', system-ui, sans-serif">
+  <title>TekPractice – Essais: state-by-state board (original Tekonest drawing; revised after council)</title>
+  <defs>
+    <linearGradient id="seq" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#2b1d4f"/><stop offset="0.33" stop-color="#2a6f8f"/>
+      <stop offset="0.66" stop-color="#3fa77a"/><stop offset="1" stop-color="#e8d85a"/>
+    </linearGradient>
+    <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="10" height="10" fill="#e9e7e1"/><line x1="0" y1="0" x2="0" y2="10" stroke="#9a958a" stroke-width="3"/>
+    </pattern>
+    <g id="room">
+      <rect x="0" y="0" width="300" height="140" rx="6" fill="#e9e7e1" stroke="#d7d4cc"/>
+      <rect x="20" y="12" width="260" height="20" fill="#c8c2b5"/>
+      <rect x="40" y="44" width="220" height="82" fill="#dcd8cf" stroke="#9a958a"/>
+      <rect x="54" y="16" width="10" height="12" fill="#1d2430"/><rect x="236" y="16" width="10" height="12" fill="#1d2430"/>
+    </g>
+  </defs>
+  <rect width="1600" height="1000" fill="#f7f6f2"/>
+  <text x="40" y="50" font-size="26" font-weight="600" fill="#1d2430">Essais — états de l'interface</text>
+  <text x="40" y="76" font-size="14" fill="#5b6270">Ce que voit l'élève · comment en sortir. Phase 1 sans valeurs acoustiques ; phase 2 en valeurs relatives seulement. Aucune valeur STI. Valeurs fictives. (État 2 « calcul » non dessiné : &lt; 200 ms.)</text>
+
+  <!-- row 1 -->
+  <g transform="translate(40,100)">
+    <rect width="360" height="300" rx="10" fill="#fff" stroke="#d7d4cc"/>
+    <text x="20" y="32" font-size="15" font-weight="600" fill="#1d2430">1 · Aucun essai</text>
+    <use href="#room" x="30" y="48"/>
+    <rect x="20" y="200" width="320" height="28" rx="6" fill="#1d2430"/><text x="30" y="219" font-size="12" fill="#f7f6f2">Placez le matériel, écrivez votre prédiction, puis Figer</text>
+    <text x="20" y="266" font-size="12" fill="#0f766e">Sortie : Figer l'essai (prédiction obligatoire)</text>
+  </g>
+  <g transform="translate(420,100)">
+    <rect width="360" height="300" rx="10" fill="#fff" stroke="#d7d4cc"/>
+    <text x="20" y="32" font-size="15" font-weight="600" fill="#1d2430">3 · Affiché = montage actuel</text>
+    <use href="#room" x="30" y="48"/>
+    <circle cx="180" cy="160" r="6" fill="#fff" stroke="#1d2430" stroke-width="2"/>
+    <rect x="192" y="148" width="96" height="22" rx="4" fill="#fff"/><text x="198" y="163" font-size="11" fill="#1d2430">écart 5,0 ms</text>
+    <rect x="20" y="200" width="320" height="28" rx="6" fill="#1d2430"/><text x="30" y="219" font-size="12" fill="#f7f6f2">Affiché : Essai B · à jour</text>
+    <text x="20" y="266" font-size="12" fill="#0f766e">Sortie : modifier → 4 · Comparer → 5</text>
+  </g>
+  <g transform="translate(800,100)">
+    <rect width="360" height="300" rx="10" fill="#fff" stroke="#d7d4cc"/>
+    <text x="20" y="32" font-size="15" font-weight="600" fill="#1d2430">4 · Montage modifié</text>
+    <use href="#room" x="30" y="48"/>
+    <rect x="70" y="92" width="220" height="82" fill="url(#hatch)" opacity="0.9"/>
+    <rect x="192" y="148" width="60" height="22" rx="4" fill="#fff"/><text x="200" y="163" font-size="11" fill="#1d2430">—</text>
+    <rect x="20" y="200" width="320" height="28" rx="6" fill="#b45309"/><text x="30" y="219" font-size="12" fill="#fff">Affiché : Essai B · Résultat à refaire</text>
+    <text x="20" y="252" font-size="12" fill="#0f766e">Sortie : Figer (nouvel essai enfant)</text>
+    <text x="20" y="272" font-size="12" fill="#0f766e">ou Repartir de l'essai B</text>
+  </g>
+  <g transform="translate(1180,100)">
+    <rect width="380" height="300" rx="10" fill="#fff" stroke="#d7d4cc"/>
+    <text x="20" y="32" font-size="15" font-weight="600" fill="#1d2430">6 · Échec</text>
+    <use href="#room" x="40" y="48"/>
+    <rect x="20" y="200" width="340" height="44" rx="6" fill="#fdecea" stroke="#c0392b"/>
+    <text x="30" y="218" font-size="12" fill="#7f1d1d">Données manquantes pour « Enceinte X »</text>
+    <text x="30" y="236" font-size="12" fill="#7f1d1d">— essai non figé, montage conservé.</text>
+    <text x="20" y="272" font-size="12" fill="#0f766e">Sortie : corriger → Figer</text>
+  </g>
+
+  <!-- row 2: compare -->
+  <g transform="translate(40,420)">
+    <rect width="740" height="540" rx="10" fill="#fff" stroke="#d7d4cc"/>
+    <text x="20" y="32" font-size="15" font-weight="600" fill="#1d2430">5 · Comparer A / B (lecture seule, échelle commune verrouillée) — exemple S2 (phase 2)</text>
+    <use href="#room" x="20" y="50"/>
+    <rect x="60" y="94" width="220" height="82" fill="url(#seq)" opacity="0.55"/>
+    <rect x="60" y="94" width="40" height="82" fill="url(#hatch)" opacity="0.8"/>
+    <text x="30" y="214" font-size="12" font-weight="600" fill="#1d2430">A · enceintes droites</text>
+    <use href="#room" x="400" y="50"/>
+    <rect x="440" y="94" width="220" height="82" fill="url(#seq)" opacity="0.8"/>
+    <rect x="530" y="94" width="40" height="82" fill="url(#hatch)" opacity="0.8"/>
+    <text x="410" y="214" font-size="12" font-weight="600" fill="#1d2430">B · enceintes pincées</text>
+    <text x="20" y="240" font-size="11" fill="#5b6270">Hachures : zone de recouvrement — interférences non modélisées. Flip A⇄B avec B, même point de vue.</text>
+    <g font-size="12" fill="#1d2430">
+      <rect x="20" y="256" width="700" height="26" fill="#f3f1ec"/>
+      <text x="32" y="274" font-weight="600">Point (réf. : régie)</text><text x="300" y="274" font-weight="600">A</text><text x="420" y="274" font-weight="600">B</text><text x="540" y="274" font-weight="600">Δ</text>
+      <text x="32" y="304">1er rang</text><text x="300" y="304">+6 dB</text><text x="420" y="304">+5 dB</text><text x="540" y="304">≈</text>
+      <text x="32" y="330">Côté bar</text><text x="300" y="330">−9 dB</text><text x="420" y="330">−4 dB</text><text x="540" y="330">+5 dB</text>
+      <text x="32" y="356">Fond de salle</text><text x="300" y="356">−5 dB</text><text x="420" y="356">−5 dB</text><text x="540" y="356">≈</text>
+      <rect x="20" y="372" width="700" height="1" fill="#d7d4cc"/>
+      <text x="32" y="398">Public dans l'empreinte −6 dB</text><text x="300" y="398">64 %</text><text x="420" y="398">86 %</text><text x="540" y="398">+22 pts</text>
+      <text x="32" y="424">Prédiction de l'élève</text><text x="300" y="424" fill="#5b6270" font-style="italic">« en pinçant, le côté bar sera mieux couvert »</text>
+      <text x="32" y="450">Règles R1–R8</text><text x="300" y="450">0 erreur</text><text x="420" y="450">0 erreur</text>
+      <text x="32" y="494" fill="#5b6270">Niveau direct relatif, en dB entiers ; Δ affiché seulement si |Δ| ≥ 3 dB.</text>
+      <text x="32" y="514" fill="#5b6270">Esc ferme la comparaison (étape 3b de la chaîne Esc).</text>
+    </g>
+  </g>
+
+  <!-- row 2 right column -->
+  <g transform="translate(800,420)">
+    <rect width="360" height="260" rx="10" fill="#fff" stroke="#d7d4cc"/>
+    <text x="20" y="32" font-size="15" font-weight="600" fill="#1d2430">7 · Contenu modifié depuis</text>
+    <rect x="20" y="50" width="320" height="28" rx="6" fill="#fff7e6" stroke="#b45309"/>
+    <text x="30" y="69" font-size="12" fill="#7a3b10">Salle ou fiche enceinte mise à jour</text>
+    <text x="20" y="108" font-size="12" fill="#5b6270">L'essai garde ce que l'élève a vu</text>
+    <text x="20" y="128" font-size="12" fill="#5b6270">(valeurs embarquées) ; jamais</text>
+    <text x="20" y="148" font-size="12" fill="#5b6270">recalculé en silence.</text>
+    <text x="20" y="228" font-size="12" fill="#0f766e">Sortie : Refaire avec les données actuelles</text>
+  </g>
+  <g transform="translate(800,700)">
+    <rect width="360" height="260" rx="10" fill="#fff" stroke="#d7d4cc"/>
+    <text x="20" y="32" font-size="15" font-weight="600" fill="#1d2430">8–9 · Stockage</text>
+    <rect x="20" y="50" width="320" height="44" rx="6" fill="#fff7e6" stroke="#b45309"/>
+    <text x="30" y="68" font-size="12" fill="#7a3b10">Espace presque plein : exporter</text>
+    <text x="30" y="86" font-size="12" fill="#7a3b10">puis archiver les anciens essais</text>
+    <rect x="20" y="108" width="320" height="44" rx="6" fill="#fdecea" stroke="#c0392b"/>
+    <text x="30" y="126" font-size="12" fill="#7f1d1d">Données illisibles : mises de côté</text>
+    <text x="30" y="144" font-size="12" fill="#7f1d1d">(quarantaine), exportables, rien effacé</text>
+    <text x="20" y="190" font-size="12" fill="#5b6270">Chaque échec d'écriture est affiché.</text>
+    <text x="20" y="228" font-size="12" fill="#0f766e">Sortie : Exporter · Continuer</text>
+  </g>
+  <g transform="translate(1180,420)">
+    <rect width="380" height="540" rx="10" fill="#fff" stroke="#d7d4cc"/>
+    <text x="20" y="32" font-size="15" font-weight="600" fill="#1d2430">10 · Page enseignant (lecture seule)</text>
+    <text x="20" y="56" font-size="12" fill="#5b6270">Ouvre un fichier .essai.json — hors ligne,</text>
+    <text x="20" y="74" font-size="12" fill="#5b6270">sur n'importe quel appareil (remplace le mode téléphone).</text>
+    <g font-size="12" fill="#1d2430">
+      <rect x="20" y="92" width="340" height="76" rx="6" fill="#fbfaf7" stroke="#d7d4cc"/>
+      <text x="32" y="112" font-weight="600">Essai A → Essai B</text>
+      <text x="32" y="132">Changement : retard du rappel G (1 seul)</text>
+      <text x="32" y="152">Prédiction : 43,5 ms — écrite à 10:09</text>
+      <rect x="20" y="180" width="340" height="116" rx="6" fill="#fbfaf7" stroke="#d7d4cc"/>
+      <text x="32" y="200" font-weight="600">Grille (4 lignes)</text>
+      <text x="32" y="220">☐ Δd/c calculé avant d'évaluer</text>
+      <text x="32" y="240">☐ La principale arrive d'abord</text>
+      <text x="32" y="260">☐ Un seul changement par essai</text>
+      <text x="32" y="280">☐ Justification orale cohérente avec la note</text>
+      <rect x="20" y="316" width="340" height="124" rx="6" fill="#e9e7e1"/>
+      <text x="190" y="382" font-size="12" fill="#5b6270" text-anchor="middle">plan 2D de la salle (SVG)</text>
+      <text x="20" y="476" fill="#5b6270">Fichier « déclaratif » : utilisable comme trace,</text>
+      <text x="20" y="496" fill="#5b6270">pas comme preuve d'examen (voir ADR-0011).</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+# The Tekonest repo is public. Screenshots of third-party software and raw probe dumps stay on
+# this PC only (internal research evidence); screenshot-index.md describes each one in our own words.
+screenshots/*
+!screenshots/README.md
+raw/probes/
+raw/terms-of-use.txt

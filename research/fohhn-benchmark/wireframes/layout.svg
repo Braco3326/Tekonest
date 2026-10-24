@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1366" height="868" viewBox="0 0 1366 868" font-family="Inter, 'Segoe UI', system-ui, sans-serif">
+  <title>TekPractice – Essais, layout at 1366×768 (original Tekonest drawing; revised after council). Scenario S1: delay speakers, arrival timing.</title>
+  <rect width="1366" height="868" fill="#f7f6f2"/>
+  <!-- the 1366x768 screen frame -->
+  <rect x="0" y="0" width="1366" height="768" fill="#efede7"/>
+
+  <!-- top bar -->
+  <rect x="0" y="0" width="1366" height="44" fill="#1d2430"/>
+  <text x="20" y="28" fill="#f7f6f2" font-size="16" font-weight="600">TekPractice · Bac à sable · Auditorium moyen</text>
+  <text x="1346" y="28" fill="#c9cdd4" font-size="12" text-anchor="end">Essais · Fiche · Inventaire (Espace) · Aide (H)</text>
+
+  <!-- left panel (only one side panel open) -->
+  <rect x="12" y="56" width="300" height="620" rx="8" fill="#ffffff" stroke="#d7d4cc"/>
+  <text x="28" y="84" font-size="15" font-weight="600" fill="#1d2430">Essais</text>
+  <!-- pinned live row -->
+  <rect x="28" y="96" width="268" height="44" rx="6" fill="#eef6f4" stroke="#0f766e"/>
+  <text x="40" y="115" font-size="13" font-weight="600" fill="#1d2430">Montage actuel</text>
+  <text x="40" y="132" font-size="12" fill="#0f766e">identique à l'essai B</text>
+  <!-- essais -->
+  <g font-size="13" fill="#1d2430">
+    <rect x="28" y="150" width="268" height="44" rx="6" fill="#eef6f4"/>
+    <text x="40" y="169" font-weight="600">Essai B – retard réglé</text>
+    <text x="40" y="186" font-size="12" fill="#5b6270">10:12 · affiché</text>
+    <text x="40" y="216">Essai A – retard à 0</text>
+    <text x="40" y="233" font-size="12" fill="#5b6270">10:04</text>
+  </g>
+  <!-- prediction -->
+  <text x="28" y="266" font-size="12" fill="#5b6270">Ma prédiction (avant de figer)</text>
+  <rect x="28" y="274" width="268" height="58" rx="6" fill="#fbfaf7" stroke="#d7d4cc"/>
+  <text x="38" y="296" font-size="12" fill="#1d2430">Δd ≈ 13,2 m → 38,5 ms ;</text>
+  <text x="38" y="314" font-size="12" fill="#1d2430">+5 ms de précédence → 43,5 ms</text>
+  <text x="28" y="352" font-size="12" fill="#5b6270">Note (verrouillée après un essai enfant)</text>
+  <rect x="28" y="360" width="268" height="44" rx="6" fill="#fbfaf7" stroke="#d7d4cc"/>
+  <text x="38" y="386" font-size="12" fill="#1d2430">Seul le retard change par rapport à A.</text>
+  <!-- buttons -->
+  <rect x="28" y="420" width="130" height="34" rx="6" fill="#0f766e"/><text x="93" y="442" font-size="13" fill="#fff" text-anchor="middle">Figer l'essai (G)</text>
+  <rect x="166" y="420" width="130" height="34" rx="6" fill="#fff" stroke="#0f766e"/><text x="231" y="442" font-size="13" fill="#0f766e" text-anchor="middle">Comparer (B)</text>
+  <rect x="28" y="462" width="268" height="34" rx="6" fill="#fff" stroke="#b8b4aa"/><text x="162" y="484" font-size="13" fill="#1d2430" text-anchor="middle">Repartir de cet essai</text>
+  <rect x="28" y="504" width="268" height="34" rx="6" fill="#fff" stroke="#b8b4aa"/><text x="162" y="526" font-size="13" fill="#1d2430" text-anchor="middle">Exporter pour l'enseignant (.essai.json)</text>
+  <text x="28" y="566" font-size="12" fill="#5b6270">Règles R1–R8 figées : 0 erreur · chaîne complète</text>
+
+  <!-- viewport -->
+  <rect x="324" y="56" width="1030" height="620" rx="8" fill="#e9e7e1" stroke="#d7d4cc"/>
+  <text x="340" y="80" font-size="12" fill="#5b6270">Vue Explorer (ADR-0010) · caméra inchangée entre A et B</text>
+  <!-- room in perspective -->
+  <polygon points="430,600 1250,600 1150,150 530,150" fill="#dcd8cf" stroke="#9a958a"/>
+  <polygon points="530,150 1150,150 1140,200 540,200" fill="#c8c2b5" stroke="#9a958a"/>
+  <text x="840" y="182" font-size="12" fill="#5b6270" text-anchor="middle">scène</text>
+  <!-- audience zone (no result overlay in S1: timing only) -->
+  <polygon points="480,560 1200,560 1130,240 550,240" fill="#cfd8d3" stroke="#7d8a84" stroke-dasharray="5 4"/>
+  <!-- speakers: mains + delays -->
+  <g fill="#1d2430"><rect x="572" y="200" width="18" height="26" rx="3"/><rect x="1090" y="200" width="18" height="26" rx="3"/>
+    <rect x="548" y="400" width="18" height="24" rx="3"/><rect x="1114" y="400" width="18" height="24" rx="3"/></g>
+  <text x="600" y="218" font-size="11" fill="#1d2430">principale G</text>
+  <text x="574" y="416" font-size="11" fill="#1d2430">rappel G</text>
+  <!-- reference point as DOM pin -->
+  <circle cx="840" cy="530" r="7" fill="#fff" stroke="#1d2430" stroke-width="2"/>
+  <rect x="854" y="514" width="200" height="26" rx="5" fill="#fff" stroke="#d7d4cc"/>
+  <text x="862" y="532" font-size="12" fill="#1d2430">Fond de salle (référence)</text>
+  <!-- path lines -->
+  <line x1="581" y1="226" x2="840" y2="530" stroke="#2a6f8f" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="557" y1="424" x2="840" y2="530" stroke="#b45309" stroke-width="2" stroke-dasharray="6 4"/>
+
+  <!-- arrival timeline (DOM SVG) -->
+  <rect x="340" y="612" width="700" height="56" rx="6" fill="#ffffff" stroke="#d7d4cc"/>
+  <text x="352" y="630" font-size="12" font-weight="600" fill="#1d2430">Arrivées à « Fond de salle » (ms)</text>
+  <line x1="352" y1="652" x2="1028" y2="652" stroke="#9a958a"/>
+  <g font-size="11" fill="#5b6270"><text x="352" y="664">0</text><text x="690" y="664">50</text><text x="1018" y="664">100</text></g>
+  <rect x="771" y="640" width="4" height="16" fill="#2a6f8f"/><text x="760" y="638" font-size="11" fill="#2a6f8f" text-anchor="end">principale 62,4</text>
+  <rect x="805" y="640" width="4" height="16" fill="#b45309"/><text x="814" y="665" font-size="11" fill="#b45309">rappel 67,4</text>
+  <text x="1028" y="630" font-size="12" fill="#0f766e" text-anchor="end">écart 5,0 ms · la principale arrive d'abord</text>
+
+  <!-- caption bar -->
+  <rect x="12" y="688" width="1342" height="68" rx="8" fill="#1d2430"/>
+  <text x="32" y="716" font-size="14" fill="#f7f6f2">Affiché : Essai B · temps d'arrivée · Montage actuel : identique</text>
+  <rect x="32" y="726" width="74" height="22" rx="11" fill="#0f766e"/><text x="69" y="742" font-size="12" fill="#fff" text-anchor="middle">relatif ?</text>
+  <rect x="116" y="726" width="74" height="22" rx="11" fill="#3fa77a"/><text x="153" y="742" font-size="12" fill="#10251c" text-anchor="middle">à jour</text>
+  <text x="1334" y="742" font-size="12" fill="#c9cdd4" text-anchor="end">c = 343 m/s à 20 °C · géométrie seule · données synthétiques TekPractice</text>
+
+  <!-- annotations below the screen frame -->
+  <g font-size="12" fill="#1d2430">
+    <text x="12" y="792">1  Une seule colonne latérale ouverte à la fois (Essais OU Fiche) : le viewport garde ≥ 60 % de la largeur à 1366 px.</text>
+    <text x="12" y="812">2  « Montage actuel » épinglé + légende qui commence par « Affiché : » : on sait toujours si l'on regarde l'essai figé ou le montage modifié.</text>
+    <text x="12" y="832">3  S1 se juge au temps d'arrivée (pas au niveau) ; la prédiction écrite avant de figer est notée. Points nommés = épingles HTML.</text>
+    <text x="12" y="852">4  Touches remappables + boutons nommés : G figer, B comparer, T viser, O calque ; PageUp/PageDown restent « regarder » ; inclinaison par pas de 2° dans le HUD.</text>
+  </g>
+</svg>
