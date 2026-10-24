@@ -26,6 +26,9 @@ export const DEFAULT_BINDINGS: Bindings = {
   PICK_UP: ['KeyX'],
   ROTATE_PLACEMENT: ['KeyR'],
   CAMERA_HOME: ['Alt+KeyH'],
+  CAMERA_PRESET_1: ['Digit1'],
+  CAMERA_PRESET_2: ['Digit2'],
+  CAMERA_PRESET_3: ['Digit3'],
   CANCEL: ['Escape'],
 }
 

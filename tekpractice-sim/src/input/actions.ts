@@ -23,6 +23,10 @@ export const ACTIONS = [
   'ROTATE_PLACEMENT',
   /** Back to the Ensemble pose (designer nav, Task 4). Default Alt+H: plain H stays help. */
   'CAMERA_HOME',
+  /** Recall camera view 1 / 2 / 3 (designer nav, Task 5). Saving is right-click or long-press on the slot. */
+  'CAMERA_PRESET_1',
+  'CAMERA_PRESET_2',
+  'CAMERA_PRESET_3',
   'CANCEL',
 ] as const
 

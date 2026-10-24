@@ -27,6 +27,10 @@ export const ACTION_LABELS: Record<Action, { fr: string; en: string }> = {
   ROTATE_PLACEMENT: { fr: 'Tourner l’objet à poser', en: 'Rotate the object being placed' },
   // Copy deck docs/copy/designer-nav-essais.md, key help.action.overview.
   CAMERA_HOME: { fr: "Vue d'ensemble", en: 'Overview' },
+  // Copy deck help.action.preset.recall / .save (save = right-click or long-press the slot).
+  CAMERA_PRESET_1: { fr: 'Aller à la vue 1', en: 'Go to view 1' },
+  CAMERA_PRESET_2: { fr: 'Aller à la vue 2', en: 'Go to view 2' },
+  CAMERA_PRESET_3: { fr: 'Aller à la vue 3', en: 'Go to view 3' },
   CANCEL: { fr: 'Libérer la souris / fermer / revenir', en: 'Release pointer / close / back' },
 }
 

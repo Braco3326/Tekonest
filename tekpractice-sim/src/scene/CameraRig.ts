@@ -105,6 +105,16 @@ export class CameraRig implements CameraDirector {
     return motionEnabled() ? TOKENS.focus.flyMs : 0
   }
 
+  /**
+   * Recall a saved view (Task 5): tween (cut under reduced motion) to the pose.
+   * The dolly floor is lowered to the pose's radius so a view saved close to a
+   * device is reachable from the Ensemble floor. Returns the flight time in ms.
+   */
+  flyToPreset(to: CameraPose): number {
+    this.fly(to, Math.min(ENSEMBLE_LOWER_RADIUS, to.radius))
+    return motionEnabled() ? TOKENS.focus.flyMs : 0
+  }
+
   /** Bumped by every flight: only the latest one may set the dolly floor when it ends. */
   private flightSeq = 0
 

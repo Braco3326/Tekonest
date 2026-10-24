@@ -230,3 +230,81 @@ test('Task 3: a wheel notch dollies in over several frames (inertia, not an inst
   for (let i = 1; i < radii.length; i++) if (radii[i] < radii[i - 1] - 1e-6) decreasingSteps++
   expect(decreasingSteps).toBeGreaterThanOrEqual(3)
 })
+
+test('Task 5: right-click saves Vue 1, a drag moves the camera, Digit1 flies back within 0.02 rad; empty slot teaches', async ({
+  page,
+}) => {
+  await boot(page, '/?level=a1&view=orbit')
+  await page.evaluate(() => window.localStorage.removeItem('audio-sim/camera-presets'))
+  await page.reload()
+  await boot(page, '/?level=a1&view=orbit')
+  const saved = await settledCamera(page)
+
+  const slot1 = page.locator('#camera-presets [data-slot="1"]')
+  await expect(slot1).toBeVisible()
+  // Empty slot: a click teaches the gesture instead of flying.
+  await page.locator('#camera-presets [data-slot="2"]').click()
+  await expect(page.locator('#hud-toasts')).toContainText("La vue 2 est vide. Clic droit ou appui long pour l'enregistrer.")
+
+  await slot1.click({ button: 'right' })
+  await expect(page.locator('#hud-toasts')).toContainText('Vue 1 enregistrée.')
+
+  const start = await canvasPoint(page, [
+    [0.5, 0.55],
+    [0.4, 0.6],
+    [0.6, 0.45],
+  ])
+  await page.mouse.move(start.x, start.y)
+  await page.mouse.down()
+  await page.mouse.move(start.x + 240, start.y + 40, { steps: 12 })
+  await page.mouse.up()
+  const moved = await settledCamera(page)
+  expect(angleDiff(moved.alpha, saved.alpha)).toBeGreaterThan(0.1)
+
+  await page.keyboard.press('Digit1')
+  const back = await settledCamera(page)
+  expect(angleDiff(back.alpha, saved.alpha)).toBeLessThan(0.02)
+  expect(angleDiff(back.beta, saved.beta)).toBeLessThan(0.02)
+  expect(Math.abs(back.radius - saved.radius)).toBeLessThan(0.05)
+  expect(dist(back.target, saved.target)).toBeLessThan(0.05)
+
+  // The slot survives a reload (per level key) and the button recalls it.
+  await page.reload()
+  await boot(page, '/?level=a1&view=orbit')
+  await page.mouse.move(start.x, start.y)
+  await page.mouse.down()
+  await page.mouse.move(start.x - 200, start.y, { steps: 10 })
+  await page.mouse.up()
+  await settledCamera(page)
+  await page.locator('#camera-presets [data-slot="1"]').click()
+  const again = await settledCamera(page)
+  expect(angleDiff(again.alpha, saved.alpha)).toBeLessThan(0.02)
+})
+
+test('Task 5: Digit1 never fires while a text field has focus; presets are hidden while walking in Explore', async ({
+  page,
+}) => {
+  await boot(page, '/?level=a1&view=orbit')
+  await page.evaluate(() => window.localStorage.removeItem('audio-sim/camera-presets'))
+  await page.reload()
+  await boot(page, '/?level=a1&view=orbit')
+  const before = await settledCamera(page)
+  await page.locator('#camera-presets [data-slot="1"]').click({ button: 'right' })
+  // Typing "1" in a text field must not recall (nor toast an empty slot): park a field and type.
+  await page.evaluate(() => {
+    const i = document.createElement('input')
+    i.id = 'probe-input'
+    document.body.appendChild(i)
+    i.focus()
+  })
+  await page.evaluate(() => window.__audioSim!.camera()) // no-op: keep ordering explicit
+  await page.locator('#hud-toasts').evaluate((el) => (el.innerHTML = ''))
+  await page.keyboard.press('Digit2') // slot 2 is empty: it would toast if the key fired
+  await expect(page.locator('#hud-toasts')).not.toContainText('est vide')
+  expect(dist((await settledCamera(page)).target, before.target)).toBeLessThan(1e-3)
+
+  await page.evaluate(() => (document.activeElement as HTMLElement).blur())
+  await page.keyboard.press('KeyV') // Orbit -> Explore (walk)
+  await page.waitForFunction(() => window.__audioSim!.explore?.().view === 'explore')
+  await expect(page.locator('#camera-presets')).toBeHidden()
+})

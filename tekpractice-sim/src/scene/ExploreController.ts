@@ -63,6 +63,8 @@ export interface ExploreDeps {
   onViewChange?(view: BaseView): void
   /** Floor height under a point (procedural rooms: raised stage zones). Default: 0. */
   floorAt?(x: number, z: number): number
+  /** CAMERA_PRESET_1..3 pressed (slot 0..2). Typing is already filtered; the host decides if the view allows it. */
+  onPreset?(slot: number): void
 }
 
 const isTyping = (el: Element | null): boolean =>
@@ -318,6 +320,11 @@ export class ExploreController implements Walker {
       case 'CAMERA_HOME':
         // Orbit / focus: fly to the Ensemble pose. Walking: ViewDirector no-op.
         this.focus.home()
+        break
+      case 'CAMERA_PRESET_1':
+      case 'CAMERA_PRESET_2':
+      case 'CAMERA_PRESET_3':
+        this.deps.onPreset?.(Number(a.slice(-1)) - 1)
         break
     }
   }

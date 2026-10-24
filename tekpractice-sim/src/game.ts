@@ -53,7 +53,10 @@ import { roomWalls, type Box } from './explore/collision'
 import { loadSettings, saveSettings, type ExploreSettings } from './ui/exploreSettings'
 import { ExploreToolbar } from './ui/exploreToolbar'
 import { Placement } from './scene/Placement'
-import { detectLayout } from './input/layoutLabels'
+import { detectLayout, labelFor } from './input/layoutLabels'
+import type { Action } from './input/actions'
+import { CameraPresets } from './ui/cameraPresets'
+import { loadPresets, roomKeyFor, savePreset } from './camera/presets'
 import type { RoomLayout } from './explore/roomLayout'
 import type { RoomFileT } from './explore/roomSchema'
 import { askCoach, createAiCoach } from './ai'
@@ -648,12 +651,18 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   const startYaw = room ? room.layout.spawn.yaw : Math.atan2(camera.target.x - startX, camera.target.z - startZ)
   // Assigned below (it needs focusPatch); view/focus hooks refresh it.
   let exploreHud: ExploreToolbar | undefined
+  let presetsUi: CameraPresets | undefined
+  const refreshNavUi = (): void => {
+    exploreHud?.refresh()
+    presetsUi?.refresh()
+  }
   const explore = new ExploreController({
     scene,
     canvas,
     arc: camera,
     rig,
-    onViewChange: () => exploreHud?.refresh(), // « Vue d'ensemble » shows in Orbit only
+    onViewChange: () => refreshNavUi(), // « Vue d'ensemble » and the presets show in Orbit only
+    onPreset: (slot) => presetsUi?.press(slot),
     settings: () => settings,
     obstacles,
     start: { x: startX, z: startZ, yaw: startYaw },
@@ -669,7 +678,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     onCandidate: markerScale,
     floorPivot: () => !explore.exploreView, // walking has no orbit pivot (ADR-0010)
     inputEnabled: () => explore.pointerFree(),
-    onViewChange: () => exploreHud?.refresh(),
+    onViewChange: () => refreshNavUi(),
   })
   // Inventory, help, settings, pause + placement ghost (ADR-0010 Décisions 8–9).
   const placement = new Placement({
@@ -694,6 +703,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       saveSettings(window.localStorage, settings)
       applyMotionPref()
       explore.settingsChanged()
+      presetsUi?.refresh() // a remapped Digit key shows on the buttons
     },
     layout: detectLayout(navigator.language ?? 'fr-FR'),
     get layoutMap() {
@@ -716,12 +726,39 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     currentView: () => explore.snapshot().view,
   })
   const exploreUi: ExploreUi = exploreHud
+  // Camera presets « Vue 1 / 2 / 3 » (Task 5): per-room slots, orbit view only.
+  const presetRoom = roomKeyFor(room?.file.id, level.id)
+  const presetKey = (slot: number): Action => `CAMERA_PRESET_${slot + 1}` as Action
+  presetsUi = new CameraPresets({
+    root: document.getElementById('hud')!,
+    slots: () => loadPresets(window.localStorage, presetRoom),
+    keyLabel: (slot) =>
+      labelFor(settings.bindings[presetKey(slot)][0] ?? '', detectLayout(navigator.language ?? 'fr-FR'), layoutMap) || '—',
+    available: () => !(explore.exploreView && focusPatch.view.mode !== 'focus'),
+    recall: (slot) => {
+      const p = loadPresets(window.localStorage, presetRoom)[slot]
+      if (p) rig.flyToPreset({ alpha: p.alpha, beta: p.beta, radius: p.radius, target: Vector3.FromArray(p.target) })
+    },
+    save: (slot) => {
+      const n = slot + 1
+      const had = loadPresets(window.localStorage, presetRoom)[slot] !== null
+      const ok = savePreset(window.localStorage, presetRoom, slot, {
+        alpha: camera.alpha,
+        beta: camera.beta,
+        radius: camera.radius,
+        target: [camera.target.x, camera.target.y, camera.target.z],
+      })
+      if (ok) hud.toast('info', had ? `Vue ${n} remplacée.` : `Vue ${n} enregistrée.`, '')
+      else hud.toast('warning', "La vue n'a pas pu être enregistrée dans ce navigateur.", '')
+    },
+    empty: (slot) => hud.toast('info', `La vue ${slot + 1} est vide. Clic droit ou appui long pour l'enregistrer.`, ''),
+  })
   // Chromium exposes the real layout map: refine key labels when it resolves.
   const kb = (navigator as Navigator & { keyboard?: { getLayoutMap?: () => Promise<ReadonlyMap<string, string>> } }).keyboard
   void kb?.getLayoutMap?.()
     .then((m) => {
       layoutMap = m
-      exploreHud?.refresh()
+      refreshNavUi()
     })
     .catch(() => undefined)
   explore.connect(focusPatch, exploreUi)
