@@ -1,0 +1,160 @@
+[
+ {
+  "tag": "site-tekpractice-1366",
+  "url": "/tekpractice.html",
+  "vp": "1366x768",
+  "status": 200,
+  "consoleErrors": [],
+  "httpErrors": []
+ },
+ {
+  "tag": "site-tekpractice-dir-1366",
+  "url": "/tekpractice/",
+  "vp": "1366x768",
+  "status": 200,
+  "consoleErrors": [],
+  "httpErrors": []
+ },
+ {
+  "tag": "game-a1-1366",
+  "url": "/tekpractice/jouer/?level=a1",
+  "vp": "1366x768",
+  "status": 200,
+  "title": "TekPractice — Tekonest",
+  "cubeVisible": true,
+  "siteLink": true,
+  "fps": 6.2,
+  "afterClick": {
+   "view": {
+    "mode": "focus",
+    "focused": "ql1-1",
+    "held": null,
+    "selected": "ql1-1"
+   },
+   "cam": {
+    "alpha": -1.5707963267948966,
+    "beta": 1.15,
+    "radius": 1.3227547271849307,
+    "target": [
+     2.1441337594296783e-10,
+     0.11127263419546551,
+     -1.4999999785730083
+    ]
+   }
+  },
+  "afterArriere": {
+   "cam": {
+    "alpha": -1.5707963267948966,
+    "beta": 1.3207963267948966,
+    "radius": 1.3227547271849307,
+    "target": [
+     2.1441337594296783e-10,
+     0.11127263419546551,
+     -1.4999999785730083
+    ]
+   },
+   "center": [
+    2.1441337594296783e-10,
+    0.11127263419546551,
+    -1.4999999785730083
+   ]
+  },
+  "consoleErrors": [],
+  "httpErrors": []
+ },
+ {
+  "tag": "game-sandbox-1366",
+  "url": "/tekpractice/jouer/?level=sandbox",
+  "vp": "1366x768",
+  "status": 200,
+  "title": "TekPractice — Tekonest",
+  "cubeVisible": false,
+  "siteLink": true,
+  "fps": 59.3,
+  "consoleErrors": [],
+  "httpErrors": []
+ },
+ {
+  "tag": "site-tekpractice-390",
+  "url": "/tekpractice.html",
+  "vp": "390x844",
+  "status": 200,
+  "consoleErrors": [],
+  "httpErrors": []
+ },
+ {
+  "tag": "site-tekpractice-dir-390",
+  "url": "/tekpractice/",
+  "vp": "390x844",
+  "status": 200,
+  "consoleErrors": [],
+  "httpErrors": []
+ },
+ {
+  "tag": "game-a1-390",
+  "url": "/tekpractice/jouer/?level=a1",
+  "vp": "390x844",
+  "status": 200,
+  "title": "TekPractice — Tekonest",
+  "cubeVisible": true,
+  "siteLink": true,
+  "fps": 11.1,
+  "afterClick": {
+   "view": {
+    "mode": "ensemble",
+    "focused": null,
+    "held": null,
+    "selected": null
+   },
+   "cam": {
+    "alpha": -1.5708,
+    "beta": 0.8727,
+    "radius": 8.5,
+    "target": [
+     0,
+     0.4,
+     0.4
+    ]
+   }
+  },
+  "afterArriere": {
+   "cam": {
+    "alpha": -1.5707963267948963,
+    "beta": 1.3207963267948966,
+    "radius": 8.5,
+    "target": [
+     0,
+     0.4,
+     0.4
+    ]
+   },
+   "center": [
+    2.1441337594296783e-10,
+    0.11127263419546551,
+    -1.4999999785730083
+   ]
+  },
+  "consoleErrors": [],
+  "httpErrors": []
+ },
+ {
+  "tag": "game-sandbox-390",
+  "url": "/tekpractice/jouer/?level=sandbox",
+  "vp": "390x844",
+  "status": 200,
+  "title": "TekPractice — Tekonest",
+  "cubeVisible": false,
+  "siteLink": true,
+  "fps": 60.2,
+  "consoleErrors": [],
+  "httpErrors": []
+ },
+ {
+  "tag": "teacher-1366",
+  "url": "/tekpractice/jouer/teacher.html",
+  "vp": "1366x768",
+  "status": 200,
+  "consoleErrors": [],
+  "httpErrors": []
+ }
+]
