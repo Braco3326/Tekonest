@@ -59,8 +59,13 @@ export class CameraRig implements CameraDirector {
   private tween: CameraTween
   private bag = new DisposableBag()
 
-  /** Release listeners and stop any flight. Idempotent; legacy never calls it. */
+  /**
+   * Release listeners and stop any flight. Idempotent; legacy never calls it.
+   * The cancelled flight's completion is orphaned first (flightSeq bump), so
+   * nothing writes the torn-down camera afterwards.
+   */
   dispose(): void {
+    this.flightSeq++
     this.tween.cancel()
     this.bag.dispose()
   }

@@ -126,6 +126,23 @@ describe('endsBetaGuard (final review: arrow keys in a text field)', () => {
   })
 })
 
+describe('CameraRig.dispose (Task 6: nothing reacts to a flight cancelled by teardown)', () => {
+  beforeEach(() => setMotionOverride(true))
+  afterEach(() => setMotionOverride(null))
+
+  it('a flight in progress cancelled by dispose() never writes the dolly floor afterwards', async () => {
+    const c = cam()
+    const rig = new CameraRig(c)
+    rig.flyToDevice({ center: new Vector3(1, 0.5, 0), boundingRadius: 0.2 })
+    expect(rig.tweening).toBe(true)
+    c.lowerRadiusLimit = 123 // a sentinel: the cancelled flight must not touch the (torn-down) camera
+    rig.dispose()
+    await settle()
+    expect(rig.tweening).toBe(false)
+    expect(c.lowerRadiusLimit).toBe(123)
+  })
+})
+
 describe('CameraRig.flyToPreset (Task 5)', () => {
   beforeEach(() => setMotionOverride(false))
   afterEach(() => setMotionOverride(null))

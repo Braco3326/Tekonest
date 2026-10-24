@@ -12,7 +12,6 @@ import {
   DirectionalLight,
   Engine,
   HemisphericLight,
-  Matrix,
   MeshBuilder,
   Scene,
   SceneLoader,
@@ -35,6 +34,7 @@ import { CableRenderer } from './scene/CableRenderer'
 import { CameraRig } from './scene/CameraRig'
 import { attachRenderScheduler, RenderScheduler, requestRender } from './creation/renderScheduler'
 import { isSoftwareRenderer } from './render/detect'
+import { projectToScreen } from './scene/project'
 import { bodyCenter, FocusPatch } from './scene/FocusPatch'
 import type { PortPoint } from './scene/snap'
 import type { Intent } from './ui/intents'
@@ -1140,19 +1140,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   // Debug/e2e hook (Playwright drives the same REAL clicks a mouse would:
   // deviceScreen() aims double-clicks, portScreen() aims port clicks, both
   // projected live through the CURRENT camera — valid in Ensemble and Focus).
-  const project = (world: Vector3): { x: number; y: number } => {
-    const projected = Vector3.Project(
-      world,
-      Matrix.Identity(),
-      scene.getTransformMatrix(),
-      camera.viewport.toGlobal(babylon.getRenderWidth(), babylon.getRenderHeight()),
-    )
-    const rect = canvas.getBoundingClientRect()
-    return {
-      x: rect.left + (projected.x / babylon.getRenderWidth()) * rect.width,
-      y: rect.top + (projected.y / babylon.getRenderHeight()) * rect.height,
-    }
-  }
+  const project = (world: Vector3): { x: number; y: number } | null => projectToScreen(world, scene, camera, babylon, canvas)
   const portScreen = (ref: PortRef): { x: number; y: number } | null => project(portPos(ref))
   const deviceScreen = (instanceId: string): { x: number; y: number } | null => {
     const inst = instances.find((i) => i.instanceId === instanceId)
