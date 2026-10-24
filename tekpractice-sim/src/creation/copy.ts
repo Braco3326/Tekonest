@@ -72,6 +72,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Eye button names; {item} = the row's label. */
     hide: 'Masquer {item}',
     show: 'Afficher {item}',
+    /** Under an empty « Matériel » group (also its description). */
+    noGear: 'Aucun appareil installé',
+    /** A zone whose kind has no `zoneKind` name. */
+    zone: 'Zone',
     /** Read after a hidden row's name (visually: struck through). */
     hiddenState: 'masqué',
     /** The tree's keyboard help (aria-describedby). */
@@ -81,6 +85,24 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusShown: 'Affiché : {item}',
     /** Status bar after Entrée on a zone or a cable row. */
     statusFramed: 'Cadré : {item}',
+  },
+  /** Room zone kinds (content/rooms/*.json `zones[].kind`) as the tree names them. */
+  zoneKind: {
+    stage: 'Scène',
+    audience: 'Public',
+    foh: 'Régie façade',
+    'monitor-world': 'Régie retours',
+    backstage: 'Coulisses',
+    'control-room': 'Régie',
+    booth: 'Cabine',
+    desk: 'Poste de régie',
+    'machine-room': 'Local technique',
+    'vocal-booth': 'Cabine voix',
+    'iso-booth': 'Cabine isolée',
+    'live-room': 'Salle de prise',
+    pit: 'Fosse',
+    gallery: 'Galerie',
+    other: 'Autre zone',
   },
   picker: {
     title: 'Choisir un lieu',

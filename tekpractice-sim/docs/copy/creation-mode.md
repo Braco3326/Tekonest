@@ -73,7 +73,7 @@ Lieu also lists the places offered by the temporary picker, with their room name
 
 ## tree
 
-Arbre « Projet » (Task 9, modèle WAI-ARIA tree). Remplace les clés `shell.treePlace`, `shell.treeGear`, `shell.treeNoPlace` et `shell.treeNoGear` (Task 7), supprimées. Les lignes d'appareil s'affichent « {nom catalogue} ({id}) », ex. « Yamaha QL1 (ql1) » ; les câbles « {id} {port} → {id} {port} », ex. « ql1 out-main-l → k12-g in-line-a » (nom de port français quand le catalogue en aura un) ; les zones par leur id de salle (« scene », « fosse »…).
+Arbre « Projet » (Task 9, modèle WAI-ARIA tree). Remplace les clés `shell.treePlace`, `shell.treeGear`, `shell.treeNoPlace` et `shell.treeNoGear` (Task 7), supprimées. Les lignes d'appareil s'affichent « {nom catalogue} ({id}) », ex. « Yamaha QL1 (ql1) » ; les câbles « {id} {port} → {id} {port} », ex. « ql1 out-main-l → k12-g in-line-a » (nom de port français quand le catalogue en aura un) ; les zones par leur type en français (section `zoneKind`), numérotées quand un type se répète (« Public », « Public 2 »).
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
@@ -85,11 +85,35 @@ Arbre « Projet » (Task 9, modèle WAI-ARIA tree). Remplace les clés `shell.tr
 | `tree.points` | Points d’écoute | brief | Groupe (brief §3) ; vide jusqu'à l'acoustique |
 | `tree.hide` | Masquer {item} | brief | Nom du bouton œil (Task 9) ; `{item}` = libellé de la ligne |
 | `tree.show` | Afficher {item} | brief | Idem, élément masqué |
+| `tree.noGear` | Aucun appareil installé | à valider (tekuxwriter) | Sous le groupe « Matériel » vide (et sa description). Reprend l'ancienne `shell.treeNoGear` ; quand l'inventaire existera, ajouter « Ouvrez l'inventaire pour en ajouter. » |
+| `tree.zone` | Zone | à valider (tekuxwriter) | Zone d'un type sans nom dans `zoneKind` |
 | `tree.hiddenState` | masqué | à valider (tekuxwriter) | Lu après le nom d'une ligne masquée (lecteur d'écran ; à l'écran : texte barré) |
 | `tree.help` | Flèches pour parcourir, Entrée pour sélectionner et cadrer, flèche droite sur un élément pour atteindre son bouton Masquer. | à valider (tekuxwriter) | Description de l'arbre (`aria-describedby`, lue à l'entrée dans l'arbre) |
 | `tree.statusHidden` | Masqué : {item} | à valider (tekuxwriter) | Barre d'état (annoncé) après le bouton œil |
 | `tree.statusShown` | Affiché : {item} | à valider (tekuxwriter) | Idem |
 | `tree.statusFramed` | Cadré : {item} | à valider (tekuxwriter) | Barre d'état (annoncé) après Entrée sur une zone ou un câble |
+
+## zoneKind
+
+Types de zones des salles (`content/rooms/*.json`, `zones[].kind`), nommés dans l'arbre « Projet » (Task 9 review). Clé = le type tel qu'écrit dans les données.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `zoneKind.stage` | Scène | à valider (tekuxwriter) | Arbre, groupe Zones |
+| `zoneKind.audience` | Public | à valider (tekuxwriter) | Idem (fosse, balcon : « Public », « Public 2 ») |
+| `zoneKind.foh` | Régie façade | à valider (tekuxwriter) | Idem |
+| `zoneKind.monitor-world` | Régie retours | à valider (tekuxwriter) | Idem |
+| `zoneKind.backstage` | Coulisses | à valider (tekuxwriter) | Idem |
+| `zoneKind.control-room` | Régie | à valider (tekuxwriter) | Idem (studios) |
+| `zoneKind.booth` | Cabine | à valider (tekuxwriter) | Idem |
+| `zoneKind.desk` | Poste de régie | à valider (tekuxwriter) | Idem |
+| `zoneKind.machine-room` | Local technique | à valider (tekuxwriter) | Idem |
+| `zoneKind.vocal-booth` | Cabine voix | à valider (tekuxwriter) | Idem |
+| `zoneKind.iso-booth` | Cabine isolée | à valider (tekuxwriter) | Idem |
+| `zoneKind.live-room` | Salle de prise | à valider (tekuxwriter) | Idem |
+| `zoneKind.pit` | Fosse | à valider (tekuxwriter) | Idem (fosse d'orchestre) |
+| `zoneKind.gallery` | Galerie | à valider (tekuxwriter) | Idem |
+| `zoneKind.other` | Autre zone | à valider (tekuxwriter) | Idem |
 
 ## picker
 

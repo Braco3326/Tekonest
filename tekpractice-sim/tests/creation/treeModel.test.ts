@@ -53,6 +53,26 @@ describe('project tree model (Task 9)', () => {
     expect(tree()[4].children ?? []).toEqual([])
     expect(tree()[0].hideable).toBe(false)
   })
+  it('zones read in French by their kind, numbered when a kind repeats; an unknown kind is « Zone »', () => {
+    const t = buildTree({
+      placeLabel: 'Salle',
+      zones: [
+        { id: 'scene', kind: 'stage' },
+        { id: 'fosse', kind: 'audience' },
+        { id: 'balcon', kind: 'audience' },
+        { id: 'x', kind: 'martian' },
+      ],
+      design,
+      deviceLabel: (id) => id,
+      points: [],
+    })
+    expect(t[1].children!.map((z) => z.label)).toEqual(['Scène', 'Public', 'Public 2', 'Zone'])
+  })
+  it('an empty « Matériel » carries a hint; a filled one does not', () => {
+    expect(tree()[2].emptyHint).toBeUndefined()
+    const empty = buildTree({ placeLabel: '', zones: [], design: { ...design, rig: { instances: [], connections: [], controls: {} } }, deviceLabel: (id) => id, points: [] })
+    expect(empty[2].emptyHint).toBe('Aucun appareil installé')
+  })
   it('hide keys: a device by its instance id, a cable or zone by its node id', () => {
     const t = tree()
     expect(hideKeyOf(t[2].children![0])).toBe('ql1')

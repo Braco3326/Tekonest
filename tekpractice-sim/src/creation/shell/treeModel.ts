@@ -18,6 +18,8 @@ export interface TreeNode {
   children?: TreeNode[]
   target?: { instanceId?: string; cableKey?: string; zoneId?: string; pointId?: string }
   hideable: boolean
+  /** A group with nothing in it yet says so (shown under the row, and its description). */
+  emptyHint?: string
 }
 
 export interface TreeInput {
@@ -31,6 +33,17 @@ export interface TreeInput {
 }
 
 const T = (): Readonly<Record<string, string>> => COPY.tree!
+
+/** Zones named in French by kind (never the room file's raw id); a repeated kind is numbered: « Public », « Public 2 ». */
+function zoneNodes(zones: { id: string; kind: string }[]): TreeNode[] {
+  const seen = new Map<string, number>()
+  return zones.map((z) => {
+    const name = COPY.zoneKind?.[z.kind] ?? T().zone!
+    const n = (seen.get(name) ?? 0) + 1
+    seen.set(name, n)
+    return { id: `zone:${z.id}`, kind: 'zone', label: n > 1 ? `${name} ${n}` : name, target: { zoneId: z.id }, hideable: true }
+  })
+}
 
 export function buildTree(input: TreeInput): TreeNode[] {
   const { design } = input
@@ -51,13 +64,14 @@ export function buildTree(input: TreeInput): TreeNode[] {
       kind: 'zones',
       label: T().zones!,
       hideable: false,
-      children: input.zones.map((z) => ({ id: `zone:${z.id}`, kind: 'zone', label: z.id, target: { zoneId: z.id }, hideable: true })),
+      children: zoneNodes(input.zones),
     },
     {
       id: 'materiel',
       kind: 'materiel',
       label: T().gear!,
       hideable: false,
+      ...(design.rig.instances.length ? {} : { emptyHint: T().noGear! }),
       children: design.rig.instances.map((i) => ({
         id: `device:${i.instanceId}`,
         kind: 'device',
