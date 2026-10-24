@@ -268,6 +268,7 @@ export class ExploreHud {
         <label>Mouvements réduits <select name="reducedMotion">${opt('system', 'Comme le système', s.reducedMotion)}${opt('on', 'Activés', s.reducedMotion)}${opt('off', 'Désactivés', s.reducedMotion)}</select></label>
         <label>Capture de la souris <select name="pointerLock">${opt('auto', 'Auto (après avoir marché au clavier)', s.pointerLock)}${opt('always', 'Toujours au clic', s.pointerLock)}${opt('never', 'Jamais (souris seule)', s.pointerLock)}</select></label>
         <label>Vue par défaut dans les niveaux <select name="levelView">${opt('orbit', 'Orbite', s.levelView)}${opt('explore', 'Exploration', s.levelView)}</select></label>
+        <label>Essais : année de formation <select name="year">${opt('1', '1re année (3 essais, liste simple)', String(s.year))}${opt('2', '2e année (arbre des essais)', String(s.year))}</select></label>
         <h3>Touches</h3>
         <table class="ex-binds"><tbody>${REMAPPABLE.map(
           (a) => `<tr><td>${esc(ACTION_LABELS[a].fr)}</td><td><kbd>${esc(s.bindings[a].map((c) => labelFor(c, this.deps.layout, this.deps.layoutMap)).join(' / '))}</kbd></td>
@@ -283,7 +284,12 @@ export class ExploreHud {
       const t = e.target as HTMLInputElement | HTMLSelectElement
       if (!t.name) return
       const cur = this.deps.settings()
-      const value: unknown = t instanceof HTMLInputElement && t.type === 'checkbox' ? t.checked : t instanceof HTMLInputElement && t.type === 'range' ? Number(t.value) : t.value
+      const value: unknown =
+        t instanceof HTMLInputElement && t.type === 'checkbox'
+          ? t.checked
+          : (t instanceof HTMLInputElement && t.type === 'range') || t.name === 'year'
+            ? Number(t.value)
+            : t.value
       const out = t.parentElement?.querySelector('output')
       if (out) out.textContent = t.name === 'fovDeg' ? `${value}°` : `${value}×`
       this.deps.onSettings({ ...cur, [t.name]: value } as ExploreSettings)

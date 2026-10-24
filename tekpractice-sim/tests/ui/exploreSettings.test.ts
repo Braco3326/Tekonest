@@ -73,6 +73,20 @@ describe('explore settings store', () => {
     expect(got.levelView).toBe('explore')
   })
 
+  it('year (Essais, Task 14): defaults to 2nd year, a file written before it keeps its other settings', () => {
+    expect(DEFAULT_SETTINGS.year).toBe(2)
+    const s = new MemStorage()
+    // a settings file from before Task 14: same version, no `year`
+    s.setItem(SETTINGS_KEY, JSON.stringify({ version: SETTINGS_VERSION, settings: { fovDeg: 85 } }))
+    expect(loadSettings(s)).toMatchObject({ fovDeg: 85, year: 2 })
+    for (const bad of [3, '1', null, 0]) {
+      s.setItem(SETTINGS_KEY, JSON.stringify({ version: SETTINGS_VERSION, settings: { year: bad } }))
+      expect(loadSettings(s).year, String(bad)).toBe(2)
+    }
+    saveSettings(s, { ...DEFAULT_SETTINGS, year: 1 })
+    expect(loadSettings(s).year).toBe(1)
+  })
+
   it('never throws when storage is blocked', () => {
     expect(loadSettings(throwing)).toEqual(DEFAULT_SETTINGS)
     expect(() => saveSettings(throwing, DEFAULT_SETTINGS)).not.toThrow()

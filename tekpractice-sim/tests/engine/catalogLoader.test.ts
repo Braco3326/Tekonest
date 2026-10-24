@@ -28,4 +28,10 @@ describe('CatalogLoader', () => {
     delete corrupt.requiredChain[0].from.instance
     expect(() => loadLevel(corrupt)).toThrowError(/requiredChain\.0\.from\.instance/)
   })
+
+  it('a level may declare Essais (optional boolean, ADR-0012 D2)', () => {
+    expect(loadLevel(rawLevel('a1')).essais).toBeUndefined()
+    expect(loadLevel({ ...(rawLevel('a1') as object), essais: true }).essais).toBe(true)
+    expect(() => loadLevel({ ...(rawLevel('a1') as object), essais: 'oui' })).toThrowError(/essais/)
+  })
 })

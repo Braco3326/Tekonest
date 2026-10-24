@@ -108,6 +108,11 @@ export const Level = z.object({
   environment: z.string().min(1).optional(),
   /** Stage positions per instanceId, meters [x, y, z]. Missing instances fall back to a grid. */
   layout: z.record(z.tuple([z.number(), z.number(), z.number()])).optional(),
+  /**
+   * Essais (ADR-0012 D2, Task 14): the level offers the Essais panel. The
+   * sandbox always does; levels and exams only when this is true.
+   */
+  essais: z.boolean().optional(),
 }).passthrough()
 
 /** Scene preset — a backdrop + camera, NEVER engine code (VISION §3: environments are data). */

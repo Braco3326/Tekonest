@@ -20,6 +20,11 @@ export interface ExploreSettings {
   pointerLock: PointerLockPref
   /** Default view inside levels A1–D1 / exam (sandbox always starts in explore). */
   levelView: ViewPref
+  /**
+   * BTS year (Essais, Task 14): 1 = flat list, at most 3 Essais; 2 = mini-tree.
+   * Added without a version bump: a file without it reads as 2 (the default).
+   */
+  year: 1 | 2
   bindings: Bindings
 }
 
@@ -34,6 +39,7 @@ export const DEFAULT_SETTINGS: ExploreSettings = {
   reducedMotion: 'system',
   pointerLock: 'auto',
   levelView: 'orbit',
+  year: 2,
   bindings: DEFAULT_BINDINGS,
 }
 
@@ -57,6 +63,7 @@ export function loadSettings(storage: Pick<Storage, 'getItem'>): ExploreSettings
       reducedMotion: oneOf(s.reducedMotion, ['system', 'on', 'off'] as const, DEFAULT_SETTINGS.reducedMotion),
       pointerLock: oneOf(s.pointerLock, ['auto', 'always', 'never'] as const, DEFAULT_SETTINGS.pointerLock),
       levelView: oneOf(s.levelView, ['orbit', 'explore'] as const, DEFAULT_SETTINGS.levelView),
+      year: s.year === 1 || s.year === 2 ? s.year : DEFAULT_SETTINGS.year,
       bindings: parseBindings(s.bindings),
     }
   } catch {
