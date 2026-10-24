@@ -8,6 +8,7 @@
 import { Color3, Mesh, MeshBuilder, Scene, StandardMaterial, Vector3 } from '@babylonjs/core'
 import { CableBudget, catenaryPoints, pointAlong, SEGMENTS_FULL, type P3 } from './cablePath'
 import { motionEnabled, TOKENS } from '../design/tokens'
+import { DisposableBag } from '../util/disposable'
 
 export type DragTint = 'neutral' | 'ok' | 'bad'
 
@@ -69,6 +70,19 @@ export class CableRenderer {
 
   private pulses = new Map<string, { mesh: Mesh; path: P3[]; phase: number }>()
   private pulseObserverOn = false
+  private bag = new DisposableBag()
+
+  /** Drop cables, pulses, the held cable, the pulse observer and the materials. Idempotent; legacy never calls it. */
+  dispose(): void {
+    if (this.bag.disposed) return
+    this.clear()
+    this.endDrag()
+    this.bag.dispose()
+    this.pulseObserverOn = false
+    for (const m of Object.values(this.mats)) m.dispose()
+    this.pulseMaterial?.dispose()
+    this.pulseMaterial = undefined
+  }
   private static readonly PULSE_PERIOD_MS = 2400
   private static readonly PULSE_CAP = 12 // perf guard: no pulse swarm on huge rigs
 
@@ -118,7 +132,7 @@ export class CableRenderer {
     this.pulses.set(connectionId, { mesh: dot, path, phase: this.pulses.size * 0.17 })
     if (!this.pulseObserverOn) {
       this.pulseObserverOn = true
-      this.scene.onBeforeRenderObservable.add(() => {
+      this.bag.observe(this.scene.onBeforeRenderObservable, () => {
         const now = performance.now()
         for (const p of this.pulses.values()) {
           const t = (now / CableRenderer.PULSE_PERIOD_MS + p.phase) % 1

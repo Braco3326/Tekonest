@@ -8,6 +8,7 @@ import { Vector3, type ArcRotateCamera } from '@babylonjs/core'
 import { shortestAngle } from '../camera/tween'
 import { ENSEMBLE_LOWER_RADIUS, ORBIT_FEEL, radiusLimitFor } from '../camera/orbitFeel'
 import { motionEnabled, TOKENS } from '../design/tokens'
+import { DisposableBag } from '../util/disposable'
 import { CameraTween, isTextTarget, type TweenCamera } from './cameraTween'
 
 export interface CameraPose {
@@ -56,6 +57,13 @@ const FOCUS_BETA = 1.15
 export class CameraRig implements CameraDirector {
   private ensemble: CameraPose
   private tween: CameraTween
+  private bag = new DisposableBag()
+
+  /** Release listeners and stop any flight. Idempotent; legacy never calls it. */
+  dispose(): void {
+    this.tween.cancel()
+    this.bag.dispose()
+  }
 
   /** A flight is running (the render scheduler keeps frames coming). */
   get tweening(): boolean {
@@ -69,14 +77,14 @@ export class CameraRig implements CameraDirector {
     // The learner grabbing the view cancels a flight in progress.
     const canvas = scene.getEngine().getRenderingCanvas()
     if (canvas) {
-      this.tween.cancelOnUserInput(canvas)
+      this.bag.add(this.tween.cancelOnUserInput(canvas))
       // The learner taking the camera again (drag, wheel, Babylon's arrow-key
       // orbit) ends a cube top / bottom view's lifted guard.
       const restore = (): void => this.restoreBetaLimits()
-      canvas.addEventListener('pointerdown', restore)
-      canvas.addEventListener('wheel', restore)
+      this.bag.listen(canvas, 'pointerdown', restore)
+      this.bag.listen(canvas, 'wheel', restore)
       if (typeof window !== 'undefined')
-        window.addEventListener('keydown', (e: KeyboardEvent) => {
+        this.bag.listen(window, 'keydown', (e: KeyboardEvent) => {
           if (endsBetaGuard(e)) restore()
         })
     } else console.warn('CameraRig: no rendering canvas; flights cannot be cancelled by user input')

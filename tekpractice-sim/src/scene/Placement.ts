@@ -7,6 +7,7 @@
 import { Color3, Mesh, MeshBuilder, Plane, Scene, StandardMaterial, Vector3 } from '@babylonjs/core'
 import { rotateStep, snapToGrid } from '../explore/placement'
 import { TOKENS } from '../design/tokens'
+import { DisposableBag } from '../util/disposable'
 import type { Intent } from '../ui/intents'
 
 export interface PlacementDeps {
@@ -24,13 +25,20 @@ export interface PlacementDeps {
 const GHOST = { w: 0.5, h: 0.4, d: 0.5 }
 
 export class Placement {
+  private bag = new DisposableBag()
   private ghost: Mesh | null = null
   private deviceId: string | null = null
   private rotationDeg = 0
   private floor = Plane.FromPositionAndNormal(Vector3.Zero(), Vector3.Up())
 
   constructor(private deps: PlacementDeps) {
-    deps.scene.onBeforeRenderObservable.add(() => this.follow())
+    this.bag.observe(deps.scene.onBeforeRenderObservable, () => this.follow())
+  }
+
+  /** Remove the follow observer and the ghost. Idempotent; legacy never calls it. */
+  dispose(): void {
+    this.cancel()
+    this.bag.dispose()
   }
 
   get active(): boolean {

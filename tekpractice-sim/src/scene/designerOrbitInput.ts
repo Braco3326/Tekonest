@@ -55,6 +55,11 @@ export class DesignerOrbitPointersInput extends ArcRotateCameraPointersInput {
   }
 }
 
+/** Detach and remove a designer input installed by installDesignerOrbitInput. */
+export function uninstallDesignerOrbitInput(cam: ArcRotateCamera, input: DesignerOrbitPointersInput): void {
+  cam.inputs.remove(input)
+}
+
 /** Swap the camera's stock pointer input for the designer one (keeps its sensibilities). */
 export function installDesignerOrbitInput(cam: ArcRotateCamera): DesignerOrbitPointersInput {
   const next = new DesignerOrbitPointersInput()

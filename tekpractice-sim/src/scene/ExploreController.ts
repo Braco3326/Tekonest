@@ -17,6 +17,7 @@ import { resolveMove, type Box } from '../explore/collision'
 import { resolveEsc } from '../explore/escChain'
 import type { ExploreSettings } from '../ui/exploreSettings'
 import { motionEnabled } from '../design/tokens'
+import { DisposableBag } from '../util/disposable'
 import type { CameraRig } from './CameraRig'
 import type { Walker } from './ViewDirector'
 import type { PortRef } from '../engine/types'
@@ -91,6 +92,7 @@ export class ExploreController implements Walker {
   readonly camera: UniversalCamera
   private player: PlayerState
   private keyboard: KeyboardState
+  private bag = new DisposableBag()
   private gesture = new MouseGesture()
   private look = { dx: 0, dy: 0 }
   private stick = { x0: 0, y0: 0, dx: 0, dy: 0, on: false }
@@ -118,15 +120,26 @@ export class ExploreController implements Walker {
     this.applyCamera()
     this.view = deps.initialView
 
-    scene.onBeforeRenderObservable.add(() => this.tick(scene.getEngine().getDeltaTime() / 1000))
-    window.addEventListener('keydown', this.onKeyDown, true)
-    window.addEventListener('keyup', this.onKeyUp, true)
-    window.addEventListener('blur', this.onBlur)
-    deps.canvas.addEventListener('pointerdown', this.onPointerDown)
-    window.addEventListener('pointermove', this.onPointerMove)
-    window.addEventListener('pointerup', this.onPointerUp)
-    deps.canvas.addEventListener('wheel', this.onWheel, { passive: false })
-    document.addEventListener('pointerlockchange', this.onLockChange)
+    const bag = this.bag
+    bag.observe(scene.onBeforeRenderObservable, () => this.tick(scene.getEngine().getDeltaTime() / 1000))
+    bag.listen(window, 'keydown', this.onKeyDown, true)
+    bag.listen(window, 'keyup', this.onKeyUp, true)
+    bag.listen(window, 'blur', this.onBlur)
+    bag.listen(deps.canvas, 'pointerdown', this.onPointerDown)
+    bag.listen(window, 'pointermove', this.onPointerMove)
+    bag.listen(window, 'pointerup', this.onPointerUp)
+    bag.listen(deps.canvas, 'wheel', this.onWheel, { passive: false })
+    bag.listen(document, 'pointerlockchange', this.onLockChange)
+  }
+
+  /** Remove every listener and the tick, leave pointer lock, drop the walking camera. Idempotent; legacy never calls it. */
+  dispose(): void {
+    if (this.bag.disposed) return
+    this.bag.dispose()
+    this.keyboard.reset()
+    this.gesture.cancel()
+    if (this.locked) document.exitPointerLock()
+    this.camera.dispose()
   }
 
   /** Late wiring: FocusPatch and the UI are built after the controller (they need its flags). */

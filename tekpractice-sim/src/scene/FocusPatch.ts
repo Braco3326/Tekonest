@@ -37,6 +37,7 @@ import {
 import { motionEnabled, TOKENS } from '../design/tokens'
 import { confirmWindowMs, DeferredEmptyClick } from './deferredEmptyClick'
 import { nearestUpHit } from './pivotSurface'
+import { DisposableBag } from '../util/disposable'
 
 export interface FocusPatchDeps {
   /** Dry-run verdict — ConnectionGraph.canConnect, injected by the bootstrap. */
@@ -68,6 +69,7 @@ export interface FocusPatchDeps {
 const same = (a: PortRef, b: PortRef) => a.instance === b.instance && a.port === b.port
 
 export class FocusPatch {
+  private bag = new DisposableBag()
   private state: FocusState = initialState()
   private glowing = new Set<AbstractMesh>()
   private dimmed = new Set<Mesh>()
@@ -83,7 +85,7 @@ export class FocusPatch {
     private ports: readonly PortPoint[],
     private deps: FocusPatchDeps,
   ) {
-    scene.onPointerObservable.add((info) => {
+    this.bag.observe(scene.onPointerObservable, (info) => {
       if (this.deps.inputEnabled && !this.deps.inputEnabled()) return
       switch (info.type) {
         case PointerEventTypes.POINTERTAP:
@@ -100,9 +102,17 @@ export class FocusPatch {
 
     // Right-click must reach the machine, not the browser menu (spec §2).
     const canvas = scene.getEngine().getRenderingCanvas()
-    canvas?.addEventListener('contextmenu', (e) => e.preventDefault())
+    if (canvas) this.bag.listen(canvas, 'contextmenu', (e: Event) => e.preventDefault())
 
-    window.addEventListener('keydown', this.onKey)
+    this.bag.listen(window, 'keydown', this.onKey)
+  }
+
+  /** Remove every listener/observer, clear glow and dim, cancel the deferred empty click. Idempotent; legacy never calls it. */
+  dispose(): void {
+    if (this.bag.disposed) return
+    this.bag.dispose()
+    this.emptyClick.cancel()
+    this.clearHints()
   }
 
   /** e2e/debug view — mode, focused device, held cable end. */
