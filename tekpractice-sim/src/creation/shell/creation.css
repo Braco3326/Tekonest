@@ -29,9 +29,10 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr[data-props='collapsed'] { --cr-props-w: var(--cr-rail-w); }
 
 /* Square corners, focused or not (beats the legacy `a:focus-visible { border-radius }`). */
-.cr *, .cr *:focus-visible, .cr-skip, .cr-skip:focus-visible { border-radius: 0 !important; }
+.cr *, .cr *:focus-visible, .cr-skip, .cr-skip:focus-visible, .cr-dialog, .cr-dialog * { border-radius: 0 !important; }
 
-.cr :focus-visible, .cr-skip:focus-visible {
+/* Projet dialogs (Task 13) live under <body>, outside `.cr`: same focus ring. */
+.cr :focus-visible, .cr-skip:focus-visible, .cr-dialog :focus-visible {
   outline: 2px solid var(--cr-ambre);
   outline-offset: 1px;
   box-shadow: 0 0 0 3px var(--cr-nuit);

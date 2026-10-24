@@ -10,6 +10,7 @@ import type { PortRef, TeachingEvent } from '../engine/types'
 import type { DesignState } from '../trials/trial'
 import type { DeviceInstance } from '../scene/DeviceSpawner'
 import type { PlaceResult } from './placeController'
+import type { QuarantineItem } from './persistence'
 
 export interface CreationDebug {
   /** Through `history.do` (undoable, as a UI action). */
@@ -49,6 +50,10 @@ export interface CreationDebug {
   choosePlace(key: string): Promise<PlaceResult>
   /** The user path: the keep / empty dialog when the rig has gear. 'busy' while another change is in flight. */
   requestPlace(key: string): Promise<PlaceResult>
+  /** Task 13: the project name and the « * » state. */
+  project(): { name: string | null; dirty: boolean }
+  /** Task 13: everything set aside in `audio-sim/creation.v1.quarantine` (kept, exportable as JSON). */
+  quarantine(): QuarantineItem[]
 }
 
 declare global {

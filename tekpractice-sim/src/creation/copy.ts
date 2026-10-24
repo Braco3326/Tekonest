@@ -57,7 +57,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     aide: 'Aide',
     undo: 'Annuler',
     redo: 'Rétablir',
+    newProject: 'Nouveau',
+    open: 'Ouvrir…',
     save: 'Enregistrer',
+    saveAs: 'Enregistrer sous…',
     choosePlace: 'Choisir un lieu…',
     inventory: 'Ouvrir l’inventaire',
     connectTo: 'Connecter à…',
@@ -249,5 +252,53 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     replaceTitle: 'Remplacer le matériel ?',
     replaceBody: 'Ce modèle installe son propre matériel : celui déjà en place sera retiré. {undo} permet de revenir en arrière.',
     replace: 'Remplacer le matériel',
+  },
+  /** Autosave, dirty marker, Ctrl+S and named projects (Task 13, C16). */
+  project: {
+    /** The browser tab's title; {name} = the project name or `untitledDoc`. Prefixed with « * » while dirty. */
+    docTitle: '{name} · Mode Création · TekPractice',
+    untitledDoc: 'Sans titre',
+    /** Read after the visible « * » in the top bar's project title (visually hidden). */
+    dirty: 'modifications non enregistrées',
+    /** Status bar after Ctrl+S; {name} = the project name. */
+    saved: 'Projet « {name} » enregistré',
+    /** Ctrl+S before any place is chosen. */
+    saveNoPlace: 'Choisissez un lieu avant d’enregistrer.',
+    saveFull: 'Plus de place pour enregistrer : 20 projets au maximum, ou stockage du navigateur plein. Rien n’a été enregistré.',
+    blocked: 'Le navigateur bloque la sauvegarde : ton travail ne sera pas gardé.',
+    blockedTitle: 'Sauvegarde impossible',
+    reset: 'Sauvegarde incompatible, on repart de zéro.',
+    resetBody: 'L’ancienne sauvegarde n’est pas effacée : elle est gardée à part dans ce navigateur.',
+    autosaveFull: 'Stockage du navigateur plein : la sauvegarde automatique est en pause. Enregistrez sous un autre nom ou libérez de la place.',
+    /** Status bar after the autosave was reopened at start. */
+    restored: 'Travail de la dernière séance rouvert.',
+    /** Name dialog (Ctrl+S the first time, « Enregistrer sous… »). Entrée enregistre. */
+    nameTitle: 'Enregistrer le projet',
+    nameTitleAs: 'Enregistrer sous',
+    nameLabel: 'Nom du projet',
+    nameSubmit: 'Enregistrer',
+    nameCancel: 'Annuler',
+    nameEmpty: 'Donnez un nom au projet.',
+    /** A project with this name exists; {name} = that name. */
+    overwriteTitle: 'Remplacer « {name} » ?',
+    overwriteBody: 'Un projet porte déjà ce nom. Il sera remplacé par le projet affiché.',
+    overwrite: 'Remplacer',
+    /** « Nouveau » with unsaved changes; {undo} = the undo key label. */
+    newTitle: 'Nouveau projet ?',
+    newBody: 'Les modifications non enregistrées seront abandonnées. {undo} permet de revenir en arrière.',
+    newConfirm: 'Nouveau projet',
+    /** History entry label of « Nouveau ». */
+    newEntry: 'Nouveau projet',
+    /** « Ouvrir… » list. */
+    openTitle: 'Ouvrir un projet',
+    openHint: 'Flèches ou Tab pour parcourir, Entrée pour ouvrir.',
+    openEmpty: 'Aucun projet enregistré pour l’instant.',
+    /** One row's accessible name; {name}, {date} = when it was saved. */
+    openItem: '{name}, enregistré le {date}',
+    /** History entry label of an opened project; {name}. */
+    openEntry: 'Ouvrir « {name} »',
+    /** Status bar; {name}, {undo}. */
+    opened: 'Projet « {name} » ouvert. {undo} pour revenir en arrière.',
+    openFailed: '« {name} » n’a pas pu être ouvert. Rien n’a changé.',
   },
 }

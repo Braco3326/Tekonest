@@ -83,10 +83,11 @@ test('menubar follows the WAI-ARIA pattern (arrows, Enter opens, Esc closes and 
   const menu = page.getByRole('menu', { name: 'Projet' })
   await expect(menu).toBeVisible()
   await expect(tops.first()).toHaveAttribute('aria-expanded', 'true')
-  await expect(menu.getByRole('menuitem', { name: /Annuler/ })).toBeFocused()
+  // Task 13: Nouveau · Ouvrir… · Enregistrer · Enregistrer sous… then Annuler · Rétablir
+  await expect(menu.getByRole('menuitem', { name: /^Nouveau/ })).toBeFocused()
   await expect(menu.getByRole('menuitem', { name: /Annuler/ })).toHaveAttribute('aria-disabled', 'true')
   await page.keyboard.press('ArrowDown')
-  await expect(menu.getByRole('menuitem', { name: /Rétablir/ })).toBeFocused()
+  await expect(menu.getByRole('menuitem', { name: /^Ouvrir/ })).toBeFocused()
   await page.keyboard.press('Escape')
   await expect(menu).toBeHidden()
   await expect(tops.first()).toBeFocused()

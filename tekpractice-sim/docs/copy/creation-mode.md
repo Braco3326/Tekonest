@@ -62,7 +62,10 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.aide` | Aide | brief | Menu 7 |
 | `menu.undo` | Annuler | brief | Projet ; raccourci affiché depuis la carte des touches (Task 8) |
 | `menu.redo` | Rétablir | brief | Projet ; idem |
-| `menu.save` | Enregistrer | à valider (tekuxwriter) | Projet ; inactif jusqu'à l'autosave/Ctrl+S (C16) |
+| `menu.newProject` | Nouveau | brief | Task 13 : Projet, 1er élément ; demande confirmation s'il y a des modifications non enregistrées (C16) |
+| `menu.open` | Ouvrir… | brief | Task 13 : Projet ; liste des projets enregistrés, Entrée ouvre |
+| `menu.save` | Enregistrer | brief | Projet ; Ctrl+S (Task 13, C16) ; demande un nom la première fois |
+| `menu.saveAs` | Enregistrer sous… | brief | Task 13 : Projet ; demande toujours un nom |
 | `menu.choosePlace` | Choisir un lieu… | à valider (tekuxwriter) | Lieu ; ouvre l'écran « Choisir un lieu » par-dessus le lieu affiché (Task 12) |
 | `menu.inventory` | Ouvrir l’inventaire | à valider (tekuxwriter) | Matériel ; inactif jusqu'au tiroir d'inventaire |
 | `menu.connectTo` | Connecter à… | à valider (tekuxwriter) | Câblage ; même libellé que l'action Propriétés « Connecter à… » (C10) |
@@ -263,6 +266,45 @@ Dialogue « Changer de lieu » (C3), ouvert quand du matériel est déjà instal
 | `place.replaceTitle` | Remplacer le matériel ? | à valider (tekuxwriter) | Task 12 (revue) : titre du dialogue quand un modèle (carte « Modèles » ou « Avec le matériel du modèle ») est ouvert alors que du matériel est installé |
 | `place.replaceBody` | Ce modèle installe son propre matériel : celui déjà en place sera retiré. {undo} permet de revenir en arrière. | à valider (tekuxwriter) | Idem, corps ; `{undo}` = libellé de la touche Annuler |
 | `place.replace` | Remplacer le matériel | à valider (tekuxwriter) | Idem, bouton principal ; « Annuler » (`place.cancel`) et Échap ne changent rien |
+
+## project
+
+Sauvegarde automatique, marque « * », Ctrl+S et projets nommés (Task 13, C16, CA-14). Les textes « brief » sont repris tels quels du plan ; tekuxwriter : `project.blocked` tutoie (« ton travail ») alors que le reste du shell vouvoie, à trancher.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `project.docTitle` | {name} · Mode Création · TekPractice | brief | Titre de l'onglet ; précédé de « * » tant qu'il y a des modifications non enregistrées ; `{name}` = nom du projet ou `project.untitledDoc` |
+| `project.untitledDoc` | Sans titre | brief | `{name}` du titre d'onglet tant que le projet n'a pas de nom (la barre du haut garde `shell.untitled`) |
+| `project.dirty` | modifications non enregistrées | à valider (tekuxwriter) | Lu après le « * » visible du titre de projet (texte masqué, lecteur d'écran) |
+| `project.saved` | Projet « {name} » enregistré | brief | Barre d'état (annoncé) après Ctrl+S / Enregistrer |
+| `project.saveNoPlace` | Choisissez un lieu avant d’enregistrer. | à valider (tekuxwriter) | Barre d'état : Ctrl+S avant le premier lieu (le dialogue d'enregistrement du navigateur ne s'ouvre jamais) |
+| `project.saveFull` | Plus de place pour enregistrer : 20 projets au maximum, ou stockage du navigateur plein. Rien n’a été enregistré. | à valider (tekuxwriter) | Barre d'état : 21e projet ou quota du navigateur atteint |
+| `project.blocked` | Le navigateur bloque la sauvegarde : ton travail ne sera pas gardé. | brief | Note persistante + barre d'état quand localStorage est bloqué (navigation privée stricte, cookies bloqués) |
+| `project.blockedTitle` | Sauvegarde impossible | à valider (tekuxwriter) | Titre (h3) de cette note |
+| `project.reset` | Sauvegarde incompatible, on repart de zéro. | brief | Titre de la note quand la sauvegarde automatique est illisible ou d'une autre version |
+| `project.resetBody` | L’ancienne sauvegarde n’est pas effacée : elle est gardée à part dans ce navigateur. | à valider (tekuxwriter) | Corps de cette note (données mises en quarantaine, jamais supprimées) |
+| `project.autosaveFull` | Stockage du navigateur plein : la sauvegarde automatique est en pause. Enregistrez sous un autre nom ou libérez de la place. | à valider (tekuxwriter) | Note + barre d'état quand l'écriture automatique dépasse le quota |
+| `project.restored` | Travail de la dernière séance rouvert. | à valider (tekuxwriter) | Barre d'état au démarrage quand la sauvegarde automatique est rouverte (le sélecteur de lieu ne s'affiche pas) |
+| `project.nameTitle` | Enregistrer le projet | à valider (tekuxwriter) | Titre du dialogue de nom (Ctrl+S la première fois) |
+| `project.nameTitleAs` | Enregistrer sous | à valider (tekuxwriter) | Titre du même dialogue pour « Enregistrer sous… » |
+| `project.nameLabel` | Nom du projet | à valider (tekuxwriter) | Étiquette du champ texte ; Entrée enregistre |
+| `project.nameSubmit` | Enregistrer | à valider (tekuxwriter) | Bouton principal du dialogue de nom |
+| `project.nameCancel` | Annuler | à valider (tekuxwriter) | Bouton ; Échap fait pareil |
+| `project.nameEmpty` | Donnez un nom au projet. | à valider (tekuxwriter) | Erreur sous le champ vide (`aria-invalid`, annoncée) |
+| `project.overwriteTitle` | Remplacer « {name} » ? | à valider (tekuxwriter) | Dialogue : un projet porte déjà ce nom |
+| `project.overwriteBody` | Un projet porte déjà ce nom. Il sera remplacé par le projet affiché. | à valider (tekuxwriter) | Corps de ce dialogue |
+| `project.overwrite` | Remplacer | à valider (tekuxwriter) | Bouton principal ; « Annuler » ne change rien |
+| `project.newTitle` | Nouveau projet ? | à valider (tekuxwriter) | Dialogue « Nouveau » quand il y a des modifications non enregistrées |
+| `project.newBody` | Les modifications non enregistrées seront abandonnées. {undo} permet de revenir en arrière. | à valider (tekuxwriter) | Corps ; `{undo}` = libellé de la touche Annuler |
+| `project.newConfirm` | Nouveau projet | à valider (tekuxwriter) | Bouton principal |
+| `project.newEntry` | Nouveau projet | à valider (tekuxwriter) | Libellé de l'entrée d'historique (« Nouveau » est annulable) |
+| `project.openTitle` | Ouvrir un projet | à valider (tekuxwriter) | Titre du dialogue « Ouvrir… » |
+| `project.openHint` | Flèches ou Tab pour parcourir, Entrée pour ouvrir. | à valider (tekuxwriter) | Sous le titre (description de la liste) |
+| `project.openEmpty` | Aucun projet enregistré pour l’instant. | à valider (tekuxwriter) | Liste vide |
+| `project.openItem` | {name}, enregistré le {date} | à valider (tekuxwriter) | Nom accessible d'une ligne ; `{date}` = date et heure locales |
+| `project.openEntry` | Ouvrir « {name} » | à valider (tekuxwriter) | Libellé de l'entrée d'historique (ouvrir est annulable) |
+| `project.opened` | Projet « {name} » ouvert. {undo} pour revenir en arrière. | à valider (tekuxwriter) | Barre d'état (annoncé) |
+| `project.openFailed` | « {name} » n’a pas pu être ouvert. Rien n’a changé. | à valider (tekuxwriter) | Barre d'état : projet illisible ou refusé |
 
 ## Glossaire
 

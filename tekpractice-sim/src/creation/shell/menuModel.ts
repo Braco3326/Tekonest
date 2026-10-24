@@ -57,7 +57,11 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
   }
   const places = ctx.places ?? []
   return [
-    { id: 'projet', label: M.projet!, items: [undo, redo, act('save', M.save!)] },
+    {
+      id: 'projet',
+      label: M.projet!,
+      items: [act('new', M.newProject!), act('open', M.open!), act('save', M.save!), act('save-as', M.saveAs!), undo, redo],
+    },
     {
       id: 'lieu',
       label: M.lieu!,

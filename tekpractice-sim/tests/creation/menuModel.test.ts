@@ -70,6 +70,21 @@ describe('menu model (Task 7)', () => {
     item.run()
     expect(picked).toBe('blank')
   })
+  it('Projet: Nouveau · Ouvrir… · Enregistrer · Enregistrer sous… · Annuler · Rétablir (Task 13), Enregistrer shows the save key', () => {
+    const menus = buildMenus(ctx({ bindingLabel: (a) => ({ save: 'Ctrl+S' })[a] }))
+    const projet = menus.find((m) => m.id === 'projet')!
+    expect(projet.items.map((i) => i.id)).toEqual(['new', 'open', 'save', 'save-as', 'undo', 'redo'])
+    expect(projet.items.map((i) => i.label)).toEqual(['Nouveau', 'Ouvrir…', 'Enregistrer', 'Enregistrer sous…', 'Annuler', 'Rétablir'])
+    expect(find(menus, 'save').shortcut).toBe('Ctrl+S')
+    let ran = ''
+    const live = buildMenus(ctx({ actions: { new: () => (ran += 'n'), open: () => (ran += 'o'), save: () => (ran += 's'), 'save-as': () => (ran += 'a') } }))
+    for (const id of ['new', 'open', 'save', 'save-as']) {
+      expect(find(live, id).enabled()).toBe(true)
+      find(live, id).run()
+    }
+    expect(ran).toBe('nosa')
+  })
+
   it('every item has a non-empty French label, no placeholder, unique ids', () => {
     const items = buildMenus(ctx({ places: [{ key: 'blank', label: 'Salle vide neutre' }] })).flatMap((m) => all(m.items))
     for (const i of items) {

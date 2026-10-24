@@ -40,6 +40,20 @@ import { mountShell } from './shell/layout'
 import { mountMenuBar } from './shell/menuBar'
 import { buildMenus } from './shell/menuModel'
 import { injectCreationTokens } from '../design/creationTokens'
+import {
+  createAutosave,
+  designFingerprint,
+  isDirty,
+  listProjects,
+  loadAutosave,
+  loadProject,
+  readQuarantine,
+  saveProject,
+  setAsideAutosave,
+  type SaveResult,
+} from './persistence'
+import { openNameDialog, openProjectList } from './shell/projectDialogs'
+import { openChoiceDialog } from './shell/placeDialog'
 // Self-hosted fonts (P12, OFL), bundled same-origin.
 import '@fontsource/tektur/600.css'
 import '@fontsource/ibm-plex-sans/400.css'
@@ -84,6 +98,49 @@ export async function bootCreation(): Promise<void> {
     return cards.find((p) => p.key === k)?.title ?? (room ? roomName(room[1]) : k.replace(/^set:/, ''))
   }
   const notes = mountNotes(document, shell.viewport)
+
+  // ── Project (Task 13, C16): per-origin localStorage, name, dirty marker, autosave.
+  let storage: Storage | null = null
+  try {
+    storage = window.localStorage
+  } catch {
+    storage = null // blocked storage: default key map, no autosave, a persistent notice
+  }
+  const PJ = COPY.project!
+  let projectName: string | null = null
+  let savedFp: string | null = null
+  /** Autosave may write: false when storage is blocked or unreadable data could not be set aside. */
+  let autosaveOn = true
+  const dirty = (): boolean => isDirty(store.design(), savedFp)
+  const refreshTitle = (): void => {
+    const d = dirty()
+    document.title = (d ? '* ' : '') + PJ.docTitle!.replace('{name}', projectName ?? PJ.untitledDoc!)
+    shell.title.textContent = (d ? '* ' : '') + (projectName ?? COPY.shell!.untitled!)
+    shell.title.dataset.dirty = String(d)
+    if (d) {
+      const sr = document.createElement('span')
+      sr.className = 'cr-sr-only'
+      sr.textContent = ` (${PJ.dirty})`
+      shell.title.appendChild(sr)
+    }
+  }
+  const blockedNote = (): void => notes.show({ id: 'storage', title: PJ.blockedTitle!, body: PJ.blocked! })
+  const autosave = createAutosave({
+    storage,
+    busy: () => history.inTransaction,
+    snapshot: () => {
+      const design = store.design()
+      if (!autosaveOn || design.roomId === null) return null // nothing worth keeping before a place
+      return { version: 1, savedAt: new Date().toISOString(), name: projectName, design, savedFingerprint: savedFp }
+    },
+    onResult: (r: SaveResult) => {
+      if (r === 'ok') return notes.dismiss('autosave-full')
+      if (r === 'full') {
+        notes.show({ id: 'autosave-full', title: PJ.blockedTitle!, body: PJ.autosaveFull! })
+        shell.setStatus(placeNow(), PJ.autosaveFull!, 'ready', true)
+      } else blockedNote()
+    },
+  })
 
   let canvasShown = false
   const showStatus = (): void => {
@@ -201,6 +258,13 @@ export async function bootCreation(): Promise<void> {
       props.render()
     }
   })
+  // Every rig change: the « * » marker now, the autosave 1 s later (after any open transaction commits).
+  store.subscribe(() => {
+    refreshTitle()
+    autosave.schedule()
+  })
+  history.onChange(() => autosave.schedule()) // a burst's commit
+  refreshTitle()
 
   // Panels fold / unfold and the window resizes: the canvas follows its box.
   const resize = new ResizeObserver(() => {
@@ -302,7 +366,40 @@ export async function bootCreation(): Promise<void> {
     thumbBase: `${import.meta.env.BASE_URL}room-thumbs/`,
     onChoose: (card, mode) => void pick(card, mode),
   })
-  picker.show({ closable: false, focus: false }) // first visit (no autosave yet, C16)
+  /** Boot (C16): reopen the last autosave directly (not undoable, no picker), else the picker; say what happened. */
+  const restore = (): boolean => {
+    const loaded = loadAutosave(storage)
+    if (loaded.status === 'blocked') {
+      autosaveOn = false
+      blockedNote()
+      shell.setStatus('', PJ.blocked!, 'idle', true)
+      return false
+    }
+    if (loaded.status === 'reset') {
+      // The unreadable data is kept in the quarantine; if it could not be, it is never overwritten.
+      autosaveOn = loaded.kept
+      if (loaded.kept) notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
+      else blockedNote()
+      return false
+    }
+    if (loaded.status === 'empty' || loaded.data.design.roomId === null) return false
+    const r = store.dispatch({ type: 'APPLY_DESIGN', design: loaded.data.design })
+    const lost = !r.ok || (r.dropped && Object.values(r.dropped).some((l) => l.length > 0))
+    // What the store could not restore stays in the quarantine, never overwritten by the next autosave.
+    if (lost && !setAsideAutosave(storage, r.ok ? 'dropped' : 'refused')) autosaveOn = false
+    if (!r.ok) {
+      notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
+      return false
+    }
+    projectName = loaded.data.name
+    savedFp = loaded.data.savedFingerprint
+    refreshTitle()
+    showCanvas()
+    showStatus()
+    shell.setStatus(placeNow(), PJ.restored!, 'ready', true)
+    return true
+  }
+  if (!restore()) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
   // While the picker covers the workspace, « Aller à la vue 3D » lands on its highlighted card.
   document.querySelector<HTMLAnchorElement>('[data-testid="skip-link"]')?.addEventListener('click', (e) => {
     if (!picker.isOpen) return
@@ -313,12 +410,6 @@ export async function bootCreation(): Promise<void> {
 
   // ── Keyboard (Task 8, C10, P3): one window listener for the page's lifetime.
   const shellBag = new DisposableBag()
-  let storage: Storage | null = null
-  try {
-    storage = window.localStorage
-  } catch {
-    storage = null // blocked storage: the default key map
-  }
   const keys = mountCreationKeyboard({ bag: shellBag, bindings: loadCreationBindings(storage), canvas })
   const cycle = (dir: 1 | -1): boolean => {
     const next = nextDevice(deviceIds(), viewState.get().selection, dir)
@@ -338,6 +429,103 @@ export async function bootCreation(): Promise<void> {
     props.flush()
     return history.redo()
   })
+  // ── Save / named projects (Task 13, C16).
+  const saveMessage: Record<Exclude<SaveResult, 'ok'>, string> = { full: PJ.saveFull!, blocked: PJ.blocked! }
+  let saving = false
+  /** Ctrl+S / Enregistrer (asks a name the first time) / Enregistrer sous… (always asks). */
+  const save = async (saveAs: boolean): Promise<void> => {
+    if (saving) return
+    saving = true
+    try {
+      props.flush() // a stepper burst still open is part of what is saved
+      if (!canvasShown || store.design().roomId === null) return shell.setStatus(placeNow(), PJ.saveNoPlace!, 'idle', true)
+      let name = projectName
+      if (saveAs || name === null) {
+        name = await openNameDialog({ saveAs, initial: projectName ?? '' })
+        if (name === null) return
+        if (name !== projectName && listProjects(storage).some((p) => p.name === name)) {
+          const ok = await openChoiceDialog<'replace' | 'cancel'>({
+            title: PJ.overwriteTitle!.replace('{name}', name),
+            body: PJ.overwriteBody!,
+            choices: [
+              { id: 'replace', label: PJ.overwrite! },
+              { id: 'cancel', label: PJ.nameCancel! },
+            ],
+            cancel: 'cancel',
+          })
+          if (ok !== 'replace') return
+        }
+      }
+      const design = store.design()
+      const r = saveProject(storage, name, design)
+      if (r !== 'ok') {
+        if (r === 'blocked') blockedNote()
+        return shell.setStatus(placeNow(), saveMessage[r], 'ready', true)
+      }
+      projectName = name
+      savedFp = designFingerprint(design)
+      refreshTitle()
+      autosave.schedule()
+      autosave.flush() // the name and the clean state survive a reload at once
+      shell.setStatus(placeNow(), PJ.saved!.replace('{name}', name), 'ready', true)
+    } finally {
+      saving = false
+    }
+  }
+  // Always taken (preventDefault): Ctrl+S never opens the browser's « save page » dialog in Mode Création.
+  keys.onAction('SAVE', () => {
+    void save(false)
+    return true
+  })
+  /** « Nouveau »: asks when there are unsaved changes; an undoable empty rig, then the picker over the place. */
+  const newProject = async (): Promise<void> => {
+    props.flush()
+    if (dirty()) {
+      const c = await openChoiceDialog<'new' | 'cancel'>({
+        title: PJ.newTitle!,
+        body: PJ.newBody!.replace('{undo}', undoLabel()),
+        choices: [
+          { id: 'new', label: PJ.newConfirm! },
+          { id: 'cancel', label: PJ.nameCancel! },
+        ],
+        cancel: 'cancel',
+      })
+      if (c !== 'new') return
+    }
+    const roomId = store.design().roomId
+    if (roomId !== null) history.do({ type: 'APPLY_DESIGN', design: { roomId, rig: { instances: [], connections: [], controls: {} }, placements: [] } }, PJ.newEntry!)
+    projectName = null
+    savedFp = null
+    refreshTitle()
+    autosave.schedule()
+    picker.show({ closable: canvasShown, focus: true })
+  }
+  /** « Ouvrir… »: the saved list; the chosen project replaces the rig as one undoable snapshot entry (C5). */
+  const openProject = async (): Promise<void> => {
+    props.flush()
+    const name = await openProjectList(listProjects(storage))
+    if (name === null) return
+    const design = loadProject(storage, name)
+    const failed = (): void => shell.setStatus(placeNow(), PJ.openFailed!.replace('{name}', name), 'ready', true)
+    if (!design || design.roomId === null) return failed()
+    const first = store.design().roomId === null
+    const r = history.do({ type: 'APPLY_DESIGN', design }, PJ.openEntry!.replace('{name}', name))
+    if (!r.ok) return failed()
+    if (first) history.clear() // the session starts at its first place (as placeController)
+    projectName = name
+    savedFp = designFingerprint(design) // anything the store dropped shows as « * »
+    refreshTitle()
+    autosave.schedule()
+    showCanvas()
+    shell.setStatus(placeNow(), PJ.opened!.replace('{name}', name).replace('{undo}', undoLabel()), 'ready', true)
+  }
+  // Leaving the page: the pending autosave is written now (never mid-transaction).
+  const leave = (): void => {
+    props.flush()
+    autosave.flush()
+  }
+  shellBag.listen(window, 'beforeunload', leave)
+  shellBag.listen(window, 'pagehide', leave)
   keys.onAction('NEXT_DEVICE', () => cycle(1))
   keys.onAction('PREV_DEVICE', () => cycle(-1))
   keys.onAction('FRAME_SELECTION', () => selection.frameSelection())
@@ -369,6 +557,10 @@ export async function bootCreation(): Promise<void> {
     site: () => location.assign(siteHref),
     // Lieu → « Choisir un lieu… »: the picker over the current place (Fermer / Échap go back).
     'choose-place': () => picker.show({ closable: canvasShown, focus: true }),
+    new: () => void newProject(),
+    open: () => void openProject(),
+    save: () => void save(false),
+    'save-as': () => void save(true),
   }
   mountMenuBar(shell.menus, () =>
     buildMenus({
@@ -416,5 +608,7 @@ export async function bootCreation(): Promise<void> {
     worldScreen: (p) => screen(Vector3.FromArray(p)),
     choosePlace,
     requestPlace,
+    project: () => ({ name: projectName, dirty: dirty() }),
+    quarantine: () => readQuarantine(storage),
   }
 }
