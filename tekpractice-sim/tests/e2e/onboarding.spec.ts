@@ -2,7 +2,7 @@
 import { expect, test } from '@playwright/test'
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/?legacy=1')
   await page.evaluate(() => window.localStorage.clear())
   await page.reload()
 })
@@ -21,7 +21,7 @@ test('declared broadcast fear → dropped straight into B1 (R5 seeded)', async (
   await page.waitForFunction(() => !!window.__audioSim)
   expect(page.url()).toContain('level=b1')
   // back home: onboarding done → dashboard with the exam countdown
-  await page.goto('/')
+  await page.goto('/?legacy=1')
   await expect(page.locator('.db-card')).toBeVisible()
   await expect(page.locator('.db-jday')).toContainText('J−')
 })

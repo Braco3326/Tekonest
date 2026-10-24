@@ -15,7 +15,7 @@ const seedOnboarding = (page: Page, examDate: string | null = null) =>
   }, examDate)
 
 test('home shows the dashboard, not the game', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/?legacy=1')
   await seedOnboarding(page)
   await page.reload()
   await expect(page.locator('.db-card')).toBeVisible()
@@ -25,7 +25,7 @@ test('home shows the dashboard, not the game', async ({ page }) => {
 })
 
 test('fresh learner: R1 never practised → CTA leads to a level exercising it', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('/?legacy=1')
   await page.evaluate(() => window.localStorage.clear())
   await seedOnboarding(page)
   await page.reload()
@@ -49,7 +49,7 @@ test('a win feeds readiness: dashboard reflects it, streak starts, J-day shows',
   await expect(page.locator('#hud-win .win-card')).toBeVisible()
 
   await seedOnboarding(page, '2030-06')
-  await page.goto('/')
+  await page.goto('/?legacy=1')
   await expect(page.locator('.db-streak-n')).toHaveText('1')
   // R1 was exercised once → 50% chip (ratio 1 × coverage ½, ADR-0003)
   await expect(page.locator('.db-rule').first()).toContainText('R1 50%')
