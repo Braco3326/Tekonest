@@ -239,10 +239,14 @@ export class SceneHost {
     this.pending = null
     this.reconcile(latest)
     this.onPlaceShown?.()
+    // Asked for a room / set, showing the blank room instead: tell the learner (non-blocking).
+    if (place.kind !== 'blank' && data.kind === 'blank') this.onFallback?.(placeKey(place))
   }
 
   /** Called when a place finished loading and shows its design (the tree reads its zones). */
   onPlaceShown: (() => void) | null = null
+  /** Called when `placeKey` could not be loaded or built and the blank room is shown instead. */
+  onFallback: ((placeKey: string) => void) | null = null
 
   /**
    * Show `design`. Another place (roomId) → load it; a load in flight → this

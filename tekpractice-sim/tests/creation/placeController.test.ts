@@ -77,6 +77,55 @@ describe('place controller (Task 6 review)', () => {
     expect(store.design().roomId).toBe('room:concert-hall-medium')
     expect(store.design().rig.instances).toHaveLength(1)
   })
+  it('a request made while another is in flight gets a distinct « busy » result (Task 12)', async () => {
+    const { ctrl, hold, release, history } = setup('keep')
+    await ctrl.choosePlace('room:concert-hall-medium')
+    history.do({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 0] })
+    hold()
+    const a = ctrl.requestPlace('blank')
+    expect(await ctrl.requestPlace('room:bar-club-stage-small')).toBe('busy')
+    expect(await ctrl.choosePlace('blank')).toBe('busy')
+    expect(await ctrl.loadDesign('room:bar-club-stage-small', async () => ({ roomId: 'room:bar-club-stage-small', rig: { instances: [], connections: [], controls: {} }, placements: [] }))).toBe('busy')
+    release()
+    expect(await a).toBe('done')
+  })
+  it('results: done, same, cancelled', async () => {
+    const { ctrl, history } = setup('cancel')
+    expect(await ctrl.requestPlace('blank')).toBe('done')
+    expect(await ctrl.requestPlace('blank')).toBe('same')
+    history.do({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 0] })
+    expect(await ctrl.requestPlace('room:concert-hall-medium')).toBe('cancelled')
+  })
+  it('loadDesign applies a whole design (template / room gear): first place not undoable, later ones undoable', async () => {
+    const { store, history, ctrl, confirm } = setup()
+    const design = (roomId: string, n: number) => ({
+      roomId,
+      rig: { instances: Array.from({ length: n }, (_, i) => ({ instanceId: `q${i}`, deviceId: 'yamaha-ql1' })), connections: [], controls: {} },
+      placements: Array.from({ length: n }, (_, i) => ({ instanceId: `q${i}`, deviceId: 'yamaha-ql1', position_m: [i, 0, 0] as [number, number, number], yawDeg: 0 })),
+    })
+    expect(await ctrl.loadDesign('room:concert-hall-medium', async () => design('room:concert-hall-medium', 2))).toBe('done')
+    expect(store.design().rig.instances).toHaveLength(2)
+    expect(history.sizes.undo).toBe(0)
+    expect(await ctrl.loadDesign('blank', async () => design('blank', 1))).toBe('done')
+    expect(confirm).not.toHaveBeenCalled() // an explicit model choice replaces the rig (undoable)
+    expect(history.sizes.undo).toBe(1)
+    history.undo()
+    expect(store.design().rig.instances).toHaveLength(2)
+  })
+  it('loadDesign: a failing build changes nothing and reports « failed »', async () => {
+    const { store, ctrl } = setup()
+    await ctrl.choosePlace('blank')
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    expect(
+      await ctrl.loadDesign('room:concert-hall-medium', async () => {
+        throw new Error('boom')
+      }),
+    ).toBe('failed')
+    warn.mockRestore()
+    expect(store.design().roomId).toBe('blank')
+    // and the guard is released
+    expect(await ctrl.choosePlace('room:concert-hall-medium')).toBe('done')
+  })
   it('the same place again is a no-op', async () => {
     const { history, ctrl, applies } = setup()
     await ctrl.choosePlace('blank')

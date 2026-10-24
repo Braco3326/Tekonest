@@ -8,6 +8,9 @@ export type PlaceRef = { kind: 'room'; id: string } | { kind: 'set'; envId: SetE
 
 export const SET_ENV_IDS: readonly SetEnvId[] = ['plateau', 'radio', 'theatre']
 
+/** « Salle vide neutre »: 24 × 14 m, flat. */
+export const BLANK_SIZE = { width: 24, length: 14 } as const
+
 /** 'room:<id>' | 'set:<envId>' | 'blank'. */
 export const placeKey = (p: PlaceRef): string => (p.kind === 'room' ? `room:${p.id}` : p.kind === 'set' ? `set:${p.envId}` : 'blank')
 

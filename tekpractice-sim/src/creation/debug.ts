@@ -9,6 +9,7 @@ import type { Intent } from '../ui/intents'
 import type { PortRef, TeachingEvent } from '../engine/types'
 import type { DesignState } from '../trials/trial'
 import type { DeviceInstance } from '../scene/DeviceSpawner'
+import type { PlaceResult } from './placeController'
 
 export interface CreationDebug {
   /** Through `history.do` (undoable, as a UI action). */
@@ -45,9 +46,9 @@ export interface CreationDebug {
   portScreen(ref: PortRef): { x: number; y: number } | null
   worldScreen(p: [number, number, number]): { x: number; y: number } | null
   /** Commit a place with an empty rig, no dialog (the picker path when there is no gear). */
-  choosePlace(key: string): Promise<void>
-  /** The user path: the keep / empty dialog when the rig has gear. */
-  requestPlace(key: string): Promise<void>
+  choosePlace(key: string): Promise<PlaceResult>
+  /** The user path: the keep / empty dialog when the rig has gear. 'busy' while another change is in flight. */
+  requestPlace(key: string): Promise<PlaceResult>
 }
 
 declare global {

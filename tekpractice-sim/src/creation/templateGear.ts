@@ -29,3 +29,10 @@ export function designFromRoomGear(room: RoomFileT, registry: Registry): GearSpa
   }
   return { design, unavailable }
 }
+
+/** The note's list (« matériel non disponible dans le jeu »): one line per model, « × n » when repeated, data order. */
+export function unavailableList(unavailable: GearSpawnPlan['unavailable']): string[] {
+  const counts = new Map<string, number>()
+  for (const u of unavailable) counts.set(u.equipmentId, (counts.get(u.equipmentId) ?? 0) + 1)
+  return [...counts].map(([id, n]) => (n > 1 ? `${id} × ${n}` : id))
+}

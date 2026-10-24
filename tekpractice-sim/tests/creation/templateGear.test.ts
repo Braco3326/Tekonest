@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { makeRegistry } from '../helpers'
 import { RoomFile } from '../../src/explore/roomSchema'
-import { designFromRoomGear } from '../../src/creation/templateGear'
+import { designFromRoomGear, unavailableList } from '../../src/creation/templateGear'
 
 const room = (id: string) => RoomFile.parse(JSON.parse(readFileSync(`content/rooms/${id}.json`, 'utf8')))
 
@@ -35,6 +35,12 @@ describe('designFromRoomGear', () => {
       ['behringer-ha400', 'beyerdynamic-dt-770-pro', 'dhd-rx2', 'rtw-touchmonitor-tm7', 'telos-hx2'],
     )
     expect(plan.unavailable[0]).toHaveProperty('zone')
+  })
+
+  it('unavailableList: one line per missing model, repeats counted (« × 2 »), in data order (Task 12 note)', () => {
+    expect(unavailableList(plan.unavailable)).toEqual(['behringer-ha400', 'beyerdynamic-dt-770-pro', 'dhd-rx2', 'rtw-touchmonitor-tm7', 'telos-hx2'])
+    expect(unavailableList([{ equipmentId: 'a', zone: 'z' }, { equipmentId: 'b', zone: 'z' }, { equipmentId: 'a', zone: 'y' }])).toEqual(['a × 2', 'b'])
+    expect(unavailableList([])).toEqual([])
   })
 
   it('a room without gear_positions yields an empty plan', () => {

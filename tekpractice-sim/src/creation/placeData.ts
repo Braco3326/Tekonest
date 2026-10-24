@@ -7,7 +7,9 @@
 import type { RoomLayout } from '../explore/roomLayout'
 import type { RoomFileT } from '../explore/roomSchema'
 import type { EnvironmentT } from '../../tools/schemas'
-import { placeKey, type PlaceRef } from './places'
+import { BLANK_SIZE, placeKey, type PlaceRef } from './places'
+
+export { BLANK_SIZE }
 
 export interface PlaceBounds {
   width: number
@@ -15,15 +17,15 @@ export interface PlaceBounds {
   floorAt(x: number, z: number): number
 }
 
-export type PlaceData =
+/** `fallback`: the place asked for could not be loaded, this is the blank room instead (the shell tells the learner). */
+export type PlaceData = (
   | ({ kind: 'room'; file: RoomFileT; layout: RoomLayout } & PlaceBounds)
   | ({ kind: 'set'; env: EnvironmentT } & PlaceBounds)
   | ({ kind: 'blank' } & PlaceBounds)
+) & { fallback?: true }
 
-/** « Salle vide neutre »: 24 × 14 m, flat. */
-export const BLANK_SIZE = { width: 24, length: 14 } as const
 const flat = (): number => 0
-export const blankData = (): PlaceData => ({ kind: 'blank', ...BLANK_SIZE, floorAt: flat })
+export const blankData = (fallback = false): PlaceData => ({ kind: 'blank', ...BLANK_SIZE, floorAt: flat, ...(fallback ? { fallback: true as const } : {}) })
 
 const roomLoaders = import.meta.glob<{ default: unknown }>('../../content/rooms/*.json')
 const envLoaders = import.meta.glob<{ default: unknown }>('../../content/environments/*.json')
@@ -50,6 +52,7 @@ export async function loadPlaceData(place: PlaceRef): Promise<PlaceData> {
     }
   } catch (e) {
     console.warn(`[creation] lieu ${placeKey(place)} indisponible, salle vide neutre`, e instanceof Error ? e.message : e)
+    return blankData(true)
   }
   return blankData()
 }

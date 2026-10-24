@@ -252,7 +252,10 @@ describe('SceneHost', () => {
   it('a room that throws while building: half-built scene disposed, blank fallback (warned), later apply() draws', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
     const { engine, host } = makeHost()
+    const fallbacks: string[] = []
+    host.onFallback = (key) => fallbacks.push(key)
     await host.load(placeFromKey('blank'), emptyIn('blank'))
+    expect(fallbacks).toEqual([]) // the blank room itself is not a fallback
     roomBoom.on = true
     try {
       await host.load(placeFromKey('room:concert-hall-medium'), emptyIn('room:concert-hall-medium'))
@@ -264,6 +267,7 @@ describe('SceneHost', () => {
     expect(host.scene!.activeCamera).toBe(host.camera)
     expect(host.place).toEqual({ kind: 'room', id: 'concert-hall-medium' })
     expect(warn).toHaveBeenCalled()
+    expect(fallbacks).toEqual(['room:concert-hall-medium']) // the learner is told, not only the console (Task 12)
     host.apply(rig('room:concert-hall-medium'))
     expect(host.instance('ql1')).toBeDefined()
     expect(cableMeshes(host)).toBe(1)
