@@ -9,6 +9,7 @@
 import { ArcRotateCamera, Scene, Vector3 } from '@babylonjs/core'
 import type { CameraDirector, CameraPose, CameraRig, FrameTarget } from './CameraRig'
 import { ENSEMBLE_LOWER_RADIUS, ORBIT_FEEL } from '../camera/orbitFeel'
+import { motionEnabled, TOKENS } from '../design/tokens'
 
 /** What the director needs from the walking camera (ExploreController). */
 export interface Walker {
@@ -60,8 +61,7 @@ export class ViewDirector implements CameraDirector {
       // Arc limits must not snap the parked pose (the walker can be far / low,
       // or look UP at gear on a stand: beta past the orbit feel's floor guard).
       this.arc.lowerRadiusLimit = 0.05
-      this.arc.lowerBetaLimit = 0.01
-      this.arc.upperBetaLimit = Math.PI - 0.01
+      this.relaxBetaLimits()
       this.arc.alpha = pose.alpha
       this.arc.beta = pose.beta
       this.arc.radius = pose.radius
@@ -72,6 +72,33 @@ export class ViewDirector implements CameraDirector {
       this.fromExplore = true
     }
     this.rig.flyToDevice(frame)
+    if (this.fromExplore) {
+      // Parking needed relaxed beta limits; once the focus flight has landed
+      // (FOCUS_BETA is inside the guard) the orbit must not dip under the floor.
+      this.clearBetaTimer()
+      const ms = motionEnabled() ? TOKENS.focus.flyMs : 0
+      this.betaTimer = setTimeout(() => {
+        this.betaTimer = null
+        this.restoreBetaLimits()
+      }, ms + 20)
+    }
+  }
+
+  private betaTimer: ReturnType<typeof setTimeout> | null = null
+
+  private clearBetaTimer(): void {
+    if (this.betaTimer) clearTimeout(this.betaTimer)
+    this.betaTimer = null
+  }
+
+  private restoreBetaLimits(): void {
+    this.arc.lowerBetaLimit = ORBIT_FEEL.lowerBetaLimit
+    this.arc.upperBetaLimit = ORBIT_FEEL.upperBetaLimit
+  }
+
+  private relaxBetaLimits(): void {
+    this.arc.lowerBetaLimit = 0.01
+    this.arc.upperBetaLimit = Math.PI - 0.01
   }
 
   /**
@@ -92,14 +119,17 @@ export class ViewDirector implements CameraDirector {
       this.rig.flyToEnsemble()
       return
     }
+    // The walker's eye may sit outside the floor guard (crouched, looking up):
+    // relax it again so the return flight lands exactly on the eye.
+    this.clearBetaTimer()
+    this.relaxBetaLimits()
     const ms = this.rig.flyToPose(poseFromEye(this.walker.eyePosition(), this.walker.lookPoint()))
     this.fromExplore = false
     const handBack = (): void => {
       this.returnTimer = null
       // Hand back to orbit with the designer feel's limits (Task 3).
       this.arc.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
-      this.arc.lowerBetaLimit = ORBIT_FEEL.lowerBetaLimit
-      this.arc.upperBetaLimit = ORBIT_FEEL.upperBetaLimit
+      this.restoreBetaLimits()
       // The learner may have switched to Orbit (V) during the flight: then the
       // orbit camera keeps control and the walker stays parked (review #4).
       if (!this.walker.exploreView) return
