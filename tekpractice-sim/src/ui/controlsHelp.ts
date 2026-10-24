@@ -52,8 +52,15 @@ export interface HelpRow {
   keys: string[]
 }
 
-export function controlsHelp(b: Bindings, layout: Layout, layoutMap?: ReadonlyMap<string, string>): HelpRow[] {
-  return ACTIONS.map((a) => ({
+export { ESSAIS_ACTIONS } from '../input/actions'
+
+export function controlsHelp(
+  b: Bindings,
+  layout: Layout,
+  layoutMap?: ReadonlyMap<string, string>,
+  hidden: readonly Action[] = [],
+): HelpRow[] {
+  return ACTIONS.filter((a) => !hidden.includes(a)).map((a) => ({
     action: a,
     label: ACTION_LABELS[a].fr,
     english: ACTION_LABELS[a].en,

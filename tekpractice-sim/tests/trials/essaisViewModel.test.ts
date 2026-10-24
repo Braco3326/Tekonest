@@ -15,6 +15,7 @@ import {
   nextTrialName,
   orbitView,
   writeFailure,
+  year1Overflow,
   YEAR1_MAX,
 } from '../../src/trials/essaisViewModel'
 import { ORBIT_FEEL } from '../../src/camera/orbitFeel'
@@ -189,6 +190,27 @@ describe('freezeDecision', () => {
   })
 })
 
+describe('1st year with more than 3 Essais (switched from 2nd year)', () => {
+  it('lists only the 3 most recent and says how many are kept out of the list', async () => {
+    const ts = [
+      await trial('t1', 'A', at(10, 1)),
+      await trial('t2', 'B', at(10, 2)),
+      await trial('t3', 'C', at(10, 3)),
+      await trial('t4', 'D', at(10, 4)),
+      await trial('t5', 'E', at(10, 5)),
+    ]
+    const rows = essaisRows(ts, { year: 1, displayedId: null, selectedId: null })
+    expect(rows.map((r) => r.name)).toEqual(['C', 'D', 'E'])
+    expect(year1Overflow(5, 1)).toEqual({
+      title: 'Vous avez 5 essais.',
+      body: 'En première année, on garde 3 essais au maximum. Supprimez-en un ou exportez-les, puis figez à nouveau. La liste montre les 3 derniers.',
+    })
+    expect(year1Overflow(3, 1)).toBeNull()
+    expect(year1Overflow(5, 2)).toBeNull()
+    expect(essaisRows(ts, { year: 2, displayedId: null, selectedId: null })).toHaveLength(5)
+  })
+})
+
 describe('limitCounter', () => {
   it('1st year shows "{n} essai(s) sur 3"; 2nd year shows nothing', () => {
     expect(limitCounter(1, 1)).toBe('1 essai sur 3')
@@ -243,6 +265,16 @@ describe('compareView', () => {
     expect(v.predictionB).toBe('plus d’erreur')
     expect(v.manual).toBe("Relisez votre prédiction : s'est-elle vérifiée ?")
     expect(JSON.stringify(v)).not.toMatch(/dB|\d+(,\d+)? ?ms/)
+  })
+
+  it('shows the room display name, never the raw id (unknown id → the id)', async () => {
+    const a = await trial('ta', 'A', NOW)
+    const d = design()
+    d.roomId = 'autre'
+    const b = await createTrial(input({ name: 'B', design: d }), NOW, 'tb')
+    const names: Record<string, string> = { 'salle-polyvalente': 'Salle polyvalente' }
+    const v = compareView(a, b, (id) => id, (id) => names[id] ?? id)
+    expect(v.rows[0]).toEqual({ label: 'Salle', a: 'Salle polyvalente', b: 'autre', delta: 'Changé' })
   })
 
   it('wiring and room changes show as Changé', async () => {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { ACTIONS } from '../../src/input/actions'
 import { DEFAULT_BINDINGS, rebind } from '../../src/input/bindings'
-import { ACTION_LABELS, controlsHelp, MOUSE_HELP, ORBIT_HELP } from '../../src/ui/controlsHelp'
+import { ACTION_LABELS, controlsHelp, ESSAIS_ACTIONS, MOUSE_HELP, ORBIT_HELP } from '../../src/ui/controlsHelp'
 
 describe('controls help (FR first)', () => {
   it('has a French label for every action', () => {
@@ -15,6 +15,15 @@ describe('controls help (FR first)', () => {
     expect(fwd.label).toBe('Avancer')
     expect(rows.find((r) => r.action === 'MOVE_DOWN')!.keys).toEqual(['A'])
     expect(rows.find((r) => r.action === 'TOGGLE_INVENTORY')!.keys).toEqual(['Espace'])
+  })
+
+  it('Essais keys: listed with the panel (G / B), hidden where there is none', () => {
+    const all = controlsHelp(DEFAULT_BINDINGS, 'azerty')
+    expect(all.find((r) => r.action === 'FREEZE_ESSAI')!.keys).toEqual(['G'])
+    expect(all.find((r) => r.action === 'COMPARE_FLIP')!.label).toBe('Comparer : alterner A et B')
+    const exam = controlsHelp(DEFAULT_BINDINGS, 'azerty', undefined, ESSAIS_ACTIONS)
+    expect(exam.some((r) => ESSAIS_ACTIONS.includes(r.action))).toBe(false)
+    expect(exam).toHaveLength(all.length - 2)
   })
 
   it('reflects remapped keys', () => {

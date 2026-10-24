@@ -55,4 +55,7 @@ export const MOVEMENT_ACTIONS: readonly Action[] = [
   'MOVE_UP',
 ]
 
+/** Essais keys: only meaningful where the Essais panel exists (sandbox, levels that declare it). */
+export const ESSAIS_ACTIONS: readonly Action[] = ['FREEZE_ESSAI', 'COMPARE_FLIP']
+
 export const isAction = (v: unknown): v is Action => (ACTIONS as readonly unknown[]).includes(v)

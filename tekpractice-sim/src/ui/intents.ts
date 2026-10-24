@@ -18,5 +18,18 @@ export type Intent =
   | { type: 'REMOVE'; instanceId: string }
   /** Sandbox (ADR-0005): rebuild a saved rig — clear stage, respawn, rewire. */
   | { type: 'LOAD_RIG'; name: string }
+  /**
+   * Sandbox (ADR-0010 Décision 8): undo a pick-up — the same instance comes
+   * back where it stood, with its cables and controls. An intent like any
+   * other, so a read-only Essais compare refuses it (Task 14 review).
+   */
+  | {
+      type: 'RESTORE_INSTANCE'
+      instanceId: string
+      deviceId: string
+      pose: { position: [number, number, number]; rotationY: number }
+      wires: { a: PortRef; b: PortRef }[]
+      controls: Record<string, ControlValue>
+    }
 
 export type IntentDispatcher = (intent: Intent) => void

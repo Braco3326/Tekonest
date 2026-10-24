@@ -197,7 +197,8 @@ export function essaisRows(
     hasChildren: (children.get(t.id)?.length ?? 0) > 0,
     multiChange: changeCount(t, t.parentId ? (byId.get(t.parentId) ?? null) : null) > 1,
   })
-  if (o.year === 1) return [...trials].sort(byFrozen).map((t) => row(t, 0))
+  // 1st year: at most 3 rows, the most recent (more exist after a switch from 2nd year: see year1Overflow).
+  if (o.year === 1) return [...trials].sort(byFrozen).slice(-YEAR1_MAX).map((t) => row(t, 0))
   const out: EssaisRow[] = []
   const seen = new Set<string>()
   const walk = (parent: string | null, depth: number): void => {
@@ -242,6 +243,15 @@ export function caption(o: { displayed: Trial | null; state: LiveState; comparin
   if (!o.displayed || o.state === 'none') return `Affiché : Montage actuel${sep}pas encore figé` // caption.none (à valider)
   if (o.state === 'fresh') return `Affiché : Essai ${o.displayed.name}${sep}Montage actuel : à jour` // caption.displayed + caption.current.fresh
   return `Affiché : Essai ${o.displayed.name}${sep}Résultat à refaire${sep}Montage actuel : modifié` // + stale.label + caption.current.modified
+}
+
+/** 1st year with more Essais than the limit (the learner switched from 2nd year): nothing is deleted, the list is capped. */
+export function year1Overflow(n: number, year: Year): { title: string; body: string } | null {
+  if (year !== 1 || n <= YEAR1_MAX) return null
+  return {
+    title: `Vous avez ${n} essais.`, // limit.over.title (à valider)
+    body: `${COPY.limitBody} La liste montre les ${YEAR1_MAX} derniers.`, // limit.reached.body + limit.over.hidden (à valider)
+  }
 }
 
 export function limitCounter(n: number, year: Year): string | null {
@@ -299,11 +309,16 @@ export interface CompareView {
   manual: string
 }
 
-export function compareView(a: Trial, b: Trial, ruleTitle: (ruleId: string) => string): CompareView {
+export function compareView(
+  a: Trial,
+  b: Trial,
+  ruleTitle: (ruleId: string) => string,
+  roomName: (roomId: string) => string = (id) => id,
+): CompareView {
   const c = compareTrials(a, b)
   const has = (prefix: string): boolean => c.changed.some((k) => k.startsWith(prefix))
   const delta = (changed: boolean): CompareRow['delta'] => (changed ? 'Changé' : 'Identique') // compare.row.changed / .same
-  const room = (t: Trial): string => t.design.roomId ?? 'sans salle' // compare.room.none (à valider)
+  const room = (t: Trial): string => (t.design.roomId === null ? 'sans salle' : roomName(t.design.roomId)) // compare.room.none (à valider)
   const devices = (t: Trial): string => plural(t.design.rig.instances.length, 'appareil', 'appareils') // (à valider)
   const cables = (t: Trial): string => plural(t.design.rig.connections.length, 'câble', 'câbles') // (à valider)
   const controls = (t: Trial): string =>
