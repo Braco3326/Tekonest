@@ -28,7 +28,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusLoading: 'Chargement du lieu…',
     statusReady: 'Prêt',
     siteBack: 'Retour au site Tekonest',
-    siteBackShort: 'tekonest.com',
+    /** Product name in the top bar (brand, not translated). */
+    brand: 'TekPractice',
   },
   menu: {
     projet: 'Projet',

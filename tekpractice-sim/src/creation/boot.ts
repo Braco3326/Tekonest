@@ -3,7 +3,8 @@
  * view state and the SceneHost (the page's only Babylon Engine). The scene is
  * reconciled from the store on every change; a place change is an undoable
  * APPLY_DESIGN (C5 snapshot entry) and never reloads the page.
- * Legacy tokens are not injected (the shell has its own, Task 7).
+ * Legacy tokens are not injected: the shell has its own (`--cr-*`, Task 7)
+ * and its own layout (menubar, Projet, viewport, Propriétés, status bar).
  */
 import catalogJson from '../../content/catalog.json'
 import roomIndexJson from '../../content/rooms/index.json'
@@ -17,17 +18,27 @@ import { History } from './history'
 import { ViewState } from './viewState'
 import { RenderScheduler, renderSceneOnce } from './renderScheduler'
 import { SceneHost } from './sceneHost'
-import { placeKey } from './places'
+import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
 import { createPlaceController } from './placeController'
 import { bodyCentreOf } from './debug'
 import { mountPlacePickerStub } from './shell/placePickerStub'
 import { openPlaceDialog } from './shell/placeDialog'
+import { mountShell } from './shell/layout'
+import { mountMenuBar } from './shell/menuBar'
+import { buildMenus } from './shell/menuModel'
+import { injectCreationTokens } from '../design/creationTokens'
+// Self-hosted fonts (P12, OFL), bundled same-origin.
+import '@fontsource/tektur/600.css'
+import '@fontsource/ibm-plex-sans/400.css'
+import '@fontsource/ibm-plex-sans/500.css'
 
 const roomName = (id: string): string => (roomIndexJson as { rooms: { id: string; name_fr: string }[] }).rooms.find((r) => r.id === id)?.name_fr ?? id
 
 export async function bootCreation(): Promise<void> {
+  injectCreationTokens()
   const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
+  const shell = mountShell(document, canvas)
   canvas.style.display = 'none' // shown once a place is chosen
 
   const registry = loadCatalog(catalogJson)
@@ -47,18 +58,46 @@ export async function bootCreation(): Promise<void> {
     activeCamera: () => host.scene?.activeCamera ?? null,
   })
   host = new SceneHost(canvas, registry, scheduler)
+  // Temporary until Task 12: three hard-coded places.
+  const places = [
+    { key: 'room:concert-hall-medium', label: roomName('concert-hall-medium') },
+    { key: 'room:bar-club-stage-small', label: roomName('bar-club-stage-small') },
+    { key: 'blank', label: COPY.picker!.blank! },
+  ]
+  const placeLabel = (key: string | null): string => {
+    const k = placeKey(placeFromKey(key))
+    const room = /^room:(.+)$/.exec(k)
+    return places.find((p) => p.key === k)?.label ?? (room ? roomName(room[1]) : k.replace(/^set:/, ''))
+  }
+
+  let canvasShown = false
+  const showStatus = (): void => {
+    if (!canvasShown) return shell.setStatus('', COPY.shell!.statusNoPlace!)
+    const label = placeLabel(store.design().roomId)
+    shell.setStatus(label, COPY.shell!.statusReady!, 'ready')
+    shell.setTreePlace(label)
+  }
   store.subscribe(() => {
     host.apply(store.design())
     scheduler.invalidate()
+    showStatus()
   })
 
-  let canvasShown = false
+  // Panels fold / unfold and the window resizes: the canvas follows its box.
+  const resize = new ResizeObserver(() => {
+    host.engine.resize()
+    scheduler.invalidate()
+  })
+  resize.observe(shell.viewport)
+
   const showCanvas = (): void => {
     if (canvasShown) return
     canvasShown = true
     canvas.style.display = ''
     host.engine.resize()
-    picker.compact()
+    const fromPicker = shell.viewport.contains(document.activeElement)
+    picker.hide()
+    if (fromPicker) canvas.focus() // the focused picker button just disappeared
   }
 
   const { choosePlace, requestPlace } = createPlaceController({
@@ -70,14 +109,30 @@ export async function bootCreation(): Promise<void> {
     label: COPY.place!.dialogTitle!,
   })
 
-  // Temporary until Task 12: three hard-coded places.
-  const picker = mountPlacePickerStub(
-    [
-      { key: 'room:concert-hall-medium', label: roomName('concert-hall-medium') },
-      { key: 'room:bar-club-stage-small', label: roomName('bar-club-stage-small') },
-      { key: 'blank', label: COPY.picker!.blank! },
-    ],
-    (key) => void requestPlace(key).catch((e: unknown) => console.error('[creation] place change failed', e)),
+  const pick = (key: string): void => {
+    shell.setStatus(canvasShown ? placeLabel(store.design().roomId) : '', COPY.shell!.statusLoading!, 'busy')
+    requestPlace(key).then(showStatus, (e: unknown) => {
+      console.error('[creation] place change failed', e)
+      showStatus()
+    })
+  }
+  const picker = mountPlacePickerStub(places, pick, shell.viewport)
+
+  // Menus: an item is live once its action is registered (features land task by task).
+  const siteHref = (document.getElementById('site-link') as HTMLAnchorElement | null)?.href ?? '/'
+  const actions: Record<string, () => void> = {
+    'panel-tree': () => shell.setPanel('tree'),
+    'panel-props': () => shell.setPanel('props'),
+    site: () => location.assign(siteHref),
+  }
+  for (const p of places) actions[`place:${p.key}`] = () => pick(p.key)
+  mountMenuBar(shell.menus, () =>
+    buildMenus({
+      history,
+      actions,
+      bindingLabel: () => undefined, // key map lands in Task 8
+      places,
+    }),
   )
 
   const screen = (world: Vector3 | null): { x: number; y: number } | null => {

@@ -20,9 +20,12 @@
     "@anthropic-ai/sdk": "^0.112.1",
     "@babylonjs/core": "^7.0.0",
     "@babylonjs/loaders": "^7.0.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/tektur": "^5.3.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@gltf-transform/core": "^4.4.1",
     "@gltf-transform/extensions": "^4.4.1",
     "@gltf-transform/functions": "^4.4.1",

@@ -1,0 +1,292 @@
+/*
+ * Mode Création shell (Task 7). Layout inspired by pro acoustic-design tools:
+ * top menu, left project tree, big 3D viewport, right properties, status bar.
+ * Every value is a --cr-* token (src/design/creationTokens.ts). Square corners
+ * everywhere. No transitions: collapsing a panel is a cut (reduced motion safe).
+ */
+
+/* The shell owns the whole window; legacy surfaces stay in the DOM, unseen. */
+html.cr-mode body { background: var(--cr-nuit); }
+html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: none !important; }
+
+.cr {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-rows: var(--cr-menubar-h) minmax(0, 1fr) var(--cr-status-h);
+  grid-template-columns: var(--cr-tree-w, 200px) minmax(0, 1fr) var(--cr-props-w, 260px);
+  grid-template-areas:
+    'menu menu menu'
+    'tree view props'
+    'status status status';
+  background: var(--cr-nuit);
+  color: var(--cr-papier);
+  font: 400 13px/1.4 var(--cr-font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+.cr[data-tree='collapsed'] { --cr-tree-w: var(--cr-rail-w); }
+.cr[data-props='collapsed'] { --cr-props-w: var(--cr-rail-w); }
+
+/* Square corners, focused or not (beats the legacy `a:focus-visible { border-radius }`). */
+.cr *, .cr *:focus-visible, .cr-skip, .cr-skip:focus-visible { border-radius: 0 !important; }
+
+.cr :focus-visible, .cr-skip:focus-visible {
+  outline: 2px solid var(--cr-ambre);
+  outline-offset: 1px;
+  box-shadow: 0 0 0 3px var(--cr-nuit);
+}
+
+.cr button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.cr h2 { margin: 0; }
+
+/* ── skip link (C10) ─────────────────────────────────────────────────── */
+.cr-skip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  padding: 6px 12px;
+  background: var(--cr-ambre);
+  color: var(--cr-nuit);
+  font: 500 13px/20px var(--cr-font-ui);
+  text-decoration: none;
+  transform: translateY(-100%);
+}
+.cr-skip:focus { transform: none; }
+
+/* ── menubar ─────────────────────────────────────────────────────────── */
+.cr-menubar {
+  grid-area: menu;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  padding: 0 0 0 12px;
+  background: var(--cr-panel);
+  border-bottom: 1px solid var(--cr-panel-line);
+  min-width: 0;
+  position: relative;
+  z-index: 3;
+}
+.cr-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 8px;
+  font: 600 13px/1 var(--cr-font-title);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.cr-brand::before { content: ''; width: 8px; height: 8px; background: var(--cr-ambre); }
+.cr-menus { display: flex; align-items: stretch; }
+.cr-menu { position: relative; display: flex; }
+.cr-menu-top {
+  padding: 0 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.cr-menu-top:hover { background: var(--cr-nuit); }
+.cr-menu-top[aria-expanded='true'] { background: var(--cr-nuit); border-bottom-color: var(--cr-ambre); color: var(--cr-ambre); }
+.cr-menu-top:focus-visible { outline-offset: -3px; box-shadow: none; }
+
+.cr-menu-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 30;
+  min-width: 232px;
+  padding: 4px 0;
+  background: var(--cr-panel);
+  border: 1px solid var(--cr-panel-line);
+  border-top: 2px solid var(--cr-ambre);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+.cr-menu-panel[hidden] { display: none; }
+.cr-menu-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 28px;
+  padding: 4px 12px;
+  text-align: left;
+}
+.cr-menu-item:hover, .cr-menu-item:focus { background: var(--cr-nuit); color: var(--cr-ambre); outline: none; }
+.cr-menu-item:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -2px; box-shadow: none; }
+/* disabled: muted, never Ambre (focus still shows the ring for keyboard users) */
+.cr-menu-item[aria-disabled='true'],
+.cr-menu-item[aria-disabled='true']:hover,
+.cr-menu-item[aria-disabled='true']:focus { color: var(--cr-ink-muted); cursor: default; }
+.cr-shortcut { color: var(--cr-ink-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.cr-menu-item:hover .cr-shortcut, .cr-menu-item:focus .cr-shortcut { color: inherit; }
+
+.cr-title {
+  flex: 1 1 auto;
+  align-self: center;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  font: 600 13px/1 var(--cr-font-title);
+  letter-spacing: 0.03em;
+}
+
+/* the legacy #site-link, moved into the top bar under the creation route */
+.cr-menubar #site-link {
+  position: static;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  font: 500 12px/1 var(--cr-font-ui);
+  color: var(--cr-ink-muted);
+  background: none;
+  border: 0;
+  border-left: 1px solid var(--cr-panel-line);
+  box-shadow: none;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.cr-menubar #site-link:hover { color: var(--cr-papier); background: var(--cr-nuit); }
+.cr-menubar #site-link:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -3px; box-shadow: none; }
+
+/* Narrow windows / 200 % zoom (WCAG 1.4.10): the menus and the way back stay reachable. */
+@media (max-width: 1000px) {
+  .cr-brand { display: none; }
+  .cr-title { visibility: hidden; }
+}
+@media (max-width: 760px) {
+  .cr-menu-top { padding: 0 6px; }
+  .cr-site-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+
+/* ── side panels ─────────────────────────────────────────────────────── */
+.cr-tree, .cr-props {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--cr-panel);
+}
+.cr-tree { grid-area: tree; border-right: 1px solid var(--cr-panel-line); }
+.cr-props { grid-area: props; border-left: 1px solid var(--cr-panel-line); }
+
+.cr-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  flex: 0 0 auto;
+  padding-left: 12px;
+  border-bottom: 1px solid var(--cr-panel-line);
+}
+.cr-props .cr-panel-head { flex-direction: row-reverse; padding: 0 12px 0 0; }
+.cr-panel-title {
+  font: 600 11px/1 var(--cr-font-title);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cr-ink-muted);
+}
+.cr-collapse {
+  width: 32px;
+  height: 31px;
+  flex: 0 0 32px;
+  display: grid;
+  place-items: center;
+  color: var(--cr-ink-muted);
+}
+.cr-collapse:hover { color: var(--cr-ambre); background: var(--cr-nuit); }
+.cr-collapse:focus-visible { outline-offset: -3px; box-shadow: none; }
+.cr-collapse svg { width: 12px; height: 12px; }
+.cr-panel-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 8px 0; }
+
+/* collapsed = a 32 px rail with its expand button and a vertical name */
+.cr[data-tree='collapsed'] .cr-tree .cr-panel-head,
+.cr[data-props='collapsed'] .cr-props .cr-panel-head { flex-direction: column-reverse; height: auto; padding: 0; border-bottom: 0; }
+.cr[data-tree='collapsed'] .cr-tree .cr-panel-title,
+.cr[data-props='collapsed'] .cr-props .cr-panel-title { writing-mode: vertical-rl; padding: 12px 0; }
+.cr[data-tree='collapsed'] .cr-tree .cr-panel-body,
+.cr[data-props='collapsed'] .cr-props .cr-panel-body { display: none; }
+
+/* tree rows */
+.cr-tree-group { list-style: none; margin: 0; padding: 0; }
+.cr-tree-label {
+  padding: 8px 12px 4px;
+  font: 600 11px/1 var(--cr-font-title);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cr-ink-muted);
+}
+.cr-tree-row { display: flex; align-items: flex-start; gap: 8px; min-height: 28px; padding: 4px 12px; }
+.cr-tree-row::before { content: ''; flex: 0 0 6px; height: 6px; margin-top: 6px; border: 1px solid var(--cr-ink-muted); }
+.cr-tree-row[data-active='true']::before { background: var(--cr-ambre); border-color: var(--cr-ambre); }
+.cr-empty { padding: 4px 12px; color: var(--cr-ink-muted); }
+
+/* ── viewport ────────────────────────────────────────────────────────── */
+.cr-viewport {
+  grid-area: view;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--cr-nuit);
+}
+.cr-viewport:focus { outline: none; }
+.cr #renderCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+.cr #renderCanvas:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
+
+/* temporary place picker (Task 12 replaces it): inside the viewport until a place is chosen */
+.cr-picker {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px;
+  background:
+    linear-gradient(var(--cr-panel-line) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(90deg, var(--cr-panel-line) 1px, transparent 1px) 0 0 / 48px 48px,
+    var(--cr-nuit);
+}
+.cr-picker[hidden] { display: none; }
+.cr-picker h1 { margin: 0; font: 600 28px/1.1 var(--cr-font-title); letter-spacing: 0.02em; }
+.cr-picker nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.cr-picker button {
+  padding: 10px 16px;
+  background: var(--cr-nuit);
+  border: 1px solid var(--cr-ambre);
+  font-weight: 500;
+}
+.cr-picker button:hover { background: var(--cr-ambre); color: var(--cr-nuit); }
+
+/* ── status bar ──────────────────────────────────────────────────────── */
+.cr-status {
+  grid-area: status;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 12px;
+  background: var(--cr-panel);
+  border-top: 1px solid var(--cr-panel-line);
+  color: var(--cr-ink-muted);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.cr-status-place { color: var(--cr-papier); font-weight: 500; }
+.cr-status-place:empty { display: none; }
+.cr-status-msg { display: flex; align-items: center; gap: 6px; }
+.cr-status-msg::before { content: ''; width: 6px; height: 6px; background: var(--cr-ink-muted); }
+.cr-status-msg[data-state='ready']::before { background: var(--cr-ok); }
+.cr-status-msg[data-state='busy']::before { background: var(--cr-ambre); }
