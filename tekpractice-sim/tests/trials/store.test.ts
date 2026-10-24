@@ -224,6 +224,23 @@ describe('TrialStore: two tabs on one storage (final review #2)', () => {
     expect(JSON.parse(item.raw)).toMatchObject({ id: 'tr_a', name: 'Nom onglet 1' })
   })
 
+  it('a merge conflict at the quarantine cap returns quarantine-evicted (re-review 2a)', async () => {
+    const s = new MemStorage()
+    const full = Array.from({ length: QUARANTINE_CAP }, (_, i) => ({ at: NOW, raw: `old-${i}`, reason: 'json' }))
+    s.data.set(QUARANTINE_KEY, JSON.stringify({ version: 1, items: full }))
+    const tab1 = new TrialStore(s, { now: () => NOW })
+    await tab1.append(await trialA())
+    const tab2 = new TrialStore(s, { now: () => NOW })
+    await tab2.load()
+    await tab1.rename('tr_a', 'Nom onglet 1')
+    const r = await tab2.rename('tr_a', 'Nom onglet 2')
+    expect(r).toMatchObject({ ok: true })
+    expect(r.ok && r.warnings).toContain('quarantine-evicted')
+    const items = quarantineItems(s)
+    expect(items).toHaveLength(QUARANTINE_CAP)
+    expect(items[items.length - 1].reason).toBe('merge-conflict:tr_a')
+  })
+
   it('a corrupt payload written meanwhile is quarantined, never overwritten away', async () => {
     const s = new MemStorage()
     const tab1 = new TrialStore(s)

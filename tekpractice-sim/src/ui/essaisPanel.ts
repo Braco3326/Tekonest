@@ -313,6 +313,7 @@ export class EssaisPanel {
       this.predictionAt = null
       this.message = null
       if (r.warnings.includes('near-budget')) this.notice = nearBudget(this.store.bytesUsed() / this.store.budget)
+      this.wrote(r.warnings)
       this.host.toast('info', COPY.frozenToast(trial.name))
       this.render()
     } finally {
@@ -408,6 +409,7 @@ export class EssaisPanel {
       this.failed(r.reason)
       return
     }
+    this.wrote(r.warnings)
     this.trials = this.store.list()
     if (this.displayedId === id) this.displayedId = null
     if (this.selectedId === id) this.selectedId = null
@@ -438,12 +440,14 @@ export class EssaisPanel {
   private async archive(ids: string[]): Promise<void> {
     this.confirmFor = null
     let n = 0
+    const warned: StoreWarning[] = []
     for (const id of ids) {
       const r = await this.store.remove(id)
       if (!r.ok) {
         this.failed(r.reason)
         break
       }
+      warned.push(...r.warnings)
       n++
     }
     this.trials = this.store.list()
@@ -451,6 +455,7 @@ export class EssaisPanel {
     if (this.selectedId && !this.find(this.selectedId)) this.selectedId = null
     if (n > 0) {
       this.notice = null
+      this.wrote(warned)
       this.host.toast('info', COPY.archived(n))
     }
     this.render()
@@ -485,10 +490,20 @@ export class EssaisPanel {
         this.failed(w.reason)
         return
       }
+      this.wrote(w.warnings)
       imported++
     }
     this.trials = this.store.list()
     this.say({ kind: 'info', title: importNotice({ imported, duplicates: r.trials.length - fresh.length, rejected: r.rejected }) })
+  }
+
+  /**
+   * A successful write may have merged another tab's list and set a copy aside
+   * (re-review 2a): 'quarantine-evicted' shows the quarantine notice, like on load.
+   */
+  private wrote(warnings: readonly StoreWarning[]): void {
+    if (warnings.includes('quarantine-evicted'))
+      this.notice = loadNotice({ quarantined: true, warnings }, this.store.bytesUsed() / this.store.budget)
   }
 
   private failed(reason: WriteFailure): void {

@@ -348,14 +348,16 @@ export class TrialStore {
    */
   private async mergeWithStored(
     next: readonly Trial[],
-  ): Promise<{ ok: true; trials: readonly Trial[]; raw: string | null } | { ok: false; reason: WriteFailure }> {
+  ): Promise<{ ok: true; trials: readonly Trial[]; raw: string | null; evicted: boolean } | { ok: false; reason: WriteFailure }> {
     let raw: string | null
     try {
       raw = this.storage.getItem(TRIALS_KEY)
     } catch {
       return { ok: false, reason: 'storage' }
     }
-    if (raw === this.lastRaw) return { ok: true, trials: next, raw }
+    if (raw === this.lastRaw) return { ok: true, trials: next, raw, evicted: false }
+    // The 5-item cap may drop the oldest quarantine item here too: reported, like on load (re-review 2a).
+    let evicted = false
     let theirs: readonly Trial[] = []
     if (raw !== null) {
       const c = await this.check(raw)
@@ -365,7 +367,9 @@ export class TrialStore {
       }
       if (c.ok) theirs = c.trials
       else {
-        const { saved } = this.toQuarantine(raw, c.reason)
+        const q = this.toQuarantine(raw, c.reason)
+        const saved = q.saved
+        evicted ||= q.evicted
         // A truncated copy is incomplete: the stored key stays the only full copy.
         if (!saved || raw.length > QUARANTINE_RAW_CAP) {
           this.readOnly = true
@@ -393,17 +397,21 @@ export class TrialStore {
     }
     for (const m of mine.values()) out.push(m) // new here (or removed by the other tab: never dropped)
     for (const t of aside) {
-      if (!this.toQuarantine(JSON.stringify(t), `merge-conflict:${t.id}`).saved) return { ok: false, reason: 'storage' }
+      const q = this.toQuarantine(JSON.stringify(t), `merge-conflict:${t.id}`)
+      if (!q.saved) return { ok: false, reason: 'storage' }
+      evicted ||= q.evicted
     }
-    return { ok: true, trials: out, raw }
+    return { ok: true, trials: out, raw, evicted }
   }
 
   private async commit(proposed: readonly Trial[]): Promise<WriteResult> {
     // The merge awaits (fingerprint checks): the other tab may write again
     // meanwhile. Re-check synchronously right before setItem; merge again if so.
     let merged = await this.mergeWithStored(proposed)
+    let evicted = false
     for (let attempt = 0; ; attempt++) {
       if (!merged.ok) return merged
+      evicted ||= merged.evicted
       let now: string | null
       try {
         now = this.storage.getItem(TRIALS_KEY)
@@ -426,7 +434,8 @@ export class TrialStore {
     this.trials = deepFreeze(next.map((t) => (Object.isFrozen(t) ? t : deepFreeze(cloneData(t) as Trial))))
     this.bytes = json.length
     this.lastRaw = json
-    return { ok: true, warnings: this.budgetWarnings(this.bytesUsed()) }
+    const warnings: StoreWarning[] = evicted ? ['quarantine-evicted'] : []
+    return { ok: true, warnings: [...warnings, ...this.budgetWarnings(this.bytesUsed())] }
   }
 
   private budgetWarnings(bytes: number): StoreWarning[] {
