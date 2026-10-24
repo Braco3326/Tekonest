@@ -47,15 +47,31 @@ export interface DroppedItems {
   devices: string[]
   cables: { a: PortRef; b: PortRef; code: string; message: string }[]
   controls: { instance: string; control: string; code: string; message: string }[]
+  /** Placement entries that are not finite or have an unknown mount (the device still loads, unplaced). */
+  placements: { instance: string; code: string; message: string }[]
 }
 
-export type DispatchResult =
-  | { ok: true; normalized: Intent; inverse: Intent[]; connectionId?: string; dropped?: DroppedItems }
-  | { ok: false; error: { code: string; message: string; ruleId?: string }; subjects: PortRef[] }
+export type DispatchResult = DispatchOk | DispatchFail
+export type DispatchOk = { ok: true; normalized: Intent; inverse: Intent[]; connectionId?: string; dropped?: DroppedItems }
+export type DispatchFail = { ok: false; error: { code: string; message: string; ruleId?: string }; subjects: PortRef[] }
 
+/**
+ * The result of `dispatchAll`: either every intent applied (one notify) with
+ * the inverse of the whole group (last change first), or none did.
+ */
+export type BatchResult =
+  | { ok: true; results: DispatchOk[]; inverse: Intent[] }
+  | { ok: false; index: number; error: DispatchFail['error']; subjects: PortRef[] }
+
+/**
+ * One notification per dispatch or per group. `intent`/`result` are the last
+ * (or only) step; `intents`/`results` list every step, in order.
+ */
 export interface StoreChange {
   intent: Intent
   result: DispatchResult
+  intents: Intent[]
+  results: DispatchResult[]
 }
 
 export type LoadReport = { ok: true; dropped: DroppedItems } | { ok: false; error: { code: string; message: string } }
@@ -70,7 +86,9 @@ const isPortRef = (v: unknown): v is PortRef => isObj(v) && typeof v.instance ==
 
 /**
  * Shape check of untrusted design data (autosave, templates, intents from the
- * shell). Returns why it is unusable, or null. Placements must all be finite.
+ * shell). Returns why it is unusable, or null. Only the overall shape counts:
+ * a placement with bad numbers or an unknown mount is dropped later, one by
+ * one, and reported (`DroppedItems.placements`).
  */
 function designShapeError(d: unknown): string | null {
   if (!isObj(d)) return 'design is not an object'
@@ -84,11 +102,15 @@ function designShapeError(d: unknown): string | null {
   if (!rig.connections.every((c) => isObj(c) && isPortRef(c.a) && isPortRef(c.b))) return 'rig.connections entries need two port refs'
   if (!isObj(rig.controls) || !Object.values(rig.controls).every(isObj)) return 'rig.controls must be an object of objects'
   if (!Array.isArray(d.placements)) return 'design.placements must be an array'
-  for (const p of d.placements) {
+  for (const p of d.placements)
     if (!isObj(p) || typeof p.instanceId !== 'string' || typeof p.deviceId !== 'string') return 'placements need string ids'
-    if (!isFinitePlacement(p)) return `placement of "${p.instanceId}" is not finite`
-    if (p.mount !== undefined && !MOUNTS.includes(p.mount as string)) return `placement of "${p.instanceId}" has an unknown mount`
-  }
+  return null
+}
+
+/** Why one placement entry cannot be used as a pose, or null. */
+function placementError(p: Record<string, unknown>): string | null {
+  if (!isFinitePlacement(p)) return `placement of "${String(p.instanceId)}" is not finite`
+  if (p.mount !== undefined && !MOUNTS.includes(p.mount as string)) return `placement of "${String(p.instanceId)}" has an unknown mount`
   return null
 }
 
@@ -176,28 +198,68 @@ export class CreationStore {
 
   /** Never throws: a rejected or malformed intent is a failed result that changes nothing. */
   dispatch(intent: Intent): DispatchResult {
-    let result: DispatchResult
+    const result = this.applySafe(intent)
+    if (result.ok) this.changed([intent], [result])
+    return result
+  }
+
+  /**
+   * Several intents as ONE transaction (undo/redo of a multi-intent entry,
+   * e.g. the undo of a REMOVE = SPAWN + poses + CONNECTs). Subscribers are
+   * notified once, after the last step, so the scene never shows an
+   * in-between state. If a step fails, the steps already applied are undone
+   * and the store is exactly as before (no revision, no notify). Never throws.
+   */
+  dispatchAll(intents: readonly Intent[]): BatchResult {
+    if (intents.length === 0) return { ok: true, results: [], inverse: [] }
+    const before = this.design()
+    const done: DispatchOk[] = []
+    for (let k = 0; k < intents.length; k++) {
+      const r = this.applySafe(intents[k])
+      if (!r.ok) {
+        this.revert(done, before)
+        return { ok: false, index: k, error: r.error, subjects: r.subjects }
+      }
+      done.push(r)
+    }
+    this.changed([...intents], done)
+    return { ok: true, results: done, inverse: inverseOf(done) }
+  }
+
+  private applySafe(intent: Intent): DispatchResult {
     try {
-      result = this.apply(intent)
+      return this.apply(intent)
     } catch (e) {
       // Defensive: every branch validates before mutating, so this is a bug report, not a path.
       console.error('[creation] dispatch failed', intent, e)
       return fail('INTERNAL', e instanceof Error ? e.message : String(e))
     }
-    if (result.ok) {
-      this.lastEvents = this.evaluator.evaluate(this.graph)
-      this.rev += 1
-      const change: StoreChange = { intent, result }
-      // One throwing subscriber must not starve the others (or the caller).
-      for (const fn of [...this.subs]) {
-        try {
-          fn(change)
-        } catch (e) {
-          console.error('[creation] subscriber failed', e)
-        }
+  }
+
+  /** Undo the applied steps of a failed group, last first; if that ever fails, rebuild `before`. */
+  private revert(done: DispatchOk[], before: DesignState): void {
+    for (const i of inverseOf(done)) {
+      if (this.applySafe(i).ok) continue
+      console.error('[creation] group rollback failed; restoring the design snapshot', i)
+      const built = this.build(before)
+      if (built.ok) this.commit(built)
+      return
+    }
+  }
+
+  /** Re-evaluate the rules, bump the revision and notify every subscriber once. */
+  private changed(intents: Intent[], results: DispatchResult[]): void {
+    this.lastEvents = this.evaluator.evaluate(this.graph)
+    this.rev += 1
+    const change: StoreChange = { intent: intents[intents.length - 1], result: results[results.length - 1], intents, results }
+    // One throwing subscriber must not starve the others (or the caller).
+    for (const fn of [...this.subs]) {
+      try {
+        fn(change)
+      } catch (e) {
+        console.error('[creation] subscriber failed', e)
       }
     }
-    return result
   }
 
   // ── intents ───────────────────────────────────────────────────────────────
@@ -362,10 +424,11 @@ export class CreationStore {
 
   /**
    * Build `design` on a SCRATCH graph without touching the live rig. Fails
-   * (nothing built) on a malformed design, a non-finite placement, or when the
-   * design has devices and none of them exists in the catalog. Otherwise the
-   * unknown devices, and the cables/controls the graph refuses, are reported
-   * in `dropped` (and warned), never silently lost. Never throws.
+   * (nothing built) on a malformed design shape, or when the design has
+   * devices and none of them exists in the catalog. Otherwise the unknown
+   * devices, the cables/controls the graph refuses and the unusable placement
+   * entries are reported in `dropped` (and warned), never silently lost.
+   * Never throws.
    */
   private build(
     design: unknown,
@@ -382,7 +445,7 @@ export class CreationStore {
         return { ok: false, code: 'UNKNOWN_DEVICE', message: `no device of the design exists in the catalog (${unknown.join(', ')})` }
 
       const graph = new ConnectionGraph(this.registry, [])
-      const dropped: DroppedItems = { devices: [], cables: [], controls: [] }
+      const dropped: DroppedItems = { devices: [], cables: [], controls: [], placements: [] }
       const ids: string[] = []
       for (const { instanceId, deviceId } of d.rig.instances) {
         if (graph.addInstance(instanceId, deviceId).ok) ids.push(instanceId)
@@ -397,12 +460,18 @@ export class CreationStore {
           const r = graph.setControl(instance, control, value)
           if (!r.ok) dropped.controls.push({ instance, control, code: r.code, message: r.message })
         }
+      // A bad placement entry is dropped on its own (reported); the device still loads, unplaced.
+      const usable = d.placements.filter((p) => {
+        const why = placementError(p as unknown as Record<string, unknown>)
+        if (why) dropped.placements.push({ instance: p.instanceId, code: 'INVALID_POSE', message: why })
+        return !why
+      })
       const present = new Set(ids)
       const placements = new Map<string, Placement>()
-      for (const p of sanitizePlacements(d))
+      for (const p of sanitizePlacements({ ...d, placements: usable }))
         if (present.has(p.instanceId))
           placements.set(p.instanceId, makePlacement(p.instanceId, p.deviceId, p.position_m, p.yawDeg, p.tiltDeg, p.mount))
-      if (dropped.devices.length || dropped.cables.length || dropped.controls.length)
+      if (dropped.devices.length || dropped.cables.length || dropped.controls.length || dropped.placements.length)
         console.warn('[creation] design loaded with dropped items', dropped)
       return { ok: true, graph, placements, roomId: d.roomId, ids, dropped }
     } catch (e) {
@@ -462,6 +531,9 @@ function makePlacement(
     ...(mount !== undefined && mount !== DEFAULT_MOUNT ? { mount } : {}),
   }
 }
+
+/** The inverse of applied steps: the last change is undone first. */
+const inverseOf = (steps: readonly DispatchOk[]): Intent[] => [...steps].reverse().flatMap((s) => s.inverse)
 
 const poseIntent = (p: Placement): Intent => ({
   type: 'SET_POSE',

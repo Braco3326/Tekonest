@@ -174,7 +174,7 @@ describe('CreationStore review fixes (Task 4 Fix 1)', () => {
     ['rig.instances not an array', { roomId: null, rig: { instances: 3, connections: [], controls: {} }, placements: [] }],
     ['missing placements', { roomId: null, rig: { instances: [], connections: [], controls: {} } }],
     ['null design', null],
-    ['non-finite placement', { roomId: null, rig: { instances: [{ instanceId: 'm2', deviceId: 'shure-sm58' }], connections: [], controls: {} }, placements: [{ instanceId: 'm2', deviceId: 'shure-sm58', position_m: [NaN, 0, 0], yawDeg: 0 }] }],
+    ['placement without string ids', { roomId: null, rig: { instances: [{ instanceId: 'm2', deviceId: 'shure-sm58' }], connections: [], controls: {} }, placements: [{ instanceId: 3, position_m: [0, 0, 0], yawDeg: 0 }] }],
     ['only unknown devices', { roomId: null, rig: { instances: [{ instanceId: 'z', deviceId: 'gone' }], connections: [], controls: {} }, placements: [] }],
   ]
   for (const [name, design] of bad)
@@ -225,7 +225,7 @@ describe('CreationStore review fixes (Task 4 Fix 1)', () => {
   it('a clean APPLY_DESIGN reports nothing dropped', () => {
     const s = store()
     const r = s.dispatch({ type: 'APPLY_DESIGN', design: { roomId: null, rig: { instances: [{ instanceId: 'm', deviceId: 'shure-sm58' }], connections: [], controls: {} }, placements: [] } })
-    expect(r.ok && r.dropped).toEqual({ devices: [], cables: [], controls: [] })
+    expect(r.ok && r.dropped).toEqual({ devices: [], cables: [], controls: [], placements: [] })
   })
   it('an invalid initial design never throws: the store starts empty and says why', () => {
     const r = makeRegistry()
@@ -278,5 +278,123 @@ describe('CreationStore review fixes (Task 4 Fix 1)', () => {
     expect(s.events().map((e) => e.ruleId)).toContain('R4')
     s.dispatch({ type: 'SET_CONTROL', instance: 'p', control: 'phantom-48v', value: true })
     expect(s.events().map((e) => e.ruleId)).not.toContain('R4')
+  })
+})
+
+describe('CreationStore placements are sanitized one by one (Task 5, carried from Task 4 review)', () => {
+  const design = (placements: unknown[]) => ({
+    roomId: null,
+    rig: { instances: [{ instanceId: 'm', deviceId: 'shure-sm58' }, { instanceId: 'x', deviceId: 'axia-iq' }], connections: [], controls: {} },
+    placements,
+  })
+  it('a non-finite placement is dropped and reported; the rest of the design loads', () => {
+    const s = store()
+    const r = s.dispatch({
+      type: 'APPLY_DESIGN',
+      design: design([
+        { instanceId: 'm', deviceId: 'shure-sm58', position_m: [NaN, 0, 0], yawDeg: 0 },
+        { instanceId: 'x', deviceId: 'axia-iq', position_m: [1, 0, 2], yawDeg: 90 },
+      ]) as never,
+    })
+    expect(r.ok).toBe(true)
+    if (!r.ok) return
+    expect(r.dropped?.placements.map((p) => [p.instance, p.code])).toEqual([['m', 'INVALID_POSE']])
+    expect(s.design().rig.instances.map((i) => i.instanceId)).toEqual(['m', 'x'])
+    expect(s.design().placements).toEqual([{ instanceId: 'x', deviceId: 'axia-iq', position_m: [1, 0, 2], yawDeg: 90 }])
+  })
+  it('a placement with an unknown mount is dropped and reported', () => {
+    const s = store()
+    const r = s.dispatch({
+      type: 'APPLY_DESIGN',
+      design: design([
+        { instanceId: 'm', deviceId: 'shure-sm58', position_m: [0, 0, 0], yawDeg: 0, mount: 'ceiling' },
+        { instanceId: 'x', deviceId: 'axia-iq', position_m: [1, 0, 2], yawDeg: 0, mount: 'stand' },
+      ]) as never,
+    })
+    expect(r.ok).toBe(true)
+    if (!r.ok) return
+    expect(r.dropped?.placements.map((p) => p.instance)).toEqual(['m'])
+    expect(s.design().placements.map((p) => [p.instanceId, p.mount])).toEqual([['x', 'stand']])
+  })
+  it('the initial design also drops a bad placement instead of starting empty', () => {
+    const r = makeRegistry()
+    const s = new CreationStore(r, creationEvaluator(r), design([{ instanceId: 'm', deviceId: 'shure-sm58', position_m: [0, Infinity, 0], yawDeg: 0 }]) as never)
+    expect(s.initialLoad.ok && s.initialLoad.dropped.placements.map((p) => p.instance)).toEqual(['m'])
+    expect(s.design().rig.instances).toHaveLength(2)
+  })
+})
+
+describe('CreationStore.dispatchAll: several intents as ONE transaction', () => {
+  const rigged = () => {
+    const s = store()
+    s.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm', position: [1, 0, 2] })
+    s.dispatch({ type: 'SPAWN', deviceId: 'axia-iq', instanceId: 'x', position: [3, 1, -2], rotationY: 40, tiltDeg: -5, mount: 'stand' })
+    s.dispatch({ type: 'SET_CONTROL', instance: 'x', control: 'monitor-mute', value: true })
+    s.dispatch({ type: 'CONNECT', a: { instance: 'm', port: 'out-xlr' }, b: { instance: 'x', port: 'in-mic-1' } })
+    return s
+  }
+  it('the multi-intent undo of a REMOVE notifies once, and subscribers only ever see the final state', () => {
+    const s = rigged()
+    const before = s.design()
+    const rm = s.dispatch({ type: 'REMOVE', instanceId: 'x' })
+    if (!rm.ok) throw new Error('remove failed')
+    expect(rm.inverse.length).toBeGreaterThan(1)
+    const seen: unknown[] = []
+    s.subscribe(() => seen.push(s.design()))
+    const rev = s.revision
+    const r = s.dispatchAll(rm.inverse)
+    expect(r.ok).toBe(true)
+    expect(seen).toEqual([before])
+    expect(s.revision).toBe(rev + 1)
+    expect(s.design()).toEqual(before)
+  })
+  it('the single change carries every intent and result of the group', () => {
+    const s = store()
+    let change: Parameters<Parameters<typeof s.subscribe>[0]>[0] | undefined
+    s.subscribe((c) => (change = c))
+    s.dispatchAll([{ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm' }, { type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'q' }])
+    expect(change?.intents.map((i) => i.type)).toEqual(['SPAWN', 'SPAWN'])
+    expect(change?.results).toHaveLength(2)
+  })
+  it('returns the inverse of the whole group, last change first', () => {
+    const s = store()
+    const r = s.dispatchAll([
+      { type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm' },
+      { type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'q' },
+      { type: 'CONNECT', a: { instance: 'm', port: 'out-xlr' }, b: { instance: 'q', port: 'in-mic-1' } },
+    ])
+    expect(r.ok && r.inverse).toEqual([
+      { type: 'UNPLUG', a: { instance: 'm', port: 'out-xlr' }, b: { instance: 'q', port: 'in-mic-1' } },
+      { type: 'REMOVE', instanceId: 'q' },
+      { type: 'REMOVE', instanceId: 'm' },
+    ])
+  })
+  it('a failing step rolls back the whole group: same design, same connection ids, no revision, no notify', () => {
+    const s = rigged()
+    const before = s.design()
+    const cid = s.connectionAt({ instance: 'm', port: 'out-xlr' })
+    let n = 0
+    s.subscribe(() => n++)
+    const rev = s.revision
+    const r = s.dispatchAll([
+      { type: 'SET_POSE', instanceId: 'x', position: [9, 9, 9], yawDeg: 0, tiltDeg: 0, mount: 'floor' },
+      { type: 'SET_CONTROL', instance: 'x', control: 'monitor-mute', value: false },
+      { type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'q' },
+      { type: 'CONNECT', a: { instance: 'q', port: 'power-in' }, b: { instance: 'x', port: 'in-mic-2' } },
+    ])
+    expect(r.ok).toBe(false)
+    if (!r.ok) expect(r.index).toBe(3)
+    expect(s.design()).toEqual(before)
+    expect(s.connectionAt({ instance: 'm', port: 'out-xlr' })).toBe(cid)
+    expect(s.revision).toBe(rev)
+    expect(n).toBe(0)
+  })
+  it('an empty group is ok and changes nothing', () => {
+    const s = store()
+    let n = 0
+    s.subscribe(() => n++)
+    expect(s.dispatchAll([]).ok).toBe(true)
+    expect(n).toBe(0)
+    expect(s.revision).toBe(0)
   })
 })
