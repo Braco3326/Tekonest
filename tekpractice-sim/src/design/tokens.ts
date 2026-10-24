@@ -43,6 +43,11 @@ const color = {
     cableOk: '#1F9D5B',
     cableBad: '#D93A47',
     contactShadow: 'rgba(20, 24, 32, 0.20)', // soft blob under devices
+
+    // View cube (designer nav, Task 8): night-blue faces, paper labels, amber active face.
+    nuit: '#131114', // faces, drawn at 85 % opacity
+    papier: '#F3EDE3', // labels on nuit (≈ 16:1)
+    ambre: '#DD9349', // active-face outline (7.5:1 on nuit; never colour alone: the label says it too)
 } as const
 
 export const TOKENS = {
@@ -50,6 +55,8 @@ export const TOKENS = {
 
   type: {
     family: "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif",
+    /** View cube labels. No web-font download: IBM Plex Sans when installed, else the system UI font. */
+    familyPlex: "'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif",
     size: { xs: '11px', sm: '12.5px', md: '14px', lg: '16px', xl: '21px' },
     weight: { regular: 450, medium: 550, bold: 650 },
   },
@@ -87,6 +94,7 @@ export function injectTokens(root: HTMLElement = document.documentElement): void
   const set = (k: string, v: string) => root.style.setProperty(k, v)
   for (const [k, v] of Object.entries(TOKENS.color)) set(`--tk-${kebab(k)}`, v)
   set('--tk-font', TOKENS.type.family)
+  set('--tk-font-plex', TOKENS.type.familyPlex)
   for (const [k, v] of Object.entries(TOKENS.type.size)) set(`--tk-text-${k}`, v)
   for (const [k, v] of Object.entries(TOKENS.type.weight)) set(`--tk-weight-${k}`, String(v))
   for (const [k, v] of Object.entries(TOKENS.space)) set(`--tk-space-${k}`, v)

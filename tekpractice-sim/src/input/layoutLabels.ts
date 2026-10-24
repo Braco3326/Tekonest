@@ -38,6 +38,9 @@ export function labelFor(code: string, layout: Layout, layoutMap?: ReadonlyMap<s
     return [...mods, labelFor(code.slice(plus + 1), layout, layoutMap)].join('+')
   }
   if (SPECIAL[code]) return SPECIAL[code]
+  // Numpad keys keep their physical name ("Numpad 1"): the layout map would say "1",
+  // which reads like the Digit1 preset key.
+  if (/^Numpad\d$/.test(code)) return `Numpad ${code.slice(6)}`
   const fromMap = layoutMap?.get(code)
   if (fromMap) return fromMap.toUpperCase()
   if (layout === 'azerty' && AZERTY_LETTERS[code]) return AZERTY_LETTERS[code]

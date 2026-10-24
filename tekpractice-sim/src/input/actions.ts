@@ -27,6 +27,15 @@ export const ACTIONS = [
   'CAMERA_PRESET_1',
   'CAMERA_PRESET_2',
   'CAMERA_PRESET_3',
+  /** View cube named views (designer nav, Task 8). Ctrl chords give the opposite side. */
+  'VIEW_FACE',
+  'VIEW_ARRIERE',
+  'VIEW_DROITE',
+  'VIEW_GAUCHE',
+  'VIEW_DESSUS',
+  /** View cube 90° turns around the current pivot. */
+  'VIEW_ROT_LEFT',
+  'VIEW_ROT_RIGHT',
   'CANCEL',
 ] as const
 

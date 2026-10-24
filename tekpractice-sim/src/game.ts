@@ -56,6 +56,8 @@ import { Placement } from './scene/Placement'
 import { detectLayout, labelFor } from './input/layoutLabels'
 import type { Action } from './input/actions'
 import { CameraPresets } from './ui/cameraPresets'
+import { dockBelow, ViewCube } from './ui/viewCube'
+import { DEFAULT_FRONT_ALPHA, faceAngles, rotate90, type FaceId } from './camera/viewCube'
 import { loadPresets, roomKeyFor, savePreset } from './camera/presets'
 import type { RoomLayout } from './explore/roomLayout'
 import type { RoomFileT } from './explore/roomSchema'
@@ -652,9 +654,12 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   // Assigned below (it needs focusPatch); view/focus hooks refresh it.
   let exploreHud: ExploreToolbar | undefined
   let presetsUi: CameraPresets | undefined
+  let viewCube: ViewCube | undefined
+  let onViewKey: (a: Action) => void = () => undefined
   const refreshNavUi = (): void => {
     exploreHud?.refresh()
     presetsUi?.refresh()
+    viewCube?.refresh()
   }
   const explore = new ExploreController({
     scene,
@@ -663,6 +668,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     rig,
     onViewChange: () => refreshNavUi(), // « Vue d'ensemble » and the presets show in Orbit only
     onPreset: (slot) => presetsUi?.press(slot),
+    onViewKey: (a) => onViewKey(a),
     settings: () => settings,
     obstacles,
     start: { x: startX, z: startZ, yaw: startYaw },
@@ -704,6 +710,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       applyMotionPref()
       explore.settingsChanged()
       presetsUi?.refresh() // a remapped Digit key shows on the buttons
+      viewCube?.refresh() // …and a remapped Numpad key in the cube tooltips
     },
     layout: detectLayout(navigator.language ?? 'fr-FR'),
     get layoutMap() {
@@ -726,12 +733,61 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     currentView: () => explore.snapshot().view,
   })
   const exploreUi: ExploreUi = exploreHud
-  // Camera presets « Vue 1 / 2 / 3 » (Task 5): per-room slots, orbit view only.
+  // View cube + camera presets dock (Task 8): top-left of the 3D view, just
+  // under the objectives panel (never over it), orbit view only.
+  const navDock = document.createElement('div')
+  navDock.id = 'view-dock'
+  document.getElementById('hud')!.appendChild(navDock)
+  dockBelow(navDock, document.getElementById('hud-objectives'))
+  const presetLayout = detectLayout(navigator.language ?? 'fr-FR')
+  // Orbit only, like the presets: walking has no pivot, and from Explore-focus the walker owns the return flight.
+  const cubeAvailable = (): boolean => !explore.exploreView
+  const frontAlpha = DEFAULT_FRONT_ALPHA // N3: Face = audience side
+  const goFace = (face: FaceId): void => {
+    const a = faceAngles(face, frontAlpha, camera.alpha)
+    rig.flyToView(a.alpha, a.beta)
+  }
+  const turn = (dir: 1 | -1): void => {
+    rig.flyToView(rotate90(camera.alpha, dir, frontAlpha), camera.beta)
+  }
+  viewCube = new ViewCube({
+    root: navDock,
+    frontAlpha,
+    pose: () => ({ alpha: camera.alpha, beta: camera.beta }),
+    available: cubeAvailable,
+    focused: () => focusPatch.view.mode === 'focus',
+    go: goFace,
+    rotate: turn,
+    home: () => focusPatch.home(),
+    keyLabel: (a) => {
+      const code = settings.bindings[a][0]
+      return code ? labelFor(code, presetLayout, layoutMap) : null
+    },
+    hasRoom: room !== null,
+    viewChanged: camera.onViewMatrixChangedObservable,
+    coach: { seen: () => seenTips.set.has('view-cube'), markSeen: () => seenTips.mark('view-cube') },
+  })
+  const VIEW_KEY_FACE: Partial<Record<Action, FaceId>> = {
+    VIEW_FACE: 'face',
+    VIEW_ARRIERE: 'arriere',
+    VIEW_DROITE: 'droite',
+    VIEW_GAUCHE: 'gauche',
+    VIEW_DESSUS: 'dessus',
+  }
+  onViewKey = (a) => {
+    if (!cubeAvailable()) return
+    if (a === 'VIEW_ROT_LEFT') turn(-1)
+    else if (a === 'VIEW_ROT_RIGHT') turn(1)
+    else {
+      const face = VIEW_KEY_FACE[a]
+      if (face) goFace(face)
+    }
+  }
+  // Camera presets « Vue 1 / 2 / 3 » (Task 5): per-room slots, orbit view only, docked under the cube.
   const presetRoom = roomKeyFor(room?.file.id, level.id)
   const presetKey = (slot: number): Action => `CAMERA_PRESET_${slot + 1}` as Action
-  const presetLayout = detectLayout(navigator.language ?? 'fr-FR')
   presetsUi = new CameraPresets({
-    root: document.getElementById('hud')!,
+    root: navDock,
     slots: () => loadPresets(window.localStorage, presetRoom),
     keyLabel: (slot) =>
       labelFor(settings.bindings[presetKey(slot)][0] ?? '', presetLayout, layoutMap) || '—',

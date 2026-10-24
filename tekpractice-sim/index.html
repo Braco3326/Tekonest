@@ -454,10 +454,67 @@
         padding: 6px 11px; cursor: pointer; box-shadow: var(--tk-elev-card);
         transition: border-color var(--tk-motion-fast, 140ms) var(--tk-motion-ease, ease);
       }
-      /* Camera presets « Vue 1/2/3 » (Task 5): under the toolbar until the view cube (phase B) docks them. */
+      /* ── View cube + presets dock (designer nav, Task 8) ───────────────────
+         Top-left of the 3D view, under the objectives panel (top set by dockBelow).
+         Original look: Nuit faces at 85 %, Papier labels (IBM Plex Sans 11 px, no
+         web-font download), Ambre active face, square corners. */
+      #view-dock {
+        position: absolute; left: var(--tk-space-lg, 20px); top: var(--tk-space-lg, 20px);
+        display: flex; flex-direction: column; align-items: flex-start; gap: var(--tk-space-sm, 8px);
+        z-index: 19; pointer-events: none;
+      }
+      #view-cube { --vc-size: 96px; --vc-half: calc(var(--vc-size) / 2); display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: var(--tk-font-plex, system-ui, sans-serif); }
+      #view-cube[hidden] { display: none; }
+      @media (max-width: 1365px) { #view-cube { --vc-size: 72px; } }
+      @media (max-width: 760px) { #view-dock { left: var(--tk-space-md, 14px); } }
+      /* A turned cube projects past its own square (up to ≈ 0.37 × size): the margin keeps it clear of the panel above. */
+      .vc-stage { width: var(--vc-size); height: var(--vc-size); perspective: calc(var(--vc-size) * 4); margin: calc(var(--vc-size) * 0.3); }
+      .vc-stage:focus-within { outline: 2px solid var(--tk-accent, #2e5fe6); outline-offset: 6px; }
+      .vc-cube { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+      .vc-face, .vc-edge {
+        position: absolute; margin: 0; padding: 0; border: 1px solid color-mix(in srgb, var(--tk-papier, #f3ede3) 22%, transparent); border-radius: 0;
+        background: color-mix(in srgb, var(--tk-nuit, #131114) 85%, transparent);
+        color: var(--tk-papier, #f3ede3); font: 500 11px/1 var(--tk-font-plex, system-ui, sans-serif); letter-spacing: 0.02em;
+        cursor: pointer; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        transition: background-color var(--tk-motion-fast, 140ms) var(--tk-motion-ease, ease);
+      }
+      .vc-face { inset: 0; width: 100%; height: 100%; }
+      .vc-face[data-face='face'] { transform: translateZ(var(--vc-half)); }
+      .vc-face[data-face='droite'] { transform: rotateY(90deg) translateZ(var(--vc-half)); }
+      .vc-face[data-face='arriere'] { transform: rotateY(180deg) translateZ(var(--vc-half)); }
+      .vc-face[data-face='gauche'] { transform: rotateY(-90deg) translateZ(var(--vc-half)); }
+      .vc-face[data-face='dessus'] { transform: rotateX(90deg) translateZ(var(--vc-half)); }
+      .vc-face[data-face='dessous'] { transform: rotateX(-90deg) translateZ(var(--vc-half)); }
+      /* ¾ views: thin tabs standing on the four vertical edges, turning with the cube. */
+      .vc-edge { width: 16px; height: 44%; left: calc(50% - 8px); top: 28%; }
+      .vc-edge[data-face='face-droite'] { transform: rotateY(45deg) translateZ(calc(var(--vc-half) * 1.4142)); }
+      .vc-edge[data-face='arriere-droite'] { transform: rotateY(135deg) translateZ(calc(var(--vc-half) * 1.4142)); }
+      .vc-edge[data-face='arriere-gauche'] { transform: rotateY(-135deg) translateZ(calc(var(--vc-half) * 1.4142)); }
+      .vc-edge[data-face='face-gauche'] { transform: rotateY(-45deg) translateZ(calc(var(--vc-half) * 1.4142)); }
+      .vc-face:hover, .vc-edge:hover { background: color-mix(in srgb, var(--tk-nuit, #131114) 70%, var(--tk-papier, #f3ede3)); }
+      .vc-face.is-active, .vc-edge.is-active { outline: 2px solid var(--tk-ambre, #dd9349); outline-offset: -2px; }
+      .vc-face:focus-visible, .vc-edge:focus-visible {
+        outline: 2px solid var(--tk-accent, #2e5fe6); outline-offset: -2px; border-radius: 0;
+        backface-visibility: visible; -webkit-backface-visibility: visible; /* a focused back face still shows */
+      }
+      .vc-row { display: flex; gap: 4px; }
+      .vc-tool {
+        width: 28px; height: 28px; padding: 0; border: 1px solid transparent; border-radius: 0;
+        background: color-mix(in srgb, var(--tk-nuit, #131114) 85%, transparent); color: var(--tk-papier, #f3ede3);
+        font: 15px/1 var(--tk-font-plex, system-ui, sans-serif); cursor: pointer;
+      }
+      .vc-tool:hover { border-color: var(--tk-ambre, #dd9349); }
+      .vc-tool:focus-visible { border-radius: 0; }
+      .vc-current, .vc-coach {
+        margin: 0; font: 500 11px/1.3 var(--tk-font-plex, system-ui, sans-serif); color: var(--tk-papier, #f3ede3);
+        background: color-mix(in srgb, var(--tk-nuit, #131114) 85%, transparent); padding: 3px 7px;
+      }
+      .vc-current:empty { display: none; }
+      .vc-coach { max-width: 190px; text-align: center; }
+      .vc-coach[hidden] { display: none; }
+      /* Camera presets « Vue 1/2/3 » (Task 5), docked under the cube. */
       #camera-presets {
-        position: absolute; top: calc(var(--tk-space-lg, 20px) + 42px); left: 50%; transform: translateX(-50%);
-        display: flex; gap: 6px; pointer-events: auto; z-index: 21;
+        display: flex; flex-wrap: wrap; gap: 6px; max-width: 250px; pointer-events: auto;
       }
       #camera-presets[hidden] { display: none; }
       #camera-presets button {

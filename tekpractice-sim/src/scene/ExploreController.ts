@@ -8,6 +8,7 @@
  */
 import { ArcRotateCamera, Scene, UniversalCamera, Vector3 } from '@babylonjs/core'
 import { actionsForCode, chordFor } from '../input/bindings'
+import type { Action } from '../input/actions'
 import { KeyboardState } from '../input/keyboardState'
 import { MouseGesture } from '../input/mouseGesture'
 import { buildIntent, MOUSE_LOOK_RAD_PER_PX } from '../explore/intent'
@@ -65,6 +66,8 @@ export interface ExploreDeps {
   floorAt?(x: number, z: number): number
   /** CAMERA_PRESET_1..3 pressed (slot 0..2). Typing is already filtered; the host decides if the view allows it. */
   onPreset?(slot: number): void
+  /** VIEW_* (view cube keys, Task 8). Typing is already filtered; the host decides if the view allows it. */
+  onViewKey?(action: Action): void
 }
 
 const isTyping = (el: Element | null): boolean =>
@@ -325,6 +328,15 @@ export class ExploreController implements Walker {
       case 'CAMERA_PRESET_2':
       case 'CAMERA_PRESET_3':
         this.deps.onPreset?.(Number(a.slice(-1)) - 1)
+        break
+      case 'VIEW_FACE':
+      case 'VIEW_ARRIERE':
+      case 'VIEW_DROITE':
+      case 'VIEW_GAUCHE':
+      case 'VIEW_DESSUS':
+      case 'VIEW_ROT_LEFT':
+      case 'VIEW_ROT_RIGHT':
+        this.deps.onViewKey?.(a as Action)
         break
     }
   }

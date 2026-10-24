@@ -31,6 +31,14 @@ export const ACTION_LABELS: Record<Action, { fr: string; en: string }> = {
   CAMERA_PRESET_1: { fr: 'Aller à la vue 1', en: 'Go to view 1' },
   CAMERA_PRESET_2: { fr: 'Aller à la vue 2', en: 'Go to view 2' },
   CAMERA_PRESET_3: { fr: 'Aller à la vue 3', en: 'Go to view 3' },
+  // Copy deck viewCube.face.*.aria and viewCube.rotate*.label (Task 8).
+  VIEW_FACE: { fr: 'Vue de face', en: 'Front view' },
+  VIEW_ARRIERE: { fr: 'Vue arrière', en: 'Back view' },
+  VIEW_DROITE: { fr: 'Vue de droite', en: 'Right view' },
+  VIEW_GAUCHE: { fr: 'Vue de gauche', en: 'Left view' },
+  VIEW_DESSUS: { fr: 'Vue de dessus', en: 'Top view' },
+  VIEW_ROT_LEFT: { fr: 'Tourner à gauche (90°)', en: 'Turn left (90°)' },
+  VIEW_ROT_RIGHT: { fr: 'Tourner à droite (90°)', en: 'Turn right (90°)' },
   CANCEL: { fr: 'Libérer la souris / fermer / revenir', en: 'Release pointer / close / back' },
 }
 

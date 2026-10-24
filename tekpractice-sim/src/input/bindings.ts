@@ -29,6 +29,14 @@ export const DEFAULT_BINDINGS: Bindings = {
   CAMERA_PRESET_1: ['Digit1'],
   CAMERA_PRESET_2: ['Digit2'],
   CAMERA_PRESET_3: ['Digit3'],
+  // View cube (Task 8): numpad codes stay the same with Num Lock off.
+  VIEW_FACE: ['Numpad1'],
+  VIEW_ARRIERE: ['Ctrl+Numpad1'],
+  VIEW_DROITE: ['Numpad3'],
+  VIEW_GAUCHE: ['Ctrl+Numpad3'],
+  VIEW_DESSUS: ['Numpad7'],
+  VIEW_ROT_LEFT: ['Numpad4'],
+  VIEW_ROT_RIGHT: ['Numpad6'],
   CANCEL: ['Escape'],
 }
 
@@ -62,7 +70,7 @@ export function chordFor(e: { code: string; altKey?: boolean; ctrlKey?: boolean;
 }
 
 /** Actions whose binding may be a modifier chord (the remap capture waits past a lone modifier). */
-export const CHORD_ACTIONS: readonly Action[] = ['CAMERA_HOME']
+export const CHORD_ACTIONS: readonly Action[] = ['CAMERA_HOME', 'VIEW_ARRIERE', 'VIEW_GAUCHE']
 
 /**
  * Keys the learner can never take over: Esc runs the Esc chain (ADR-0010 D5)

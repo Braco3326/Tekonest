@@ -229,6 +229,7 @@ export class ExploreHud {
         <h3>Vue Orbite</h3><table><tbody>
           ${ORBIT_HELP.map((m) => `<tr><td>${esc(m.gesture)}</td><td>${esc(m.action)}</td></tr>`).join('')}
         </tbody></table>
+        <p class="ex-muted">Pas de pavé numérique ? Cliquez le cube.</p>
         <p class="ex-muted">Clic sur un appareil : focus et ports (comme avant). Les touches suivent la position physique du clavier (AZERTY ou QWERTY) et se changent dans Réglages.</p></section>
       </div>`,
     )

@@ -6,7 +6,7 @@
  */
 import { Vector3, type ArcRotateCamera } from '@babylonjs/core'
 import { shortestAngle } from '../camera/tween'
-import { ENSEMBLE_LOWER_RADIUS, radiusLimitFor } from '../camera/orbitFeel'
+import { ENSEMBLE_LOWER_RADIUS, ORBIT_FEEL, radiusLimitFor } from '../camera/orbitFeel'
 import { motionEnabled, TOKENS } from '../design/tokens'
 import { CameraTween, type TweenCamera } from './cameraTween'
 
@@ -55,8 +55,11 @@ export class CameraRig implements CameraDirector {
     this.tween = new CameraTween(asTweenCamera(camera), scene)
     // The learner grabbing the view cancels a flight in progress.
     const canvas = scene.getEngine().getRenderingCanvas()
-    if (canvas) this.tween.cancelOnUserInput(canvas)
-    else console.warn('CameraRig: no rendering canvas; flights cannot be cancelled by user input')
+    if (canvas) {
+      this.tween.cancelOnUserInput(canvas)
+      // The learner orbiting again ends a cube top / bottom view's lifted guard.
+      canvas.addEventListener('pointerdown', () => this.restoreBetaLimits())
+    } else console.warn('CameraRig: no rendering canvas; flights cannot be cancelled by user input')
   }
 
   private currentPose(): CameraPose {
@@ -115,6 +118,37 @@ export class CameraRig implements CameraDirector {
   flyToPreset(to: CameraPose): number {
     this.fly(to, Math.min(ENSEMBLE_LOWER_RADIUS, to.radius))
     return motionEnabled() ? TOKENS.focus.flyMs : 0
+  }
+
+  /** A top / bottom cube view lifted the orbit floor guard (Task 8). */
+  private betaRelaxed = false
+
+  /**
+   * View cube (Task 8): turn around the CURRENT pivot to (alpha, beta); target and
+   * distance stay. Dessus / Dessous sit outside the orbit's beta guard, so the
+   * guard is lifted for this request and restored on the learner's next orbit
+   * (restoreBetaLimits, called on canvas pointerdown). Returns the flight time.
+   */
+  flyToView(alpha: number, beta: number): number {
+    const cam = this.camera
+    if (cam.lowerBetaLimit != null && beta < cam.lowerBetaLimit) {
+      cam.lowerBetaLimit = Math.max(0.0001, beta)
+      this.betaRelaxed = true
+    }
+    if (cam.upperBetaLimit != null && beta > cam.upperBetaLimit) {
+      cam.upperBetaLimit = Math.PI - 0.01
+      this.betaRelaxed = true
+    }
+    this.fly({ alpha, beta, radius: cam.radius, target: cam.target.clone() })
+    return motionEnabled() ? TOKENS.focus.flyMs : 0
+  }
+
+  /** Back to the designer orbit's beta guard (Babylon clamps the pose on its next frame). */
+  restoreBetaLimits(): void {
+    if (!this.betaRelaxed) return
+    this.betaRelaxed = false
+    this.camera.lowerBetaLimit = ORBIT_FEEL.lowerBetaLimit
+    this.camera.upperBetaLimit = ORBIT_FEEL.upperBetaLimit
   }
 
   /** Bumped by every flight: only the latest one may set the dolly floor when it ends. */
