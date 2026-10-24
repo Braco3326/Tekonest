@@ -26,6 +26,7 @@ import { debugBodyCenter } from '../scene/debugBody'
 import { cableKey } from './sceneDiff'
 import { attachCanvasPicking, createSelection, pickDevice } from './selection'
 import { mountProjectTree } from './shell/projectTree'
+import { mountPropertiesPanel } from './shell/propertiesPanel'
 import { buildTree, hideKeyOf, type TreeNode } from './shell/treeModel'
 import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
@@ -148,12 +149,24 @@ export async function bootCreation(): Promise<void> {
       shell.setStatus(placeNow(), (now ? COPY.tree!.statusHidden! : COPY.tree!.statusShown!).replace('{item}', nodeLabel(key)), 'ready', true)
     },
   })
+  // ── « Propriétés » (Task 10): the selection's pose, controls and cables, edited through history.do only.
+  const props = mountPropertiesPanel({
+    doc: document,
+    container: shell.propsBody,
+    registry,
+    history,
+    design: () => store.design(),
+    selection: () => viewState.get().selection,
+    floorAt: (x, z) => host.layout?.floorAt(x, z) ?? 0,
+    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+  })
   viewState.subscribe(() => {
     const v = viewState.get()
     if (v.selection !== null) treeActive = null
     host.setSelected(v.selection)
     host.setHidden(v.hidden)
     tree.render()
+    props.render()
   })
   host.onPlaceShown = () => {
     // Hidden zones of the previous place do not carry over.
@@ -176,8 +189,11 @@ export async function bootCreation(): Promise<void> {
     const hidden = v.hidden.filter((k) => (k.startsWith('cable:') ? cables.has(k) : k.startsWith('zone:') || ids.includes(k)))
     if (treeActive?.startsWith('cable:') && !cables.has(treeActive)) treeActive = null
     const viewChanged = sel !== v.selection || hidden.length !== v.hidden.length
-    if (viewChanged) viewState.set({ selection: sel, hidden }) // its subscriber rebuilds the tree
-    else tree.render() // one rebuild per store change, never two
+    if (viewChanged) viewState.set({ selection: sel, hidden }) // its subscriber rebuilds the tree and Propriétés
+    else {
+      tree.render() // one rebuild per store change, never two
+      props.render()
+    }
   })
 
   // Panels fold / unfold and the window resizes: the canvas follows its box.
@@ -233,8 +249,15 @@ export async function bootCreation(): Promise<void> {
     selection.select(next) // the camera follows (a cut under reduced motion)
     return true
   }
-  keys.onAction('UNDO', () => history.undo())
-  keys.onAction('REDO', () => history.redo())
+  // A stepper burst still open (600 ms) closes first, so it is the entry undone.
+  keys.onAction('UNDO', () => {
+    props.flush()
+    return history.undo()
+  })
+  keys.onAction('REDO', () => {
+    props.flush()
+    return history.redo()
+  })
   keys.onAction('NEXT_DEVICE', () => cycle(1))
   keys.onAction('PREV_DEVICE', () => cycle(-1))
   keys.onAction('FRAME_SELECTION', () => selection.frameSelection())

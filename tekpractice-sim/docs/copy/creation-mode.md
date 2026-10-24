@@ -146,6 +146,11 @@ Panneau « Propriétés » (Task 10) : l'appareil sélectionné. Tous les libell
 | `props.increase` | Augmenter {field} | brief | Nom du bouton + (« Augmenter Lacet ») |
 | `props.adjust` | Régler {field} | brief | Libellé de l'entrée d'historique (saisie ou rafale de ±) |
 | `props.invalidNumber` | Valeur non valide : entrez un nombre, par exemple 2,5. | à valider (tekuxwriter) | Erreur sous le champ (`aria-invalid`, `aria-describedby`, annoncée) ; rien n'est appliqué |
+| `props.unitMetres` | en mètres | à valider (tekuxwriter) | Description lue d'un champ en m (l'unité visible « m » est masquée au lecteur d'écran) |
+| `props.unitDegrees` | en degrés | à valider (tekuxwriter) | Idem pour « ° » |
+| `props.dirIn` | entrée | à valider (tekuxwriter) | Sens de la prise, liste Connexions |
+| `props.dirOut` | sortie | à valider (tekuxwriter) | Idem |
+| `props.dirBidir` | entrée et sortie | à valider (tekuxwriter) | Idem (Dante, GPIO…) |
 | `props.toggleOn` | Activé | à valider (tekuxwriter) | État visible d'un interrupteur (`aria-pressed` le dit au lecteur d'écran) |
 | `props.toggleOff` | Désactivé | à valider (tekuxwriter) | Idem |
 | `props.noControls` | Aucun réglage sur cet appareil. | à valider (tekuxwriter) | Section Réglages vide |

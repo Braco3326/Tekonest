@@ -131,6 +131,13 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** History entry of a field edit or a stepper burst. */
     adjust: 'Régler {field}',
     invalidNumber: 'Valeur non valide : entrez un nombre, par exemple 2,5.',
+    /** Read as a numeric field's description (the visible unit is a symbol). */
+    unitMetres: 'en mètres',
+    unitDegrees: 'en degrés',
+    /** Port direction, Connexions list. */
+    dirIn: 'entrée',
+    dirOut: 'sortie',
+    dirBidir: 'entrée et sortie',
     toggleOn: 'Activé',
     toggleOff: 'Désactivé',
     noControls: 'Aucun réglage sur cet appareil.',
