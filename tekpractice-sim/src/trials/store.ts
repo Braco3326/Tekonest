@@ -146,8 +146,6 @@ export class TrialStore {
   private loaded = false
   private readOnly = false
   private queue: Promise<unknown> = Promise.resolve()
-  /** The latest load (public load() calls); writes queued after it wait for it. */
-  loading: Promise<LoadResult> | null = null
   private quarantineItems: readonly QuarantineItem[] = deepFreeze([])
   private readonly now: () => Date | string
   private readonly hash: Hasher
@@ -173,9 +171,7 @@ export class TrialStore {
   }
 
   load(): Promise<LoadResult> {
-    const p = this.serial(() => this.doLoad())
-    this.loading = p
-    return p
+    return this.serial(() => this.doLoad())
   }
 
   private async doLoad(): Promise<LoadResult> {
@@ -272,7 +268,9 @@ export class TrialStore {
   /** Append-only amendment; the note itself is never rewritten (locked from creation). */
   amendNote(id: string, text: string, now: Date | string): Promise<WriteResult> {
     if (!text.trim()) return Promise.resolve({ ok: false, reason: 'empty' })
-    const at = toIso(now)
+    const d = typeof now === 'string' ? new Date(now) : now
+    if (!(d instanceof Date) || Number.isNaN(d.getTime())) return Promise.resolve({ ok: false, reason: 'invalid' })
+    const at = d.toISOString()
     return this.serial(() =>
       this.replace(id, (t) => ({
         ...t,
@@ -295,8 +293,8 @@ export class TrialStore {
 
   /**
    * A queued load() has already finished by the time this runs (queue order).
-   * Deliberately NOT `await this.loading` here: a load queued *after* this
-   * write would wait on the write, which would wait on it (deadlock).
+   * Never await another queued operation from here: anything queued *after*
+   * this one would wait on it, and it on them (deadlock).
    */
   private async ensureLoaded(): Promise<void> {
     if (!this.loaded) await this.doLoad()

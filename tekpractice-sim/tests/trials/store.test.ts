@@ -210,6 +210,18 @@ describe('TrialStore: write-once', () => {
     expect('setNote' in store).toBe(false)
   })
 
+  it('amendNote with an invalid date → {ok:false, reason:"invalid"}, never a throw', async () => {
+    const store = new TrialStore(new MemStorage())
+    await store.append(await trialA())
+    expect(await store.amendNote('tr_a', 'x', 'pas une date')).toEqual({ ok: false, reason: 'invalid' })
+    expect(await store.amendNote('tr_a', 'x', new Date(Number.NaN))).toEqual({ ok: false, reason: 'invalid' })
+    expect(store.list()[0].evidence.noteAmendments).toEqual([])
+  })
+
+  it('has no public loading field', () => {
+    expect('loading' in new TrialStore(new MemStorage())).toBe(false)
+  })
+
   it('amendNote refuses empty text', async () => {
     const store = new TrialStore(new MemStorage())
     await store.load()
