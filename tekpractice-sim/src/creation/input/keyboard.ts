@@ -36,10 +36,20 @@ const IN_TEXT_OK: ReadonlySet<CreationAction> = new Set<CreationAction>(['CANCEL
 /**
  * Single-character keys that act only while the 3D canvas has focus (WCAG 2.1.4:
  * no remapping UI yet, so a stray F / [ / ] typed elsewhere must do nothing).
- * Tasks that register other single-character actions extend this set or ship a remap UI.
+ * Tasks that register other single-character actions extend this set or ship a remap UI
+ * (guarded by tests/creation/characterKeys.test.ts).
  */
-const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(['NEXT_DEVICE', 'PREV_DEVICE', 'FRAME_SELECTION'])
-const CONTROL_ROLES = new Set(['button', 'link', 'menuitem', 'menuitemcheckbox', 'menuitemradio', 'checkbox', 'radio', 'switch', 'tab', 'option'])
+export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(['NEXT_DEVICE', 'PREV_DEVICE', 'FRAME_SELECTION'])
+
+const CHARACTER_CODE = /^(Key[A-Z]|Digit\d|Numpad\d|BracketLeft|BracketRight|Minus|Equal|Semicolon|Quote|Comma|Period|Slash|Backslash|Backquote|IntlBackslash)$/
+
+/** A chord that is one letter / digit / punctuation key with no modifier (WCAG 2.1.4 « character key shortcut »). */
+export function isPlainCharacterChord(chord: string): boolean {
+  if (chord.includes('+')) return false
+  if (chord.startsWith('key:')) return chord.length === 5
+  return CHARACTER_CODE.test(chord)
+}
+const CONTROL_ROLES = new Set(['button', 'link', 'menuitem', 'menuitemcheckbox', 'menuitemradio', 'checkbox', 'radio', 'switch', 'tab', 'option', 'treeitem'])
 
 type ElementLike = { tagName?: string; getAttribute?(n: string): string | null; closest?(s: string): unknown }
 
