@@ -289,3 +289,17 @@ describe('History.onBeforeCommand (Task 10 review): a foreign command closes an 
     expect(calls).toHaveLength(6)
   })
 })
+describe('History.onRefused (Task 14): a refused learner intent is reported once, nothing recorded', () => {
+  it('a refused CONNECT calls the listener with the intent and the failure; a valid one does not', () => {
+    const { history } = setup()
+    history.do({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm' })
+    history.do({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'q' })
+    const seen: { type: string; code: string }[] = []
+    history.onRefused((intent, r) => seen.push({ type: intent.type, code: r.error.code }))
+    expect(history.do({ type: 'CONNECT', a: MIC, b: MIC }).ok).toBe(false)
+    expect(seen).toEqual([{ type: 'CONNECT', code: 'SELF_CONNECTION' }])
+    expect(history.do({ type: 'CONNECT', a: MIC, b: DESK }).ok).toBe(true)
+    expect(seen).toHaveLength(1)
+    expect(history.sizes.undo).toBe(3)
+  })
+})

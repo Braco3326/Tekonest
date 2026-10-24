@@ -41,6 +41,7 @@ export class History {
   private depth = 0
   private listeners = new Set<() => void>()
   private metaListeners = new Set<(meta: unknown) => void>()
+  private refusedListeners = new Set<(intent: Intent, result: Extract<DispatchResult, { ok: false }>) => void>()
   private beforeCommand = new Set<(kind: 'do' | 'undo' | 'redo') => void>()
 
   constructor(
@@ -75,7 +76,10 @@ export class History {
   do(intent: Intent, label: string = intent.type, meta?: { before: unknown; after: unknown }): DispatchResult {
     this.before('do')
     const r = this.store.dispatch(intent)
-    if (!r.ok) return r
+    if (!r.ok) {
+      this.emitRefused(intent, r)
+      return r
+    }
     const step: HistoryEntry = { label, forward: [r.normalized], inverse: [...r.inverse], ...(meta ? { meta } : {}) }
     if (this.tx) this.merge(this.tx, step)
     else this.push(step)
@@ -189,6 +193,27 @@ export class History {
         fn(meta)
       } catch (e) {
         console.error('[creation] history meta listener failed', e)
+      }
+    }
+  }
+
+  /**
+   * A learner intent the store refused (Task 14): the status bar keeps the last
+   * refused connection listed (persistent, not a toast). Undo / redo refusals are not reported here.
+   */
+  onRefused(fn: (intent: Intent, result: Extract<DispatchResult, { ok: false }>) => void): () => void {
+    this.refusedListeners.add(fn)
+    return () => {
+      this.refusedListeners.delete(fn)
+    }
+  }
+
+  private emitRefused(intent: Intent, r: Extract<DispatchResult, { ok: false }>): void {
+    for (const fn of [...this.refusedListeners]) {
+      try {
+        fn(intent, r)
+      } catch (e) {
+        console.error('[creation] history refused listener failed', e)
       }
     }
   }
