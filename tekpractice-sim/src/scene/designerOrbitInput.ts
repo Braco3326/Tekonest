@@ -4,7 +4,10 @@
  *   left-drag            = orbit (Babylon default)
  *   right-drag           = pan (Babylon default, panning button 2)
  *   Shift + left-drag    = pan (added here; Babylon 7 has no "shift for panning" flag)
- *   Ctrl + left-drag     = pan (Babylon default, kept: attachControl() re-arms it)
+ *   Ctrl + left-drag     = pan (Babylon's camera._useCtrlForPanning: every
+ *                          attachControl() call — ours pass only `true`, the
+ *                          legacy noPreventDefault flag — leaves it at its
+ *                          default, true. We keep it as a second pan gesture.)
  * The pan speed is re-tuned at each pointerdown so the scene follows the cursor
  * at the current distance (orbitFeel.panningSensibilityFor): zero per-frame work.
  * Camera-only: never touches the graph. Explore view detaches this camera.
