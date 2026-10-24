@@ -18,6 +18,12 @@ export interface HistoryEntry {
   forward: Intent[]
   /** In application order: the last change is undone first. */
   inverse: Intent[]
+  /**
+   * Side state that must travel with this entry (Task 13: the project name and
+   * saved fingerprint of an « Ouvrir » / « Nouveau »). Undo hands `before` to
+   * the `onMeta` listeners, redo hands `after`.
+   */
+  meta?: { before: unknown; after: unknown }
 }
 
 export interface HistoryStore {
@@ -34,6 +40,7 @@ export class History {
   private tx: HistoryEntry | null = null
   private depth = 0
   private listeners = new Set<() => void>()
+  private metaListeners = new Set<(meta: unknown) => void>()
   private beforeCommand = new Set<(kind: 'do' | 'undo' | 'redo') => void>()
 
   constructor(
@@ -65,11 +72,11 @@ export class History {
   }
 
   /** Dispatch and record. A failed dispatch records nothing and keeps the redo stack. */
-  do(intent: Intent, label: string = intent.type): DispatchResult {
+  do(intent: Intent, label: string = intent.type, meta?: { before: unknown; after: unknown }): DispatchResult {
     this.before('do')
     const r = this.store.dispatch(intent)
     if (!r.ok) return r
-    const step: HistoryEntry = { label, forward: [r.normalized], inverse: [...r.inverse] }
+    const step: HistoryEntry = { label, forward: [r.normalized], inverse: [...r.inverse], ...(meta ? { meta } : {}) }
     if (this.tx) this.merge(this.tx, step)
     else this.push(step)
     return r
@@ -110,6 +117,7 @@ export class History {
     }
     this.undoStack.pop()
     this.redoStack.push(e)
+    if (e.meta) this.emitMeta(e.meta.before)
     this.emit()
     return true
   }
@@ -125,7 +133,8 @@ export class History {
       return false
     }
     this.redoStack.pop()
-    this.undoStack.push({ label: e.label, forward: e.forward, inverse: r.inverse })
+    this.undoStack.push({ label: e.label, forward: e.forward, inverse: r.inverse, ...(e.meta ? { meta: e.meta } : {}) })
+    if (e.meta) this.emitMeta(e.meta.after)
     this.emit()
     return true
   }
@@ -164,6 +173,24 @@ export class History {
     this.tx = null
     this.depth = 0
     this.emit()
+  }
+
+  /** Side state of an undone (`before`) or redone (`after`) entry; called before `onChange`. */
+  onMeta(fn: (meta: unknown) => void): () => void {
+    this.metaListeners.add(fn)
+    return () => {
+      this.metaListeners.delete(fn)
+    }
+  }
+
+  private emitMeta(meta: unknown): void {
+    for (const fn of [...this.metaListeners]) {
+      try {
+        fn(meta)
+      } catch (e) {
+        console.error('[creation] history meta listener failed', e)
+      }
+    }
   }
 
   onChange(fn: () => void): () => void {

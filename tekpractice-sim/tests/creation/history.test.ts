@@ -58,6 +58,21 @@ describe('History: undo/redo command stack', () => {
     expect(store.design().placements[0].position_m).toEqual([29, 0, 0])
   })
 
+  it('an entry can carry side state (meta): undo hands back `before`, redo `after` (Task 13 fix: name travels with the rig)', () => {
+    const { store, history } = setup()
+    const seen: unknown[] = []
+    history.onMeta((m) => seen.push(m))
+    history.do({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm' }, 'Ouvrir', { before: { name: 'A' }, after: { name: 'B' } })
+    history.do({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'n' }) // no meta
+    expect(history.undo()).toBe(true)
+    expect(seen).toEqual([]) // an entry without meta says nothing
+    expect(history.undo()).toBe(true)
+    expect(seen).toEqual([{ name: 'A' }])
+    expect(ids(store)).toEqual([])
+    expect(history.redo()).toBe(true)
+    expect(seen).toEqual([{ name: 'A' }, { name: 'B' }])
+  })
+
   it('inTransaction is true between the outer begin and its commit / rollback (autosave waits on it, Task 13)', () => {
     const { history } = setup()
     expect(history.inTransaction).toBe(false)

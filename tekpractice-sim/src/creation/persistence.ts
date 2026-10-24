@@ -8,11 +8,16 @@
  *   legacy rig / progress / Essais keys are never read nor touched here.
  * - Nothing is ever removed (no removeItem). Unreadable data (bad JSON, other
  *   version, wrong shape) is COPIED into `audio-sim/creation.v1.quarantine`
- *   (append-only, deduplicated) before the caller may write over it; when that
- *   copy cannot be made, the result says so (`kept: false`) and the caller
- *   must not write the key.
+ *   (append-only, deduplicated) before the caller may write over it. The
+ *   quarantine is capped (ADR-0012: 5 items × 200 000 chars): when full it
+ *   REFUSES the new item (never evicts an old one) and the result says so
+ *   (`kept: 'full'`, with the raw data so the caller can offer it for export).
+ *   Clearing the quarantine is not implemented (Oscar's decision N19).
+ * - Two tabs (ADR-0012 §6): a named project overwritten since this tab read it
+ *   (its `stamp` changed) is set aside first (`conflict-kept`); the shell
+ *   pauses its autosave when another tab writes (`isForeignWrite`).
  * - Every failure is a returned value, never a throw: blocked storage →
- *   'blocked', quota → 'full'.
+ *   'blocked', quota → 'full', no room to set data aside → 'quarantine-full'.
  * - Untrusted designs are zod-checked; bad placement entries are dropped one
  *   by one (`sanitizePlacements`), the device itself is kept.
  */
@@ -26,6 +31,12 @@ export const AUTOSAVE_KEY = 'audio-sim/creation.v1'
 export const PROJECTS_KEY = 'audio-sim/creation-projects.v1'
 export const AUTOSAVE_QUARANTINE_KEY = 'audio-sim/creation.v1.quarantine'
 export const PROJECTS_MAX = 20
+/** ADR-0012 quarantine cap: items, and characters per item. */
+export const QUARANTINE_MAX_ITEMS = 5
+export const QUARANTINE_MAX_CHARS = 200_000
+
+/** Setting data aside: kept (or already there), refused (cap or quota), or storage blocked. */
+export type KeepResult = 'kept' | 'full' | 'blocked'
 
 export interface AutosaveV1 {
   version: 1
@@ -33,16 +44,38 @@ export interface AutosaveV1 {
   name: string | null
   design: DesignState
   savedFingerprint: string | null
+  /** The named project's row stamp when this tab last read / wrote it (two-tab check). */
+  stamp?: string | null
 }
 
 export type LoadResult =
   | { status: 'ok'; data: AutosaveV1 }
   | { status: 'empty' }
-  /** `kept`: the unreadable data was copied to the quarantine (false → do not overwrite the key). */
-  | { status: 'reset'; reason: 'version' | 'corrupt'; kept: boolean }
+  /** `kept` ≠ 'kept': the unreadable `raw` is NOT in the quarantine; the caller must keep it (export) before overwriting. */
+  | { status: 'reset'; reason: 'version' | 'corrupt'; kept: KeepResult; raw: string }
   | { status: 'blocked' }
 
 export type SaveResult = 'ok' | 'blocked' | 'full'
+/**
+ * ok · conflict-kept: saved; another tab's newer copy was set aside first ·
+ * list-reset: saved; the unreadable list was set aside and a new one started ·
+ * blocked · full (20 projects or quota) · quarantine-full: something had to be
+ * set aside first and could not be, so nothing was saved.
+ */
+export type ProjectSaveResult = 'ok' | 'conflict-kept' | 'list-reset' | 'blocked' | 'full' | 'quarantine-full'
+
+export interface ProjectInfo {
+  name: string
+  savedAt: string
+  /** Changes on every write of this row (two-tab check). */
+  stamp: string
+}
+
+export type ProjectList =
+  | { status: 'ok'; projects: ProjectInfo[] }
+  /** The stored list cannot be read; it is set aside at once (`kept`), the key is not rewritten. */
+  | { status: 'unreadable'; kept: KeepResult; raw: string }
+  | { status: 'blocked' }
 
 export interface QuarantineItem {
   at: string
@@ -70,10 +103,11 @@ const AutosaveSchema = z.object({
   name: z.string().nullable(),
   design: z.unknown(),
   savedFingerprint: z.string().nullable(),
+  stamp: z.string().nullable().optional(),
 })
 const ProjectsSchema = z.object({
   version: z.literal(1),
-  projects: z.array(z.object({ name: z.string(), savedAt: z.string(), design: z.unknown() })),
+  projects: z.array(z.object({ name: z.string(), savedAt: z.string(), stamp: z.string().optional(), design: z.unknown() })),
 })
 const QuarantineSchema = z.object({
   version: z.literal(1),
@@ -137,14 +171,44 @@ export function readQuarantine(storage: Storage | null): QuarantineItem[] {
   return q?.success ? q.data.items : [{ at: '', key: AUTOSAVE_QUARANTINE_KEY, reason: 'quarantine-unreadable', raw: r.raw }]
 }
 
-/** Append `raw` to the quarantine (deduplicated). True when it is (now) kept there. */
-function quarantine(storage: Storage | null, key: string, raw: string, reason: string): boolean {
+/**
+ * Append `raw` to the quarantine (deduplicated). Over the cap (items or
+ * size) the item is refused, never an old one evicted. An unreadable
+ * quarantine is never rewritten (it would be lost): refused too.
+ */
+function quarantine(storage: Storage | null, key: string, raw: string, reason: string): KeepResult {
   const r = read(storage, AUTOSAVE_QUARANTINE_KEY)
-  if (!r.ok) return false
-  const items = readQuarantine(storage)
-  if (items.some((i) => i.raw === raw)) return true
+  if (!r.ok) return 'blocked'
+  let items: QuarantineItem[] = []
+  if (r.raw !== null) {
+    const j = parseJson(r.raw)
+    const q = j.ok ? QuarantineSchema.safeParse(j.v) : null
+    if (!q?.success) return 'full'
+    items = q.data.items
+  }
+  if (items.some((i) => i.raw === raw)) return 'kept'
+  if (items.length >= QUARANTINE_MAX_ITEMS || raw.length > QUARANTINE_MAX_CHARS) return 'full'
   items.push({ at: new Date().toISOString(), key, reason, raw })
-  return write(storage, AUTOSAVE_QUARANTINE_KEY, JSON.stringify({ version: 1, items })) === 'ok'
+  const w = write(storage, AUTOSAVE_QUARANTINE_KEY, JSON.stringify({ version: 1, items }))
+  return w === 'ok' ? 'kept' : w
+}
+
+/**
+ * Everything set aside, plus what could not be (`pending`, held by the
+ * shell), as one JSON document for « Exporter les données mises de côté… ».
+ * Read-only: nothing is removed.
+ */
+export function exportBundle(storage: Storage | null, pending: QuarantineItem[], now: string = new Date().toISOString()): string {
+  return JSON.stringify(
+    { format: 'tekpractice-creation-export', version: 1, exportedAt: now, quarantine: readQuarantine(storage), pending },
+    null,
+    2,
+  )
+}
+
+/** A `storage` event from another tab that concerns Mode Création (its autosave, its projects, or a clear()). */
+export function isForeignWrite(e: { key: string | null }): boolean {
+  return e.key === null || e.key === AUTOSAVE_KEY || e.key === PROJECTS_KEY
 }
 
 // ── autosave ───────────────────────────────────────────────────────────────
@@ -153,7 +217,12 @@ export function loadAutosave(storage: Storage | null): LoadResult {
   const r = read(storage, AUTOSAVE_KEY)
   if (!r.ok) return { status: 'blocked' }
   if (r.raw === null) return { status: 'empty' }
-  const reset = (reason: 'version' | 'corrupt'): LoadResult => ({ status: 'reset', reason, kept: quarantine(storage, AUTOSAVE_KEY, r.raw!, reason) })
+  const reset = (reason: 'version' | 'corrupt'): LoadResult => ({
+    status: 'reset',
+    reason,
+    kept: quarantine(storage, AUTOSAVE_KEY, r.raw!, reason),
+    raw: r.raw!,
+  })
   const j = parseJson(r.raw)
   if (!j.ok) return reset('corrupt')
   const version = (j.v as { version?: unknown } | null)?.version
@@ -162,18 +231,20 @@ export function loadAutosave(storage: Storage | null): LoadResult {
   if (!a.success) return reset('corrupt')
   const design = parseDesign(a.data.design)
   if (!design) return reset('corrupt')
-  return { status: 'ok', data: { version: 1, savedAt: a.data.savedAt, name: a.data.name, design, savedFingerprint: a.data.savedFingerprint } }
+  const { savedAt, name, savedFingerprint, stamp } = a.data
+  return { status: 'ok', data: { version: 1, savedAt, name, design, savedFingerprint, ...(stamp !== undefined ? { stamp } : {}) } }
 }
 
 /**
  * Copy the stored autosave into the quarantine as is (the store refused or
- * dropped part of it, so the next autosave would lose it). True when it is
- * kept (or there is nothing to keep); false → do not overwrite the key.
+ * dropped part of it, so the next autosave would lose it). `kept` ≠ 'kept':
+ * the caller holds `raw` (export) before overwriting the key.
  */
-export function setAsideAutosave(storage: Storage | null, reason: string): boolean {
+export function setAsideAutosave(storage: Storage | null, reason: string): { kept: KeepResult; raw: string | null } {
   const r = read(storage, AUTOSAVE_KEY)
-  if (!r.ok) return false
-  return r.raw === null || quarantine(storage, AUTOSAVE_KEY, r.raw, reason)
+  if (!r.ok) return { kept: 'blocked', raw: null }
+  if (r.raw === null) return { kept: 'kept', raw: null }
+  return { kept: quarantine(storage, AUTOSAVE_KEY, r.raw, reason), raw: r.raw }
 }
 
 export function saveAutosave(storage: Storage | null, data: AutosaveV1): SaveResult {
@@ -182,8 +253,13 @@ export function saveAutosave(storage: Storage | null, data: AutosaveV1): SaveRes
 
 // ── named projects ─────────────────────────────────────────────────────────
 
-type ProjectRow = { name: string; savedAt: string; design?: unknown }
-/** The stored list: rows, empty, unreadable (raw kept for the quarantine) or blocked. */
+type ProjectRow = { name: string; savedAt: string; stamp?: string; design?: unknown }
+/** A row's write stamp; rows written before stamps existed use their savedAt. */
+const stampOf = (r: ProjectRow): string => r.stamp ?? r.savedAt
+/** A fresh write stamp (pass it to `saveProject` to know what this tab wrote). */
+export const newStamp = (): string => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+
+/** The stored list: rows, empty, unreadable (raw) or blocked. Never writes. */
 function readProjects(storage: Storage | null): { ok: true; rows: ProjectRow[] } | { ok: false; raw: string } | { ok: false; raw: null } {
   const r = read(storage, PROJECTS_KEY)
   if (!r.ok) return { ok: false, raw: null }
@@ -193,29 +269,58 @@ function readProjects(storage: Storage | null): { ok: true; rows: ProjectRow[] }
   return p?.success ? { ok: true, rows: p.data.projects } : { ok: false, raw: r.raw }
 }
 
+/** The saved projects; an unreadable list is reported (and set aside at once), never shown as « no project ». */
+export function readProjectList(storage: Storage | null): ProjectList {
+  const p = readProjects(storage)
+  if (p.ok) return { status: 'ok', projects: p.rows.map((r) => ({ name: r.name, savedAt: r.savedAt, stamp: stampOf(r) })) }
+  if (p.raw === null) return { status: 'blocked' }
+  return { status: 'unreadable', kept: quarantine(storage, PROJECTS_KEY, p.raw, 'corrupt'), raw: p.raw }
+}
+
 export function listProjects(storage: Storage | null): { name: string; savedAt: string }[] {
   const p = readProjects(storage)
   return p.ok ? p.rows.map(({ name, savedAt }) => ({ name, savedAt })) : []
 }
 
-/** Max PROJECTS_MAX; the same name overwrites (the UI confirms first). Never removes another project. */
-export function saveProject(storage: Storage | null, name: string, design: DesignState): SaveResult {
+/**
+ * Max PROJECTS_MAX; the same name overwrites (the UI confirms first). Never
+ * removes another project. `expectStamp`: the stamp of this name's row when
+ * this tab last read it (null: it did not exist); a different stored row was
+ * written by another tab and is set aside before the overwrite.
+ */
+export function saveProject(
+  storage: Storage | null,
+  name: string,
+  design: DesignState,
+  opts: { expectStamp?: string | null; stamp?: string; unreadableExported?: string } = {},
+): ProjectSaveResult {
   const n = name.trim()
   if (!n) throw new RangeError('saveProject: empty name')
   const p = readProjects(storage)
   let rows: ProjectRow[]
+  let listReset = false
   if (p.ok) rows = p.rows
   else if (p.raw === null) return 'blocked'
   else {
-    // Unreadable list: kept in the quarantine first, else never overwritten.
-    if (!quarantine(storage, PROJECTS_KEY, p.raw, 'corrupt')) return 'full'
+    // Unreadable list: set aside first (or already exported by the learner, exactly this content), else never overwritten.
+    const k = opts.unreadableExported === p.raw ? 'kept' : quarantine(storage, PROJECTS_KEY, p.raw, 'corrupt')
+    if (k !== 'kept') return k === 'blocked' ? 'blocked' : 'quarantine-full'
     rows = []
+    listReset = true
   }
   const at = rows.findIndex((r) => r.name === n)
   if (at < 0 && rows.length >= PROJECTS_MAX) return 'full'
-  const row: ProjectRow = { name: n, savedAt: new Date().toISOString(), design }
+  let conflict = false
+  if (at >= 0 && opts.expectStamp !== undefined && stampOf(rows[at]) !== opts.expectStamp) {
+    const k = quarantine(storage, PROJECTS_KEY, JSON.stringify(rows[at]), 'conflict')
+    if (k !== 'kept') return k === 'blocked' ? 'blocked' : 'quarantine-full'
+    conflict = true
+  }
+  const row: ProjectRow = { name: n, savedAt: new Date().toISOString(), stamp: opts.stamp ?? newStamp(), design }
   const next = at < 0 ? [...rows, row] : rows.map((r, i) => (i === at ? row : r))
-  return write(storage, PROJECTS_KEY, JSON.stringify({ version: 1, projects: next }))
+  const w = write(storage, PROJECTS_KEY, JSON.stringify({ version: 1, projects: next }))
+  if (w !== 'ok') return w
+  return listReset ? 'list-reset' : conflict ? 'conflict-kept' : 'ok'
 }
 
 export function loadProject(storage: Storage | null, name: string): DesignState | null {
@@ -291,21 +396,51 @@ export interface AutosaveDeps {
 }
 
 /** The debounced autosave (C16, 1000 ms): one write per burst of changes, after the transaction commits. */
-export function createAutosave(d: AutosaveDeps): { schedule(): void; flush(): void; cancel(): void } {
+export interface Autosave {
+  schedule(): void
+  flush(): void
+  cancel(): void
+  /** Another tab writes: this one stops writing (its pending change stays pending) until `resume`. */
+  pause(): void
+  resume(): void
+  readonly paused: boolean
+}
+
+export function createAutosave(d: AutosaveDeps): Autosave {
   const ms = d.ms ?? 1000
+  let paused = false
+  let pending = false
   const tick = debounce(() => {
+    if (paused) return // kept pending: written on resume
     if (d.busy()) return tick() // try again after the commit
+    pending = false
     const snap = d.snapshot()
     if (!snap) return
     const r = saveAutosave(d.storage, snap)
     d.onResult?.(r)
   }, ms)
   return {
-    schedule: () => tick(),
-    // beforeunload: save now, unless a transaction is open (the last committed autosave stays).
-    flush: () => {
-      if (!d.busy()) tick.flush()
+    schedule: () => {
+      pending = true
+      tick()
     },
-    cancel: () => tick.cancel(),
+    // beforeunload: save now, unless a transaction is open (the last committed autosave stays) or paused.
+    flush: () => {
+      if (!d.busy() && !paused) tick.flush()
+    },
+    cancel: () => {
+      pending = false
+      tick.cancel()
+    },
+    pause: () => {
+      paused = true
+    },
+    resume: () => {
+      paused = false
+      if (pending) tick()
+    },
+    get paused() {
+      return paused
+    },
   }
 }
