@@ -6,10 +6,11 @@ const walk = (d: string): string[] => readdirSync(d).flatMap((f) => (statSync(jo
 describe('the shell dispatches intents only (C6)', () => {
   it('no file under src/creation/shell imports ConnectionGraph or engine internals', () => {
     const dir = fileURLToPath(new URL('../../src/creation/shell/', import.meta.url))
-    // TODO(Task 6+): once src/creation/shell/ exists, replace this early return
-    // with `expect(existsSync(dir)).toBe(true)` so the guard can never pass vacuously.
-    if (!existsSync(dir)) return
-    for (const f of walk(dir).filter((p) => p.endsWith('.ts'))) {
+    // The folder exists since Task 6: the guard can never pass vacuously.
+    expect(existsSync(dir)).toBe(true)
+    const files = walk(dir).filter((p) => p.endsWith('.ts'))
+    expect(files.length).toBeGreaterThan(0)
+    for (const f of files) {
       const src = readFileSync(f, 'utf8')
       expect(src, f).not.toMatch(/ConnectionGraph/)
       expect(src, f).not.toMatch(/from\s+['"].*engine\/(ConnectionGraph|RuleEvaluator)['"]/)
