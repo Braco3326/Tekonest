@@ -221,7 +221,10 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         if (setCfg.scale) root.scaling.setAll(setCfg.scale)
         if (setCfg.rotationY) root.rotation = new Vector3(0, (setCfg.rotationY * Math.PI) / 180, 0)
         if (setCfg.position) root.position = Vector3.FromArray(setCfg.position)
-        // Not pickable by default picks; still an orbit pivot surface (floor double-click).
+        // Not pickable by default picks. Set .glb files merge floor, walls and
+        // truss into a few meshes (live-stage.glb: 5), so the floor cannot be
+        // told apart per mesh: they are flagged, and FocusPatch keeps only hits
+        // whose picked FACE points up (floor, deck tops) — never a wall face.
         for (const m of meshes) {
           m.isPickable = false
           m.metadata = { ...(m.metadata ?? {}), pivotSurface: true }

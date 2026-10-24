@@ -46,8 +46,9 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout): Tr
   }
 
   // Floor and zones are orbit pivot surfaces (designer nav: double-click the
-  // floor to orbit around that point). Still not pickable by default picks:
-  // only FocusPatch's explicit floor predicate looks at this flag.
+  // floor to orbit around that point). Walls and ceiling never are; for zone
+  // decks only the TOP counts (FocusPatch keeps up-facing hits only).
+  // Still not pickable by default picks: only FocusPatch's floor predicate looks at this flag.
   const surface = (m: Mesh): Mesh => {
     m.metadata = { ...(m.metadata ?? {}), pivotSurface: true }
     return m

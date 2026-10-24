@@ -35,6 +35,7 @@ import {
 } from './focusMachine'
 import { motionEnabled, TOKENS } from '../design/tokens'
 import { confirmWindowMs, DeferredEmptyClick } from './deferredEmptyClick'
+import { nearestUpHit } from './pivotSurface'
 
 export interface FocusPatchDeps {
   /** Dry-run verdict — ConnectionGraph.canConnect, injected by the bootstrap. */
@@ -523,20 +524,26 @@ export class FocusPatch {
   }
 
   /**
-   * World point on the floor / room surface under the pointer (Task 4 re-pivot).
-   * Devices, ports, labels, cables never count: only meshes flagged
-   * `pivotSurface` (white ground, room floor and zones, env set) or any other
-   * pickable non-device mesh. Default picks ignore those surfaces (isPickable
-   * false), so the predicate checks enabled/visible itself.
+   * World point on the FLOOR under the pointer (Task 4 re-pivot, review minor 4).
+   * Only meshes flagged `pivotSurface` (white ground, room floor and zones,
+   * floor-like env-set meshes) and only where the picked face points up: a
+   * deck side, a wall or a ceiling never counts, and a wall's back face in
+   * front of the floor does not block it (multiPick, nearest up-facing hit).
+   * Default picks ignore those surfaces (isPickable false), so the predicate
+   * checks enabled/visible itself.
    */
   private surfaceUnderPointer(): [number, number, number] | null {
-    const hit = this.scene.pick(this.scene.pointerX, this.scene.pointerY, (m: AbstractMesh) => {
+    const hits = this.scene.multiPick(this.scene.pointerX, this.scene.pointerY, (m: AbstractMesh) => {
       const md = m.metadata as { isDeviceBody?: boolean; isPortMarker?: boolean; pivotSurface?: boolean } | null
       if (!m.isEnabled() || !m.isVisible || md?.isDeviceBody || md?.isPortMarker) return false
-      return md?.pivotSurface === true || m.isPickable
+      return md?.pivotSurface === true
     })
-    const p = hit?.hit ? hit.pickedPoint : null
-    return p ? [p.x, p.y, p.z] : null
+    return nearestUpHit(
+      (hits ?? []).flatMap((h) => {
+        const p = h.hit ? h.pickedPoint : null
+        return p ? [{ distance: h.distance, normal: h.getNormal(true, true), point: [p.x, p.y, p.z] as [number, number, number] }] : []
+      }),
+    )
   }
 
   private bodyMeshes(inst: DeviceInstance): AbstractMesh[] {
