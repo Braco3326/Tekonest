@@ -26,10 +26,36 @@ export const FACE_COPY: Record<FaceId, { label: string; aria: string }> = {
   'arriere-droite': { label: 'Arrière-droite', aria: 'Vue de trois quarts, arrière-droite' },
 }
 
-/** viewCube.face.gauche.hint / droite.hint: shown only in levels with a room. */
+/**
+ * Jardin / cour hints (viewCube.face.gauche.hint / droite.hint) are OFF: rooms
+ * render mirrored left-to-right compared with their data (ADR-0011-nav, "Known
+ * issue: rooms rendered mirrored"), so "Côté cour" would contradict the room's
+ * `coulisse-jardin`. Turn back on once that is fixed.
+ */
+export const SHOW_SIDE_HINT = false
 const SIDE_HINT: Partial<Record<FaceId, string>> = {
   gauche: 'Côté jardin (à gauche vu de la salle)',
   droite: 'Côté cour (à droite vu de la salle)',
+}
+
+/** Tooltip of a face button: accessible name, bound key, room-only side hint (when enabled). */
+export function faceTooltip(face: FaceId, key: string | null, hasRoom: boolean): string {
+  const hint = SHOW_SIDE_HINT && hasRoom ? SIDE_HINT[face] : undefined
+  return `${FACE_COPY[face].aria}${key ? ` (${key})` : ''}${hint ? `\n${hint}` : ''}`
+}
+
+/**
+ * In-plane turn (degrees) of the Dessus / Dessous label so it always reads
+ * upright: the cube's heading ry = front − alpha, snapped to the nearest
+ * quadrant (dessus +q, dessous −q). Derivation: at the top view the cube is
+ * RX(−90°)·RY(ry)·RX(90°) = RZ(−ry) on the top face, so a label RZ(q) cancels it
+ * (bottom face: RX(90°)·RY(ry)·RX(−90°) = RZ(ry), cancelled by RZ(−q)).
+ */
+export function capLabelTurn(face: 'dessus' | 'dessous', alpha: number, frontAlpha: number): number {
+  const ry = cubeCssRotation(alpha, Math.PI / 2, frontAlpha).ry
+  const q = Math.round(ry / 90) * 90
+  const turn = face === 'dessus' ? q : -q
+  return (((turn % 360) + 360) % 360) // 0, 90, 180, 270
 }
 
 const COPY = {
@@ -140,6 +166,7 @@ export class ViewCube {
   private current: HTMLElement
   private coachEl: HTMLElement
   private buttons = new Map<FaceId, HTMLButtonElement>()
+  private caps = new Map<'dessus' | 'dessous', HTMLElement>()
   private rotL: HTMLButtonElement
   private rotR: HTMLButtonElement
   private homeBtn: HTMLButtonElement
@@ -163,7 +190,13 @@ export class ViewCube {
       b.type = 'button'
       b.className = EDGES.includes(f) ? 'vc-edge' : 'vc-face'
       b.dataset.face = f
-      if (!EDGES.includes(f)) b.textContent = FACE_COPY[f].label
+      if (!EDGES.includes(f)) {
+        const span = document.createElement('span')
+        span.className = 'vc-label'
+        span.textContent = FACE_COPY[f].label
+        b.appendChild(span)
+        if (f === 'dessus' || f === 'dessous') this.caps.set(f, span)
+      }
       b.addEventListener('click', () => this.use(() => deps.go(f)))
       b.addEventListener('focus', () => this.showFocused(FACE_COPY[f].aria))
       b.addEventListener('blur', () => this.showFocused(null))
@@ -222,6 +255,11 @@ export class ViewCube {
     const { alpha, beta } = this.deps.pose()
     const { rx, ry } = cubeCssRotation(alpha, beta, this.deps.frontAlpha)
     this.cube.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`
+    // Top / bottom labels stay upright whatever the heading (changes only at a quadrant crossing).
+    for (const [f, span] of this.caps) {
+      const turn = `rotate(${capLabelTurn(f, alpha, this.deps.frontAlpha)}deg)`
+      if (span.style.transform !== turn) span.style.transform = turn
+    }
     const face = nearestFace(alpha, beta, this.deps.frontAlpha)
     if (face !== this.active) {
       if (this.active) this.label(this.active, false)
@@ -250,8 +288,7 @@ export class ViewCube {
     for (const [f, b] of this.buttons) {
       const action = FACE_KEY[f]
       const key = action ? this.deps.keyLabel(action) : null
-      const hint = this.deps.hasRoom ? SIDE_HINT[f] : undefined
-      b.title = `${FACE_COPY[f].aria}${key ? ` (${key})` : ''}${hint ? `\n${hint}` : ''}`
+      b.title = faceTooltip(f, key, this.deps.hasRoom)
       if (!b.hasAttribute('aria-label')) this.label(f, f === this.active)
     }
     const k = (a: Parameters<ViewCubeDeps['keyLabel']>[0]): string => {

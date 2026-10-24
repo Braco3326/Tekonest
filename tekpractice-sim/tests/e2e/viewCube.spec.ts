@@ -140,6 +140,20 @@ test('Task 8: Numpad7 = top view (beta < 0.05); Dessous lifts the floor guard un
   await page.mouse.move(box.x + box.width * 0.6 + 40, box.y + box.height * 0.6, { steps: 4 })
   await page.mouse.up()
   expect((await settledCamera(page)).beta).toBeLessThanOrEqual(Math.PI / 2 - 0.02 + 1e-6)
+
+  // The wheel and the arrow-key orbit end the lifted guard too (review minor 1).
+  const dessous = page.getByRole('button', { name: 'Vue de dessous', exact: true })
+  for (const takeOver of ['wheel', 'arrow'] as const) {
+    await dessous.focus()
+    await page.keyboard.press('Enter')
+    expect((await settledCamera(page)).beta).toBeGreaterThan(Math.PI - 0.05)
+    await page.evaluate(() => (document.activeElement as HTMLElement).blur())
+    if (takeOver === 'wheel') {
+      await page.mouse.move(box.x + box.width * 0.6, box.y + box.height * 0.6)
+      await page.mouse.wheel(0, 120)
+    } else await page.keyboard.press('ArrowLeft')
+    expect((await settledCamera(page)).beta, takeOver).toBeLessThanOrEqual(Math.PI / 2 - 0.02 + 1e-6)
+  }
 })
 
 test('Task 8: cube keys never fire while typing; the cube hides while walking (Explore)', async ({ page }) => {
@@ -213,8 +227,85 @@ test('Task 8 a11y: every cube button has a name; Tab reaches the cube; the focus
     return { el: el.getAttribute('aria-label'), outline: cs.outlineStyle, width: cs.outlineWidth, stage: stage.outlineStyle }
   })
   expect(ring.outline).toBe('solid')
+
+  // ¾ edge tabs hit-test over at least 24 × 24 px on screen (WCAG 2.5.8), from the Face view.
+  await page.keyboard.press('Numpad1')
+  // Under load, two equal camera reads can straddle a missed frame: wait for the pose itself.
+  await page.waitForFunction(
+    ([f, b]) => {
+      const c = window.__audioSim!.camera()
+      const d = Math.abs((((c.alpha - f) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI)
+      return d < 1e-3 && Math.abs(c.beta - b) < 1e-3
+    },
+    [FRONT, Math.PI / 2 - 0.25],
+  )
+  await page.waitForTimeout(150) // the cube's coalesced frame
+  // Twice: with the coach line shown, then hidden (it narrows the column and moves the cube:
+  // that shift once exposed a depth tie along the edge seam).
+  for (const coachHidden of [false, true])
+  for (const edge of ['face-droite', 'face-gauche']) {
+    if (coachHidden) await page.evaluate(() => ((document.querySelector('#view-cube .vc-coach') as HTMLElement).hidden = true))
+    // Longest run of on-screen pixels that hit the tab, across and along it through its centre.
+    const measure = (): Promise<{ w: number; h: number }> => page.evaluate((f) => {
+      const tab = document.querySelector<HTMLElement>(`#view-cube [data-face="${f}"]`)!
+      const r = tab.getBoundingClientRect()
+      const cx = (r.left + r.right) / 2
+      const cy = (r.top + r.bottom) / 2
+      const run = (pt: (i: number) => [number, number]): number => {
+        let best = 0
+        let cur = 0
+        for (let i = -30; i <= 30; i++) {
+          const [x, y] = pt(i)
+          cur = document.elementFromPoint(x, y) === tab ? cur + 1 : 0
+          best = Math.max(best, cur)
+        }
+        return best
+      }
+      return { w: run((i) => [cx + i, cy]), h: run((i) => [cx, cy + i]) }
+    }, edge)
+    // Polled: under parallel load the cube's coalesced frame can trail the camera.
+    await expect.poll(async () => Math.min((await measure()).w, (await measure()).h), { message: edge, timeout: 8000 }).toBeGreaterThanOrEqual(24)
+  }
   expect(ring.stage === 'solid' || ring.outline === 'solid').toBe(true)
   await page.locator('#view-cube').screenshot({ path: 'test-results/view-cube-focus-ring.png' })
+})
+
+test('Task 8 review: Dessus reads upright from every heading (screenshots: side + top per heading)', async ({ page }) => {
+  test.setTimeout(150_000) // eight flights; slow under parallel software GL
+  await page.setViewportSize({ width: 1366, height: 768 })
+  await boot(page)
+  const cube = page.locator('#view-cube')
+  const landed = (alpha: number, top: boolean): Promise<unknown> =>
+    page.waitForFunction(
+      ([a, t]) => {
+        const c = window.__audioSim!.camera()
+        const d = Math.abs((((c.alpha - a) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI)
+        return d < 1e-3 && (t ? c.beta < 0.01 : Math.abs(c.beta - (Math.PI / 2 - 0.25)) < 1e-3)
+      },
+      [alpha, top] as const,
+    )
+  for (const [name, key, turn, off] of [
+    ['face', 'Numpad1', 0, 0],
+    ['droite', 'Numpad3', 270, Math.PI / 2],
+    ['arriere', 'Control+Numpad1', 180, Math.PI],
+    ['gauche', 'Control+Numpad3', 90, -Math.PI / 2],
+  ] as const) {
+    await page.keyboard.press(key)
+    await landed(FRONT + off, false)
+    await page.waitForTimeout(150)
+    await expect(page.locator('#view-cube .vc-current')).toHaveText(name === 'arriere' ? 'Arrière' : name[0].toUpperCase() + name.slice(1))
+    await cube.screenshot({ path: `test-results/view-cube-heading-${name}.png` })
+    await page.keyboard.press('Numpad7') // top view, heading kept
+    await landed(FRONT + off, true)
+    await page.waitForTimeout(150)
+    await expect(page.locator('#view-cube .vc-current')).toHaveText('Dessus')
+    await expect
+      .poll(() => page.locator('#view-cube [data-face="dessus"] .vc-label').evaluate((el) => (el as HTMLElement).style.transform), {
+        message: name,
+      })
+      .toBe(`rotate(${turn}deg)`)
+    await cube.screenshot({ path: `test-results/view-cube-top-${name}.png` })
+  }
 })
 
 for (const vp of [
