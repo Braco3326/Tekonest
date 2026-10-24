@@ -107,10 +107,10 @@ describe('diffDesign', () => {
     expect(diffDesign(design(), design())).toEqual([])
   })
 
-  it('placement: moved more than 1 mm, or yaw changed more than 0.1°', () => {
+  it('placement: compares the fingerprint quantisation (1 mm per axis, 0.1° yaw, 0 ≡ 360)', () => {
     const b = design()
-    b.placements[0].position_m = [0.0005, 1.2, -3] // 0.5 mm: no change
-    b.placements[1].yawDeg = 10.05 // 0.05°: no change
+    b.placements[0].position_m = [0.0004, 1.2, -3] // rounds to the same mm
+    b.placements[1].yawDeg = 370.04 // ≡ 10.0°
     expect(diffDesign(design(), b)).toEqual([])
     b.placements[0].position_m = [0.002, 1.2, -3]
     expect(diffDesign(design(), b)).toEqual(['placement:mic-1'])
@@ -123,6 +123,19 @@ describe('diffDesign', () => {
     b.rig.instances = b.rig.instances.filter((i) => i.instanceId !== 'mic-1')
     b.rig.instances.push({ instanceId: 'spk-r', deviceId: 'powered-12' })
     expect(diffDesign(design(), b)).toEqual(['instance:+spk-r', 'instance:-mic-1'])
+  })
+
+  it('placement: one side only (instance kept) → placement:id', () => {
+    const b = design()
+    b.placements = b.placements.filter((p) => p.instanceId !== 'mic-1')
+    expect(diffDesign(design(), b)).toEqual(['placement:mic-1'])
+  })
+
+  it('instance:~id when the deviceId changes under the same instanceId', () => {
+    const b = design()
+    b.rig.instances[2] = { instanceId: 'spk-l', deviceId: 'powered-15' }
+    b.placements[1] = { ...b.placements[1], deviceId: 'powered-15' }
+    expect(diffDesign(design(), b)).toEqual(['instance:~spk-l'])
   })
 
   it('connection:+N / connection:-N counts, direction-insensitive', () => {

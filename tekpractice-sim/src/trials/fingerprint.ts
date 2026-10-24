@@ -10,7 +10,8 @@
  *   with its two ends ordered (a < b) and the list is sorted, so the same
  *   wiring always gives the same string whatever the patch order or direction;
  * - numbers quantised by field name (positions 1 mm, degrees 0.1°, delayMs
- *   0.01 ms, anything else 1e-6), -0 → 0, plain decimals (never an exponent).
+ *   0.01 ms, anything else 1e-6), -0 → 0, plain decimals (never an exponent);
+ *   yawDeg is first normalised to [0, 360).
  *
  * Any change to these rules is a new prefix (fp2:), never a silent rewrite.
  */
@@ -40,15 +41,40 @@ export function formatQuantised(value: number, places: number): string {
   return (n < 0 ? '-' : '') + int + (frac ? '.' + frac : '')
 }
 
+/**
+ * The single quantisation rule for a numeric field, shared by canonicalize()
+ * and diffDesign() so that "same fingerprint" ⇔ "no diff".
+ * yawDeg is normalised to [0, 360) first, so 0 ≡ 360 ≡ -360.
+ */
+export function quantField(key: string | null, value: number): string {
+  if (key === 'yawDeg') {
+    const s = formatQuantised(((value % 360) + 360) % 360, 1)
+    return s === '360' ? '0' : s
+  }
+  return formatQuantised(value, placesFor(key))
+}
+
 function isCable(v: unknown): v is { a: unknown; b: unknown } {
   return typeof v === 'object' && v !== null && 'a' in v && 'b' in v
+}
+
+/**
+ * One cable, direction-free: its two ends are ordered (a < b by canonical
+ * string) and EVERY other field of the cable is kept, so a future cable
+ * attribute (kind, length…) is fingerprinted too.
+ */
+export function canonicalCable(c: unknown): string {
+  if (!isCable(c)) return canon(c, null)
+  const a = canon(c.a, 'a')
+  const b = canon(c.b, 'b')
+  return canon(a > b ? { ...c, a: c.b, b: c.a } : c, null)
 }
 
 function canon(value: unknown, key: string | null): string {
   if (value === null) return 'null'
   switch (typeof value) {
     case 'number':
-      return formatQuantised(value, placesFor(key))
+      return quantField(key, value)
     case 'string':
       return JSON.stringify(value)
     case 'boolean':
@@ -60,13 +86,7 @@ function canon(value: unknown, key: string | null): string {
   }
   if (Array.isArray(value)) {
     if (key === 'connections') {
-      const cables = value.map((c) => {
-        if (!isCable(c)) return canon(c, null)
-        let a = canon(c.a, 'a')
-        let b = canon(c.b, 'b')
-        if (a > b) [a, b] = [b, a]
-        return `{"a":${a},"b":${b}}`
-      })
+      const cables = value.map(canonicalCable)
       cables.sort()
       return `[${cables.join(',')}]`
     }

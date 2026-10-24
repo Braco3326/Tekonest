@@ -7,7 +7,7 @@
  */
 import type { CameraPoseJSON } from '../camera/presets'
 import type { ControlValue, LevelState, PortRef, TeachingEvent } from '../engine/types'
-import { canonicalize, FP_PREFIX, sha256hex, type Hasher } from './fingerprint'
+import { canonicalCable, canonicalize, FP_PREFIX, quantField, sha256hex, type Hasher } from './fingerprint'
 
 export type DeepReadonly<T> = T extends (infer U)[]
   ? readonly DeepReadonly<U>[]
@@ -167,15 +167,9 @@ export async function createTrial(input: TrialInput, now: Date | string, id: str
 
 // ---- diffDesign: what changed between two designs (for changedSinceParent) ----
 
-const MOVE_EPS_M = 0.001
-const YAW_EPS_DEG = 0.1
-const FLOAT_SLACK = 1e-9
-
-const cableKey = (c: { a: PortRef; b: PortRef }): string => {
-  const a = canonicalize(c.a)
-  const b = canonicalize(c.b)
-  return a < b ? `${a}|${b}` : `${b}|${a}`
-}
+/** A placement as the fingerprint sees it (same quantisation, yaw normalised). */
+const placementKey = (p: DeepReadonly<Placement>): string =>
+  [...p.position_m.map((v) => quantField('position_m', v)), quantField('yawDeg', p.yawDeg)].join('|')
 
 function multiset(keys: string[]): Map<string, number> {
   const m = new Map<string, number>()
@@ -186,31 +180,45 @@ function multiset(keys: string[]): Map<string, number> {
 type DesignLike = DeepReadonly<DesignState> | DesignState
 
 /**
- * Keys, in this order: 'room', 'instance:+id', 'instance:-id', 'placement:id'
- * (moved > 1 mm or yaw changed > 0.1°), 'connection:+N', 'connection:-N',
+ * Keys, in this order: 'room', 'instance:+id', 'instance:-id', 'instance:~id'
+ * (deviceId changed), 'placement:id', 'connection:+N', 'connection:-N',
  * 'control:<instance>.<control>'. Ids sorted within each group.
+ *
+ * Positions and yaw are compared with the fingerprint's own quantisation
+ * (quantField), so equal fp1 ⇔ empty diff (array order aside). A placement
+ * counts as changed when its quantised position or yaw differs, when it exists
+ * on one side only while the instance exists on both, or when its deviceId
+ * differs without an 'instance:~' already saying so.
  */
 export function diffDesign(a: DesignLike, b: DesignLike): string[] {
   const out: string[] = []
   if (a.roomId !== b.roomId) out.push('room')
 
-  const ia = new Set(a.rig.instances.map((i) => i.instanceId))
-  const ib = new Set(b.rig.instances.map((i) => i.instanceId))
-  for (const id of [...ib].filter((x) => !ia.has(x)).sort()) out.push(`instance:+${id}`)
-  for (const id of [...ia].filter((x) => !ib.has(x)).sort()) out.push(`instance:-${id}`)
+  const ia = new Map(a.rig.instances.map((i) => [i.instanceId, i.deviceId]))
+  const ib = new Map(b.rig.instances.map((i) => [i.instanceId, i.deviceId]))
+  const both = [...ib.keys()].filter((x) => ia.has(x))
+  for (const id of [...ib.keys()].filter((x) => !ia.has(x)).sort()) out.push(`instance:+${id}`)
+  for (const id of [...ia.keys()].filter((x) => !ib.has(x)).sort()) out.push(`instance:-${id}`)
+  const swapped = new Set(both.filter((id) => ia.get(id) !== ib.get(id)))
+  for (const id of [...swapped].sort()) out.push(`instance:~${id}`)
 
   const pa = new Map(a.placements.map((p) => [p.instanceId, p]))
+  const pb = new Map(b.placements.map((p) => [p.instanceId, p]))
   const moved: string[] = []
-  for (const q of b.placements) {
-    const p = pa.get(q.instanceId)
-    if (!p) continue
-    const d = Math.hypot(q.position_m[0] - p.position_m[0], q.position_m[1] - p.position_m[1], q.position_m[2] - p.position_m[2])
-    if (d > MOVE_EPS_M + FLOAT_SLACK || Math.abs(q.yawDeg - p.yawDeg) > YAW_EPS_DEG + FLOAT_SLACK) moved.push(q.instanceId)
+  for (const id of new Set([...pa.keys(), ...pb.keys()])) {
+    const p = pa.get(id)
+    const q = pb.get(id)
+    if (!p || !q) {
+      // a placement appearing/disappearing with its instance is already 'instance:±'
+      if (ia.has(id) === ib.has(id)) moved.push(id)
+      continue
+    }
+    if (placementKey(p) !== placementKey(q) || (p.deviceId !== q.deviceId && !swapped.has(id))) moved.push(id)
   }
   for (const id of moved.sort()) out.push(`placement:${id}`)
 
-  const ca = multiset(a.rig.connections.map(cableKey))
-  const cb = multiset(b.rig.connections.map(cableKey))
+  const ca = multiset(a.rig.connections.map(canonicalCable))
+  const cb = multiset(b.rig.connections.map(canonicalCable))
   let added = 0
   let removed = 0
   for (const [k, n] of cb) added += Math.max(0, n - (ca.get(k) ?? 0))

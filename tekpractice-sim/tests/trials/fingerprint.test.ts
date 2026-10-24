@@ -22,6 +22,22 @@ describe('canonicalize', () => {
     expect(canonicalize({ gain: 0.12345678 })).toBe('{"gain":0.123457}')
   })
 
+  it('normalises yaw to [0, 360) before quantising (0 ≡ 360)', () => {
+    expect(canonicalize({ yawDeg: 360 })).toBe('{"yawDeg":0}')
+    expect(canonicalize({ yawDeg: -10 })).toBe('{"yawDeg":350}')
+    expect(canonicalize({ yawDeg: 359.97 })).toBe('{"yawDeg":0}')
+    expect(canonicalize({ yawDeg: 720.04 })).toBe('{"yawDeg":0}')
+    expect(canonicalize({ yawDeg: -0.02 })).toBe('{"yawDeg":0}')
+    expect(() => canonicalize({ yawDeg: Infinity })).toThrow(RangeError)
+  })
+
+  it('keeps every cable field (not just a/b) in the canonical cable', () => {
+    const base = { a: { instance: 'mic', port: 'out' }, b: { instance: 'mix', port: 'in-1' } }
+    const withKind = canonicalize({ connections: [{ ...base, kind: 'xlr' }] })
+    expect(withKind).not.toBe(canonicalize({ connections: [base] }))
+    expect(withKind).toBe(canonicalize({ connections: [{ kind: 'xlr', a: base.b, b: base.a }] }))
+  })
+
   it('maps -0 to 0 and never uses an exponent', () => {
     expect(canonicalize({ x: -0 })).toBe('{"x":0}')
     expect(canonicalize({ x: 1e-7 })).toBe('{"x":0}')
