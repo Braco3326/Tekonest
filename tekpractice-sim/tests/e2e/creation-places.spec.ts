@@ -20,6 +20,16 @@ test('5 place changes without reload: one scene, no leftovers, no leaks, 0 conso
   expect(await page.evaluate(() => performance.getEntriesByType('navigation').length)).toBe(nav)
   expect(errors).toEqual([])
 })
+test('idle in a place = 0 renders: after choosePlace and a 1.5 s settle, renders() grows by 0 over 2 s', async ({ page }) => {
+  await page.goto('/')
+  await page.waitForFunction(() => !!window.__creation) // the shell boots from a lazy chunk, after `load`
+  await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
+  await page.waitForTimeout(1500) // settle: models land, the first frames are drawn
+  const r0 = await page.evaluate(() => window.__creation!.renders())
+  await page.waitForTimeout(2000)
+  expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
+})
 test('changing place with gear asks « Garder le matériel / Repartir à vide »', async ({ page }) => {
   await page.goto('/')
   await page.waitForFunction(() => !!window.__creation) // the shell boots from a lazy chunk, after `load`
