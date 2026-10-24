@@ -34,10 +34,39 @@ export interface DesignState {
   placements: Placement[]
 }
 
+/**
+ * A rule outcome as frozen in an Essai: no title/teach text. `rulesRev` pins
+ * the catalog the texts come from, so they are looked up, not copied (size).
+ */
+export interface RuleResult {
+  ruleId: string
+  severity: 'error' | 'warning'
+  subjects: PortRef[]
+}
+export type FrozenLevelState = Omit<LevelState, 'violations'> & { violations: RuleResult[] }
+
+export const compactRule = (e: TeachingEvent | RuleResult): RuleResult => ({
+  ruleId: e.ruleId,
+  severity: e.severity,
+  subjects: e.subjects.map((s) => ({ instance: s.instance, port: s.port })),
+})
+
+const compactLevelState = (s: LevelState | FrozenLevelState | null): FrozenLevelState | null =>
+  s === null
+    ? null
+    : {
+        chainComplete: s.chainComplete,
+        connectedRequired: s.connectedRequired,
+        totalRequired: s.totalRequired,
+        missing: s.missing,
+        violations: s.violations.map(compactRule),
+        won: s.won,
+      }
+
 export interface Evidence {
   prediction: { text: string; writtenAt: string }
-  ruleResults: TeachingEvent[]
-  levelState: LevelState | null
+  ruleResults: RuleResult[]
+  levelState: FrozenLevelState | null
   /** 'r1:' + sha256(canonicalize(catalog.rules)); see rulesRevOf(). */
   rulesRev: string
   note: string
@@ -70,7 +99,11 @@ export interface TrialInput {
   design: DesignState
   consumed: { room: { roomId: string | null; geometryRev: string | null } }
   view: TrialView
-  evidence: Omit<Evidence, 'noteAmendments' | 'changedSinceParent'>
+  /** Full engine events are accepted; they are compacted to RuleResult on freeze. */
+  evidence: Omit<Evidence, 'noteAmendments' | 'changedSinceParent' | 'ruleResults' | 'levelState'> & {
+    ruleResults: (TeachingEvent | RuleResult)[]
+    levelState: LevelState | FrozenLevelState | null
+  }
   /** The Trial this one was restored from; sets parentId and changedSinceParent. */
   parent?: Trial | null
   levelId?: string
@@ -104,6 +137,21 @@ export function deepFreeze<T>(value: T): DeepReadonly<T> {
 /** Plain-data deep copy (by value; drops undefined fields). */
 export function cloneData<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T
+}
+
+/**
+ * Stores placements exactly as the fingerprint sees them (1 mm, yaw in
+ * [0, 360) at 0.1°): smaller, and re-quantising is idempotent so fp1 is unchanged.
+ */
+function quantiseDesign(d: DesignState): DesignState {
+  return {
+    ...d,
+    placements: d.placements.map((p) => ({
+      ...p,
+      position_m: p.position_m.map((v) => Number(quantField('position_m', v))) as [number, number, number],
+      yawDeg: Number(quantField('yawDeg', p.yawDeg)),
+    })),
+  }
 }
 
 /** 'tr_' + base36 timestamp + random; clock and rng injected for tests. */
@@ -144,7 +192,7 @@ export async function createTrial(input: TrialInput, now: Date | string, id: str
   } catch {
     throw new TrialError('crypto-unavailable')
   }
-  const design = cloneData(input.design)
+  const design = quantiseDesign(cloneData(input.design))
   const trial = {
     formatVersion: 1 as const,
     id,
@@ -155,7 +203,11 @@ export async function createTrial(input: TrialInput, now: Date | string, id: str
     design,
     consumed: cloneData(input.consumed),
     evidence: {
-      ...cloneData(input.evidence),
+      prediction: { text: input.evidence.prediction.text, writtenAt: input.evidence.prediction.writtenAt },
+      ruleResults: input.evidence.ruleResults.map(compactRule),
+      levelState: cloneData(compactLevelState(input.evidence.levelState)),
+      rulesRev: input.evidence.rulesRev,
+      note: input.evidence.note,
       noteAmendments: [],
       changedSinceParent,
     },

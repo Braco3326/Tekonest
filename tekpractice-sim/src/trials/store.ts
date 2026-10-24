@@ -50,16 +50,15 @@ const finite = z.number().refine(Number.isFinite)
 const iso = z.string().datetime({ offset: true })
 const vec3 = z.tuple([finite, finite, finite])
 const portRef = z.object({ instance: z.string(), port: z.string() }).strict()
-const teachingEvent = z
-  .object({ ruleId: z.string(), severity: z.enum(['error', 'warning']), title: z.string(), teach: z.string(), subjects: z.array(portRef) })
-  .strict()
+/** Compact rule outcome: no title/teach text (rulesRev pins the catalog). */
+const ruleResult = z.object({ ruleId: z.string(), severity: z.enum(['error', 'warning']), subjects: z.array(portRef) }).strict()
 const levelState = z
   .object({
     chainComplete: z.boolean(),
     connectedRequired: finite,
     totalRequired: finite,
     missing: z.array(z.object({ from: portRef, to: portRef }).strict()),
-    violations: z.array(teachingEvent),
+    violations: z.array(ruleResult),
     won: z.boolean(),
   })
   .strict()
@@ -89,7 +88,7 @@ const trialSchema = z
     evidence: z
       .object({
         prediction: z.object({ text: z.string().refine((t) => t.trim() !== ''), writtenAt: iso }).strict(),
-        ruleResults: z.array(teachingEvent),
+        ruleResults: z.array(ruleResult),
         levelState: levelState.nullable(),
         rulesRev: z.string(),
         note: z.string(),
