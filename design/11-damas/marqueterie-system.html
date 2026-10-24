@@ -1,0 +1,182 @@
+<title>Tekonest Marqueterie</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tektur:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a live mock of the Tekonest home page; three switchable layers borrowed from Damascene inlay boxes (frames, medallion, inlaid bands). Fixed brand look (no theme switch): ebony/nacre/walnut mapped to Nuit/Papier/Ambre/Prune. */
+:root{
+  --nuit:#131114;        /* ebony */
+  --nuit-2:#1C181B;
+  --papier:#F3EDE3;      /* nacre */
+  --creme:#EAE2D5;
+  --ambre:#DD9349;       /* light wood / gold leaf */
+  --prune:#7A2E45;       /* red-dyed wood */
+  --noyer:#6B4A33;       /* walnut, hairlines on light */
+  --ink-2:#4A4247;
+  --brume:#C9BFB4;
+  --display:"Tektur","IBM Plex Sans",system-ui,sans-serif;
+  --text:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+body{background:var(--creme);color:var(--nuit);font-family:var(--text);font-size:16px;line-height:1.55}
+.page{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px;display:flex;flex-direction:column;gap:22px}
+.panel{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.panel h1{font:500 22px/1.2 var(--display);margin:0}
+.panel p{margin:0;color:var(--ink-2);font-size:14px;max-width:62ch}
+.toggles{display:flex;flex-wrap:wrap;gap:8px}
+.tg{font:500 14px var(--text);background:var(--papier);color:var(--nuit);border:1px solid var(--noyer);padding:10px 14px;min-height:44px;cursor:pointer}
+.tg[aria-pressed="true"]{background:var(--nuit);color:var(--papier);border-color:var(--nuit)}
+.tg:focus-visible,.mock a:focus-visible{outline:3px solid var(--ambre);outline-offset:3px}
+
+/* ---------- the mock site ---------- */
+.mock{background:var(--papier);border:1px solid #d9cfbf;overflow:hidden}
+.mk-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px clamp(16px,4vw,48px);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font:600 18px var(--display);letter-spacing:.04em;color:var(--nuit);text-decoration:none}
+.brand svg{width:30px;height:30px}
+.mk-nav{display:flex;gap:18px;flex-wrap:wrap;font-size:14px}
+.mk-nav a{color:var(--nuit);text-decoration:none}
+.hero{background:var(--nuit);color:var(--papier);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:center;padding:clamp(28px,5vw,64px) clamp(16px,4vw,48px);position:relative}
+.hero h2{font:500 clamp(30px,4.4vw,54px)/1.04 var(--display);margin:0 0 14px;text-wrap:balance}
+.hero p{margin:0;color:var(--brume);max-width:42ch}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ambre);display:block;margin-bottom:12px}
+.hero-art{position:relative;max-width:440px;width:100%;justify-self:center;aspect-ratio:1}
+.hero-art svg{position:absolute;inset:0;width:100%;height:100%}
+.section{padding:clamp(28px,5vw,56px) clamp(16px,4vw,48px);display:flex;flex-direction:column;gap:22px}
+.section h3{font:500 26px var(--display);margin:0}
+.doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.door{position:relative;display:flex;flex-direction:column;gap:8px;padding:24px;background:#FBF8F3;border:1px solid #dcd2c2;color:var(--nuit);text-decoration:none;min-width:0}
+.door h4{font:500 22px var(--display);margin:0}
+.door p{margin:0;color:var(--ink-2);font-size:15px}
+.door .st{font-size:13px;font-weight:600;display:inline-flex;gap:8px;align-items:center;margin-top:auto}
+.door .st::before{content:"";width:10px;height:10px;border:2px solid currentColor;border-radius:50%}
+.direction{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:28px;align-items:start}
+.direction ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.direction li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:12px;align-items:start}
+.direction li svg{width:18px;height:18px;margin-top:4px}
+.mk-foot{background:var(--nuit);color:var(--brume);padding:28px clamp(16px,4vw,48px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px}
+.mk-foot b{color:var(--papier);font:600 16px var(--display);letter-spacing:.04em}
+@media (max-width:820px){.hero,.direction{grid-template-columns:1fr}.doors{grid-template-columns:1fr}.hero-art{max-width:280px}}
+
+/* ---------- layer 1: Cadres (nested frames + nacre corners) ---------- */
+.band{display:none}
+.mock.frames .door{border:1px solid var(--noyer);outline:1px solid var(--noyer);outline-offset:-7px}
+.mock.frames .door::before,.mock.frames .door::after{content:"";position:absolute;width:14px;height:14px;background:linear-gradient(135deg,var(--ambre) 50%,transparent 50%)}
+.mock.frames .door::before{top:0;left:0}
+.mock.frames .door::after{bottom:0;right:0;transform:rotate(180deg)}
+.mock.frames .hero{box-shadow:inset 0 0 0 10px var(--nuit),inset 0 0 0 11px #4a3a2c,inset 0 0 0 16px var(--nuit),inset 0 0 0 17px #4a3a2c}
+/* ---------- layer 2: Médaillon ---------- */
+.medal{opacity:0;transition:opacity .4s}
+.mock.medallion .medal{opacity:1}
+.dot-medal{display:none}
+.mock.medallion .dot-medal{display:block}
+.mock:not(.medallion) .dot-plain{display:block}
+.dot-plain{display:none}
+/* ---------- layer 3: Bandes incrustées ---------- */
+.mock.bands .band{display:block;height:14px;background-repeat:repeat-x;background-size:28px 14px}
+.band.light{background-color:var(--nuit)}
+.band.dark{background-color:var(--nuit)}
+@media (prefers-reduced-motion: reduce){.medal{transition:none}}
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.notes div{background:var(--papier);border:1px solid #d9cfbf;padding:18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.notes b{font:500 17px var(--display)}
+.notes p{margin:0;font-size:14px;color:var(--ink-2)}
+@media (max-width:820px){.notes{grid-template-columns:1fr}}
+</style>
+
+<div class="page">
+  <div class="panel">
+    <div>
+      <h1>Tekonest × marqueterie de Damas</h1>
+      <p>La même page d'accueil, avec trois couches tirées des boîtes incrustées. Activez-les une par une ou ensemble pour composer le site.</p>
+    </div>
+    <div class="toggles" role="group" aria-label="Couches de marqueterie">
+      <button class="tg" id="t-frames" data-layer="frames" aria-pressed="true">1 · Cadres</button>
+      <button class="tg" id="t-medallion" data-layer="medallion" aria-pressed="true">2 · Médaillon</button>
+      <button class="tg" id="t-bands" data-layer="bands" aria-pressed="false">3 · Bandes incrustées</button>
+    </div>
+  </div>
+
+  <div class="mock frames medallion" id="mock">
+    <header class="mk-head">
+      <a class="brand" href="#mock"><svg viewBox="20 -5 260 260" aria-hidden="true" class="nest-sm"></svg>TEKONEST</a>
+      <nav class="mk-nav" aria-label="Exemple de navigation"><a href="#mock">Se former</a><a href="#mock">Créer avec nous</a><a href="#mock">Réseau</a><a href="#mock">Notre direction</a></nav>
+    </header>
+    <div class="band dark" data-band="a"></div>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Paris · cultures et son</span>
+        <h2>Un nid pour les cultures et les métiers du son.</h2>
+        <p>Des fils venus d'ailleurs, tressés ensemble : se former, créer, se rencontrer.</p>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 400 400" class="medal" aria-hidden="true" id="medal"></svg>
+        <svg viewBox="20 -5 260 260" aria-hidden="true" id="heroNest" style="inset:18%;width:64%;height:64%"></svg>
+      </div>
+    </section>
+    <div class="band dark" data-band="b"></div>
+    <section class="section">
+      <h3>Trois entrées</h3>
+      <div class="doors">
+        <a class="door" href="#mock"><h4>Se former</h4><p>Apprendre le son et s'entraîner sur TekPractice.</p><span class="st">En développement</span></a>
+        <a class="door" href="#mock"><h4>Créer avec nous</h4><p>Organiser, accompagner, produire un projet.</p><span class="st">En projet</span></a>
+        <a class="door" href="#mock"><h4>Rejoindre le réseau</h4><p>Artistes, techniciennes et techniciens, payés correctement.</p><span class="st">En projet</span></a>
+      </div>
+    </section>
+    <section class="section" style="padding-top:0">
+      <div class="direction">
+        <h3>Notre direction : le mélange culturel</h3>
+        <ul>
+          <li><svg viewBox="0 0 40 40" aria-hidden="true" class="dot-medal"></svg><svg viewBox="0 0 40 40" aria-hidden="true" class="dot-plain"><circle cx="20" cy="20" r="6" fill="#7A2E45"/></svg><span>Des musiques arabes, afro et électroniques réunies dans un même lieu.</span></li>
+          <li><svg viewBox="0 0 40 40" aria-hidden="true" class="dot-medal"></svg><svg viewBox="0 0 40 40" aria-hidden="true" class="dot-plain"><circle cx="20" cy="20" r="6" fill="#7A2E45"/></svg><span>Les cultures racontées par celles et ceux qui les font vivre.</span></li>
+          <li><svg viewBox="0 0 40 40" aria-hidden="true" class="dot-medal"></svg><svg viewBox="0 0 40 40" aria-hidden="true" class="dot-plain"><circle cx="20" cy="20" r="6" fill="#7A2E45"/></svg><span>Une équipe payée correctement, sur scène comme en coulisses.</span></li>
+        </ul>
+      </div>
+    </section>
+    <div class="band dark" data-band="c"></div>
+    <footer class="mk-foot"><b>TEKONEST</b><span>Paris · prototype</span></footer>
+  </div>
+
+  <div class="notes">
+    <div><b>1 · Cadres</b><p>Les boîtes de Damas sont faites de cadres emboîtés. Ici : un double filet autour des cartes et du bandeau nuit, avec un coin triangle comme la nacre incrustée.</p></div>
+    <div><b>2 · Médaillon</b><p>Le centre de la boîte est une étoile à 12 branches. Ici : une seule étoile fine derrière le nid, et la même en petit comme puce de liste. Une par page, pas plus.</p></div>
+    <div><b>3 · Bandes incrustées</b><p>Les bordures répètent de minuscules motifs (losanges, damiers, filets). Ici : une seule rangée fine, utilisée seulement comme séparateur entre les grandes parties.</p></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const C={nuit:"#131114",papier:"#F3EDE3",ambre:"#DD9349",prune:"#7A2E45",noyer:"#6B4A33"};
+  function el(tag,attrs){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e;}
+  // Nest (logo L4): 7 ellipses
+  function nest(svg,color,w){
+    for(let i=0;i<7;i++){
+      const r=i*360/7, ox=150+8*Math.cos(r*Math.PI/180), oy=125+8*Math.sin(r*Math.PI/180);
+      svg.appendChild(el("ellipse",{cx:ox.toFixed(2),cy:oy.toFixed(2),rx:100,ry:82,transform:`rotate(${r.toFixed(2)} ${ox.toFixed(2)} ${oy.toFixed(2)})`,fill:"none",stroke:color,"stroke-width":w}));
+    }
+  }
+  document.querySelectorAll(".nest-sm").forEach(s=>nest(s,C.nuit,9));
+  nest(document.getElementById("heroNest"),C.papier,4.2);
+  // 12-point star {12/5} + its inner dodecagon, like the centre of the inlay boxes
+  function star(svg,cx,cy,R,color,w,inner){
+    const pts=[];for(let k=0;k<12;k++){const a=-Math.PI/2+k*Math.PI/6;pts.push([cx+R*Math.cos(a),cy+R*Math.sin(a)]);}
+    let d="";for(let k=0;k<12;k++){const p=pts[(k*5)%12];d+=(k?"L":"M")+p[0].toFixed(2)+" "+p[1].toFixed(2);}d+="Z";
+    svg.appendChild(el("path",{d,fill:"none",stroke:color,"stroke-width":w,"stroke-linejoin":"round"}));
+    if(inner){svg.appendChild(el("circle",{cx,cy,r:R*1.06,fill:"none",stroke:color,"stroke-width":w*0.6,opacity:.7}));
+      let d2="";for(let k=0;k<12;k++){const a=-Math.PI/2+k*Math.PI/6+Math.PI/12;d2+=(k?"L":"M")+(cx+R*1.16*Math.cos(a)).toFixed(2)+" "+(cy+R*1.16*Math.sin(a)).toFixed(2);}d2+="Z";
+      svg.appendChild(el("path",{d:d2,fill:"none",stroke:color,"stroke-width":w*0.6,opacity:.55}));}
+  }
+  star(document.getElementById("medal"),200,200,150,C.ambre,1.6,true);
+  document.querySelectorAll(".dot-medal").forEach(s=>star(s,20,20,16,C.prune,2.2,false));
+  // Inlaid band: diamond + tiny square, repeated (as a data-URI tile)
+  const tile=`<svg xmlns='http://www.w3.org/2000/svg' width='28' height='14'><rect width='28' height='14' fill='${C.nuit}'/><path d='M7 2 L12 7 L7 12 L2 7Z' fill='none' stroke='${C.papier}' stroke-width='1'/><rect x='5.5' y='5.5' width='3' height='3' fill='${C.ambre}'/><rect x='17' y='5' width='4' height='4' fill='${C.prune}'/><path d='M14 0V14' stroke='%23F3EDE3' stroke-opacity='.25'/></svg>`;
+  const url=`url("data:image/svg+xml,${tile.replace(/#/g,"%23").replace(/</g,"%3C").replace(/>/g,"%3E")}")`;
+  document.querySelectorAll(".band").forEach(b=>b.style.backgroundImage=url);
+  // Toggles
+  const mock=document.getElementById("mock");
+  document.querySelectorAll(".tg").forEach(b=>b.addEventListener("click",()=>{
+    const on=b.getAttribute("aria-pressed")!=="true"; b.setAttribute("aria-pressed",String(on)); mock.classList.toggle(b.dataset.layer,on);
+  }));
+})();
+</script>
