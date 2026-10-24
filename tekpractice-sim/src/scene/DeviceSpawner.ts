@@ -21,6 +21,7 @@ import '@babylonjs/loaders/glTF'
 import type { Registry, DeviceT } from '../engine/CatalogLoader'
 import type { PortRef } from '../engine/types'
 import { TOKENS } from '../design/tokens'
+import { assetUrl } from '../assetUrl'
 
 export interface DeviceInstance {
   instanceId: string
@@ -187,7 +188,7 @@ export class DeviceSpawner {
     instance: DeviceInstance,
   ): Promise<boolean> {
     const deviceId = device.id
-    return SceneLoader.ImportMeshAsync(null, '/assets/', `${deviceId}.glb`, this.scene)
+    return SceneLoader.ImportMeshAsync(null, assetUrl('assets/'), `${deviceId}.glb`, this.scene)
       .then(({ meshes }) => {
         const glbRoot = meshes[0]
         glbRoot.name = `glb:${instanceId}`

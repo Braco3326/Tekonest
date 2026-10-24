@@ -396,6 +396,9 @@ Registers: the website is French first, same calm tone. Status wording per the b
 | `site.beta.note` | TekPractice est en développement : certaines choses changeront. Dites-nous ce qui vous gêne. | TekPractice is in development: some things will change. Tell us what gets in your way. | Footer note | Feedback channel link is for Oscar to supply |
 | `site.teacher.link` | Ouvrir la page enseignant | Open the teacher page | Link | Opens `teacher.html` |
 | `site.meta.title` | TekPractice : s'exercer à la sonorisation dans le navigateur | TekPractice: practise sound reinforcement in the browser | `<title>` | |
+| `site.back.label` | ← tekonest.com | ← tekonest.com | In-game link, top-right of the game and teacher pages (Task 16) | **à valider (tekuxwriter)**. Goes to `/` (site root) |
+| `site.back.aria` | Retour au site Tekonest | Back to the Tekonest site | aria-label of that link | **à valider (tekuxwriter)** |
+| `site.game.title` | TekPractice — Tekonest | TekPractice — Tekonest | `<title>` of the game page | **à valider (tekuxwriter)** |
 | `site.meta.description` | Un jeu de câblage et de placement pour les élèves de BTS Métiers de l'audiovisuel option son. En développement. | A wiring and placement game for BTS audiovisual (sound) students. In development. | Meta description | **Flag:** check the exact BTS name with Oscar before publishing |
 
 ## 12. New keys: help overlay (H) entries

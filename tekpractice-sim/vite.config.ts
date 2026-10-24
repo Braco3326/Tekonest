@@ -2,6 +2,8 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
+  // Deploy build only: tools/build-site.mjs sets TEKPRACTICE_BASE=/tekpractice/jouer/.
+  base: process.env.TEKPRACTICE_BASE ?? '/',
   server: {
     port: 3000,
   },

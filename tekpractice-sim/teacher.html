@@ -64,10 +64,21 @@
       .rubric input { margin-top: 4px; width: 16px; height: 16px; flex: none; }
       .draft { font-size: var(--tk-text-sm, 12.5px); color: var(--tk-warning-ink, #a85a00); margin-bottom: var(--tk-space-sm, 8px); }
       footer.disclaimer { margin-top: var(--tk-space-xl, 32px); padding-top: var(--tk-space-md, 14px); border-top: 1px solid var(--tk-surface-border, #e6e8ee); color: var(--tk-ink-muted, #5a6372); }
+      /* Back to the Tekonest site (key site.back.*); top-right, clear of the page title. */
+      #site-link {
+        position: absolute; top: var(--tk-space-md, 14px); right: var(--tk-space-md, 14px);
+        font-size: var(--tk-text-sm, 12.5px); font-weight: var(--tk-weight-medium, 550);
+        color: var(--tk-ink, #1b2129); background: var(--tk-surface, #fff); text-decoration: none; white-space: nowrap;
+        border: 1px solid var(--tk-surface-border, #e6e8ee); border-radius: var(--tk-radius-sm, 7px); padding: 6px 11px;
+      }
+      #site-link:hover { border-color: var(--tk-accent, #2e5fe6); }
+      @media (max-width: 700px) { h1 { margin-top: 36px; } }
+      @media print { #site-link { display: none; } }
       @media print { .drop, #print { display: none; } body { background: #fff; } .card { break-inside: avoid; box-shadow: none; } }
     </style>
   </head>
   <body>
+    <a id="site-link" href="/" aria-label="Retour au site Tekonest">← tekonest.com</a>
     <main id="app">
       <h1 id="title">Parcours d'essais : lecture enseignant</h1>
       <p class="sub" id="subtitle"></p>

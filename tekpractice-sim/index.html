@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TekPractice</title>
+    <title>TekPractice — Tekonest</title>
     <style>
       /* All values reference the Teknest design tokens (src/design/tokens.ts →
          injectTokens). Fallbacks mirror the token values for the pre-JS frame. */
@@ -30,7 +30,7 @@
       .b2d-cable { stroke: var(--tk-cable, #2a2f3a); stroke-width: 3; stroke-linecap: round; cursor: pointer; }
       .b2d-cable:hover { stroke: var(--tk-error, #d93a47); }
       .board2d-toggle {
-        position: absolute; top: var(--tk-space-lg, 20px); right: var(--tk-space-lg, 20px);
+        position: absolute; top: 64px; right: var(--tk-space-lg, 20px);
         background: var(--tk-surface, #fff); border: 1px solid var(--tk-surface-border, #e6e8ee);
         border-radius: var(--tk-radius-sm, 7px); color: var(--tk-ink, #1b2129);
         font: inherit; font-size: var(--tk-text-sm, 12.5px); font-weight: var(--tk-weight-medium, 550);
@@ -38,6 +38,21 @@
       }
       .board2d-toggle:hover { border-color: var(--tk-accent, #2e5fe6); }
       .board2d-toggle:focus-visible { outline: 2px solid var(--tk-accent, #2e5fe6); outline-offset: 2px; }
+      /* Back to the Tekonest site (Task 16, key site.back.*): fixed top-right, above the HUD.
+         The toolbar strip, exam timer and 2D toggle are offset so nothing sits under it. */
+      #site-link {
+        position: fixed; top: var(--tk-space-lg, 20px); right: var(--tk-space-lg, 20px); z-index: 30;
+        font: inherit; font-size: var(--tk-text-sm, 12.5px); font-weight: var(--tk-weight-medium, 550);
+        color: var(--tk-ink, #1b2129); background: var(--tk-surface, #fff); text-decoration: none; white-space: nowrap;
+        border: 1px solid var(--tk-surface-border, #e6e8ee); border-radius: var(--tk-radius-sm, 7px);
+        padding: 6px 11px; box-shadow: var(--tk-elev-card);
+      }
+      #site-link:hover { border-color: var(--tk-accent, #2e5fe6); }
+      #site-link:focus-visible { outline: 2px solid var(--tk-accent, #2e5fe6); outline-offset: 2px; }
+      @media (max-width: 900px) {
+        #site-link { top: 10px; right: var(--tk-space-md, 14px); }
+        #hud-objectives { top: 52px; }
+      }
       /* --hud-card-w: the objectives card's width, shared by the toolbar placement (one source). */
       #hud { position: fixed; inset: 0; pointer-events: none; color: var(--tk-ink, #1b2129); --hud-card-w: 380px; }
       #hud button, #hud a { pointer-events: auto; }
@@ -295,7 +310,7 @@
 
       /* ── Exam mode ────────────────────────────────────────────────────── */
       #exam-timer {
-        position: absolute; top: var(--tk-space-lg, 20px); right: var(--tk-space-lg, 20px);
+        position: absolute; top: 64px; right: var(--tk-space-lg, 20px);
         background: var(--tk-surface, #fff); border: 1px solid var(--tk-surface-border, #e6e8ee);
         border-radius: var(--tk-radius-md, 12px); box-shadow: var(--tk-elev-card);
         padding: 10px 18px; font-size: var(--tk-text-xl, 21px);
@@ -467,7 +482,7 @@
          it at 1366 px. The strip itself lets clicks through; its buttons do not. */
       @media (min-width: 901px) {
         #explore-toolbar {
-          left: calc(var(--tk-space-lg, 20px) * 2 + var(--hud-card-w, 380px)); right: var(--tk-space-lg, 20px);
+          left: calc(var(--tk-space-lg, 20px) * 2 + var(--hud-card-w, 380px)); right: calc(var(--tk-space-lg, 20px) + 140px);
           transform: none; justify-content: center; flex-wrap: wrap; pointer-events: none;
         }
       }
@@ -723,6 +738,7 @@
     </style>
   </head>
   <body>
+    <a id="site-link" href="/" aria-label="Retour au site Tekonest">← tekonest.com</a>
     <canvas id="renderCanvas"></canvas>
     <div id="board2d" hidden></div>
     <div id="hud"></div>

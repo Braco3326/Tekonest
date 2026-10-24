@@ -246,7 +246,7 @@ export class ExploreHud {
         <button type="button" class="ex-primary" data-autofocus data-act="resume">Reprendre</button>
         <button type="button" data-act="settings">Réglages</button>
         <button type="button" data-act="help">Aide des contrôles</button>
-        <a href="/">Retour au tableau de bord</a>
+        <a href="${location.pathname}">Retour au tableau de bord</a>
       </div>`,
     )
     el.querySelector('[data-act="resume"]')!.addEventListener('click', () => this.closeTopPanel())

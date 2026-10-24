@@ -11,3 +11,5 @@ test-results/
 # Third-party datasheets/photos live here purely as modeling reference; the .glb
 # assets we ship are OUR recreations (see assets-source/SOURCES.md legal note).
 assets-source/
+
+dist-site/

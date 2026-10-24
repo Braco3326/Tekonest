@@ -9,6 +9,7 @@
  */
 import type { Registry } from '../engine/CatalogLoader'
 import type { Intent } from './intents'
+import { assetUrl } from '../assetUrl'
 import { loadRigs, type RigSaveFailure, type RigSaveResult, type RigWarning } from './rigStore'
 
 export const GUIDED_PALETTE = ['shure-sm58', 'yamaha-rio3224-d2', 'yamaha-ql1']
@@ -47,7 +48,7 @@ export class Shelf {
             .map(
               (d) =>
                 `<button class="shelf-item" data-device="${d.id}" title="${esc(d.realWorld.typicalUse)}">
-                  <img src="/assets/thumbs/${d.id}.png" alt="" loading="lazy" onerror="this.remove()" />
+                  <img src="${assetUrl(`assets/thumbs/${d.id}.png`)}" alt="" loading="lazy" onerror="this.remove()" />
                   <span>${esc(d.label)}</span>
                 </button>`,
             )

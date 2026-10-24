@@ -63,6 +63,7 @@ import { detectLayout, labelFor } from './input/layoutLabels'
 import { ESSAIS_ACTIONS, type Action } from './input/actions'
 import { CameraPresets } from './ui/cameraPresets'
 import { dockBelow, ViewCube } from './ui/viewCube'
+import { assetUrl } from './assetUrl'
 import { DEFAULT_FRONT_ALPHA, faceAngles, rotate90, type FaceId } from './camera/viewCube'
 import { loadPresets, roomKeyFor, savePreset } from './camera/presets'
 import type { RoomLayout } from './explore/roomLayout'
@@ -239,7 +240,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     // origin where the gear already lives — anchored by preset DATA. Non-blocking:
     // any failure keeps the white studio (assets never block gameplay).
     const setCfg = env.set
-    SceneLoader.ImportMeshAsync(null, '/assets/environments/', setCfg.glb, scene)
+    SceneLoader.ImportMeshAsync(null, assetUrl('assets/environments/'), setCfg.glb, scene)
       .then(({ meshes }) => {
         const root = meshes[0]
         root.name = 'env:set'
