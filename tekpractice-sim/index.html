@@ -38,7 +38,8 @@
       }
       .board2d-toggle:hover { border-color: var(--tk-accent, #2e5fe6); }
       .board2d-toggle:focus-visible { outline: 2px solid var(--tk-accent, #2e5fe6); outline-offset: 2px; }
-      #hud { position: fixed; inset: 0; pointer-events: none; color: var(--tk-ink, #1b2129); }
+      /* --hud-card-w: the objectives card's width, shared by the toolbar placement (one source). */
+      #hud { position: fixed; inset: 0; pointer-events: none; color: var(--tk-ink, #1b2129); --hud-card-w: 380px; }
       #hud button, #hud a { pointer-events: auto; }
       /* Accessibility: a visible keyboard-focus ring on every interactive element
          (components may override with their own, e.g. .b2d-port). */
@@ -48,7 +49,7 @@
 
       .hud-panel {
         position: absolute; top: var(--tk-space-lg, 20px); left: var(--tk-space-lg, 20px);
-        max-width: 380px;
+        max-width: var(--hud-card-w, 380px);
         /* Opaque fallback first; browsers with color-mix + backdrop-filter get the
            premium translucent-white so the scene stays perceivable beneath. */
         background: var(--tk-surface, #fff);
@@ -461,12 +462,12 @@
         position: absolute; top: var(--tk-space-lg, 20px); left: 50%; transform: translateX(-50%);
         display: flex; gap: 6px; pointer-events: auto; z-index: 21;
       }
-      /* Wide screens: centred in the strip right of the objectives card (≤ 380 px
+      /* Wide screens: centred in the strip right of the objectives card (≤ --hud-card-w
          wide), so a longer toolbar (Essais, Vue d'ensemble, Ramasser) never covers
          it at 1366 px. The strip itself lets clicks through; its buttons do not. */
       @media (min-width: 901px) {
         #explore-toolbar {
-          left: calc(var(--tk-space-lg, 20px) * 2 + 380px); right: var(--tk-space-lg, 20px);
+          left: calc(var(--tk-space-lg, 20px) * 2 + var(--hud-card-w, 380px)); right: var(--tk-space-lg, 20px);
           transform: none; justify-content: center; flex-wrap: wrap; pointer-events: none;
         }
       }

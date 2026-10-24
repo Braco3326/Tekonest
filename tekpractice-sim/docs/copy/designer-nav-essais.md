@@ -446,6 +446,10 @@ Added by tekfrontenddesigner / tekdeveloper while wiring the panel (night build 
 | `settings.year.1` | 1re année (3 essais, liste simple) | 1st year (3 trials, flat list) | Settings option | **à valider (tekuxwriter)** |
 | `settings.year.2` | 2e année (arbre des essais) | 2nd year (trial tree) | Settings option | **à valider (tekuxwriter)**. Default |
 
+| `compare.viewLocked` | Fermez d'abord la comparaison (Échap) pour changer de vue. | Close the comparison first (Esc) to change the view. | Toast when V / « Vue : … » is used during a compare | **à valider (tekuxwriter)**. Added after the tekreviwer review |
+| `limit.over.title` | Vous avez {n} essais. | You have {n} trials. | Panel notice, 1st year with more than 3 Essais (switched from 2nd year) | **à valider (tekuxwriter)**. Followed by `limit.reached.body` |
+| `limit.over.hidden` | La liste montre les 3 derniers. | The list shows the last 3. | Same notice, last sentence | **à valider (tekuxwriter)**. Nothing is deleted |
+
 Not shown on purpose: `essais.current.autosaved` (« Enregistré automatiquement dans ce navigateur. »). The live setup is not autosaved yet, so the line would be false.
 
 ## Open points for Oscar / reviewers

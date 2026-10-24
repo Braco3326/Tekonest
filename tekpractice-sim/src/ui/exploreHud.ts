@@ -31,6 +31,8 @@ export interface ExploreHudDeps {
   currentView(): BaseView
   /** The toolbar re-renders its pressed states when panels open/close. */
   onPanelsChanged(): void
+  /** Actions with nothing to act on here (Essais keys without the panel): not listed in help / remap. */
+  hiddenActions?: readonly Action[]
 }
 
 export type PanelId = 'inventory' | 'help' | 'settings' | 'pause'
@@ -214,7 +216,7 @@ export class ExploreHud {
 
   // ── help ────────────────────────────────────────────────────────────────────
   private buildHelp(): HTMLElement {
-    const rows = controlsHelp(this.deps.settings().bindings, this.deps.layout, this.deps.layoutMap)
+    const rows = controlsHelp(this.deps.settings().bindings, this.deps.layout, this.deps.layoutMap, this.deps.hiddenActions)
     return this.panel(
       'Contrôles',
       'ex-help',
@@ -270,7 +272,7 @@ export class ExploreHud {
         <label>Vue par défaut dans les niveaux <select name="levelView">${opt('orbit', 'Orbite', s.levelView)}${opt('explore', 'Exploration', s.levelView)}</select></label>
         <label>Essais : année de formation <select name="year">${opt('1', '1re année (3 essais, liste simple)', String(s.year))}${opt('2', '2e année (arbre des essais)', String(s.year))}</select></label>
         <h3>Touches</h3>
-        <table class="ex-binds"><tbody>${REMAPPABLE.map(
+        <table class="ex-binds"><tbody>${REMAPPABLE.filter((a) => !this.deps.hiddenActions?.includes(a)).map(
           (a) => `<tr><td>${esc(ACTION_LABELS[a].fr)}</td><td><kbd>${esc(s.bindings[a].map((c) => labelFor(c, this.deps.layout, this.deps.layoutMap)).join(' / '))}</kbd></td>
             <td><button type="button" data-bind="${a}">Changer</button></td></tr>`,
         ).join('')}</tbody></table>

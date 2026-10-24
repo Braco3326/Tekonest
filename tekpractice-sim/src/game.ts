@@ -36,6 +36,7 @@ import { CameraRig } from './scene/CameraRig'
 import { bodyCenter, FocusPatch } from './scene/FocusPatch'
 import type { PortPoint } from './scene/snap'
 import type { Intent } from './ui/intents'
+import { winTransition } from './ui/winTransition'
 import { Hud } from './ui/hud'
 import { ControlsPanel } from './ui/controlsPanel'
 import { LocalStorageProgressStore } from './ui/ProgressStore'
@@ -59,7 +60,7 @@ import { loadSettings, saveSettings, type ExploreSettings } from './ui/exploreSe
 import { ExploreToolbar } from './ui/exploreToolbar'
 import { Placement } from './scene/Placement'
 import { detectLayout, labelFor } from './input/layoutLabels'
-import type { Action } from './input/actions'
+import { ESSAIS_ACTIONS, type Action } from './input/actions'
 import { CameraPresets } from './ui/cameraPresets'
 import { dockBelow, ViewCube } from './ui/viewCube'
 import { DEFAULT_FRONT_ALPHA, faceAngles, rotate90, type FaceId } from './camera/viewCube'
@@ -161,6 +162,13 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   const essaisEnabled = sandboxMode || level.essais === true
   let essais: EssaisPanel | null = null
   const comparing = (): boolean => essais?.comparing() ?? false
+  /** V / « Vue : … » during a compare: refused (the stored views are orbit poses). */
+  const viewToggleAllowed = (): boolean => {
+    if (!comparing()) return true
+    // Copy deck compare.viewLocked (à valider).
+    hud.toast('info', "Fermez d'abord la comparaison (Échap) pour changer de vue.", '')
+    return false
+  }
 
   // ── engine ────────────────────────────────────────────────────────────────
   const graph = new ConnectionGraph(registry, level.devices)
@@ -303,7 +311,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       if (id) cables.addCable(id, portPos(conn.a), portPos(conn.b)) // addCable replaces by id
     }
   }
-  for (const inst of instances) void inst.modelReady.then((ok) => ok && resyncInstance(inst))
+  // A device disposed meanwhile (rig load, Essai applied, pick-up) must not be re-anchored.
+  for (const inst of instances) void inst.modelReady.then((ok) => ok && instances.includes(inst) && resyncInstance(inst))
   const hud = new Hud(document.getElementById('hud')!, registry, level)
   const progress = new LocalStorageProgressStore(window.localStorage)
   const controlsPanel = new ControlsPanel(
@@ -383,6 +392,13 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     }
     if (mode !== 'preview') essais?.liveChanged()
     if (mode === 'preview') return state
+    if (mode === 'restore') {
+      // A re-applied design is not a learner win: follow the state, record nothing.
+      const step = winTransition(mode, state.won, won, sandboxMode)
+      won = step.won
+      if (step.retract) hud.hideWin()
+      return state
+    }
     // Logic violations (R4–R8 sweeps) — recorded ALWAYS (play = assessment),
     // but taught (toasted) only outside exam mode.
     for (const v of state.violations) {
@@ -396,8 +412,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     for (const id of [...activeViolations])
       if (!state.violations.some((v) => v.ruleId === id)) activeViolations.delete(id)
 
-    if (state.won && !won && !sandboxMode) {
-      // Sandbox has no requiredChain — "won" is meaningless there (ADR-0004).
+    const step = winTransition(mode, state.won, won, sandboxMode)
+    if (step.earn) {
       won = true
       const firstEver = Object.values(progress.load().data.levels).every((l) => l.wins === 0)
       progress.recordWin(level.id) // feeds the readiness model (ADR-0003)
@@ -412,7 +428,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
           }
         }
       }
-    } else if (!state.won && won && !sandboxMode) {
+    } else if (step.retract) {
       // Regressed out of a win (a required cable was pulled): retract the card.
       won = false
       hud.hideWin()
@@ -465,6 +481,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     }
     // Re-anchor + redraw once (if) the glb replaces this placeholder.
     void inst.modelReady.then((ok) => {
+      if (!instances.includes(inst)) return // disposed meanwhile (rig load, Essai applied, pick-up)
       invalidateObstacles()
       if (ok) resyncInstance(inst)
     })
@@ -511,24 +528,31 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     invalidateObstacles()
     refresh()
     const label = registry.deviceById.get(inst.deviceId)?.label ?? inst.deviceId
-    hud.toast('info', 'Appareil ramassé', `${label} est retourné dans l’inventaire${wires.length ? ` (${wires.length} câble(s) débranché(s))` : ''}.`, {
+    const undo = hud.toast('info', 'Appareil ramassé', `${label} est retourné dans l’inventaire${wires.length ? ` (${wires.length} câble(s) débranché(s))` : ''}.`, {
       label: 'Annuler',
       onClick: (toastEl) => {
         toastEl.remove()
-        if (instances.some((i) => i.instanceId === instanceId)) return
-        if (instances.length >= MAX_SANDBOX_DEVICES) {
-          hud.toast('warning', 'Rack plein', `Maximum ${MAX_SANDBOX_DEVICES} appareils — retire-en un pour annuler.`)
-          return
-        }
-        if (!spawnExact(instanceId, inst.deviceId, 0, pose)) return
-        for (const w of wires) {
-          const r = graph.connect(w.a, w.b)
-          if (r.ok && r.connectionId) cables.addCable(r.connectionId, portPos(w.a), portPos(w.b))
-        }
-        for (const [controlId, value] of Object.entries(controls)) graph.setControl(instanceId, controlId, value)
-        refresh()
+        // Through dispatch, like every edit: a read-only Essais compare refuses it.
+        dispatch({ type: 'RESTORE_INSTANCE', instanceId, deviceId: inst.deviceId, pose, wires, controls })
       },
     })
+    undo.classList.add('toast-undo') // an Essais compare dismisses pending undos
+  }
+
+  /** RESTORE_INSTANCE: the pick-up undo (device, cables, controls come back). */
+  const restoreInstance = (i: Extract<Intent, { type: 'RESTORE_INSTANCE' }>): void => {
+    if (instances.some((x) => x.instanceId === i.instanceId)) return
+    if (instances.length >= MAX_SANDBOX_DEVICES) {
+      hud.toast('warning', 'Rack plein', `Maximum ${MAX_SANDBOX_DEVICES} appareils — retire-en un pour annuler.`)
+      return
+    }
+    if (!spawnExact(i.instanceId, i.deviceId, 0, i.pose)) return
+    for (const w of i.wires) {
+      const r = graph.connect(w.a, w.b)
+      if (r.ok && r.connectionId) cables.addCable(r.connectionId, portPos(w.a), portPos(w.b))
+    }
+    for (const [controlId, value] of Object.entries(i.controls)) graph.setControl(i.instanceId, controlId, value)
+    refresh()
   }
 
   /**
@@ -663,6 +687,10 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         if (sandboxMode) loadRigByName(intent.name)
         break
       }
+      case 'RESTORE_INSTANCE': {
+        if (sandboxMode) restoreInstance(intent)
+        break
+      }
     }
   }
 
@@ -759,6 +787,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     onViewChange: () => refreshNavUi(), // « Vue d'ensemble » and the presets show in Orbit only
     onPreset: (slot) => presetsUi?.press(slot),
     onViewKey: (a) => onViewKey(a),
+    canToggleView: () => viewToggleAllowed(),
     onEssaiKey: (a) => {
       if (!essaisEnabled) return
       void ensureEssais().then((p) => (a === 'FREEZE_ESSAI' ? void p.freeze() : p.compareKey()))
@@ -824,8 +853,11 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       }
       dispatch({ type: 'REMOVE', instanceId })
     },
-    toggleView: () => explore.toggleView(),
+    toggleView: () => {
+      if (viewToggleAllowed()) explore.toggleView()
+    },
     currentView: () => explore.snapshot().view,
+    hiddenActions: essaisEnabled ? [] : ESSAIS_ACTIONS,
     essais: essaisEnabled
       ? {
           isOpen: () => essais?.isOpen() ?? false,
@@ -1021,6 +1053,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       return { alpha: camera.alpha, beta: camera.beta, radius: camera.radius, target: [camera.target.x, camera.target.y, camera.target.z] }
     },
     ruleTitle: (id) => registry.ruleById.get(id)?.title ?? id,
+    roomName: (id) => (room?.file.id === id ? room.file.name_fr : undefined) ?? opts.roomIndex?.find((r) => r.id === id)?.name_fr ?? id,
     applyDesign: (d, mode) => void applyDesign(d, mode === 'preview' ? 'preview' : 'restore'),
     flyTo: (v) => focusPatch.recallPreset({ alpha: v.pose.alpha, beta: v.pose.beta, radius: v.pose.radius, target: Vector3.FromArray([...v.pose.target]) }),
     enterCompare: () => {
@@ -1029,6 +1062,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       compareBase = { view: explore.exploreView ? 'explore' : 'orbit', pose: explore.exploreView ? null : arcPose() }
       // The stored views are orbit poses: compare in Orbit (the cube and presets stay usable).
       if (explore.exploreView) explore.toggleView()
+      // A pending pick-up undo would edit the preview: dismiss it (dispatch refuses it anyway).
+      hudRoot.querySelectorAll('.toast-undo').forEach((t) => t.remove())
       hudRoot.classList.add('essais-comparing')
       if (controlsEl) controlsEl.inert = true
       refreshNavUi()

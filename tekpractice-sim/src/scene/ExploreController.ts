@@ -76,6 +76,11 @@ export interface ExploreDeps {
   onViewKey?(action: Action): void
   /** FREEZE_ESSAI / COMPARE_FLIP (Task 14). Typing is already filtered; the host decides if Essais exist here. */
   onEssaiKey?(action: 'FREEZE_ESSAI' | 'COMPARE_FLIP'): void
+  /**
+   * TOGGLE_VIEW (V) asked: return false to refuse it (an Essais compare stays
+   * in Orbit; the host says why). Default: allowed.
+   */
+  canToggleView?(): boolean
 }
 
 const isTyping = (el: Element | null): boolean =>
@@ -306,6 +311,7 @@ export class ExploreController implements Walker {
         this.ui.toggleHelp()
         break
       case 'TOGGLE_VIEW':
+        if (this.deps.canToggleView?.() === false) break
         this.toggleView()
         break
       case 'FOCUS': {

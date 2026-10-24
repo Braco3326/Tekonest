@@ -27,6 +27,7 @@ import {
   importNotice,
   limitCounter,
   liveState,
+  year1Overflow,
   loadNotice,
   nearBudget,
   orbitView,
@@ -58,6 +59,8 @@ export interface EssaisHost {
   /** Current camera pose (Explore: the walker's eye as an orbit pose). */
   cameraPose(): CameraPoseJSON
   ruleTitle(ruleId: string): string
+  /** Room display name (« Salle polyvalente »), never the raw id. */
+  roomName(roomId: string): string
   /** 'preview' = compare (read-only, quiet, no live notification); 'live' = restore. */
   applyDesign(design: DeepReadonly<DesignState>, mode: 'preview' | 'live'): void
   flyTo(view: DeepReadonly<TrialView>): void
@@ -111,6 +114,8 @@ export class EssaisPanel {
   private liveSeq = 0
   private confirmFor: { kind: 'restore' | 'delete' | 'archive'; id?: string; ids?: string[] } | null = null
   private rulesRev: Promise<string> | null = null
+  /** openCompare() is awaiting the store: a second open must not start. */
+  private opening = false
 
   constructor(private host: EssaisHost) {
     this.store = new TrialStore(host.storage)
@@ -193,8 +198,16 @@ export class EssaisPanel {
       this.host.toast('info', COPY.locked)
       return
     }
-    if (this.busy) return
+    if (this.busy || this.opening) return
     this.busy = true
+    // Everything the Essai freezes is read NOW, before any await: a key pressed
+    // right after G (B opens a preview) must never leak into this Essai.
+    const design = this.host.captureDesign()
+    const evidence = this.host.evidence()
+    const view = orbitView(this.host.cameraPose())
+    const text = this.q<HTMLTextAreaElement>('#es-prediction').value
+    const note = this.q<HTMLTextAreaElement>('#es-note').value
+    const typedAt = this.predictionAt
     try {
       await this.ready
       this.open(false)
@@ -203,7 +216,6 @@ export class EssaisPanel {
         this.say({ kind: 'error', title: writeFailure('read-only').title, actions: [{ id: 'export-quarantine', label: COPY.quarantineExport }] })
         return
       }
-      const design = this.host.captureDesign()
       let liveFp: string
       try {
         liveFp = await fingerprint(design)
@@ -240,16 +252,15 @@ export class EssaisPanel {
         })
         return
       }
-      const text = this.q<HTMLTextAreaElement>('#es-prediction').value
       if (text.trim() === '') {
         this.say({ kind: 'warning', title: COPY.predictionRequired, body: COPY.predictionHelp })
         this.q<HTMLElement>('#es-prediction').focus()
         return
       }
       const now = new Date()
-      const writtenAt = this.predictionAt && Date.parse(this.predictionAt) <= now.getTime() ? this.predictionAt : now.toISOString()
+      const writtenAt = typedAt && Date.parse(typedAt) <= now.getTime() ? typedAt : now.toISOString()
       const parent = decision.parentId ? (this.trials.find((t) => t.id === decision.parentId) ?? null) : null
-      const { ruleResults, levelState } = this.host.evidence()
+      const { ruleResults, levelState } = evidence
       let trial: Trial
       try {
         trial = await createTrial(
@@ -257,13 +268,13 @@ export class EssaisPanel {
             name: decision.name,
             design,
             consumed: { room: refs.room },
-            view: orbitView(this.host.cameraPose()),
+            view,
             evidence: {
               prediction: { text, writtenAt },
               ruleResults,
               levelState,
               rulesRev: refs.rulesRev,
-              note: this.q<HTMLTextAreaElement>('#es-note').value,
+              note,
             },
             parent,
             levelId: this.host.levelId,
@@ -303,7 +314,16 @@ export class EssaisPanel {
 
   // ── compare (read-only preview) ──────────────────────────────────────────────
   private async openCompare(): Promise<void> {
-    await this.ready
+    // One compare at a time; never while a freeze or another open is in flight
+    // (a second open would capture the PREVIEW as the "live" design).
+    if (this.compare || this.opening || this.busy) return
+    this.opening = true
+    try {
+      await this.ready
+    } finally {
+      this.opening = false
+    }
+    if (this.compare || this.busy) return
     if (this.trials.length < 2) {
       this.open(false)
       this.say({ kind: 'info', title: COPY.compareDisabled })
@@ -353,7 +373,7 @@ export class EssaisPanel {
   // ── restore, delete, export, import ──────────────────────────────────────────
   private restore(id: string, confirmed: boolean): void {
     const t = this.find(id)
-    if (!t || this.compare) return
+    if (!t || this.compare || this.busy || this.opening) return
     const unsaved = this.liveFp !== null && !this.trials.some((x) => x.fingerprint === this.liveFp)
     if (unsaved && !confirmed) {
       this.confirmFor = { kind: 'restore', id }
@@ -679,6 +699,8 @@ export class EssaisPanel {
         <div class="es-notice-actions">${this.notice.actions.map((a) => `<button type="button" data-act="${a}">${esc(actLabel[a])}</button>`).join('')}</div>`,
       )
     }
+    const over = year1Overflow(this.trials.length, year)
+    if (over) parts.push(`<p><strong>${esc(over.title)}</strong></p><p>${esc(over.body)}</p>`)
     if (this.message) {
       const m = this.message
       parts.push(
@@ -782,7 +804,7 @@ export class EssaisPanel {
       setHtml('#es-flip', `${esc(COPY.flip)} ${kbd('COMPARE_FLIP')}`)
       setHtml('#es-close-compare', `${esc(COPY.closeCompare)} <kbd>Échap</kbd>`)
       if (a && b) {
-        const v = compareView(a, b, (id) => this.host.ruleTitle(id))
+        const v = compareView(a, b, (id) => this.host.ruleTitle(id), (id) => this.host.roomName(id))
         const th = (col: 'a' | 'b', label: string): string =>
           `<th scope="col" data-col="${col}" class="${comparing.shown === col ? 'is-shown' : ''}">${esc(label)}${comparing.shown === col ? ` <span class="sr-only">(${esc(COPY.displayedBadge)})</span>` : ''}</th>`
         const head = `<tr><th scope="col"><span class="sr-only">Élément</span></th>${th('a', trialLabel(a))}${th('b', trialLabel(b))}<th scope="col">${esc(v.headers[3])}</th></tr>`

@@ -154,6 +154,117 @@ test('freeze → stale → child → compare flip → Esc → export / import', 
   await page.screenshot({ path: info.outputPath('essais-imported.png') })
 })
 
+/** Live poses of every placed device (the "exact live design" oracle). */
+const livePoses = (page: Page) =>
+  page.evaluate(() => {
+    const sim = window.__audioSim!
+    return Object.fromEntries(sim.assets().map((a) => [a.instanceId, sim.pose!(a.instanceId)]))
+  })
+/** Key presses dispatched in ONE task: no await between them (the races the review found). */
+const burst = (page: Page, codes: string[]) =>
+  page.evaluate((cs) => {
+    for (const code of cs) {
+      window.dispatchEvent(new KeyboardEvent('keydown', { code, bubbles: true }))
+      window.dispatchEvent(new KeyboardEvent('keyup', { code, bubbles: true }))
+    }
+  }, codes)
+
+async function twoEssais(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    const sim = window.__audioSim!
+    sim.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', position: [1.2, 0, -1], rotationY: 0 })
+    sim.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', position: [-1.4, 0, 0.6], rotationY: 90 })
+  })
+  await page.getByRole('button', { name: 'Essais' }).click()
+  await freeze(page, 'Premier montage.')
+  await expect(page.locator('.es-row')).toHaveCount(1)
+  await page.evaluate(() => window.__audioSim!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-rio3224-d2', position: [0, 0, 2] }))
+  await freeze(page, 'J’ajoute la stagebox.')
+  await expect(page.locator('.es-row')).toHaveCount(2)
+}
+
+test('review: a pending pick-up undo cannot edit the compare preview; V is refused; Esc gives the live setup back', async ({ page }) => {
+  await page.evaluate(() => {
+    const sim = window.__audioSim!
+    sim.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', position: [1.2, 0, -1], rotationY: 0 })
+    sim.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', position: [-1.4, 0, 0.6], rotationY: 90 })
+  })
+  await page.getByRole('button', { name: 'Essais' }).click()
+  await freeze(page, 'Premier montage.')
+  // pick the console up: an « Annuler » toast is now pending
+  await page.evaluate(() => window.__audioSim!.dispatch({ type: 'REMOVE', instanceId: 'yamaha-ql1-s2' }))
+  await expect(page.locator('.toast-undo')).toHaveCount(1)
+  await freeze(page, 'Sans la console.')
+  await expect(page.locator('.es-row')).toHaveCount(2)
+  const live = await livePoses(page)
+
+  await page.keyboard.press('KeyB') // compare: Essai B shown (no console)
+  await expect(page.locator('#essais-caption')).toHaveText('Affiché : Essai B · comparaison en lecture seule')
+  await expect(page.locator('.toast-undo')).toHaveCount(0) // pending undos dismissed
+  await page.keyboard.press('KeyB') // flip to A: the console is in the preview
+  await expect(page.locator('#essais-caption')).toHaveText('Affiché : Essai A · comparaison en lecture seule')
+  const preview = await livePoses(page)
+  // the undo is an intent now: refused while comparing, the preview is untouched
+  await page.evaluate(() =>
+    window.__audioSim!.dispatch({
+      type: 'RESTORE_INSTANCE',
+      instanceId: 'yamaha-ql1-s2',
+      deviceId: 'yamaha-ql1',
+      pose: { position: [3, 0, 3], rotationY: 0 },
+      wires: [],
+      controls: {},
+    }),
+  )
+  await expect(page.locator('.toast-info').last()).toContainText('Comparaison en lecture seule')
+  expect(await livePoses(page)).toEqual(preview)
+  // V cannot leave Orbit during a compare
+  await page.keyboard.press('KeyV')
+  await expect(page.locator('.toast-info').last()).toContainText("Fermez d'abord la comparaison")
+  expect(await page.evaluate(() => window.__audioSim!.explore!().view)).toBe('orbit')
+
+  await page.keyboard.press('Escape')
+  await expect(page.locator('.es-compare')).toBeHidden()
+  expect(await livePoses(page)).toEqual(live)
+})
+
+test('review: B twice in one burst opens ONE compare, and Esc restores the true live design', async ({ page }) => {
+  await twoEssais(page)
+  // the live setup differs from both Essais (a second open would save the PREVIEW as "live")
+  await page.evaluate(() => window.__audioSim!.dispatch({ type: 'REMOVE', instanceId: 'shure-sm58-s1' }))
+  await page.locator('#es-prediction').blur()
+  const live = await livePoses(page)
+  await burst(page, ['KeyB', 'KeyB'])
+  await expect(page.locator('.es-compare')).toBeVisible()
+  await expect(page.locator('#essais-caption')).toHaveText('Affiché : Essai B · comparaison en lecture seule')
+  await page.keyboard.press('KeyB') // a normal press still flips
+  await expect(page.locator('#essais-caption')).toHaveText('Affiché : Essai A · comparaison en lecture seule')
+  await page.keyboard.press('Escape')
+  await expect(page.locator('.es-compare')).toBeHidden()
+  expect(await livePoses(page)).toEqual(live)
+})
+
+test('review: G then B in one burst freezes the LIVE design, evidence and camera (B is ignored)', async ({ page }) => {
+  await twoEssais(page)
+  // change the live setup and the camera, then G+B at once
+  await page.evaluate(() => window.__audioSim!.dispatch({ type: 'REMOVE', instanceId: 'shure-sm58-s1' }))
+  await page.locator('#explore-toolbar [data-act="view"]').click()
+  await page.locator('#es-prediction').fill('Sans le micro.')
+  await page.locator('#es-prediction').blur()
+  const live = await livePoses(page)
+  const cam = await page.evaluate(() => window.__audioSim!.camera())
+  const violations = await page.evaluate(() => window.__audioSim!.state().violations.map((v) => v.ruleId).sort())
+  await burst(page, ['KeyG', 'KeyB'])
+  await expect(page.locator('.es-row')).toHaveCount(3)
+  await expect(page.locator('.es-compare')).toBeHidden()
+  const c = (await trials(page))[2] as StoredTrial & { evidence: { ruleResults: { ruleId: string }[] } }
+  expect(c.name).toBe('C')
+  expect(c.design.placements.map((p) => p.instanceId).sort()).toEqual(Object.keys(live).sort())
+  for (const p of c.design.placements) for (let k = 0; k < 3; k++) expect(near(p.position_m[k], live[p.instanceId]!.position[k])).toBe(true)
+  expect(c.evidence.ruleResults.map((r) => r.ruleId).sort()).toEqual(violations)
+  expect(sameAngle(c.view.pose.alpha, cam.alpha) && near(c.view.pose.radius, cam.radius)).toBe(true)
+  expect(await livePoses(page)).toEqual(live)
+})
+
 test('one side panel at a time: the inventory closes the Essais panel, Esc closes it', async ({ page }) => {
   await page.getByRole('button', { name: 'Essais' }).click()
   await expect(page.locator('#essais-panel')).toBeVisible()
