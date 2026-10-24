@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -735,8 +735,15 @@
           transition-duration: 0.01ms !important;
         }
       }
+      /* Same, when the in-app « Mouvements réduits » setting asks for it
+         (game.ts puts .reduced-motion on <html>; the media query only knows the system). */
+      html.reduced-motion *, html.reduced-motion *::before, html.reduced-motion *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     </style>
-    <script type="module" crossorigin src="/tekpractice/jouer/assets/main-CBkVF1VM.js"></script>
+    <script type="module" crossorigin src="/tekpractice/jouer/assets/main-Dwk1N4ox.js"></script>
     <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/index-DnqJoJRJ.js">
     <link rel="modulepreload" crossorigin href="/tekpractice/jouer/assets/babylon-Be1wTWRw.js">
   </head>
