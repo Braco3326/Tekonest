@@ -54,12 +54,21 @@ function sampleFrames(page: Page, frames: number): Promise<Cam[]> {
   )
 }
 
-/** Poll until the camera stops moving (flight + inertia over). */
+/**
+ * Poll until the camera stops moving (flight + inertia over). Two equal samples
+ * alone are not proof: on software GL frames can be > 80 ms apart (the camera only
+ * moves inside a frame), and the first frames of an ease-in flight move < 1e-4.
+ * So the game must also report no flight and no inertia left (cameraMoving).
+ */
 async function settledCamera(page: Page): Promise<Cam> {
   let last: Cam | null = null
-  for (let i = 0; i < 60; i++) {
-    const c = await camera(page)
+  for (let i = 0; i < 120; i++) {
+    const { c, moving } = await page.evaluate(() => ({
+      c: window.__audioSim!.camera(),
+      moving: window.__audioSim!.cameraMoving!(),
+    }))
     if (
+      !moving &&
       last &&
       Math.abs(c.alpha - last.alpha) < 1e-4 &&
       Math.abs(c.beta - last.beta) < 1e-4 &&
@@ -67,10 +76,10 @@ async function settledCamera(page: Page): Promise<Cam> {
       Math.hypot(c.target[0] - last.target[0], c.target[1] - last.target[1], c.target[2] - last.target[2]) < 1e-4
     )
       return c
-    last = c
+    last = moving ? null : c
     await page.waitForTimeout(80)
   }
-  return last!
+  throw new Error('the camera never settled (flight or inertia still running)')
 }
 
 const angleDiff = (a: number, b: number): number => {
@@ -203,6 +212,9 @@ test('Task 4: double-click on the floor re-pivots there; angle and distance are 
 })
 
 test('Task 3: Shift + left-drag pans (target moves, angle kept); a plain left-drag orbits', async ({ page }) => {
+  // Two drags, each waited out to the end of its inertia (~40 frames): on software GL
+  // under a parallel run that alone can pass 40 s.
+  test.slow()
   await boot(page)
   const before = await settledCamera(page)
   const start = await canvasPoint(page, [
@@ -281,6 +293,33 @@ test('Task 5: right-click saves Vue 1, a drag moves the camera, Digit1 flies bac
   expect(Math.abs(back.radius - saved.radius)).toBeLessThan(0.05)
   expect(dist(back.target, saved.target)).toBeLessThan(0.05)
 
+})
+
+test('settle oracle: cameraMoving() covers drag inertia and a recall flight from the key press on', async ({ page }) => {
+  // The false "settled" windows behind the old Task 5 flake: right after a drag (inertia
+  // left, next frame far away on software GL) and right after Digit1 (flight frames ~0).
+  await bootClean(page)
+  const saved = await settledCamera(page)
+  expect(await page.evaluate(() => window.__audioSim!.cameraMoving!())).toBe(false)
+  await page.locator('#camera-presets [data-slot="1"]').click({ button: 'right' })
+  await expect(page.locator('#hud-toasts')).toContainText('Vue 1 enregistrée.')
+  const start = await canvasPoint(page, [
+    [0.5, 0.55],
+    [0.4, 0.6],
+    [0.6, 0.45],
+  ])
+  await page.mouse.move(start.x, start.y)
+  await page.mouse.down()
+  await page.mouse.move(start.x + 240, start.y + 40, { steps: 4 })
+  await page.mouse.up()
+  expect(await page.evaluate(() => window.__audioSim!.cameraMoving!())).toBe(true) // inertia left
+  await settledCamera(page)
+  await page.keyboard.press('Digit1')
+  expect(await page.evaluate(() => window.__audioSim!.cameraMoving!())).toBe(true) // the flight runs
+  const back = await settledCamera(page)
+  expect(await page.evaluate(() => window.__audioSim!.cameraMoving!())).toBe(false)
+  expect(angleDiff(back.alpha, saved.alpha)).toBeLessThan(0.02)
+  expect(angleDiff(back.beta, saved.beta)).toBeLessThan(0.02)
 })
 
 test('Task 5: a saved view survives a reload (per level key) and its button recalls it', async ({ page }) => {

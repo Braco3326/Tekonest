@@ -26,13 +26,17 @@ async function boot(page: Page, url = '/?level=a1&view=orbit'): Promise<void> {
 
 async function settledCamera(page: Page): Promise<Cam> {
   // Render on demand (Task 2): a flight's first rendered frame is at progress ~0 and the
-  // next one can be a slow software-GL frame later, so a single equal poll is not "settled".
-  // Require 3 consecutive equal polls (240 ms > one slow frame).
+  // next one can be a slow software-GL frame later, so equal polls alone are not "settled":
+  // the game must also report no flight and no inertia left (cameraMoving), then 3 equal polls.
   let last: Cam | null = null
   let stable = 0
-  for (let i = 0; i < 60; i++) {
-    const c = await camera(page)
-    if (
+  for (let i = 0; i < 120; i++) {
+    const { c, moving } = await page.evaluate(() => ({
+      c: window.__audioSim!.camera(),
+      moving: window.__audioSim!.cameraMoving!(),
+    }))
+    if (moving) stable = 0
+    else if (
       last &&
       Math.abs(c.alpha - last.alpha) < 1e-4 &&
       Math.abs(c.beta - last.beta) < 1e-4 &&
@@ -44,7 +48,7 @@ async function settledCamera(page: Page): Promise<Cam> {
     last = c
     await page.waitForTimeout(80)
   }
-  return last!
+  throw new Error('the camera never settled (flight or inertia still running)')
 }
 
 /** |shortestAngle(a, b)| */

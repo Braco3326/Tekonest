@@ -32,7 +32,7 @@ import { clockCheck } from './logic/clock'
 import { DeviceSpawner, type DeviceInstance } from './scene/DeviceSpawner'
 import { CableRenderer } from './scene/CableRenderer'
 import { CameraRig } from './scene/CameraRig'
-import { attachRenderScheduler, RenderScheduler, requestRender } from './creation/renderScheduler'
+import { attachRenderScheduler, hasInertia, RenderScheduler, requestRender } from './creation/renderScheduler'
 import { isSoftwareRenderer } from './render/detect'
 import { projectToScreen } from './scene/project'
 import { debugBodyCenter } from './scene/debugBody'
@@ -104,6 +104,12 @@ declare global {
       camera: () => { alpha: number; beta: number; radius: number; target: [number, number, number] }
       /** Frames actually rendered by the on-demand scheduler (render-on-demand e2e). */
       renders?: () => number
+      /**
+       * The orbit camera is still moving on its own: a flight is running or orbit
+       * inertia is left (e2e settle oracle; frames can be far apart on software GL,
+       * so two equal camera samples do not prove the motion is over).
+       */
+      cameraMoving?: () => boolean
       /**
        * World centre of a device's body meshes (N9), computed by its OWN loop
        * (debugBodyCenter) so the e2e checks the focus pivot non-circularly. 2D: null.
@@ -1181,6 +1187,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       return inst ? debugBodyCenter(inst) : null
     },
     renders: () => renderSchedulerRef?.renders ?? 0,
+    cameraMoving: () => rig.tweening || (scene.activeCamera === camera && hasInertia(camera)),
     camera: () => ({
       alpha: camera.alpha,
       beta: camera.beta,
