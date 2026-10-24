@@ -33,6 +33,12 @@ export type Intent =
    */
   | { type: 'SET_POSE'; instanceId: string; position: [number, number, number]; yawDeg: number; tiltDeg: number; mount: Mount }
   /**
+   * Mode Création (Task 4 review): forget a device's placement. Only produced
+   * as the inverse of a SET_POSE/REMOVE on a device that had no placement, so
+   * undo restores "no placement" exactly instead of inventing one.
+   */
+  | { type: 'CLEAR_POSE'; instanceId: string }
+  /**
    * Mode Création (C5/C6): replace the whole design (template, rig or place
    * load). Its inverse is an APPLY_DESIGN of the design it replaced.
    */

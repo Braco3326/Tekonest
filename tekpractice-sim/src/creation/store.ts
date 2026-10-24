@@ -14,7 +14,7 @@ import type { LevelT, Registry } from '../engine/CatalogLoader'
 import type { ConnectResult, ControlValue, PortRef, RigSnapshot, TeachingEvent } from '../engine/types'
 import type { Intent } from '../ui/intents'
 import type { DesignState, Mount, Placement } from '../trials/trial'
-import { captureDesignFrom, sanitizePlacements } from '../scene/designApplier'
+import { captureDesignFrom, isFinitePlacement, sanitizePlacements } from '../scene/designApplier'
 import { phantomCheck } from '../logic/phantom'
 import { gpioCheck } from '../logic/gpio'
 import { mixMinusCheck } from '../logic/mixMinus'
@@ -41,8 +41,16 @@ export function creationEvaluator(registry: Registry): RuleEvaluator {
   })
 }
 
+/** What a design load could not restore (reported, never silent). */
+export interface DroppedItems {
+  /** Instance ids whose device is unknown (or duplicated). */
+  devices: string[]
+  cables: { a: PortRef; b: PortRef; code: string; message: string }[]
+  controls: { instance: string; control: string; code: string; message: string }[]
+}
+
 export type DispatchResult =
-  | { ok: true; normalized: Intent; inverse: Intent[]; connectionId?: string }
+  | { ok: true; normalized: Intent; inverse: Intent[]; connectionId?: string; dropped?: DroppedItems }
   | { ok: false; error: { code: string; message: string; ruleId?: string }; subjects: PortRef[] }
 
 export interface StoreChange {
@@ -50,9 +58,39 @@ export interface StoreChange {
   result: DispatchResult
 }
 
+export type LoadReport = { ok: true; dropped: DroppedItems } | { ok: false; error: { code: string; message: string } }
+
 const clone = <T>(v: T): T => structuredClone(v)
 const EMPTY: DesignState = { roomId: null, rig: { instances: [], connections: [], controls: {} }, placements: [] }
 const DEFAULT_MOUNT: Mount = 'floor'
+const MOUNTS: readonly string[] = ['floor', 'stand', 'flown']
+
+const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v)
+const isPortRef = (v: unknown): v is PortRef => isObj(v) && typeof v.instance === 'string' && typeof v.port === 'string'
+
+/**
+ * Shape check of untrusted design data (autosave, templates, intents from the
+ * shell). Returns why it is unusable, or null. Placements must all be finite.
+ */
+function designShapeError(d: unknown): string | null {
+  if (!isObj(d)) return 'design is not an object'
+  if (d.roomId !== null && typeof d.roomId !== 'string') return 'roomId must be a string or null'
+  const rig = d.rig
+  if (!isObj(rig)) return 'design.rig is missing'
+  if (!Array.isArray(rig.instances)) return 'rig.instances must be an array'
+  if (!rig.instances.every((i) => isObj(i) && typeof i.instanceId === 'string' && typeof i.deviceId === 'string'))
+    return 'rig.instances entries need string instanceId and deviceId'
+  if (!Array.isArray(rig.connections)) return 'rig.connections must be an array'
+  if (!rig.connections.every((c) => isObj(c) && isPortRef(c.a) && isPortRef(c.b))) return 'rig.connections entries need two port refs'
+  if (!isObj(rig.controls) || !Object.values(rig.controls).every(isObj)) return 'rig.controls must be an object of objects'
+  if (!Array.isArray(d.placements)) return 'design.placements must be an array'
+  for (const p of d.placements) {
+    if (!isObj(p) || typeof p.instanceId !== 'string' || typeof p.deviceId !== 'string') return 'placements need string ids'
+    if (!isFinitePlacement(p)) return `placement of "${p.instanceId}" is not finite`
+    if (p.mount !== undefined && !MOUNTS.includes(p.mount as string)) return `placement of "${p.instanceId}" has an unknown mount`
+  }
+  return null
+}
 
 const fail = (code: string, message: string, subjects: PortRef[] = [], ruleId?: string): DispatchResult => ({
   ok: false,
@@ -69,14 +107,23 @@ export class CreationStore {
   private rev = 0
   private seq = new Map<string, number>()
   private subs = new Set<(c: StoreChange) => void>()
+  /** How the initial design loaded. On failure the store starts empty (never throws). */
+  readonly initialLoad: LoadReport
 
   constructor(
-    registry: Registry,
+    private registry: Registry,
     private evaluator: RuleEvaluator,
     initial: DesignState = EMPTY,
   ) {
     this.graph = new ConnectionGraph(registry, [])
-    this.load(initial)
+    const built = this.build(initial)
+    if (built.ok) {
+      this.commit(built)
+      this.initialLoad = { ok: true, dropped: built.dropped }
+    } else {
+      console.error(`[creation] initial design rejected (${built.code}): ${built.message}`)
+      this.initialLoad = { ok: false, error: { code: built.code, message: built.message } }
+    }
     this.lastEvents = this.evaluator.evaluate(this.graph)
   }
 
@@ -127,13 +174,28 @@ export class CreationStore {
     return id
   }
 
+  /** Never throws: a rejected or malformed intent is a failed result that changes nothing. */
   dispatch(intent: Intent): DispatchResult {
-    const result = this.apply(intent)
+    let result: DispatchResult
+    try {
+      result = this.apply(intent)
+    } catch (e) {
+      // Defensive: every branch validates before mutating, so this is a bug report, not a path.
+      console.error('[creation] dispatch failed', intent, e)
+      return fail('INTERNAL', e instanceof Error ? e.message : String(e))
+    }
     if (result.ok) {
       this.lastEvents = this.evaluator.evaluate(this.graph)
       this.rev += 1
       const change: StoreChange = { intent, result }
-      for (const fn of [...this.subs]) fn(change)
+      // One throwing subscriber must not starve the others (or the caller).
+      for (const fn of [...this.subs]) {
+        try {
+          fn(change)
+        } catch (e) {
+          console.error('[creation] subscriber failed', e)
+        }
+      }
     }
     return result
   }
@@ -168,42 +230,42 @@ export class CreationStore {
       }
       case 'SET_POSE': {
         if (!this.hasInstance(intent.instanceId)) return fail('UNKNOWN_INSTANCE', `no instance "${intent.instanceId}"`)
+        if (!MOUNTS.includes(intent.mount)) return fail('INVALID_POSE', `unknown mount "${String(intent.mount)}"`)
         const before = this.placements.get(intent.instanceId)
-        const deviceId = this.deviceOf(intent.instanceId)
-        const next: Placement = {
-          instanceId: intent.instanceId,
-          deviceId,
-          position_m: [intent.position[0], intent.position[1], intent.position[2]],
-          yawDeg: intent.yawDeg,
-          tiltDeg: intent.tiltDeg,
-          mount: intent.mount,
-        }
+        const next = makePlacement(intent.instanceId, this.deviceOf(intent.instanceId), intent.position, intent.yawDeg, intent.tiltDeg, intent.mount)
         if (!isPoseFinite(next)) return fail('INVALID_POSE', `pose of "${intent.instanceId}" is not finite`)
         this.placements.set(intent.instanceId, next)
-        const prev = before ?? { position_m: [0, 0, 0] as [number, number, number], yawDeg: 0 }
         return {
           ok: true,
           normalized: { type: 'SET_POSE', instanceId: intent.instanceId, position: [...next.position_m], yawDeg: next.yawDeg, tiltDeg: intent.tiltDeg, mount: intent.mount },
-          inverse: [
-            {
-              type: 'SET_POSE',
-              instanceId: intent.instanceId,
-              position: [prev.position_m[0], prev.position_m[1], prev.position_m[2]],
-              yawDeg: prev.yawDeg,
-              tiltDeg: before?.tiltDeg ?? 0,
-              mount: before?.mount ?? DEFAULT_MOUNT,
-            },
-          ],
+          // No placement before → undo clears it again (never invents one).
+          inverse: [before ? poseIntent(before) : { type: 'CLEAR_POSE', instanceId: intent.instanceId }],
+        }
+      }
+      case 'CLEAR_POSE': {
+        if (!this.hasInstance(intent.instanceId)) return fail('UNKNOWN_INSTANCE', `no instance "${intent.instanceId}"`)
+        const before = this.placements.get(intent.instanceId)
+        this.placements.delete(intent.instanceId)
+        return {
+          ok: true,
+          normalized: { type: 'CLEAR_POSE', instanceId: intent.instanceId },
+          inverse: [before ? poseIntent(before) : { type: 'CLEAR_POSE', instanceId: intent.instanceId }],
         }
       }
       case 'APPLY_DESIGN': {
+        // Atomic: the new rig is built on a scratch graph and swapped in only
+        // when it is usable, so a failure never touches the live rig (no
+        // restore, connection ids unchanged, no notify).
+        const built = this.build(intent.design)
+        if (!built.ok) return fail(built.code, built.message)
         const before = this.design()
-        const loaded = this.load(intent.design)
-        if (!loaded.ok) {
-          this.load(before) // every device unknown: restore, nothing changes
-          return fail('UNKNOWN_DEVICE', `no device of the design exists in the catalog (${loaded.skipped.join(', ')})`)
+        this.commit(built)
+        return {
+          ok: true,
+          normalized: { type: 'APPLY_DESIGN', design: this.design() },
+          inverse: [{ type: 'APPLY_DESIGN', design: before }],
+          dropped: built.dropped,
         }
-        return { ok: true, normalized: { type: 'APPLY_DESIGN', design: this.design() }, inverse: [{ type: 'APPLY_DESIGN', design: before }] }
       }
       case 'LOAD_RIG':
       case 'RESTORE_INSTANCE':
@@ -212,6 +274,7 @@ export class CreationStore {
   }
 
   private spawn(intent: Extract<Intent, { type: 'SPAWN' }>): DispatchResult {
+    if (intent.mount !== undefined && !MOUNTS.includes(intent.mount)) return fail('INVALID_POSE', `unknown mount "${String(intent.mount)}"`)
     const instanceId = intent.instanceId ?? this.newInstanceId(intent.deviceId)
     const added = this.graph.addInstance(instanceId, intent.deviceId)
     if (!added.ok) return fail(added.code, added.message)
@@ -223,15 +286,7 @@ export class CreationStore {
         return fail(r.code, r.message)
       }
     }
-    const pos = intent.position ?? [0, 0, 0]
-    const placement: Placement = {
-      instanceId,
-      deviceId: intent.deviceId,
-      position_m: [pos[0], pos[1], pos[2]],
-      yawDeg: intent.rotationY ?? 0,
-      ...(intent.tiltDeg !== undefined ? { tiltDeg: intent.tiltDeg } : {}),
-      ...(intent.mount !== undefined ? { mount: intent.mount } : {}),
-    }
+    const placement = makePlacement(instanceId, intent.deviceId, intent.position ?? [0, 0, 0], intent.rotationY ?? 0, intent.tiltDeg, intent.mount)
     if (!isPoseFinite(placement)) {
       this.graph.removeInstance(instanceId)
       return fail('INVALID_POSE', `pose of "${instanceId}" is not finite`)
@@ -264,16 +319,22 @@ export class CreationStore {
       type: 'SPAWN',
       instanceId,
       deviceId: inst.deviceId,
-      position: p ? [p.position_m[0], p.position_m[1], p.position_m[2]] : [0, 0, 0],
-      rotationY: p?.yawDeg ?? 0,
       controls: { ...inst.controls },
-      ...(p?.tiltDeg !== undefined ? { tiltDeg: p.tiltDeg } : {}),
-      ...(p?.mount !== undefined ? { mount: p.mount } : {}),
+      ...(p
+        ? {
+            position: [p.position_m[0], p.position_m[1], p.position_m[2]] as [number, number, number],
+            rotationY: p.yawDeg,
+            ...(p.tiltDeg !== undefined ? { tiltDeg: p.tiltDeg } : {}),
+            ...(p.mount !== undefined ? { mount: p.mount } : {}),
+          }
+        : {}),
     }
+    // SPAWN always places; a device that had no placement gets it cleared again.
+    const unplace: Intent[] = p ? [] : [{ type: 'CLEAR_POSE', instanceId }]
     return {
       ok: true,
       normalized: { type: 'REMOVE', instanceId },
-      inverse: [respawn, ...wires.map((w): Intent => ({ type: 'CONNECT', a: ref(w.a), b: ref(w.b) }))],
+      inverse: [respawn, ...unplace, ...wires.map((w): Intent => ({ type: 'CONNECT', a: ref(w.a), b: ref(w.b) }))],
     }
   }
 
@@ -300,26 +361,61 @@ export class CreationStore {
   // ── helpers ───────────────────────────────────────────────────────────────
 
   /**
-   * Replace everything with `design`. Unknown devices are skipped (and their
-   * cables, controls and placements with them); `ok` is false only when the
-   * design had devices and none of them could be added.
+   * Build `design` on a SCRATCH graph without touching the live rig. Fails
+   * (nothing built) on a malformed design, a non-finite placement, or when the
+   * design has devices and none of them exists in the catalog. Otherwise the
+   * unknown devices, and the cables/controls the graph refuses, are reported
+   * in `dropped` (and warned), never silently lost. Never throws.
    */
-  private load(design: DesignState): { ok: boolean; skipped: string[] } {
-    this.graph.clear()
-    this.placements.clear()
-    const skipped: string[] = []
-    for (const { instanceId, deviceId } of design.rig.instances) {
-      if (this.graph.addInstance(instanceId, deviceId).ok) this.bumpSeq(instanceId)
-      else skipped.push(instanceId)
+  private build(
+    design: unknown,
+  ):
+    | { ok: true; graph: ConnectionGraph; placements: Map<string, Placement>; roomId: string | null; ids: string[]; dropped: DroppedItems }
+    | { ok: false; code: string; message: string } {
+    try {
+      const shape = designShapeError(design)
+      if (shape) return { ok: false, code: 'INVALID_DESIGN', message: shape }
+      const d = design as DesignState
+      const total = d.rig.instances.length
+      const unknown = d.rig.instances.filter((i) => !this.registry.deviceById.has(i.deviceId)).map((i) => i.instanceId)
+      if (total > 0 && unknown.length === total)
+        return { ok: false, code: 'UNKNOWN_DEVICE', message: `no device of the design exists in the catalog (${unknown.join(', ')})` }
+
+      const graph = new ConnectionGraph(this.registry, [])
+      const dropped: DroppedItems = { devices: [], cables: [], controls: [] }
+      const ids: string[] = []
+      for (const { instanceId, deviceId } of d.rig.instances) {
+        if (graph.addInstance(instanceId, deviceId).ok) ids.push(instanceId)
+        else dropped.devices.push(instanceId)
+      }
+      for (const c of d.rig.connections) {
+        const r = graph.connect(c.a, c.b)
+        if (!r.ok) dropped.cables.push({ a: ref(c.a), b: ref(c.b), code: r.code, message: r.message })
+      }
+      for (const [instance, ctrls] of Object.entries(d.rig.controls))
+        for (const [control, value] of Object.entries(ctrls)) {
+          const r = graph.setControl(instance, control, value)
+          if (!r.ok) dropped.controls.push({ instance, control, code: r.code, message: r.message })
+        }
+      const present = new Set(ids)
+      const placements = new Map<string, Placement>()
+      for (const p of sanitizePlacements(d))
+        if (present.has(p.instanceId))
+          placements.set(p.instanceId, makePlacement(p.instanceId, p.deviceId, p.position_m, p.yawDeg, p.tiltDeg, p.mount))
+      if (dropped.devices.length || dropped.cables.length || dropped.controls.length)
+        console.warn('[creation] design loaded with dropped items', dropped)
+      return { ok: true, graph, placements, roomId: d.roomId, ids, dropped }
+    } catch (e) {
+      return { ok: false, code: 'INVALID_DESIGN', message: e instanceof Error ? e.message : String(e) }
     }
-    if (skipped.length > 0) console.warn(`[creation] skipped unknown devices: ${skipped.join(', ')}`)
-    for (const c of design.rig.connections) this.graph.connect(c.a, c.b)
-    for (const [inst, ctrls] of Object.entries(design.rig.controls))
-      for (const [control, value] of Object.entries(ctrls)) this.graph.setControl(inst, control, value)
-    for (const p of sanitizePlacements(design)) if (this.hasInstance(p.instanceId)) this.placements.set(p.instanceId, p)
-    this.roomId = design.roomId
-    const total = design.rig.instances.length
-    return { ok: total === 0 || skipped.length < total, skipped }
+  }
+
+  /** Swap a built design in (cannot fail). */
+  private commit(built: { graph: ConnectionGraph; placements: Map<string, Placement>; roomId: string | null; ids: string[] }): void {
+    this.graph = built.graph
+    this.placements = built.placements
+    this.roomId = built.roomId
+    for (const id of built.ids) this.bumpSeq(id)
   }
 
   private connectionById(id: string): { a: PortRef; b: PortRef } | undefined {
@@ -343,6 +439,38 @@ export class CreationStore {
     this.seq.set(deviceId, Math.max(this.seq.get(deviceId) ?? 0, Number(n)))
   }
 }
+
+/**
+ * A placement in canonical form: tilt 0 and mount 'floor' are the defaults and
+ * are left out, so an untilted floor device looks exactly like a legacy
+ * placement (same fingerprint) and undo round-trips compare equal.
+ */
+function makePlacement(
+  instanceId: string,
+  deviceId: string,
+  position: readonly number[],
+  yawDeg: number,
+  tiltDeg: number | undefined,
+  mount: Mount | undefined,
+): Placement {
+  return {
+    instanceId,
+    deviceId,
+    position_m: [position[0], position[1], position[2]],
+    yawDeg,
+    ...(tiltDeg !== undefined && tiltDeg !== 0 ? { tiltDeg } : {}),
+    ...(mount !== undefined && mount !== DEFAULT_MOUNT ? { mount } : {}),
+  }
+}
+
+const poseIntent = (p: Placement): Intent => ({
+  type: 'SET_POSE',
+  instanceId: p.instanceId,
+  position: [p.position_m[0], p.position_m[1], p.position_m[2]],
+  yawDeg: p.yawDeg,
+  tiltDeg: p.tiltDeg ?? 0,
+  mount: p.mount ?? DEFAULT_MOUNT,
+})
 
 const isPoseFinite = (p: Placement): boolean =>
   p.position_m.every((v) => Number.isFinite(v)) && Number.isFinite(p.yawDeg) && (p.tiltDeg === undefined || Number.isFinite(p.tiltDeg))

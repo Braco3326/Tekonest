@@ -50,6 +50,21 @@ describe('CreationStore drives the reference rig through intents only', () => {
     expect(s.design().rig.connections).toHaveLength(1)
     expect(s.design().rig.instances.some((i) => i.instanceId === 'q')).toBe(true)
   })
+  it('REMOVE inverse restores pose (incl. tilt/mount), controls and cables exactly', () => {
+    const s = store()
+    s.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm', position: [1, 0, 2] })
+    s.dispatch({ type: 'SPAWN', deviceId: 'axia-iq', instanceId: 'x', position: [3, 1, -2], rotationY: 40, tiltDeg: -5, mount: 'stand' })
+    s.dispatch({ type: 'SET_CONTROL', instance: 'x', control: 'monitor-mute', value: true })
+    s.dispatch({ type: 'CONNECT', a: { instance: 'm', port: 'out-xlr' }, b: { instance: 'x', port: 'in-mic-1' } })
+    const before = s.design()
+    const r = s.dispatch({ type: 'REMOVE', instanceId: 'x' })
+    for (const i of r.ok ? r.inverse : []) expect(s.dispatch(i).ok).toBe(true)
+    const after = s.design()
+    expect(after.placements.find((p) => p.instanceId === 'x')).toEqual(before.placements.find((p) => p.instanceId === 'x'))
+    expect(after.rig.controls.x).toEqual(before.rig.controls.x)
+    expect(after.rig.controls.x['monitor-mute']).toBe(true)
+    expect(after.rig.connections).toEqual(before.rig.connections)
+  })
   it('APPLY_DESIGN replaces everything; its inverse is the previous design', () => {
     const s = store()
     s.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm' })
@@ -141,6 +156,118 @@ describe('CreationStore edge cases', () => {
     const s = store()
     const r = s.dispatch({ type: 'APPLY_DESIGN', design: { roomId: null, rig: { instances: [{ instanceId: 'z', deviceId: 'gone' }], connections: [], controls: {} }, placements: [] } })
     expect(!r.ok && r.error.code).toBe('UNKNOWN_DEVICE')
+  })
+})
+
+describe('CreationStore review fixes (Task 4 Fix 1)', () => {
+  /** A small rig with a pose, a non-default control and a cable. */
+  const rigged = () => {
+    const s = store()
+    s.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm', position: [1, 0, 2] })
+    s.dispatch({ type: 'SPAWN', deviceId: 'axia-iq', instanceId: 'x', position: [3, 0, 0], rotationY: 90 })
+    s.dispatch({ type: 'SET_CONTROL', instance: 'x', control: 'monitor-mute', value: true })
+    const c = s.dispatch({ type: 'CONNECT', a: { instance: 'm', port: 'out-xlr' }, b: { instance: 'x', port: 'in-mic-1' } })
+    return { s, connectionId: c.ok ? c.connectionId! : '' }
+  }
+  const bad: [string, unknown][] = [
+    ['missing rig', { roomId: null, placements: [] }],
+    ['rig.instances not an array', { roomId: null, rig: { instances: 3, connections: [], controls: {} }, placements: [] }],
+    ['missing placements', { roomId: null, rig: { instances: [], connections: [], controls: {} } }],
+    ['null design', null],
+    ['non-finite placement', { roomId: null, rig: { instances: [{ instanceId: 'm2', deviceId: 'shure-sm58' }], connections: [], controls: {} }, placements: [{ instanceId: 'm2', deviceId: 'shure-sm58', position_m: [NaN, 0, 0], yawDeg: 0 }] }],
+    ['only unknown devices', { roomId: null, rig: { instances: [{ instanceId: 'z', deviceId: 'gone' }], connections: [], controls: {} }, placements: [] }],
+  ]
+  for (const [name, design] of bad)
+    it(`a failed APPLY_DESIGN (${name}) never throws and leaves the previous design, ids and revision intact, without notifying`, () => {
+      const { s, connectionId } = rigged()
+      const before = s.design()
+      const rev = s.revision
+      let n = 0
+      s.subscribe(() => n++)
+      let r: ReturnType<typeof s.dispatch> | undefined
+      expect(() => (r = s.dispatch({ type: 'APPLY_DESIGN', design: design as never }))).not.toThrow()
+      expect(r!.ok).toBe(false)
+      expect(s.design()).toEqual(before)
+      expect(s.design().rig.controls.x['monitor-mute']).toBe(true)
+      expect(s.connectionAt({ instance: 'm', port: 'out-xlr' })).toBe(connectionId)
+      expect(s.revision).toBe(rev)
+      expect(n).toBe(0)
+    })
+  it('APPLY_DESIGN reports dropped devices, cables and controls instead of dropping them silently', () => {
+    const s = store()
+    const r = s.dispatch({
+      type: 'APPLY_DESIGN',
+      design: {
+        roomId: null,
+        rig: {
+          instances: [{ instanceId: 'm', deviceId: 'shure-sm58' }, { instanceId: 'x', deviceId: 'axia-iq' }, { instanceId: 'z', deviceId: 'gone' }],
+          connections: [
+            { a: { instance: 'm', port: 'out-xlr' }, b: { instance: 'x', port: 'in-mic-1' } },
+            { a: { instance: 'x', port: 'power-in' }, b: { instance: 'x', port: 'in-line-1' } },
+            { a: { instance: 'z', port: 'out' }, b: { instance: 'x', port: 'in-line-1' } },
+          ],
+          controls: { x: { 'monitor-mute': true, 'no-such-control': true }, z: { k: true } },
+        },
+        placements: [],
+      },
+    })
+    expect(r.ok).toBe(true)
+    if (!r.ok) return
+    expect(r.dropped?.devices).toEqual(['z'])
+    expect(r.dropped?.cables.map((c) => [c.a.instance, c.a.port, c.b.instance, c.b.port])).toEqual([
+      ['x', 'power-in', 'x', 'in-line-1'],
+      ['z', 'out', 'x', 'in-line-1'],
+    ])
+    expect(r.dropped?.controls.map((c) => `${c.instance}.${c.control}`)).toEqual(['x.no-such-control', 'z.k'])
+    expect(s.design().rig.connections).toHaveLength(1)
+    expect(s.design().rig.controls.x['monitor-mute']).toBe(true)
+  })
+  it('a clean APPLY_DESIGN reports nothing dropped', () => {
+    const s = store()
+    const r = s.dispatch({ type: 'APPLY_DESIGN', design: { roomId: null, rig: { instances: [{ instanceId: 'm', deviceId: 'shure-sm58' }], connections: [], controls: {} }, placements: [] } })
+    expect(r.ok && r.dropped).toEqual({ devices: [], cables: [], controls: [] })
+  })
+  it('an invalid initial design never throws: the store starts empty and says why', () => {
+    const r = makeRegistry()
+    let s: CreationStore | undefined
+    expect(() => (s = new CreationStore(r, creationEvaluator(r), { roomId: null } as never))).not.toThrow()
+    expect(s!.design().rig.instances).toEqual([])
+    expect(s!.initialLoad.ok).toBe(false)
+  })
+  it('SET_POSE on a device without a placement: undo restores "no placement" exactly', () => {
+    const r = makeRegistry()
+    const s = new CreationStore(r, creationEvaluator(r), { roomId: null, rig: { instances: [{ instanceId: 'm', deviceId: 'shure-sm58' }], connections: [], controls: {} }, placements: [] })
+    const before = s.design()
+    const p = s.dispatch({ type: 'SET_POSE', instanceId: 'm', position: [1, 0, 1], yawDeg: 10, tiltDeg: 0, mount: 'floor' })
+    expect(s.design().placements).toHaveLength(1)
+    for (const i of p.ok ? p.inverse : []) expect(s.dispatch(i).ok).toBe(true)
+    expect(s.design()).toEqual(before)
+    expect(s.design().placements).toEqual([])
+  })
+  it('REMOVE of a device without a placement: undo brings it back still without a placement', () => {
+    const r = makeRegistry()
+    const s = new CreationStore(r, creationEvaluator(r), { roomId: null, rig: { instances: [{ instanceId: 'm', deviceId: 'shure-sm58' }], connections: [], controls: {} }, placements: [] })
+    const before = s.design()
+    const rm = s.dispatch({ type: 'REMOVE', instanceId: 'm' })
+    for (const i of rm.ok ? rm.inverse : []) expect(s.dispatch(i).ok).toBe(true)
+    expect(s.design()).toEqual(before)
+  })
+  it('a throwing subscriber does not stop the others, and dispatch still returns its result', () => {
+    const s = store()
+    const errors: unknown[] = []
+    const orig = console.error
+    console.error = (...a: unknown[]) => void errors.push(a)
+    try {
+      let n = 0
+      s.subscribe(() => { throw new Error('boom') })
+      s.subscribe(() => n++)
+      const r = s.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm' })
+      expect(r.ok).toBe(true)
+      expect(n).toBe(1)
+      expect(errors).toHaveLength(1)
+    } finally {
+      console.error = orig
+    }
   })
   it('events() is the R4–R8 evaluation after the last change (U 87 into an ISA One without +48 V → R4)', () => {
     const s = store()
