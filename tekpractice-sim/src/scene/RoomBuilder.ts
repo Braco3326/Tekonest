@@ -6,7 +6,16 @@
  * (facing inward): the orbit camera outside the room sees straight in.
  * Never pickable — gear and ports stay the only interactive meshes.
  */
-import { Color3, HemisphericLight, Mesh, MeshBuilder, Scene, StandardMaterial, TransformNode, Vector3 } from '@babylonjs/core'
+import {
+  Color3,
+  HemisphericLight,
+  Mesh,
+  MeshBuilder,
+  Scene,
+  StandardMaterial,
+  TransformNode,
+  Vector3,
+} from '@babylonjs/core'
 import type { RoomLayout } from '../explore/roomLayout'
 import type { RoomFileT } from '../explore/roomSchema'
 
@@ -42,7 +51,12 @@ export interface RoomTheme {
   roomLight: boolean
 }
 
-export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout, theme?: RoomTheme): TransformNode {
+export function buildRoom(
+  scene: Scene,
+  room: RoomFileT,
+  layout: RoomLayout,
+  theme?: RoomTheme
+): TransformNode {
   const root = new TransformNode(`room:${room.id}`, scene)
   const mat = (name: string, hex: string, alpha = 1): StandardMaterial => {
     const m = new StandardMaterial(`mat:room:${name}`, scene)
@@ -77,11 +91,17 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout, the
     return m
   }
 
-  const floor = surface(own(MeshBuilder.CreateGround('room:floor', { width: layout.width, height: layout.length }, scene)))
+  const floor = surface(
+    own(
+      MeshBuilder.CreateGround('room:floor', { width: layout.width, height: layout.length }, scene)
+    )
+  )
   floor.material = floorMat
 
   // Ceiling: a plane facing DOWN (visible from inside, culled from above).
-  const ceiling = own(MeshBuilder.CreatePlane('room:ceiling', { width: layout.width, height: layout.length }, scene))
+  const ceiling = own(
+    MeshBuilder.CreatePlane('room:ceiling', { width: layout.width, height: layout.length }, scene)
+  )
   ceiling.rotation.x = -Math.PI / 2
   ceiling.position.y = layout.height
   ceiling.material = ceilMat
@@ -90,11 +110,20 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout, the
     const len = Math.hypot(s.x1 - s.x0, s.z1 - s.z0)
     const h = s.top - s.bottom
     if (len < 0.01 || h < 0.01) continue
-    const plane = own(MeshBuilder.CreatePlane(`room:wall:${s.wall}:${i}`, { width: len, height: h }, scene))
+    const plane = own(
+      MeshBuilder.CreatePlane(`room:wall:${s.wall}:${i}`, { width: len, height: h }, scene)
+    )
     plane.position = new Vector3((s.x0 + s.x1) / 2, s.bottom + h / 2, (s.z0 + s.z1) / 2)
     // A plane's front face points −Z; rotation.y = θ turns its normal to
     // (−sin θ, 0, −cos θ). Each wall must face the room centre.
-    plane.rotation.y = s.wall === 'front' ? Math.PI : s.wall === 'rear' ? 0 : s.wall === 'left' ? -Math.PI / 2 : Math.PI / 2
+    plane.rotation.y =
+      s.wall === 'front'
+        ? Math.PI
+        : s.wall === 'rear'
+          ? 0
+          : s.wall === 'left'
+            ? -Math.PI / 2
+            : Math.PI / 2
     plane.material = wallMat
   }
 
@@ -102,11 +131,17 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout, the
     const tint = ZONE_TINT[z.kind] ?? '#9AA3B2'
     const raised = z.y > 0.05
     if (raised) {
-      const deck = surface(own(MeshBuilder.CreateBox(`room:zone:${z.id}`, { width: z.w, depth: z.d, height: z.y }, scene)))
+      const deck = surface(
+        own(
+          MeshBuilder.CreateBox(`room:zone:${z.id}`, { width: z.w, depth: z.d, height: z.y }, scene)
+        )
+      )
       deck.position = new Vector3(z.x, z.y / 2, z.z)
       deck.material = zoneMat ?? mat(`zone:${z.id}`, tint, 1)
     } else {
-      const mark = surface(own(MeshBuilder.CreateGround(`room:zone:${z.id}`, { width: z.w, height: z.d }, scene)))
+      const mark = surface(
+        own(MeshBuilder.CreateGround(`room:zone:${z.id}`, { width: z.w, height: z.d }, scene))
+      )
       mark.position = new Vector3(z.x, 0.005, z.z)
       if (zoneMat) mark.material = zoneMat
       else {

@@ -117,7 +117,11 @@ function portGrid(n: number, w: number, h: number, d: number): PortSlot[] {
     const col = i % cols
     const row = Math.floor(i / cols)
     slots.push({
-      local: new Vector3((col - (cols - 1) / 2) * sx, h / 2 + ((rows - 1) / 2 - row) * sy, -d / 2 - 0.015),
+      local: new Vector3(
+        (col - (cols - 1) / 2) * sx,
+        h / 2 + ((rows - 1) / 2 - row) * sy,
+        -d / 2 - 0.015
+      ),
       pickDiameter,
     })
   }
@@ -155,7 +159,14 @@ function portGridThemed(n: number, h: number, d: number): PortSlot[] {
   for (let i = 0; i < n; i++) {
     const col = i % cols
     const row = Math.floor(i / cols)
-    slots.push({ local: new Vector3((col - (cols - 1) / 2) * sx, cy + ((rows - 1) / 2 - row) * sy, -d / 2 - 0.015), pickDiameter: 0.08 })
+    slots.push({
+      local: new Vector3(
+        (col - (cols - 1) / 2) * sx,
+        cy + ((rows - 1) / 2 - row) * sy,
+        -d / 2 - 0.015
+      ),
+      pickDiameter: 0.08,
+    })
   }
   return slots
 }
@@ -201,7 +212,7 @@ export class DeviceSpawner {
   constructor(
     private scene: Scene,
     private registry: Registry,
-    private theme?: DeviceTheme,
+    private theme?: DeviceTheme
   ) {}
 
   spawn(deviceId: string, position: Vector3, instanceId = deviceId): DeviceInstance {
@@ -248,7 +259,7 @@ export class DeviceSpawner {
     instanceId: string,
     root: TransformNode,
     portMarkers: Map<string, Mesh>,
-    instance: DeviceInstance,
+    instance: DeviceInstance
   ): Promise<boolean> {
     const deviceId = device.id
     return SceneLoader.ImportMeshAsync(null, assetUrl('assets/'), `${deviceId}.glb`, this.scene)
@@ -275,7 +286,9 @@ export class DeviceSpawner {
         // THIS instance's box: a global name lookup could hit a respawned twin with the same id.
         root.getChildMeshes(true, (n) => n.name === `box:${instanceId}`)[0]?.setEnabled(false)
         instance.assetStatus = 'glb'
-        console.info(`[assets] ${deviceId}: glb chargé (${meshes.length} meshes, scale ×${scale.toFixed(3)})`)
+        console.info(
+          `[assets] ${deviceId}: glb chargé (${meshes.length} meshes, scale ×${scale.toFixed(3)})`
+        )
         return true
       })
       .catch((e: unknown) => {
@@ -293,9 +306,10 @@ export class DeviceSpawner {
    */
   private normalizeModel(deviceId: string, glbRoot: AbstractMesh): number {
     const real = REAL_SIZE_M[deviceId]
-    const origin = glbRoot.parent instanceof TransformNode
-      ? (glbRoot.parent as TransformNode).getAbsolutePosition()
-      : Vector3.Zero()
+    const origin =
+      glbRoot.parent instanceof TransformNode
+        ? (glbRoot.parent as TransformNode).getAbsolutePosition()
+        : Vector3.Zero()
 
     glbRoot.computeWorldMatrix(true)
     let bounds = glbRoot.getHierarchyBoundingVectors()
@@ -315,7 +329,9 @@ export class DeviceSpawner {
       .getDescendants(false)
       .filter((n): n is TransformNode => n instanceof TransformNode && /port[_:]/i.test(n.name))
     if (empties.length) {
-      console.info(`[assets] ${deviceId}: ${empties.length} empties port_* trouvés — ${empties.map((n) => n.name).join(', ')}`)
+      console.info(
+        `[assets] ${deviceId}: ${empties.length} empties port_* trouvés — ${empties.map((n) => n.name).join(', ')}`
+      )
       let meanZ = 0
       for (const n of empties) meanZ += n.getAbsolutePosition().z - origin.z
       meanZ /= empties.length
@@ -360,7 +376,7 @@ export class DeviceSpawner {
     device: DeviceT,
     instanceId: string,
     glbRoot: AbstractMesh,
-    portMarkers: Map<string, Mesh>,
+    portMarkers: Map<string, Mesh>
   ): void {
     if (device.ports.length === 0) return
     const root = glbRoot.parent as TransformNode
@@ -406,7 +422,12 @@ export class DeviceSpawner {
         label.computeWorldMatrix(true)
       }
     })
-    if (this.theme) this.declutterLabels(instanceId, root, device.ports.map((p) => p.portId))
+    if (this.theme)
+      this.declutterLabels(
+        instanceId,
+        root,
+        device.ports.map((p) => p.portId)
+      )
   }
 
   /**
@@ -416,9 +437,13 @@ export class DeviceSpawner {
    * twice the gap to its nearest row neighbour — labels never run into each other.
    */
   private declutterLabels(instanceId: string, root: TransformNode, portIds: string[]): void {
-    const own = (name: string) => root.getChildMeshes(true, (n) => n.name === name)[0] as Mesh | undefined
+    const own = (name: string) =>
+      root.getChildMeshes(true, (n) => n.name === name)[0] as Mesh | undefined
     const items = portIds
-      .map((id) => ({ marker: own(`port:${instanceId}:${id}`), label: own(`portlabel:${instanceId}:${id}`) }))
+      .map((id) => ({
+        marker: own(`port:${instanceId}:${id}`),
+        label: own(`portlabel:${instanceId}:${id}`),
+      }))
       .filter((it): it is { marker: Mesh; label: Mesh } => !!it.marker && !!it.label)
     const rows: (typeof items)[] = []
     for (const it of [...items].sort((a, b) => b.marker.position.y - a.marker.position.y)) {
@@ -426,18 +451,28 @@ export class DeviceSpawner {
       if (row) row.push(it)
       else rows.push([it])
     }
-    const textW = (l: Mesh): number => (l.metadata?.textW as number | undefined) ?? THEMED_LABELS.port.w
+    const textW = (l: Mesh): number =>
+      (l.metadata?.textW as number | undefined) ?? THEMED_LABELS.port.w
     for (const row of rows) {
       row.sort((a, b) => a.marker.position.x - b.marker.position.x)
       // Stagger only a row whose neighbours are closer than their labels are wide (the themed grid never is).
-      const stagger = row.some((it, i) => i > 0 && it.marker.position.x - row[i - 1].marker.position.x < (textW(it.label) + textW(row[i - 1].label)) / 2)
+      const stagger = row.some(
+        (it, i) =>
+          i > 0 &&
+          it.marker.position.x - row[i - 1].marker.position.x <
+            (textW(it.label) + textW(row[i - 1].label)) / 2
+      )
       row.forEach((it, i) => {
-        const gaps = [row[i - 1], row[i + 1]].filter(Boolean).map((n) => Math.abs(n!.marker.position.x - it.marker.position.x))
+        const gaps = [row[i - 1], row[i + 1]]
+          .filter(Boolean)
+          .map((n) => Math.abs(n!.marker.position.x - it.marker.position.x))
         const room = gaps.length ? (stagger ? 2 : 1) * Math.min(...gaps) * 0.95 : Infinity
         it.label.scaling.setAll(Math.min(1, room / textW(it.label)))
         const off = THEMED_LABELS.offset
         const below = stagger && i % 2 === 1
-        it.label.position = it.marker.position.add(new Vector3(off.x, below ? -off.y : off.y, off.z))
+        it.label.position = it.marker.position.add(
+          new Vector3(off.x, below ? -off.y : off.y, off.z)
+        )
         it.label.computeWorldMatrix(true)
       })
     }
@@ -445,7 +480,11 @@ export class DeviceSpawner {
 
   // ── placeholder box + labelled port markers ───────────────────────────────
 
-  private buildPlaceholder(device: DeviceT, instanceId: string, root: TransformNode): Map<string, Mesh> {
+  private buildPlaceholder(
+    device: DeviceT,
+    instanceId: string,
+    root: TransformNode
+  ): Map<string, Mesh> {
     const [w, h, d] = SIZE_BY_CATEGORY[device.realWorld.category] ?? DEFAULT_SIZE
 
     const theme = this.theme
@@ -454,13 +493,23 @@ export class DeviceSpawner {
       // Sides in the body colour, the top face tinted by gear family (vertex
       // colours × a white material): one mesh, one shared material.
       const side = Color3.FromHexString(theme.body).toColor4(1)
-      const top = Color3.FromHexString(theme.accentOf(device.realWorld.category) ?? theme.body).toColor4(1)
+      const top = Color3.FromHexString(
+        theme.accentOf(device.realWorld.category) ?? theme.body
+      ).toColor4(1)
       const faceColors = [side, side, side, side, top, side] // Babylon box faces: 4 = top
-      box = MeshBuilder.CreateBox(`box:${instanceId}`, { width: w, height: h, depth: d, faceColors }, this.scene)
+      box = MeshBuilder.CreateBox(
+        `box:${instanceId}`,
+        { width: w, height: h, depth: d, faceColors },
+        this.scene
+      )
       // Emissive is scaled by the vertex colour in the standard shader: a lift per face colour.
       box.material = this.material('body:themed', undefined, Color3.White(), theme.bodyGlow)
     } else {
-      box = MeshBuilder.CreateBox(`box:${instanceId}`, { width: w, height: h, depth: d }, this.scene)
+      box = MeshBuilder.CreateBox(
+        `box:${instanceId}`,
+        { width: w, height: h, depth: d },
+        this.scene
+      )
       box.material = this.material('body', TOKENS.color.deviceBody)
     }
     box.parent = root
@@ -475,8 +524,24 @@ export class DeviceSpawner {
 
     if (theme) {
       const n = THEMED_LABELS.name
-      this.labelPlane(`label:${instanceId}`, device.label, n.w, n.h, root, new Vector3(0, h + n.above, 0), n.fontPx)
-    } else this.labelPlane(`label:${instanceId}`, device.label, 0.8, 0.2, root, new Vector3(0, h + 0.22, 0))
+      this.labelPlane(
+        `label:${instanceId}`,
+        device.label,
+        n.w,
+        n.h,
+        root,
+        new Vector3(0, h + n.above, 0),
+        n.fontPx
+      )
+    } else
+      this.labelPlane(
+        `label:${instanceId}`,
+        device.label,
+        0.8,
+        0.2,
+        root,
+        new Vector3(0, h + 0.22, 0)
+      )
 
     // Port grid on the camera-facing (−Z) side of the box (placeholder dims).
     // The exact same grid geometry is re-applied with REAL dims once the glb
@@ -490,20 +555,29 @@ export class DeviceSpawner {
       const marker = MeshBuilder.CreateCylinder(
         `port:${instanceId}:${port.portId}`,
         { diameter: 0.05, height: 0.02, tessellation: 16 },
-        this.scene,
+        this.scene
       )
       marker.rotation.x = Math.PI / 2
       marker.parent = root
       marker.position = local
       marker.material = theme
-        ? this.material(`dir:${port.dir}:themed`, theme.port[port.dir as keyof DeviceTheme['port']] ?? theme.port.bidir, undefined, theme.portGlow)
+        ? this.material(
+            `dir:${port.dir}:themed`,
+            theme.port[port.dir as keyof DeviceTheme['port']] ?? theme.port.bidir,
+            undefined,
+            theme.portGlow
+          )
         : this.material(`dir:${port.dir}`, undefined, DIR_COLOR[port.dir])
       marker.isPickable = false
 
       // Invisible, enlarged pick target — capped by grid spacing ONLY along
       // axes that actually have neighbours: overlapping spheres make the ray
       // grab a neighbour port, but a lone port keeps the full comfort size.
-      const pick = MeshBuilder.CreateSphere(`pick:${instanceId}:${port.portId}`, { diameter: pickDiameter }, this.scene)
+      const pick = MeshBuilder.CreateSphere(
+        `pick:${instanceId}:${port.portId}`,
+        { diameter: pickDiameter },
+        this.scene
+      )
       pick.parent = root
       pick.position = local
       pick.visibility = 0
@@ -512,8 +586,24 @@ export class DeviceSpawner {
 
       const pl = THEMED_LABELS.port
       const label = theme
-        ? this.labelPlane(`portlabel:${instanceId}:${port.portId}`, port.portId, pl.w, pl.h, root, local.add(this.labelOffset), pl.fontPx)
-        : this.labelPlane(`portlabel:${instanceId}:${port.portId}`, port.portId, 0.34, 0.085, root, local.add(PORT_LABEL_OFFSET), 22)
+        ? this.labelPlane(
+            `portlabel:${instanceId}:${port.portId}`,
+            port.portId,
+            pl.w,
+            pl.h,
+            root,
+            local.add(this.labelOffset),
+            pl.fontPx
+          )
+        : this.labelPlane(
+            `portlabel:${instanceId}:${port.portId}`,
+            port.portId,
+            0.34,
+            0.085,
+            root,
+            local.add(PORT_LABEL_OFFSET),
+            22
+          )
       // Themed: port labels draw after the scene (group 1), so no marker or model part ever covers them.
       if (theme) label.renderingGroupId = 1
 
@@ -571,7 +661,7 @@ export class DeviceSpawner {
     hPlane: number,
     parent: TransformNode,
     position: Vector3,
-    fontPx = 44,
+    fontPx = 44
   ): Mesh {
     const texW = 512
     const texH = Math.round((texW * hPlane) / wPlane)
@@ -589,7 +679,8 @@ export class DeviceSpawner {
       // Long ids (up to ~19 chars) shrink to fit the plane instead of being clipped.
       const width = ctx.measureText?.(text)?.width ?? 0
       const max = texW * 0.92
-      if (width > max) ctx.font = `bold ${Math.max(12, Math.floor((fontPx * max) / width))}px ${t.labelFont}`
+      if (width > max)
+        ctx.font = `bold ${Math.max(12, Math.floor((fontPx * max) / width))}px ${t.labelFont}`
       // World width of the ink (halo included), for the .glb label declutter.
       textW = width > 0 ? (Math.min(width, max) / texW) * wPlane + 0.01 : wPlane
       ctx.textAlign = 'center'
@@ -606,7 +697,15 @@ export class DeviceSpawner {
     } else {
       // Ink on OPAQUE white — a tiny gallery label card. No alpha pipeline at
       // all: dark glyphs die in luminance-derived opacity (learned the hard way).
-      tex.drawText(text, null, null, `bold ${fontPx}px sans-serif`, TOKENS.color.ink, TOKENS.color.floor, true)
+      tex.drawText(
+        text,
+        null,
+        null,
+        `bold ${fontPx}px sans-serif`,
+        TOKENS.color.ink,
+        TOKENS.color.floor,
+        true
+      )
     }
     mat.emissiveTexture = tex
     mat.disableLighting = true

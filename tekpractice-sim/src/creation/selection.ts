@@ -77,7 +77,11 @@ export function isClick(down: Press, up: Press): boolean {
 /** The instance id under a canvas point (device bodies only, visible ones), or null. */
 export function pickDevice(scene: Scene | null, x: number, y: number): string | null {
   if (!scene) return null
-  const hit = scene.pick(x, y, (m) => m.metadata?.isDeviceBody === true && m.isEnabled() && m.isVisible)
+  const hit = scene.pick(
+    x,
+    y,
+    (m) => m.metadata?.isDeviceBody === true && m.isEnabled() && m.isVisible
+  )
   const id = hit?.hit ? hit.pickedMesh?.metadata?.instanceId : undefined
   return typeof id === 'string' ? id : null
 }
@@ -88,7 +92,12 @@ export function pickDevice(scene: Scene | null, x: number, y: number): string | 
  * press clears it. Event-driven only: one pick per pointer move, no per-frame
  * work (the move already asks for a frame through the render scheduler).
  */
-export function attachCanvasHover(canvas: HTMLElement, bag: DisposableBag, pick: (x: number, y: number) => string | null, hover: (id: string | null) => void): void {
+export function attachCanvasHover(
+  canvas: HTMLElement,
+  bag: DisposableBag,
+  pick: (x: number, y: number) => string | null,
+  hover: (id: string | null) => void
+): void {
   bag.listen(canvas, 'pointermove', (e: PointerEvent) => {
     if (e.pointerType === 'touch') return
     hover(e.buttons === 0 ? pick(e.offsetX, e.offsetY) : null)
@@ -100,7 +109,12 @@ export function attachCanvasHover(canvas: HTMLElement, bag: DisposableBag, pick:
  * A primary-button click on a device body selects it and flies to it.
  * DOM listeners on the canvas (in `bag`), independent of the place's scene.
  */
-export function attachCanvasPicking(canvas: HTMLElement, bag: DisposableBag, pick: (x: number, y: number) => string | null, sel: Selection): void {
+export function attachCanvasPicking(
+  canvas: HTMLElement,
+  bag: DisposableBag,
+  pick: (x: number, y: number) => string | null,
+  sel: Selection
+): void {
   let down: Press | null = null
   bag.listen(canvas, 'pointerdown', (e: PointerEvent) => {
     down = e.button === 0 && e.isPrimary ? { x: e.offsetX, y: e.offsetY, t: e.timeStamp } : null
@@ -108,7 +122,8 @@ export function attachCanvasPicking(canvas: HTMLElement, bag: DisposableBag, pic
   bag.listen(canvas, 'pointerup', (e: PointerEvent) => {
     const from = down
     down = null
-    if (!from || e.button !== 0 || !isClick(from, { x: e.offsetX, y: e.offsetY, t: e.timeStamp })) return
+    if (!from || e.button !== 0 || !isClick(from, { x: e.offsetX, y: e.offsetY, t: e.timeStamp }))
+      return
     const id = pick(e.offsetX, e.offsetY)
     if (id) sel.select(id)
   })

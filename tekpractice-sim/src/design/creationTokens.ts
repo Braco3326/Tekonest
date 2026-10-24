@@ -115,7 +115,9 @@ const channel = (c: number): number => {
 }
 const luminance = (hex: string): number => {
   const n = parseInt(hex.replace('#', ''), 16)
-  return 0.2126 * channel((n >> 16) & 255) + 0.7152 * channel((n >> 8) & 255) + 0.0722 * channel(n & 255)
+  return (
+    0.2126 * channel((n >> 16) & 255) + 0.7152 * channel((n >> 8) & 255) + 0.0722 * channel(n & 255)
+  )
 }
 
 /** WCAG 2.1 contrast ratio between two #RRGGBB colours (1…21, order-independent). */

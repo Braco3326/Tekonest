@@ -60,11 +60,16 @@ passe `RoomTheme` à `buildRoom` et `DeviceTheme` à `DeviceSpawner` ; sans thè
   auto-illumination `bodyGlow` pour que les faces à l'ombre ne se fondent pas dans le sol. Les .glb ne sont jamais recolorés.
 - Ports : `portIn` bleu / `portOut` jaune / `portBidir` lilas, ≥ 3:1 sur le corps et le sol, `portGlow` 0.55.
 - Labels : encre Papier + halo `labelBg` sur texture transparente (alpha = couverture du glyphe), IBM Plex Sans bold.
+  Hiérarchie (`THEMED_LABELS`) : nom 0.4 × 0.1 m (moitié du legacy), labels de port ≈ 0.8× la hauteur du nom ; grille de ports
+  au pas fixe 0.26 × 0.10 m (un label ne touche jamais le marqueur voisin), labels de port dans le rendering group 1 (au-dessus) ;
+  sur un .glb (ports réels serrés), les voisins alternent dessus / dessous et rétrécissent pour tenir.
   ⚠️ `DynamicTexture.drawText(y = null)` lit la taille comme TOUS les chiffres de la police : jamais de graisse numérique.
-- Lumière : une hémisphérique `fill` 0.62 (sol `fillGround` assez clair pour décoller les faces verticales) + une clé 0.6
-  légèrement chaude ; pas de shadow map, aucun travail par frame (render on demand inchangé, idle = 0 rendu).
-- Sélection : trait écran Ambre (`HighlightLayer` isStroke, net à toute distance, sans les « ailettes » du mesh outline
-  sur les normales éclatées des .glb) + lavis Ambre 0.22. Survol : trait Papier, sans lavis (≠ sélection, contraste 2.2:1 entre eux).
+- Lumière : une hémisphérique `fill` 0.5 + une clé 0.5 quasi neutres : le sol éclairé rend ≈ son token (#352D35 mesuré),
+  `fillGround` neutre pour décoller les faces verticales ; pas de shadow map, aucun travail par frame (idle = 0 rendu).
+- Sélection : UN trait écran Ambre autour de la silhouette entière de l'appareil (`HighlightLayer` isStroke ; corps + pièces .glb
+  + marqueurs écrivent le stencil, labels / ombre / sphères de pick exclus du masque) + lavis Ambre 0.22. Survol : trait Papier,
+  sans lavis. Le group 1 n'efface que la profondeur (effacer le stencil remplirait le corps d'Ambre).
+- Focus clavier du canvas : anneau Papier, jamais Ambre (Ambre dans la vue = « appareil sélectionné »).
 
 ## HUD
 

@@ -4,7 +4,19 @@
  * theme passed) keep the old colours exactly. NullEngine, as sceneHost.test.ts.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Color3, DirectionalLight, DynamicTexture, HemisphericLight, Mesh, MeshBuilder, NullEngine, Scene, StandardMaterial, Vector3, VertexBuffer } from '@babylonjs/core'
+import {
+  Color3,
+  DirectionalLight,
+  DynamicTexture,
+  HemisphericLight,
+  Mesh,
+  MeshBuilder,
+  NullEngine,
+  Scene,
+  StandardMaterial,
+  Vector3,
+  VertexBuffer,
+} from '@babylonjs/core'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { DeviceSpawner, THEMED_LABELS } from '../../src/scene/DeviceSpawner'
@@ -30,7 +42,7 @@ function fakeCanvas2d() {
     {
       get: (_t, k) => (k === 'canvas' ? el : () => ({ width: 10, addColorStop() {} })),
       set: (_t, k, v) => (ctxWrites.push([String(k), v]), true),
-    },
+    }
   )
   const el = { width: 1, height: 1, style: {}, getContext: () => ctx }
   return el
@@ -50,7 +62,8 @@ afterEach(() => {
 
 const registry = loadCatalog(catalogJson)
 const hex = (c: Color3): string => c.toHexString()
-const diffuse = (m: { material: unknown } | null): string => hex((m!.material as StandardMaterial).diffuseColor)
+const diffuse = (m: { material: unknown } | null): string =>
+  hex((m!.material as StandardMaterial).diffuseColor)
 
 async function roomData() {
   const data = await loadPlaceData(placeFromKey('room:concert-hall-medium'))
@@ -63,15 +76,23 @@ describe('RoomBuilder: legacy default unchanged, creation theme from tokens', ()
     const { file, layout } = await roomData()
     const scene = new Scene(new NullEngine())
     buildRoom(scene, file, layout)
-    expect(diffuse(scene.getMeshByName('room:floor'))).toBe(file.procedural.floor_color.toUpperCase())
-    expect(diffuse(scene.getMeshByName('room:ceiling'))).toBe(file.procedural.ceiling_color.toUpperCase())
+    expect(diffuse(scene.getMeshByName('room:floor'))).toBe(
+      file.procedural.floor_color.toUpperCase()
+    )
+    expect(diffuse(scene.getMeshByName('room:ceiling'))).toBe(
+      file.procedural.ceiling_color.toUpperCase()
+    )
     const wall = scene.meshes.find((m) => m.name.startsWith('room:wall:'))!
     expect(diffuse(wall)).toBe(file.procedural.wall_color.toUpperCase())
     const stage = layout.zones.find((z) => z.kind === 'stage')!
     expect(diffuse(scene.getMeshByName(`room:zone:${stage.id}`))).toBe('#C9A86A')
-    for (const z of layout.zones) expect(scene.meshes.filter((m) => m.name === `room:zone:${z.id}`)).toHaveLength(1) // no outline
+    for (const z of layout.zones)
+      expect(scene.meshes.filter((m) => m.name === `room:zone:${z.id}`)).toHaveLength(1) // no outline
     const flat = layout.zones.find((z) => z.y <= 0.05)
-    if (flat) expect((scene.getMeshByName(`room:zone:${flat.id}`)!.material as StandardMaterial).alpha).toBe(0.12)
+    if (flat)
+      expect(
+        (scene.getMeshByName(`room:zone:${flat.id}`)!.material as StandardMaterial).alpha
+      ).toBe(0.12)
     const light = scene.lights.find((l) => l.name === `room:light:${file.id}`) as HemisphericLight
     expect(light).toBeDefined()
     expect(light.intensity).toBe(0.35)
@@ -85,14 +106,18 @@ describe('RoomBuilder: legacy default unchanged, creation theme from tokens', ()
     buildRoom(scene, file, layout, CREATION_ROOM_THEME)
     expect(diffuse(scene.getMeshByName('room:floor'))).toBe(S.floor)
     expect(diffuse(scene.getMeshByName('room:ceiling'))).toBe(S.ceiling)
-    for (const w of scene.meshes.filter((m) => m.name.startsWith('room:wall:'))) expect(diffuse(w)).toBe(S.wall)
+    for (const w of scene.meshes.filter((m) => m.name.startsWith('room:wall:')))
+      expect(diffuse(w)).toBe(S.wall)
     for (const z of layout.zones) {
       const meshes = scene.meshes.filter((m) => m.name === `room:zone:${z.id}`)
       const fill = meshes.find((m) => m.material)!
       expect(diffuse(fill)).toBe(S.zoneFill)
       expect((fill.material as StandardMaterial).alpha).toBe(1)
       // the outline shares the zone's name: hidden / framed with it
-      const edge = meshes.find((m) => m !== fill) as unknown as { color: Color3; isPickable: boolean }
+      const edge = meshes.find((m) => m !== fill) as unknown as {
+        color: Color3
+        isPickable: boolean
+      }
       expect(edge).toBeDefined()
       expect(hex(edge.color)).toBe(S.zoneEdge)
       expect(edge.isPickable).toBe(false)
@@ -104,7 +129,8 @@ describe('RoomBuilder: legacy default unchanged, creation theme from tokens', ()
 
 describe('DeviceSpawner placeholders: legacy default unchanged, creation theme from tokens', () => {
   const box = (scene: Scene, id: string) => scene.getMeshByName(`box:${id}`) as Mesh
-  const marker = (scene: Scene, id: string, port: string) => scene.getMeshByName(`port:${id}:${port}`) as Mesh
+  const marker = (scene: Scene, id: string, port: string) =>
+    scene.getMeshByName(`port:${id}:${port}`) as Mesh
 
   it('no theme = the old look: TOKENS body and port colours, no vertex tint', () => {
     const scene = new Scene(new NullEngine())
@@ -115,7 +141,9 @@ describe('DeviceSpawner placeholders: legacy default unchanged, creation theme f
     const port = registry.deviceById.get('yamaha-ql1')!.ports.find((p) => p.dir === 'out')!
     expect(diffuse(marker(scene, 'ql1', port.portId))).toBe(TOKENS.color.portOut.toUpperCase())
     // the gallery label card: opaque, ink on white
-    expect((scene.getMeshByName('label:ql1')!.material as StandardMaterial).opacityTexture).toBeNull()
+    expect(
+      (scene.getMeshByName('label:ql1')!.material as StandardMaterial).opacityTexture
+    ).toBeNull()
     scene.dispose()
   })
 
@@ -141,7 +169,8 @@ describe('DeviceSpawner placeholders: legacy default unchanged, creation theme f
     // labels: Papier ink + dark halo on a transparent texture (no card), in Plex
     expect(drawText).not.toHaveBeenCalled()
     // (string writes only: the contact shadow's fillStyle is a gradient object)
-    const writes = (k: string) => ctxWrites.filter(([key, v]) => key === k && typeof v === 'string').map(([, v]) => v)
+    const writes = (k: string) =>
+      ctxWrites.filter(([key, v]) => key === k && typeof v === 'string').map(([, v]) => v)
     expect(writes('font').length).toBeGreaterThan(0)
     for (const f of writes('font')) expect(String(f)).toMatch(/^bold \d+px 'IBM Plex Sans'/)
     expect(new Set(writes('fillStyle'))).toEqual(new Set([S.labelInk]))
@@ -150,7 +179,8 @@ describe('DeviceSpawner placeholders: legacy default unchanged, creation theme f
     expect(label.opacityTexture).toBe(label.emissiveTexture)
     const ports = registry.deviceById.get('yamaha-ql1')!.ports
     const want = { in: S.portIn, out: S.portOut, bidir: S.portBidir } as const
-    for (const p of ports) expect(diffuse(marker(scene, 'ql1', p.portId))).toBe(want[p.dir as keyof typeof want])
+    for (const p of ports)
+      expect(diffuse(marker(scene, 'ql1', p.portId))).toBe(want[p.dir as keyof typeof want])
     scene.dispose()
   })
 })
@@ -165,10 +195,15 @@ describe('Task 14b Fix 1: label hierarchy and a port grid spaced for its labels'
 
   it('themed: name label halved; port label glyph ≥ 0.5× the name glyph; port labels drawn on top (group 1)', () => {
     const scene = new Scene(new NullEngine())
-    new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME).spawn('yamaha-ql1', Vector3.Zero(), 'ql1')
+    new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME).spawn(
+      'yamaha-ql1',
+      Vector3.Zero(),
+      'ql1'
+    )
     const { name, port } = THEMED_LABELS
     expect(size(scene, 'label:ql1').w).toBeCloseTo(0.8 / 2, 6)
-    const glyph = (l: { w: number; h: number; fontPx: number }) => (l.fontPx / Math.round((512 * l.h) / l.w)) * l.h
+    const glyph = (l: { w: number; h: number; fontPx: number }) =>
+      (l.fontPx / Math.round((512 * l.h) / l.w)) * l.h
     expect(glyph(port) / glyph(name)).toBeGreaterThanOrEqual(0.5)
     const labels = scene.meshes.filter((m) => m.name.startsWith('portlabel:ql1:'))
     expect(labels.length).toBe(registry.deviceById.get('yamaha-ql1')!.ports.length)
@@ -182,7 +217,10 @@ describe('Task 14b Fix 1: label hierarchy and a port grid spaced for its labels'
       const scene = new Scene(new NullEngine())
       new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME).spawn(id, Vector3.Zero(), 'd')
       const ports = registry.deviceById.get(id)!.ports.map((p) => p.portId)
-      const glyphH = (THEMED_LABELS.port.fontPx / Math.round((512 * THEMED_LABELS.port.h) / THEMED_LABELS.port.w)) * THEMED_LABELS.port.h
+      const glyphH =
+        (THEMED_LABELS.port.fontPx /
+          Math.round((512 * THEMED_LABELS.port.h) / THEMED_LABELS.port.w)) *
+        THEMED_LABELS.port.h
       for (const a of ports) {
         const la = pos(scene, `portlabel:d:${a}`)
         // its own marker sits below the glyph band
@@ -191,7 +229,8 @@ describe('Task 14b Fix 1: label hierarchy and a port grid spaced for its labels'
           if (a === b) continue
           const lb = pos(scene, `portlabel:d:${b}`)
           const sameRow = Math.abs(la.y - lb.y) < 1e-6
-          if (sameRow) expect(Math.abs(la.x - lb.x)).toBeGreaterThanOrEqual(THEMED_LABELS.pitchX - 1e-9)
+          if (sameRow)
+            expect(Math.abs(la.x - lb.x)).toBeGreaterThanOrEqual(THEMED_LABELS.pitchX - 1e-9)
           // a neighbour's marker is never inside this label's glyph band
           const mb = pos(scene, `port:d:${b}`)
           const inBand = Math.abs(mb.y - la.y) < glyphH / 2 + 0.025
@@ -211,7 +250,9 @@ describe('Task 14b Fix 1: label hierarchy and a port grid spaced for its labels'
     ids.forEach((id, i) => inst.portMarkers.get(id)!.position.set(i * 0.05, 0.1, -0.2)) // one dense row, like the QL1 rear panel
     // headless canvas measures nothing: give the labels a real ink width (≈ « out-main-l » at 52 px)
     for (const id of ids) scene.getMeshByName(`portlabel:ql1:${id}`)!.metadata = { textW: 0.2 }
-    ;(sp as unknown as { declutterLabels(i: string, r: unknown, ids: string[]): void }).declutterLabels('ql1', inst.root, ids)
+    ;(
+      sp as unknown as { declutterLabels(i: string, r: unknown, ids: string[]): void }
+    ).declutterLabels('ql1', inst.root, ids)
     const labels = ids.map((id) => scene.getMeshByName(`portlabel:ql1:${id}`)!)
     for (let i = 0; i < labels.length; i++) {
       const l = labels[i]
@@ -219,7 +260,9 @@ describe('Task 14b Fix 1: label hierarchy and a port grid spaced for its labels'
       // same side neighbours (i ± 2) never overlap: scaled ink width ≤ their distance
       if (i + 2 < labels.length) {
         const w = (m: typeof l) => (m.metadata!.textW as number) * m.scaling.x
-        expect((w(l) + w(labels[i + 2])) / 2).toBeLessThanOrEqual(labels[i + 2].position.x - l.position.x + 1e-9)
+        expect((w(l) + w(labels[i + 2])) / 2).toBeLessThanOrEqual(
+          labels[i + 2].position.x - l.position.x + 1e-9
+        )
       }
     }
     scene.dispose()
@@ -244,13 +287,24 @@ describe('SceneHost uses the creation look (Task 14b)', () => {
     const canvas = target()
     ;(engine as unknown as { getRenderingCanvas: () => unknown }).getRenderingCanvas = () => canvas
     ;(engine as unknown as { getInputElement: () => unknown }).getInputElement = () => null
-    const scheduler = new RenderScheduler({ render: () => {}, camera: () => null, tweening: () => false })
+    const scheduler = new RenderScheduler({
+      render: () => {},
+      camera: () => null,
+      tweening: () => false,
+    })
     const host = new SceneHost(canvas as unknown as HTMLCanvasElement, registry, scheduler, engine)
     return { host, scheduler }
   }
   const design = (roomId: string): DesignState => ({
     roomId,
-    rig: { instances: [{ instanceId: 'ql1', deviceId: 'yamaha-ql1' }, { instanceId: 'k12', deviceId: 'qsc-k12-2' }], connections: [], controls: {} },
+    rig: {
+      instances: [
+        { instanceId: 'ql1', deviceId: 'yamaha-ql1' },
+        { instanceId: 'k12', deviceId: 'qsc-k12-2' },
+      ],
+      connections: [],
+      controls: {},
+    },
     placements: [
       { instanceId: 'ql1', deviceId: 'yamaha-ql1', position_m: [0, 0, 4], yawDeg: 0 },
       { instanceId: 'k12', deviceId: 'qsc-k12-2', position_m: [2, 0, 0], yawDeg: 0 },
@@ -282,7 +336,11 @@ describe('SceneHost uses the creation look (Task 14b)', () => {
     await host.load(placeFromKey('blank'), design('blank'))
     const inst = host.instance('ql1')!
     // a .glb-like small part (a connector) in front of the body: it writes the stencil too, so no ring around it
-    const part = MeshBuilder.CreateCylinder('glb:part', { diameter: 0.03, height: 0.02 }, host.scene!)
+    const part = MeshBuilder.CreateCylinder(
+      'glb:part',
+      { diameter: 0.03, height: 0.02 },
+      host.scene!
+    )
     part.parent = inst.root
     part.metadata = { isDeviceBody: true, instanceId: 'ql1' }
     const names = [...strokeTargets(inst)].map((m) => m.name)
@@ -292,7 +350,10 @@ describe('SceneHost uses the creation look (Task 14b)', () => {
     for (const p of ports) expect(names).toContain(p)
     expect(names.filter((n) => /^(label|portlabel|pick|shadow):/.test(n))).toEqual([])
     host.setSelected('ql1')
-    const hl = host.scene!.effectLayers[0] as unknown as { hasMesh(m: unknown): boolean; _shouldRenderMesh(m: unknown): boolean }
+    const hl = host.scene!.effectLayers[0] as unknown as {
+      hasMesh(m: unknown): boolean
+      _shouldRenderMesh(m: unknown): boolean
+    }
     for (const m of inst.root.getChildMeshes(false)) {
       const inStroke = names.includes(m.name)
       expect(hl.hasMesh(m), m.name).toBe(inStroke)
@@ -308,7 +369,11 @@ describe('SceneHost uses the creation look (Task 14b)', () => {
   it('hover: a Papier stroke without wash; selection (Ambre stroke + wash) wins; outlined() lists the selection only', async () => {
     const { host, scheduler } = makeHost()
     await host.load(placeFromKey('blank'), design('blank'))
-    const bodies = (id: string) => host.instance(id)!.root.getChildMeshes(false).filter((m) => m.metadata?.isDeviceBody === true)
+    const bodies = (id: string) =>
+      host
+        .instance(id)!
+        .root.getChildMeshes(false)
+        .filter((m) => m.metadata?.isDeviceBody === true)
     const inv = vi.spyOn(scheduler, 'invalidate')
     host.setHovered('k12')
     expect(inv).toHaveBeenCalledTimes(1)

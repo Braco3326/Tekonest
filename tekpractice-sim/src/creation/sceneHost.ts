@@ -31,7 +31,11 @@ import type { DesignState, Placement } from '../trials/trial'
 import { DeviceSpawner, type DeviceInstance } from '../scene/DeviceSpawner'
 import { CableRenderer } from '../scene/CableRenderer'
 import { CameraRig } from '../scene/CameraRig'
-import { installDesignerOrbitInput, uninstallDesignerOrbitInput, type DesignerOrbitPointersInput } from '../scene/designerOrbitInput'
+import {
+  installDesignerOrbitInput,
+  uninstallDesignerOrbitInput,
+  type DesignerOrbitPointersInput,
+} from '../scene/designerOrbitInput'
 import { applyOrbitFeel, ENSEMBLE_LOWER_RADIUS } from '../camera/orbitFeel'
 import { isSoftwareRenderer } from '../render/detect'
 import { assetUrl } from '../assetUrl'
@@ -71,12 +75,17 @@ export function strokeTargets(inst: DeviceInstance): Set<Mesh> {
           m.isVisible &&
           m.visibility > 0 &&
           m.renderingGroupId === 0 &&
-          (m.metadata?.isDeviceBody === true || m.name.startsWith(`port:${inst.instanceId}:`)),
-      ),
+          (m.metadata?.isDeviceBody === true || m.name.startsWith(`port:${inst.instanceId}:`))
+      )
   )
 }
 
-type RoomBuild = (scene: Scene, file: Extract<PlaceData, { kind: 'room' }>['file'], layout: RoomLayout, theme?: RoomTheme) => unknown
+type RoomBuild = (
+  scene: Scene,
+  file: Extract<PlaceData, { kind: 'room' }>['file'],
+  layout: RoomLayout,
+  theme?: RoomTheme
+) => unknown
 
 export class SceneHost {
   readonly engine: Engine
@@ -106,9 +115,10 @@ export class SceneHost {
     private readonly registry: Registry,
     private readonly scheduler: RenderScheduler,
     /** Tests inject a NullEngine; the app lets the host create the page's only Engine. */
-    engine?: Engine,
+    engine?: Engine
   ) {
-    this.engine = engine ?? new Engine(canvas, true, { preserveDrawingBuffer: false, stencil: true })
+    this.engine =
+      engine ?? new Engine(canvas, true, { preserveDrawingBuffer: false, stencil: true })
     if (!engine && isSoftwareRenderer(this.engine.getGlInfo().renderer)) {
       this.engine.setHardwareScalingLevel(1.5)
       console.info('[render] software GL → scaling 1.5')
@@ -191,7 +201,11 @@ export class SceneHost {
   /** Devices currently drawn as SELECTED (Ambre stroke + wash; e2e / tests). A hovered device has no wash. */
   outlined(): string[] {
     return [...this.instances]
-      .filter(([, inst]) => inst.root.getChildMeshes(false).some((m) => m.metadata?.isDeviceBody === true && m.renderOverlay))
+      .filter(([, inst]) =>
+        inst.root
+          .getChildMeshes(false)
+          .some((m) => m.metadata?.isDeviceBody === true && m.renderOverlay)
+      )
       .map(([id]) => id)
   }
 
@@ -200,8 +214,12 @@ export class SceneHost {
     const inst = this.instances.get(id)
     const hl = this.highlight
     if (!inst || !hl) return null
-    const body = inst.root.getChildMeshes(false).find((m): m is Mesh => m instanceof Mesh && m.metadata?.isDeviceBody === true && hl.hasMesh(m))
-    return body ? this.strokeColor.get(body.uniqueId) ?? null : null
+    const body = inst.root
+      .getChildMeshes(false)
+      .find(
+        (m): m is Mesh => m instanceof Mesh && m.metadata?.isDeviceBody === true && hl.hasMesh(m)
+      )
+    return body ? (this.strokeColor.get(body.uniqueId) ?? null) : null
   }
   /** Screen-space stroke for selection / hover (Task 14b): crisp at any distance, no fins on split-normal .glb meshes. */
   private highlight: HighlightLayer | null = null
@@ -223,7 +241,10 @@ export class SceneHost {
       lo = lo ? Vector3.Minimize(lo, b.minimumWorld) : b.minimumWorld.clone()
       hi = hi ? Vector3.Maximize(hi, b.maximumWorld) : b.maximumWorld.clone()
     }
-    return { center: lo!.add(hi!).scale(0.5), boundingRadius: Math.max(0.25, hi!.subtract(lo!).length() / 2) }
+    return {
+      center: lo!.add(hi!).scale(0.5),
+      boundingRadius: Math.max(0.25, hi!.subtract(lo!).length() / 2),
+    }
   }
 
   private applyDecor(): void {
@@ -256,13 +277,17 @@ export class SceneHost {
         hl.removeExcludedMesh(m)
         if (on || hover) {
           hl.addMesh(m, on ? SELECTION : HOVER)
-          this.strokeColor.set(m.uniqueId, on ? CREATION_TOKENS.scene.selection : CREATION_TOKENS.scene.hover)
+          this.strokeColor.set(
+            m.uniqueId,
+            on ? CREATION_TOKENS.scene.selection : CREATION_TOKENS.scene.hover
+          )
         }
       }
     }
     for (const m of scene.meshes) {
       if (m.name.startsWith('cable:')) m.setEnabled(!this.hidden.has(m.name))
-      else if (m.name.startsWith('room:zone:')) m.setEnabled(!this.hidden.has(`zone:${m.name.slice('room:zone:'.length)}`))
+      else if (m.name.startsWith('room:zone:'))
+        m.setEnabled(!this.hidden.has(`zone:${m.name.slice('room:zone:'.length)}`))
     }
     this.scheduler.invalidate()
   }
@@ -291,7 +316,10 @@ export class SceneHost {
       scene = this.buildScene(data, build)
     } catch (e) {
       // Assets never block (CLAUDE.md): drop the half-built scene, show the blank room, warn.
-      console.warn(`[creation] lieu ${placeKey(place)} impossible à construire, salle vide neutre`, e)
+      console.warn(
+        `[creation] lieu ${placeKey(place)} impossible à construire, salle vide neutre`,
+        e
+      )
       this.teardown()
       data = blankData()
       try {
@@ -352,7 +380,9 @@ export class SceneHost {
   // ── internals ─────────────────────────────────────────────────────────────
 
   private startLoad(design: DesignState): void {
-    this.load(placeFromKey(design.roomId), design).catch((e: unknown) => console.error('[creation] place load failed', e))
+    this.load(placeFromKey(design.roomId), design).catch((e: unknown) =>
+      console.error('[creation] place load failed', e)
+    )
   }
 
   private teardown(): void {
@@ -389,7 +419,12 @@ export class SceneHost {
     const nuit = Color3.FromHexString(NUIT)
     scene.clearColor = new Color4(nuit.r, nuit.g, nuit.b, 1)
     // Selection / hover stroke (Task 14b): only drawn when a frame renders; empty = no cost.
-    const hl = new HighlightLayer('cr:stroke', scene, { isStroke: true, mainTextureRatio: 1, blurHorizontalSize: 1, blurVerticalSize: 1 })
+    const hl = new HighlightLayer('cr:stroke', scene, {
+      isStroke: true,
+      mainTextureRatio: 1,
+      blurHorizontalSize: 1,
+      blurVerticalSize: 1,
+    })
     hl.innerGlow = false
     this.highlight = hl
     // Port labels draw in rendering group 1 (on top of markers / model parts). That group must clear
@@ -406,7 +441,7 @@ export class SceneHost {
       env ? env.camera.beta : 1.05,
       env ? env.camera.radius : roomRadius,
       env ? Vector3.FromArray(env.camera.target) : new Vector3(0, 1, 0),
-      scene,
+      scene
     )
     const orbitInput = installDesignerOrbitInput(camera)
     this._camera = camera
@@ -434,9 +469,15 @@ export class SceneHost {
       // Above the flat zone marks (5 mm; the themed floor is depth-biased back, RoomBuilder), under the raised decks.
       this.buildGrid(scene, data.layout.width, data.layout.length, 0.012)
     } else {
-      const ground = MeshBuilder.CreateGround('stage', { width: data.width, height: data.length }, scene)
+      const ground = MeshBuilder.CreateGround(
+        'stage',
+        { width: data.width, height: data.length },
+        scene
+      )
       const mat = new StandardMaterial('mat:stage', scene)
-      mat.diffuseColor = Color3.FromHexString(env ? env.backdrop.floorColor : CREATION_TOKENS.scene.floor)
+      mat.diffuseColor = Color3.FromHexString(
+        env ? env.backdrop.floorColor : CREATION_TOKENS.scene.floor
+      )
       mat.specularColor = Color3.Black()
       ground.material = mat
       ground.isPickable = false
@@ -456,7 +497,12 @@ export class SceneHost {
   }
 
   /** A 1 m grid (every 5 m from the centre stronger), one line-system mesh, never picked. */
-  private buildGrid(scene: Scene, width: number, length: number, y = 0.003 /* above the floor, no z-fighting */): void {
+  private buildGrid(
+    scene: Scene,
+    width: number,
+    length: number,
+    y = 0.003 /* above the floor, no z-fighting */
+  ): void {
     const hw = width / 2
     const hl = length / 2
     const minor = Color4.FromColor3(Color3.FromHexString(CREATION_TOKENS.scene.gridMinor))
@@ -468,19 +514,31 @@ export class SceneHost {
       const c = i % 5 === 0 ? major : minor
       colors.push([c, c])
     }
-    for (let i = -Math.floor(hw); i <= Math.floor(hw); i++) add(new Vector3(i, y, -hl), new Vector3(i, y, hl), i)
-    for (let j = -Math.floor(hl); j <= Math.floor(hl); j++) add(new Vector3(-hw, y, j), new Vector3(hw, y, j), j)
+    for (let i = -Math.floor(hw); i <= Math.floor(hw); i++)
+      add(new Vector3(i, y, -hl), new Vector3(i, y, hl), i)
+    for (let j = -Math.floor(hl); j <= Math.floor(hl); j++)
+      add(new Vector3(-hw, y, j), new Vector3(hw, y, j), j)
     // The floor's own border (non-integer extents, e.g. 18.1 m): the grid always reaches the floor edges.
-    if (hw !== Math.floor(hw)) for (const x of [-hw, hw]) add(new Vector3(x, y, -hl), new Vector3(x, y, hl), 1)
-    if (hl !== Math.floor(hl)) for (const z of [-hl, hl]) add(new Vector3(-hw, y, z), new Vector3(hw, y, z), 1)
+    if (hw !== Math.floor(hw))
+      for (const x of [-hw, hw]) add(new Vector3(x, y, -hl), new Vector3(x, y, hl), 1)
+    if (hl !== Math.floor(hl))
+      for (const z of [-hl, hl]) add(new Vector3(-hw, y, z), new Vector3(hw, y, z), 1)
     const grid = MeshBuilder.CreateLineSystem('stage:grid', { lines, colors }, scene)
     grid.isPickable = false
   }
 
   /** The venue set .glb (as game.ts): non-blocking, a failure keeps the plain floor. */
-  private async importSet(scene: Scene, set: NonNullable<Extract<PlaceData, { kind: 'set' }>['env']['set']>): Promise<void> {
+  private async importSet(
+    scene: Scene,
+    set: NonNullable<Extract<PlaceData, { kind: 'set' }>['env']['set']>
+  ): Promise<void> {
     try {
-      const { meshes } = await SceneLoader.ImportMeshAsync(null, assetUrl('assets/environments/'), set.glb, scene)
+      const { meshes } = await SceneLoader.ImportMeshAsync(
+        null,
+        assetUrl('assets/environments/'),
+        set.glb,
+        scene
+      )
       if (scene.isDisposed) {
         for (const m of meshes) m.dispose(false, true)
         return
@@ -497,7 +555,8 @@ export class SceneHost {
       scene.getMeshByName('stage')?.setEnabled(false) // the set brings its own floor
       this.scheduler.invalidate()
     } catch {
-      if (!scene.isDisposed) console.warn(`[creation] décor ${set.glb} indisponible, sol simple conservé`)
+      if (!scene.isDisposed)
+        console.warn(`[creation] décor ${set.glb} indisponible, sol simple conservé`)
     }
   }
 
