@@ -27,3 +27,4 @@ Brief: Oscar's "Mode Création only" prompt (2026-10-24). Autonomous run; defaul
 ## Progress
 
 - Phase 0 (audit): started.
+- Phase 1 : gate run (Task 15, before review). `tsc` 0 errors; vitest 98 files / 1064 tests green; `npm run lint` green (lint debt fixed); Playwright 179 passed, 16 skipped (`zz-qa-crawl`, needs `QA_CRAWL=1`), 0 failed. Start chunks (entry + static imports, KiB): creation `boot` 5470.2 raw / 1234.1 gzip vs legacy `legacyMain` 5635.6 raw / 1281.1 gzip = **−2.9 % raw** (budget ≤ +15 %); without the shared Babylon chunk 240.6 vs 406.0 (−40.7 %). Creation idle = 0 renders over 2 s (new e2e). Site build boots Mode Création and `?legacy=1` with 0 console errors (`npm run smoke:site`). Decision: the camera e2e settle check now asks the game whether a flight or inertia is still running (`__audioSim.cameraMoving`, debug only), because under render on demand two equal camera samples did not prove the camera had stopped.
