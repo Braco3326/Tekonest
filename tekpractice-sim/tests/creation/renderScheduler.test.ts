@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import {
   cameraSignature, hasInertia, registerScheduler, RenderScheduler, requestRender,
-  type InertiaSource, type SignatureCamera,
+  renderSceneOnce, type InertiaSource, type SignatureCamera,
 } from '../../src/creation/renderScheduler'
 
 const arc = (over: Partial<SignatureCamera> = {}): SignatureCamera => ({
@@ -134,5 +134,43 @@ describe('RenderScheduler', () => {
     expect(s.shouldRender()).toBe(true)
     state.busy = false
     expect(s.shouldRender()).toBe(false)
+  })
+})
+
+describe('renderSceneOnce (Task 6 review: no per-frame re-invalidation while a scene is not ready)', () => {
+  const fakeScene = (ready: () => boolean) => {
+    const waiting: (() => void)[] = []
+    return {
+      renders: 0,
+      waiting,
+      render() { this.renders++ },
+      isReady: ready,
+      executeWhenReady(fn: () => void) { waiting.push(fn) },
+    }
+  }
+  it('a ready scene renders and asks for nothing more', () => {
+    const s = fakeScene(() => true)
+    const inv = vi.fn()
+    renderSceneOnce(s, inv)
+    expect(s.renders).toBe(1)
+    expect(s.waiting).toHaveLength(0)
+    expect(inv).not.toHaveBeenCalled()
+  })
+  it('a scene not ready registers ONE ready callback, however many frames render, and it invalidates once', () => {
+    const s = fakeScene(() => false)
+    const inv = vi.fn()
+    for (let i = 0; i < 5; i++) renderSceneOnce(s, inv)
+    expect(s.renders).toBe(5)
+    expect(s.waiting).toHaveLength(1)
+    expect(inv).not.toHaveBeenCalled() // no per-frame invalidate: idle can reach 0 renders
+    s.waiting[0]()
+    expect(inv).toHaveBeenCalledTimes(1)
+  })
+  it('after the ready callback ran, a later not-ready frame may register again', () => {
+    const s = fakeScene(() => false)
+    renderSceneOnce(s, () => {})
+    s.waiting[0]()
+    renderSceneOnce(s, () => {})
+    expect(s.waiting).toHaveLength(2)
   })
 })

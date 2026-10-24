@@ -16,7 +16,7 @@ import { COPY } from './copy'
 import { CreationStore, creationEvaluator } from './store'
 import { History } from './history'
 import { ViewState } from './viewState'
-import { RenderScheduler } from './renderScheduler'
+import { RenderScheduler, renderSceneOnce } from './renderScheduler'
 import { SceneHost } from './sceneHost'
 import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
@@ -43,9 +43,7 @@ export async function bootCreation(): Promise<void> {
   const scheduler: RenderScheduler = new RenderScheduler({
     render: () => {
       const scene = host.scene
-      if (!scene) return
-      scene.render()
-      if (!scene.isReady()) scheduler.invalidate()
+      if (scene) renderSceneOnce(scene, () => scheduler.invalidate())
     },
     camera: () => (host.camera && host.scene?.activeCamera === host.camera ? host.camera : null),
     tweening: () => host.rig?.tweening ?? false,

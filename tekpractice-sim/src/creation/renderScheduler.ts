@@ -77,6 +77,28 @@ export class RenderScheduler {
   get leaseNames(): string[] { return [...this.leases.keys()] }
 }
 
+/** Structural view of a Babylon Scene, enough to render once and wait for readiness. */
+export interface RenderableScene {
+  render(): void
+  isReady(): boolean
+  executeWhenReady(fn: () => void): void
+}
+const waitingReady = new WeakSet<object>()
+/**
+ * Render one frame. A scene not ready yet (textures, shaders compiling) gets
+ * ONE ready callback that asks for one more frame, never a per-frame
+ * re-invalidation: the loop can still fall idle (0 renders) while it waits.
+ */
+export function renderSceneOnce(scene: RenderableScene, invalidate: () => void): void {
+  scene.render()
+  if (scene.isReady() || waitingReady.has(scene)) return
+  waitingReady.add(scene)
+  scene.executeWhenReady(() => {
+    waitingReady.delete(scene)
+    invalidate()
+  })
+}
+
 let registered: RenderScheduler | null = null
 /** attachRenderScheduler registers the page's scheduler; tests pass null to reset. */
 export function registerScheduler(s: RenderScheduler | null): void { registered = s }
