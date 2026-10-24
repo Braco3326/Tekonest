@@ -28,10 +28,10 @@ Faces follow N3: "Face" = looking from the audience toward the stage (camera at 
 |---|---|---|---|---|
 | `viewCube.face.face.label` | Face | Front | Cube face | **[brief]** Numpad1 |
 | `viewCube.face.arriere.label` | Arrière | Back | Cube face | **[brief]** Ctrl+Numpad1 |
-| `viewCube.face.gauche.label` | Gauche | Left | Cube face | **[brief]** Numpad4 |
-| `viewCube.face.droite.label` | Droite | Right | Cube face | **[brief]** Numpad6 |
+| `viewCube.face.gauche.label` | Gauche | Left | Cube face | **[brief]** Ctrl+Numpad3 |
+| `viewCube.face.droite.label` | Droite | Right | Cube face | **[brief]** Numpad3 |
 | `viewCube.face.dessus.label` | Dessus | Top | Cube face | **[brief]** Numpad7 |
-| `viewCube.face.dessous.label` | Dessous | Bottom | Cube face | **[brief]** Ctrl+Numpad7 |
+| `viewCube.face.dessous.label` | Dessous | Bottom | Cube face | **[brief]** no key (button only) |
 | `viewCube.corner.faceGauche.label` | Face-gauche | Front-left | Cube corner | **[brief]** three-quarter view |
 | `viewCube.corner.faceDroite.label` | Face-droite | Front-right | Cube corner | **[brief]** |
 | `viewCube.corner.arriereGauche.label` | Arrière-gauche | Back-left | Cube corner | **[brief]** |
@@ -67,20 +67,21 @@ Left/right are always the viewer's own left/right **when looking at that face**;
 | `viewCube.home.aria` | Revenir à la vue d'ensemble de la salle | Go back to the room overview | aria-label | |
 | `viewCube.key.face` | Numpad 1 | | Tooltip key hint, face "Face" | Key hints show the physical key (`code`), as in CONTROLS.md |
 | `viewCube.key.arriere` | Ctrl + Numpad 1 | | Tooltip, "Arrière" | |
-| `viewCube.key.droiteCorner` | Numpad 3 | | Tooltip, "Face-droite" | Corner not named in the brief; confirm with tekfrontenddesigner |
-| `viewCube.key.arriereCorner` | Ctrl + Numpad 3 | | Tooltip, ¾ back view | **Open:** brief lists Numpad3 and Ctrl+Numpad3 without naming the corner; fill after the input map is final |
-| `viewCube.key.dessus` | Numpad 7 | | Tooltip, "Dessus" | |
-| `viewCube.key.gauche` | Numpad 4 | | Tooltip, "Gauche" | |
-| `viewCube.key.droite` | Numpad 6 | | Tooltip, "Droite" | |
+| `viewCube.key.droite` | Numpad 3 | | Tooltip, "Droite" | Bound key (brief table, `VIEW_DROITE`). Tooltips show the live, remappable binding |
+| `viewCube.key.gauche` | Ctrl + Numpad 3 | | Tooltip, "Gauche" | `VIEW_GAUCHE` |
+| `viewCube.key.dessus` | Numpad 7 | | Tooltip, "Dessus" | `VIEW_DESSUS` |
+| `viewCube.key.rotateLeft` | Numpad 4 | | Tooltip, "Tourner à gauche (90°)" | `VIEW_ROT_LEFT` |
+| `viewCube.key.rotateRight` | Numpad 6 | | Tooltip, "Tourner à droite (90°)" | `VIEW_ROT_RIGHT` |
+| `viewCube.key.corners` | (aucune) | | ¾ views | The ¾ views have no key: buttons only. Dessous has no key either |
 | `viewCube.noNumpad.hint` | Pas de pavé numérique ? Cliquez le cube. | No numpad? Click the cube. | Help overlay, under the cube keys | Many school laptops have no numpad; every action has a button |
 
 ### 1.4 Jardin / cour hint
 
 | key | FR | EN gloss | where it shows | notes |
 |---|---|---|---|---|
-| `viewCube.face.gauche.hint` | Côté jardin (à gauche vu de la salle) | Stage-left-of-house side: "jardin" (left, seen from the audience) | Tooltip of "Gauche" | jardin cited: TEK Brain `american-seating` |
-| `viewCube.face.droite.hint` | Côté cour (à droite vu de la salle) | "cour" side (right, seen from the audience) | Tooltip of "Droite" | **Flag for Oscar:** cour not in TEK Brain, common theatre usage |
-| `viewCube.jardinCour.help` | Au théâtre, « jardin » est à gauche et « cour » à droite, vus depuis la salle (le public). | In theatre, "jardin" is left and "cour" is right, seen from the audience. | Help overlay (H), one line under the cube | Same flag |
+| `viewCube.face.gauche.hint` | Côté jardin (à gauche vu de la salle) | Stage-left-of-house side: "jardin" (left, seen from the audience) | Tooltip of "Gauche" | **désactivé (salle en miroir, voir ADR-0011)**. jardin cited: TEK Brain `american-seating` |
+| `viewCube.face.droite.hint` | Côté cour (à droite vu de la salle) | "cour" side (right, seen from the audience) | Tooltip of "Droite" | **désactivé (salle en miroir, voir ADR-0011)**. **Flag for Oscar:** cour not in TEK Brain, common theatre usage |
+| `viewCube.jardinCour.help` | Au théâtre, « jardin » est à gauche et « cour » à droite, vus depuis la salle (le public). | In theatre, "jardin" is left and "cour" is right, seen from the audience. | Help overlay (H), one line under the cube | **désactivé (salle en miroir, voir ADR-0011)**. Same flag |
 | `viewCube.jardinCour.noRoom` | Sans salle dans ce niveau, « Face » regarde les appareils du côté sans connecteurs. | Without a room in this level, "Face" looks at the devices from the side without connectors. | Help overlay | Follows N3. Show the jardin/cour hint **only** in levels with a room |
 
 ### 1.5 Coach hint
@@ -385,8 +386,9 @@ Key ids for the help table. Existing rows stay as in `CONTROLS.md`.
 | `help.action.overview` | Vue d'ensemble | Overview | Help overlay, row label | Alt+H |
 | `help.action.preset.recall` | Aller à la vue 1, 2 ou 3 | Go to view 1, 2 or 3 | Help overlay | Digit1 / Digit2 / Digit3 |
 | `help.action.preset.save` | Enregistrer la vue 1, 2 ou 3 | Save view 1, 2 or 3 | Help overlay | Right-click or long-press the slot |
-| `help.action.cube.faces` | Vues du cube : face, arrière, gauche, droite, dessus | Cube views: front, back, left, right, top | Help overlay | Numpad1, Ctrl+Numpad1, Numpad4, Numpad6, Numpad7 |
-| `help.action.cube.corners` | Vues de trois quarts | Three-quarter views | Help overlay | Numpad3, Ctrl+Numpad3 (see open point in 1.3) |
+| `help.action.cube.faces` | Vues du cube : face, arrière, gauche, droite, dessus | Cube views: front, back, left, right, top | Help overlay | Numpad1, Ctrl+Numpad1, Ctrl+Numpad3, Numpad3, Numpad7 (bound keys, brief table). In-game the help lists one row per action (`ACTION_LABELS`) |
+| `help.action.cube.rotate` | Tourner de 90° à gauche ou à droite | Turn 90° left or right | Help overlay | Numpad4, Numpad6 |
+| `help.action.cube.corners` | Vues de trois quarts | Three-quarter views | Help overlay | No key: click the cube's edge tabs |
 | `help.action.freeze` | Figer l'essai | Freeze the trial | Help overlay | G |
 | `help.action.compare` | Comparer : alterner A et B | Compare: flip A and B | Help overlay | B |
 | `help.action.toggleOverlay` | Afficher ou masquer la couche de résultat | Show or hide the result layer | Help overlay (phase 2) | O |
@@ -416,7 +418,7 @@ Added by tekdeveloper after the Tasks 3–4 review (no tekuxwriter string existe
 ## Open points for Oscar / reviewers
 
 1. **Cour = droite** is common theatre usage, not in TEK Brain; jardin = gauche is backed by `american-seating`. Consider a glossary term.
-2. `viewCube.key.droiteCorner` / `arriereCorner`: the brief lists Numpad3 and Ctrl+Numpad3 without naming the corners; complete with tekfrontenddesigner.
+2. ~~`viewCube.key.droiteCorner` / `arriereCorner`~~ Resolved: Numpad3 / Ctrl+Numpad3 are Droite / Gauche (brief key table); the ¾ views have no key. The jardin / cour hints are disabled until the rooms' left-right mirror is fixed (ADR-0011, "Known issue").
 3. `site.badge.new` ("Nouveau cette nuit") will age; `site.status` uses "essai" for "test", which can be confused with the learner Essais; consider "version de test".
 4. Teacher rubric items 1 to 5 are a draft based on the brief's criteria; the brief §2.7 only names "teacher rubric".
 5. Exam copy depends on the contested exam-mode decision.
