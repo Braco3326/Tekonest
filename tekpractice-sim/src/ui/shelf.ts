@@ -71,7 +71,6 @@ export class Shelf {
       : ''
 
     const { rigs: saved, warnings } = loadRigs(window.localStorage)
-    const notices = [...new Set(warnings.map((w) => RIG_COPY.warning[w]))]
 
     root.innerHTML = `
       <h2>Étagères${guided ? ' · palette guidée' : ''}</h2>
@@ -79,14 +78,14 @@ export class Shelf {
       ${roomPicker}
       ${guided ? `<p class="shelf-brief">${GUIDED_BRIEF}</p>` : ''}
       <div class="shelf-scroll">${sections}</div>
-      <p class="shelf-rig-notice" role="status"${notices.length ? '' : ' hidden'}>${notices.map(esc).join('<br>')}</p>
+      <p class="shelf-rig-notice" role="status"></p>
       <div class="shelf-rigs"></div>
       <div class="shelf-save">
         <input id="rig-name" type="text" placeholder="Nom du rig…" maxlength="40" />
         <button id="rig-save">Sauver</button>
-        <span id="rig-saved" role="status" hidden></span>
+        <span id="rig-saved" role="status"></span>
       </div>
-      <div class="shelf-confirm" id="rig-overwrite" role="alertdialog" aria-labelledby="rig-ow-title" aria-describedby="rig-ow-body" hidden>
+      <div class="shelf-confirm" id="rig-overwrite" role="alertdialog" aria-modal="true" data-owns-keys aria-labelledby="rig-ow-title" aria-describedby="rig-ow-body" hidden>
         <strong id="rig-ow-title">${esc(RIG_COPY.overwriteTitle)}</strong>
         <p id="rig-ow-body"></p>
         <div class="shelf-confirm-actions">
@@ -114,28 +113,56 @@ export class Shelf {
     })
 
     const input = root.querySelector<HTMLInputElement>('#rig-name')!
+    const saveBtn = root.querySelector<HTMLButtonElement>('#rig-save')!
+    // Live regions stay in the DOM; only their text changes (a11y).
     const status = root.querySelector<HTMLElement>('#rig-saved')!
+    const noticeEl = root.querySelector<HTMLElement>('.shelf-rig-notice')!
     const confirmEl = root.querySelector<HTMLElement>('#rig-overwrite')!
+    const showNotices = (ws: readonly RigWarning[]): void => {
+      noticeEl.textContent = [...new Set(ws.map((w) => RIG_COPY.warning[w]))].join(' ')
+    }
+    showNotices(warnings)
     let statusTimer = 0
     let pending = ''
     const showStatus = (text: string, ok: boolean): void => {
       window.clearTimeout(statusTimer)
       status.textContent = text
       status.classList.toggle('rig-error', !ok)
-      status.hidden = false
       // Failures stay on screen (every failure is shown); successes fade.
-      if (ok) statusTimer = window.setTimeout(() => (status.hidden = true), 2500)
+      if (ok) statusTimer = window.setTimeout(() => (status.textContent = ''), 2500)
     }
-    const closeConfirm = (focus: HTMLElement): void => {
+    const hideConfirm = (): void => {
       confirmEl.hidden = true
       pending = ''
+    }
+    const closeConfirm = (focus: HTMLElement): void => {
+      hideConfirm()
       focus.focus()
     }
+    // The dialog owns its keys while it has focus (`data-owns-keys`: the Explore
+    // capture listener steps aside): Esc = Annuler, Tab cycles its 3 buttons.
+    confirmEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        e.stopPropagation() // FocusPatch must not move the camera
+        closeConfirm(saveBtn)
+      } else if (e.key === 'Tab') {
+        e.preventDefault()
+        e.stopPropagation()
+        const buttons = [...confirmEl.querySelectorAll<HTMLButtonElement>('button')]
+        const i = buttons.indexOf(document.activeElement as HTMLButtonElement)
+        const next = (i + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length
+        buttons[i < 0 ? 0 : next].focus()
+      }
+    })
     const attempt = (name: string, overwrite: boolean): void => {
+      hideConfirm()
       const r = onSaveRig(name, overwrite)
       if (r.ok) {
         showStatus(r.replaced ? RIG_COPY.replaced(name) : RIG_COPY.saved(name), true)
-        renderRigs(loadRigs(window.localStorage).rigs)
+        const after = loadRigs(window.localStorage)
+        renderRigs(after.rigs)
+        showNotices([...r.warnings, ...after.warnings])
         return
       }
       if (r.reason === 'exists') {
@@ -177,7 +204,7 @@ export class Shelf {
           input.select()
           break
         case 'rig-ow-cancel':
-          closeConfirm(root.querySelector<HTMLButtonElement>('#rig-save')!)
+          closeConfirm(saveBtn)
           break
       }
     })
@@ -202,16 +229,18 @@ export const RIG_COPY = {
   warning: {
     migrated: 'Vos montages enregistrés ont été copiés vers le nouveau format. Les anciens sont conservés.',
     'migration-failed': "Vos montages n'ont pas pu être copiés vers le nouveau format. Les anciens sont conservés.",
-    quarantined: 'Montages enregistrés illisibles — mis de côté (quarantaine). Rien n’est effacé.',
+    quarantined: "Montages enregistrés illisibles — mis de côté (quarantaine). Rien n'est effacé.",
     'quarantine-evicted': 'Une ancienne copie de secours des montages a été retirée.',
-    'quarantine-failed': 'Montages illisibles : rien n’a été effacé, mais aucun montage ne peut être enregistré pour l’instant.',
+    'quarantine-failed': "Montages illisibles : rien n'a été effacé, mais aucun montage ne peut être enregistré pour l'instant.",
     'storage-unavailable': 'Les montages ne peuvent pas être lus dans ce navigateur (navigation privée ?).',
   } satisfies Record<RigWarning, string>,
   failure: {
-    invalid: 'Ce montage contient une position invalide : il n’a pas été enregistré.',
+    invalid: "Ce montage contient une position invalide : il n'a pas été enregistré.",
     empty: 'Donnez un nom au montage.',
-    'read-only': 'Les montages ne peuvent pas être enregistrés pour l’instant. Rien n’a été effacé.',
-    quota: 'L’enregistrement dans ce navigateur a échoué : la mémoire est pleine.',
-    storage: 'L’enregistrement dans ce navigateur a échoué.',
+    'read-only': "Les montages ne peuvent pas être enregistrés pour l'instant. Rien n'a été effacé.",
+    quota: "L'enregistrement dans ce navigateur a échoué : la mémoire est pleine.",
+    storage: "L'enregistrement dans ce navigateur a échoué.",
   } satisfies Record<Exclude<RigSaveFailure, 'exists'>, string>,
+  /** Provisional (no deck key): LOAD_RIG on a name that is no longer stored. */
+  missing: (name: string): string => `Le montage « ${name} » est introuvable dans ce navigateur. Rien n'a été chargé.`,
 }

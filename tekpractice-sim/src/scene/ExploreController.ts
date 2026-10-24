@@ -254,6 +254,9 @@ export class ExploreController implements Walker {
   // ── keyboard ────────────────────────────────────────────────────────────────
   private onKeyDown = (e: KeyboardEvent): void => {
     if (!this.ui || this.ui.capturingKey()) return
+    // A HUD dialog marked `data-owns-keys` (e.g. the rig overwrite confirm)
+    // handles its own Esc/Tab while it has focus: the capture-phase chain steps aside.
+    if ((e.target as Element | null)?.closest?.('[data-owns-keys]')) return
     const actions = actionsForCode(this.deps.settings().bindings, e.code)
     if (actions.includes('CANCEL')) {
       this.handleEsc(e)

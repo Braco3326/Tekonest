@@ -92,6 +92,50 @@ test('same name → in-page confirm (rename focused); Replace overwrites, Cancel
   expect(rigs[0].instances).toHaveLength(2)
 })
 
+test('overwrite dialog: Tab is trapped, Esc = Annuler (camera untouched, data byte-identical)', async ({ page }) => {
+  await page.locator('.shelf-item[data-device="shure-sm58"]').click()
+  await page.locator('#rig-name').fill('Esc')
+  await page.locator('#rig-save').click()
+  await page.locator('#rig-save').click()
+  const dialog = page.getByRole('alertdialog')
+  await expect(dialog).toBeVisible()
+  await expect(dialog).toHaveAttribute('aria-modal', 'true')
+  await expect(page.locator('#rig-ow-rename')).toBeFocused()
+
+  // Tab cycles the 3 buttons only
+  await page.keyboard.press('Tab')
+  await expect(page.locator('#rig-ow-cancel')).toBeFocused()
+  await page.keyboard.press('Tab')
+  await expect(page.locator('#rig-ow-replace')).toBeFocused()
+  await page.keyboard.press('Shift+Tab')
+  await expect(page.locator('#rig-ow-cancel')).toBeFocused()
+
+  const snap = () =>
+    page.evaluate(() => {
+      const sim = window.__audioSim!
+      const ex = sim.explore?.()
+      return JSON.stringify({ camera: sim.camera(), view: sim.view(), explore: ex ? { ...ex } : null })
+    })
+  const before = await snap()
+  const data = await page.evaluate(() => window.localStorage.getItem('audio-sim/rigs.v2'))
+
+  await page.keyboard.press('Escape')
+  await expect(dialog).toBeHidden()
+  await expect(page.locator('#rig-save')).toBeFocused()
+  expect(await snap()).toBe(before)
+  expect(await page.evaluate(() => window.localStorage.getItem('audio-sim/rigs.v2'))).toBe(data)
+})
+
+test('loading a rig that is no longer stored shows the failure notice', async ({ page }) => {
+  await page.locator('.shelf-item[data-device="shure-sm58"]').click()
+  await page.locator('#rig-name').fill('Fantôme')
+  await page.locator('#rig-save').click()
+  // another tab / an old build removes it behind the shelf's back
+  await page.evaluate(() => window.localStorage.setItem('audio-sim/rigs.v2', JSON.stringify({ version: 2, rigs: [] })))
+  await page.locator('.shelf-rig', { hasText: 'Fantôme' }).click()
+  await expect(page.locator('.toast-warning')).toContainText('Le montage « Fantôme » est introuvable dans ce navigateur.')
+})
+
 test('save → reload → load: positions restored within ±1 cm', async ({ page }) => {
   const placed: Record<string, [number, number, number]> = {
     'shure-sm58-s1': [1.234, 0, -0.875],

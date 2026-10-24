@@ -40,7 +40,7 @@ import { Hud } from './ui/hud'
 import { ControlsPanel } from './ui/controlsPanel'
 import { LocalStorageProgressStore } from './ui/ProgressStore'
 import { ExamController } from './ui/exam'
-import { Shelf } from './ui/shelf'
+import { RIG_COPY, Shelf } from './ui/shelf'
 import { loadRigs, saveRig } from './ui/rigStore'
 import { SeenTips, tipFor, type CoachFile } from './ui/coach'
 import type { ToastAction } from './ui/hud'
@@ -511,8 +511,14 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
 
   // Rig reload (ADR-0005): clear stage → respawn exact ids → rewire → restate.
   const loadRigByName = (name: string): void => {
-    const rig = loadRigs(window.localStorage).rigs.find((r) => r.name === name)
-    if (!rig) return
+    const loaded = loadRigs(window.localStorage)
+    const rig = loaded.rigs.find((r) => r.name === name)
+    if (!rig) {
+      // Every failure is shown: the rig vanished (another tab, quarantine, blocked storage).
+      const why = loaded.warnings.map((w) => RIG_COPY.warning[w]).join(' ')
+      hud.toast('warning', 'Montage introuvable', `${RIG_COPY.missing(name)}${why ? ` ${why}` : ''}`)
+      return
+    }
     graph.clear()
     cables.clear()
     for (const inst of instances) inst.dispose()
