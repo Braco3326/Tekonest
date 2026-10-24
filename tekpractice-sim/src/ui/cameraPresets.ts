@@ -31,6 +31,7 @@ export class CameraPresets {
   private buttons: HTMLButtonElement[] = []
   /** A long-press already saved: swallow the click / contextmenu that follows the same gesture. */
   private suppressUntil = 0
+  private saveRow!: HTMLElement
 
   constructor(private deps: CameraPresetsDeps) {
     this.el = document.createElement('div')
@@ -45,6 +46,32 @@ export class CameraPresets {
       this.el.appendChild(b)
       this.buttons.push(b)
     }
+    // Named keyboard/pointer path for saving (every action has a button): a toggle reveals three save buttons.
+    const toggle = document.createElement('button')
+    toggle.type = 'button'
+    toggle.className = 'save-toggle'
+    toggle.textContent = 'Enregistrer ici'
+    toggle.setAttribute('aria-expanded', 'false')
+    this.saveRow = document.createElement('div')
+    this.saveRow.className = 'save-row'
+    this.saveRow.hidden = true
+    toggle.addEventListener('click', () => {
+      this.saveRow.hidden = !this.saveRow.hidden
+      toggle.setAttribute('aria-expanded', String(!this.saveRow.hidden))
+    })
+    for (let slot = 0; slot < 3; slot++) {
+      const s = document.createElement('button')
+      s.type = 'button'
+      s.dataset.save = String(slot + 1)
+      s.textContent = `Vue ${slot + 1}`
+      s.setAttribute('aria-label', `Enregistrer ici : Vue ${slot + 1}`)
+      s.addEventListener('click', () => {
+        this.deps.save(slot)
+        this.refresh()
+      })
+      this.saveRow.appendChild(s)
+    }
+    this.el.append(toggle, this.saveRow)
     deps.root.appendChild(this.el)
     this.refresh()
   }

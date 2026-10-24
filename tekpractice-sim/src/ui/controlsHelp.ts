@@ -58,6 +58,7 @@ export const ORBIT_HELP: { gesture: string; action: string }[] = [
   { gesture: 'Clic sur un appareil', action: 'Focus : la vue tourne autour de cet appareil' },
   { gesture: 'Clic gauche maintenu + glisser', action: 'Tourner autour du point de pivot' },
   { gesture: 'Clic droit maintenu + glisser, Maj + glisser ou Ctrl + glisser', action: 'Déplacer la vue (panoramique)' },
+  { gesture: 'Clic droit ou appui long sur Vue 1, 2 ou 3 (ou bouton « Enregistrer ici »)', action: 'Enregistrer la vue 1, 2 ou 3' },
   { gesture: 'Molette', action: 'Avancer vers le curseur ou reculer' },
   { gesture: 'Double-clic sur le sol', action: 'Tourner autour de ce point du sol' },
   { gesture: "Alt + H ou bouton « Vue d'ensemble »", action: "Revenir à la vue d'ensemble" },
@@ -70,6 +71,7 @@ export const MOUSE_HELP: { gesture: string; action: string }[] = [
   { gesture: 'Clic droit maintenu + glisser vers le bas', action: 'Reculer' },
   { gesture: 'Clic droit maintenu + glisser à gauche / à droite', action: 'Pas de côté' },
   { gesture: 'Clic gauche sans glisser', action: 'Interagir : focus sur un appareil, clic sur un port' },
+  { gesture: 'Clic droit ou appui long sur Vue 1, 2 ou 3 (ou bouton « Enregistrer ici »)', action: 'Enregistrer la vue 1, 2 ou 3' },
   { gesture: 'Molette', action: 'Zoom (champ de vision)' },
   { gesture: 'En focus : glisser / molette / clic droit', action: 'Tourner autour / zoomer / revenir (ADR-0008)' },
 ]

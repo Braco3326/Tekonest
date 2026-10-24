@@ -467,6 +467,9 @@
         padding: 4px 10px; cursor: pointer; box-shadow: var(--tk-elev-card);
         transition: border-color var(--tk-motion-fast, 140ms) var(--tk-motion-ease, ease);
       }
+      #camera-presets .save-row { display: flex; gap: 6px; }
+      #camera-presets .save-row[hidden] { display: none; }
+      #camera-presets .save-toggle { border-style: dashed; }
       #camera-presets button:hover { border-color: var(--tk-accent, #2e5fe6); }
       #camera-presets button.is-empty { color: var(--tk-ink-muted, #5a6372); border-style: dashed; }
       #explore-toolbar button:hover, .ex-panel button:hover { border-color: var(--tk-accent, #2e5fe6); }

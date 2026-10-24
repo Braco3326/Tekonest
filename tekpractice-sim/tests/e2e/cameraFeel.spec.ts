@@ -308,3 +308,52 @@ test('Task 5: Digit1 never fires while a text field has focus; presets are hidde
   await page.waitForFunction(() => window.__audioSim!.explore?.().view === 'explore')
   await expect(page.locator('#camera-presets')).toBeHidden()
 })
+
+test('Task 5 (N12): recalling a view from focus leaves focus, keeps the held cable, and does not fly home', async ({ page }) => {
+  await boot(page, '/?level=a1&view=orbit')
+  await page.evaluate(() => window.localStorage.removeItem('audio-sim/camera-presets'))
+  await page.reload()
+  await boot(page, '/?level=a1&view=orbit')
+  const saved = await settledCamera(page)
+  await page.locator('#camera-presets [data-slot="1"]').click({ button: 'right' })
+
+  const from = (await page.evaluate(() => window.__audioSim!.level.requiredChain))[0].from
+  await clickFocus(page, from.instance)
+  await settledCamera(page)
+  // Pick the cable up at its port (retry: the model may land late).
+  for (let i = 0; i < 5 && (await page.evaluate(() => window.__audioSim!.view().held)) === null; i++) {
+    const p = await page.evaluate((r) => window.__audioSim!.portScreen(r), from)
+    if (p) await page.mouse.click(p.x, p.y)
+    await page.waitForTimeout(200)
+  }
+  expect(await page.evaluate(() => window.__audioSim!.view().held)).not.toBeNull()
+
+  await page.keyboard.press('Digit1')
+  await page.waitForFunction(() => window.__audioSim!.view().mode === 'ensemble')
+  const landed = await settledCamera(page)
+  expect(angleDiff(landed.alpha, saved.alpha)).toBeLessThan(0.02)
+  expect(dist(landed.target, saved.target)).toBeLessThan(0.05)
+  // No fly-home afterwards: the camera stays at the saved pose.
+  await page.waitForTimeout(600)
+  const later = await camera(page)
+  expect(angleDiff(later.alpha, landed.alpha)).toBeLessThan(1e-3)
+  expect(dist(later.target, landed.target)).toBeLessThan(1e-3)
+  expect(await page.evaluate(() => window.__audioSim!.view().held)).not.toBeNull()
+  await page.keyboard.press('Escape')
+  await page.waitForFunction(() => window.__audioSim!.view().held === null)
+})
+
+test('Task 5: the named « Enregistrer ici » buttons save a view (keyboard and pointer path)', async ({ page }) => {
+  await boot(page, '/?level=a1&view=orbit')
+  await page.evaluate(() => window.localStorage.removeItem('audio-sim/camera-presets'))
+  await page.reload()
+  await boot(page, '/?level=a1&view=orbit')
+  const toggle = page.getByRole('button', { name: 'Enregistrer ici', exact: true })
+  await toggle.click()
+  const save3 = page.getByRole('button', { name: 'Enregistrer ici : Vue 3' })
+  await expect(save3).toBeVisible()
+  await save3.click()
+  await expect(page.locator('#hud-toasts')).toContainText('Vue 3 enregistrée.')
+  const stored = await page.evaluate(() => JSON.parse(window.localStorage.getItem('audio-sim/camera-presets')!))
+  expect(Object.values(stored.rooms)[0]).toHaveProperty('2.radius')
+})
