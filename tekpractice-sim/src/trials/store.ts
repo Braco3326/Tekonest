@@ -10,6 +10,10 @@
  *   bounded removal, warned 'quarantine-evicted') and the list starts empty.
  *   This replaces, for Essais, CLAUDE.md's "version mismatch → reset".
  * - One serial queue for every operation (load included).
+ * - Two tabs: every write re-reads the key first; a list written by another
+ *   tab is verified and merged by id (union, never drop an id; a clash keeps
+ *   both, the stored copy quarantined as 'merge-conflict:<id>'). reload()
+ *   re-reads on a `storage` event.
  * - Writes never throw: QuotaExceededError → { ok:false, reason:'quota' };
  *   growth past the GLOBAL budget (trials + quarantine, UTF-16 code units)
  *   → { ok:false, reason:'budget' }; ≥ 80 % → 'near-budget'.
@@ -134,6 +138,18 @@ const isQuota = (err: unknown): boolean => {
 
 const toIso = (d: Date | string): string => (typeof d === 'string' ? new Date(d) : d).toISOString()
 
+/** Key-order-independent JSON (a parsed copy and an in-memory copy compare equal). */
+const stable = (v: unknown): string =>
+  Array.isArray(v)
+    ? `[${v.map(stable).join(',')}]`
+    : v !== null && typeof v === 'object'
+      ? `{${Object.keys(v as object)
+          .sort()
+          .map((k) => `${JSON.stringify(k)}:${stable((v as Record<string, unknown>)[k])}`)
+          .join(',')}}`
+      : JSON.stringify(v)
+const sameTrial = (a: Trial, b: Trial): boolean => stable(a) === stable(b)
+
 export interface TrialStoreOptions {
   budget?: number
   now?: () => Date | string
@@ -151,6 +167,8 @@ export class TrialStore {
   private quarantineItems: readonly QuarantineItem[] = deepFreeze([])
   private readonly now: () => Date | string
   private readonly hash: Hasher
+  /** The stored string this store last read or wrote: anything else was written by another tab. */
+  private lastRaw: string | null = null
 
   constructor(
     private readonly storage: TrialStorage,
@@ -176,6 +194,11 @@ export class TrialStore {
     return this.serial(() => this.doLoad())
   }
 
+  /** Re-read the stored list (another tab wrote it: `storage` event). Same queue, same checks as load(). */
+  reload(): Promise<LoadResult> {
+    return this.load()
+  }
+
   private async doLoad(): Promise<LoadResult> {
     this.loaded = true
     this.readOnly = false
@@ -185,6 +208,7 @@ export class TrialStore {
     this.qBytes = 0
     try {
       raw = this.storage.getItem(TRIALS_KEY)
+      this.lastRaw = raw
       const q = this.readQuarantine()
       this.quarantineItems = deepFreeze(q.items)
       this.qBytes = q.bytes
@@ -312,7 +336,85 @@ export class TrialStore {
     return this.commit(next)
   }
 
-  private commit(next: readonly Trial[]): WriteResult {
+  /**
+   * Another tab may have written since this store last read or wrote the key
+   * (final review #2). Re-read it; when it changed, merge by id so nothing is
+   * ever dropped: the other tab's new trials are kept, its edits to trials
+   * this tab left untouched win, this tab's deliberate removals stay removed
+   * (unless the other tab changed that trial meanwhile: that copy is
+   * quarantined), and a true clash (both tabs changed one id) keeps this tab's
+   * copy in the list and quarantines the stored one. A corrupt stored payload
+   * is quarantined like on load. Any quarantine failure refuses the write.
+   */
+  private async mergeWithStored(
+    next: readonly Trial[],
+  ): Promise<{ ok: true; trials: readonly Trial[]; raw: string | null } | { ok: false; reason: WriteFailure }> {
+    let raw: string | null
+    try {
+      raw = this.storage.getItem(TRIALS_KEY)
+    } catch {
+      return { ok: false, reason: 'storage' }
+    }
+    if (raw === this.lastRaw) return { ok: true, trials: next, raw }
+    let theirs: readonly Trial[] = []
+    if (raw !== null) {
+      const c = await this.check(raw)
+      if (c.ok === 'crypto') {
+        this.readOnly = true
+        return { ok: false, reason: 'read-only' }
+      }
+      if (c.ok) theirs = c.trials
+      else {
+        const { saved } = this.toQuarantine(raw, c.reason)
+        // A truncated copy is incomplete: the stored key stays the only full copy.
+        if (!saved || raw.length > QUARANTINE_RAW_CAP) {
+          this.readOnly = true
+          return { ok: false, reason: 'read-only' }
+        }
+      }
+    }
+    const base = new Map(this.trials.map((t) => [t.id, t]))
+    const mine = new Map(next.map((t) => [t.id, t]))
+    const out: Trial[] = []
+    const aside: Trial[] = []
+    for (const t of theirs) {
+      const m = mine.get(t.id)
+      const b = base.get(t.id)
+      if (m) {
+        mine.delete(t.id)
+        if (sameTrial(m, t)) out.push(m)
+        else if (b && sameTrial(m, b)) out.push(t) // untouched here: the other tab's edit wins
+        else {
+          out.push(m)
+          if (!b || !sameTrial(t, b)) aside.push(t) // both changed it: keep both
+        }
+      } else if (!b) out.push(t) // new in the other tab
+      else if (!sameTrial(t, b)) aside.push(t) // removed here, changed there meanwhile
+    }
+    for (const m of mine.values()) out.push(m) // new here (or removed by the other tab: never dropped)
+    for (const t of aside) {
+      if (!this.toQuarantine(JSON.stringify(t), `merge-conflict:${t.id}`).saved) return { ok: false, reason: 'storage' }
+    }
+    return { ok: true, trials: out, raw }
+  }
+
+  private async commit(proposed: readonly Trial[]): Promise<WriteResult> {
+    // The merge awaits (fingerprint checks): the other tab may write again
+    // meanwhile. Re-check synchronously right before setItem; merge again if so.
+    let merged = await this.mergeWithStored(proposed)
+    for (let attempt = 0; ; attempt++) {
+      if (!merged.ok) return merged
+      let now: string | null
+      try {
+        now = this.storage.getItem(TRIALS_KEY)
+      } catch {
+        return { ok: false, reason: 'storage' }
+      }
+      if (now === merged.raw) break
+      if (attempt >= 3) return { ok: false, reason: 'storage' } // never write blind over a moving key
+      merged = await this.mergeWithStored(proposed)
+    }
+    const next = merged.trials
     const json = JSON.stringify({ version: TRIALS_VERSION, trials: next })
     // Only growth is refused: removing is always possible, even over the cap.
     if (json.length + this.qBytes > this.budget && json.length > this.bytes) return { ok: false, reason: 'budget' }
@@ -321,8 +423,9 @@ export class TrialStore {
     } catch (err) {
       return { ok: false, reason: isQuota(err) ? 'quota' : 'storage' }
     }
-    this.trials = deepFreeze([...next])
+    this.trials = deepFreeze(next.map((t) => (Object.isFrozen(t) ? t : deepFreeze(cloneData(t) as Trial))))
     this.bytes = json.length
+    this.lastRaw = json
     return { ok: true, warnings: this.budgetWarnings(this.bytesUsed()) }
   }
 

@@ -323,6 +323,29 @@ test('final review #1: two compare flips within 200 ms leave no ghost device (on
   await expect(page.locator('.es-compare')).toBeHidden()
 })
 
+test('final review #2: two tabs freeze Essais → both kept, the other tab’s list follows', async ({ page }) => {
+  const tab2 = await page.context().newPage()
+  await tab2.emulateMedia({ reducedMotion: 'reduce' })
+  await tab2.goto('/?level=sandbox')
+  await tab2.waitForFunction(() => !!window.__audioSim)
+  await tab2.getByRole('button', { name: 'Essais' }).click()
+  await expect(tab2.locator('.es-row')).toHaveCount(0)
+
+  await page.evaluate(() => window.__audioSim!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', position: [1.2, 0, -1] }))
+  await page.getByRole('button', { name: 'Essais' }).click()
+  await freeze(page, 'Onglet 1.')
+  await expect(page.locator('.es-row')).toHaveCount(1)
+  // the storage event reaches tab 2: its list now shows tab 1's Essai
+  await expect(tab2.locator('.es-row')).toHaveCount(1)
+
+  await tab2.evaluate(() => window.__audioSim!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', position: [-1.4, 0, 0.6] }))
+  await freeze(tab2, 'Onglet 2.')
+  await expect(tab2.locator('.es-row')).toHaveCount(2)
+  expect((await trials(page)).map((t) => t.evidence.prediction.text).sort()).toEqual(['Onglet 1.', 'Onglet 2.'])
+  await expect(page.locator('.es-row')).toHaveCount(2)
+  await tab2.close()
+})
+
 test('exam mode has no Essais panel (D2)', async ({ page }) => {
   await page.goto('/?level=a1&mode=exam')
   await page.waitForFunction(() => !!window.__audioSim)

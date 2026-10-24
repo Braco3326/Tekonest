@@ -159,6 +159,119 @@ describe('TrialStore: concurrency (one serial queue)', () => {
   })
 })
 
+describe('TrialStore: two tabs on one storage (final review #2)', () => {
+  const trialC = () => {
+    const i = input({ name: 'Essai C' })
+    i.design.placements[0].position_m = [4, 0, 4]
+    return createTrial(i, NOW, 'tr_c')
+  }
+  const stored = (s: MemStorage) => (JSON.parse(s.getItem(TRIALS_KEY) as string).trials as Trial[]).map((t) => t.id)
+
+  it('two store instances append different trials → both survive', async () => {
+    const s = new MemStorage()
+    const tab1 = new TrialStore(s)
+    const tab2 = new TrialStore(s)
+    await tab1.load()
+    await tab2.load()
+    const a = await trialA()
+    expect((await tab1.append(a)).ok).toBe(true)
+    expect((await tab2.append(await trialC())).ok).toBe(true)
+    expect(stored(s).sort()).toEqual(['tr_a', 'tr_c'])
+    expect(tab2.list().map((t) => t.id).sort()).toEqual(['tr_a', 'tr_c'])
+    // and the first tab, writing again, keeps the second tab's trial
+    expect((await tab1.append(await trialB(a))).ok).toBe(true)
+    expect(stored(s).sort()).toEqual(['tr_a', 'tr_b', 'tr_c'])
+    expect((await new TrialStore(s).load()).quarantined).toBe(false)
+  })
+
+  it('a remove in one tab does not resurrect, and does not drop the other tab’s new trial', async () => {
+    const s = new MemStorage()
+    const tab1 = new TrialStore(s)
+    const a = await trialA()
+    await tab1.append(a)
+    await tab1.append(await trialB(a))
+    const tab2 = new TrialStore(s)
+    await tab2.load()
+    await tab2.append(await trialC())
+    expect((await tab1.remove('tr_b')).ok).toBe(true)
+    expect(stored(s).sort()).toEqual(['tr_a', 'tr_c'])
+  })
+
+  it('an edit made by the other tab on a trial this tab did not touch is kept', async () => {
+    const s = new MemStorage()
+    const tab1 = new TrialStore(s)
+    await tab1.append(await trialA())
+    const tab2 = new TrialStore(s)
+    await tab2.load()
+    await tab1.rename('tr_a', 'Renommé ailleurs')
+    await tab2.append(await trialC())
+    const r = await new TrialStore(s).load()
+    expect(r.trials.find((t) => t.id === 'tr_a')?.name).toBe('Renommé ailleurs')
+    expect(s.getItem(QUARANTINE_KEY)).toBeNull()
+  })
+
+  it('an id clash with different content keeps both: the stored copy goes to quarantine', async () => {
+    const s = new MemStorage()
+    const tab1 = new TrialStore(s, { now: () => NOW })
+    await tab1.append(await trialA())
+    const tab2 = new TrialStore(s, { now: () => NOW })
+    await tab2.load()
+    await tab1.rename('tr_a', 'Nom onglet 1')
+    expect((await tab2.rename('tr_a', 'Nom onglet 2')).ok).toBe(true)
+    expect((await new TrialStore(s).load()).trials.map((t) => t.name)).toEqual(['Nom onglet 2'])
+    const [item] = quarantineItems(s)
+    expect(item.reason).toBe('merge-conflict:tr_a')
+    expect(JSON.parse(item.raw)).toMatchObject({ id: 'tr_a', name: 'Nom onglet 1' })
+  })
+
+  it('a corrupt payload written meanwhile is quarantined, never overwritten away', async () => {
+    const s = new MemStorage()
+    const tab1 = new TrialStore(s)
+    await tab1.load()
+    s.data.set(TRIALS_KEY, 'garbage from elsewhere')
+    expect((await tab1.append(await trialA())).ok).toBe(true)
+    expect(stored(s)).toEqual(['tr_a'])
+    expect(quarantineItems(s).map((i) => i.raw)).toEqual(['garbage from elsewhere'])
+  })
+
+  it('a write landing while the merge is verifying is merged too (re-checked right before setItem)', async () => {
+    const a = await trialA()
+    const elsewhere = new MemStorage()
+    const helper = new TrialStore(elsewhere)
+    await helper.append(a)
+    await helper.append(await trialC())
+    const rawAC = elsewhere.getItem(TRIALS_KEY) as string
+
+    const s = new MemStorage()
+    let calls = 0
+    // 1st hash = append's own check, 2nd = the merge verifying tab 1's file: the other tab writes again right then
+    const racing = async (text: string) => {
+      if (calls++ === 1) s.data.set(TRIALS_KEY, rawAC)
+      return sha256hex(text)
+    }
+    const tab2 = new TrialStore(s, { hash: racing })
+    await tab2.load()
+    calls = 0
+    const tab1 = new TrialStore(s)
+    await tab1.append(a)
+    expect((await tab2.append(await trialB(a))).ok).toBe(true)
+    expect(stored(s).sort()).toEqual(['tr_a', 'tr_b', 'tr_c'])
+  })
+
+  it('reload() picks up the other tab’s writes', async () => {
+    const s = new MemStorage()
+    const tab1 = new TrialStore(s)
+    const tab2 = new TrialStore(s)
+    await tab1.load()
+    await tab2.load()
+    await tab1.append(await trialA())
+    expect(tab2.list()).toHaveLength(0)
+    const r = await tab2.reload()
+    expect(r.trials.map((t) => t.id)).toEqual(['tr_a'])
+    expect(tab2.list().map((t) => t.id)).toEqual(['tr_a'])
+  })
+})
+
 describe('TrialStore: write-once', () => {
   it('rename changes only the name', async () => {
     const s = new MemStorage()

@@ -14,7 +14,7 @@
 import type { LevelState, TeachingEvent } from '../engine/types'
 import { exportQuarantine, exportTrails, importTrails } from '../trials/export'
 import { fingerprint, rulesRevOf } from '../trials/fingerprint'
-import { TrialStore, type StoreWarning, type TrialStorage, type WriteFailure } from '../trials/store'
+import { TRIALS_KEY, TrialStore, type LoadResult, type StoreWarning, type TrialStorage, type WriteFailure } from '../trials/store'
 import { createTrial, newTrialId, TrialError, type DeepReadonly, type DesignState, type Trial, type TrialView } from '../trials/trial'
 import {
   caption,
@@ -133,14 +133,22 @@ export class EssaisPanel {
     host.root.append(this.el, this.cap)
     dockBelow(this.el, host.anchor)
     this.wire()
-    this.ready = this.store.load().then((r) => {
-      this.trials = r.trials
-      this.notice = loadNotice(r, this.store.bytesUsed() / this.store.budget)
-      this.readOnly = r.warnings.some((w: StoreWarning) =>
-        ['quarantine-truncated', 'quarantine-failed', 'storage-unavailable', 'crypto-unavailable'].includes(w),
-      )
-      this.render()
+    this.ready = this.store.load().then((r) => this.loaded(r))
+    // Another tab wrote the Essais (final review #2): re-read, so this tab's
+    // list is current and its next write merges instead of overwriting.
+    window.addEventListener('storage', (e) => {
+      if (e.key !== TRIALS_KEY && e.key !== null) return
+      this.ready = this.ready.then(() => this.store.reload()).then((r) => this.loaded(r))
     })
+  }
+
+  private loaded(r: LoadResult): void {
+    this.trials = r.trials
+    this.notice = loadNotice(r, this.store.bytesUsed() / this.store.budget) ?? this.notice
+    this.readOnly = r.warnings.some((w: StoreWarning) =>
+      ['quarantine-truncated', 'quarantine-failed', 'storage-unavailable', 'crypto-unavailable'].includes(w),
+    )
+    this.render()
   }
 
   // ── public surface (toolbar, keys, game) ─────────────────────────────────────
