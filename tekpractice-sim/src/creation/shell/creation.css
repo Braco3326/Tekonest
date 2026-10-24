@@ -263,8 +263,9 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   border-bottom: 1px solid var(--cr-panel-line);
 }
 .cr-props .cr-panel-head { flex-direction: row-reverse; padding: 0 12px 0 0; }
+/* Plex 500, not Tektur (Task 14b): « PROPRIÉTÉS » — Tektur's acute on É reads as a macron at 11 px (« PROPRIĒTĒS »), as in .cr-pick-confirm-title. */
 .cr-panel-title {
-  font: 600 11px/1 var(--cr-font-title);
+  font: 500 11px/1 var(--cr-font-ui);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--cr-ink-muted);
@@ -332,7 +333,8 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 
 /* ── « Propriétés » (Task 10): label column + control, 28 px rows, 24 px+ targets ── */
 .cr-props-content { padding: 0 12px 12px; }
-.cr .cr-props-title { margin: 4px 0 8px; font: 600 15px/1.25 var(--cr-font-title); letter-spacing: 0.02em; color: var(--cr-papier); overflow-wrap: anywhere; }
+/* Plex (Task 14b): « Aucune sélection » and device names carry accents (Tektur's acute reads as a macron). */
+.cr .cr-props-title { margin: 4px 0 8px; font: 500 15px/1.25 var(--cr-font-ui); letter-spacing: 0.02em; color: var(--cr-papier); overflow-wrap: anywhere; }
 .cr .cr-props-title:focus-visible { outline-offset: 2px; box-shadow: none; }
 .cr-props-empty .cr-props-hint { margin: 0; }
 .cr-props-section { margin: 0; }
@@ -340,7 +342,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-props-ident .cr-field { padding-bottom: 8px; }
 .cr-props-legend {
   padding: 0 0 6px;
-  font: 600 11px/1 var(--cr-font-title);
+  font: 500 11px/1 var(--cr-font-ui); /* « RÉGLAGES »: Plex, as .cr-panel-title */
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--cr-ink-muted);

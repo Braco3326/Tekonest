@@ -59,6 +59,15 @@ for (const [w, h] of [[1366, 768], [1920, 1080]] as const) {
   })
 }
 
+test('accented panel titles use Plex, not Tektur (« PROPRIÉTÉS », « Aucune sélection »: Tektur\'s acute reads as a macron)', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.choosePlace('blank'))
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  for (const sel of ['.cr-panel-title', '.cr-props-title'])
+    expect(await page.locator(sel).first().evaluate((e) => getComputedStyle(e).fontFamily), sel).toMatch(/^'?"?IBM Plex Sans/)
+  await expect(page.locator('.cr-props .cr-panel-title')).toHaveText(/Propriétés/i)
+})
+
 test('placeholder look (a .glb that fails): token body, family top tint, port markers, Plex labels', async ({ page }) => {
   await page.setViewportSize({ width: 1366, height: 768 })
   await page.route('**/assets/yamaha-ql1.glb', (r) => r.abort())

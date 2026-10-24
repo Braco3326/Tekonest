@@ -61,3 +61,19 @@ Skips (loggés, pas des echecs) :
 Restant :
 - Verif prod : attendre que la file de builds Vercel serve le dernier commit (hash bundle).
 - P2 : recettes v2 pour consoles/speakers (details), visuels de connecteurs sur les cables, orientation fine des glb par device.
+
+## 2026-10-25 — Polices du Mode Création (Task 14b, décision P12)
+
+Auto-hébergées via npm (aucun téléchargement à l'exécution), importées par `src/creation/boot.ts` ;
+les woff2 sont copiés dans `dist/assets/` au build. Les deux sont sous SIL Open Font License 1.1 (OFL) :
+usage, intégration et redistribution libres, pas de vente seule des polices, noms réservés non réutilisés
+pour une version modifiée (nous ne les modifions pas). Texte de la licence : `node_modules/@fontsource/<nom>/LICENSE`.
+
+| Police | Paquet (version) | Graisses chargées | Source | Copyright | Licence |
+|---|---|---|---|---|---|
+| Tektur | `@fontsource/tektur` 5.3.0 | 600 | https://fontsource.org/fonts/tektur — amont https://github.com/hyvyys/Tektur | © 2023 The Tektur Project Authors | OFL-1.1 |
+| IBM Plex Sans | `@fontsource/ibm-plex-sans` 5.3.0 | 400, 500 | https://fontsource.org/fonts/ibm-plex-sans — amont https://github.com/IBM/plex | © 2019 IBM Corp. | OFL-1.1 |
+
+Règle d'usage (Tasks 12 et 14b) : Tektur seulement pour les titres sans accent (marque, titre du projet,
+« Choisir un lieu ») ; tout titre qui porte du français accentué (« PROPRIÉTÉS », « Aucune sélection »,
+noms de lieux) est en IBM Plex Sans 500, car l'aigu de Tektur se lit comme un macron (« Ē ») aux petites tailles.
