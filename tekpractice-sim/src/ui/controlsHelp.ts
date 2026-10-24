@@ -46,6 +46,19 @@ export function controlsHelp(b: Bindings, layout: Layout, layoutMap?: ReadonlyMa
   }))
 }
 
+/**
+ * Orbit view mouse gestures (designer nav, Tasks 3–4; ADR-0008 addendum).
+ * Copy deck docs/copy/designer-nav-essais.md §13 « Navigation », keys nav.help.*.
+ */
+export const ORBIT_HELP: { gesture: string; action: string }[] = [
+  { gesture: 'Clic sur un appareil', action: 'Focus : la vue tourne autour de cet appareil' },
+  { gesture: 'Clic gauche maintenu + glisser', action: 'Tourner autour du point de pivot' },
+  { gesture: 'Clic droit maintenu + glisser, Maj + glisser ou Ctrl + glisser', action: 'Déplacer la vue (panoramique)' },
+  { gesture: 'Molette', action: 'Avancer vers le curseur ou reculer' },
+  { gesture: 'Double-clic sur le sol', action: 'Tourner autour de ce point du sol' },
+  { gesture: "Alt + H ou bouton « Vue d'ensemble »", action: "Revenir à la vue d'ensemble" },
+]
+
 /** Mouse-only scheme (ADR-0010 Décision 3). */
 export const MOUSE_HELP: { gesture: string; action: string }[] = [
   { gesture: 'Clic gauche maintenu + glisser', action: 'Regarder autour de soi' },

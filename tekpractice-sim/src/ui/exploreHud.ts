@@ -11,7 +11,7 @@ import type { Placement } from '../scene/Placement'
 import type { Action } from '../input/actions'
 import { CHORD_ACTIONS, chordFor, isModifierCode, rebind, REMAPPABLE, RESERVED_CODES } from '../input/bindings'
 import { labelFor, type Layout } from '../input/layoutLabels'
-import { ACTION_LABELS, controlsHelp, MOUSE_HELP } from './controlsHelp'
+import { ACTION_LABELS, controlsHelp, MOUSE_HELP, ORBIT_HELP } from './controlsHelp'
 import { buildInventoryModel, type InventoryDevice, type KbSheets } from './inventoryModel'
 import { DEFAULT_SETTINGS, type ExploreSettings } from './exploreSettings'
 
@@ -225,6 +225,9 @@ export class ExploreHud {
         </tbody></table></section>
         <section><h3>Souris seule</h3><table><tbody>
           ${MOUSE_HELP.map((m) => `<tr><td>${esc(m.gesture)}</td><td>${esc(m.action)}</td></tr>`).join('')}
+        </tbody></table>
+        <h3>Vue Orbite</h3><table><tbody>
+          ${ORBIT_HELP.map((m) => `<tr><td>${esc(m.gesture)}</td><td>${esc(m.action)}</td></tr>`).join('')}
         </tbody></table>
         <p class="ex-muted">Clic sur un appareil : focus et ports (comme avant). Les touches suivent la position physique du clavier (AZERTY ou QWERTY) et se changent dans Réglages.</p></section>
       </div>`,

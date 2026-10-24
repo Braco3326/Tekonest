@@ -393,6 +393,26 @@ Key ids for the help table. Existing rows stay as in `CONTROLS.md`.
 | `help.action.essais.list` | Parcourir les essais | Browse the trials | Help overlay | Arrow Up / Down inside the panel |
 | `help.keysIgnoredInField` | Les touches ne fonctionnent pas quand vous écrivez dans un champ. | Keys do nothing while you type in a field. | Help overlay footer | Explains the text-field rule |
 
+## 13. Navigation (Orbit view, help overlay)
+
+Added by tekdeveloper after the Tasks 3–4 review (no tekuxwriter string existed for these). Shown in the help overlay (H) under « Vue Orbite » (`src/ui/controlsHelp.ts` `ORBIT_HELP`). For tekuxwriter to review.
+
+| key | FR | EN gloss | where it shows | notes |
+|---|---|---|---|---|
+| `nav.help.section` | Vue Orbite | Orbit view | Help overlay, table heading | |
+| `nav.help.clickFocus.gesture` | Clic sur un appareil | Click a device | Help overlay | N1: a single click focuses |
+| `nav.help.clickFocus.action` | Focus : la vue tourne autour de cet appareil | Focus: the view turns around this device | Help overlay | |
+| `nav.help.orbit.gesture` | Clic gauche maintenu + glisser | Hold left button + drag | Help overlay | Same wording as the Explore rows |
+| `nav.help.orbit.action` | Tourner autour du point de pivot | Turn around the pivot point | Help overlay | |
+| `nav.help.pan.gesture` | Clic droit maintenu + glisser, Maj + glisser ou Ctrl + glisser | Hold right button + drag, Shift + drag or Ctrl + drag | Help overlay | « Maj » is the French label of Shift |
+| `nav.help.pan.action` | Déplacer la vue (panoramique) | Move the view (pan) | Help overlay | |
+| `nav.help.wheel.gesture` | Molette | Wheel | Help overlay | |
+| `nav.help.wheel.action` | Avancer vers le curseur ou reculer | Move toward the cursor or back | Help overlay | Wheel dollies toward the cursor |
+| `nav.help.floorPivot.gesture` | Double-clic sur le sol | Double-click the floor | Help overlay | Floors only, never walls |
+| `nav.help.floorPivot.action` | Tourner autour de ce point du sol | Turn around this point of the floor | Help overlay | |
+| `nav.help.home.gesture` | Alt + H ou bouton « Vue d'ensemble » | Alt + H or the "Vue d'ensemble" button | Help overlay | Shows the remapped key in the key table |
+| `nav.help.home.action` | Revenir à la vue d'ensemble | Go back to the overview | Help overlay | Same words as `viewCube.home.label` |
+
 ## Open points for Oscar / reviewers
 
 1. **Cour = droite** is common theatre usage, not in TEK Brain; jardin = gauche is backed by `american-seating`. Consider a glossary term.

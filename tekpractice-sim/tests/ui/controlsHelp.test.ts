@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { ACTIONS } from '../../src/input/actions'
 import { DEFAULT_BINDINGS, rebind } from '../../src/input/bindings'
-import { ACTION_LABELS, controlsHelp, MOUSE_HELP } from '../../src/ui/controlsHelp'
+import { ACTION_LABELS, controlsHelp, MOUSE_HELP, ORBIT_HELP } from '../../src/ui/controlsHelp'
 
 describe('controls help (FR first)', () => {
   it('has a French label for every action', () => {
@@ -20,6 +20,15 @@ describe('controls help (FR first)', () => {
   it('reflects remapped keys', () => {
     const rows = controlsHelp(rebind(DEFAULT_BINDINGS, 'RUN', ['KeyC']), 'qwerty')
     expect(rows.find((r) => r.action === 'RUN')!.keys).toEqual(['C'])
+  })
+
+  it('lists the Orbit mouse gestures (designer nav): click focus, pan, floor pivot, home', () => {
+    const text = ORBIT_HELP.map((r) => `${r.gesture} ${r.action}`).join(' | ')
+    expect(text).toContain('Double-clic sur le sol')
+    expect(text).toContain('Maj + glisser')
+    expect(text).toContain('Ctrl + glisser')
+    expect(text).toContain('Alt + H')
+    expect(ORBIT_HELP.find((r) => r.gesture.startsWith('Clic sur un appareil'))).toBeDefined()
   })
 
   it('lists the mouse-only scheme in French', () => {

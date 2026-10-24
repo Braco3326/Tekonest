@@ -13,7 +13,7 @@ Reference: ADR-0010 (Explore view) and ADR-0008 (Focus & Patch). Every key can b
   │  Sandbox     │                │  autour)     │
   │  par défaut  │                │  Niveaux A1–D1, examen
   └──────┬───────┘                └──────┬───────┘   par défaut
-         │ clic sur un appareil / F       │ double-clic / Tab + Entrée
+         │ clic sur un appareil / F       │ clic / double-clic / Tab + Entrée
          ▼                                ▼
       ┌─────────────────────────────────────────┐
       │      FOCUS & PATCH (ADR-0008)            │
@@ -55,6 +55,7 @@ Keys follow the **physical position** on the keyboard (`KeyboardEvent.code`). Th
 | R | R | Tourner l'objet à poser (90°) | Rotate the object being placed |
 | V | V | Exploration ⇄ Orbite | Explore ⇄ Orbit |
 | H | H | Aide des contrôles | Controls help |
+| Alt + H | Alt + H | Vue d'ensemble (aussi le bouton « Vue d'ensemble ») | Overview (also the "Vue d'ensemble" button) |
 | Échap | Esc | Voir « Échap » ci-dessous | See "Esc" below |
 
 **Pointer capture (auto)**: clicking empty floor captures the mouse **once you have walked with the keyboard**. After that, a crosshair appears, a click focuses the device under it, and Esc frees the mouse. This can be changed in Réglages (auto / always / never).
@@ -80,6 +81,21 @@ Keys follow the **physical position** on the keyboard (`KeyboardEvent.code`). Th
 | Molette | Wheel | Zoom par champ de vision — FOV zoom |
 
 A gesture counts as a drag once the mouse has moved 10 px, the same threshold Babylon uses, so it is never also read as a click.
+
+## Vue Orbite / Orbit view
+
+Inspired by pro acoustic-design and 3D modelling tools (ADR-0008 addendum, 2026-10-24). The help overlay (`H`) lists the same gestures under « Vue Orbite ».
+
+| Geste | Gesture | Action |
+|---|---|---|
+| Clic sur un appareil | Click a device | Focus : la vue tourne autour de cet appareil — focus, the view turns around it (a double-click works too) |
+| Clic gauche maintenu + glisser | Left drag | Tourner autour du point de pivot — orbit around the pivot |
+| Clic droit maintenu + glisser, Maj + glisser ou Ctrl + glisser | Right drag, Shift + left drag or Ctrl + left drag | Déplacer la vue (panoramique) — pan |
+| Molette | Wheel | Avancer vers le curseur ou reculer — dolly toward the cursor |
+| Double-clic sur le sol | Double-click the floor | Tourner autour de ce point du sol — re-pivot there (floors only, never walls; angle and distance kept) |
+| Alt + H ou bouton « Vue d'ensemble » | Alt + H or the "Vue d'ensemble" button | Revenir à la vue d'ensemble — back to the overview (a cable in hand is kept) |
+
+The camera keeps a little inertia and never goes under the floor. In Focus you can come as close as 1.2 × the device size. In Explore (walking) none of this applies: the floor double-click, `Alt + H` and the « Vue d'ensemble » button only act on the orbit camera.
 
 ## Échap / Esc (order of priority)
 
