@@ -7,7 +7,7 @@
  * injected FocusPatch handles and UI callbacks.
  */
 import { ArcRotateCamera, Scene, UniversalCamera, Vector3 } from '@babylonjs/core'
-import { actionsForCode } from '../input/bindings'
+import { actionsForCode, chordFor } from '../input/bindings'
 import { KeyboardState } from '../input/keyboardState'
 import { MouseGesture } from '../input/mouseGesture'
 import { buildIntent, MOUSE_LOOK_RAD_PER_PX } from '../explore/intent'
@@ -46,6 +46,8 @@ export interface FocusHandles {
   readonly view: { mode: 'ensemble' | 'focus'; focused: string | null; held: PortRef | null; selected: string | null }
   focusInstance(instanceId: string): void
   deviceAt(x: number, y: number): string | null
+  /** CAMERA_HOME (Alt+H): back to the Ensemble pose (Task 4). */
+  home(): void
 }
 
 export interface ExploreDeps {
@@ -157,10 +159,7 @@ export class ExploreController implements Walker {
       (this.ui?.panelCount() ?? 0) === 0
     )
   }
-  /** Single click focuses only while walking (orbit keeps ADR-0008 click = select). */
-  clickFocuses(): boolean {
-    return this.view === 'explore' && this.focus?.view.mode !== 'focus'
-  }
+  // (clickFocuses() retired: N1 makes a single click focus in every view, in focusMachine.)
   snapshot(): {
     view: BaseView
     camera: string | null
@@ -259,7 +258,16 @@ export class ExploreController implements Walker {
     if (isTyping(target)) return // inventory search, rig name… never hijacked
     const onButton = target && target !== document.body && target.tagName !== 'CANVAS'
     if (onButton && (e.code === 'Space' || e.code === 'Enter')) return // the focused button owns it
-    if (e.ctrlKey || e.metaKey || e.altKey) return
+    const chord = chordFor(e)
+    if (chord !== e.code) {
+      // A modifier chord (Alt+H = CAMERA_HOME): one-shot actions bound to the
+      // chord only — never the plain key's action (plain H = help).
+      const chordActions = actionsForCode(this.deps.settings().bindings, chord)
+      if (chordActions.length === 0 || e.repeat) return
+      e.preventDefault() // e.g. Firefox's Alt+H Help menu
+      for (const a of chordActions) this.onPressed(a, e)
+      return
+    }
     if (actions.length === 0) return
 
     this.keyboard.keyDown(e.code)
@@ -306,6 +314,10 @@ export class ExploreController implements Walker {
       }
       case 'ROTATE_PLACEMENT':
         if (this.ui.placing()) this.ui.rotatePlacement()
+        break
+      case 'CAMERA_HOME':
+        // Orbit / focus: fly to the Ensemble pose. Walking: ViewDirector no-op.
+        this.focus.home()
         break
     }
   }

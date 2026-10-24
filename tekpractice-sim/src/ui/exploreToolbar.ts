@@ -15,9 +15,11 @@ export interface ExploreToolbarDeps extends Omit<ExploreHudDeps, 'onPanelsChange
   inventoryEnabled: boolean
   /** Device currently framed in Focus (shows the "Ramasser" button in the sandbox). */
   focusedInstance(): string | null
+  /** « Vue d'ensemble » (CAMERA_HOME, Task 4): fly back to the Ensemble pose. */
+  home(): void
 }
 
-type Act = 'inventory' | 'view' | 'help' | 'settings' | 'pickup'
+type Act = 'home' | 'inventory' | 'view' | 'help' | 'settings' | 'pickup'
 
 export class ExploreToolbar implements ExploreUi {
   private el: HTMLElement
@@ -31,7 +33,7 @@ export class ExploreToolbar implements ExploreUi {
     this.el = document.createElement('nav')
     this.el.id = 'explore-toolbar'
     this.el.setAttribute('aria-label', 'Contrôles du monde 3D')
-    const acts: Act[] = [...(deps.inventoryEnabled ? (['inventory'] as Act[]) : []), 'view', 'help', 'settings']
+    const acts: Act[] = ['home', ...(deps.inventoryEnabled ? (['inventory'] as Act[]) : []), 'view', 'help', 'settings']
     if (deps.sandbox) acts.push('pickup')
     for (const act of acts) {
       const b = document.createElement('button')
@@ -120,7 +122,8 @@ export class ExploreToolbar implements ExploreUi {
 
   // ── toolbar ─────────────────────────────────────────────────────────────────
   private onClick(act: Act): void {
-    if (act === 'inventory') this.toggleInventory()
+    if (act === 'home') this.deps.home()
+    else if (act === 'inventory') this.toggleInventory()
     else if (act === 'help') this.toggleHelp()
     else if (act === 'settings') this.withPanels((h) => h.toggleSettings())
     else if (act === 'view') {
@@ -151,6 +154,15 @@ export class ExploreToolbar implements ExploreUi {
   private render(): void {
     const kbd = (a: Action) => `<kbd>${this.key(a).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)}</kbd>`
     const view = this.deps.currentView()
+    // « Vue d'ensemble » (copy deck viewCube.home.*). Hidden while walking with
+    // nothing framed: Explore has no orbit overview (ADR-0010 untouched).
+    const home = this.buttons.get('home')
+    if (home) {
+      home.hidden = view === 'explore' && !this.deps.focusedInstance()
+      this.set('home', `Vue d'ensemble ${kbd('CAMERA_HOME')}`)
+      home.title = `Vue d'ensemble (${this.key('CAMERA_HOME')})`
+      home.setAttribute('aria-label', "Revenir à la vue d'ensemble de la salle")
+    }
     this.set('inventory', `Inventaire ${kbd('TOGGLE_INVENTORY')}`, this.open('inventory'))
     // The label says the state; no aria-pressed on a button whose label changes.
     this.set('view', `Vue : ${view === 'explore' ? 'Exploration' : 'Orbite'} ${kbd('TOGGLE_VIEW')}`)

@@ -21,8 +21,11 @@ import type { ConnectResult, PortRef } from '../engine/types'
 import type { Intent } from '../ui/intents'
 import type { DeviceInstance } from './DeviceSpawner'
 import type { PortPoint } from './snap'
-import type { CameraDirector } from './CameraRig'
+import type { CameraDirector, FrameTarget } from './CameraRig'
 import type { CableRenderer } from './CableRenderer'
+import { needsReframe } from '../camera/tween'
+
+type Vec3 = [number, number, number]
 import {
   initialState,
   reduce,
@@ -45,10 +48,11 @@ export interface FocusPatchDeps {
   /** Hover candidate while a cable is held (drives the marker breathing). */
   onCandidate?(ref: PortRef | null): void
   /**
-   * Explore view (ADR-0010 Décision 3): a single click on a device focuses it
-   * directly (you walked up to it). Orbit view keeps click = select.
+   * Floor double-click re-pivots the orbit (designer nav, Task 4). False while
+   * the Explore view is the base view: walking has no pivot (ADR-0010 untouched).
+   * Default: true.
    */
-  clickFocuses?(): boolean
+  floorPivot?(): boolean
   /**
    * False while pointer lock / a panel / placement owns the mouse: Babylon taps
    * then carry stale or foreign coordinates and must not reach the machine.
@@ -120,6 +124,15 @@ export class FocusPatch {
       this.apply(reduce(this.state, { type: 'RIGHT_CLICK' }))
       return
     }
+    // N1: a click DURING the flight a click-focus started aims at a moving view
+    // (often the 2nd half of a double-click that a busy frame split into two
+    // taps). It confirms that focus — never a pick through the moving scene.
+    const first = this.clickFocus
+    if (first && performance.now() - first.at < TOKENS.focus.flyMs) {
+      this.clickFocus = null
+      this.apply(reduce(this.state, { type: 'DEVICE_DOUBLE_CLICK', instanceId: first.id }))
+      return
+    }
     const port = this.portUnderPointer()
     if (port) {
       const hadHeld = this.state.held !== null
@@ -129,11 +142,40 @@ export class FocusPatch {
     }
     const device = this.deviceUnderPointer()
     if (device) {
-      const type = this.deps.clickFocuses?.() ? 'DEVICE_DOUBLE_CLICK' : 'DEVICE_CLICK'
-      this.apply(reduce(this.state, { type, instanceId: device }))
+      // N1: a single click focuses in Orbit and Explore alike (the machine decides).
+      const t = reduce(this.state, { type: 'DEVICE_CLICK', instanceId: device })
+      if (t.commands.some((c) => c.kind === 'flyToDevice')) this.clickFocus = { id: device, at: performance.now() }
+      this.apply(t)
+      return
+    }
+    if (this.state.mode === 'focus') {
+      // Leaving focus waits out the double-click window: if this click is the
+      // first half of a floor double-click (re-pivot), the camera must not
+      // start flying home first.
+      this.cancelPendingEmpty()
+      this.pendingEmpty = setTimeout(() => {
+        this.pendingEmpty = null
+        this.apply(reduce(this.state, { type: 'EMPTY_CLICK' }))
+      }, Scene.DoubleClickDelay)
       return
     }
     this.apply(reduce(this.state, { type: 'EMPTY_CLICK' }))
+  }
+
+  /** A deferred "empty click leaves focus" (see onTap). */
+  private pendingEmpty: ReturnType<typeof setTimeout> | null = null
+
+  private cancelPendingEmpty(): boolean {
+    if (!this.pendingEmpty) return false
+    clearTimeout(this.pendingEmpty)
+    this.pendingEmpty = null
+    return true
+  }
+
+  /** Alt+H / « Vue d'ensemble » (Task 4): fly home, cable kept. */
+  home(): void {
+    this.cancelPendingEmpty()
+    this.apply(reduce(this.state, { type: 'HOME' }))
   }
 
   /** Focus a device programmatically (Explore: F key, crosshair click). Same path as a double-click. */
@@ -161,7 +203,21 @@ export class FocusPatch {
 
   private pickupAt = 0
 
+  /** The pair's FIRST click already focused this device (N1) — see onDoubleTap. */
+  private clickFocus: { id: string; at: number } | null = null
+
   private onDoubleTap(): void {
+    const leftFocusPending = this.cancelPendingEmpty()
+    // N1: the first click of a double-click already started the flight, so the
+    // view under the cursor is MOVING — re-picking now could hit the stand, a
+    // neighbour or the floor. The double-click confirms the device the first
+    // click chose (and re-issues the flight its 2nd pointerdown cancelled).
+    const first = this.clickFocus
+    this.clickFocus = null
+    if (first && performance.now() - first.at < 600) {
+      this.apply(reduce(this.state, { type: 'DEVICE_DOUBLE_CLICK', instanceId: first.id }))
+      return
+    }
     const port = this.portUnderPointer()
     if (port) {
       // A double-click landing on a port means "dive on this device" (on tiny
@@ -180,7 +236,18 @@ export class FocusPatch {
       return
     }
     const device = this.deviceUnderPointer()
-    if (device) this.apply(reduce(this.state, { type: 'DEVICE_DOUBLE_CLICK', instanceId: device }))
+    if (device) {
+      this.apply(reduce(this.state, { type: 'DEVICE_DOUBLE_CLICK', instanceId: device }))
+      return
+    }
+    // Floor / room surface: orbit around that point (Task 4). Walking: no pivot.
+    const point = this.deps.floorPivot?.() === false ? null : this.surfaceUnderPointer()
+    if (point) {
+      this.apply(reduce(this.state, { type: 'FLOOR_DOUBLE_CLICK', point }))
+      return
+    }
+    // Nothing to pivot on: the deferred empty click still leaves focus.
+    if (leftFocusPending) this.apply(reduce(this.state, { type: 'EMPTY_CLICK' }))
   }
 
   private onKey = (e: KeyboardEvent): void => {
@@ -270,15 +337,27 @@ export class FocusPatch {
       case 'flyToDevice': {
         const inst = this.instances.find((i) => i.instanceId === cmd.instanceId)
         if (!inst) return
-        const { min, max } = inst.root.getHierarchyBoundingVectors()
-        this.rig.flyToDevice({
-          center: min.add(max).scale(0.5),
-          boundingRadius: max.subtract(min).length() / 2,
+        const frame = focusFrame(inst)
+        const flewAt = performance.now()
+        this.rig.flyToDevice(frame)
+        // The .glb may land after the flight started (placeholder box → model):
+        // re-centre the pivot on the real bounds, only if it moved ≥ 2 cm.
+        void inst.modelReady.then(() => {
+          if (this.state.mode !== 'focus' || this.state.focused !== inst.instanceId) return
+          const next = focusFrame(inst)
+          if (!needsReframe(frame.center.asArray() as Vec3, next.center.asArray() as Vec3)) return
+          // Mid-flight: finish the SAME framing on the corrected centre; after it:
+          // move the target only (the learner may have orbited since).
+          if (performance.now() - flewAt < TOKENS.focus.flyMs + 50) this.rig.flyToDevice(next)
+          else this.rig.repivot(next.center, next.boundingRadius)
         })
         break
       }
       case 'flyToEnsemble':
         this.rig.flyToEnsemble()
+        break
+      case 'repivot':
+        this.rig.repivot(Vector3.FromArray(cmd.point))
         break
       case 'pickup': {
         const p = this.portPoint(cmd.from)
@@ -439,11 +518,38 @@ export class FocusPatch {
     return best
   }
 
+  /**
+   * World point on the floor / room surface under the pointer (Task 4 re-pivot).
+   * Devices, ports, labels, cables never count: only meshes flagged
+   * `pivotSurface` (white ground, room floor and zones, env set) or any other
+   * pickable non-device mesh. Default picks ignore those surfaces (isPickable
+   * false), so the predicate checks enabled/visible itself.
+   */
+  private surfaceUnderPointer(): [number, number, number] | null {
+    const hit = this.scene.pick(this.scene.pointerX, this.scene.pointerY, (m: AbstractMesh) => {
+      const md = m.metadata as { isDeviceBody?: boolean; isPortMarker?: boolean; pivotSurface?: boolean } | null
+      if (!m.isEnabled() || !m.isVisible || md?.isDeviceBody || md?.isPortMarker) return false
+      return md?.pivotSurface === true || m.isPickable
+    })
+    const p = hit?.hit ? hit.pickedPoint : null
+    return p ? [p.x, p.y, p.z] : null
+  }
+
   private bodyMeshes(inst: DeviceInstance): AbstractMesh[] {
     return inst.root
       .getChildMeshes(false)
       .filter((m) => m.metadata?.isDeviceBody === true)
   }
+}
+
+/**
+ * The focus pivot: the device's WORLD bounding-box centre over its whole
+ * hierarchy (Task 4, getHierarchyBoundingVectors) and its half-diagonal.
+ * Shared with the __audioSim.deviceCenter() e2e hook.
+ */
+export function focusFrame(inst: DeviceInstance): FrameTarget {
+  const { min, max } = inst.root.getHierarchyBoundingVectors()
+  return { center: min.add(max).scale(0.5), boundingRadius: max.subtract(min).length() / 2 }
 }
 
 /**

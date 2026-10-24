@@ -68,3 +68,38 @@ Clavier : Tab cycle les devices, Entrée focus, flèches orbitent (accessibilit�
 - Indices mode-gated (spec §3) : glow devices + tint ok/bad SEULEMENT si hints() —
   ON Learn/Levels, OFF Examen, toggle Sandbox. Le 2D (Render2D) suit la même règle.
 - e2e pilotables à la vraie souris : `deviceScreen()`/`portScreen()` projettent en continu.
+
+## Addendum 2026-10-24 — navigation « designer » (nuit, Tasks 3–4, décisions N1/N2)
+
+Étend la décision, ne la remplace pas : Esc, clic droit, câble tenu, Tab/Entrée et
+l'architecture des trois modules restent tels quels.
+
+- **N1 — un clic simple sur un appareil le met en focus** (pivot = l'appareil + vol),
+  en Orbite comme en Exploration. Cela **remplace** « clic simple = sélection » (spec §1,
+  tableau Décision 5 ligne « Focus device ») ; le double-clic focus toujours.
+  `DEVICE_CLICK` produit la même transition que `DEVICE_DOUBLE_CLICK`, câble tenu conservé.
+  Exception : un clic sur l'appareil **déjà** cadré ne relance pas le vol (un clic qui rate
+  un port ne doit pas annuler l'angle choisi par l'élève). La dep `clickFocuses()` de
+  FocusPatch (ADR-0010) disparaît : la machine décide seule.
+- **N2 — le vol de focus garde le cadrage de la Décision 4** (`FOCUS_ALPHA`, ports face à
+  la caméra) ; seul le pivot change. Pivot = **centre de la boîte englobante monde** de la
+  hiérarchie (`root.getHierarchyBoundingVectors()`). Quand le `.glb` arrive après le vol
+  (`modelReady`), seul le pivot est recadré, et seulement si le centre bouge d'au moins
+  2 cm (pendant le vol : le même cadrage repart sur le bon centre).
+- **Re-pivot au sol** : nouvel event `FLOOR_DOUBLE_CLICK { point }` → commande `repivot`
+  (cible seule ; alpha, beta, rayon gardés). En focus, on sort du focus **sans** revoler
+  vers l'Ensemble. Pick = sol blanc, sol et zones de salle, set d'environnement (meta
+  `pivotSurface`), jamais appareils ni ports ; rien sous le curseur = rien. Pour que le
+  1er clic d'un double-clic au sol ne lance pas le retour Ensemble, le « clic dans le
+  vide » en focus attend la fenêtre de double-clic (`Scene.DoubleClickDelay`, 300 ms).
+  En marche (Exploration sans focus) : pas de pivot, ADR-0010 inchangé.
+- **HOME** : nouvel event → `flyToEnsemble`, mode ensemble, câble gardé (comme le clic
+  droit en focus, mais aussi depuis l'Ensemble après un pan ou un re-pivot). Action
+  `CAMERA_HOME` = **Alt+H** (binding remappable `'Alt+KeyH'`, H seul reste l'aide) et
+  bouton « Vue d'ensemble » dans la barre du haut (deck `viewCube.home.*`), masqué en
+  marche.
+- **Plancher de dolly** : en focus `lowerRadiusLimit = max(0.3, 1.2 × rayon englobant)`,
+  retour Ensemble = 2 ; jamais au-dessus du rayon de départ (pas de saut par clamp).
+- Mise à jour du tableau Décision 5 : Focus device = **clic** (ou double-clic) ; pan =
+  drag droit, Maj + drag gauche (ou Ctrl + drag gauche) ; re-pivot = double-clic au sol ;
+  Retour Ensemble = Esc / clic droit / clic vide / Alt+H.

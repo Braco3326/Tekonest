@@ -28,7 +28,15 @@ const SPECIAL: Record<string, string> = {
   PageDown: 'Page ↓',
 }
 
+const CHORD_PREFIX: Record<string, string> = { Ctrl: 'Ctrl', Alt: 'Alt', Meta: 'Méta' }
+
 export function labelFor(code: string, layout: Layout, layoutMap?: ReadonlyMap<string, string>): string {
+  // Chord binding ('Alt+KeyH', see bindings.chordFor): label each part.
+  const plus = code.lastIndexOf('+')
+  if (plus > 0) {
+    const mods = code.slice(0, plus).split('+').map((m) => CHORD_PREFIX[m] ?? m)
+    return [...mods, labelFor(code.slice(plus + 1), layout, layoutMap)].join('+')
+  }
   if (SPECIAL[code]) return SPECIAL[code]
   const fromMap = layoutMap?.get(code)
   if (fromMap) return fromMap.toUpperCase()

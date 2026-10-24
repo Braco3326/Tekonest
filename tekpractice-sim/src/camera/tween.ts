@@ -109,3 +109,14 @@ export class TweenClock {
     return this.finished
   }
 }
+
+/** A focused model landing late moves its centre: re-frame only from this shift on (no camera jitter). */
+export const REFRAME_MIN_SHIFT_M = 0.02
+
+export function needsReframe(
+  framed: readonly [number, number, number],
+  landed: readonly [number, number, number],
+): boolean {
+  const d = Math.hypot(landed[0] - framed[0], landed[1] - framed[1], landed[2] - framed[2])
+  return d >= REFRAME_MIN_SHIFT_M - 1e-9
+}

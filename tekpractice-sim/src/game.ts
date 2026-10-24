@@ -33,7 +33,7 @@ import { clockCheck } from './logic/clock'
 import { DeviceSpawner, type DeviceInstance } from './scene/DeviceSpawner'
 import { CableRenderer } from './scene/CableRenderer'
 import { CameraRig } from './scene/CameraRig'
-import { bodyCenter, FocusPatch } from './scene/FocusPatch'
+import { bodyCenter, FocusPatch, focusFrame } from './scene/FocusPatch'
 import type { PortPoint } from './scene/snap'
 import type { Intent } from './ui/intents'
 import { Hud } from './ui/hud'
@@ -80,6 +80,10 @@ declare global {
       explore?: () => ReturnType<ExploreController['snapshot']> & { panels: number; placing: boolean }
       /** Orbit camera pose (designer nav e2e): angles in rad, radius and target in m. */
       camera: () => { alpha: number; beta: number; radius: number; target: [number, number, number] }
+      /** Focus pivot of a device: world bounding-box centre of its hierarchy (Task 4). 2D: null. */
+      deviceCenter: (instanceId: string) => [number, number, number] | null
+      /** Screen point of a world point through the current camera (e2e aims at the floor). 2D: null. */
+      worldScreen: (p: [number, number, number]) => { x: number; y: number } | null
     }
   }
 }
@@ -194,6 +198,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   groundMat.specularColor = Color3.Black()
   ground.material = groundMat
   ground.isPickable = false
+  // Orbit pivot surface (designer nav: double-click the floor to orbit there).
+  ground.metadata = { pivotSurface: true }
 
   if (room) {
     // Procedural room from data: its own floor replaces the white ground.
@@ -212,7 +218,11 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
         if (setCfg.scale) root.scaling.setAll(setCfg.scale)
         if (setCfg.rotationY) root.rotation = new Vector3(0, (setCfg.rotationY * Math.PI) / 180, 0)
         if (setCfg.position) root.position = Vector3.FromArray(setCfg.position)
-        for (const m of meshes) m.isPickable = false
+        // Not pickable by default picks; still an orbit pivot surface (floor double-click).
+        for (const m of meshes) {
+          m.isPickable = false
+          m.metadata = { ...(m.metadata ?? {}), pivotSurface: true }
+        }
         // The room brings its own floor — retire the white ground (z-fight).
         ground.setEnabled(false)
         console.info(`[env] set ${setCfg.glb} chargé (${meshes.length} meshes)`)
@@ -630,11 +640,14 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   const startX = room ? room.layout.spawn.x : clampIn(presetEye.x, floorW / 2)
   const startZ = room ? room.layout.spawn.z : clampIn(presetEye.z, floorD / 2)
   const startYaw = room ? room.layout.spawn.yaw : Math.atan2(camera.target.x - startX, camera.target.z - startZ)
+  // Assigned below (it needs focusPatch); view/focus hooks refresh it.
+  let exploreHud: ExploreToolbar | undefined
   const explore = new ExploreController({
     scene,
     canvas,
     arc: camera,
     rig,
+    onViewChange: () => exploreHud?.refresh(), // « Vue d'ensemble » shows in Orbit only
     settings: () => settings,
     obstacles,
     start: { x: startX, z: startZ, yaw: startYaw },
@@ -643,14 +656,12 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     floorAt: room ? (x, z) => room.layout.floorAt(x, z) : undefined,
   })
   const director = new ViewDirector(scene, camera, rig, explore)
-  // Assigned just below (it needs focusPatch); FocusPatch's view hook refreshes it.
-  let exploreHud: ExploreToolbar | undefined
   const focusPatch = new FocusPatch(scene, camera, director, cables, instances, portPoints, {
     canConnect: (a, b) => graph.canConnect(a, b),
     dispatch,
     hints,
     onCandidate: markerScale,
-    clickFocuses: () => explore.clickFocuses(),
+    floorPivot: () => !explore.exploreView, // walking has no orbit pivot (ADR-0010)
     inputEnabled: () => explore.pointerFree(),
     onViewChange: () => exploreHud?.refresh(),
   })
@@ -670,6 +681,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     sandbox: sandboxMode,
     inventoryEnabled: !examMode,
     focusedInstance: () => (focusPatch.view.mode === 'focus' ? focusPatch.view.focused : null),
+    home: () => focusPatch.home(),
     settings: () => settings,
     onSettings: (next) => {
       settings = next
@@ -813,6 +825,11 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     assets: () =>
       instances.map((i) => ({ instanceId: i.instanceId, deviceId: i.deviceId, status: i.assetStatus })),
     explore: () => ({ ...explore.snapshot(), panels: exploreUi.panelCount(), placing: exploreUi.placing() }),
+    worldScreen: (p) => project(Vector3.FromArray(p)),
+    deviceCenter: (instanceId) => {
+      const inst = instances.find((i) => i.instanceId === instanceId)
+      return inst ? (focusFrame(inst).center.asArray() as [number, number, number]) : null
+    },
     camera: () => ({
       alpha: camera.alpha,
       beta: camera.beta,

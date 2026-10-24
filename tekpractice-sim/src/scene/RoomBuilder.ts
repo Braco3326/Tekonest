@@ -45,7 +45,15 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout): Tr
     return m
   }
 
-  const floor = own(MeshBuilder.CreateGround('room:floor', { width: layout.width, height: layout.length }, scene))
+  // Floor and zones are orbit pivot surfaces (designer nav: double-click the
+  // floor to orbit around that point). Still not pickable by default picks:
+  // only FocusPatch's explicit floor predicate looks at this flag.
+  const surface = (m: Mesh): Mesh => {
+    m.metadata = { ...(m.metadata ?? {}), pivotSurface: true }
+    return m
+  }
+
+  const floor = surface(own(MeshBuilder.CreateGround('room:floor', { width: layout.width, height: layout.length }, scene)))
   floor.material = floorMat
 
   // Ceiling: a plane facing DOWN (visible from inside, culled from above).
@@ -69,11 +77,11 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout): Tr
   for (const z of layout.zones) {
     const tint = ZONE_TINT[z.kind] ?? '#9AA3B2'
     if (z.y > 0.05) {
-      const deck = own(MeshBuilder.CreateBox(`room:zone:${z.id}`, { width: z.w, depth: z.d, height: z.y }, scene))
+      const deck = surface(own(MeshBuilder.CreateBox(`room:zone:${z.id}`, { width: z.w, depth: z.d, height: z.y }, scene)))
       deck.position = new Vector3(z.x, z.y / 2, z.z)
       deck.material = mat(`zone:${z.id}`, tint, 1)
     } else {
-      const mark = own(MeshBuilder.CreateGround(`room:zone:${z.id}`, { width: z.w, height: z.d }, scene))
+      const mark = surface(own(MeshBuilder.CreateGround(`room:zone:${z.id}`, { width: z.w, height: z.d }, scene)))
       mark.position = new Vector3(z.x, 0.005, z.z)
       mark.material = mat(`zone:${z.id}`, tint, 0.12)
     }

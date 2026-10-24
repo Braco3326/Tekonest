@@ -9,7 +9,7 @@
 import type { BaseView } from '../scene/ExploreController'
 import type { Placement } from '../scene/Placement'
 import type { Action } from '../input/actions'
-import { rebind, REMAPPABLE, RESERVED_CODES } from '../input/bindings'
+import { CHORD_ACTIONS, chordFor, isModifierCode, rebind, REMAPPABLE, RESERVED_CODES } from '../input/bindings'
 import { labelFor, type Layout } from '../input/layoutLabels'
 import { ACTION_LABELS, controlsHelp, MOUSE_HELP } from './controlsHelp'
 import { buildInventoryModel, type InventoryDevice, type KbSheets } from './inventoryModel'
@@ -306,10 +306,13 @@ export class ExploreHud {
     e.preventDefault()
     e.stopPropagation()
     const action = this.capture
+    // Chord actions (Alt+H home): a lone modifier is the start of the chord — keep waiting.
+    const chord = CHORD_ACTIONS.includes(action)
+    if (chord && isModifierCode(e.code)) return
     this.capture = null
     if (!RESERVED_CODES.includes(e.code)) {
       const cur = this.deps.settings()
-      this.deps.onSettings({ ...cur, bindings: rebind(cur.bindings, action, [e.code]) })
+      this.deps.onSettings({ ...cur, bindings: rebind(cur.bindings, action, [chord ? chordFor(e) : e.code]) })
     }
     // Rebuild the settings panel in place so the table shows the new key.
     if (this.stack.length && this.stack[this.stack.length - 1].id === 'settings') {

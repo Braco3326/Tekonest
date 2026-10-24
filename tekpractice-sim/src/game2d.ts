@@ -209,6 +209,8 @@ export function bootGame2D(registry: Registry, rawLevel: unknown): void {
       level.devices.map((d) => ({ instanceId: d.instanceId, deviceId: d.deviceId, status: 'placeholder' as const })),
     // 2D board has no orbit camera: a fixed stub keeps the hook shape.
     camera: () => ({ alpha: 0, beta: 0, radius: 0, target: [0, 0, 0] }),
+    deviceCenter: () => null,
+    worldScreen: () => null,
   }
 
   refresh()

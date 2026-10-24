@@ -25,12 +25,41 @@ export const DEFAULT_BINDINGS: Bindings = {
   FOCUS: ['KeyF'],
   PICK_UP: ['KeyX'],
   ROTATE_PLACEMENT: ['KeyR'],
+  CAMERA_HOME: ['Alt+KeyH'],
   CANCEL: ['Escape'],
 }
 
+/** `code` may be a plain KeyboardEvent.code or a chord such as 'Alt+KeyH' (see chordFor). */
 export function actionsForCode(b: Bindings, code: string): Action[] {
   return ACTIONS.filter((a) => b[a].includes(code))
 }
+
+const MODIFIER_CODES = new Set([
+  'AltLeft',
+  'AltRight',
+  'ControlLeft',
+  'ControlRight',
+  'MetaLeft',
+  'MetaRight',
+  'ShiftLeft',
+  'ShiftRight',
+])
+
+/** The key IS a modifier (pressing Alt alone, Shift for RUN…). */
+export const isModifierCode = (code: string): boolean => MODIFIER_CODES.has(code)
+
+/**
+ * Binding string for a key event: the physical code, prefixed by the held
+ * Ctrl / Alt / Meta modifiers ('Alt+KeyH'). Shift is never a chord prefix
+ * (it is a key of its own: RUN). A modifier key itself stays its plain code.
+ */
+export function chordFor(e: { code: string; altKey?: boolean; ctrlKey?: boolean; metaKey?: boolean; shiftKey?: boolean }): string {
+  if (isModifierCode(e.code)) return e.code
+  return `${e.ctrlKey ? 'Ctrl+' : ''}${e.altKey ? 'Alt+' : ''}${e.metaKey ? 'Meta+' : ''}${e.code}`
+}
+
+/** Actions whose binding may be a modifier chord (the remap capture waits past a lone modifier). */
+export const CHORD_ACTIONS: readonly Action[] = ['CAMERA_HOME']
 
 /**
  * Keys the learner can never take over: Esc runs the Esc chain (ADR-0010 D5)

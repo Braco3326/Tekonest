@@ -55,9 +55,13 @@ async function settledScreen(
  * happen to a real user), cancel with Esc and re-aim slightly higher.
  */
 async function focusDevice(page: Page, instanceId: string): Promise<void> {
+  // Re-aim higher ONLY after an accidental port pickup (what the shift is for).
+  // A plain miss (e.g. the .glb landed after we aimed, under load) re-aims at
+  // the centre: a growing offset walks off a tiny mic for good.
+  let bumps = 0
   for (let attempt = 0; attempt < 5; attempt++) {
     const pos = await settledScreen(page, { device: instanceId })
-    await page.mouse.dblclick(pos.x, pos.y - attempt * 14)
+    await page.mouse.dblclick(pos.x, pos.y - bumps * 14)
     const focused = await page
       .waitForFunction(
         (id) => {
@@ -72,7 +76,14 @@ async function focusDevice(page: Page, instanceId: string): Promise<void> {
       await page.waitForTimeout(FLY_SETTLE_MS)
       return
     }
+    if ((await page.evaluate(() => window.__audioSim!.view().held)) !== null) bumps++
     await page.keyboard.press('Escape') // drop any accidental pickup, retry
+    // Designer nav (Task 4): a double-click that missed the device and landed
+    // on the floor now RE-PIVOTS the orbit there. Fly home (Alt+H) so the
+    // retry aims from the same Ensemble view a learner would start from.
+    if ((await page.evaluate(() => window.__audioSim!.view().mode)) === 'focus') await page.keyboard.press('Escape')
+    await page.keyboard.press('Alt+KeyH')
+    await page.waitForTimeout(FLY_SETTLE_MS)
   }
   throw new Error(`could not focus ${instanceId}`)
 }

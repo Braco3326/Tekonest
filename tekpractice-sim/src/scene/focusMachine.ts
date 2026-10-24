@@ -31,17 +31,25 @@ export const initialState = (): FocusState => ({
 
 export type FocusEvent =
   | { type: 'DEVICE_DOUBLE_CLICK'; instanceId: string }
-  | { type: 'DEVICE_CLICK'; instanceId: string } // single click = select/preview (spec §1 "avoids accidental focus")
+  // Single click on a device. N1 (night brief 2026-10-24, ADR-0008 addendum)
+  // overrides spec §1 "single click = select": it now focuses, like a double-click.
+  | { type: 'DEVICE_CLICK'; instanceId: string }
   | { type: 'PORT_CLICK'; ref: PortRef }
   | { type: 'EMPTY_CLICK' }
   | { type: 'RIGHT_CLICK' }
   | { type: 'ESC' }
   | { type: 'TAB'; instanceIds: readonly string[] }
   | { type: 'ENTER' }
+  /** Double-click on the floor / any non-device surface: orbit around that point. */
+  | { type: 'FLOOR_DOUBLE_CLICK'; point: readonly [number, number, number] }
+  /** Alt+H or the « Vue d'ensemble » button: back to the Ensemble pose. */
+  | { type: 'HOME' }
 
 export type FocusCommand =
   | { kind: 'flyToDevice'; instanceId: string }
   | { kind: 'flyToEnsemble' }
+  /** Move the orbit pivot only (alpha, beta, radius kept). */
+  | { kind: 'repivot'; point: readonly [number, number, number] }
   | { kind: 'pickup'; from: PortRef }
   | { kind: 'dropHeld' }
   | { kind: 'connect'; a: PortRef; b: PortRef }
@@ -56,6 +64,15 @@ const same = (a: PortRef, b: PortRef) => a.instance === b.instance && a.port ===
 const keep = (state: FocusState): Transition => ({ state, commands: [] })
 
 /**
+ * From either mode: fly straight to the device (device→device refocus allowed).
+ * A held cable stays in hand (spec §1 step 5).
+ */
+const focusOn = (state: FocusState, instanceId: string): Transition => ({
+  state: { ...state, mode: 'focus', focused: instanceId, selected: instanceId },
+  commands: [{ kind: 'flyToDevice', instanceId }],
+})
+
+/**
  * ESC policy (ADR-0008): the spec lists Esc both as "back to Ensemble" and as
  * "cancel held cable". Resolution: Esc undoes the MOST RECENT commitment —
  * first press cancels the held cable, next press leaves Focus. Right-click and
@@ -65,14 +82,30 @@ const keep = (state: FocusState): Transition => ({ state, commands: [] })
 export function reduce(state: FocusState, event: FocusEvent): Transition {
   switch (event.type) {
     case 'DEVICE_DOUBLE_CLICK':
-      // From either mode: fly straight to the device (device→device refocus allowed).
-      return {
-        state: { ...state, mode: 'focus', focused: event.instanceId, selected: event.instanceId },
-        commands: [{ kind: 'flyToDevice', instanceId: event.instanceId }],
-      }
+      return focusOn(state, event.instanceId)
 
     case 'DEVICE_CLICK':
-      return keep({ ...state, selected: event.instanceId })
+      // N1: a single click focuses too (pivot = the device). On the device
+      // already framed it is a no-op: a click that misses a port must not
+      // snap away the angle the learner orbited to. (Double-click still re-frames.)
+      if (state.mode === 'focus' && state.focused === event.instanceId) return keep(state)
+      return focusOn(state, event.instanceId)
+
+    case 'FLOOR_DOUBLE_CLICK':
+      // Orbit around a point of the room. In Focus this leaves focus (nothing
+      // is framed any more) WITHOUT flying home: the camera keeps its angle.
+      return {
+        state: { ...state, mode: 'ensemble', focused: null },
+        commands: [{ kind: 'repivot', point: event.point }],
+      }
+
+    case 'HOME':
+      // Like right-click from Focus, but it also flies home from Ensemble
+      // (after a pan or a re-pivot). The held cable survives.
+      return {
+        state: { ...state, mode: 'ensemble', focused: null },
+        commands: [{ kind: 'flyToEnsemble' }],
+      }
 
     case 'PORT_CLICK': {
       if (!state.held) {

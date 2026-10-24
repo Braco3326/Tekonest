@@ -31,6 +31,12 @@ export interface FrameTarget {
 export interface CameraDirector {
   flyToDevice(frame: FrameTarget): void
   flyToEnsemble(): void
+  /**
+   * Orbit around `point` from now on: tween the target only (alpha, beta, radius kept).
+   * `focusRadius` = the focused device's bounding radius when re-framing a focus
+   * (its dolly floor stays); omitted = a floor pivot (Ensemble floor).
+   */
+  repivot(point: Vector3, focusRadius?: number): void
 }
 
 /** Placeholder port panels face −Z (DeviceSpawner) — arrive looking at them. */
@@ -79,6 +85,18 @@ export class CameraRig implements CameraDirector {
   /** Back to the env/room overview pose captured at construction; dolly floor back to the env default. */
   flyToEnsemble(): void {
     this.fly(this.ensemble, ENSEMBLE_LOWER_RADIUS)
+  }
+
+  /**
+   * Floor re-pivot / late model re-frame (Task 4): only the target moves, the
+   * learner's angle and distance stay. Floor pivot → Ensemble dolly floor;
+   * focus re-frame → the device's floor. Never above the current radius.
+   */
+  repivot(point: Vector3, focusRadius?: number): void {
+    this.fly(
+      { alpha: this.camera.alpha, beta: this.camera.beta, radius: this.camera.radius, target: point },
+      focusRadius === undefined ? ENSEMBLE_LOWER_RADIUS : radiusLimitFor(focusRadius),
+    )
   }
 
   /** Fly to an arbitrary pose (ViewDirector: back to the walker's eye). Returns the flight time in ms (0 = cut). */

@@ -74,8 +74,21 @@ export class ViewDirector implements CameraDirector {
     this.rig.flyToDevice(frame)
   }
 
+  /**
+   * Orbit view, or a focus started from Explore (the arc camera is live): move
+   * the pivot. Walking (Explore, no focus): no-op — the walker has no pivot and
+   * ADR-0010's mouse rules stay untouched.
+   */
+  repivot(point: Vector3, focusRadius?: number): void {
+    if (this.walker.exploreView && !this.fromExplore) return
+    this.rig.repivot(point, focusRadius)
+  }
+
   flyToEnsemble(): void {
     if (!this.fromExplore) {
+      // Walking (HOME from Explore with nothing framed): the orbit camera is
+      // not shown — do not fly it in the background.
+      if (this.walker.exploreView) return
       this.rig.flyToEnsemble()
       return
     }

@@ -32,11 +32,33 @@ describe('Ensemble ⇄ Focus (spec §1)', () => {
     expect(t.commands).toEqual([{ kind: 'flyToDevice', instanceId: 'ql1-1' }])
   })
 
-  it('single click only selects (no accidental focus)', () => {
+  // N1 (night brief 2026-10-24) overrides ADR-0008's "single click = select":
+  // a single click now focuses, exactly like a double-click (pivot = the device).
+  it('single click focuses and flies to the device (N1)', () => {
     const t = reduce(initialState(), { type: 'DEVICE_CLICK', instanceId: 'ql1-1' })
-    expect(t.state.mode).toBe('ensemble')
-    expect(t.state.selected).toBe('ql1-1')
-    expect(t.commands).toEqual([])
+    expect(t.state).toMatchObject({ mode: 'focus', focused: 'ql1-1', selected: 'ql1-1' })
+    expect(t.commands).toEqual([{ kind: 'flyToDevice', instanceId: 'ql1-1' }])
+  })
+
+  it('a single click on the device ALREADY focused does not re-fly (a missed port click keeps your orbit)', () => {
+    const { state, kinds } = run(
+      initialState(),
+      { type: 'DEVICE_CLICK', instanceId: 'ql1-1' },
+      { type: 'DEVICE_CLICK', instanceId: 'ql1-1' },
+    )
+    expect(state).toMatchObject({ mode: 'focus', focused: 'ql1-1' })
+    expect(kinds).toEqual(['flyToDevice'])
+  })
+
+  it('a click on another device while holding a cable refocuses and KEEPS the cable (N1)', () => {
+    const { state, kinds } = run(
+      initialState(),
+      { type: 'DEVICE_CLICK', instanceId: 'sm58-1' },
+      { type: 'PORT_CLICK', ref: P1 },
+      { type: 'DEVICE_CLICK', instanceId: 'rio-1' },
+    )
+    expect(state).toMatchObject({ mode: 'focus', focused: 'rio-1', held: P1 })
+    expect(kinds).toEqual(['flyToDevice', 'pickup', 'flyToDevice'])
   })
 
   it('right-click and empty-click fly back to Ensemble', () => {
@@ -60,6 +82,51 @@ describe('Ensemble ⇄ Focus (spec §1)', () => {
     )
     expect(state).toMatchObject({ mode: 'focus', focused: 'rio-1' })
     expect(kinds.filter((k) => k === 'flyToDevice')).toHaveLength(2)
+  })
+})
+
+describe('floor re-pivot (Task 4)', () => {
+  const point: [number, number, number] = [1.5, 0, -2]
+
+  it('in Ensemble: emits repivot only — no flight home, mode unchanged', () => {
+    const t = reduce(initialState(), { type: 'FLOOR_DOUBLE_CLICK', point })
+    expect(t.commands).toEqual([{ kind: 'repivot', point }])
+    expect(t.state.mode).toBe('ensemble')
+  })
+
+  it('in Focus: leaves focus (ensemble, focused null) but does NOT fly back to Ensemble', () => {
+    const { state, kinds } = run(
+      initialState(),
+      { type: 'DEVICE_DOUBLE_CLICK', instanceId: 'ql1-1' },
+      { type: 'FLOOR_DOUBLE_CLICK', point },
+    )
+    expect(state).toMatchObject({ mode: 'ensemble', focused: null })
+    expect(kinds).toEqual(['flyToDevice', 'repivot'])
+    expect(kinds).not.toContain('flyToEnsemble')
+  })
+
+  it('keeps a held cable', () => {
+    const { state } = run(initialState(), { type: 'PORT_CLICK', ref: P1 }, { type: 'FLOOR_DOUBLE_CLICK', point })
+    expect(state.held).toEqual(P1)
+  })
+})
+
+describe('HOME (Alt+H / « Vue d’ensemble », Task 4)', () => {
+  it('from Focus: flies to Ensemble, cable kept (like right-click)', () => {
+    const { state, kinds } = run(
+      initialState(),
+      { type: 'DEVICE_DOUBLE_CLICK', instanceId: 'sm58-1' },
+      { type: 'PORT_CLICK', ref: P1 },
+      { type: 'HOME' },
+    )
+    expect(state).toMatchObject({ mode: 'ensemble', focused: null, held: P1 })
+    expect(kinds[kinds.length - 1]).toBe('flyToEnsemble')
+  })
+
+  it('from Ensemble: also flies home (after a pan / re-pivot the view comes back)', () => {
+    const t = reduce(initialState(), { type: 'HOME' })
+    expect(t.commands).toEqual([{ kind: 'flyToEnsemble' }])
+    expect(t.state.mode).toBe('ensemble')
   })
 })
 
@@ -165,6 +232,8 @@ describe('discipline: the machine never mutates anything but its own state', () 
   it('emits only camera/cable commands — connect is a COMMAND, never applied here', () => {
     const t = run(initialState(), { type: 'PORT_CLICK', ref: P1 }, { type: 'PORT_CLICK', ref: P2 })
     // the machine's entire output surface is state + command kinds
-    expect(t.kinds.every((k) => ['flyToDevice', 'flyToEnsemble', 'pickup', 'dropHeld', 'connect'].includes(k))).toBe(true)
+    expect(
+      t.kinds.every((k) => ['flyToDevice', 'flyToEnsemble', 'repivot', 'pickup', 'dropHeld', 'connect'].includes(k)),
+    ).toBe(true)
   })
 })

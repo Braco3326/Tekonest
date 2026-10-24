@@ -21,6 +21,8 @@ export const ACTIONS = [
   'FOCUS',
   'PICK_UP',
   'ROTATE_PLACEMENT',
+  /** Back to the Ensemble pose (designer nav, Task 4). Default Alt+H: plain H stays help. */
+  'CAMERA_HOME',
   'CANCEL',
 ] as const
 

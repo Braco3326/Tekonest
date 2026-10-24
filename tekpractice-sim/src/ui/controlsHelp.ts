@@ -25,6 +25,8 @@ export const ACTION_LABELS: Record<Action, { fr: string; en: string }> = {
   FOCUS: { fr: 'Zoomer sur l’appareil visé (focus)', en: 'Focus the aimed device' },
   PICK_UP: { fr: 'Ramasser l’appareil visé (Sandbox)', en: 'Pick up the aimed device (Sandbox)' },
   ROTATE_PLACEMENT: { fr: 'Tourner l’objet à poser', en: 'Rotate the object being placed' },
+  // Copy deck docs/copy/designer-nav-essais.md, key help.action.overview.
+  CAMERA_HOME: { fr: "Vue d'ensemble", en: 'Overview' },
   CANCEL: { fr: 'Libérer la souris / fermer / revenir', en: 'Release pointer / close / back' },
 }
 
