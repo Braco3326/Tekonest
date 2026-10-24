@@ -41,6 +41,9 @@ export interface CameraDirector {
   repivot(point: Vector3, focusRadius?: number): void
 }
 
+/** Keys that orbit the ArcRotateCamera directly (Babylon's keyboard input): they end a lifted beta guard. */
+const ORBIT_KEYS = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'])
+
 /** Placeholder port panels face −Z (DeviceSpawner) — arrive looking at them. */
 const FOCUS_ALPHA = -Math.PI / 2
 const FOCUS_BETA = 1.15
@@ -57,8 +60,15 @@ export class CameraRig implements CameraDirector {
     const canvas = scene.getEngine().getRenderingCanvas()
     if (canvas) {
       this.tween.cancelOnUserInput(canvas)
-      // The learner orbiting again ends a cube top / bottom view's lifted guard.
-      canvas.addEventListener('pointerdown', () => this.restoreBetaLimits())
+      // The learner taking the camera again (drag, wheel, Babylon's arrow-key
+      // orbit) ends a cube top / bottom view's lifted guard.
+      const restore = (): void => this.restoreBetaLimits()
+      canvas.addEventListener('pointerdown', restore)
+      canvas.addEventListener('wheel', restore)
+      if (typeof window !== 'undefined')
+        window.addEventListener('keydown', (e: KeyboardEvent) => {
+          if (ORBIT_KEYS.has(e.code)) restore()
+        })
     } else console.warn('CameraRig: no rendering canvas; flights cannot be cancelled by user input')
   }
 
