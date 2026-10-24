@@ -7,6 +7,10 @@ export async function bootCreation(): Promise<void> {
   const main = document.createElement('main')
   main.dataset.testid = 'place-picker'
   main.className = 'cr-placeholder'
+  // Minimal Nuit / Papier look until the shell stylesheet lands (square corners).
+  main.style.cssText =
+    'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;' +
+    'background:#131114;color:#F3EDE3;border-radius:0;'
   const h1 = document.createElement('h1')
   h1.textContent = COPY.picker!.title!
   main.appendChild(h1)

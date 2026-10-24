@@ -112,7 +112,7 @@ export class ExamController {
         <h2 style="color:${verdictColor}">${score.score20}/20</h2>
         <p class="exam-verdict">${score.timedOut ? "Temps écoulé — voilà exactement où tu en es." : score.score20 >= 10 ? 'Épreuve validée. Ce score est une mesure, pas un jugement.' : "Pas encore — et c'est une donnée précieuse : tu sais quoi travailler."}</p>
         <ul>${rows.map((r) => `<li>${r}</li>`).join('')}</ul>
-        <a class="db-cta" href="${location.pathname}">Voir ma readiness</a>
+        <a class="db-cta" href="${location.pathname}?legacy=1">Voir ma readiness</a>
         <a class="exam-retry" href="?level=${new URLSearchParams(location.search).get('level')}&mode=exam">Repasser l'épreuve</a>
       </div>`
     this.root.appendChild(overlay)

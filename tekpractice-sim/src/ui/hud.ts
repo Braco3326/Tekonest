@@ -43,7 +43,7 @@ export class Hud {
     const sandbox = level.id === 'sandbox'
     const cur = (on: boolean) => (on ? ' aria-current="page"' : '')
     const nav =
-      `<a href="${location.pathname}" title="Retour au tableau de bord" aria-label="Retour au tableau de bord">←</a>` +
+      `<a href="${location.pathname}?legacy=1" title="Retour au tableau de bord" aria-label="Retour au tableau de bord">←</a>` +
       ['a1', 'b1', 'c1', 'd1']
         .map(
           (id) =>

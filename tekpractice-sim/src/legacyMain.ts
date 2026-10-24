@@ -1,6 +1,7 @@
 /**
- * Entry router: no ?level → the dashboard (home, Beat 2 — ONE next action,
- * no 3D boot at all); ?level=<id> → the game (src/game.ts).
+ * Legacy app entry (ADR-0013), loaded by src/main.ts for ?legacy=1 and every ?level= URL.
+ * ?legacy=1 → the dashboard (home, Beat 2 — ONE next action, no 3D boot at all);
+ * ?level=<id> → the game (src/game.ts). Legacy back-links keep ?legacy=1.
  */
 import catalogJson from '../content/catalog.json'
 import a1Json from '../content/levels/a1.json'
