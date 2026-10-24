@@ -31,7 +31,7 @@ export class DesignerOrbitPointersInput extends ArcRotateCameraPointersInput {
     const cam = this.camera
     const engine = cam.getScene().getEngine()
     const heightPx = engine.getRenderingCanvas()?.clientHeight || engine.getRenderHeight()
-    this.panningSensibility = panningSensibilityFor(cam.radius, heightPx, cam.fov)
+    this.panningSensibility = panningSensibilityFor(cam.radius, heightPx, cam.fov, cam.panningInertia)
   }
 
   override onTouch(point: Nullable<PointerTouch>, offsetX: number, offsetY: number): void {

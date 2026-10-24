@@ -6,6 +6,7 @@ import {
   applyOrbitFeel,
   ENSEMBLE_LOWER_RADIUS,
   ORBIT_FEEL,
+  orbitMotion,
   panningSensibilityFor,
   radiusLimitFor,
   type OrbitCam,
@@ -102,5 +103,34 @@ describe('panningSensibilityFor (pan follows the cursor at any distance)', () =>
       expect(Number.isFinite(s)).toBe(true)
       expect(s).toBeGreaterThan(0)
     }
+  })
+  it('with no pan inertia (reduced motion) one pixel still moves one pixel of world', () => {
+    const r = 3
+    const expected = (2 * r * Math.tan(fov / 2)) / h
+    expect(1 / panningSensibilityFor(r, h, fov, 0) / expected).toBeCloseTo(1, 6)
+  })
+})
+
+describe('orbitMotion (reduced motion: no glide, same travel — final review)', () => {
+  it('normal motion = the designer feel', () => {
+    expect(orbitMotion(false)).toEqual({
+      inertia: ORBIT_FEEL.inertia,
+      panningInertia: ORBIT_FEEL.panningInertia,
+      wheelDeltaPercentage: ORBIT_FEEL.wheelDeltaPercentage,
+      angularScale: 1,
+    })
+  })
+  it('reduced motion: inertia and panningInertia 0', () => {
+    const m = orbitMotion(true)
+    expect(m.inertia).toBe(0)
+    expect(m.panningInertia).toBe(0)
+  })
+  it('reduced motion keeps the travel per gesture: input / (1 − inertia) is unchanged', () => {
+    const n = orbitMotion(false)
+    const r = orbitMotion(true)
+    // wheel: total = step / (1 − inertia)
+    expect(r.wheelDeltaPercentage / (1 - r.inertia)).toBeCloseTo(n.wheelDeltaPercentage / (1 - n.inertia), 9)
+    // orbit: total = px / (sensibility · (1 − inertia))
+    expect(1 / (r.angularScale * (1 - r.inertia))).toBeCloseTo(1 / (n.angularScale * (1 - n.inertia)), 9)
   })
 })

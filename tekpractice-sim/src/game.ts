@@ -53,7 +53,7 @@ import type { CameraPose } from './scene/CameraRig'
 // Types only: the Essais panel and the trials modules are a lazy chunk (Task 14).
 import type { EssaisHost, EssaisPanel } from './ui/essaisPanel'
 import type { DeepReadonly, DesignState } from './trials/trial'
-import { applyOrbitFeel, ENSEMBLE_LOWER_RADIUS } from './camera/orbitFeel'
+import { applyOrbitFeel, ENSEMBLE_LOWER_RADIUS, orbitMotion } from './camera/orbitFeel'
 import { installDesignerOrbitInput } from './scene/designerOrbitInput'
 import { roomWalls, type Box } from './explore/collision'
 import { loadSettings, saveSettings, type ExploreSettings } from './ui/exploreSettings'
@@ -213,7 +213,8 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   )
   // Designer-grade orbit feel (Task 3): inertia, wheel dolly toward the cursor,
   // right-drag / Shift+left-drag pan, beta kept above the floor.
-  installDesignerOrbitInput(camera)
+  const orbitPointers = installDesignerOrbitInput(camera)
+  const baseAngular = { x: orbitPointers.angularSensibilityX, y: orbitPointers.angularSensibilityY }
   camera.attachControl(true)
   camera.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
   camera.upperRadiusLimit = room ? Math.max(40, roomRadius * 1.5) : 40
@@ -727,8 +728,19 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
   // Sandbox starts walking; levels/exam keep orbit unless the learner (or
   // ?view=) asks — their layouts and e2e are framed for the orbit camera.
   let settings: ExploreSettings = loadSettings(window.localStorage)
-  const applyMotionPref = (): void =>
+  const applyMotionPref = (): void => {
     setMotionOverride(settings.reducedMotion === 'system' ? null : settings.reducedMotion === 'off')
+    // Final review: the in-app setting reaches the CSS too (the media query only
+    // knows the system preference) and the orbit stops gliding.
+    const reduced = !motionEnabled()
+    document.documentElement.classList.toggle('reduced-motion', reduced)
+    const m = orbitMotion(reduced)
+    camera.inertia = m.inertia
+    camera.panningInertia = m.panningInertia
+    camera.wheelDeltaPercentage = m.wheelDeltaPercentage
+    orbitPointers.angularSensibilityX = baseAngular.x * m.angularScale
+    orbitPointers.angularSensibilityY = baseAngular.y * m.angularScale
+  }
   applyMotionPref()
   const viewParam = new URLSearchParams(location.search).get('view')
   const initialView: BaseView =
