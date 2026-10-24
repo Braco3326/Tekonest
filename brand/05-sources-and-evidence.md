@@ -21,7 +21,7 @@ Audit date: **21 Oct 2026**, on branch `docs/tekonest-brand-foundation`.
 
 | Register | Covers | IDs |
 | --- | --- | --- |
-| [event-project-register.md](evidence/event-project-register.md) | `event-project/` docs, deck, model | EV-01…EV-90 |
+| [event-project-register.md](../projects/rebels-x-tekonest/tekonest-notes/event-project-register.md) | `projects/rebels-x-tekonest/` docs, deck, model | EV-01…EV-90 |
 | [learning-platform-register.md](evidence/learning-platform-register.md) | `learning-platform/` docs and code | LP-01…LP-47 |
 | [tekpractice-register.md](evidence/tekpractice-register.md) | `tekpractice-sim/` docs and code, plus `archive/teknest*` | TP-01…TP-60 |
 | [thechnest-2026-07-register.md](evidence/thechnest-2026-07-register.md) | Founder's July 2026 local folder (now in `archive/thechnest-local-2026-07/`) | LT-01…LT-70 |
@@ -36,24 +36,25 @@ These are statements the founder made directly in chat on 20–21 Oct 2026. They
 | --- | --- | --- | --- |
 | FB-01 | The canonical brand name is **Tekonest**. Older spellings (Techonest, Technest, Thechnest…) are kept for historical traceability | 21 Oct 2026 | [FB] |
 | FB-02 | Tekonest is a brand or umbrella with several possible services and ideas that may connect over time; "kind of a nest of multiservices" | 21 Oct 2026 | [FB] |
-| FB-03 | `event-project/` is a current event and cultural-programming vision | 21 Oct 2026 | [FB] |
+| FB-03 | `projects/rebels-x-tekonest/` is a current event and cultural-programming vision. **Superseded by FB-12**: the folder is now `projects/rebels-x-tekonest/` | 21 Oct 2026 | [FB] |
 | FB-04 | `learning-platform/` and `tekpractice-sim/` are **current** service visions, under development during the website-creation phase. Do not classify them as abandoned | 21 Oct 2026 | [FB] |
 | FB-05 | `archive/` holds older copies or historical material | 21 Oct 2026 | [FB] |
 | FB-06 | The founder's local `Thechnest` project folder (on his PC) is historical evidence, not authority over the current vision | 21 Oct 2026 | [FB] |
 | FB-07 | The latest direct instructions take priority. Where sources conflict, record the conflict and its dates | 21 Oct 2026 | [FB] |
 | FB-08 | The vision is still being developed. Keep decided, proposed, built and open separate | 21 Oct 2026 | [FB] |
 | FB-09 | "The plan is to make everything about Tekonest in one repo", with each service in its own independent folder | 21 Oct 2026 | [FB] |
-| FB-10 | Founder statements made on 20–21 Oct about the event idea are recorded in [`event-project/docs/05-everything-explained.md`](../event-project/docs/05-everything-explained.md) | 20–21 Oct 2026 | [F] |
+| FB-10 | Founder statements made on 20–21 Oct about the event idea are recorded in [`projects/rebels-x-tekonest/docs/05-everything-explained.md`](../projects/rebels-x-tekonest/docs/05-everything-explained.md) | 20–21 Oct 2026 | [F] |
 | FB-11 | Oscar (GitHub account Braco3326) is the person developing Tekonest; another person named in some older files is someone else | 21 Oct 2026 | [FB] |
+| FB-12 | Tekonest is a Paris umbrella for the craft of sound and live production (Se former · Créer avec nous · Rejoindre le réseau). The cultural-mix idea, the Rebels Collectif nights, tickets, deck, legal guide and night financial model belong only to the separate project Rebels × Tekonest | 24 Oct 2026 | [FB] |
 
 ## Source inventory
 
 | Source | Dates | Kind | How it was inspected |
 | --- | --- | --- | --- |
-| [`event-project/README.md`](../event-project/README.md) | 21 Oct 2026 | AI synthesis of founder statements and proposals | Read in full |
-| [`event-project/docs/01`–`05`](../event-project/docs/) | 20–21 Oct 2026 | AI research and proposals; `05` records founder statements | Read in full |
-| [`event-project/presentation/`](../event-project/presentation/) (.pptx, .pdf, build.js, slides-web) | 20–21 Oct 2026 | Deck v2 (35 slides + notes); v1 web deck (23 slides, superseded) | Slide and note text extracted; PDF page count matched; visuals not re-checked |
-| [`event-project/model/pilot_model.py`](../event-project/model/pilot_model.py) | 21 Oct 2026 | Financial model (estimates) | **Run**; outputs compared with the deck (C-13) |
+| [`projects/rebels-x-tekonest/PILOT-OVERVIEW.md`](../projects/rebels-x-tekonest/PILOT-OVERVIEW.md) | 21 Oct 2026 | AI synthesis of founder statements and proposals | Read in full |
+| [`projects/rebels-x-tekonest/docs/01`–`05`](../projects/rebels-x-tekonest/docs/) | 20–21 Oct 2026 | AI research and proposals; `05` records founder statements | Read in full |
+| [`projects/rebels-x-tekonest/presentation/`](../projects/rebels-x-tekonest/presentation/) (.pptx, .pdf, build.js, slides-web) | 20–21 Oct 2026 | Deck v2 (35 slides + notes); v1 web deck (23 slides, superseded) | Slide and note text extracted; PDF page count matched; visuals not re-checked |
+| [`projects/rebels-x-tekonest/model/pilot_model.py`](../projects/rebels-x-tekonest/model/pilot_model.py) | 21 Oct 2026 | Financial model (estimates) | **Run**; outputs compared with the deck (C-13) |
 | [`learning-platform/`](../learning-platform/) README, docs, ADRs, config | 13–16 Jul 2026 | Founder brief (prompt) + AI docs | Read in full |
 | `learning-platform/src/**` | 13–16 Jul 2026 | Next.js code | Skimmed for routes and features; **unit tests and type-check run 21 Oct** (54 pass, 3 skipped); build blocked by sandbox network |
 | [`tekpractice-sim/`](../tekpractice-sim/) CLAUDE.md, kickoff/prompt files, docs, ADRs, logs | 7–19 Jul 2026 | Founder briefs + AI docs and logs | Read in full |

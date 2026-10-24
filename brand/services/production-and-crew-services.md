@@ -3,9 +3,9 @@
 | | |
 | --- | --- |
 | **Status** | **Proposed** · founder-stated activity · docs place it "later, assessed separately" · nothing built or offered |
-| **Folder** | None; described in [`event-project/`](../../event-project/) docs |
+| **Folder** | None; described in the [Rebels × Tekonest](../../projects/rebels-x-tekonest/README.md) docs |
 | **Source dates** | 20–21 Oct 2026 |
-| **Evidence IDs** | `EV-xx` and §C of the [event register](../evidence/event-project-register.md) |
+| **Evidence IDs** | `EV-xx` and §C of the [Rebels × Tekonest register](../../projects/rebels-x-tekonest/tekonest-notes/event-project-register.md) |
 
 Labels: **[F]** founder · **[P]** proposal · **[R]** research · **[Inf]** inference · **[Rec]** Claude's recommendation.
 
@@ -16,7 +16,7 @@ Labels: **[F]** founder · **[P]** proposal · **[R]** research · **[Inf]** inf
 ## 1. What it is and why it exists
 
 - **Crew coordination.** Provide or coordinate sound, light, film, editing and marketing crews for events run by *other* organisers **[F]** (event register §C).
-- **Rebels nights.** Technical coordination for Rebels Collectif's nights, paid as a fee, is listed as a possible early, low-cost test **[P]** (event register §C, plan §H).
+- **Partner projects.** Technical coordination for a partner project such as [Rebels × Tekonest](../../projects/rebels-x-tekonest/README.md), paid as a fee, is listed as a possible early, low-cost test **[P]** (register §C, plan §H). No agreement exists.
 - **Why.** To create more paid work for the network beyond Tekonest's own nights **[Inf]** (from EV-02, EV-06).
 
 ## 2. Who it is for
@@ -33,8 +33,8 @@ Labels: **[F]** founder · **[P]** proposal · **[R]** research · **[Inf]** inf
 
 | Item | State |
 | --- | --- |
-| Crew for Tekonest's own pilot (filming the night, credits) | Part of the event proposal **[P]** (EV-11) |
-| Coordination fee for Rebels nights | Proposal only; no Rebels agreement exists **[P]/[I]** (EV-27) |
+| Crew for a partner project (filming, credits) | Part of the Rebels × Tekonest proposal **[P]** (EV-11) |
+| Coordination fee for a partner project | Proposal only; no agreement exists **[P]/[I]** (EV-27) |
 | Service for other organisers | Not started; "later, assessed separately" **[P]** |
 
 ## 5. What it would require
@@ -60,8 +60,8 @@ A price per production or a coordination fee **[P]**. No figures have been discu
 
 ## 8. Claude's recommendation (not a founder decision)
 
-- **[Rec]** Keep this proposed until the event pilot has shown that the crew loop works and a lawyer has approved the model.
+- **[Rec]** Keep this proposed until a first project has shown that the crew loop works and a lawyer has approved the model.
 
 ## 9. Sources
 
-[`event-project/docs/05-everything-explained.md`](../../event-project/docs/05-everything-explained.md) · [`03-working-project-plan.md`](../../event-project/docs/03-working-project-plan.md) §A, §C, §H · [deck slides 19–21](../../event-project/presentation/Techonest_Vision_and_Project_Plan.pptx) · [`01-legal-structure-guide.md`](../../event-project/docs/01-legal-structure-guide.md).
+[`projects/rebels-x-tekonest/docs/05-everything-explained.md`](../../projects/rebels-x-tekonest/docs/05-everything-explained.md) · [`03-working-project-plan.md`](../../projects/rebels-x-tekonest/docs/03-working-project-plan.md) §A, §C, §H · [deck slides 19–21](../../projects/rebels-x-tekonest/presentation/Techonest_Vision_and_Project_Plan.pptx) · [`01-legal-structure-guide.md`](../../projects/rebels-x-tekonest/docs/01-legal-structure-guide.md).

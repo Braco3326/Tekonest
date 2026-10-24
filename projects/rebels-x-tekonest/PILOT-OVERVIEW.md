@@ -2,7 +2,7 @@
 
 > Where cultures meet on a Paris stage — and the people who make the night get real, fairly paid work.
 
-> Part of the **Tekonest** umbrella. Canonical vision: [`brand/services/event-programme.md`](../brand/services/event-programme.md). This README is the detailed pilot overview.
+> Part of the **Tekonest** umbrella. Canonical vision: [`brand/services/event-programme.md`](tekonest-notes/event-programme.md). This README is the detailed pilot overview.
 
 **Status (21 Oct 2026):** idea stage · no legal structure yet · no agreement with Rebels Collectif · all figures are estimates until replaced by quotes · nothing here is legal advice.
 
@@ -94,7 +94,7 @@ Each night creates paid slots, credits and footage for the network; the network 
 
 > Name note: earlier files use "Techonest"; the project name going forward is **Tekonest**.
 >
-> Known issues: `docs/01`–`03` and `presentation/slides-web/` (20 Oct) are partly superseded by this README and the 21 Oct deck. `model/pilot_model.py` uses a €500 setup cost where the deck uses ≈ €200, so its cash-before-night, exposure and cancellation figures differ from the deck. See [brand/04 C-11–C-13](../brand/04-decisions-and-questions.md#3-conflicts-between-sources-dates-kept).
+> Known issues: `docs/01`–`03` and `presentation/slides-web/` (20 Oct) are partly superseded by this README and the 21 Oct deck. `model/pilot_model.py` uses a €500 setup cost where the deck uses ≈ €200, so its cash-before-night, exposure and cancellation figures differ from the deck. See [brand/04 C-11–C-13](../../brand/04-decisions-and-questions.md#3-conflicts-between-sources-dates-kept).
 
 ## Rebuild the deck
 

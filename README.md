@@ -1,6 +1,6 @@
 # Tekonest
 
-**Tekonest** is a brand and umbrella for several services, founded by Oscar. Some of the services may connect over time; others will stay independent. The vision is still being developed. These documents keep apart what the founder has **decided**, what is **proposed**, what is **built**, and what is still **open**.
+**Tekonest** is a Paris umbrella for the craft of sound and live production, founded by Oscar, with three entrances: *Se former* (BTS Son platform and TekPractice), *Créer avec nous* (organise, accompany and create projects with a creative/technical team) and *Rejoindre le réseau* (technicians and artists, fairly paid). Some of the services may connect over time; others will stay independent. The vision is still being developed. These documents keep apart what the founder has **decided**, what is **proposed**, what is **built**, and what is still **open**.
 
 > Status, 21 Oct 2026: no legal structure, no signed partner, no paying customers. All money figures are estimates. Nothing here is legal, financial or immigration advice.
 
@@ -21,7 +21,7 @@ The [status map](brand/03-status-map.md) is the canonical source for status; the
 
 | Service | Status | Vision | Working folder |
 | --- | --- | --- | --- |
-| Event & cultural programme (Paris nights) | Proposed · current vision | [vision](brand/services/event-programme.md) | [`event-project/`](event-project/) |
+| Rebels × Tekonest (collaboration project) | Idea stage · no agreement signed | [project](projects/rebels-x-tekonest/README.md) | [`projects/rebels-x-tekonest/`](projects/rebels-x-tekonest/) |
 | Artist & technician network | Proposed · current vision | [vision](brand/services/creative-network.md) | (none yet) |
 | BTS Son learning platform ("Tech Nest") | Under development · code exists | [vision](brand/services/learning-platform.md) | [`learning-platform/`](learning-platform/) |
 | TekPractice 3D simulator | Under development · code exists | [vision](brand/services/tekpractice.md) | [`tekpractice-sim/`](tekpractice-sim/) |
@@ -37,7 +37,7 @@ brand/                     canonical overview docs (start here)
   evidence/                detailed evidence registers (audit notes)
 design/                    art direction, logos, design system, review (draft)
 website-prototype/         static umbrella-site prototype (draft, not deployed)
-event-project/             event programme: pilot overview, legal guide, plan, deck, model
+projects/                  separate projects, e.g. rebels-x-tekonest/ (collaboration with Rebels Collectif)
 learning-platform/         Next.js app (imported from repo "Technest", full history)
 tekpractice-sim/           Vite + Babylon.js app (imported from repo "Technest-Sim", full history)
 archive/                   historical copies and July 2026 planning docs; not current

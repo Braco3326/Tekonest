@@ -1,6 +1,6 @@
 # Tekonest — service and relationship map
 
-> Written after the individual [service visions](services/). Each link is marked with how certain it is. Linking two services here does **not** mean they must be connected.
+> Written after the individual [service visions](services/). Links L7, L8, L10, L13 and L14 concerned the event idea and moved to the [Rebels × Tekonest](../projects/rebels-x-tekonest/README.md) project; their numbers are not reused. Each link is marked with how certain it is. Linking two services here does **not** mean they must be connected.
 
 **Link states**
 
@@ -17,22 +17,16 @@ flowchart LR
     LP["Learning platform<br/>(Tech Nest / Tekskol)"]
     TP["TekPractice<br/>3D simulator"]
   end
-  subgraph LIVE["Live culture & creative-work family (Oct 2026 →)"]
-    EV["Event & cultural<br/>programme"]
+  subgraph LIVE["Live production & creative-work family (Oct 2026 →)"]
     NW["Artist & technician<br/>network"]
     PS["Production & crew<br/>services (proposed)"]
     ER["Equipment rental<br/>(proposed)"]
   end
   TP -- "E4 embed: EXISTS in code" --> LP
   LP -- "micro-lessons, design, backend: PLANNED" --> TP
-  EV -- "paid slots, credits: PLANNED (hypothesis)" --> NW
-  NW -- "crew, acts: PLANNED (hypothesis)" --> EV
   NW -. "crew for clients: DECISION (legal)" .-> PS
-  EV -- "Rebels fee test: PLANNED" --> PS
-  ER -- "gear, phase 3+: PLANNED" --> EV
   ER -- "gear, phase 3+: PLANNED" --> PS
   LP -. "students/graduates: DECISION" .-> NW
-  TP -. "event rigs as levels: POSSIBLE" .-> EV
 ```
 
 ## 1. Links between services
@@ -45,32 +39,27 @@ flowchart LR
 | L4 | Learning platform ↔ TekPractice (accounts, progress, certificates) | A common backend; simulator progress feeding the certificates | **PLANNED** (seam documented; both still browser-only) | LT-37, LT-16 |
 | L5 | Learning platform ↔ TekPractice (domain) | `teknest.fr` was used for the site and for the simulator at different dates | **DECISION** | LT-05, LT-06, LP-30 |
 | L6 | Learning platform ↔ TekPractice (AI) | Site tutor (Claude/Gemini) and simulator coach (Anthropic, user key) are built separately; no link today | **POSSIBLE** (unifying them) | LP-23, TP-32 |
-| L7 | Event programme → network | Paid slots, credits and footage for members | **PLANNED** as the core loop; a hypothesis to test at the pilot | EV-06, EV-08, EV-14 |
-| L8 | Network → event programme | Crew, new acts, audiences | **PLANNED** (hypothesis) | EV-08 |
 | L9 | Network → production & crew services | Members working for other organisers | **DECISION**: needs a lawful model (L8241-1) | EV-76 |
-| L10 | Event programme → production & crew services | Crew experience and a Rebels coordination fee as a first client | **PLANNED** as a phase 1–2 test in the plan; no Rebels agreement | event register §C, EV-27 |
-| L11 | Equipment rental → events / production | Owned gear used and rented out | **PLANNED** for phase 3+ in the plan; nothing owned | event register §C |
+| L11 | Equipment rental → production | Owned gear used and rented out | **PLANNED** for phase 3+ in the plan; nothing owned | Rebels × Tekonest register §C |
 | L12 | Learning products → network | BTS students and graduates join the network; internship finder; "community + mentors" | **DECISION**: in no plan; touches minors, pay and consent | TP-11, LP-35 |
-| L13 | Event programme → TekPractice | Real event rigs modelled as levels (an "Événementiel" room was proposed in July but not built) | **POSSIBLE** (inference) | LT-15, TP-26 |
-| L14 | Event programme → learning products | Nights as practice opportunities; footage as course material | **POSSIBLE** (inference; no source) | — |
 
 ## 2. Shared resources across the umbrella
 
 | Resource | Shared how | State |
 | --- | --- | --- |
-| **People** | The founder is in every service. Ahmad and Gabriel appear only in the event strand | **EXISTS** (EV-15–EV-21) |
+| **People** | The founder is in every service. Ahmad and Gabriel appear only in the Rebels × Tekonest docs | **EXISTS** (EV-15–EV-21) |
 | **Skills** | Sound and audiovisual craft underpins all services | **EXISTS** [Inf] |
-| **Founder time and personal work limits** | The founder's personal work-status limits apply to any paid role he takes in any service (details in [`event-project/docs/01`](../event-project/docs/01-legal-structure-guide.md); depend on his situation; not verified; not legal advice) | **DECISION** constraint on all services |
+| **Founder time and personal work limits** | The founder's personal work-status limits apply to any paid role he takes in any service (details in [`projects/rebels-x-tekonest/docs/01`](../projects/rebels-x-tekonest/docs/01-legal-structure-guide.md); depend on his situation; not verified; not legal advice) | **DECISION** constraint on all services |
 | **Equipment** | Rented or borrowed for events. Simulator gear is virtual only | **POSSIBLE** (nothing shared today) |
 | **Technology** | Learning platform and TekPractice both deploy on Vercel (possibly different accounts) and used `teknest.fr` at different dates; similar AI seams. The event strand has none | **EXISTS** in parallel, not shared; domain is a **DECISION** (L5) |
-| **Audiences and marketing** | Overlap only via "students and creatives" (EV-12). Otherwise separate | **POSSIBLE** |
-| **Revenue** | No service earns money yet. Event surplus "stays for the next night" or is recycled into projects | **DECISION**: whether one service may fund another (EV-51, EV-82) |
+| **Audiences and marketing** | Separate for now | **POSSIBLE** |
+| **Revenue** | No service earns money yet | **DECISION**: whether one service may fund another |
 | **Brand identity** | "Tek" family names; two design directions (dark site, white game) | **DECISION** (see [umbrella §6](01-umbrella-vision.md#6-brand-architecture-options-not-yet-decided)) |
 
 ## 3. Conflicts and tensions between services
 
-1. **Different audiences, different tones.** An exam-prep tool for possible minors and a Paris club night share one name. That needs a brand-architecture decision **[Inf]**.
-2. **Founder time.** Two families are under way in parallel: software in July, events in October. Both depend on the same person and his personal work limits **[Inf]**.
+1. **Different audiences, different tones.** An exam-prep tool for possible minors and a paid-crew network share one name. That needs a brand-architecture decision **[Inf]**.
+2. **Founder time.** Two families are under way in parallel: software in July, the network and partner projects in October. Both depend on the same person and his personal work limits **[Inf]**.
 3. **Pay model.** The network's "fairly paid" promise must also hold for any student link (L12). Unpaid student "experience" is not a workaround **[R]** (EV-55).
 4. **Domain and name.** `teknest.fr` was claimed by both learning products at different times. "Tekonest" is not yet used in any product **[I]**.
 5. **Design.** The theory site is dark and studio-grade; the game is white and calm **[I]**.
@@ -87,9 +76,9 @@ flowchart LR
    - one known-good public TekPractice build;
    - confirm the learning platform's live state.
    - This finishes L1.
-3. **Event pilot (proposed Feb–Mar 2027)**
+3. **First network projects**
    - pay the crew;
-   - start the network list from people who actually worked the night (L7, L8).
+   - start the network list from people who actually worked on a real project.
 4. **Join the education family properly**
    - shared design, accounts and Learn mode (L2–L4).
 5. **Bridge the families only if the founder wants it**

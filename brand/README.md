@@ -8,4 +8,4 @@ These are the canonical overview documents. Read them in order:
 4. [Decisions & questions](04-decisions-and-questions.md)
 5. [Sources & evidence](05-sources-and-evidence.md)
 
-Each service has its own vision in [`services/`](services/). The supporting audit notes are in [`evidence/`](evidence/). Detailed working material stays in each service folder, for example [`event-project/docs/`](../event-project/docs/), and is linked rather than copied.
+Each service has its own vision in [`services/`](services/). The supporting audit notes are in [`evidence/`](evidence/). Detailed working material stays in each service folder, for example [`projects/rebels-x-tekonest/docs/`](../projects/rebels-x-tekonest/docs/), and is linked rather than copied.

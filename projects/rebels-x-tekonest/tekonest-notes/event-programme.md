@@ -3,10 +3,10 @@
 | | |
 | --- | --- |
 | **Status** | Current vision · planning stage · nothing booked, signed or launched |
-| **Folder** | [`event-project/`](../../event-project/) (pilot overview, legal guide, plan, deck, model) |
+| **Folder** | [`event-project/`](../) (pilot overview, legal guide, plan, deck, model) |
 | **Working name** | "Tekonest Event Project" (no public name chosen) |
 | **Source dates** | 20–21 Oct 2026 |
-| **Evidence IDs** | `EV-xx` → [event-project register](../evidence/event-project-register.md) · `FB-xx` → [founder briefs](../05-sources-and-evidence.md#founder-briefs-chat) |
+| **Evidence IDs** | `EV-xx` → [event-project register](event-project-register.md) · `FB-xx` → [founder briefs](../../../brand/05-sources-and-evidence.md#founder-briefs-chat) |
 
 Labels: **[F]** founder statement · **[FB]** founder brief/instruction · **[P]** proposal in existing docs · **[R]** research finding · **[E]** estimate · **[I]** implementation fact · **[Inf]** inference · **[Rec]** Claude's recommendation (kept in §9).
 
@@ -36,7 +36,7 @@ Labels: **[F]** founder statement · **[FB]** founder brief/instruction · **[P]
   - context, not costume;
   - real, rehearsed collaborations;
   - fair pay is part of the art.
-- **Later.** Own event series, such as a themed year with Halloween and other themed nights **[F]** (founder Activity, see [event register §C](../evidence/event-project-register.md)).
+- **Later.** Own event series, such as a themed year with Halloween and other themed nights **[F]** (founder Activity, see [event register §C](event-project-register.md)).
 
 ## 4. Distinct identity and value
 
@@ -91,8 +91,8 @@ The nights would offer a curated cross-cultural line-up with live music at the c
   5. pilot shape;
   6. money and fair-pay rules;
   7. artistic direction.
-- **Conflicts to resolve.** The founder's earlier idea of unpaid or percentage pay for technicians conflicts with the docs' "everyone paid" rule and the legal basis behind it **[F] vs [P]/[R]** (EV-53, EV-54, EV-55). See [decisions register](../04-decisions-and-questions.md).
-- **Dependency.** Any role the founder takes must fit the founder's personal work-status limits (details in [`event-project/docs/01`](../../event-project/docs/01-legal-structure-guide.md); not verified; not legal advice) **[R]** (EV-65, EV-66).
+- **Conflicts to resolve.** The founder's earlier idea of unpaid or percentage pay for technicians conflicts with the docs' "everyone paid" rule and the legal basis behind it **[F] vs [P]/[R]** (EV-53, EV-54, EV-55). See [decisions register](../../../brand/04-decisions-and-questions.md).
+- **Dependency.** Any role the founder takes must fit the founder's personal work-status limits (details in [`event-project/docs/01`](../docs/01-legal-structure-guide.md); not verified; not legal advice) **[R]** (EV-65, EV-66).
 - **Main risks.**
   - **[Inf] judgment ratings** (EV-84):
     - too few tickets;
@@ -112,4 +112,4 @@ The nights would offer a curated cross-cultural line-up with live music at the c
 
 ## 10. Sources
 
-[`event-project/README.md`](../../event-project/README.md) · [`docs/01`](../../event-project/docs/01-legal-structure-guide.md) · [`02`](../../event-project/docs/02-meeting-brief.md) · [`03`](../../event-project/docs/03-working-project-plan.md) · [`04`](../../event-project/docs/04-deck-companion-notes.md) · [`05`](../../event-project/docs/05-everything-explained.md) · [deck](../../event-project/presentation/Techonest_Vision_and_Project_Plan.pptx) · [model](../../event-project/model/pilot_model.py) · full register: [event-project-register.md](../evidence/event-project-register.md).
+[`event-project/README.md`](../PILOT-OVERVIEW.md) · [`docs/01`](../docs/01-legal-structure-guide.md) · [`02`](../docs/02-meeting-brief.md) · [`03`](../docs/03-working-project-plan.md) · [`04`](../docs/04-deck-companion-notes.md) · [`05`](../docs/05-everything-explained.md) · [deck](../presentation/Techonest_Vision_and_Project_Plan.pptx) · [model](../model/pilot_model.py) · full register: [event-project-register.md](event-project-register.md).

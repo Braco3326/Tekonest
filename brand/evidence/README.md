@@ -4,7 +4,7 @@ These are working audit notes made on 21 Oct 2026. Each one lists its sources, a
 
 | File | Scope | IDs |
 | --- | --- | --- |
-| [event-project-register.md](event-project-register.md) | `event-project/` | EV-xx |
+| [event-project-register.md](../../projects/rebels-x-tekonest/tekonest-notes/event-project-register.md) | `projects/rebels-x-tekonest/` | EV-xx |
 | [learning-platform-register.md](learning-platform-register.md) | `learning-platform/` | LP-xx |
 | [tekpractice-register.md](tekpractice-register.md) | `tekpractice-sim/` + `archive/teknest*` | TP-xx |
 | [thechnest-2026-07-register.md](thechnest-2026-07-register.md) | `archive/thechnest-local-2026-07/` | LT-xx |

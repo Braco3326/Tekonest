@@ -3,10 +3,10 @@
 | | |
 | --- | --- |
 | **Status** | Current vision · concept only · no members list, platform or process yet |
-| **Folder** | None yet; described inside [`event-project/`](../../event-project/) docs |
+| **Folder** | None yet; early thinking is in the [Rebels × Tekonest](../../projects/rebels-x-tekonest/README.md) docs |
 | **Working name** | "the network" / "community" (no public name chosen) |
 | **Source dates** | 20–21 Oct 2026 (event docs); earlier "community" ideas in July 2026 learning docs |
-| **Evidence IDs** | `EV-xx` [event register](../evidence/event-project-register.md) · `TP-xx` [TekPractice register](../evidence/tekpractice-register.md) · `LT-xx` [July 2026 register](../evidence/thechnest-2026-07-register.md) · `LP-xx` [learning register](../evidence/learning-platform-register.md) |
+| **Evidence IDs** | `EV-xx` [event register](../../projects/rebels-x-tekonest/tekonest-notes/event-project-register.md) · `TP-xx` [TekPractice register](../evidence/tekpractice-register.md) · `LT-xx` [July 2026 register](../evidence/thechnest-2026-07-register.md) · `LP-xx` [learning register](../evidence/learning-platform-register.md) |
 
 Labels: **[F]** founder · **[FB]** founder brief · **[P]** proposal · **[R]** research · **[E]** estimate · **[I]** implementation fact · **[Inf]** inference · **[Rec]** Claude's recommendation.
 
@@ -26,7 +26,7 @@ Labels: **[F]** founder · **[FB]** founder brief · **[P]** proposal · **[R]**
 ## 3. The experience
 
 - **Creator pathway, 8 steps [P]** (EV-14): discovery → selection → briefing → contract and pay → the night → credits and footage → feedback → next opportunity.
-- **Build-up.** An "artist and technician call" and a "network list v1" (Apr–Jun 2027), built in parallel with the pilot **[P]** (event register §C).
+- **Build-up.** An "artist and technician call" and a "network list v1" (Apr–Jun 2027), built in parallel with the first partner project **[P]** (Rebels × Tekonest register §C).
 - **Two earlier, separate "community" ideas** were attached to the learning products in July 2026:
   - BTS graduates become "community + mentor content" (TP-11, LT-24 **[P]**);
   - a "chercheur de stages/alternances" (internship/apprenticeship finder) is announced in the learning platform's E6 stub (LP-35 **[P]**).
@@ -73,4 +73,4 @@ Not discussed beyond the events themselves. The docs place coordination for othe
 
 ## 10. Sources
 
-[`event-project/docs/05-everything-explained.md`](../../event-project/docs/05-everything-explained.md) · [deck slides 3, 8, 21](../../event-project/presentation/Techonest_Vision_and_Project_Plan.pptx) · [`03-working-project-plan.md`](../../event-project/docs/03-working-project-plan.md) §A, §C · [`tekpractice-sim/docs/VISION_TekPractice-StudentJourney.md`](../../tekpractice-sim/docs/VISION_TekPractice-StudentJourney.md) Beat 6.
+[`projects/rebels-x-tekonest/docs/05-everything-explained.md`](../../projects/rebels-x-tekonest/docs/05-everything-explained.md) · [deck slides 3, 8, 21](../../projects/rebels-x-tekonest/presentation/Techonest_Vision_and_Project_Plan.pptx) · [`03-working-project-plan.md`](../../projects/rebels-x-tekonest/docs/03-working-project-plan.md) §A, §C · [`tekpractice-sim/docs/VISION_TekPractice-StudentJourney.md`](../../tekpractice-sim/docs/VISION_TekPractice-StudentJourney.md) Beat 6.

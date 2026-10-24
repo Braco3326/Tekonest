@@ -5,7 +5,7 @@
 | **Status** | **Proposed** (founder-stated activity, little detail) · docs place it in phase 3+ · nothing owned or offered |
 | **Folder** | None |
 | **Source dates** | 20–21 Oct 2026 |
-| **Evidence IDs** | §C of the [event register](../evidence/event-project-register.md) |
+| **Evidence IDs** | §C of the [Rebels × Tekonest register](../../projects/rebels-x-tekonest/tekonest-notes/event-project-register.md) |
 
 Labels: **[F]** founder · **[P]** proposal · **[R]** research · **[Inf]** inference · **[Rec]** Claude's recommendation.
 
@@ -36,7 +36,7 @@ Other organisers and the event programme itself **[F]/[Inf]**.
   - storage and transport;
   - maintenance;
   - rental contracts and deposits.
-- **A legal entity** able to invoice. The founder's personal work-status limits (details in [`event-project/docs/01`](../../event-project/docs/01-legal-structure-guide.md); not verified; not legal advice) apply **[R]** (EV-66).
+- **A legal entity** able to invoice. The founder's personal work-status limits (details in [`projects/rebels-x-tekonest/docs/01`](../../projects/rebels-x-tekonest/docs/01-legal-structure-guide.md); not verified; not legal advice) apply **[R]** (EV-66).
 
 ## 5. How it might sustain itself
 
@@ -61,8 +61,8 @@ Other organisers and the event programme itself **[F]/[Inf]**.
 
 ## 7. Claude's recommendation (not a founder decision)
 
-- **[Rec]** Record each equipment rental cost at the pilot and the nights after it. That record shows when owning would beat renting.
+- **[Rec]** Record each equipment rental cost at the first projects. That record shows when owning would beat renting.
 
 ## 8. Sources
 
-[`event-project/docs/05-everything-explained.md`](../../event-project/docs/05-everything-explained.md) · [`03-working-project-plan.md`](../../event-project/docs/03-working-project-plan.md) §A, §C · [deck slide 21](../../event-project/presentation/Techonest_Vision_and_Project_Plan.pptx).
+[`projects/rebels-x-tekonest/docs/05-everything-explained.md`](../../projects/rebels-x-tekonest/docs/05-everything-explained.md) · [`03-working-project-plan.md`](../../projects/rebels-x-tekonest/docs/03-working-project-plan.md) §A, §C · [deck slide 21](../../projects/rebels-x-tekonest/presentation/Techonest_Vision_and_Project_Plan.pptx).
