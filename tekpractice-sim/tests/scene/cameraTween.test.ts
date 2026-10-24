@@ -155,15 +155,16 @@ describe('CameraTween', () => {
   })
 
   describe('cancelOnUserInput', () => {
+    type Ev = { timeStamp?: number; repeat?: boolean; key?: string; target?: unknown }
     function listeners() {
-      const map = new Map<string, Set<() => void>>()
+      const map = new Map<string, Set<(e: Ev) => void>>()
       return {
-        addEventListener: (type: string, cb: () => void) => {
+        addEventListener: (type: string, cb: (e: Ev) => void) => {
           if (!map.has(type)) map.set(type, new Set())
           map.get(type)!.add(cb)
         },
-        removeEventListener: (type: string, cb: () => void) => map.get(type)?.delete(cb),
-        fire: (type: string) => map.get(type)?.forEach((cb) => cb()),
+        removeEventListener: (type: string, cb: (e: Ev) => void) => map.get(type)?.delete(cb),
+        fire: (type: string, ev: Ev = { timeStamp: 1 }) => map.get(type)?.forEach((cb) => cb(ev)),
         count: (type: string) => map.get(type)?.size ?? 0,
       }
     }
@@ -184,6 +185,38 @@ describe('CameraTween', () => {
         await expect(p).resolves.toBe('cancelled')
         expect(scene.observers).toHaveLength(0)
       }
+    })
+
+    it('ignores events stamped at or before the start, cancels on a later one', async () => {
+      setMotionOverride(true)
+      const { scene, tween, advance } = setup()
+      advance(100) // start stamp = 100
+      const canvas = listeners()
+      tween.cancelOnUserInput(canvas, listeners())
+      const p = tween.to(goal, 400)
+      canvas.fire('pointerdown', { timeStamp: 99 })
+      canvas.fire('pointerdown', { timeStamp: 100 })
+      expect(tween.active).toBe(true)
+      expect(scene.observers).toHaveLength(1)
+      canvas.fire('pointerdown', { timeStamp: 101 })
+      await expect(p).resolves.toBe('cancelled')
+    })
+
+    it('keydown ignores repeats, modifier-only keys and text-field targets', async () => {
+      setMotionOverride(true)
+      const { tween } = setup()
+      const win = listeners()
+      tween.cancelOnUserInput(listeners(), win)
+      const p = tween.to(goal, 400)
+      win.fire('keydown', { timeStamp: 5, key: 'a', repeat: true })
+      for (const key of ['Shift', 'Control', 'Alt', 'Meta', 'CapsLock']) win.fire('keydown', { timeStamp: 5, key })
+      for (const tagName of ['INPUT', 'TEXTAREA', 'SELECT'])
+        win.fire('keydown', { timeStamp: 5, key: 'a', target: { tagName } })
+      win.fire('keydown', { timeStamp: 5, key: 'a', target: { tagName: 'DIV', isContentEditable: true } })
+      win.fire('keydown', { timeStamp: 5, key: 'a', target: { tagName: 'SPAN', closest: () => ({}) } })
+      expect(tween.active).toBe(true)
+      win.fire('keydown', { timeStamp: 5, key: 'a', target: { tagName: 'BODY', closest: () => null } })
+      await expect(p).resolves.toBe('cancelled')
     })
 
     it('does nothing when no tween is active', () => {

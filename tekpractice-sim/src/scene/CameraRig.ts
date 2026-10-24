@@ -1,7 +1,7 @@
 /**
  * CameraRig — flies the ArcRotateCamera between the ENSEMBLE pose (the level's
  * environment preset) and a FOCUS pose auto-framing one device (ADR-0008).
- * Eased 250-350 ms (spec §2); prefers-reduced-motion → instant cut, no fly.
+ * Eased 450 ms (CameraTween, zero idle cost); prefers-reduced-motion → instant cut, no fly.
  * Camera-only module: imports no engine code and never mutates any graph state.
  */
 import { Vector3, type ArcRotateCamera } from '@babylonjs/core'
@@ -47,6 +47,7 @@ export class CameraRig implements CameraDirector {
     // The learner grabbing the view cancels a flight in progress.
     const canvas = scene.getEngine().getRenderingCanvas()
     if (canvas) this.tween.cancelOnUserInput(canvas)
+    else console.warn('CameraRig: no rendering canvas; flights cannot be cancelled by user input')
   }
 
   private currentPose(): CameraPose {
@@ -90,6 +91,7 @@ export class CameraRig implements CameraDirector {
 
 /** Structural view of the Babylon camera (its setTarget wants a Vector3, the tween speaks plain x/y/z). */
 function asTweenCamera(cam: ArcRotateCamera): TweenCamera {
+  const scratch = new Vector3() // reused: no per-frame allocation while a tween runs
   return {
     get alpha() { return cam.alpha },
     set alpha(v) { cam.alpha = v },
@@ -98,7 +100,10 @@ function asTweenCamera(cam: ArcRotateCamera): TweenCamera {
     get radius() { return cam.radius },
     set radius(v) { cam.radius = v },
     get target() { return cam.target },
-    setTarget: (t) => cam.setTarget(new Vector3(t.x, t.y, t.z)),
+    setTarget: (t) => {
+      scratch.set(t.x, t.y, t.z)
+      cam.setTarget(scratch)
+    },
     get lowerRadiusLimit() { return cam.lowerRadiusLimit },
     get upperRadiusLimit() { return cam.upperRadiusLimit },
     get lowerBetaLimit() { return cam.lowerBetaLimit },

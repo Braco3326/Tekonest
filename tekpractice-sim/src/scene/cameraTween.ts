@@ -31,9 +31,27 @@ export interface TweenScene {
   }
 }
 
+export interface InputEventLike {
+  timeStamp?: number
+  repeat?: boolean
+  key?: string
+  target?: unknown
+}
+
 export interface EventSourceLike {
-  addEventListener(type: string, cb: () => void): void
-  removeEventListener(type: string, cb: () => void): void
+  addEventListener(type: string, cb: (e: InputEventLike) => void): void
+  removeEventListener(type: string, cb: (e: InputEventLike) => void): void
+}
+
+const MODIFIER_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock'])
+const TEXT_TAGS = new Set(['INPUT', 'TEXTAREA', 'SELECT'])
+
+function isTextTarget(target: unknown): boolean {
+  const t = target as { tagName?: string; isContentEditable?: boolean; closest?: (s: string) => unknown } | null
+  if (!t || typeof t !== 'object') return false
+  if (t.tagName && TEXT_TAGS.has(t.tagName.toUpperCase())) return true
+  if (t.isContentEditable) return true
+  return typeof t.closest === 'function' && !!t.closest('[contenteditable]')
 }
 
 export type TweenResult = 'done' | 'cancelled'
@@ -43,6 +61,7 @@ export class CameraTween {
   private clock: TweenClock | null = null
   private settle: ((r: TweenResult) => void) | null = null
   private disposeInput: (() => void) | null = null
+  private startStamp = 0
 
   constructor(
     private readonly camera: TweenCamera,
@@ -87,7 +106,8 @@ export class CameraTween {
     }
     const from = this.currentPose()
     const clock = new TweenClock(ms)
-    clock.start(this.now())
+    this.startStamp = this.now()
+    clock.start(this.startStamp)
     this.clock = clock
     return new Promise<TweenResult>((resolve) => {
       this.settle = resolve
@@ -120,16 +140,23 @@ export class CameraTween {
   cancelOnUserInput(canvas: EventSourceLike, win?: EventSourceLike): () => void {
     if (this.disposeInput) return this.disposeInput
     const w: EventSourceLike | null = win ?? (typeof window !== 'undefined' ? window : null)
-    const onInput = (): void => {
-      if (this.active) this.cancel()
+    const onPointer = (e: InputEventLike): void => {
+      // Ignore events at or before the start: the handler that started this flight may run first.
+      if (this.active && !(e.timeStamp !== undefined && e.timeStamp <= this.startStamp)) this.cancel()
     }
-    canvas.addEventListener('pointerdown', onInput)
-    canvas.addEventListener('wheel', onInput)
-    w?.addEventListener('keydown', onInput)
+    const onKey = (e: InputEventLike): void => {
+      if (e.repeat) return
+      if (e.key !== undefined && MODIFIER_KEYS.has(e.key)) return
+      if (isTextTarget(e.target)) return
+      onPointer(e)
+    }
+    canvas.addEventListener('pointerdown', onPointer)
+    canvas.addEventListener('wheel', onPointer)
+    w?.addEventListener('keydown', onKey)
     this.disposeInput = () => {
-      canvas.removeEventListener('pointerdown', onInput)
-      canvas.removeEventListener('wheel', onInput)
-      w?.removeEventListener('keydown', onInput)
+      canvas.removeEventListener('pointerdown', onPointer)
+      canvas.removeEventListener('wheel', onPointer)
+      w?.removeEventListener('keydown', onKey)
       this.disposeInput = null
     }
     return this.disposeInput
