@@ -4,7 +4,7 @@
  * NullEngine + spy window/canvas, as tests/scene/dispose.test.ts.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { MeshBuilder, NullEngine } from '@babylonjs/core'
+import { MeshBuilder, NullEngine, Vector3 } from '@babylonjs/core'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { SceneHost } from '../../src/creation/sceneHost'
@@ -229,6 +229,23 @@ describe('SceneHost', () => {
     expect(cableMeshes(host)).toBe(1)
     await settle()
     expect(host.scene!.meshes.length).toBe(meshes0)
+    host.dispose()
+  })
+
+  it('tilt sign (Task 10): a positive tiltDeg aims the front (local +z) upward, a negative one downward', async () => {
+    const { host } = makeHost()
+    const store = new CreationStore(registry, creationEvaluator(registry), rig('blank'))
+    store.subscribe(() => host.apply(store.design()))
+    await host.load(placeFromKey('blank'), store.design())
+    const frontY = (): number => {
+      const root = host.instance('k12-g')!.root
+      root.computeWorldMatrix(true)
+      return Vector3.TransformNormal(new Vector3(0, 0, 1), root.getWorldMatrix()).y
+    }
+    store.dispatch({ type: 'SET_POSE', instanceId: 'k12-g', position: [3, 1.5, -3], yawDeg: 30, tiltDeg: 10, mount: 'stand' })
+    expect(frontY()).toBeCloseTo(Math.sin((10 * Math.PI) / 180), 6)
+    store.dispatch({ type: 'SET_POSE', instanceId: 'k12-g', position: [3, 1.5, -3], yawDeg: 30, tiltDeg: -10, mount: 'stand' })
+    expect(frontY()).toBeCloseTo(-Math.sin((10 * Math.PI) / 180), 6)
     host.dispose()
   })
 

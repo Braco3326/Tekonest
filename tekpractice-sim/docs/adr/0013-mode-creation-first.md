@@ -21,3 +21,10 @@ L'URL par défaut ouvrait le tableau de bord (ou l'accueil de première visite),
 - Deux chunks d'entrée (`legacyMain` et `creation/boot`) au lieu d'un seul ; le chunk de démarrage de Mode Création devra rester ≤ celui du sandbox historique + 15 %.
 - Aucun lien vers un niveau, l'onboarding ou le tableau de bord n'apparaît dans Mode Création.
 - Réversible : `FEATURES.levels = true` renvoie l'URL par défaut vers l'app historique.
+
+## Addendum (Task 10) — conventions de pose lues par l'acoustique
+
+- **Inclinaison (`Placement.tiltDeg`, P6).** Rotation autour de l'axe x propre à l'appareil, bornée à [−90°, 90°]. **Positif = l'avant (axe acoustique, z local +, P9 / ADR-0015) vise vers le haut** ; négatif = vers le bas (vers le public). `SceneHost` l'affiche ainsi (`rotation.x = −tiltDeg`, le +x de Babylon, repère main gauche, baissant le +z). L'acoustique (Task 36) lit `tiltDeg` avec ce signe.
+- **Lacet (`yawDeg`).** Rotation autour de +y, ramenée dans [0°, 360°) par Propriétés.
+- **Montage.** « Sol » pose l'appareil au sol (hauteur = sol du lieu, non modifiable) ; « Pied » et « Accroché » gardent une hauteur modifiable, jamais sous le sol.
+- **Point à vérifier en Task 36 :** `DeviceSpawner` place la grille de prises des boîtes de remplacement sur la face −z ; il faut confirmer que la face avant (grille) des `.glb` d'enceintes regarde bien +z, sinon retourner modèle et axe ensemble.

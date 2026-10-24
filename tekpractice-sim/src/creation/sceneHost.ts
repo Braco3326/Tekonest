@@ -452,7 +452,9 @@ export class SceneHost {
   private pose(inst: DeviceInstance, p: Placement): void {
     inst.root.position = Vector3.FromArray(p.position_m)
     // Yaw about +y (legacy convention), tilt about the device's own x axis.
-    inst.root.rotation = new Vector3((p.tiltDeg ?? 0) * DEG, p.yawDeg * DEG, 0)
+    // Tilt sign (Task 10, propertiesModel.ts): positive = the front (local +z) aims UP.
+    // Babylon's left-handed +x rotation pitches +z down, hence the minus.
+    inst.root.rotation = new Vector3(-(p.tiltDeg ?? 0) * DEG, p.yawDeg * DEG, 0)
     // The contact shadow stays on the floor whatever the device height (DeviceSpawner).
     const blob = inst.root.getChildMeshes(true, (n) => n.name === `shadow:${inst.instanceId}`)[0]
     if (blob) blob.position.y = 0.002 - p.position_m[1]
