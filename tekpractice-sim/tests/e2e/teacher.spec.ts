@@ -79,6 +79,27 @@ test('garbage files give an error message, no crash, and a good file still opens
   expect(errors).toEqual([])
 })
 
+test('a file over 10 MB is refused with a message, before parsing', async ({ page }) => {
+  await open(page)
+  await upload(page, 'big.json', ' '.repeat(10 * 1024 * 1024 + 1))
+  await expect(page.locator('#status .error')).toContainText('dépasse 10 Mo')
+  await expect(page.locator('ol.trail')).toHaveCount(0)
+})
+
+test('more than 500 trials is refused with a message', async ({ page }) => {
+  await open(page)
+  const data = { formatVersion: 1, exportedAt: '2026-10-24T10:00:00.000Z', app: 'tekpractice', declaratif: true, trials: Array.from({ length: 501 }, () => ({})) }
+  await upload(page, 'many.json', JSON.stringify(data))
+  await expect(page.locator('#status .error')).toContainText('plus de 500 essais')
+})
+
+test('several files: the first is read and the user is told', async ({ page }) => {
+  await open(page)
+  await page.locator('#file').setInputFiles([FIXTURE, FIXTURE])
+  await expect(page.locator('ol.trail > li')).toHaveCount(fixture.trials.length)
+  await expect(page.locator('#status')).toContainText('seul le premier est lu')
+})
+
 test('a tampered trial is rejected and reported, the others stay', async ({ page }) => {
   await open(page)
   const data = JSON.parse(readFileSync(FIXTURE, 'utf8'))

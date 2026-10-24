@@ -45,7 +45,32 @@ export const TEACHER_COPY = {
   noChange: 'Aucun changement',
   noRules: 'Aucune règle signalée',
   noNote: 'Aucune note',
+  // à valider (tekuxwriter): per-trial wording moved out of main.ts
+  changes: 'Changements depuis le parent',
+  fixed: 'Corrigées depuis le parent : ',
+  broken: 'Nouvelles depuis le parent : ',
+  frozenAt: (t: string): string => `figé à ${t}`,
+  writtenAt: (t: string): string => `(écrite à ${t})`,
+  amendedAt: (t: string): string => `(à ${t})`,
+  parentOf: (name: string): string => `parent : Essai ${name}`,
+  tooBig: (maxMb: number): string => `Ce fichier dépasse ${maxMb} Mo : un fichier d'essais TekPractice est bien plus petit. Vérifiez qu'il vient bien de TekPractice.`,
+  tooMany: (max: number): string => `Ce fichier contient plus de ${max} essais : il n'est pas lu.`,
+  oneFileOnly: 'Plusieurs fichiers ont été déposés : seul le premier est lu.',
 } as const
+
+/** Limits applied before parsing: a real export is a few kB per trial. */
+export const MAX_FILE_BYTES = 10 * 1024 * 1024
+export const MAX_TRIALS = 500
+
+/** Number of entries in `trials` when the text is a JSON object with a trials array, else null. */
+export const trialCountOf = (text: string): number | null => {
+  try {
+    const t = (JSON.parse(text) as { trials?: unknown } | null)?.trials
+    return Array.isArray(t) ? t.length : null
+  } catch {
+    return null
+  }
+}
 
 export type ImportFailureReason = 'corrupt' | 'format' | 'version' | 'crypto-unavailable'
 

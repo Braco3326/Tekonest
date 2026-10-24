@@ -35,7 +35,7 @@
       :focus-visible { outline: 2px solid var(--tk-accent, #2e5fe6); outline-offset: 2px; }
       /* The native input stays focusable and operable (keyboard); only the button look is shared. */
       /* Visually hidden but focusable: Tab reaches it, Enter/Space opens the picker; the label shows the focus ring. */
-      #file { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+      #file { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
       .drop:has(#file:focus-visible) #chooseLabel { outline: 2px solid var(--tk-ink, #1b2129); outline-offset: 2px; }
       #status { margin-top: var(--tk-space-md, 14px); }
       .msg { padding: 10px 14px; border-radius: var(--tk-radius-sm, 7px); border: 1px solid var(--tk-surface-border, #e6e8ee); background: var(--tk-surface, #fff); }
@@ -74,7 +74,7 @@
       <div class="drop" id="drop">
         <p id="dropText"></p>
         <label class="btn" id="chooseLabel" for="file"><span id="chooseText"></span></label>
-        <input type="file" id="file" accept=".json,application/json" aria-describedby="dropText" />
+        <input type="file" id="file" multiple accept=".json,application/json" aria-describedby="dropText" />
       </div>
       <div id="status" role="status" aria-live="polite"></div>
       <div id="result"></div>

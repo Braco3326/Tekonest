@@ -9,9 +9,12 @@ import { importTrails } from '../trials/export'
 import {
   failureMessage,
   isQuarantineFile,
+  MAX_FILE_BYTES,
+  MAX_TRIALS,
   rejectedNotice,
   TEACHER_COPY as C,
   trailCards,
+  trialCountOf,
   type MapGeometry,
   type RoomInfo,
   type TrialCard,
@@ -44,7 +47,7 @@ function svg(tag: string, attrs: Record<string, string | number> = {}, ...kids: 
 }
 
 function mapSvg(g: MapGeometry, titleId: string): SVGElement {
-  const root = svg('svg', { class: 'map', viewBox: g.viewBox, role: 'img', 'aria-labelledby': titleId, 'aria-label': g.title })
+  const root = svg('svg', { class: 'map', viewBox: g.viewBox, role: 'img', 'aria-labelledby': titleId })
   root.append(svg('title', { id: titleId }, g.title))
   if (g.room) root.append(svg('rect', { class: 'room', x: g.room.x, y: g.room.y, width: g.room.w, height: g.room.h }))
   for (const d of g.dots) {
@@ -65,9 +68,9 @@ function cardEl(c: TrialCard): HTMLElement {
   const field = (label: string, ...body: Child[]): void => {
     dl.append(el('dt', {}, label), el('dd', {}, ...body))
   }
-  field(C.prediction, `${c.prediction.text} `, el('span', { class: 'meta' }, `(écrite à ${c.prediction.time})`))
+  field(C.prediction, `${c.prediction.text} `, el('span', { class: 'meta' }, C.writtenAt(c.prediction.time)))
   field(
-    'Changements depuis le parent',
+    C.changes,
     c.parentName === null ? C.noParent : list(c.changes.map((x) => el('li', {}, x)), C.noChange),
   )
   const rulesBody: Child[] = [
@@ -76,24 +79,24 @@ function cardEl(c: TrialCard): HTMLElement {
       C.noRules,
     ),
   ]
-  if (c.fixed && c.fixed.length) rulesBody.push(el('p', { class: 'good' }, 'Corrigées depuis le parent : ', ...c.fixed.map((x, i) => el('code', {}, i ? `, ${x}` : x))))
-  if (c.broken && c.broken.length) rulesBody.push(el('p', { class: 'bad' }, 'Nouvelles depuis le parent : ', ...c.broken.map((x, i) => el('code', {}, i ? `, ${x}` : x))))
+  if (c.fixed && c.fixed.length) rulesBody.push(el('p', { class: 'good' }, C.fixed, ...c.fixed.map((x, i) => el('code', {}, i ? `, ${x}` : x))))
+  if (c.broken && c.broken.length) rulesBody.push(el('p', { class: 'bad' }, C.broken, ...c.broken.map((x, i) => el('code', {}, i ? `, ${x}` : x))))
   field(C.rules, ...rulesBody)
   if (c.levelState) field(C.levelState, c.levelState)
   const noteBody: Child[] = [c.note ? el('p', {}, c.note) : el('p', { class: 'meta' }, C.noNote)]
-  if (c.amendments.length) noteBody.push(el('ul', {}, ...c.amendments.map((a) => el('li', {}, `${a.text} `, el('span', { class: 'meta' }, `(à ${a.time})`)))))
+  if (c.amendments.length) noteBody.push(el('ul', {}, ...c.amendments.map((a) => el('li', {}, `${a.text} `, el('span', { class: 'meta' }, C.amendedAt(a.time))))))
   field(C.note, ...noteBody)
 
   const mapTitleId = `m-${c.id}`
   return el(
     'li',
-    { class: 'card', 'aria-labelledby': headId },
+    { class: 'card' },
     el(
       'header',
       {},
       el('h3', { id: headId }, c.label),
-      el('span', { class: 'meta' }, `figé à ${c.time}`),
-      el('span', { class: 'meta' }, c.parentName ? `parent : Essai ${c.parentName}` : C.noParent),
+      el('span', { class: 'meta' }, C.frozenAt(c.time)),
+      el('span', { class: 'meta' }, c.parentName ? C.parentOf(c.parentName) : C.noParent),
       el('span', { class: 'meta' }, c.roomName),
     ),
     el('div', { class: 'grid' }, dl, el('div', {}, el('p', { class: 'meta' }, C.map), mapSvg(c.map, mapTitleId))),
@@ -128,8 +131,16 @@ function init(): void {
   }
   say(C.empty)
 
-  async function open(file: File): Promise<void> {
+  /** Reads the first file only; `many` adds a notice when several were given. */
+  async function open(file: File, many = false): Promise<void> {
+    await load(file)
+    if (many) status.append(el('p', { class: 'msg info' }, C.oneFileOnly))
+  }
+
+  async function load(file: File): Promise<void> {
     result.replaceChildren()
+    // Size is checked BEFORE reading the file into memory.
+    if (file.size > MAX_FILE_BYTES) return say(C.tooBig(MAX_FILE_BYTES / 1024 / 1024), 'error')
     let text: string
     try {
       text = await file.text()
@@ -139,6 +150,7 @@ function init(): void {
     }
     try {
       if (isQuarantineFile(text)) return say(failureMessage('quarantine'), 'error')
+      if ((trialCountOf(text) ?? 0) > MAX_TRIALS) return say(C.tooMany(MAX_TRIALS), 'error')
       const r = await importTrails(text)
       if (!r.ok) return say(failureMessage(r.reason), 'error')
       if (r.trials.length === 0) return say(rejectedNotice(r.rejected) ?? C.noTrials, r.rejected ? 'warn' : 'info')
@@ -166,7 +178,7 @@ function init(): void {
 
   input.addEventListener('change', () => {
     const f = input.files?.[0]
-    if (f) void open(f)
+    if (f) void open(f, (input.files?.length ?? 0) > 1)
     input.value = '' // the same file can be chosen again
   })
   drop.addEventListener('dragover', (e) => {
@@ -178,7 +190,7 @@ function init(): void {
     e.preventDefault()
     drop.classList.remove('over')
     const f = e.dataTransfer?.files?.[0]
-    if (f) void open(f)
+    if (f) void open(f, (e.dataTransfer?.files?.length ?? 0) > 1)
   })
   // A file dropped beside the zone must not navigate away from the page.
   window.addEventListener('dragover', (e) => e.preventDefault())

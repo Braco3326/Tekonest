@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { importTrails } from '../trials/export'
 import type { Trial } from '../trials/trial'
-import { changeLabel, failureMessage, isQuarantineFile, mapGeometry, rejectedNotice, TEACHER_COPY, trailCards } from './teacherModel'
+import { changeLabel, failureMessage, isQuarantineFile, mapGeometry, MAX_FILE_BYTES, MAX_TRIALS, rejectedNotice, TEACHER_COPY, trailCards, trialCountOf } from './teacherModel'
 
 const fixture = readFileSync('tests/fixtures/essais-sample.essai.json', 'utf8')
 const load = async (): Promise<Trial[]> => {
@@ -100,6 +100,18 @@ describe('messages', () => {
     expect(failureMessage('quarantine')).toBe(TEACHER_COPY.quarantine)
     expect(failureMessage('corrupt')).toBe(TEACHER_COPY.errorRead)
     expect(failureMessage('format')).toBe(TEACHER_COPY.errorRead)
+  })
+  it('trial count and limits', () => {
+    expect(trialCountOf('{"trials":[1,2,3]}')).toBe(3)
+    expect(trialCountOf('{"trials":5}')).toBeNull()
+    expect(trialCountOf('nope')).toBeNull()
+    expect(MAX_FILE_BYTES).toBe(10 * 1024 * 1024)
+    expect(TEACHER_COPY.tooBig(10)).toContain('10 Mo')
+    expect(TEACHER_COPY.tooMany(MAX_TRIALS)).toContain('500')
+  })
+  it('per-trial wording', () => {
+    expect(TEACHER_COPY.frozenAt('10:49')).toBe('figé à 10:49')
+    expect(TEACHER_COPY.parentOf('A')).toBe('parent : Essai A')
   })
   it('rejected notice only when something was rejected', () => {
     expect(rejectedNotice(0)).toBeNull()

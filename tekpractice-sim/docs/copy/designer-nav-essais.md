@@ -348,6 +348,27 @@ Essais are off in exam mode unless a level declares them (D2).
 | `teacher.rubric.5` | L'élève a-t-il relu sa prédiction après comparaison ? | Did the student reread the prediction after comparing? | Rubric item | |
 | `teacher.disclaimer` | Les essais sont déclaratifs : ils montrent ce que l'élève a saisi et figé. Le fichier n'est pas signé et peut être modifié. | Trials are declarative: they show what the student entered and froze. The file is not signed and can be edited. | Page footer, always visible | **[reused]** the "déclaratif" disclaimer |
 | `teacher.print.button` | Imprimer ou enregistrer en PDF | Print or save as PDF | Button | |
+| `teacher.rubric.draft` | Brouillon : formulation à valider par Oscar. | Draft: wording to be validated by Oscar. | Under the rubric title | **à valider (tekuxwriter)**; N8 |
+| `teacher.room.none` | Sans salle | No room | Per-trial header | **à valider (tekuxwriter)** |
+| `teacher.trial.changes` | Changements depuis le parent | Changes since the parent | Per-trial label | **à valider (tekuxwriter)** |
+| `teacher.trial.first` | Premier essai | First trial | Per-trial header and changes | **à valider (tekuxwriter)** |
+| `teacher.trial.noChange` | Aucun changement | No change | Changes list, empty | **à valider (tekuxwriter)** |
+| `teacher.trial.noRules` | Aucune règle signalée | No rule flagged | Rules, empty | **à valider (tekuxwriter)** |
+| `teacher.trial.noNote` | Aucune note | No note | Note, empty | **à valider (tekuxwriter)** |
+| `teacher.trial.frozenAt` | figé à {time} | frozen at {time} | Per-trial header | **à valider (tekuxwriter)**; same wording as `essais.item.time` |
+| `teacher.trial.parentOf` | parent : Essai {name} | parent: Trial {name} | Per-trial header | **à valider (tekuxwriter)** |
+| `teacher.trial.predictionAt` | (écrite à {time}) | (written at {time}) | After the prediction | **à valider (tekuxwriter)** |
+| `teacher.trial.amendedAt` | (à {time}) | (at {time}) | After each amendment | **à valider (tekuxwriter)** |
+| `teacher.trial.fixed` | Corrigées depuis le parent : | Fixed since the parent: | Rules, rule ids follow | **à valider (tekuxwriter)** |
+| `teacher.trial.broken` | Nouvelles depuis le parent : | New since the parent: | Rules, rule ids follow | **à valider (tekuxwriter)** |
+| `teacher.error.quarantine` | Ce fichier contient des données mises de côté (quarantaine), pas un parcours d'essais. Rouvrez TekPractice pour exporter les essais. | This file holds quarantined data, not a trial trail. Reopen TekPractice to export the trials. | Error | **à valider (tekuxwriter)** |
+| `teacher.error.version` | Ce fichier vient d'une version plus récente de TekPractice et ne peut pas être lu ici. | This file comes from a newer TekPractice version and cannot be read here. | Error | **à valider (tekuxwriter)** |
+| `teacher.error.crypto` | Ce navigateur ne permet pas de vérifier le fichier. Ouvrez la page dans un navigateur récent. | This browser cannot verify the file. Open the page in a recent browser. | Error | **à valider (tekuxwriter)** |
+| `teacher.error.noTrials` | Ce fichier ne contient aucun essai. | This file holds no trial. | Info | **à valider (tekuxwriter)** |
+| `teacher.error.tooBig` | Ce fichier dépasse {max} Mo : un fichier d'essais TekPractice est bien plus petit. Vérifiez qu'il vient bien de TekPractice. | This file is over {max} MB: a TekPractice trial file is much smaller. Check it comes from TekPractice. | Error, size limit 10 MB | **à valider (tekuxwriter)** |
+| `teacher.error.tooMany` | Ce fichier contient plus de {max} essais : il n'est pas lu. | This file holds more than {max} trials: it is not read. | Error, limit 500 | **à valider (tekuxwriter)** |
+| `teacher.error.oneFile` | Plusieurs fichiers ont été déposés : seul le premier est lu. | Several files were dropped: only the first is read. | Info | **à valider (tekuxwriter)** |
+| `teacher.warn.rejected` | {n} essai(s) du fichier n'a/n'ont pas passé la vérification et est/sont ignoré(s). | {n} trial(s) failed verification and are ignored. | Warning | **à valider (tekuxwriter)**; singular/plural in code |
 
 ## 11. Website copy: `tekpractice.html` and the game link
 
