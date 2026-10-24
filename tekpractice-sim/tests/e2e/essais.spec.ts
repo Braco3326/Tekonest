@@ -346,6 +346,26 @@ test('final review #2: two tabs freeze Essais → both kept, the other tab’s l
   await tab2.close()
 })
 
+test('final review #3: « Exporter puis archiver » asks to check the file; nothing is removed before the explicit button', async ({ page }) => {
+  await twoEssais(page)
+  // The near-budget notice carries this action; reaching 1.2 MB in a test is slow, so its button is injected.
+  await page.evaluate(() => {
+    const b = document.createElement('button')
+    b.dataset.act = 'export-archive'
+    b.id = 'test-export-archive'
+    document.querySelector('#essais-panel .es-notice')!.appendChild(b)
+  })
+  const [download] = await Promise.all([page.waitForEvent('download'), page.locator('#test-export-archive').click()])
+  expect(download.suggestedFilename()).toMatch(/\.essai\.json$/)
+  await expect(page.locator('#es-confirm-text')).toContainText("Vérifiez d'abord le fichier téléchargé")
+  const ok = page.locator('#es-confirm-ok')
+  await expect(ok).toHaveText("J'ai vérifié le fichier — archiver")
+  expect(await trials(page)).toHaveLength(2) // the download alone archives nothing
+  await ok.click()
+  await expect(page.locator('.es-row')).toHaveCount(0)
+  expect(await trials(page)).toHaveLength(0)
+})
+
 test('exam mode has no Essais panel (D2)', async ({ page }) => {
   await page.goto('/?level=a1&mode=exam')
   await page.waitForFunction(() => !!window.__audioSim)

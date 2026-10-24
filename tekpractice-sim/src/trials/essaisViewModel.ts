@@ -77,8 +77,10 @@ export const COPY = {
   quarantineNothing: "Aucune donnée mise de côté n'a pu être lue dans ce navigateur.", // quarantine.export.empty (à valider)
   nearButton: 'Exporter puis archiver', // storage.near.button
   later: 'Plus tard', // storage.near.dismiss
-  archiveConfirm: 'Les essais exportés seront retirés de ce navigateur. Le fichier reste chez vous.', // storage.archive.confirm
-  archiveOk: 'Archiver', // storage.archive.confirm.ok (à valider)
+  // Archiving removes the trials from the browser: the learner checks the file first (final review #3).
+  archiveConfirm:
+    "Vérifiez d'abord le fichier téléchargé : il doit être dans vos téléchargements et s'ouvrir. Ensuite seulement, archivez : les essais exportés seront retirés de ce navigateur. Le fichier reste chez vous.", // storage.archive.confirm.verify (à valider)
+  archiveOk: "J'ai vérifié le fichier — archiver", // storage.archive.confirm.ok (à valider)
   archived: (n: number) => `${n} essai${n > 1 ? 's' : ''} archivé${n > 1 ? 's' : ''}.`, // storage.archive.done.toast
   // 1st-year limit (deck §6)
   limitTitle: 'Vous avez 3 essais.', // limit.reached.title
