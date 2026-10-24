@@ -78,7 +78,7 @@ export const TOKENS = {
     glowOverlayAlpha: 0.3, // one translucent wash for bodies + labels — calm on white
     dimVisibility: 0.35, // incompatible port markers recede without vanishing
     heldCableRadius: 0.02, // cable in hand: readable in the wide Ensemble view (committed stays thin)
-    flyMs: 300, // camera flight (spec §2: 250-350 ms eased)
+    flyMs: 450, // camera flight: ease-in-out cubic, 450 ms (designer-nav N4)
   },
 } as const
 

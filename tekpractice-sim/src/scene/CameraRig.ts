@@ -4,8 +4,10 @@
  * Eased 250-350 ms (spec §2); prefers-reduced-motion → instant cut, no fly.
  * Camera-only module: imports no engine code and never mutates any graph state.
  */
-import { ArcRotateCamera, Animation, CubicEase, EasingFunction, Vector3 } from '@babylonjs/core'
+import { Vector3, type ArcRotateCamera } from '@babylonjs/core'
+import { shortestAngle } from '../camera/tween'
 import { motionEnabled, TOKENS } from '../design/tokens'
+import { CameraTween, type TweenCamera } from './cameraTween'
 
 export interface CameraPose {
   alpha: number
@@ -30,16 +32,21 @@ export interface CameraDirector {
   flyToEnsemble(): void
 }
 
-const FPS = 60
 /** Placeholder port panels face −Z (DeviceSpawner) — arrive looking at them. */
 const FOCUS_ALPHA = -Math.PI / 2
 const FOCUS_BETA = 1.15
 
 export class CameraRig implements CameraDirector {
   private ensemble: CameraPose
+  private tween: CameraTween
 
   constructor(private camera: ArcRotateCamera) {
     this.ensemble = this.currentPose()
+    const scene = camera.getScene()
+    this.tween = new CameraTween(asTweenCamera(camera), scene)
+    // The learner grabbing the view cancels a flight in progress.
+    const canvas = scene.getEngine().getRenderingCanvas()
+    if (canvas) this.tween.cancelOnUserInput(canvas)
   }
 
   private currentPose(): CameraPose {
@@ -72,44 +79,32 @@ export class CameraRig implements CameraDirector {
   }
 
   private fly(to: CameraPose): void {
-    this.camera.getScene().stopAnimation(this.camera)
-    if (!motionEnabled()) {
-      // prefers-reduced-motion: instant cut (spec §2 — no fly, no nausea).
-      this.camera.alpha = to.alpha
-      this.camera.beta = to.beta
-      this.camera.radius = to.radius
-      this.camera.setTarget(to.target.clone())
-      return
-    }
-    const frames = Math.round((TOKENS.focus.flyMs / 1000) * FPS)
-    const ease = new CubicEase()
-    ease.setEasingMode(EasingFunction.EASINGMODE_EASEINOUT)
-    const scene = this.camera.getScene()
-    // Normalize alpha so the fly takes the short way around the orbit.
-    const alphaFrom = this.camera.alpha
-    const alphaTo = alphaFrom + shortestAngle(alphaFrom, to.alpha)
-    const animate = (property: string, from: number | Vector3, target: number | Vector3) => {
-      const type = typeof from === 'number' ? Animation.ANIMATIONTYPE_FLOAT : Animation.ANIMATIONTYPE_VECTOR3
-      const anim = new Animation(`cam:${property}`, property, FPS, type, Animation.ANIMATIONLOOPMODE_CONSTANT)
-      anim.setKeys([
-        { frame: 0, value: from },
-        { frame: frames, value: target },
-      ])
-      anim.setEasingFunction(ease)
-      scene.beginDirectAnimation(this.camera, [anim], 0, frames, false)
-    }
-    animate('alpha', alphaFrom, alphaTo)
-    animate('beta', this.camera.beta, to.beta)
-    animate('radius', this.camera.radius, to.radius)
-    animate('target', this.camera.target.clone(), to.target.clone())
+    void this.tween.to({
+      alpha: to.alpha,
+      beta: to.beta,
+      radius: to.radius,
+      target: [to.target.x, to.target.y, to.target.z],
+    })
   }
 }
 
-/** Signed shortest rotation from a to b, in (−π, π]. */
-export function shortestAngle(a: number, b: number): number {
-  const twoPi = Math.PI * 2
-  let d = (b - a) % twoPi
-  if (d > Math.PI) d -= twoPi
-  if (d <= -Math.PI) d += twoPi
-  return d
+/** Structural view of the Babylon camera (its setTarget wants a Vector3, the tween speaks plain x/y/z). */
+function asTweenCamera(cam: ArcRotateCamera): TweenCamera {
+  return {
+    get alpha() { return cam.alpha },
+    set alpha(v) { cam.alpha = v },
+    get beta() { return cam.beta },
+    set beta(v) { cam.beta = v },
+    get radius() { return cam.radius },
+    set radius(v) { cam.radius = v },
+    get target() { return cam.target },
+    setTarget: (t) => cam.setTarget(new Vector3(t.x, t.y, t.z)),
+    get lowerRadiusLimit() { return cam.lowerRadiusLimit },
+    get upperRadiusLimit() { return cam.upperRadiusLimit },
+    get lowerBetaLimit() { return cam.lowerBetaLimit },
+    get upperBetaLimit() { return cam.upperBetaLimit },
+  }
 }
+
+/** Moved to camera/tween.ts; re-exported so existing imports keep working. */
+export { shortestAngle }
