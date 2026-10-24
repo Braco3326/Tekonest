@@ -269,3 +269,73 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 .site-footer { border-top: 14px solid var(--color-ink); position: relative; }
 .site-footer::before { content: ""; position: absolute; top: -14px; left: 0; right: 0; height: 14px; background: inherit;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='14'%3E%3Cpath d='M7 2L12 7L7 12L2 7Z' fill='%23FBF8F3'/%3E%3Crect x='18' y='4' width='6' height='6' fill='%23DD9349'/%3E%3Cpath d='M35 2L40 7L35 12L30 7Z' fill='none' stroke='%23FBF8F3' stroke-width='1'/%3E%3C/svg%3E"); background-repeat: repeat-x; background-position: center; }
+
+/* ===== Home v3 — council pass: moodboard + marqueterie mock ===== */
+.section-head .eyebrow { font-size: 0.75rem; color: var(--color-signal); margin-bottom: calc(-1 * var(--space-2)); }
+.cadre-filet { position: absolute; inset: 18px; border: 1px solid var(--noyer-dark); outline: 1px solid var(--noyer-dark); outline-offset: -8px; pointer-events: none; opacity: .75; }
+.cadre-filet::before, .cadre-filet::after { content: ""; position: absolute; width: 14px; height: 14px; background: var(--color-amber); }
+.cadre-filet::before { top: -1px; left: -1px; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.cadre-filet::after { bottom: -1px; right: -1px; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
+@media (max-width: 760px) { .cadre-filet { inset: 8px; } }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-top: var(--space-6); }
+.hero-actions .btn-replay { margin-top: 0; }
+.btn-light { background: var(--color-paper); color: var(--color-ink); }
+.btn-light:hover { background: #fff; }
+.btn-outline-light { background: transparent; color: var(--color-on-dark); border-color: var(--color-on-dark); }
+.btn-outline-light:hover { border-color: var(--color-amber); color: #fff; }
+.btn-replay { display: inline-flex; align-items: center; gap: var(--space-2); }
+.btn-replay[hidden] { display: none; }
+.btn-replay svg { width: 18px; height: 18px; fill: currentColor; }
+.btn-replay[aria-pressed="true"] { border-color: var(--color-amber); color: var(--color-amber); }
+.door-who { font-size: var(--text-sm); color: var(--color-ink-3); margin: 0; }
+.door.cadre::after { content: ""; position: absolute; bottom: 0; right: 0; width: 18px; height: 18px; background: var(--color-amber); clip-path: polygon(100% 0, 100% 100%, 0 100%); pointer-events: none; }
+
+/* Direction: nest of light over the stage, médaillon bullets */
+.direction { min-height: 640px; }
+.direction__halo { position: absolute; left: 48%; top: 34%; width: clamp(200px, 22vw, 320px); transform: translate(-50%, -50%); fill: none; stroke: var(--color-amber); stroke-width: 2.4; mix-blend-mode: screen; opacity: .75; filter: drop-shadow(0 0 6px rgba(221,147,73,.9)); }
+@media (prefers-reduced-motion: no-preference) {
+  .direction__halo { animation: halo-turn 40s linear infinite; animation-play-state: paused; }
+  .direction__halo.is-on { animation-play-state: running; }
+}
+@keyframes halo-turn { to { transform: translate(-50%, -50%) rotate(360deg); } }
+@media (max-width: 760px) { .direction__halo { left: 50%; top: 22%; width: 200px; } .direction { min-height: 720px; } }
+.medaillons { list-style: none; padding: 0; margin: var(--space-5) 0 0; display: grid; gap: var(--space-3); max-width: 36rem; }
+.medaillons li { position: relative; padding-left: 30px; color: var(--color-on-dark); font-size: 1.0625rem; }
+.medaillons li::before { content: ""; position: absolute; left: 0; top: .25em; width: 16px; height: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'%3E%3Cpath d='M0,-9L4.5,7.79L-7.79,-4.5L9,0L-7.79,4.5L4.5,-7.79L0,9L-4.5,-7.79L7.79,4.5L-9,0L7.79,-4.5L-4.5,7.79Z' fill='none' stroke='%23DD9349' stroke-width='1.2'/%3E%3C/svg%3E") center/contain no-repeat; }
+
+/* Sept fils, sept métiers */
+.fils-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-7); margin-bottom: var(--space-7); align-items: end; }
+.fils-head h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem); }
+.fils-head p { color: var(--color-ink-2); margin: 0 0 var(--space-3); }
+.fils-head .note { font-size: var(--text-sm); }
+@media (max-width: 800px) { .fils-head { grid-template-columns: 1fr; gap: var(--space-4); } }
+.fils { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--noyer); border-bottom: 1px solid var(--noyer); }
+.fil { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5) var(--space-4); border-left: 1px solid var(--color-line); }
+.fil:first-child { border-left: 0; }
+.fil-nid { width: 56px; height: 56px; fill: none; stroke: var(--color-line-strong); stroke-width: 7; }
+.fil-nid .on { stroke: var(--color-signal); stroke-width: 16; }
+.fil-n { font: 500 0.75rem/1.4 var(--font-text); letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink-3); }
+.fil strong { font-family: var(--font-display); font-weight: 500; font-size: 1.125rem; }
+.fil-d { font-size: var(--text-sm); color: var(--color-ink-2); }
+@media (prefers-reduced-motion: no-preference) {
+  .fil-nid { transition: transform 700ms var(--ease); }
+  .fil:hover .fil-nid { transform: rotate(51.43deg); }
+}
+@media (max-width: 1100px) { .fils { grid-template-columns: repeat(4, minmax(0, 1fr)); } .fil:nth-child(5) { border-left: 0; } .fil:nth-child(n+5) { border-top: 1px solid var(--color-line); } }
+@media (max-width: 600px) { .fils { grid-template-columns: repeat(2, minmax(0, 1fr)); } .fil { border-left: 0; border-top: 1px solid var(--color-line); } .fil:nth-child(even) { border-left: 1px solid var(--color-line); } .fil:first-child, .fil:nth-child(2) { border-top: 0; } }
+
+/* Closing band on Nuit with the bronze Damascus texture */
+.cta-nuit { position: relative; background: var(--color-ink); color: var(--color-on-dark); overflow: hidden; --focus-color: var(--color-paper); }
+.cta-nuit__bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .38; }
+.cta-nuit__in { position: relative; padding-block: var(--space-9); padding-inline: calc(var(--gutter) + var(--space-6)); text-align: center; display: grid; justify-items: center; gap: var(--space-4); }
+.cta-nuit .cadre-filet { inset: var(--space-6) var(--gutter); }
+.cta-nuit blockquote { margin: 0 0 var(--space-4); font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); line-height: 1.15; max-width: 22ch; color: var(--color-on-dark); }
+.cta-nuit cite { display: block; margin-top: var(--space-3); font: 400 var(--text-sm)/1.5 var(--font-text); font-style: normal; color: var(--color-amber); }
+.cta-nuit h2 { font-size: var(--text-xl); color: var(--color-on-dark); }
+.cta-nuit p { color: var(--color-on-dark-2); max-width: 36rem; margin: 0; }
+.cta-nuit .hero-actions { justify-content: center; margin-top: var(--space-3); }
+.fil-nid { width: 64px; height: 64px; stroke: var(--color-line); stroke-width: 6; }
+.fil-nid .on { stroke: var(--color-signal); stroke-width: 14; }
+@media (max-width: 760px) { .hero-nuit__txt, .cta-nuit__in { padding-inline: calc(var(--gutter) + 14px); } }
+.fil-nid { stroke: var(--color-line-strong); stroke-width: 5; } .fil-nid ellipse:not(.on) { opacity: .45; }

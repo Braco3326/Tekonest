@@ -9,10 +9,10 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 PAGES = ROOT / "src" / "pages"
 
 NAV = [
-    ("apprendre.html", "Apprendre"),
-    ("tekpractice.html", "TekPractice"),
+    ("apprendre.html", "Se former"),
     ("organiser.html", "Créer avec nous"),
     ("reseau.html", "Réseau"),
+    ("index.html#notre-direction", "Notre direction"),
     ("histoire.html", "L'histoire"),
     ("contact.html", "Contact"),
 ]
