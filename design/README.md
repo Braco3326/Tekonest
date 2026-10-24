@@ -28,8 +28,8 @@ Reconciled with the brand docs on this branch: [`../brand/`](../brand/). Statuse
 | # | Decision | Why it matters | Where it shows |
 | --- | --- | --- | --- |
 | F-01 | Approve **Direction A "Bobine"** and the **Bobine logo**, or choose B/C | Everything visual follows from it | Boards, logos, prototype |
-| F-02 | Branch names: Soirées / Réseau / Organiser / Apprendre / TekPractice, and the **learning platform's product name** (Tech Nest, Tekskol or other) | Navigation and lockups | Header, Apprendre page |
-| F-03 | Confirm the **fair-pay rule** as public policy: "everyone who works on a paid night is paid; no unpaid or percentage pay" | The Réseau and Soirées pages promise it | Réseau, Soirées, L'histoire |
+| F-02 | Branch names: Réseau / Organiser / Apprendre / TekPractice, and the **learning platform's product name** (Tech Nest, Tekskol or other) | Navigation and lockups | Header, Apprendre page |
+| F-03 | Confirm the **fair-pay rule** as public policy: "everyone who works on a paid project is paid; no unpaid or percentage pay" | The Réseau page promises it | Réseau, L'histoire |
 | F-04 | What the site may say **publicly about people**: Oscar's name and role; whether to mention cofounders; ownership of the learning products (an open question in brand/04 C-18) | Privacy and accuracy | L'histoire |
 | F-05 | A **contact e-mail address**, and when to open sign-ups (needs a GDPR notice and a working inbox) | Every call to action currently waits on it | Contact, sign-up blocks |
 | F-06 | Whether to publish **live links** to the learning platform and TekPractice (are they up? which domain: teknest.fr, tekonest.…?) | Avoids dead links | Apprendre, TekPractice |

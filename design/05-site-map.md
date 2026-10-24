@@ -1,11 +1,12 @@
 # Phase 4 — Site map and page outlines
 
+> Revised 24 Oct 2026: the Soirées page was removed from the site (it belongs to the separate project [Rebels × Tekonest](../projects/rebels-x-tekonest/README.md)); the home page no longer has a « Notre direction » section.
+
 > Agents: **tekuxwriter** (copy) and **tekfrontenddesigner** (structure). Implemented in [`website-prototype/`](../website-prototype/).
 > Navigation is **task-based**, not audience-based: Nielsen Norman Group warns that audience-split navigation degrades usability because people belong to several groups. Audience routing happens through the three **doors** on the home page.
 
 ```
 Accueil (index.html)
-├── Soirées (soirees.html)            — public · cable sodium · « Soirée pilote en projet »
 ├── Réseau (reseau.html)              — artistes / technique · cable vert · « Réseau en projet »
 ├── Organiser (organiser.html)        — organisateurs · cable violet · « Offre en projet, pas encore proposée »
 ├── Apprendre (apprendre.html)        — étudiants BTS Son · cable ambre · « En développement »
@@ -19,9 +20,9 @@ Accueil (index.html)
 
 | Question | Where it is answered |
 | --- | --- |
-| What is Tekonest? | Hero h1 and lead: « Un nid pour les cultures et les métiers du son. » plus the one-line offer |
+| What is Tekonest? | Hero h1 and lead: « Un nid pour les métiers du son. » plus the one-line offer |
 | Why was it created? | « Pourquoi Tekonest existe »: the founding conviction and the origin of the name |
-| Who is it for? | Three doors: public · artistes, techniciennes et techniciens · organisateurs et lieux. Learning band: BTS Son students |
+| Who is it for? | Three doors: Se former (BTS Son students) · Créer avec nous (organisateurs et lieux) · Rejoindre le réseau (artistes, techniciennes et techniciens) |
 | What does each branch offer? | Doors, learning band and status board |
 | How do the branches connect? | « Comment tout se relie »: each link labelled Prévu / En partie construit / À décider / Plus tard |
 | What can I do here now? | Hero honesty line, doors (each leads to an explanatory page) and « Ce que vous pouvez faire aujourd'hui » (read the story, write to us) |
@@ -33,12 +34,11 @@ Accueil (index.html)
 1. **Branch hero:** cable rule, status tag, h1 (a plain promise), lead.
 2. **Three columns:** what exists today · what is being prepared · what is still to decide. Organiser uses a variant: what we could offer · why not yet · what you can do.
 3. **Branch-specific block:**
-   - Soirées: programming principles;
    - Réseau: the 8-step pathway (a real sequence, so it is numbered);
    - Apprendre and TekPractice: a product preview in its own skin.
-4. **Imagery:** honest photo slots (Soirées).
+4. **Imagery:** honest photo slots, only where real photos exist.
 5. **Action:**
-   - disabled sign-up (Soirées, Réseau);
+   - disabled sign-up (Réseau);
    - "access coming soon" (Apprendre, TekPractice);
    - "Écrire à Tekonest" (Organiser).
 
@@ -46,9 +46,8 @@ Accueil (index.html)
 
 | Audience | CTA label | Where it goes | Why it is honest |
 | --- | --- | --- | --- |
-| Night-goers | Trouver une soirée | Soirées page | It shows the pilot is a project (no date); the sign-up is disabled |
 | Artists, technicians | Rejoindre le réseau | Réseau page | Explains the principles; inscriptions open only after pay principles are published |
-| Organisers | Parlez-nous de votre événement | Organiser page, then Contact | Says clearly that it is not an offer, a quote or a commitment |
+| Organisers | Parlez-nous de votre événement | Organiser page, then Contact | Says clearly that it is not an offer, a quote or a commitment. Also names partner projects such as Rebels × Tekonest (en réflexion), with no programme details |
 | Students | La plateforme pour réussir le BTS Son / TekPractice | Branch pages | A disabled "Accès bientôt disponible" button, with no dead link |
 
 **Before any external test:** set a contact e-mail (F-05). Until then « Écrire à Tekonest » leads to a contact page that says the address is still to be chosen.

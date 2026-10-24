@@ -1,5 +1,8 @@
 # Phase 6 — Visual and accessibility review
 
+> **Note, 24 Oct 2026.** The Soirées page reviewed here was removed from the site on 24 Oct 2026; its screenshots moved to [`projects/rebels-x-tekonest/site-prototype-screens/`](../../projects/rebels-x-tekonest/site-prototype-screens/). The page belongs to the separate project [Rebels × Tekonest](../../projects/rebels-x-tekonest/README.md).
+
+
 Run on 22 Oct 2026 with Playwright + Chromium against the built static files.
 
 ## What was checked

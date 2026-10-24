@@ -1,5 +1,8 @@
 # Phase 2 — Three art directions and a recommendation
 
+> **Note, 24 Oct 2026.** This is a dated record. Its cultural-mix framing (mixed-culture nights, Arab/Afro/electronic programming) is superseded: that idea belongs to the separate project [Rebels × Tekonest](../../projects/rebels-x-tekonest/README.md), not to Tekonest's identity (brand decision D-08). Tekonest is a Paris umbrella for the craft of sound and live production. Kept unchanged below as the record of what was studied.
+
+
 > Agents: **tekcreativedirector** (ideas and recommendation) and **tekbranddesigner** (identity). All three are **drafts pending founder review**.
 > Boards: `boards/*.png`, rendered from `boards/*.html`. Research behind the choices: [`../research/`](../research/).
 

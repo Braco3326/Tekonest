@@ -1,6 +1,6 @@
 # Tekonest
 
-Un nid pour les cultures et les métiers du son. Tekonest est une marque parisienne qui réunit des soirées métissées (musiques arabes, afro, électroniques), un réseau d'artistes et de techniciens payés correctement, et des outils pour apprendre le son (Apprendre, TekPractice).
+Un nid pour les métiers du son. Tekonest est une marque parisienne qui réunit trois entrées : se former (Apprendre, TekPractice), créer avec nous (organiser, accompagner et produire des projets) et rejoindre le réseau (artistes et techniciens payés correctement).
 
 **Nom** : toujours **TEKONEST** en capitales dans le logo et les titres de marque ; « Tekonest » dans une phrase. Jamais Techonest, Technest ou Thechnest.
 
@@ -8,7 +8,7 @@ Un nid pour les cultures et les métiers du son. Tekonest est une marque parisie
 
 - Français d'abord, direct, chaleureux, sans jargon. « Nous », jamais « on ».
 - Honnête sur l'état des choses : chaque offre porte un statut (Existe · En développement · En projet · À décider). Rien n'est présenté comme disponible s'il ne l'est pas.
-- Les cultures sont nommées précisément (« musiques arabes, du Moyen-Orient au Maroc ») et racontées par celles et ceux qui les font vivre — jamais « oriental », jamais de décor exotique.
+- Les métiers sont nommés précisément (régie son, lumière, plateau, image) et racontés par celles et ceux qui les exercent. Pas de décor emprunté à une culture : les motifs viennent d'un savoir-faire (la marqueterie), et la source est créditée.
 - Exemple : « Tekonest se construit pas à pas. Rien n'est encore en vente : ce site dit clairement ce qui existe et ce qui se prépare. »
 
 ## Fondations visuelles
@@ -16,7 +16,7 @@ Un nid pour les cultures et les métiers du son. Tekonest est une marque parisie
 **L'idée** : un nid tressé de fils, comme une boîte incrustée de Damas : du bois sombre, de la nacre, quelques pièces d'or. Beaucoup de vide autour, du détail précis là où il compte.
 
 **Couleurs** (tokens `color`) :
-- `ground` Papier `#F3EDE3` le jour, Nuit `#131114` pour les pages d'événements, le hero, les affiches.
+- `ground` Papier `#F3EDE3` le jour, Nuit `#131114` pour le hero, les bandeaux et les affiches.
 - `ink` pour le texte et le logo ; `ink-2`, `ink-3` pour le secondaire.
 - `ambre` (feuille d'or) : l'accent **sur Nuit uniquement**. Sur Papier il tombe à 2,2:1 — jamais en texte ni en logo sur fond clair.
 - `prune` (bois teinté rouge) : l'accent sur Papier.
@@ -29,7 +29,7 @@ Un nid pour les cultures et les métiers du son. Tekonest est une marque parisie
 ## Le logo — le nid tressé (L4)
 
 Sept ellipses (rx 100, ry 82 sur une grille de 260) tournées de 360/7 et décalées de 8 unités : sept fils, sept personnes du réseau. Fichiers dans le groupe **Logos** :
-- `TEKONEST-lockup` (nid au-dessus, nom dessous) — logo principal ; `-reverse` sur Nuit ; `-amber-on-night` pour affiches et soirées.
+- `TEKONEST-lockup` (nid au-dessus, nom dessous) — logo principal ; `-reverse` sur Nuit ; `-amber-on-night` pour affiches et supports sombres.
 - `TEKONEST-horizontal` — en-tête de site.
 - `tekonest-mark` — le nid seul (avatar) ; `tekonest-favicon` traits épaissis pour 16–32 px.
 - Ne pas déformer, ne pas remplir, ne pas ajouter d'ombre. Zone de protection : la hauteur d'une ellipse ÷ 4.

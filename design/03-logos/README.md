@@ -17,7 +17,7 @@ Each concept folder contains `symbol`, `wordmark`, `lockup` (symbol + wordmark) 
 
 ## B. Jonction
 
-- **Idea.** Three strands, for three audiences or three cultures, meet at one warm node, with a slight turning movement like a pinwheel. Condensed capitals (Big Shoulders) for a poster voice.
+- **Idea.** Three strands, for three audiences, meet at one warm node, with a slight turning movement like a pinwheel. Condensed capitals (Big Shoulders) for a poster voice.
 - **Minimum size.** Lockup 24 px high. The symbol becomes thin below 24 px, so the favicon uses a simplified version.
 - **Clear space.** The diameter of the node.
 - **Limit.** At small sizes it can read as a molecule, a peace sign or a "share" icon.
@@ -35,7 +35,6 @@ The brand architecture follows the master brand: descriptive branch names next t
 
 | Branch | Name on the site | Lockup |
 | --- | --- | --- |
-| Events | Soirées | `tekonest` + « Soirées » set in Plex Sans 500 at cap height |
 | Network | Réseau | `tekonest` + « Réseau » |
 | Organisers | Organiser (working label) | `tekonest` + « Organiser » |
 | Learning platform | Apprendre (final product name **to decide**: Tech Nest / Tekskol / other) | product name + « par Tekonest » |

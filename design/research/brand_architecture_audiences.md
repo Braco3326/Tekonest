@@ -1,5 +1,8 @@
 # Brand architecture and audience routing for a Paris multi-service cultural brand (Tekonest)
 
+> **Note, 24 Oct 2026.** This is a dated record. Its cultural-mix framing (mixed-culture nights, Arab/Afro/electronic programming) is superseded: that idea belongs to the separate project [Rebels × Tekonest](../../projects/rebels-x-tekonest/README.md), not to Tekonest's identity (brand decision D-08). Tekonest is a Paris umbrella for the craft of sound and live production. Kept unchanged below as the record of what was studied.
+
+
 Scope note: about 20 search/fetch calls. Several pages could not be fetched (noted under Gaps). Everything under "Cited Findings" was verified on the linked page during this session. "Inferences" are my interpretation and are not sourced facts.
 
 ## Q1. Comparable organisations combining events, community, education and services, and how they architect the brand

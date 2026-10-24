@@ -7,7 +7,7 @@
 | Shared across the umbrella (never varies) | May vary by branch |
 | --- | --- |
 | Logo, name and endorsement line « par Tekonest » | One **cable colour** per branch (rules, tags, focus accents) |
-| Paper, ink and sodium colours; type families; spacing scale; status tags and wording | Imagery: event photography for Soirées, portraits for Réseau, product screenshots for Apprendre and TekPractice |
+| Paper, ink and sodium colours; type families; spacing scale; status tags and wording | Imagery: documentary portraits for Réseau, product screenshots for Apprendre and TekPractice |
 | Accessibility rules, French typography rules, honesty rules | **Product interfaces**: the learning platform keeps its dark studio skin (`--tn-*` tokens, Space Grotesk / Inter / JetBrains Mono); TekPractice keeps its white gallery (`#F5F6F8`, accent `#2E5FE6`, Inter). Only the endorsement and the umbrella links are shared |
 
 ## 2. Colour (semantic tokens)
@@ -105,7 +105,7 @@ Contrast is measured against Papier `#FAFAF7` and computed with the WCAG formula
   | --- | --- | --- |
   | Existing | « Existe » | `now` green |
   | Under development | « En développement » | `dev` blue |
-  | Proposed | « En projet » (e.g. « Soirée pilote en projet ») | `prep` sodium |
+  | Proposed | « En projet » (e.g. « Réseau en projet ») | `prep` sodium |
   | Proposed, later | « En projet, plus tard » / « Offre en projet, pas encore proposée » | `later` grey |
   | Undecided | « À décider » | `later` grey |
 - **Every call to action names what happens.** There is no generic « Commencer ».

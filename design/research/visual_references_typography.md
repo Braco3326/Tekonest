@@ -1,5 +1,8 @@
 # Visual references, typography and logo practice for Tekonest (umbrella cultural/creative brand, Paris)
 
+> **Note, 24 Oct 2026.** This is a dated record. Its cultural-mix framing (mixed-culture nights, Arab/Afro/electronic programming) is superseded: that idea belongs to the separate project [Rebels × Tekonest](../../projects/rebels-x-tekonest/README.md), not to Tekonest's identity (brand decision D-08). Tekonest is a Paris umbrella for the craft of sound and live production. Kept unchanged below as the record of what was studied.
+
+
 Research date: 2026-10-22. Method note: about 20 tool calls. Font licence and subset data were checked directly against the npm registry packages published by Fontsource (tarball `metadata.json` and file listings). The Fontsource web API and jsDelivr returned 403 through the proxy, so the registry was used instead. Anything not checked against a primary page is marked **[UNVERIFIED]**.
 
 ---
