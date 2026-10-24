@@ -4,7 +4,7 @@
  * NullEngine + spy window/canvas, as tests/scene/dispose.test.ts.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { NullEngine } from '@babylonjs/core'
+import { MeshBuilder, NullEngine } from '@babylonjs/core'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { SceneHost } from '../../src/creation/sceneHost'
@@ -14,6 +14,22 @@ import { History } from '../../src/creation/history'
 import { placeFromKey } from '../../src/creation/places'
 import { DisposableBag } from '../../src/util/disposable'
 import type { DesignState } from '../../src/trials/trial'
+
+/** Review fix 1: a room builder that throws half-way (after adding a mesh) when armed. */
+const roomBoom = vi.hoisted(() => ({ on: false }))
+vi.mock('../../src/scene/RoomBuilder', async (importOriginal) => {
+  const real = await importOriginal<typeof import('../../src/scene/RoomBuilder')>()
+  return {
+    ...real,
+    buildRoom: (...args: Parameters<typeof real.buildRoom>) => {
+      if (roomBoom.on) {
+        MeshBuilder.CreateBox('boom:half-built', {}, args[0])
+        throw new Error('boom')
+      }
+      return real.buildRoom(...args)
+    },
+  }
+})
 
 function spyTarget() {
   const entries: { type: string; fn: unknown }[] = []
@@ -198,6 +214,28 @@ describe('SceneHost', () => {
     await settle()
     expect(host.scene!.meshes.length).toBe(meshes0)
     host.dispose()
+  })
+
+  it('a room that throws while building: half-built scene disposed, blank fallback (warned), later apply() draws', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const { engine, host } = makeHost()
+    await host.load(placeFromKey('blank'), emptyIn('blank'))
+    roomBoom.on = true
+    try {
+      await host.load(placeFromKey('room:concert-hall-medium'), emptyIn('room:concert-hall-medium'))
+    } finally {
+      roomBoom.on = false
+    }
+    expect(engine.scenes.length).toBe(1)
+    expect(host.scene!.getMeshByName('boom:half-built')).toBeNull()
+    expect(host.scene!.activeCamera).toBe(host.camera)
+    expect(host.place).toEqual({ kind: 'room', id: 'concert-hall-medium' })
+    expect(warn).toHaveBeenCalled()
+    host.apply(rig('room:concert-hall-medium'))
+    expect(host.instance('ql1')).toBeDefined()
+    expect(cableMeshes(host)).toBe(1)
+    host.dispose()
+    expect(engine.scenes.length).toBe(0)
   })
 
   it('a pending cancelled flight does not touch anything after dispose; the engine survives', async () => {

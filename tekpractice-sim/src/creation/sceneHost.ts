@@ -135,7 +135,23 @@ export class SceneHost {
     }
     if (token !== this.loadSeq) return
 
-    const scene = this.buildScene(data, build)
+    let scene: Scene
+    try {
+      scene = this.buildScene(data, build)
+    } catch (e) {
+      // Assets never block (CLAUDE.md): drop the half-built scene, show the blank room, warn.
+      console.warn(`[creation] lieu ${placeKey(place)} impossible à construire, salle vide neutre`, e)
+      this.teardown()
+      data = blankData()
+      try {
+        scene = this.buildScene(data, null)
+      } catch (e2) {
+        this.teardown()
+        this.loadingKey = null
+        this.pending = null
+        throw e2
+      }
+    }
     if (data.kind === 'set' && data.env.set) {
       await this.importSet(scene, data.env.set)
       if (token !== this.loadSeq) return
@@ -207,6 +223,8 @@ export class SceneHost {
 
   private buildScene(data: PlaceData, buildRoom: RoomBuild | null): Scene {
     const scene = new Scene(this.engine)
+    // Owned from the first line: if anything below throws, teardown() disposes the half-built scene.
+    this._scene = scene
     const nuit = Color3.FromHexString(NUIT)
     scene.clearColor = new Color4(nuit.r, nuit.g, nuit.b, 1)
 
@@ -222,6 +240,8 @@ export class SceneHost {
       scene,
     )
     const orbitInput = installDesignerOrbitInput(camera)
+    this._camera = camera
+    this.orbitInput = orbitInput
     camera.attachControl(true)
     camera.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
     camera.upperRadiusLimit = env ? 40 : Math.max(40, roomRadius * 1.5)
@@ -249,9 +269,6 @@ export class SceneHost {
     }
 
     const bag = new DisposableBag()
-    this._scene = scene
-    this._camera = camera
-    this.orbitInput = orbitInput
     this.bag = bag
     this.controllers = new DisposableBag()
     this.spawner = new DeviceSpawner(scene, this.registry)
