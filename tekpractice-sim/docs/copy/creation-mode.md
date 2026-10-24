@@ -33,6 +33,22 @@ Status column:
 | `shell.statusReady` | Prêt | à valider (tekuxwriter) | Barre d'état, lieu affiché |
 | `shell.siteBack` | Retour au site Tekonest | validé | Lien vers le site, à droite de la barre du haut (même nom accessible que l'ancien `#site-link`) |
 | `shell.brand` | TekPractice | validé | Nom du produit, non traduit |
+| `shell.appTitle` | TekPractice, Mode Création | à valider (tekuxwriter) | Task 8 : `h1` de la page, visuellement masqué (navigation par titres au lecteur d'écran ; le sélecteur de lieu passe en `h2`) |
+| `shell.statusSelected` | Sélectionné : {device} | à valider (tekuxwriter) | Task 8 : barre d'état (`role="status"`, annoncé) après `[` / `]` dans la vue 3D ; `{device}` = nom catalogue de l'appareil |
+| `shell.statusNoSelection` | Aucun appareil sélectionné | à valider (tekuxwriter) | Task 8 : barre d'état, Échap dans la vue 3D a vidé la sélection |
+| `shell.statusNothingToSelect` | Aucun appareil à sélectionner. Ajoutez-en depuis l’inventaire. | à valider (tekuxwriter) | Task 8 : barre d'état, `[` / `]` pressé sans matériel installé (retour sur chaque touche manquée) |
+
+## keys
+
+Noms de touches affichés à droite des entrées de menu (carte des touches, Task 8). Les lettres et chiffres s'affichent tels quels (« Ctrl+Z », « Alt+H », « 1 »), ainsi que « [ » et « ] ».
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `keys.delete` | Suppr | brief | Touche Suppr (action Supprimer) |
+| `keys.space` | Espace | brief | Barre d'espace (inventaire) |
+| `keys.escape` | Échap | à valider (tekuxwriter) | Touche Échap (annuler / fermer) |
+| `keys.enter` | Entrée | à valider (tekuxwriter) | Touche Entrée (cadrer depuis la vue 3D) |
+| `keys.shift` | Maj | à valider (tekuxwriter) | Modificateur Maj (« Maj+V », « Maj+R ») ; Ctrl et Alt restent tels quels |
 
 ## menu
 
@@ -54,7 +70,7 @@ Status column:
 | `menu.play` | Écouter le morceau | à valider (tekuxwriter) | Écoute ; inactif tant que la lecture n'existe pas |
 | `menu.panelTree` | Panneau Projet | à valider (tekuxwriter) | Vue ; replie / déplie le panneau |
 | `menu.panelProps` | Panneau Propriétés | à valider (tekuxwriter) | Vue ; idem |
-| `menu.shortcuts` | Raccourcis clavier | à valider (tekuxwriter) | Aide ; inactif jusqu'à Task 8 |
+| `menu.shortcuts` | Raccourcis clavier | à valider (tekuxwriter) | Aide ; affiche « H » depuis Task 8, inactif jusqu'au panneau d'aide |
 | `menu.siteBack` | Retour au site Tekonest | validé | Aide ; même libellé que `shell.siteBack` |
 
 Lieu also lists the places offered by the temporary picker, with their room names from `content/rooms/index.json` (`name_fr`) and `picker.blank`.
@@ -63,7 +79,7 @@ Lieu also lists the places offered by the temporary picker, with their room name
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `picker.title` | Choisir un lieu | validé | Titre (h1) du sélecteur temporaire, dans la vue 3D avant le premier lieu |
+| `picker.title` | Choisir un lieu | validé | Titre (h2 depuis Task 8, sous le `h1` `shell.appTitle`) du sélecteur temporaire, dans la vue 3D avant le premier lieu |
 | `picker.blank` | Salle vide neutre | brief | Carte de la salle vide (L1) |
 
 ## place

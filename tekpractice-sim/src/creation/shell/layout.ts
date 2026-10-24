@@ -63,10 +63,19 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   const skip = el(doc, 'a', 'cr-skip', S().skip)
   skip.href = '#cr-viewport'
   skip.dataset.testid = 'skip-link'
+  // Land on the canvas itself (one tab stop, keys ready) once it is shown; else on the viewport.
+  skip.addEventListener('click', (e) => {
+    if (canvas.style.display === 'none') return
+    e.preventDefault()
+    canvas.focus()
+  })
 
   const root = el(doc, 'div', 'cr')
   root.id = 'creation-root'
   root.dataset.testid = 'creation-root'
+  // The page's h1 (Task 7 review): visually hidden, panels and the picker use h2.
+  const h1 = el(doc, 'h1', 'cr-sr-only', S().appTitle)
+  root.appendChild(h1)
 
   // ── header: brand, menus, project title, back to the site
   const menubar = el(doc, 'header', 'cr-menubar')
@@ -127,16 +136,20 @@ export function mountShell(doc: Document, canvas: HTMLCanvasElement): ShellDom {
   viewport.dataset.testid = 'viewport'
   canvas.tabIndex = 0
   canvas.setAttribute('aria-label', S().canvas!)
-  canvas.setAttribute('role', 'application') // a keyboard-driven 3D view (keys: Task 8); Tab is never intercepted
+  canvas.setAttribute('role', 'application') // keyboard-driven 3D view (input/keyboard.ts); the focus key is never intercepted
   viewport.appendChild(canvas)
 
   // ── status bar (footer): place + a polite live message
   const status = el(doc, 'footer', 'cr-status')
   status.dataset.testid = 'status-bar'
+  // One focusable summary line (the status bar is a tab stop until it gets controls, Task 14).
+  const summary = el(doc, 'div', 'cr-status-summary')
+  summary.tabIndex = 0
   const statusPlace = el(doc, 'span', 'cr-status-place')
   const statusMsg = el(doc, 'span', 'cr-status-msg')
   statusMsg.setAttribute('role', 'status')
-  status.append(statusPlace, statusMsg)
+  summary.append(statusPlace, statusMsg)
+  status.append(summary)
 
   root.append(menubar, tree.box, viewport, props.box, status)
   doc.body.prepend(skip, root) // the skip link is the first tab stop

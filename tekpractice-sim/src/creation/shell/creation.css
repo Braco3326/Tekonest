@@ -38,6 +38,19 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 }
 
 .cr button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* visually hidden, still read (the page h1) — out of the grid flow */
+.cr-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
 .cr h2 { margin: 0; }
 
 /* ── skip link (C10) ─────────────────────────────────────────────────── */
@@ -260,7 +273,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
     var(--cr-nuit);
 }
 .cr-picker[hidden] { display: none; }
-.cr-picker h1 { margin: 0; font: 600 28px/1.1 var(--cr-font-title); letter-spacing: 0.02em; }
+.cr-picker h2 { margin: 0; font: 600 28px/1.1 var(--cr-font-title); letter-spacing: 0.02em; }
 .cr-picker nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .cr-picker button {
   padding: 10px 16px;
@@ -284,6 +297,9 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   white-space: nowrap;
   overflow: hidden;
 }
+.cr-status-summary { display: flex; align-items: center; gap: 16px; min-width: 0; height: 100%; padding: 0 6px; margin-left: -6px; }
+/* inside the clipped status bar: the ring is drawn inward so it is never cut */
+.cr-status-summary:focus-visible { outline-offset: -2px; box-shadow: none; }
 .cr-status-place { color: var(--cr-papier); font-weight: 500; }
 .cr-status-place:empty { display: none; }
 .cr-status-msg { display: flex; align-items: center; gap: 6px; }

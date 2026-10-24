@@ -1,7 +1,7 @@
 /**
  * « Changer de lieu » dialog (C3): shown when the rig has gear. Modal
- * (role="dialog", aria-modal), the page behind it `inert`, focus trapped on
- * its buttons, Esc = Annuler, focus given back to where it was. Square corners, Nuit / Papier / Ambre.
+ * (role="dialog", aria-modal), the page behind it `inert`, focus kept on
+ * its buttons by two edge sentinels (the focus key itself is never intercepted), Esc = Annuler, focus given back to where it was. Square corners, Nuit / Papier / Ambre.
  */
 import { COPY } from '../copy'
 
@@ -72,16 +72,18 @@ export function openPlaceDialog(parent: HTMLElement = document.body): Promise<Pl
         e.preventDefault()
         e.stopPropagation()
         close('cancel')
-      } else if (e.key === 'Tab') {
-        // Focus trap: Tab / Shift+Tab cycle on the dialog's buttons.
-        const i = buttons.indexOf(document.activeElement as HTMLButtonElement)
-        const n = buttons.length
-        const next = e.shiftKey ? (i <= 0 ? n - 1 : i - 1) : i < 0 || i === n - 1 ? 0 : i + 1
-        e.preventDefault()
-        buttons[next].focus()
       }
     })
-    box.append(title, body, row)
+    // Focus trap without taking the focus key (C10): the browser moves focus as
+    // usual; landing on an edge sentinel sends it round to the other end.
+    const sentinel = (to: () => HTMLButtonElement): HTMLSpanElement => {
+      const s = document.createElement('span')
+      s.tabIndex = 0
+      s.dataset.sentinel = ''
+      s.addEventListener('focus', () => to().focus())
+      return s
+    }
+    box.append(sentinel(() => buttons[buttons.length - 1]), title, body, row, sentinel(() => buttons[0]))
     overlay.appendChild(box)
     parent.appendChild(overlay)
     makeInert()

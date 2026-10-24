@@ -18,9 +18,9 @@ export function mountPlacePickerStub(places: StubPlace[], onPick: (key: string) 
   section.dataset.testid = 'place-picker'
   section.className = 'cr-picker'
   section.setAttribute('aria-labelledby', 'cr-picker-title')
-  const h1 = doc.createElement('h1')
-  h1.id = 'cr-picker-title'
-  h1.textContent = COPY.picker!.title!
+  const h2 = doc.createElement('h2') // under the shell's h1 (Task 8)
+  h2.id = 'cr-picker-title'
+  h2.textContent = COPY.picker!.title!
   const nav = doc.createElement('nav')
   nav.setAttribute('aria-label', COPY.picker!.title!)
   for (const p of places) {
@@ -31,7 +31,7 @@ export function mountPlacePickerStub(places: StubPlace[], onPick: (key: string) 
     b.addEventListener('click', () => onPick(p.key))
     nav.appendChild(b)
   }
-  section.append(h1, nav)
+  section.append(h2, nav)
   parent.appendChild(section)
   return {
     hide() {

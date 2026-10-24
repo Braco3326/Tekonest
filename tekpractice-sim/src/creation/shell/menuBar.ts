@@ -3,7 +3,8 @@
  * - top items: role="menuitem", aria-haspopup="menu", roving tabindex (one tab stop);
  *   Left/Right move (wrap), Home/End, Down/Enter/Space open on the first item, Up on the last;
  * - open menu: Up/Down move (wrap), Home/End, Enter/Space run the item, Esc closes and returns
- *   focus to its top item, Left/Right open the neighbour menu, Tab closes (never intercepted).
+ *   focus to its top item, Left/Right open the neighbour menu; focus leaving the menu (Tab,
+ *   never intercepted) closes it.
  * Disabled items stay focusable with aria-disabled (APG). The panel is rebuilt on every open,
  * so enabled states and shortcut labels are always current.
  */
@@ -53,6 +54,12 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
     })
     top.addEventListener('keydown', (e) => onTopKey(e, i))
     panel.addEventListener('keydown', (e) => onPanelKey(e, i))
+    // Focus leaving the open menu (the browser moving it on the focus key, which is
+    // never intercepted) closes it; back to its own top item = that item's click toggles.
+    panel.addEventListener('focusout', (e: FocusEvent) => {
+      const to = e.relatedTarget as Node | null
+      if (openIndex === i && to !== top && !panel.contains(to)) close(false)
+    })
   })
 
   const rove = (i: number): void => {
@@ -196,10 +203,6 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
       }
       case 'Escape':
         close(true)
-        break
-      case 'Tab':
-        close(false) // let the browser move focus (Tab is never intercepted)
-        handled = false
         break
       default:
         handled = false

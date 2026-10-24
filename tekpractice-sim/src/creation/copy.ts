@@ -30,6 +30,22 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     siteBack: 'Retour au site Tekonest',
     /** Product name in the top bar (brand, not translated). */
     brand: 'TekPractice',
+    /** The page's h1 (visually hidden): names the app for screen-reader heading navigation. */
+    appTitle: 'TekPractice, Mode Création',
+    /** Status bar after [ / ] (announced, `role="status"`); {device} = the device name. */
+    statusSelected: 'Sélectionné : {device}',
+    /** Status bar: Échap in the 3D view cleared the selection. */
+    statusNoSelection: 'Aucun appareil sélectionné',
+    /** Status bar: [ / ] pressed while the place has no gear. */
+    statusNothingToSelect: 'Aucun appareil à sélectionner. Ajoutez-en depuis l’inventaire.',
+  },
+  keys: {
+    /** Key names shown next to menu items (French keyboard labels). */
+    delete: 'Suppr',
+    space: 'Espace',
+    escape: 'Échap',
+    enter: 'Entrée',
+    shift: 'Maj',
   },
   menu: {
     projet: 'Projet',

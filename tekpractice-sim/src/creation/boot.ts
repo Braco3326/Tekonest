@@ -21,7 +21,10 @@ import { SceneHost } from './sceneHost'
 import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
 import { createPlaceController } from './placeController'
-import { bodyCentreOf } from './debug'
+import { bodyCentreOf, frameOf } from './debug'
+import { nextDevice } from './deviceCycle'
+import { mountCreationKeyboard } from './input/keyboard'
+import { bindingLabel, loadCreationBindings, type CreationAction } from './input/creationActions'
 import { mountPlacePickerStub } from './shell/placePickerStub'
 import { openPlaceDialog } from './shell/placeDialog'
 import { mountShell } from './shell/layout'
@@ -77,10 +80,14 @@ export async function bootCreation(): Promise<void> {
     shell.setStatus(label, COPY.shell!.statusReady!, 'ready')
     shell.setTreePlace(label)
   }
+  const deviceIds = (): string[] => store.design().rig.instances.map((i) => i.instanceId)
   store.subscribe(() => {
     host.apply(store.design())
     scheduler.invalidate()
     showStatus()
+    // A selected device that left the rig (REMOVE, undo of its SPAWN) is no longer selected.
+    const sel = viewState.get().selection
+    if (sel !== null && !deviceIds().includes(sel)) viewState.set({ selection: null })
   })
 
   // Panels fold / unfold and the window resizes: the canvas follows its box.
@@ -118,6 +125,62 @@ export async function bootCreation(): Promise<void> {
   }
   const picker = mountPlacePickerStub(places, pick, shell.viewport)
 
+  // ── Keyboard (Task 8, C10, P3): one window listener for the page's lifetime.
+  const shellBag = new DisposableBag()
+  let storage: Storage | null = null
+  try {
+    storage = window.localStorage
+  } catch {
+    storage = null // blocked storage: the default key map
+  }
+  const keys = mountCreationKeyboard({ bag: shellBag, bindings: loadCreationBindings(storage), canvas })
+  const placeNow = (): string => (canvasShown ? placeLabel(store.design().roomId) : '')
+  const deviceLabel = (id: string): string => {
+    const deviceId = store.design().rig.instances.find((i) => i.instanceId === id)?.deviceId
+    return (deviceId && registry.deviceById.get(deviceId)?.label) || id
+  }
+  const cycle = (dir: 1 | -1): boolean => {
+    const next = nextDevice(deviceIds(), viewState.get().selection, dir)
+    if (next === null) {
+      shell.setStatus(placeNow(), COPY.shell!.statusNothingToSelect!, 'idle')
+      return true
+    }
+    viewState.set({ selection: next })
+    shell.setStatus(placeNow(), COPY.shell!.statusSelected!.replace('{device}', deviceLabel(next)), 'ready')
+    return true // the camera follows in Task 9 (focus flight)
+  }
+  const frameSelection = (): boolean => {
+    const sel = viewState.get().selection
+    const inst = sel ? host.instance(sel) : undefined
+    if (!inst || !host.rig) return false
+    host.rig.flyToDevice(frameOf(inst))
+    scheduler.invalidate()
+    return true
+  }
+  keys.onAction('UNDO', () => history.undo())
+  keys.onAction('REDO', () => history.redo())
+  keys.onAction('NEXT_DEVICE', () => cycle(1))
+  keys.onAction('PREV_DEVICE', () => cycle(-1))
+  keys.onAction('FRAME_SELECTION', frameSelection)
+  keys.onAction('CANCEL', (e) => {
+    if (e.target !== canvas || viewState.get().selection === null) return false
+    viewState.set({ selection: null })
+    shell.setStatus(placeNow(), COPY.shell!.statusNoSelection!, 'ready')
+    return true
+  })
+  /** Menu item ids → the key map (the menus show the live labels). */
+  const MENU_KEYS: Record<string, CreationAction | undefined> = {
+    undo: 'UNDO',
+    redo: 'REDO',
+    save: 'SAVE',
+    inventory: 'TOGGLE_INVENTORY',
+    shortcuts: 'TOGGLE_HELP',
+  }
+  const menuShortcut = (id: string): string | undefined => {
+    const a = MENU_KEYS[id]
+    return (a && bindingLabel(keys.bindings, a)) || undefined
+  }
+
   // Menus: an item is live once its action is registered (features land task by task).
   const siteHref = (document.getElementById('site-link') as HTMLAnchorElement | null)?.href ?? '/'
   const actions: Record<string, () => void> = {
@@ -130,7 +193,7 @@ export async function bootCreation(): Promise<void> {
     buildMenus({
       history,
       actions,
-      bindingLabel: () => undefined, // key map lands in Task 8
+      bindingLabel: menuShortcut,
       places,
     }),
   )

@@ -44,8 +44,8 @@ declare global {
   }
 }
 
-/** Centre of a device's visible body meshes (world), or null. */
-export function bodyCentreOf(inst: DeviceInstance): Vector3 | null {
+/** World bounds of a device's visible body meshes, or null. */
+function bodyBoundsOf(inst: DeviceInstance): { lo: Vector3; hi: Vector3 } | null {
   let lo: Vector3 | null = null
   let hi: Vector3 | null = null
   for (const m of inst.root.getChildMeshes(false)) {
@@ -55,5 +55,18 @@ export function bodyCentreOf(inst: DeviceInstance): Vector3 | null {
     lo = lo ? Vector3.Minimize(lo, b.minimumWorld) : b.minimumWorld.clone()
     hi = hi ? Vector3.Maximize(hi, b.maximumWorld) : b.maximumWorld.clone()
   }
-  return lo && hi ? lo.add(hi).scale(0.5) : null
+  return lo && hi ? { lo, hi } : null
+}
+
+/** Centre of a device's visible body meshes (world), or null. */
+export function bodyCentreOf(inst: DeviceInstance): Vector3 | null {
+  const b = bodyBoundsOf(inst)
+  return b ? b.lo.add(b.hi).scale(0.5) : null
+}
+
+/** What the camera rig frames (as legacy `focusFrame`): body bounds, else the whole hierarchy. */
+export function frameOf(inst: DeviceInstance): { center: Vector3; boundingRadius: number } {
+  const b = bodyBoundsOf(inst)
+  const { min, max } = b ? { min: b.lo, max: b.hi } : inst.root.getHierarchyBoundingVectors()
+  return { center: min.add(max).scale(0.5), boundingRadius: max.subtract(min).length() / 2 }
 }
