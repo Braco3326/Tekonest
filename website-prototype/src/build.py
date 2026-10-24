@@ -9,11 +9,10 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 PAGES = ROOT / "src" / "pages"
 
 NAV = [
-    ("soirees.html", "Soirées"),
-    ("reseau.html", "Réseau"),
-    ("organiser.html", "Organiser"),
     ("apprendre.html", "Apprendre"),
     ("tekpractice.html", "TekPractice"),
+    ("organiser.html", "Créer avec nous"),
+    ("reseau.html", "Réseau"),
     ("histoire.html", "L'histoire"),
     ("contact.html", "Contact"),
 ]
@@ -52,7 +51,7 @@ LAYOUT = """<!doctype html>
   <div class="wrap">
     <div>
       <img src="assets/img/lockup-reverse.svg" alt="Tekonest" width="140" height="30">
-      <p>Tekonest relie cultures et métiers du son : soirées métissées à Paris, réseau créatif équitable, outils pour apprendre.</p>
+      <p>Un nid pour les cultures et les métiers du son : se former, créer ensemble, rejoindre un réseau payé correctement.</p>
     </div>
     <nav aria-label="Pied de page">
       <ul>
@@ -60,7 +59,7 @@ LAYOUT = """<!doctype html>
         <li><a href="accessibilite.html">Accessibilité</a></li>
       </ul>
     </nav>
-    <p class="fine">Prototype de conception, 22 octobre 2026. Tekonest n'a pas encore de structure juridique ; les services marqués « en préparation », « en développement » ou « en réflexion » ne sont pas proposés aujourd'hui. Polices : Bricolage Grotesque et IBM Plex Sans (licence SIL OFL 1.1), hébergées sur ce site.</p>
+    <p class="fine">Prototype de conception, 22 octobre 2026. Tekonest n'a pas encore de structure juridique ; les services marqués « en préparation », « en développement » ou « en réflexion » ne sont pas proposés aujourd'hui. Polices : Tektur et IBM Plex Sans (licence SIL OFL 1.1), hébergées sur ce site. Motifs inspirés de la marqueterie de Damas.</p>
   </div>
 </footer>
 </body>

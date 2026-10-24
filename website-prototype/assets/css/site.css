@@ -211,3 +211,61 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 .branch-hero[style*="--cable-soirees"] .lead, .branch-hero[style*="--cable-soirees"] p { color: var(--color-on-dark-2); }
 .branch-hero[style*="--cable-soirees"] h1, .branch-hero[style*="--cable-soirees"] .status { color: var(--color-on-dark); }
 .branch-hero[style*="--cable-soirees"] .cable { border-top-color: var(--color-amber); }
+
+/* ===== Home v2 — nid + marqueterie de Damas (design system Tekonest) ===== */
+:root { --noyer: #6B4A33; --noyer-dark: #8A6A4F; --nacre: #FBF8F3; }
+.eyebrow { font: 500 0.75rem/1.4 var(--font-text); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-signal); margin: 0 0 var(--space-3); }
+
+/* Hero on Nuit with canvas (Onde + Médaillon + nid) */
+.hero-nuit { position: relative; background: var(--color-ink); color: var(--color-on-dark); min-height: min(88vh, 760px); display: flex; align-items: center; overflow: hidden; --focus-color: var(--color-paper); }
+.hero-nuit canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero-nuit__txt { position: relative; padding-block: var(--space-9); }
+.hero-nuit .eyebrow { color: var(--color-amber); }
+.hero-nuit h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.25rem, 1.4rem + 3.6vw, 3.75rem); line-height: 1.04; letter-spacing: -0.01em; max-width: 13ch; color: var(--color-on-dark); }
+.hero-nuit .lead { margin-top: var(--space-5); max-width: 32rem; font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem); color: var(--color-on-dark-2); }
+.hero-nuit .honest { margin-top: var(--space-4); max-width: 32rem; font-size: var(--text-sm); color: var(--color-on-dark-2); }
+.btn-replay { margin-top: var(--space-5); background: none; border: 1px solid #857B81; color: var(--color-on-dark); font: 500 0.875rem var(--font-text); min-height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-control); cursor: pointer; }
+.btn-replay:hover { border-color: var(--color-amber); }
+@media (prefers-reduced-motion: reduce) { .btn-replay { display: none; } }
+@media (max-width: 760px) {
+  .hero-nuit { align-items: flex-end; min-height: 680px; }
+  .hero-nuit__txt { padding-top: 300px; padding-bottom: var(--space-8); }
+}
+
+/* Bande incrustée: nacre lozenge + amber square + plum square on Nuit, 14px */
+.bande { height: 14px; background-color: var(--color-ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='14'%3E%3Cpath d='M7 2L12 7L7 12L2 7Z' fill='%23FBF8F3'/%3E%3Crect x='18' y='4' width='6' height='6' fill='%23DD9349'/%3E%3Cpath d='M35 2L40 7L35 12L30 7Z' fill='none' stroke='%23FBF8F3' stroke-width='1'/%3E%3C/svg%3E");
+  background-repeat: repeat-x; background-position: center; }
+
+/* Cadre: double walnut filet offset 7px + amber corner piece */
+.doors--cadre { margin-top: 0; }
+.door.cadre { border-top: 0; padding: var(--space-6); background: var(--color-surface); border: 1px solid var(--noyer); outline: 1px solid var(--noyer); outline-offset: -8px; gap: var(--space-3); }
+.door.cadre::before { content: ""; position: absolute; top: 0; left: 0; width: 18px; height: 18px; background: var(--color-amber); clip-path: polygon(0 0, 100% 0, 0 100%); }
+.door.cadre:focus-within { outline: 3px solid var(--focus-color); outline-offset: 4px; }
+.door h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.375rem; line-height: 1.2; }
+.door h3 a { text-decoration: none; color: var(--color-ink); }
+.door h3 a::after { content: ""; position: absolute; inset: 0; }
+.door h3 a:focus-visible { outline: none; }
+.door:hover h3 a { text-decoration: underline; text-decoration-thickness: 2px; }
+.door .inner { position: relative; z-index: 1; color: var(--color-signal); }
+.door-nid { width: 64px; height: 64px; fill: none; stroke: var(--color-ink); stroke-width: 9; margin-bottom: var(--space-2); }
+@media (prefers-reduced-motion: no-preference) {
+  .door-nid { transition: transform 600ms var(--ease); }
+  .door:hover .door-nid, .door:focus-within .door-nid { transform: rotate(51.43deg); }
+}
+
+/* Notre direction: full-bleed photo, text on Nuit gradient */
+.direction { position: relative; background: var(--color-ink); color: var(--color-on-dark); min-height: 520px; display: flex; align-items: flex-end; overflow: hidden; --focus-color: var(--color-paper); }
+.direction picture, .direction img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.direction::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(19,17,20,.92) 0%, rgba(19,17,20,.6) 45%, rgba(19,17,20,.1) 100%); }
+.direction__txt { position: relative; z-index: 1; padding-block: var(--space-9) var(--space-8); }
+.direction .eyebrow { color: var(--color-amber); }
+.direction h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem); color: var(--color-on-dark); }
+.direction p { max-width: 34rem; color: var(--color-on-dark-2); margin-top: var(--space-4); }
+.direction .credit { font-size: 0.75rem; margin-top: var(--space-5); }
+@media (max-width: 760px) { .direction::after { background: linear-gradient(0deg, rgba(19,17,20,.95) 30%, rgba(19,17,20,.35) 100%); } }
+
+/* Footer starts with a bande */
+.site-footer { border-top: 14px solid var(--color-ink); position: relative; }
+.site-footer::before { content: ""; position: absolute; top: -14px; left: 0; right: 0; height: 14px; background: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='14'%3E%3Cpath d='M7 2L12 7L7 12L2 7Z' fill='%23FBF8F3'/%3E%3Crect x='18' y='4' width='6' height='6' fill='%23DD9349'/%3E%3Cpath d='M35 2L40 7L35 12L30 7Z' fill='none' stroke='%23FBF8F3' stroke-width='1'/%3E%3C/svg%3E"); background-repeat: repeat-x; background-position: center; }
