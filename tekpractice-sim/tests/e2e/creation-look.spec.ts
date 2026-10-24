@@ -27,6 +27,24 @@ const settle = async (page: Page): Promise<void> => {
   }, { timeout: 15000 }).toBe(0)
 }
 
+/** RGB of page pixels (CSS px) in a screenshot, decoded in the page (no PNG dependency). */
+const pixels = async (page: Page, png: Buffer, at: { x: number; y: number }[]): Promise<number[][]> =>
+  page.evaluate(
+    async ({ b64, pts }) => {
+      const img = new Image()
+      img.src = `data:image/png;base64,${b64}`
+      await img.decode()
+      const cv = document.createElement('canvas')
+      cv.width = img.width
+      cv.height = img.height
+      const ctx = cv.getContext('2d')!
+      ctx.drawImage(img, 0, 0)
+      const k = img.width / window.innerWidth
+      return pts.map((p) => [...ctx.getImageData(Math.round(p.x * k), Math.round(p.y * k), 1, 1).data.slice(0, 3)])
+    },
+    { b64: png.toString('base64'), pts: at },
+  )
+
 const template = async (page: Page): Promise<void> => {
   await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
   await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
@@ -54,7 +72,10 @@ for (const [w, h] of [[1366, 768], [1920, 1080]] as const) {
     await page.mouse.click(p.x, p.y)
     await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBe(first)
     expect(await page.evaluate(() => window.__creation!.outlined())).toEqual([first])
-    await settle(page)
+    await settle(page) // idle reached with the HighlightLayer stroke active
+    const r0 = await page.evaluate(() => window.__creation!.renders())
+    await page.waitForTimeout(1500)
+    expect(await page.evaluate(() => window.__creation!.renders()), 'idle = 0 renders with a .glb selected').toBe(r0)
     await page.screenshot({ path: `${SHOTS}/task-14b-selected-${w}x${h}.png` })
   })
 }
@@ -79,7 +100,22 @@ test('placeholder look (a .glb that fails): token body, family top tint, port ma
   await page.keyboard.press(']') // select + frame it
   await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBe('ql1')
   await settle(page)
-  await page.screenshot({ path: `${SHOTS}/task-14b-placeholder-selected-1366x768.png` })
+  const shot = await page.screenshot({ path: `${SHOTS}/task-14b-placeholder-selected-1366x768.png` })
+  // Fix 1 (critical): the selected body is washed, never painted solid Ambre. Sample the front face
+  // at its centre height, left of the port grid (markers / labels are coloured on purpose).
+  const c = (await page.evaluate(() => window.__creation!.deviceBodyCenter('ql1')))!
+  const at = (await page.evaluate((p) => window.__creation!.worldScreen(p), [c[0] - 0.45, c[1], c[2]] as [number, number, number]))!
+  const centre = (await page.evaluate((p) => window.__creation!.worldScreen(p), c))!
+  const [body, mid] = await pixels(page, shot, [at, centre])
+  const AMBRE = [0xdd, 0x93, 0x49]
+  const dist = (a: number[], b: number[]) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])
+  expect(dist(body, AMBRE), `body pixel ${body}`).toBeGreaterThan(80)
+  expect(dist(mid, AMBRE), `centre pixel ${mid}`).toBeGreaterThan(40)
+  // the selection stroke (HighlightLayer) costs no idle frame
+  const r0 = await page.evaluate(() => window.__creation!.renders())
+  await page.waitForTimeout(1500)
+  expect(await page.evaluate(() => window.__creation!.renders())).toBe(r0)
+  expect(await page.evaluate(() => window.__creation!.outlined())).toEqual(['ql1'])
   await page.keyboard.press('Escape')
   await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBeNull()
   await settle(page)

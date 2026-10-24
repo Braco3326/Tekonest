@@ -51,6 +51,31 @@ const LIGHT = CREATION_TOKENS.light
 /** Selection = Ambre screen-space stroke + a light Ambre wash; hover = a Papier stroke, no wash. */
 const SELECT_OVERLAY_ALPHA = 0.22
 const DEG = Math.PI / 180
+/**
+ * The meshes that make up a device's outlined silhouette (Task 14b Fix 1): every
+ * OPAQUE, drawn part — body (placeholder box or all .glb sub-meshes) and port
+ * markers — merged into ONE stroke. Each of them writes the highlight stencil, so
+ * the stroke runs around the device's outer silhouette only, never as a ring around
+ * a connector or marker in front of the body. Transparent quads (labels, contact
+ * shadow) and invisible pick spheres are left out entirely (not even occluders).
+ */
+export function strokeTargets(inst: DeviceInstance): Set<Mesh> {
+  return new Set(
+    inst.root
+      .getChildMeshes(false)
+      .filter(
+        (m): m is Mesh =>
+          m instanceof Mesh &&
+          m.getTotalVertices() > 0 &&
+          m.isEnabled(false) &&
+          m.isVisible &&
+          m.visibility > 0 &&
+          m.renderingGroupId === 0 &&
+          (m.metadata?.isDeviceBody === true || m.name.startsWith(`port:${inst.instanceId}:`)),
+      ),
+  )
+}
+
 type RoomBuild = (scene: Scene, file: Extract<PlaceData, { kind: 'room' }>['file'], layout: RoomLayout, theme?: RoomTheme) => unknown
 
 export class SceneHost {
@@ -211,14 +236,25 @@ export class SceneHost {
       inst.root.setEnabled(!this.hidden.has(id))
       const on = id === this.selected
       const hover = !on && id === this.hoveredId
+      const main = strokeTargets(inst)
       for (const m of inst.root.getChildMeshes(false)) {
-        if (m.metadata?.isDeviceBody !== true) continue
-        m.renderOverlay = on
-        if (on) {
-          m.overlayColor = SELECTION
-          m.overlayAlpha = SELECT_OVERLAY_ALPHA
+        if (m.metadata?.isDeviceBody === true) {
+          m.renderOverlay = on
+          if (on) {
+            m.overlayColor = SELECTION
+            m.overlayAlpha = SELECT_OVERLAY_ALPHA
+          }
         }
-        if ((on || hover) && hl && m instanceof Mesh && m.getTotalVertices() > 0) {
+        if (!hl || !(m instanceof Mesh)) continue
+        if (!main.has(m)) {
+          // Labels (transparent quads), port markers, pick spheres, connector sub-meshes, the
+          // contact shadow: never in the stroke mask, not even as occluders (they cut holes /
+          // draw rings inside the body otherwise — Task 14b review, Fix 1).
+          hl.addExcludedMesh(m)
+          continue
+        }
+        hl.removeExcludedMesh(m)
+        if (on || hover) {
           hl.addMesh(m, on ? SELECTION : HOVER)
           this.strokeColor.set(m.uniqueId, on ? CREATION_TOKENS.scene.selection : CREATION_TOKENS.scene.hover)
         }
@@ -356,6 +392,10 @@ export class SceneHost {
     const hl = new HighlightLayer('cr:stroke', scene, { isStroke: true, mainTextureRatio: 1, blurHorizontalSize: 1, blurVerticalSize: 1 })
     hl.innerGlow = false
     this.highlight = hl
+    // Port labels draw in rendering group 1 (on top of markers / model parts). That group must clear
+    // DEPTH only: clearing the stencil would erase the highlighted bodies' stencil and the stroke
+    // would fill the whole body (Task 14b review, Fix 1, critical).
+    scene.setRenderingAutoClearDepthStencil(1, true, true, false)
 
     // Overview from the audience side (+z) looking at the stage end (−z), as the legacy room boot.
     const roomRadius = Math.min(55, Math.max(8, Math.max(data.width, data.length) * 0.8))
@@ -430,8 +470,12 @@ export class SceneHost {
     }
     for (let i = -Math.floor(hw); i <= Math.floor(hw); i++) add(new Vector3(i, y, -hl), new Vector3(i, y, hl), i)
     for (let j = -Math.floor(hl); j <= Math.floor(hl); j++) add(new Vector3(-hw, y, j), new Vector3(hw, y, j), j)
+    // The floor's own border (non-integer extents, e.g. 18.1 m): the grid always reaches the floor edges.
+    if (hw !== Math.floor(hw)) for (const x of [-hw, hw]) add(new Vector3(x, y, -hl), new Vector3(x, y, hl), 1)
+    if (hl !== Math.floor(hl)) for (const z of [-hl, hl]) add(new Vector3(-hw, y, z), new Vector3(hw, y, z), 1)
     const grid = MeshBuilder.CreateLineSystem('stage:grid', { lines, colors }, scene)
-    grid.isPickable = false  }
+    grid.isPickable = false
+  }
 
   /** The venue set .glb (as game.ts): non-blocking, a failure keeps the plain floor. */
   private async importSet(scene: Scene, set: NonNullable<Extract<PlaceData, { kind: 'set' }>['env']['set']>): Promise<void> {

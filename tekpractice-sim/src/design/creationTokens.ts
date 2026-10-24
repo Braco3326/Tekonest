@@ -69,12 +69,13 @@ export const CREATION_TOKENS = {
   },
   /** Creation viewport lighting: one calm hemispheric fill + one key, no shadow maps (no per-frame cost). */
   light: {
-    fill: 0.62,
-    fillSky: '#F3EDE3',
-    /** Bounce from below: light enough that vertical device faces separate from the floor (floors face up, unaffected). */
-    fillGround: '#7A7280',
-    key: 0.6,
-    keyColor: '#FFF4E8',
+    /** fill + key on an up-facing floor ≈ 0.9: the lit floor renders at (or just under) its token, neutral-dark, never pink-bright (Fix 1). */
+    fill: 0.5,
+    fillSky: '#EEEDEF',
+    /** Bounce from below, neutral: lifts vertical device faces off the floor (floors face up, unaffected). */
+    fillGround: '#5E5B63',
+    key: 0.5,
+    keyColor: '#FFF9F2',
     /** Contact-shadow core opacity (0…1). */
     shadowAlpha: 0.6,
     /** Port marker self-illumination (share of its colour), so markers read in the dark room. */

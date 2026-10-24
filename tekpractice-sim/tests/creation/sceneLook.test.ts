@@ -4,13 +4,13 @@
  * theme passed) keep the old colours exactly. NullEngine, as sceneHost.test.ts.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Color3, DirectionalLight, DynamicTexture, HemisphericLight, Mesh, NullEngine, Scene, StandardMaterial, Vector3, VertexBuffer } from '@babylonjs/core'
+import { Color3, DirectionalLight, DynamicTexture, HemisphericLight, Mesh, MeshBuilder, NullEngine, Scene, StandardMaterial, Vector3, VertexBuffer } from '@babylonjs/core'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
-import { DeviceSpawner } from '../../src/scene/DeviceSpawner'
+import { DeviceSpawner, THEMED_LABELS } from '../../src/scene/DeviceSpawner'
 import { buildRoom, kelvinToColor } from '../../src/scene/RoomBuilder'
 import { CREATION_DEVICE_THEME, CREATION_ROOM_THEME } from '../../src/creation/sceneTheme'
-import { SceneHost } from '../../src/creation/sceneHost'
+import { SceneHost, strokeTargets } from '../../src/creation/sceneHost'
 import { RenderScheduler } from '../../src/creation/renderScheduler'
 import { loadPlaceData } from '../../src/creation/placeData'
 import { placeFromKey } from '../../src/creation/places'
@@ -155,6 +155,89 @@ describe('DeviceSpawner placeholders: legacy default unchanged, creation theme f
   })
 })
 
+describe('Task 14b Fix 1: label hierarchy and a port grid spaced for its labels', () => {
+  const pos = (scene: Scene, name: string) => scene.getMeshByName(name)!.position
+  const size = (scene: Scene, name: string) => {
+    const m = scene.getMeshByName(name)!
+    const b = m.getBoundingInfo().boundingBox
+    return { w: b.maximum.x - b.minimum.x, h: b.maximum.y - b.minimum.y }
+  }
+
+  it('themed: name label halved; port label glyph ≥ 0.5× the name glyph; port labels drawn on top (group 1)', () => {
+    const scene = new Scene(new NullEngine())
+    new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME).spawn('yamaha-ql1', Vector3.Zero(), 'ql1')
+    const { name, port } = THEMED_LABELS
+    expect(size(scene, 'label:ql1').w).toBeCloseTo(0.8 / 2, 6)
+    const glyph = (l: { w: number; h: number; fontPx: number }) => (l.fontPx / Math.round((512 * l.h) / l.w)) * l.h
+    expect(glyph(port) / glyph(name)).toBeGreaterThanOrEqual(0.5)
+    const labels = scene.meshes.filter((m) => m.name.startsWith('portlabel:ql1:'))
+    expect(labels.length).toBe(registry.deviceById.get('yamaha-ql1')!.ports.length)
+    for (const l of labels) expect(l.renderingGroupId).toBe(1)
+    expect(scene.getMeshByName('label:ql1')!.renderingGroupId).toBe(0)
+    scene.dispose()
+  })
+
+  it('themed: no port label overlaps another label or a neighbouring marker (QL1, 7 ports; Axia iQ, 9 ports)', () => {
+    for (const id of ['yamaha-ql1', 'axia-iq']) {
+      const scene = new Scene(new NullEngine())
+      new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME).spawn(id, Vector3.Zero(), 'd')
+      const ports = registry.deviceById.get(id)!.ports.map((p) => p.portId)
+      const glyphH = (THEMED_LABELS.port.fontPx / Math.round((512 * THEMED_LABELS.port.h) / THEMED_LABELS.port.w)) * THEMED_LABELS.port.h
+      for (const a of ports) {
+        const la = pos(scene, `portlabel:d:${a}`)
+        // its own marker sits below the glyph band
+        expect(la.y - glyphH / 2).toBeGreaterThan(pos(scene, `port:d:${a}`).y + 0.025)
+        for (const b of ports) {
+          if (a === b) continue
+          const lb = pos(scene, `portlabel:d:${b}`)
+          const sameRow = Math.abs(la.y - lb.y) < 1e-6
+          if (sameRow) expect(Math.abs(la.x - lb.x)).toBeGreaterThanOrEqual(THEMED_LABELS.pitchX - 1e-9)
+          // a neighbour's marker is never inside this label's glyph band
+          const mb = pos(scene, `port:d:${b}`)
+          const inBand = Math.abs(mb.y - la.y) < glyphH / 2 + 0.025
+          if (inBand) expect(Math.abs(mb.x - la.x)).toBeGreaterThanOrEqual(THEMED_LABELS.pitchX / 2)
+        }
+        expect(pos(scene, `port:d:${a}`).y).toBeGreaterThan(0.03) // never under the floor
+      }
+      scene.dispose()
+    }
+  })
+
+  it('themed .glb re-anchor: real connectors 5 cm apart → labels alternate above / below and shrink to fit (no collision)', () => {
+    const scene = new Scene(new NullEngine())
+    const sp = new DeviceSpawner(scene, registry, CREATION_DEVICE_THEME)
+    const inst = sp.spawn('yamaha-ql1', Vector3.Zero(), 'ql1')
+    const ids = registry.deviceById.get('yamaha-ql1')!.ports.map((p) => p.portId)
+    ids.forEach((id, i) => inst.portMarkers.get(id)!.position.set(i * 0.05, 0.1, -0.2)) // one dense row, like the QL1 rear panel
+    // headless canvas measures nothing: give the labels a real ink width (≈ « out-main-l » at 52 px)
+    for (const id of ids) scene.getMeshByName(`portlabel:ql1:${id}`)!.metadata = { textW: 0.2 }
+    ;(sp as unknown as { declutterLabels(i: string, r: unknown, ids: string[]): void }).declutterLabels('ql1', inst.root, ids)
+    const labels = ids.map((id) => scene.getMeshByName(`portlabel:ql1:${id}`)!)
+    for (let i = 0; i < labels.length; i++) {
+      const l = labels[i]
+      expect(l.position.y > 0.1, ids[i]).toBe(i % 2 === 0) // even above, odd below
+      // same side neighbours (i ± 2) never overlap: scaled ink width ≤ their distance
+      if (i + 2 < labels.length) {
+        const w = (m: typeof l) => (m.metadata!.textW as number) * m.scaling.x
+        expect((w(l) + w(labels[i + 2])) / 2).toBeLessThanOrEqual(labels[i + 2].position.x - l.position.x + 1e-9)
+      }
+    }
+    scene.dispose()
+  })
+
+  it('legacy: port labels keep the old size, offset and rendering group', () => {
+    const scene = new Scene(new NullEngine())
+    new DeviceSpawner(scene, registry).spawn('yamaha-ql1', Vector3.Zero(), 'ql1')
+    const p = registry.deviceById.get('yamaha-ql1')!.ports[0].portId
+    expect(size(scene, `portlabel:ql1:${p}`).w).toBeCloseTo(0.34, 6)
+    expect(size(scene, 'label:ql1').w).toBeCloseTo(0.8, 6)
+    const d = pos(scene, `portlabel:ql1:${p}`).subtract(pos(scene, `port:ql1:${p}`))
+    expect(d.asArray().map((v) => +v.toFixed(6))).toEqual([0, 0.055, -0.01])
+    expect(scene.getMeshByName(`portlabel:ql1:${p}`)!.renderingGroupId).toBe(0)
+    scene.dispose()
+  })
+})
+
 describe('SceneHost uses the creation look (Task 14b)', () => {
   function makeHost() {
     const engine = new NullEngine()
@@ -191,6 +274,34 @@ describe('SceneHost uses the creation look (Task 14b)', () => {
     // no shadow maps: nothing re-rendered per frame for shadows
     expect(scene.lights.every((l) => !l.getShadowGenerator())).toBe(true)
     expect(diffuse(scene.getMeshByName('box:ql1'))).toBe('#FFFFFF')
+    host.dispose()
+  })
+
+  it('Fix 1: ONE merged silhouette stroke (body + parts + markers); labels, pick spheres and the shadow never enter its mask', async () => {
+    const { host } = makeHost()
+    await host.load(placeFromKey('blank'), design('blank'))
+    const inst = host.instance('ql1')!
+    // a .glb-like small part (a connector) in front of the body: it writes the stencil too, so no ring around it
+    const part = MeshBuilder.CreateCylinder('glb:part', { diameter: 0.03, height: 0.02 }, host.scene!)
+    part.parent = inst.root
+    part.metadata = { isDeviceBody: true, instanceId: 'ql1' }
+    const names = [...strokeTargets(inst)].map((m) => m.name)
+    expect(names).toContain('box:ql1')
+    expect(names).toContain('glb:part')
+    const ports = registry.deviceById.get('yamaha-ql1')!.ports.map((p) => `port:ql1:${p.portId}`)
+    for (const p of ports) expect(names).toContain(p)
+    expect(names.filter((n) => /^(label|portlabel|pick|shadow):/.test(n))).toEqual([])
+    host.setSelected('ql1')
+    const hl = host.scene!.effectLayers[0] as unknown as { hasMesh(m: unknown): boolean; _shouldRenderMesh(m: unknown): boolean }
+    for (const m of inst.root.getChildMeshes(false)) {
+      const inStroke = names.includes(m.name)
+      expect(hl.hasMesh(m), m.name).toBe(inStroke)
+      // transparent quads / pick spheres: not even occluders (they cut the mask otherwise)
+      if (!inStroke) expect(hl._shouldRenderMesh(m), m.name).toBe(false)
+    }
+    expect(host.strokeOf('ql1')).toBe(S.selection)
+    host.setSelected(null)
+    expect(hl.hasMesh(part)).toBe(false)
     host.dispose()
   })
 
