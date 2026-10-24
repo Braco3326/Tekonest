@@ -90,5 +90,129 @@
   "mood": "Éclairage doux et réglable, sans ronflement de ballast, lampes de bureau orientables sur le plateau",
   "color_temp_k": 3500
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "axia-iq",
+   "zone": "on-air-desk",
+   "position_m": [
+    0,
+    0.75,
+    -0.3
+   ],
+   "rotation_deg": 0,
+   "note": "Surface de console encastrée dans le plateau, face à l'animateur."
+  },
+  {
+   "equipment_id": "ev-re20",
+   "zone": "on-air-desk",
+   "position_m": [
+    0,
+    1.1,
+    0.1
+   ],
+   "rotation_deg": 0,
+   "note": "Micro animateur sur bras, capsule tournée vers la bouche (vers +z)."
+  },
+  {
+   "equipment_id": "yellowtec-mika",
+   "zone": "on-air-desk",
+   "position_m": [
+    0.4,
+    0.75,
+    -0.4
+   ],
+   "rotation_deg": 0,
+   "note": "Bras micro fixé au plateau, câble XLR dans le bras."
+  },
+  {
+   "equipment_id": "ev-re20",
+   "zone": "on-air-desk",
+   "position_m": [
+    1.2,
+    1.1,
+    0.1
+   ],
+   "rotation_deg": 0,
+   "note": "Micro invité en bout de table, tourné vers l'invité."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "on-air-desk",
+   "position_m": [
+    -0.9,
+    1.2,
+    -1.2
+   ],
+   "rotation_deg": 15,
+   "note": "Écoute gauche de proximité, coupée à l'ouverture des micros."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "on-air-desk",
+   "position_m": [
+    0.9,
+    1.2,
+    -1.2
+   ],
+   "rotation_deg": -15,
+   "note": "Écoute droite de proximité."
+  },
+  {
+   "equipment_id": "beyerdynamic-dt-770-pro",
+   "zone": "on-air-desk",
+   "position_m": [
+    0.35,
+    0.78,
+    0
+   ],
+   "rotation_deg": 0,
+   "note": "Casque fermé animateur ; un second pour l'invité."
+  },
+  {
+   "equipment_id": "playout-pc",
+   "zone": "on-air-desk",
+   "position_m": [
+    -0.75,
+    0.9,
+    -0.85
+   ],
+   "rotation_deg": 20,
+   "note": "Écran de l'automate de diffusion à gauche de la console."
+  },
+  {
+   "equipment_id": "rtw-touchmonitor-tm7",
+   "zone": "on-air-desk",
+   "position_m": [
+    0.65,
+    0.95,
+    -0.9
+   ],
+   "rotation_deg": -20,
+   "note": "Mesure de loudness / crête dans le champ de vision."
+  },
+  {
+   "equipment_id": "telos-hx2",
+   "zone": "furniture-rack",
+   "position_m": [
+    -1.45,
+    0.6,
+    -1.9
+   ],
+   "rotation_deg": 0,
+   "note": "Hybride téléphonique dans le rack du meuble (auditeurs au téléphone, N-1)."
+  },
+  {
+   "equipment_id": "yellowtec-litt",
+   "zone": "presenter-guest-seats",
+   "position_m": [
+    1.2,
+    2.2,
+    1.35
+   ],
+   "rotation_deg": 180,
+   "note": "Témoin ON AIR côté intérieur près de la porte ; un second au-dessus de la porte côté couloir."
+  }
+ ],
  "source_count": 3
 }

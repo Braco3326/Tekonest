@@ -22,6 +22,19 @@ describe('content/rooms (synced from TEK Brain templates)', () => {
     expect(index.rooms.map((r) => `${r.id}.json`).sort()).toEqual([...files].sort())
   })
 
+  it('keeps gear_positions and coordinate_system (zod would strip undeclared keys)', () => {
+    const room = JSON.parse(readFileSync(join(DIR, 'radio-talk-studio-medium.json'), 'utf8'))
+    const extra = { ...room, coordinate_system: 'x = right', gear_positions: [{ equipment_id: 'ev-re20', zone: 'talk-table', position_m: [0, 1, 2], rotation_deg: 90, note: 'n' }] }
+    const parsed = RoomFile.parse(extra)
+    expect(parsed.gear_positions).toEqual(extra.gear_positions)
+    expect(parsed.coordinate_system).toBe('x = right')
+  })
+
+  it('the synced radio-talk-studio-medium carries its 14 gear_positions', () => {
+    const parsed = RoomFile.parse(JSON.parse(readFileSync(join(DIR, 'radio-talk-studio-medium.json'), 'utf8')))
+    expect(parsed.gear_positions).toHaveLength(14)
+  })
+
   it('rejects a room without typical dimensions', () => {
     expect(RoomFile.safeParse({ id: 'x', name_fr: 'x' }).success).toBe(false)
   })

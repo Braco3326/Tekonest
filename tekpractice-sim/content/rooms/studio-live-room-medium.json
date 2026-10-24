@@ -108,5 +108,129 @@
   "mood": "chaud, gradable, lampes d'appoint près des musiciens",
   "color_temp_k": 3000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "akg-d112-mkii",
+   "zone": "drum-area",
+   "position_m": [
+    1.8,
+    0.25,
+    -2
+   ],
+   "rotation_deg": 180,
+   "note": "Grosse caisse, micro dans l'évent de la peau de résonance. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+  },
+  {
+   "equipment_id": "shure-sm57",
+   "zone": "drum-area",
+   "position_m": [
+    1.55,
+    0.6,
+    -2.45
+   ],
+   "rotation_deg": 180,
+   "note": "Caisse claire, dessus."
+  },
+  {
+   "equipment_id": "sennheiser-md-421-ii",
+   "zone": "drum-area",
+   "position_m": [
+    2.2,
+    0.75,
+    -2.6
+   ],
+   "rotation_deg": 180,
+   "note": "Toms (un par fût)."
+  },
+  {
+   "equipment_id": "schoeps-cmc-6-mk-4",
+   "zone": "drum-area",
+   "position_m": [
+    1.8,
+    2,
+    -2.2
+   ],
+   "rotation_deg": 180,
+   "note": "Paire d'overheads cardioïdes au-dessus de la batterie."
+  },
+  {
+   "equipment_id": "coles-4038",
+   "zone": "live-main",
+   "position_m": [
+    1.8,
+    1.6,
+    0.6
+   ],
+   "rotation_deg": 180,
+   "note": "Micros d'ambiance (room) face à la batterie, à quelques mètres."
+  },
+  {
+   "equipment_id": "royer-r-121",
+   "zone": "amp-corner",
+   "position_m": [
+    -2.8,
+    0.4,
+    3.3
+   ],
+   "rotation_deg": 0,
+   "note": "Ampli guitare, ruban à 15–20 cm du haut-parleur."
+  },
+  {
+   "equipment_id": "neumann-u87-ai",
+   "zone": "iso-booth",
+   "position_m": [
+    -3.05,
+    1.6,
+    -4
+   ],
+   "rotation_deg": 0,
+   "note": "Voix témoin ou voix lead dans la cabine d'isolation."
+  },
+  {
+   "equipment_id": "akg-c414-xls",
+   "zone": "live-main",
+   "position_m": [
+    -1.5,
+    1.2,
+    0.5
+   ],
+   "rotation_deg": 0,
+   "note": "Piano / guitare acoustique, au centre de la pièce."
+  },
+  {
+   "equipment_id": "km-210-9",
+   "zone": "live-main",
+   "position_m": [
+    -1.5,
+    0,
+    0.5
+   ],
+   "rotation_deg": 0,
+   "note": "Pieds de micro (perche) — un par source."
+  },
+  {
+   "equipment_id": "behringer-ha400",
+   "zone": "live-main",
+   "position_m": [
+    0,
+    1,
+    -0.5
+   ],
+   "rotation_deg": 0,
+   "note": "Distribution casque (cue mix) pour les musiciens."
+  },
+  {
+   "equipment_id": "beyerdynamic-dt-770-pro",
+   "zone": "live-main",
+   "position_m": [
+    0.3,
+    1,
+    -0.5
+   ],
+   "rotation_deg": 0,
+   "note": "Casques fermés des musiciens."
+  }
+ ],
  "source_count": 3
 }

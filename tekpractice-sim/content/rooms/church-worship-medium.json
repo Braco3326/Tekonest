@@ -159,5 +159,129 @@
   "mood": "lumière naturelle des vitraux le jour, éclairage chaud suspendu le soir, chœur plus éclairé",
   "color_temp_k": 3000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "yamaha-tf5",
+   "zone": "regie",
+   "position_m": [
+    -9.6,
+    0.9,
+    17.2
+   ],
+   "rotation_deg": 180,
+   "note": "Console numérique compacte au fond de l'église, sous la tribune ; dans beaucoup de paroisses, un simple mélangeur en sacristie suffit."
+  },
+  {
+   "equipment_id": "dbx-driverack-venu360",
+   "zone": "regie",
+   "position_m": [
+    -10.6,
+    1,
+    18.2
+   ],
+   "rotation_deg": 180,
+   "note": "Processeur : égalisation et retards des enceintes réparties le long de la nef."
+  },
+  {
+   "equipment_id": "crown-xls-2502",
+   "zone": "regie",
+   "position_m": [
+    -8.6,
+    1,
+    18.2
+   ],
+   "rotation_deg": 180,
+   "note": "Amplification (les chapelles de Fátima utilisent des amplis Crown)."
+  },
+  {
+   "equipment_id": "ev-evolve-50m-g2",
+   "zone": "bas-cote-gauche",
+   "position_m": [
+    -6.3,
+    3,
+    -8
+   ],
+   "rotation_deg": 90,
+   "note": "Enceinte colonne sur pilier, première rangée, orientée vers la nef ; les chapelles de Fátima utilisent des enceintes Bose placées latéralement."
+  },
+  {
+   "equipment_id": "ev-evolve-50m-g2",
+   "zone": "bas-cote-droit",
+   "position_m": [
+    6.3,
+    3,
+    -8
+   ],
+   "rotation_deg": 270,
+   "note": "Colonne symétrique côté droit."
+  },
+  {
+   "equipment_id": "ev-evolve-50m-g2",
+   "zone": "bas-cote-gauche",
+   "position_m": [
+    -6.3,
+    3,
+    6
+   ],
+   "rotation_deg": 90,
+   "note": "Colonne retardée pour le fond de la nef (retard réglé sur la distance au chœur)."
+  },
+  {
+   "equipment_id": "akg-c451-b",
+   "zone": "choeur",
+   "position_m": [
+    3.5,
+    1.9,
+    -13
+   ],
+   "rotation_deg": 0,
+   "note": "Micro d'ambon (lectures) ; en pratique souvent un col de cygne, AKG est la marque utilisée dans les chapelles de Fátima."
+  },
+  {
+   "equipment_id": "sennheiser-ew-100-g4",
+   "zone": "regie",
+   "position_m": [
+    -10.8,
+    1,
+    16.8
+   ],
+   "rotation_deg": 180,
+   "note": "Récepteur HF du célébrant."
+  },
+  {
+   "equipment_id": "sennheiser-mke-2",
+   "zone": "choeur",
+   "position_m": [
+    0,
+    1.75,
+    -15
+   ],
+   "rotation_deg": 0,
+   "note": "Micro cravate du célébrant, sur l'émetteur de poche."
+  },
+  {
+   "equipment_id": "schoeps-cmc-6-mk-4",
+   "zone": "choeur",
+   "position_m": [
+    0,
+    2.8,
+    -12.5
+   ],
+   "rotation_deg": 180,
+   "note": "Micro de chœur sur grand pied, tourné vers les choristes (concert ou enregistrement)."
+  },
+  {
+   "equipment_id": "radial-jdi",
+   "zone": "tribune-orgue",
+   "position_m": [
+    3,
+    5.1,
+    18
+   ],
+   "rotation_deg": 0,
+   "note": "DI pour un piano numérique ou un orgue électronique en tribune."
+  }
+ ],
  "source_count": 3
 }

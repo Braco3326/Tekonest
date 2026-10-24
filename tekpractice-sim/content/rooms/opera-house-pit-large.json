@@ -138,5 +138,151 @@
   "mood": "salle rouge et or sous lustre, plateau en lumière de théâtre, fosse en lampes de pupitre 24 V",
   "color_temp_k": 3200
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "yamaha-rivage-pm10",
+   "zone": "regie",
+   "position_m": [
+    0,
+    0.9,
+    19
+   ],
+   "rotation_deg": 180,
+   "note": "Console de salle de grande capacité ; Lille liste une SSL Live300 avec stagebox MADI et une Yamaha DM2000 (non présentes dans le catalogue)."
+  },
+  {
+   "equipment_id": "digico-sd-rack",
+   "zone": "scene",
+   "position_m": [
+    -11,
+    1.05,
+    -6
+   ],
+   "rotation_deg": 90,
+   "note": "Rack d'entrées au plateau, côté coulisse (Lille : SSL ML32.32 au plateau)."
+  },
+  {
+   "equipment_id": "schoeps-mstc-74",
+   "zone": "fosse-mobile",
+   "position_m": [
+    0,
+    4.5,
+    0.4
+   ],
+   "rotation_deg": 180,
+   "note": "Couple ORTF principal suspendu au-dessus du bord de fosse, vers la scène (Lille : Schoeps MSTC 64)."
+  },
+  {
+   "equipment_id": "neumann-km-184",
+   "zone": "fosse-mobile",
+   "position_m": [
+    -4,
+    -0.9,
+    -1
+   ],
+   "rotation_deg": 180,
+   "note": "Appoint premiers violons ; la repisse en fosse est forte."
+  },
+  {
+   "equipment_id": "neumann-km-184",
+   "zone": "fosse-mobile",
+   "position_m": [
+    3.5,
+    -0.9,
+    -1.2
+   ],
+   "rotation_deg": 180,
+   "note": "Appoint bois."
+  },
+  {
+   "equipment_id": "sennheiser-md-421-ii",
+   "zone": "fosse-sous-scene",
+   "position_m": [
+    3,
+    -0.8,
+    -5.5
+   ],
+   "rotation_deg": 180,
+   "note": "Appoint cuivres dans la partie de fosse sous la scène (Lille : 2 MD421)."
+  },
+  {
+   "equipment_id": "dpa-4060",
+   "zone": "scene",
+   "position_m": [
+    0.5,
+    2.7,
+    -8
+   ],
+   "rotation_deg": 0,
+   "note": "Micro miniature caché dans la perruque d'un chanteur, sur émetteur de poche."
+  },
+  {
+   "equipment_id": "sennheiser-em-6000",
+   "zone": "regie",
+   "position_m": [
+    2.2,
+    1,
+    20.5
+   ],
+   "rotation_deg": 180,
+   "note": "Récepteurs HF numériques pour les micros des chanteurs."
+  },
+  {
+   "equipment_id": "dpa-4088",
+   "zone": "scene",
+   "position_m": [
+    -2,
+    2.7,
+    -10
+   ],
+   "rotation_deg": 0,
+   "note": "Serre-tête pour un rôle parlé ou un effet (Lille : 1 DPA 4088)."
+  },
+  {
+   "equipment_id": "l-acoustics-x8",
+   "zone": "avant-scene",
+   "position_m": [
+    -5,
+    4,
+    -3.4
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte de complément en loge d'avant-scène (Lille : 4 L-Acoustics X8 et diffusion fixe en loge d'avant-scène)."
+  },
+  {
+   "equipment_id": "l-acoustics-x8",
+   "zone": "avant-scene",
+   "position_m": [
+    5,
+    4,
+    -3.4
+   ],
+   "rotation_deg": 0,
+   "note": "Complément côté droit."
+  },
+  {
+   "equipment_id": "l-acoustics-la4x",
+   "zone": "scene",
+   "position_m": [
+    11,
+    1.05,
+    -6
+   ],
+   "rotation_deg": 270,
+   "note": "Contrôleur amplifié (Lille : 4 LA4X)."
+  },
+  {
+   "equipment_id": "radial-j48",
+   "zone": "fosse-mobile",
+   "position_m": [
+    5.5,
+    -1.9,
+    0
+   ],
+   "rotation_deg": 0,
+   "note": "DI active pour un clavier ou un célesta électronique en fosse (Lille : 2 Radial J48)."
+  }
+ ],
  "source_count": 3
 }

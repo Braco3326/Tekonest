@@ -120,5 +120,162 @@
   "mood": "nuit club : salle noire, lasers et stroboscopes, booth éclairé en lumière de service tamisée",
   "color_temp_k": 6500
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "sennheiser-hd-25",
+   "zone": "booth-dj",
+   "position_m": [
+    0,
+    1.85,
+    -4.6
+   ],
+   "rotation_deg": 0,
+   "note": "Casque DJ fermé pour le calage (pré-écoute) ; la table et les lecteurs DJ ne sont pas encore au catalogue."
+  },
+  {
+   "equipment_id": "l-acoustics-x15-hiq",
+   "zone": "booth-dj",
+   "position_m": [
+    -1.4,
+    0.8,
+    -4.2
+   ],
+   "rotation_deg": 135,
+   "note": "Retour de booth gauche tourné vers le DJ (Nouveau Monde : X15 HiQ en retours)."
+  },
+  {
+   "equipment_id": "l-acoustics-x15-hiq",
+   "zone": "booth-dj",
+   "position_m": [
+    1.4,
+    0.8,
+    -4.2
+   ],
+   "rotation_deg": 225,
+   "note": "Retour de booth droit."
+  },
+  {
+   "equipment_id": "radial-prod2",
+   "zone": "booth-dj",
+   "position_m": [
+    0.9,
+    0.8,
+    -5
+   ],
+   "rotation_deg": 0,
+   "note": "DI stéréo passive sur la sortie master de la table DJ (Nouveau Monde : 2 Radial Pro D2)."
+  },
+  {
+   "equipment_id": "shure-sm58",
+   "zone": "booth-dj",
+   "position_m": [
+    -0.9,
+    1.9,
+    -4.5
+   ],
+   "rotation_deg": 0,
+   "note": "Micro MC filaire."
+  },
+  {
+   "equipment_id": "shure-slx-d",
+   "zone": "regie-facade",
+   "position_m": [
+    1,
+    1,
+    6.9
+   ],
+   "rotation_deg": 180,
+   "note": "Micro HF de secours pour le MC."
+  },
+  {
+   "equipment_id": "yamaha-rio3224-d2",
+   "zone": "scene",
+   "position_m": [
+    4.2,
+    0.8,
+    -7.6
+   ],
+   "rotation_deg": 180,
+   "note": "Stagebox : reçoit la DI stéréo et le micro MC."
+  },
+  {
+   "equipment_id": "yamaha-cl5",
+   "zone": "regie-facade",
+   "position_m": [
+    0,
+    0.9,
+    6.6
+   ],
+   "rotation_deg": 180,
+   "note": "Console façade (Nouveau Monde : CL5) : le DJ arrive sur deux tranches stéréo."
+  },
+  {
+   "equipment_id": "nti-audio-xl2",
+   "zone": "regie-facade",
+   "position_m": [
+    -1.2,
+    1.6,
+    6.6
+   ],
+   "rotation_deg": 180,
+   "note": "Sonomètre pour suivre les Leq dB(A) et dB(C) réglementaires."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "scene",
+   "position_m": [
+    -4.3,
+    4.2,
+    -3.3
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne gauche (Nouveau Monde : 10 KARA)."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "scene",
+   "position_m": [
+    4.3,
+    4.2,
+    -3.3
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne droite."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "scene",
+   "position_m": [
+    -3.6,
+    0,
+    -3.6
+   ],
+   "rotation_deg": 0,
+   "note": "Sub (Nouveau Monde : SB28 ; KS28 = modèle de la même famille au catalogue)."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "scene",
+   "position_m": [
+    3.6,
+    0,
+    -3.6
+   ],
+   "rotation_deg": 0,
+   "note": "Sub droit."
+  },
+  {
+   "equipment_id": "l-acoustics-la12x",
+   "zone": "scene",
+   "position_m": [
+    -4.2,
+    0.8,
+    -7.6
+   ],
+   "rotation_deg": 180,
+   "note": "Amplification (Nouveau Monde : LA8)."
+  }
+ ],
  "source_count": 4
 }

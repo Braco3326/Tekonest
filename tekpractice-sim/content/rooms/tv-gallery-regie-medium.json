@@ -90,5 +90,129 @@
   "mood": "Pénombre maîtrisée, éclairage de pupitre gradable, écrans dominants",
   "color_temp_k": 4000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "clear-com-ms-702",
+   "zone": "production-gallery",
+   "position_m": [
+    -2.75,
+    0.9,
+    -0.4
+   ],
+   "rotation_deg": 0,
+   "note": "Poste d'ordres du réalisateur sur le pupitre avant (intercom vers plateau, cadreurs, son)."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "production-gallery",
+   "position_m": [
+    -5.6,
+    1.7,
+    -2.9
+   ],
+   "rotation_deg": 10,
+   "note": "Écoute programme intégrée au mur d'écrans (gauche)."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "production-gallery",
+   "position_m": [
+    0.1,
+    1.7,
+    -2.9
+   ],
+   "rotation_deg": -10,
+   "note": "Écoute programme intégrée au mur d'écrans (droite)."
+  },
+  {
+   "equipment_id": "calrec-brio",
+   "zone": "sound-control-room",
+   "position_m": [
+    4,
+    0.8,
+    -0.4
+   ],
+   "rotation_deg": 0,
+   "note": "Console son broadcast (≈ 1,8 m de large) au centre d'un pupitre en L."
+  },
+  {
+   "equipment_id": "neumann-kh-120-ii",
+   "zone": "sound-control-room",
+   "position_m": [
+    3,
+    1.2,
+    -1.9
+   ],
+   "rotation_deg": 15,
+   "note": "Écoute gauche ; base 2 m, auditeur à ≈ 1,8 m (géométrie EBU Tech 3276)."
+  },
+  {
+   "equipment_id": "neumann-kh-120-ii",
+   "zone": "sound-control-room",
+   "position_m": [
+    5,
+    1.2,
+    -1.9
+   ],
+   "rotation_deg": -15,
+   "note": "Écoute droite."
+  },
+  {
+   "equipment_id": "rtw-touchmonitor-tm7",
+   "zone": "sound-control-room",
+   "position_m": [
+    4.7,
+    0.95,
+    -0.7
+   ],
+   "rotation_deg": -10,
+   "note": "Loudness programme (EBU R128) et vectorscope."
+  },
+  {
+   "equipment_id": "nugen-audio-vislm",
+   "zone": "sound-control-room",
+   "position_m": [
+    3.2,
+    0.95,
+    -0.7
+   ],
+   "rotation_deg": 10,
+   "note": "Logiciel de mesure loudness / journal sur le poste de l'ingé son."
+  },
+  {
+   "equipment_id": "sennheiser-hd-25",
+   "zone": "sound-control-room",
+   "position_m": [
+    4.4,
+    0.8,
+    0
+   ],
+   "rotation_deg": 0,
+   "note": "Casque de contrôle (pré-écoute, ordres)."
+  },
+  {
+   "equipment_id": "shure-axient-digital-ad4d",
+   "zone": "sound-rack",
+   "position_m": [
+    6.2,
+    1,
+    2.3
+   ],
+   "rotation_deg": -90,
+   "note": "Récepteurs HF du plateau, télécommandés depuis la régie."
+  },
+  {
+   "equipment_id": "telos-hx2",
+   "zone": "sound-rack",
+   "position_m": [
+    6.2,
+    1.5,
+    2
+   ],
+   "rotation_deg": -90,
+   "note": "Hybride pour les intervenants au téléphone (N-1 depuis la console)."
+  }
+ ],
  "source_count": 2
 }

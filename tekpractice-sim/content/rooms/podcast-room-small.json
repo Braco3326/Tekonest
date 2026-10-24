@@ -82,5 +82,107 @@
   "mood": "lumineux, éclairage vidéo doux (panneaux LED)",
   "color_temp_k": 5600
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "shure-sm7b",
+   "zone": "table",
+   "position_m": [
+    -0.5,
+    1,
+    -0.35
+   ],
+   "rotation_deg": 0,
+   "note": "Invité 1 ; micro dynamique sur bras, 5–10 cm de la bouche. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+  },
+  {
+   "equipment_id": "shure-sm7b",
+   "zone": "table",
+   "position_m": [
+    0.5,
+    1,
+    -0.35
+   ],
+   "rotation_deg": 0,
+   "note": "Invité 2."
+  },
+  {
+   "equipment_id": "shure-sm7b",
+   "zone": "table",
+   "position_m": [
+    -0.5,
+    1,
+    0.75
+   ],
+   "rotation_deg": 180,
+   "note": "Invité 3, face aux deux premiers."
+  },
+  {
+   "equipment_id": "shure-sm7b",
+   "zone": "table",
+   "position_m": [
+    0.5,
+    1,
+    0.75
+   ],
+   "rotation_deg": 180,
+   "note": "Invité 4."
+  },
+  {
+   "equipment_id": "rode-psa1-plus",
+   "zone": "table",
+   "position_m": [
+    0,
+    0.78,
+    0.2
+   ],
+   "rotation_deg": 0,
+   "note": "Bras articulés (×4) fixés au bord de la table."
+  },
+  {
+   "equipment_id": "tascam-portacapture-x8",
+   "zone": "producer",
+   "position_m": [
+    1.3,
+    0.8,
+    2.2
+   ],
+   "rotation_deg": 180,
+   "note": "Enregistreur multipiste 4 entrées XLR (rôle du Rodecaster cité par les sources, absent du catalogue)."
+  },
+  {
+   "equipment_id": "behringer-ha400",
+   "zone": "producer",
+   "position_m": [
+    1,
+    0.8,
+    2.1
+   ],
+   "rotation_deg": 180,
+   "note": "Ampli casque 4 sorties."
+  },
+  {
+   "equipment_id": "audio-technica-ath-m50x",
+   "zone": "table",
+   "position_m": [
+    0,
+    0.8,
+    0.2
+   ],
+   "rotation_deg": 0,
+   "note": "Casques fermés (×4), un par invité."
+  },
+  {
+   "equipment_id": "neumann-kh-120-ii",
+   "zone": "producer",
+   "position_m": [
+    1.3,
+    1.1,
+    2.55
+   ],
+   "rotation_deg": 180,
+   "note": "Paire d'écoutes du producteur (coupées pendant l'enregistrement)."
+  }
+ ],
  "source_count": 3
 }

@@ -90,5 +90,107 @@
   "mood": "Cellule exiguë, LED blanches gradables au plafond, lampes de pupitre",
   "color_temp_k": 4000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "lawo-ruby",
+   "zone": "sound-desk",
+   "position_m": [
+    -0.7,
+    0.75,
+    0.4
+   ],
+   "rotation_deg": 90,
+   "note": "Console le long de la paroi gauche, tournée vers l'opérateur (+x) ; l'ingé son regarde la paroi (−x)."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "sound-desk",
+   "position_m": [
+    -0.85,
+    1.3,
+    -0.3
+   ],
+   "rotation_deg": 90,
+   "note": "Écoute gauche en très proche champ (base ≈ 1,4 m, impossible de respecter 2 m dans un car)."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "sound-desk",
+   "position_m": [
+    -0.85,
+    1.3,
+    1.1
+   ],
+   "rotation_deg": 90,
+   "note": "Écoute droite."
+  },
+  {
+   "equipment_id": "rtw-touchmonitor-tm7",
+   "zone": "sound-desk",
+   "position_m": [
+    -0.75,
+    1,
+    1.5
+   ],
+   "rotation_deg": 90,
+   "note": "Mesure loudness / crête du programme envoyé."
+  },
+  {
+   "equipment_id": "sennheiser-hd-25",
+   "zone": "sound-desk",
+   "position_m": [
+    -0.5,
+    0.78,
+    0.7
+   ],
+   "rotation_deg": 90,
+   "note": "Casque : souvent la vraie référence d'écoute dans un car."
+  },
+  {
+   "equipment_id": "sound-devices-888",
+   "zone": "sound-desk",
+   "position_m": [
+    -0.7,
+    0.8,
+    -0.8
+   ],
+   "rotation_deg": 90,
+   "note": "Enregistreur de secours multipiste au poste technicien."
+  },
+  {
+   "equipment_id": "tieline-gateway",
+   "zone": "equipment-bay",
+   "position_m": [
+    0.5,
+    1.2,
+    -1.95
+   ],
+   "rotation_deg": 180,
+   "note": "Codec IP en baie vers la station (liaison programme + retour)."
+  },
+  {
+   "equipment_id": "directout-prodigy-mc",
+   "zone": "equipment-bay",
+   "position_m": [
+    0.5,
+    0.9,
+    -1.95
+   ],
+   "rotation_deg": 180,
+   "note": "Convertisseur / routeur MADI-IP entre tailboard, console et codecs."
+  },
+  {
+   "equipment_id": "riedel-bolero",
+   "zone": "audio-control",
+   "position_m": [
+    0.7,
+    1,
+    2.2
+   ],
+   "rotation_deg": 180,
+   "note": "Beltpack intercom HF prêt pour le régisseur sur site."
+  }
+ ],
  "source_count": 2
 }

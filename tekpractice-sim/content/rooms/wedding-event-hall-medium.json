@@ -135,5 +135,118 @@
   "mood": "salle de banquet chaleureuse : lustres et guirlandes, piste en LED colorées, estrade en face chaude",
   "color_temp_k": 2700
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "allen-heath-sq-6",
+   "zone": "regie-sono",
+   "position_m": [
+    -5.4,
+    1.3,
+    -8.5
+   ],
+   "rotation_deg": 90,
+   "note": "Petite console numérique côté jardin, sur l'estrade (Satge : régie sur scène côté jardin ; Lausanne : Allen & Heath QU-24, même marque)."
+  },
+  {
+   "equipment_id": "shure-qlx-d",
+   "zone": "regie-sono",
+   "position_m": [
+    -5.8,
+    1.3,
+    -9.4
+   ],
+   "rotation_deg": 90,
+   "note": "Récepteur HF pour les discours (Lausanne : 2 micros main HF + 1 cravate)."
+  },
+  {
+   "equipment_id": "radial-prod2",
+   "zone": "regie-sono",
+   "position_m": [
+    -5,
+    0.4,
+    -9.4
+   ],
+   "rotation_deg": 90,
+   "note": "DI stéréo pour l'ordinateur ou la sortie du DJ invité."
+  },
+  {
+   "equipment_id": "yamaha-dbr12",
+   "zone": "estrade",
+   "position_m": [
+    -3.9,
+    2.2,
+    -5.5
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte amplifiée sur pied, gauche (Proudhon : 4 Yamaha DXR12 mkII ; Lausanne : 2 EV EKX-12P suspendues)."
+  },
+  {
+   "equipment_id": "yamaha-dbr12",
+   "zone": "estrade",
+   "position_m": [
+    3.9,
+    2.2,
+    -5.5
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte amplifiée sur pied, droite."
+  },
+  {
+   "equipment_id": "qsc-k12-2",
+   "zone": "estrade",
+   "position_m": [
+    -1.5,
+    0.4,
+    -6.2
+   ],
+   "rotation_deg": 180,
+   "note": "Retour pour le groupe du bal (couché en wedge)."
+  },
+  {
+   "equipment_id": "qsc-k12-2",
+   "zone": "estrade",
+   "position_m": [
+    1.5,
+    0.4,
+    -6.2
+   ],
+   "rotation_deg": 180,
+   "note": "Second retour."
+  },
+  {
+   "equipment_id": "shure-sm58",
+   "zone": "estrade",
+   "position_m": [
+    0,
+    2,
+    -6
+   ],
+   "rotation_deg": 0,
+   "note": "Micro filaire sur pied pour le chant ou les discours (Lausanne : 4 micros filaires)."
+  },
+  {
+   "equipment_id": "shure-sm57",
+   "zone": "estrade",
+   "position_m": [
+    2.5,
+    0.7,
+    -8.8
+   ],
+   "rotation_deg": 180,
+   "note": "Micro d'ampli guitare du groupe."
+  },
+  {
+   "equipment_id": "bose-l1-pro32",
+   "zone": "tables",
+   "position_m": [
+    -5.8,
+    0,
+    8.5
+   ],
+   "rotation_deg": 45,
+   "note": "Colonne portable pour la cérémonie laïque ou le cocktail dans un coin de salle."
+  }
+ ],
  "source_count": 5
 }

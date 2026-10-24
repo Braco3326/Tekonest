@@ -146,5 +146,173 @@
   "mood": "salle noire immense, plateau en lyres et écrans LED, poursuites en passerelles, éclairage de service bleu en coulisse",
   "color_temp_k": 5600
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "yamaha-rivage-pm10",
+   "zone": "regie-facade",
+   "position_m": [
+    0,
+    4.9,
+    25
+   ],
+   "rotation_deg": 180,
+   "note": "Console façade de tournée sur la plateforme régie (8 × 3 m, 4 m au-dessus du sol à Strasbourg)."
+  },
+  {
+   "equipment_id": "yamaha-cl5",
+   "zone": "regie-retours",
+   "position_m": [
+    15.5,
+    2.3,
+    -19
+   ],
+   "rotation_deg": 270,
+   "note": "Console retours en coulisse, à vue des musiciens."
+  },
+  {
+   "equipment_id": "yamaha-rio3224-d2",
+   "zone": "regie-retours",
+   "position_m": [
+    16.5,
+    1.4,
+    -22
+   ],
+   "rotation_deg": 270,
+   "note": "Stagebox réseau ; en tournée on en empile souvent plusieurs."
+  },
+  {
+   "equipment_id": "l-acoustics-k2",
+   "zone": "espace-scenique",
+   "position_m": [
+    -14,
+    12,
+    -12
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne principale gauche accrochée au gril (charges validées sur le plan de charges de la salle)."
+  },
+  {
+   "equipment_id": "l-acoustics-k2",
+   "zone": "espace-scenique",
+   "position_m": [
+    14,
+    12,
+    -12
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne principale droite."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "fosse",
+   "position_m": [
+    -6,
+    0,
+    -10.8
+   ],
+   "rotation_deg": 0,
+   "note": "Subs au sol devant la scène, derrière les crash barrières."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "fosse",
+   "position_m": [
+    6,
+    0,
+    -10.8
+   ],
+   "rotation_deg": 0,
+   "note": "Subs au sol, côté droit."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "fosse",
+   "position_m": [
+    -20,
+    10,
+    -10
+   ],
+   "rotation_deg": 30,
+   "note": "Ligne de débouchage latéral (out fill) vers les gradins côté gauche."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "fosse",
+   "position_m": [
+    20,
+    10,
+    -10
+   ],
+   "rotation_deg": 330,
+   "note": "Out fill droit."
+  },
+  {
+   "equipment_id": "l-acoustics-la12x",
+   "zone": "espace-scenique",
+   "position_m": [
+    17,
+    0,
+    -30
+   ],
+   "rotation_deg": 270,
+   "note": "Racks d'amplification au lointain cour, près de l'armoire son de la salle."
+  },
+  {
+   "equipment_id": "l-acoustics-x15-hiq",
+   "zone": "scene",
+   "position_m": [
+    0,
+    1.4,
+    -13.2
+   ],
+   "rotation_deg": 180,
+   "note": "Wedge en bord de scène (beaucoup d'artistes sont en ear monitors)."
+  },
+  {
+   "equipment_id": "shure-psm-1000",
+   "zone": "regie-retours",
+   "position_m": [
+    17,
+    2.3,
+    -16.5
+   ],
+   "rotation_deg": 270,
+   "note": "Émetteurs d'ear monitors."
+  },
+  {
+   "equipment_id": "shure-axient-digital-ad4d",
+   "zone": "regie-retours",
+   "position_m": [
+    17,
+    2.3,
+    -17.5
+   ],
+   "rotation_deg": 270,
+   "note": "Récepteurs HF des micros chant."
+  },
+  {
+   "equipment_id": "shure-beta-58a",
+   "zone": "scene",
+   "position_m": [
+    0,
+    3,
+    -14
+   ],
+   "rotation_deg": 0,
+   "note": "Micro chant (capsule filaire de secours)."
+  },
+  {
+   "equipment_id": "nti-audio-xl2",
+   "zone": "regie-facade",
+   "position_m": [
+    1.5,
+    5.5,
+    25
+   ],
+   "rotation_deg": 180,
+   "note": "Sonomètre en régie pour suivre le Leq réglementaire."
+  }
+ ],
  "source_count": 3
 }

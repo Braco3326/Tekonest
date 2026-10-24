@@ -110,5 +110,162 @@
   "mood": "salle sombre, plateau en LED colorées et lyres, fumée légère, bar éclairé chaud",
   "color_temp_k": 3200
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "yamaha-cl5",
+   "zone": "regie-facade",
+   "position_m": [
+    0,
+    0.9,
+    6.6
+   ],
+   "rotation_deg": 180,
+   "note": "Console façade : Nouveau Monde liste une Yamaha CL5 (Paloma Club : Yamaha DM7)."
+  },
+  {
+   "equipment_id": "yamaha-rio3224-d2",
+   "zone": "scene",
+   "position_m": [
+    4.2,
+    0.8,
+    -7.6
+   ],
+   "rotation_deg": 180,
+   "note": "Stagebox Dante au plateau (Nouveau Monde : Rio 32-24 + Rio 16-8 ; Paloma : Rio3224 + Rio1608)."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "scene",
+   "position_m": [
+    -4.3,
+    4.2,
+    -3.3
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne gauche accrochée au nez de scène (Nouveau Monde : 10 KARA au total, soit 5 par côté)."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "scene",
+   "position_m": [
+    4.3,
+    4.2,
+    -3.3
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne droite."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "scene",
+   "position_m": [
+    -3.6,
+    0,
+    -3.6
+   ],
+   "rotation_deg": 0,
+   "note": "Sub au sol sous le nez de scène ; Nouveau Monde utilise 2 SB28 (le KS28 est le modèle de la même famille présent dans le catalogue)."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "scene",
+   "position_m": [
+    3.6,
+    0,
+    -3.6
+   ],
+   "rotation_deg": 0,
+   "note": "Sub droit."
+  },
+  {
+   "equipment_id": "l-acoustics-x8",
+   "zone": "scene",
+   "position_m": [
+    -1.5,
+    0.8,
+    -3.3
+   ],
+   "rotation_deg": 0,
+   "note": "Front fill posé au nez de scène (Nouveau Monde : 2 X8 en front fill)."
+  },
+  {
+   "equipment_id": "l-acoustics-x15-hiq",
+   "zone": "scene",
+   "position_m": [
+    0,
+    0.8,
+    -4
+   ],
+   "rotation_deg": 180,
+   "note": "Retour de scène (wedge) tourné vers le chanteur (Nouveau Monde : 6 X15 HiQ)."
+  },
+  {
+   "equipment_id": "l-acoustics-la12x",
+   "zone": "scene",
+   "position_m": [
+    -4.2,
+    0.8,
+    -7.6
+   ],
+   "rotation_deg": 180,
+   "note": "Rack d'amplification en coulisse de scène ; Nouveau Monde utilise des LA8 (génération précédente)."
+  },
+  {
+   "equipment_id": "shure-sm58",
+   "zone": "scene",
+   "position_m": [
+    0,
+    2.4,
+    -4.6
+   ],
+   "rotation_deg": 0,
+   "note": "Micro chant sur pied (25 SM58 au parc de Paloma)."
+  },
+  {
+   "equipment_id": "shure-beta-52a",
+   "zone": "scene",
+   "position_m": [
+    0.3,
+    1.1,
+    -6.8
+   ],
+   "rotation_deg": 0,
+   "note": "Grosse caisse (présent dans les fiches Nouveau Monde et Paloma)."
+  },
+  {
+   "equipment_id": "shure-sm57",
+   "zone": "scene",
+   "position_m": [
+    -0.4,
+    1.4,
+    -6.6
+   ],
+   "rotation_deg": 0,
+   "note": "Caisse claire."
+  },
+  {
+   "equipment_id": "sennheiser-e-906",
+   "zone": "scene",
+   "position_m": [
+    2.8,
+    1.1,
+    -7
+   ],
+   "rotation_deg": 180,
+   "note": "Ampli guitare (Paloma : 6 e906)."
+  },
+  {
+   "equipment_id": "klark-teknik-dn100-v2",
+   "zone": "scene",
+   "position_m": [
+    -2.6,
+    0.8,
+    -6
+   ],
+   "rotation_deg": 0,
+   "note": "DI active pour clavier ou basse (Nouveau Monde : 6 DN100)."
+  }
+ ],
  "source_count": 4
 }

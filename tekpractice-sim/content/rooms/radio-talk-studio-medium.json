@@ -101,5 +101,162 @@
   "mood": "Studio chaleureux avec douches sur la table (souvent filmé pour la radio filmée) ; régie plus sombre, éclairage de pupitre",
   "color_temp_k": 3200
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "ev-re20",
+   "zone": "talk-table",
+   "position_m": [
+    0,
+    1.1,
+    -3.3
+   ],
+   "rotation_deg": 180,
+   "note": "Micro animateur ; l'animateur est assis côté −z et regarde la vitre de régie."
+  },
+  {
+   "equipment_id": "ev-re20",
+   "zone": "talk-table",
+   "position_m": [
+    -1.2,
+    1.1,
+    -2.8
+   ],
+   "rotation_deg": 90,
+   "note": "Invité 1 (côté gauche de la table)."
+  },
+  {
+   "equipment_id": "ev-re20",
+   "zone": "talk-table",
+   "position_m": [
+    1.2,
+    1.1,
+    -2.8
+   ],
+   "rotation_deg": -90,
+   "note": "Invité 2 (côté droit) ; invités 3 et 4 sur la même logique."
+  },
+  {
+   "equipment_id": "ev-re20",
+   "zone": "talk-table",
+   "position_m": [
+    0,
+    1.1,
+    -2.1
+   ],
+   "rotation_deg": 0,
+   "note": "Invité face à l'animateur, dos à la vitre."
+  },
+  {
+   "equipment_id": "yellowtec-mika",
+   "zone": "talk-table",
+   "position_m": [
+    0.3,
+    0.75,
+    -3.5
+   ],
+   "rotation_deg": 0,
+   "note": "Bras micro animateur ; les invités ont des bras identiques."
+  },
+  {
+   "equipment_id": "behringer-ha400",
+   "zone": "talk-table",
+   "position_m": [
+    0,
+    0.75,
+    -2.8
+   ],
+   "rotation_deg": 0,
+   "note": "Distribution casque au centre de la table (une sortie par invité)."
+  },
+  {
+   "equipment_id": "beyerdynamic-dt-770-pro",
+   "zone": "talk-table",
+   "position_m": [
+    -0.3,
+    0.78,
+    -3.2
+   ],
+   "rotation_deg": 0,
+   "note": "Un casque fermé par place (5 au total)."
+  },
+  {
+   "equipment_id": "yellowtec-litt",
+   "zone": "talk-studio",
+   "position_m": [
+    -2.9,
+    2.2,
+    -2.5
+   ],
+   "rotation_deg": 90,
+   "note": "Témoin ON AIR studio, visible de tous les invités."
+  },
+  {
+   "equipment_id": "dhd-rx2",
+   "zone": "control-room",
+   "position_m": [
+    0,
+    0.8,
+    2
+   ],
+   "rotation_deg": 0,
+   "note": "Console de diffusion face à la vitre ; le technicien regarde vers −z."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "control-room",
+   "position_m": [
+    -1,
+    1.25,
+    0.6
+   ],
+   "rotation_deg": 15,
+   "note": "Écoute gauche de part et d'autre de la vitre ; base ≈ 2 m (minimum EBU Tech 3276)."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "control-room",
+   "position_m": [
+    1,
+    1.25,
+    0.6
+   ],
+   "rotation_deg": -15,
+   "note": "Écoute droite."
+  },
+  {
+   "equipment_id": "rtw-touchmonitor-tm7",
+   "zone": "control-room",
+   "position_m": [
+    0.9,
+    1,
+    1.7
+   ],
+   "rotation_deg": -15,
+   "note": "Loudness et crêtes du programme."
+  },
+  {
+   "equipment_id": "playout-pc",
+   "zone": "control-room",
+   "position_m": [
+    -1.2,
+    0.9,
+    1.8
+   ],
+   "rotation_deg": 15,
+   "note": "Automate (jingles, pub, sons) côté régie."
+  },
+  {
+   "equipment_id": "telos-hx2",
+   "zone": "control-rack",
+   "position_m": [
+    2.5,
+    1,
+    4.3
+   ],
+   "rotation_deg": -90,
+   "note": "Hybrides téléphoniques (auditeurs, invité à distance) en rack ; N-1 depuis la console."
+  }
+ ],
  "source_count": 2
 }

@@ -93,5 +93,118 @@
   "mood": "tamisé, indirect, pas de reflet sur les écrans",
   "color_temp_k": 3000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "desk",
+   "position_m": [
+    -0.8,
+    1.2,
+    -1.7
+   ],
+   "rotation_deg": 30,
+   "note": "Enceinte gauche, pincée vers l'auditeur ; triangle de 1,6 m (angle de 60°, Genelec). rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "desk",
+   "position_m": [
+    0.8,
+    1.2,
+    -1.7
+   ],
+   "rotation_deg": -30,
+   "note": "Enceinte droite, symétrique."
+  },
+  {
+   "equipment_id": "ssl-uf8",
+   "zone": "desk",
+   "position_m": [
+    0,
+    0.78,
+    -0.8
+   ],
+   "rotation_deg": 0,
+   "note": "Surface de contrôle DAW devant l'auditeur."
+  },
+  {
+   "equipment_id": "universal-audio-apollo-twin-x-gen2",
+   "zone": "desk",
+   "position_m": [
+    0.55,
+    0.8,
+    -0.95
+   ],
+   "rotation_deg": 0,
+   "note": "Interface audio (préamplis + conversion)."
+  },
+  {
+   "equipment_id": "mackie-big-knob-studio",
+   "zone": "desk",
+   "position_m": [
+    -0.55,
+    0.8,
+    -0.95
+   ],
+   "rotation_deg": 0,
+   "note": "Contrôleur d'écoute : volume, sélection des enceintes, talkback."
+  },
+  {
+   "equipment_id": "universal-audio-1176ln",
+   "zone": "rack",
+   "position_m": [
+    1.55,
+    0.6,
+    -1
+   ],
+   "rotation_deg": -90,
+   "note": "Compresseur en rack latéral, face avant vers l'opérateur."
+  },
+  {
+   "equipment_id": "km-210-9",
+   "zone": "overdub-corner",
+   "position_m": [
+    1.2,
+    0,
+    1.7
+   ],
+   "rotation_deg": 180,
+   "note": "Pied de micro du coin voix."
+  },
+  {
+   "equipment_id": "neumann-tlm-103",
+   "zone": "overdub-corner",
+   "position_m": [
+    1.2,
+    1.6,
+    1.6
+   ],
+   "rotation_deg": 180,
+   "note": "Micro statique voix/overdub."
+  },
+  {
+   "equipment_id": "beyerdynamic-dt-770-pro",
+   "zone": "overdub-corner",
+   "position_m": [
+    1.7,
+    1.4,
+    2.2
+   ],
+   "rotation_deg": 180,
+   "note": "Casque fermé pour l'overdub (pas de repisse)."
+  },
+  {
+   "equipment_id": "minidsp-umik-1",
+   "zone": "listening",
+   "position_m": [
+    0,
+    1.2,
+    -0.3
+   ],
+   "rotation_deg": 0,
+   "note": "Micro de mesure à hauteur d'oreille pour REW (modes, réponse)."
+  }
+ ],
  "source_count": 4
 }

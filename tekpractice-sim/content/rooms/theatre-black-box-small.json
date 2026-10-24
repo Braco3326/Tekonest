@@ -97,5 +97,96 @@
   "mood": "noir total, service en lumière bleue, plateau en découpes et PAR halogènes/LED",
   "color_temp_k": 3200
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "mackie-1604vlz4",
+   "zone": "regie",
+   "position_m": [
+    4.25,
+    2.5,
+    5.9
+   ],
+   "rotation_deg": 180,
+   "note": "Petite console analogique en haut du gradin ; Valcourt liste une Mackie 1642VLZ3, l'Alchimic une Allen & Heath 14:4:2."
+  },
+  {
+   "equipment_id": "tascam-ss-cdr250n",
+   "zone": "regie",
+   "position_m": [
+    5.2,
+    2.4,
+    6.2
+   ],
+   "rotation_deg": 180,
+   "note": "Lecteur/enregistreur de sons pour les effets ; les deux fiches listent des lecteurs CD avec auto-pause."
+  },
+  {
+   "equipment_id": "yamaha-dbr12",
+   "zone": "aire-de-jeu",
+   "position_m": [
+    -4.5,
+    4.6,
+    1.5
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte de face accrochée à la grille (Valcourt : 2 × d&b Ci-80 ; Alchimic : 4 × Kling & Freitag CA 1001)."
+  },
+  {
+   "equipment_id": "yamaha-dbr12",
+   "zone": "aire-de-jeu",
+   "position_m": [
+    4.5,
+    4.6,
+    1.5
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte de face, côté droit."
+  },
+  {
+   "equipment_id": "shure-sm58",
+   "zone": "aire-de-jeu",
+   "position_m": [
+    0,
+    1.5,
+    -1
+   ],
+   "rotation_deg": 0,
+   "note": "Micro main (présent dans les deux fiches)."
+  },
+  {
+   "equipment_id": "sennheiser-ew-100-g4",
+   "zone": "regie",
+   "position_m": [
+    3.4,
+    2.4,
+    6.2
+   ],
+   "rotation_deg": 180,
+   "note": "Liaison HF pour un comédien, souvent louée en plus du parc de la salle."
+  },
+  {
+   "equipment_id": "dpa-4060",
+   "zone": "aire-de-jeu",
+   "position_m": [
+    1,
+    1.6,
+    -3
+   ],
+   "rotation_deg": 0,
+   "note": "Micro miniature porté sur la liaison HF."
+  },
+  {
+   "equipment_id": "radial-jdi",
+   "zone": "aire-de-jeu",
+   "position_m": [
+    -5,
+    0.1,
+    -6
+   ],
+   "rotation_deg": 0,
+   "note": "DI passive pour un clavier ou un ordinateur de musique de scène."
+  }
+ ],
  "source_count": 2
 }

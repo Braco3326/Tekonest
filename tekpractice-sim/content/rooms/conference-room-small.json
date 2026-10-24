@@ -100,5 +100,96 @@
   "mood": "éclairage de bureau diffus et uniforme, gradable par zone, stores occultants",
   "color_temp_k": 4000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "front-av",
+   "position_m": [
+    -1.2,
+    1.9,
+    -2.1
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte active gauche à côté de l'écran ; en installation réelle on trouverait souvent des plafonniers."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "front-av",
+   "position_m": [
+    1.2,
+    1.9,
+    -2.1
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte active droite."
+  },
+  {
+   "equipment_id": "shure-beta-91a",
+   "zone": "table",
+   "position_m": [
+    0,
+    0.76,
+    -0.4
+   ],
+   "rotation_deg": 180,
+   "note": "Micro de surface (boundary) demi-cardioïde posé sur la table, côté écran."
+  },
+  {
+   "equipment_id": "shure-beta-91a",
+   "zone": "table",
+   "position_m": [
+    0,
+    0.76,
+    1
+   ],
+   "rotation_deg": 180,
+   "note": "Second micro de surface, côté fond de table."
+  },
+  {
+   "equipment_id": "shure-scm820",
+   "zone": "credenza-rack",
+   "position_m": [
+    -1.75,
+    0.7,
+    1.9
+   ],
+   "rotation_deg": 90,
+   "note": "Mélangeur automatique 8 voies (IntelliMix) : ouvre seulement les micros actifs."
+  },
+  {
+   "equipment_id": "sennheiser-ew-dx-em-2",
+   "zone": "credenza-rack",
+   "position_m": [
+    -1.75,
+    0.8,
+    1.9
+   ],
+   "rotation_deg": 90,
+   "note": "Récepteur HF 2 canaux pour l'intervenant debout."
+  },
+  {
+   "equipment_id": "yamaha-xmv8280-d",
+   "zone": "credenza-rack",
+   "position_m": [
+    -1.75,
+    0.5,
+    1.9
+   ],
+   "rotation_deg": 90,
+   "note": "Ampli d'installation (utile si l'on passe à des plafonniers passifs)."
+  },
+  {
+   "equipment_id": "audinate-dante-avio-analog-input-2ch",
+   "zone": "credenza-rack",
+   "position_m": [
+    -1.75,
+    0.3,
+    1.9
+   ],
+   "rotation_deg": 90,
+   "note": "Adaptateur analogique → Dante pour envoyer le mix vers le PC visio ou l'enregistrement."
+  }
+ ],
  "source_count": 2
 }

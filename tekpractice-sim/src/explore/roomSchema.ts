@@ -6,6 +6,16 @@ import { z } from 'zod'
 
 const Range = z.object({ min: z.number(), typical: z.number().positive(), max: z.number() })
 
+/** A piece of gear the KB template places in a zone (metres, room coordinates). */
+export const GearPosition = z.object({
+  equipment_id: z.string(),
+  zone: z.string(),
+  position_m: z.tuple([z.number(), z.number(), z.number()]),
+  rotation_deg: z.number().optional(),
+  note: z.string().optional(),
+})
+export type GearPositionT = z.infer<typeof GearPosition>
+
 export const RoomFile = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/),
   name_fr: z.string(),
@@ -38,6 +48,8 @@ export const RoomFile = z.object({
     prop_hints: z.array(z.string()),
   }),
   lighting: z.object({ mood: z.string(), color_temp_k: z.number() }),
+  coordinate_system: z.string().optional(),
+  gear_positions: z.array(GearPosition).optional(),
   source_count: z.number().int().nonnegative().optional(),
 })
 export type RoomFileT = z.infer<typeof RoomFile>

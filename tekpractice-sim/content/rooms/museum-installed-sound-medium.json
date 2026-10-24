@@ -108,5 +108,107 @@
   "mood": "éclairage muséographique d'accent sur les œuvres, salle tamisée, alcôve dans le noir",
   "color_temp_k": 3000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "gallery-a",
+   "position_m": [
+    -4.5,
+    3.2,
+    -7.5
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte d'ambiance zone A, en hauteur sur rail."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "gallery-a",
+   "position_m": [
+    4.5,
+    3.2,
+    -7.5
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte d'ambiance zone A."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "av-alcove",
+   "position_m": [
+    -2.4,
+    2.5,
+    3.8
+   ],
+   "rotation_deg": 180,
+   "note": "Canal gauche alcôve, tourné vers les bancs (dos à l'entrée)."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "av-alcove",
+   "position_m": [
+    2.4,
+    2.5,
+    3.8
+   ],
+   "rotation_deg": 180,
+   "note": "Canal droit alcôve."
+  },
+  {
+   "equipment_id": "sennheiser-hd-25",
+   "zone": "listening-station",
+   "position_m": [
+    -4.5,
+    1.2,
+    5.5
+   ],
+   "rotation_deg": 90,
+   "note": "Casque de la borne d'écoute."
+  },
+  {
+   "equipment_id": "figure53-qlab",
+   "zone": "tech-cupboard",
+   "position_m": [
+    5,
+    1,
+    8
+   ],
+   "rotation_deg": 270,
+   "note": "Lecture et cues programmées (ouverture/fermeture du musée)."
+  },
+  {
+   "equipment_id": "yamaha-xmv8280-d",
+   "zone": "tech-cupboard",
+   "position_m": [
+    5,
+    0.8,
+    8.2
+   ],
+   "rotation_deg": 270,
+   "note": "Ampli d'installation 8 canaux Dante (si enceintes passives)."
+  },
+  {
+   "equipment_id": "netgear-m4250-10g2xf-poe-plus",
+   "zone": "tech-cupboard",
+   "position_m": [
+    5,
+    1.4,
+    8.2
+   ],
+   "rotation_deg": 270,
+   "note": "Switch PoE+ du réseau AV."
+  },
+  {
+   "equipment_id": "dbx-driverack-venu360",
+   "zone": "tech-cupboard",
+   "position_m": [
+    5,
+    1.2,
+    8.2
+   ],
+   "rotation_deg": 270,
+   "note": "Processeur de zones : EQ, délais et limiteurs par zone."
+  }
+ ],
  "source_count": 3
 }

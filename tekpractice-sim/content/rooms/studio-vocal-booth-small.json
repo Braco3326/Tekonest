@@ -66,5 +66,63 @@
   "mood": "doux, chaud, pas de néon (pas de bourdonnement)",
   "color_temp_k": 2700
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "km-210-9",
+   "zone": "booth",
+   "position_m": [
+    0,
+    0,
+    -0.25
+   ],
+   "rotation_deg": 0,
+   "note": "Pied perche ; la base reste hors des pieds du chanteur. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+  },
+  {
+   "equipment_id": "neumann-u87-ai",
+   "zone": "booth",
+   "position_m": [
+    0,
+    1.6,
+    -0.25
+   ],
+   "rotation_deg": 0,
+   "note": "Micro statique cardioïde, face au chanteur (côté +z)."
+  },
+  {
+   "equipment_id": "stedman-proscreen-xl",
+   "zone": "booth",
+   "position_m": [
+    0,
+    1.6,
+    -0.08
+   ],
+   "rotation_deg": 0,
+   "note": "Anti-pop entre la bouche et le micro."
+  },
+  {
+   "equipment_id": "beyerdynamic-dt-770-pro",
+   "zone": "booth",
+   "position_m": [
+    0.7,
+    1.5,
+    0.6
+   ],
+   "rotation_deg": 180,
+   "note": "Casque fermé accroché au mur."
+  },
+  {
+   "equipment_id": "behringer-ha400",
+   "zone": "booth",
+   "position_m": [
+    -0.75,
+    1.1,
+    0
+   ],
+   "rotation_deg": 90,
+   "note": "Ampli casque sur tablette murale (réglage du retour)."
+  }
+ ],
  "source_count": 3
 }

@@ -129,5 +129,129 @@
   "mood": "travail, assez lumineux sur le plateau, écran de projection visible",
   "color_temp_k": 4000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "sennheiser-mkh-416",
+   "zone": "foley-floor",
+   "position_m": [
+    -1,
+    1.4,
+    1.6
+   ],
+   "rotation_deg": 180,
+   "note": "Micro principal du bruitage, à ~1 m de l'action. La source cite le Neumann KMR 81 comme standard Foley/ADR d'Hollywood ; absent du catalogue, le MKH 416 (canon court) le remplace ici. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+  },
+  {
+   "equipment_id": "schoeps-cmc-6-mk-41",
+   "zone": "foley-floor",
+   "position_m": [
+    0.5,
+    1.8,
+    2.2
+   ],
+   "rotation_deg": 180,
+   "note": "Second micro (supercardioïde) plus éloigné, pour un plan différent."
+  },
+  {
+   "equipment_id": "km-210-9",
+   "zone": "foley-floor",
+   "position_m": [
+    -1,
+    0,
+    1.6
+   ],
+   "rotation_deg": 180,
+   "note": "Pieds perche des micros de bruitage."
+  },
+  {
+   "equipment_id": "neumann-u87-ai",
+   "zone": "adr-spot",
+   "position_m": [
+    3.3,
+    1.7,
+    -0.2
+   ],
+   "rotation_deg": 0,
+   "note": "Micro de postsynchro (doublage), comédien face à l'écran."
+  },
+  {
+   "equipment_id": "sennheiser-mkh-50",
+   "zone": "adr-spot",
+   "position_m": [
+    3,
+    2.1,
+    -0.3
+   ],
+   "rotation_deg": 0,
+   "note": "Supercardioïde en perche haute pour coller au son du tournage."
+  },
+  {
+   "equipment_id": "beyerdynamic-dt-770-pro",
+   "zone": "adr-spot",
+   "position_m": [
+    3.8,
+    1.2,
+    0.4
+   ],
+   "rotation_deg": 180,
+   "note": "Casque du comédien (bips de synchro, son direct)."
+  },
+  {
+   "equipment_id": "avid-s1",
+   "zone": "control-room",
+   "position_m": [
+    0,
+    1.1,
+    -4.3
+   ],
+   "rotation_deg": 180,
+   "note": "Surface de contrôle Pro Tools, face au plateau à travers la vitre."
+  },
+  {
+   "equipment_id": "avid-hd-io",
+   "zone": "control-room",
+   "position_m": [
+    -3.5,
+    0.8,
+    -5.2
+   ],
+   "rotation_deg": 180,
+   "note": "Interface Pro Tools HD."
+  },
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "control-room",
+   "position_m": [
+    -1.2,
+    1.2,
+    -5.5
+   ],
+   "rotation_deg": 0,
+   "note": "Écoute L de la régie (L/C/R pour l'image)."
+  },
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "control-room",
+   "position_m": [
+    0,
+    1.2,
+    -5.6
+   ],
+   "rotation_deg": 0,
+   "note": "Écoute C."
+  },
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "control-room",
+   "position_m": [
+    1.2,
+    1.2,
+    -5.5
+   ],
+   "rotation_deg": 0,
+   "note": "Écoute R."
+  }
+ ],
  "source_count": 1
 }

@@ -115,5 +115,129 @@
   "mood": "éclairage de salle gradable par zones, douche sur l'estrade, salle plongée pour la projection",
   "color_temp_k": 3500
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "nexo-p12",
+   "zone": "stage",
+   "position_m": [
+    -5,
+    3,
+    -9.3
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte façade gauche (coaxiale), orientée vers les gradins."
+  },
+  {
+   "equipment_id": "nexo-p12",
+   "zone": "stage",
+   "position_m": [
+    5,
+    3,
+    -9.3
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte façade droite."
+  },
+  {
+   "equipment_id": "shure-sm58",
+   "zone": "stage",
+   "position_m": [
+    -3,
+    1.5,
+    -8
+   ],
+   "rotation_deg": 180,
+   "note": "Micro main sur pince au pupitre (questions, intervenants)."
+  },
+  {
+   "equipment_id": "yamaha-tio1608-d",
+   "zone": "stage",
+   "position_m": [
+    5.5,
+    0.4,
+    -9.6
+   ],
+   "rotation_deg": 0,
+   "note": "Boîtier de scène Dante en coulisse d'estrade : micros pupitre et retours HF."
+  },
+  {
+   "equipment_id": "shure-ulx-d",
+   "zone": "control-room",
+   "position_m": [
+    6.5,
+    1.8,
+    9.5
+   ],
+   "rotation_deg": 180,
+   "note": "Récepteurs HF numériques en régie."
+  },
+  {
+   "equipment_id": "dpa-4088",
+   "zone": "stage",
+   "position_m": [
+    0,
+    1.6,
+    -8.5
+   ],
+   "rotation_deg": 0,
+   "note": "Micro-casque de l'enseignant (émetteur ceinture ULX-D)."
+  },
+  {
+   "equipment_id": "yamaha-tf5",
+   "zone": "control-room",
+   "position_m": [
+    5.5,
+    2,
+    8.6
+   ],
+   "rotation_deg": 180,
+   "note": "Console numérique en régie, face à l'estrade."
+  },
+  {
+   "equipment_id": "shure-scm820",
+   "zone": "control-room",
+   "position_m": [
+    4.2,
+    1.8,
+    9.6
+   ],
+   "rotation_deg": 180,
+   "note": "Automixer pour les tables rondes à plusieurs micros."
+  },
+  {
+   "equipment_id": "nexo-nxamp4x4mk2",
+   "zone": "control-room",
+   "position_m": [
+    4.8,
+    1.6,
+    9.6
+   ],
+   "rotation_deg": 180,
+   "note": "Contrôleur-ampli des NEXO P12."
+  },
+  {
+   "equipment_id": "audinate-dante-virtual-soundcard",
+   "zone": "control-room",
+   "position_m": [
+    6.8,
+    2,
+    8.6
+   ],
+   "rotation_deg": 180,
+   "note": "Captation du cours (lecture capture) sur PC via Dante."
+  },
+  {
+   "equipment_id": "beyerdynamic-dt-297-pv-mkii",
+   "zone": "interp-booth",
+   "position_m": [
+    -5,
+    1.76,
+    7.8
+   ],
+   "rotation_deg": 180,
+   "note": "Casque-micro interprète (si colloque multilingue)."
+  }
+ ],
  "source_count": 4
 }

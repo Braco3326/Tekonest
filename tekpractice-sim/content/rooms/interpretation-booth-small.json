@@ -93,5 +93,63 @@
   "mood": "salle souvent dans la pénombre ; lampe de table gradable par interprète (≥ 300 lx sur le plan de travail), pas de tubes fluorescents (crachements)",
   "color_temp_k": 3000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "beyerdynamic-dt-297-pv-mkii",
+   "zone": "work-table",
+   "position_m": [
+    -0.6,
+    0.76,
+    -1
+   ],
+   "rotation_deg": 180,
+   "note": "Casque-micro de l'interprète 1 (le KB n'a pas de casque d'interprète dédié ; ISO 2603:1998 demande un cordon d'environ 1,5 m)."
+  },
+  {
+   "equipment_id": "beyerdynamic-dt-297-pv-mkii",
+   "zone": "work-table",
+   "position_m": [
+    0.6,
+    0.76,
+    -1
+   ],
+   "rotation_deg": 180,
+   "note": "Casque-micro de l'interprète 2."
+  },
+  {
+   "equipment_id": "sennheiser-hmd-26",
+   "zone": "work-table",
+   "position_m": [
+    1.1,
+    0.76,
+    -1.05
+   ],
+   "rotation_deg": 180,
+   "note": "Casque-micro de secours."
+  },
+  {
+   "equipment_id": "audinate-dante-avio-analog-input-2ch",
+   "zone": "work-table",
+   "position_m": [
+    0,
+    0.7,
+    -1.15
+   ],
+   "rotation_deg": 180,
+   "note": "Sous la table : départ des voix interprètes vers le réseau (en vrai, le pupitre d'interprète est raccordé au système de conférence)."
+  },
+  {
+   "equipment_id": "nti-audio-xl2",
+   "zone": "interpreters",
+   "position_m": [
+    0,
+    1.2,
+    0.3
+   ],
+   "rotation_deg": 180,
+   "note": "Sonomètre/analyseur pour la réception : bruit de fond ≤ 35 dB(A) et RT de la cabine (kit de mesure, pas un équipement fixe)."
+  }
+ ],
  "source_count": 3
 }

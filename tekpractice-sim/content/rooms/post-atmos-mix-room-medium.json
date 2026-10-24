@@ -114,5 +114,173 @@
   "mood": "sombre, bias light derrière l'écran",
   "color_temp_k": 6500
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "front-lcr",
+   "position_m": [
+    -1.4,
+    1.2,
+    -1.83
+   ],
+   "rotation_deg": 30,
+   "note": "L à 30° de l'axe, 2,8 m de la position de mixage (Focal : < 4 m). rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+  },
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "front-lcr",
+   "position_m": [
+    0,
+    1.2,
+    -2.2
+   ],
+   "rotation_deg": 0,
+   "note": "C, droit devant."
+  },
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "front-lcr",
+   "position_m": [
+    1.4,
+    1.2,
+    -1.83
+   ],
+   "rotation_deg": -30,
+   "note": "R à 30°."
+  },
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "surrounds",
+   "position_m": [
+    -2.25,
+    1.2,
+    1.42
+   ],
+   "rotation_deg": 110,
+   "note": "Ls à 110° (Dolby) ; distance plus courte compensée par retard."
+  },
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "surrounds",
+   "position_m": [
+    2.25,
+    1.2,
+    1.42
+   ],
+   "rotation_deg": -110,
+   "note": "Rs à 110°."
+  },
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "surrounds",
+   "position_m": [
+    -1.2,
+    1.2,
+    2.68
+   ],
+   "rotation_deg": 150,
+   "note": "Lrs (surround arrière) vers 150°."
+  },
+  {
+   "equipment_id": "genelec-8341a",
+   "zone": "surrounds",
+   "position_m": [
+    1.2,
+    1.2,
+    2.68
+   ],
+   "rotation_deg": -150,
+   "note": "Rrs vers 150°."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "overheads",
+   "position_m": [
+    -1.4,
+    2.9,
+    -1
+   ],
+   "rotation_deg": 0,
+   "note": "Ltf (haut avant gauche) au plafond ; élévation ≈ 39° (Dolby : 30–55°) ; séparation avant/arrière des hautes ≈ moitié de la longueur."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "overheads",
+   "position_m": [
+    1.4,
+    2.9,
+    -1
+   ],
+   "rotation_deg": 0,
+   "note": "Rtf."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "overheads",
+   "position_m": [
+    -1.4,
+    2.9,
+    2.2
+   ],
+   "rotation_deg": 180,
+   "note": "Ltr (haut arrière gauche)."
+  },
+  {
+   "equipment_id": "genelec-8030c",
+   "zone": "overheads",
+   "position_m": [
+    1.4,
+    2.9,
+    2.2
+   ],
+   "rotation_deg": 180,
+   "note": "Rtr."
+  },
+  {
+   "equipment_id": "genelec-7360a",
+   "zone": "front-lcr",
+   "position_m": [
+    0.9,
+    0.25,
+    -2.3
+   ],
+   "rotation_deg": 0,
+   "note": "Caisson (LFE + bass management) ; LFE calé +10 dB par bande 20–80 Hz (Dolby)."
+  },
+  {
+   "equipment_id": "avid-s6",
+   "zone": "desk",
+   "position_m": [
+    0,
+    0.8,
+    -0.25
+   ],
+   "rotation_deg": 0,
+   "note": "Console de post-production devant la position de mixage."
+  },
+  {
+   "equipment_id": "avid-protools-mtrx-studio",
+   "zone": "rack",
+   "position_m": [
+    2.2,
+    0.8,
+    -2.8
+   ],
+   "rotation_deg": 0,
+   "note": "Interface et gestion du monitoring 7.1.4."
+  },
+  {
+   "equipment_id": "nti-audio-xl2",
+   "zone": "mix-position",
+   "position_m": [
+    0,
+    1.2,
+    0.6
+   ],
+   "rotation_deg": 0,
+   "note": "Calibrage : bruit rose 79 dB C lent par canal (Dolby)."
+  }
+ ],
  "source_count": 5
 }

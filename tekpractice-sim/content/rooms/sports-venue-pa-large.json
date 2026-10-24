@@ -157,5 +157,162 @@
   "mood": "stade éclairé par projecteurs de toiture, lumière froide et uniforme ; en concert, salle plongée dans le noir et scène en lumière",
   "color_temp_k": 5600
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "yamaha-ql1",
+   "zone": "regie-sono",
+   "position_m": [
+    -60,
+    15.9,
+    0
+   ],
+   "rotation_deg": 90,
+   "note": "Console de la régie match (speaker, musique, messages), face à la pelouse."
+  },
+  {
+   "equipment_id": "ev-re20",
+   "zone": "regie-sono",
+   "position_m": [
+    -59.2,
+    16.3,
+    1
+   ],
+   "rotation_deg": 90,
+   "note": "Micro du speaker du stade (dynamique, peu sensible au bruit de la foule)."
+  },
+  {
+   "equipment_id": "shure-ulx-d",
+   "zone": "regie-sono",
+   "position_m": [
+    -61,
+    16,
+    -1.2
+   ],
+   "rotation_deg": 90,
+   "note": "Récepteur du micro HF de l'animateur sur la pelouse."
+  },
+  {
+   "equipment_id": "figure53-qlab",
+   "zone": "regie-sono",
+   "position_m": [
+    -61,
+    15.9,
+    1.2
+   ],
+   "rotation_deg": 90,
+   "note": "Lecture des jingles, hymnes et messages préenregistrés."
+  },
+  {
+   "equipment_id": "yamaha-rio3224-d2",
+   "zone": "local-technique",
+   "position_m": [
+    -70,
+    0.5,
+    19
+   ],
+   "rotation_deg": 90,
+   "note": "Interface réseau entre la régie et la distribution vers la toiture."
+  },
+  {
+   "equipment_id": "meyer-sound-galileo-galaxy-816",
+   "zone": "local-technique",
+   "position_m": [
+    -70,
+    1,
+    20
+   ],
+   "rotation_deg": 90,
+   "note": "Processeur : égalisation et retards de chaque zone d'enceintes."
+  },
+  {
+   "equipment_id": "db-audiotechnik-d80",
+   "zone": "local-technique",
+   "position_m": [
+    -70,
+    1.5,
+    21
+   ],
+   "rotation_deg": 90,
+   "note": "Amplificateurs des groupes d'enceintes de toiture."
+  },
+  {
+   "equipment_id": "db-audiotechnik-y10p",
+   "zone": "tribune-nord",
+   "position_m": [
+    0,
+    40,
+    -62
+   ],
+   "rotation_deg": 180,
+   "note": "Bloc d'enceintes intégré au toit au-dessus d'une tribune (représente un des 36 blocs cités pour le Stade de France ; modèle non sourcé)."
+  },
+  {
+   "equipment_id": "db-audiotechnik-y10p",
+   "zone": "tribune-est",
+   "position_m": [
+    45,
+    40,
+    0
+   ],
+   "rotation_deg": 90,
+   "note": "Bloc de toiture au-dessus de la tribune est (modèle non sourcé)."
+  },
+  {
+   "equipment_id": "db-audiotechnik-y10p",
+   "zone": "tribune-ouest",
+   "position_m": [
+    -45,
+    40,
+    0
+   ],
+   "rotation_deg": 270,
+   "note": "Bloc de toiture au-dessus de la tribune ouest (modèle non sourcé)."
+  },
+  {
+   "equipment_id": "l-acoustics-k2",
+   "zone": "scene-concert",
+   "position_m": [
+    -19,
+    16,
+    -38
+   ],
+   "rotation_deg": 0,
+   "note": "Configuration concert : ligne principale gauche de la production, accrochée à la structure de scène."
+  },
+  {
+   "equipment_id": "l-acoustics-k2",
+   "zone": "scene-concert",
+   "position_m": [
+    19,
+    16,
+    -38
+   ],
+   "rotation_deg": 0,
+   "note": "Configuration concert : ligne principale droite."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "pelouse",
+   "position_m": [
+    0,
+    0,
+    -36
+   ],
+   "rotation_deg": 0,
+   "note": "Configuration concert : ligne de subs au sol devant la scène."
+  },
+  {
+   "equipment_id": "digico-sd12",
+   "zone": "regie-facade-concert",
+   "position_m": [
+    0,
+    1.4,
+    15
+   ],
+   "rotation_deg": 180,
+   "note": "Configuration concert : console façade sur l'aire de jeu."
+  }
+ ],
  "source_count": 1
 }

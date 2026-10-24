@@ -144,5 +144,162 @@
   "mood": "plein air de fin de journée puis nuit, scène en lyres et écrans LED, public dans la pénombre",
   "color_temp_k": 5600
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "yamaha-cl5",
+   "zone": "regie-facade",
+   "position_m": [
+    0,
+    1.5,
+    2
+   ],
+   "rotation_deg": 180,
+   "note": "Console façade (comme dans le scénario de changement de plateau)."
+  },
+  {
+   "equipment_id": "luminex-gigacore-16t",
+   "zone": "regie-facade",
+   "position_m": [
+    2,
+    1.2,
+    3
+   ],
+   "rotation_deg": 180,
+   "note": "Switch réseau en régie (fibre vers la scène)."
+  },
+  {
+   "equipment_id": "nti-audio-xl3",
+   "zone": "regie-facade",
+   "position_m": [
+    -2,
+    2.2,
+    2
+   ],
+   "rotation_deg": 180,
+   "note": "Mesure du niveau public et des fréquences basses."
+  },
+  {
+   "equipment_id": "yamaha-ql1",
+   "zone": "regie-retours",
+   "position_m": [
+    16.5,
+    2.7,
+    -51
+   ],
+   "rotation_deg": 270,
+   "note": "Console retours en coulisse côté droit (vue du public)."
+  },
+  {
+   "equipment_id": "shure-psm-900",
+   "zone": "regie-retours",
+   "position_m": [
+    19,
+    2.7,
+    -52
+   ],
+   "rotation_deg": 270,
+   "note": "Émetteurs d'ear monitors."
+  },
+  {
+   "equipment_id": "shure-axient-digital-ad4d",
+   "zone": "regie-retours",
+   "position_m": [
+    19,
+    2.7,
+    -50
+   ],
+   "rotation_deg": 270,
+   "note": "Récepteurs HF."
+  },
+  {
+   "equipment_id": "yamaha-rio3224-d2",
+   "zone": "scene",
+   "position_m": [
+    10,
+    1.8,
+    -50
+   ],
+   "rotation_deg": 270,
+   "note": "Stagebox réseau sur roulettes (rolling riser au changement de plateau)."
+  },
+  {
+   "equipment_id": "l-acoustics-k2",
+   "zone": "aile-son-gauche",
+   "position_m": [
+    -16.5,
+    12,
+    -42
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne principale accrochée à l'aile son gauche (Classic 4-Tower : jusqu'à 9,4 t par aile)."
+  },
+  {
+   "equipment_id": "l-acoustics-k2",
+   "zone": "aile-son-droite",
+   "position_m": [
+    16.5,
+    12,
+    -42
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne principale droite."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "public",
+   "position_m": [
+    -6,
+    0,
+    -34
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne de subs au sol devant la scène, derrière les crash barrières."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "public",
+   "position_m": [
+    6,
+    0,
+    -34
+   ],
+   "rotation_deg": 0,
+   "note": "Subs au sol, côté droit."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "tour-delai-gauche",
+   "position_m": [
+    -15,
+    8,
+    30
+   ],
+   "rotation_deg": 0,
+   "note": "Tour de délai : retardée pour arriver juste après le son de la scène."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "tour-delai-droite",
+   "position_m": [
+    15,
+    8,
+    30
+   ],
+   "rotation_deg": 0,
+   "note": "Tour de délai droite."
+  },
+  {
+   "equipment_id": "l-acoustics-la12x",
+   "zone": "aile-son-gauche",
+   "position_m": [
+    -16.5,
+    1.8,
+    -47
+   ],
+   "rotation_deg": 90,
+   "note": "Racks d'amplification sous l'aile son."
+  }
+ ],
  "source_count": 3
 }

@@ -93,5 +93,118 @@
   "mood": "calme, indirect, chaud",
   "color_temp_k": 3000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "neumann-kh-420",
+   "zone": "speakers",
+   "position_m": [
+    -1.4,
+    1.2,
+    -2.85
+   ],
+   "rotation_deg": 30,
+   "note": "Écoute principale gauche sur pied, ≥ 1 m des murs (EBU) ; base 2,8 m. rotation_deg = lacet ; 0 = face avant de l'appareil tournée vers +z (vers l'auditeur / l'opérateur)."
+  },
+  {
+   "equipment_id": "neumann-kh-420",
+   "zone": "speakers",
+   "position_m": [
+    1.4,
+    1.2,
+    -2.85
+   ],
+   "rotation_deg": -30,
+   "note": "Écoute principale droite."
+  },
+  {
+   "equipment_id": "neumann-kh-750-dsp",
+   "zone": "speakers",
+   "position_m": [
+    0,
+    0.25,
+    -3.3
+   ],
+   "rotation_deg": 0,
+   "note": "Caisson de grave central."
+  },
+  {
+   "equipment_id": "grace-m905",
+   "zone": "desk",
+   "position_m": [
+    0,
+    0.75,
+    -0.9
+   ],
+   "rotation_deg": 0,
+   "note": "Contrôleur d'écoute (volume calibré, sources, mono)."
+  },
+  {
+   "equipment_id": "rtw-touchmonitor-tm7",
+   "zone": "desk",
+   "position_m": [
+    0.5,
+    0.85,
+    -1
+   ],
+   "rotation_deg": 0,
+   "note": "Mesure de loudness et true peak."
+  },
+  {
+   "equipment_id": "manley-variable-mu",
+   "zone": "racks",
+   "position_m": [
+    2.4,
+    1,
+    -0.8
+   ],
+   "rotation_deg": -90,
+   "note": "Compresseur stéréo à tubes."
+  },
+  {
+   "equipment_id": "ssl-the-bus-plus",
+   "zone": "racks",
+   "position_m": [
+    2.4,
+    0.8,
+    -0.4
+   ],
+   "rotation_deg": -90,
+   "note": "Compresseur de bus stéréo."
+  },
+  {
+   "equipment_id": "lynx-aurora-n",
+   "zone": "racks",
+   "position_m": [
+    2.4,
+    0.6,
+    0
+   ],
+   "rotation_deg": -90,
+   "note": "Conversion AN/NA haute qualité."
+  },
+  {
+   "equipment_id": "antelope-ocx-hd",
+   "zone": "racks",
+   "position_m": [
+    2.4,
+    0.4,
+    0
+   ],
+   "rotation_deg": -90,
+   "note": "Horloge maître (word clock)."
+  },
+  {
+   "equipment_id": "nti-audio-xl2",
+   "zone": "listening",
+   "position_m": [
+    0,
+    1.2,
+    -0.4
+   ],
+   "rotation_deg": 0,
+   "note": "Sonomètre pour calibrer le niveau d'écoute au point de référence."
+  }
+ ],
  "source_count": 2
 }

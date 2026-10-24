@@ -14,7 +14,7 @@ const ROOT = resolve(__dirname, '..')
 const SRC = resolve(ROOT, '..', 'knowledge-base', 'tek-brain', 'rooms')
 const OUT = join(ROOT, 'content', 'rooms')
 
-const KEEP = ['id', 'name_fr', 'name_en', 'family', 'size', 'review', 'dimensions_m', 'zones', 'openings', 'procedural', 'lighting'] as const
+const KEEP = ['id', 'name_fr', 'name_en', 'family', 'size', 'review', 'dimensions_m', 'zones', 'openings', 'procedural', 'lighting', 'gear_positions', 'coordinate_system'] as const
 
 mkdirSync(OUT, { recursive: true })
 const index: { id: string; name_fr: string; family: string; size: string }[] = []

@@ -75,5 +75,107 @@
   "mood": "Lumière du jour variable, réverbères le soir ; torche LED caméra",
   "color_temp_k": 5600
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "ev-re50",
+   "zone": "interview-spot",
+   "position_m": [
+    -2,
+    1.4,
+    1
+   ],
+   "rotation_deg": 90,
+   "note": "Micro main dynamique omnidirectionnel du journaliste, tendu vers l'interviewé."
+  },
+  {
+   "equipment_id": "sennheiser-mkh-416",
+   "zone": "interview-spot",
+   "position_m": [
+    -1.5,
+    2.3,
+    0.2
+   ],
+   "rotation_deg": 0,
+   "note": "Micro canon en perche au-dessus du champ caméra."
+  },
+  {
+   "equipment_id": "rycote-cyclone-medium",
+   "zone": "interview-spot",
+   "position_m": [
+    -1.5,
+    2.3,
+    0.2
+   ],
+   "rotation_deg": 0,
+   "note": "Suspension + bonnette anti-vent autour du canon (indispensable dehors)."
+  },
+  {
+   "equipment_id": "rode-boompole-pro",
+   "zone": "interview-spot",
+   "position_m": [
+    -0.6,
+    1.6,
+    0
+   ],
+   "rotation_deg": 0,
+   "note": "Perche tenue par le preneur de son."
+  },
+  {
+   "equipment_id": "sound-devices-mixpre-6-ii",
+   "zone": "interview-spot",
+   "position_m": [
+    -0.4,
+    1,
+    -0.5
+   ],
+   "rotation_deg": 0,
+   "note": "Enregistreur-mélangeur portable en sacoche."
+  },
+  {
+   "equipment_id": "sennheiser-hd-25",
+   "zone": "interview-spot",
+   "position_m": [
+    -0.4,
+    1.7,
+    -0.5
+   ],
+   "rotation_deg": 0,
+   "note": "Casque fermé, isole du bruit de rue."
+  },
+  {
+   "equipment_id": "sennheiser-ew-dp-ek",
+   "zone": "interview-spot",
+   "position_m": [
+    -3.5,
+    1.5,
+    -0.5
+   ],
+   "rotation_deg": 0,
+   "note": "Récepteur HF monté sur la caméra (cravate de l'invité)."
+  },
+  {
+   "equipment_id": "comrex-access-nx",
+   "zone": "vehicle-tech-base",
+   "position_m": [
+    5,
+    0.9,
+    -3
+   ],
+   "rotation_deg": 0,
+   "note": "Codec IP portable sur batterie (cellulaire/Wi-Fi/Ethernet) pour le direct vers la station."
+  },
+  {
+   "equipment_id": "tieline-via",
+   "zone": "vehicle-tech-base",
+   "position_m": [
+    5,
+    0.9,
+    -4.5
+   ],
+   "rotation_deg": 0,
+   "note": "Codec de secours (double liaison)."
+  }
+ ],
  "source_count": 1
 }

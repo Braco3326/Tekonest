@@ -127,5 +127,129 @@
   "mood": "Décor sur-éclairé, public en lumière plus basse, gril chargé de projecteurs LED",
   "color_temp_k": 5600
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "dpa-4060",
+   "zone": "set",
+   "position_m": [
+    -2,
+    1.4,
+    -4
+   ],
+   "rotation_deg": 0,
+   "note": "Micro cravate de l'animateur, émetteur ceinture HF."
+  },
+  {
+   "equipment_id": "dpa-4060",
+   "zone": "set",
+   "position_m": [
+    2,
+    1.2,
+    -4.5
+   ],
+   "rotation_deg": 0,
+   "note": "Cravate invité (assis)."
+  },
+  {
+   "equipment_id": "shure-sm58",
+   "zone": "set",
+   "position_m": [
+    6,
+    1.5,
+    -3
+   ],
+   "rotation_deg": 0,
+   "note": "Micro main (chauffeur de salle, prestation)."
+  },
+  {
+   "equipment_id": "sennheiser-mkh-416",
+   "zone": "set",
+   "position_m": [
+    0,
+    3,
+    -2
+   ],
+   "rotation_deg": 180,
+   "note": "Micro canon sur perche, en secours des cravates ou pour un groupe."
+  },
+  {
+   "equipment_id": "schoeps-cmc-6-mk-41",
+   "zone": "audience-seating",
+   "position_m": [
+    -5,
+    6,
+    9
+   ],
+   "rotation_deg": 0,
+   "note": "Micro d'ambiance public suspendu au gril (rires, applaudissements)."
+  },
+  {
+   "equipment_id": "schoeps-cmc-6-mk-41",
+   "zone": "audience-seating",
+   "position_m": [
+    5,
+    6,
+    9
+   ],
+   "rotation_deg": 0,
+   "note": "Second micro public."
+  },
+  {
+   "equipment_id": "qsc-k12-2",
+   "zone": "camera-floor",
+   "position_m": [
+    -11,
+    1.8,
+    3.5
+   ],
+   "rotation_deg": 0,
+   "note": "Diffusion public (renfort léger) orientée vers les gradins, hors axe des micros."
+  },
+  {
+   "equipment_id": "qsc-k12-2",
+   "zone": "camera-floor",
+   "position_m": [
+    11,
+    1.8,
+    3.5
+   ],
+   "rotation_deg": 0,
+   "note": "Diffusion public côté droit."
+  },
+  {
+   "equipment_id": "sennheiser-ew-iem-g4",
+   "zone": "set",
+   "position_m": [
+    -3,
+    1.2,
+    -6
+   ],
+   "rotation_deg": 0,
+   "note": "Retour oreillette de l'animateur (ordres + programme)."
+  },
+  {
+   "equipment_id": "riedel-bolero",
+   "zone": "camera-floor",
+   "position_m": [
+    3,
+    1.1,
+    1
+   ],
+   "rotation_deg": 180,
+   "note": "Beltpack intercom HF du régisseur plateau (floor manager)."
+  },
+  {
+   "equipment_id": "shure-axient-digital-ad4d",
+   "zone": "sound-floor-store",
+   "position_m": [
+    -13.5,
+    1,
+    -2
+   ],
+   "rotation_deg": 90,
+   "note": "Récepteurs HF et distribution d'antennes dans le local son plateau."
+  }
+ ],
  "source_count": 5
 }

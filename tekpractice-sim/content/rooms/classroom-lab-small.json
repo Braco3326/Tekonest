@@ -108,5 +108,118 @@
   "mood": "éclairage de classe uniforme, rang de luminaires gradable côté tableau",
   "color_temp_k": 4000
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "behringer-x32",
+   "zone": "teacher-desk",
+   "position_m": [
+    0,
+    0.76,
+    -3.2
+   ],
+   "rotation_deg": 180,
+   "note": "Console numérique de démonstration (routing, gain staging)."
+  },
+  {
+   "equipment_id": "yamaha-hs8",
+   "zone": "teacher-desk",
+   "position_m": [
+    -1.8,
+    1.4,
+    -3.7
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte de démonstration gauche, tournée vers les élèves."
+  },
+  {
+   "equipment_id": "yamaha-hs8",
+   "zone": "teacher-desk",
+   "position_m": [
+    1.8,
+    1.4,
+    -3.7
+   ],
+   "rotation_deg": 0,
+   "note": "Enceinte de démonstration droite."
+  },
+  {
+   "equipment_id": "focusrite-scarlett-2i2-4th-gen",
+   "zone": "student-benches",
+   "position_m": [
+    -2,
+    0.76,
+    -0.8
+   ],
+   "rotation_deg": 180,
+   "note": "Interface audio USB d'un poste élève."
+  },
+  {
+   "equipment_id": "yamaha-mg10xu",
+   "zone": "student-benches",
+   "position_m": [
+    -1,
+    0.76,
+    -0.8
+   ],
+   "rotation_deg": 180,
+   "note": "Petite table de mixage analogique d'un poste élève."
+  },
+  {
+   "equipment_id": "beyerdynamic-dt-770-pro",
+   "zone": "student-benches",
+   "position_m": [
+    1,
+    0.76,
+    -0.8
+   ],
+   "rotation_deg": 180,
+   "note": "Casque fermé élève (écoute sans gêner les voisins)."
+  },
+  {
+   "equipment_id": "audio-technica-ath-m50x",
+   "zone": "student-benches",
+   "position_m": [
+    2,
+    0.76,
+    1.2
+   ],
+   "rotation_deg": 180,
+   "note": "Casque élève (autre rangée)."
+  },
+  {
+   "equipment_id": "cockos-reaper",
+   "zone": "student-benches",
+   "position_m": [
+    -2,
+    0.76,
+    1.2
+   ],
+   "rotation_deg": 180,
+   "note": "STAN installée sur les postes élèves."
+  },
+  {
+   "equipment_id": "shure-sm58",
+   "zone": "recording-corner",
+   "position_m": [
+    2.6,
+    1.5,
+    3.2
+   ],
+   "rotation_deg": 180,
+   "note": "Micro dynamique sur pied pour les TP voix."
+  },
+  {
+   "equipment_id": "rode-nt1-5th-gen",
+   "zone": "recording-corner",
+   "position_m": [
+    2.9,
+    1.6,
+    3.4
+   ],
+   "rotation_deg": 180,
+   "note": "Micro statique large membrane (fantôme 48 V)."
+  }
+ ],
  "source_count": 3
 }

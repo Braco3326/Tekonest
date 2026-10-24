@@ -139,5 +139,151 @@
   "mood": "salle noire, plateau en lyres LED et traditionnels, face chaude, fumée de diffusion",
   "color_temp_k": 3200
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "yamaha-dm7",
+   "zone": "regie-facade",
+   "position_m": [
+    0,
+    0.9,
+    8
+   ],
+   "rotation_deg": 180,
+   "note": "Console façade (Paloma : Yamaha DM7 ; Embarcadère : Midas Pro 2 / HD96, absentes du catalogue)."
+  },
+  {
+   "equipment_id": "yamaha-dm7",
+   "zone": "regie-retours",
+   "position_m": [
+    8,
+    2.2,
+    -12
+   ],
+   "rotation_deg": 270,
+   "note": "Console retours en coulisse cour (Paloma : DM7 aussi en retours)."
+  },
+  {
+   "equipment_id": "yamaha-rio3224-d2",
+   "zone": "regie-retours",
+   "position_m": [
+    8.4,
+    1.3,
+    -13.6
+   ],
+   "rotation_deg": 270,
+   "note": "Stage rack Dante (Paloma : Rio3224-D2 + Rio1608-D2 ; Embarcadère : Midas DL251 au lointain cour)."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "scene",
+   "position_m": [
+    -6.5,
+    6,
+    -7.2
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne gauche accrochée (Embarcadère : 18 Kara WST au total, génération précédente du Kara II)."
+  },
+  {
+   "equipment_id": "l-acoustics-kara-ii",
+   "zone": "scene",
+   "position_m": [
+    6.5,
+    6,
+    -7.2
+   ],
+   "rotation_deg": 0,
+   "note": "Ligne droite."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "scene",
+   "position_m": [
+    -4,
+    0,
+    -7.4
+   ],
+   "rotation_deg": 0,
+   "note": "Subs au sol sous le nez de scène (Embarcadère : 6 SB18 ; Paloma : 4 MDC3 + subs accrochés)."
+  },
+  {
+   "equipment_id": "l-acoustics-ks28",
+   "zone": "scene",
+   "position_m": [
+    4,
+    0,
+    -7.4
+   ],
+   "rotation_deg": 0,
+   "note": "Sub droit."
+  },
+  {
+   "equipment_id": "l-acoustics-x15-hiq",
+   "zone": "scene",
+   "position_m": [
+    0,
+    1.3,
+    -9
+   ],
+   "rotation_deg": 180,
+   "note": "Wedge chant (Embarcadère : 4 X15 ; Paloma : 16 Adamson M15)."
+  },
+  {
+   "equipment_id": "l-acoustics-la12x",
+   "zone": "coulisse-jardin",
+   "position_m": [
+    -8,
+    1.3,
+    -14
+   ],
+   "rotation_deg": 90,
+   "note": "Amplification façade (Embarcadère : LA8 + LA4 ; Paloma : Lab Gruppen PLM)."
+  },
+  {
+   "equipment_id": "shure-axient-digital-ad4d",
+   "zone": "regie-retours",
+   "position_m": [
+    8.4,
+    2.2,
+    -10.6
+   ],
+   "rotation_deg": 270,
+   "note": "Récepteurs HF numériques (Paloma : 2 AD4D ; Embarcadère : AD4Q)."
+  },
+  {
+   "equipment_id": "shure-sm58",
+   "zone": "scene",
+   "position_m": [
+    0,
+    2.9,
+    -9.8
+   ],
+   "rotation_deg": 0,
+   "note": "Micro chant sur pied."
+  },
+  {
+   "equipment_id": "shure-beta-91a",
+   "zone": "scene",
+   "position_m": [
+    0.5,
+    1.4,
+    -13
+   ],
+   "rotation_deg": 0,
+   "note": "Micro de surface dans la grosse caisse (présent dans les deux fiches)."
+  },
+  {
+   "equipment_id": "sennheiser-e-906",
+   "zone": "scene",
+   "position_m": [
+    3,
+    1.6,
+    -13.5
+   ],
+   "rotation_deg": 180,
+   "note": "Ampli guitare (Paloma : 6 e906)."
+  }
+ ],
  "source_count": 3
 }

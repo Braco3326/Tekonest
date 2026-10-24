@@ -150,5 +150,140 @@
   "mood": "salle chaude dorée sous lustre, plateau éclairé en halogène et LED, coulisses en lumière bleue de service",
   "color_temp_k": 3200
  },
+ "coordinate_system": "origin = floor centre; x = right, y = up, z = toward the audience / listener; metres",
+ "gear_positions": [
+  {
+   "equipment_id": "yamaha-cl5",
+   "zone": "regie",
+   "position_m": [
+    0,
+    0.9,
+    9.6
+   ],
+   "rotation_deg": 180,
+   "note": "Console numérique Dante ; la fiche de Nevers liste une Yamaha CL3 (même famille, format plus court)."
+  },
+  {
+   "equipment_id": "shure-ulx-d",
+   "zone": "regie",
+   "position_m": [
+    1.8,
+    1,
+    10.2
+   ],
+   "rotation_deg": 180,
+   "note": "Récepteurs HF en rack (Nevers : ULXD4Q, 2 émetteurs de poche et 4 micros main)."
+  },
+  {
+   "equipment_id": "yamaha-rio3224-d2",
+   "zone": "coulisse-gauche",
+   "position_m": [
+    -6.5,
+    1.17,
+    -3.5
+   ],
+   "rotation_deg": 90,
+   "note": "Stagebox Dante fixe au plateau (Nevers : 1 Rio3224-D2 fixe + 1 Rio1608-D2 mobile)."
+  },
+  {
+   "equipment_id": "l-acoustics-x15-hiq",
+   "zone": "avant-scene",
+   "position_m": [
+    -3.9,
+    6,
+    -2.2
+   ],
+   "rotation_deg": 0,
+   "note": "Diffusion de face accrochée au cadre, côté gauche ; Beaune utilise des L-Acoustics 12XT (coaxiaux) au même endroit."
+  },
+  {
+   "equipment_id": "l-acoustics-x15-hiq",
+   "zone": "avant-scene",
+   "position_m": [
+    3.9,
+    6,
+    -2.2
+   ],
+   "rotation_deg": 0,
+   "note": "Diffusion de face, côté droit."
+  },
+  {
+   "equipment_id": "l-acoustics-x8",
+   "zone": "plateau",
+   "position_m": [
+    -2.5,
+    1.17,
+    -3
+   ],
+   "rotation_deg": 180,
+   "note": "Retour de scène au sol (Beaune : 6 enceintes 12XT en diffusion scène)."
+  },
+  {
+   "equipment_id": "l-acoustics-la4x",
+   "zone": "coulisse-droite",
+   "position_m": [
+    6.8,
+    1.17,
+    -9.5
+   ],
+   "rotation_deg": 270,
+   "note": "Contrôleur amplifié (Beaune : LA4)."
+  },
+  {
+   "equipment_id": "dpa-4060",
+   "zone": "plateau",
+   "position_m": [
+    0.8,
+    2.6,
+    -5
+   ],
+   "rotation_deg": 0,
+   "note": "Micro miniature omni porté par un comédien, sur émetteur de poche (Nevers : 2 DPA 4060, 2 DPA 4066)."
+  },
+  {
+   "equipment_id": "neumann-km-184",
+   "zone": "fosse",
+   "position_m": [
+    -1.5,
+    -0.1,
+    0.8
+   ],
+   "rotation_deg": 180,
+   "note": "Appoint sur pied en fosse (Nevers : 6 KM184)."
+  },
+  {
+   "equipment_id": "sennheiser-md-421-ii",
+   "zone": "fosse",
+   "position_m": [
+    2,
+    -0.3,
+    1.2
+   ],
+   "rotation_deg": 180,
+   "note": "Appoint cuivres/percussions en fosse (Nevers : 3 MD421)."
+  },
+  {
+   "equipment_id": "shure-sm58",
+   "zone": "avant-scene",
+   "position_m": [
+    0,
+    2.6,
+    -1.6
+   ],
+   "rotation_deg": 0,
+   "note": "Micro main pour présentation ou chant."
+  },
+  {
+   "equipment_id": "beyerdynamic-m-88",
+   "zone": "plateau",
+   "position_m": [
+    -1.5,
+    1.6,
+    -8.5
+   ],
+   "rotation_deg": 0,
+   "note": "Grosse caisse ou ampli d'un petit groupe au lointain (présent dans les deux fiches)."
+  }
+ ],
  "source_count": 3
 }
