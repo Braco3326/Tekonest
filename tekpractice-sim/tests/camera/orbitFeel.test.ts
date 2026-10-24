@@ -20,6 +20,7 @@ const blank = (): OrbitCam => ({
   lowerBetaLimit: 0,
   upperRadiusLimit: 0,
   panningSensibility: 0,
+  minZ: 1, // Babylon's default near plane
 })
 
 describe('ORBIT_FEEL values (brief, verbatim)', () => {
@@ -48,6 +49,16 @@ describe('applyOrbitFeel', () => {
     expect(cam.lowerBetaLimit).toBe(0.05)
     expect(cam.upperRadiusLimit).toBe(60)
     expect(cam.panningSensibility).toBeGreaterThan(0) // pan enabled (0 disables it in Babylon)
+  })
+
+  it('near clip plane sits well inside the closest dolly (a focused mic is never clipped / unpickable)', () => {
+    const cam = blank()
+    applyOrbitFeel(cam)
+    // Closest the camera can get to a pivot = the focus dolly floor, at least 0.3 m;
+    // a device extends towards the camera by up to its bounding radius.
+    expect(cam.minZ).toBeLessThanOrEqual(0.05)
+    expect(cam.minZ).toBeGreaterThan(0)
+    expect(cam.minZ).toBeLessThan(radiusLimitFor(0) - 0.2)
   })
 
   it('never lowers a larger upper radius limit (big rooms keep their reach)', () => {

@@ -32,7 +32,15 @@ export interface OrbitCam {
   lowerBetaLimit: number | null
   upperRadiusLimit: number | null
   panningSensibility: number
+  minZ: number
 }
+
+/**
+ * Near clip plane of the orbit camera. Babylon's default (1 m) hides — and
+ * makes unpickable — a small device framed at the 0.9 m focus radius or dollied
+ * to the 0.3 m floor. Same value as the Explore walker's camera.
+ */
+export const ORBIT_MIN_Z = 0.05
 
 /** Focus: the dolly may come to 1.2 × the device's bounding radius, never under 0.3 m. */
 export function radiusLimitFor(boundingRadius: number): number {
@@ -71,4 +79,5 @@ export function applyOrbitFeel(cam: OrbitCam): void {
   cam.lowerBetaLimit = ORBIT_FEEL.lowerBetaLimit
   cam.upperRadiusLimit = Math.max(cam.upperRadiusLimit ?? 0, ORBIT_FEEL.upperRadiusLimit)
   cam.panningSensibility = DEFAULT_PANNING_SENSIBILITY
+  cam.minZ = ORBIT_MIN_Z
 }
