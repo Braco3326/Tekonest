@@ -53,6 +53,9 @@ test('fixture: names, predictions, parent and map are visible; no Babylon is loa
 
 test('the file input is keyboard-reachable', async ({ page }) => {
   await open(page)
+  // Tab order: the site link comes first (header position, as on the game page), then the file control.
+  await page.keyboard.press('Tab')
+  await expect(page.locator('#site-link')).toBeFocused()
   await page.keyboard.press('Tab')
   await expect(page.locator('#file')).toBeFocused()
 })
