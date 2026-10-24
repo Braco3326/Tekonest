@@ -27,6 +27,7 @@ Un apprenant de BTS doit apprendre une **méthode** : changer une seule chose à
 - Un `Trial` contient **une copie** de tout ce qu'il a consommé : le `DesignState` complet, les preuves (`Evidence`) et la salle consommée `consumed.room = { roomId | null, geometryRev | null }`.
 - Il contient aussi la **vue** (`view: { pose, pivot }`) pour que la comparaison se fasse depuis la même caméra. La vue **n'entre pas** dans l'empreinte : changer de vue n'est pas une nouvelle évaluation.
 - `rulesRev = 'r1:' + sha256(canonicalize(catalog.rules))`, calculé hors du module `trials` (qui n'importe jamais le catalog) et passé en entrée.
+- Les résultats de règles sont figés **compacts** : `{ ruleId, severity, subjects }` (idem pour `levelState.violations`). Les textes `title` / `teach` ne sont pas copiés : `rulesRev` fige le catalog d'où ils viennent (gain de taille, voir Décision 7).
 
 ## Décision 4 — Write-once
 
@@ -35,16 +36,19 @@ Un apprenant de BTS doit apprendre une **méthode** : changer une seule chose à
   - le renommage (`name`) ;
   - l'ajout d'amendements à la note (`evidence.noteAmendments`, append-only) ;
   - la suppression explicite par l'apprenant (`remove`, avec confirmation dans l'UI).
-- La note elle-même n'est jamais réécrite ; dès qu'un essai enfant existe (`parentId`), seule la voie des amendements reste ouverte.
-- `createTrial` exige une **prédiction non vide** (sinon `TrialError('prediction-required')`) et `prediction.writtenAt <= frozenAt`.
+- La note est **verrouillée dès la création** : aucune API ne la réécrit, jamais (avec ou sans essai enfant). Seuls les amendements datés s'ajoutent.
+- `createTrial` exige une **prédiction non vide** (sinon `TrialError('prediction-required')`) et `prediction.writtenAt <= frozenAt`. Un nombre non canonisable (NaN, ±Infini, hors plage) → `TrialError('invalid-design')` ; un hacheur absent → `TrialError('crypto-unavailable')`. Aucune exception brute ne sort.
 
 ## Décision 5 — Empreinte canonique `fp1`
 
 - `fingerprint(design) = 'fp1:' + sha256hex(canonicalize(design))` via `crypto.subtle`.
 - `canonicalize` :
-  - clés triées ; tableaux gardés dans l'ordre, **sauf** les listes de connexions, triées par une clé normalisée (chaque câble écrit `a < b`, puis la liste triée) : brancher A→B ou B→A, dans n'importe quel ordre, donne la même empreinte ;
+  - clés triées ; tableaux gardés dans l'ordre, **sauf** les listes de connexions, triées par une clé normalisée (chaque câble écrit `a < b`, puis la liste triée) : brancher A→B ou B→A, dans n'importe quel ordre, donne la même empreinte. **Tous les champs** du câble sont conservés (pas seulement `a`/`b`), pour qu'un futur attribut de câble entre dans l'empreinte ;
   - nombres quantifiés selon le nom du champ : positions → 0,001 m ; angles en degrés → 0,1° ; `delayMs` → 0,01 ms ; autres → 1e-6 ;
+  - le lacet (`yawDeg`) est d'abord **normalisé dans [0, 360)** : 0° ≡ 360° ≡ −360° ;
   - `-0` → `0`, jamais de notation exponentielle.
+- Le design figé est **stocké déjà quantifié** (1 mm, 0,1°) ; la re-quantification est idempotente, l'empreinte ne change pas.
+- `diffDesign` (→ `changedSinceParent`) compare **les mêmes valeurs quantifiées** que l'empreinte (`quantField`, `canonicalCable`) : empreintes égales ⇔ diff vide (à l'ordre des tableaux près), vérifié par un test de propriété sur 400 paires aléatoires. Clés : `room`, `instance:+id`, `instance:-id`, `instance:~id` (deviceId changé), `placement:id`, `connection:+N`, `connection:-N`, `control:<instance>.<contrôle>`.
 - L'empreinte est **revérifiée au chargement** ; un écart envoie le stockage en quarantaine.
 - Le préfixe `fp1:` est versionné : toute évolution de la canonisation crée `fp2:`, jamais une réécriture silencieuse.
 
@@ -52,15 +56,33 @@ Un apprenant de BTS doit apprendre une **méthode** : changer une seule chose à
 
 - L'API de stockage injectée est `Pick<Storage, 'getItem' | 'setItem'>` : **`removeItem` n'existe pas** dans le module.
 - Au chargement : parse zod strict + empreinte revérifiée par essai. En cas d'échec, la chaîne brute est **ajoutée** à `audio-sim/trials.quarantine` = `{ version: 1, items: { at, raw, reason }[] }`, la liste chargée est vide et `quarantined: true` est renvoyé (l'UI le signale).
-- La quarantaine est en lecture seule et exportable. Elle est **plafonnée à 5 éléments** : au-delà, le plus ancien est retiré. C'est la **seule suppression bornée** du système, documentée ici volontairement : une boucle de corruption ne doit pas remplir le stockage.
+- La quarantaine est en lecture seule et exportable. Elle est **plafonnée à 5 éléments** : au-delà, le plus ancien est retiré, avec l'avertissement `quarantine-evicted`. C'est la **seule suppression bornée** du système, documentée ici volontairement : une boucle de corruption ne doit pas remplir le stockage.
+- Chaque `raw` est **tronqué à 200 000 caractères** (drapeau `truncated: true`) : la quarantaine reste sous ~1 Mo. Un même contenu n'est mis en quarantaine qu'une fois. Une quarantaine illisible (dont un `at` non ISO) est elle-même conservée comme élément (`quarantine-unreadable`).
+- Si la copie en quarantaine échoue, le store passe en **lecture seule** (`quarantine-failed`) : aucune écriture ultérieure ne peut écraser la seule copie.
+- Si `crypto.subtle` manque, rien n'est vérifiable : **lecture seule** (`crypto-unavailable`) et **pas** de quarantaine (les données sont probablement saines, c'est le navigateur qui manque).
+- Toutes les opérations du store (chargement compris) passent par **une seule file série** : une écriture ne peut pas s'intercaler pendant un chargement, et deux ajouts concurrents du même id donnent un ajout et un `duplicate-id`.
 - Ceci remplace, pour les Essais, la règle générale « version mismatch → reset + notice » de `CLAUDE.md`.
 
 ## Décision 7 — Budget global en octets (D3)
 
-- Budget absolu : **1 500 000 octets** pour `audio-sim/trials` (mesuré en longueur de chaîne JSON). Avertissement `near-budget` dès **80 %**.
-- `append` refuse un ajout qui dépasserait le budget → `{ ok: false, reason: 'budget' }`. L'UI propose « Exporter puis archiver » ; l'arrêt dur n'arrive qu'au budget absolu.
-- Toute écriture est protégée : `QuotaExceededError` → `{ ok: false, reason: 'quota' }`, toujours affiché à l'apprenant. **Aucun échec d'écriture n'est silencieux.**
-- La taille réelle d'un Essai reste à mesurer (3 Ko est une estimation non mesurée) ; le budget pourra être réglé, pas contourné.
+- Budget absolu **global** : **1 500 000 unités**, où « global » = `audio-sim/trials` **+** `audio-sim/trials.quarantine`, et l'unité = une **unité de code UTF-16** (`string.length` du JSON stocké ; c'est ainsi que les navigateurs comptent le quota de localStorage). Avertissement `near-budget` dès **80 %**.
+- Une écriture qui ferait **grossir** le fichier au-delà du budget est refusée → `{ ok: false, reason: 'budget' }`. La suppression reste toujours possible. L'UI propose « Exporter puis archiver » ; l'arrêt dur n'arrive qu'au budget absolu.
+- Toute écriture est protégée : `QuotaExceededError` → `{ ok: false, reason: 'quota' }`, autre erreur → `'storage'`. **Aucun échec d'écriture n'est silencieux.**
+- **Mesure** (test `tests/trials/size.test.ts`) : un Essai moyen (12 appareils, 14 câbles, 3 événements de règle, prédiction et note de 200 caractères, état de niveau) pèse **4 805 unités** (6 819 avant compactage des règles et quantification du design). Soit ~310 Essais dans le budget, quarantaine vide. L'estimation de 3 Ko du modèle de données était trop basse.
+
+### Avis à afficher à l'apprenant (UI)
+
+| Code | Quand | Intention (le texte final vient du copy deck, tekuxwriter) |
+|---|---|---|
+| `quarantined: true` | Chargement : données illisibles mises de côté | les Essais ont été mis de côté, exportables |
+| `quarantine-evicted` | Le plafond de 5 a retiré le plus ancien élément | une ancienne copie de secours a été retirée |
+| `quarantine-failed` | La copie de secours n'a pas pu être écrite | lecture seule, rien n'a été effacé |
+| `read-only` | Écriture refusée (store en lecture seule) | rien n'est enregistré pour l'instant |
+| `crypto-unavailable` | Navigateur sans `crypto.subtle` | Essais en lecture seule sur ce navigateur |
+| `storage-unavailable` | Stockage bloqué (navigation privée…) | Essais indisponibles |
+| `near-budget` | ≥ 80 % du budget global | proposer « Exporter puis archiver » |
+| `budget` | L'ajout dépasserait le budget | « Exporter puis archiver » |
+| `quota` / `storage` | Le navigateur a refusé l'écriture | l'Essai n'a pas été enregistré |
 
 ## Décision 8 — Politique d'examen (D2)
 

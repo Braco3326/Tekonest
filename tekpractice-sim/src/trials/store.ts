@@ -5,11 +5,15 @@
  * - `audio-sim/trials` = { version: 1, trials: Trial[] }, append-only.
  * - Load: strict zod parse + every fingerprint re-verified. Any failure copies
  *   the raw string into `audio-sim/trials.quarantine`
- *   ({ version: 1, items: { at, raw, reason }[] }, append-only, capped at 5:
- *   the oldest item is the only bounded removal) and the list starts empty.
+ *   ({ version: 1, items: { at, raw, reason, truncated? }[] }, append-only,
+ *   raw capped at 200k chars, at most 5 items: evicting the oldest is the only
+ *   bounded removal, warned 'quarantine-evicted') and the list starts empty.
  *   This replaces, for Essais, CLAUDE.md's "version mismatch → reset".
+ * - One serial queue for every operation (load included).
  * - Writes never throw: QuotaExceededError → { ok:false, reason:'quota' };
- *   growth past the byte budget → { ok:false, reason:'budget' }; ≥ 80 % → 'near-budget'.
+ *   growth past the GLOBAL budget (trials + quarantine, UTF-16 code units)
+ *   → { ok:false, reason:'budget' }; ≥ 80 % → 'near-budget'.
+ * - No crypto.subtle → read-only + 'crypto-unavailable', no quarantine.
  * - Write-once: only `name` and `evidence.noteAmendments` change after a
  *   freeze; `remove` is an explicit learner action (confirmed in the UI).
  */
