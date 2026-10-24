@@ -11,13 +11,16 @@
  * - exportQuarantine(storage): what the store set aside (quarantine items +
  *   the raw main key, which is the only full copy when the quarantine copy was
  *   truncated), as the same kind of envelope with `kind: 'quarantine'`, so a
- *   learner can save it while the store is read-only. Read-only: no
+ *   learner can save it while the store is read-only; the saved-rig quarantine
+ *   (`audio-sim/rigs.v2.quarantine`) rides along as `rigItems`. Read-only: no
  *   "acknowledge / clear" step here (open decision, ADR-0012 Décision 6).
  */
 import { z } from 'zod'
 import { canonicalize, FP_PREFIX, sha256hex, type Hasher } from './fingerprint'
 import { QUARANTINE_KEY, quarantineSchema, TRIALS_KEY, trialSchema, type QuarantineItem, type TrialStorage } from './store'
 import { cloneData, deepFreeze, type Trial } from './trial'
+// Pure module (zod + types only): the saved-rig quarantine is exported alongside.
+import { RIGS_QUARANTINE_KEY } from '../ui/rigStore'
 
 export const EXPORT_FORMAT_VERSION = 1
 export const EXPORT_APP = 'tekpractice'
@@ -97,25 +100,17 @@ export function exportQuarantine(storage: TrialStorage, exportedAt: Date | strin
   const at = toIso(exportedAt)
   let qRaw: string | null
   let trialsRaw: string | null
+  let rigRaw: string | null
   try {
     qRaw = storage.getItem(QUARANTINE_KEY)
     trialsRaw = storage.getItem(TRIALS_KEY)
+    rigRaw = storage.getItem(RIGS_QUARANTINE_KEY)
   } catch {
     return { ok: false, reason: 'storage' }
   }
-  let items: QuarantineItem[] = []
-  if (qRaw !== null) {
-    let parsed: unknown
-    try {
-      parsed = JSON.parse(qRaw)
-    } catch {
-      parsed = undefined
-    }
-    const q = quarantineSchema.safeParse(parsed)
-    // An unreadable quarantine is exported whole, as one item: never dropped.
-    items = q.success ? q.data.items : [{ at, raw: qRaw, reason: 'quarantine-unreadable' }]
-  }
-  if (items.length === 0 && trialsRaw === null) return { ok: false, reason: 'empty' }
+  const items = readItems(qRaw, at)
+  const rigItems = readItems(rigRaw, at)
+  if (items.length === 0 && rigItems.length === 0 && trialsRaw === null) return { ok: false, reason: 'empty' }
   const json = JSON.stringify({
     formatVersion: EXPORT_FORMAT_VERSION,
     kind: 'quarantine',
@@ -124,6 +119,21 @@ export function exportQuarantine(storage: TrialStorage, exportedAt: Date | strin
     declaratif: true,
     items,
     trialsRaw,
+    rigItems,
   })
-  return { ok: true, json, items: items.length }
+  return { ok: true, json, items: items.length + rigItems.length }
+}
+
+/** Both quarantines share the { version: 1, items: { at, raw, reason, truncated? }[] } shape. */
+function readItems(raw: string | null, at: string): QuarantineItem[] {
+  if (raw === null) return []
+  let parsed: unknown
+  try {
+    parsed = JSON.parse(raw)
+  } catch {
+    parsed = undefined
+  }
+  const q = quarantineSchema.safeParse(parsed)
+  // An unreadable quarantine is exported whole, as one item: never dropped.
+  return q.success ? q.data.items : [{ at, raw, reason: 'quarantine-unreadable' }]
 }

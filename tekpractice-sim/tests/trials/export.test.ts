@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { exportQuarantine, exportTrails, importTrails } from '../../src/trials/export'
 import { QUARANTINE_KEY, TRIALS_KEY, type TrialStorage } from '../../src/trials/store'
 import { createTrial, type Trial } from '../../src/trials/trial'
+import { RIGS_QUARANTINE_KEY } from '../../src/ui/rigStore'
 import { input, NOW } from './fixtures'
 
 const EXPORTED_AT = '2026-10-24T11:00:00.000Z'
@@ -103,7 +104,7 @@ describe('exportQuarantine', () => {
     expect(r.ok).toBe(true)
     if (!r.ok) return
     const env = JSON.parse(r.json)
-    expect(Object.keys(env)).toEqual(['formatVersion', 'kind', 'exportedAt', 'app', 'declaratif', 'items', 'trialsRaw'])
+    expect(Object.keys(env)).toEqual(['formatVersion', 'kind', 'exportedAt', 'app', 'declaratif', 'items', 'trialsRaw', 'rigItems'])
     expect(env).toEqual({
       formatVersion: 1,
       kind: 'quarantine',
@@ -112,7 +113,21 @@ describe('exportQuarantine', () => {
       declaratif: true,
       items: [item],
       trialsRaw: '{broken',
+      rigItems: [],
     })
+    expect(r.items).toBe(1)
+  })
+
+  it('also carries the saved-rig quarantine (audio-sim/rigs.v2.quarantine) as rigItems', () => {
+    const rigItem = { at: '2026-10-24T09:30:00.000Z', raw: '{"version":2,"rigs":[{"name":1}]}', reason: 'schema:rigs.0.name' }
+    const s = mem({ [RIGS_QUARANTINE_KEY]: JSON.stringify({ version: 1, items: [rigItem] }) })
+    const r = exportQuarantine(s, EXPORTED_AT)
+    expect(r.ok).toBe(true)
+    if (!r.ok) return
+    const env = JSON.parse(r.json)
+    expect(env.rigItems).toEqual([rigItem])
+    expect(env.items).toEqual([])
+    expect(env.trialsRaw).toBeNull()
     expect(r.items).toBe(1)
   })
 
