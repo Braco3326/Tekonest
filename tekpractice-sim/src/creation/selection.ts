@@ -83,6 +83,20 @@ export function pickDevice(scene: Scene | null, x: number, y: number): string | 
 }
 
 /**
+ * Hover (Task 14b): the device under a free-moving pointer (no button held, so
+ * never during an orbit drag) gets the hover outline; leaving the canvas or a
+ * press clears it. Event-driven only: one pick per pointer move, no per-frame
+ * work (the move already asks for a frame through the render scheduler).
+ */
+export function attachCanvasHover(canvas: HTMLElement, bag: DisposableBag, pick: (x: number, y: number) => string | null, hover: (id: string | null) => void): void {
+  bag.listen(canvas, 'pointermove', (e: PointerEvent) => {
+    if (e.pointerType === 'touch') return
+    hover(e.buttons === 0 ? pick(e.offsetX, e.offsetY) : null)
+  })
+  bag.listen(canvas, 'pointerleave', () => hover(null))
+}
+
+/**
  * A primary-button click on a device body selects it and flies to it.
  * DOM listeners on the canvas (in `bag`), independent of the place's scene.
  */

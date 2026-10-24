@@ -39,14 +39,20 @@ import { cableKey, planSceneOps } from './sceneDiff'
 import { placeFromKey, placeKey, type PlaceRef } from './places'
 import { blankData, loadPlaceData, type PlaceData } from './placeData'
 import { CREATION_TOKENS } from '../design/creationTokens'
+import type { RoomTheme } from '../scene/RoomBuilder'
+import { CREATION_DEVICE_THEME, CREATION_ROOM_THEME } from './sceneTheme'
 
 const NUIT = CREATION_TOKENS.color.nuit
-const AMBRE = Color3.FromHexString(CREATION_TOKENS.color.ambre)
+const SELECTION = Color3.FromHexString(CREATION_TOKENS.scene.selection)
+const HOVER = Color3.FromHexString(CREATION_TOKENS.scene.hover)
+const LIGHT = CREATION_TOKENS.light
 /** Selection outline (world units) + overlay wash: the outline alone is sub-pixel from the room overview. */
 const SELECT_OUTLINE_WIDTH = 0.015
 const SELECT_OVERLAY_ALPHA = 0.22
+/** Hover: thinner, no wash, never mistaken for the selection. */
+const HOVER_OUTLINE_WIDTH = 0.008
 const DEG = Math.PI / 180
-type RoomBuild = (scene: Scene, file: Extract<PlaceData, { kind: 'room' }>['file'], layout: RoomLayout) => unknown
+type RoomBuild = (scene: Scene, file: Extract<PlaceData, { kind: 'room' }>['file'], layout: RoomLayout, theme?: RoomTheme) => unknown
 
 export class SceneHost {
   readonly engine: Engine
@@ -144,9 +150,25 @@ export class SceneHost {
     return this.instances.get(id)?.root.isEnabled() ?? false
   }
 
-  /** Devices currently drawn with the selection outline (e2e / tests). */
+  /** The device under the pointer, drawn with the hover outline (null = none). */
+  private hoveredId: string | null = null
+
+  /** Hover a device (null clears). A frame is asked only when it changes. */
+  setHovered(id: string | null): void {
+    if (id === this.hoveredId) return
+    this.hoveredId = id
+    this.applyDecor()
+  }
+
+  hovered(): string | null {
+    return this.hoveredId
+  }
+
+  /** Devices currently drawn with the SELECTION outline (e2e / tests); the hover outline has no wash. */
   outlined(): string[] {
-    return [...this.instances].filter(([, inst]) => inst.root.getChildMeshes(false).some((m) => m.metadata?.isDeviceBody === true && m.renderOutline)).map(([id]) => id)
+    return [...this.instances]
+      .filter(([, inst]) => inst.root.getChildMeshes(false).some((m) => m.metadata?.isDeviceBody === true && m.renderOutline && m.renderOverlay))
+      .map(([id]) => id)
   }
 
   /** What the camera frames for a tree row: a 'zone:<id>' or 'cable:<key>' mesh (world bounds), or null. */
@@ -174,15 +196,19 @@ export class SceneHost {
     for (const [id, inst] of this.instances) {
       inst.root.setEnabled(!this.hidden.has(id))
       const on = id === this.selected
+      const hover = !on && id === this.hoveredId
       for (const m of inst.root.getChildMeshes(false)) {
         if (m.metadata?.isDeviceBody !== true) continue
-        m.renderOutline = on
+        m.renderOutline = on || hover
         m.renderOverlay = on
         if (on) {
-          m.outlineColor = AMBRE
+          m.outlineColor = SELECTION
           m.outlineWidth = SELECT_OUTLINE_WIDTH
-          m.overlayColor = AMBRE
+          m.overlayColor = SELECTION
           m.overlayAlpha = SELECT_OVERLAY_ALPHA
+        } else if (hover) {
+          m.outlineColor = HOVER
+          m.outlineWidth = HOVER_OUTLINE_WIDTH
         }
       }
     }
@@ -334,15 +360,20 @@ export class SceneHost {
     // Explicit: a disposed previous camera must never leave Babylon falling back to cameras[0].
     scene.activeCamera = camera
 
+    // One calm fill + one key (Task 14b, tokens): no shadow generator, nothing recomputed per frame.
     const hemi = new HemisphericLight('light', new Vector3(0.2, 1, 0.3), scene)
-    hemi.intensity = 0.95
-    hemi.groundColor = Color3.FromHexString('#DDE1E8')
+    hemi.intensity = LIGHT.fill
+    hemi.diffuse = Color3.FromHexString(LIGHT.fillSky)
+    hemi.groundColor = Color3.FromHexString(LIGHT.fillGround)
+    hemi.specular = Color3.Black()
     const key = new DirectionalLight('key', new Vector3(-0.35, -1, 0.25), scene)
-    key.intensity = 0.35
+    key.intensity = LIGHT.key
+    key.diffuse = Color3.FromHexString(LIGHT.keyColor)
 
     if (data.kind === 'room' && buildRoom) {
-      buildRoom(scene, data.file, data.layout)
+      buildRoom(scene, data.file, data.layout, CREATION_ROOM_THEME)
       this._layout = data.layout
+      this.buildGrid(scene, data.layout.width, data.layout.length)
     } else {
       const ground = MeshBuilder.CreateGround('stage', { width: data.width, height: data.length }, scene)
       const mat = new StandardMaterial('mat:stage', scene)
@@ -357,7 +388,7 @@ export class SceneHost {
     const bag = new DisposableBag()
     this.bag = bag
     this.controllers = new DisposableBag()
-    this.spawner = new DeviceSpawner(scene, this.registry)
+    this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME)
     this.cables = new CableRenderer(scene, undefined, { pulses: false })
     this._rig = new CameraRig(camera)
     attachRenderScheduler(this.engine, scene, camera, this.canvas, this.scheduler, bag)

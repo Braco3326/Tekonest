@@ -133,12 +133,40 @@ const DIR_COLOR: Record<string, Color3> = {
   bidir: Color3.FromHexString(TOKENS.color.portBidir),
 }
 
+/**
+ * An opt-in placeholder look (Mode Création, Task 14b). Absent = the legacy
+ * look, exactly (TOKENS body / ports, ink-on-white labels). A loaded .glb is
+ * never recoloured: only the placeholder box, its markers, labels and shadow.
+ */
+export interface DeviceTheme {
+  /** Box sides. */
+  body: string
+  /** Top-face tint for a realWorld.category (null = the body colour). */
+  accentOf(category: string): string | null
+  port: { in: string; out: string; bidir: string }
+  /** Port marker self-illumination, share of its colour (legacy: 0.25). */
+  portGlow: number
+  labelInk: string
+  labelBg: string
+  /** Canvas font family for labels (falls back to the UA sans-serif when not loaded). */
+  labelFont: string
+  /** Contact-shadow core colour + opacity. */
+  shadow: string
+  shadowAlpha: number
+}
+
+const hexToRgba = (hex: string, a: number): string => {
+  const n = parseInt(hex.replace('#', ''), 16)
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`
+}
+
 export class DeviceSpawner {
   private materials = new Map<string, StandardMaterial>()
 
   constructor(
     private scene: Scene,
     private registry: Registry,
+    private theme?: DeviceTheme,
   ) {}
 
   spawn(deviceId: string, position: Vector3, instanceId = deviceId): DeviceInstance {
@@ -350,10 +378,22 @@ export class DeviceSpawner {
   private buildPlaceholder(device: DeviceT, instanceId: string, root: TransformNode): Map<string, Mesh> {
     const [w, h, d] = SIZE_BY_CATEGORY[device.realWorld.category] ?? DEFAULT_SIZE
 
-    const box = MeshBuilder.CreateBox(`box:${instanceId}`, { width: w, height: h, depth: d }, this.scene)
+    const theme = this.theme
+    let box: Mesh
+    if (theme) {
+      // Sides in the body colour, the top face tinted by gear family (vertex
+      // colours × a white material): one mesh, one shared material.
+      const side = Color3.FromHexString(theme.body).toColor4(1)
+      const top = Color3.FromHexString(theme.accentOf(device.realWorld.category) ?? theme.body).toColor4(1)
+      const faceColors = [side, side, side, side, top, side] // Babylon box faces: 4 = top
+      box = MeshBuilder.CreateBox(`box:${instanceId}`, { width: w, height: h, depth: d, faceColors }, this.scene)
+      box.material = this.material('body:themed', undefined, Color3.White(), 0.06)
+    } else {
+      box = MeshBuilder.CreateBox(`box:${instanceId}`, { width: w, height: h, depth: d }, this.scene)
+      box.material = this.material('body', TOKENS.color.deviceBody)
+    }
     box.parent = root
     box.position.y = h / 2
-    box.material = this.material('body', TOKENS.color.deviceBody)
     // Focus & Patch (ADR-0008): the body is the double-click focus target.
     box.isPickable = true
     box.metadata = { isDeviceBody: true, instanceId }
@@ -381,7 +421,9 @@ export class DeviceSpawner {
       marker.rotation.x = Math.PI / 2
       marker.parent = root
       marker.position = local
-      marker.material = this.material(`dir:${port.dir}`, undefined, DIR_COLOR[port.dir])
+      marker.material = theme
+        ? this.material(`dir:${port.dir}:themed`, theme.port[port.dir as keyof DeviceTheme['port']] ?? theme.port.bidir, undefined, theme.portGlow)
+        : this.material(`dir:${port.dir}`, undefined, DIR_COLOR[port.dir])
       marker.isPickable = false
 
       // Invisible, enlarged pick target — capped by grid spacing ONLY along
@@ -416,8 +458,9 @@ export class DeviceSpawner {
       tex = new DynamicTexture('tex:contact-shadow', { width: 256, height: 256 }, this.scene, false)
       const ctx = tex.getContext() as CanvasRenderingContext2D
       const g = ctx.createRadialGradient(128, 128, 8, 128, 128, 126)
-      g.addColorStop(0, TOKENS.color.contactShadow)
-      g.addColorStop(1, 'rgba(20, 24, 32, 0)')
+      const t = this.theme
+      g.addColorStop(0, t ? hexToRgba(t.shadow, t.shadowAlpha) : TOKENS.color.contactShadow)
+      g.addColorStop(1, t ? hexToRgba(t.shadow, 0) : 'rgba(20, 24, 32, 0)')
       ctx.fillStyle = g
       ctx.fillRect(0, 0, 256, 256)
       tex.update()
@@ -456,7 +499,9 @@ export class DeviceSpawner {
     const tex = new DynamicTexture(`tex:${name}`, { width: texW, height: texH }, this.scene, false)
     // Ink on OPAQUE white — a tiny gallery label card. No alpha pipeline at
     // all: dark glyphs die in luminance-derived opacity (learned the hard way).
-    tex.drawText(text, null, null, `bold ${fontPx}px sans-serif`, TOKENS.color.ink, TOKENS.color.floor, true)
+    const t = this.theme
+    if (t) tex.drawText(text, null, null, `600 ${fontPx}px ${t.labelFont}`, t.labelInk, t.labelBg, true)
+    else tex.drawText(text, null, null, `bold ${fontPx}px sans-serif`, TOKENS.color.ink, TOKENS.color.floor, true)
 
     const mat = new StandardMaterial(`mat:${name}`, this.scene)
     mat.emissiveTexture = tex
@@ -472,13 +517,13 @@ export class DeviceSpawner {
   }
 
   /** Shared materials (one per body/direction) — placeholders must stay cheap. */
-  private material(key: string, hex?: string, color?: Color3): StandardMaterial {
+  private material(key: string, hex?: string, color?: Color3, glow = 0.25): StandardMaterial {
     let mat = this.materials.get(key)
     if (!mat) {
       mat = new StandardMaterial(`mat:${key}`, this.scene)
       const c = color ?? Color3.FromHexString(hex ?? '#888888')
       mat.diffuseColor = c
-      mat.emissiveColor = c.scale(0.25)
+      mat.emissiveColor = c.scale(glow)
       this.materials.set(key, mat)
     }
     return mat

@@ -27,7 +27,7 @@ import { mountNotes } from './shell/notes'
 import { bodyCentreOf } from './debug'
 import { debugBodyCenter } from '../scene/debugBody'
 import { cableKey } from './sceneDiff'
-import { attachCanvasPicking, createSelection, pickDevice } from './selection'
+import { attachCanvasHover, attachCanvasPicking, createSelection, pickDevice } from './selection'
 import { mountProjectTree } from './shell/projectTree'
 import { mountPropertiesPanel } from './shell/propertiesPanel'
 import { buildTree, hideKeyOf, type TreeNode } from './shell/treeModel'
@@ -803,6 +803,8 @@ export async function bootCreation(): Promise<void> {
   })
   // A click on a device body in the 3D view selects it and flies to it.
   attachCanvasPicking(canvas, shellBag, (x, y) => pickDevice(host.scene, x, y), selection)
+  // Hover (Task 14b): a thin Papier outline on the device under the pointer, never the Ambre selection.
+  attachCanvasHover(canvas, shellBag, (x, y) => pickDevice(host.scene, x, y), (id) => host.setHovered(id))
   /** Menu item ids → the key map (the menus show the live labels). */
   const MENU_KEYS: Record<string, CreationAction | undefined> = {
     undo: 'UNDO',

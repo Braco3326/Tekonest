@@ -25,7 +25,24 @@ const ZONE_TINT: Record<string, string> = {
   pit: '#5A4632',
 }
 
-export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout): TransformNode {
+/**
+ * An opt-in look (Mode Création, Task 14b). Absent = the legacy look, exactly:
+ * the room file's procedural colours, per-kind zone tints, a translucent flat
+ * zone mark and the room's own colour-temperature light.
+ */
+export interface RoomTheme {
+  floor: string
+  wall: string
+  ceiling: string
+  /** Every zone (deck or flat mark), opaque. */
+  zoneFill: string
+  /** A thin outline around each zone's top, named like the zone (hidden / framed with it). */
+  zoneEdge: string
+  /** False: the caller owns the lighting, the room adds no light. */
+  roomLight: boolean
+}
+
+export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout, theme?: RoomTheme): TransformNode {
   const root = new TransformNode(`room:${room.id}`, scene)
   const mat = (name: string, hex: string, alpha = 1): StandardMaterial => {
     const m = new StandardMaterial(`mat:room:${name}`, scene)
@@ -35,9 +52,14 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout): Tr
     m.backFaceCulling = true
     return m
   }
-  const wallMat = mat('wall', room.procedural.wall_color)
-  const floorMat = mat('floor', room.procedural.floor_color)
-  const ceilMat = mat('ceiling', room.procedural.ceiling_color)
+  const wallMat = mat('wall', theme ? theme.wall : room.procedural.wall_color)
+  const floorMat = mat('floor', theme ? theme.floor : room.procedural.floor_color)
+  const ceilMat = mat('ceiling', theme ? theme.ceiling : room.procedural.ceiling_color)
+  // Themed zones share two materials (deck, flat mark); the flat mark is depth-biased as below.
+  const deckMat = theme ? mat('zone:deck', theme.zoneFill, 1) : null
+  const markMatThemed = theme ? mat('zone:mark', theme.zoneFill, 1) : null
+  if (markMatThemed) markMatThemed.zOffset = -2
+  const edgeColor = theme ? Color3.FromHexString(theme.zoneEdge) : null
   const own = (m: Mesh): Mesh => {
     m.isPickable = false
     m.parent = root
@@ -77,23 +99,46 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout): Tr
 
   for (const z of layout.zones) {
     const tint = ZONE_TINT[z.kind] ?? '#9AA3B2'
-    if (z.y > 0.05) {
+    const raised = z.y > 0.05
+    if (raised) {
       const deck = surface(own(MeshBuilder.CreateBox(`room:zone:${z.id}`, { width: z.w, depth: z.d, height: z.y }, scene)))
       deck.position = new Vector3(z.x, z.y / 2, z.z)
-      deck.material = mat(`zone:${z.id}`, tint, 1)
+      deck.material = deckMat ?? mat(`zone:${z.id}`, tint, 1)
     } else {
       const mark = surface(own(MeshBuilder.CreateGround(`room:zone:${z.id}`, { width: z.w, height: z.d }, scene)))
       mark.position = new Vector3(z.x, 0.005, z.z)
-      const markMat = mat(`zone:${z.id}`, tint, 0.12)
-      // y stays 0.005: with the orbit minZ at 0.05 the mark could z-fight the floor at overview distance, so bias it forward in depth.
-      markMat.zOffset = -2
-      mark.material = markMat
+      if (markMatThemed) mark.material = markMatThemed
+      else {
+        const markMat = mat(`zone:${z.id}`, tint, 0.12)
+        // y stays 0.005: with the orbit minZ at 0.05 the mark could z-fight the floor at overview distance, so bias it forward in depth.
+        markMat.zOffset = -2
+        mark.material = markMat
+      }
+    }
+    if (edgeColor) {
+      // One closed line loop just above the zone's top: 1 px, no per-frame work, never picked.
+      const y = (raised ? z.y : 0.005) + 0.004
+      const hw = z.w / 2
+      const hd = z.d / 2
+      const loop = [
+        new Vector3(z.x - hw, y, z.z - hd),
+        new Vector3(z.x + hw, y, z.z - hd),
+        new Vector3(z.x + hw, y, z.z + hd),
+        new Vector3(z.x - hw, y, z.z + hd),
+        new Vector3(z.x - hw, y, z.z - hd),
+      ]
+      const edge = MeshBuilder.CreateLines(`room:zone:${z.id}`, { points: loop }, scene)
+      edge.color = edgeColor
+      edge.isPickable = false
+      edge.parent = root
     }
   }
 
-  const light = new HemisphericLight(`room:light:${room.id}`, new Vector3(0, 1, 0), scene)
-  light.diffuse = kelvinToColor(room.lighting.color_temp_k)
-  light.intensity = 0.35
-  light.parent = root
+  if (!theme || theme.roomLight) {
+    const light = new HemisphericLight(`room:light:${room.id}`, new Vector3(0, 1, 0), scene)
+    light.diffuse = kelvinToColor(room.lighting.color_temp_k)
+    light.intensity = 0.35
+    light.parent = root
+  }
   return root
 }
