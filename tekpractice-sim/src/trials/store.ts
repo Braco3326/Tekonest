@@ -24,11 +24,13 @@ export const TRIALS_VERSION = 1
 export const TRIALS_BUDGET = 1_500_000
 export const NEAR_BUDGET_RATIO = 0.8
 export const QUARANTINE_CAP = 5
+/** Each quarantined raw payload is truncated to this many chars (flag `truncated: true`): ≤ ~1 MB of quarantine in total. */
+export const QUARANTINE_RAW_CAP = 200_000
 
 /** Deliberately no removeItem: the store can quarantine, never erase. */
 export type TrialStorage = Pick<Storage, 'getItem' | 'setItem'>
 
-export type StoreWarning = 'near-budget' | 'quarantine-failed' | 'storage-unavailable' | 'crypto-unavailable'
+export type StoreWarning = 'near-budget' | 'quarantine-failed' | 'quarantine-evicted' | 'storage-unavailable' | 'crypto-unavailable'
 export type WriteFailure = 'quota' | 'storage' | 'budget' | 'not-found' | 'duplicate-id' | 'invalid' | 'empty' | 'read-only'
 export type WriteResult = { ok: true; warnings: StoreWarning[] } | { ok: false; reason: WriteFailure }
 export interface LoadResult {
@@ -40,6 +42,7 @@ export interface QuarantineItem {
   at: string
   raw: string
   reason: string
+  truncated?: true
 }
 
 // ---- strict schema (mirrors trial.ts types) ----
@@ -106,7 +109,10 @@ const trialSchema = z
   .refine((t) => Date.parse(t.evidence.prediction.writtenAt) <= Date.parse(t.frozenAt), 'prediction written after freeze')
 const fileSchema = z.object({ version: z.literal(TRIALS_VERSION), trials: z.array(trialSchema) }).strict()
 const quarantineSchema = z
-  .object({ version: z.literal(1), items: z.array(z.object({ at: z.string(), raw: z.string(), reason: z.string() }).strict()) })
+  .object({
+    version: z.literal(1),
+    items: z.array(z.object({ at: iso, raw: z.string(), reason: z.string(), truncated: z.literal(true).optional() }).strict()),
+  })
   .strict()
 
 const isQuota = (err: unknown): boolean => {
@@ -126,6 +132,7 @@ export class TrialStore {
   readonly budget: number
   private trials: readonly Trial[] = deepFreeze([])
   private bytes = 0
+  private qBytes = 0
   private loaded = false
   private readOnly = false
   private queue: Promise<unknown> = Promise.resolve()
@@ -167,9 +174,12 @@ export class TrialStore {
     this.trials = deepFreeze([])
     this.bytes = 0
     let raw: string | null
+    this.qBytes = 0
     try {
       raw = this.storage.getItem(TRIALS_KEY)
-      this.quarantineItems = deepFreeze(this.readQuarantine().items)
+      const q = this.readQuarantine()
+      this.quarantineItems = deepFreeze(q.items)
+      this.qBytes = q.bytes
     } catch {
       this.readOnly = true
       return { trials: this.trials, quarantined: false, warnings: ['storage-unavailable'] }
@@ -192,11 +202,15 @@ export class TrialStore {
     if (problem.ok) {
       this.trials = deepFreeze(problem.trials)
       this.bytes = raw.length
-      return { trials: this.trials, quarantined: false, warnings: this.budgetWarnings(this.bytes) }
+      return { trials: this.trials, quarantined: false, warnings: this.budgetWarnings(this.bytesUsed()) }
     }
-    const saved = this.toQuarantine(raw, problem.reason)
-    if (!saved) this.readOnly = true // never let a later write clobber the only copy
-    return { trials: this.trials, quarantined: true, warnings: saved ? [] : ['quarantine-failed'] }
+    const { saved, evicted } = this.toQuarantine(raw, problem.reason)
+    if (!saved) {
+      this.readOnly = true // never let a later write clobber the only copy
+      return { trials: this.trials, quarantined: true, warnings: ['quarantine-failed'] }
+    }
+    const warnings: StoreWarning[] = evicted ? ['quarantine-evicted'] : []
+    return { trials: this.trials, quarantined: true, warnings: [...warnings, ...this.budgetWarnings(this.bytesUsed())] }
   }
 
   /** Current trials (frozen). */
@@ -209,8 +223,9 @@ export class TrialStore {
     return this.quarantineItems
   }
 
+  /** Global usage, in UTF-16 code units (string.length): trials file + quarantine file. */
   bytesUsed(): number {
-    return this.bytes
+    return this.bytes + this.qBytes
   }
 
   append(trial: Trial): Promise<WriteResult> {
@@ -283,7 +298,8 @@ export class TrialStore {
 
   private commit(next: readonly Trial[]): WriteResult {
     const json = JSON.stringify({ version: TRIALS_VERSION, trials: next })
-    if (json.length > this.budget && json.length > this.bytes) return { ok: false, reason: 'budget' }
+    // Only growth is refused: removing is always possible, even over the cap.
+    if (json.length + this.qBytes > this.budget && json.length > this.bytes) return { ok: false, reason: 'budget' }
     try {
       this.storage.setItem(TRIALS_KEY, json)
     } catch (err) {
@@ -291,7 +307,7 @@ export class TrialStore {
     }
     this.trials = deepFreeze([...next])
     this.bytes = json.length
-    return { ok: true, warnings: this.budgetWarnings(json.length) }
+    return { ok: true, warnings: this.budgetWarnings(this.bytesUsed()) }
   }
 
   private budgetWarnings(bytes: number): StoreWarning[] {
@@ -339,35 +355,45 @@ export class TrialStore {
     return fp === expected ? 'ok' : 'mismatch'
   }
 
-  private readQuarantine(): { items: QuarantineItem[] } {
+  /** One quarantine item; `raw` capped at QUARANTINE_RAW_CAP chars so the quarantine stays bounded. */
+  private item(raw: string, reason: string): QuarantineItem {
+    const at = toIso(this.now())
+    return raw.length > QUARANTINE_RAW_CAP ? { at, raw: raw.slice(0, QUARANTINE_RAW_CAP), reason, truncated: true } : { at, raw, reason }
+  }
+
+  private readQuarantine(): { items: QuarantineItem[]; bytes: number } {
     const raw = this.storage.getItem(QUARANTINE_KEY)
-    if (raw === null) return { items: [] }
+    if (raw === null) return { items: [], bytes: 0 }
     try {
       const q = quarantineSchema.safeParse(JSON.parse(raw))
-      if (q.success) return { items: q.data.items }
+      if (q.success) return { items: q.data.items, bytes: raw.length }
     } catch {
       /* fall through */
     }
     // An unreadable quarantine is itself kept, as an item, never overwritten away.
-    return { items: [{ at: toIso(this.now()), raw, reason: 'quarantine-unreadable' }] }
+    return { items: [this.item(raw, 'quarantine-unreadable')], bytes: raw.length }
   }
 
-  /** Appends raw to the quarantine (deduplicated, capped). Returns false if it could not be saved. */
-  private toQuarantine(raw: string, reason: string): boolean {
+  /** Appends raw to the quarantine (deduplicated, capped). */
+  private toQuarantine(raw: string, reason: string): { saved: boolean; evicted: boolean } {
     let items: QuarantineItem[]
     try {
       items = this.readQuarantine().items
     } catch {
-      return false
+      return { saved: false, evicted: false }
     }
-    if (!items.some((i) => i.raw === raw)) items.push({ at: toIso(this.now()), raw, reason })
+    const fresh = this.item(raw, reason)
+    if (!items.some((i) => i.raw === fresh.raw)) items.push(fresh)
+    const evicted = items.length > QUARANTINE_CAP
     items = items.slice(-QUARANTINE_CAP)
+    const json = JSON.stringify({ version: 1, items })
     try {
-      this.storage.setItem(QUARANTINE_KEY, JSON.stringify({ version: 1, items }))
+      this.storage.setItem(QUARANTINE_KEY, json)
     } catch {
-      return false
+      return { saved: false, evicted: false }
     }
     this.quarantineItems = deepFreeze(items)
-    return true
+    this.qBytes = json.length
+    return { saved: true, evicted }
   }
 }

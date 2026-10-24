@@ -6,6 +6,8 @@ import { describe, expect, it, vi } from 'vitest'
 import { CryptoUnavailableError, sha256hex } from '../../src/trials/fingerprint'
 import { createTrial, type Trial } from '../../src/trials/trial'
 import {
+  type QuarantineItem,
+  QUARANTINE_RAW_CAP,
   QUARANTINE_CAP,
   QUARANTINE_KEY,
   TRIALS_BUDGET,
@@ -314,6 +316,43 @@ describe('TrialStore: quarantine (never removeItem)', () => {
     expect(s.getItem(TRIALS_KEY)).toBe('garbage')
   })
 
+  it(`truncates a quarantined raw payload to ${QUARANTINE_RAW_CAP} chars, flagged truncated`, async () => {
+    const s = new MemStorage()
+    const big = 'x'.repeat(QUARANTINE_RAW_CAP + 50_000)
+    s.data.set(TRIALS_KEY, big)
+    await new TrialStore(s).load()
+    const [item] = quarantineItems(s) as (QuarantineItem & { truncated?: boolean })[]
+    expect(QUARANTINE_RAW_CAP).toBe(200_000)
+    expect(item.raw.length).toBe(QUARANTINE_RAW_CAP)
+    expect(item.truncated).toBe(true)
+    // reloading the same big payload is still recognised (no duplicate item)
+    await new TrialStore(s).load()
+    expect(quarantineItems(s)).toHaveLength(1)
+  })
+
+  it('warns quarantine-evicted when the cap drops the oldest item', async () => {
+    const s = new MemStorage()
+    const warnings: string[][] = []
+    for (let i = 1; i <= QUARANTINE_CAP + 1; i++) {
+      s.data.set(TRIALS_KEY, `garbage-${i}`)
+      warnings.push((await new TrialStore(s).load()).warnings)
+    }
+    expect(warnings.slice(0, QUARANTINE_CAP).every((w) => !w.includes('quarantine-evicted'))).toBe(true)
+    expect(warnings[QUARANTINE_CAP]).toContain('quarantine-evicted')
+  })
+
+  it('a quarantine item whose `at` is not an ISO date makes the file unreadable (kept as an item)', async () => {
+    const s = new MemStorage()
+    const bad = JSON.stringify({ version: 1, items: [{ at: 'hier', raw: 'r', reason: 'json' }] })
+    s.data.set(QUARANTINE_KEY, bad)
+    s.data.set(TRIALS_KEY, 'garbage')
+    await new TrialStore(s).load()
+    expect(quarantineItems(s).map((i) => [i.raw, i.reason])).toEqual([
+      [bad, 'quarantine-unreadable'],
+      ['garbage', 'json'],
+    ])
+  })
+
   it('exposes the quarantine read-only for export', async () => {
     const s = new MemStorage()
     s.data.set(TRIALS_KEY, 'garbage')
@@ -396,6 +435,22 @@ describe('TrialStore: writes and byte budget', () => {
     expect(store.bytesUsed()).toBe(0)
     await store.append(await trialA())
     expect(store.bytesUsed()).toBe((s.getItem(TRIALS_KEY) as string).length)
+  })
+
+  it('the budget is global: bytesUsed() = trials + quarantine (UTF-16 code units)', async () => {
+    const s = new MemStorage()
+    s.data.set(TRIALS_KEY, 'garbage')
+    const a = await trialA()
+    const oneTrialBytes = JSON.stringify({ version: 1, trials: [a] }).length
+    const store = new TrialStore(s, { budget: oneTrialBytes + 10 })
+    await store.load()
+    const qBytes = (s.getItem(QUARANTINE_KEY) as string).length
+    expect(store.bytesUsed()).toBe(qBytes)
+    // the trial alone would fit, but not with the quarantine on top
+    expect(await store.append(a)).toEqual({ ok: false, reason: 'budget' })
+    const roomy = new TrialStore(s, { budget: oneTrialBytes + qBytes })
+    expect((await roomy.append(a)).ok).toBe(true)
+    expect(roomy.bytesUsed()).toBe(oneTrialBytes + qBytes)
   })
 
   it('append refuses when it would exceed the budget', async () => {
