@@ -4,6 +4,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { confirmWindowMs, DeferredEmptyClick } from '../../src/scene/deferredEmptyClick'
+import { initialState, reduce, type FocusState } from '../../src/scene/focusMachine'
 
 describe('confirmWindowMs (tap during a click-focus flight)', () => {
   it('is the given window when flights animate', () => {
@@ -14,8 +15,6 @@ describe('confirmWindowMs (tap during a click-focus flight)', () => {
     expect(confirmWindowMs(600, false)).toBe(0)
   })
 })
-import { initialState, reduce, type FocusState } from '../../src/scene/focusMachine'
-
 describe('DeferredEmptyClick', () => {
   beforeEach(() => {
     vi.useFakeTimers()

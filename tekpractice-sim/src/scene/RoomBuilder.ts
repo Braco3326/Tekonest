@@ -84,7 +84,10 @@ export function buildRoom(scene: Scene, room: RoomFileT, layout: RoomLayout): Tr
     } else {
       const mark = surface(own(MeshBuilder.CreateGround(`room:zone:${z.id}`, { width: z.w, height: z.d }, scene)))
       mark.position = new Vector3(z.x, 0.005, z.z)
-      mark.material = mat(`zone:${z.id}`, tint, 0.12)
+      const markMat = mat(`zone:${z.id}`, tint, 0.12)
+      // y stays 0.005: with the orbit minZ at 0.05 the mark could z-fight the floor at overview distance, so bias it forward in depth.
+      markMat.zOffset = -2
+      mark.material = markMat
     }
   }
 
