@@ -1,6 +1,15 @@
 /** Renderer selection (2D fallback) — pure decision, every branch. */
 import { describe, expect, it } from 'vitest'
-import { decideRenderer, type RenderEnv } from '../../src/render/detect'
+import { decideRenderer, isSoftwareRenderer, type RenderEnv } from '../../src/render/detect'
+
+describe('isSoftwareRenderer', () => {
+  it.each([
+    ['Google SwiftShader', true], ['ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero)))', true],
+    ['llvmpipe (LLVM 15.0.7, 256 bits)', true], ['Microsoft Basic Render Driver', true],
+    ['ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Ti Direct3D11 vs_5_0 ps_5_0, D3D11)', false],
+    ['ANGLE (Intel, Intel(R) UHD Graphics 620 Direct3D11 vs_5_0 ps_5_0, D3D11)', false],
+  ])('isSoftwareRenderer(%s) = %s', (r, expected) => expect(isSoftwareRenderer(r)).toBe(expected))
+})
 
 const env = (over: Partial<RenderEnv> = {}): RenderEnv => ({
   param: null,

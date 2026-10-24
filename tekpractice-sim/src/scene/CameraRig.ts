@@ -57,6 +57,11 @@ export class CameraRig implements CameraDirector {
   private ensemble: CameraPose
   private tween: CameraTween
 
+  /** A flight is running (the render scheduler keeps frames coming). */
+  get tweening(): boolean {
+    return this.tween.active
+  }
+
   constructor(private camera: ArcRotateCamera) {
     this.ensemble = this.currentPose()
     const scene = camera.getScene()

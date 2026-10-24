@@ -22,6 +22,7 @@ export class CableRenderer {
   constructor(
     private scene: Scene,
     private budget = new CableBudget(),
+    private opts: { pulses?: boolean } = {},
   ) {
     const make = (name: string, hex: string, glow = 0.6) => {
       const m = new StandardMaterial(`cable:${name}`, scene)
@@ -104,8 +105,13 @@ export class CableRenderer {
    * visible (pedagogical motion, VISION §6). Skipped entirely under
    * prefers-reduced-motion and beyond the pulse cap.
    */
+  /** Live signal-flow pulses (they animate every frame; the render scheduler treats them as busy). */
+  get pulseCount(): number {
+    return this.pulses.size
+  }
+
   private addPulse(connectionId: string, path: P3[]): void {
-    if (!motionEnabled() || this.pulses.size >= CableRenderer.PULSE_CAP) return
+    if (this.opts.pulses === false || !motionEnabled() || this.pulses.size >= CableRenderer.PULSE_CAP) return
     const dot = MeshBuilder.CreateSphere(`pulse:${connectionId}`, { diameter: 0.024, segments: 8 }, this.scene)
     dot.material = this.pulseMat()
     dot.isPickable = false

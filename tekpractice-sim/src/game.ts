@@ -33,6 +33,8 @@ import { clockCheck } from './logic/clock'
 import { DeviceSpawner, type DeviceInstance } from './scene/DeviceSpawner'
 import { CableRenderer } from './scene/CableRenderer'
 import { CameraRig } from './scene/CameraRig'
+import { attachRenderScheduler, RenderScheduler } from './creation/renderScheduler'
+import { isSoftwareRenderer } from './render/detect'
 import { bodyCenter, FocusPatch } from './scene/FocusPatch'
 import type { PortPoint } from './scene/snap'
 import type { Intent } from './ui/intents'
@@ -98,6 +100,8 @@ declare global {
       explore?: () => ReturnType<ExploreController['snapshot']> & { panels: number; placing: boolean }
       /** Orbit camera pose (designer nav e2e): angles in rad, radius and target in m. */
       camera: () => { alpha: number; beta: number; radius: number; target: [number, number, number] }
+      /** Frames actually rendered by the on-demand scheduler (render-on-demand e2e). */
+      renders?: () => number
       /**
        * World centre of a device's body meshes (N9), computed by its OWN loop
        * (debugBodyCenter) so the e2e checks the focus pivot non-circularly. 2D: null.
@@ -1169,6 +1173,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     return center ? project(center) : null
   }
 
+  let renderSchedulerRef: RenderScheduler | undefined // set at the end of boot (window.__audioSim is built first)
   window.__audioSim = {
     dispatch,
     state: () => runner.check(graph),
@@ -1196,6 +1201,7 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
       const inst = instances.find((i) => i.instanceId === instanceId)
       return inst ? debugBodyCenter(inst) : null
     },
+    renders: () => renderSchedulerRef?.renders ?? 0,
     camera: () => ({
       alpha: camera.alpha,
       beta: camera.beta,
@@ -1204,8 +1210,22 @@ export function bootGame(registry: Registry, rawLevel: unknown, opts: BootOption
     }),
   }
 
-  babylon.runRenderLoop(() => scene.render())
-  window.addEventListener('resize', () => babylon.resize())
+  const renderScheduler = new RenderScheduler({
+    render: () => {
+      scene.render()
+      if (!scene.isReady()) renderScheduler.invalidate()
+    },
+    camera: () => (scene.activeCamera === camera ? camera : null),
+    tweening: () => rig.tweening,
+    // Legacy keeps its continuous animations: walking, placing, cable pulses.
+    busy: () => explore.exploreView || exploreUi.placing() || cables.pulseCount > 0,
+  })
+  renderSchedulerRef = renderScheduler
+  if (isSoftwareRenderer(babylon.getGlInfo().renderer)) {
+    babylon.setHardwareScalingLevel(1.5)
+    console.info('[render] software GL → scaling 1.5')
+  }
+  attachRenderScheduler(babylon, scene, camera, canvas, renderScheduler)
   refresh()
 }
 

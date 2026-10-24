@@ -25,7 +25,11 @@ async function boot(page: Page, url = '/?level=a1&view=orbit'): Promise<void> {
 }
 
 async function settledCamera(page: Page): Promise<Cam> {
+  // Render on demand (Task 2): a flight's first rendered frame is at progress ~0 and the
+  // next one can be a slow software-GL frame later, so a single equal poll is not "settled".
+  // Require 3 consecutive equal polls (240 ms > one slow frame).
   let last: Cam | null = null
+  let stable = 0
   for (let i = 0; i < 60; i++) {
     const c = await camera(page)
     if (
@@ -34,8 +38,9 @@ async function settledCamera(page: Page): Promise<Cam> {
       Math.abs(c.beta - last.beta) < 1e-4 &&
       Math.abs(c.radius - last.radius) < 1e-4 &&
       Math.hypot(c.target[0] - last.target[0], c.target[1] - last.target[1], c.target[2] - last.target[2]) < 1e-4
-    )
-      return c
+    ) {
+      if (++stable >= 3) return c
+    } else stable = 0
     last = c
     await page.waitForTimeout(80)
   }

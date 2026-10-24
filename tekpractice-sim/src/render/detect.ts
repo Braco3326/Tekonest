@@ -42,7 +42,12 @@ export function decideRenderer(env: RenderEnv): RenderDecision {
   return { use2d: false, reason: 'default' }
 }
 
-const PREF_KEY = 'audio-sim/render'
+/** True for CPU rasterisers (SwiftShader, llvmpipe, Basic Render Driver): the shell lowers resolution (C4). */
+export function isSoftwareRenderer(rendererString: string): boolean {
+  return /swiftshader|llvmpipe|software|basic render/i.test(rendererString)
+}
+
+const PREF_KEY ='audio-sim/render'
 
 function hasWebGL(): boolean {
   try {
