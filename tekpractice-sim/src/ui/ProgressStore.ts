@@ -2,13 +2,18 @@
  * ProgressStore — per-level wins + mistake history + activity days: the raw
  * signal behind the readiness model (ADR-0003). Swappable interface; the
  * default implementation persists to localStorage, VERSIONED:
- *  - v1 → v2 → v3 payloads MIGRATE silently (losing a learner's history is an
- *    anti-Beat-4; reset is a last resort). v3 adds the exam scores (ADR-0012 D2:
- *    `ExamScore` is persisted).
+ *  - v1 → v2 payloads MIGRATE silently (losing a learner's history is an
+ *    anti-Beat-4; reset is a last resort).
+ *  - Exam scores (ADR-0012 D2: `ExamScore` is persisted) are an OPTIONAL extra
+ *    field of v2, defaulted to [] on load. The version is deliberately NOT
+ *    bumped: an already-deployed v2 build resets any unknown version, but it
+ *    passes unknown fields through on re-save, so `exams` survives it.
  *  - unknown version / corrupt payload → reset with notice (CLAUDE.md).
  */
 
-export const PROGRESS_VERSION = 3
+export const PROGRESS_VERSION = 2
+/** Only ever written by local dev runs of an earlier draft: read as v2 + exams, rewritten as v2. */
+const DRAFT_V3 = 3
 
 /** Exam history is bounded like the mistakes: the most recent N scores. */
 export const EXAM_CAP = 50
@@ -35,7 +40,7 @@ export interface ProgressData {
   levels: Record<string, LevelProgress>
   /** Unique active days (YYYY-MM-DD) — the streak signal (forgiving, ADR-0003). */
   activity: string[]
-  /** Finished exams, oldest first, capped at EXAM_CAP (v3). */
+  /** Finished exams, oldest first, capped at EXAM_CAP (optional in storage, [] after load). */
   exams: ExamRecord[]
 }
 
@@ -104,11 +109,10 @@ export class LocalStorageProgressStore implements IProgressStore {
         this.save(migrated)
         return { data: migrated, wasReset: false }
       }
-      if (parsed.version === 2 && typeof parsed.levels === 'object' && parsed.levels !== null) {
-        // v2 → v3: everything kept as is; the exam history starts empty.
-        const migrated: ProgressData = { ...parsed, version: PROGRESS_VERSION, activity: parsed.activity ?? [], exams: [] }
-        this.save(migrated)
-        return { data: migrated, wasReset: false }
+      if (parsed.version === DRAFT_V3 && typeof parsed.levels === 'object' && parsed.levels !== null) {
+        const back: ProgressData = { ...parsed, version: PROGRESS_VERSION, activity: parsed.activity ?? [], exams: Array.isArray(parsed.exams) ? parsed.exams : [] }
+        this.save(back)
+        return { data: back, wasReset: false }
       }
       if (parsed.version !== PROGRESS_VERSION || typeof parsed.levels !== 'object' || parsed.levels === null) {
         this.storage.removeItem(this.key)

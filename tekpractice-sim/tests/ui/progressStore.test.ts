@@ -63,7 +63,7 @@ describe('LocalStorageProgressStore', () => {
 
   it('version mismatch → reset + notice (CLAUDE.md)', () => {
     const storage = fakeStorage({
-      'audio-sim/progress': JSON.stringify({ version: PROGRESS_VERSION + 1, levels: { a1: { mistakes: [] } } }),
+      'audio-sim/progress': JSON.stringify({ version: 99, levels: { a1: { mistakes: [] } } }), // 3 = earlier local draft, read as v2
     })
     const { data, wasReset } = new LocalStorageProgressStore(storage).load()
     expect(wasReset).toBe(true)
@@ -106,7 +106,8 @@ describe('LocalStorageProgressStore', () => {
     expect(() => store.recordMistake('a1', 'R2')).not.toThrow()
   })
 
-  it('v2 payload MIGRATES to v3: levels, wins, mistakes and activity kept; exams start empty', () => {
+  it('the version is NOT bumped: exams is an optional v2 field (old builds reset unknown versions)', () => {
+    expect(PROGRESS_VERSION).toBe(2)
     const v2 = {
       version: 2,
       levels: {
@@ -118,19 +119,53 @@ describe('LocalStorageProgressStore', () => {
     const storage = fakeStorage({ 'audio-sim/progress': JSON.stringify(v2) })
     const { data, wasReset } = new LocalStorageProgressStore(storage).load()
     expect(wasReset).toBe(false)
-    expect(PROGRESS_VERSION).toBe(3)
-    expect(data).toEqual({ ...v2, version: 3, exams: [] })
-    // persisted as v3 (the migration is written back, nothing dropped)
-    expect(JSON.parse(storage.dump()['audio-sim/progress']!)).toEqual({ ...v2, version: 3, exams: [] })
+    expect(data).toEqual({ ...v2, exams: [] })
+    // an exam is saved INSIDE the v2 object, everything else kept
+    new LocalStorageProgressStore(storage).recordExam('a1', 12, new Date('2026-10-24T10:00:00Z'))
+    const saved = JSON.parse(storage.dump()['audio-sim/progress']!)
+    expect(saved.version).toBe(2)
+    expect(saved.levels).toEqual(v2.levels)
+    expect(saved.exams).toEqual([{ levelId: 'a1', score20: 12, at: '2026-10-24T10:00:00.000Z' }])
   })
 
-  it('v1 payload migrates all the way to v3', () => {
+  it('an OLD v2 build (pre-exams code) re-saving the payload keeps exams', () => {
+    const storage = fakeStorage()
+    new LocalStorageProgressStore(storage).recordExam('a1', 15, new Date('2026-10-24T10:00:00Z'))
+    // The deployed v2 code, verbatim in behaviour: load = JSON.parse (version 2
+    // accepted, `activity ??= []`), mutate in place, save = JSON.stringify(data).
+    const oldBuildRecordMistake = (levelId: string, ruleId: string): void => {
+      const parsed = JSON.parse(storage.getItem('audio-sim/progress')!)
+      if (parsed.version !== 2) throw new Error('old build would reset here')
+      parsed.activity ??= []
+      const level = (parsed.levels[levelId] ??= { wins: 0, mistakes: [] })
+      level.mistakes.push({ ruleId, at: '2026-10-25T08:00:00.000Z' })
+      storage.setItem('audio-sim/progress', JSON.stringify(parsed))
+    }
+    oldBuildRecordMistake('a1', 'R2')
+    const { data, wasReset } = new LocalStorageProgressStore(storage).load()
+    expect(wasReset).toBe(false)
+    expect(data.exams).toEqual([{ levelId: 'a1', score20: 15, at: '2026-10-24T10:00:00.000Z' }])
+    expect(data.levels.a1?.mistakes.map((m) => m.ruleId)).toEqual(['R2'])
+  })
+
+  it('a version-3 payload from an earlier local draft is read as v2 + exams and rewritten as v2', () => {
+    const exams = [{ levelId: 'a1', score20: 9, at: '2026-10-24T10:00:00.000Z' }]
+    const storage = fakeStorage({
+      'audio-sim/progress': JSON.stringify({ version: 3, levels: { a1: { wins: 1, mistakes: [] } }, activity: ['2026-10-24'], exams }),
+    })
+    const { data, wasReset } = new LocalStorageProgressStore(storage).load()
+    expect(wasReset).toBe(false)
+    expect(data).toEqual({ version: 2, levels: { a1: { wins: 1, mistakes: [] } }, activity: ['2026-10-24'], exams })
+    expect(JSON.parse(storage.dump()['audio-sim/progress']!).version).toBe(2)
+  })
+
+  it('v1 payload migrates to v2 with exams = []', () => {
     const storage = fakeStorage({
       'audio-sim/progress': JSON.stringify({ version: 1, levels: { a1: { completedAt: '2026-07-01T10:00:00Z', mistakes: [] } } }),
     })
     const { data } = new LocalStorageProgressStore(storage).load()
     expect(data).toEqual({
-      version: 3,
+      version: 2,
       levels: { a1: { completedAt: '2026-07-01T10:00:00Z', wins: 1, mistakes: [] } },
       activity: [],
       exams: [],
@@ -163,8 +198,8 @@ describe('LocalStorageProgressStore', () => {
     expect(storage.dump()).toEqual({})
   })
 
-  it('a v3 payload missing exams (hand-edited) loads with exams = []', () => {
-    const storage = fakeStorage({ 'audio-sim/progress': JSON.stringify({ version: 3, levels: {}, activity: [] }) })
+  it('a v2 payload with a non-array exams (hand-edited) loads with exams = []', () => {
+    const storage = fakeStorage({ 'audio-sim/progress': JSON.stringify({ version: 2, levels: {}, activity: [], exams: 'x' }) })
     expect(new LocalStorageProgressStore(storage).load().data.exams).toEqual([])
   })
 

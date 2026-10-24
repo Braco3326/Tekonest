@@ -45,7 +45,7 @@ describe('daysToExam', () => {
 })
 
 describe('recommender seeding (declared weakness wins ties at zero)', () => {
-  const empty = { version: 3, levels: {}, activity: [], exams: [] }
+  const empty = { version: 2, levels: {}, activity: [], exams: [] }
   it('fresh learner + "broadcast" fear → R5 first → level B1', () => {
     const rec = recommend(empty, levels, map, ['R5', 'R6', 'R7'])
     expect(rec.ruleId).toBe('R5')
@@ -56,7 +56,7 @@ describe('recommender seeding (declared weakness wins ties at zero)', () => {
   })
   it('seed never overrides a GENUINE weakness (non-tied lower score wins)', () => {
     const data = {
-      version: 3,
+      version: 2,
       activity: [],
       exams: [],
       levels: {
