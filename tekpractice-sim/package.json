@@ -8,6 +8,7 @@
     "thumbs:rooms": "tsx tools/room-thumbs.ts",
     "preview": "vite preview",
     "build:site": "node tools/build-site.mjs",
+    "smoke:site": "node tools/site-smoke.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
