@@ -138,7 +138,9 @@ export class EssaisPanel {
     // list is current and its next write merges instead of overwriting.
     window.addEventListener('storage', (e) => {
       if (e.key !== TRIALS_KEY && e.key !== null) return
-      this.ready = this.ready.then(() => this.store.reload()).then((r) => this.loaded(r))
+      // The compared Essais may have changed or gone: give the live design back first (re-review minor).
+      if (this.compare) this.closeCompare(false)
+      this.ready =this.ready.then(() => this.store.reload()).then((r) => this.loaded(r))
     })
   }
 

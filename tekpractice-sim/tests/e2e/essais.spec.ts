@@ -346,6 +346,29 @@ test('final review #2: two tabs freeze Essais → both kept, the other tab’s l
   await tab2.close()
 })
 
+test('re-review: another tab writing the Essais closes an open compare and gives the live design back', async ({ page }) => {
+  await twoEssais(page)
+  await page.evaluate(() => window.__audioSim!.dispatch({ type: 'REMOVE', instanceId: 'shure-sm58-s1' }))
+  await page.locator('#es-prediction').blur()
+  const live = await livePoses(page)
+  await page.keyboard.press('KeyB')
+  await expect(page.locator('.es-compare')).toBeVisible()
+  expect(await livePoses(page)).not.toEqual(live) // the preview is on stage
+
+  const tab2 = await page.context().newPage()
+  await tab2.goto('/?level=sandbox')
+  await tab2.waitForFunction(() => !!window.__audioSim)
+  await tab2.evaluate(() => window.__audioSim!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm57', position: [0, 0, -2] }))
+  await tab2.getByRole('button', { name: 'Essais' }).click()
+  await freeze(tab2, 'Onglet 2.')
+  await expect(tab2.locator('.es-row')).toHaveCount(3)
+
+  await expect(page.locator('.es-compare')).toBeHidden()
+  await expect(page.locator('.es-row')).toHaveCount(3)
+  expect(await livePoses(page)).toEqual(live)
+  await tab2.close()
+})
+
 test('final review #3: « Exporter puis archiver » asks to check the file; nothing is removed before the explicit button', async ({ page }) => {
   await twoEssais(page)
   // The near-budget notice carries this action; reaching 1.2 MB in a test is slow, so its button is injected.
