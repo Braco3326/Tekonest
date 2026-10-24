@@ -386,31 +386,163 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 }
 .cr #renderCanvas:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
 
-/* temporary place picker (Task 12 replaces it): inside the viewport until a place is chosen */
-.cr-picker {
-  position: absolute;
-  inset: 0;
+/* ── « Choisir un lieu » (Task 12): the start screen over the workspace ── */
+/* Spans the panels + viewport row; the menubar and the status bar stay. No transitions (cuts only). */
+.cr-pick {
+  grid-area: 2 / 1 / 3 / 4;
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 24px;
+  min-width: 0;
+  min-height: 0;
   background:
-    linear-gradient(var(--cr-panel-line) 1px, transparent 1px) 0 0 / 48px 48px,
-    linear-gradient(90deg, var(--cr-panel-line) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(var(--cr-panel) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(90deg, var(--cr-panel) 1px, transparent 1px) 0 0 / 48px 48px,
     var(--cr-nuit);
 }
-.cr-picker[hidden] { display: none; }
-.cr-picker h2 { margin: 0; font: 600 28px/1.1 var(--cr-font-title); letter-spacing: 0.02em; }
-.cr-picker nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.cr-picker button {
-  padding: 10px 16px;
+.cr-pick[hidden] { display: none; }
+.cr-pick-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 20px 24px 14px;
+  border-bottom: 1px solid var(--cr-panel-line);
   background: var(--cr-nuit);
+}
+.cr-pick-title { font: 600 26px/1.1 var(--cr-font-title); letter-spacing: 0.02em; }
+.cr-pick-title::before { content: ''; display: inline-block; width: 10px; height: 10px; margin: 0 12px 3px 0; background: var(--cr-ambre); }
+.cr-pick-hint { margin: 6px 0 0; color: var(--cr-ink-muted); }
+.cr-pick-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin: 4px 0 0; font-size: 12px; color: var(--cr-ink-muted); }
+.cr-pick-key { display: inline-flex; align-items: center; gap: 6px; color: var(--cr-papier); }
+.cr-pick-key::before { content: ''; width: 14px; height: 10px; box-sizing: border-box; }
+.cr-pick-key--stage::before { background: var(--cr-prune); }
+.cr-pick-key--operator::before { background: rgba(221, 147, 73, 0.3); border: 1px solid var(--cr-ambre); }
+.cr-pick-key--audience::before { border: 1px dashed var(--cr-papier); }
+.cr-pick-tools { display: flex; align-items: center; gap: 12px; }
+.cr-pick-filter { display: flex; align-items: center; gap: 8px; color: var(--cr-ink-muted); }
+.cr-pick-filter select {
+  height: 32px;
+  padding: 0 8px;
+  font: inherit;
+  color: var(--cr-papier);
+  background: var(--cr-panel);
+  border: 1px solid var(--cr-panel-line);
+  border-radius: 0;
+}
+.cr-pick-filter select:hover { border-color: var(--cr-ambre); }
+.cr .cr-pick-close {
+  height: 32px;
+  padding: 0 14px;
   border: 1px solid var(--cr-ambre);
   font-weight: 500;
 }
-.cr-picker button:hover { background: var(--cr-ambre); color: var(--cr-nuit); }
+.cr .cr-pick-close:hover { background: var(--cr-ambre); color: var(--cr-nuit); }
+.cr .cr-pick-close[hidden] { display: none; }
+
+.cr-pick-scroll { flex: 1; min-height: 0; overflow-x: hidden; overflow-y: auto; padding: 4px 24px 24px; }
+.cr-pick-row {
+  margin: 16px 0 10px;
+  font: 600 13px/1.2 var(--cr-font-title);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cr-ink-muted);
+}
+.cr-pick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(188px, 1fr));
+  gap: 12px;
+}
+
+.cr-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 8px 8px 10px;
+  background: var(--cr-panel);
+  border: 1px solid var(--cr-panel-line);
+  cursor: pointer;
+  transition: none;
+}
+.cr-card:hover { border-color: var(--cr-ink-muted); }
+/* The highlighted card reads as such while its grid has focus (one Ambre card on screen, not two). */
+.cr-pick-grid:focus-within .cr-card[aria-selected='true'] { border-color: var(--cr-ambre); box-shadow: inset 0 0 0 1px var(--cr-ambre); }
+.cr-card[hidden] { display: none; }
+/* Fixed 16:10 box whatever the plan's shape (portrait halls, wide galleries): the image never sizes the card. */
+.cr-card-thumb { position: relative; aspect-ratio: 16 / 10; min-height: 0; overflow: hidden; background: var(--cr-nuit); }
+.cr-card-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 6px; box-sizing: border-box; }
+.cr-card-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding-top: 6px; }
+.cr-card-type { font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--cr-ink-muted); }
+.cr-card-name {
+  font-weight: 500;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cr-card-size { font-size: 12px; color: var(--cr-ink-muted); font-variant-numeric: tabular-nums; }
+/* « Modèles »: one wide card per template (thumbnail left), so the row stays short. */
+.cr-pick-grid--wide { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+.cr-pick-grid--wide .cr-card { flex-direction: row; gap: 12px; }
+.cr-pick-grid--wide .cr-card-thumb { flex: 0 0 132px; }
+.cr-pick-grid--wide .cr-card-text { padding-top: 0; justify-content: center; }
+.cr-card-badge {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cr-ambre);
+  border: 1px solid var(--cr-ambre);
+}
+
+/* « Salle vide » / « Avec le matériel du modèle » */
+.cr-pick-confirm { position: absolute; inset: 0; z-index: 3; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(19, 17, 20, 0.72); }
+.cr-pick-confirm[hidden] { display: none; }
+.cr-pick-confirm-box {
+  width: min(440px, 100%);
+  padding: 20px 24px;
+  background: var(--cr-panel);
+  border: 1px solid var(--cr-prune);
+  border-top: 2px solid var(--cr-ambre);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+.cr-pick-confirm-title { margin: 0 0 12px; font: 600 18px/1.25 var(--cr-font-title); }
+.cr-pick-modes { margin: 0 0 18px; padding: 0; border: 0; display: grid; gap: 8px; }
+.cr-pick-mode { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1px solid var(--cr-panel-line); cursor: pointer; }
+.cr-pick-mode:has(input:checked) { border-color: var(--cr-ambre); }
+.cr-pick-mode input { margin: 3px 0 0; accent-color: var(--cr-ambre); width: 16px; height: 16px; }
+.cr-pick-mode-text { display: grid; gap: 2px; }
+.cr-pick-mode-label { font-weight: 500; }
+.cr-pick-mode-hint { font-size: 12px; color: var(--cr-ink-muted); }
+.cr-pick-confirm-actions { display: flex; gap: 8px; }
+.cr .cr-btn { height: 34px; padding: 0 16px; border: 1px solid var(--cr-ambre); font-weight: 500; }
+.cr .cr-btn:hover { background: var(--cr-nuit); }
+.cr .cr-btn-primary { background: var(--cr-ambre); color: var(--cr-nuit); }
+.cr .cr-btn-primary:hover { background: var(--cr-papier); border-color: var(--cr-papier); }
+
+/* ── notes in the 3D view (Task 12): dismissible, non-blocking, bottom-left ── */
+.cr-notes { position: absolute; left: 12px; bottom: 12px; z-index: 5; display: flex; flex-direction: column; gap: 8px; width: min(380px, calc(100% - 24px)); pointer-events: none; }
+.cr-notes:empty { display: none; }
+.cr-note {
+  position: relative;
+  padding: 10px 40px 10px 12px;
+  background: var(--cr-panel);
+  border: 1px solid var(--cr-panel-line);
+  border-left: 3px solid var(--cr-ambre);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+.cr-note-title { margin: 0 0 4px; font: 600 13px/1.3 var(--cr-font-title); }
+.cr-note-body { margin: 0; color: var(--cr-ink-muted); }
+.cr-note-list { margin: 6px 0 0; padding-left: 18px; max-height: 132px; overflow-y: auto; }
+.cr .cr-note-close { position: absolute; top: 4px; right: 4px; width: 28px; height: 28px; font-size: 18px; line-height: 1; color: var(--cr-ink-muted); }
+.cr .cr-note-close:hover { color: var(--cr-papier); background: var(--cr-nuit); }
 
 /* ── status bar ──────────────────────────────────────────────────────── */
 .cr-status {

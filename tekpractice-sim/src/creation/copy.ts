@@ -32,6 +32,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusNoSelection: 'Aucun appareil sélectionné',
     /** Status bar: [ / ] pressed while the place has no gear. */
     statusNothingToSelect: 'Aucun appareil à sélectionner. Ajoutez-en depuis l’inventaire.',
+    /** Status bar: a place was asked for while another one is still loading. */
+    statusBusy: 'Un lieu est déjà en cours d’ouverture. Patientez un instant.',
+    /** Status bar after « Avec le matériel du modèle » / a template; {n} = devices installed. */
+    statusGearLoaded: '{n} appareils installés.',
   },
   keys: {
     /** Key names shown next to menu items (French keyboard labels). */
@@ -171,6 +175,65 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     title: 'Choisir un lieu',
     /** L1: the neutral blank room card. */
     blank: 'Salle vide neutre',
+    /** Under the title; also the grids' description. */
+    hint: 'Flèches pour parcourir, Entrée pour ouvrir.',
+    /** Plan legend under the hint (the thumbnails: seen from the audience, stage at the top). */
+    legendIntro: 'Plans vus depuis le public, scène en haut :',
+    legendStage: 'scène',
+    legendOperator: 'régie',
+    legendAudience: 'public',
+    filter: 'Type de lieu',
+    filterAll: 'Tous les types',
+    /** Row headings; {n} = number of cards shown. */
+    templates: 'Modèles',
+    places: 'Lieux ({n})',
+    /** L2 badge on a card. */
+    withGearBadge: 'Avec le matériel',
+    /** Template card badge; {n} = devices. */
+    devices: '{n} appareils',
+    close: 'Fermer',
+    /** Card names of the three .glb venue sets. */
+    'set-plateau': 'Plateau live (décor 3D)',
+    'set-radio': 'Studio radio (décor 3D)',
+    'set-theatre': 'Théâtre (décor 3D)',
+    /** « Salle vide » / « Avec le matériel du modèle » (radio group + Ouvrir). {place} = card name. */
+    confirmTitle: 'Ouvrir {place}',
+    confirmEmpty: 'Salle vide',
+    confirmGear: 'Avec le matériel du modèle',
+    /** Under « Avec le matériel du modèle »; {n} = catalog devices installed. */
+    confirmGearHint: '{n} appareils du jeu sont installés à leur place.',
+    confirmOpen: 'Ouvrir',
+    confirmCancel: 'Annuler',
+  },
+  /** Card type labels: room families (content/rooms `family`), sets, blank room, templates. */
+  placeType: {
+    live: 'Concert / live',
+    education: 'Enseignement',
+    worship: 'Lieu de culte',
+    conference: 'Conférence',
+    broadcast: 'Radio / TV',
+    outdoor: 'Plein air',
+    post: 'Post-production',
+    studio: 'Studio',
+    installed: 'Installation fixe',
+    classical: 'Musique classique',
+    theatre: 'Théâtre',
+    set: 'Décor 3D',
+    blank: 'Salle neutre',
+    template: 'Modèle',
+    other: 'Autre lieu',
+  },
+  /** Dismissible notes in the 3D view (Task 12). */
+  note: {
+    close: 'Fermer la note',
+    /** « Avec le matériel du modèle »: KB gear the catalog does not have (L2). */
+    unavailableTitle: 'Matériel non disponible dans le jeu',
+    /** {n} = items listed below. */
+    unavailableBody: '{n} appareils du modèle ne sont pas encore dans le jeu :',
+    /** The room could not be built: the blank room is shown instead. */
+    fallbackTitle: 'Lieu indisponible',
+    /** {place} = the place name. */
+    fallbackBody: '{place} n’a pas pu être chargé. La salle vide neutre est affichée à la place.',
   },
   place: {
     dialogTitle: 'Changer de lieu',

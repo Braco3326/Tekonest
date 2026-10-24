@@ -20,7 +20,10 @@ import { RenderScheduler, renderSceneOnce } from './renderScheduler'
 import { SceneHost } from './sceneHost'
 import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
-import { createPlaceController } from './placeController'
+import { createPlaceController, type PlaceResult } from './placeController'
+import { designFromRoomGear, unavailableList } from './templateGear'
+import { loadTemplates, templateToDesign } from './templates'
+import { mountNotes } from './shell/notes'
 import { bodyCentreOf } from './debug'
 import { debugBodyCenter } from '../scene/debugBody'
 import { cableKey } from './sceneDiff'
@@ -31,8 +34,8 @@ import { buildTree, hideKeyOf, type TreeNode } from './shell/treeModel'
 import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
 import { bindingLabel, loadCreationBindings, type CreationAction } from './input/creationActions'
-import { mountPlacePickerStub } from './shell/placePickerStub'
 import { openPlaceDialog } from './shell/placeDialog'
+import type { PlaceCard } from './shell/placePicker'
 import { mountShell } from './shell/layout'
 import { mountMenuBar } from './shell/menuBar'
 import { buildMenus } from './shell/menuModel'
@@ -67,17 +70,18 @@ export async function bootCreation(): Promise<void> {
     activeCamera: () => host.scene?.activeCamera ?? null,
   })
   host = new SceneHost(canvas, registry, scheduler)
-  // Temporary until Task 12: three hard-coded places.
-  const places = [
-    { key: 'room:concert-hall-medium', label: roomName('concert-hall-medium') },
-    { key: 'room:bar-club-stage-small', label: roomName('bar-club-stage-small') },
-    { key: 'blank', label: COPY.picker!.blank! },
-  ]
+  // « Choisir un lieu » (Task 12): its own lazy chunk (cards, grid keys) + the templates.
+  const { placeCards, templateCards, mountPlacePicker, placeSummary } = await import('./shell/placePicker')
+  const summary = placeSummary()
+  const cards = placeCards({ rooms: summary.rooms, sets: summary.sets })
+  const templates = await loadTemplates(new Set(cards.map((c) => c.key)))
   const placeLabel = (key: string | null): string => {
     const k = placeKey(placeFromKey(key))
     const room = /^room:(.+)$/.exec(k)
-    return places.find((p) => p.key === k)?.label ?? (room ? roomName(room[1]) : k.replace(/^set:/, ''))
+    // a key that is not a card (an unknown room) still reads as its id
+    return cards.find((p) => p.key === k)?.title ?? (room ? roomName(room[1]) : k.replace(/^set:/, ''))
   }
+  const notes = mountNotes(document, shell.viewport)
 
   let canvasShown = false
   const showStatus = (): void => {
@@ -203,17 +207,20 @@ export async function bootCreation(): Promise<void> {
   })
   resize.observe(shell.viewport)
 
+  /** A place is committed: the canvas shows, the picker goes (focus follows to the canvas if it was in the picker). */
   const showCanvas = (): void => {
-    if (canvasShown) return
-    canvasShown = true
-    canvas.style.display = ''
-    host.engine.resize()
-    const fromPicker = shell.viewport.contains(document.activeElement)
+    if (!canvasShown) {
+      canvasShown = true
+      canvas.style.display = ''
+      host.engine.resize()
+    }
+    if (!picker.isOpen) return
+    const fromPicker = picker.root.contains(document.activeElement)
     picker.hide()
-    if (fromPicker) canvas.focus() // the focused picker button just disappeared
+    if (fromPicker) canvas.focus() // the focused card just disappeared
   }
 
-  const { choosePlace, requestPlace } = createPlaceController({
+  const { choosePlace, requestPlace, loadDesign } = createPlaceController({
     store,
     history,
     bounds: (place) => loadPlaceData(place),
@@ -222,14 +229,76 @@ export async function bootCreation(): Promise<void> {
     label: COPY.place!.dialogTitle!,
   })
 
-  const pick = (key: string): void => {
-    shell.setStatus(canvasShown ? placeLabel(store.design().roomId) : '', COPY.shell!.statusLoading!, 'busy')
-    requestPlace(key).then(showStatus, (e: unknown) => {
-      console.error('[creation] place change failed', e)
-      showStatus()
-    })
+  // Not only the console (Task 12): a place that fell back to the blank room says so on screen.
+  const N = COPY.note!
+  const fallbackNote = (key: string): void => {
+    notes.show({ id: 'fallback', title: N.fallbackTitle!, body: N.fallbackBody!.replace('{place}', placeLabel(key)) })
+    shell.setStatus(placeNow(), N.fallbackBody!.replace('{place}', placeLabel(key)), 'ready', true)
   }
-  const picker = mountPlacePickerStub(places, pick, shell.viewport)
+  host.onFallback = fallbackNote
+
+  /** The picker's choice → the place change; the picker stays open on cancel / busy / failure. */
+  const pick = async (card: PlaceCard, mode: 'empty' | 'gear'): Promise<void> => {
+    shell.setStatus(canvasShown ? placeLabel(store.design().roomId) : '', COPY.shell!.statusLoading!, 'busy')
+    picker.setBusy(true)
+    let missing: string[] = []
+    let result: PlaceResult = 'failed'
+    const isTemplate = card.key.startsWith('template:')
+    try {
+      const tpl = isTemplate ? templates.find((t) => `template:${t.id}` === card.key) : undefined
+      if (tpl) result = await loadDesign(tpl.roomId, async () => templateToDesign(tpl))
+      else if (mode === 'gear')
+        result = await loadDesign(card.key, async () => {
+          const data = await loadPlaceData(placeFromKey(card.key))
+          if (data.kind !== 'room') throw new Error('salle indisponible')
+          const plan = designFromRoomGear(data.file, registry)
+          missing = unavailableList(plan.unavailable)
+          return plan.design
+        })
+      else result = await requestPlace(card.key)
+    } catch (e) {
+      console.error('[creation] place change failed', e)
+    } finally {
+      picker.setBusy(false)
+    }
+    if (result === 'busy') return shell.setStatus(placeNow(), COPY.shell!.statusBusy!, 'busy', true)
+    if (result === 'failed') {
+      notes.show({ id: 'fallback', title: N.fallbackTitle!, body: N.fallbackBody!.replace('{place}', card.title) })
+      return showStatus()
+    }
+    if (result === 'cancelled') return showStatus()
+    showCanvas() // 'done' / 'same'
+    showStatus()
+    notes.dismiss('unavailable')
+    if (result === 'done' && (isTemplate || mode === 'gear')) {
+      const n = store.design().rig.instances.length
+      // The note is announced too (status bar, role="status"), not only shown.
+      const more = missing.length ? ` ${N.unavailableTitle} : ${missing.join(', ')}.` : ''
+      shell.setStatus(placeNow(), COPY.shell!.statusGearLoaded!.replace('{n}', String(n)) + more, 'ready', true)
+    }
+    if (missing.length)
+      notes.show({ id: 'unavailable', title: N.unavailableTitle!, body: N.unavailableBody!.replace('{n}', String(missing.length)), items: missing })
+  }
+  const picker = mountPlacePicker({
+    doc: document,
+    parent: shell.root,
+    covers: [shell.tree, shell.viewport, shell.props],
+    places: cards,
+    templates: templateCards(
+      templates.map((t) => ({ id: t.id, name_fr: t.name_fr, roomId: t.roomId, devices: t.instances.length })),
+      cards,
+    ),
+    thumbBase: `${import.meta.env.BASE_URL}room-thumbs/`,
+    onChoose: (card, mode) => void pick(card, mode),
+  })
+  picker.show({ closable: false, focus: false }) // first visit (no autosave yet, C16)
+  // While the picker covers the workspace, « Aller à la vue 3D » lands on its highlighted card.
+  document.querySelector<HTMLAnchorElement>('[data-testid="skip-link"]')?.addEventListener('click', (e) => {
+    if (!picker.isOpen) return
+    e.preventDefault()
+    e.stopImmediatePropagation()
+    picker.focus()
+  })
 
   // ── Keyboard (Task 8, C10, P3): one window listener for the page's lifetime.
   const shellBag = new DisposableBag()
@@ -287,14 +356,14 @@ export async function bootCreation(): Promise<void> {
     'panel-tree': () => shell.setPanel('tree'),
     'panel-props': () => shell.setPanel('props'),
     site: () => location.assign(siteHref),
+    // Lieu → « Choisir un lieu… »: the picker over the current place (Fermer / Échap go back).
+    'choose-place': () => picker.show({ closable: canvasShown, focus: true }),
   }
-  for (const p of places) actions[`place:${p.key}`] = () => pick(p.key)
   mountMenuBar(shell.menus, () =>
     buildMenus({
       history,
       actions,
       bindingLabel: menuShortcut,
-      places,
     }),
   )
 

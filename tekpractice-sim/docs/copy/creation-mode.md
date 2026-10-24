@@ -33,6 +33,8 @@ Status column:
 | `shell.statusSelected` | Sélectionné : {device} | à valider (tekuxwriter) | Task 8 : barre d'état (`role="status"`, annoncé) après `[` / `]` dans la vue 3D ; `{device}` = nom catalogue de l'appareil |
 | `shell.statusNoSelection` | Aucun appareil sélectionné | à valider (tekuxwriter) | Task 8 : barre d'état, Échap dans la vue 3D a vidé la sélection |
 | `shell.statusNothingToSelect` | Aucun appareil à sélectionner. Ajoutez-en depuis l’inventaire. | à valider (tekuxwriter) | Task 8 : barre d'état, `[` / `]` pressé sans matériel installé (retour sur chaque touche manquée) |
+| `shell.statusBusy` | Un lieu est déjà en cours d’ouverture. Patientez un instant. | à valider (tekuxwriter) | Task 12 : barre d'état (annoncé) quand un lieu est demandé pendant qu'un autre s'ouvre (résultat « busy ») |
+| `shell.statusGearLoaded` | {n} appareils installés. | à valider (tekuxwriter) | Task 12 : barre d'état (annoncé) après un modèle ou « Avec le matériel du modèle » |
 
 ## keys
 
@@ -60,7 +62,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.undo` | Annuler | brief | Projet ; raccourci affiché depuis la carte des touches (Task 8) |
 | `menu.redo` | Rétablir | brief | Projet ; idem |
 | `menu.save` | Enregistrer | à valider (tekuxwriter) | Projet ; inactif jusqu'à l'autosave/Ctrl+S (C16) |
-| `menu.choosePlace` | Choisir un lieu… | à valider (tekuxwriter) | Lieu ; affiché seulement si aucune liste de lieux n'est fournie (le vrai sélecteur arrive en Task 12) |
+| `menu.choosePlace` | Choisir un lieu… | à valider (tekuxwriter) | Lieu ; ouvre l'écran « Choisir un lieu » par-dessus le lieu affiché (Task 12) |
 | `menu.inventory` | Ouvrir l’inventaire | à valider (tekuxwriter) | Matériel ; inactif jusqu'au tiroir d'inventaire |
 | `menu.connectTo` | Connecter à… | à valider (tekuxwriter) | Câblage ; même libellé que l'action Propriétés « Connecter à… » (C10) |
 | `menu.play` | Écouter le morceau | à valider (tekuxwriter) | Écoute ; inactif tant que la lecture n'existe pas |
@@ -69,7 +71,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.shortcuts` | Raccourcis clavier | à valider (tekuxwriter) | Aide ; affiche « H » depuis Task 8, inactif jusqu'au panneau d'aide |
 | `menu.siteBack` | Retour au site Tekonest | validé | Aide ; même libellé que `shell.siteBack` |
 
-Lieu also lists the places offered by the temporary picker, with their room names from `content/rooms/index.json` (`name_fr`) and `picker.blank`.
+Since Task 12, Lieu holds only « Choisir un lieu… »; the place names are on the picker cards (`content/rooms/*.json` `name_fr`, `picker.set-*`, `picker.blank`).
 
 ## tree
 
@@ -187,8 +189,63 @@ Types de signal du catalogue (`signalTypes[].id`), tels que Propriétés les nom
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `picker.title` | Choisir un lieu | validé | Titre (h2 depuis Task 8, sous le `h1` `shell.appTitle`) du sélecteur temporaire, dans la vue 3D avant le premier lieu |
+| `picker.title` | Choisir un lieu | validé | Titre (h2, sous le `h1` `shell.appTitle`) de l'écran de départ « Choisir un lieu » (Task 12) ; ouvert au premier lancement et par Lieu → « Choisir un lieu… » |
 | `picker.blank` | Salle vide neutre | brief | Carte de la salle vide (L1) |
+| `picker.hint` | Flèches pour parcourir, Entrée pour ouvrir. | à valider (tekuxwriter) | Task 12 : sous le titre ; aussi la description (`aria-describedby`) des deux grilles. Les flèches ne changent jamais de lieu (CA-13) |
+| `picker.legendIntro` | Plans vus depuis le public, scène en haut : | à valider (tekuxwriter) | Task 12 : légende des vignettes (même sens que la vue Face, ADR-0011 / P14), suivie de trois pastilles |
+| `picker.legendStage` | scène | à valider (tekuxwriter) | Pastille Prune (zones stage / pit) |
+| `picker.legendOperator` | régie | à valider (tekuxwriter) | Pastille Ambre (régie façade, retours, régie, poste, galerie, cabine) |
+| `picker.legendAudience` | public | à valider (tekuxwriter) | Pastille en pointillés (zones audience) |
+| `picker.filter` | Type de lieu | à valider (tekuxwriter) | Task 12 : étiquette du filtre (liste déroulante) |
+| `picker.filterAll` | Tous les types | à valider (tekuxwriter) | Task 12 : première option du filtre |
+| `picker.templates` | Modèles | à valider (tekuxwriter) | Task 12 : titre (h3) de la rangée des modèles de départ |
+| `picker.places` | Lieux ({n}) | à valider (tekuxwriter) | Task 12 : titre (h3) de la grille des lieux ; `{n}` = cartes affichées (36, ou moins après filtre) |
+| `picker.withGearBadge` | Avec le matériel | brief | Task 12 : badge des 5 cartes L2 |
+| `picker.devices` | {n} appareils | à valider (tekuxwriter) | Task 12 : badge d'une carte modèle (« 4 appareils ») |
+| `picker.close` | Fermer | à valider (tekuxwriter) | Task 12 : bouton visible quand un lieu est déjà affiché ; Échap fait pareil |
+| `picker.set-plateau` | Plateau live (décor 3D) | à valider (tekuxwriter) | Task 12 : carte du décor .glb `plateau` (le nom de `content/environments` est « Plateau / scene live », sans accent) |
+| `picker.set-radio` | Studio radio (décor 3D) | à valider (tekuxwriter) | Task 12 : carte du décor .glb `radio` |
+| `picker.set-theatre` | Théâtre (décor 3D) | à valider (tekuxwriter) | Task 12 : carte du décor .glb `theatre` |
+| `picker.confirmTitle` | Ouvrir {place} | à valider (tekuxwriter) | Task 12 : titre du petit dialogue des cartes « Avec le matériel » ; `{place}` = nom de la carte |
+| `picker.confirmEmpty` | Salle vide | brief | Task 12 : bouton radio (coché par défaut) |
+| `picker.confirmGear` | Avec le matériel du modèle | brief | Task 12 : bouton radio (L2) |
+| `picker.confirmGearHint` | {n} appareils du jeu sont installés à leur place. | à valider (tekuxwriter) | Task 12 : description du bouton radio ; `{n}` = appareils du modèle présents au catalogue |
+| `picker.confirmOpen` | Ouvrir | à valider (tekuxwriter) | Task 12 : bouton principal du dialogue (Entrée) |
+| `picker.confirmCancel` | Annuler | à valider (tekuxwriter) | Task 12 : retour à la carte ; Échap fait pareil |
+
+## placeType
+
+Type affiché sur chaque carte et proposé dans le filtre (Task 12). Familles des salles (`content/rooms/*.json` `family`), puis décors, salle vide, modèles.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `placeType.live` | Concert / live | à valider (tekuxwriter) | Carte, filtre |
+| `placeType.education` | Enseignement | à valider (tekuxwriter) | Idem |
+| `placeType.worship` | Lieu de culte | à valider (tekuxwriter) | Idem |
+| `placeType.conference` | Conférence | à valider (tekuxwriter) | Idem |
+| `placeType.broadcast` | Radio / TV | à valider (tekuxwriter) | Idem |
+| `placeType.outdoor` | Plein air | à valider (tekuxwriter) | Idem |
+| `placeType.post` | Post-production | à valider (tekuxwriter) | Idem |
+| `placeType.studio` | Studio | à valider (tekuxwriter) | Idem |
+| `placeType.installed` | Installation fixe | à valider (tekuxwriter) | Idem |
+| `placeType.classical` | Musique classique | à valider (tekuxwriter) | Idem |
+| `placeType.theatre` | Théâtre | à valider (tekuxwriter) | Idem |
+| `placeType.set` | Décor 3D | à valider (tekuxwriter) | Les 3 décors .glb |
+| `placeType.blank` | Salle neutre | à valider (tekuxwriter) | « Salle vide neutre » |
+| `placeType.template` | Modèle | à valider (tekuxwriter) | Cartes de la rangée « Modèles » |
+| `placeType.other` | Autre lieu | à valider (tekuxwriter) | Famille inconnue |
+
+## note
+
+Notes refermables en bas à gauche de la vue 3D (Task 12) : ce que l'apprenant doit voir, pas seulement la console.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `note.close` | Fermer la note | à valider (tekuxwriter) | Nom du bouton « × » de chaque note |
+| `note.unavailableTitle` | Matériel non disponible dans le jeu | brief | Titre (h3) de la note après « Avec le matériel du modèle » (L2) |
+| `note.unavailableBody` | {n} appareils du modèle ne sont pas encore dans le jeu : | à valider (tekuxwriter) | Suivi de la liste des identifiants (« dhd-rx2 », « × 2 » si répété) |
+| `note.fallbackTitle` | Lieu indisponible | à valider (tekuxwriter) | Titre de la note quand une salle n'a pas pu être chargée ou construite |
+| `note.fallbackBody` | {place} n’a pas pu être chargé. La salle vide neutre est affichée à la place. | à valider (tekuxwriter) | Corps de la note, aussi annoncé dans la barre d'état ; `{place}` = nom du lieu |
 
 ## place
 

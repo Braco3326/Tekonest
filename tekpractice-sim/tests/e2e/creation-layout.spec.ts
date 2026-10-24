@@ -41,6 +41,7 @@ test('the shell owns the full window: menubar at the top, status bar at the bott
 
 test('panels collapse and expand with named buttons', async ({ page }) => {
   await boot(page)
+  await page.evaluate(() => window.__creation!.choosePlace('blank')) // the start screen covers the panels until a place is chosen (Task 12)
   await page.getByRole('button', { name: 'Replier le panneau Projet' }).click()
   await expect(page.getByRole('button', { name: 'Déplier le panneau Projet' })).toBeVisible()
   await expect(page.getByRole('button', { name: 'Déplier le panneau Projet' })).toHaveAttribute('aria-expanded', 'false')
@@ -97,8 +98,10 @@ test('Vue menu toggles the Projet panel; Lieu menu changes the place', async ({ 
   await page.getByRole('menuitem', { name: 'Vue' }).click()
   await page.getByRole('menuitem', { name: 'Panneau Projet' }).click()
   await expect(page.getByRole('button', { name: 'Déplier le panneau Projet' })).toBeVisible()
+  // Lieu → « Choisir un lieu… » opens the picker (Task 12); a card click changes the place
   await page.getByRole('menuitem', { name: 'Lieu' }).click()
-  await page.getByRole('menuitem', { name: 'Salle vide neutre' }).click()
+  await page.getByRole('menuitem', { name: 'Choisir un lieu…' }).click()
+  await page.getByRole('option', { name: /Salle vide neutre/ }).click()
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
   await expect(page.getByTestId('status-bar')).toContainText('Salle vide neutre')
 })

@@ -26,6 +26,8 @@ test('from a fresh load, Tab walks skip link → menubar → tree → canvas →
 })
 test('[ and ] cycle devices only while the canvas has focus; Ctrl+Z undoes', async ({ page }) => {
   await page.goto('/'); await page.waitForFunction(() => !!window.__creation); await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
+  // choosePlace resolves on dispatch; the scene (and so a selectable device) is there once place() reports it
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
   await page.evaluate(() => { window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1' }); window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58' }) })
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press(']')
