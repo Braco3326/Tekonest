@@ -6,7 +6,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { ArcRotateCamera, NullEngine, Scene, Vector3 } from '@babylonjs/core'
-import { asTweenCamera, CameraRig } from '../../src/scene/CameraRig'
+import { asTweenCamera, CameraRig, endsBetaGuard } from '../../src/scene/CameraRig'
 import { ENSEMBLE_LOWER_RADIUS, radiusLimitFor } from '../../src/camera/orbitFeel'
 import { setMotionOverride } from '../../src/design/tokens'
 
@@ -108,6 +108,21 @@ describe('CameraRig dolly floor (Task 3: focus lets you come close, Ensemble doe
     expect(c.lowerRadiusLimit!).toBeLessThanOrEqual(0.9 + 1e-6)
     await settle()
     expect(c.lowerRadiusLimit).toBeCloseTo(radiusLimitFor(2), 9)
+  })
+})
+
+describe('endsBetaGuard (final review: arrow keys in a text field)', () => {
+  it('an arrow key on the canvas / body ends the lifted guard', () => {
+    expect(endsBetaGuard({ code: 'ArrowUp', target: { tagName: 'CANVAS' } })).toBe(true)
+    expect(endsBetaGuard({ code: 'ArrowLeft', target: null })).toBe(true)
+  })
+  it('an arrow key typed in a textarea / input / select / contenteditable does not', () => {
+    for (const tagName of ['TEXTAREA', 'INPUT', 'SELECT'])
+      expect(endsBetaGuard({ code: 'ArrowDown', target: { tagName } }), tagName).toBe(false)
+    expect(endsBetaGuard({ code: 'ArrowRight', target: { tagName: 'DIV', isContentEditable: true } })).toBe(false)
+  })
+  it('other keys never end it', () => {
+    expect(endsBetaGuard({ code: 'KeyW', target: null })).toBe(false)
   })
 })
 

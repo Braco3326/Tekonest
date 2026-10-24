@@ -44,6 +44,30 @@ describe('ViewDirector: parked Explore focus gets the floor guard back (review m
   })
 })
 
+describe('ViewDirector: a delayed hand-back never clobbers the Orbit dolly floor (final review)', () => {
+  beforeEach(() => setMotionOverride(true)) // real flight time: the hand-back is delayed
+  afterEach(() => setMotionOverride(null))
+
+  it('switched to Orbit during the return flight: lowerRadiusLimit is left alone', async () => {
+    const scene = new Scene(new NullEngine())
+    const arc = new ArcRotateCamera('arc', 0, 1, 10, Vector3.Zero(), scene)
+    const walker = {
+      exploreView: true,
+      eyePosition: () => new Vector3(0, 1.6, -3),
+      lookPoint: () => new Vector3(0, 1.6, 0),
+      resume: () => undefined,
+      suspend: () => undefined,
+    }
+    const director = new ViewDirector(scene, arc, new CameraRig(arc), walker)
+    director.flyToDevice({ center: new Vector3(0, 1, 0), boundingRadius: 0.2 })
+    director.flyToEnsemble() // delayed hand-back (flight time + 20 ms)
+    walker.exploreView = false // V: Orbit now…
+    arc.lowerRadiusLimit = 0.4 // …and an Orbit focus set its own dolly floor
+    await new Promise((r) => setTimeout(r, 700))
+    expect(arc.lowerRadiusLimit).toBe(0.4)
+  })
+})
+
 /** ArcRotateCamera position for a pose: target + r·(cos α sin β, cos β, sin α sin β). */
 const positionOf = (p: ReturnType<typeof poseFromEye>) =>
   new Vector3(

@@ -131,12 +131,13 @@ export class ViewDirector implements CameraDirector {
     this.fromExplore = false
     const handBack = (): void => {
       this.returnTimer = null
-      // Hand back to orbit with the designer feel's limits (Task 3).
-      this.arc.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
       this.restoreBetaLimits()
       // The learner may have switched to Orbit (V) during the flight: then the
-      // orbit camera keeps control and the walker stays parked (review #4).
+      // orbit camera keeps control and the walker stays parked (review #4), and
+      // its dolly floor (an Orbit focus may have set one) is left alone.
       if (!this.walker.exploreView) return
+      // Hand back with the designer feel's floor (Task 3).
+      this.arc.lowerRadiusLimit = ENSEMBLE_LOWER_RADIUS
       this.arc.detachControl()
       this.walker.resume()
     }

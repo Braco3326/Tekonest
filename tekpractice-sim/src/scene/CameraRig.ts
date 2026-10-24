@@ -8,7 +8,7 @@ import { Vector3, type ArcRotateCamera } from '@babylonjs/core'
 import { shortestAngle } from '../camera/tween'
 import { ENSEMBLE_LOWER_RADIUS, ORBIT_FEEL, radiusLimitFor } from '../camera/orbitFeel'
 import { motionEnabled, TOKENS } from '../design/tokens'
-import { CameraTween, type TweenCamera } from './cameraTween'
+import { CameraTween, isTextTarget, type TweenCamera } from './cameraTween'
 
 export interface CameraPose {
   alpha: number
@@ -44,6 +44,11 @@ export interface CameraDirector {
 /** Keys that orbit the ArcRotateCamera directly (Babylon's keyboard input): they end a lifted beta guard. */
 const ORBIT_KEYS = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'])
 
+/** An arrow key that orbits the camera: never one typed in a text field (the caret moves, not the view). */
+export function endsBetaGuard(e: { code: string; target: unknown }): boolean {
+  return ORBIT_KEYS.has(e.code) && !isTextTarget(e.target)
+}
+
 /** Placeholder port panels face −Z (DeviceSpawner) — arrive looking at them. */
 const FOCUS_ALPHA = -Math.PI / 2
 const FOCUS_BETA = 1.15
@@ -67,7 +72,7 @@ export class CameraRig implements CameraDirector {
       canvas.addEventListener('wheel', restore)
       if (typeof window !== 'undefined')
         window.addEventListener('keydown', (e: KeyboardEvent) => {
-          if (ORBIT_KEYS.has(e.code)) restore()
+          if (endsBetaGuard(e)) restore()
         })
     } else console.warn('CameraRig: no rendering canvas; flights cannot be cancelled by user input')
   }

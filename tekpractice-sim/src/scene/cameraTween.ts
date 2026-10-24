@@ -46,7 +46,7 @@ export interface EventSourceLike {
 const MODIFIER_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock'])
 const TEXT_TAGS = new Set(['INPUT', 'TEXTAREA', 'SELECT'])
 
-function isTextTarget(target: unknown): boolean {
+export function isTextTarget(target: unknown): boolean {
   const t = target as { tagName?: string; isContentEditable?: boolean; closest?: (s: string) => unknown } | null
   if (!t || typeof t !== 'object') return false
   if (t.tagName && TEXT_TAGS.has(t.tagName.toUpperCase())) return true
