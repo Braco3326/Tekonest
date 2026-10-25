@@ -102,10 +102,15 @@ test('review fixes 1-2: a foreign command during a burst is its own entry; an un
   await select(page, 'ql1')
   const up = page.getByTestId('properties').getByRole('button', { name: 'Augmenter Lacet' })
   const u0 = await undoSize(page)
-  await up.click()
-  await up.click()
-  // within the 600 ms burst, another edit that leaves the panel as it is (focus stays on the stepper)
-  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [1, 0, 6] }))
+  // Two steps, then within the 600 ms burst another edit that leaves the panel as it is (focus stays
+  // on the stepper). All in ONE page task: under a loaded parallel run, two Playwright clicks can land
+  // more than 600 ms apart and make two bursts (the old flake).
+  await up.evaluate((b: HTMLButtonElement) => {
+    b.focus()
+    b.click()
+    b.click()
+    window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [1, 0, 6] })
+  })
   await expect(up).toBeFocused()
   await page.waitForTimeout(800)
   expect(await undoSize(page)).toBe(u0 + 2)
@@ -114,8 +119,13 @@ test('review fixes 1-2: a foreign command during a burst is its own entry; an un
   expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(2)
   expect((await pose(page, 'ql1'))!.yawDeg).toBe(30)
 
-  await up.click() // 45
-  expect(await page.evaluate(() => window.__creation!.undo())).toBe(true) // at once, inside the 600 ms
+  // 45, then undo at once, inside the 600 ms (same page task: really inside the burst)
+  expect(
+    await up.evaluate((b: HTMLButtonElement) => {
+      b.click()
+      return window.__creation!.undo()
+    })
+  ).toBe(true)
   expect((await pose(page, 'ql1'))!.yawDeg).toBe(30)
 })
 
