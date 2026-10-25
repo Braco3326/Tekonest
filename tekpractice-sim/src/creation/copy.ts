@@ -273,8 +273,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Unreadable data could not be set aside (5 items at most, or quota): autosave waits for the export. */
     keptFullTitle: 'Données mises de côté : plus de place',
     keptFull: 'Des données illisibles n’ont pas pu être mises de côté. Exportez-les avec Projet > Exporter les données mises de côté… : la sauvegarde automatique reprendra ensuite.',
-    /** A named save that needed to set an older copy aside first, without room for it. */
-    quarantineFull: 'Rien n’a été enregistré : l’ancienne version doit d’abord être mise de côté, et la place est pleine. Pour garder votre travail, utilisez Projet > Enregistrer sous… avec un autre nom.',
+    /** A named save that had to set another tab's copy of this project aside first, without room for it (a new name needs no setting aside). */
+    quarantineFull: 'Rien n’a été enregistré : la version enregistrée depuis un autre onglet doit d’abord être mise de côté, et la place est pleine. Pour garder votre travail, utilisez Projet > Enregistrer sous… avec un autre nom.',
+    /** Same, but the unreadable project list is what could not be set aside: any name fails until it is exported and confirmed. */
+    quarantineFullList: 'Rien n’a été enregistré : la liste des projets, illisible, ne peut pas être mise de côté (place pleine). Exportez-la avec Projet > Exporter les données mises de côté…, confirmez avec « J’ai vérifié le fichier », puis enregistrez à nouveau.',
     /** After the export: the note waits for this confirmation before the autosave resumes. */
     keptFullExported: 'Fichier téléchargé. Ouvrez-le pour vérifier qu’il contient vos données, puis confirmez : la sauvegarde automatique reprendra et remplacera l’ancienne sauvegarde illisible.',
     checkedFile: 'J’ai vérifié le fichier',

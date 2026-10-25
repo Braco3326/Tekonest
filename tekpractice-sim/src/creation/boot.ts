@@ -769,7 +769,10 @@ export async function bootCreation(): Promise<void> {
       })
       if (r === 'blocked' || r === 'full' || r === 'quarantine-full') {
         if (r === 'blocked') blockedNote()
-        return shell.setStatus(placeNow(), saveFailed[r], 'ready', true)
+        // quarantine-full: the unreadable list (export it first) vs another tab's copy (a new name works).
+        const msg =
+          r === 'quarantine-full' && readProjectList(storage).status === 'unreadable' ? PJ.quarantineFullList! : saveFailed[r]
+        return shell.setStatus(placeNow(), msg, 'ready', true)
       }
       setProject({ name, savedFp: designFingerprint(design), stamp })
       refreshTitle()

@@ -306,6 +306,55 @@ test('quarantine full (5): the unreadable autosave is not dropped; autosave wait
   expect(JSON.parse((await page.evaluate(() => localStorage.getItem('audio-sim/creation.v1')))!).design.rig.instances).toHaveLength(2)
 })
 
+const fiveKept = () =>
+  JSON.stringify({ version: 1, items: [0, 1, 2, 3, 4].map((i) => ({ at: 't', key: 'audio-sim/creation.v1', reason: 'corrupt', raw: `old${i}` })) })
+
+test('quarantine full + unreadable project list: Ctrl+S says to export the list first (any name fails), never « Enregistrer sous »', async ({ page }) => {
+  await page.addInitScript((kept) => {
+    if (!sessionStorage.getItem('seeded')) {
+      sessionStorage.setItem('seeded', '1')
+      localStorage.setItem('audio-sim/creation.v1.quarantine', kept)
+      localStorage.setItem('audio-sim/creation-projects.v1', '{not json')
+    }
+  }, fiveKept())
+  await boot(page)
+  await placeTwo(page)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+s')
+  await nameAndEnter(page, 'Neuf')
+  const msg = page.locator('.cr-status-msg')
+  await expect(msg).toContainText('la liste des projets, illisible, ne peut pas être mise de côté')
+  await expect(msg).toContainText('Projet > Exporter les données mises de côté…')
+  await expect(msg).not.toContainText('Enregistrer sous')
+  expect(await page.evaluate(() => localStorage.getItem('audio-sim/creation-projects.v1'))).toBe('{not json') // never overwritten
+})
+
+test('quarantine full + another tab saved this project meanwhile: Ctrl+S points to « Enregistrer sous… » with another name', async ({ page }) => {
+  await boot(page)
+  await placeTwo(page)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+s')
+  await nameAndEnter(page, 'P')
+  await expect(page.locator('.cr-status-msg')).toContainText('Projet « P » enregistré')
+  // another tab rewrote « P » (new stamp) and the quarantine is full
+  await page.evaluate((kept) => {
+    const k = 'audio-sim/creation-projects.v1'
+    const l = JSON.parse(localStorage.getItem(k)!)
+    l.projects[0].stamp = 'other-tab'
+    localStorage.setItem(k, JSON.stringify(l))
+    localStorage.setItem('audio-sim/creation.v1.quarantine', kept)
+  }, fiveKept())
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+s')
+  const msg = page.locator('.cr-status-msg')
+  await expect(msg).toContainText('la version enregistrée depuis un autre onglet doit d’abord être mise de côté')
+  await expect(msg).toContainText('Projet > Enregistrer sous… avec un autre nom')
+  // and it is true: another name saves
+  await menu(page, 'Enregistrer sous…')
+  await nameAndEnter(page, 'P2')
+  await expect(msg).toContainText('Projet « P2 » enregistré')
+})
+
 test('two tabs: when the other tab autosaves, this one pauses (said) and writes nothing until Ctrl+S here', async ({ page, context }) => {
   await boot(page)
   await placeTwo(page)
