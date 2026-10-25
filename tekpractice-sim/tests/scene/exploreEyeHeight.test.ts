@@ -216,6 +216,27 @@ describe('ExploreController acceptKey / onActive (Task 19, render lease)', () =>
     win.fire('keydown', key('KeyW'))
     expect(seen).toEqual([true])
   })
+  it('Shift still down from Maj+V is the run modifier, not a stale key: W then runs (Task 21 carry-over)', () => {
+    /** Walk 10 frames of 50 ms with W held; how far the walker went. */
+    const walked = (shift: 'none' | 'before' | 'after'): number => {
+      const { engine, scene, ex, connect } = make()
+      vi.spyOn(engine, 'getDeltaTime').mockReturnValue(50)
+      connect()
+      if (shift === 'before') win.fire('keydown', { ...key('ShiftLeft'), shiftKey: true }) // Maj of Maj+V
+      ex.setBaseView('explore', false)
+      if (shift === 'after') win.fire('keydown', { ...key('ShiftLeft'), shiftKey: true })
+      const p0 = ex.eyePosition()
+      win.fire('keydown', { ...key('KeyW'), shiftKey: shift !== 'none' })
+      for (let i = 0; i < 10; i++) scene.onBeforeRenderObservable.notifyObservers(scene)
+      const p1 = ex.eyePosition()
+      return Math.hypot(p1.x - p0.x, p1.z - p0.z)
+    }
+    const walk = walked('none')
+    const run = walked('after')
+    expect(walk).toBeGreaterThan(0)
+    expect(run).toBeGreaterThan(walk * 1.5)
+    expect(walked('before')).toBeCloseTo(run, 6)
+  })
   it('leaving Explore while a key is held ends the activity', () => {
     const seen: boolean[] = []
     const { ex, connect } = make({ onActive: (on) => seen.push(on) })

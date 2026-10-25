@@ -231,8 +231,13 @@ export class ExploreController implements Walker {
     if (v === this.view) return
     // A key held before the switch (an arrow orbiting) never moves the walker, not even through
     // its auto-repeat: it is ignored until released; a new press does.
-    for (const c of this.keyboard.heldCodes()) this.staleKeys.add(c)
+    // The run modifier is not a motion: a Shift still down from Maj+V stays held (W then runs).
+    const run = new Set(this.deps.settings().bindings.RUN)
+    const held = this.keyboard.heldCodes()
+    for (const c of held) if (!run.has(c)) this.staleKeys.add(c)
     this.keyboard.reset()
+    for (const c of held) if (run.has(c)) this.keyboard.keyDown(c)
+    this.keyboard.consumePressed() // re-holding it is no new press
     this.gesture.cancel()
     this.stick.on = false
     this.setView(v, animate)
