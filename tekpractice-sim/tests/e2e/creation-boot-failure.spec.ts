@@ -3,8 +3,9 @@
  * without WebGL, or a chunk that fails to load, must never leave the learner on
  * « Choisissez un lieu pour commencer. » with nothing to click. A persistent
  * alert says why and gives the way out (the 2D version, or a reload).
- * Review minor: while « Choisir un lieu » is open, the menubar and the creation
- * shortcuts are inert (« Annuler » / Ctrl+Z never edit the rig under the picker).
+ * Review minor: while « Choisir un lieu » is open, « Annuler » / « Rétablir » and
+ * the creation shortcuts are off (they never edit the rig under the picker); the
+ * menus themselves stay usable (Exporter…, Ouvrir…, Vue, Aide on a first visit).
  */
 import { expect, test, type Page } from '@playwright/test'
 
@@ -71,7 +72,7 @@ for (const [what, pattern] of [
   })
 }
 
-test('« Choisir un lieu » open over a rig: the menubar is inert and Ctrl+Z does nothing; closed, both work again', async ({
+test('« Choisir un lieu » open over a rig: « Annuler » is disabled and Ctrl+Z does nothing; closed, both work again', async ({
   page,
 }) => {
   await page.goto('/')
@@ -95,27 +96,30 @@ test('« Choisir un lieu » open over a rig: the menubar is inert and Ctrl+Z doe
   await page.getByRole('menuitem', { name: /^Choisir un lieu/ }).click()
   const picker = page.getByTestId('place-picker')
   await expect(picker).toBeVisible()
-  expect(
-    await page.evaluate(
-      () => !!document.querySelector('[data-testid="menubar"] [role="menubar"]')!.closest('[inert]')
-    )
-  ).toBe(true)
-  // « Retour au site Tekonest » (same header) stays a way out
-  expect(
-    await page.evaluate(() => !!document.getElementById('site-link')?.closest('[inert]'))
-  ).toBe(false)
+  // Shortcuts: Ctrl+Z / Ctrl+Y do nothing under the picker (the keys stay the browser's)
   await page.keyboard.press('Control+z')
   await page.keyboard.press('Control+y')
   expect(await instances()).toBe(1)
   expect(await undoSize()).toBe(u0)
+  // Menus stay usable (Exporter…, Ouvrir…, Vue, Aide: the first visit needs them), but
+  // « Annuler » / « Rétablir » are disabled and a click on them changes nothing
+  await page.getByRole('menuitem', { name: 'Projet' }).click()
+  const undoItem = page
+    .getByRole('menu', { name: 'Projet' })
+    .getByRole('menuitem', { name: /^Annuler/ })
+  await expect(undoItem).toHaveAttribute('aria-disabled', 'true')
+  await undoItem.click({ force: true })
+  expect(await instances()).toBe(1)
+  expect(await undoSize()).toBe(u0)
+  await page.keyboard.press('Escape') // closes the menu
 
-  await page.keyboard.press('Escape') // closable: a place is on screen
+  await picker.getByRole('button', { name: 'Fermer' }).click() // closable: a place is on screen
   await expect(picker).toBeHidden()
-  expect(
-    await page.evaluate(
-      () => !!document.querySelector('[data-testid="menubar"] [role="menubar"]')!.closest('[inert]')
-    )
-  ).toBe(false)
+  await page.getByRole('menuitem', { name: 'Projet' }).click()
+  await expect(
+    page.getByRole('menu', { name: 'Projet' }).getByRole('menuitem', { name: /^Annuler/ })
+  ).not.toHaveAttribute('aria-disabled', 'true')
+  await page.keyboard.press('Escape')
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press('Control+z')
   await expect.poll(instances).toBe(0)

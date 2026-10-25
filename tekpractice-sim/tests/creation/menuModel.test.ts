@@ -45,6 +45,21 @@ describe('menu model (Task 7)', () => {
     find(buildMenus(ctx({ history: h })), 'undo').run()
     expect(undone).toBe(1)
   })
+  it('history locked (place picker open): Annuler / Rétablir are disabled and do nothing', () => {
+    let calls = 0
+    let locked = true
+    const h = { canUndo: true, canRedo: true, undo: () => (calls++, true), redo: () => (calls++, true) } as unknown as History
+    const menus = buildMenus(ctx({ history: h, historyLocked: () => locked }))
+    expect(find(menus, 'undo').enabled()).toBe(false)
+    expect(find(menus, 'redo').enabled()).toBe(false)
+    find(menus, 'undo').run()
+    find(menus, 'redo').run()
+    expect(calls).toBe(0)
+    locked = false
+    expect(find(menus, 'undo').enabled()).toBe(true)
+    find(menus, 'undo').run()
+    expect(calls).toBe(1)
+  })
   it('an item is enabled only when its action is registered, and runs it', () => {
     let ran = 0
     expect(find(buildMenus(ctx()), 'panel-tree').enabled()).toBe(false)

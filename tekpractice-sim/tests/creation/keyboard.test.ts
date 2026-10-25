@@ -121,15 +121,15 @@ describe('creation keyboard (Task 8)', () => {
     win.fire(dup)
     expect(dup.prevented).toBe(0) // DUPLICATE has no handler yet: the browser keeps Ctrl+D
   })
-  it('while suspended (the place picker is open) no action fires and nothing is prevented', () => {
+  it('a suspended action (place picker open) does not fire and its key stays the browser’s; others still fire', () => {
     const win = fakeWindow()
-    let suspended = true
+    let pickerOpen = true
     const kb = mountCreationKeyboard({
       bag: new DisposableBag(),
       bindings: DEFAULT_CREATION_BINDINGS,
       canvas: el('CANVAS') as unknown as HTMLElement,
       target: win,
-      suspended: () => suspended,
+      suspended: (a) => pickerOpen && a !== 'SAVE',
     })
     const log: string[] = []
     for (const a of ['UNDO', 'REDO', 'SAVE'] as const) kb.onAction(a, () => void log.push(a))
@@ -137,12 +137,14 @@ describe('creation keyboard (Task 8)', () => {
     const e = undo()
     win.fire(e)
     win.fire(key({ code: 'KeyY', key: 'y', ctrlKey: true, target: el('BUTTON') }))
-    win.fire(key({ code: 'KeyS', key: 's', ctrlKey: true, target: el('BUTTON') }))
-    expect(log).toEqual([])
+    const save = key({ code: 'KeyS', key: 's', ctrlKey: true, target: el('BUTTON') })
+    win.fire(save)
+    expect(log).toEqual(['SAVE'])
     expect(e.prevented).toBe(0)
-    suspended = false
+    expect(save.prevented).toBe(1)
+    pickerOpen = false
     win.fire(undo())
-    expect(log).toEqual(['UNDO'])
+    expect(log).toEqual(['SAVE', 'UNDO'])
   })
   it('the listener is released with the bag', () => {
     const { win, bag } = setup()

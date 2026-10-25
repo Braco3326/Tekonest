@@ -29,6 +29,8 @@ export interface MenuContext {
   bindingLabel(action: string): string | undefined
   /** Places offered in « Lieu » (each runs the action `place:<key>`). */
   places?: { key: string; label: string }[]
+  /** True while Annuler / Rétablir are off (the place picker covers the rig: nothing under it may change). */
+  historyLocked?(): boolean
 }
 
 export function buildMenus(ctx: MenuContext): MenuDef[] {
@@ -41,19 +43,22 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     enabled: () => typeof ctx.actions[action] === 'function',
     run: () => ctx.actions[action]?.(),
   })
+  const free = (): boolean => !ctx.historyLocked?.()
+  const canUndo = (): boolean => free() && ctx.history.canUndo
+  const canRedo = (): boolean => free() && ctx.history.canRedo
   const undo: MenuItem = {
     id: 'undo',
     label: M.undo!,
     shortcut: ctx.bindingLabel('undo'),
-    enabled: () => ctx.history.canUndo,
-    run: () => void (ctx.history.canUndo && ctx.history.undo()),
+    enabled: canUndo,
+    run: () => void (canUndo() && ctx.history.undo()),
   }
   const redo: MenuItem = {
     id: 'redo',
     label: M.redo!,
     shortcut: ctx.bindingLabel('redo'),
-    enabled: () => ctx.history.canRedo,
-    run: () => void (ctx.history.canRedo && ctx.history.redo()),
+    enabled: canRedo,
+    run: () => void (canRedo() && ctx.history.redo()),
   }
   const places = ctx.places ?? []
   return [

@@ -600,9 +600,7 @@ export async function bootCreation(): Promise<void> {
   const picker = mountPlacePicker({
     doc: document,
     parent: shell.root,
-    // The menus too: « Annuler » / « Nouveau »… must not edit the rig under the open picker (Phase 1 review).
-    // Only the menus: « Retour au site Tekonest » in the same header stays a way out.
-    covers: [shell.menus, shell.tree, shell.viewport, shell.props],
+    covers: [shell.tree, shell.viewport, shell.props],
     places: cards,
     templates: templateCards(
       templates.map((t) => ({
@@ -689,8 +687,10 @@ export async function bootCreation(): Promise<void> {
     bag: shellBag,
     bindings: loadCreationBindings(storage),
     canvas,
-    // « Choisir un lieu » covers the workspace: no shortcut edits the rig under it (Phase 1 review).
-    suspended: () => picker.isOpen,
+    // « Choisir un lieu » covers the workspace: no shortcut acts on the rig or the view under it
+    // (Phase 1 review: Ctrl+Z after « Nouveau » undid the rig under the open picker).
+    // Ctrl+S stays taken (« Choisissez un lieu avant d’enregistrer. »), help stays reachable.
+    suspended: (a) => picker.isOpen && a !== 'SAVE' && a !== 'TOGGLE_HELP',
   })
   const cycle = (dir: 1 | -1): boolean => {
     const next = nextDevice(deviceIds(), viewState.get().selection, dir)
@@ -985,6 +985,7 @@ export async function bootCreation(): Promise<void> {
       history,
       actions,
       bindingLabel: menuShortcut,
+      historyLocked: () => picker.isOpen, // Phase 1 review: « Annuler » never edits the rig under the picker
     })
   )
 
