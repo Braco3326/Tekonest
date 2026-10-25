@@ -155,9 +155,15 @@ test('hover renders on demand: a frame per zone change, then idle (0 renders in 
   const n1 = await page.evaluate(() => window.__creation!.renders())
   await page.waitForTimeout(2000)
   expect(await page.evaluate(() => window.__creation!.renders())).toBe(n1)
-  // leaving the cube clears the hover
+  // leaving the cube clears the hover: one frame repaints the patch, then idle again (Task 21 gate: 0 renders in 2 s)
+  const n2 = await page.evaluate(() => window.__creation!.renders())
   await page.mouse.move(r.x + r.width + 200, r.y + r.height + 200)
   await expect.poll(() => page.evaluate(() => window.__creation!.cubeHover())).toBeNull()
+  await expect.poll(() => page.evaluate(() => window.__creation!.renders())).toBeGreaterThan(n2)
+  await page.waitForTimeout(300)
+  const n3 = await page.evaluate(() => window.__creation!.renders())
+  await page.waitForTimeout(2000)
+  expect(await page.evaluate(() => window.__creation!.renders())).toBe(n3)
 })
 
 test('hover caption: the zone name under the square (edge and corner too), hidden on leave and while dragging; never in the way', async ({ page }) => {
