@@ -500,7 +500,8 @@ export class SceneHost {
     this.controllers = new DisposableBag()
     this.spawner = new DeviceSpawner(scene, this.registry, CREATION_DEVICE_THEME)
     this.cables = new CableRenderer(scene, undefined, { pulses: false })
-    this._rig = new CameraRig(camera)
+    // L7 (Task 18): a recalled view lands exactly, even during an orbit flick.
+    this._rig = new CameraRig(camera, { stopInertiaOnFlight: true })
     attachRenderScheduler(this.engine, scene, camera, this.canvas, this.scheduler, bag)
     // View cube (Task 17): a second camera of this scene, only on a real DOM canvas (headless
     // NullEngine tests have a stand-in, no DOM). Disposed with the plumbing, before the scene.

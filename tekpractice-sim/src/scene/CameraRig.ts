@@ -50,6 +50,14 @@ export function endsBetaGuard(e: { code: string; target: unknown }): boolean {
   return ORBIT_KEYS.has(e.code) && !isTextTarget(e.target)
 }
 
+export interface CameraRigOptions {
+  /**
+   * Zero the camera's inertial offsets (orbit, dolly, pan) when a flight starts, so a recalled
+   * view lands exactly (decision L7, Task 18). Default false: legacy keeps Babylon's behaviour.
+   */
+  stopInertiaOnFlight?: boolean
+}
+
 /** Placeholder port panels face −Z (DeviceSpawner) — arrive looking at them. */
 const FOCUS_ALPHA = -Math.PI / 2
 const FOCUS_BETA = 1.15
@@ -84,7 +92,10 @@ export class CameraRig implements CameraDirector {
     return this.tween.active
   }
 
-  constructor(private camera: ArcRotateCamera) {
+  constructor(
+    private camera: ArcRotateCamera,
+    private readonly options: CameraRigOptions = {},
+  ) {
     this.ensemble = this.currentPose()
     const scene = camera.getScene()
     this.tween = new CameraTween(asTweenCamera(camera), scene)
@@ -204,6 +215,15 @@ export class CameraRig implements CameraDirector {
    */
   private fly(to: CameraPose, lowerRadius?: number): void {
     const seq = ++this.flightSeq
+    if (this.options.stopInertiaOnFlight) {
+      // L7: an orbit flick still coasting would carry the camera past the view it was asked for.
+      const c = this.camera
+      c.inertialAlphaOffset = 0
+      c.inertialBetaOffset = 0
+      c.inertialRadiusOffset = 0
+      c.inertialPanningX = 0
+      c.inertialPanningY = 0
+    }
     if (lowerRadius !== undefined) {
       this.camera.lowerRadiusLimit = Math.min(lowerRadius, this.camera.radius, to.radius)
     }

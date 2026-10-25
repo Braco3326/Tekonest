@@ -143,6 +143,67 @@ describe('CameraRig.dispose (Task 6: nothing reacts to a flight cancelled by tea
   })
 })
 
+describe('CameraRig stopInertiaOnFlight (Task 18, decision L7: a recalled view lands where asked)', () => {
+  beforeEach(() => setMotionOverride(false)) // a cut: the drift, if any, comes only from inertia
+  afterEach(() => setMotionOverride(null))
+
+  const flick = (c: ArcRotateCamera): void => {
+    c.inertialAlphaOffset = 0.05
+    c.inertialBetaOffset = -0.03
+    c.inertialRadiusOffset = 0.4
+    c.inertialPanningX = 0.2
+    c.inertialPanningY = -0.2
+  }
+  const offsets = (c: ArcRotateCamera) => [c.inertialAlphaOffset, c.inertialBetaOffset, c.inertialRadiusOffset, c.inertialPanningX, c.inertialPanningY]
+  /** Babylon applies (and decays) inertia in camera.update(), once per rendered frame. */
+  const frames = (c: ArcRotateCamera, n = 120) => {
+    for (let i = 0; i < n; i++) c.update()
+  }
+
+  it('on: a flight started during an orbit flick zeroes the inertia, the pose stays exactly on the view', async () => {
+    const c = cam()
+    const rig = new CameraRig(c, { stopInertiaOnFlight: true })
+    flick(c)
+    rig.flyToView(1.2, 0.8)
+    expect(offsets(c)).toEqual([0, 0, 0, 0, 0])
+    await settle()
+    const target = c.target.asArray()
+    frames(c)
+    expect(c.alpha).toBeCloseTo(1.2, 9)
+    expect(c.beta).toBeCloseTo(0.8, 9)
+    expect(c.radius).toBeCloseTo(10, 9)
+    expect(c.target.asArray()).toEqual(target)
+  })
+
+  it('on: every flight kind stops it (device, ensemble, preset, pose, repivot)', () => {
+    const c = cam()
+    const rig = new CameraRig(c, { stopInertiaOnFlight: true })
+    const runs = [
+      () => rig.flyToDevice({ center: new Vector3(1, 0.5, 0), boundingRadius: 0.2 }),
+      () => rig.flyToEnsemble(),
+      () => rig.flyToPreset({ alpha: 1, beta: 1, radius: 5, target: Vector3.Zero() }),
+      () => rig.flyToPose({ alpha: 1, beta: 1, radius: 5, target: Vector3.Zero() }),
+      () => rig.repivot(new Vector3(1, 0, 1)),
+    ]
+    for (const run of runs) {
+      flick(c)
+      run()
+      expect(offsets(c)).toEqual([0, 0, 0, 0, 0])
+    }
+  })
+
+  it('off by default (legacy unchanged): the inertia is left to Babylon and the camera drifts', async () => {
+    const c = cam()
+    const rig = new CameraRig(c)
+    flick(c)
+    rig.flyToView(1.2, 0.8)
+    expect(offsets(c)).toEqual([0.05, -0.03, 0.4, 0.2, -0.2])
+    await settle()
+    frames(c)
+    expect(Math.abs(c.alpha - 1.2)).toBeGreaterThan(0.1)
+  })
+})
+
 describe('CameraRig.flyToPreset (Task 5)', () => {
   beforeEach(() => setMotionOverride(false))
   afterEach(() => setMotionOverride(null))
