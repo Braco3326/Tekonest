@@ -6,7 +6,7 @@
  * Explore ⇄ Orbit toggle. Never touches the graph: interactions go through the
  * injected FocusPatch handles and UI callbacks.
  */
-import { ArcRotateCamera, Scene, UniversalCamera, Vector3 } from '@babylonjs/core'
+import { ArcRotateCamera, Scene, UniversalCamera, Vector3, type Observer } from '@babylonjs/core'
 import { actionsForCode, chordFor } from '../input/bindings'
 import type { Action } from '../input/actions'
 import { KeyboardState } from '../input/keyboardState'
@@ -82,6 +82,21 @@ export interface ExploreDeps {
    * in Orbit; the host says why). Default: allowed.
    */
   canToggleView?(): boolean
+  /**
+   * Eye height above the floor at start (Mode Création ear height, Task 19: 1.2 m seated,
+   * 1.7 m standing). Default: the legacy standing eye (EYE.stand), unchanged.
+   */
+  eyeHeight?: number
+  /**
+   * Keydown gate (Mode Création, Task 19): return false and the key is not the walker's
+   * (keys act only while the 3D canvas has focus, WCAG 2.1.4). Default: every key (legacy).
+   */
+  acceptKey?(e: KeyboardEvent): boolean
+  /**
+   * The walker starts / stops needing frames (movement keys held, a look drag, velocity
+   * still easing out). The render-on-demand shell holds a lease meanwhile. Default: none.
+   */
+  onActive?(active: boolean): void
 }
 
 const isTyping = (el: Element | null): boolean =>
@@ -108,10 +123,19 @@ export class ExploreController implements Walker {
   private focus!: FocusHandles
   private ui!: ExploreUi
 
+  /** The per-frame tick, registered only while the base view is Explore (no idle ticking, Task 19). */
+  private tickObserver: Observer<Scene> | null = null
+  /** Last value given to `deps.onActive`. */
+  private active = false
+  /** Floor height the eased floorY is heading to. */
+  private floorTarget = 0
+
   constructor(private deps: ExploreDeps) {
     const { scene } = deps
     this.player = initialPlayer(deps.start.x, deps.start.z, deps.start.yaw)
+    if (deps.eyeHeight !== undefined) this.player = { ...this.player, eye: deps.eyeHeight }
     this.floorY = deps.floorAt?.(deps.start.x, deps.start.z) ?? 0
+    this.floorTarget = this.floorY
     this.keyboard = new KeyboardState(deps.settings().bindings)
     this.camera = new UniversalCamera('explore', new Vector3(this.player.x, this.player.eye, this.player.z), scene)
     this.camera.inputs.clear() // WE drive it: no Babylon key/mouse inputs
@@ -121,7 +145,8 @@ export class ExploreController implements Walker {
     this.view = deps.initialView
 
     const bag = this.bag
-    bag.observe(scene.onBeforeRenderObservable, () => this.tick(scene.getEngine().getDeltaTime() / 1000))
+    this.syncTick() // a controller born in Explore (legacy sandbox) ticks at once
+    bag.add(() => this.stopTick())
     bag.listen(window, 'keydown', this.onKeyDown, true)
     bag.listen(window, 'keyup', this.onKeyUp, true)
     bag.listen(window, 'blur', this.onBlur)
@@ -138,8 +163,71 @@ export class ExploreController implements Walker {
     this.bag.dispose()
     this.keyboard.reset()
     this.gesture.cancel()
+    this.stick.on = false
     if (this.locked) document.exitPointerLock()
+    this.setActive(false)
     this.camera.dispose()
+  }
+
+  // ── tick registration (Task 19): per-frame work only while the base view is Explore ──
+  private syncTick(): void {
+    if (this.view === 'explore') this.startTick()
+    else this.stopTick()
+  }
+  private startTick(): void {
+    if (this.tickObserver || this.bag.disposed) return
+    const scene = this.deps.scene
+    // Inserted first, as when it was registered in the constructor before every later observer
+    // (Placement's ghost follows the aim of the camera this tick has just moved).
+    this.tickObserver = scene.onBeforeRenderObservable.add(
+      () => this.tick(scene.getEngine().getDeltaTime() / 1000),
+      undefined,
+      true
+    )
+  }
+  private stopTick(): void {
+    if (!this.tickObserver) return
+    this.deps.scene.onBeforeRenderObservable.remove(this.tickObserver)
+    this.tickObserver = null
+  }
+
+  /** Movement / turn / look keys held (RUN alone does not move). */
+  private motionHeld(): boolean {
+    const held = (a: Action): boolean => this.keyboard.held(a)
+    return (
+      held('MOVE_FORWARD') || held('MOVE_BACK') || held('STRAFE_LEFT') || held('STRAFE_RIGHT') ||
+      held('MOVE_UP') || held('MOVE_DOWN') || held('TURN_LEFT') || held('TURN_RIGHT') ||
+      held('LOOK_UP') || held('LOOK_DOWN')
+    )
+  }
+  /** Re-evaluate whether the walker needs frames; `deps.onActive` hears the edges only. */
+  private refreshActive(): void {
+    if (!this.deps.onActive) return
+    const easing =
+      Math.hypot(this.player.vx, this.player.vz) > 1e-3 || Math.abs(this.floorTarget - this.floorY) > 1e-3
+    this.setActive(
+      !this.bag.disposed && this.walking && (this.motionHeld() || this.gesture.isDragging || this.stick.on || easing)
+    )
+  }
+  private setActive(on: boolean): void {
+    if (on === this.active) return
+    this.active = on
+    this.deps.onActive?.(on)
+  }
+
+  /** Mode Création (Task 19): ear height switch; the walk camera moves to floor + `h` at once. */
+  setEyeHeight(h: number): void {
+    this.player = { ...this.player, eye: h }
+    this.applyCamera()
+  }
+
+  /**
+   * Set the base view directly (Mode Création: « Marcher » / Maj+V, Esc). `animate` flies the
+   * orbit camera to the Ensemble pose on the way back to Orbit, as `toggleView` does.
+   */
+  setBaseView(v: BaseView, animate = true): void {
+    if (v === this.view) return
+    this.setView(v, animate)
   }
 
   /** Late wiring: FocusPatch and the UI are built after the controller (they need its flags). */
@@ -166,11 +254,16 @@ export class ExploreController implements Walker {
     this.keyboard.reset()
     this.gesture.cancel()
     this.stick.on = false
+    // Look deltas never carry over a suspension (the tick, which used to drop them every
+    // frame while not walking, may not run now: Task 19).
+    this.look.dx = this.look.dy = 0
     if (this.locked) document.exitPointerLock()
+    this.refreshActive()
   }
   resume(): void {
     this.suspended = false
     this.deps.scene.activeCamera = this.camera
+    this.refreshActive()
   }
 
   // ── public state (e2e, FocusPatch gates) ────────────────────────────────────
@@ -247,6 +340,8 @@ export class ExploreController implements Walker {
       arc.attachControl(true)
       if (animate) rig.flyToEnsemble()
     }
+    this.syncTick()
+    this.refreshActive()
     this.deps.onViewChange?.(v)
   }
 
@@ -268,8 +363,10 @@ export class ExploreController implements Walker {
     const at = resolveMove({ x: this.player.x, z: this.player.z }, { x: next.x, z: next.z }, PLAYER_RADIUS, this.deps.obstacles())
     this.player = { ...next, x: at.x, z: at.z }
     const target = this.deps.floorAt?.(at.x, at.z) ?? 0
+    this.floorTarget = target
     this.floorY += (target - this.floorY) * Math.min(1, dt * 8)
     this.applyCamera()
+    this.refreshActive() // the lease ends once the walker has come to rest
   }
 
   private applyCamera(): void {
@@ -280,6 +377,7 @@ export class ExploreController implements Walker {
   // ── keyboard ────────────────────────────────────────────────────────────────
   private onKeyDown = (e: KeyboardEvent): void => {
     if (!this.ui || this.ui.capturingKey()) return
+    if (this.deps.acceptKey && !this.deps.acceptKey(e)) return
     // A HUD dialog marked `data-owns-keys` (e.g. the rig overwrite confirm)
     // handles its own Esc/Tab while it has focus: the capture-phase chain steps aside.
     if ((e.target as Element | null)?.closest?.('[data-owns-keys]')) return
@@ -310,6 +408,7 @@ export class ExploreController implements Walker {
     for (const a of this.keyboard.consumePressed()) this.onPressed(a, e)
     if (this.walking && actions.some((a) => a.startsWith('MOVE') || a.startsWith('STRAFE') || a.startsWith('TURN') || a.startsWith('LOOK')))
       e.preventDefault() // arrows / PageUp must not scroll the page while walking
+    this.refreshActive()
   }
 
   private onPressed(a: string, e: KeyboardEvent): void {
@@ -375,12 +474,16 @@ export class ExploreController implements Walker {
     }
   }
 
-  private onKeyUp = (e: KeyboardEvent): void => this.keyboard.keyUp(e.code)
+  private onKeyUp = (e: KeyboardEvent): void => {
+    this.keyboard.keyUp(e.code)
+    this.refreshActive()
+  }
 
   private onBlur = (): void => {
     this.keyboard.reset()
     this.gesture.cancel()
     this.stick.on = false
+    this.refreshActive()
   }
 
   private handleEsc(e: KeyboardEvent): void {
@@ -463,11 +566,13 @@ export class ExploreController implements Walker {
       this.stick.dx = e.clientX - this.stick.x0
       this.stick.dy = e.clientY - this.stick.y0
     }
+    if (d.kind !== 'none') this.refreshActive()
   }
 
   private onPointerUp = (e: PointerEvent): void => {
     const result = this.gesture.up(e.clientX, e.clientY)
     this.stick.on = false
+    this.refreshActive()
     if (result !== 'click' || e.button !== 0 || !this.mouseActive()) return
     if (this.ui.placing()) {
       this.ui.confirmPlacement()

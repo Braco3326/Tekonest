@@ -146,7 +146,8 @@ describe('dispose() releases every listener and observer', () => {
       crosshair: {} as HTMLElement,
     })
     expect(win.entries.length + doc.entries.length + canvas.entries.length).toBe(8)
-    expect(scene.onBeforeRenderObservable.observers.length).toBe(c0.before + 1)
+    // Task 19: born in Orbit, no per-frame tick (it is registered only while the base view is Explore)
+    expect(scene.onBeforeRenderObservable.observers.length).toBe(c0.before)
     const nCams = scene.cameras.length
     ex.dispose()
     ex.dispose()
