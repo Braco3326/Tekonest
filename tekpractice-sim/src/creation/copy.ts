@@ -431,4 +431,28 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     dessus: 'DESSUS',
     dessous: 'DESSOUS',
   },
+  /**
+   * Named views (Task 18, C11, CA-05): the Vue menu and the `V` picker. The 26 view names
+   * themselves come from `zoneLabel` (src/camera/cubeZones.ts). Every string here: à valider (tekuxwriter).
+   */
+  views: {
+    /** Vue › submenu holding the 26 views. */
+    menu: 'Vues',
+    /** Submenu group headings. */
+    faces: 'Faces',
+    edges: 'Arêtes',
+    corners: 'Coins',
+    /** Vue menu items (shortcut shown from the key map). */
+    frame: 'Cadrer la sélection',
+    home: 'Vue d’ensemble',
+    pick: 'Choisir une vue…',
+    /** The `V` picker dialog. */
+    pickerTitle: 'Choisir une vue',
+    pickerHelp: 'Flèches : changer de vue. Entrée : y aller. Échap : annuler.',
+    cancel: 'Annuler',
+    /** Marks the view the camera is closest to (shown and read). */
+    current: 'vue actuelle',
+    /** Status bar after a view is chosen; {view} = the view name. */
+    status: 'Vue : {view}',
+  },
 }

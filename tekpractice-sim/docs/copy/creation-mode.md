@@ -419,6 +419,25 @@ Le cube de vue (Task 17, C11) en haut à gauche de la vue 3D : libellés peints 
 | `cube.dessus` | DESSUS | à valider | Libellé de la face du dessus |
 | `cube.dessous` | DESSOUS | à valider | Libellé de la face du dessous |
 
+## views
+
+Les vues nommées (Task 18, C11, CA-05) : le sous-menu Vue › Vues (26 vues groupées Faces / Arêtes / Coins) et le sélecteur `V` (grille 8 × 3 + les deux pôles). Les 26 noms de vue viennent de `zoneLabel` (`src/camera/cubeZones.ts`, ex. « Dessus · Face · Droite ») ; ce sont aussi les noms du survol du cube. « Marcher » (Maj+V) arrive avec Task 19.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `views.menu` | Vues | à valider (tekuxwriter) | Vue ; sous-menu des 26 vues |
+| `views.faces` | Faces | à valider (tekuxwriter) | Titre du groupe des 6 faces dans le sous-menu |
+| `views.edges` | Arêtes | à valider (tekuxwriter) | Titre du groupe des 12 arêtes |
+| `views.corners` | Coins | à valider (tekuxwriter) | Titre du groupe des 8 coins |
+| `views.frame` | Cadrer la sélection | à valider (tekuxwriter) | Vue ; raccourci F (vue 3D) |
+| `views.home` | Vue d’ensemble | à valider (tekuxwriter) | Vue ; raccourci Alt+H ; retour à la vue d'ouverture du lieu |
+| `views.pick` | Choisir une vue… | à valider (tekuxwriter) | Vue ; raccourci V (vue 3D) ; ouvre le sélecteur |
+| `views.pickerTitle` | Choisir une vue | à valider (tekuxwriter) | Titre du sélecteur `V` (dialogue) |
+| `views.pickerHelp` | Flèches : changer de vue. Entrée : y aller. Échap : annuler. | à valider (tekuxwriter) | Sous le titre ; description du dialogue |
+| `views.cancel` | Annuler | à valider (tekuxwriter) | Bouton du sélecteur (même effet qu'Échap) |
+| `views.current` | vue actuelle | à valider (tekuxwriter) | Repère sur la case de la vue la plus proche de la caméra (affiché et lu) |
+| `views.status` | Vue : {view} | à valider (tekuxwriter) | Barre d'état après le choix d'une vue (annoncé) ; {view} = nom de la vue |
+
 ## Glossaire
 
 - **lieu** : la salle (modèle TEK Brain), le décor .glb ou la salle vide. Jamais « scène » pour le lieu (la scène = le plateau).

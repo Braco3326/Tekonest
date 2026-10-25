@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { buildMenus, type MenuContext, type MenuItem } from '../../src/creation/shell/menuModel'
 import type { History } from '../../src/creation/history'
+import { ZONES, zoneId, zoneLabel } from '../../src/camera/cubeZones'
 
 const fakeHistory = (canUndo: boolean, canRedo: boolean): History =>
   ({ canUndo, canRedo, undo: () => canUndo, redo: () => canRedo }) as unknown as History
@@ -106,6 +107,65 @@ describe('menu model (Task 7)', () => {
       find(live, id).run()
     }
     expect(ran).toBe('nosa')
+  })
+
+  describe('Vue (Task 18, C11, CA-05)', () => {
+    const vue = (c: MenuContext) => buildMenus(c).find((m) => m.id === 'vue')!
+    // Faces (horizon clockwise from Face, then the poles), edges (horizon, top, bottom), corners (top, bottom).
+    const ORDER = [
+      'face', 'droite', 'arriere', 'gauche', 'dessus', 'dessous',
+      'face-droite', 'arriere-droite', 'arriere-gauche', 'face-gauche',
+      'dessus-face', 'dessus-droite', 'dessus-arriere', 'dessus-gauche',
+      'dessous-face', 'dessous-droite', 'dessous-arriere', 'dessous-gauche',
+      'dessus-face-droite', 'dessus-arriere-droite', 'dessus-arriere-gauche', 'dessus-face-gauche',
+      'dessous-face-droite', 'dessous-arriere-droite', 'dessous-arriere-gauche', 'dessous-face-gauche',
+    ]
+    const expected = ORDER.map((id) => ZONES.find((z) => zoneId(z) === id)!)
+    it('the expected order covers the 26 zones once, by kind', () => {
+      expect(new Set(ORDER).size).toBe(26)
+      const kind = (z: (typeof ZONES)[number]) => Math.abs(z.x) + Math.abs(z.y) + Math.abs(z.z)
+      expect(expected.map(kind)).toEqual([...Array(6).fill(1), ...Array(12).fill(2), ...Array(8).fill(3)])
+    })
+    it('Vue › Vues holds the 26 named views: faces (6), edges (12), corners (8), labels = zoneLabel', () => {
+      const views = vue(ctx()).items.find((i) => i.id === 'views')!
+      expect(views.label).toBe('Vues')
+      expect(views.children).toHaveLength(26)
+      expect(views.children!.map((i) => i.label)).toEqual(expected.map(zoneLabel))
+      expect(views.children!.map((i) => i.id)).toEqual(expected.map((z) => `view:${zoneId(z)}`))
+      expect(views.children!.map((i) => i.group)).toEqual([
+        ...Array(6).fill('Faces'),
+        ...Array(12).fill('Arêtes'),
+        ...Array(8).fill('Coins'),
+      ])
+    })
+    it('Vue lists Vues · Cadrer la sélection · Vue d’ensemble · Choisir une vue… then the panels, with live shortcuts', () => {
+      const labels: Record<string, string> = { 'frame-selection': 'F', 'camera-home': 'Alt+H', 'view-picker': 'V' }
+      const items = vue(ctx({ bindingLabel: (a) => labels[a] })).items
+      expect(items.map((i) => i.id)).toEqual(['views', 'frame-selection', 'camera-home', 'view-picker', 'panel-tree', 'panel-props'])
+      expect(items.map((i) => i.label)).toEqual(['Vues', 'Cadrer la sélection', 'Vue d’ensemble', 'Choisir une vue…', 'Panneau Projet', 'Panneau Propriétés'])
+      expect(items.map((i) => i.shortcut)).toEqual([undefined, 'F', 'Alt+H', 'V', undefined, undefined])
+    })
+    it('a view item runs its view:<id> action; views are disabled while the view is locked (place picker open)', () => {
+      const ran: string[] = []
+      let locked = false
+      const actions = Object.fromEntries(expected.map((z) => [`view:${zoneId(z)}`, () => void ran.push(zoneId(z))]))
+      const c = ctx({ actions: { ...actions, 'view-picker': () => void ran.push('picker') }, viewLocked: () => locked })
+      const items = vue(c).items
+      const views = items.find((i) => i.id === 'views')!
+      expect(views.enabled()).toBe(true)
+      views.children![2].run()
+      expect(ran).toEqual([zoneId(expected[2])])
+      locked = true
+      expect(views.enabled()).toBe(false)
+      expect(views.children!.every((i) => !i.enabled())).toBe(true)
+      expect(items.find((i) => i.id === 'view-picker')!.enabled()).toBe(false)
+      views.children![0].run()
+      items.find((i) => i.id === 'view-picker')!.run()
+      expect(ran).toHaveLength(1)
+    })
+    it('no « Marcher » item until the walk action exists (Task 19)', () => {
+      expect(vue(ctx()).items.some((i) => i.id === 'walk')).toBe(false)
+    })
   })
 
   it('every item has a non-empty French label, no placeholder, unique ids', () => {
