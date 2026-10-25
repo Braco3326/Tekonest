@@ -13,6 +13,7 @@
  */
 import {
   ArcRotateCamera,
+  Camera,
   Color3,
   Mesh,
   MeshBuilder,
@@ -47,14 +48,19 @@ import {
 
 const K = CREATION_TOKENS.cube
 /**
- * Cube camera distance (cube side = 1) and vertical field of view (the square is
- * square, so the horizontal one is the same). Tuned so the cube fills most of the
- * square while no vertex of the cube, its ring or the Face arrow ever leaves it,
- * from any pose (tests/creation/viewCubeWidget.test.ts checks every vertex over
- * the 26 zone poses and a sweep of in-between poses).
+ * The cube camera is ORTHOGRAPHIC (Fix 2): a perspective camera this close shrinks
+ * the far faces (at the opening pose the top read 0.39 of the front, « DESSUS » a
+ * sliver); orthographic gives the true tan(elevation) ratio (0.58 at beta 1.05).
+ *
+ * ORTHO_HALF is the half-width of the square in world units (cube side = 1): the
+ * worst-case silhouette over every pose is 0.964 (the Face arrow tip on the compass
+ * ring; the cube's own corners reach 0.866), plus ~4 %. Measured by projecting every
+ * vertex over a 96 × 61 alpha / beta sweep; tests/creation/viewCubeWidget.test.ts
+ * keeps the fill between 0.85 and 0.98 of the square over the 26 zone poses and a sweep.
+ * CAM_DISTANCE only places the near / far planes around the cube.
  */
-export const CAM_DISTANCE = 2.6
-export const CAM_FOV = 0.79
+export const ORTHO_HALF = 1.0
+export const CAM_DISTANCE = 3
 /** Compass ring (world units, cube side = 1): just outside the cube's footprint (half-diagonal 0.707), at its base. */
 const RING_SIZE = 0.72
 const RING_Y = -0.5
@@ -157,7 +163,11 @@ export class ViewCubeWidget {
       scene
     )
     cam.layerMask = CUBE_LAYER
-    cam.fov = CAM_FOV
+    cam.mode = Camera.ORTHOGRAPHIC_CAMERA
+    cam.orthoLeft = -ORTHO_HALF
+    cam.orthoRight = ORTHO_HALF
+    cam.orthoBottom = -ORTHO_HALF
+    cam.orthoTop = ORTHO_HALF
     cam.minZ = 0.1
     cam.maxZ = 10
     // Mirrors every main pose, poles included (Dessus / Dessous sit at 0.0001 from them).

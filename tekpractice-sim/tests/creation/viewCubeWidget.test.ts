@@ -4,13 +4,19 @@
  * scene's active camera after a frame, the centre patch classified, clean dispose.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { ArcRotateCamera, NullEngine, Scene, Vector3, VertexBuffer } from '@babylonjs/core'
+import { ArcRotateCamera, Camera, NullEngine, Scene, Vector3, VertexBuffer } from '@babylonjs/core'
 import { ViewCubeWidget } from '../../src/creation/viewCubeWidget'
-import { CUBE_LAYER } from '../../src/creation/viewCubeGeometry'
+import { CUBE_LAYER, cubeToWorld } from '../../src/creation/viewCubeGeometry'
 import { RenderScheduler } from '../../src/creation/renderScheduler'
 import { CameraRig } from '../../src/scene/CameraRig'
 import { DisposableBag } from '../../src/util/disposable'
 import { ZONES, zoneAngles, zoneId } from '../../src/camera/cubeZones'
+
+/** A cube-frame point in world space. */
+const v3w = (p: { x: number; y: number; z: number }) => {
+  const w = cubeToWorld(p)
+  return new Vector3(w.x, w.y, w.z)
+}
 
 function spyTarget() {
   const entries: { type: string; fn: unknown }[] = []
@@ -140,6 +146,27 @@ describe('ViewCubeWidget (Task 17)', () => {
     expect(worst).toBeLessThanOrEqual(0.98)
     // …and the cube really fills it (Fix 1): at the corner (iso) poses, the outermost vertex is near the border
     expect(worst).toBeGreaterThan(0.85)
+  })
+
+  it('orthographic: at the opening pose (beta 1.05) the top face reads ≈ 0.58 of the front height, not a perspective sliver (Fix 2)', () => {
+    const { scene, main } = setup()
+    const cubeCam = scene.activeCameras![1] as ArcRotateCamera
+    expect(cubeCam.mode).toBe(Camera.ORTHOGRAPHIC_CAMERA)
+    expect(cubeCam.orthoTop).toBe(-cubeCam.orthoBottom!)
+    expect(cubeCam.orthoRight).toBe(-cubeCam.orthoLeft!)
+    expect(cubeCam.orthoTop).toBe(cubeCam.orthoRight)
+    main.alpha = zoneAngles({ x: 0, y: 0, z: 1 }).alpha
+    main.beta = 1.05
+    scene.render()
+    const vp = cubeCam.getViewMatrix().multiply(cubeCam.getProjectionMatrix())
+    const y = (p: { x: number; y: number; z: number }) => Vector3.TransformCoordinates(v3w(p), vp).y
+    const topBack = y({ x: 0, y: 0.5, z: -0.5 })
+    const topFront = y({ x: 0, y: 0.5, z: 0.5 })
+    const bottomFront = y({ x: 0, y: -0.5, z: 0.5 })
+    const ratio = (topBack - topFront) / (topFront - bottomFront)
+    // tan(30°) = 0.577 in orthographic; the perspective camera gave ≈ 0.39
+    expect(ratio).toBeGreaterThan(0.55)
+    expect(ratio).toBeLessThan(0.61)
   })
 
   it('after a frame the main camera is the scene active camera again (picking, the scheduler inertia check)', () => {
