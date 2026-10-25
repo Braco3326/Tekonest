@@ -24,7 +24,16 @@ describe('view picker', () => {
     expect(c).toBe(cell(0, 1))
     expect(zoneId(pickerMove(cell(0, 0), 'ArrowRight').zone)).toBe('face-droite')
   })
-  it('ArrowUp from el 1 goes to the pole, ArrowDown returns to el 1 at the previous azimuth', () => {
+  it('pole memory: the opposite arrow returns to el 1 at prevAz (default az 0)', () => {
+    const pole = pickerMove(cell(3, 1), 'ArrowUp')
+    expect(pole.el).toBe(2)
+    expect(pickerMove(pole, 'ArrowDown', 3)).toBe(cell(3, 1))
+    expect(pickerMove(pole, 'ArrowDown')).toBe(cell(0, 1))
+    const south = pickerMove(cell(5, -1), 'ArrowDown')
+    expect(south.el).toBe(-2)
+    expect(pickerMove(south, 'ArrowUp', 5)).toBe(cell(5, -1))
+  })
+  it('ArrowUp from el 1 goes to the pole, ArrowDown returns to el 1 at az 0 when no prevAz is given', () => {
     const pole = pickerMove(cell(0, 1), 'ArrowUp')
     expect(pole.el).toBe(2)
     expect(zoneId(pole.zone)).toBe('dessus')

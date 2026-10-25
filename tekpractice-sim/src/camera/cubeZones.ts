@@ -21,8 +21,7 @@ export interface ZoneSigns {
 /** acos(1/√3): the elevation (from the pole) of a cube corner. */
 const ISO = 0.9553
 
-const sgn = (v: number, t: number): Sign =>
-  Math.abs(v) >= 0.999 ? (Math.sign(v) as Sign) : Math.abs(v) > t ? (Math.sign(v) as Sign) : 0
+const sgn = (v: number, t: number): Sign => (Math.abs(v) > t ? (Math.sign(v) as Sign) : 0)
 
 /** The 26 non-zero sign triples. */
 export const ZONES: readonly ZoneSigns[] = (() => {
@@ -52,6 +51,8 @@ export function zoneLabel(s: ZoneSigns): string {
 
 /** `local` is a point of the cube surface in [−0.5, 0.5]³; `threshold` 0.5 splits each axis in 3 bands. */
 export function classifyHit(l: { x: number; y: number; z: number }, threshold = 0.5): ZoneSigns {
+  // Clamp so the surface axis (|2v| = 1) always classifies as ±1.
+  threshold = Math.min(Math.max(threshold, 0), 0.99)
   return { x: sgn(l.x * 2, threshold), y: sgn(l.y * 2, threshold), z: sgn(l.z * 2, threshold) }
 }
 

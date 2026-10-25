@@ -38,6 +38,31 @@ describe('cube zones', () => {
     expect(zoneLabel({ x: 1, y: -1, z: -1 })).toBe('Dessous · Arrière · Droite')
     expect(zoneLabel({ x: 0, y: -1, z: 0 })).toBe('Dessous')
   })
+  it('zoneBox edge and corner', () => {
+    const e = zoneBox({ x: 0, y: 1, z: 1 })
+    expect(e.center[0]).toBeCloseTo(0)
+    expect(e.center[1]).toBeCloseTo(0.385)
+    expect(e.center[2]).toBeCloseTo(0.385)
+    expect(e.size).toEqual([0.5, 0.25, 0.25])
+    const c = zoneBox({ x: 1, y: -1, z: 1 })
+    expect(c.center[0]).toBeCloseTo(0.385)
+    expect(c.center[1]).toBeCloseTo(-0.385)
+    expect(c.center[2]).toBeCloseTo(0.385)
+    expect(c.size).toEqual([0.25, 0.25, 0.25])
+  })
+  it('alpha for arriere and gauche', () => {
+    expect(zoneAngles({ x: 0, y: 0, z: -1 }).alpha).toBeCloseTo(DEFAULT_FRONT_ALPHA + Math.PI)
+    expect(zoneAngles({ x: -1, y: 0, z: 0 }).alpha).toBeCloseTo(DEFAULT_FRONT_ALPHA - Math.PI / 2)
+  })
+  it('classifyHit boundary |2v| = 0.5 is the middle band', () => {
+    expect(zoneId(classifyHit({ x: 0.25, y: 0, z: 0.5 }))).toBe('face')
+    expect(zoneId(classifyHit({ x: 0.26, y: 0, z: 0.5 }))).toBe('face-droite')
+  })
+  it('nearestZone handles alpha off by a full turn', () => {
+    const { beta } = zoneAngles({ x: 0, y: 0, z: 1 })
+    expect(zoneId(nearestZone(DEFAULT_FRONT_ALPHA - 2 * Math.PI + 0.05, beta))).toBe('face')
+    expect(zoneId(nearestZone(DEFAULT_FRONT_ALPHA + 4 * Math.PI - 0.05, beta))).toBe('face')
+  })
   it('zoneBox: hover overlay sits on the surface', () => {
     const b = zoneBox({ x: 0, y: 0, z: 1 })
     expect(b.center[0]).toBeCloseTo(0)

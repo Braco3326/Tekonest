@@ -38,6 +38,7 @@ const find = (az: number, el: PickerElevation): PickerCell => {
 export function pickerMove(
   cell: PickerCell,
   key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown',
+  prevAz?: number,
 ): PickerCell {
   const pole = Math.abs(cell.el) === 2
   if (key === 'ArrowLeft' || key === 'ArrowRight') {
@@ -45,6 +46,8 @@ export function pickerMove(
     return find((cell.az + (key === 'ArrowRight' ? 1 : 7)) % 8, cell.el)
   }
   const next = Math.max(-2, Math.min(2, cell.el + (key === 'ArrowUp' ? 1 : -1))) as PickerElevation
-  // The single pole cell keeps az 0, so coming back down returns to the Face side.
-  return find(Math.abs(next) === 2 ? 0 : cell.az, next)
+  if (Math.abs(next) === 2) return find(0, next) // the single pole cell
+  // Leaving a pole: return at the caller's last non-pole azimuth (default 0 = Face).
+  const az = pole ? (((Math.round(prevAz ?? 0) % 8) + 8) % 8) : cell.az
+  return find(az, next)
 }
