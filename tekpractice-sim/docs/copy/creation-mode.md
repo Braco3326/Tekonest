@@ -32,10 +32,10 @@ Status column:
 | `shell.appTitle` | TekPractice, Mode Création | à valider (tekuxwriter) | Task 8 : `h1` de la page, visuellement masqué (navigation par titres au lecteur d'écran ; le sélecteur de lieu passe en `h2`) |
 | `shell.statusSelected` | Sélectionné : {device} | à valider (tekuxwriter) | Task 8 : barre d'état (`role="status"`, annoncé) après `[` / `]` dans la vue 3D ; `{device}` = nom catalogue de l'appareil |
 | `shell.statusNoSelection` | Aucun appareil sélectionné | à valider (tekuxwriter) | Task 8 : barre d'état, Échap dans la vue 3D a vidé la sélection |
-| `shell.statusNothingToSelect` | Aucun appareil à sélectionner. Ajoutez-en depuis l’inventaire. | à valider (tekuxwriter) | Task 8 : barre d'état, `[` / `]` pressé sans matériel installé (retour sur chaque touche manquée) |
+| `shell.statusNothingToSelect` | Aucun appareil à sélectionner : ce lieu est vide. | validé | Task 8 : barre d'état, `[` / `]` pressé sans matériel installé (retour sur chaque touche manquée). L9 : ne renvoie plus vers l'inventaire, encore inactif ; rajouter « Ajoutez-en depuis l’inventaire. » quand il existera |
 | `shell.statusBusy` | Un lieu est déjà en cours d’ouverture. Patientez un instant. | à valider (tekuxwriter) | Task 12 : barre d'état (annoncé) quand un lieu est demandé pendant qu'un autre s'ouvre (résultat « busy ») |
-| `shell.statusReplaced` | Matériel remplacé : {n} appareils installés. {undo} pour revenir en arrière. | à valider (tekuxwriter) | Task 12 (revue) : barre d'état (annoncé) après « Remplacer le matériel » ; `{undo}` = libellé de la touche Annuler (« Ctrl+Z ») |
-| `shell.statusGearLoaded` | {n} appareils installés. | à valider (tekuxwriter) | Task 12 : barre d'état (annoncé) après un modèle ou « Avec le matériel du modèle » |
+| `shell.statusReplaced` | Matériel remplacé. Appareils installés : {n}. {undo} pour revenir en arrière. | validé | Task 12 (revue) : barre d'état (annoncé) après « Remplacer le matériel » ; `{undo}` = libellé de la touche Annuler (« Ctrl+Z ») |
+| `shell.statusGearLoaded` | Appareils installés : {n}. | validé | Task 12 : barre d'état (annoncé) après un modèle ou « Avec le matériel du modèle ». L9 : forme « libellé : nombre », juste au singulier comme au pluriel |
 
 ## keys
 
@@ -137,7 +137,7 @@ Panneau « Propriétés » (Task 10) : l'appareil sélectionné. Tous les libell
 | `props.sectionMount` | Montage | brief | Idem |
 | `props.sectionControls` | Réglages | brief | Idem (contrôles du catalogue : +48V, mute, fader…) |
 | `props.sectionConnections` | Connexions | brief | Idem (liste des prises, lecture seule + « Débrancher ») |
-| `props.name` | Nom | à valider (tekuxwriter) | Champ en lecture seule : l'identifiant de l'appareil (ql1, k12-g) |
+| `props.name` | Identifiant | validé | Champ en lecture seule : l'identifiant de l'appareil (ql1, k12-g) |
 | `props.x` | X | à valider (tekuxwriter) | Champ, en m |
 | `props.y` | Hauteur | à valider (tekuxwriter) | Champ, en m ; lecture seule quand le montage est « Sol » |
 | `props.z` | Z | à valider (tekuxwriter) | Champ, en m |
@@ -184,7 +184,7 @@ Types de signal du catalogue (`signalTypes[].id`), tels que Propriétés les nom
 | `signal.madi` | MADI multicanal | à valider (tekuxwriter) | Idem |
 | `signal.aoip` | Audio sur IP (Dante) | à valider (tekuxwriter) | Idem |
 | `signal.wordclock` | Word clock | à valider (tekuxwriter) | Idem |
-| `signal.usb-audio` | Liaison audio ordinateur (USB) | à valider (tekuxwriter) | Idem |
+| `signal.usb-audio` | Audio USB | validé | Idem |
 | `signal.gpio-tally` | GPIO / tally | à valider (tekuxwriter) | Idem |
 | `signal.dmx512` | DMX512 | à valider (tekuxwriter) | Idem |
 | `signal.phantom-48v` | Alimentation fantôme +48 V | à valider (tekuxwriter) | Idem |
@@ -214,10 +214,10 @@ Types de signal du catalogue (`signalTypes[].id`), tels que Propriétés les nom
 | `picker.confirmTitle` | Ouvrir {place} | à valider (tekuxwriter) | Task 12 : titre du petit dialogue des cartes « Avec le matériel » ; `{place}` = nom de la carte |
 | `picker.confirmEmpty` | Salle vide | brief | Task 12 : bouton radio (coché par défaut) |
 | `picker.confirmGear` | Avec le matériel du modèle | brief | Task 12 : bouton radio (L2) |
-| `picker.confirmGearHint` | {n} appareils du jeu sont installés à leur place. | à valider (tekuxwriter) | Task 12 : description du bouton radio ; `{n}` = appareils du modèle présents au catalogue |
+| `picker.confirmGearHint` | Les appareils disponibles dans le jeu ({n}) seront installés à leur place. | validé | Task 12 : description du bouton radio ; `{n}` = appareils du modèle présents au catalogue |
 | `picker.confirmOpen` | Ouvrir | à valider (tekuxwriter) | Task 12 : bouton principal du dialogue (Entrée) |
 | `picker.confirmCancel` | Annuler | à valider (tekuxwriter) | Task 12 : retour à la carte ; Échap fait pareil |
-| `picker.openFailed` | {place} n’a pas pu être ouvert. Rien n’a changé. | à valider (tekuxwriter) | Task 12 (revue) : ligne d'erreur dans l'en-tête du sélecteur (`role="alert"`) et barre d'état, quand une carte n'a pas pu être ouverte ; le sélecteur reste ouvert |
+| `picker.openFailed` | Impossible d’ouvrir {place}. Rien n’a changé : réessayez ou choisissez un autre lieu. | validé | Task 12 (revue) : ligne d'erreur dans l'en-tête du sélecteur (`role="alert"`) et barre d'état, quand une carte n'a pas pu être ouverte ; le sélecteur reste ouvert |
 
 ## placeType
 
@@ -249,9 +249,9 @@ Notes refermables en bas à gauche de la vue 3D (Task 12) : ce que l'apprenant d
 |---|---|---|---|
 | `note.close` | Fermer la note | à valider (tekuxwriter) | Nom du bouton « × » de chaque note |
 | `note.unavailableTitle` | Matériel non disponible dans le jeu | brief | Titre (h3) de la note après « Avec le matériel du modèle » (L2) |
-| `note.unavailableBody` | {n} appareils du modèle ne sont pas encore dans le jeu : | à valider (tekuxwriter) | Suivi de la liste des identifiants (« dhd-rx2 », « × 2 » si répété) |
+| `note.unavailableBody` | Ces appareils du modèle ne sont pas encore dans le jeu ({n}) : | validé | Suivi de la liste des identifiants (« dhd-rx2 », « × 2 » si répété) |
 | `note.fallbackTitle` | Lieu indisponible | à valider (tekuxwriter) | Titre de la note quand une salle n'a pas pu être chargée ou construite |
-| `note.fallbackBody` | {place} n’a pas pu être chargé. La salle vide neutre est affichée à la place. | à valider (tekuxwriter) | Corps de la note, aussi annoncé dans la barre d'état ; `{place}` = nom du lieu |
+| `note.fallbackBody` | Impossible de charger {place} : la salle vide neutre est affichée à la place. Lieu > Choisir un lieu… pour en ouvrir un autre. | validé | Corps de la note, aussi annoncé dans la barre d'état ; `{place}` = nom du lieu |
 
 ## place
 
@@ -260,7 +260,7 @@ Dialogue « Changer de lieu » (C3), ouvert quand du matériel est déjà instal
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
 | `place.dialogTitle` | Changer de lieu | à valider (tekuxwriter) | Titre du dialogue ; aussi le libellé de l'entrée d'historique. Revu en Task 7 : verbe d'action + objet, clair, gardé. |
-| `place.dialogBody` | Du matériel est déjà installé. Gardez-le pour le placer dans le nouveau lieu, ou repartez d’une scène vide. | à valider (tekuxwriter) | Revu en Task 7. Avant : « Que voulez-vous en faire dans le nouveau lieu ? » (question ouverte). Maintenant le corps nomme les deux choix avec les mêmes verbes que les boutons (garder / repartir), Annuler reste implicite. |
+| `place.dialogBody` | Du matériel est déjà installé. Gardez-le pour le placer dans le nouveau lieu, ou repartez à vide. | validé | L9 : « scène vide » → « à vide » (glossaire : jamais « scène » pour le lieu ; même mot que le bouton). Revu en Task 7. Avant : « Que voulez-vous en faire dans le nouveau lieu ? » (question ouverte). Maintenant le corps nomme les deux choix avec les mêmes verbes que les boutons (garder / repartir), Annuler reste implicite. |
 | `place.keep` | Garder le matériel | brief | Bouton principal (C3) |
 | `place.empty` | Repartir à vide | brief | Bouton (C3) |
 | `place.cancel` | Annuler | validé | Bouton ; Échap fait pareil |
@@ -320,7 +320,7 @@ Sauvegarde automatique, marque « * », Ctrl+S et projets nommés (Task 13, C16,
 | `project.openItem` | {name}, enregistré le {date} | à valider (tekuxwriter) | Nom accessible d'une ligne ; `{date}` = date et heure locales |
 | `project.openEntry` | Ouvrir « {name} » | à valider (tekuxwriter) | Libellé de l'entrée d'historique (ouvrir est annulable) |
 | `project.opened` | Projet « {name} » ouvert. {undo} pour revenir en arrière. | à valider (tekuxwriter) | Barre d'état (annoncé) |
-| `project.openFailed` | « {name} » n’a pas pu être ouvert. Rien n’a changé. | à valider (tekuxwriter) | Barre d'état : projet illisible ou refusé |
+| `project.openFailed` | Impossible d’ouvrir le projet « {name} ». Rien n’a changé. | validé | Barre d'état : projet illisible ou refusé |
 
 Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1–R8 (`rule.*`) sont des rendus fidèles du catalogue (`title` / `check`), sans nouvelle affirmation technique.
 
@@ -341,11 +341,11 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 | `status.warningsMany` | {n} avertissements | à valider (tekuxwriter) | Idem, `{n}` ≥ 2 |
 | `status.refusedMark` | connexion refusée | à valider (tekuxwriter) | À côté du bouton signal tant que la dernière connexion refusée est listée |
 | `status.signalAnnounce` | Signal : | à valider (tekuxwriter) | Annoncé (`role="status"`) avant le nouveau libellé quand une modification ajoute ou retire une erreur (« Signal : 1 erreur ») |
-| `status.signalHint` | Afficher la liste des erreurs | à valider (tekuxwriter) | Infobulle (`title`) du bouton signal |
+| `status.signalHint` | Afficher les erreurs et avertissements | validé | Infobulle (`title`) du bouton signal |
 | `status.listTitle` | Erreurs et avertissements | à valider (tekuxwriter) | Titre de la liste (pop-over `role="dialog"`) |
 | `status.listEmpty` | Aucune erreur ni avertissement pour l’instant. | à valider (tekuxwriter) | Liste vide |
 | `status.listClose` | Fermer la liste | à valider (tekuxwriter) | Bouton × (nom accessible) |
-| `status.listHint` | Cliquez une ligne pour sélectionner l’appareil concerné. | à valider (tekuxwriter) | Sous le titre (description du dialogue) |
+| `status.listHint` | Choisissez une ligne pour sélectionner l’appareil concerné. | validé | Sous le titre (description du dialogue) |
 | `status.tagRefused` | Connexion refusée | à valider (tekuxwriter) | Étiquette de ligne + glyphe ⊘ (suivie de « : ») |
 | `status.tagError` | Erreur | à valider (tekuxwriter) | Étiquette de ligne + glyphe ⚠ |
 | `status.tagWarning` | Avertissement | à valider (tekuxwriter) | Étiquette de ligne + glyphe ⓘ |
@@ -362,8 +362,8 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 | `status.autosaveSaved` | Enregistré | à valider (tekuxwriter) | État : écrite |
 | `status.autosaveModified` | Modifié | à valider (tekuxwriter) | État : modification en attente d'écriture (1 s) |
 | `status.autosavePaused` | En pause | à valider (tekuxwriter) | État : en pause |
-| `status.pausedKept` | Sauvegarde automatique en pause — exportez les données mises de côté pour la reprendre. | à valider (tekuxwriter) | Ligne persistante (la note peut être fermée) ; bouton « Exporter… » |
-| `status.pausedKeptExported` | Sauvegarde automatique en pause — vérifiez le fichier exporté, puis confirmez. | à valider (tekuxwriter) | Ligne persistante après l’export ; bouton « J’ai vérifié le fichier » |
+| `status.pausedKept` | Sauvegarde automatique en pause : exportez les données mises de côté pour la reprendre. | validé | Ligne persistante (la note peut être fermée) ; bouton « Exporter… » |
+| `status.pausedKeptExported` | Sauvegarde automatique en pause : vérifiez le fichier exporté, puis confirmez. | validé | Ligne persistante après l’export ; bouton « J’ai vérifié le fichier » |
 | `status.pausedOtherTab` | Sauvegarde automatique en pause : ce projet est ouvert dans un autre onglet. | à valider (tekuxwriter) | Ligne persistante ; bouton « Reprendre ici » |
 | `status.pausedFull` | Sauvegarde automatique en pause : stockage du navigateur plein. | à valider (tekuxwriter) | Ligne persistante, quota plein |
 | `status.pausedBlocked` | Sauvegarde automatique impossible : le navigateur la bloque. | à valider (tekuxwriter) | Ligne persistante, stockage bloqué |

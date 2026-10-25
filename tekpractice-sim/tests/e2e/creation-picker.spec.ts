@@ -76,7 +76,7 @@ test('« Avec le matériel du modèle » on the radio talk studio: 9 devices, an
   await expect(note.getByRole('listitem').first()).toHaveText('Behringer MicroAMP HA400')
   await expect(note.getByRole('listitem').nth(2)).toHaveText('DHD audio RX2 (Series 52)')
   // announced, not only shown
-  await expect(page.locator('.cr-status-msg')).toContainText('9 appareils installés. Matériel non disponible dans le jeu : Behringer MicroAMP HA400')
+  await expect(page.locator('.cr-status-msg')).toContainText('Appareils installés : 9. Matériel non disponible dans le jeu : Behringer MicroAMP HA400')
   // the first place of the session is not undoable into « no place »
   expect(await page.evaluate(() => window.__creation!.historySize())).toBe(0)
   await note.getByRole('button', { name: 'Fermer la note' }).click()
@@ -110,7 +110,7 @@ test('« Concert simple (référence) » loads 4 devices in concert-hall-medium;
   const dr = (await page.evaluate(() => window.__creation!.deviceScreen('k12-d')))!
   expect(g.x).toBeLessThan(mid)
   expect(dr.x).toBeGreaterThan(mid)
-  await expect(page.getByTestId('status-bar')).toContainText('4 appareils installés.')
+  await expect(page.getByTestId('status-bar')).toContainText('Appareils installés : 4.')
 })
 
 test('Lieu → « Choisir un lieu… » reopens the picker over the place; Fermer / Échap go back unchanged', async ({ page }) => {
@@ -158,7 +158,7 @@ test('a model over installed gear asks « Remplacer le matériel » first: Annul
   await page.getByRole('dialog', { name: 'Remplacer le matériel ?' }).getByRole('button', { name: 'Remplacer le matériel' }).click()
   await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
   expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(4)
-  await expect(page.locator('.cr-status-msg')).toContainText('Matériel remplacé : 4 appareils installés. Ctrl+Z pour revenir en arrière.')
+  await expect(page.locator('.cr-status-msg')).toContainText('Matériel remplacé. Appareils installés : 4. Ctrl+Z pour revenir en arrière.')
   await page.evaluate(() => window.__creation!.undo())
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
   expect(await page.evaluate(() => window.__creation!.design().rig.instances.map((i) => i.instanceId))).toEqual(['ql1'])
@@ -174,9 +174,9 @@ test('a card that cannot be opened says so in the picker (and the status bar); n
   await dialog.getByRole('button', { name: 'Ouvrir' }).click()
   const err = page.getByTestId('place-picker-error')
   await expect(err).toBeVisible()
-  await expect(err).toHaveText('Studio radio de débat + régie (moyen) n’a pas pu être ouvert. Rien n’a changé.')
+  await expect(err).toHaveText('Impossible d’ouvrir Studio radio de débat + régie (moyen). Rien n’a changé : réessayez ou choisissez un autre lieu.')
   await expect(err).toHaveAttribute('role', 'alert')
-  await expect(page.locator('.cr-status-msg')).toContainText('Rien n’a changé.')
+  await expect(page.locator('.cr-status-msg')).toContainText('Rien n’a changé')
   await expect(page.getByTestId('place-picker')).toBeVisible()
   expect(await page.evaluate(() => window.__creation!.place())).toBeNull()
   // the next choice clears it

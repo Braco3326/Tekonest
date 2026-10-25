@@ -131,7 +131,7 @@ describe('autosaveView: the autosave state in the status bar', () => {
   })
   it('paused until the export: a persistent line with its action', () => {
     const v = autosaveView({ place: true, pending: true, pause: 'kept' })
-    expect(v.line).toContain('Sauvegarde automatique en pause — exportez')
+    expect(v.line).toContain('Sauvegarde automatique en pause : exportez')
     expect(v.action).toBe('export')
     expect(autosaveView({ place: true, pending: true, pause: 'kept-exported' }).action).toBe('checked')
     expect(autosaveView({ place: true, pending: false, pause: 'other-tab' }).action).toBe('resume')

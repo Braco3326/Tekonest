@@ -31,13 +31,13 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Status bar: Échap in the 3D view cleared the selection. */
     statusNoSelection: 'Aucun appareil sélectionné',
     /** Status bar: [ / ] pressed while the place has no gear. */
-    statusNothingToSelect: 'Aucun appareil à sélectionner. Ajoutez-en depuis l’inventaire.',
+    statusNothingToSelect: 'Aucun appareil à sélectionner : ce lieu est vide.',
     /** Status bar: a place was asked for while another one is still loading. */
     statusBusy: 'Un lieu est déjà en cours d’ouverture. Patientez un instant.',
     /** Status bar after « Avec le matériel du modèle » / a template; {n} = devices installed. */
-    statusGearLoaded: '{n} appareils installés.',
+    statusGearLoaded: 'Appareils installés : {n}.',
     /** Status bar after « Remplacer le matériel »; {n} = devices now installed, {undo} = the undo key label. */
-    statusReplaced: 'Matériel remplacé : {n} appareils installés. {undo} pour revenir en arrière.',
+    statusReplaced: 'Matériel remplacé. Appareils installés : {n}. {undo} pour revenir en arrière.',
   },
   keys: {
     /** Key names shown next to menu items (French keyboard labels). */
@@ -123,7 +123,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     sectionMount: 'Montage',
     sectionControls: 'Réglages',
     sectionConnections: 'Connexions',
-    name: 'Nom',
+    name: 'Identifiant',
     x: 'X',
     y: 'Hauteur',
     z: 'Z',
@@ -171,7 +171,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     madi: 'MADI multicanal',
     aoip: 'Audio sur IP (Dante)',
     wordclock: 'Word clock',
-    'usb-audio': 'Liaison audio ordinateur (USB)',
+    'usb-audio': 'Audio USB',
     'gpio-tally': 'GPIO / tally',
     dmx512: 'DMX512',
     'phantom-48v': 'Alimentation fantôme +48 V',
@@ -207,11 +207,11 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     confirmEmpty: 'Salle vide',
     confirmGear: 'Avec le matériel du modèle',
     /** Under « Avec le matériel du modèle »; {n} = catalog devices installed. */
-    confirmGearHint: '{n} appareils du jeu sont installés à leur place.',
+    confirmGearHint: 'Les appareils disponibles dans le jeu ({n}) seront installés à leur place.',
     confirmOpen: 'Ouvrir',
     confirmCancel: 'Annuler',
     /** A chosen card could not be opened (the picker stays open); {place} = card name. */
-    openFailed: '{place} n’a pas pu être ouvert. Rien n’a changé.',
+    openFailed: 'Impossible d’ouvrir {place}. Rien n’a changé : réessayez ou choisissez un autre lieu.',
   },
   /** Card type labels: room families (content/rooms `family`), sets, blank room, templates. */
   placeType: {
@@ -237,15 +237,15 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** « Avec le matériel du modèle »: KB gear the catalog does not have (L2). */
     unavailableTitle: 'Matériel non disponible dans le jeu',
     /** {n} = items listed below. */
-    unavailableBody: '{n} appareils du modèle ne sont pas encore dans le jeu :',
+    unavailableBody: 'Ces appareils du modèle ne sont pas encore dans le jeu ({n}) :',
     /** The room could not be built: the blank room is shown instead. */
     fallbackTitle: 'Lieu indisponible',
     /** {place} = the place name. */
-    fallbackBody: '{place} n’a pas pu être chargé. La salle vide neutre est affichée à la place.',
+    fallbackBody: 'Impossible de charger {place} : la salle vide neutre est affichée à la place. Lieu > Choisir un lieu… pour en ouvrir un autre.',
   },
   place: {
     dialogTitle: 'Changer de lieu',
-    dialogBody: 'Du matériel est déjà installé. Gardez-le pour le placer dans le nouveau lieu, ou repartez d’une scène vide.',
+    dialogBody: 'Du matériel est déjà installé. Gardez-le pour le placer dans le nouveau lieu, ou repartez à vide.',
     keep: 'Garder le matériel',
     empty: 'Repartir à vide',
     cancel: 'Annuler',
@@ -325,7 +325,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     openEntry: 'Ouvrir « {name} »',
     /** Status bar; {name}, {undo}. */
     opened: 'Projet « {name} » ouvert. {undo} pour revenir en arrière.',
-    openFailed: '« {name} » n’a pas pu être ouvert. Rien n’a changé.',
+    openFailed: 'Impossible d’ouvrir le projet « {name} ». Rien n’a changé.',
   },
   /** Status bar (Task 14, C17): selection, snapping, autosave state, signal button and its error list. */
   status: {
@@ -350,12 +350,12 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Announced before the new label when a change adds or clears an error (« Signal : 1 erreur »). */
     signalAnnounce: 'Signal :',
     /** The signal button's tooltip. */
-    signalHint: 'Afficher la liste des erreurs',
+    signalHint: 'Afficher les erreurs et avertissements',
     /** The pop-over (role="dialog"). */
     listTitle: 'Erreurs et avertissements',
     listEmpty: 'Aucune erreur ni avertissement pour l’instant.',
     listClose: 'Fermer la liste',
-    listHint: 'Cliquez une ligne pour sélectionner l’appareil concerné.',
+    listHint: 'Choisissez une ligne pour sélectionner l’appareil concerné.',
     /** Row tags (with a glyph: never colour alone). */
     tagRefused: 'Connexion refusée',
     tagError: 'Erreur',
@@ -379,8 +379,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     autosaveModified: 'Modifié',
     autosavePaused: 'En pause',
     /** Persistent lines while the autosave is off, each with its action button. */
-    pausedKept: 'Sauvegarde automatique en pause — exportez les données mises de côté pour la reprendre.',
-    pausedKeptExported: 'Sauvegarde automatique en pause — vérifiez le fichier exporté, puis confirmez.',
+    pausedKept: 'Sauvegarde automatique en pause : exportez les données mises de côté pour la reprendre.',
+    pausedKeptExported: 'Sauvegarde automatique en pause : vérifiez le fichier exporté, puis confirmez.',
     pausedOtherTab: 'Sauvegarde automatique en pause : ce projet est ouvert dans un autre onglet.',
     pausedFull: 'Sauvegarde automatique en pause : stockage du navigateur plein.',
     pausedBlocked: 'Sauvegarde automatique impossible : le navigateur la bloque.',
@@ -408,7 +408,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     R8Title: 'Word clock maître/esclave et fréquence d’échantillonnage',
     R8Detail: 'Chaque liaison audio numérique a besoin d’une seule horloge maître en amont. Deux maîtres, aucun maître ou des fréquences différentes sur une liaison sont des erreurs.',
   },
-  /** The shell could not start (Phase 1 review): a persistent alert with the way out. All à valider (tekuxwriter). */
+  /** The shell could not start (Phase 1 review): a persistent alert with the way out. */
   boot: {
     /** No WebGL on this computer / browser: the 3D view cannot start. */
     noWebglTitle: 'Vue 3D indisponible',

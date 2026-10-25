@@ -124,7 +124,7 @@ test('« kept-full »: closing the note leaves a persistent paused line with « 
   await page.getByTestId('note-kept-full').getByRole('button', { name: 'Fermer la note' }).click()
   const line = page.getByTestId('status-autosave-paused')
   await expect(line).toBeVisible()
-  await expect(line).toContainText('Sauvegarde automatique en pause — exportez')
+  await expect(line).toContainText('Sauvegarde automatique en pause : exportez')
   const action = page.getByTestId('status-autosave-action')
   await expect(action).toHaveText('Exporter…')
   const download = page.waitForEvent('download')
