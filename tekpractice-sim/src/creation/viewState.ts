@@ -29,12 +29,33 @@ export function loadViewPrefs(storage: Pick<Storage, 'getItem'> | null): ViewPre
   }
 }
 
-/** Write the view settings; a blocked or full storage is ignored (the setting still applies now). */
-export function saveViewPrefs(storage: Pick<Storage, 'setItem'> | null, prefs: Required<ViewPrefs>): void {
+/** Absent, or a valid v1 file: the only cases this tab may write over. */
+function ours(raw: string | null): boolean {
+  if (raw === null) return true
   try {
-    storage?.setItem(VIEW_PREFS_KEY, JSON.stringify({ version: 1, earHeight: prefs.earHeight }))
+    const f = JSON.parse(raw) as { version?: unknown; earHeight?: unknown } | null
+    return !!f && typeof f === 'object' && !Array.isArray(f) && f.version === 1 && (f.earHeight === 1.2 || f.earHeight === 1.7)
   } catch {
-    // blocked / quota: not worth a notice for a view setting
+    return false
+  }
+}
+
+/**
+ * Write the view settings (the setting applies for the session either way).
+ * Data it cannot read (bad JSON, another version, a wrong shape) is never written over:
+ * 'kept' (user data is never silently deleted). Blocked or full storage: 'blocked'.
+ */
+export function saveViewPrefs(
+  storage: Pick<Storage, 'getItem' | 'setItem'> | null,
+  prefs: Required<ViewPrefs>
+): 'written' | 'kept' | 'blocked' {
+  if (!storage) return 'blocked'
+  try {
+    if (!ours(storage.getItem(VIEW_PREFS_KEY))) return 'kept'
+    storage.setItem(VIEW_PREFS_KEY, JSON.stringify({ version: 1, earHeight: prefs.earHeight }))
+    return 'written'
+  } catch {
+    return 'blocked' // blocked / quota: not worth a notice for a view setting
   }
 }
 

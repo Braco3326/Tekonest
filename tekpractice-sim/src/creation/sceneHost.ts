@@ -281,6 +281,11 @@ export class SceneHost {
       onActive: (on) => this.setWalkLease(on),
     })
     w.connect(NO_FOCUS, ui)
+    // Right-drag moves the walker: no browser menu. In Orbit the attached camera's pointer
+    // input already prevents it (Babylon); walking detaches it, so the walk view does it here.
+    bag.listen(this.canvas, 'contextmenu', (e: Event) => {
+      if (w.exploreView) e.preventDefault()
+    })
     // Disposed FIRST on teardown (a place change while walking): back to the main camera, no lease left.
     bag.add(() => {
       const was = w.exploreView

@@ -129,6 +129,8 @@ export class ExploreController implements Walker {
   private active = false
   /** Floor height the eased floorY is heading to. */
   private floorTarget = 0
+  /** Codes held across a `setBaseView` switch: ignored until their key-up (Mode Création only). */
+  private staleKeys = new Set<string>()
 
   constructor(private deps: ExploreDeps) {
     const { scene } = deps
@@ -227,6 +229,12 @@ export class ExploreController implements Walker {
    */
   setBaseView(v: BaseView, animate = true): void {
     if (v === this.view) return
+    // A key held before the switch (an arrow orbiting) never moves the walker, not even through
+    // its auto-repeat: it is ignored until released; a new press does.
+    for (const c of this.keyboard.heldCodes()) this.staleKeys.add(c)
+    this.keyboard.reset()
+    this.gesture.cancel()
+    this.stick.on = false
     this.setView(v, animate)
   }
 
@@ -378,6 +386,7 @@ export class ExploreController implements Walker {
   private onKeyDown = (e: KeyboardEvent): void => {
     if (!this.ui || this.ui.capturingKey()) return
     if (this.deps.acceptKey && !this.deps.acceptKey(e)) return
+    if (this.staleKeys.has(e.code)) return
     // A HUD dialog marked `data-owns-keys` (e.g. the rig overwrite confirm)
     // handles its own Esc/Tab while it has focus: the capture-phase chain steps aside.
     if ((e.target as Element | null)?.closest?.('[data-owns-keys]')) return
@@ -475,11 +484,13 @@ export class ExploreController implements Walker {
   }
 
   private onKeyUp = (e: KeyboardEvent): void => {
+    this.staleKeys.delete(e.code)
     this.keyboard.keyUp(e.code)
     this.refreshActive()
   }
 
   private onBlur = (): void => {
+    this.staleKeys.clear() // their key-up may never come
     this.keyboard.reset()
     this.gesture.cancel()
     this.stick.on = false

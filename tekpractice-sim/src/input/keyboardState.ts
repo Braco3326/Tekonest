@@ -36,6 +36,11 @@ export class KeyboardState {
     return this.bindings[action].some((c) => this.down.has(c))
   }
 
+  /** Codes held right now. */
+  heldCodes(): string[] {
+    return [...this.down]
+  }
+
   /** Actions pressed since the last call (each physical press once). */
   consumePressed(): Action[] {
     const out = this.pressed

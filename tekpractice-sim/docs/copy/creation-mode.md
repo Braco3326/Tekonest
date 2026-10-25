@@ -440,14 +440,14 @@ Les vues nommées (Task 18, C11, CA-05) : le sous-menu Vue › Vues (26 vues gro
 
 ## walk
 
-Marcher dans le lieu (Task 19, C11, S6) : Vue › Marcher (Maj+V, la vue 3D a le focus) et la hauteur d'oreille dans Écoute (assis 1,2 m par défaut, debout 1,7 m ; réglage de vue, gardé d'une visite à l'autre, jamais annulable). Échap ou Maj+V reviennent à l'orbite. WASD désigne les touches par position : ZQSD sur un clavier AZERTY.
+Marcher dans le lieu (Task 19, C11, S6) : Vue › Marcher (Maj+V, la vue 3D a le focus) et la hauteur d'oreille dans Écoute (assis 1,2 m par défaut, debout 1,7 m ; réglage de vue, gardé d'une visite à l'autre, jamais annulable). Échap ou Maj+V reviennent à l'orbite. Les touches de marche sont lues par position : ZQSD sur un clavier AZERTY, WASD en QWERTY.
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
 | `walk.menu` | Marcher | à valider (tekuxwriter) | Vue ; case à cocher ; raccourci Maj+V (vue 3D) |
 | `walk.earSeated` | Hauteur d’oreille : assis 1,2 m | à valider (tekuxwriter) | Écoute ; bouton radio (défaut) ; aussi annoncé dans la barre d'état |
 | `walk.earStanding` | Hauteur d’oreille : debout 1,7 m | à valider (tekuxwriter) | Écoute ; bouton radio ; aussi annoncé dans la barre d'état |
-| `walk.statusOn` | Marche : flèches ou WASD pour avancer et tourner, {walk} ou Échap pour revenir à l’orbite. | à valider (tekuxwriter) | Barre d'état à l'entrée en marche (annoncé) ; {walk} = « Maj+V » |
+| `walk.statusOn` | Marche : flèches ou ZQSD (WASD en QWERTY) pour avancer et tourner, {walk} ou Échap pour revenir à l’orbite. | à valider (tekuxwriter) | Barre d'état à l'entrée en marche (annoncé) ; {walk} = « Maj+V » |
 | `walk.statusOff` | Retour à l’orbite | à valider (tekuxwriter) | Barre d'état à la sortie de la marche (annoncé) |
 | `walk.canvas` | Vue 3D en marche : flèches = avancer et tourner, glisser = regarder, {walk} ou Échap = revenir à l’orbite | à valider (tekuxwriter) | `aria-label` du canvas pendant la marche (remplace `shell.canvas`) |
 

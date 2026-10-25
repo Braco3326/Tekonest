@@ -201,6 +201,21 @@ describe('ExploreController acceptKey / onActive (Task 19, render lease)', () =>
     win.fire('keydown', key('KeyW'))
     expect(seen).toEqual([])
   })
+  it('setBaseView(explore) forgets keys held in Orbit: the walk never starts already moving (review minor 6)', () => {
+    const seen: boolean[] = []
+    const { ex, connect } = make({ onActive: (on) => seen.push(on) })
+    connect()
+    win.fire('keydown', key('KeyW')) // held in Orbit
+    ex.setBaseView('explore', false)
+    expect(seen).toEqual([])
+    // the held key's auto-repeat stays ignored until it is released
+    win.fire('keydown', { ...key('KeyW'), repeat: true })
+    expect(seen).toEqual([])
+    // a new press walks
+    win.fire('keyup', key('KeyW'))
+    win.fire('keydown', key('KeyW'))
+    expect(seen).toEqual([true])
+  })
   it('leaving Explore while a key is held ends the activity', () => {
     const seen: boolean[] = []
     const { ex, connect } = make({ onActive: (on) => seen.push(on) })

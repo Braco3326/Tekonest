@@ -4,8 +4,13 @@
  * injected (per-origin localStorage in the shell), no DOM, no Babylon.
  *
  * Data safety (ADR-0012 spirit):
- * - Only the two Mode Création keys (+ their quarantine) are ever written; the
+ * - Only the two Mode Création keys (+ their quarantine) are ever written here; the
  *   legacy rig / progress / Essais keys are never read nor touched here.
+ *   Every key Mode Création writes: `audio-sim/creation.v1` (autosave),
+ *   `audio-sim/creation-projects.v1` (named projects), `audio-sim/creation.v1.quarantine`
+ *   (this file) and `audio-sim/creation-view.v1` (view settings: the ear height, Task 19,
+ *   `viewState.ts`: written only when absent or a valid v1 file, never over data it cannot
+ *   read). `audio-sim/creation-bindings.v1` (key map) is only read.
  * - Nothing is ever removed (no removeItem). Unreadable data (bad JSON, other
  *   version, wrong shape) is COPIED into `audio-sim/creation.v1.quarantine`
  *   (append-only, deduplicated) before the caller may write over it. The

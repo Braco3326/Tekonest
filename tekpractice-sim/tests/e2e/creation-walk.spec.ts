@@ -54,6 +54,46 @@ test('Maj+V walks (3D view focused), the cube hides, Maj+V and Échap go back to
   await expect(canvas).toBeFocused()
 })
 
+test('right-drag never opens the browser menu: in walk view (move) as in Orbit (pan) (review Fix 1)', async ({ page }) => {
+  await boot(page)
+  const prevented = () =>
+    page.evaluate(() => {
+      const e = new MouseEvent('contextmenu', { bubbles: true, cancelable: true, button: 2 })
+      document.getElementById('renderCanvas')!.dispatchEvent(e)
+      return e.defaultPrevented
+    })
+  expect(await prevented()).toBe(true) // Orbit: Babylon's attached camera input takes it
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Shift+V')
+  await expect.poll(() => view(page)).toBe('explore')
+  expect(await prevented()).toBe(true)
+  await page.keyboard.press('Shift+V')
+  await expect.poll(() => view(page)).toBe('orbit')
+  expect(await prevented()).toBe(true)
+})
+
+test('an arrow held in Orbit does not start the walk moving (review minor 6)', async ({ page }) => {
+  await boot(page)
+  const canvas = page.locator('#renderCanvas')
+  await canvas.focus()
+  // a first walk creates the walker, then back to Orbit
+  await page.keyboard.press('Shift+V')
+  await expect.poll(() => view(page)).toBe('explore')
+  await page.keyboard.press('Shift+V')
+  await expect.poll(() => view(page)).toBe('orbit')
+  await page.keyboard.down('ArrowUp') // orbits
+  await page.waitForTimeout(150)
+  await page.keyboard.press('Shift+V')
+  await expect.poll(() => view(page)).toBe('explore')
+  const p0 = (await walkCam(page))!
+  await page.keyboard.down('ArrowUp') // an auto-repeat of the same held key (repeat: true)
+  await page.waitForTimeout(400)
+  const p1 = (await walkCam(page))!
+  expect(Math.hypot(p1.x - p0.x, p1.z - p0.z)).toBeLessThan(1e-6)
+  expect(await leases(page)).not.toContain('walk')
+  await page.keyboard.up('ArrowUp')
+})
+
 test('Maj+V acts only on the 3D view (WCAG 2.1.4), never on a button or under the place picker', async ({ page }) => {
   await boot(page)
   await page.getByTestId('tree-collapse').focus()

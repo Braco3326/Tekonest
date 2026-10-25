@@ -466,7 +466,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     earSeated: 'Hauteur d’oreille : assis 1,2 m',
     earStanding: 'Hauteur d’oreille : debout 1,7 m',
     /** Status bar when the walk starts (announced); {walk} = the walk key label (« Maj+V »). */
-    statusOn: 'Marche : flèches ou WASD pour avancer et tourner, {walk} ou Échap pour revenir à l’orbite.',
+    statusOn: 'Marche : flèches ou ZQSD (WASD en QWERTY) pour avancer et tourner, {walk} ou Échap pour revenir à l’orbite.',
     /** Status bar when the walk ends (announced). */
     statusOff: 'Retour à l’orbite',
     /** Canvas `aria-label` while walking (replaces `shell.canvas`); {walk} = the walk key label. */

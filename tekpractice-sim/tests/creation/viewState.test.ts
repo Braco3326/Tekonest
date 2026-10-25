@@ -25,6 +25,19 @@ describe('view prefs (Task 19): the ear height survives a reload, never in the r
     expect(loadViewPrefs(memory({ [VIEW_PREFS_KEY]: '{"version":2,"earHeight":1.7}' }))).toEqual({})
     expect(loadViewPrefs(memory({ [VIEW_PREFS_KEY]: '{"version":1,"earHeight":3}' }))).toEqual({})
   })
+  it('never writes over data it cannot read (review Fix 2): absent → written, valid v1 → updated, garbage / other version → untouched', () => {
+    const absent = memory()
+    expect(saveViewPrefs(absent, { earHeight: 1.7 })).toBe('written')
+    expect(loadViewPrefs(absent)).toEqual({ earHeight: 1.7 })
+    const valid = memory({ [VIEW_PREFS_KEY]: '{"version":1,"earHeight":1.2}' })
+    expect(saveViewPrefs(valid, { earHeight: 1.7 })).toBe('written')
+    expect(JSON.parse(valid.m.get(VIEW_PREFS_KEY)!)).toEqual({ version: 1, earHeight: 1.7 })
+    for (const raw of ['{oops', '{"version":2,"earHeight":1.7}', '{"version":1,"earHeight":3}', '[]', 'null']) {
+      const s = memory({ [VIEW_PREFS_KEY]: raw })
+      expect(saveViewPrefs(s, { earHeight: 1.7 }), raw).toBe('kept')
+      expect(s.m.get(VIEW_PREFS_KEY), raw).toBe(raw)
+    }
+  })
   it('blocked storage never throws', () => {
     const blocked = {
       getItem: () => {

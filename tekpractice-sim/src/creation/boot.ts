@@ -988,7 +988,15 @@ export async function bootCreation(): Promise<void> {
     host.enterWalk({
       eyeHeight: viewState.get().earHeight,
       // Movement keys only while the 3D view has focus (WCAG 2.1.4), never with Ctrl / Alt / Meta.
-      acceptKey: (e) => e.target === canvas && !e.ctrlKey && !e.altKey && !e.metaKey,
+      acceptKey: (e) => {
+        if (e.target !== canvas || e.ctrlKey || e.altKey || e.metaKey) return false
+        if (!e.repeat) return true
+        // An auto-repeat adds nothing for a key the walker saw go down; for a key held since
+        // before the walk (an arrow orbiting) it must not start the walk moving (review minor 6).
+        // The page still never scrolls under the walk.
+        if (host.walking && /^(Arrow|Page)/.test(e.code)) e.preventDefault()
+        return false
+      },
       covered: () => picker.isOpen,
     })
   /** Back to Orbit (no-op when not walking). */
