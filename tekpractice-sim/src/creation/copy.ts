@@ -295,7 +295,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** « Ouvrir… » with unsaved changes; body = `newBody`. */
     openDirtyTitle: 'Ouvrir un autre projet ?',
     openDirtyConfirm: 'Choisir un projet',
-    autosaveFull: 'Stockage du navigateur plein : la sauvegarde automatique est en pause. Enregistrez sous un autre nom ou libérez de la place.',
+    autosaveFull: 'Stockage du navigateur plein : sauvegarde automatique en pause. Votre travail reste affiché tant que la page est ouverte ; rien de déjà enregistré n’est effacé.',
     /** Status bar after the autosave was reopened at start. */
     restored: 'Travail de la dernière séance rouvert.',
     /** Name dialog (Ctrl+S the first time, « Enregistrer sous… »). Entrée enregistre. */
