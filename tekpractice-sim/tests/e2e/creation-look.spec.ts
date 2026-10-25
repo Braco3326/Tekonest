@@ -1,13 +1,14 @@
 /**
  * Task 14b « Look 3D Mode Création »: the viewport in the chrome's palette.
  * Screenshots (blank room, the « Concert simple (référence) » template, a
- * selected device) at 1366×768 and 1920×1080 are committed under
- * docs/creative/screens/task-14b-*.png (our own game, original styling).
+ * selected device) at 1366×768 and 1920×1080 are written to the git-ignored
+ * test-results/screens/ (as Task 14): a run never rewrites the reviewed copies
+ * committed under docs/creative/screens/task-14b-*.png; refresh those by hand.
  * Plus: hover is Papier and never the selection, and costs no idle frame.
  */
 import { expect, test, type Page } from '@playwright/test'
 
-const SHOTS = 'docs/creative/screens'
+const SHOTS = 'test-results/screens'
 
 const boot = async (page: Page): Promise<void> => {
   await page.emulateMedia({ reducedMotion: 'reduce' }) // camera flights are cuts: stable shots
