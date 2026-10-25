@@ -24,7 +24,7 @@ Typography: plain spaces before « : ; ! ? » and inside « » (no U+00A0 / U+20
 | `shell.treeExpand` | Déplier le panneau Projet | brief | Bouton, panneau replié (rail 32 px) |
 | `shell.propsCollapse` | Replier le panneau Propriétés | brief | Bouton, panneau ouvert |
 | `shell.propsExpand` | Déplier le panneau Propriétés | brief | Bouton, panneau replié |
-| `shell.canvas` | Vue 3D : flèches = orbiter, [ ] = appareil suivant/précédent, Entrée = cadrer | brief | `aria-label` du canvas (touches livrées en Task 8) |
+| `shell.canvas` | Vue 3D : flèches = orbiter, [ ] = appareil suivant/précédent, Entrée = cadrer, 1 2 3 = points d’écoute | brief ; « 1 2 3 » à valider (tekuxwriter) | `aria-label` du canvas (touches livrées en Task 8 ; 1 2 3 en Task 20, lues par position : la touche « & 1 » en AZERTY) |
 | `shell.propsEmpty` | Sélectionnez un appareil pour voir ses réglages. | validé | Propriétés : état vide |
 | `shell.statusNoPlace` | Choisissez un lieu pour commencer. | validé | Barre d'état, avant le premier lieu |
 | `shell.statusLoading` | Chargement du lieu… | validé | Barre d'état pendant un changement de lieu (`role="status"`) |
@@ -450,6 +450,20 @@ Marcher dans le lieu (Task 19, C11, S6) : Vue › Marcher (Maj+V, la vue 3D a le
 | `walk.statusOn` | Marche : flèches ou ZQSD (WASD en QWERTY) pour avancer et tourner, {walk} ou Échap pour revenir à l’orbite. | à valider (tekuxwriter) | Barre d'état à l'entrée en marche (annoncé) ; {walk} = « Maj+V » |
 | `walk.statusOff` | Retour à l’orbite | à valider (tekuxwriter) | Barre d'état à la sortie de la marche (annoncé) |
 | `walk.canvas` | Vue 3D en marche : flèches = avancer et tourner, glisser = regarder, {walk} ou Échap = revenir à l’orbite | à valider (tekuxwriter) | `aria-label` du canvas pendant la marche (remplace `shell.canvas`) |
+
+## points
+
+Points d'écoute nommés (Task 20 ; seule la Régie est obligatoire). Lignes du groupe « Points d’écoute » de l'arbre Projet, Vue › Aller au point d’écoute, touches 1 / 2 / 3 (lues par position, la vue 3D a le focus). Aller à un point quitte la marche et place la caméra au point, à hauteur d'oreille, tournée vers la scène. Le point choisi devient le point d'écoute actif (bouton radio coché). « Premier rang » et « Fond de salle » n'existent que si le lieu a une zone public.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `points.regie` | Régie | à valider (tekuxwriter) | Point de la zone régie façade (sinon centre du lieu aux 2/3 de la profondeur) ; touche 1 |
+| `points.premierRang` | Premier rang | à valider (tekuxwriter) | 2 m devant le bord de scène, dans le public |
+| `points.fondDeSalle` | Fond de salle | à valider (tekuxwriter) | 1 m avant le fond de la dernière zone public |
+| `points.centre` | Centre | à valider (tekuxwriter) | Salle vide neutre et décors 3D : seul point, au centre |
+| `points.menu` | Aller au point d’écoute | à valider (tekuxwriter) | Vue ; sous-menu (boutons radio, raccourcis 1 / 2 / 3) |
+| `points.status` | Point d’écoute : {point} | à valider (tekuxwriter) | Barre d'état après le choix d'un point (annoncé) ; {point} = nom du point |
+| `points.none` | Pas de point d’écoute {n} dans ce lieu. | à valider (tekuxwriter) | Barre d'état : touche 2 ou 3 sans point derrière (ex. salle vide) ; {n} = la touche |
 
 ## Glossaire
 

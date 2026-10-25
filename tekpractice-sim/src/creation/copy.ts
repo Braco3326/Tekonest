@@ -16,7 +16,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     treeExpand: 'Déplier le panneau Projet',
     propsCollapse: 'Replier le panneau Propriétés',
     propsExpand: 'Déplier le panneau Propriétés',
-    canvas: 'Vue 3D : flèches = orbiter, [ ] = appareil suivant/précédent, Entrée = cadrer',
+    canvas: 'Vue 3D : flèches = orbiter, [ ] = appareil suivant/précédent, Entrée = cadrer, 1 2 3 = points d’écoute',
     propsEmpty: 'Sélectionnez un appareil pour voir ses réglages.',
     statusNoPlace: 'Choisissez un lieu pour commencer.',
     statusLoading: 'Chargement du lieu…',
@@ -471,5 +471,23 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusOff: 'Retour à l’orbite',
     /** Canvas `aria-label` while walking (replaces `shell.canvas`); {walk} = the walk key label. */
     canvas: 'Vue 3D en marche : flèches = avancer et tourner, glisser = regarder, {walk} ou Échap = revenir à l’orbite',
+  },
+  /**
+   * Named listening points (Task 20): the « Points d’écoute » tree rows, Vue › Aller au point
+   * d’écoute, keys 1 / 2 / 3. Every string here: à valider (tekuxwriter).
+   */
+  points: {
+    /** Point names (tree rows, menu items). */
+    regie: 'Régie',
+    premierRang: 'Premier rang',
+    fondDeSalle: 'Fond de salle',
+    /** A blank place or a venue set: one point in the middle. */
+    centre: 'Centre',
+    /** Vue › submenu listing the points. */
+    menu: 'Aller au point d’écoute',
+    /** Status bar after going to a point (announced); {point} = its name. */
+    status: 'Point d’écoute : {point}',
+    /** Status bar: a key 1 / 2 / 3 with no point behind it in this place; {n} = the key. */
+    none: 'Pas de point d’écoute {n} dans ce lieu.',
   },
 }
