@@ -35,6 +35,8 @@ export const DEFAULT_CREATION_BINDINGS: CreationBindings = {
   ROTATE_CW: ['KeyR'],
   ROTATE_CCW: ['Shift+KeyR'],
   CAMERA_HOME: ['Alt+KeyH'],
+  // Mode Création: the listening points by position (Task 20: 1 = Régie). The legacy's saved
+  // views « Vue 1/2/3 » (same action names, legacy key map) do not exist in Mode Création.
   CAMERA_PRESET_1: ['Digit1'],
   CAMERA_PRESET_2: ['Digit2'],
   CAMERA_PRESET_3: ['Digit3'],

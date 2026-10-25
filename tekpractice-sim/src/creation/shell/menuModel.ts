@@ -66,6 +66,10 @@ export interface MenuContext {
   walking?(): boolean
   /** The ear height (Task 19): which of the two Écoute radio items is checked. */
   earHeight?(): 1.2 | 1.7
+  /** The place's listening points (Task 20), Vue › Aller au point d’écoute; each runs `point:<id>`. */
+  points?(): { id: string; label: string }[]
+  /** The active listening point's id (its radio item is checked). */
+  listenerPoint?(): string
 }
 
 export function buildMenus(ctx: MenuContext): MenuDef[] {
@@ -122,6 +126,22 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     run: () => {},
     children: viewItems,
   }
+  // Listening points (Task 20): radio items (the active point), keys 1 / 2 / 3 by position;
+  // like the views they leave the walk first (their action) and hand focus to the 3D view.
+  const pointList = ctx.points?.() ?? []
+  const pointItems = pointList.map((p, i): MenuItem => {
+    const item: MenuItem = { ...cam(`point:${p.id}`, p.label, true), kind: 'radio', checked: () => ctx.listenerPoint?.() === p.id }
+    item.shortcut = i < 3 ? ctx.bindingLabel(`point-key-${i + 1}`) : undefined
+    if (item.shortcut === undefined) delete item.shortcut
+    return item
+  })
+  const points: MenuItem = {
+    id: 'points',
+    label: COPY.points!.menu!,
+    enabled: () => pointItems.some((i) => i.enabled()),
+    run: () => {},
+    children: pointItems,
+  }
   // The V picker shows the orbit views around the room: off in the walk view (the views and
   // « Vue d'ensemble » themselves go back to Orbit first, in their actions).
   const pickerBase = cam('view-picker', V.pick!, false) // the picker gives focus to the 3D view when it closes
@@ -159,6 +179,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
       label: M.vue!,
       items: [
         views,
+        points,
         cam('frame-selection', V.frame!, true),
         cam('camera-home', V.home!, true),
         picker,

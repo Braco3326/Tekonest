@@ -8,9 +8,15 @@ export interface ViewStateData {
   treeOpen: boolean
   propsOpen: boolean
   earHeight: 1.2 | 1.7
+  /**
+   * The active listening point (Task 20): what the Web Audio listener uses when not walking
+   * (Task 39). A point id of `listeningPoints.ts`; a place without it falls back to its first point.
+   * Session only: never in the view prefs file (point ids depend on the place).
+   */
+  listenerPoint: string
 }
 
-const DEFAULTS: ViewStateData = { selection: null, hidden: [], treeOpen: true, propsOpen: true, earHeight: 1.2 }
+const DEFAULTS: ViewStateData = { selection: null, hidden: [], treeOpen: true, propsOpen: true, earHeight: 1.2, listenerPoint: 'regie' }
 
 /** View settings kept across reloads (Task 19: the ear height). Per origin, never in the rig. */
 export const VIEW_PREFS_KEY = 'audio-sim/creation-view.v1'

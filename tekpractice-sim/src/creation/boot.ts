@@ -17,6 +17,15 @@ import { showBootFailure, type BootFailureKind } from './bootFailure'
 import { CreationStore, creationEvaluator } from './store'
 import { History } from './history'
 import { loadViewPrefs, saveViewPrefs, ViewState } from './viewState'
+import {
+  activePoint,
+  defaultPoints,
+  POINT_IDS,
+  pointLookAt,
+  pointPose,
+  type ListeningPoint,
+  type PointPose,
+} from './listeningPoints'
 import { hasInertia, RenderScheduler, renderSceneOnce } from './renderScheduler'
 import { SceneHost } from './sceneHost'
 import { placeFromKey, placeKey } from './places'
@@ -379,13 +388,18 @@ export async function bootCreation(): Promise<void> {
   let treeActive: string | null = null
   const zones = (): { id: string; kind: string }[] =>
     canvasShown ? (host.layout?.zones ?? []).map((z) => ({ id: z.id, kind: z.kind })) : []
+  /** The place's listening points (Task 20) at the current ear height; none before a place is shown. */
+  const listeningPoints = (): ListeningPoint[] =>
+    canvasShown && host.place ? defaultPoints(host.layout, viewState.get().earHeight) : []
+  /** The point the camera was last sent to and the pose it got (the ear height re-flies it while it is still there). */
+  let atPoint: { id: string; pose: PointPose } | null = null
   const treeNodes = (): TreeNode[] =>
     buildTree({
       placeLabel: placeNow(),
       zones: zones(),
       design: store.design(),
       deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
-      points: [],
+      points: listeningPoints().map((p) => ({ id: p.id, label: p.label })),
     })
   const nodeLabel = (key: string): string => {
     const find = (list: TreeNode[]): TreeNode | undefined =>
@@ -416,6 +430,11 @@ export async function bootCreation(): Promise<void> {
           'ready',
           true
         )
+      } else if (node.kind === 'point') {
+        // A listening point (Task 20): leaves the walk, the camera stands there looking at the stage.
+        treeActive = node.id // before the view-state change re-renders the tree
+        if (!goToPoint(node.target!.pointId!)) treeActive = null
+        tree.render()
       } else if (node.kind === 'lieu' && host.rig) {
         // The place row: back to the overview.
         leaveWalk()
@@ -458,6 +477,8 @@ export async function bootCreation(): Promise<void> {
       earHeight = v.earHeight
       saveViewPrefs(storage, { earHeight })
       host.setEarHeight(earHeight) // a live walker moves at once
+      // The listening points follow the ear height: a camera still standing on one moves with it.
+      if (atPoint && !host.walking && cameraOn(atPoint.pose)) goToPoint(atPoint.id, false)
     }
     if (v.selection !== null) treeActive = null
     host.setSelected(v.selection)
@@ -470,6 +491,8 @@ export async function bootCreation(): Promise<void> {
     // Hidden zones of the previous place do not carry over.
     const ids = new Set(zones().map((z) => `zone:${z.id}`))
     const hidden = viewState.get().hidden.filter((k) => !k.startsWith('zone:') || ids.has(k))
+    atPoint = null // a new camera: it stands on no point
+    if (treeActive?.startsWith('point:')) treeActive = null
     viewState.set({ hidden })
     tree.render()
   }
@@ -1042,6 +1065,59 @@ export async function bootCreation(): Promise<void> {
     scheduler.invalidate()
     announceView(VW.home!)
   }
+  // ── Listening points (Task 20): tree « Points d’écoute », Vue › Aller au point d’écoute, 1 / 2 / 3.
+  const PT = COPY.points!
+  /**
+   * Stand the orbit camera on a listening point, looking at the stage (a cut under reduced
+   * motion); it becomes the active listening point (`viewState.listenerPoint`). Like the named
+   * views it leaves the walk first. False when the view is locked or the place has no such point.
+   */
+  function goToPoint(id: string, announce = true): boolean {
+    if (viewLocked()) return false
+    const p = listeningPoints().find((q) => q.id === id)
+    if (!p) return false
+    leaveWalk()
+    const pose = pointPose(p.position, pointLookAt(host.layout, p), host.camera!.upperRadiusLimit ?? 60)
+    host.rig!.flyToPreset({
+      alpha: pose.alpha,
+      beta: pose.beta,
+      radius: pose.radius,
+      target: Vector3.FromArray(pose.target),
+    })
+    atPoint = { id, pose }
+    viewState.set({ listenerPoint: id })
+    scheduler.invalidate()
+    if (announce) shell.setStatus(placeNow(), PT.status!.replace('{point}', p.label), 'ready', true)
+    return true
+  }
+  /** The orbit camera is (or is flying to) this pose: nobody moved it since. */
+  function cameraOn(pose: PointPose): boolean {
+    const c = host.camera
+    if (!c || !host.rig) return false
+    if (host.rig.tweening) return true
+    const da = Math.abs(Math.atan2(Math.sin(c.alpha - pose.alpha), Math.cos(c.alpha - pose.alpha)))
+    const [tx, ty, tz] = pose.target
+    return (
+      da < 1e-3 &&
+      Math.abs(c.beta - pose.beta) < 1e-3 &&
+      Math.abs(c.radius - pose.radius) < 1e-3 &&
+      Math.hypot(c.target.x - tx, c.target.y - ty, c.target.z - tz) < 1e-3
+    )
+  }
+  /** Key 1 / 2 / 3 (3D view focused): the place's point at that position. */
+  const pointKey = (n: number): boolean => {
+    if (viewLocked()) return false
+    const p = listeningPoints()[n - 1]
+    if (!p) {
+      shell.setStatus(placeNow(), PT.none!.replace('{n}', String(n)), 'idle', true)
+      return true
+    }
+    return goToPoint(p.id)
+  }
+  keys.onAction('CAMERA_PRESET_1', () => pointKey(1))
+  keys.onAction('CAMERA_PRESET_2', () => pointKey(2))
+  keys.onAction('CAMERA_PRESET_3', () => pointKey(3))
+
   const frameFromMenu = (): void => {
     if (viewState.get().selection !== null) leaveWalk()
     if (!selection.frameSelection())
@@ -1097,6 +1173,9 @@ export async function bootCreation(): Promise<void> {
     'camera-home': 'CAMERA_HOME',
     'view-picker': 'VIEW_PICKER',
     walk: 'WALK_TOGGLE',
+    'point-key-1': 'CAMERA_PRESET_1',
+    'point-key-2': 'CAMERA_PRESET_2',
+    'point-key-3': 'CAMERA_PRESET_3',
   }
   const menuShortcut = (id: string): string | undefined => {
     const a = MENU_KEYS[id]
@@ -1133,6 +1212,15 @@ export async function bootCreation(): Promise<void> {
     'ear-seated': () => setEar(1.2),
     'ear-standing': () => setEar(1.7),
     ...Object.fromEntries(
+      POINT_IDS.map((id) => [
+        `point:${id}`,
+        () => {
+          canvas.focus() // the arrows then orbit around the stage from the point
+          goToPoint(id)
+        },
+      ])
+    ),
+    ...Object.fromEntries(
       ZONES.map((z) => [
         `view:${zoneId(z)}`,
         () => {
@@ -1151,6 +1239,9 @@ export async function bootCreation(): Promise<void> {
       viewLocked,
       walking: () => host.walking,
       earHeight: () => viewState.get().earHeight,
+      points: () => listeningPoints().map((p) => ({ id: p.id, label: p.label })),
+      listenerPoint: () =>
+        activePoint(listeningPoints(), viewState.get().listenerPoint)?.id ?? '',
     })
   )
 
@@ -1230,5 +1321,7 @@ export async function bootCreation(): Promise<void> {
     walkCamera: () => host.walkSnapshot(),
     leases: () => scheduler.leaseNames,
     earHeight: () => viewState.get().earHeight,
+    listeningPoints: () => listeningPoints(),
+    listenerPoint: () => viewState.get().listenerPoint,
   }
 }

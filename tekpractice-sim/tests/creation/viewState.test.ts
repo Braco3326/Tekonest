@@ -54,8 +54,13 @@ describe('view prefs (Task 19): the ear height survives a reload, never in the r
 })
 
 describe('ViewState (never undoable)', () => {
-  it('has the defaults: nothing selected, panels open, seated ear height', () => {
-    expect(new ViewState().get()).toEqual({ selection: null, hidden: [], treeOpen: true, propsOpen: true, earHeight: 1.2 })
+  it('has the defaults: nothing selected, panels open, seated ear height, listening at the Régie', () => {
+    expect(new ViewState().get()).toEqual({ selection: null, hidden: [], treeOpen: true, propsOpen: true, earHeight: 1.2, listenerPoint: 'regie' })
+  })
+  it('the listening point is view state only: never written to the view prefs (Task 20)', () => {
+    const s = memory()
+    saveViewPrefs(s, { earHeight: 1.2 })
+    expect(JSON.parse(s.m.get(VIEW_PREFS_KEY)!)).toEqual({ version: 1, earHeight: 1.2 })
   })
   it('set merges a patch and notifies subscribers', () => {
     const v = new ViewState()

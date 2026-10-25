@@ -80,6 +80,10 @@ export interface CreationDebug {
   leases(): string[]
   /** Task 19: the ear height view setting. */
   earHeight(): 1.2 | 1.7
+  /** Task 20: the place's listening points at the current ear height ([] before a place is shown). */
+  listeningPoints(): { id: string; label: string; position: [number, number, number] }[]
+  /** Task 20: `viewState.listenerPoint` (the active listening point's id). */
+  listenerPoint(): string
 }
 
 declare global {

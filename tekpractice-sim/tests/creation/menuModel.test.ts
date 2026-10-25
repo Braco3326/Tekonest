@@ -141,9 +141,48 @@ describe('menu model (Task 7)', () => {
     it('Vue lists Vues · Cadrer la sélection · Vue d’ensemble · Choisir une vue… then the panels, with live shortcuts', () => {
       const labels: Record<string, string> = { 'frame-selection': 'F', 'camera-home': 'Alt+H', 'view-picker': 'V', walk: 'Maj+V' }
       const items = vue(ctx({ bindingLabel: (a) => labels[a] })).items
-      expect(items.map((i) => i.id)).toEqual(['views', 'frame-selection', 'camera-home', 'view-picker', 'walk', 'panel-tree', 'panel-props'])
-      expect(items.map((i) => i.label)).toEqual(['Vues', 'Cadrer la sélection', 'Vue d’ensemble', 'Choisir une vue…', 'Marcher', 'Panneau Projet', 'Panneau Propriétés'])
-      expect(items.map((i) => i.shortcut)).toEqual([undefined, 'F', 'Alt+H', 'V', 'Maj+V', undefined, undefined])
+      expect(items.map((i) => i.id)).toEqual(['views', 'points', 'frame-selection', 'camera-home', 'view-picker', 'walk', 'panel-tree', 'panel-props'])
+      expect(items.map((i) => i.label)).toEqual(['Vues', 'Aller au point d’écoute', 'Cadrer la sélection', 'Vue d’ensemble', 'Choisir une vue…', 'Marcher', 'Panneau Projet', 'Panneau Propriétés'])
+      expect(items.map((i) => i.shortcut)).toEqual([undefined, undefined, 'F', 'Alt+H', 'V', 'Maj+V', undefined, undefined])
+    })
+    it('Vue › Aller au point d’écoute (Task 20): one radio item per point, keys 1 / 2 / 3 by position, checked = the active point', () => {
+      let active = 'regie'
+      let locked = false
+      const ran: string[] = []
+      const points = [
+        { id: 'regie', label: 'Régie' },
+        { id: 'premier-rang', label: 'Premier rang' },
+        { id: 'fond-de-salle', label: 'Fond de salle' },
+      ]
+      const c = ctx({
+        actions: Object.fromEntries(points.map((p) => [`point:${p.id}`, () => void ran.push(p.id)])),
+        bindingLabel: (a) => ({ 'point-key-1': '1', 'point-key-2': '2', 'point-key-3': '3' })[a],
+        points: () => points,
+        listenerPoint: () => active,
+        viewLocked: () => locked,
+      })
+      const sub = vue(c).items.find((i) => i.id === 'points')!
+      expect(sub.enabled()).toBe(true)
+      expect(sub.children!.map((i) => [i.id, i.label, i.shortcut, i.kind])).toEqual([
+        ['point:regie', 'Régie', '1', 'radio'],
+        ['point:premier-rang', 'Premier rang', '2', 'radio'],
+        ['point:fond-de-salle', 'Fond de salle', '3', 'radio'],
+      ])
+      for (const i of sub.children!) expect(i.returnFocus, i.id).toBe(false) // camera items: focus to the 3D view
+      expect(sub.children!.map((i) => i.checked!())).toEqual([true, false, false])
+      active = 'premier-rang'
+      expect(sub.children!.map((i) => i.checked!())).toEqual([false, true, false])
+      sub.children![2].run()
+      expect(ran).toEqual(['fond-de-salle'])
+      locked = true
+      expect(sub.enabled()).toBe(false)
+      sub.children![0].run()
+      expect(ran).toEqual(['fond-de-salle'])
+    })
+    it('no points (no place yet): the submenu is there, disabled', () => {
+      const sub = vue(ctx()).items.find((i) => i.id === 'points')!
+      expect(sub.children).toEqual([])
+      expect(sub.enabled()).toBe(false)
     })
     it('a view item runs its view:<id> action; views are disabled while the view is locked (place picker open)', () => {
       const ran: string[] = []
@@ -164,9 +203,10 @@ describe('menu model (Task 7)', () => {
       expect(ran).toHaveLength(1)
     })
     it('camera items hand focus to the 3D view (returnFocus false); the picker and the panels keep the APG return', () => {
-      const items = vue(ctx()).items
+      const items = vue(ctx({ points: () => [{ id: 'regie', label: 'Régie' }] })).items
       const views = items.find((i) => i.id === 'views')!
       for (const v of views.children!) expect(v.returnFocus, v.id).toBe(false)
+      for (const v of items.find((i) => i.id === 'points')!.children!) expect(v.returnFocus, v.id).toBe(false)
       expect(items.find((i) => i.id === 'frame-selection')!.returnFocus).toBe(false)
       expect(items.find((i) => i.id === 'camera-home')!.returnFocus).toBe(false)
       expect(items.find((i) => i.id === 'view-picker')!.returnFocus).toBeUndefined()
