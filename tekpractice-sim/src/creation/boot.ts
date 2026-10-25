@@ -480,7 +480,7 @@ export async function bootCreation(): Promise<void> {
       saveViewPrefs(storage, { earHeight })
       host.setEarHeight(earHeight) // a live walker moves at once
       // The listening points follow the ear height: a camera still standing on one moves with it.
-      if (atPoint && !host.walking && cameraOn(atPoint.pose)) goToPoint(atPoint.id, false)
+      if (atPoint && !host.walking && cameraOn(atPoint.pose)) goToPoint(atPoint.id, { refly: true })
     }
     if (v.selection !== null) treeActive = null
     host.setSelected(v.selection)
@@ -1074,15 +1074,17 @@ export async function bootCreation(): Promise<void> {
    * Stand the orbit camera on a listening point, looking at the stage (a cut under reduced
    * motion); it becomes the active listening point (`viewState.listenerPoint`). Like the named
    * views it leaves the walk first. False when the view is locked or the place has no such point.
+   * `refly`: the silent re-fly when the ear height changes under a camera still on the point; it
+   * neither announces nor touches the device selection (the learner chose no new view).
    */
-  function goToPoint(id: string, announce = true): boolean {
+  function goToPoint(id: string, opts: { refly?: boolean } = {}): boolean {
     if (viewLocked()) return false
     const p = listeningPoints().find((q) => q.id === id)
     if (!p) return false
     leaveWalk()
     // A room-level view, like the « Lieu » row (overview): it ends the device focus, so the tree's
     // one selected row is the point's (review Fix 1, minor). Selection is never undoable.
-    if (viewState.get().selection !== null) selection.select(null)
+    if (!opts.refly && viewState.get().selection !== null) selection.select(null)
     const pose = pointPose(p.position, pointLookAt(host.layout, p), host.camera!.upperRadiusLimit ?? 60)
     host.rig!.flyToPreset({
       alpha: pose.alpha,
@@ -1093,7 +1095,7 @@ export async function bootCreation(): Promise<void> {
     atPoint = { id, pose }
     viewState.set({ listenerPoint: id })
     scheduler.invalidate()
-    if (announce) shell.setStatus(placeNow(), PT.status!.replace('{point}', p.label), 'ready', true)
+    if (!opts.refly) shell.setStatus(placeNow(), PT.status!.replace('{point}', p.label), 'ready', true)
     return true
   }
   /** The orbit camera is (or is flying to) this pose: nobody moved it since. */

@@ -161,6 +161,30 @@ test('review Fix 1 (minor): a listening point is a room-level view: it clears th
   expect(await distTo(page, 'regie')).toBeLessThan(0.5)
 })
 
+test('Task 21 carry-over: the ear-height re-fly keeps the device selection (only choosing a point clears it)', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 4] }))
+  const canvas = page.locator('#renderCanvas')
+  await canvas.focus()
+  await page.keyboard.press('Digit1')
+  expect(await distTo(page, 'regie')).toBeLessThan(0.5)
+  // A selection made while walking never flies the hidden orbit camera: back in Orbit, the camera
+  // still stands on the Régie with a device selected.
+  await page.keyboard.press('Shift+V')
+  await expect.poll(() => page.evaluate(() => window.__creation!.view())).toBe('explore')
+  await page.keyboard.press(']')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+  await page.keyboard.press('Escape') // the walk goes first: back to Orbit, the selection stays
+  await expect.poll(() => page.evaluate(() => window.__creation!.view())).toBe('orbit')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+  expect(await distTo(page, 'regie')).toBeLessThan(0.5)
+  const y12 = (await camPos(page))[1]
+  await page.getByRole('menuitem', { name: 'Écoute' }).click()
+  await page.getByRole('menuitemradio', { name: /debout 1,7 m/ }).click()
+  await expect.poll(async () => (await camPos(page))[1] - y12).toBeCloseTo(0.5, 2) // the silent re-fly ran
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+})
+
 test('blank place: one « Centre » point (key 1); key 2 says there is none; off under the place picker', async ({ page }) => {
   await boot(page, 'blank')
   const pts = await page.evaluate(() => window.__creation!.listeningPoints())
