@@ -20,6 +20,11 @@ export interface MenuItem {
   children?: MenuItem[]
   /** Heading of the run of consecutive submenu items sharing it (« Faces », « Arêtes », « Coins »). */
   group?: string
+  /**
+   * false: choosing it does not send focus back to the menubar (APG default); the action
+   * takes it (camera items hand it to the 3D view, so the arrows then orbit).
+   */
+  returnFocus?: false
 }
 
 /**
@@ -87,15 +92,17 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
   const V = COPY.views!
   const viewFree = (): boolean => !ctx.viewLocked?.()
   /** A camera item: live when its action is registered and the view may change. */
-  const cam = (id: string, label: string, action = id, group?: string): MenuItem => {
-    const base = act(id, label, action)
+  const cam = (id: string, label: string, toView: boolean, group?: string): MenuItem => {
+    const base = act(id, label)
     const enabled = (): boolean => viewFree() && base.enabled()
-    return { ...base, group, enabled, run: () => void (enabled() && base.run()) }
+    const item: MenuItem = { ...base, group, enabled, run: () => void (enabled() && base.run()) }
+    if (toView) item.returnFocus = false // the action focuses the 3D view
+    return item
   }
   const GROUP = { faces: V.faces!, edges: V.edges!, corners: V.corners! }
   const viewItems = viewMenuOrder().map(({ kind, zone }) => {
     const id = `view:${zoneId(zone)}`
-    const item = cam(id, zoneLabel(zone), id, GROUP[kind])
+    const item = cam(id, zoneLabel(zone), true, GROUP[kind])
     delete item.shortcut
     return item
   })
@@ -125,9 +132,9 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
       label: M.vue!,
       items: [
         views,
-        cam('frame-selection', V.frame!),
-        cam('camera-home', V.home!),
-        cam('view-picker', V.pick!),
+        cam('frame-selection', V.frame!, true),
+        cam('camera-home', V.home!, true),
+        cam('view-picker', V.pick!, false), // the picker gives focus to the 3D view when it closes
         act('panel-tree', M.panelTree!),
         act('panel-props', M.panelProps!),
       ],

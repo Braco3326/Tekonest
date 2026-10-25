@@ -28,7 +28,9 @@ const gap = async (page: Page, s: ZoneSigns | { alpha: number; beta: number }) =
   }
 }
 const zone = (id: string): ZoneSigns => ZONES.find((z) => zoneId(z) === id)!
-const focusedName = (page: Page) => page.evaluate(() => (document.activeElement as HTMLElement | null)?.textContent ?? null)
+/** The focused control's text, no-break spaces read as spaces (the picker keeps « · » off a line start). */
+const focusedName = (page: Page) =>
+  page.evaluate(() => (document.activeElement as HTMLElement | null)?.textContent?.replace(/ /g, ' ') ?? null)
 
 test('V opens « Choisir une vue » (5 rows, focus on the nearest view); arrows + Entrée land, Échap never moves', async ({ page }) => {
   await boot(page)
@@ -147,6 +149,12 @@ test('every Vue › Vues item, reached by keyboard through the menubar, lands it
     const s = order[k]
     const start = await gap(page, s)
     expect(Math.max(start.alpha, start.beta), `${zoneId(s)}: the start pose is not already the target`).toBeGreaterThan(0.1)
+    if (k > 0) {
+      // the previous view handed focus to the 3D view: back to the menubar by keyboard (Maj+Tab)
+      await expect(page.locator('#renderCanvas')).toBeFocused()
+      for (let i = 0; i < 12 && !(await page.locator('#cr-menu-vue').evaluate((e) => e === document.activeElement)); i++)
+        await page.keyboard.press('Shift+Tab')
+    }
     await expect(page.locator('#cr-menu-vue')).toBeFocused()
     await page.keyboard.press('Enter') // opens Vue on its first item, « Vues »
     await expect(page.getByRole('menuitem', { name: 'Vues', exact: true })).toBeFocused()
@@ -205,6 +213,99 @@ test('Vues submenu: groups Faces / Arêtes / Coins; ← and Échap close it back
   await expect(sub).toBeVisible()
   await page.keyboard.press('Tab')
   await expect(page.getByRole('menu')).toHaveCount(0)
+})
+
+// ── Review Fix 1 ──
+
+for (const size of [{ width: 1100, height: 768 }, { width: 1280, height: 720 }, { width: 1366, height: 768 }]) {
+  test(`Vues submenu stays inside the window at ${size.width}×${size.height}; the last corner is reached visibly`, async ({ page }) => {
+    await page.setViewportSize(size)
+    await boot(page)
+    await page.locator('#cr-menu-projet').focus()
+    for (let i = 0; i < 5; i++) await page.keyboard.press('ArrowRight')
+    await page.keyboard.press('Enter')
+    await page.keyboard.press('ArrowRight')
+    const sub = page.getByRole('menu', { name: 'Vues', exact: true })
+    await expect(sub).toBeVisible()
+    // opened as soon as the shell is up: the web fonts may still be on their way (they widen the menubar)
+    await page.evaluate(() => document.fonts.ready.then(() => new Promise((r) => requestAnimationFrame(r))))
+    const rects = await sub.getByRole('menuitem').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().toJSON() as DOMRect))
+    expect(rects).toHaveLength(26)
+    for (const r of rects) {
+      expect(r.left).toBeGreaterThanOrEqual(0)
+      expect(r.top).toBeGreaterThanOrEqual(0)
+      expect(r.right).toBeLessThanOrEqual(size.width)
+      expect(r.bottom).toBeLessThanOrEqual(size.height)
+    }
+    await page.keyboard.press('End')
+    const last = sub.getByRole('menuitem', { name: 'Dessous · Face · Gauche', exact: true })
+    await expect(last).toBeFocused()
+    await expect(last).toBeInViewport({ ratio: 1 })
+    // the focused item is the one on top at its centre (not under another layer)
+    const top = await last.evaluate((e) => {
+      const r = e.getBoundingClientRect()
+      return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('[role="menuitem"]') === e
+    })
+    expect(top).toBe(true)
+  })
+}
+
+test('a view, « Vue d’ensemble » or « Cadrer la sélection » chosen in the menu hands focus to the 3D view (arrows then orbit)', async ({ page }) => {
+  await boot(page)
+  const canvas = page.locator('#renderCanvas')
+  await page.getByRole('menuitem', { name: 'Vue', exact: true }).click()
+  await page.keyboard.press('ArrowRight')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('Enter') // « Droite »
+  await expect(canvas).toBeFocused()
+  const a0 = (await camera(page)).alpha
+  // held, not tapped: Babylon's keyboard orbit reads the keys down at each frame (a tap within one frame is lost under load)
+  await page.keyboard.down('ArrowLeft')
+  await expect.poll(async () => (await camera(page)).alpha).not.toBeCloseTo(a0, 3)
+  await page.keyboard.up('ArrowLeft')
+  for (const name of [/Vue d’ensemble/, /Cadrer la sélection/]) {
+    await page.getByRole('menuitem', { name: 'Vue', exact: true }).click()
+    await page.getByRole('menuitem', { name }).click()
+    await expect(canvas).toBeFocused()
+  }
+  // other items keep the menubar return (APG)
+  await page.getByRole('menuitem', { name: 'Vue', exact: true }).click()
+  await page.getByRole('menuitem', { name: 'Panneau Propriétés' }).click()
+  await expect(page.locator('#cr-menu-vue')).toBeFocused()
+})
+
+test('picker: Home / End go to the row ends, Ctrl+Home / Ctrl+End to the poles; names break after the dot; the current view has an Ambre bar', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.cubeZoneScreenPoint('arriere'))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('v')
+  const grid = page.getByRole('dialog', { name: 'Choisir une vue' }).getByRole('grid')
+  const norm = async () => (await focusedName(page))?.replace(/ /g, ' ')
+  expect(await norm()).toBe('Arrière')
+  await page.keyboard.press('Home')
+  expect(await norm()).toBe('Face')
+  await page.keyboard.press('End')
+  expect(await norm()).toBe('Face · Gauche')
+  await page.keyboard.press('Control+Home')
+  expect(await norm()).toBe('Dessus')
+  await page.keyboard.press('Home') // a pole is its own row
+  expect(await norm()).toBe('Dessus')
+  await page.keyboard.press('Control+End')
+  expect(await norm()).toBe('Dessous')
+  await page.keyboard.press('ArrowUp') // leaving the pole: back to the last azimuth (End → az 7)
+  expect(await norm()).toBe('Dessous · Face · Gauche')
+  // a no-break space before each « · »: a line never starts with the dot
+  const t = await grid.getByRole('button', { name: 'Dessous · Face · Droite' }).textContent()
+  expect(t).toBe('Dessous · Face · Droite')
+  // the current view: a full-width Ambre bar ≥ 3 px at the bottom of its cell
+  const cur = grid.locator('[aria-current="true"]')
+  const bar = await cur.evaluate((e) => {
+    const s = getComputedStyle(e, '::after')
+    return { h: parseFloat(s.height), w: parseFloat(s.width), bg: s.backgroundColor, cell: e.getBoundingClientRect().width }
+  })
+  expect(bar.h).toBeGreaterThanOrEqual(3)
+  expect(bar.w).toBeGreaterThan(bar.cell - 4)
+  expect(bar.bg).toBe('rgb(221, 147, 73)')
 })
 
 test('Échap dismisses the cube hover caption (WCAG 1.4.13) without moving the camera; the Esc chain still clears the selection', async ({ page }) => {

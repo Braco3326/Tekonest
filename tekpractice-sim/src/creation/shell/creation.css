@@ -208,6 +208,9 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-submenu {
   top: -6px;
   left: 100%;
+  /* placed by script (menuBar `place`): a cut. The legacy reduced-motion reset (index.html) puts a
+     0.01 ms transition on everything, which delays the new `left` by a frame. */
+  transition: none !important;
   display: grid;
   grid-auto-flow: column;
   align-items: stretch; /* the group separators run the full height */
@@ -253,14 +256,14 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-views-row[data-el='2'] .cr-views-btn, .cr-views-row[data-el='-2'] .cr-views-btn { min-height: 34px; }
 .cr-views-btn:hover { border-color: var(--cr-ink-muted); }
 .cr-views-btn:focus { background: var(--cr-nuit); color: var(--cr-ambre); border-color: var(--cr-ambre); }
-/* the view the camera is closest to: a small Ambre square, as the brand mark */
-.cr-views-btn[aria-current='true']::before {
+/* the view the camera is closest to: a full-width Ambre bar at the cell's foot (focus = border + ring, so both read at once) */
+.cr-views-btn[aria-current='true']::after {
   content: '';
   position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 6px;
-  height: 6px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
   background: var(--cr-ambre);
 }
 

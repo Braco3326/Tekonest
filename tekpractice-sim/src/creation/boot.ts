@@ -1038,10 +1038,25 @@ export async function bootCreation(): Promise<void> {
     save: () => void save(false),
     'save-as': () => void save(true),
     'export-kept': exportKept,
-    'frame-selection': frameFromMenu,
-    'camera-home': cameraHome,
+    // Camera items hand focus to the 3D view (returnFocus: false), so the arrows then orbit, as after the V picker.
+    'frame-selection': () => {
+      canvas.focus()
+      frameFromMenu()
+    },
+    'camera-home': () => {
+      canvas.focus()
+      cameraHome()
+    },
     'view-picker': () => void openViews(),
-    ...Object.fromEntries(ZONES.map((z) => [`view:${zoneId(z)}`, () => goToView(z)])),
+    ...Object.fromEntries(
+      ZONES.map((z) => [
+        `view:${zoneId(z)}`,
+        () => {
+          canvas.focus()
+          goToView(z)
+        },
+      ])
+    ),
   }
   mountMenuBar(shell.menus, () =>
     buildMenus({

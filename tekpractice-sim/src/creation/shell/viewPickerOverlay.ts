@@ -6,6 +6,7 @@
  *   columns clockwise from Face, so → turns toward « Droite » (src/camera/viewPicker.ts);
  * - each cell a button named by `zoneLabel`; one tab stop (roving tabindex), arrows move with
  *   `pickerMove`; leaving a pole comes back to the azimuth you came from (prevAz contract);
+ *   Home / End = the row's ends, Ctrl+Home / Ctrl+End = Dessus / Dessous (APG grid);
  * - Entrée / Espace / a click chooses (resolves the zone), Échap / « Annuler » resolve null.
  * The caller flies the camera and puts focus back on the canvas.
  */
@@ -60,7 +61,8 @@ export function openViewPicker(camera: { alpha: number; beta: number }): Promise
           b.type = 'button'
           b.className = 'cr-views-btn'
           b.dataset.zone = zoneId(cell.zone)
-          b.textContent = zoneLabel(cell.zone)
+          // A no-break space before each « · »: a wrapped name breaks after the dot, never before it.
+          b.textContent = zoneLabel(cell.zone).replace(/ · /g, ' · ')
           b.tabIndex = cell === active ? 0 : -1
           if (cell === start.cell) b.setAttribute('aria-current', 'true')
           b.addEventListener('click', () => done(cell.zone))
@@ -80,8 +82,22 @@ export function openViewPicker(camera: { alpha: number; beta: number }): Promise
         if (Math.abs(cell.el) !== 2) lastAz = cell.az
         if (focus) buttons.get(cell)!.focus()
       }
+      /** APG grid: Home / End = the row's first / last cell; Ctrl+Home / Ctrl+End = the first / last cell (the poles). */
+      const jump = (e: KeyboardEvent): PickerCell | null => {
+        const first = e.key === 'Home'
+        if (e.ctrlKey) return PICKER_CELLS.find((c) => c.el === (first ? 2 : -2))!
+        const row = PICKER_CELLS.filter((c) => c.el === active.el)
+        return row[first ? 0 : row.length - 1]
+      }
       grid.addEventListener('keydown', (e: KeyboardEvent) => {
-        if (!ARROWS.has(e.key) || e.ctrlKey || e.altKey || e.metaKey) return
+        if (e.altKey || e.metaKey) return
+        if (e.key === 'Home' || e.key === 'End') {
+          e.preventDefault()
+          const to = jump(e)
+          if (to) moveTo(to, true)
+          return
+        }
+        if (!ARROWS.has(e.key) || e.ctrlKey) return
         e.preventDefault() // the page never scrolls
         moveTo(pickerMove(active, e.key as Arrow, lastAz), true)
       })

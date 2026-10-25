@@ -19,6 +19,9 @@ export interface MenuBarHandle {
   dispose(): void
 }
 
+/** A submenu keeps this far (CSS px) from the window edges. */
+const MARGIN = 4
+
 export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarHandle {
   const doc = bar.ownerDocument
   const defs = menus()
@@ -82,10 +85,47 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
     if (sub && sub.panel !== panel) closeSub(false)
     sub = { parent, panel }
     panel.hidden = false
+    place(panel)
+    // The menubar widens when the web fonts arrive (its items move right): place it again then.
+    const fonts = (doc as Document & { fonts?: FontFaceSet }).fonts
+    if (fonts && fonts.status !== 'loaded')
+      void fonts.ready.then(() => {
+        if (sub?.panel === panel) place(panel)
+      })
     parent.setAttribute('aria-expanded', 'true')
     const list = subItems()
     if (focus === 'first') list[0]?.focus()
     else if (focus === 'last') list[list.length - 1]?.focus()
+  }
+
+  /**
+   * Never off-screen (Fix 1: 1280 px laptops, 1366 px at 125 % zoom): to the right of its item when
+   * it fits, else to the left of the menu, else slid left until its right edge is inside the window
+   * (over the parent menu, which it then covers in part). Too tall: it scrolls.
+   */
+  function place(panel: HTMLElement): void {
+    const s = panel.style
+    s.left = s.right = s.maxHeight = s.overflowY = ''
+    const win = doc.defaultView
+    if (!win) return
+    const vw = doc.documentElement.clientWidth || win.innerWidth
+    const vh = doc.documentElement.clientHeight || win.innerHeight
+    const r = panel.getBoundingClientRect()
+    const host = (panel.offsetParent as HTMLElement | null)?.getBoundingClientRect()
+    if (r.right > vw - MARGIN && host) {
+      if (host.left - r.width >= MARGIN) {
+        s.left = 'auto'
+        s.right = '100%'
+      } else {
+        const left = Math.max(MARGIN, vw - MARGIN - r.width)
+        s.left = `${left - host.left}px`
+      }
+    }
+    const top = panel.getBoundingClientRect().top
+    if (top + r.height > vh - MARGIN) {
+      s.maxHeight = `${Math.max(120, vh - MARGIN - top)}px`
+      s.overflowY = 'auto'
+    }
   }
 
   function closeSub(returnFocus: boolean): void {
@@ -186,7 +226,7 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
 
   function activate(item: MenuItem): void {
     if (!item.enabled()) return
-    close(true)
+    close(item.returnFocus !== false)
     item.run()
   }
 
@@ -360,12 +400,18 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
   }
   doc.addEventListener('pointerdown', onOutside, true)
   doc.addEventListener('focusin', onOutside)
+  // A window resize (or zoom) with a submenu open: it is placed again, never left off-screen.
+  const onResize = (): void => {
+    if (sub) place(sub.panel)
+  }
+  doc.defaultView?.addEventListener('resize', onResize)
 
   return {
     close: () => close(false),
     dispose() {
       doc.removeEventListener('pointerdown', onOutside, true)
       doc.removeEventListener('focusin', onOutside)
+      doc.defaultView?.removeEventListener('resize', onResize)
       bar.replaceChildren()
     },
   }

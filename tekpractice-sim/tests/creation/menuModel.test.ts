@@ -163,6 +163,15 @@ describe('menu model (Task 7)', () => {
       items.find((i) => i.id === 'view-picker')!.run()
       expect(ran).toHaveLength(1)
     })
+    it('camera items hand focus to the 3D view (returnFocus false); the picker and the panels keep the APG return', () => {
+      const items = vue(ctx()).items
+      const views = items.find((i) => i.id === 'views')!
+      for (const v of views.children!) expect(v.returnFocus, v.id).toBe(false)
+      expect(items.find((i) => i.id === 'frame-selection')!.returnFocus).toBe(false)
+      expect(items.find((i) => i.id === 'camera-home')!.returnFocus).toBe(false)
+      expect(items.find((i) => i.id === 'view-picker')!.returnFocus).toBeUndefined()
+      expect(items.find((i) => i.id === 'panel-tree')!.returnFocus).toBeUndefined()
+    })
     it('no « Marcher » item until the walk action exists (Task 19)', () => {
       expect(vue(ctx()).items.some((i) => i.id === 'walk')).toBe(false)
     })
