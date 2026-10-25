@@ -269,6 +269,13 @@ export class ViewCubeWidget {
       if (!this.press) this.setHover(null)
     })
     bag.listen(el, 'contextmenu', (e: Event) => e.preventDefault())
+    // WCAG 1.4.13: Échap dismisses the caption without moving the pointer. Passive: the key is not
+    // taken (the rest of the Esc chain, e.g. clearing the selection, still runs) and the camera
+    // never moves. The same zone stays quiet until the pointer reaches another zone or leaves.
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function')
+      bag.listen(window, 'keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Escape') this.caption.style.display = 'none'
+      })
     // The wheel over the cube zooms the room as anywhere else in the view: hand it to the canvas
     // (same point and deltas, so zoom-to-cursor works); the page never scrolls.
     bag.listen(
@@ -449,7 +456,7 @@ export class ViewCubeWidget {
   private setHover(z: ZoneSigns | null): void {
     const same = z && this.hovered ? zoneId(z) === zoneId(this.hovered) : z === this.hovered
     if (same) return
-    this.hovered = z
+    this.hovered = z // a new zone (or none) resets an Échap-dismissed caption
     if (z) {
       const b = zoneBox(z)
       const c = cubeToWorld({ x: b.center[0], y: b.center[1], z: b.center[2] })
