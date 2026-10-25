@@ -422,9 +422,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     loadBody: 'Une partie de l’application n’a pas pu être téléchargée. Vérifiez votre connexion, puis rechargez la page.',
     reload: 'Recharger la page',
   },
-  /** The view cube (Task 17, C11): face labels painted on the cube, the hit layer's name. */
+  /** The view cube (Task 17, C11): face labels painted on the cube. */
   cube: {
-    group: 'Cube de vue',
     face: 'FACE',
     arriere: 'ARRIÈRE',
     gauche: 'GAUCHE',

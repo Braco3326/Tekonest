@@ -18,6 +18,7 @@ import {
   MeshBuilder,
   StandardMaterial,
   Vector3,
+  VertexBuffer,
   Viewport,
   type Scene,
 } from '@babylonjs/core'
@@ -32,7 +33,6 @@ import {
 import { CREATION_TOKENS } from '../design/creationTokens'
 import type { CameraRig } from '../scene/CameraRig'
 import type { DisposableBag } from '../util/disposable'
-import { COPY } from './copy'
 import { cubeFaceTexture, whenLabelFontReady, type CubeFace } from './cubeTextures'
 import type { RenderScheduler } from './renderScheduler'
 import {
@@ -47,18 +47,21 @@ import {
 
 const K = CREATION_TOKENS.cube
 /**
- * Cube camera distance (cube side = 1) and vertical field of view. The cube, its
- * ring and the Face arrow fit in a sphere of radius ≈ 1.11; at 3.2 that sphere
- * needs a half-angle of asin(1.11 / 3.2) ≈ 0.354, so nothing is ever clipped by
- * the square, from any pose (poles included).
+ * Cube camera distance (cube side = 1) and vertical field of view (the square is
+ * square, so the horizontal one is the same). Tuned so the cube fills most of the
+ * square while no vertex of the cube, its ring or the Face arrow ever leaves it,
+ * from any pose (tests/creation/viewCubeWidget.test.ts checks every vertex over
+ * the 26 zone poses and a sweep of in-between poses).
  */
-const CAM_DISTANCE = 3.2
-const CAM_FOV = 0.72
+export const CAM_DISTANCE = 2.6
+export const CAM_FOV = 0.79
 /** Compass ring (world units, cube side = 1): just outside the cube's footprint (half-diagonal 0.707), at its base. */
-const RING_SIZE = 0.8
+const RING_SIZE = 0.72
 const RING_Y = -0.5
-/** The Face arrow: a flat triangle just outside the ring. */
-const ARROW_SIZE = 0.09
+/** The Face arrow: a flat triangle on the ring, tip outward. */
+const ARROW_SIZE = 0.07
+/** Label decals: a shell just outside the box, above the hover patch (0.01 proud), so labels always read on top. */
+const DECAL_OFFSET = 0.515
 /** A press that moves more than this (CSS px) is a drag (orbit), never a click. */
 const DRAG_PX = 4
 /** Orbit speed of a cube drag (radians per CSS px). */
@@ -76,6 +79,31 @@ const FACES: readonly { face: CubeFace; n: XYZ; up: XYZ }[] = [
 ]
 
 const v3 = (p: XYZ): Vector3 => new Vector3(p.x, p.y, p.z)
+
+/** Unlit, coloured by the vertex colours (the box's per-face shades). */
+function vertexShaded(name: string, scene: Scene): StandardMaterial {
+  const m = new StandardMaterial(name, scene)
+  m.disableLighting = true // no light term at all: the emissive carries the colour
+  m.diffuseColor = Color3.Black()
+  m.specularColor = Color3.Black()
+  m.emissiveColor = Color3.White() // × vertex colour (Babylon multiplies the emissive by the base colour)
+  return m
+}
+
+/** Vertex colours of the body box by face normal: top lighter, sides, bottom darker (volume without lights). */
+function faceShades(box: Mesh): number[] {
+  const normals = box.getVerticesData(VertexBuffer.NormalKind) ?? []
+  const top = Color3.FromHexString(K.bodyTop)
+  const side = Color3.FromHexString(K.body)
+  const bottom = Color3.FromHexString(K.bodyBottom)
+  const out: number[] = []
+  for (let i = 0; i < normals.length; i += 3) {
+    const ny = normals[i + 1]
+    const c = ny > 0.5 ? top : ny < -0.5 ? bottom : side
+    out.push(c.r, c.g, c.b, 1)
+  }
+  return out
+}
 
 function unlit(name: string, scene: Scene, color: string): StandardMaterial {
   const m = new StandardMaterial(name, scene)
@@ -142,16 +170,22 @@ export class ViewCubeWidget {
     // main camera back (device picking, the render scheduler's inertia check), and the pointers.
     scene.cameraToUseForPointers = main
     // Its view-projection too: screen projections read the scene's current transform (projectToScreen).
-    bag.observe(scene.onAfterRenderObservable, () => {
-      if (scene.activeCamera !== main) scene.activeCamera = main
-      scene.setTransformMatrix(main.getViewMatrix(), main.getProjectionMatrix())
-    })
+    // Inserted FIRST, so every other after-render observer (now or later) sees the main camera.
+    const restore = scene.onAfterRenderObservable.add(
+      () => {
+        if (scene.activeCamera !== main) scene.activeCamera = main
+        scene.setTransformMatrix(main.getViewMatrix(), main.getProjectionMatrix())
+      },
+      undefined,
+      true
+    )
+    bag.add(() => void scene.onAfterRenderObservable.remove(restore))
     bag.observe(main.onViewMatrixChangedObservable, () => this.sync())
 
-    // ── the cube: one box (picked), six label decals, the hover patch, the compass ring
-    const bodyMat = unlit('mat:cube:body', scene, K.body)
+    // ── the cube: one box (picked; shaded per face), six label decals, the hover patch, the compass ring
     const box = MeshBuilder.CreateBox('cube:box', { size: 1 }, scene)
-    box.material = bodyMat
+    box.material = vertexShaded('mat:cube:body', scene)
+    box.setVerticesData(VertexBuffer.ColorKind, faceShades(box))
     this.box = this.own(box)
     const textures = FACES.map(({ face, n, up }) => {
       const t = cubeFaceTexture(scene, face)
@@ -160,15 +194,17 @@ export class ViewCubeWidget {
       mat.diffuseColor = Color3.Black()
       mat.specularColor = Color3.Black()
       mat.emissiveTexture = t.texture
-      const plane = MeshBuilder.CreatePlane(`cube:label:${face}`, { size: 1 }, scene)
+      mat.opacityTexture = t.texture // transparent decal: the shaded body and the hover patch show through
+      const plane = MeshBuilder.CreatePlane(`cube:label:${face}`, { size: 2 * DECAL_OFFSET }, scene)
       plane.material = mat
+      plane.alphaIndex = 1 // always after the hover patch (alphaIndex 0), whatever the camera distance sort says
       // World frame of the decal: local −z faces out (a plane's front), +y is the label's up.
       const nw = v3(cubeToWorld(n))
       const uw = v3(cubeToWorld(up))
       const forward = nw.scale(-1)
       const right = Vector3.Cross(uw, forward)
       plane.rotation = Vector3.RotationFromAxis(right, uw, forward)
-      plane.position = nw.scale(0.5005)
+      plane.position = nw.scale(DECAL_OFFSET)
       this.own(plane)
       return t
     })
@@ -182,6 +218,7 @@ export class ViewCubeWidget {
     hoverMat.alpha = K.hoverAlpha
     const hover = MeshBuilder.CreateBox('cube:hover', { size: 1 }, scene)
     hover.material = hoverMat
+    hover.alphaIndex = 0
     hover.setEnabled(false)
     this.hover = this.own(hover)
 
@@ -192,9 +229,8 @@ export class ViewCubeWidget {
     const el = doc!.createElement('div')
     el.className = 'cr-cube-hit'
     el.dataset.testid = 'view-cube'
-    el.setAttribute('role', 'group')
-    el.setAttribute('aria-label', COPY.cube!.group!)
-    // Not a tab stop and hidden from assistive tech: the named views live in the Vue menu and the V picker (Task 18).
+    // Not a tab stop and hidden from assistive tech (so no name either): the named views live in
+    // the Vue menu and the V picker (Task 18).
     el.setAttribute('aria-hidden', 'true')
     this.hitElement = el
     this.canvas?.parentElement?.appendChild(el)
@@ -211,6 +247,35 @@ export class ViewCubeWidget {
       if (!this.press) this.setHover(null)
     })
     bag.listen(el, 'contextmenu', (e: Event) => e.preventDefault())
+    // The wheel over the cube zooms the room as anywhere else in the view: hand it to the canvas
+    // (same point and deltas, so zoom-to-cursor works); the page never scrolls.
+    bag.listen(
+      el,
+      'wheel',
+      (e: WheelEvent) => {
+        e.preventDefault()
+        this.canvas?.dispatchEvent(
+          new WheelEvent('wheel', {
+            bubbles: true,
+            cancelable: true,
+            clientX: e.clientX,
+            clientY: e.clientY,
+            screenX: e.screenX,
+            screenY: e.screenY,
+            deltaX: e.deltaX,
+            deltaY: e.deltaY,
+            deltaZ: e.deltaZ,
+            deltaMode: e.deltaMode,
+            ctrlKey: e.ctrlKey,
+            shiftKey: e.shiftKey,
+            altKey: e.altKey,
+            metaKey: e.metaKey,
+            buttons: e.buttons,
+          })
+        )
+      },
+      { passive: false }
+    )
     bag.add(() => this.dispose())
     this.sync()
     scheduler.invalidate()
@@ -319,7 +384,7 @@ export class ViewCubeWidget {
     mat.backFaceCulling = false // the flat arrow reads from above and below
     const ring = MeshBuilder.CreateTorus(
       'cube:ring',
-      { diameter: RING_SIZE * 2, thickness: 0.018, tessellation: 72 },
+      { diameter: RING_SIZE * 2, thickness: 0.014, tessellation: 72 },
       scene
     )
     ring.position.y = RING_Y
@@ -330,7 +395,7 @@ export class ViewCubeWidget {
       const a = (k * Math.PI) / 6
       const tick = MeshBuilder.CreateBox(
         'cube:tick',
-        { width: 0.018, height: 0.01, depth: k % 3 === 0 ? 0.1 : 0.06 },
+        { width: 0.014, height: 0.008, depth: k % 3 === 0 ? 0.08 : 0.05 },
         scene
       )
       tick.position = new Vector3(Math.sin(a) * RING_SIZE, RING_Y, Math.cos(a) * RING_SIZE)

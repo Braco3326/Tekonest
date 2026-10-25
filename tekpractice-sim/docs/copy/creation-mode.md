@@ -408,11 +408,10 @@ Le shell n'a pas pu démarrer (revue Phase 1) : une alerte persistante (`role="a
 
 ## cube
 
-Le cube de vue (Task 17, C11) en haut à gauche de la vue 3D : libellés peints sur ses faces (capitales), nom du calque de clic. Le calque n'est pas un arrêt de tabulation : les vues nommées vivent dans le menu Vue et le sélecteur `V` (Task 18).
+Le cube de vue (Task 17, C11) en haut à gauche de la vue 3D : libellés peints sur ses faces (capitales). Le calque de clic est masqué aux lecteurs d'écran (`aria-hidden`, sans nom) et n'est pas un arrêt de tabulation : les vues nommées vivent dans le menu Vue et le sélecteur `V` (Task 18).
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `cube.group` | Cube de vue | à valider | `aria-label` du calque de clic au-dessus du cube (masqué aux lecteurs d'écran, `aria-hidden`) |
 | `cube.face` | FACE | à valider | Libellé de la face avant du cube (côté public), aussi sur la flèche de la boussole |
 | `cube.arriere` | ARRIÈRE | à valider | Libellé de la face arrière |
 | `cube.gauche` | GAUCHE | à valider | Libellé de la face gauche (vue depuis le public) |

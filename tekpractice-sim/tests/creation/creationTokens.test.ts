@@ -3,6 +3,14 @@ import { CREATION_TOKENS, contrastRatio } from '../../src/design/creationTokens'
 
 const C = CREATION_TOKENS.color
 
+/** `top` drawn with `alpha` over `under` (sRGB blend), as '#RRGGBB'. */
+function blend(top: string, under: string, alpha: number): string {
+  const ch = (h: string, i: number) => parseInt(h.slice(1 + 2 * i, 3 + 2 * i), 16)
+  return `#${[0, 1, 2]
+    .map((i) => Math.round(alpha * ch(top, i) + (1 - alpha) * ch(under, i)).toString(16).padStart(2, '0'))
+    .join('')}`
+}
+
 describe('creation tokens (brief §2, P11)', () => {
   it('the four brand colours are exact', () => {
     expect(C.nuit).toBe('#131114')
@@ -71,17 +79,28 @@ describe('creation tokens (brief §2, P11)', () => {
     expect(contrastRatio(S.hover, S.floor)).toBeGreaterThanOrEqual(3)
     expect(contrastRatio(S.selection, S.hover)).toBeGreaterThanOrEqual(1.5)
   })
-  it('Task 17: view cube look (Nuit body, Papier labels, Ambre hover, 120 / 130 px)', () => {
+  it('Task 17: view cube look (lifted Nuit body, Papier labels, Ambre hover, 120 / 130 px)', () => {
     const K = CREATION_TOKENS.cube
-    expect(K.body).toBe(C.nuit)
     expect(K.label).toBe(C.papier)
+    expect(K.halo).toBe(C.nuit)
     expect(K.hover).toBe(C.ambre)
-    expect(contrastRatio(K.label, K.body)).toBeGreaterThanOrEqual(4.5)
-    expect(contrastRatio(K.edge, K.body)).toBeGreaterThanOrEqual(3)
-    expect(contrastRatio(K.ring, K.body)).toBeGreaterThanOrEqual(3)
     expect([K.sizePx, K.sizeWidePx, K.wideFromPx, K.marginPx]).toEqual([120, 130, 1600, 16])
     expect(K.hoverAlpha).toBeGreaterThan(0)
     expect(K.hoverAlpha).toBeLessThan(1)
+    // Fix 1: the body is lifted off the Nuit clear colour, shaded per face for volume (top > sides > bottom)
+    const lum = (h: string) => contrastRatio(h, '#000000')
+    expect(lum(K.bodyTop)).toBeGreaterThan(lum(K.body))
+    expect(lum(K.body)).toBeGreaterThan(lum(K.bodyBottom))
+    expect(lum(K.bodyBottom)).toBeGreaterThan(lum(C.nuit))
+    for (const body of [K.bodyTop, K.body, K.bodyBottom]) {
+      // text: Papier ink on its Nuit halo, whatever lies under the halo (body or hover patch)
+      expect(contrastRatio(K.label, body), body).toBeGreaterThanOrEqual(4.5)
+      expect(contrastRatio(K.edge, body), body).toBeGreaterThanOrEqual(3)
+      expect(contrastRatio(K.ring, C.nuit)).toBeGreaterThanOrEqual(3)
+      // the hover patch, alpha-blended (sRGB, as Babylon blends) over each face: a state cue ≥ 3:1 (WCAG 1.4.11)
+      expect(contrastRatio(blend(K.hover, body, K.hoverAlpha), body), body).toBeGreaterThanOrEqual(3)
+    }
+    expect(contrastRatio(K.label, K.halo)).toBeGreaterThanOrEqual(4.5)
   })
   it('no radius token exists (square corners)', () => {
     expect(JSON.stringify(CREATION_TOKENS)).not.toMatch(/radius/i)

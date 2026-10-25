@@ -4,13 +4,13 @@
  * scene's active camera after a frame, the centre patch classified, clean dispose.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { ArcRotateCamera, NullEngine, Scene, Vector3 } from '@babylonjs/core'
+import { ArcRotateCamera, NullEngine, Scene, Vector3, VertexBuffer } from '@babylonjs/core'
 import { ViewCubeWidget } from '../../src/creation/viewCubeWidget'
 import { CUBE_LAYER } from '../../src/creation/viewCubeGeometry'
 import { RenderScheduler } from '../../src/creation/renderScheduler'
 import { CameraRig } from '../../src/scene/CameraRig'
 import { DisposableBag } from '../../src/util/disposable'
-import { zoneAngles, zoneId } from '../../src/camera/cubeZones'
+import { ZONES, zoneAngles, zoneId } from '../../src/camera/cubeZones'
 
 function spyTarget() {
   const entries: { type: string; fn: unknown }[] = []
@@ -93,8 +93,53 @@ describe('ViewCubeWidget (Task 17)', () => {
     expect(cube.sizePx()).toBe(120)
     const attrs = (cube.hitElement as unknown as { attrs: Record<string, string> }).attrs
     expect(attrs['aria-hidden']).toBe('true') // the named views live in the Vue menu (Task 18)
-    expect(attrs['aria-label']).toBe('Cube de vue')
+    expect(attrs['aria-label']).toBeUndefined() // hidden: no name (Fix 1)
     expect(cube.hitElement.dataset.testid).toBe('view-cube')
+  })
+
+  it('every after-render observer, even one registered before the cube, already sees the main camera', () => {
+    const engine = new NullEngine()
+    const scene = new Scene(engine)
+    const main = new ArcRotateCamera('cam', Math.PI / 2, 1.05, 20, Vector3.Zero(), scene)
+    scene.activeCamera = main
+    const seen: string[] = []
+    scene.onAfterRenderObservable.add(() => seen.push(scene.activeCamera!.name)) // e.g. a scheduler hook
+    const scheduler = new RenderScheduler({ render: () => {}, camera: () => null, tweening: () => false })
+    new ViewCubeWidget(scene, main, new CameraRig(main), scheduler, new DisposableBag())
+    scene.render()
+    scene.render()
+    expect(seen).toEqual(['cam', 'cam'])
+  })
+
+  it('nothing of the cube, its ring or the Face arrow ever leaves the square, from any pose; the cube fills it', () => {
+    const { scene, main, cube } = setup()
+    const cubeCam = scene.activeCameras![1] as ArcRotateCamera
+    main.lowerBetaLimit = null
+    main.upperBetaLimit = null
+    const poses = ZONES.map((s) => zoneAngles(s))
+    for (let a = 0; a < 24; a++)
+      for (const b of [0.0001, 0.3, 0.7, 1.05, 1.35, Math.PI / 2, 1.9, 2.4, 2.9, Math.PI - 0.0001])
+        poses.push({ alpha: (a * Math.PI) / 12, beta: b })
+    let worst = 0
+    for (const p of poses) {
+      main.alpha = p.alpha
+      main.beta = p.beta
+      scene.render()
+      const vp = cubeCam.getViewMatrix().multiply(cubeCam.getProjectionMatrix())
+      for (const m of cube.meshes) {
+        if (!m.isEnabled()) continue // the hover patch: inside the cube anyway
+        const pos = m.getVerticesData(VertexBuffer.PositionKind)!
+        const w = m.computeWorldMatrix(true)
+        for (let i = 0; i < pos.length; i += 3) {
+          const ndc = Vector3.TransformCoordinates(Vector3.TransformCoordinates(new Vector3(pos[i], pos[i + 1], pos[i + 2]), w), vp)
+          worst = Math.max(worst, Math.abs(ndc.x), Math.abs(ndc.y))
+        }
+      }
+    }
+    // a 2 % margin inside the square, never clipped
+    expect(worst).toBeLessThanOrEqual(0.98)
+    // …and the cube really fills it (Fix 1): at the corner (iso) poses, the outermost vertex is near the border
+    expect(worst).toBeGreaterThan(0.85)
   })
 
   it('after a frame the main camera is the scene active camera again (picking, the scheduler inertia check)', () => {

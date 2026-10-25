@@ -88,10 +88,12 @@ export const CREATION_TOKENS = {
     ui: "'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif",
   },
   /**
-   * View cube (Task 17, C11): a Nuit body, Papier labels and edges, an Ambre hover
-   * patch, a muted compass ring. Drawn by its own camera in the viewport's top-left.
-   * Contrast (tests/creation/creationTokens.test.ts): label/body ≥ 4.5, edge/body ≥ 3,
-   * hover = the shell's Ambre.
+   * View cube (Task 17, C11): a lifted Nuit body shaded per face (top lighter,
+   * bottom darker: volume, not a wireframe on the clear colour), Papier labels on
+   * a Nuit halo, Papier-tinted edges, an Ambre hover patch, a muted compass ring.
+   * Drawn by its own camera in the viewport's top-left.
+   * Contrast (tests/creation/creationTokens.test.ts): label/each face ≥ 4.5,
+   * label/halo ≥ 4.5, edge/each face ≥ 3, hover patch blended over each face ≥ 3.
    */
   cube: {
     /** Square side in CSS px (C-a): 120 below `wideFromPx` window width, 130 from it. */
@@ -100,12 +102,17 @@ export const CREATION_TOKENS = {
     wideFromPx: 1600,
     /** Gap between the viewport's top-left corner and the cube square (CSS px). */
     marginPx: 16,
-    body: '#131114',
+    /** Side faces; the top catches a little more light, the bottom a little less. */
+    body: '#221D20',
+    bodyTop: '#2A2428',
+    bodyBottom: '#1A1619',
     label: '#F3EDE3',
+    /** Dark outline around the label glyphs: the ink stays ≥ 4.5:1 over the hover patch too. */
+    halo: '#131114',
     edge: '#B3AAA0',
     ring: '#8C8279',
     hover: '#DD9349',
-    hoverAlpha: 0.35,
+    hoverAlpha: 0.6,
   },
   /** px */
   size: { menubar: 32, status: 28, tree: 200, props: 260, rail: 32 },
