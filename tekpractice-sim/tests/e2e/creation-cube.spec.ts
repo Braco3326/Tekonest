@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { ZONES, zoneAngles, zoneId } from '../../src/camera/cubeZones'
+import { ZONES, zoneAngles, zoneId, zoneLabel } from '../../src/camera/cubeZones'
 test.use({ viewport: { width: 1366, height: 768 } })
 
 /** Every 4 px of the cube square: the zone under that point, as a click would classify it. */
@@ -158,6 +158,47 @@ test('hover renders on demand: a frame per zone change, then idle (0 renders in 
   // leaving the cube clears the hover
   await page.mouse.move(r.x + r.width + 200, r.y + r.height + 200)
   await expect.poll(() => page.evaluate(() => window.__creation!.cubeHover())).toBeNull()
+})
+
+test('hover caption: the zone name under the square (edge and corner too), hidden on leave and while dragging; never in the way', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.cubeZoneScreenPoint('face'))
+  const cap = page.getByTestId('view-cube-caption')
+  await expect(cap).toBeHidden()
+  await expect(cap).toHaveAttribute('aria-hidden', 'true')
+  for (const s of [{ x: 0, y: 1, z: 1 }, { x: 1, y: 1, z: 1 }, { x: 0, y: 0, z: 1 }] as const) {
+    const id = zoneId(s)
+    const pt = (await patchPoint(page, id))!
+    await page.mouse.move(pt.x, pt.y)
+    await expect.poll(() => page.evaluate(() => window.__creation!.cubeHover())).toBe(id)
+    await expect(cap).toBeVisible()
+    await expect(cap).toHaveText(zoneLabel(s))
+  }
+  // just below the square, inside the viewport; Papier on Nuit, Plex 500 12 px, square corners, no pointer events
+  const r = await page.evaluate(() => window.__creation!.cubeRect())
+  const box = (await cap.boundingBox())!
+  expect(box.y).toBeGreaterThanOrEqual(r.y + r.height)
+  expect(box.y).toBeLessThan(r.y + r.height + 12)
+  expect(box.x).toBeCloseTo(r.x, 0)
+  const st = await cap.evaluate((e) => {
+    const c = getComputedStyle(e)
+    return { pe: c.pointerEvents, fw: c.fontWeight, fs: c.fontSize, ff: c.fontFamily, bg: c.backgroundColor, fg: c.color, br: c.borderRadius, tr: c.transitionDuration, an: c.animationName }
+  })
+  expect(st).toMatchObject({ pe: 'none', fw: '500', fs: '12px', bg: 'rgb(19, 17, 20)', fg: 'rgb(243, 237, 227)', br: '0px', an: 'none' })
+  expect(parseFloat(st.tr)).toBeLessThan(0.001) // no transition (the reduced-motion reset leaves 1e-05s)
+  expect(st.ff).toContain('IBM Plex Sans')
+  // a point under the caption reaches what is below it
+  const under = await page.evaluate((p) => document.elementFromPoint(p.x, p.y)?.getAttribute('data-testid') ?? null, { x: box.x + box.width / 2, y: box.y + box.height / 2 })
+  expect(under).not.toBe('view-cube-caption')
+  // dragging the cube: no caption
+  await page.mouse.down()
+  await page.mouse.move(r.x + r.width / 2 + 30, r.y + r.height / 2 + 5, { steps: 4 })
+  await expect(cap).toBeHidden()
+  await page.mouse.up()
+  // leaving: hidden
+  await page.mouse.move(r.x + r.width + 300, r.y + r.height + 300)
+  await expect.poll(() => page.evaluate(() => window.__creation!.cubeHover())).toBeNull()
+  await expect(cap).toBeHidden()
 })
 
 test('device picking ignores the cube; the main camera stays the active camera between frames', async ({ page }) => {

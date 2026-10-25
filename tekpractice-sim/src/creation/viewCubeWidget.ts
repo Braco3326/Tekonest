@@ -29,6 +29,7 @@ import {
   zoneAngles,
   zoneBox,
   zoneId,
+  zoneLabel,
   type ZoneSigns,
 } from '../camera/cubeZones'
 import { CREATION_TOKENS } from '../design/creationTokens'
@@ -123,6 +124,8 @@ function unlit(name: string, scene: Scene, color: string): StandardMaterial {
 export class ViewCubeWidget {
   /** The transparent pointer layer over the cube square (the viewport's only overlay). */
   readonly hitElement: HTMLElement
+  /** The hovered zone's name under the square (no pointer events, hidden when nothing is hovered). */
+  readonly caption: HTMLElement
   /** Every mesh of the cube (excluded from the selection stroke by the host). */
   readonly meshes: Mesh[] = []
   private readonly cubeCam: ArcRotateCamera
@@ -244,6 +247,15 @@ export class ViewCubeWidget {
     el.setAttribute('aria-hidden', 'true')
     this.hitElement = el
     this.canvas?.parentElement?.appendChild(el)
+    // The hovered zone's name, just below the square (Fix 3): edge / corner patches carry no label of
+    // their own and « DESSUS » is foreshortened. DOM only: showing it never asks a frame.
+    const cap = doc!.createElement('div')
+    cap.className = 'cr-cube-caption'
+    cap.dataset.testid = 'view-cube-caption'
+    cap.setAttribute('aria-hidden', 'true')
+    cap.style.display = 'none'
+    this.caption = cap
+    this.canvas?.parentElement?.appendChild(cap)
     this.layout()
     bag.observe(engine.onResizeObservable, () => this.layout())
     if (typeof window !== 'undefined' && typeof window.addEventListener === 'function')
@@ -345,6 +357,7 @@ export class ViewCubeWidget {
     }
     this.main.layerMask = this.prevMainMask
     this.hitElement.remove?.()
+    this.caption.remove?.()
     for (const m of this.meshes) {
       const mat = m.material
       m.dispose(false, false)
@@ -385,6 +398,9 @@ export class ViewCubeWidget {
     s.top = `${(c?.offsetTop ?? 0) + K.marginPx}px`
     s.width = `${size}px`
     s.height = `${size}px`
+    const cs = this.caption.style
+    cs.left = s.left
+    cs.top = `${(c?.offsetTop ?? 0) + K.marginPx + size + 4}px`
     this.scheduler.invalidate()
   }
 
@@ -441,6 +457,8 @@ export class ViewCubeWidget {
       this.hover.scaling.set(b.size[0], b.size[1], b.size[2]) // sizes are unsigned: the mirror does not apply
       this.hover.setEnabled(true)
     } else this.hover.setEnabled(false)
+    this.caption.textContent = z ? zoneLabel(z) : ''
+    this.caption.style.display = z ? '' : 'none'
     this.hitElement.style.cursor = z ? 'pointer' : ''
     this.scheduler.invalidate()
   }

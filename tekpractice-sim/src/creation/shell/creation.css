@@ -460,6 +460,19 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   user-select: none;
   background: transparent;
 }
+/* The hovered cube zone's name (Task 17 Fix 3): Papier on Nuit (16:1), square, no motion, never in the way. */
+.cr-cube-caption {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  padding: 2px 6px;
+  border-radius: 0;
+  background: var(--cr-nuit);
+  color: var(--cr-papier);
+  font: 500 12px/16px var(--cr-font-ui);
+}
 /* The 3D view's focus ring is Papier, never Ambre: Ambre in the viewport means « selected device » (Task 14b Fix 1). */
 .cr #renderCanvas:focus-visible { outline: 2px solid var(--cr-papier); outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
 

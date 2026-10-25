@@ -101,6 +101,11 @@ describe('ViewCubeWidget (Task 17)', () => {
     expect(attrs['aria-hidden']).toBe('true') // the named views live in the Vue menu (Task 18)
     expect(attrs['aria-label']).toBeUndefined() // hidden: no name (Fix 1)
     expect(cube.hitElement.dataset.testid).toBe('view-cube')
+    // the hover caption (Fix 3): hidden from assistive tech, hidden until a zone is hovered
+    const cap = cube.caption as unknown as { attrs: Record<string, string>; style: Record<string, string> }
+    expect(cap.attrs['aria-hidden']).toBe('true')
+    expect(cap.style.display).toBe('none')
+    expect(cap.style.top).toBe('140px') // 16 + 120 + 4: just below the square
   })
 
   it('every after-render observer, even one registered before the cube, already sees the main camera', () => {
@@ -213,6 +218,7 @@ describe('ViewCubeWidget (Task 17)', () => {
     expect(scene.meshes.filter((m) => m.name.startsWith('cube:'))).toEqual([])
     expect(scene.cameras.map((c) => c.name)).toEqual(['cam'])
     expect((cube.hitElement as unknown as { removed: boolean }).removed).toBe(true)
+    expect((cube.caption as unknown as { removed: boolean }).removed).toBe(true)
     cube.dispose() // idempotent
   })
 })
