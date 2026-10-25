@@ -210,7 +210,7 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   left: 100%;
   display: grid;
   grid-auto-flow: column;
-  align-items: start;
+  align-items: stretch; /* the group separators run the full height */
   min-width: 0;
   padding: 0;
 }
