@@ -186,8 +186,10 @@ export class ViewCubeWidget {
     // Inserted FIRST, so every other after-render observer (now or later) sees the main camera.
     const restore = scene.onAfterRenderObservable.add(
       () => {
-        if (scene.activeCamera !== main) scene.activeCamera = main
-        scene.setTransformMatrix(main.getViewMatrix(), main.getProjectionMatrix())
+        // In the walk view (Task 19) the walking camera is the live one.
+        const live = this.walkCam ?? main
+        if (scene.activeCamera !== live) scene.activeCamera = live
+        scene.setTransformMatrix(live.getViewMatrix(), live.getProjectionMatrix())
       },
       undefined,
       true
@@ -353,9 +355,37 @@ export class ViewCubeWidget {
     return { x: r.left + r.width / 2, y: r.top + r.height / 2 }
   }
 
+  /** The walking camera while the walk view is on (Task 19), else null. */
+  private walkCam: Camera | null = null
+
+  /**
+   * Walk view (Task 19, decision N16 of the night build): the cube shows orbit views around
+   * the room, so it hides while walking and the walking camera alone renders and takes the
+   * pointers. null gives the main camera, the cube and its pointer layer back.
+   */
+  setWalkCamera(cam: Camera | null): void {
+    if (this.disposed) return
+    this.walkCam = cam
+    const scene = this.scene
+    scene.activeCameras = cam ? [cam] : [this.main, this.cubeCam]
+    scene.cameraToUseForPointers = cam ?? this.main
+    scene.activeCamera = cam ?? this.main
+    this.endPress()
+    this.setHover(null)
+    this.hitElement.style.display = cam ? 'none' : ''
+    if (!cam) this.sync()
+    this.scheduler.invalidate()
+  }
+
+  /** True while the cube is hidden for the walk view. */
+  get walkHidden(): boolean {
+    return this.walkCam !== null
+  }
+
   dispose(): void {
     if (this.disposed) return
     this.disposed = true
+    this.walkCam = null
     const scene = this.scene
     if (!scene.isDisposed) {
       scene.activeCameras = [this.main]

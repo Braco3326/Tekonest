@@ -16,7 +16,7 @@ import { COPY } from './copy'
 import { showBootFailure, type BootFailureKind } from './bootFailure'
 import { CreationStore, creationEvaluator } from './store'
 import { History } from './history'
-import { ViewState } from './viewState'
+import { loadViewPrefs, saveViewPrefs, ViewState } from './viewState'
 import { hasInertia, RenderScheduler, renderSceneOnce } from './renderScheduler'
 import { SceneHost } from './sceneHost'
 import { placeFromKey, placeKey } from './places'
@@ -202,6 +202,8 @@ export async function bootCreation(): Promise<void> {
   } catch {
     storage = null // blocked storage: default key map, no autosave, a persistent notice
   }
+  // View settings kept across visits (Task 19: the ear height), never in the rig.
+  viewState.set(loadViewPrefs(storage))
   const PJ = COPY.project!
   let projectName: string | null = null
   let savedFp: string | null = null
@@ -352,7 +354,14 @@ export async function bootCreation(): Promise<void> {
   // ── Selection (Task 9): one state for the tree, a click in the 3D view and [ / ].
   const selection = createSelection({
     viewState,
-    host,
+    // While walking a selection (click, [ ], the tree) never flies the hidden orbit camera.
+    host: {
+      instance: (id) => host.instance(id),
+      frameOfKey: (key) => host.frameOfKey(key),
+      get rig() {
+        return host.walking ? null : host.rig
+      },
+    },
     invalidate: () => scheduler.invalidate(),
     onSelect: (id) =>
       shell.setStatus(
@@ -397,6 +406,7 @@ export async function bootCreation(): Promise<void> {
         treeActive = null
         selection.select(node.target!.instanceId!)
       } else if (node.kind === 'zone' || node.kind === 'cable') {
+        leaveWalk() // framing a row is an orbit view
         if (!selection.flyToKey(node.id)) return
         treeActive = node.id
         tree.render()
@@ -408,6 +418,7 @@ export async function bootCreation(): Promise<void> {
         )
       } else if (node.kind === 'lieu' && host.rig) {
         // The place row: back to the overview.
+        leaveWalk()
         treeActive = null
         selection.select(null)
         host.rig.flyToEnsemble()
@@ -440,8 +451,14 @@ export async function bootCreation(): Promise<void> {
     floorAt: (x, z) => host.layout?.floorAt(x, z) ?? 0,
     announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
   })
+  let earHeight = viewState.get().earHeight
   viewState.subscribe(() => {
     const v = viewState.get()
+    if (v.earHeight !== earHeight) {
+      earHeight = v.earHeight
+      saveViewPrefs(storage, { earHeight })
+      host.setEarHeight(earHeight) // a live walker moves at once
+    }
     if (v.selection !== null) treeActive = null
     host.setSelected(v.selection)
     host.setHidden(v.hidden)
@@ -946,16 +963,51 @@ export async function bootCreation(): Promise<void> {
   shellBag.listen(window, 'pagehide', leave)
   keys.onAction('NEXT_DEVICE', () => cycle(1))
   keys.onAction('PREV_DEVICE', () => cycle(-1))
-  keys.onAction('FRAME_SELECTION', () => selection.frameSelection())
 
   // ── Named views (Task 18, C11, CA-05): Vue › Vues, V, Alt+H, F. The cube's small edge / corner
   // targets meet WCAG 2.5.8 through these. Off while no place is on screen or the place picker covers it.
   const VW = COPY.views!
   const viewLocked = (): boolean => !canvasShown || picker.isOpen || !host.rig || !host.camera
+
+  // ── Walk view (Task 19, C11, S6): Vue › Marcher / Maj+V; Échap or Maj+V back to Orbit.
+  const WK = COPY.walk!
+  const walkKey = (): string => bindingLabel(keys.bindings, 'WALK_TOGGLE') || 'Maj+V'
+  const canvasLabel = canvas.getAttribute('aria-label')
+  host.onWalkChange = (on) => {
+    if (on) canvas.setAttribute('aria-label', WK.canvas!.replace('{walk}', walkKey()))
+    else if (canvasLabel !== null) canvas.setAttribute('aria-label', canvasLabel)
+    shell.setStatus(
+      placeNow(),
+      on ? WK.statusOn!.replace('{walk}', walkKey()) : WK.statusOff!,
+      'ready',
+      true
+    )
+  }
+  const enterWalk = (): boolean =>
+    !viewLocked() &&
+    host.enterWalk({
+      eyeHeight: viewState.get().earHeight,
+      // Movement keys only while the 3D view has focus (WCAG 2.1.4), never with Ctrl / Alt / Meta.
+      acceptKey: (e) => e.target === canvas && !e.ctrlKey && !e.altKey && !e.metaKey,
+      covered: () => picker.isOpen,
+    })
+  /** Back to Orbit (no-op when not walking). */
+  function leaveWalk(): void {
+    host.exitWalk()
+  }
+  const toggleWalk = (): void => {
+    if (host.walking) leaveWalk()
+    else enterWalk()
+  }
+  const setEar = (h: 1.2 | 1.7): void => {
+    viewState.set({ earHeight: h }) // its subscriber saves it and moves a live walker
+    shell.setStatus(placeNow(), h === 1.2 ? WK.earSeated! : WK.earStanding!, 'ready', true)
+  }
   const announceView = (label: string): void =>
     shell.setStatus(placeNow(), VW.status!.replace('{view}', label), 'ready', true)
   const goToView = (z: ZoneSigns): void => {
     if (viewLocked()) return
+    leaveWalk() // a named view is an orbit view
     const a = zoneAngles(z)
     host.rig!.flyToView(a.alpha, a.beta) // reduced motion: a cut
     scheduler.invalidate()
@@ -963,7 +1015,7 @@ export async function bootCreation(): Promise<void> {
   }
   let viewPickerOpen = false
   const openViews = async (): Promise<void> => {
-    if (viewPickerOpen || viewLocked()) return
+    if (viewPickerOpen || viewLocked() || host.walking) return
     viewPickerOpen = true
     try {
       // Static import (small): the dialog is up in the same task as the V key, so the next arrow lands in it.
@@ -977,16 +1029,18 @@ export async function bootCreation(): Promise<void> {
   }
   const cameraHome = (): void => {
     if (viewLocked()) return
+    leaveWalk() // « Vue d’ensemble » is an orbit view
     host.rig!.flyToEnsemble()
     scheduler.invalidate()
     announceView(VW.home!)
   }
   const frameFromMenu = (): void => {
+    if (viewState.get().selection !== null) leaveWalk()
     if (!selection.frameSelection())
       shell.setStatus(placeNow(), COPY.shell!.statusNoSelection!, 'idle', true)
   }
   keys.onAction('VIEW_PICKER', () => {
-    if (viewLocked()) return false
+    if (viewLocked() || host.walking) return false // the orbit views' picker: off while walking
     void openViews()
     return true
   })
@@ -995,9 +1049,24 @@ export async function bootCreation(): Promise<void> {
     cameraHome()
     return true
   })
+  keys.onAction('FRAME_SELECTION', () => {
+    if (viewState.get().selection !== null) leaveWalk() // framing is an orbit view
+    return selection.frameSelection()
+  })
+  // Échap: the walk goes first (back to Orbit), then the selection. Menus, dialogs and the cube
+  // caption see the key before (they take it, or it is passive for the caption).
   keys.onAction('CANCEL', (e) => {
+    if (host.walking && (e.target === canvas || e.target === document.body)) {
+      leaveWalk()
+      return true
+    }
     if (e.target !== canvas || viewState.get().selection === null) return false
     selection.select(null)
+    return true
+  })
+  keys.onAction('WALK_TOGGLE', () => {
+    if (viewLocked()) return false
+    toggleWalk()
     return true
   })
   // A click on a device body in the 3D view selects it and flies to it.
@@ -1019,6 +1088,7 @@ export async function bootCreation(): Promise<void> {
     'frame-selection': 'FRAME_SELECTION',
     'camera-home': 'CAMERA_HOME',
     'view-picker': 'VIEW_PICKER',
+    walk: 'WALK_TOGGLE',
   }
   const menuShortcut = (id: string): string | undefined => {
     const a = MENU_KEYS[id]
@@ -1048,6 +1118,12 @@ export async function bootCreation(): Promise<void> {
       cameraHome()
     },
     'view-picker': () => void openViews(),
+    walk: () => {
+      canvas.focus() // the arrows then walk (or orbit, back from the walk)
+      toggleWalk()
+    },
+    'ear-seated': () => setEar(1.2),
+    'ear-standing': () => setEar(1.7),
     ...Object.fromEntries(
       ZONES.map((z) => [
         `view:${zoneId(z)}`,
@@ -1065,6 +1141,8 @@ export async function bootCreation(): Promise<void> {
       bindingLabel: menuShortcut,
       historyLocked: () => picker.isOpen, // Phase 1 review: « Annuler » never edits the rig under the picker
       viewLocked,
+      walking: () => host.walking,
+      earHeight: () => viewState.get().earHeight,
     })
   )
 
@@ -1140,5 +1218,9 @@ export async function bootCreation(): Promise<void> {
     },
     activeCameraIsMain: () => !!host.scene && host.scene.activeCamera === host.camera,
     cameraMoving: () => (host.rig?.tweening ?? false) || hasInertia(host.camera),
+    view: () => (host.walking ? 'explore' : 'orbit'),
+    walkCamera: () => host.walkSnapshot(),
+    leases: () => scheduler.leaseNames,
+    earHeight: () => viewState.get().earHeight,
   }
 }

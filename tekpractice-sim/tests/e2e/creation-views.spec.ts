@@ -125,7 +125,7 @@ test('the Vue menu shows Vues, F, Alt+H, V; « Vue d’ensemble » (Alt+H) goes 
   await expect(menu.getByRole('menuitem', { name: /Cadrer la sélection/ })).toContainText('F')
   await expect(menu.getByRole('menuitem', { name: /Vue d’ensemble/ })).toContainText('Alt+H')
   await expect(menu.getByRole('menuitem', { name: /Choisir une vue…/ })).toContainText('V')
-  await expect(menu.getByRole('menuitem', { name: 'Marcher' })).toHaveCount(0) // Task 19
+  await expect(menu.getByRole('menuitemcheckbox', { name: /Marcher/ })).toContainText('Maj+V') // Task 19
   await menu.getByRole('menuitem', { name: /Vue d’ensemble/ }).click()
   const g = await gap(page, open)
   expect(Math.max(g.alpha, g.beta)).toBeLessThan(0.02)

@@ -72,6 +72,14 @@ export interface CreationDebug {
   activeCameraIsMain(): boolean
   /** Task 18: a flight runs or the orbit inertia still coasts (false = the camera has settled). */
   cameraMoving(): boolean
+  /** Task 19: the base view, 'explore' while walking. */
+  view(): 'orbit' | 'explore'
+  /** Task 19: the walk camera (eye position, heading, floor height under it); null when not walking. */
+  walkCamera(): { x: number; y: number; z: number; yaw: number; floor: number } | null
+  /** Task 19: the render scheduler's held leases ('walk' while the walker moves). */
+  leases(): string[]
+  /** Task 19: the ear height view setting. */
+  earHeight(): 1.2 | 1.7
 }
 
 declare global {

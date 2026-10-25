@@ -48,6 +48,27 @@ import { CREATION_TOKENS } from '../design/creationTokens'
 import type { RoomTheme } from '../scene/RoomBuilder'
 import { CREATION_DEVICE_THEME, CREATION_ROOM_THEME } from './sceneTheme'
 import { ViewCubeWidget } from './viewCubeWidget'
+import { ExploreController, type ExploreUi, type FocusHandles } from '../scene/ExploreController'
+import { roomWalls } from '../explore/collision'
+import { CREATION_WALK_SETTINGS, walkSpawn } from './walk'
+
+/** What the shell gives the walk view (Task 19). */
+export interface WalkOptions {
+  /** Ear height above the floor (1.2 m seated, 1.7 m standing). */
+  eyeHeight: number
+  /** A key the walker may take (the shell: only while the 3D canvas has focus, no Ctrl / Alt / Meta). */
+  acceptKey(e: KeyboardEvent): boolean
+  /** Something modal covers the view (the place picker): no walking under it. */
+  covered(): boolean
+}
+
+/** The shell has no FocusPatch (Task 9): the walker's focus handles are inert. */
+const NO_FOCUS: FocusHandles = {
+  view: { mode: 'ensemble', focused: null, held: null, selected: null },
+  focusInstance: () => {},
+  deviceAt: () => null,
+  home: () => {},
+}
 
 const NUIT = CREATION_TOKENS.color.nuit
 const SELECTION = Color3.FromHexString(CREATION_TOKENS.scene.selection)
@@ -154,6 +175,130 @@ export class SceneHost {
 
   instance(id: string): DeviceInstance | undefined {
     return this.instances.get(id)
+  }
+
+  // ── walk view (Task 19, C11, S6): view state, never in the store, never undoable ──
+
+  /** This place's walker: created on the first walk, disposed with the place (its `controllers` bag). */
+  private walker: ExploreController | null = null
+  /** The render lease held while the walker moves (keys held, look drag, velocity easing out). */
+  private walkLease: (() => void) | null = null
+  /** Floor size of the place on screen (the walls of a blank room / venue set). */
+  private floor = { width: 20, length: 20 }
+  /** The walk view started (true) or ended (false), including by a place change. */
+  onWalkChange: ((walking: boolean) => void) | null = null
+
+  /** The walk view is on. */
+  get walking(): boolean {
+    return this.walker?.exploreView ?? false
+  }
+
+  /** Walk from the orbit view. False when no place is on screen. */
+  enterWalk(o: WalkOptions): boolean {
+    if (this.walking) return true
+    const scene = this._scene
+    const arc = this._camera
+    const rig = this._rig
+    const bag = this.controllers
+    if (!scene || !arc || !rig || !bag || !this._place) return false
+    // The orbit camera stops where it is: no flight or coast goes on unseen behind the walk.
+    rig.cancelFlight()
+    arc.inertialAlphaOffset = arc.inertialBetaOffset = arc.inertialRadiusOffset = 0
+    arc.inertialPanningX = arc.inertialPanningY = 0
+    if (!this.walker) this.walker = this.createWalker(scene, arc, rig, bag, o)
+    else this.walker.setEyeHeight(o.eyeHeight)
+    this.walker.setBaseView('explore', false)
+    this._cube?.setWalkCamera(this.walker.camera)
+    this.scheduler.invalidate()
+    this.onWalkChange?.(true)
+    return true
+  }
+
+  /** Back to the orbit view, where the orbit camera was. */
+  exitWalk(): void {
+    const w = this.walker
+    if (!w || !w.exploreView) return
+    w.setBaseView('orbit', false)
+    this._cube?.setWalkCamera(null)
+    this.scheduler.invalidate()
+    this.onWalkChange?.(false)
+  }
+
+  /** The ear height changed (Écoute): a live walker moves at once. */
+  setEarHeight(h: number): void {
+    this.walker?.setEyeHeight(h)
+    this.scheduler.invalidate()
+  }
+
+  /** The walk camera (e2e): eye position, heading and the floor height under it; null when not walking. */
+  walkSnapshot(): { x: number; y: number; z: number; yaw: number; floor: number } | null {
+    const w = this.walker
+    if (!w || !w.exploreView) return null
+    const s = w.snapshot()
+    const { x, y, z } = s.position
+    return { x, y, z, yaw: s.yaw, floor: this._layout?.floorAt(x, z) ?? 0 }
+  }
+
+  private createWalker(
+    scene: Scene,
+    arc: ArcRotateCamera,
+    rig: CameraRig,
+    bag: DisposableBag,
+    o: WalkOptions
+  ): ExploreController {
+    const layout = this._layout
+    const walls = layout ? layout.colliders : roomWalls(this.floor.width, this.floor.length, 4)
+    // The shell shows no crosshair (no pointer lock): a detached, hidden element.
+    const crosshair = document.createElement('div')
+    crosshair.hidden = true
+    const ui: ExploreUi = {
+      panelCount: () => (o.covered() ? 1 : 0),
+      closeTopPanel: () => {},
+      toggleInventory: () => {},
+      toggleHelp: () => {},
+      openPause: () => {},
+      placing: () => false,
+      cancelPlacement: () => {},
+      rotatePlacement: () => {},
+      confirmPlacement: () => {},
+      pickUp: () => {},
+      capturingKey: () => false,
+    }
+    const w = new ExploreController({
+      scene,
+      canvas: this.canvas,
+      arc,
+      rig,
+      settings: () => CREATION_WALK_SETTINGS,
+      obstacles: () => walls,
+      start: walkSpawn(layout, this.floor, arc.position, arc.target),
+      initialView: 'orbit',
+      crosshair,
+      floorAt: layout ? (x, z) => layout.floorAt(x, z) : undefined,
+      eyeHeight: o.eyeHeight,
+      acceptKey: (e) => o.acceptKey(e),
+      canToggleView: () => false,
+      onActive: (on) => this.setWalkLease(on),
+    })
+    w.connect(NO_FOCUS, ui)
+    // Disposed FIRST on teardown (a place change while walking): back to the main camera, no lease left.
+    bag.add(() => {
+      const was = w.exploreView
+      this._cube?.setWalkCamera(null)
+      w.dispose()
+      this.setWalkLease(false)
+      if (this.walker === w) this.walker = null
+      if (was) this.onWalkChange?.(false)
+    })
+    return w
+  }
+
+  private setWalkLease(on: boolean): void {
+    if (on && !this.walkLease) this.walkLease = this.scheduler.hold('walk')
+    else if (!on && this.walkLease) {
+      this.walkLease()
+      this.walkLease = null
+    }
   }
 
   /** World position of a port marker, or null when the instance or port is unknown. */
@@ -423,6 +568,7 @@ export class SceneHost {
     const scene = new Scene(this.engine)
     // Owned from the first line: if anything below throws, teardown() disposes the half-built scene.
     this._scene = scene
+    this.floor = { width: data.width, length: data.length }
     const nuit = Color3.FromHexString(NUIT)
     scene.clearColor = new Color4(nuit.r, nuit.g, nuit.b, 1)
     // Port labels draw in rendering group 1 (on top of markers / model parts). That group must clear

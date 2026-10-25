@@ -44,7 +44,7 @@ const IN_TEXT_OK: ReadonlySet<CreationAction> = new Set<CreationAction>(['CANCEL
  * Tasks that register other single-character actions extend this set or ship a remap UI
  * (guarded by tests/creation/characterKeys.test.ts).
  */
-export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(['NEXT_DEVICE', 'PREV_DEVICE', 'FRAME_SELECTION', 'VIEW_PICKER'])
+export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(['NEXT_DEVICE', 'PREV_DEVICE', 'FRAME_SELECTION', 'VIEW_PICKER', 'WALK_TOGGLE'])
 
 const CHARACTER_CODE = /^(Key[A-Z]|Digit\d|Numpad\d|BracketLeft|BracketRight|Minus|Equal|Semicolon|Quote|Comma|Period|Slash|Backslash|Backquote|IntlBackslash)$/
 

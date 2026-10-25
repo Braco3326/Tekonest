@@ -186,7 +186,7 @@ describe('ExploreController acceptKey / onActive (Task 19, render lease)', () =>
   })
   it('acceptKey false: the key is ignored (no movement, never active)', () => {
     const seen: boolean[] = []
-    const { ex, connect } = make({ onActive: (on) => seen.push(on), acceptKey: (e) => e.target === canvas })
+    const { ex, connect } = make({ onActive: (on) => seen.push(on), acceptKey: (e) => (e.target as unknown) === canvas })
     connect()
     ex.setBaseView('explore', false)
     win.fire('keydown', key('KeyW', doc))
