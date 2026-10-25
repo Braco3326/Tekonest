@@ -6,7 +6,15 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 import { roomLayout, type RoomLayout, type RoomTemplate } from '../../src/explore/roomLayout'
-import { activePoint, defaultPoints, pointLookAt, pointPose } from '../../src/creation/listeningPoints'
+import {
+  activePoint,
+  DEFAULT_LISTENER_POINT,
+  defaultPoints,
+  keySlot,
+  pointForKey,
+  pointLookAt,
+  pointPose,
+} from '../../src/creation/listeningPoints'
 import { ORBIT_FEEL } from '../../src/camera/orbitFeel'
 
 const dir = fileURLToPath(new URL('../../content/rooms/', import.meta.url))
@@ -57,12 +65,24 @@ describe('defaultPoints (Task 20)', () => {
       })
     }
   })
-  it('no foh zone: Régie at the room centre at 2/3 depth from the stage wall', () => {
-    const L = room('auditorium-amphitheatre-medium') // 16 × 20, a control-room but no foh
+  it('no foh zone: Régie at the centre of the control-room zone (French « régie », as roomLayout.spawn)', () => {
+    const L = room('auditorium-amphitheatre-medium') // 16 × 20, control-room (5.5, 9) raised 1.2 m, no foh
+    const regie = defaultPoints(L, 1.2)[0]
+    expect(regie.id).toBe('regie')
+    expect([regie.position[0], regie.position[2]]).toEqual([5.5, 9])
+    expect(regie.position[1]).toBeCloseTo(1.2 + 1.2, 9)
+    // a studio: the control room, looking at the front wall (−z, monitors / window), never behind
+    const S = room('studio-control-room-small')
+    const s = defaultPoints(S, 1.2)[0]
+    expect([s.id, s.position[0], s.position[2]]).toEqual(['regie', 0, -0.3])
+    expect(pointLookAt(S, s)[2]).toBeLessThan(s.position[2])
+  })
+  it('neither foh nor control-room: Régie at the room centre at 2/3 depth from the stage wall', () => {
+    const L = room('classroom-lab-small') // 7 × 8, desks only
     const regie = defaultPoints(L, 1.2)[0]
     expect(regie.id).toBe('regie')
     expect(regie.position[0]).toBe(0)
-    expect(regie.position[2]).toBeCloseTo(-10 + (2 / 3) * 20, 9)
+    expect(regie.position[2]).toBeCloseTo(-4 + (2 / 3) * 8, 9)
     expect(regie.position[1]).toBeCloseTo(L.floorAt(0, regie.position[2]) + 1.2, 9)
   })
   it('a room without an audience zone has only Régie', () => {
@@ -94,6 +114,22 @@ describe('defaultPoints (Task 20)', () => {
           expect(Math.hypot(a[0] - b[0], a[2] - b[2]), `${id} ${pts[i].id}/${pts[j].id}`).toBeGreaterThanOrEqual(1)
         }
     }
+  })
+})
+
+describe('keys 1 / 2 / 3 are fixed slots (review Fix 1): 1 = Régie (Centre), 2 = Premier rang, 3 = Fond de salle', () => {
+  it('keySlot by id; pointForKey never renumbers when a point is dropped', () => {
+    expect(['regie', 'centre', 'premier-rang', 'fond-de-salle'].map(keySlot)).toEqual([1, 1, 2, 3])
+    expect(keySlot('autre')).toBeNull()
+    const tv = defaultPoints(room('tv-studio-plateau-large'), 1.2) // Premier rang lands on the Régie: dropped
+    expect(tv.map((p) => p.id)).toEqual(['regie', 'fond-de-salle'])
+    expect(pointForKey(tv, 1)!.id).toBe('regie')
+    expect(pointForKey(tv, 2)).toBeNull()
+    expect(pointForKey(tv, 3)!.id).toBe('fond-de-salle')
+    const blank = defaultPoints(null, 1.2)
+    expect(pointForKey(blank, 1)!.id).toBe('centre')
+    expect(pointForKey(blank, 2)).toBeNull()
+    expect(DEFAULT_LISTENER_POINT).toBe('regie')
   })
 })
 

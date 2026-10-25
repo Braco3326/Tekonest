@@ -1,7 +1,11 @@
 /**
  * Named listening points (Task 20, council: only « Régie » is mandatory). Pure: no Babylon.
- * - « Régie »: the centre of the first `foh` zone, else the room centre at 2/3 depth from the
- *   stage wall; a blank place / venue set (no room layout) has one « Centre » point instead.
+ * - « Régie »: the centre of the first `foh` zone, else of the first `control-room` zone (French
+ *   « régie », as `roomLayout.spawn`), else the room centre at 2/3 depth from the stage wall; a
+ *   blank place / venue set (no room layout) has one « Centre » point instead (decision L16).
+ * - Every point looks at the stage; a room without a stage looks at the middle of its front
+ *   wall (−z: the « stage / far end » of roomLayout, where a studio's monitors and window are).
+ * - Keys 1 / 2 / 3 are fixed slots (`keySlot`): 1 = Régie (or Centre), 2 = Premier rang, 3 = Fond de salle.
  * - « Premier rang »: 2 m in front of the stage edge, on the audience floor (only when an
  *   audience zone lies in front of the stage).
  * - « Fond de salle »: 1 m before the back of the last audience zone.
@@ -47,10 +51,11 @@ export function defaultPoints(layout: RoomLayout | null, earHeight: number): Lis
     label,
     position: [x, layout.floorAt(x, z) + earHeight, z],
   })
-  const foh = layout.zones.find((z) => z.kind === 'foh')
+  // foh → control-room (French « régie » is also the studio control room; as roomLayout.spawn) → 2/3 depth.
+  const desk = layout.zones.find((z) => z.kind === 'foh') ?? layout.zones.find((z) => z.kind === 'control-room')
   const out: ListeningPoint[] = [
-    foh
-      ? at('regie', P().regie!, foh.x, foh.z)
+    desk
+      ? at('regie', P().regie!, desk.x, desk.z)
       : at('regie', P().regie!, 0, -layout.length / 2 + (2 / 3) * layout.length),
   ]
   const stages = layout.zones.filter((z) => z.kind === 'stage')
@@ -72,6 +77,19 @@ export function defaultPoints(layout: RoomLayout | null, earHeight: number): Lis
   }
   // « when the room allows »: a point within 1 m of an earlier one is the same place to listen from.
   return out.filter((p, i) => out.slice(0, i).every((q) => Math.hypot(p.position[0] - q.position[0], p.position[2] - q.position[2]) >= 1))
+}
+
+/** Fixed key slots (review Fix 1): 1 = Régie (Centre without a layout), 2 = Premier rang, 3 = Fond de salle. */
+const SLOTS: Readonly<Record<string, 1 | 2 | 3>> = { regie: 1, centre: 1, 'premier-rang': 2, 'fond-de-salle': 3 }
+
+/** The key (1 / 2 / 3) of a point id; null for an id without one. */
+export function keySlot(id: string): 1 | 2 | 3 | null {
+  return SLOTS[id] ?? null
+}
+
+/** The point behind key `n` in this place; null when the place has none (a dropped point never renumbers the keys). */
+export function pointForKey(points: readonly ListeningPoint[], n: number): ListeningPoint | null {
+  return points.find((p) => keySlot(p.id) === n) ?? null
 }
 
 /** The point with this id, else the first one (Centre in a blank place); null when there is none. */

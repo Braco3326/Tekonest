@@ -457,7 +457,7 @@ Points d'écoute nommés (Task 20 ; seule la Régie est obligatoire). Lignes du 
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
-| `points.regie` | Régie | à valider (tekuxwriter) | Point de la zone régie façade (sinon centre du lieu aux 2/3 de la profondeur) ; touche 1 |
+| `points.regie` | Régie | à valider (tekuxwriter) | Point de la zone régie façade, sinon de la régie (control room), sinon centre du lieu aux 2/3 de la profondeur ; touche 1 (touches fixes : 2 = Premier rang, 3 = Fond de salle, même si un point manque) |
 | `points.premierRang` | Premier rang | à valider (tekuxwriter) | 2 m devant le bord de scène, dans le public |
 | `points.fondDeSalle` | Fond de salle | à valider (tekuxwriter) | 1 m avant le fond de la dernière zone public |
 | `points.centre` | Centre | à valider (tekuxwriter) | Salle vide neutre et décors 3D : seul point, au centre |

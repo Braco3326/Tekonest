@@ -9,6 +9,7 @@ import type { History } from '../history'
 import { COPY } from '../copy'
 import { zoneId, zoneLabel, type ZoneSigns } from '../../camera/cubeZones'
 import { PICKER_CELLS } from '../../camera/viewPicker'
+import { keySlot } from '../listeningPoints'
 
 export interface MenuItem {
   id: string
@@ -126,12 +127,13 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     run: () => {},
     children: viewItems,
   }
-  // Listening points (Task 20): radio items (the active point), keys 1 / 2 / 3 by position;
+  // Listening points (Task 20): radio items (the active point), keys 1 / 2 / 3 by fixed slot;
   // like the views they leave the walk first (their action) and hand focus to the 3D view.
   const pointList = ctx.points?.() ?? []
-  const pointItems = pointList.map((p, i): MenuItem => {
+  const pointItems = pointList.map((p): MenuItem => {
     const item: MenuItem = { ...cam(`point:${p.id}`, p.label, true), kind: 'radio', checked: () => ctx.listenerPoint?.() === p.id }
-    item.shortcut = i < 3 ? ctx.bindingLabel(`point-key-${i + 1}`) : undefined
+    const slot = keySlot(p.id) // fixed slots: a dropped point never renumbers the keys
+    item.shortcut = slot ? ctx.bindingLabel(`point-key-${slot}`) : undefined
     if (item.shortcut === undefined) delete item.shortcut
     return item
   })

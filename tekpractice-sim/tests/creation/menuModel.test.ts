@@ -179,6 +179,20 @@ describe('menu model (Task 7)', () => {
       sub.children![0].run()
       expect(ran).toEqual(['fond-de-salle'])
     })
+    it('a dropped point never renumbers the keys: Régie 1, Fond de salle 3 (review Fix 1)', () => {
+      const keys: Record<string, string> = { 'point-key-1': '1', 'point-key-2': '2', 'point-key-3': '3' }
+      const c = ctx({
+        bindingLabel: (a) => keys[a],
+        points: () => [
+          { id: 'regie', label: 'Régie' },
+          { id: 'fond-de-salle', label: 'Fond de salle' },
+        ],
+      })
+      const sub = vue(c).items.find((i) => i.id === 'points')!
+      expect(sub.children!.map((i) => i.shortcut)).toEqual(['1', '3'])
+      const blank = vue(ctx({ bindingLabel: (a) => keys[a], points: () => [{ id: 'centre', label: 'Centre' }] }))
+      expect(blank.items.find((i) => i.id === 'points')!.children!.map((i) => i.shortcut)).toEqual(['1'])
+    })
     it('no points (no place yet): the submenu is there, disabled', () => {
       const sub = vue(ctx()).items.find((i) => i.id === 'points')!
       expect(sub.children).toEqual([])
