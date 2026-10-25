@@ -5,6 +5,10 @@
  * - open menu: Up/Down move (wrap), Home/End, Enter/Space run the item, Esc closes and returns
  *   focus to its top item, Left/Right open the neighbour menu; focus leaving the menu (Tab,
  *   never intercepted) closes it.
+ * - a submenu (an item with `children`, Task 18: Vue › Vues): aria-haspopup / aria-expanded on its
+ *   item; → / Enter / Space open it on its first item, hover opens it; inside, Up/Down/Home/End move
+ *   (wrap), ← / Esc close it back to its item, → opens the next menu, Enter/Space run; children
+ *   sharing a `group` sit in a labelled role="group".
  * Disabled items stay focusable with aria-disabled (APG). The panel is rebuilt on every open,
  * so enabled states and shortcut labels are always current.
  */
@@ -66,13 +70,39 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
     tops.forEach((t, k) => (t.tabIndex = k === i ? 0 : -1))
     tops[i].focus()
   }
-  const items = (i: number): HTMLButtonElement[] => Array.from(panels[i].querySelectorAll<HTMLButtonElement>('[role="menuitem"]'))
+  /** The open menu's own items (not those of its submenu). */
+  const items = (i: number): HTMLButtonElement[] =>
+    Array.from(panels[i].querySelectorAll<HTMLButtonElement>(':scope > [role="menuitem"], :scope > .cr-submenu-wrap > [role="menuitem"]'))
+  /** The open submenu (Vue › Vues, Task 18): its parent item and its panel. */
+  let sub: { parent: HTMLButtonElement; panel: HTMLElement } | null = null
+  const subItems = (): HTMLButtonElement[] => (sub ? Array.from(sub.panel.querySelectorAll<HTMLButtonElement>('[role="menuitem"]')) : [])
+
+  function openSub(parent: HTMLButtonElement, panel: HTMLElement, focus: 'first' | 'last' | 'none'): void {
+    if (parent.getAttribute('aria-disabled') === 'true') return
+    if (sub && sub.panel !== panel) closeSub(false)
+    sub = { parent, panel }
+    panel.hidden = false
+    parent.setAttribute('aria-expanded', 'true')
+    const list = subItems()
+    if (focus === 'first') list[0]?.focus()
+    else if (focus === 'last') list[list.length - 1]?.focus()
+  }
+
+  function closeSub(returnFocus: boolean): void {
+    if (!sub) return
+    const { parent, panel } = sub
+    sub = null
+    panel.hidden = true
+    parent.setAttribute('aria-expanded', 'false')
+    if (returnFocus) parent.focus()
+  }
 
   function render(i: number): void {
+    sub = null
     const def = menus()[i]
     const panel = panels[i]
     panel.replaceChildren()
-    const add = (item: MenuItem): void => {
+    const button = (item: MenuItem): HTMLButtonElement => {
       const b = doc.createElement('button')
       b.type = 'button'
       b.className = 'cr-menu-item'
@@ -88,15 +118,70 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
         k.textContent = item.shortcut
         b.appendChild(k)
       }
-      const enabled = item.enabled()
-      if (!enabled) b.setAttribute('aria-disabled', 'true')
-      b.addEventListener('click', () => activate(item))
-      b.addEventListener('pointerenter', () => b.focus())
-      panel.appendChild(b)
-      // Submenus are not used yet: children render flat, after their parent.
-      for (const c of item.children ?? []) add(c)
+      if (!item.enabled()) b.setAttribute('aria-disabled', 'true')
+      return b
     }
-    for (const item of def.items) add(item)
+    for (const item of def.items) {
+      const b = button(item)
+      if (!item.children?.length) {
+        b.addEventListener('click', () => activate(item))
+        b.addEventListener('pointerenter', () => {
+          closeSub(false)
+          b.focus()
+        })
+        panel.appendChild(b)
+        continue
+      }
+      // A submenu (APG): → / Entrée / Espace open it on its first item, ← / Échap close it back here.
+      b.id = `cr-menu-item-${item.id}`
+      b.setAttribute('aria-haspopup', 'menu')
+      b.setAttribute('aria-expanded', 'false')
+      const chevron = doc.createElement('span')
+      chevron.className = 'cr-submenu-chevron'
+      chevron.setAttribute('aria-hidden', 'true')
+      chevron.textContent = '›'
+      b.appendChild(chevron)
+      const wrap = doc.createElement('div')
+      wrap.className = 'cr-submenu-wrap'
+      wrap.setAttribute('role', 'none')
+      const sp = doc.createElement('div')
+      sp.className = 'cr-menu-panel cr-submenu'
+      sp.id = `cr-menu-${item.id}-panel`
+      sp.setAttribute('role', 'menu')
+      sp.setAttribute('aria-labelledby', b.id)
+      sp.hidden = true
+      b.setAttribute('aria-controls', sp.id)
+      // Consecutive children sharing a `group` go in one labelled role="group" (« Faces », « Arêtes », « Coins »).
+      let group: HTMLElement | null = null
+      let groupName: string | undefined
+      item.children.forEach((c) => {
+        if (c.group !== undefined && (group === null || c.group !== groupName)) {
+          groupName = c.group
+          group = doc.createElement('div')
+          group.className = 'cr-menu-group'
+          group.setAttribute('role', 'group')
+          const h = doc.createElement('div')
+          h.className = 'cr-menu-group-label'
+          h.id = `${sp.id}-g${sp.childElementCount}`
+          h.textContent = c.group
+          h.setAttribute('aria-hidden', 'true') // names the group (aria-labelledby), not a menu child
+          group.setAttribute('aria-labelledby', h.id)
+          group.appendChild(h)
+          sp.appendChild(group)
+        } else if (c.group === undefined) group = null
+        const cb = button(c)
+        cb.addEventListener('click', () => activate(c))
+        cb.addEventListener('pointerenter', () => cb.focus())
+        ;(group ?? sp).appendChild(cb)
+      })
+      b.addEventListener('click', () => (sub?.panel === sp ? closeSub(true) : openSub(b, sp, 'first')))
+      b.addEventListener('pointerenter', () => {
+        b.focus()
+        openSub(b, sp, 'none')
+      })
+      wrap.append(b, sp)
+      panel.appendChild(wrap)
+    }
   }
 
   function activate(item: MenuItem): void {
@@ -119,6 +204,7 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
   }
 
   function hide(i: number): void {
+    closeSub(false)
     panels[i].hidden = true
     tops[i].setAttribute('aria-expanded', 'false')
   }
@@ -169,10 +255,67 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
     }
   }
 
+  /** The item model behind a rendered button (submenu items included). */
+  const modelOf = (i: number, b: HTMLElement | undefined): MenuItem | undefined => {
+    const flat = (xs: MenuItem[]): MenuItem[] => xs.flatMap((x) => [x, ...flat(x.children ?? [])])
+    return b ? flat(menus()[i].items).find((x) => x.id === b.dataset.item) : undefined
+  }
+
+  /** Keys inside the open submenu: ↑ ↓ Home End move (wrap), ← / Échap back to its parent, → next menu. */
+  function onSubKey(e: KeyboardEvent, i: number): boolean {
+    const list = subItems()
+    const at = list.indexOf(doc.activeElement as HTMLButtonElement)
+    const n = tops.length
+    switch (e.key) {
+      case 'ArrowDown':
+        list[(at + 1) % list.length]?.focus()
+        return true
+      case 'ArrowUp':
+        list[(at - 1 + list.length) % list.length]?.focus()
+        return true
+      case 'Home':
+        list[0]?.focus()
+        return true
+      case 'End':
+        list[list.length - 1]?.focus()
+        return true
+      case 'ArrowLeft':
+      case 'Escape':
+        closeSub(true)
+        return true
+      case 'ArrowRight':
+        open((i + 1) % n, 'first')
+        return true
+      case 'Enter':
+      case ' ': {
+        const item = modelOf(i, list[at])
+        if (item) activate(item)
+        return true
+      }
+      default:
+        return false
+    }
+  }
+
   function onPanelKey(e: KeyboardEvent, i: number): void {
+    if (sub && sub.panel.contains(doc.activeElement)) {
+      if (onSubKey(e, i)) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+      return
+    }
     const list = items(i)
     const at = list.indexOf(doc.activeElement as HTMLButtonElement)
     const n = tops.length
+    const here = list[at]
+    if (here?.getAttribute('aria-haspopup') === 'menu' && (e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault()
+      e.stopPropagation()
+      openSub(here, here.nextElementSibling as HTMLElement, 'first')
+      return
+    }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Home' || e.key === 'End') closeSub(false)
     let handled = true
     switch (e.key) {
       case 'ArrowDown':
@@ -195,9 +338,7 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
         break
       case 'Enter':
       case ' ': {
-        const def = menus()[i]
-        const flat = (xs: MenuItem[]): MenuItem[] => xs.flatMap((x) => [x, ...flat(x.children ?? [])])
-        const item = flat(def.items).find((x) => x.id === list[at]?.dataset.item)
+        const item = modelOf(i, here)
         if (item) activate(item)
         break
       }

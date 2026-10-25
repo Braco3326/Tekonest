@@ -17,7 +17,7 @@ import { showBootFailure, type BootFailureKind } from './bootFailure'
 import { CreationStore, creationEvaluator } from './store'
 import { History } from './history'
 import { ViewState } from './viewState'
-import { RenderScheduler, renderSceneOnce } from './renderScheduler'
+import { hasInertia, RenderScheduler, renderSceneOnce } from './renderScheduler'
 import { SceneHost } from './sceneHost'
 import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
@@ -39,9 +39,10 @@ import { openPlaceDialog, openReplaceDialog } from './shell/placeDialog'
 import type { PlaceCard } from './shell/placePicker'
 import { mountShell } from './shell/layout'
 import { mountMenuBar } from './shell/menuBar'
+import { openViewPicker } from './shell/viewPickerOverlay'
 import { buildMenus } from './shell/menuModel'
 import { CREATION_TOKENS, injectCreationTokens } from '../design/creationTokens'
-import { zoneId } from '../camera/cubeZones'
+import { ZONES, zoneAngles, zoneId, zoneLabel, type ZoneSigns } from '../camera/cubeZones'
 import { cubeSizePx } from './viewCubeGeometry'
 import {
   AUTOSAVE_KEY,
@@ -946,6 +947,54 @@ export async function bootCreation(): Promise<void> {
   keys.onAction('NEXT_DEVICE', () => cycle(1))
   keys.onAction('PREV_DEVICE', () => cycle(-1))
   keys.onAction('FRAME_SELECTION', () => selection.frameSelection())
+
+  // ── Named views (Task 18, C11, CA-05): Vue › Vues, V, Alt+H, F. The cube's small edge / corner
+  // targets meet WCAG 2.5.8 through these. Off while no place is on screen or the place picker covers it.
+  const VW = COPY.views!
+  const viewLocked = (): boolean => !canvasShown || picker.isOpen || !host.rig || !host.camera
+  const announceView = (label: string): void =>
+    shell.setStatus(placeNow(), VW.status!.replace('{view}', label), 'ready', true)
+  const goToView = (z: ZoneSigns): void => {
+    if (viewLocked()) return
+    const a = zoneAngles(z)
+    host.rig!.flyToView(a.alpha, a.beta) // reduced motion: a cut
+    scheduler.invalidate()
+    announceView(zoneLabel(z))
+  }
+  let viewPickerOpen = false
+  const openViews = async (): Promise<void> => {
+    if (viewPickerOpen || viewLocked()) return
+    viewPickerOpen = true
+    try {
+      // Static import (small): the dialog is up in the same task as the V key, so the next arrow lands in it.
+      const cam = host.camera!
+      const z = await openViewPicker({ alpha: cam.alpha, beta: cam.beta })
+      canvas.focus() // Entrée and Échap both give the 3D view back
+      if (z) goToView(z)
+    } finally {
+      viewPickerOpen = false
+    }
+  }
+  const cameraHome = (): void => {
+    if (viewLocked()) return
+    host.rig!.flyToEnsemble()
+    scheduler.invalidate()
+    announceView(VW.home!)
+  }
+  const frameFromMenu = (): void => {
+    if (!selection.frameSelection())
+      shell.setStatus(placeNow(), COPY.shell!.statusNoSelection!, 'idle', true)
+  }
+  keys.onAction('VIEW_PICKER', () => {
+    if (viewLocked()) return false
+    void openViews()
+    return true
+  })
+  keys.onAction('CAMERA_HOME', () => {
+    if (viewLocked()) return false
+    cameraHome()
+    return true
+  })
   keys.onAction('CANCEL', (e) => {
     if (e.target !== canvas || viewState.get().selection === null) return false
     selection.select(null)
@@ -967,6 +1016,9 @@ export async function bootCreation(): Promise<void> {
     save: 'SAVE',
     inventory: 'TOGGLE_INVENTORY',
     shortcuts: 'TOGGLE_HELP',
+    'frame-selection': 'FRAME_SELECTION',
+    'camera-home': 'CAMERA_HOME',
+    'view-picker': 'VIEW_PICKER',
   }
   const menuShortcut = (id: string): string | undefined => {
     const a = MENU_KEYS[id]
@@ -986,6 +1038,10 @@ export async function bootCreation(): Promise<void> {
     save: () => void save(false),
     'save-as': () => void save(true),
     'export-kept': exportKept,
+    'frame-selection': frameFromMenu,
+    'camera-home': cameraHome,
+    'view-picker': () => void openViews(),
+    ...Object.fromEntries(ZONES.map((z) => [`view:${zoneId(z)}`, () => goToView(z)])),
   }
   mountMenuBar(shell.menus, () =>
     buildMenus({
@@ -993,6 +1049,7 @@ export async function bootCreation(): Promise<void> {
       actions,
       bindingLabel: menuShortcut,
       historyLocked: () => picker.isOpen, // Phase 1 review: « Annuler » never edits the rig under the picker
+      viewLocked,
     })
   )
 
@@ -1067,5 +1124,6 @@ export async function bootCreation(): Promise<void> {
       return host.cube ? host.cube.zoneScreenPoint(id) : null
     },
     activeCameraIsMain: () => !!host.scene && host.scene.activeCamera === host.camera,
+    cameraMoving: () => (host.rig?.tweening ?? false) || hasInertia(host.camera),
   }
 }

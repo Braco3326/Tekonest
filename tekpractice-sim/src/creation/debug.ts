@@ -70,6 +70,8 @@ export interface CreationDebug {
   cubeZoneScreenPoint(id: string): Promise<{ x: number; y: number } | null>
   /** Task 17: between frames the scene's active camera is the main one (pointers, picking, render scheduler). */
   activeCameraIsMain(): boolean
+  /** Task 18: a flight runs or the orbit inertia still coasts (false = the camera has settled). */
+  cameraMoving(): boolean
 }
 
 declare global {

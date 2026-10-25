@@ -435,7 +435,7 @@ Les vues nommées (Task 18, C11, CA-05) : le sous-menu Vue › Vues (26 vues gro
 | `views.pickerTitle` | Choisir une vue | à valider (tekuxwriter) | Titre du sélecteur `V` (dialogue) |
 | `views.pickerHelp` | Flèches : changer de vue. Entrée : y aller. Échap : annuler. | à valider (tekuxwriter) | Sous le titre ; description du dialogue |
 | `views.cancel` | Annuler | à valider (tekuxwriter) | Bouton du sélecteur (même effet qu'Échap) |
-| `views.current` | vue actuelle | à valider (tekuxwriter) | Repère sur la case de la vue la plus proche de la caméra (affiché et lu) |
+| `views.current` | Vue actuelle : {view}. | à valider (tekuxwriter) | Début de la description du sélecteur ; {view} = la vue la plus proche de la caméra (le focus part de sa case, marquée `aria-current`) |
 | `views.status` | Vue : {view} | à valider (tekuxwriter) | Barre d'état après le choix d'une vue (annoncé) ; {view} = nom de la vue |
 
 ## Glossaire

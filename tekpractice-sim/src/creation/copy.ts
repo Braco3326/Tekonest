@@ -450,8 +450,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     pickerTitle: 'Choisir une vue',
     pickerHelp: 'Flèches : changer de vue. Entrée : y aller. Échap : annuler.',
     cancel: 'Annuler',
-    /** Marks the view the camera is closest to (shown and read). */
-    current: 'vue actuelle',
+    /** First sentence of the picker's description; {view} = the view the camera is closest to (focus starts there). */
+    current: 'Vue actuelle : {view}.',
     /** Status bar after a view is chosen; {view} = the view name. */
     status: 'Vue : {view}',
   },
