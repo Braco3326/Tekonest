@@ -87,6 +87,26 @@ export const CREATION_TOKENS = {
     title: "'Tektur', 'IBM Plex Sans', system-ui, sans-serif",
     ui: "'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif",
   },
+  /**
+   * View cube (Task 17, C11): a Nuit body, Papier labels and edges, an Ambre hover
+   * patch, a muted compass ring. Drawn by its own camera in the viewport's top-left.
+   * Contrast (tests/creation/creationTokens.test.ts): label/body ≥ 4.5, edge/body ≥ 3,
+   * hover = the shell's Ambre.
+   */
+  cube: {
+    /** Square side in CSS px (C-a): 120 below `wideFromPx` window width, 130 from it. */
+    sizePx: 120,
+    sizeWidePx: 130,
+    wideFromPx: 1600,
+    /** Gap between the viewport's top-left corner and the cube square (CSS px). */
+    marginPx: 16,
+    body: '#131114',
+    label: '#F3EDE3',
+    edge: '#B3AAA0',
+    ring: '#8C8279',
+    hover: '#DD9349',
+    hoverAlpha: 0.35,
+  },
   /** px */
   size: { menubar: 32, status: 28, tree: 200, props: 260, rail: 32 },
   motion: { drawerMs: 180, flyMs: 450 },

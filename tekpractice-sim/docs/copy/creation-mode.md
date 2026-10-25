@@ -406,6 +406,20 @@ Le shell n'a pas pu démarrer (revue Phase 1) : une alerte persistante (`role="a
 | `boot.loadBody` | Une partie de l’application n’a pas pu être téléchargée. Vérifiez votre connexion, puis rechargez la page. | validé | Corps de cette alerte |
 | `boot.reload` | Recharger la page | validé | Bouton de l'alerte de chargement, reçoit le focus |
 
+## cube
+
+Le cube de vue (Task 17, C11) en haut à gauche de la vue 3D : libellés peints sur ses faces (capitales), nom du calque de clic. Le calque n'est pas un arrêt de tabulation : les vues nommées vivent dans le menu Vue et le sélecteur `V` (Task 18).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `cube.group` | Cube de vue | à valider | `aria-label` du calque de clic au-dessus du cube (masqué aux lecteurs d'écran, `aria-hidden`) |
+| `cube.face` | FACE | à valider | Libellé de la face avant du cube (côté public), aussi sur la flèche de la boussole |
+| `cube.arriere` | ARRIÈRE | à valider | Libellé de la face arrière |
+| `cube.gauche` | GAUCHE | à valider | Libellé de la face gauche (vue depuis le public) |
+| `cube.droite` | DROITE | à valider | Libellé de la face droite (vue depuis le public) |
+| `cube.dessus` | DESSUS | à valider | Libellé de la face du dessus |
+| `cube.dessous` | DESSOUS | à valider | Libellé de la face du dessous |
+
 ## Glossaire
 
 - **lieu** : la salle (modèle TEK Brain), le décor .glb ou la salle vide. Jamais « scène » pour le lieu (la scène = le plateau).

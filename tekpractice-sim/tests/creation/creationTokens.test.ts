@@ -71,6 +71,18 @@ describe('creation tokens (brief §2, P11)', () => {
     expect(contrastRatio(S.hover, S.floor)).toBeGreaterThanOrEqual(3)
     expect(contrastRatio(S.selection, S.hover)).toBeGreaterThanOrEqual(1.5)
   })
+  it('Task 17: view cube look (Nuit body, Papier labels, Ambre hover, 120 / 130 px)', () => {
+    const K = CREATION_TOKENS.cube
+    expect(K.body).toBe(C.nuit)
+    expect(K.label).toBe(C.papier)
+    expect(K.hover).toBe(C.ambre)
+    expect(contrastRatio(K.label, K.body)).toBeGreaterThanOrEqual(4.5)
+    expect(contrastRatio(K.edge, K.body)).toBeGreaterThanOrEqual(3)
+    expect(contrastRatio(K.ring, K.body)).toBeGreaterThanOrEqual(3)
+    expect([K.sizePx, K.sizeWidePx, K.wideFromPx, K.marginPx]).toEqual([120, 130, 1600, 16])
+    expect(K.hoverAlpha).toBeGreaterThan(0)
+    expect(K.hoverAlpha).toBeLessThan(1)
+  })
   it('no radius token exists (square corners)', () => {
     expect(JSON.stringify(CREATION_TOKENS)).not.toMatch(/radius/i)
   })
