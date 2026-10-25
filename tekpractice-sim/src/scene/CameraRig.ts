@@ -70,6 +70,15 @@ export class CameraRig implements CameraDirector {
     this.bag.dispose()
   }
 
+  /**
+   * The learner takes the camera from outside the canvas (the creation view cube's
+   * drag, Task 17): stop a flight in progress, as a canvas pointerdown does.
+   * Legacy never calls it.
+   */
+  cancelFlight(): void {
+    this.tween.cancel() // the flight's end still sets its dolly floor, as with a canvas pointerdown
+  }
+
   /** A flight is running (the render scheduler keeps frames coming). */
   get tweening(): boolean {
     return this.tween.active

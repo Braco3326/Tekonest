@@ -40,7 +40,9 @@ import type { PlaceCard } from './shell/placePicker'
 import { mountShell } from './shell/layout'
 import { mountMenuBar } from './shell/menuBar'
 import { buildMenus } from './shell/menuModel'
-import { injectCreationTokens } from '../design/creationTokens'
+import { CREATION_TOKENS, injectCreationTokens } from '../design/creationTokens'
+import { zoneId } from '../camera/cubeZones'
+import { cubeSizePx } from './viewCubeGeometry'
 import {
   AUTOSAVE_KEY,
   PROJECTS_KEY,
@@ -78,6 +80,8 @@ import {
 import '@fontsource/tektur/600.css'
 import '@fontsource/ibm-plex-sans/400.css'
 import '@fontsource/ibm-plex-sans/500.css'
+// The view cube's face labels (Task 17): fetched only when the cube draws them.
+import '@fontsource/ibm-plex-sans/600.css'
 
 const roomName = (id: string): string =>
   (roomIndexJson as { rooms: { id: string; name_fr: string }[] }).rooms.find((r) => r.id === id)
@@ -1042,5 +1046,26 @@ export async function bootCreation(): Promise<void> {
     requestPlace,
     project: () => ({ name: projectName, dirty: dirty() }),
     quarantine: () => readQuarantine(storage),
+    cubeRect: () => {
+      const hit = host.cube?.hitElement.getBoundingClientRect()
+      if (hit && hit.width > 0) return { x: hit.x, y: hit.y, width: hit.width, height: hit.height }
+      // No place on screen yet: where the cube will sit (same size rule and margin as the widget).
+      const v = shell.viewport.getBoundingClientRect()
+      const size = cubeSizePx(window.innerWidth)
+      const m = CREATION_TOKENS.cube.marginPx
+      return { x: v.x + m, y: v.y + m, width: size, height: size }
+    },
+    cubeZoneAt: (x, y) => {
+      const z = host.cube?.zoneAtPage(x, y)
+      return z ? zoneId(z) : null
+    },
+    cubeHover: () => host.cube?.hoveredZone() ?? null,
+    cubeZoneScreenPoint: async (id) => {
+      // A place being committed shows its scene (and cube) a few frames later: wait up to 10 s.
+      for (let i = 0; i < 500 && !(host.cube && host.place); i++)
+        await new Promise((r) => setTimeout(r, 20))
+      return host.cube ? host.cube.zoneScreenPoint(id) : null
+    },
+    activeCameraIsMain: () => !!host.scene && host.scene.activeCamera === host.camera,
   }
 }

@@ -56,6 +56,20 @@ export interface CreationDebug {
   project(): { name: string | null; dirty: boolean }
   /** Task 13: everything set aside in `audio-sim/creation.v1.quarantine` (kept, exportable as JSON). */
   quarantine(): QuarantineItem[]
+  /** Task 17: the view cube square in page CSS px (also before a place is on screen: where it will sit). */
+  cubeRect(): { x: number; y: number; width: number; height: number }
+  /** Task 17: the cube zone id under a page point, as a click there would classify it (null = no cube / missed). */
+  cubeZoneAt(x: number, y: number): string | null
+  /** Task 17: the zone painted Ambre under the pointer, or null. */
+  cubeHover(): string | null
+  /**
+   * Task 17: turn the main camera to the zone's own pose (its patch then sits at the cube centre,
+   * the honest user path: turn, then click the centre patch) and return the cube centre (page px).
+   * Resolves once the camera is there (a cut under reduced motion, else after the flight).
+   */
+  cubeZoneScreenPoint(id: string): Promise<{ x: number; y: number } | null>
+  /** Task 17: between frames the scene's active camera is the main one (pointers, picking, render scheduler). */
+  activeCameraIsMain(): boolean
 }
 
 declare global {

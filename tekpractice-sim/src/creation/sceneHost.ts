@@ -47,6 +47,7 @@ import { blankData, loadPlaceData, type PlaceData } from './placeData'
 import { CREATION_TOKENS } from '../design/creationTokens'
 import type { RoomTheme } from '../scene/RoomBuilder'
 import { CREATION_DEVICE_THEME, CREATION_ROOM_THEME } from './sceneTheme'
+import { ViewCubeWidget } from './viewCubeWidget'
 
 const NUIT = CREATION_TOKENS.color.nuit
 const SELECTION = Color3.FromHexString(CREATION_TOKENS.scene.selection)
@@ -141,6 +142,11 @@ export class SceneHost {
   get place(): PlaceRef | null {
     return this._place
   }
+  /** The view cube of this place's scene (Task 17); null without a scene or a canvas. */
+  get cube(): ViewCubeWidget | null {
+    return this._cube
+  }
+  private _cube: ViewCubeWidget | null = null
   /** A bag for controllers bound to this place's scene; disposed first on teardown. Null when no scene. */
   get placeBag(): DisposableBag | null {
     return this.controllers
@@ -409,6 +415,7 @@ export class SceneHost {
     this.controllers = null
     this.applied = null
     this.highlight = null // disposed with its scene
+    this._cube = null // disposed by `bag`
     this.strokeColor.clear()
   }
 
@@ -418,15 +425,6 @@ export class SceneHost {
     this._scene = scene
     const nuit = Color3.FromHexString(NUIT)
     scene.clearColor = new Color4(nuit.r, nuit.g, nuit.b, 1)
-    // Selection / hover stroke (Task 14b): only drawn when a frame renders; empty = no cost.
-    const hl = new HighlightLayer('cr:stroke', scene, {
-      isStroke: true,
-      mainTextureRatio: 1,
-      blurHorizontalSize: 1,
-      blurVerticalSize: 1,
-    })
-    hl.innerGlow = false
-    this.highlight = hl
     // Port labels draw in rendering group 1 (on top of markers / model parts). That group must clear
     // DEPTH only: clearing the stencil would erase the highlighted bodies' stencil and the stroke
     // would fill the whole body (Task 14b review, Fix 1, critical).
@@ -452,6 +450,18 @@ export class SceneHost {
     applyOrbitFeel(camera)
     // Explicit: a disposed previous camera must never leave Babylon falling back to cameras[0].
     scene.activeCamera = camera
+
+    // Selection / hover stroke (Task 14b): only drawn when a frame renders; empty = no cost.
+    // Bound to the main camera (Task 17): the view cube's camera never renders nor composites it.
+    const hl = new HighlightLayer('cr:stroke', scene, {
+      isStroke: true,
+      mainTextureRatio: 1,
+      blurHorizontalSize: 1,
+      blurVerticalSize: 1,
+      camera,
+    })
+    hl.innerGlow = false
+    this.highlight = hl
 
     // One calm fill + one key (Task 14b, tokens): no shadow generator, nothing recomputed per frame.
     const hemi = new HemisphericLight('light', new Vector3(0.2, 1, 0.3), scene)
@@ -492,6 +502,14 @@ export class SceneHost {
     this.cables = new CableRenderer(scene, undefined, { pulses: false })
     this._rig = new CameraRig(camera)
     attachRenderScheduler(this.engine, scene, camera, this.canvas, this.scheduler, bag)
+    // View cube (Task 17): a second camera of this scene, only on a real DOM canvas (headless
+    // NullEngine tests have a stand-in, no DOM). Disposed with the plumbing, before the scene.
+    const domCanvas = this.engine.getRenderingCanvas()
+    if (typeof HTMLElement !== 'undefined' && domCanvas instanceof HTMLElement) {
+      const cube = new ViewCubeWidget(scene, camera, this._rig, this.scheduler, bag)
+      for (const m of cube.meshes) hl.addExcludedMesh(m) // never in the selection stroke mask
+      this._cube = cube
+    }
     this.scheduler.invalidate()
     return scene
   }
