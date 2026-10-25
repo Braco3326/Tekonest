@@ -19,8 +19,10 @@ import { History } from './history'
 import { loadViewPrefs, saveViewPrefs, ViewState } from './viewState'
 import {
   activePoint,
+  DEFAULT_LISTENER_POINT,
   defaultPoints,
   POINT_IDS,
+  pointForKey,
   pointLookAt,
   pointPose,
   type ListeningPoint,
@@ -493,7 +495,8 @@ export async function bootCreation(): Promise<void> {
     const hidden = viewState.get().hidden.filter((k) => !k.startsWith('zone:') || ids.has(k))
     atPoint = null // a new camera: it stands on no point
     if (treeActive?.startsWith('point:')) treeActive = null
-    viewState.set({ hidden })
+    // A new place listens from its Régie (Centre without a layout) until a point is chosen (review Fix 1).
+    viewState.set({ hidden, listenerPoint: DEFAULT_LISTENER_POINT })
     tree.render()
   }
 
@@ -1077,6 +1080,9 @@ export async function bootCreation(): Promise<void> {
     const p = listeningPoints().find((q) => q.id === id)
     if (!p) return false
     leaveWalk()
+    // A room-level view, like the « Lieu » row (overview): it ends the device focus, so the tree's
+    // one selected row is the point's (review Fix 1, minor). Selection is never undoable.
+    if (viewState.get().selection !== null) selection.select(null)
     const pose = pointPose(p.position, pointLookAt(host.layout, p), host.camera!.upperRadiusLimit ?? 60)
     host.rig!.flyToPreset({
       alpha: pose.alpha,
@@ -1104,10 +1110,10 @@ export async function bootCreation(): Promise<void> {
       Math.hypot(c.target.x - tx, c.target.y - ty, c.target.z - tz) < 1e-3
     )
   }
-  /** Key 1 / 2 / 3 (3D view focused): the place's point at that position. */
+  /** Key 1 / 2 / 3 (3D view focused): a fixed slot (1 Régie / Centre, 2 Premier rang, 3 Fond de salle). */
   const pointKey = (n: number): boolean => {
     if (viewLocked()) return false
-    const p = listeningPoints()[n - 1]
+    const p = pointForKey(listeningPoints(), n)
     if (!p) {
       shell.setStatus(placeNow(), PT.none!.replace('{n}', String(n)), 'idle', true)
       return true

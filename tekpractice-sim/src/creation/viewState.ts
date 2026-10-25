@@ -2,6 +2,7 @@
  * View state of Mode Création (selection, hidden devices, panels, ear height).
  * Never undoable (brief §4): it lives beside the store, never inside it.
  */
+import { DEFAULT_LISTENER_POINT } from './listeningPoints'
 export interface ViewStateData {
   selection: string | null
   hidden: string[]
@@ -11,12 +12,20 @@ export interface ViewStateData {
   /**
    * The active listening point (Task 20): what the Web Audio listener uses when not walking
    * (Task 39). A point id of `listeningPoints.ts`; a place without it falls back to its first point.
-   * Session only: never in the view prefs file (point ids depend on the place).
+   * Session only: never in the view prefs file (point ids depend on the place); back to
+   * `DEFAULT_LISTENER_POINT` whenever another place is shown (review Fix 1).
    */
   listenerPoint: string
 }
 
-const DEFAULTS: ViewStateData = { selection: null, hidden: [], treeOpen: true, propsOpen: true, earHeight: 1.2, listenerPoint: 'regie' }
+const DEFAULTS: ViewStateData = {
+  selection: null,
+  hidden: [],
+  treeOpen: true,
+  propsOpen: true,
+  earHeight: 1.2,
+  listenerPoint: DEFAULT_LISTENER_POINT,
+}
 
 /** View settings kept across reloads (Task 19: the ear height). Per origin, never in the rig. */
 export const VIEW_PREFS_KEY = 'audio-sim/creation-view.v1'

@@ -120,6 +120,47 @@ test('a point while walking goes back to Orbit first; the points follow the ear 
   expect(await distTo(page, 'regie')).toBeLessThan(0.5)
 })
 
+test('review Fix 1: a place change resets the listening point to Régie; keys are fixed slots (a dropped point never renumbers)', async ({ page }) => {
+  await boot(page)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Digit3')
+  expect(await listener(page)).toBe('fond-de-salle')
+  // tv-studio-plateau-large has no Premier rang (it would sit on the Régie): 2 is empty, 3 is still Fond de salle
+  await page.evaluate(() => window.__creation!.choosePlace('room:tv-studio-plateau-large'))
+  await page.waitForFunction(() => window.__creation!.place() === 'room:tv-studio-plateau-large')
+  expect(await listener(page)).toBe('regie')
+  expect((await page.evaluate(() => window.__creation!.listeningPoints())).map((p) => p.id)).toEqual(['regie', 'fond-de-salle'])
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Digit2')
+  await expect(page.getByRole('status')).toHaveText('Pas de point d’écoute 2 dans ce lieu.')
+  expect(await listener(page)).toBe('regie')
+  await page.keyboard.press('Digit3')
+  expect(await listener(page)).toBe('fond-de-salle')
+  expect(await distTo(page, 'fond-de-salle')).toBeLessThan(0.5)
+  await page.getByRole('menuitem', { name: 'Vue', exact: true }).click()
+  await page.getByRole('menuitem', { name: /Aller au point d’écoute/ }).hover()
+  await expect(page.getByRole('menuitemradio', { name: /Fond de salle/ })).toContainText('3')
+})
+
+test('review Fix 1 (minor): a listening point is a room-level view: it clears the device selection, its tree row stays selected', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 4] }))
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press(']')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBe('ql1')
+  const tree = page.getByRole('tree', { name: 'Projet' })
+  await tree.getByRole('treeitem', { name: /^Points d’écoute/ }).click() // opens the group
+  await page.keyboard.press('ArrowDown')
+  const regie = tree.getByRole('treeitem', { name: 'Régie' })
+  await expect(regie).toBeFocused()
+  await page.keyboard.press('Enter')
+  expect(await page.evaluate(() => window.__creation!.selection())).toBeNull()
+  await expect(regie).toHaveAttribute('aria-selected', 'true')
+  await expect(tree.locator('[aria-selected="true"]')).toHaveCount(1)
+  await expect(page.getByRole('status')).toHaveText('Point d’écoute : Régie')
+  expect(await distTo(page, 'regie')).toBeLessThan(0.5)
+})
+
 test('blank place: one « Centre » point (key 1); key 2 says there is none; off under the place picker', async ({ page }) => {
   await boot(page, 'blank')
   const pts = await page.evaluate(() => window.__creation!.listeningPoints())
