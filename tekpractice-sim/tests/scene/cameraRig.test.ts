@@ -220,3 +220,24 @@ describe('CameraRig.flyToPreset (Task 5)', () => {
     expect(c.target.asArray()).toEqual([1, 0.5, -2])
   })
 })
+
+describe('CameraRig.onFlight (Task 21 review: Mode Création learns the camera left a listening point)', () => {
+  beforeEach(() => setMotionOverride(false))
+  afterEach(() => setMotionOverride(null))
+
+  it('runs as every camera request starts; null by default (legacy never sets it)', () => {
+    const c = cam()
+    const rig = new CameraRig(c)
+    expect(rig.onFlight).toBeNull()
+    rig.repivot(new Vector3(1, 0, 1)) // no hook: nothing to call, no throw
+    let n = 0
+    rig.onFlight = () => n++
+    rig.flyToView(0.5, 1)
+    rig.flyToEnsemble()
+    rig.repivot(new Vector3(1, 0, 1))
+    rig.flyToDevice({ center: new Vector3(0, 1, 0), boundingRadius: 0.5 })
+    rig.flyToPreset({ alpha: 0, beta: 1, radius: 5, target: Vector3.Zero() })
+    rig.flyToPose({ alpha: 0, beta: 1, radius: 5, target: Vector3.Zero() })
+    expect(n).toBe(6)
+  })
+})

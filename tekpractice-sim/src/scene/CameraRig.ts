@@ -208,6 +208,13 @@ export class CameraRig implements CameraDirector {
   private flightSeq = 0
 
   /**
+   * Called as every camera request starts (device, ensemble, re-pivot, view, preset, pose).
+   * Mode Création (Task 21 review) learns from it that the camera left a listening point;
+   * legacy never sets it (null).
+   */
+  onFlight: (() => void) | null = null
+
+  /**
    * `lowerRadius` (optional) = the dolly floor for the destination. At take-off
    * the floor never exceeds where the camera stands nor where it goes (Babylon
    * would otherwise clamp the radius = a visible jump); the full floor applies
@@ -215,6 +222,7 @@ export class CameraRig implements CameraDirector {
    */
   private fly(to: CameraPose, lowerRadius?: number): void {
     const seq = ++this.flightSeq
+    this.onFlight?.()
     if (this.options.stopInertiaOnFlight) {
       // L7: an orbit flick still coasting would carry the camera past the view it was asked for.
       const c = this.camera
