@@ -13,6 +13,7 @@ import { loadCatalog } from '../engine/CatalogLoader'
 import { projectToScreen } from '../scene/project'
 import { DisposableBag } from '../util/disposable'
 import { COPY } from './copy'
+import { showBootFailure, type BootFailureKind } from './bootFailure'
 import { CreationStore, creationEvaluator } from './store'
 import { History } from './history'
 import { ViewState } from './viewState'
@@ -93,7 +94,6 @@ export async function bootCreation(): Promise<void> {
   const history = new History(store)
   const viewState = new ViewState()
   // `host` is assigned right below; the hooks only run once the render loop does.
-  // eslint-disable-next-line prefer-const
   let host: SceneHost
   const scheduler: RenderScheduler = new RenderScheduler({
     render: () => {
@@ -104,10 +104,26 @@ export async function bootCreation(): Promise<void> {
     tweening: () => host.rig?.tweening ?? false,
     activeCamera: () => host.scene?.activeCamera ?? null,
   })
-  host = new SceneHost(canvas, registry, scheduler)
+  /** The shell cannot work: it goes inert behind a persistent alert with the way out (Phase 1 review). */
+  const fail = (kind: BootFailureKind, e: unknown): void => {
+    console.error(`[creation] boot failed (${kind})`, e)
+    shell.root.inert = true
+    showBootFailure(document, kind)
+  }
+  try {
+    host = new SceneHost(canvas, registry, scheduler) // throws without WebGL (no context)
+  } catch (e) {
+    return fail('no-webgl', e)
+  }
   // « Choisir un lieu » (Task 12): its own lazy chunk (cards, grid keys) and the templates, fetched together.
-  const [{ placeCards, templateCards, mountPlacePicker, placeSummary }, allTemplates] =
-    await Promise.all([import('./shell/placePicker'), loadTemplates()])
+  let loaded: [typeof import('./shell/placePicker'), Awaited<ReturnType<typeof loadTemplates>>]
+  try {
+    loaded = await Promise.all([import('./shell/placePicker'), loadTemplates()])
+  } catch (e) {
+    host.dispose()
+    return fail('load', e)
+  }
+  const [{ placeCards, templateCards, mountPlacePicker, placeSummary }, allTemplates] = loaded
   const summary = placeSummary()
   const cards = placeCards({ rooms: summary.rooms, sets: summary.sets })
   const placeKeys = new Set(cards.map((c) => c.key))
@@ -584,7 +600,9 @@ export async function bootCreation(): Promise<void> {
   const picker = mountPlacePicker({
     doc: document,
     parent: shell.root,
-    covers: [shell.tree, shell.viewport, shell.props],
+    // The menus too: « Annuler » / « Nouveau »… must not edit the rig under the open picker (Phase 1 review).
+    // Only the menus: « Retour au site Tekonest » in the same header stays a way out.
+    covers: [shell.menus, shell.tree, shell.viewport, shell.props],
     places: cards,
     templates: templateCards(
       templates.map((t) => ({
@@ -671,6 +689,8 @@ export async function bootCreation(): Promise<void> {
     bag: shellBag,
     bindings: loadCreationBindings(storage),
     canvas,
+    // « Choisir un lieu » covers the workspace: no shortcut edits the rig under it (Phase 1 review).
+    suspended: () => picker.isOpen,
   })
   const cycle = (dir: 1 | -1): boolean => {
     const next = nextDevice(deviceIds(), viewState.get().selection, dir)

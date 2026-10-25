@@ -390,6 +390,19 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 | `rule.R8Title` | Word clock maître/esclave et fréquence d’échantillonnage | à valider (tekuxwriter) | Source : catalog.json `rules[R8].title`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
 | `rule.R8Detail` | Chaque liaison audio numérique a besoin d’une seule horloge maître en amont. Deux maîtres, aucun maître ou des fréquences différentes sur une liaison sont des erreurs. | à valider (tekuxwriter) | Source : catalog.json `rules[R8].check`, traduction fidèle sans fait nouveau ; remplacé par `title_fr` / `teach_fr` du catalogue en Task 29 |
 
+## boot
+
+Le shell n'a pas pu démarrer (revue Phase 1) : une alerte persistante (`role="alert"`) dans la vue, avec la sortie.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `boot.noWebglTitle` | Vue 3D indisponible | à valider (tekuxwriter) | Titre de l'alerte quand WebGL manque (le moteur 3D ne peut pas être créé) |
+| `boot.noWebglBody` | La vue 3D ne peut pas démarrer sur cet ordinateur : ce navigateur n’a pas accès à WebGL. Vous pouvez vous entraîner avec la version 2D. | à valider (tekuxwriter) | Corps de l'alerte sans WebGL |
+| `boot.open2d` | Ouvrir la version 2D | à valider (tekuxwriter) | Lien vers le plateau 2D (`?level=a1&render=2d`), reçoit le focus |
+| `boot.loadTitle` | Le Mode Création n’a pas pu se charger | à valider (tekuxwriter) | Titre de l'alerte quand un morceau de l'application (code, modèles) n'a pas pu être téléchargé |
+| `boot.loadBody` | Une partie de l’application n’a pas pu être téléchargée. Vérifiez votre connexion, puis rechargez la page. | à valider (tekuxwriter) | Corps de cette alerte |
+| `boot.reload` | Recharger la page | à valider (tekuxwriter) | Bouton de l'alerte de chargement, reçoit le focus |
+
 ## Glossaire
 
 - **lieu** : la salle (modèle TEK Brain), le décor .glb ou la salle vide. Jamais « scène » pour le lieu (la scène = le plateau).

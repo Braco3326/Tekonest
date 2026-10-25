@@ -30,6 +30,11 @@ export interface KeyboardDeps {
   canvas: HTMLElement
   /** Defaults to `window`. */
   target?: ListenTarget
+  /**
+   * True while every creation shortcut is off (the place picker covers the workspace:
+   * Ctrl+Z must not edit the rig under it). The keys then stay the browser's.
+   */
+  suspended?: () => boolean
 }
 
 const IN_TEXT_OK: ReadonlySet<CreationAction> = new Set<CreationAction>(['CANCEL', 'SAVE'])
@@ -75,7 +80,7 @@ export function mountCreationKeyboard(d: KeyboardDeps): CreationKeyboard {
   const handlers = new Map<CreationAction, ActionHandler>()
 
   const onKey = (e: KeyboardEvent): void => {
-    if (e.defaultPrevented || e.isComposing) return
+    if (e.defaultPrevented || e.isComposing || d.suspended?.()) return
     const t = e.target as ElementLike | null
     if (inDialog(t)) return
     const onCanvas = e.target === d.canvas
