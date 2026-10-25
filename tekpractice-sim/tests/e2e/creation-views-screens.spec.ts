@@ -30,7 +30,9 @@ const boot = async (page: Page): Promise<void> => {
 
 test('views screenshots (V picker, Vue › Vues submenu)', async ({ page }) => {
   await boot(page)
-  await page.mouse.move(700, 500)
+  // the pointer rests on the empty Propriétés panel: no hover style in the shots (review Fix 1)
+  const away = () => page.mouse.move(1300, 420)
+  await away()
 
   // V picker from the canvas, focus moved one step (focused cell + the « current » mark both show)
   await page.evaluate(() => window.__creation!.cubeZoneScreenPoint('dessus-face'))
@@ -56,6 +58,18 @@ test('views screenshots (V picker, Vue › Vues submenu)', async ({ page }) => {
   await page.getByRole('menuitem', { name: 'Dessus · Arrière · Droite', exact: true }).hover()
   await page.waitForTimeout(150)
   await page.screenshot({ path: `${OUT}/task-18-vue-menu-hover.png` })
+  await page.keyboard.press('Escape')
+  await page.keyboard.press('Escape')
+
+  // 1100 px (1366 at 125 % zoom ≈ 1093): the submenu slides left, never off-screen (review Fix 1)
+  await page.setViewportSize({ width: 1100, height: 768 })
+  await page.mouse.move(1000, 700)
+  await page.locator('#cr-menu-vue').focus()
+  await page.keyboard.press('Enter')
+  await page.keyboard.press('ArrowRight')
+  await page.keyboard.press('End')
+  await page.waitForTimeout(200)
+  await page.screenshot({ path: `${OUT}/task-18-vue-menu-views-1100.png` })
   await page.keyboard.press('Escape')
   await page.keyboard.press('Escape')
 
