@@ -56,8 +56,10 @@ test('the canvas keys work as its label says: arrows orbit, ] selects (announced
   // arrows orbit
   await canvas.focus()
   const a0 = (await page.evaluate(() => window.__creation!.camera()))!.alpha
-  for (let i = 0; i < 5; i++) await page.keyboard.press('ArrowLeft')
+  // held, not tapped: Babylon's keyboard orbit reads the keys down at each frame (a tap within one frame is lost under load)
+  await page.keyboard.down('ArrowLeft')
   await expect.poll(async () => (await page.evaluate(() => window.__creation!.camera()))!.alpha).not.toBeCloseTo(a0, 3)
+  await page.keyboard.up('ArrowLeft')
 
   // ] selects and the status bar announces it
   await page.keyboard.press(']')
