@@ -36,6 +36,8 @@ Brief: Oscar's "Mode Création only" prompt (2026-10-24). Autonomous run; defaul
 
 ## Progress
 
+- **Phase 2 : done (2026-10-25).** Navigation: 26-zone view cube on a second orthographic camera (one WebGL context) with hover caption and ↺ ↻ ⌂ buttons; 26 named views in Vue › Vues and on `V`; walk view (Maj+V) at 1,2 / 1,7 m ear height; listening points Régie / Premier rang / Fond de salle on keys 1–3; double-click the floor to re-pivot; no inertia drift after a flight in Mode Création (L7). Whole-phase review by tekreviwer (a4f4e22..fe3960d): two brief §3 items the plan had dropped (cube ↺ ↻ ⌂ buttons, floor double-click re-pivot) built at the gate. Final checks: `tsc` 0; vitest 1154; lint 0; Playwright 232 passed / 0 failed / 21 skipped on the first full run; start chunk −2.0 % vs legacy; idle 0 renders (orbit, walk without keys, after cube hover-out); `smoke:site` OK. Flakes fixed: legacy back-arrow (cold page load of the legacy dashboard, which still downloads Babylon — see L11) and the arrow-key tap test. Open: tekuxwriter on the new view/walk/point/rotate strings; tekdesigner on the cube buttons' look.
+
 - **Phase 1 : done (2026-10-25).** Whole-phase review by tekreviwer (c51dc87..07d865d): one Important (no-WebGL dead end) fixed, copy signed off by tekuxwriter (L9, L12). Final checks: `tsc` 0; vitest 1069; lint 0; Playwright 183 passed / 0 failed / 16 skipped (full suite after the review fixes), creation e2e 76/76 after the copy pass; start chunk −2.9 % vs legacy; idle = 0 renders; `smoke:site` OK. Open for Oscar: « Galerie » (L12). Carried to later phases: L7, L11, project export/import/delete (L12), minors in the SDD ledger.
 
 - Phase 0 (audit): started.
