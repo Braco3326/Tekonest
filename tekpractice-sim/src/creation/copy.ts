@@ -46,6 +46,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     escape: 'Échap',
     enter: 'Entrée',
     shift: 'Maj',
+    /** Prefix of a numeric keypad key (« Pavé num. 6 »). À valider (tekuxwriter). */
+    numpad: 'Pavé num.',
   },
   menu: {
     projet: 'Projet',
@@ -446,6 +448,12 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     frame: 'Cadrer la sélection',
     home: 'Vue d’ensemble',
     pick: 'Choisir une vue…',
+    /** Vue menu items: a quarter turn of the view (Task 21 review, brief §3). À valider (tekuxwriter). */
+    rotateLeftMenu: 'Tourner la vue à gauche',
+    rotateRightMenu: 'Tourner la vue à droite',
+    /** The ↺ ↻ buttons beside the cube (accessible names; ⌂ uses `home`). À valider (tekuxwriter). */
+    rotateLeft: 'Tourner de 90° à gauche',
+    rotateRight: 'Tourner de 90° à droite',
     /** The `V` picker dialog. */
     pickerTitle: 'Choisir une vue',
     pickerHelp: 'Flèches : changer de vue. Entrée : y aller. Échap : annuler.',

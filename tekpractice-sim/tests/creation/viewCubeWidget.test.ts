@@ -5,7 +5,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ArcRotateCamera, Camera, NullEngine, Scene, Vector3, VertexBuffer } from '@babylonjs/core'
-import { ViewCubeWidget } from '../../src/creation/viewCubeWidget'
+import { ViewCubeWidget, type CubeHooks } from '../../src/creation/viewCubeWidget'
 import { CUBE_LAYER, cubeToWorld } from '../../src/creation/viewCubeGeometry'
 import { RenderScheduler } from '../../src/creation/renderScheduler'
 import { CameraRig } from '../../src/scene/CameraRig'
@@ -40,12 +40,18 @@ function fakeElement(tag: string) {
     return el
   }
   return Object.assign(spyTarget(), {
+    tag,
     style: {} as Record<string, string>,
     dataset: {} as Record<string, string>,
     attrs: {} as Record<string, string>,
+    children: [] as unknown[],
+    textContent: '',
     removed: false,
     setAttribute(k: string, v: string) {
       this.attrs[k] = v
+    },
+    appendChild(c: unknown) {
+      this.children.push(c)
     },
     remove() {
       this.removed = true
@@ -70,7 +76,7 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
-function setup() {
+function setup(hooks: CubeHooks = {}) {
   const engine = new NullEngine({ renderWidth: 900, renderHeight: 700, textureSize: 256, deterministicLockstep: false, lockstepMaxSteps: 1 })
   const scene = new Scene(engine)
   const main = new ArcRotateCamera('cam', Math.PI / 2, 1.05, 20, Vector3.Zero(), scene)
@@ -79,9 +85,66 @@ function setup() {
   const scheduler = new RenderScheduler({ render: () => scene.render(), camera: () => null, tweening: () => false })
   const bag = new DisposableBag()
   const beforeRender = scene.onBeforeRenderObservable.observers.length
-  const cube = new ViewCubeWidget(scene, main, rig, scheduler, bag)
+  const cube = new ViewCubeWidget(scene, main, rig, scheduler, bag, hooks)
   return { engine, scene, main, rig, bag, cube, beforeRender }
 }
+
+type FakeEl = ReturnType<typeof spyTarget> & {
+  tag: string
+  type?: string
+  title?: string
+  textContent: string
+  attrs: Record<string, string>
+  style: Record<string, string>
+  dataset: Record<string, string>
+  children: FakeEl[]
+  removed: boolean
+}
+const click = (b: FakeEl) => {
+  for (const e of b.entries.filter((x) => x.type === 'click')) (e.fn as () => void)()
+}
+
+describe('ViewCubeWidget ↺ ↻ ⌂ (Task 21 review, brief §3)', () => {
+  it('three named buttons beside the square; each runs its hook; hidden while walking; removed on dispose', () => {
+    const seen: string[] = []
+    const { cube, bag } = setup({ rotate: (d) => seen.push(`rotate ${d}`), home: () => seen.push('home') })
+    const tools = cube.tools as unknown as FakeEl
+    expect(tools.dataset.testid).toBe('view-cube-tools')
+    const [left, right, home] = tools.children
+    expect(tools.children.map((b) => [b.tag, b.type, b.textContent, b.attrs['aria-label']])).toEqual([
+      ['button', 'button', '↺', 'Tourner de 90° à gauche'],
+      ['button', 'button', '↻', 'Tourner de 90° à droite'],
+      ['button', 'button', '⌂', 'Vue d’ensemble'],
+    ])
+    // a column just right of the 120 px square (16 px margin + 120 + 4), level with its top
+    expect(tools.style.left).toBe('140px')
+    expect(tools.style.top).toBe('16px')
+    click(right)
+    click(left)
+    click(home)
+    expect(seen).toEqual(['rotate 1', 'rotate -1', 'home'])
+    cube.setWalkCamera(cube['main'])
+    expect(tools.style.display).toBe('none')
+    cube.setWalkCamera(null)
+    expect(tools.style.display).toBe('')
+    bag.dispose()
+    expect(tools.removed).toBe(true)
+  })
+
+  it('a zone click flies to its view and tells the shell which (announced like the menu and V)', () => {
+    const views: string[] = []
+    const { cube } = setup({ onView: (z) => views.push(zoneId(z)) })
+    const hit = cube.hitElement as unknown as FakeEl
+    const fire = (type: string, e: Record<string, unknown>) => {
+      for (const x of hit.entries.filter((y) => y.type === type)) (x.fn as (e: unknown) => void)(e)
+    }
+    // the square's centre (76, 76) is the zone the pose faces; the NullEngine canvas is null (offset 0)
+    const at = { clientX: 76, clientY: 76, pointerId: 1, button: 0, preventDefault: () => {} }
+    fire('pointerdown', at)
+    fire('pointerup', at)
+    expect(views).toHaveLength(1)
+  })
+})
 
 describe('ViewCubeWidget (Task 17)', () => {
   it('a second camera with its own layer; the main camera never sees the cube; nothing per frame', () => {

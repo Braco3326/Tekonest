@@ -139,11 +139,21 @@ describe('menu model (Task 7)', () => {
       ])
     })
     it('Vue lists Vues · Cadrer la sélection · Vue d’ensemble · Choisir une vue… then the panels, with live shortcuts', () => {
-      const labels: Record<string, string> = { 'frame-selection': 'F', 'camera-home': 'Alt+H', 'view-picker': 'V', walk: 'Maj+V' }
+      const labels: Record<string, string> = {
+        'frame-selection': 'F',
+        'camera-home': 'Alt+H',
+        'view-rotate-left': 'Pavé num. 4',
+        'view-rotate-right': 'Pavé num. 6',
+        'view-picker': 'V',
+        walk: 'Maj+V',
+      }
       const items = vue(ctx({ bindingLabel: (a) => labels[a] })).items
-      expect(items.map((i) => i.id)).toEqual(['views', 'points', 'frame-selection', 'camera-home', 'view-picker', 'walk', 'panel-tree', 'panel-props'])
-      expect(items.map((i) => i.label)).toEqual(['Vues', 'Aller au point d’écoute', 'Cadrer la sélection', 'Vue d’ensemble', 'Choisir une vue…', 'Marcher', 'Panneau Projet', 'Panneau Propriétés'])
-      expect(items.map((i) => i.shortcut)).toEqual([undefined, undefined, 'F', 'Alt+H', 'V', 'Maj+V', undefined, undefined])
+      expect(items.map((i) => i.id)).toEqual(['views', 'points', 'frame-selection', 'camera-home', 'view-rotate-left', 'view-rotate-right', 'view-picker', 'walk', 'panel-tree', 'panel-props'])
+      expect(items.map((i) => i.label)).toEqual(['Vues', 'Aller au point d’écoute', 'Cadrer la sélection', 'Vue d’ensemble', 'Tourner la vue à gauche', 'Tourner la vue à droite', 'Choisir une vue…', 'Marcher', 'Panneau Projet', 'Panneau Propriétés'])
+      expect(items.map((i) => i.shortcut)).toEqual([undefined, undefined, 'F', 'Alt+H', 'Pavé num. 4', 'Pavé num. 6', 'V', 'Maj+V', undefined, undefined])
+      // the quarter turns are camera items: they hand focus to the 3D view, off while the view is locked
+      for (const id of ['view-rotate-left', 'view-rotate-right'])
+        expect(items.find((i) => i.id === id)!.returnFocus, id).toBe(false)
     })
     it('Vue › Aller au point d’écoute (Task 20): one radio item per point, keys 1 / 2 / 3 by position, checked = the active point', () => {
       let active = 'regie'

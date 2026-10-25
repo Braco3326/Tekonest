@@ -47,7 +47,7 @@ import { blankData, loadPlaceData, type PlaceData } from './placeData'
 import { CREATION_TOKENS } from '../design/creationTokens'
 import type { RoomTheme } from '../scene/RoomBuilder'
 import { CREATION_DEVICE_THEME, CREATION_ROOM_THEME } from './sceneTheme'
-import { ViewCubeWidget } from './viewCubeWidget'
+import { ViewCubeWidget, type CubeHooks } from './viewCubeWidget'
 import { ExploreController, type ExploreUi, type FocusHandles } from '../scene/ExploreController'
 import { roomWalls } from '../explore/collision'
 import { CREATION_WALK_SETTINGS, walkSpawn } from './walk'
@@ -168,6 +168,8 @@ export class SceneHost {
     return this._cube
   }
   private _cube: ViewCubeWidget | null = null
+  /** What the shell does for every place's cube buttons and clicks (read at each use). */
+  cubeHooks: CubeHooks = {}
   /** A bag for controllers bound to this place's scene; disposed first on teardown. Null when no scene. */
   get placeBag(): DisposableBag | null {
     return this.controllers
@@ -658,7 +660,11 @@ export class SceneHost {
     // NullEngine tests have a stand-in, no DOM). Disposed with the plumbing, before the scene.
     const domCanvas = this.engine.getRenderingCanvas()
     if (typeof HTMLElement !== 'undefined' && domCanvas instanceof HTMLElement) {
-      const cube = new ViewCubeWidget(scene, camera, this._rig, this.scheduler, bag)
+      const cube = new ViewCubeWidget(scene, camera, this._rig, this.scheduler, bag, {
+        rotate: (dir) => this.cubeHooks.rotate?.(dir),
+        home: () => this.cubeHooks.home?.(),
+        onView: (z) => this.cubeHooks.onView?.(z),
+      })
       for (const m of cube.meshes) hl.addExcludedMesh(m) // never in the selection stroke mask
       this._cube = cube
     }

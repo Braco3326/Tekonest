@@ -544,6 +544,25 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   color: var(--cr-papier);
   font: 500 12px/16px var(--cr-font-ui);
 }
+/* ↺ ↻ ⌂ beside the cube (Task 21 review, brief §3): a column right of the square, 28 px targets,
+   Papier on Nuit, Ambre on hover; the shell's Ambre + Nuit focus ring; square; no motion. */
+.cr-cube-tools {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cr .cr-cube-tool {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--cr-ink-muted);
+  background: var(--cr-nuit);
+  color: var(--cr-papier);
+  font: 400 16px/1 var(--cr-font-ui);
+}
+.cr .cr-cube-tool:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }
 /* The 3D view's focus ring is Papier, never Ambre: Ambre in the viewport means « selected device » (Task 14b Fix 1). */
 .cr #renderCanvas:focus-visible { outline: 2px solid var(--cr-papier); outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
 

@@ -39,7 +39,9 @@ import { mountNotes } from './shell/notes'
 import { bodyCentreOf } from './debug'
 import { debugBodyCenter } from '../scene/debugBody'
 import { cableKey } from './sceneDiff'
-import { attachCanvasHover, attachCanvasPicking, createSelection, pickDevice } from './selection'
+import { attachCanvasHover, attachCanvasPicking, createSelection, pickDevice, portAt } from './selection'
+import { floorPointAt } from '../scene/pivotPick'
+import { rotate90 } from '../camera/viewCube'
 import { mountProjectTree } from './shell/projectTree'
 import { mountPropertiesPanel } from './shell/propertiesPanel'
 import { buildTree, hideKeyOf, type TreeNode } from './shell/treeModel'
@@ -53,7 +55,7 @@ import { mountMenuBar } from './shell/menuBar'
 import { openViewPicker } from './shell/viewPickerOverlay'
 import { buildMenus } from './shell/menuModel'
 import { CREATION_TOKENS, injectCreationTokens } from '../design/creationTokens'
-import { ZONES, zoneAngles, zoneId, zoneLabel, type ZoneSigns } from '../camera/cubeZones'
+import { nearestZone, ZONES, zoneAngles, zoneId, zoneLabel, type ZoneSigns } from '../camera/cubeZones'
 import { cubeSizePx } from './viewCubeGeometry'
 import {
   AUTOSAVE_KEY,
@@ -395,6 +397,8 @@ export async function bootCreation(): Promise<void> {
     canvasShown && host.place ? defaultPoints(host.layout, viewState.get().earHeight) : []
   /** The point the camera was last sent to and the pose it got (the ear height re-flies it while it is still there). */
   let atPoint: { id: string; pose: PointPose } | null = null
+  /** True while goToPoint asks the rig for the point's own flight. */
+  let pointFlight = false
   const treeNodes = (): TreeNode[] =>
     buildTree({
       placeLabel: placeNow(),
@@ -494,6 +498,20 @@ export async function bootCreation(): Promise<void> {
     const ids = new Set(zones().map((z) => `zone:${z.id}`))
     const hidden = viewState.get().hidden.filter((k) => !k.startsWith('zone:') || ids.has(k))
     atPoint = null // a new camera: it stands on no point
+    // Any other camera request (cube, menu, V, home, a quarter turn, re-pivot, device focus) leaves
+    // the point, even while the point's own flight still runs (Task 21 review minor).
+    if (host.rig)
+      host.rig.onFlight = () => {
+        if (!pointFlight) atPoint = null
+      }
+    // Keypad 4 / 6 are the quarter turns. With Num Lock off the browser reports them as arrows
+    // (key « ArrowLeft », keyCode 37), and Babylon's keyboard orbit reads keyCodes: it would orbit
+    // on top of the turn. Those keys never reach the camera's own input.
+    host.scene?.onPreKeyboardObservable.add((info) => {
+      const code = info.event.code
+      if (keys.bindings.VIEW_ROT_LEFT.includes(code) || keys.bindings.VIEW_ROT_RIGHT.includes(code))
+        info.skipOnKeyboardObservable = true
+    })
     if (treeActive?.startsWith('point:')) treeActive = null
     // A new place listens from its Régie (Centre without a layout) until a point is chosen (review Fix 1).
     viewState.set({ hidden, listenerPoint: DEFAULT_LISTENER_POINT })
@@ -1068,6 +1086,52 @@ export async function bootCreation(): Promise<void> {
     scheduler.invalidate()
     announceView(VW.home!)
   }
+  /**
+   * A quarter turn around the current pivot (↺ ↻ beside the cube, Vue › Tourner la vue…, keypad
+   * 4 / 6; Task 21 review, brief §3): to the next multiple of 90° from Face, beta kept. +1 (↻)
+   * turns the view clockwise seen from above (Face → Droite, the cube's OCTANTS order), as the
+   * legacy ↻. A cut under reduced motion. Off under the place picker and the V picker.
+   */
+  const turnView = (dir: 1 | -1): void => {
+    if (viewLocked() || viewPickerOpen) return
+    leaveWalk() // a turn is an orbit view
+    const cam = host.camera!
+    const alpha = rotate90(cam.alpha, dir)
+    host.rig!.flyToView(alpha, cam.beta)
+    scheduler.invalidate()
+    announceView(zoneLabel(nearestZone(alpha, cam.beta)))
+  }
+  host.cubeHooks = {
+    rotate: (dir) => turnView(dir),
+    home: () => {
+      if (!viewPickerOpen) cameraHome()
+    },
+    onView: (z) => announceView(zoneLabel(z)),
+  }
+  keys.onAction('VIEW_ROT_LEFT', () => {
+    if (viewLocked()) return false
+    turnView(-1)
+    return true
+  })
+  keys.onAction('VIEW_ROT_RIGHT', () => {
+    if (viewLocked()) return false
+    turnView(1)
+    return true
+  })
+  // Double-click on the floor re-pivots there (Task 21 review, brief §3, council T2.5): angle and
+  // distance kept, the target moves (a cut under reduced motion). Never on a device or a port (their
+  // click is theirs), never on the cube (its own layer gets those events), never while walking.
+  shellBag.listen(canvas, 'dblclick', (e: MouseEvent) => {
+    const scene = host.scene
+    if (e.button !== 0 || !scene || viewLocked() || host.walking) return
+    const x = e.offsetX
+    const y = e.offsetY
+    if (pickDevice(scene, x, y) || portAt(scene, x, y)) return
+    const p = floorPointAt(scene, x, y, host.camera!)
+    if (!p) return
+    host.rig!.repivot(Vector3.FromArray(p))
+    scheduler.invalidate()
+  })
   // ── Listening points (Task 20): tree « Points d’écoute », Vue › Aller au point d’écoute, 1 / 2 / 3.
   const PT = COPY.points!
   /**
@@ -1086,19 +1150,24 @@ export async function bootCreation(): Promise<void> {
     // one selected row is the point's (review Fix 1, minor). Selection is never undoable.
     if (!opts.refly && viewState.get().selection !== null) selection.select(null)
     const pose = pointPose(p.position, pointLookAt(host.layout, p), host.camera!.upperRadiusLimit ?? 60)
-    host.rig!.flyToPreset({
-      alpha: pose.alpha,
-      beta: pose.beta,
-      radius: pose.radius,
-      target: Vector3.FromArray(pose.target),
-    })
+    pointFlight = true
+    try {
+      host.rig!.flyToPreset({
+        alpha: pose.alpha,
+        beta: pose.beta,
+        radius: pose.radius,
+        target: Vector3.FromArray(pose.target),
+      })
+    } finally {
+      pointFlight = false
+    }
     atPoint = { id, pose }
     viewState.set({ listenerPoint: id })
     scheduler.invalidate()
     if (!opts.refly) shell.setStatus(placeNow(), PT.status!.replace('{point}', p.label), 'ready', true)
     return true
   }
-  /** The orbit camera is (or is flying to) this pose: nobody moved it since. */
+  /** The orbit camera is (or is flying to) this pose: nobody moved it since (any other flight clears `atPoint`). */
   function cameraOn(pose: PointPose): boolean {
     const c = host.camera
     if (!c || !host.rig) return false
@@ -1179,6 +1248,8 @@ export async function bootCreation(): Promise<void> {
     shortcuts: 'TOGGLE_HELP',
     'frame-selection': 'FRAME_SELECTION',
     'camera-home': 'CAMERA_HOME',
+    'view-rotate-left': 'VIEW_ROT_LEFT',
+    'view-rotate-right': 'VIEW_ROT_RIGHT',
     'view-picker': 'VIEW_PICKER',
     walk: 'WALK_TOGGLE',
     'point-key-1': 'CAMERA_PRESET_1',
@@ -1211,6 +1282,14 @@ export async function bootCreation(): Promise<void> {
     'camera-home': () => {
       canvas.focus()
       cameraHome()
+    },
+    'view-rotate-left': () => {
+      canvas.focus()
+      turnView(-1)
+    },
+    'view-rotate-right': () => {
+      canvas.focus()
+      turnView(1)
     },
     'view-picker': () => void openViews(),
     walk: () => {

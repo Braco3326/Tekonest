@@ -184,6 +184,8 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
         points,
         cam('frame-selection', V.frame!, true),
         cam('camera-home', V.home!, true),
+        cam('view-rotate-left', V.rotateLeftMenu!, true),
+        cam('view-rotate-right', V.rotateRightMenu!, true),
         picker,
         walk,
         act('panel-tree', M.panelTree!),

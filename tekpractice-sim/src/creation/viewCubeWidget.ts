@@ -36,6 +36,7 @@ import { CREATION_TOKENS } from '../design/creationTokens'
 import type { CameraRig } from '../scene/CameraRig'
 import type { DisposableBag } from '../util/disposable'
 import { cubeFaceTexture, whenLabelFontReady, type CubeFace } from './cubeTextures'
+import { COPY } from './copy'
 import type { RenderScheduler } from './renderScheduler'
 import {
   cubeSizePx,
@@ -121,11 +122,23 @@ function unlit(name: string, scene: Scene, color: string): StandardMaterial {
   return m
 }
 
+/** What the shell does for the cube's buttons and clicks (Task 21 review, brief §3). */
+export interface CubeHooks {
+  /** ↺ (−1) / ↻ (+1): a quarter turn of the view. */
+  rotate?(dir: 1 | -1): void
+  /** ⌂: « Vue d’ensemble ». */
+  home?(): void
+  /** A zone was clicked and its view requested (the shell announces it). */
+  onView?(zone: ZoneSigns): void
+}
+
 export class ViewCubeWidget {
   /** The transparent pointer layer over the cube square (the viewport's only overlay). */
   readonly hitElement: HTMLElement
   /** The hovered zone's name under the square (no pointer events, hidden when nothing is hovered). */
   readonly caption: HTMLElement
+  /** ↺ ↻ ⌂ beside the square (council T2.3 / Q4): named DOM buttons, the cube's keyboard path. */
+  readonly tools: HTMLElement
   /** Every mesh of the cube (excluded from the selection stroke by the host). */
   readonly meshes: Mesh[] = []
   private readonly cubeCam: ArcRotateCamera
@@ -149,7 +162,8 @@ export class ViewCubeWidget {
     private readonly main: ArcRotateCamera,
     private readonly rig: CameraRig,
     private readonly scheduler: RenderScheduler,
-    bag: DisposableBag
+    bag: DisposableBag,
+    private readonly hooks: CubeHooks = {}
   ) {
     const engine = scene.getEngine()
     this.canvas = engine.getRenderingCanvas()
@@ -258,6 +272,27 @@ export class ViewCubeWidget {
     cap.style.display = 'none'
     this.caption = cap
     this.canvas?.parentElement?.appendChild(cap)
+    // ↺ ↻ ⌂ (Task 21 review): a column just right of the square, inside the viewport, above the
+    // caption's line; after the canvas in the tab order. The shell decides what they do (hooks).
+    const V = COPY.views!
+    const tools = doc!.createElement('div')
+    tools.className = 'cr-cube-tools'
+    tools.dataset.testid = 'view-cube-tools'
+    const tool = (glyph: string, label: string, run: () => void): void => {
+      const b = doc!.createElement('button')
+      b.type = 'button'
+      b.className = 'cr-cube-tool'
+      b.textContent = glyph
+      b.title = label
+      b.setAttribute('aria-label', label)
+      bag.listen(b, 'click', run)
+      tools.appendChild(b)
+    }
+    tool('↺', V.rotateLeft!, () => this.hooks.rotate?.(-1))
+    tool('↻', V.rotateRight!, () => this.hooks.rotate?.(1))
+    tool('⌂', V.home!, () => this.hooks.home?.())
+    this.tools = tools
+    this.canvas?.parentElement?.appendChild(tools)
     this.layout()
     bag.observe(engine.onResizeObservable, () => this.layout())
     if (typeof window !== 'undefined' && typeof window.addEventListener === 'function')
@@ -373,6 +408,7 @@ export class ViewCubeWidget {
     this.endPress()
     this.setHover(null)
     this.hitElement.style.display = cam ? 'none' : ''
+    this.tools.style.display = cam ? 'none' : '' // orbit-view tools: hidden while walking
     if (!cam) this.sync()
     this.scheduler.invalidate()
   }
@@ -395,6 +431,7 @@ export class ViewCubeWidget {
     this.main.layerMask = this.prevMainMask
     this.hitElement.remove?.()
     this.caption.remove?.()
+    this.tools.remove?.()
     for (const m of this.meshes) {
       const mat = m.material
       m.dispose(false, false)
@@ -438,6 +475,9 @@ export class ViewCubeWidget {
     const cs = this.caption.style
     cs.left = s.left
     cs.top = `${(c?.offsetTop ?? 0) + K.marginPx + size + 4}px`
+    const ts = this.tools.style
+    ts.left = `${(c?.offsetLeft ?? 0) + K.marginPx + size + 4}px`
+    ts.top = s.top
     this.scheduler.invalidate()
   }
 
@@ -564,6 +604,7 @@ export class ViewCubeWidget {
     const a = zoneAngles(z)
     const ms = this.rig.flyToView(a.alpha, a.beta) // reduced motion: CameraRig cuts
     this.scheduler.invalidate()
+    this.hooks.onView?.(z) // announced, as from the Vue menu and V
     // A cut turned the cube under the pointer: show what is there now; a flight shows it on the next move.
     this.setHover(ms === 0 ? this.zoneAtCanvas(x, y) : null)
   }

@@ -86,6 +86,12 @@ export function pickDevice(scene: Scene | null, x: number, y: number): string | 
   return typeof id === 'string' ? id : null
 }
 
+/** A port (its marker or its invisible enlarged pick proxy) is under a canvas point. */
+export function portAt(scene: Scene | null, x: number, y: number): boolean {
+  if (!scene) return false
+  return !!scene.pick(x, y, (m) => m.metadata?.isPortMarker === true && m.isEnabled())?.hit
+}
+
 /**
  * Hover (Task 14b): the device under a free-moving pointer (no button held, so
  * never during an orbit drag) gets the hover outline; leaving the canvas or a

@@ -50,6 +50,7 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `keys.escape` | Échap | validé | Touche Échap (annuler / fermer) |
 | `keys.enter` | Entrée | validé | Touche Entrée (cadrer depuis la vue 3D) |
 | `keys.shift` | Maj | validé | Modificateur Maj (« Maj+V », « Maj+R ») ; Ctrl et Alt restent tels quels |
+| `keys.numpad` | Pavé num. | à valider (tekuxwriter) | Préfixe d'une touche du pavé numérique (« Pavé num. 6 ») |
 
 ## menu
 
@@ -432,6 +433,10 @@ Les vues nommées (Task 18, C11, CA-05) : le sous-menu Vue › Vues (26 vues gro
 | `views.frame` | Cadrer la sélection | à valider (tekuxwriter) | Vue ; raccourci F (vue 3D) |
 | `views.home` | Vue d’ensemble | à valider (tekuxwriter) | Vue ; raccourci Alt+H ; retour à la vue d'ouverture du lieu |
 | `views.pick` | Choisir une vue… | à valider (tekuxwriter) | Vue ; raccourci V (vue 3D) ; ouvre le sélecteur |
+| `views.rotateLeftMenu` | Tourner la vue à gauche | à valider (tekuxwriter) | Vue ; raccourci Pavé num. 4 (vue 3D) ; quart de tour |
+| `views.rotateRightMenu` | Tourner la vue à droite | à valider (tekuxwriter) | Vue ; raccourci Pavé num. 6 (vue 3D) ; quart de tour |
+| `views.rotateLeft` | Tourner de 90° à gauche | à valider (tekuxwriter) | Nom accessible et infobulle du bouton ↺ à côté du cube |
+| `views.rotateRight` | Tourner de 90° à droite | à valider (tekuxwriter) | Nom accessible et infobulle du bouton ↻ à côté du cube (⌂ reprend `views.home`) |
 | `views.pickerTitle` | Choisir une vue | à valider (tekuxwriter) | Titre du sélecteur `V` (dialogue) |
 | `views.pickerHelp` | Flèches : changer de vue. Entrée : y aller. Échap : annuler. | à valider (tekuxwriter) | Sous le titre ; description du dialogue |
 | `views.cancel` | Annuler | à valider (tekuxwriter) | Bouton du sélecteur (même effet qu'Échap) |

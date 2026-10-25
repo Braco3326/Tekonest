@@ -48,6 +48,8 @@ export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(
   'NEXT_DEVICE', 'PREV_DEVICE', 'FRAME_SELECTION', 'VIEW_PICKER', 'WALK_TOGGLE',
   // 1 / 2 / 3: the listening points (Task 20)
   'CAMERA_PRESET_1', 'CAMERA_PRESET_2', 'CAMERA_PRESET_3',
+  // keypad 4 / 6: a quarter turn of the view (Task 21 review)
+  'VIEW_ROT_LEFT', 'VIEW_ROT_RIGHT',
 ])
 
 const CHARACTER_CODE = /^(Key[A-Z]|Digit\d|Numpad\d|BracketLeft|BracketRight|Minus|Equal|Semicolon|Quote|Comma|Period|Slash|Backslash|Backquote|IntlBackslash)$/

@@ -14,7 +14,7 @@ import { COPY } from '../copy'
 export const CREATION_ACTIONS = [
   'UNDO', 'REDO', 'SAVE', 'DUPLICATE', 'DELETE', 'NEXT_DEVICE', 'PREV_DEVICE', 'FRAME_SELECTION',
   'TOGGLE_INVENTORY', 'TOGGLE_HELP', 'VIEW_PICKER', 'WALK_TOGGLE', 'ROTATE_CW', 'ROTATE_CCW',
-  'CAMERA_HOME', 'CAMERA_PRESET_1', 'CAMERA_PRESET_2', 'CAMERA_PRESET_3', 'CANCEL',
+  'CAMERA_HOME', 'CAMERA_PRESET_1', 'CAMERA_PRESET_2', 'CAMERA_PRESET_3', 'VIEW_ROT_LEFT', 'VIEW_ROT_RIGHT', 'CANCEL',
 ] as const
 export type CreationAction = (typeof CREATION_ACTIONS)[number]
 export type CreationBindings = Record<CreationAction, string[]>
@@ -40,6 +40,9 @@ export const DEFAULT_CREATION_BINDINGS: CreationBindings = {
   CAMERA_PRESET_1: ['Digit1'],
   CAMERA_PRESET_2: ['Digit2'],
   CAMERA_PRESET_3: ['Digit3'],
+  // A quarter turn of the view (Task 21 review): the legacy keypad keys (bindings.ts), 3D view only.
+  VIEW_ROT_LEFT: ['Numpad4'],
+  VIEW_ROT_RIGHT: ['Numpad6'],
   CANCEL: ['Escape'],
 }
 
@@ -120,6 +123,8 @@ function keyName(k: string): string {
     const c = k.slice(4)
     return c.length === 1 ? c.toUpperCase() : c
   }
+  const np = /^Numpad(\d)$/.exec(k)
+  if (np) return K().numpad ? `${K().numpad} ${np[1]}` : np[1]
   const m = /^(?:Key|Digit|Numpad)(.+)$/.exec(k)
   if (m) return m[1]
   const named: Record<string, string | undefined> = {
