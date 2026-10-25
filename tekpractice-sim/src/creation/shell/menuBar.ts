@@ -75,10 +75,10 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
   }
   /** The open menu's own items (not those of its submenu). */
   const items = (i: number): HTMLButtonElement[] =>
-    Array.from(panels[i].querySelectorAll<HTMLButtonElement>(':scope > [role="menuitem"], :scope > .cr-submenu-wrap > [role="menuitem"]'))
+    Array.from(panels[i].querySelectorAll<HTMLButtonElement>(':scope > [role^="menuitem"], :scope > .cr-submenu-wrap > [role^="menuitem"]'))
   /** The open submenu (Vue › Vues, Task 18): its parent item and its panel. */
   let sub: { parent: HTMLButtonElement; panel: HTMLElement } | null = null
-  const subItems = (): HTMLButtonElement[] => (sub ? Array.from(sub.panel.querySelectorAll<HTMLButtonElement>('[role="menuitem"]')) : [])
+  const subItems = (): HTMLButtonElement[] => (sub ? Array.from(sub.panel.querySelectorAll<HTMLButtonElement>('[role^="menuitem"]')) : [])
 
   function openSub(parent: HTMLButtonElement, panel: HTMLElement, focus: 'first' | 'last' | 'none'): void {
     if (parent.getAttribute('aria-disabled') === 'true') return
@@ -146,7 +146,9 @@ export function mountMenuBar(bar: HTMLElement, menus: () => MenuDef[]): MenuBarH
       const b = doc.createElement('button')
       b.type = 'button'
       b.className = 'cr-menu-item'
-      b.setAttribute('role', 'menuitem')
+      // Checkable items (Task 19): « Marcher » is a checkbox, the ear heights a radio pair.
+      b.setAttribute('role', item.kind === 'checkbox' ? 'menuitemcheckbox' : item.kind === 'radio' ? 'menuitemradio' : 'menuitem')
+      if (item.kind) b.setAttribute('aria-checked', String(!!item.checked?.()))
       b.tabIndex = -1
       b.dataset.item = item.id
       const label = doc.createElement('span')

@@ -25,6 +25,10 @@ export interface MenuItem {
    * takes it (camera items hand it to the 3D view, so the arrows then orbit).
    */
   returnFocus?: false
+  /** A checkable item (Task 19): 'checkbox' (Marcher) → menuitemcheckbox, 'radio' (ear height) → menuitemradio. */
+  kind?: 'checkbox' | 'radio'
+  /** Its checked state, read at each render (with `kind`). */
+  checked?(): boolean
 }
 
 /**
@@ -58,6 +62,10 @@ export interface MenuContext {
   historyLocked?(): boolean
   /** True while no view may change (no place on screen, or the place picker covers it): views, V, F, Alt+H are off. */
   viewLocked?(): boolean
+  /** True in the walk view (Task 19): « Marcher » is checked, the V picker is off. */
+  walking?(): boolean
+  /** The ear height (Task 19): which of the two Écoute radio items is checked. */
+  earHeight?(): 1.2 | 1.7
 }
 
 export function buildMenus(ctx: MenuContext): MenuDef[] {
@@ -88,8 +96,9 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     run: () => void (canRedo() && ctx.history.redo()),
   }
   const places = ctx.places ?? []
-  // ── Vue (Task 18): the 26 named views, F, Alt+H, V. « Marcher » (Maj+V) lands with Task 19.
+  // ── Vue (Task 18): the 26 named views, F, Alt+H, V; « Marcher » (Maj+V, Task 19).
   const V = COPY.views!
+  const W = COPY.walk!
   const viewFree = (): boolean => !ctx.viewLocked?.()
   /** A camera item: live when its action is registered and the view may change. */
   const cam = (id: string, label: string, toView: boolean, group?: string): MenuItem => {
@@ -113,6 +122,20 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     run: () => {},
     children: viewItems,
   }
+  // The V picker shows the orbit views around the room: off in the walk view (the views and
+  // « Vue d'ensemble » themselves go back to Orbit first, in their actions).
+  const pickerBase = cam('view-picker', V.pick!, false) // the picker gives focus to the 3D view when it closes
+  const picker: MenuItem = {
+    ...pickerBase,
+    enabled: () => !ctx.walking?.() && pickerBase.enabled(),
+    run: () => void (!ctx.walking?.() && pickerBase.run()),
+  }
+  const walk: MenuItem = { ...cam('walk', W.menu!, true), kind: 'checkbox', checked: () => !!ctx.walking?.() }
+  const ear = (id: string, label: string, h: 1.2 | 1.7): MenuItem => ({
+    ...act(id, label),
+    kind: 'radio',
+    checked: () => (ctx.earHeight?.() ?? 1.2) === h,
+  })
   return [
     {
       id: 'projet',
@@ -126,7 +149,11 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
     },
     { id: 'materiel', label: M.materiel!, items: [act('inventory', M.inventory!)] },
     { id: 'cablage', label: M.cablage!, items: [act('connect-to', M.connectTo!)] },
-    { id: 'ecoute', label: M.ecoute!, items: [act('play', M.play!)] },
+    {
+      id: 'ecoute',
+      label: M.ecoute!,
+      items: [act('play', M.play!), ear('ear-seated', W.earSeated!, 1.2), ear('ear-standing', W.earStanding!, 1.7)],
+    },
     {
       id: 'vue',
       label: M.vue!,
@@ -134,7 +161,8 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
         views,
         cam('frame-selection', V.frame!, true),
         cam('camera-home', V.home!, true),
-        cam('view-picker', V.pick!, false), // the picker gives focus to the 3D view when it closes
+        picker,
+        walk,
         act('panel-tree', M.panelTree!),
         act('panel-props', M.panelProps!),
       ],

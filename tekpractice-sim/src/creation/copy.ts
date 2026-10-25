@@ -455,4 +455,21 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Status bar after a view is chosen; {view} = the view name. */
     status: 'Vue : {view}',
   },
+  /**
+   * Walking (Task 19, C11, S6): Vue › Marcher (Maj+V) and the ear height in Écoute.
+   * Every string here: à valider (tekuxwriter).
+   */
+  walk: {
+    /** Vue menu item (checkbox; shortcut shown from the key map). */
+    menu: 'Marcher',
+    /** Écoute menu items (radio pair). */
+    earSeated: 'Hauteur d’oreille : assis 1,2 m',
+    earStanding: 'Hauteur d’oreille : debout 1,7 m',
+    /** Status bar when the walk starts (announced); {walk} = the walk key label (« Maj+V »). */
+    statusOn: 'Marche : flèches ou WASD pour avancer et tourner, {walk} ou Échap pour revenir à l’orbite.',
+    /** Status bar when the walk ends (announced). */
+    statusOff: 'Retour à l’orbite',
+    /** Canvas `aria-label` while walking (replaces `shell.canvas`); {walk} = the walk key label. */
+    canvas: 'Vue 3D en marche : flèches = avancer et tourner, glisser = regarder, {walk} ou Échap = revenir à l’orbite',
+  },
 }

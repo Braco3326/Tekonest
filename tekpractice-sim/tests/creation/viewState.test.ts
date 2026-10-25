@@ -1,5 +1,44 @@
 import { describe, expect, it } from 'vitest'
-import { ViewState } from '../../src/creation/viewState'
+import { loadViewPrefs, saveViewPrefs, VIEW_PREFS_KEY, ViewState } from '../../src/creation/viewState'
+
+const memory = (init: Record<string, string> = {}) => {
+  const m = new Map(Object.entries(init))
+  return {
+    m,
+    getItem: (k: string) => m.get(k) ?? null,
+    setItem: (k: string, v: string) => void m.set(k, v),
+  } as unknown as Storage & { m: Map<string, string> }
+}
+
+describe('view prefs (Task 19): the ear height survives a reload, never in the rig or the history', () => {
+  it('saves and loads the ear height under its own key', () => {
+    const s = memory()
+    saveViewPrefs(s, { earHeight: 1.7 })
+    expect(VIEW_PREFS_KEY).toBe('audio-sim/creation-view.v1')
+    expect(JSON.parse(s.m.get(VIEW_PREFS_KEY)!)).toEqual({ version: 1, earHeight: 1.7 })
+    expect(loadViewPrefs(s)).toEqual({ earHeight: 1.7 })
+  })
+  it('defaults (seated 1.2 m) when absent, unreadable, of another version or out of range', () => {
+    expect(loadViewPrefs(null)).toEqual({})
+    expect(loadViewPrefs(memory())).toEqual({})
+    expect(loadViewPrefs(memory({ [VIEW_PREFS_KEY]: '{oops' }))).toEqual({})
+    expect(loadViewPrefs(memory({ [VIEW_PREFS_KEY]: '{"version":2,"earHeight":1.7}' }))).toEqual({})
+    expect(loadViewPrefs(memory({ [VIEW_PREFS_KEY]: '{"version":1,"earHeight":3}' }))).toEqual({})
+  })
+  it('blocked storage never throws', () => {
+    const blocked = {
+      getItem: () => {
+        throw new Error('blocked')
+      },
+      setItem: () => {
+        throw new Error('blocked')
+      },
+    } as unknown as Storage
+    expect(loadViewPrefs(blocked)).toEqual({})
+    expect(() => saveViewPrefs(blocked, { earHeight: 1.2 })).not.toThrow()
+    expect(() => saveViewPrefs(null, { earHeight: 1.2 })).not.toThrow()
+  })
+})
 
 describe('ViewState (never undoable)', () => {
   it('has the defaults: nothing selected, panels open, seated ear height', () => {

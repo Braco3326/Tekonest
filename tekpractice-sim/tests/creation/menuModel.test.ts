@@ -139,11 +139,11 @@ describe('menu model (Task 7)', () => {
       ])
     })
     it('Vue lists Vues · Cadrer la sélection · Vue d’ensemble · Choisir une vue… then the panels, with live shortcuts', () => {
-      const labels: Record<string, string> = { 'frame-selection': 'F', 'camera-home': 'Alt+H', 'view-picker': 'V' }
+      const labels: Record<string, string> = { 'frame-selection': 'F', 'camera-home': 'Alt+H', 'view-picker': 'V', walk: 'Maj+V' }
       const items = vue(ctx({ bindingLabel: (a) => labels[a] })).items
-      expect(items.map((i) => i.id)).toEqual(['views', 'frame-selection', 'camera-home', 'view-picker', 'panel-tree', 'panel-props'])
-      expect(items.map((i) => i.label)).toEqual(['Vues', 'Cadrer la sélection', 'Vue d’ensemble', 'Choisir une vue…', 'Panneau Projet', 'Panneau Propriétés'])
-      expect(items.map((i) => i.shortcut)).toEqual([undefined, 'F', 'Alt+H', 'V', undefined, undefined])
+      expect(items.map((i) => i.id)).toEqual(['views', 'frame-selection', 'camera-home', 'view-picker', 'walk', 'panel-tree', 'panel-props'])
+      expect(items.map((i) => i.label)).toEqual(['Vues', 'Cadrer la sélection', 'Vue d’ensemble', 'Choisir une vue…', 'Marcher', 'Panneau Projet', 'Panneau Propriétés'])
+      expect(items.map((i) => i.shortcut)).toEqual([undefined, 'F', 'Alt+H', 'V', 'Maj+V', undefined, undefined])
     })
     it('a view item runs its view:<id> action; views are disabled while the view is locked (place picker open)', () => {
       const ran: string[] = []
@@ -172,8 +172,59 @@ describe('menu model (Task 7)', () => {
       expect(items.find((i) => i.id === 'view-picker')!.returnFocus).toBeUndefined()
       expect(items.find((i) => i.id === 'panel-tree')!.returnFocus).toBeUndefined()
     })
-    it('no « Marcher » item until the walk action exists (Task 19)', () => {
-      expect(vue(ctx()).items.some((i) => i.id === 'walk')).toBe(false)
+    it('« Marcher » (Maj+V, Task 19): a checkbox item following the walk view, focus to the 3D view, off while the view is locked', () => {
+      let walking = false
+      let locked = false
+      let ran = 0
+      const c = ctx({
+        actions: { walk: () => void ran++, 'view-picker': () => {} },
+        bindingLabel: (a) => ({ walk: 'Maj+V' })[a],
+        walking: () => walking,
+        viewLocked: () => locked,
+      })
+      const items = vue(c).items
+      const walk = items.find((i) => i.id === 'walk')!
+      expect(walk.label).toBe('Marcher')
+      expect(walk.shortcut).toBe('Maj+V')
+      expect(walk.returnFocus).toBe(false)
+      expect(walk.kind).toBe('checkbox')
+      expect(walk.checked!()).toBe(false)
+      expect(walk.enabled()).toBe(true)
+      walk.run()
+      expect(ran).toBe(1)
+      walking = true
+      expect(walk.checked!()).toBe(true)
+      // the V picker is off while walking (views and Vue d'ensemble go back to Orbit first: their actions)
+      expect(items.find((i) => i.id === 'view-picker')!.enabled()).toBe(false)
+      locked = true
+      expect(walk.enabled()).toBe(false)
+      walk.run()
+      expect(ran).toBe(1)
+    })
+  })
+
+  describe('Écoute › Hauteur d’oreille (Task 19, S6)', () => {
+    const ecoute = (c: MenuContext) => buildMenus(c).find((m) => m.id === 'ecoute')!
+    it('two radio items, assis 1,2 m and debout 1,7 m, checked from the view state', () => {
+      let ear: 1.2 | 1.7 = 1.2
+      const ran: string[] = []
+      const c = ctx({
+        actions: { 'ear-seated': () => void ran.push('seated'), 'ear-standing': () => void ran.push('standing') },
+        earHeight: () => ear,
+      })
+      const items = ecoute(c).items
+      const seated = items.find((i) => i.id === 'ear-seated')!
+      const standing = items.find((i) => i.id === 'ear-standing')!
+      expect(seated.label).toBe('Hauteur d’oreille : assis 1,2 m')
+      expect(standing.label).toBe('Hauteur d’oreille : debout 1,7 m')
+      expect(seated.kind).toBe('radio')
+      expect(standing.kind).toBe('radio')
+      expect([seated.checked!(), standing.checked!()]).toEqual([true, false])
+      ear = 1.7
+      expect([seated.checked!(), standing.checked!()]).toEqual([false, true])
+      standing.run()
+      seated.run()
+      expect(ran).toEqual(['standing', 'seated'])
     })
   })
 

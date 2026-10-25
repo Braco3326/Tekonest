@@ -421,7 +421,7 @@ Le cube de vue (Task 17, C11) en haut à gauche de la vue 3D : libellés peints 
 
 ## views
 
-Les vues nommées (Task 18, C11, CA-05) : le sous-menu Vue › Vues (26 vues groupées Faces / Arêtes / Coins) et le sélecteur `V` (grille 8 × 3 + les deux pôles). Les 26 noms de vue viennent de `zoneLabel` (`src/camera/cubeZones.ts`, ex. « Dessus · Face · Droite ») ; ce sont aussi les noms du survol du cube. « Marcher » (Maj+V) arrive avec Task 19.
+Les vues nommées (Task 18, C11, CA-05) : le sous-menu Vue › Vues (26 vues groupées Faces / Arêtes / Coins) et le sélecteur `V` (grille 8 × 3 + les deux pôles). Les 26 noms de vue viennent de `zoneLabel` (`src/camera/cubeZones.ts`, ex. « Dessus · Face · Droite ») ; ce sont aussi les noms du survol du cube. « Marcher » (Maj+V) : voir `walk`.
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
@@ -437,6 +437,19 @@ Les vues nommées (Task 18, C11, CA-05) : le sous-menu Vue › Vues (26 vues gro
 | `views.cancel` | Annuler | à valider (tekuxwriter) | Bouton du sélecteur (même effet qu'Échap) |
 | `views.current` | Vue actuelle : {view}. | à valider (tekuxwriter) | Début de la description du sélecteur ; {view} = la vue la plus proche de la caméra (le focus part de sa case, marquée `aria-current`) |
 | `views.status` | Vue : {view} | à valider (tekuxwriter) | Barre d'état après le choix d'une vue (annoncé) ; {view} = nom de la vue |
+
+## walk
+
+Marcher dans le lieu (Task 19, C11, S6) : Vue › Marcher (Maj+V, la vue 3D a le focus) et la hauteur d'oreille dans Écoute (assis 1,2 m par défaut, debout 1,7 m ; réglage de vue, gardé d'une visite à l'autre, jamais annulable). Échap ou Maj+V reviennent à l'orbite. WASD désigne les touches par position : ZQSD sur un clavier AZERTY.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `walk.menu` | Marcher | à valider (tekuxwriter) | Vue ; case à cocher ; raccourci Maj+V (vue 3D) |
+| `walk.earSeated` | Hauteur d’oreille : assis 1,2 m | à valider (tekuxwriter) | Écoute ; bouton radio (défaut) ; aussi annoncé dans la barre d'état |
+| `walk.earStanding` | Hauteur d’oreille : debout 1,7 m | à valider (tekuxwriter) | Écoute ; bouton radio ; aussi annoncé dans la barre d'état |
+| `walk.statusOn` | Marche : flèches ou WASD pour avancer et tourner, {walk} ou Échap pour revenir à l’orbite. | à valider (tekuxwriter) | Barre d'état à l'entrée en marche (annoncé) ; {walk} = « Maj+V » |
+| `walk.statusOff` | Retour à l’orbite | à valider (tekuxwriter) | Barre d'état à la sortie de la marche (annoncé) |
+| `walk.canvas` | Vue 3D en marche : flèches = avancer et tourner, glisser = regarder, {walk} ou Échap = revenir à l’orbite | à valider (tekuxwriter) | `aria-label` du canvas pendant la marche (remplace `shell.canvas`) |
 
 ## Glossaire
 
