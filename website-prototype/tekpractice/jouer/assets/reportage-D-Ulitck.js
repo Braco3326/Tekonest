@@ -1,0 +1,1 @@
+const o="reportage",a="Reportage extérieur (ENG)",r={clearColor:"#F5F5F4",floorColor:"#FCFBFA",floorSize:[10,8]},e={alpha:-1.5708,beta:.82,radius:6,target:[0,.4,.2]},t={id:o,name:a,backdrop:r,camera:e};export{r as backdrop,e as camera,t as default,o as id,a as name};

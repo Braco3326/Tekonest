@@ -1,0 +1,1 @@
+const a="blanc",o="Studio blanc",c={clearColor:"#F5F6F8",floorColor:"#FCFCFD",floorSize:[24,14]},r={alpha:-1.5708,beta:.8727,radius:8.5,target:[0,.4,.4]},n={id:a,name:o,backdrop:c,camera:r};export{c as backdrop,r as camera,n as default,a as id,o as name};

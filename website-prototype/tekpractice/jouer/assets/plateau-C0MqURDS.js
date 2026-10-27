@@ -1,0 +1,1 @@
+const a="plateau",e="Plateau / scene live",o={clearColor:"#F5F6F8",floorColor:"#FCFCFD",floorSize:[24,14]},t={alpha:-1.5708,beta:.8727,radius:8.5,target:[0,.4,.4]},l={glb:"live-stage.glb",position:[0,-1.05,2.5]},s={id:a,name:e,backdrop:o,camera:t,set:l};export{o as backdrop,t as camera,s as default,a as id,e as name,l as set};

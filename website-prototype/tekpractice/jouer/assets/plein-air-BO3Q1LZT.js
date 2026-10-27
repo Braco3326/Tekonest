@@ -1,0 +1,1 @@
+const a="plein-air",o="Plein-air / concert",r={clearColor:"#F2F5F8",floorColor:"#F9FBFC",floorSize:[30,20]},e={alpha:-1.5708,beta:.9,radius:12,target:[0,.5,.8]},c={id:a,name:o,backdrop:r,camera:e};export{r as backdrop,e as camera,c as default,a as id,o as name};

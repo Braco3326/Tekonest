@@ -1,0 +1,1 @@
+const t="theatre",a="Théâtre",e={clearColor:"#F6F4F2",floorColor:"#FBF9F6",floorSize:[20,16]},o={alpha:-1.5708,beta:.85,radius:10,target:[0,.5,.6]},r={glb:"theatre-stage.glb"},s={id:t,name:a,backdrop:e,camera:o,set:r};export{e as backdrop,o as camera,s as default,t as id,a as name,r as set};

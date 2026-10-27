@@ -1,0 +1,1 @@
+const o="radio",a="Studio radio (self-op)",r={clearColor:"#F6F5F3",floorColor:"#FDFCFA",floorSize:[16,10]},t={alpha:-1.5708,beta:.95,radius:4.2,target:[0,1,.6]},e={glb:"radio-booth.glb"},s={id:o,name:a,backdrop:r,camera:t,set:e};export{r as backdrop,t as camera,s as default,o as id,a as name,e as set};

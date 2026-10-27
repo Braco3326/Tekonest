@@ -1,0 +1,1 @@
+const o="studio",a="Studio son / post-production",t={clearColor:"#F4F5F8",floorColor:"#FBFCFD",floorSize:[18,12]},r={alpha:-1.5708,beta:.8727,radius:8,target:[0,.4,.4]},s={id:o,name:a,backdrop:t,camera:r};export{t as backdrop,r as camera,s as default,o as id,a as name};
