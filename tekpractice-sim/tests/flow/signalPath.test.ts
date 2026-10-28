@@ -268,6 +268,31 @@ describe('daisy chain through the passive loop-thru', () => {
   })
 })
 
+describe('a cable loop through two passive thrus terminates', () => {
+  // The store allows one cable per port, and every input of the loop (k12-g, k12-d in-line-a) already has its own feed, so the
+  // loop cannot be wired through intents: the DesignState is built by hand (signalPath is pure and reads any DesignState).
+  it('ql1 -> k12-g -> (thru) k12-d -> (thru) back into k12-g in-line-a: bounded work, a sane result', () => {
+    const d = chain()
+    d.rig.connections.push({ a: ref('k12-d thru-out-a'), b: ref('k12-g in-line-a') }) // the loop; k12-g in-line-a now has two cables
+    // Bounded step counter: every walk step looks a cable up by iterating the connection list. A walk that does not stop (the `seen`
+    // guard removed) would loop for ever and hang the suite, so the list throws after a generous bound instead: the mutant FAILS.
+    let steps = 0
+    const LIMIT = 500
+    const watched = new Proxy(d.rig.connections, {
+      get(target, prop, receiver) {
+        if (prop === Symbol.iterator && ++steps > LIMIT) throw new Error(`signal walk exceeded ${LIMIT} cable lookups: no cycle guard`)
+        return Reflect.get(target, prop, receiver)
+      },
+    })
+    d.rig.connections = watched
+    const r = signalPath(d, registry, [])
+    expect(steps).toBeLessThan(LIMIT)
+    expect(steps).toBeGreaterThan(0) // the counter really sees the walk
+    expect(r.playbackReady).toBe(true)
+    expect(fed(r)).toEqual([['k12-d', ['L']], ['k12-g', ['L']]]) // each fed once, left only: nothing doubled by going round
+  })
+})
+
 describe('Micro OK is separate from playback', () => {
   it('SM58 into a powered QL1 mic input with no error event → micOk; unplugged → not', () => {
     expect(signalPath(rig(), registry, []).micOk).toBe(true)
@@ -484,7 +509,7 @@ describe('purity', () => {
     expect(signalPath(rig(), registry, [err('k12-g', 'in-line-a'), err('k12-d', 'in-line-a')]).reasons[0].text_fr).toBe(P.ruleError)
     expect(signalPath(rig({ unplug: 'sm58 out-xlr' }), registry, []).micReasons[0].text_fr).toBe(P.noMic)
   })
-  it('the draft reason texts are the brief\'s (tekuxwriter owns the final wording)', () => {
+  it('the current drafts of the reason texts (tekuxwriter owns the final wording)', () => {
     const P = COPY.playback!
     expect(P.noSource).toBe('Aucune source de lecture dans le projet.')
     expect(P.sourceOff).toBe('La lecture console est coupée.')
