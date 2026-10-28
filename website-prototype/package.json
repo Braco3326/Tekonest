@@ -9,5 +9,9 @@
     "build": "node tools/build.mjs",
     "test": "node --test",
     "verify:browser": "node tools/verify-browser.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1"
   }
 }
