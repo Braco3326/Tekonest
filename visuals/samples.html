@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Échantillons · marqueterie de Damas</title>
+<style>
+  html, body { margin: 0; background: #131114; }
+  canvas { width: 100vw; height: auto; aspect-ratio: 16 / 9; display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080" aria-label="Quatre échantillons de marqueterie de Damas, construits à partir d'une division du cercle."></canvas>
+<script src="lib/damas.js"></script>
+<script>
+/* Sample board: four samples built from construction logic, static, for review before any motion.
+   A. Lid: 12-fold medallion + mosaic rings + border (all on one circle division)
+   B. 8-fold khatam field on the 4.8.8 tiling
+   C. Border frieze, unrolled
+   D. Over-under interlace {12/5}, alternating at true crossings */
+(function () {
+  var D = window.Damas, C = D.C, cv = document.getElementById("c"), ctx = cv.getContext("2d");
+  function label(txt, x, y) { ctx.fillStyle = "#8c8186"; ctx.font = "15px system-ui, sans-serif"; ctx.fillText(txt, x, y); }
+  function draw() {
+    ctx.fillStyle = C.nuit; ctx.fillRect(0, 0, 1920, 1080);
+
+    // A. the lid, left
+    var lid = D.buildLid(20261028, 500, 540, 470, 1);
+    D.drawPieces(ctx, lid.pieces);
+    ctx.fillStyle = C.nuit; ctx.beginPath(); ctx.arc(lid.cx, lid.cy, lid.hole, 0, 2 * Math.PI); ctx.fill();   // the open centre, where the logo is placed
+    label("A · Couvercle : médaillon à 12 branches, champ, bordure (n = 12, 24, 48)", 40, 1060);
+
+    // B. the khatam field, top right
+    ctx.save(); ctx.beginPath(); ctx.rect(1000, 20, 900, 330); ctx.clip();
+    D.drawPieces(ctx, D.buildKhatam(7, 1010, 40, 5, 4, 62, 1).pieces);
+    ctx.restore();
+    label("B · Champ khatam à 8 branches (pavage 4.8.8)", 1000, 372);
+
+    // C. the frieze, unrolled, middle right
+    var reg = D.Registry(11, 1.2), fy0 = 410, fy1 = 480, n = 18, cw = 50;
+    for (var j = 0; j < n; j++) {
+      var x0 = 1000 + j * cw, x1 = x0 + cw;
+      var a = reg.v("a" + j, x0, fy0), b = reg.v("a" + (j + 1), x1, fy0), c = reg.v("b" + (j + 1), x1, fy1), d = reg.v("b" + j, x0, fy1);
+      var cl = D.cell(a, b, c, d);
+      D.drawPiece(ctx, { pts: cl.diamond, role: j % 2 ? "prune" : "nacre", tone: D.r01(3, "d" + j, "t") });
+      cl.corners.forEach(function (p, q) { D.drawPiece(ctx, { pts: p, role: (j + q) % 2 ? "ebony" : "walnut", tone: D.r01(3, "c" + j + q, "t") }); });
+    }
+    label("C · Bordure : cellules « tranche de baguette » (losange + 4 triangles)", 1000, 505);
+
+    // D. interlace, bottom right
+    var L = D.interlace(1450, 800, 222, 12, 5, 9, ["#F3EDE3", "#8A4466"]);
+    ctx.fillStyle = C.ebony; ctx.beginPath(); ctx.arc(1450, 800, 240, 0, 2 * Math.PI); ctx.fill();
+    ctx.strokeStyle = C.noyer; ctx.lineWidth = 3; ctx.stroke();
+    D.drawInterlace(ctx, L);
+    label("D · Entrelacs {12/5} : dessus-dessous aux vrais croisements", 1000, 1060);
+  }
+  window.drawBoard = draw;
+  draw();
+})();
+</script>
+</body>
+</html>
