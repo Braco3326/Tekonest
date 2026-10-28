@@ -130,6 +130,19 @@ describe('CableRenderer style', () => {
     expect(c.paths().map(([id]) => id)).toEqual(['c1'])
   })
 
+  it('revision is never reused: two renderers that drew the same cables never share one (a cache key survives a reload)', () => {
+    const one = new CableRenderer(scene, new CableBudget(), { pulses: false })
+    one.addCable('c1', p(0), p(2), [A, B])
+    const two = new CableRenderer(scene, new CableBudget(), { pulses: false })
+    two.addCable('c1', p(0), p(2), [A, B])
+    expect(two.revision).not.toBe(one.revision)
+    const before = two.revision
+    two.removeCable('c1')
+    expect(two.revision).toBeGreaterThan(before)
+    one.dispose()
+    two.dispose()
+  })
+
   it('dispose releases the coloured and highlight materials and the meshes', () => {
     const before = scene.materials.length
     const c = new CableRenderer(scene, new CableBudget(), { pulses: false, colorFor: () => Color3.Red(), dashFor: () => true })

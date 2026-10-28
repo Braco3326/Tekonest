@@ -846,6 +846,7 @@ export class SceneHost {
     this.cableStroke = null // its mesh went with the scene
     this.proxies = null // its observer and materials went with `controllers`
     this.cables = null
+    this.screenCache = null // projected from the old scene's cables and camera
     this.bag = null
     this.controllers = null
     this.applied = null

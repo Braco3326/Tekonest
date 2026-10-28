@@ -607,6 +607,26 @@ describe('SceneHost cables (Task 27, C18): coloured by signal, hover, screen-spa
     host.dispose()
   })
 
+  it('a reload of the same place with a device moved (same camera pose, same canvas) answers from the NEW cable, never from the old scene cache', async () => {
+    withRect()
+    const { host } = makeHost()
+    await host.load(placeFromKey(ROOM), rig(ROOM))
+    const mid = (): { x: number; y: number } => {
+      const pts = host.cableSamples(KEY)!
+      return pts[Math.floor(pts.length / 2)]!
+    }
+    const old = mid()
+    expect(host.cableAtPoint(old.x, old.y)).toBe(KEY) // the cache is filled by the old scene's polylines
+    const moved = rig(ROOM)
+    moved.placements[1] = { instanceId: 'k12-g', deviceId: 'qsc-k12-2', position_m: [-6, 0, -1], yawDeg: 0 }
+    await host.load(placeFromKey(ROOM), moved) // a new scene: new camera at the same default pose, a new renderer
+    const fresh = mid()
+    expect(Math.hypot(fresh.x - old.x, fresh.y - old.y)).toBeGreaterThan(30) // the cable really is elsewhere now
+    expect(host.cableAtPoint(fresh.x, fresh.y)).toBe(KEY)
+    expect(host.cableAtPoint(old.x, old.y)).toBeNull() // not the old polyline
+    host.dispose()
+  })
+
   it('cableAtPoint with no cable on the scene does no projection at all', async () => {
     withRect()
     const { host } = makeHost()

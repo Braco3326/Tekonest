@@ -32,6 +32,9 @@ export interface CableOptions {
   dashFor?: (a: PortRef, b: PortRef) => boolean
 }
 
+/** One counter for every renderer: a revision is never reused, so two renderers (a place reload) can never share a cache key. */
+let revisionSeq = 0
+
 interface Drawn {
   mesh: Mesh
   path: P3[]
@@ -46,7 +49,7 @@ export class CableRenderer {
   private colored = new Map<string, StandardMaterial>()
   private hot = new Map<string, StandardMaterial>()
   private _highlighted: string | null = null
-  private _revision = 0
+  private _revision = ++revisionSeq
   private drag: { mesh: Mesh; from: Vector3 } | null = null
   private mats!: Record<DragTint | 'committed', StandardMaterial>
 
@@ -126,7 +129,7 @@ export class CableRenderer {
    */
   addCable(connectionId: string, a: Vector3, b: Vector3, ends?: readonly [PortRef, PortRef]): void {
     const wasHot = this._highlighted === connectionId
-    this._revision++
+    this._revision = ++revisionSeq
     this.removeCable(connectionId)
     const segments = this.budget.grant(connectionId) // straight line once over budget
     const path = catenaryPoints(a, b, segments)
@@ -207,7 +210,7 @@ export class CableRenderer {
     const drawn = this.committed.get(connectionId)
     if (!drawn) return
     drawn.mesh.dispose()
-    this._revision++
+    this._revision = ++revisionSeq
     this.committed.delete(connectionId)
     if (this._highlighted === connectionId) this._highlighted = null
     this.budget.release(connectionId)
