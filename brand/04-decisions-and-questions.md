@@ -16,6 +16,7 @@
 | D-06 | [Rebels × Tekonest] For the structure, the priority is low-to-medium risk and low cost | 20 Oct 2026 | EV-86 |
 | D-07 | Oscar is the person developing Tekonest (another person named in some July files is someone else) | 21 Oct 2026 | FB-11 |
 | D-08 | **Tekonest is a Paris umbrella for the craft of sound and live production**, with three entrances: *Se former* (BTS Son platform and TekPractice), *Créer avec nous* (organise, accompany and create projects with a creative/technical team), *Rejoindre le réseau* (technicians and artists, fairly paid). The cultural-mix idea (Arab, Afro and electronic nights, Rebels Collectif parties, tickets, deck, legal guide, night financial model) is **not** Tekonest's identity. It belongs only to the separate project [Rebels × Tekonest](../projects/rebels-x-tekonest/README.md) | 24 Oct 2026 | FB-12 |
+| D-09 | The artist and technician network is set aside and leaves the public site (it was built for the Rebels pilot). **Créer avec nous** becomes a client-facing creative and technical service: création sonore, prise de son, live, direction artistique, mixage et mastering. Legal questions are discussed after the structure is settled | 28 Oct 2026 | Founder, chat |
 
 **Founder-reported status (not a decision, no written agreement)**
 

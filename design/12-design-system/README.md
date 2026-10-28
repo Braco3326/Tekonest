@@ -1,6 +1,6 @@
 # Tekonest
 
-Un nid pour les métiers du son. Tekonest est une marque parisienne qui réunit trois entrées : se former (Apprendre, TekPractice), créer avec nous (organiser, accompagner et produire des projets) et rejoindre le réseau (artistes et techniciens payés correctement).
+Un nid pour les métiers du son. Tekonest est une marque parisienne qui réunit deux entrées : se former (Apprendre, TekPractice) et créer avec nous (une expérience au service de votre projet).
 
 **Nom** : toujours **TEKONEST** en capitales dans le logo et les titres de marque ; « Tekonest » dans une phrase. Jamais Techonest, Technest ou Thechnest.
 
@@ -28,7 +28,7 @@ Un nid pour les métiers du son. Tekonest est une marque parisienne qui réunit 
 
 ## Le logo — le nid tressé (L4)
 
-Sept ellipses (rx 100, ry 82 sur une grille de 260) tournées de 360/7 et décalées de 8 unités : sept fils, sept personnes du réseau. Fichiers dans le groupe **Logos** :
+Sept ellipses (rx 100, ry 82 sur une grille de 260) tournées de 360/7 et décalées de 8 unités : sept fils, sept métiers. Fichiers dans le groupe **Logos** :
 - `TEKONEST-lockup` (nid au-dessus, nom dessous) — logo principal ; `-reverse` sur Nuit ; `-amber-on-night` pour affiches et supports sombres.
 - `TEKONEST-horizontal` — en-tête de site.
 - `tekonest-mark` — le nid seul (avatar) ; `tekonest-favicon` traits épaissis pour 16–32 px.

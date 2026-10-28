@@ -1,5 +1,7 @@
 # Phase 4 — Site map and page outlines
 
+> Revised 28 Oct 2026: two doors (*Se former*, *Créer avec nous*); the network is set aside and `reseau.html` is removed; `organiser.html` became `creer.html`. The sections below describing three doors, the Réseau page or the Organiser page are historical.
+
 > Revised 24 Oct 2026: the Soirées page was removed from the site (it belongs to the separate project [Rebels × Tekonest](../projects/rebels-x-tekonest/README.md)); the home page no longer has a « Notre direction » section.
 
 > Agents: **tekuxwriter** (copy) and **tekfrontenddesigner** (structure). Implemented in [`website-prototype/`](../website-prototype/).
@@ -7,8 +9,7 @@
 
 ```
 Accueil (index.html)
-├── Réseau (reseau.html)              — artistes / technique · cable vert · « Réseau en projet »
-├── Organiser (organiser.html)        — organisateurs · cable violet · « Offre en projet, pas encore proposée »
+├── Créer avec nous (creer.html)      — porteuses et porteurs de projet · quatre familles : création sonore, prise de son, live, direction artistique/mixage/mastering · « Offre en projet »
 ├── Apprendre (apprendre.html)        — étudiants BTS Son · cable ambre · « En développement »
 ├── TekPractice (tekpractice.html)    — étudiants BTS Son · cable bleu · « En développement »
 ├── L'histoire (histoire.html)        — tout le monde
