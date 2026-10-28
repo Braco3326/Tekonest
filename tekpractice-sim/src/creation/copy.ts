@@ -360,6 +360,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     errorsMany: '{n} erreurs',
     warningsOne: '1 avertissement',
     warningsMany: '{n} avertissements',
+    /** Next to the signal label when the rig holds one Bêta (proposed) device: the rules ran on declared, unverified ports. */
+    unverifiedOne: '1 appareil non vérifié',
+    /** {n} ≥ 2. */
+    unverifiedMany: '{n} appareils non vérifiés',
     /** Next to the signal label while the last refused connection is listed. */
     refusedMark: 'connexion refusée',
     /** Announced before the new label when a change adds or clears an error (« Signal : 1 erreur »). */
@@ -509,6 +513,10 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     missingTitle: 'Appareils non rechargés',
     /** Note body; the device ids follow as a list. */
     missingBody: 'La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés.',
+    /** Note title when the Bêta sheets a saved project needs could not be fetched (network or timeout): the project is NOT opened and NOT touched. */
+    unavailableTitle: 'Projet non rouvert',
+    /** Note body, status line and place-picker line for the same case. */
+    unavailable: 'Fiches Bêta indisponibles (réseau). Rechargez la page pour retrouver votre projet.',
     /** Status bar while the Bêta sheets a saved project needs are fetched (reopening only). */
     loadingBeta: 'Chargement des fiches Bêta…',
     /** Status bar while the drawer module loads (first open). */

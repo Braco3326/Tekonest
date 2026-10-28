@@ -72,6 +72,22 @@ describe('statusView (Task 14, C17)', () => {
   })
 })
 
+describe('statusView: unverified devices (Task 30 fix 3)', () => {
+  it('no unverified device: no phrase (default and 0)', () => {
+    expect(statusView(base).extra).toBe('')
+    expect(statusView({ ...base, unverified: 0 }).extra).toBe('')
+  })
+  it('one / several unverified devices are said next to the signal, with plural handling', () => {
+    expect(statusView({ ...base, unverified: 1 }).extra).toBe('1 appareil non vérifié')
+    expect(statusView({ ...base, unverified: 3 }).extra).toBe('3 appareils non vérifiés')
+  })
+  it('joins the other extras, and never changes the signal (still neutral, never « Signal OK »)', () => {
+    const v = statusView({ ...base, unverified: 2, events: [ev('R5', 'warning')], playbackReady: false })
+    expect(v.extra).toBe('1 avertissement · 2 appareils non vérifiés')
+    expect(v.signal).toEqual({ kind: 'neutral', label: 'Aucune erreur détectée', count: 0 })
+  })
+})
+
 describe('ruleTextFor', () => {
   it('prefers the catalog French fields', () => {
     const t = ruleTextFor([{ id: 'R9', title: 'EN', teach: 'en', title_fr: 'FR', teach_fr: 'fr' }])

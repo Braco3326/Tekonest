@@ -58,7 +58,8 @@ import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
 import { bindingLabel, creationActionsFor, loadCreationBindings, type CreationAction } from './input/creationActions'
 import type { InventoryDrawer } from './shell/inventoryDrawer'
-import { isUnverified, parseProposals, proposalEntries, registerProposals, unknownDeviceIds } from './betaDevices'
+import type { BetaPrep } from './betaDevices'
+import { isUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, within, type BetaLoad } from './betaDevices'
 import type { DeviceT } from '../engine/CatalogLoader'
 import type { DesignState } from '../trials/trial'
 import { openPlaceDialog, openReplaceDialog } from './shell/placeDialog'
@@ -178,21 +179,27 @@ export async function bootCreation(): Promise<void> {
   // fetched when the inventory drawer first opens or when a reopened project holds a device the catalog does not know.
   // A proposal is registered (betaDevices.ts) only when it is chosen or reopened: the catalog list is never touched.
   let betaDevices: readonly DeviceT[] = []
-  let betaLoad: Promise<readonly DeviceT[]> | null = null
-  /** Never rejects: a source that cannot load leaves the Bêta tab hidden (said in the console), and a later call retries. */
-  const loadBeta = (): Promise<readonly DeviceT[]> =>
-    (betaLoad ??= import('./proposalsSource').then(
-      ({ default: raw }) => {
-        const parsed = parseProposals(raw, registry)
-        if (parsed.skipped.length) console.warn('[creation] Bêta sheets left out', parsed.skipped)
-        return (betaDevices = parsed.devices)
-      },
-      (e: unknown) => {
-        console.warn('[creation] Bêta sheets unavailable: the tab stays hidden', e)
+  let betaLoad: Promise<BetaLoad> | null = null
+  /** How long a fetch of the Bêta sheets may take before it counts as failed (5 s; `window.__creationBetaTimeoutMs` is a test-only seam). */
+  const betaTimeoutMs = (): number => {
+    const t = (window as unknown as { __creationBetaTimeoutMs?: unknown }).__creationBetaTimeoutMs
+    return typeof t === 'number' && t > 0 ? t : 5000
+  }
+  /**
+   * Never rejects. `failed` (offline, a rejected import, no answer within the delay) is told apart from a file that loaded
+   * and does not hold a sheet: a failure leaves the tab hidden and drops nothing, and a later call retries.
+   */
+  const loadBeta = (): Promise<BetaLoad> =>
+    (betaLoad ??= within(import('./proposalsSource'), betaTimeoutMs()).then((r): BetaLoad => {
+      if (!r.ok) {
+        console.warn('[creation] Bêta sheets unavailable: the tab stays hidden')
         betaLoad = null
-        return betaDevices
+        return { devices: betaDevices, failed: true }
       }
-    ))
+      const parsed = parseProposals(r.value.default, registry)
+      if (parsed.skipped.length) console.warn('[creation] Bêta sheets left out', parsed.skipped)
+      return { devices: (betaDevices = parsed.devices), failed: false }
+    }))
   /** Make these proposals placeable (a no-op for a catalog device or an unloaded id). */
   const registerBeta = (ids: readonly string[]): void => {
     registerProposals(
@@ -202,17 +209,36 @@ export async function bootCreation(): Promise<void> {
   }
   /**
    * Before a saved design opens: fetch the Bêta sheets it needs (only when it holds a device the catalog does not know)
-   * and register them. Returns the device ids that stay unknown (their sheet is gone): the store drops those, and the
-   * learner is told (`noteMissing`), never silently.
+   * and register them. `ready.missing` = ids whose sheet is genuinely gone from a loaded file: the store drops those and the
+   * learner is told (`noteMissing`). `unavailable` = the fetch failed: the design must NOT be applied (`holdForBeta`).
    */
-  const ensureBetaFor = async (design: DesignState): Promise<string[]> => {
-    const need = unknownDeviceIds(registry, design)
-    if (!need.length) return []
-    shell.setStatus('', COPY.inventory!.loadingBeta!, 'busy')
-    await loadBeta()
-    registerBeta(need)
+  const ensureBetaFor = async (design: DesignState): Promise<BetaPrep> => {
+    const needs = prepareBeta(registry, design, async () => {
+      shell.setStatus('', COPY.inventory!.loadingBeta!, 'busy')
+      return loadBeta()
+    })
+    const prep = await needs
     showStatus() // the loading line is over (the caller says what happened next)
-    return unknownDeviceIds(registry, design)
+    return prep
+  }
+  /** The stored autosave is held (not applied, not overwritten) because the Bêta sheets could not be fetched. */
+  let betaHold = false
+  /** The fetch failed: say so, honestly, everywhere the learner looks (note, status line; the picker line is set by the caller). */
+  /** The first change after a held reopen: set the stored project aside (recoverable by the export) so the autosave never loses it. */
+  const releaseBetaHold = (): void => {
+    betaHold = false
+    notes.dismiss('beta-unavailable')
+    const aside = setAsideAutosave(storage, 'beta-unavailable')
+    if (aside.kept === 'full' && aside.raw !== null) holdPending(AUTOSAVE_KEY, 'beta-unavailable', aside.raw, true)
+    else if (aside.kept === 'blocked') {
+      autosaveOn = false
+      storageBlocked = true
+    }
+  }
+  const noteBetaUnavailable = (): void => {
+    const I = COPY.inventory!
+    notes.show({ id: 'beta-unavailable', title: I.unavailableTitle!, body: I.unavailable! })
+    shell.setStatus('', I.unavailable!, 'ready', true)
   }
   const noteMissing = (ids: readonly string[]): void => {
     if (!ids.length) return
@@ -226,6 +252,8 @@ export async function bootCreation(): Promise<void> {
   let events = store.events()
   /** Cables in the rig at the last store change (0 → « Rien de branché »). */
   let connections = 0
+  /** Bêta (proposed) devices in the rig at the last store change: « Aucune erreur détectée » says so (Task 30). */
+  let unverified = 0
   /** The last refused connection: listed first until a valid connection, a new design, or its device leaves. */
   let lastRejection: Rejection | null = null
   const statusBar = mountStatusBar({
@@ -251,6 +279,7 @@ export async function bootCreation(): Promise<void> {
       lastRejection,
       ruleText,
       connections,
+      unverified,
       // playbackReady: false until the signal path feeds it (Task 34): « Signal OK » only for a playable chain (L5).
       // A Bêta device (isUnverified, betaDevices.ts) must never make a chain playable: that path stops at it. R1–R8 read its declared ports only.
       playbackReady: false,
@@ -360,7 +389,7 @@ export async function bootCreation(): Promise<void> {
     busy: () => history.inTransaction,
     snapshot: () => {
       const design = store.design()
-      if (!autosaveOn || design.roomId === null) return null // nothing worth keeping before a place
+      if (!autosaveOn || betaHold || design.roomId === null) return null // nothing worth keeping before a place; or the held project (betaHold)
       return {
         version: 1,
         savedAt: new Date().toISOString(),
@@ -588,6 +617,7 @@ export async function bootCreation(): Promise<void> {
   }
 
   store.subscribe((change) => {
+    if (betaHold) releaseBetaHold() // the learner started something else: the held project is set aside first, then the autosave may write
     host.apply(store.design())
     scheduler.invalidate()
     showStatus()
@@ -596,6 +626,7 @@ export async function bootCreation(): Promise<void> {
     events = store.events()
     const after = events.filter((e) => e.severity === 'error').length
     connections = store.design().rig.connections.length
+    unverified = store.design().rig.instances.filter((i) => isUnverified(registry, i.deviceId)).length
     if (lastRejection) {
       const present = new Set(deviceIds())
       const cleared = change.intents.some((i) => i.type === 'CONNECT' || i.type === 'APPLY_DESIGN')
@@ -777,7 +808,16 @@ export async function bootCreation(): Promise<void> {
     }
     if (loaded.status === 'empty' || loaded.data.design.roomId === null) return false
     // A Bêta device of the last session needs its sheet first (fetched only then); a sheet that is gone is reported below.
-    const missing = await ensureBetaFor(loaded.data.design)
+    const prep = await ensureBetaFor(loaded.data.design)
+    if (prep.kind === 'unavailable') {
+      // The fetch FAILED (not « the sheet is gone »): applying the design would drop the Bêta devices and the next autosave would
+      // overwrite the stored project. So nothing is applied, nothing is set aside, and the autosave holds until the learner starts something else.
+      betaHold = true
+      autosave.cancel()
+      noteBetaUnavailable()
+      return false
+    }
+    const missing = prep.missing
     const r = store.dispatch({ type: 'APPLY_DESIGN', design: loaded.data.design })
     // Reopening writes nothing (another tab with this project open must not hear a write).
     autosave.cancel()
@@ -810,7 +850,10 @@ export async function bootCreation(): Promise<void> {
   }
   refreshSignal()
   refreshAutosave()
-  if (!(await restore())) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
+  if (!(await restore())) {
+    picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
+    if (betaHold) picker.showError(COPY.inventory!.unavailable!) // the picker covers the notes: it says it too
+  }
   // While the picker covers the workspace, « Aller à la vue 3D » lands on its highlighted card.
   document
     .querySelector<HTMLAnchorElement>('[data-testid="skip-link"]')
@@ -992,7 +1035,13 @@ export async function bootCreation(): Promise<void> {
     const failed = (): void =>
       shell.setStatus(placeNow(), PJ.openFailed!.replace('{name}', name), 'ready', true)
     if (!design || design.roomId === null) return failed()
-    const missing = await ensureBetaFor(design)
+    const prep = await ensureBetaFor(design)
+    if (prep.kind === 'unavailable') {
+      // Nothing is opened and nothing changes: the stored project stays as it is (open it again once the network is back).
+      notes.show({ id: 'beta-unavailable', title: COPY.inventory!.unavailableTitle!, body: COPY.inventory!.unavailable! })
+      return shell.setStatus(placeNow(), COPY.inventory!.unavailable!, 'ready', true)
+    }
+    const missing = prep.missing
     const first = store.design().roomId === null
     // anything the store drops shows as « * » (the fingerprint is the stored design's)
     const after: ProjectState = {

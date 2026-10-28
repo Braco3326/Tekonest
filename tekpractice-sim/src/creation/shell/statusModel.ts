@@ -58,6 +58,8 @@ export function statusView(input: {
   playbackReady?: boolean
   /** Cables in the rig (0 → « Rien de branché »). Default 0. */
   connections?: number
+  /** Devices in the rig that are Bêta proposals (Task 30): « no error » is weaker evidence with them, and it says so. Default 0. */
+  unverified?: number
 }): StatusView {
   const errors = input.events.filter((e) => e.severity === 'error')
   const warnings = input.events.filter((e) => e.severity !== 'error')
@@ -79,6 +81,7 @@ export function statusView(input: {
   const extra = [
     input.lastRejection ? S().refusedMark! : '',
     warnings.length === 0 ? '' : warnings.length === 1 ? S().warningsOne! : fill(S().warningsMany!, 'n', String(warnings.length)),
+    (input.unverified ?? 0) <= 0 ? '' : input.unverified === 1 ? S().unverifiedOne! : fill(S().unverifiedMany!, 'n', String(input.unverified)),
   ].filter(Boolean)
   return {
     selection: input.selectionLabel === null ? S().selectionNone! : fill(S().selection!, 'device', input.selectionLabel),

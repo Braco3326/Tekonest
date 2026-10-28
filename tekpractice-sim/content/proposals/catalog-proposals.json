@@ -1,6 +1,6 @@
 {
  "generated": "2026-10-22",
- "status": "proposal — needs Oscar's review; catalog.json is the source of truth and is NOT modified",
+ "status": "proposal — needs Oscar's review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified",
  "devices": [
   {
    "id": "crown-xls-2502",

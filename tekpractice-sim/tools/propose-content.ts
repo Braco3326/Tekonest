@@ -96,7 +96,7 @@ mkdirSync(join(ROOT, 'content', 'proposals'), { recursive: true })
 writeFileSync(
   join(ROOT, 'content', 'proposals', 'catalog-proposals.json'),
   JSON.stringify(
-    { generated: today, status: "proposal — needs Oscar's review; catalog.json is the source of truth and is NOT modified", devices: proposals, skipped },
+    { generated: today, status: "proposal — needs Oscar's review; shown in the TekPractice Bêta tab badged « non vérifié » (approximate behaviour), never as verified gear; catalog.json is the source of truth and is NOT modified", devices: proposals, skipped },
     null,
     1,
   ) + '\n',

@@ -1,6 +1,8 @@
-# Propositions pour Oscar (ne sont PAS en jeu)
+# Propositions pour Oscar
 
-Générées par `npx tsx tools/propose-content.ts` à partir de la base de connaissances (`knowledge-base/`). Rien ici ne modifie `content/catalog.json` ni la liste des niveaux jouables : c'est à toi de relire puis de copier ce que tu veux garder.
+Générées par `npx tsx tools/propose-content.ts` à partir de la base de connaissances (`knowledge-base/`). Rien ici ne modifie `content/catalog.json` (le seul catalogue vérifié) ni la liste des niveaux jouables : c'est à toi de relire puis de copier ce que tu veux garder.
+
+**Les appareils de `catalog-proposals.json` alimentent l'onglet « Bêta » du Mode Création** (Task 30) : ils y sont proposés tels quels, avec la pastille « non vérifié » et le comportement approximatif (seuls les ports déclarés ci-dessous existent ; aucune fiche n'a été relue avant d'être exposée, seulement marquée). Ils ne sont **pas** dans le catalogue vérifié et n'entrent dans aucun niveau. Les brouillons de niveaux, eux, ne sont pas en jeu.
 
 | Fichier | Contenu |
 |---|---|

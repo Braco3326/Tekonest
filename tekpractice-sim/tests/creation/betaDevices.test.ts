@@ -4,12 +4,12 @@
  * the fixtures only exercise the failure paths (a bad entry, a repeated id), they invent no gear.
  */
 import { readFileSync } from 'node:fs'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { makeRegistry } from '../helpers'
 import { COPY } from '../../src/creation/copy'
 import { inventory } from '../../src/creation/inventory'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
-import { isUnverified, parseProposals, proposalEntries, registerProposals, unknownDeviceIds } from '../../src/creation/betaDevices'
+import { isUnverified, parseProposals, prepareBeta, proposalEntries, registerProposals, unknownDeviceIds, within } from '../../src/creation/betaDevices'
 import { buildTree } from '../../src/creation/shell/treeModel'
 import { propsView } from '../../src/creation/shell/propertiesModel'
 
@@ -252,5 +252,67 @@ describe('copy', () => {
   it('the tooltip is the sentence the brief gives', () => {
     expect(COPY.inventory!.tipUnverified).toBe('Fiche proposée, pas encore vérifiée : comportement approximatif.')
     expect(COPY.inventory!.badgeUnverified).toBe('non vérifié')
+  })
+})
+
+describe('prepareBeta: a failed fetch is not an absent sheet (Task 30 fix 1)', () => {
+  const design = (...deviceIds: string[]) => ({
+    rig: { instances: deviceIds.map((deviceId, i) => ({ instanceId: "i-" + i, deviceId })), connections: [], controls: {} },
+  })
+  const loaded = (reg: ReturnType<typeof makeRegistry>) => ({ devices: parseProposals(file, reg).devices, failed: false })
+  it('nothing unknown: the loader is not called (no fetch for a catalogue-only design)', async () => {
+    const reg = makeRegistry()
+    const load = vi.fn(async () => ({ devices: [], failed: false }))
+    expect(await prepareBeta(reg, design('yamaha-ql1'), load)).toEqual({ kind: 'ready', missing: [] })
+    expect(load).not.toHaveBeenCalled()
+  })
+  it('sheet present in a successfully loaded file: registered, nothing missing', async () => {
+    const reg = makeRegistry()
+    expect(await prepareBeta(reg, design('crown-xls-2502', 'yamaha-ql1'), async () => loaded(reg))).toEqual({ kind: 'ready', missing: [] })
+    expect(isUnverified(reg, 'crown-xls-2502')).toBe(true)
+  })
+  it('sheet genuinely absent from a successfully loaded file: ready, with the id missing', async () => {
+    const reg = makeRegistry()
+    const r = await prepareBeta(reg, design('crown-xls-2502', 'gone-device'), async () => loaded(reg))
+    expect(r).toEqual({ kind: 'ready', missing: ['gone-device'] })
+  })
+  it('a failed load is « unavailable », never « missing »: nothing is registered, every unknown id is reported', async () => {
+    const reg = makeRegistry()
+    // even when the failed loader still holds a stale list, a failure registers nothing
+    const r = await prepareBeta(reg, design('crown-xls-2502', 'yamaha-ql1'), async () => ({ devices: parseProposals(file, reg).devices, failed: true }))
+    expect(r).toEqual({ kind: 'unavailable', ids: ['crown-xls-2502'] })
+    expect(isUnverified(reg, 'crown-xls-2502')).toBe(false)
+    expect(reg.deviceById.has('crown-xls-2502')).toBe(false)
+  })
+})
+
+describe('within: a fetch that never settles is a failure after the delay (Task 30 fix 2)', () => {
+  it('resolves with the value when the promise settles first, and leaves no timer behind', async () => {
+    vi.useFakeTimers()
+    try {
+      const r = await within(Promise.resolve(7), 5000)
+      expect(r).toEqual({ ok: true, value: 7 })
+      expect(vi.getTimerCount()).toBe(0)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+  it('resolves { ok: false } when the delay passes first', async () => {
+    vi.useFakeTimers()
+    try {
+      const r = within(new Promise<number>(() => {}), 5000)
+      await vi.advanceTimersByTimeAsync(4999)
+      let done = false
+      void r.then(() => (done = true))
+      await vi.advanceTimersByTimeAsync(0)
+      expect(done).toBe(false)
+      await vi.advanceTimersByTimeAsync(1)
+      expect(await r).toEqual({ ok: false })
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+  it('a rejection is a failure too, not an exception', async () => {
+    expect(await within(Promise.reject(new Error('offline')), 5000)).toEqual({ ok: false })
   })
 })

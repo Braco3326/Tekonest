@@ -218,6 +218,8 @@ test('a Bêta device is patched by its declared connector and signal (R1), and n
   expect(bad.ok).toBe(false) // XLR male out into the declared RCA input: refused like any connector mismatch
   expect((await design(page)).rig.connections).toHaveLength(1)
   await expect(page.getByTestId('status-bar')).not.toContainText('Signal OK')
+  // the absence of errors is weaker evidence with a proposal in the rig: the status line says so
+  await expect(page.getByTestId('signal-extra')).toContainText('1 appareil non vérifié')
 })
 
 test('a Bêta device is duplicated, deleted and restored like any other (one undo entry each)', async ({ page }) => {
@@ -314,4 +316,73 @@ test('accessibility: no axe violation on the Bêta tab, with a Bêta device sele
   const tree = await new AxeBuilder({ page }).include('[role="tree"]').analyze()
   expect(tree.violations.map((v) => v.id)).toEqual([])
   if (process.env.BETA_SCREENS === 'commit') await page.screenshot({ path: 'docs/creative/screens/task-30-beta-placed-1366.png' })
+})
+
+const AUTOSAVE_KEY = 'audio-sim/creation.v1'
+const stored = (page: Page) => page.evaluate((k) => localStorage.getItem(k), AUTOSAVE_KEY)
+const UNAVAILABLE = 'Fiches Bêta indisponibles (réseau). Rechargez la page pour retrouver votre projet.'
+
+/** A saved session with a catalogue device and a Bêta one; returns the stored autosave (bytes). */
+const saveSession = async (page: Page): Promise<string> => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] }))
+  await placeBeta(page, AMP.id)
+  await page.waitForTimeout(1200) // the autosave
+  const raw = await stored(page)
+  expect(raw).toContain(AMP.id)
+  return raw!
+}
+
+test('reload while the proposals chunk cannot be fetched: nothing is lost, nothing is overwritten, the note says it is the network; the next reload brings the device back', async ({ page }) => {
+  const raw = await saveSession(page)
+  await page.route('**/proposalsSource*', (r) => r.abort())
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  // the honest note (not « n’existe plus »), also in the picker the learner is looking at
+  await expect(page.getByTestId('note-missing-sheets')).toHaveCount(0)
+  const note = page.getByTestId('note-beta-unavailable')
+  await expect(note).toBeVisible()
+  await expect(note).toContainText(UNAVAILABLE)
+  await expect(page.getByTestId('place-picker')).toContainText(UNAVAILABLE)
+  // no half-loaded rig, no generic « sauvegarde incompatible » note, nothing set aside
+  expect((await design(page)).rig.instances).toEqual([])
+  await expect(page.getByTestId('note-storage')).toHaveCount(0)
+  expect(await page.evaluate(() => window.__creation!.quarantine())).toEqual([])
+  // the stored project is byte-identical, also after the autosave delay and a page hide
+  await page.waitForTimeout(1500)
+  await page.evaluate(() => window.dispatchEvent(new Event('beforeunload')))
+  expect(await stored(page)).toBe(raw)
+  // a reload WITHOUT the failure: the project is back, the chunk was fetched for it
+  await page.unroute('**/proposalsSource*')
+  await reboot(page)
+  expect((await design(page)).rig.instances.map((i) => i.deviceId).sort()).toEqual([AMP.id, 'yamaha-ql1'].sort())
+  await expect(page.getByTestId('note-beta-unavailable')).toHaveCount(0)
+})
+
+test('reload while the proposals request stalls: the workspace is not blank for ever; after the delay the same non-destructive path runs', async ({ page }) => {
+  const raw = await saveSession(page)
+  await page.addInitScript(() => {
+    ;(window as unknown as { __creationBetaTimeoutMs: number }).__creationBetaTimeoutMs = 400 // test-only seam (default 5 s)
+  })
+  await page.route('**/proposalsSource*', () => {
+    // never answered
+  })
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation, undefined, { timeout: 4000 })
+  await expect(page.getByTestId('note-beta-unavailable')).toBeVisible()
+  await expect(page.getByTestId('place-picker')).toBeVisible()
+  expect((await design(page)).rig.instances).toEqual([])
+  await page.waitForTimeout(1500)
+  expect(await stored(page)).toBe(raw)
+})
+
+test('after a failed reload, starting something else sets the held project aside (recoverable) before the autosave writes', async ({ page }) => {
+  const raw = await saveSession(page)
+  await page.route('**/proposalsSource*', (r) => r.abort())
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  await expect(page.getByTestId('note-beta-unavailable')).toBeVisible()
+  await page.evaluate((p) => window.__creation!.choosePlace(p), PLACE) // the learner starts a new project
+  await page.waitForFunction((p) => window.__creation!.place() === p, PLACE)
+  await expect.poll(() => page.evaluate(() => window.__creation!.quarantine().map((q) => q.raw))).toContain(raw)
 })

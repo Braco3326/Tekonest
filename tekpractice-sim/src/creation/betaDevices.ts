@@ -129,3 +129,47 @@ export function unknownDeviceIds(registry: Registry, design: Pick<DesignState, '
   const ids = instances.flatMap((i) => (isObj(i) && typeof i.deviceId === 'string' && !registry.deviceById.has(i.deviceId) ? [i.deviceId] : []))
   return [...new Set(ids)]
 }
+
+/** The proposals as loaded: `failed` = the file could not be fetched (network, timeout), which is NOT « the file has no such sheet ». */
+export interface BetaLoad {
+  devices: readonly DeviceT[]
+  failed: boolean
+}
+
+/**
+ * What opening a saved design needs of the Bêta sheets.
+ * - `none`: every device is known (no fetch was made);
+ * - `unavailable`: the fetch FAILED. Nothing is registered; the caller must not apply the design (it would drop the Bêta devices);
+ * - `ready`: the file loaded; `missing` = ids it does not hold (a sheet that is genuinely gone), which the store will drop.
+ */
+export type BetaPrep = { kind: 'ready'; missing: string[] } | { kind: 'unavailable'; ids: string[] }
+
+/** Fetch the sheets a design needs (only when it holds a device the registry does not know) and register them. */
+export async function prepareBeta(registry: Registry, design: Pick<DesignState, 'rig'>, load: () => Promise<BetaLoad>): Promise<BetaPrep> {
+  const need = unknownDeviceIds(registry, design)
+  if (!need.length) return { kind: 'ready', missing: [] }
+  const loaded = await load()
+  if (loaded.failed) return { kind: 'unavailable', ids: need }
+  registerProposals(
+    registry,
+    loaded.devices.filter((d) => need.includes(d.id)),
+  )
+  return { kind: 'ready', missing: unknownDeviceIds(registry, design) }
+}
+
+/** The promise's value, or `{ ok: false }` when it rejects or does not settle within `ms` (the timer never outlives the race). */
+export function within<T>(p: Promise<T>, ms: number): Promise<{ ok: true; value: T } | { ok: false }> {
+  return new Promise((resolve) => {
+    const timer = setTimeout(() => resolve({ ok: false }), ms)
+    p.then(
+      (value) => {
+        clearTimeout(timer)
+        resolve({ ok: true, value })
+      },
+      () => {
+        clearTimeout(timer)
+        resolve({ ok: false })
+      },
+    )
+  })
+}

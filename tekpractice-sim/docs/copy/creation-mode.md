@@ -350,6 +350,8 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 | `status.errorsMany` | {n} erreurs | brief | Idem, `{n}` ≥ 2 |
 | `status.warningsOne` | 1 avertissement | validé | À côté du bouton signal (les avertissements ne comptent pas comme erreurs) |
 | `status.warningsMany` | {n} avertissements | validé | Idem, `{n}` ≥ 2 |
+| `status.unverifiedOne` | 1 appareil non vérifié | à valider (tekuxwriter) | À côté du signal quand le montage contient un appareil Bêta : les règles ont tourné sur des ports déclarés, non vérifiés (Task 30) |
+| `status.unverifiedMany` | {n} appareils non vérifiés | à valider (tekuxwriter) | Idem, `{n}` ≥ 2 |
 | `status.refusedMark` | connexion refusée | validé | À côté du bouton signal tant que la dernière connexion refusée est listée |
 | `status.signalAnnounce` | Signal : | validé | Annoncé (`role="status"`) avant le nouveau libellé quand une modification ajoute ou retire une erreur (« Signal : 1 erreur ») |
 | `status.signalHint` | Afficher les erreurs et avertissements | validé | Infobulle (`title`) du bouton signal |
@@ -478,6 +480,8 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.tipUnverified` | Fiche proposée, pas encore vérifiée : comportement approximatif. | à valider (tekuxwriter) | Info-bulle d’un appareil Bêta (tiroir) et description de l’appareil posé (Propriétés) |
 | `inventory.missingTitle` | Appareils non rechargés | à valider (tekuxwriter) | Titre de la note quand un projet rouvert contient des appareils dont la fiche n’existe plus |
 | `inventory.missingBody` | La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés. | à valider (tekuxwriter) | Corps de la note ; les identifiants des appareils suivent en liste |
+| `inventory.unavailableTitle` | Projet non rouvert | à valider (tekuxwriter) | Titre de la note quand les fiches Bêta dont un projet enregistré a besoin n’ont pas pu être chargées (réseau, délai de 5 s) : le projet n’est ni ouvert ni modifié |
+| `inventory.unavailable` | Fiches Bêta indisponibles (réseau). Rechargez la page pour retrouver votre projet. | à valider (tekuxwriter) | Corps de la note, ligne d’état et ligne du sélecteur de lieu pour le même cas |
 | `inventory.loadingBeta` | Chargement des fiches Bêta… | à valider (tekuxwriter) | Barre d’état pendant le chargement des fiches Bêta dont un projet enregistré a besoin (réouverture seulement) |
 | `inventory.loading` | Ouverture de l’inventaire… | à valider (tekuxwriter) | Barre d’état pendant le chargement du tiroir (première ouverture) |
 | `inventory.loadFailed` | L’inventaire n’a pas pu s’ouvrir. Réessayez avec Espace ou le menu Matériel. | à valider (tekuxwriter) | Barre d’état si le module du tiroir ne se charge pas (hors ligne) |
