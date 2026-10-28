@@ -16,11 +16,15 @@
  *     module "engine") are always-on in ConnectionGraph and must NOT be listed
  *  8. controls (ADR-0001): unique ids per device; enables.ports exist on the
  *     device and actually carry the gated flag
+ *  9. pure checks in tools/catalogChecks.ts: unique port ids (error), optional
+ *     routing / acoustic fields, and a missing public/assets/<id>.glb (WARNING
+ *     only: the placeholder ships, so it never fails the gate)
  */
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
+import { checkCatalog } from './catalogChecks'
 import { Catalog, Coach, Environment, Level, Onboarding, Readiness } from './schemas'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -40,7 +44,8 @@ function parseOrDie<T>(schema: z.ZodType<T>, data: unknown, file: string): T {
   return r.data
 }
 
-const catalog = parseOrDie(Catalog, read('content/catalog.json'), 'content/catalog.json')
+const rawCatalog = read('content/catalog.json')
+const catalog = parseOrDie(Catalog, rawCatalog, 'content/catalog.json')
 const LEVEL_IDS = ['a1', 'b1', 'c1', 'd1'] as const
 const levels = LEVEL_IDS.map((id) =>
   parseOrDie(Level, read(`content/levels/${id}.json`), `content/levels/${id}.json`),
@@ -58,7 +63,16 @@ assertUnique(catalog.connectorTypes.map((c) => c.id), 'connectorTypes.id')
 assertUnique(catalog.signalTypes.map((s) => s.id), 'signalTypes.id')
 assertUnique(catalog.devices.map((d) => d.id), 'devices.id')
 assertUnique(catalog.rules.map((r) => r.id), 'rules.id')
-for (const d of catalog.devices) assertUnique(d.ports.map((p) => p.portId), `ports.portId in ${d.id}`)
+
+// Pure checks (duplicate port ids, optional routing/acoustic, missing .glb).
+// The raw catalog is passed so fields not yet in the zod Device (routing,
+// acoustic) are still seen; its shape was validated just above.
+const modelIds = new Set(
+  readdirSync(resolve(root, 'public/assets')).filter((f) => f.endsWith('.glb')).map((f) => f.slice(0, -4)),
+)
+const warnings: string[] = []
+for (const i of checkCatalog(rawCatalog as typeof catalog, { modelIds }))
+  (i.level === 'error' ? errors : warnings).push(`${i.path}: ${i.message}`)
 
 const connectorIds = new Set(catalog.connectorTypes.map((c) => c.id))
 const signalIds = new Set(catalog.signalTypes.map((s) => s.id))
@@ -221,6 +235,11 @@ if (errors.length) {
   console.error(`✗ catalog INVALID — ${errors.length} error(s):\n`)
   for (const e of errors) console.error('  • ' + e)
   process.exit(1)
+}
+
+if (warnings.length) {
+  console.warn(`! ${warnings.length} warning(s):`)
+  for (const w of warnings) console.warn('  - ' + w)
 }
 
 const totalPorts = catalog.devices.reduce((n, d) => n + d.ports.length, 0)
