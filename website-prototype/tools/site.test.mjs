@@ -246,3 +246,60 @@ test("the old halo animation is gone", () => {
   assert.doesNotMatch(css(), /halo-turn/);
   assert.doesNotMatch(css(), /\.direction\b/);
 });
+
+// ---- Phase B2, Task 5: the home page ----
+const homeHtml = () => plain(page("index.html"));
+
+test("the hero is the panel figure", () => {
+  const fig = homeHtml().match(/<figure class="hero-panel">[\s\S]*?<\/figure>/);
+  assert.ok(fig, "no figure.hero-panel");
+  const f = fig[0];
+  const img = f.match(/<img class="hero-panel__poster"[^>]*>/)[0];
+  assert.match(img, /src="assets\/img\/panel\/hero-poster-720\.webp"/);
+  assert.match(img, /srcset="assets\/img\/panel\/hero-poster-720\.webp 720w, assets\/img\/panel\/hero-poster-1200\.webp 1200w"/);
+  assert.match(img, /sizes="/);
+  assert.match(img, /width="720"/);
+  assert.match(img, /height="720"/);
+  assert.match(img, /fetchpriority="high"/);
+  assert.doesNotMatch(img, /loading="lazy"/);
+  assert.match(img, /alt="Panneau de marqueterie/);
+  assert.match(f, /<canvas class="hero-panel__canvas"[^>]*\bhidden\b[^>]*aria-hidden="true"|<canvas class="hero-panel__canvas"[^>]*aria-hidden="true"[^>]*\bhidden\b/);
+  assert.match(f, /<button class="hero-panel__pause" type="button" aria-pressed="false" hidden>Mettre en pause l'animation<\/button>/);
+});
+
+test("the hero text is unchanged", () => {
+  const html = homeHtml();
+  assert.match(html, /<h1 id="hero-titre">Un nid pour les métiers du son\.<\/h1>/);
+  assert.match(html, /Se former, créer : des fils tressés ensemble\./);
+  assert.match(html, /Tekonest se construit pas à pas\. Rien n'est encore en vente/);
+  assert.match(html, /<a class="btn btn-light" href="#entrees">Les deux entrées<\/a>/);
+});
+
+test("the old hero is gone", () => {
+  const html = homeHtml();
+  assert.doesNotMatch(html, /nid-stage|nid-son|nid-replay|home\.js|texture-damas|class="bande"/);
+  for (const gone of ["assets/js/home.js", "assets/img/photos/texture-damas.jpg", "assets/img/photos/texture-damas.webp"]) assert.equal(existsSync(rootPath(gone)), false, gone);
+});
+
+test("the dividers follow the mapping", () => {
+  const html = homeHtml();
+  assert.equal((html.match(/class="rule /g) || []).length, 2, "exactly two dividers on the home page");
+  assert.match(html, /<\/section>\s*<div class="rule rule-rope" role="presentation"><\/div>\s*<section class="section" aria-labelledby="entrees">/);
+  assert.match(html, /<div class="rule rule-saw" role="presentation"><\/div>\s*<section class="section section--sunken" aria-labelledby="etat">/);
+});
+
+test("the closing band uses the field texture", () => {
+  const img = homeHtml().match(/<img class="cta-nuit__bg"[^>]*>/);
+  assert.ok(img, "no img.cta-nuit__bg");
+  assert.match(img[0], /src="assets\/img\/panel\/closing-texture\.webp"/);
+  assert.match(img[0], /alt=""/);
+  assert.match(img[0], /width="1280"/);
+  assert.match(img[0], /height="720"/);
+  assert.match(img[0], /loading="lazy"/);
+});
+
+test("only the home page loads the panel script", () => {
+  assert.equal((homeHtml().match(/<script src="assets\/js\/panel\.js" defer><\/script>/g) || []).length, 1);
+  for (const name of pages().filter((n) => n !== "index.html")) assert.doesNotMatch(page(name), /panel\.js/, name);
+  assert.ok(existsSync(rootPath("assets/js/panel.js")));
+});
