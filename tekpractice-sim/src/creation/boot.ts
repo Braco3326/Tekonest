@@ -587,15 +587,20 @@ export async function bootCreation(): Promise<void> {
     props.render()
     refreshSignal()
   })
+  /**
+   * What a place change resets in the controllers below. They are created AFTER `await restore()`, and a blank place reaches
+   * `onPlaceShown` before restore() resumes: so the hook cannot name them (a const in its temporal dead zone throws and the rest
+   * of the hook is lost). They register here once they exist; before that there is nothing to reset.
+   */
+  const placeResets: (() => void)[] = []
+  /** The keypad quarter-turn keys (set once the key map exists, same reason): nothing is claimed before. */
+  let isViewRotateCode: (code: string) => boolean = () => false
   host.onPlaceShown = () => {
     // Hidden zones of the previous place do not carry over.
     const ids = new Set(zones().map((z) => `zone:${z.id}`))
     const hidden = viewState.get().hidden.filter((k) => !k.startsWith('zone:') || ids.has(k))
     atPoint = null // a new camera: it stands on no point
-    cableHover.reset() // a hovered cable belongs to the old scene
-    patch.reset() // a cable in hand, a pinned refusal or an offer belong to the old scene's ports
-    connectDialog.close() // a list of the old rig's ports
-    toast.dismiss() // a message about the previous place's view does not carry over
+    for (const reset of placeResets) reset()
     // Any other camera request (cube, menu, V, home, a quarter turn, re-pivot, device focus) leaves
     // the point, even while the point's own flight still runs (Task 21 review minor).
     if (host.rig)
@@ -606,9 +611,7 @@ export async function bootCreation(): Promise<void> {
     // (key « ArrowLeft », keyCode 37), and Babylon's keyboard orbit reads keyCodes: it would orbit
     // on top of the turn. Those keys never reach the camera's own input.
     host.scene?.onPreKeyboardObservable.add((info) => {
-      const code = info.event.code
-      if (keys.bindings.VIEW_ROT_LEFT.includes(code) || keys.bindings.VIEW_ROT_RIGHT.includes(code))
-        info.skipOnKeyboardObservable = true
+      if (isViewRotateCode(info.event.code)) info.skipOnKeyboardObservable = true
     })
     if (treeActive?.startsWith('point:')) treeActive = null
     // A new place listens from its Régie (Centre without a layout) until a point is chosen (review Fix 1).
@@ -876,6 +879,7 @@ export async function bootCreation(): Promise<void> {
     // Ctrl+S stays taken (« Choisissez un lieu avant d’enregistrer. »), help stays reachable.
     suspended: (a) => picker.isOpen && a !== 'SAVE' && a !== 'TOGGLE_HELP',
   })
+  isViewRotateCode = (code) => keys.bindings.VIEW_ROT_LEFT.includes(code) || keys.bindings.VIEW_ROT_RIGHT.includes(code)
   const cycle = (dir: 1 | -1): boolean => {
     const next = nextDevice(deviceIds(), viewState.get().selection, dir)
     if (next === null) {
@@ -1606,6 +1610,12 @@ export async function bootCreation(): Promise<void> {
   // the selection. Not while a device follows the pointer (that click drops it), in the walk view, under the
   // place picker, nor on a port (its click is the cabling's).
   const toast = mountToast(document, shell.viewport, shellBag)
+  placeResets.push(
+    () => cableHover.reset(), // a hovered cable belongs to the old scene
+    () => patch.reset(), // a cable in hand, a pinned refusal or an offer belong to the old scene's ports
+    () => connectDialog.close(), // a list of the old rig's ports
+    () => toast.dismiss() // a message about the previous place's view does not carry over
+  )
   const missedClick = (x: number, y: number): void => {
     if (placement.placing || placement.dragging || host.walking || viewLocked() || patch.wouldTake(x, y)) return
     if (viewState.get().selection !== null) viewState.set({ selection: null }) // not undoable; the toast speaks, not the status bar

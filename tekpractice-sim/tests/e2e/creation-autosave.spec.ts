@@ -38,6 +38,28 @@ test('2 devices → 1.2 s → reload: both back with the same ids and poses, no 
   expect(await page.evaluate(() => window.__creation!.historySize())).toBe(0)
 })
 
+test('a blank-place autosave reloads with zero page errors / console errors, the tree rendered, no picker (final review 1)', async ({ page }) => {
+  const errors: string[] = []
+  page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`))
+  page.on('console', (m) => m.type() === 'error' && errors.push(`console: ${m.text()}`))
+  await boot(page)
+  await page.evaluate(() => window.__creation!.choosePlace('blank'))
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  await page.evaluate(() =>
+    window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 0], rotationY: 0 }),
+  )
+  await page.waitForFunction(() => localStorage.getItem('audio-sim/creation.v1')?.includes('"ql1"'), null, { timeout: 5000 })
+  await page.reload()
+  await page.waitForFunction(() => window.__creation?.place() === 'blank')
+  expect(errors).toEqual([]) // the hook ran whole: no ReferenceError (TDZ) from a controller created after restore()
+  // The rest of onPlaceShown ran: the tree shows the restored device and the place row, the picker stays away.
+  await expect(page.getByTestId('place-picker')).toBeHidden()
+  await expect(page.getByRole('treeitem', { name: /^Lieu : Salle vide neutre/ })).toBeVisible()
+  await expect(page.getByRole('treeitem', { name: /Lieu : aucun lieu choisi/ })).toHaveCount(0)
+  expect((await design(page)).rig.instances.map((i) => i.instanceId)).toEqual(['ql1'])
+  await expect(page.locator('.cr-status-msg')).toContainText('Travail de la dernière séance rouvert.')
+})
+
 test('« * » while dirty; Ctrl+S asks a name, Enter saves (no click); legacy keys untouched', async ({ page }) => {
   await boot(page)
   const legacy = '{"version":2,"rigs":[]}'
