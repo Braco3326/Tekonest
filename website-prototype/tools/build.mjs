@@ -11,12 +11,11 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PAGES = join(ROOT, "src", "pages");
 
 export const NNBSP = " ";
-const FOOTER_DATE = "22 octobre 2026";
+const FOOTER_DATE = "28 octobre 2026";
 
 export const NAV = [
   ["apprendre.html", "Se former"],
   ["creer.html", "Créer avec nous"],
-  ["reseau.html", "Réseau"],
   ["histoire.html", "L'histoire"],
   ["contact.html", "Contact"],
 ];
@@ -55,7 +54,7 @@ const LAYOUT = `<!doctype html>
   <div class="wrap">
     <div>
       <img src="assets/img/lockup-reverse.svg" alt="Tekonest" width="140" height="30">
-      <p>Un nid pour les métiers du son : se former, créer ensemble, rejoindre un réseau payé correctement.</p>
+      <p>Un nid pour les métiers du son : se former, créer ensemble.</p>
     </div>
     <nav aria-label="Pied de page">
       <ul>

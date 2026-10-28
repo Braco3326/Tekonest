@@ -147,3 +147,47 @@ test("status board lists three branches and the build date", () => {
 test("doors grid has two columns", () => {
   assert.match(page("assets/css/site.css"), /\.doors\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
 });
+
+test("no network, no three-door wording, no Rebels in any built page", () => {
+  const problems = [];
+  for (const name of pages()) {
+    const hits = plain(page(name)).match(/r[ée]seau|trois entrées|organiser\.html|Rebels/gi);
+    if (hits) problems.push(`${name}: ${[...new Set(hits)].join(", ")}`);
+  }
+  assert.deepEqual(problems, []);
+});
+
+test("reseau.html is gone and its old URLs redirect home", () => {
+  assert.equal(existsSync(rootPath("reseau.html")), false);
+  assert.equal(existsSync(rootPath("src/pages/reseau.html")), false);
+  const redirects = page("_redirects");
+  assert.match(redirects, /^\/reseau \/ 301$/m);
+  assert.match(redirects, /^\/reseau\.html \/ 301$/m);
+});
+
+test("nav has four entries in the agreed order", () => {
+  assert.deepEqual(NAV, [
+    ["apprendre.html", "Se former"],
+    ["creer.html", "Créer avec nous"],
+    ["histoire.html", "L'histoire"],
+    ["contact.html", "Contact"],
+  ]);
+});
+
+test("footer carries the new tagline and date", () => {
+  for (const name of pages()) {
+    const footer = plain(page(name)).split("<footer")[1];
+    assert.match(footer, /Un nid pour les métiers du son : se former, créer ensemble\./, name);
+    assert.match(footer, /Prototype de conception, 28 octobre 2026\./, name);
+  }
+});
+
+test("histoire describes the creation service", () => {
+  const text = bodyText(plain(page("histoire.html")));
+  assert.match(text, /une expérience au service des projets des autres/);
+  assert.match(text, /Un musicien et un DJ ont dit oui pour cofonder le projet/);
+});
+
+test("contact note mentions a project to create with us", () => {
+  assert.match(bodyText(plain(page("contact.html"))), /un projet à créer avec nous/);
+});
