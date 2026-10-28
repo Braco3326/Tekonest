@@ -191,3 +191,9 @@ test("histoire describes the creation service", () => {
 test("contact note mentions a project to create with us", () => {
   assert.match(bodyText(plain(page("contact.html"))), /un projet à créer avec nous/);
 });
+
+test("home does not claim Tekonest already works in all seven trades", () => {
+  const html = plain(main("index.html"));
+  assert.match(html, /les sept métiers avec lesquels Tekonest veut travailler/);
+  assert.doesNotMatch(html, /dans lesquels Tekonest travaille/);
+});

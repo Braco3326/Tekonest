@@ -2,17 +2,15 @@
 // Browser checks for the built pages: axe (WCAG 2.2 AA), horizontal overflow, mobile menu,
 // reduced motion and no-JS rendering. Saves screenshots for review.
 // Run (from website-prototype/): node tools/verify-browser.mjs
-import { createServer } from "node:http";
-import { existsSync, mkdirSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { extname, join, normalize } from "node:path";
+import { mkdirSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { serveStatic } from "./static-server.mjs";
 
 const ROOT = fileURLToPath(new URL("../", import.meta.url));
 const SHOTS = join(ROOT, "..", "design", "07-review", "screens-2026-10-28");
-const PORT = 4173;
-const BASE = `http://127.0.0.1:${PORT}`;
 const VIEWPORTS = [
   { width: 375, height: 812 },
   { width: 768, height: 1024 },
@@ -22,34 +20,13 @@ const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 // Screenshots: 375 and 1440 for every page, 768 for the pages whose grid changed.
 const WIDE_GRID_PAGES = new Set(["index", "creer", "histoire"]);
 
-const MIME = {
-  ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript",
-  ".svg": "image/svg+xml", ".woff2": "font/woff2", ".webp": "image/webp", ".jpg": "image/jpeg",
-  ".png": "image/png", ".json": "application/json", ".glb": "model/gltf-binary",
-};
-
-function serve() {
-  const server = createServer((req, res) => {
-    let path = normalize(decodeURIComponent(new URL(req.url, BASE).pathname)).replace(/^([/\\])+/, "");
-    let file = join(ROOT, path);
-    if (!file.startsWith(ROOT)) { res.writeHead(403).end(); return; }
-    if (existsSync(file) && statSync(file).isDirectory()) file = join(file, "index.html");
-    if (!existsSync(file)) { res.writeHead(404).end("not found"); return; }
-    res.writeHead(200, { "content-type": MIME[extname(file)] ?? "application/octet-stream" });
-    res.end(readFileSync(file));
-  });
-  return new Promise((resolve) => server.listen(PORT, "127.0.0.1", () => resolve(server)));
-}
-
 const failures = [];
 const ok = (message) => console.log(`OK    ${message}`);
 const fail = (message) => { failures.push(message); console.log(`FAIL  ${message}`); };
 
-async function main() {
+async function run(BASE, browser) {
   mkdirSync(SHOTS, { recursive: true });
   const names = readdirSync(ROOT).filter((f) => f.endsWith(".html")).map((f) => f.replace(/\.html$/, "")).sort();
-  const server = await serve();
-  const browser = await chromium.launch();
   let axeViolations = 0;
   let overflows = 0;
 
@@ -61,9 +38,7 @@ async function main() {
       await page.waitForTimeout(400);
       const { violations } = await new AxeBuilder({ page }).withTags(TAGS).analyze();
       axeViolations += violations.length;
-      if (violations.length) {
-        for (const v of violations) fail(`${name} @${viewport.width}: axe ${v.id} (${v.nodes.length} nodes) ${v.helpUrl}`);
-      }
+      for (const v of violations) fail(`${name} @${viewport.width}: axe ${v.id} (${v.nodes.length} nodes) ${v.helpUrl}`);
       const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       if (over > 0) { overflows += 1; fail(`${name} @${viewport.width}: horizontal overflow ${over}px`); }
       if (!violations.length && over <= 0) ok(`${name} @${viewport.width}: axe 0, overflow 0`);
@@ -99,19 +74,29 @@ async function main() {
       const context = await browser.newContext({ viewport: VIEWPORTS[0], ...options });
       const page = await context.newPage();
       await page.goto(`${BASE}/${name}.html`, { waitUntil: "load" });
-      const visible = await page.locator("h1").first().isVisible();
-      if (visible) ok(`${name} with ${label}: h1 visible`);
+      if (await page.locator("h1").first().isVisible()) ok(`${name} with ${label}: h1 visible`);
       else fail(`${name} with ${label}: h1 not visible`);
       await context.close();
     }
   }
+  return { axeViolations, overflows };
+}
 
-  await browser.close();
-  server.close();
+let server;
+let browser;
+try {
+  server = await serveStatic(ROOT);
+  browser = await chromium.launch();
+  const { axeViolations, overflows } = await run(server.url, browser);
   console.log(failures.length
     ? `\n${failures.length} failure(s)`
     : `\n${axeViolations} violations, ${overflows} overflow, menu OK`);
-  process.exit(failures.length ? 1 : 0);
+  process.exitCode = failures.length ? 1 : 0;
+} catch (error) {
+  console.error(error);
+  process.exitCode = 1;
+} finally {
+  // Let the event loop drain (no process.exit) so every line above is flushed.
+  await browser?.close();
+  await server?.close();
 }
-
-main().catch((error) => { console.error(error); process.exit(1); });
