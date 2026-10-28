@@ -65,6 +65,7 @@
       ctx.beginPath(); pts.forEach(function (p, k) { k ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }); ctx.closePath();
       ctx.strokeStyle = o.cols[e % o.cols.length]; ctx.lineWidth = w; ctx.stroke();
     });
+    if (o.weave === false) return;                                  // the brand mark: continuous loops, no cuts
     nest.X.forEach(function (c) {
       var e = c.over, pos = e === c.a ? c.pa : c.pb, pts = nest.E[e];
       var arc = 2 * Math.PI * 91 * nest.sc / N, m = Math.ceil((w + 2 * gap) * 1.1 / arc) + 1;
@@ -87,6 +88,7 @@
       if (last < 1) return;
       trace(pts, 0, Math.min(N, last)); ctx.strokeStyle = o.cols[e % o.cols.length]; ctx.lineWidth = w; ctx.stroke();
     });
+    if (o.weave === false) return;
     nest.X.forEach(function (c) {
       var la = N * prog[c.a], lb = N * prog[c.b];
       if (c.pa > la || c.pb > lb) return;

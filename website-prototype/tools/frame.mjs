@@ -11,7 +11,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   page.on("pageerror", (e) => console.log("PAGE ERROR:", e.message));
   page.on("console", (m) => { if (m.type() === "error") console.log("CONSOLE ERROR:", m.text()); });
-  await page.goto(`${pathToFileURL(resolve(file)).href}?t=${t}`);
+  await page.goto(`${pathToFileURL(resolve(file)).href}?t=${t}${process.env.VISUAL_QUERY ? "&" + process.env.VISUAL_QUERY : ""}`);
   const clip = x === undefined ? undefined : { x: +x, y: +y, width: +width, height: +height };
   await page.screenshot({ path: out, clip });
   console.log("wrote", out);

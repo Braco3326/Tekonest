@@ -27,7 +27,8 @@
    Ease-out only. No glow, no particles, no spin, no text. Inspired by Damascene wood marquetry. */
 (function () {
   var W = 1920, H = 1080, FPS = 24, ctx = document.getElementById("c").getContext("2d");
-  var model = Panel.build(980, { seed: 1306, hand: 1.4 }), DURATION = model.duration;
+  var MARKS = { amber: "#DD9349", papier: "#F3EDE3" }, mk = new URLSearchParams(location.search).get("mark");
+  var model = Panel.build(980, { seed: 1306, hand: 1.4, mark: MARKS[mk] }), DURATION = model.duration;
   if (new URLSearchParams(location.search).get("t") === null) Panel.warm(model);          // bake finished looks before playing, so no frame hitches
   function drawFrame(t, live) {
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = "#131114"; ctx.fillRect(0, 0, W, H);

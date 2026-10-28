@@ -193,7 +193,7 @@
     } });
 
     // the roundel and the mark
-    var r = 2.1 * S, nest = g.Nest.build(0, 0, (r - 17) / 108), NW = { w: Math.max(2.2, r * 0.026), gap: Math.max(1.6, r * 0.02), ground: GROUND, cols: [PEARL, "#D6CBB9", PEARL, "#D6CBB9", PEARL, "#D6CBB9", PEARL] };
+    var r = 2.1 * S, nest = g.Nest.build(0, 0, (r - 17) / 108), NW = { w: Math.max(2.4, r * 0.03), weave: false, ground: GROUND, cols: [o.mark || "#DD9349"] };
     add({ layer: "disc", custom: true, draw: function (ctx, p) { if (MASK.on) return; ctx.save(); ctx.beginPath(); ctx.arc(0, 0, (r + 12) * p, 0, TAU); ctx.clip(); ctx.fillStyle = GROUND; ctx.fillRect(-r - 20, -r - 20, 2 * r + 40, 2 * r + 40); ctx.restore(); } });
     function ringArc(rad, col, w) { return function (ctx, p) { if (MASK.on || p <= 0) return; ctx.strokeStyle = col; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(0, 0, rad, -Math.PI / 2, -Math.PI / 2 + TAU * p); ctx.stroke(); }; }
     add({ layer: "ring1", custom: true, draw: ringArc(r + 9, "#B9B0A2", 1.2) });

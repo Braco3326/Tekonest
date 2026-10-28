@@ -28,7 +28,7 @@
     var sc = (size * 0.40) / 108, n = window.Nest.build(0, 0, sc);
     if (ring) { ctx.strokeStyle = C.ambre; ctx.lineWidth = Math.max(1.5, size * 0.012); ctx.beginPath(); ctx.arc(0, 0, size * 0.455, 0, 2 * Math.PI); ctx.stroke(); }
     var small = size <= 64;
-    window.Nest.draw(ctx, n, { w: small ? Math.max(1.6, size * 0.075) : Math.max(1.8, size * 0.0165), gap: small ? 0 : Math.max(1.4, size * 0.011), ground: gapCol, cols: strands });
+    window.Nest.draw(ctx, n, { w: small ? Math.max(1.6, size * 0.075) : Math.max(1.8, size * 0.0165), weave: false, ground: gapCol, cols: strands });
     ctx.restore();
     return n;
   }
@@ -42,11 +42,11 @@
 
     // right, row 1: the mark
     var x = 1060, y = 40, s = 190, gap = 20;
-    var n1 = markOn(x, y, s, C.nuit, PEARLCOLS, C.nuit, true);
+    var n1 = markOn(x, y, s, C.nuit, ["#DD9349"], C.nuit, false);
     markOn(x + (s + gap), y, s, C.nuit, ["#F3EDE3"], C.nuit, false);
     markOn(x + 2 * (s + gap), y, s, "#F3EDE3", ["#131114"], "#F3EDE3", false);
-    label("B · La marque, vrai dessus-dessous : deux couleurs · une couleur · sur papier", 1060, 252);
-    label("croisements : " + n1.X.length + " · conflits de tissage : " + n1.conflicts, 1060, 272);
+    label("B · La marque, boucles continues, sans coupures : ambre · papier · sur papier", 1060, 252);
+    
     // small cuts for small sizes (no weave gaps, heavier stroke): real size, then enlarged 4x without smoothing
     var off = document.createElement("canvas");
     function small(sz, px, py, mag) {
