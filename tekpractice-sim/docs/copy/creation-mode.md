@@ -172,6 +172,10 @@ Panneau « Propriétés » (Task 10) : l'appareil sélectionné. Libellés de te
 | `props.unplug` | Débrancher | validé | Texte visible du bouton par câble |
 | `props.unplugName` | Débrancher {port} de {other} | validé | Nom complet du bouton ; `{other}` = « K12.2 (k12-g) · in-line-a » |
 | `props.statusUnplugged` | Débranché : {port} de {other} | validé | Barre d'état (annoncé) après « Débrancher » |
+| `props.connect` | Connecter à… | à valider (tekuxwriter) | Task 28 : bouton visible d'une prise libre (ouvre la boîte « Connecter à… ») |
+| `props.connectName` | Connecter à… (depuis {port}) | à valider (tekuxwriter) | Nom complet du bouton ; `{port}` = la prise de la ligne |
+| `props.portName` | {port} · {connector} · {signal} · {state} | à valider (tekuxwriter) | Nom accessible d'une ligne de Connexions : l'équivalent clavier de l'étiquette au survol d'une prise ; `{state}` = « branché à … » ou « libre » |
+| `props.portStateConnected` | branché à {other} | à valider (tekuxwriter) | `{other}` = « K12.2 (k12-g) · in-line-a » |
 
 ## signal
 
@@ -562,6 +566,26 @@ Câbler au clic sur les prises de la scène (Task 26, CA-19, CA-20). Survoler un
 | `patch.offerGroup` | Prise déjà branchée | à valider (tekuxwriter) | Nom accessible de la bulle « Débrancher » |
 | `patch.offerUnplug` | Débrancher | à valider (tekuxwriter) | Texte visible du bouton de la bulle |
 | `patch.offerName` | Débrancher {port} de {other} | à valider (tekuxwriter) | Nom complet du bouton de la bulle |
+
+## connect
+
+« Connecter à… » (Task 28, CA-02) : brancher un câble au clavier ou au lecteur d’écran. Depuis une prise libre de Propriétés › Connexions, une boîte de dialogue liste les prises libres des autres appareils, groupées par appareil. Un champ « Filtrer » réduit la liste, Entrée branche. Les prises impossibles sont dans un groupe replié « Incompatibles », avec la raison, et ne se choisissent pas.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `connect.title` | Connecter à… | à valider (tekuxwriter) | Titre de la boîte de dialogue |
+| `connect.body` | Depuis {port}. Tapez pour filtrer, flèches haut et bas pour choisir, Entrée pour brancher, Échap pour fermer. | à valider (tekuxwriter) | Sous le titre, lue comme sa description ; {port} = la prise de départ avec son connecteur et son signal |
+| `connect.filter` | Filtrer | à valider (tekuxwriter) | Libellé du champ de filtre (saisie qui réduit la liste) |
+| `connect.listName` | Prises compatibles | à valider (tekuxwriter) | Nom de la liste des prises compatibles |
+| `connect.countOne` | 1 prise compatible. | à valider (tekuxwriter) | Annonce (polite) du nombre de prises après une frappe |
+| `connect.countMany` | {n} prises compatibles. | à valider (tekuxwriter) | Idem ; {n} = nombre |
+| `connect.none` | Aucune prise compatible n’est libre. | à valider (tekuxwriter) | Rien de compatible du tout (aucun filtre) : dit en clair dans la boîte |
+| `connect.noMatch` | Aucune prise ne correspond à « {query} ». | à valider (tekuxwriter) | Le filtre ne retient rien ; {query} = le texte tapé |
+| `connect.rejectedToggle` | Incompatibles ({n}) | à valider (tekuxwriter) | Bouton qui déplie le groupe des prises refusées ; {n} = nombre |
+| `connect.rejectedHint` | Ces prises ne peuvent pas recevoir ce câble ; chacune dit pourquoi. | à valider (tekuxwriter) | Phrase au-dessus du groupe des prises refusées (elles ne se choisissent pas) |
+| `connect.cancel` | Annuler | à valider (tekuxwriter) | Bouton qui ferme sans brancher |
+| `connect.statusConnected` | Connecté : {a} à {b}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un branchement par la boîte (annoncé poliment, une fois) ; {a} / {b} = « Appareil (id) · prise », {undo} = touche d’annulation |
+| `connect.statusClosedStale` | Connecter à… fermé : le matériel a changé. Rouvrez-le pour voir les prises à jour. | à valider (tekuxwriter) | Barre d’état quand la boîte se ferme parce que le matériel a changé pendant qu’elle était ouverte |
 
 ## cables
 

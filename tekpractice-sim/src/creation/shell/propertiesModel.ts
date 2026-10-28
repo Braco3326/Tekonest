@@ -19,6 +19,7 @@ import type { ControlValue, PortRef } from '../../engine/types'
 import type { Intent } from '../../ui/intents'
 import type { DesignState, Mount, Placement } from '../../trials/trial'
 import { COPY } from '../copy'
+import { cableText, portInfoOf } from '../cableStyle'
 
 export type FieldId = 'name' | 'x' | 'y' | 'z' | 'yaw' | 'tilt' | 'mount'
 
@@ -45,9 +46,18 @@ export interface PropPort {
   portId: string
   label: string
   connector: string
+  /** The connector in French (`COPY.connector`), else the catalog label. */
+  connectorLabel: string
   signal: string
   /** The signal type in French (`COPY.signal`), else the catalog label. */
   signalLabel: string
+  /**
+   * The row's full accessible name (Task 28, CA-02): « <port id> · <connector> · <signal type> · branché à X / libre ».
+   * The keyboard / screen-reader equivalent of the port label a pointer sees on hover.
+   */
+  name: string
+  /** A connected row: the cable as the hover shows it (« ql1 out-main-l → k12-g in-line-a · Niveau ligne pro »). Null for a free row. */
+  cable: string | null
   dir: 'in' | 'out' | 'bidir'
   state: { kind: 'free' } | { kind: 'connected'; to: PortRef; toLabel: string }
 }
@@ -71,6 +81,7 @@ const STEP: Record<'x' | 'y' | 'z' | 'yaw' | 'tilt', number> = { x: 0.1, y: 0.1,
 export const TILT_MIN = -90
 export const TILT_MAX = 90
 
+const fill = (s: string, k: string, v: string): string => s.replace(`{${k}}`, () => v)
 const mm = (v: number): number => Math.round(v * 1000) / 1000 + 0
 const tenth = (v: number): number => Math.round(v * 10) / 10 + 0
 const fr = (s: string): string => s.replace('.', ',')
@@ -83,11 +94,20 @@ const wrapYaw = (v: number): number => {
 const clampTilt = (v: number): number => tenth(Math.min(TILT_MAX, Math.max(TILT_MIN, v)))
 
 /** A short device name for the other end of a cable: the catalog label without its brand (« QSC K12.2 » → « K12.2 »). */
-function shortName(registry: Registry, deviceId: string): string {
+export function shortName(registry: Registry, deviceId: string): string {
   const d = registry.deviceById.get(deviceId)
   if (!d) return deviceId
   const brand = d.realWorld.brand
   return d.label.startsWith(`${brand} `) ? d.label.slice(brand.length + 1) : d.label
+}
+
+/** A connector's French name (the catalog label when the copy has none). */
+export function connectorName(registry: Registry, connectorId: string): string {
+  return COPY.connector?.[connectorId] ?? registry.connectorById.get(connectorId)?.label ?? connectorId
+}
+/** A signal type's French name (the legend's: the catalog label when the copy has none). */
+export function signalName(registry: Registry, signalId: string): string {
+  return COPY.signal?.[signalId] ?? registry.signalById.get(signalId)?.label ?? signalId
 }
 
 /** Above the floor by more than this (m), a placement with no mount reads as « Pied ». */
@@ -142,21 +162,29 @@ export function propsView(design: DesignState, registry: Registry, instanceId: s
       : { id: c.id, label: c.label, kind: 'enum', value: (live[c.id] as ControlValue | undefined) ?? c.defaultOption, options: [...c.options] },
   )
   const deviceOf = new Map(design.rig.instances.map((i) => [i.instanceId, i.deviceId]))
+  const portOf = portInfoOf(registry, design.rig.instances)
   const ports: PropPort[] = device.ports.map((p) => {
     const conn = design.rig.connections.find(
       (c) => (c.a.instance === instanceId && c.a.port === p.portId) || (c.b.instance === instanceId && c.b.port === p.portId),
     )
     const to = conn ? (conn.a.instance === instanceId && conn.a.port === p.portId ? conn.b : conn.a) : null
+    const toLabel = to ? `${shortName(registry, deviceOf.get(to.instance) ?? '')} (${to.instance}) · ${to.port}` : ''
+    const signalLabel = signalName(registry, p.signal)
+    const connectorLabel = connectorName(registry, p.connector)
+    const me = { instance: instanceId, port: p.portId }
+    // The cable as the hover shows it: the output end first, whichever way it is stored.
+    const cable = to ? cableText(portOf, me, { instance: to.instance, port: to.port }) : null
     return {
       portId: p.portId,
       label: p.portId, // the catalog has no French port names yet
       connector: p.connector,
+      connectorLabel,
       signal: p.signal,
-      signalLabel: COPY.signal?.[p.signal] ?? registry.signalById.get(p.signal)?.label ?? p.signal,
+      signalLabel,
+      name: fill(fill(fill(fill(P().portName!, 'port', p.portId), 'connector', connectorLabel), 'signal', signalLabel), 'state', to ? fill(P().portStateConnected!, 'other', toLabel) : P().portFree!),
+      cable,
       dir: p.dir,
-      state: to
-        ? { kind: 'connected', to: { instance: to.instance, port: to.port }, toLabel: `${shortName(registry, deviceOf.get(to.instance) ?? '')} (${to.instance}) · ${to.port}` }
-        : { kind: 'free' },
+      state: to ? { kind: 'connected', to: { instance: to.instance, port: to.port }, toLabel } : { kind: 'free' },
     }
   })
   return { title: device.label, deviceId: device.id, instanceId, fields, controls, ports }

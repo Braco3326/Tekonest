@@ -52,6 +52,7 @@ import { floorPointAt } from '../scene/pivotPick'
 import { rotate90 } from '../camera/viewCube'
 import { mountProjectTree } from './shell/projectTree'
 import { mountPropertiesPanel } from './shell/propertiesPanel'
+import { createConnectDialog } from './shell/connectDialog'
 import { buildTree, hideKeyOf, type TreeNode } from './shell/treeModel'
 import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
@@ -486,6 +487,8 @@ export async function bootCreation(): Promise<void> {
     selection: () => viewState.get().selection,
     floorAt: (x, z) => host.layout?.floorAt(x, z) ?? 0,
     announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    // « Connecter à… » (Task 28, CA-02): the keyboard / screen-reader way to cable, defined with the patch controller below.
+    connect: (from, opener) => connectDialog.open(from, opener),
   })
   let earHeight = viewState.get().earHeight
   viewState.subscribe(() => {
@@ -511,6 +514,7 @@ export async function bootCreation(): Promise<void> {
     atPoint = null // a new camera: it stands on no point
     cableHover.reset() // a hovered cable belongs to the old scene
     patch.reset() // a cable in hand, a pinned refusal or an offer belong to the old scene's ports
+    connectDialog.close() // a list of the old rig's ports
     toast.dismiss() // a message about the previous place's view does not carry over
     // Any other camera request (cube, menu, V, home, a quarter turn, re-pivot, device focus) leaves
     // the point, even while the point's own flight still runs (Task 21 review minor).
@@ -1355,7 +1359,7 @@ export async function bootCreation(): Promise<void> {
   }
   const patch = new PatchController(host, history, store, scheduler, shellBag, {
     ui: portLabels,
-    busy: () => placement.placing || placement.dragging,
+    busy: () => placement.placing || placement.dragging || connectDialog.isOpen,
     describe: describePort,
     portName,
     allPorts: () =>
@@ -1367,6 +1371,21 @@ export async function bootCreation(): Promise<void> {
     undoLabel,
     beforeDispatch: () => props.flush(),
   })
+
+  // ── « Connecter à… » (Task 28, CA-02, C10): the same CONNECT intent as the mouse, picked from a list. A refusal reads through
+  // the one function the status list and the mouse path use (`rejectionOf`); a place change or teardown closes it.
+  const connectDialog = createConnectDialog({
+    registry,
+    store,
+    history,
+    portName,
+    rejectionTitle: (error, subjects) => rejectionOf(error, subjects, ruleText).title,
+    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    undoLabel,
+    beforeDispatch: () => props.flush(),
+    restoreFocus: (from) => props.focusPort(from.port),
+  })
+  shellBag.add(() => connectDialog.close())
 
   // ── Cables by signal type (Task 27, C18): the colour is the scene host's (the catalog's signal of each connection);
   // the legend (bottom of Propriétés) lists the types present; hovering a cable highlights it and says what it joins.

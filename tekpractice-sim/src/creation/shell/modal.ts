@@ -4,7 +4,7 @@
  * - role="dialog" + aria-modal, labelled by its h2 (and described by `body` when given);
  * - everything behind it is `inert` (each element's own state restored on close);
  * - focus kept in by two edge sentinels: the focus key itself is never intercepted (C10);
- * - Esc = `cancel`; focus goes back where it was;
+ * - Esc = `cancel`; focus goes back where it was; a press on the backdrop does not take focus out of the dialog;
  * - one dialog at a time: a new one closes the open one (which resolves its cancel).
  * Styled by `.cr-dialog*` classes in creation.css (`--cr-*` tokens, square corners).
  */
@@ -87,6 +87,10 @@ export function openModal<T>(o: ModalOptions<T>): Promise<T> {
     box.prepend(sentinel(() => parts.edges()[1]))
     box.append(sentinel(() => parts.edges()[0]))
     overlay.appendChild(box)
+    // A press on the backdrop is not a way out and must not blur the dialog: focus stays where it is, so Échap still works.
+    overlay.addEventListener('mousedown', (e) => {
+      if (e.target === overlay) e.preventDefault()
+    })
     parent.appendChild(overlay)
     // Everything behind the dialog: the overlay's siblings up to <body>.
     for (let node: HTMLElement | null = overlay; node && node !== document.documentElement; node = node.parentElement)

@@ -535,6 +535,8 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   font-size: 12px;
 }
 .cr .cr-unplug:hover { color: var(--cr-ambre); border-color: var(--cr-ambre); }
+/* Task 28: the legacy `button { transition: all }` would animate the focus ring; "Connecter à…" shares the unplug button's look. */
+.cr .cr-unplug, .cr .cr-connect-btn { transition: none; }
 
 /* ── viewport ────────────────────────────────────────────────────────── */
 .cr-viewport {

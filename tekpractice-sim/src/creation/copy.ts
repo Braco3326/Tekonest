@@ -162,6 +162,14 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** The « Débrancher » button's full name; {port} = this port, {other} = the other end. */
     unplugName: 'Débrancher {port} de {other}',
     statusUnplugged: 'Débranché : {port} de {other}',
+    /** Task 28: the « Connecter à… » button of a free port (opens the dialog). */
+    connect: 'Connecter à…',
+    /** Its full name; {port} = this port. */
+    connectName: 'Connecter à… (depuis {port})',
+    /** A Connexions row's accessible name: the keyboard / screen-reader equivalent of the port's hover label. {state} = « branché à … » or « libre ». */
+    portName: '{port} · {connector} · {signal} · {state}',
+    /** {other} = « Appareil (id) · prise » of the other end. */
+    portStateConnected: 'branché à {other}',
   },
   /** Signal types (catalog `signalTypes[].id`) as Propriétés names them. */
   signal: {
@@ -612,6 +620,35 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     offerUnplug: 'Débrancher',
     /** Nom complet du bouton de la bulle. */
     offerName: 'Débrancher {port} de {other}',
+  },
+  /** « Connecter à… » (Task 28, CA-02): patching with the keyboard and a screen reader. */
+  connect: {
+    /** Titre de la boîte de dialogue. */
+    title: 'Connecter à…',
+    /** Sous le titre, lue comme sa description ; {port} = la prise de départ avec son connecteur et son signal. */
+    body: 'Depuis {port}. Tapez pour filtrer, flèches haut et bas pour choisir, Entrée pour brancher, Échap pour fermer.',
+    /** Libellé du champ de filtre (saisie qui réduit la liste). */
+    filter: 'Filtrer',
+    /** Nom de la liste des prises compatibles. */
+    listName: 'Prises compatibles',
+    /** Annonce (polite) du nombre de prises après une frappe. */
+    countOne: '1 prise compatible.',
+    /** Idem ; {n} = nombre. */
+    countMany: '{n} prises compatibles.',
+    /** Rien de compatible du tout (aucun filtre) : dit en clair dans la boîte. */
+    none: 'Aucune prise compatible n’est libre.',
+    /** Le filtre ne retient rien ; {query} = le texte tapé. */
+    noMatch: 'Aucune prise ne correspond à « {query} ».',
+    /** Bouton qui déplie le groupe des prises refusées ; {n} = nombre. */
+    rejectedToggle: 'Incompatibles ({n})',
+    /** Phrase au-dessus du groupe des prises refusées (elles ne se choisissent pas). */
+    rejectedHint: 'Ces prises ne peuvent pas recevoir ce câble ; chacune dit pourquoi.',
+    /** Bouton qui ferme sans brancher. */
+    cancel: 'Annuler',
+    /** Barre d’état après un branchement par la boîte (annoncé poliment, une fois) ; {a} / {b} = « Appareil (id) · prise », {undo} = touche d’annulation. */
+    statusConnected: 'Connecté : {a} à {b}. {undo} pour annuler.',
+    /** Barre d’état quand la boîte se ferme parce que le matériel a changé pendant qu’elle était ouverte. */
+    statusClosedStale: 'Connecter à… fermé : le matériel a changé. Rouvrez-le pour voir les prises à jour.',
   },
   /** Câbles colorés par type de signal, légende et survol (Task 27, C18). */
   cables: {

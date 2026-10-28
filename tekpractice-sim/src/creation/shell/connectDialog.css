@@ -1,0 +1,36 @@
+/* « Connecter à… » (Task 28): a modal over the whole shell (like the Projet dialogs), tokens only, square corners, cuts only. */
+.cr-connect { width: min(560px, calc(100vw - 32px)); }
+.cr-connect * { transition: none; }
+.cr-connect .cr-dialog-body { margin-bottom: 12px; color: var(--cr-ink-muted); font-size: 14px; font-weight: 400; }
+.cr-connect-count { min-height: 1.4em; margin: 8px 0; color: var(--cr-ink-muted); font-size: 14px; }
+.cr-connect-list {
+  max-height: min(30vh, 240px);
+  overflow: auto;
+  border: 1px solid var(--cr-ink-muted);
+  background: var(--cr-panel);
+}
+.cr-connect-list[hidden] { display: none; }
+.cr-connect-group + .cr-connect-group { border-top: 1px solid var(--cr-panel-line); }
+.cr-connect-group-title { padding: 8px 10px 4px; color: var(--cr-ink-muted); font-size: 13px; font-weight: 500; }
+.cr-connect-opt {
+  padding: 6px 10px 6px 14px;
+  color: var(--cr-papier);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.cr-connect-opt:hover { background: var(--cr-panel-line); }
+/* The active option: a fill AND an Ambre bar (shape, not colour alone); focus stays in the field. */
+.cr-connect-opt[aria-selected='true'] { background: var(--cr-panel-line); box-shadow: inset 4px 0 0 var(--cr-ambre); font-weight: 500; }
+.cr-connect-toggle { margin-top: 12px; }
+.cr-connect-toggle[hidden], .cr-connect-rejected[hidden] { display: none; }
+.cr-connect-toggle[aria-expanded='true'] { border-color: var(--cr-papier); }
+.cr-connect-rejected { margin-top: 8px; max-height: min(22vh, 168px); overflow: auto; border: 1px solid var(--cr-panel-line); }
+.cr-connect-hint { margin: 0; padding: 8px 10px; color: var(--cr-ink-muted); font-size: 13px; }
+.cr-connect-rejected-list { list-style: none; margin: 0; padding: 0; }
+.cr-connect-rejected-item { display: flex; flex-direction: column; gap: 2px; padding: 6px 10px; border-top: 1px solid var(--cr-panel-line); overflow-wrap: anywhere; }
+.cr-connect-rejected-name { color: var(--cr-ink-muted); font-size: 14px; }
+.cr-connect-reason { color: var(--cr-danger); font-size: 13px; }
+@media (max-width: 480px) {
+  .cr-connect { padding: 16px; }
+  .cr-connect-list { max-height: 26vh; }
+}

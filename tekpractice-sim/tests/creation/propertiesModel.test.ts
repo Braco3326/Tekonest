@@ -75,6 +75,23 @@ describe('propsView', () => {
     expect(back.state).toMatchObject({ kind: 'connected', toLabel: 'QL1 (ql1) · out-main-l' })
   })
 
+  it('every row has a full accessible name: port · connector · signal type (French) · branché à X / libre (Task 28, CA-02)', () => {
+    const v = view(design(), 'ql1')
+    const free = v.ports.find((p) => p.portId === 'in-mic-1')!
+    expect(free.connectorLabel).toBe('XLR3 femelle')
+    expect(free.name).toBe('in-mic-1 · XLR3 femelle · Niveau micro · libre')
+    expect(free.cable).toBeNull()
+    const main = v.ports.find((p) => p.portId === 'out-main-l')!
+    expect(main.name).toBe('out-main-l · XLR3 mâle · Niveau ligne pro (+4 dBu) · branché à K12.2 (k12-g) · in-line-a')
+  })
+
+  it('a connected row says its cable in text: both ends and the signal type, output end first, from either end (Task 27 carry-over)', () => {
+    const d = design()
+    const text = 'ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu)'
+    expect(view(d, 'ql1').ports.find((p) => p.portId === 'out-main-l')!.cable).toBe(text)
+    expect(view(d, 'k12-g').ports.find((p) => p.portId === 'in-line-a')!.cable).toBe(text)
+  })
+
   it('a placement with no mount above the floor reads as « Pied » with an editable height (review fix 4); on the floor, « Sol »', () => {
     const d = design()
     d.placements = d.placements.map((p) => (p.instanceId === 'isa' ? { instanceId: 'isa', deviceId: p.deviceId, position_m: [0, 1.2, 0], yawDeg: 0 } : p))
