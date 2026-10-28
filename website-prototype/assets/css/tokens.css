@@ -83,3 +83,6 @@
   --focus-ring: 3px solid var(--focus-color);
   --focus-offset: 3px;
 }
+
+/* Marquetry panel materials (Phase B2): pearl, walnut, ebony and the gold wire. --noyer (site.css) stays the walnut. */
+:root { --pearl: #E8DFD0; --pearl-dim: #CBBFAD; --walnut-dark: #3A281C; --ebony: #14100E; --wire: var(--color-amber); }

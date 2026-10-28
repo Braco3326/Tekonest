@@ -197,3 +197,52 @@ test("home does not claim Tekonest already works in all seven trades", () => {
   assert.match(html, /les sept métiers avec lesquels Tekonest veut travailler/);
   assert.doesNotMatch(html, /dans lesquels Tekonest travaille/);
 });
+
+// ---- Phase B2, Task 4: panel tokens, dividers, frames, bullets, hero layout ----
+const css = () => page("assets/css/site.css");
+const ruleBlock = (text, selector) => {
+  const i = text.indexOf(selector + " {");
+  return i < 0 ? "" : text.slice(i, text.indexOf("}", i));
+};
+
+test("the panel tokens exist", () => {
+  const tokens = page("assets/css/tokens.css");
+  for (const name of ["--pearl", "--pearl-dim", "--walnut-dark", "--ebony", "--wire"]) assert.match(tokens, new RegExp(`${name}\s*:`), name);
+});
+
+test("the dividers use the rendered tiles", () => {
+  for (const [rule, tile] of [[".rule-rope", "rope"], [".rule-tri", "tri"], [".rule-saw", "saw"]]) {
+    const block = ruleBlock(css(), rule);
+    assert.match(block, new RegExp(`assets/img/panel/${tile}-tile-1x\.webp|\.\./img/panel/${tile}-tile-1x\.webp`), `${rule} tile`);
+    assert.ok(existsSync(rootPath(`assets/img/panel/${tile}-tile-1x.webp`)), `${tile} tile file`);
+  }
+  assert.match(ruleBlock(css(), ".rule"), /repeat-x/);
+});
+
+test("the old diamond strip, hero canvas and replay button are gone from the CSS", () => {
+  const text = css();
+  assert.doesNotMatch(text, /\.bande\b/);
+  assert.doesNotMatch(text, /\.site-footer::before/);
+  assert.doesNotMatch(text, /\.hero-nuit canvas/);
+  assert.doesNotMatch(text, /\.btn-replay/);
+});
+
+test("cards carry nested fillets", () => {
+  const block = ruleBlock(css(), ".door.cadre, .family.cadre");
+  assert.match(block, /box-shadow:\s*inset 0 0 0 5px[^;]*,\s*inset 0 0 0 6px/);
+});
+
+test("lists use the star bullet", () => {
+  assert.match(ruleBlock(css(), ".cols ul"), /list-style:\s*none/);
+  assert.match(ruleBlock(css(), ".cols li"), /background:[^;]*data:image\/svg\+xml/);
+});
+
+test("the hero figure reserves its square", () => {
+  assert.match(ruleBlock(css(), ".hero-panel"), /aspect-ratio:\s*1\b/);
+  assert.match(css(), /\.hero-panel__pause\[hidden\]/);
+});
+
+test("the old halo animation is gone", () => {
+  assert.doesNotMatch(css(), /halo-turn/);
+  assert.doesNotMatch(css(), /\.direction\b/);
+});

@@ -217,28 +217,16 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 
 /* Hero on Nuit with canvas (Onde + Médaillon + nid) */
 .hero-nuit { position: relative; background: var(--color-ink); color: var(--color-on-dark); min-height: min(88vh, 760px); display: flex; align-items: center; overflow: hidden; --focus-color: var(--color-paper); }
-.hero-nuit canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .hero-nuit__txt { position: relative; padding-block: var(--space-9); }
 .hero-nuit .eyebrow { color: var(--color-amber); }
 .hero-nuit h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2.25rem, 1.4rem + 3.6vw, 3.75rem); line-height: 1.04; letter-spacing: -0.01em; max-width: 13ch; color: var(--color-on-dark); }
 .hero-nuit .lead { margin-top: var(--space-5); max-width: 32rem; font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem); color: var(--color-on-dark-2); }
 .hero-nuit .honest { margin-top: var(--space-4); max-width: 32rem; font-size: var(--text-sm); color: var(--color-on-dark-2); }
-.btn-replay { margin-top: var(--space-5); background: none; border: 1px solid #857B81; color: var(--color-on-dark); font: 500 0.875rem var(--font-text); min-height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-control); cursor: pointer; }
-.btn-replay:hover { border-color: var(--color-amber); }
-@media (prefers-reduced-motion: reduce) { .btn-replay { display: none; } }
-@media (max-width: 760px) {
-  .hero-nuit { align-items: flex-end; min-height: 680px; }
-  .hero-nuit__txt { padding-top: 300px; padding-bottom: var(--space-8); }
-}
 
-/* Bande incrustée: nacre lozenge + amber square + plum square on Nuit, 14px */
-.bande { height: 14px; background-color: var(--color-ink);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='14'%3E%3Cpath d='M7 2L12 7L7 12L2 7Z' fill='%23FBF8F3'/%3E%3Crect x='18' y='4' width='6' height='6' fill='%23DD9349'/%3E%3Cpath d='M35 2L40 7L35 12L30 7Z' fill='none' stroke='%23FBF8F3' stroke-width='1'/%3E%3C/svg%3E");
-  background-repeat: repeat-x; background-position: center; }
 
 /* Cadre: double walnut filet offset 7px + amber corner piece */
 .doors--cadre { margin-top: 0; }
-.door.cadre, .family.cadre { border-top: 0; padding: var(--space-6); background: var(--color-surface); border: 1px solid var(--noyer); outline: 1px solid var(--noyer); outline-offset: -8px; gap: var(--space-3); }
+.door.cadre, .family.cadre { border-top: 0; padding: var(--space-6); background: var(--color-surface); border: 1px solid var(--noyer); outline: 1px solid var(--noyer); outline-offset: -8px; gap: var(--space-3); box-shadow: inset 0 0 0 5px var(--color-surface), inset 0 0 0 6px var(--noyer); }
 .door.cadre::before, .family.cadre::before { content: ""; position: absolute; top: 0; left: 0; width: 18px; height: 18px; background: var(--color-amber); clip-path: polygon(0 0, 100% 0, 0 100%); }
 .door.cadre:focus-within { outline: 3px solid var(--focus-color); outline-offset: 4px; }
 .door h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.375rem; line-height: 1.2; }
@@ -253,21 +241,9 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
   .door:hover .door-nid, .door:focus-within .door-nid { transform: rotate(51.43deg); }
 }
 
-/* Notre direction: full-bleed photo, text on Nuit gradient */
-.direction { position: relative; background: var(--color-ink); color: var(--color-on-dark); min-height: 520px; display: flex; align-items: flex-end; overflow: hidden; --focus-color: var(--color-paper); }
-.direction picture, .direction img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.direction::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(19,17,20,.92) 0%, rgba(19,17,20,.6) 45%, rgba(19,17,20,.1) 100%); }
-.direction__txt { position: relative; z-index: 1; padding-block: var(--space-9) var(--space-8); }
-.direction .eyebrow { color: var(--color-amber); }
-.direction h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem); color: var(--color-on-dark); }
-.direction p { max-width: 34rem; color: var(--color-on-dark-2); margin-top: var(--space-4); }
-.direction .credit { font-size: 0.75rem; margin-top: var(--space-5); }
-@media (max-width: 760px) { .direction::after { background: linear-gradient(0deg, rgba(19,17,20,.95) 30%, rgba(19,17,20,.35) 100%); } }
 
-/* Footer starts with a bande */
-.site-footer { border-top: 14px solid var(--color-ink); position: relative; }
-.site-footer::before { content: ""; position: absolute; top: -14px; left: 0; right: 0; height: 14px; background: inherit;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='14'%3E%3Cpath d='M7 2L12 7L7 12L2 7Z' fill='%23FBF8F3'/%3E%3Crect x='18' y='4' width='6' height='6' fill='%23DD9349'/%3E%3Cpath d='M35 2L40 7L35 12L30 7Z' fill='none' stroke='%23FBF8F3' stroke-width='1'/%3E%3C/svg%3E"); background-repeat: repeat-x; background-position: center; }
+/* Footer: a sawtooth divider (.rule-saw) now sits above it */
+.site-footer { position: relative; }
 
 /* ===== Home v3 — council pass: moodboard + marqueterie mock ===== */
 .section-head .eyebrow { font-size: 0.75rem; color: var(--color-signal); margin-bottom: calc(-1 * var(--space-2)); }
@@ -277,27 +253,13 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 .cadre-filet::after { bottom: -1px; right: -1px; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
 @media (max-width: 760px) { .cadre-filet { inset: 8px; } }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-top: var(--space-6); }
-.hero-actions .btn-replay { margin-top: 0; }
 .btn-light { background: var(--color-paper); color: var(--color-ink); }
 .btn-light:hover { background: #fff; }
 .btn-outline-light { background: transparent; color: var(--color-on-dark); border-color: var(--color-on-dark); }
 .btn-outline-light:hover { border-color: var(--color-amber); color: #fff; }
-.btn-replay { display: inline-flex; align-items: center; gap: var(--space-2); }
-.btn-replay[hidden] { display: none; }
-.btn-replay svg { width: 18px; height: 18px; fill: currentColor; }
-.btn-replay[aria-pressed="true"] { border-color: var(--color-amber); color: var(--color-amber); }
 .door-who { font-size: var(--text-sm); color: var(--color-ink-3); margin: 0; }
 .door.cadre::after, .family.cadre::after { content: ""; position: absolute; bottom: 0; right: 0; width: 18px; height: 18px; background: var(--color-amber); clip-path: polygon(100% 0, 100% 100%, 0 100%); pointer-events: none; }
 
-/* Direction: nest of light over the stage, médaillon bullets */
-.direction { min-height: 640px; }
-.direction__halo { position: absolute; left: 48%; top: 34%; width: clamp(200px, 22vw, 320px); transform: translate(-50%, -50%); fill: none; stroke: var(--color-amber); stroke-width: 2.4; mix-blend-mode: screen; opacity: .75; filter: drop-shadow(0 0 6px rgba(221,147,73,.9)); }
-@media (prefers-reduced-motion: no-preference) {
-  .direction__halo { animation: halo-turn 40s linear infinite; animation-play-state: paused; }
-  .direction__halo.is-on { animation-play-state: running; }
-}
-@keyframes halo-turn { to { transform: translate(-50%, -50%) rotate(360deg); } }
-@media (max-width: 760px) { .direction__halo { left: 50%; top: 22%; width: 200px; } .direction { min-height: 720px; } }
 .medaillons { list-style: none; padding: 0; margin: var(--space-5) 0 0; display: grid; gap: var(--space-3); max-width: 36rem; }
 .medaillons li { position: relative; padding-left: 30px; color: var(--color-on-dark); font-size: 1.0625rem; }
 .medaillons li::before { content: ""; position: absolute; left: 0; top: .25em; width: 16px; height: 16px;
@@ -326,7 +288,7 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 
 /* Closing band on Nuit with the bronze Damascus texture */
 .cta-nuit { position: relative; background: var(--color-ink); color: var(--color-on-dark); overflow: hidden; --focus-color: var(--color-paper); }
-.cta-nuit__bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .38; }
+.cta-nuit__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .38; }
 .cta-nuit__in { position: relative; padding-block: var(--space-9); padding-inline: calc(var(--gutter) + var(--space-6)); text-align: center; display: grid; justify-items: center; gap: var(--space-4); }
 .cta-nuit .cadre-filet { inset: var(--space-6) var(--gutter); }
 .cta-nuit blockquote { margin: 0 0 var(--space-4); font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); line-height: 1.15; max-width: 22ch; color: var(--color-on-dark); }
@@ -349,3 +311,38 @@ kbd { display: inline-block; font: 600 0.875em/1.4 var(--font-text); padding: 0 
 .board--keys td { line-height: 1.9; }
 .tp-table-note { margin-top: calc(-1 * var(--space-4)); }
 @media (max-width: 720px) { .board--keys tbody th { width: auto; } }
+
+
+/* ===== Marquetry panel (Phase B2) ===== */
+/* Dividers: rendered tiles repeated along x (assets/img/panel, from visuals/ by tools/render-assets.mjs) */
+.rule { display: block; margin: 0; background-repeat: repeat-x; background-position: left center; }
+.rule-rope { height: 25px; background-size: 80px 25px; background-image: url("../img/panel/rope-tile-1x.webp"); background-image: image-set(url("../img/panel/rope-tile-1x.webp") 1x, url("../img/panel/rope-tile-2x.webp") 2x); }
+.rule-tri { height: 40px; background-size: 76px 40px; background-image: url("../img/panel/tri-tile-1x.webp"); background-image: image-set(url("../img/panel/tri-tile-1x.webp") 1x, url("../img/panel/tri-tile-2x.webp") 2x); }
+.rule-saw { height: 24px; background-size: 32px 24px; background-image: url("../img/panel/saw-tile-1x.webp"); background-image: image-set(url("../img/panel/saw-tile-1x.webp") 1x, url("../img/panel/saw-tile-2x.webp") 2x); }
+
+/* Home hero: text left, the panel being made on the right. The poster is the LCP image; the canvas is revealed by script only when motion is allowed. */
+.hero-nuit__grid { position: relative; width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) min(46vw, 560px); gap: var(--space-8); align-items: center; padding-block: var(--space-8); }
+.hero-nuit__grid .hero-nuit__txt { padding-block: 0; }
+.hero-panel { position: relative; margin: 0; width: 100%; aspect-ratio: 1; justify-self: end; background: #0C0A0B; }
+.hero-panel__poster, .hero-panel__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero-panel__canvas[hidden], .hero-panel__pause[hidden] { display: none; }
+.hero-panel__pause { position: absolute; left: 12px; bottom: 12px; background: rgba(19,17,20,.88); border: 1px solid #857B81; color: var(--color-on-dark); font: 500 0.875rem var(--font-text); min-height: 44px; padding: 0 var(--space-4); cursor: pointer; }
+.hero-panel__pause:hover { border-color: var(--color-amber); }
+.hero-panel__pause[aria-pressed="true"] { border-color: var(--color-amber); color: var(--color-amber); }
+.hero-panel__pause:focus-visible { outline: 3px solid var(--focus-color); outline-offset: 3px; }
+@media (max-width: 800px) {
+  .hero-nuit { min-height: 0; }
+  .hero-nuit__grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); padding-block: var(--space-7); }
+  .hero-panel { order: -1; width: min(86vw, 420px); justify-self: center; }
+}
+
+/* Lists: an eight-point star (two squares, one turned 45 degrees) in place of the dot */
+.cols ul { list-style: none; padding: 0; margin: var(--space-3) 0 0; }
+.cols li { padding-left: 1.5rem; margin-block: var(--space-2); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cg fill='none' stroke='%23612D45' stroke-width='1'%3E%3Crect x='2.2' y='2.2' width='7.6' height='7.6'/%3E%3Crect x='2.2' y='2.2' width='7.6' height='7.6' transform='rotate(45 6 6)'/%3E%3C/g%3E%3C/svg%3E") no-repeat 0 0.4em / 12px 12px; }
+
+/* Se former hero: the strapwork crop beside the text (hidden on narrow screens), and the footer seal */
+.branch-hero__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7); align-items: center; }
+@media (min-width: 801px) { .branch-hero__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 360px); } }
+.branch-hero__art { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid var(--noyer); }
+@media (max-width: 800px) { .branch-hero__art { display: none; } }
+.site-footer__seal { display: block; width: 96px; height: 96px; margin-bottom: var(--space-4); }
