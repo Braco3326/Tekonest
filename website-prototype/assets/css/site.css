@@ -330,6 +330,7 @@ kbd { display: inline-block; font: 600 0.875em/1.4 var(--font-text); padding: 0 
 .hero-panel__pause:hover { border-color: var(--color-amber); }
 .hero-panel__pause[aria-pressed="true"] { border-color: var(--color-amber); color: var(--color-amber); }
 .hero-panel__pause:focus-visible { outline: 3px solid var(--focus-color); outline-offset: 3px; }
+.hero-panel:focus-visible { outline: 3px solid var(--focus-color); outline-offset: 3px; }
 @media (max-width: 800px) {
   .hero-nuit { min-height: 0; }
   .hero-nuit__grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); padding-block: var(--space-7); }

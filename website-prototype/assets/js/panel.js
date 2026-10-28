@@ -621,6 +621,10 @@
     return L.cache;
   }
   function warm(model) { model.layerList.forEach(function (L) { if (L.name !== "guides") layerCache(L, model); }); pearlMask(model); }
+  function release(model) {                                                            // drop every canvas this model holds; rendering again rebuilds them
+    model.layerList.forEach(function (L) { L.cache = null; L.live = null; });
+    model.sheenCv = null; maskCache = null;
+  }
 
     /* opts.live: finished pieces of a layer still in progress are baked once, so playback stays light. Rendering for video
      leaves it off, because then the frame is a pure function of t. */
@@ -632,6 +636,7 @@
     ctx.fillStyle = GROUND; ctx.fillRect(-model.a0, -model.a0, model.W, model.W);
     model.layerList.forEach(function (L) {
       if (t >= L.end) {
+        L.live = null;                                                                 // a finished layer's live bake is no longer needed
         ctx.drawImage(layerCache(L, model), -model.W / 2, -model.W / 2);
       } else if (live) {
         if (!L.live) { L.live = { cv: document.createElement("canvas"), done: {} }; L.live.cv.width = L.live.cv.height = model.W; L.live.cx = L.live.cv.getContext("2d"); L.live.cx.translate(model.W / 2, model.W / 2); }
@@ -671,13 +676,15 @@
 
   g.Panel = { build: function (W, o) { return schedule(build(W, o)); }, render: render, drawPanel: drawPanel, DURATION: DURATION, PLAN: PLAN, ease: ease,
     strip: function (ctx, type, L, t, seed, hand) { var s = STRIPS[type](L, t, seed, hand); s.base(ctx); s.cells.forEach(function (c) { c.draw(ctx); }); },
-    maskOf: pearlMask, warm: warm, drawRoundel: drawRoundel, fieldTexture: fieldTexture, tile: tile, corner: cornerDraw, slab: slab, pearl: pearl, GROUND: GROUND };
+    maskOf: pearlMask, warm: warm, release: release, drawRoundel: drawRoundel, fieldTexture: fieldTexture, tile: tile, corner: cornerDraw, slab: slab, pearl: pearl, GROUND: GROUND };
 })(window);
 ;
 /* hero-panel: starts the panel's making animation inside figure.hero-panel on the home page.
    The poster (an <img>) is what loads first and stays in the DOM. This script only reveals the canvas when motion is allowed:
    not under prefers-reduced-motion, not under Save-Data, not without JavaScript. One pause button (aria-pressed); it goes away
-   when the animation has finished. The animation holds its last frame, which is the poster. Plays once, never restarts. */
+   when the animation has finished. The animation holds its last frame, which is the poster. Plays once, never restarts.
+   If anything throws while drawing, the canvas and the button are hidden again and the poster shows. When the animation ends
+   the model's canvases are released; a resize rebuilds them for one redraw and releases them again. */
 (function () {
   var fig = document.querySelector("figure.hero-panel");
   if (!fig) return;
@@ -688,9 +695,14 @@
   if (reduce || saveData) return;
 
   var PAUSE = "Mettre en pause l'animation", RESUME = "Reprendre l'animation";
-  var started = false, running = false, finished = false, userPaused = false, autoPaused = false;
-  var elapsed = 0, last = 0, raf = 0, model = null, ctx = null, scale = 1, resizeTimer = 0;
+  var started = false, running = false, finished = false, failed = false, userPaused = false, autoPaused = false;
+  var elapsed = 0, last = 0, raf = 0, model = null, ctx = null, scale = 1, resizeTimer = 0, io = null;
 
+  function build() { model = window.Panel.build(980, { seed: 1306, hand: 1.4 }); window.Panel.warm(model); }
+  function release() { if (model && window.Panel.release) window.Panel.release(model); model = null; }
+  function keepFocus() {                              // the button is about to disappear: keep a keyboard user's place in the hero
+    if (document.activeElement === btn) { fig.setAttribute("tabindex", "-1"); fig.focus(); }
+  }
   function size() {
     var dpr = Math.min(window.devicePixelRatio || 1, 2), px = Math.round((fig.clientWidth || 560) * dpr);
     cv.width = px; cv.height = px; scale = px / 980; ctx = cv.getContext("2d");
@@ -699,11 +711,20 @@
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
     window.Panel.render(ctx, 490, 490, model, Math.min(elapsed, model.duration), { live: true });
   }
+  function giveUp() {                                 // back to the poster, for good
+    failed = true; running = false; finished = true;
+    window.cancelAnimationFrame(raf);
+    keepFocus(); cv.hidden = true; btn.hidden = true;
+    try { release(); } catch (e) { model = null; }
+  }
+  function finish() { running = false; finished = true; keepFocus(); btn.hidden = true; release(); }
   function frame(now) {
     if (!running) return;
-    elapsed += last ? Math.min((now - last) / 1000, 0.1) : 0; last = now;
-    draw();
-    if (elapsed >= model.duration) { running = false; finished = true; btn.hidden = true; return; }
+    try {
+      elapsed += last ? Math.min((now - last) / 1000, 0.1) : 0; last = now;
+      draw();
+      if (elapsed >= model.duration) { finish(); return; }
+    } catch (e) { giveUp(); return; }
     raf = window.requestAnimationFrame(frame);
   }
   function play() { if (running || finished) return; running = true; last = 0; raf = window.requestAnimationFrame(frame); }
@@ -712,10 +733,10 @@
   function begin() {
     if (started) return;
     started = true;
-    model = window.Panel.build(980, { seed: 1306, hand: 1.4 });
-    window.Panel.warm(model);
-    size(); draw();
-    cv.hidden = false; btn.hidden = false; btn.textContent = PAUSE; btn.setAttribute("aria-pressed", "false");
+    try {
+      build(); size(); draw();
+      cv.hidden = false; btn.hidden = false; btn.textContent = PAUSE; btn.setAttribute("aria-pressed", "false");
+    } catch (e) { giveUp(); return; }
     play();
   }
 
@@ -726,18 +747,25 @@
     if (userPaused) stop(); else play();
   });
   document.addEventListener("visibilitychange", function () {
-    if (!started || finished) return;
+    if (!started) { if (!document.hidden && io) { io.disconnect(); arm(); } return; }   // opened in a background tab: look again now
+    if (finished) return;
     if (document.hidden) { if (running) { autoPaused = true; stop(); } }
     else if (autoPaused) { autoPaused = false; if (!userPaused) play(); }
   });
   window.addEventListener("resize", function () {
-    if (!model) return;
-    clearTimeout(resizeTimer); resizeTimer = setTimeout(function () { size(); draw(); }, 150);
+    if (!started || failed) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      try {
+        if (model) { size(); draw(); return; }
+        build(); size(); draw(); release();           // finished: rebuild for one redraw at the new size, then let go again
+      } catch (e) { giveUp(); }
+    }, 150);
   });
 
   function arm() {
     if (!("IntersectionObserver" in window)) { begin(); return; }
-    var io = new IntersectionObserver(function (entries) {
+    io = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting && !document.hidden) { io.disconnect(); begin(); }
     }, { threshold: 0.4 });
     io.observe(fig);

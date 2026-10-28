@@ -290,6 +290,10 @@
     return L.cache;
   }
   function warm(model) { model.layerList.forEach(function (L) { if (L.name !== "guides") layerCache(L, model); }); pearlMask(model); }
+  function release(model) {                                                            // drop every canvas this model holds; rendering again rebuilds them
+    model.layerList.forEach(function (L) { L.cache = null; L.live = null; });
+    model.sheenCv = null; maskCache = null;
+  }
 
     /* opts.live: finished pieces of a layer still in progress are baked once, so playback stays light. Rendering for video
      leaves it off, because then the frame is a pure function of t. */
@@ -301,6 +305,7 @@
     ctx.fillStyle = GROUND; ctx.fillRect(-model.a0, -model.a0, model.W, model.W);
     model.layerList.forEach(function (L) {
       if (t >= L.end) {
+        L.live = null;                                                                 // a finished layer's live bake is no longer needed
         ctx.drawImage(layerCache(L, model), -model.W / 2, -model.W / 2);
       } else if (live) {
         if (!L.live) { L.live = { cv: document.createElement("canvas"), done: {} }; L.live.cv.width = L.live.cv.height = model.W; L.live.cx = L.live.cv.getContext("2d"); L.live.cx.translate(model.W / 2, model.W / 2); }
@@ -340,5 +345,5 @@
 
   g.Panel = { build: function (W, o) { return schedule(build(W, o)); }, render: render, drawPanel: drawPanel, DURATION: DURATION, PLAN: PLAN, ease: ease,
     strip: function (ctx, type, L, t, seed, hand) { var s = STRIPS[type](L, t, seed, hand); s.base(ctx); s.cells.forEach(function (c) { c.draw(ctx); }); },
-    maskOf: pearlMask, warm: warm, drawRoundel: drawRoundel, fieldTexture: fieldTexture, tile: tile, corner: cornerDraw, slab: slab, pearl: pearl, GROUND: GROUND };
+    maskOf: pearlMask, warm: warm, release: release, drawRoundel: drawRoundel, fieldTexture: fieldTexture, tile: tile, corner: cornerDraw, slab: slab, pearl: pearl, GROUND: GROUND };
 })(window);
