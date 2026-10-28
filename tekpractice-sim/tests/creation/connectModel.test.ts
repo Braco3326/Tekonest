@@ -6,7 +6,7 @@ import { COPY } from '../../src/creation/copy'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { History } from '../../src/creation/history'
 import { rejectionOf, ruleTextFor, type RuleRow } from '../../src/creation/shell/statusModel'
-import { candidates, ConnectSession, filterCandidates, groupByDevice } from '../../src/creation/shell/connectModel'
+import { candidates, ConnectSession, filterCandidates, focusPlan, groupByDevice } from '../../src/creation/shell/connectModel'
 
 const registry = loadCatalog(catalogJson)
 const ruleText = ruleTextFor(registry.catalog.rules as readonly RuleRow[])
@@ -255,5 +255,29 @@ describe('ConnectSession: the dialog\'s state, without the DOM', () => {
     s.setQuery('k12-g power')
     expect(s.rejectedVisible.map((e) => key(e.ref))).toEqual(['k12-g.power-in'])
     expect(s.visible).toEqual([])
+  })
+})
+
+describe('focusPlan: where focus goes when the dialog closes (never <body>, never the row of another device)', () => {
+  it('a place change: the canvas, and nothing else', () => {
+    expect(focusPlan('place', true)).toEqual(['canvas'])
+    expect(focusPlan('place', false)).toEqual(['canvas'])
+  })
+  it('a cable was made: its row, then the Propriétés title, then the canvas', () => {
+    expect(focusPlan('connected', false)).toEqual(['row', 'title', 'canvas'])
+  })
+  it('cancelled or stale: the opener only while it still denotes the same device and port, else the title, else the canvas', () => {
+    for (const r of ['cancelled', 'stale'] as const) {
+      expect(focusPlan(r, true)).toEqual(['opener', 'title', 'canvas'])
+      expect(focusPlan(r, false)).toEqual(['title', 'canvas'])
+    }
+  })
+  it('every plan ends on the canvas (the one target that always exists), and no plan has a body or other-device target', () => {
+    for (const r of ['connected', 'cancelled', 'stale', 'place'] as const)
+      for (const same of [true, false]) {
+        const plan = focusPlan(r, same)
+        expect(plan[plan.length - 1]).toBe('canvas')
+        expect(plan.every((t) => ['opener', 'row', 'title', 'canvas'].includes(t))).toBe(true)
+      }
   })
 })

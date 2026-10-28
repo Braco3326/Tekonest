@@ -19,7 +19,7 @@ import type { PortRef } from '../../engine/types'
 import { COPY } from '../copy'
 import type { History } from '../history'
 import type { CreationStore } from '../store'
-import { ConnectSession, groupByDevice, type RejectionTitle } from './connectModel'
+import { ConnectSession, focusPlan, groupByDevice, type CloseReason, type RejectionTitle } from './connectModel'
 import { connectorName, shortName, signalName } from './propertiesModel'
 import { modalButton, modalRow, openModal } from './modal'
 import './connectDialog.css'
@@ -37,11 +37,17 @@ export interface ConnectDialogDeps {
   undoLabel?(): string
   /** Called just before an intent is dispatched (the shell closes a stepper burst still open). */
   beforeDispatch?(): void
-  /**
-   * The dialog closed and the opener is gone (the panel was rebuilt by the cable, or the rig changed): put focus where the
-   * learner was. `connected`: a cable was made from `from`.
-   */
-  restoreFocus(from: PortRef, connected: boolean): void
+  /** Where focus can go when the dialog closes (each returns true when it took focus). See `focusPlan`. */
+  focus: {
+    /** The device Propriétés shows now (null = none). */
+    panelDevice(): string | null
+    /** The row of `from.port` on the device `from.instance`, only while Propriétés shows that device. */
+    row(from: PortRef): boolean
+    /** The Propriétés title (it takes focus: tabindex -1). */
+    title(): boolean
+    /** The 3D canvas. */
+    canvas(): boolean
+  }
 }
 
 export interface ConnectDialog {
@@ -84,13 +90,24 @@ export function createConnectDialog(d: ConnectDialogDeps): ConnectDialog {
     let ended = false
     let end: (v: Outcome) => void = () => {}
     let staleClosed = false
-    const unsubscribe = d.store.subscribe(() => {
+    /** Set before `end` when the close is not the learner's: a rig change under it, or the place (the whole design). */
+    let reason: CloseReason | null = null
+    const roomAtOpen = d.store.design().roomId
+    const unsubscribe = d.store.subscribe((change) => {
       // Its own CONNECT notifies during the dispatch: not a reason to close. Anything else is.
       if (ended || !session.onStoreChange()) return
       staleClosed = true
+      // A new design (a place, « Nouveau », « Ouvrir », an undo of one) replaces the rig the dialog was about.
+      reason = change.intents.some((i) => i.type === 'APPLY_DESIGN') || d.store.design().roomId !== roomAtOpen ? 'place' : 'stale'
       end('cancelled')
     })
-    const handle = { close: () => end('cancelled') }
+    // An outside close (the shell changed place, or is torn down): the rig this was about is gone.
+    const handle = {
+      close: () => {
+        reason ??= 'place'
+        end('cancelled')
+      },
+    }
     current = handle
 
     const result = openModal<Outcome>({
@@ -302,11 +319,24 @@ export function createConnectDialog(d: ConnectDialogDeps): ConnectDialog {
     void result.then((outcome) => {
       unsubscribe() // closed by Échap or by another modal too
       ended = true
+      const superseded = current !== null && current !== handle // a newer dialog owns focus now
       if (current === handle) current = null
       if (staleClosed) d.announce(C().statusClosedStale!)
-      // The opener leaves the DOM when the cable rebuilds its row: focus the row. A cancelled dialog gets its opener back
-      // from the modal itself, unless the rig changed under it.
-      if (outcome === 'connected' || !opener.isConnected) d.restoreFocus(from, outcome === 'connected')
+      if (superseded) return
+      // The modal gave focus back to the opener; that is right only while the opener still denotes this device and port
+      // (the panel patches in place when nothing structural changed, and rebuilds - new buttons - when it did).
+      const openerSame =
+        opener.isConnected && opener.dataset.key === `connect:${from.port}` && d.focus.panelDevice() === from.instance && d.store.design().rig.instances.some((i) => i.instanceId === from.instance)
+      const tryTarget = {
+        opener: () => {
+          if (document.activeElement !== opener) opener.focus()
+          return document.activeElement === opener
+        },
+        row: () => d.focus.row(from),
+        title: () => d.focus.title(),
+        canvas: () => d.focus.canvas(),
+      }
+      for (const target of focusPlan(reason ?? (outcome === 'connected' ? 'connected' : 'cancelled'), openerSame)) if (tryTarget[target]()) return
     })
   }
 

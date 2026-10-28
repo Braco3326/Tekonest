@@ -50,8 +50,12 @@ export interface PropertiesPanel {
   render(): void
   /** Close a pending stepper burst now (before an undo / redo). */
   flush(): void
-  /** Put focus on a port's row (after a cable was made or removed under the focused button); the title when it is gone. */
-  focusPort(portId: string): void
+  /** The device the panel shows now (null = none). */
+  device(): string | null
+  /** Put focus on a port's row, only while the panel shows that device. False (focus untouched) otherwise. */
+  focusPort(instanceId: string, portId: string): boolean
+  /** Put focus on the panel's title (it takes focus: tabindex -1). False when it did not take it. */
+  focusTitle(): boolean
 }
 
 type NumField = 'x' | 'y' | 'z' | 'yaw' | 'tilt'
@@ -539,9 +543,17 @@ export function mountPropertiesPanel(d: PropertiesPanelDeps): PropertiesPanel {
     },
     render,
     flush,
-    focusPort(portId: string): void {
+    device: () => view?.instanceId ?? null,
+    focusPort(instanceId: string, portId: string): boolean {
+      if (view?.instanceId !== instanceId) return false
       const row = root.querySelector<HTMLElement>(`[data-key="${CSS.escape(`port:${portId}`)}"]`)
-      ;(row ?? root.querySelector<HTMLElement>('.cr-props-title'))?.focus()
+      row?.focus()
+      return !!row && doc.activeElement === row
+    },
+    focusTitle(): boolean {
+      const title = root.querySelector<HTMLElement>('.cr-props-title')
+      title?.focus()
+      return !!title && doc.activeElement === title
     },
   }
 }

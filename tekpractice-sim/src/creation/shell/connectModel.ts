@@ -213,3 +213,21 @@ export class ConnectSession {
     return { kind: 'refused', message: this.d.rejectionTitle(r.error, r.subjects) }
   }
 }
+
+/** Why the dialog closed: its cable was made, the learner left, the rig changed under it, or the place (the whole design) did. */
+export type CloseReason = 'connected' | 'cancelled' | 'stale' | 'place'
+/** Where focus may go when the dialog closes, tried in order until one takes it. Never `<body>`, never a row of another device. */
+export type FocusTarget = 'opener' | 'row' | 'title' | 'canvas'
+
+/**
+ * The ordered focus targets after the dialog closed (controller ruling, Task 28 fix round 1):
+ * - place changed: the 3D canvas (the shell's one tab stop; the rig the dialog referred to is gone);
+ * - the cable was made: the row it cabled (same device), then the panel title, then the canvas;
+ * - cancelled / rig changed under it: the opener if it is still connected and still denotes the same device and port,
+ *   else the Propriétés title (focusable), else the canvas.
+ */
+export function focusPlan(reason: CloseReason, openerSame: boolean): FocusTarget[] {
+  if (reason === 'place') return ['canvas']
+  if (reason === 'connected') return ['row', 'title', 'canvas']
+  return openerSame ? ['opener', 'title', 'canvas'] : ['title', 'canvas']
+}

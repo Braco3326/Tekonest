@@ -1383,7 +1383,15 @@ export async function bootCreation(): Promise<void> {
     announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
     undoLabel,
     beforeDispatch: () => props.flush(),
-    restoreFocus: (from) => props.focusPort(from.port),
+    focus: {
+      panelDevice: () => props.device(),
+      row: (from) => props.focusPort(from.instance, from.port),
+      title: () => props.focusTitle(),
+      canvas: () => {
+        canvas.focus()
+        return document.activeElement === canvas
+      },
+    },
   })
   shellBag.add(() => connectDialog.close())
 

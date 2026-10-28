@@ -4,7 +4,7 @@
  * - role="dialog" + aria-modal, labelled by its h2 (and described by `body` when given);
  * - everything behind it is `inert` (each element's own state restored on close);
  * - focus kept in by two edge sentinels: the focus key itself is never intercepted (C10);
- * - Esc = `cancel`; focus goes back where it was; a press on the backdrop does not take focus out of the dialog;
+ * - Esc = `cancel`; focus goes back where it was; a press on a non-control part (backdrop, title, text) does not take focus out of it;
  * - one dialog at a time: a new one closes the open one (which resolves its cancel).
  * Styled by `.cr-dialog*` classes in creation.css (`--cr-*` tokens, square corners).
  */
@@ -87,9 +87,14 @@ export function openModal<T>(o: ModalOptions<T>): Promise<T> {
     box.prepend(sentinel(() => parts.edges()[1]))
     box.append(sentinel(() => parts.edges()[0]))
     overlay.appendChild(box)
-    // A press on the backdrop is not a way out and must not blur the dialog: focus stays where it is, so Échap still works.
+    // A press on anything that is not a control (the backdrop, the title, the text, a heading, the padding) must not blur the
+    // dialog to <body>: Échap (listened on the box) and the arrows would stop reaching it. Preventing the press's default keeps
+    // focus where it is; the click still happens, and controls (and their labels) keep their normal press. Chosen over a
+    // document-level Échap listener because it touches no key routing and changes nothing for a control; its one cost is that
+    // a press on plain text no longer starts a text selection.
     overlay.addEventListener('mousedown', (e) => {
-      if (e.target === overlay) e.preventDefault()
+      const t = e.target
+      if (!(t instanceof Element) || !t.closest('input, button, select, textarea, a, label, summary, [tabindex], [contenteditable]')) e.preventDefault()
     })
     parent.appendChild(overlay)
     // Everything behind the dialog: the overlay's siblings up to <body>.

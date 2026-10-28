@@ -278,12 +278,12 @@ test('a rig that changes under the open dialog closes it, says so, and nothing s
   await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'k12-g' }))
   await expect(dialog(page)).toHaveCount(0)
   expect(await connections(page)).toHaveLength(0)
-  // 3. a place change
+  // 3. a place change: focus goes to the 3D canvas (the rig the dialog was about is gone), never <body> or a panel row
   await open(page, 'out-main-l')
   await page.evaluate(() => window.__creation!.choosePlace('room:radio-talk-studio-medium'))
   await page.waitForFunction(() => window.__creation!.place() === 'room:radio-talk-studio-medium')
   await expect(dialog(page)).toHaveCount(0)
-  expect(await page.evaluate(() => document.activeElement?.isConnected)).toBe(true)
+  await expect(page.locator('#renderCanvas')).toBeFocused()
   expect(await page.evaluate(() => window.__creation!.design().rig.connections.length)).toBe(0)
   expect(errors).toEqual([])
 })
@@ -386,4 +386,41 @@ test('narrow window: the dialog fits a 390 px wide screen and its list scrolls i
   expect(box.x + box.width).toBeLessThanOrEqual(390)
   expect(box.y + box.height).toBeLessThanOrEqual(700)
   await page.screenshot({ path: process.env.TK_SHOT_DIR ? `${process.env.TK_SHOT_DIR}/connect-narrow.png` : 'test-results/connect-narrow.png' })
+})
+
+test('a press on a group heading, the count line or the text keeps focus in the field: the arrows and Échap still work', async ({ page }) => {
+  await boot(page)
+  await open(page, 'out-main-r')
+  const options = dialog(page).getByRole('option')
+  for (const target of [dialog(page).locator('.cr-connect-group-title').first(), page.getByTestId('connect-count'), dialog(page).locator('.cr-dialog-title'), dialog(page).locator('.cr-dialog-body')]) {
+    await target.click()
+    await expect(filter(page)).toBeFocused()
+  }
+  await page.keyboard.press('ArrowDown')
+  await expect(options.nth(1)).toHaveAttribute('aria-selected', 'true')
+  await page.keyboard.press('Escape')
+  await expect(dialog(page)).toHaveCount(0)
+  await expect(opener(page, 'out-main-r')).toBeFocused()
+})
+
+test('where focus goes when the rig changes under the dialog: the opener while it still stands, else the Propriétés title, never <body> nor the row of another device', async ({ page }) => {
+  await boot(page)
+  const active = () => page.evaluate(() => ({ tag: document.activeElement?.tagName ?? null, cls: document.activeElement?.className ?? '', key: (document.activeElement as HTMLElement | null)?.dataset?.key ?? null }))
+  // 1. a change that leaves ql1's panel as it was (k12-d removed): the opener is still the opener
+  await open(page, 'out-main-l')
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'k12-d' }))
+  await expect(dialog(page)).toHaveCount(0)
+  await expect(opener(page, 'out-main-l')).toBeFocused()
+  // 2. a change that rebuilds the panel (this very port is cabled from elsewhere): the opener is gone, focus is the panel's title
+  await open(page, 'out-main-l')
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'CONNECT', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } }))
+  await expect(dialog(page)).toHaveCount(0)
+  await expect(opener(page, 'out-main-l')).toHaveCount(0)
+  expect(await active()).toMatchObject({ cls: expect.stringContaining('cr-props-title') })
+  await expect(page.getByTestId('properties').getByRole('heading', { name: 'Yamaha QL1' })).toBeFocused()
+  // 3. the device the dialog was opened from leaves the rig: the panel says « Aucune sélection » and that title takes focus
+  await open(page, 'out-main-r')
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'ql1' }))
+  await expect(dialog(page)).toHaveCount(0)
+  await expect(page.getByTestId('properties').getByRole('heading', { name: 'Aucune sélection' })).toBeFocused()
 })
