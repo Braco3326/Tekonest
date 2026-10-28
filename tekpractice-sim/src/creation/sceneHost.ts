@@ -426,6 +426,15 @@ export class SceneHost {
     return this.walking ? null : (this.proxies?.portAt(x, y) ?? null)
   }
 
+  /**
+   * The canvas was resized (the projection changed, the view matrix did not): the port proxies are re-sized for the new
+   * viewport height (a stale scale would leave the hit radius under 12 px) and the labels on screen follow their port.
+   */
+  viewResized(): void {
+    this.proxies?.refresh()
+    this.onPortViewChange?.()
+  }
+
   /** A port's hit radius on screen (CSS px); 0 for an unknown port. */
   portHitRadiusPx(ref: PortRef): number {
     return this.proxies?.hitRadiusPx(ref) ?? 0

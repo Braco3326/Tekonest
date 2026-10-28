@@ -576,7 +576,7 @@ export async function bootCreation(): Promise<void> {
   // Panels fold / unfold and the window resizes: the canvas follows its box.
   const resize = new ResizeObserver(() => {
     host.engine.resize()
-    host.onPortViewChange?.() // the projection changed with no camera move: a port label follows its port
+    host.viewResized() // the projection changed with no camera move: port proxies are re-sized, labels follow their port
     scheduler.invalidate()
   })
   resize.observe(shell.viewport)

@@ -86,7 +86,9 @@ for (const [w, h] of [
 
     // select a device with a click in the 3D view (the pick path), the camera cuts to it
     const first = await page.evaluate(() => window.__creation!.design().rig.instances[0].instanceId)
-    const p = (await page.evaluate((id) => window.__creation!.deviceScreen(id), first))!
+    // A port's hit area is >= 12 px (Task 26): click a body point outside every port's hit area, so the click is the body's.
+    const p = (await page.evaluate((id) => window.__creation!.bodyPointAway(id, 14), first))!
+    expect(p, 'a body point outside every port hit area').not.toBeNull()
     await page.mouse.click(p.x, p.y)
     await expect.poll(() => page.evaluate(() => window.__creation!.selection())).toBe(first)
     expect(await page.evaluate(() => window.__creation!.outlined())).toEqual([first])

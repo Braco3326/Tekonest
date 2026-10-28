@@ -392,23 +392,50 @@ test('a pinned refusal follows its port through a camera cut and a window resize
     expect(Math.abs(port.y - 14 - (box.y + box.height)), `${what}: vertical`).toBeLessThanOrEqual(6)
   }
   await near('at pin')
-  // a camera cut (reduced motion: one event, no flight)
-  await page.evaluate(() => window.__creation!.setCameraRadius(window.__creation!.camera()!.radius * 0.75))
-  await near('after a zoom cut')
   // a quarter turn of the view (keypad 6): a single cut too
   const before = await screenOf(page, MIC1)
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press('Numpad6')
   await settle(page)
   const turned = await screenOf(page, MIC1)
-  if (Math.hypot(turned.x - before.x, turned.y - before.y) > 20) {
-    const vp = (await page.getByTestId('viewport').boundingBox())!
-    // only when the port is still well inside the view (a bubble at an edge is clamped, which is not the lag under test)
-    if (turned.x > vp.x + 150 && turned.x < vp.x + vp.width - 150 && turned.y > vp.y + 80 && turned.y < vp.y + vp.height - 40) await near('after a quarter turn')
-  }
+  const vp = (await page.getByTestId('viewport').boundingBox())!
+  // Preconditions, loud: the turn really moved the port, and it is still well inside the view (a bubble at an edge is
+  // clamped, which is not the lag under test).
+  expect(Math.hypot(turned.x - before.x, turned.y - before.y), 'the quarter turn moved the port').toBeGreaterThan(20)
+  expect(turned.x, 'turned port inside the view (left)').toBeGreaterThan(vp.x + 150)
+  expect(turned.x, 'turned port inside the view (right)').toBeLessThan(vp.x + vp.width - 150)
+  expect(turned.y, 'turned port inside the view (top)').toBeGreaterThan(vp.y + 80)
+  expect(turned.y, 'turned port inside the view (bottom)').toBeLessThan(vp.y + vp.height - 40)
+  await near('after a quarter turn')
+  // a camera cut (reduced motion: one event, no flight)
+  await page.evaluate(() => window.__creation!.setCameraRadius(window.__creation!.camera()!.radius * 1.25))
+  await near('after a zoom cut')
   // a window resize
   await page.setViewportSize({ width: 1300, height: 640 }) // the port stays well inside the view (a bubble at an edge is clamped, not lagging)
   await near('after a resize')
+})
+
+test('after a window resize (shrink AND grow) every port is still a >= 12 px radius target and a click 11 px off a connector still takes it', async ({ page }) => {
+  await boot(page)
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'UNPLUG', a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } }))
+  const radii = () =>
+    page.evaluate(() => {
+      const c = window.__creation!
+      return c.design().rig.instances.flatMap((i) => c.devicePorts(i.instanceId).map((port) => ({ ref: `${i.instanceId}.${port}`, r: c.portHitRadiusPx({ instance: i.instanceId, port }) })))
+    })
+  for (const size of [{ width: 1300, height: 560 }, { width: 1500, height: 900 }, { width: 1366, height: 768 }]) {
+    await page.setViewportSize(size)
+    await settle(page)
+    const all = await radii()
+    expect(all.length).toBeGreaterThan(10)
+    for (const x of all) expect(x.r, `${x.ref} at ${size.width}x${size.height}`).toBeGreaterThanOrEqual(12 - 1e-6)
+    // a real click 11 px off the lone mic connector is still the port's (starts a cable)
+    const p = await screenOf(page, SM58)
+    await page.mouse.click(p.x + 11, p.y)
+    expect(await pending(page), `11 px off at ${size.width}x${size.height}`).toEqual(SM58)
+    await page.keyboard.press('Escape')
+    expect(await pending(page)).toBeNull()
+  }
 })
 
 test('a place change drops the cable in hand and the labels; the new scene has its own >= 24 px targets', async ({ page }) => {
