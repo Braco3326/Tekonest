@@ -366,4 +366,76 @@ describe('SceneHost view decor (Task 9): selection outline and hidden objects', 
     expect(host.frameOfKey('zone:nope')).toBeNull()
     host.dispose()
   })
+
+  describe('placement ghost (Task 24)', () => {
+    const bodies = (host: SceneHost) => host.scene!.meshes.filter((m) => /^box:ghost-/.test(m.name))
+
+    it('shows a half-transparent, unpickable body at the pose; never in the instances or the outline', async () => {
+      const { host } = makeHost()
+      await host.load(placeFromKey('blank'), emptyIn('blank'))
+      expect(host.showGhost('yamaha-ql1', [1, 0, 2], 90)).toBe(true)
+      expect(host.hasGhost).toBe(true)
+      const [box] = bodies(host)
+      expect(box.visibility).toBe(0.5)
+      expect(box.isPickable).toBe(false)
+      expect(box.metadata?.isDeviceBody).toBe(false) // pickDevice never answers with the ghost
+      const root = box.parent as unknown as { position: Vector3; rotation: Vector3 }
+      expect(root.position.asArray()).toEqual([1, 0, 2])
+      expect(root.rotation.y).toBeCloseTo(Math.PI / 2, 6)
+      // body only: no label, port marker, pick sphere or contact shadow is drawn
+      const ghostParts = host.scene!.meshes.filter((m) => m.name.includes('ghost-'))
+      expect(ghostParts.filter((m) => m.isEnabled() && m.isVisible && m.visibility > 0).every((m) => m.name.startsWith('box:'))).toBe(true)
+      expect(host.instance('ghost-1')).toBeUndefined()
+      expect(host.outlined()).toEqual([])
+      host.moveGhost([2, 0, 3], 0)
+      expect(root.position.asArray()).toEqual([2, 0, 3])
+      host.dispose()
+    })
+
+    it('showing another device replaces it; hideGhost removes every mesh it made and leaves the shared materials alone', async () => {
+      const { host } = makeHost()
+      await host.load(placeFromKey('blank'), rig('blank'))
+      const sceneMeshes = host.scene!.meshes.length
+      const mats = host.scene!.materials.map((m) => m.name).filter((n) => !n.includes('ghost-'))
+      host.showGhost('yamaha-ql1', [0, 0, 0], 0)
+      host.showGhost('shure-sm58', [0, 0, 0], 0)
+      expect(bodies(host)).toHaveLength(1)
+      expect(bodies(host)[0].name).toBe('box:ghost-2')
+      host.hideGhost()
+      expect(host.hasGhost).toBe(false)
+      expect(host.scene!.meshes.filter((m) => m.name.includes('ghost-'))).toHaveLength(0)
+      expect(host.scene!.meshes.length).toBe(sceneMeshes)
+      expect(host.scene!.transformNodes.filter((n) => n.name.includes('ghost-'))).toHaveLength(0)
+      // no ghost material left behind, the spawner's shared ones still there
+      expect(host.scene!.materials.map((m) => m.name).filter((n) => n.includes('ghost-'))).toEqual([])
+      for (const n of mats) expect(host.scene!.materials.some((m) => m.name === n)).toBe(true)
+      expect(host.scene!.getTextureByName('tex:contact-shadow')).not.toBeNull()
+      host.dispose()
+    })
+
+    it('a place change takes the ghost down; no place, an unknown device: no ghost', async () => {
+      const { host } = makeHost()
+      expect(host.showGhost('yamaha-ql1', [0, 0, 0], 0)).toBe(false) // nothing on screen yet
+      await host.load(placeFromKey('blank'), emptyIn('blank'))
+      vi.spyOn(console, 'warn').mockImplementation(() => {})
+      expect(host.showGhost('no-such-device', [0, 0, 0], 0)).toBe(false)
+      expect(host.hasGhost).toBe(false)
+      host.showGhost('yamaha-ql1', [0, 0, 0], 0)
+      await host.load(placeFromKey('room:concert-hall-medium'), emptyIn('room:concert-hall-medium'))
+      expect(host.hasGhost).toBe(false)
+      host.dispose()
+    })
+
+    it('knows the floor rectangle and height of the place', async () => {
+      const { host } = makeHost()
+      await host.load(placeFromKey('room:concert-hall-medium'), emptyIn('room:concert-hall-medium'))
+      const b = host.roomBounds()
+      expect(b.minX).toBe(-b.maxX)
+      expect(b.maxX).toBeGreaterThan(3)
+      expect(b.minZ).toBe(-b.maxZ)
+      expect(typeof host.floorHeight(0, 0, 9)).toBe('number')
+      expect(host.floorHeight(0, 0, 9)).not.toBe(9) // a room answers with its own floor
+      host.dispose()
+    })
+  })
 })

@@ -77,6 +77,8 @@ const LIGHT = CREATION_TOKENS.light
 /** Selection = Ambre screen-space stroke + a light Ambre wash; hover = a Papier stroke, no wash. */
 const SELECT_OVERLAY_ALPHA = 0.22
 const DEG = Math.PI / 180
+/** The placement ghost's opacity (Task 24). */
+const GHOST_ALPHA = 0.5
 /**
  * The meshes that make up a device's outlined silhouette (Task 14b Fix 1): every
  * OPAQUE, drawn part — body (placeholder box or all .glb sub-meshes) and port
@@ -305,6 +307,92 @@ export class SceneHost {
     else if (!on && this.walkLease) {
       this.walkLease()
       this.walkLease = null
+    }
+  }
+
+  // ── placement ghost (Task 24): scene decoration, never in the store, never undoable ──
+
+  private ghost: DeviceInstance | null = null
+  private ghostSeq = 0
+
+  /** The 3D canvas (pointer handling of the placement controller). */
+  get canvasElement(): HTMLCanvasElement {
+    return this.canvas
+  }
+
+  /** The place's floor rectangle (x, z), centred on the origin as the room and the grid are. */
+  roomBounds(): { minX: number; maxX: number; minZ: number; maxZ: number } {
+    const hw = this.floor.width / 2
+    const hl = this.floor.length / 2
+    return { minX: -hw, maxX: hw, minZ: -hl, maxZ: hl }
+  }
+
+  /** The floor height at (x, z): the room's own (raised decks), else `fallback` (a venue set, the blank floor). */
+  floorHeight(x: number, z: number, fallback: number): number {
+    return this._layout ? this._layout.floorAt(x, z) : fallback
+  }
+
+  /** A ghost is on screen (false after a place change took it down). */
+  get hasGhost(): boolean {
+    return this.ghost !== null
+  }
+
+  /**
+   * Show the half-transparent ghost of a device: its real .glb when one loads, else the placeholder
+   * box. Body only (no labels, ports, contact shadow), not pickable, not in `instances`, not outlined.
+   * False when no place is on screen or the device is unknown.
+   */
+  showGhost(deviceId: string, at: [number, number, number], yawDeg: number): boolean {
+    const spawner = this.spawner
+    if (!spawner || !this._scene) return false
+    this.hideGhost()
+    let inst: DeviceInstance
+    try {
+      inst = spawner.spawn(deviceId, Vector3.FromArray(at), `ghost-${++this.ghostSeq}`)
+    } catch (e) {
+      console.warn(`[creation] ${deviceId}: appareil inconnu, pas de fantôme`, e)
+      return false
+    }
+    this.ghost = inst
+    this.styleGhost(inst)
+    void inst.modelReady.then(() => {
+      if (this.ghost === inst) {
+        this.styleGhost(inst) // the .glb meshes arrived pickable and marked as device bodies
+        this.scheduler.invalidate()
+      }
+    })
+    this.moveGhost(at, yawDeg)
+    return true
+  }
+
+  moveGhost(at: [number, number, number], yawDeg: number): void {
+    const g = this.ghost
+    if (!g) return
+    g.root.position.set(at[0], at[1], at[2])
+    g.root.rotation.y = yawDeg * DEG
+    this.scheduler.invalidate()
+  }
+
+  hideGhost(): void {
+    const g = this.ghost
+    if (!g) return
+    this.ghost = null
+    // Not `g.dispose()`: that disposes every material, and the spawner shares its body, port and
+    // contact-shadow materials / texture with the real devices. Only what the ghost owns goes.
+    for (const m of g.root.getChildMeshes(false)) {
+      if (m.name.startsWith('shadow:')) m.material?.dispose(false, false) // its texture is shared
+      m.dispose(true, !/^(box|port|shadow):/.test(m.name))
+    }
+    g.root.dispose(true, false)
+    this.scheduler.invalidate()
+  }
+
+  private styleGhost(inst: DeviceInstance): void {
+    for (const m of inst.root.getChildMeshes(false)) {
+      m.isPickable = false
+      if (m.metadata) m.metadata = { ...m.metadata, isDeviceBody: false, isPortMarker: false }
+      if (/^(label|portlabel|port|pick|shadow):/.test(m.name)) m.setEnabled(false)
+      else m.visibility = GHOST_ALPHA
     }
   }
 
@@ -544,6 +632,7 @@ export class SceneHost {
   }
 
   private teardown(): void {
+    this.ghost = null // its meshes go with the scene; its materials are shared with the spawner's
     this.controllers?.dispose()
     this.cables?.dispose()
     for (const inst of this.instances.values()) inst.dispose()

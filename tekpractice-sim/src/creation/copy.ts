@@ -504,8 +504,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     title: 'Inventaire',
     /** Accessible name of the tab list. */
     tabs: 'Catégories d’appareils',
-    /** Line under the title; {key} = the inventory key label (Space by default). Reworded when placement exists (Task 24). */
-    hint: 'Entrée ou clic : poser l’appareil au centre de la vue. {key} ou Échap : fermer.',
+    /** Line under the title; {key} = the inventory key label (Space by default). */
+    hint: 'Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer.',
     /** Visible text of the close button. */
     close: 'Fermer',
     /** Accessible name of the close button (contains the visible text). */
@@ -520,10 +520,6 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     loadFailed: 'L’inventaire n’a pas pu s’ouvrir. Réessayez avec Espace ou le menu Matériel.',
     /** History entry label; {device} = device name. */
     entry: 'Ajouter {device}',
-    /** Status bar after choosing a device (announced); {undo} = undo key label. */
-    statusAdded: 'Ajouté : {device}. {undo} pour annuler.',
-    /** Status bar if the store refuses the add (announced). */
-    statusRefused: 'Impossible d’ajouter {device}.',
     /** Tab « Micros » (inventory category). */
     tabMicros: 'Micros',
     /** Tab « Consoles » (inventory category). */
@@ -542,5 +538,22 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     tabBeta: 'Bêta',
     /** Tab « Autres » (inventory category). */
     tabAutres: 'Autres',
+  },
+  /** Placing and moving devices in the 3D view (Task 24, CA-10). {device} = device name, {undo} = undo key label. */
+  placement: {
+    /** History entry label of a drag. */
+    entryMove: 'Déplacer {device}',
+    /** Status bar once a device is chosen and follows the pointer (announced). */
+    statusPlacing: 'Cliquez pour poser {device} (Entrée : ici). Alt : libre. Échap : annuler.',
+    /** Status bar after the drop (announced). */
+    statusPlaced: 'Posé : {device}. {undo} pour annuler.',
+    /** Status bar after a drag (announced). */
+    statusMoved: 'Déplacé : {device}. {undo} pour annuler.',
+    /** Status bar after Échap while placing (announced). */
+    statusCancelled: 'Pose annulée.',
+    /** Status bar after Échap during a drag (announced). */
+    statusMoveCancelled: 'Déplacement annulé : {device} est resté en place.',
+    /** Status bar if the device cannot be placed (announced). */
+    statusRefused: 'Impossible de poser {device}.',
   },
 }

@@ -33,6 +33,7 @@ import { SceneHost } from './sceneHost'
 import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
 import { createPlaceController, type PlaceResult } from './placeController'
+import { PlacementController } from './placementController'
 import { designFromRoomGear, unavailableList } from './templateGear'
 import { loadTemplates, templateToDesign } from './templates'
 import { mountNotes } from './shell/notes'
@@ -182,11 +183,13 @@ export async function bootCreation(): Promise<void> {
     autosaveAction: (a) =>
       a === 'export' ? exportKept() : a === 'checked' ? checkedFile() : resumeHere(),
   })
+  /** Snapping while a device is placed or dragged (false = grid, true = free with Alt); undefined = no snapping text. */
+  let snapFree: boolean | undefined
   const refreshSignal = (): StatusView => {
     const sel = viewState.get().selection
     const v = statusView({
       selectionLabel: sel === null ? null : `${deviceLabel(sel)} (${sel})`,
-      // snapFree: omitted until placement snapping exists (no « Aimantation » text meanwhile).
+      snapFree,
       events,
       lastRejection,
       ruleText,
@@ -1212,7 +1215,9 @@ export async function bootCreation(): Promise<void> {
     cameraHome()
     return true
   })
-  keys.onAction('FRAME_SELECTION', () => {
+  keys.onAction('FRAME_SELECTION', (e) => {
+    // Entrée while a device follows the pointer drops it where it stands (the keyboard path).
+    if ((e.code === 'Enter' || e.code === 'NumpadEnter') && placement.confirm()) return true
     if (viewState.get().selection !== null) leaveWalk() // framing is an orbit view
     return selection.frameSelection()
   })
@@ -1228,6 +1233,7 @@ export async function bootCreation(): Promise<void> {
       leaveWalk()
       return true
     }
+    if (placement.cancel()) return true // a placement or a drag goes first; the selection stays
     if (e.target !== canvas || viewState.get().selection === null) return false
     selection.select(null)
     return true
@@ -1245,32 +1251,8 @@ export async function bootCreation(): Promise<void> {
   /** The learner's last wish while the chunk loads (a second Espace before it arrives cancels the open). */
   let drawerWanted = false
   const drawerOpen = (): boolean => (drawer ? drawer.isOpen : drawerWanted)
-  /**
-   * Entrée / click on a device. Until Task 24 brings `startPlacement(deviceId)` (swap this one body),
-   * the device is added where the middle of the 3D view meets the floor: one undoable SPAWN.
-   */
-  const chooseDevice = (deviceId: string): void => {
-    const name = registry.deviceById.get(deviceId)?.label ?? deviceId
-    const scene = host.scene
-    const cam = scene?.activeCamera ?? host.camera
-    let at: [number, number, number] | null =
-      scene && cam ? floorPointAt(scene, canvas.clientWidth / 2, canvas.clientHeight / 2, cam) : null
-    if (!at && host.camera) {
-      // No floor under the middle of the view (looking at the sky): the camera's pivot, on the floor.
-      const t = host.camera.target
-      at = [t.x, host.layout?.floorAt(t.x, t.z) ?? 0, t.z]
-    }
-    const r = history.do(
-      { type: 'SPAWN', deviceId, ...(at ? { position: at } : {}) },
-      INV.entry!.replace('{device}', name)
-    )
-    shell.setStatus(
-      placeNow(),
-      r.ok ? INV.statusAdded!.replace('{device}', name).replace('{undo}', undoLabel()) : INV.statusRefused!.replace('{device}', name),
-      'ready',
-      true
-    )
-  }
+  /** Entrée / click on a device in the drawer: it follows the pointer until a click drops it (Task 24). */
+  const chooseDevice = (deviceId: string): void => placement.startPlacement(deviceId)
   const loadDrawer = (): Promise<InventoryDrawer> =>
     (drawerLoad ??= import('./shell/inventoryDrawer').then(({ mountInventoryDrawer }) => {
       drawer = mountInventoryDrawer({
@@ -1316,14 +1298,33 @@ export async function bootCreation(): Promise<void> {
   })
 
   // A click on a device body in the 3D view selects it and flies to it.
-  attachCanvasPicking(canvas, shellBag, (x, y) => pickDevice(host.scene, x, y), selection)
+  // Not while a device follows the pointer: the click that drops it is not a selection.
+  attachCanvasPicking(
+    canvas,
+    shellBag,
+    (x, y) => (placement.placing ? null : pickDevice(host.scene, x, y)),
+    selection
+  )
   // Hover (Task 14b): a thin Papier outline on the device under the pointer, never the Ambre selection.
   attachCanvasHover(
     canvas,
     shellBag,
-    (x, y) => pickDevice(host.scene, x, y),
+    (x, y) => (placement.placing ? null : pickDevice(host.scene, x, y)),
     (id) => host.setHovered(id)
   )
+  // Placing and moving devices (Task 24, CA-10, P20): after the picking above, so a drop is not also a click-to-select.
+  const placement = new PlacementController(host, history, store, viewState, scheduler, shellBag, {
+    deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
+    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    undoLabel,
+    onPlaced: (id) => selection.select(id, { fly: false }),
+    onClickSelected: (id) => selection.select(id),
+    onSnap: (free) => {
+      snapFree = free === null ? undefined : free
+      refreshSignal()
+    },
+    beforeDrag: () => props.flush(),
+  })
   /** Menu item ids → the key map (the menus show the live labels). */
   const MENU_KEYS: Record<string, CreationAction | undefined> = {
     undo: 'UNDO',
@@ -1499,5 +1500,11 @@ export async function bootCreation(): Promise<void> {
     earHeight: () => viewState.get().earHeight,
     listeningPoints: () => listeningPoints(),
     listenerPoint: () => viewState.get().listenerPoint,
+    cableCenters: () =>
+      store.design().rig.connections.map((c) => {
+        const f = host.frameOfKey(`cable:${cableKey(c.a, c.b)}`)
+        return f ? ([f.center.x, f.center.y, f.center.z] as [number, number, number]) : null
+      }),
+    placing: () => placement.placing,
   }
 }

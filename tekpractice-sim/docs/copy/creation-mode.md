@@ -334,8 +334,8 @@ Task 14 (barre d'état, liste d'erreurs persistante) : les textes des règles R1
 |---|---|---|---|
 | `status.selection` | Sélection : {device} | brief | Barre d'état, texte fixe ; `{device}` = « Yamaha QL1 (ql1) » |
 | `status.selectionNone` | Aucune sélection | brief | Barre d'état, rien de sélectionné |
-| `status.snapping` | Aimantation : 0,25 m · 15° | brief | Barre d'état : pas de placement (grille, rotation R) ; masqué tant que l'aimantation de placement n'existe pas |
-| `status.snappingFree` | Aimantation : libre | brief | Barre d'état : placement libre (Maj) ; masqué tant que l'aimantation de placement n'existe pas |
+| `status.snapping` | Aimantation : 0,25 m · 15° | brief | Barre d'état : pas de placement (grille, rotation R) ; affiché seulement pendant une pose ou un déplacement |
+| `status.snappingFree` | Aimantation : libre | brief | Barre d'état : placement libre (touche Alt, décision de la Task 24) ; affiché seulement pendant une pose ou un déplacement |
 | `status.signalOk` | Signal OK | brief | Bouton signal, couleur ok + glyphe ✓, UNIQUEMENT quand le chemin du signal peut jouer (`playbackReady`, décision L5) |
 | `status.signalNoError` | Aucune erreur détectée | validé | Bouton signal, 0 erreur mais lecture non prouvée (L5) : couleur neutre (ink-muted), glyphe ○ |
 | `status.signalNothing` | Rien de branché | validé | Bouton signal, aucun câble dans le montage (L5) : neutre, glyphe ○ |
@@ -472,13 +472,13 @@ Points d'écoute nommés (Task 20 ; seule la Régie est obligatoire). Lignes du 
 
 ## inventory
 
-Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 3D a le focus), tiroir en bas de la vue 3D, onglets par catégorie (les neuf noms d'onglets sont les lignes `inventory.tab*` ci-dessous ; `TAB_LABELS`, src/creation/inventory.ts, en est construit). Entrée ou clic sur un appareil l'ajoute au centre de la vue jusqu'au placement à la souris (Task 24). Espace ou Échap ferment et rendent le focus à la vue 3D.
+Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 3D a le focus), tiroir en bas de la vue 3D, onglets par catégorie (les neuf noms d'onglets sont les lignes `inventory.tab*` ci-dessous ; `TAB_LABELS`, src/creation/inventory.ts, en est construit). Entrée ou clic sur un appareil le choisit : il suit alors le pointeur dans la vue 3D et se pose d'un clic (section `placement`, Task 24). Espace ou Échap ferment et rendent le focus à la vue 3D.
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
 | `inventory.title` | Inventaire | à valider (tekuxwriter) | Titre du tiroir (h2) et nom accessible de la boîte de dialogue ; même mot que Matériel › Inventaire |
 | `inventory.tabs` | Catégories d’appareils | à valider (tekuxwriter) | Nom accessible de la liste d’onglets (tablist) ; les noms d’onglets sont les lignes `inventory.tab*` de copy.ts |
-| `inventory.hint` | Entrée ou clic : poser l’appareil au centre de la vue. {key} ou Échap : fermer. | à valider (tekuxwriter) | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut). Sera remplacé quand le placement à la souris existera (Task 24) |
+| `inventory.hint` | Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer. | à valider (tekuxwriter) | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut) |
 | `inventory.close` | Fermer | à valider (tekuxwriter) | Texte du bouton |
 | `inventory.closeLabel` | Fermer l’inventaire | à valider (tekuxwriter) | Nom accessible du bouton Fermer (contient le texte visible) |
 | `inventory.empty` | Aucun appareil disponible pour le moment. | à valider (tekuxwriter) | État vide d’un onglet sans appareil |
@@ -486,8 +486,6 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.loading` | Ouverture de l’inventaire… | à valider (tekuxwriter) | Barre d’état pendant le chargement du tiroir (première ouverture) |
 | `inventory.loadFailed` | L’inventaire n’a pas pu s’ouvrir. Réessayez avec Espace ou le menu Matériel. | à valider (tekuxwriter) | Barre d’état si le module du tiroir ne se charge pas (hors ligne) |
 | `inventory.entry` | Ajouter {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique (Annuler / Rétablir) ; {device} = nom de l’appareil |
-| `inventory.statusAdded` | Ajouté : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après Entrée ou clic sur un appareil (annoncé) ; {undo} = touche d’annulation |
-| `inventory.statusRefused` | Impossible d’ajouter {device}. | à valider (tekuxwriter) | Barre d’état si le store refuse l’ajout (annoncé) |
 | `inventory.tabMicros` | Micros | à valider (tekuxwriter) | Onglet ; Micros, d’après la catégorie « microphone » du catalogue ; les onglets vides sont masqués |
 | `inventory.tabConsoles` | Consoles | à valider (tekuxwriter) | Onglet ; Consoles, stageboxes, préamplis et contrôleurs d’écoute ; les onglets vides sont masqués |
 | `inventory.tabEnceintes` | Enceintes | à valider (tekuxwriter) | Onglet ; Enceintes amplifiées et moniteurs de studio ; les onglets vides sont masqués |
@@ -503,3 +501,17 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 - **lieu** : la salle (modèle TEK Brain), le décor .glb ou la salle vide. Jamais « scène » pour le lieu (la scène = le plateau).
 - **matériel / appareil** : « matériel » pour l'ensemble, « appareil » pour un élément.
 - **réglages** : les contrôles d'un appareil (gain, mute, +48V…), dans Propriétés.
+
+## placement
+
+Pose et déplacement d'un appareil dans la vue 3D (Task 24, CA-10). Choisir un appareil dans l'inventaire le fait suivre le pointeur (fantôme à moitié transparent) ; un clic le pose, Entrée le pose là où il est, Échap annule. Un glisser qui commence sur l'appareil déjà sélectionné le déplace (un seul pas dans l'historique) ; Échap pendant le glisser le remet en place. Alt = sans aimantation. `{device}` = nom de l'appareil, `{undo}` = touche d'annulation.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `placement.entryMove` | Déplacer {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un glisser (Annuler / Rétablir) |
+| `placement.statusPlacing` | Cliquez pour poser {device} (Entrée : ici). Alt : libre. Échap : annuler. | à valider (tekuxwriter) | Barre d’état dès qu’un appareil est choisi (annoncé) |
+| `placement.statusPlaced` | Posé : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après la pose (annoncé) |
+| `placement.statusMoved` | Déplacé : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un glisser (annoncé) |
+| `placement.statusCancelled` | Pose annulée. | à valider (tekuxwriter) | Barre d’état après Échap pendant la pose (annoncé) |
+| `placement.statusMoveCancelled` | Déplacement annulé : {device} est resté en place. | à valider (tekuxwriter) | Barre d’état après Échap pendant un glisser (annoncé) |
+| `placement.statusRefused` | Impossible de poser {device}. | à valider (tekuxwriter) | Barre d’état si l’appareil ne peut pas être posé (annoncé) |

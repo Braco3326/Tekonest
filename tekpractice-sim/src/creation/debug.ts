@@ -84,6 +84,10 @@ export interface CreationDebug {
   listeningPoints(): { id: string; label: string; position: [number, number, number] }[]
   /** Task 20: `viewState.listenerPoint` (the active listening point's id). */
   listenerPoint(): string
+  /** Task 24: the world centre of each drawn cable's mesh (a cable follows a moved device), in rig order; null for a cable not drawn. */
+  cableCenters(): ([number, number, number] | null)[]
+  /** Task 24: a device is following the pointer (placement ghost on screen). */
+  placing(): boolean
 }
 
 declare global {

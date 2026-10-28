@@ -1,8 +1,7 @@
 /**
  * Task 23: the inventory drawer (CA-09). Space (3D view focused) opens it, Space or Esc closes it
  * and gives the canvas back; ≤ 200 ms slide (0 under reduced motion); tabs are a tablist with
- * arrow keys; an item (Entrée or click) adds the device at the viewport centre until Task 24
- * brings `startPlacement`; the module is a lazy chunk requested on the first open only.
+ * arrow keys; an item (Entrée or click) chooses the device (Task 24: it then follows the pointer); the module is a lazy chunk requested on the first open only.
  * Screenshot on demand: $env:DRAWER_SCREENS = 'commit' → docs/creative/screens/task-23-drawer-1366.png
  */
 import AxeBuilder from '@axe-core/playwright'
@@ -148,7 +147,7 @@ test('items are named buttons with an icon; no duplicate across the catalogue; a
   await expect(page.getByTestId('inventory-badge')).toHaveCount(0) // no proposals yet (Task 30)
 })
 
-test('Enter or click on an item adds the device at the viewport centre (one undoable entry), then the drawer closes', async ({ page }) => {
+test('Enter or click on an item chooses the device (it then follows the pointer, Task 24), and the drawer closes', async ({ page }) => {
   await boot(page)
   await open(page)
   const first = page.getByRole('tabpanel').getByTestId('inventory-item').first()
@@ -159,19 +158,22 @@ test('Enter or click on an item adds the device at the viewport centre (one undo
   await page.keyboard.press('Enter')
   await expect(drawer(page)).toBeHidden()
   await expect(page.locator('#renderCanvas')).toBeFocused()
-  let design = await page.evaluate(() => window.__creation!.design())
-  expect(design.rig.instances.map((i) => i.deviceId)).toEqual([id])
-  const pl = design.placements.find((p) => p.instanceId === design.rig.instances[0].instanceId)!
-  expect(Math.abs(pl.position_m[0])).toBeLessThan(20)
+  expect(await page.evaluate(() => window.__creation!.placing())).toBe(true)
+  expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(0) // chosen, not placed yet
   await expect(page.getByRole('status')).toContainText(name)
+  // a click in the 3D view drops it: one undoable entry
+  const box = (await page.locator('#renderCanvas').boundingBox())!
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2)
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2)
+  await expect.poll(() => page.evaluate(() => window.__creation!.design().rig.instances.map((i) => i.deviceId))).toEqual([id])
   expect(await page.evaluate(() => window.__creation!.historySize())).toBe(1)
-  // click path
+  // click path (Entrée drops where the ghost stands)
   await page.keyboard.press('Space')
   await expect(drawer(page)).toBeVisible()
   await page.getByRole('tabpanel').getByTestId('inventory-item').first().click()
   await expect(drawer(page)).toBeHidden()
-  design = await page.evaluate(() => window.__creation!.design())
-  expect(design.rig.instances).toHaveLength(2)
+  await page.keyboard.press('Enter')
+  await expect.poll(() => page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(2)
   await page.keyboard.press('Control+z')
   expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(1)
 })
