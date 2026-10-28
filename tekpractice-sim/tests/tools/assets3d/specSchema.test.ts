@@ -1,0 +1,210 @@
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { afterEach, describe, expect, it } from 'vitest'
+import { AssetSpec } from '../../../tools/assets3d/specSchema'
+import type { AssetSpecT } from '../../../tools/assets3d/specSchema'
+import { checkSpecParity, loadSpecs } from '../../../tools/assets3d/loadSpecs'
+import { buildSkeleton, parseDimensionsMm, writeSkeleton } from '../../../tools/assets3d/spec-skeleton'
+import type { CatalogT } from '../../../tools/schemas'
+import { makeRegistry } from '../../helpers'
+
+const catalog = makeRegistry().catalog
+const fresh = (): CatalogT => structuredClone(catalog)
+
+/** A valid spec whose ports and controls are exactly the catalog's ids for `deviceId`. */
+function specFor(c: CatalogT, deviceId: string): AssetSpecT {
+  const d = c.devices.find((x) => x.id === deviceId)!
+  return {
+    id: deviceId,
+    kind: 'device',
+    tier: 'standard',
+    realSizeMm: { w: 468, h: 272, d: 562 },
+    ports: d.ports.map((p) => ({ portId: p.portId, face: 'io' as const, xMm: 10, yMm: 10, confidence: 'photo' as const })),
+    controls: (d.controls ?? []).map((k) => ({
+      controlId: k.id, kind: 'switch' as const, face: 'top' as const, xMm: 5, yMm: 5, axis: 'y' as const, sizeMm: { w: 5, h: 5, d: 5 },
+    })),
+    sources: [],
+  }
+}
+
+describe('AssetSpec schema', () => {
+  it('accepts a complete spec', () => {
+    expect(AssetSpec.safeParse(specFor(catalog, 'yamaha-ql1')).success).toBe(true)
+  })
+
+  it('rejects a non-positive size', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    for (const bad of [0, -3]) {
+      const r = AssetSpec.safeParse({ ...spec, realSizeMm: { ...spec.realSizeMm, h: bad } })
+      expect(r.success).toBe(false)
+    }
+  })
+
+  it('rejects an unknown face', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    const r = AssetSpec.safeParse({ ...spec, ports: [{ ...spec.ports[0], face: 'front' }] })
+    expect(r.success).toBe(false)
+  })
+
+  it('accepts an optional circular opening on a port (R3)', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    expect(AssetSpec.safeParse({ ...spec, ports: [{ ...spec.ports[0], openingMm: 19 }, ...spec.ports.slice(1)] }).success).toBe(true)
+    expect(AssetSpec.safeParse({ ...spec, ports: [{ ...spec.ports[0], openingMm: 0 }, ...spec.ports.slice(1)] }).success).toBe(false)
+  })
+})
+
+describe('checkSpecParity (device)', () => {
+  it('parity passes when ids match exactly', () => {
+    expect(checkSpecParity(specFor(catalog, 'yamaha-ql1'), catalog)).toEqual([])
+  })
+
+  it('parity flags a spec port the catalog lacks, naming the device and port', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    spec.ports.push({ portId: 'ghost-port', face: 'io', xMm: 1, yMm: 1, confidence: 'photo' })
+    const errs = checkSpecParity(spec, catalog)
+    expect(errs).toHaveLength(1)
+    expect(errs[0]).toContain('yamaha-ql1')
+    expect(errs[0]).toContain('ghost-port')
+  })
+
+  it('parity flags a catalog port the spec lacks', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    const dropped = spec.ports.pop()!
+    const errs = checkSpecParity(spec, catalog)
+    expect(errs).toHaveLength(1)
+    expect(errs[0]).toContain('yamaha-ql1')
+    expect(errs[0]).toContain(dropped.portId)
+  })
+
+  it('parity flags control ids missing on either side', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    const dropped = spec.controls.pop()!
+    spec.controls.push({ controlId: 'ghost-knob', kind: 'knob', face: 'top', xMm: 1, yMm: 1, axis: 'z', sizeMm: { w: 1, h: 1, d: 1 } })
+    const errs = checkSpecParity(spec, catalog)
+    expect(errs).toHaveLength(2)
+    expect(errs.some((e) => e.includes('ghost-knob'))).toBe(true)
+    expect(errs.some((e) => e.includes(dropped.controlId))).toBe(true)
+  })
+
+  it('parity flags a spec for a device that is not in the catalog', () => {
+    const spec = { ...specFor(catalog, 'yamaha-ql1'), id: 'no-such-device' }
+    const errs = checkSpecParity(spec, catalog)
+    expect(errs).toHaveLength(1)
+    expect(errs[0]).toContain('no-such-device')
+  })
+
+  it('parity flags a port id used twice in the spec', () => {
+    const spec = specFor(catalog, 'yamaha-ql1')
+    spec.ports.push({ ...spec.ports[0] })
+    const errs = checkSpecParity(spec, catalog)
+    expect(errs).toHaveLength(1)
+    expect(errs[0]).toContain(spec.ports[0].portId)
+  })
+})
+
+describe('checkSpecParity (connector, R7)', () => {
+  const connector = (id: string): AssetSpecT => ({
+    id, kind: 'connector', tier: 'connector', realSizeMm: { w: 25, h: 25, d: 60 }, ports: [], controls: [],
+    mating: { role: 'plug', outerMm: 24 }, sources: [],
+  })
+
+  it('passes for a connector id in catalog.connectorTypes', () => {
+    expect(checkSpecParity(connector('xlr3-m'), catalog)).toEqual([])
+  })
+
+  it('does not look in catalog.devices: a device id is not a connector', () => {
+    const errs = checkSpecParity(connector('yamaha-ql1'), catalog)
+    expect(errs).toHaveLength(1)
+    expect(errs[0]).toContain('yamaha-ql1')
+    expect(errs[0]).toContain('connectorTypes')
+  })
+
+  it('flags a connector spec that carries ports or controls', () => {
+    const spec = connector('xlr3-m')
+    spec.ports.push({ portId: 'p', face: 'io', xMm: 0, yMm: 0, confidence: 'photo' })
+    spec.controls.push({ controlId: 'c', kind: 'knob', face: 'top', xMm: 0, yMm: 0, axis: 'z', sizeMm: { w: 1, h: 1, d: 1 } })
+    expect(checkSpecParity(spec, catalog)).toHaveLength(2)
+  })
+})
+
+describe('parseDimensionsMm', () => {
+  it('reads prefix-labelled W/H/D', () => {
+    expect(parseDimensionsMm('W 468mm(18.4in ) x H 272mm(10.7in) x D 562mm(22.1in)')).toEqual({ w: 468, h: 272, d: 562 })
+  })
+
+  it('reads a trailing label group, in its own order', () => {
+    expect(parseDimensionsMm('602 × 356 × 350 mm (23.7 × 14 × 13.8 in) (H × W × D)')).toEqual({ w: 356, h: 602, d: 350 })
+    expect(parseDimensionsMm('376 x 601 x 348 mm (14.8" x 23.7" x 13.7") (WxHxD, with rubber feet)')).toEqual({ w: 376, h: 601, d: 348 })
+    expect(parseDimensionsMm('480 x 44 x 252 mm (L x H x P)')).toEqual({ w: 480, h: 44, d: 252 })
+  })
+
+  it('reads number-then-label and word labels', () => {
+    expect(parseDimensionsMm('482.6 (W) x 230 (D) x 44 (H) mm (1U)')).toEqual({ w: 482.6, h: 44, d: 230 })
+    expect(parseDimensionsMm('Height 104mm / 4.1", Width 220mm / 8.7", Depth 290mm / 11.4"')).toEqual({ w: 220, h: 104, d: 290 })
+  })
+
+  it('returns null when the axes are not labelled or are not metric', () => {
+    expect(parseDimensionsMm('110 x 73 x 42 mm')).toBeNull()
+    expect(parseDimensionsMm('Diameter 56 mm, length 200 mm')).toBeNull()
+    expect(parseDimensionsMm('2U rack, 3.5" x 10.5" x 17"')).toBeNull()
+    expect(parseDimensionsMm(undefined)).toBeNull()
+  })
+})
+
+describe('buildSkeleton', () => {
+  it('uses the catalog ids, the parsed size and zeroed photo-confidence coordinates', () => {
+    const sk = buildSkeleton('yamaha-ql1', catalog, { w: 468, h: 272, d: 562 }, [])
+    expect(sk.kind).toBe('device')
+    expect(sk.realSizeMm).toEqual({ w: 468, h: 272, d: 562 })
+    expect(sk.ports).toHaveLength(7)
+    expect(sk.ports.every((p) => p.xMm === 0 && p.yMm === 0 && p.confidence === 'photo')).toBe(true)
+    expect(checkSpecParity(sk, catalog)).toEqual([])
+  })
+
+  it('makes a connector skeleton with empty ports and controls and a mating role from the gender', () => {
+    const sk = buildSkeleton('xlr3-f', catalog, null, [])
+    expect(sk.kind).toBe('connector')
+    expect(sk.tier).toBe('connector')
+    expect(sk.ports).toEqual([])
+    expect(sk.controls).toEqual([])
+    expect(sk.mating?.role).toBe('socket')
+  })
+
+  it('throws for an id that is neither a device nor a connector type', () => {
+    expect(() => buildSkeleton('nope', fresh(), null, [])).toThrow(/nope/)
+  })
+})
+
+describe('writeSkeleton and loadSpecs', () => {
+  const dirs: string[] = []
+  const tmp = () => {
+    const d = mkdtempSync(join(tmpdir(), 'asset-specs-'))
+    dirs.push(d)
+    return d
+  }
+  afterEach(() => {
+    for (const d of dirs.splice(0)) rmSync(d, { recursive: true, force: true })
+  })
+
+  it('refuses to overwrite an existing spec unless force is passed', () => {
+    const specDir = tmp()
+    const kbDir = tmp()
+    writeSkeleton('xlr3-m', { catalog, specDir, kbDir })
+    writeFileSync(join(specDir, 'xlr3-m.json'), '{"keep":"me"}')
+    expect(() => writeSkeleton('xlr3-m', { catalog, specDir, kbDir })).toThrow(/--force/)
+    expect(readFileSync(join(specDir, 'xlr3-m.json'), 'utf8')).toBe('{"keep":"me"}')
+    writeSkeleton('xlr3-m', { catalog, specDir, kbDir }, true)
+    expect(JSON.parse(readFileSync(join(specDir, 'xlr3-m.json'), 'utf8')).id).toBe('xlr3-m')
+  })
+
+  it('loadSpecs reads valid specs, returns [] for a missing folder and throws naming a bad file', () => {
+    const dir = tmp()
+    const spec = buildSkeleton('xlr3-m', catalog, { w: 25, h: 25, d: 60 }, [])
+    writeFileSync(join(dir, 'xlr3-m.json'), JSON.stringify(spec))
+    expect(loadSpecs(dir).map((s) => s.id)).toEqual(['xlr3-m'])
+    expect(loadSpecs(join(dir, 'nope'))).toEqual([])
+    writeFileSync(join(dir, 'xlr3-f.json'), JSON.stringify({ ...spec, id: 'xlr3-f', realSizeMm: { w: 0, h: 1, d: 1 } }))
+    expect(() => loadSpecs(dir)).toThrow(/xlr3-f\.json/)
+  })
+})
