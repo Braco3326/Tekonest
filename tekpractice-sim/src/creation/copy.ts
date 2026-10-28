@@ -517,6 +517,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     unavailableTitle: 'Projet non rouvert',
     /** Note body, status line and place-picker line for the same case. */
     unavailable: 'Fiches Bêta indisponibles (réseau). Rechargez la page pour retrouver votre projet.',
+    /** Note body and status line when « Ouvrir… » could not fetch the Bêta sheets of the project the learner chose: nothing was opened. */
+    unavailableOpen: 'Fiches Bêta indisponibles (réseau). Le projet n’a pas été ouvert ; réessayez plus tard.',
     /** Status bar while the Bêta sheets a saved project needs are fetched (reopening only). */
     loadingBeta: 'Chargement des fiches Bêta…',
     /** Status bar while the drawer module loads (first open). */

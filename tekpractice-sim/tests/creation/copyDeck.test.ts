@@ -5,10 +5,13 @@ import { COPY } from '../../src/creation/copy'
 
 const deck = readFileSync(fileURLToPath(new URL('../../docs/copy/creation-mode.md', import.meta.url)), 'utf8')
 
+const escapeRe = (t: string): string => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
 describe('copy deck docs/copy/creation-mode.md mirrors COPY (Task 7)', () => {
   it('has a section per COPY section, and every key with its exact French text', () => {
     for (const [section, entries] of Object.entries(COPY)) {
-      expect(deck, section).toContain(`## ${section}`)
+      // Anchored: `## place` must not be satisfied by `## placeType`, nor `## connect` by `## connector`.
+      expect(deck, `deck heading ## ${section}`).toMatch(new RegExp(`^## ${escapeRe(section)}\\s*$`, 'm'))
       for (const [key, text] of Object.entries(entries)) {
         const row = deck.split('\n').find((l) => l.startsWith(`| \`${section}.${key}\` |`))
         expect(row, `${section}.${key}`).toBeDefined()
@@ -27,14 +30,14 @@ describe('copy deck docs/copy/creation-mode.md mirrors COPY (Task 7)', () => {
     // The forward test above guarantees a row per COPY key, so with no stale and no duplicate row the counts are equal:
     // a parser that silently skips rows (a key character it does not know) breaks this, with no hard-coded bound.
     const total = Object.values(COPY).reduce((n, e) => n + Object.keys(e).length, 0)
-    expect(rows.length).toBe(total)
+    expect(rows.length, `deck rows (${rows.length}) vs COPY keys (${total})`).toBe(total)
   })
   it('reverse: every `## section` heading of the deck is a COPY section, or a listed non-COPY section', () => {
     // Deliberately not COPY sections: the vocabulary rules (prose, no keys) and the catalog rule texts (Task 29).
     const NOT_COPY = new Set(['Glossaire', 'Textes des règles (catalogue)'])
     const headings = [...deck.matchAll(/^## (.+?)\s*$/gm)].map((m) => m[1])
     expect(headings.length).toBeGreaterThan(0)
-    expect(headings.filter((h) => !(h in COPY) && !NOT_COPY.has(h))).toEqual([])
+    expect(headings.filter((h) => !Object.prototype.hasOwnProperty.call(COPY, h) && !NOT_COPY.has(h))).toEqual([]) // own keys only: « constructor » is not a section
     for (const h of NOT_COPY) expect(headings, h).toContain(h) // an allow-list entry that no longer exists is dead weight
   })
   it('Task 29: the rule texts are catalog data (title_fr / teach_fr), not COPY: the deck has no rule section and no rule.R* key', () => {

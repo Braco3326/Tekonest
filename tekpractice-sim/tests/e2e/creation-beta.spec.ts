@@ -129,6 +129,50 @@ test('« Bêta » is hidden, and the drawer still opens, when the proposals file
   await expect(drawer(page)).toBeHidden()
 })
 
+/**
+ * The proposals request stalls past the (shortened) delay, then arrives: the first open shows the drawer without « Bêta » (a failed
+ * fetch is never « there are none »); the next open asks again and the tab comes back. A request ABORTED outright is remembered by
+ * Chromium for the document (a second import() of the same chunk fails without a new request): only a reload recovers that one.
+ */
+const stallProposals = async (page: Page): Promise<{ release: () => Promise<void>; held: () => number }> => {
+  await page.addInitScript(() => {
+    ;(window as unknown as { __creationBetaTimeoutMs: number }).__creationBetaTimeoutMs = 400 // test-only seam (default 5 s)
+  })
+  const held: Array<() => Promise<void>> = []
+  await page.route('**/proposalsSource*', (r) => void held.push(() => r.continue()))
+  return { release: async () => void (await Promise.all(held.splice(0).map((f) => f()))), held: () => held.length }
+}
+
+test('« Bêta » comes back on the next open once a stalled proposals file has arrived (a failed fetch is not remembered for the session)', async ({ page }) => {
+  const net = await stallProposals(page)
+  await boot(page)
+  await open(page) // waits the 400 ms, then opens without the tab
+  await expect(page.getByRole('tab').first()).toHaveText('Micros')
+  await expect(betaTab(page)).toHaveCount(0)
+  await page.keyboard.press('Space')
+  await expect(drawer(page)).toBeHidden()
+  await net.release() // the network is back
+  await open(page)
+  await expect(betaTab(page)).toBeVisible()
+  await betaTab(page).click()
+  await expect(page.getByTestId('inventory-badge').first()).toBeVisible()
+})
+
+test('a second Espace while the drawer waits for the Bêta sheets cancels the open (as for the first open)', async ({ page }) => {
+  const net = await stallProposals(page)
+  await boot(page)
+  await open(page)
+  await page.keyboard.press('Space')
+  await expect(drawer(page)).toBeHidden()
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Space') // the retry waits for the sheets (they are still stalled)
+  await expect(page.getByRole('status')).toContainText('Ouverture')
+  await page.keyboard.press('Space') // changed my mind
+  await net.release()
+  await expect(page.getByRole('status')).not.toContainText('Ouverture') // the retry is over
+  await expect(drawer(page)).toBeHidden()
+})
+
 test('« Bêta » is hidden when the file is not a proposals file', async ({ page }) => {
   await serveProposals(page, 'export default 42')
   await boot(page)
@@ -374,6 +418,44 @@ test('reload while the proposals request stalls: the workspace is not blank for 
   expect((await design(page)).rig.instances).toEqual([])
   await page.waitForTimeout(1500)
   expect(await stored(page)).toBe(raw)
+})
+
+const UNAVAILABLE_OPEN = 'Fiches Bêta indisponibles (réseau). Le projet n’a pas été ouvert ; réessayez plus tard.'
+
+test('« Ouvrir… » while the Bêta sheets cannot be fetched says the project was NOT opened (not « reload the page »); a later successful open clears the note', async ({ page }) => {
+  await boot(page)
+  await placeBeta(page, AMP.id)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Control+s')
+  await page.getByRole('textbox', { name: 'Nom du projet' }).fill('Mon ampli')
+  await page.keyboard.press('Enter')
+  await expect(page).toHaveTitle('Mon ampli · Mode Création · TekPractice')
+  // Start something else, so the autosave holds no Bêta device: the reload below needs no sheet and holds nothing (no betaHold)
+  await page.getByRole('menuitem', { name: 'Projet' }).click()
+  await page.getByRole('menuitem', { name: /^Nouveau/ }).click()
+  await expect.poll(async () => (await design(page)).rig.instances).toEqual([])
+  await expect.poll(() => stored(page).then((raw) => !!raw && !raw.includes(AMP.id))).toBe(true)
+  const net = await stallProposals(page)
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  const note = page.getByTestId('note-beta-unavailable')
+  await expect(note).toHaveCount(0)
+  await page.getByRole('menuitem', { name: 'Projet' }).click()
+  await page.getByRole('menuitem', { name: /^Ouvrir/ }).click()
+  await page.getByRole('button', { name: /Mon ampli/ }).click()
+  // the learner just tried to open a project: the note says it was not opened and to try again, not to reload
+  await expect(note).toContainText(UNAVAILABLE_OPEN)
+  await expect(note).not.toContainText('Rechargez')
+  await expect(page.locator('.cr-status-msg')).toContainText(UNAVAILABLE_OPEN)
+  expect((await design(page)).rig.instances).toEqual([])
+  await expect(page.getByTestId('project-title')).not.toContainText('Mon ampli')
+  // the network is back: the same « Ouvrir… » works and the note goes
+  await net.release()
+  await page.getByRole('menuitem', { name: 'Projet' }).click()
+  await page.getByRole('menuitem', { name: /^Ouvrir/ }).click()
+  await page.getByRole('button', { name: /Mon ampli/ }).click()
+  await expect.poll(async () => (await design(page)).rig.instances.map((i) => i.deviceId)).toEqual([AMP.id])
+  await expect(note).toHaveCount(0)
 })
 
 test('after a failed reload, starting something else sets the held project aside (recoverable) before the autosave writes', async ({ page }) => {

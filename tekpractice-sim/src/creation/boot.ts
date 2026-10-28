@@ -223,8 +223,7 @@ export async function bootCreation(): Promise<void> {
   }
   /** The stored autosave is held (not applied, not overwritten) because the Bêta sheets could not be fetched. */
   let betaHold = false
-  /** The fetch failed: say so, honestly, everywhere the learner looks (note, status line; the picker line is set by the caller). */
-  /** The first change after a held reopen: set the stored project aside (recoverable by the export) so the autosave never loses it. */
+  /** The first change after a held reopen: set the stored project aside (recoverable through the export, a JSON file; no re-import yet, see L12 of the log) so the autosave never loses it. */
   const releaseBetaHold = (): void => {
     betaHold = false
     notes.dismiss('beta-unavailable')
@@ -235,6 +234,7 @@ export async function bootCreation(): Promise<void> {
       storageBlocked = true
     }
   }
+  /** The fetch failed: say so, honestly, everywhere the learner looks (note, status line; the picker line is set by the caller). */
   const noteBetaUnavailable = (): void => {
     const I = COPY.inventory!
     notes.show({ id: 'beta-unavailable', title: I.unavailableTitle!, body: I.unavailable! })
@@ -1039,9 +1039,10 @@ export async function bootCreation(): Promise<void> {
     const prep = await ensureBetaFor(design)
     if (prep.kind === 'unavailable') {
       // Nothing is opened and nothing changes: the stored project stays as it is (open it again once the network is back).
-      notes.show({ id: 'beta-unavailable', title: COPY.inventory!.unavailableTitle!, body: COPY.inventory!.unavailable! })
-      return shell.setStatus(placeNow(), COPY.inventory!.unavailable!, 'ready', true)
+      notes.show({ id: 'beta-unavailable', title: COPY.inventory!.unavailableTitle!, body: COPY.inventory!.unavailableOpen! })
+      return shell.setStatus(placeNow(), COPY.inventory!.unavailableOpen!, 'ready', true)
     }
+    notes.dismiss('beta-unavailable') // the sheets came back: an earlier « fiches indisponibles » note no longer holds
     const missing = prep.missing
     const first = store.design().roomId === null
     // anything the store drops shows as « * » (the fingerprint is the stored design's)
@@ -1384,14 +1385,22 @@ export async function bootCreation(): Promise<void> {
   let drawerLoad: Promise<InventoryDrawer> | null = null
   /** The learner's last wish while the chunk loads (a second Espace before it arrives cancels the open). */
   let drawerWanted = false
-  const drawerOpen = (): boolean => (drawer ? drawer.isOpen : drawerWanted)
+  /** A mounted drawer is waiting for a fresh fetch of the Bêta sheets before it shows (a second Espace cancels, as for the first open). */
+  let drawerRetry = false
+  const drawerOpen = (): boolean => (drawer ? drawer.isOpen || (drawerRetry && drawerWanted) : drawerWanted)
   /** Entrée / click on a device in the drawer: it follows the pointer until a click drops it (Task 24). */
   const chooseDevice = (deviceId: string): void => {
     registerBeta([deviceId]) // a Bêta sheet becomes placeable only now (a catalog id is never touched)
     placement.startPlacement(deviceId)
   }
+  /**
+   * The drawer was mounted without the Bêta sheets because their fetch FAILED (not because there are none): the next open
+   * fetches them again before it shows, so the tab can come back. The module itself (drawerLoad) stays cached.
+   */
+  let betaStale = false
   const loadDrawer = (): Promise<InventoryDrawer> =>
-    (drawerLoad ??= Promise.all([import('./shell/inventoryDrawer'), loadBeta()]).then(([{ mountInventoryDrawer }]) => {
+    (drawerLoad ??= Promise.all([import('./shell/inventoryDrawer'), loadBeta()]).then(([{ mountInventoryDrawer }, beta]) => {
+      betaStale = beta.failed
       drawer = mountInventoryDrawer({
         doc: document,
         parent: shell.viewport,
@@ -1406,14 +1415,22 @@ export async function bootCreation(): Promise<void> {
     }))
   const setInventory = (open: boolean, opts: { returnFocus?: boolean } = {}): void => {
     drawerWanted = open
-    if (drawer) {
+    if (drawer && !(open && betaStale)) {
       if (open) drawer.open()
       else drawer.close(opts)
       return
     }
     if (!open) return
     shell.setStatus(placeNow(), INV.loading!, 'busy')
-    loadDrawer().then(
+    drawerRetry = !!drawer
+    const ready = drawer
+      ? loadBeta().then((r) => {
+          betaStale = r.failed // never rejects; a second failure keeps the retry for the next open
+          drawerRetry = false
+          return drawer!
+        })
+      : loadDrawer()
+    ready.then(
       (d) => {
         showStatus()
         if (drawerWanted && !viewLocked()) d.open()
