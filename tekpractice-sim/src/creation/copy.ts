@@ -498,7 +498,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Accessible name of the tab list. */
     tabs: 'Catégories d’appareils',
     /** Line under the title; {key} = the inventory key label (Space by default). */
-    hint: 'Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer.',
+    hint: 'Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme.',
     /** Visible text of the close button. */
     close: 'Fermer',
     /** Accessible name of the close button (contains the visible text). */

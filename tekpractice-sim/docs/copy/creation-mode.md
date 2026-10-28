@@ -466,13 +466,13 @@ Points d'écoute nommés (Task 20 ; seule la Régie est obligatoire). Lignes du 
 
 ## inventory
 
-Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 3D a le focus), tiroir en bas de la vue 3D, onglets par catégorie (les neuf noms d'onglets sont les lignes `inventory.tab*` ci-dessous ; `TAB_LABELS`, src/creation/inventory.ts, en est construit). Entrée ou clic sur un appareil le choisit : il suit alors le pointeur dans la vue 3D et se pose d'un clic (section `placement`, Task 24). Espace ou Échap ferment et rendent le focus à la vue 3D.
+Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 3D a le focus), tiroir en bas de la vue 3D, onglets par catégorie (les neuf noms d'onglets sont les lignes `inventory.tab*` ci-dessous ; `TAB_LABELS`, src/creation/inventory.ts, en est construit). Entrée ou clic sur un appareil le choisit : il suit alors le pointeur dans la vue 3D et se pose d'un clic (section `placement`, Task 24). Espace ou Échap ferment et rendent le focus à la vue 3D ; dans le champ « Filtrer », Espace écrit une espace et seul Échap ferme.
 
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
 | `inventory.title` | Inventaire | à valider (tekuxwriter) | Titre du tiroir (h2) et nom accessible de la boîte de dialogue ; même mot que Matériel › Inventaire |
 | `inventory.tabs` | Catégories d’appareils | à valider (tekuxwriter) | Nom accessible de la liste d’onglets (tablist) ; les noms d’onglets sont les lignes `inventory.tab*` de copy.ts |
-| `inventory.hint` | Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer. | à valider (tekuxwriter) | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut) |
+| `inventory.hint` | Entrée ou clic : choisir l’appareil, puis cliquer dans la vue pour le poser. {key} ou Échap : fermer ; dans « Filtrer », seul Échap ferme. | à valider (tekuxwriter) | Sous le titre ; {key} = touche de l’inventaire (« Espace » par défaut) |
 | `inventory.close` | Fermer | à valider (tekuxwriter) | Texte du bouton |
 | `inventory.closeLabel` | Fermer l’inventaire | à valider (tekuxwriter) | Nom accessible du bouton Fermer (contient le texte visible) |
 | `inventory.filter` | Filtrer | à valider (tekuxwriter) | Étiquette du champ de recherche au-dessus des onglets (aussi son nom pour les aides techniques) |

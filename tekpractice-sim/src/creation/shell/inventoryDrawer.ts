@@ -158,7 +158,7 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
   panel.id = 'cr-inv-panel'
   panel.setAttribute('role', 'tabpanel')
   const hint = el(doc, 'p', 'cr-drawer-hint')
-  // DOM order = Tab order: tabs, the devices, then « Fermer » (placed top right by the CSS).
+  // DOM order = Tab order: « Filtrer », the tabs, the devices, then « Fermer » (placed top right by the CSS).
   root.append(head, panel, hint, close)
   d.parent.appendChild(root)
 
