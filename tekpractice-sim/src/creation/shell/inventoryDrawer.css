@@ -32,6 +32,11 @@
 @media (prefers-reduced-motion: reduce) {
   .cr-drawer, .cr-drawer[data-open='true'] { transition: none; }
 }
+/* Nothing inside the drawer transitions. The legacy reset (index.html) puts `transition-duration: 0.01ms !important` on
+   everything, and the wrapper divs keep the initial `transition-property: all`: under reduced motion the inherited
+   `visibility` hidden -> visible would then be a 0.01 ms transition, still `hidden` when `open()` calls focus() (WCAG 2.4.3).
+   `none` removes the property, so the duration no longer matters. Without reduced motion those durations are already 0 s. */
+.cr-drawer * { transition: none; }
 
 /* ── head: title, tabs, close ─────────────────────────────────────── */
 .cr-drawer-head {

@@ -364,6 +364,34 @@ test('keyboard only: Space, type, Enter -> the first match follows the pointer (
   expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(0) // chosen, not placed
 })
 
+test('under prefers-reduced-motion the drawer still takes focus on open (L24, WCAG 2.4.3), and Space, type, Enter starts a placement', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await boot(page)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Space')
+  await expect(drawer(page)).toBeVisible()
+  // No sleep: the assertion auto-waits. With the legacy 0.01 ms transition on the wrapper divs, `visibility` was still `hidden`
+  // when focus() ran, and focus stayed on the 3D view.
+  await expect(page.getByRole('tab', { selected: true })).toBeFocused()
+  await page.keyboard.type('sm58') // typed on the focused tab: it lands in the field
+  await expect(filterField(page)).toBeFocused()
+  await expect(filterField(page)).toHaveValue('sm58')
+  await page.keyboard.press('Enter')
+  await expect(drawer(page)).toBeHidden()
+  await expect(page.locator('#renderCanvas')).toBeFocused()
+  await expect.poll(() => page.evaluate(() => window.__creation!.placing())).toBe(true)
+})
+
+test('nothing inside the drawer inherits a transition (the wrappers keep the legacy `transition: all`, which turns a `visibility` flip into a 0.01 ms one under reduced motion)', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await boot(page)
+  await open(page)
+  const props = await drawer(page).evaluate((root) =>
+    [...root.querySelectorAll('*')].filter((e) => getComputedStyle(e).transitionProperty !== 'none').map((e) => `${e.tagName.toLowerCase()}.${(e as HTMLElement).className}`)
+  )
+  expect(props).toEqual([])
+})
+
 test('the filter looks across all tabs by label, ignoring case and accents; a tab click clears it', async ({ page }) => {
   await boot(page)
   await open(page)

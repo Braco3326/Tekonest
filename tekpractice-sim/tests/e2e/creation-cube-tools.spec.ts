@@ -270,7 +270,7 @@ test('a double-click on the floor shows no « Rien ici » toast and keeps the se
 })
 
 test('a double-click event while a device follows the pointer (the drop already happened elsewhere) does not re-pivot', async ({ page }) => {
-  await boot(page, false) // not reduced motion: the drawer takes focus on open only then (see the final report)
+  await boot(page)
   const before = await settled(page)
   await page.locator('#renderCanvas').focus()
   await page.keyboard.press('Space')
