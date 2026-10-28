@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import { describe, expect, it } from 'vitest'
+import { z } from 'zod'
 import catalogJson from '../../content/catalog.json'
-import { Catalog, Device, Port, PortFlag, Route, Rule } from '../../tools/schemas'
+import { Acoustic, Catalog, Device, Port, PortFlag, Route, Rule, Sourced } from '../../tools/schemas'
 
 /** Task 29 (C17, CA-15): every catalog rule carries its French title and teaching text. */
 const rule = () => structuredClone(catalogJson.rules[0]) as Record<string, unknown>
@@ -279,5 +280,191 @@ describe('content/catalog.schema.json: the routing hunk matches the generator (T
     const items = (onDisk.properties!.routing as { items: { properties: Record<string, { description?: string }> } }).items
     expect(Object.keys(items.properties).sort()).toEqual(['channels', 'from', 'passive', 'to', 'when'])
     for (const [k, v] of Object.entries(items.properties)) expect(v.description, k).toMatch(/\S/)
+  })
+})
+
+/**
+ * Task 35 (C12): the acoustic fields of a loudspeaker, each with its provenance. `Sourced` is the zod shape of a value + its source;
+ * `checkCatalog` (tests/tools/catalogChecks.test.ts) adds the rules zod cannot see (nominal only as 90 x 60, a speaker needs acoustic).
+ */
+describe('Sourced / Acoustic schema (Task 35, C12)', () => {
+  const src = { kind: 'kb', ref: 'knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage', retrieved: '2026-10-22' }
+  const ok = () => ({ coverage_h_deg: { value: 90, source: { ...src } }, coverage_v_deg: { value: 60, source: { ...src } } })
+  const FIELDS = ['coverage_h_deg', 'coverage_v_deg', 'max_spl_db', 'sensitivity_db'] as const
+  const full = () => ({ ...ok(), max_spl_db: { value: 131, source: { ...src } }, sensitivity_db: { value: 98, source: { ...src } } })
+
+  it('accepts coverage alone, and with the optional max SPL and sensitivity', () => {
+    expect(Acoustic.safeParse(ok()).success).toBe(true)
+    expect(Acoustic.safeParse(full()).success).toBe(true)
+    expect(Acoustic.safeParse({ ...ok(), max_spl_db: { value: 131, source: src } }).success).toBe(true)
+  })
+  it('requires both coverage angles', () => {
+    for (const k of ['coverage_h_deg', 'coverage_v_deg'] as const) {
+      const a: Record<string, unknown> = ok()
+      delete a[k]
+      expect(paths(Acoustic.safeParse(a)), k).toEqual([k])
+    }
+  })
+  it('requires a source on EVERY acoustic field (a bare value is refused, with the path of the missing source)', () => {
+    for (const k of FIELDS) {
+      const a: Record<string, unknown> = full()
+      a[k] = { value: 90 }
+      expect(paths(Acoustic.safeParse(a)), k).toEqual([`${k}.source`])
+    }
+  })
+  it('requires kind (datasheet | kb | nominal), a non-empty ref and an ISO date', () => {
+    for (const kind of ['datasheet', 'kb', 'nominal']) expect(Sourced(z.number()).safeParse({ value: 1, source: { ...src, kind } }).success, kind).toBe(true)
+    const bad = (source: Record<string, unknown>) => paths(Sourced(z.number()).safeParse({ value: 1, source }))
+    expect(bad({ ...src, kind: 'memory' })).toEqual(['source.kind'])
+    expect(bad({ ...src, kind: undefined })).toEqual(['source.kind'])
+    expect(bad({ ...src, ref: '' })).toEqual(['source.ref'])
+    expect(bad({ ...src, ref: undefined })).toEqual(['source.ref'])
+    expect(bad({ ...src, retrieved: '22/10/2026' })).toEqual(['source.retrieved'])
+    expect(bad({ ...src, retrieved: undefined })).toEqual(['source.retrieved'])
+  })
+  it('refuses a non-positive angle, a non-numeric value, and a key it does not know (a typo would vanish silently)', () => {
+    expect(paths(Acoustic.safeParse({ ...ok(), coverage_h_deg: { value: 0, source: src } }))).toEqual(['coverage_h_deg.value'])
+    expect(paths(Acoustic.safeParse({ ...ok(), coverage_v_deg: { value: '60', source: src } }))).toEqual(['coverage_v_deg.value'])
+    expect(Acoustic.safeParse({ ...ok(), max_spl: { value: 131, source: src } }).success).toBe(false)
+    expect(Acoustic.safeParse({ ...ok(), coverage_h_deg: { value: 90, source: { ...src, note: 'x' } } }).success).toBe(false)
+  })
+  it('every Acoustic field, and every field of a source, carries a .describe()', () => {
+    const shape = Acoustic.shape as unknown as Record<string, { description?: string }>
+    expect(Object.keys(shape).sort()).toEqual([...FIELDS].sort())
+    for (const k of FIELDS) expect(shape[k].description, k).toMatch(/\S/)
+    const sourced = Sourced(z.number()).shape as unknown as Record<string, { description?: string; shape?: Record<string, { description?: string }> }>
+    expect(sourced.value.description, 'value').toMatch(/\S/)
+    expect(sourced.source.description, 'source').toMatch(/\S/)
+    expect(Object.keys(sourced.source.shape!).sort()).toEqual(['kind', 'ref', 'retrieved'])
+    for (const [k, v] of Object.entries(sourced.source.shape!)) expect(v.description, k).toMatch(/\S/)
+  })
+  it('Device.acoustic is optional, and the parsed device keeps it', () => {
+    const d = structuredClone(catalogJson.devices.find((x) => x.id === 'shure-sm58')!) as Record<string, unknown>
+    expect(Device.safeParse(d).success).toBe(true)
+    expect(Device.parse({ ...d, acoustic: ok() }).acoustic).toEqual(ok())
+    expect(paths(Device.safeParse({ ...d, acoustic: { ...ok(), coverage_h_deg: { value: 90 } } }))).toEqual(['acoustic.coverage_h_deg.source'])
+  })
+  it('the parsed catalog keeps the acoustic block of the speakers (the schema knows the field)', () => {
+    const parsed = Catalog.parse(catalogJson)
+    expect(parsed.devices.find((d) => d.id === 'qsc-k12-2')!.acoustic).toBeDefined()
+  })
+})
+
+/** Task 35: Route is .strict() so that the typed catalog (which validate:catalog now uses) still reports a stray key, with its path. */
+describe('Route is strict (Task 35: the typed catalog no longer hides a stray route key)', () => {
+  const stereo = { from: 'in-mic-1', to: ['out-main-l'] }
+  it('refuses an unknown key on a route', () => {
+    for (const key of ['enabledBy', 'source']) expect(Route.safeParse({ ...stereo, [key]: 'x' }).success, key).toBe(false)
+  })
+  it('Catalog.parse reports a stray route key of the real catalog with its path', () => {
+    const broken = structuredClone(catalogJson) as unknown as { devices: { id: string; routing?: Record<string, unknown>[] }[] }
+    const i = broken.devices.findIndex((d) => d.id === 'yamaha-ql1')
+    broken.devices[i].routing![0].enabledBy = 'power'
+    const parsed = Catalog.safeParse(broken)
+    expect(parsed.success).toBe(false)
+    expect(paths(parsed)).toEqual([`devices.${i}.routing.0`])
+    expect(parsed.error!.issues[0].message).toMatch(/enabledBy/)
+  })
+})
+
+/** The acoustic data of the three speakers, read against the KB files (values are copied, never invented). */
+describe('Acoustic data of the speakers (Task 35, C12)', () => {
+  type Src = { kind: string; ref: string; retrieved: string }
+  type Sv = { value: number; source: Src }
+  type Ac = { coverage_h_deg: Sv; coverage_v_deg: Sv; max_spl_db?: Sv; sensitivity_db?: Sv }
+  type Dev = { id: string; acoustic?: Ac }
+  const devices = catalogJson.devices as unknown as Dev[]
+  const ac = (id: string): Ac => devices.find((d) => d.id === id)!.acoustic!
+  const kbFile = (f: string) => JSON.parse(readFileSync(`../knowledge-base/equipment/${f}`, 'utf8')) as { generated: string; devices: { id: string; key_specs: Record<string, string> }[] }
+  const loud = kbFile('loudspeakers.json')
+  const mon = kbFile('studio-monitors.json')
+  const strip = (s: Sv) => ({ value: s.value, kind: s.source.kind, retrieved: s.source.retrieved })
+  const quoted = (ref: string) => /« (.+?) »/.exec(ref)![1]
+
+  it('K12.2: coverage 75 x 75 (kb), max SPL 132 (kb, peak), no sensitivity', () => {
+    const a = ac('qsc-k12-2')
+    expect(strip(a.coverage_h_deg)).toEqual({ value: 75, kind: 'kb', retrieved: '2026-10-22' })
+    expect(strip(a.coverage_v_deg)).toEqual({ value: 75, kind: 'kb', retrieved: '2026-10-22' })
+    expect(strip(a.max_spl_db!)).toEqual({ value: 132, kind: 'kb', retrieved: '2026-10-22' })
+    expect(a.sensitivity_db, 'the KB has no sensitivity for the K12.2').toBeUndefined()
+    expect(a.max_spl_db!.source.ref, 'the continuous figure is noted in ref').toContain('126 dB @ 1 m continuous')
+  })
+  it('DBR12: coverage 90 x 60 (kb), max SPL 131 (kb, peak), no sensitivity', () => {
+    const a = ac('yamaha-dbr12')
+    expect(strip(a.coverage_h_deg)).toEqual({ value: 90, kind: 'kb', retrieved: '2026-10-22' })
+    expect(strip(a.coverage_v_deg)).toEqual({ value: 60, kind: 'kb', retrieved: '2026-10-22' })
+    expect(strip(a.max_spl_db!)).toEqual({ value: 131, kind: 'kb', retrieved: '2026-10-22' })
+    expect(a.sensitivity_db, 'the KB input_sensitivity is an input level in dBu, not an SPL sensitivity').toBeUndefined()
+  })
+  it('8030C: 90 x 60 nominal with the « valeur nominale » ref; no max SPL (the KB gives a lower bound only), no sensitivity', () => {
+    const a = ac('genelec-8030c')
+    const ref = 'valeur nominale (pas de donnée constructeur dans la KB)'
+    expect(a.coverage_h_deg).toEqual({ value: 90, source: { kind: 'nominal', ref, retrieved: '2026-10-22' } })
+    expect(a.coverage_v_deg).toEqual({ value: 60, source: { kind: 'nominal', ref, retrieved: '2026-10-22' } })
+    expect(a.max_spl_db, '« > 104 dB SPL » is a lower bound').toBeUndefined()
+    expect(a.sensitivity_db).toBeUndefined()
+  })
+  it('only the three speakers carry acoustic', () => {
+    expect(devices.filter((d) => d.acoustic !== undefined).map((d) => d.id).sort()).toEqual(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'])
+  })
+  it('every kb value cites the KB entry and field it comes from, quotes the KB text verbatim, and carries the KB note date', () => {
+    const kbValues = devices.flatMap((d) => Object.entries(d.acoustic ?? {}).map(([field, s]) => ({ id: d.id, field, s: s as Sv }))).filter((x) => x.s.source.kind === 'kb')
+    expect(kbValues.map((x) => `${x.id}.${x.field}`).sort()).toEqual([
+      'qsc-k12-2.coverage_h_deg', 'qsc-k12-2.coverage_v_deg', 'qsc-k12-2.max_spl_db',
+      'yamaha-dbr12.coverage_h_deg', 'yamaha-dbr12.coverage_v_deg', 'yamaha-dbr12.max_spl_db',
+    ])
+    for (const { id, field, s } of kbValues) {
+      const m = /^knowledge-base\/equipment\/(loudspeakers\.json)#([a-z0-9-]+) key_specs\.([a-z_]+) « /.exec(s.source.ref)
+      expect(m, `${id}.${field}: ref = KB path#entry key_specs.<key> « quote »`).not.toBeNull()
+      expect(m![2], `${id}.${field}: the entry cited is the device itself`).toBe(id)
+      const text = loud.devices.find((d) => d.id === m![2])!.key_specs[m![3]]
+      expect(text, `${id}.${field}: key_specs.${m![3]} exists in the KB`).toBeDefined()
+      expect(quoted(s.source.ref), `${id}.${field}: the quotation is the KB text, verbatim`).toBe(text)
+      expect(s.source.retrieved, `${id}.${field}: the KB note date`).toBe(loud.generated)
+    }
+  })
+  it('the KB texts carry the values (75 / H90 x V60 / 132 peak / 131 peak), pinned against the KB file', () => {
+    const k = loud.devices.find((d) => d.id === 'qsc-k12-2')!.key_specs
+    const b = loud.devices.find((d) => d.id === 'yamaha-dbr12')!.key_specs
+    expect(k.coverage).toBe('75° nominal, axisymmetric')
+    expect(k.max_spl).toBe('132 dB @ 1 m peak; 126 dB @ 1 m continuous')
+    expect(b.coverage).toBe('H90° x V60° Constant Directivity Horn')
+    expect(b.max_spl).toBe('131 dB SPL (Measured Maximum SPL (Peak) IEC noise@1m)')
+    expect(b.coverage).toContain(`H${ac('yamaha-dbr12').coverage_h_deg.value}° x V${ac('yamaha-dbr12').coverage_v_deg.value}°`)
+    expect(k.coverage).toContain(`${ac('qsc-k12-2').coverage_h_deg.value}°`)
+    expect(k.max_spl.startsWith(`${ac('qsc-k12-2').max_spl_db!.value} dB`)).toBe(true)
+    expect(b.max_spl.startsWith(`${ac('yamaha-dbr12').max_spl_db!.value} dB`)).toBe(true)
+  })
+  it('the 8030C claims are backed by the KB: no coverage in its entry, max SPL only as a lower bound; its note date is the retrieved date', () => {
+    const e = mon.devices.find((d) => d.id === 'genelec-8030c')!
+    expect(JSON.stringify(e)).not.toMatch(/coverage|directivity|dispersion/i)
+    expect(e.key_specs.max_spl_short_term_sine).toBe('> 104 dB SPL @ 1 m (half space, 100 Hz - 3 kHz)')
+    expect(e.key_specs.max_spl_long_term).toBe('> 96 dB SPL @ 1 m (IEC weighted noise)')
+    expect(ac('genelec-8030c').coverage_h_deg.source.retrieved).toBe(mon.generated)
+  })
+})
+
+/** Same idea as the routing hunk above: the acoustic hunk of the hand-patched file is what the generator emits. */
+describe('content/catalog.schema.json: the acoustic hunk matches the generator (Task 35)', () => {
+  type Obj = { properties?: Record<string, unknown>; required?: string[] }
+  const deviceItems = (schema: unknown): Obj => (schema as { definitions: { Catalog: { properties: { devices: { items: Obj } } } } }).definitions.Catalog.properties.devices.items
+  const onDisk = deviceItems(JSON.parse(readFileSync('content/catalog.schema.json', 'utf8')))
+  const generated = deviceItems(zodToJsonSchema(Catalog, { name: 'Catalog', $refStrategy: 'none' }))
+
+  it('Device.acoustic is optional (not in `required`) and its node is exactly the generated one', () => {
+    expect(onDisk.properties).toHaveProperty('acoustic')
+    expect(onDisk.required).not.toContain('acoustic')
+    expect(onDisk.properties!.acoustic).toEqual(generated.properties!.acoustic)
+  })
+  it('the node documents every acoustic field and every source field', () => {
+    type N = { description?: string; properties?: Record<string, N> }
+    const node = onDisk.properties!.acoustic as N
+    expect(Object.keys(node.properties!).sort()).toEqual(['coverage_h_deg', 'coverage_v_deg', 'max_spl_db', 'sensitivity_db'])
+    for (const [k, v] of Object.entries(node.properties!)) {
+      expect(v.description, k).toMatch(/\S/)
+      expect(v.properties!.value.description, `${k}.value`).toMatch(/\S/)
+      expect(Object.keys(v.properties!.source.properties!).sort(), `${k}.source`).toEqual(['kind', 'ref', 'retrieved'])
+      for (const [s, sv] of Object.entries(v.properties!.source.properties!)) expect(sv.description, `${k}.source.${s}`).toMatch(/\S/)
+    }
   })
 })

@@ -10,17 +10,19 @@
  *     port, or `control:<id>` of a control of the device; every `to` is an output / bidir port or the
  *     pseudo-target `transducer`; `channels` (L/R) runs parallel to `to`; `when.control` is a control of
  *     the device and `when.equals` fits its type; no unknown key (the zod Route would strip it silently)
- *  4. optional `acoustic` (council C12) is validated when present: every
- *     value carries a source, `nominal` only for 90 / 60
+ *  4. optional `acoustic` (council C12; Task 35) is validated when present: the shape is the zod `Acoustic` (a source
+ *     on every value), `nominal` only as the coverage PAIR 90 x 60 with « valeur nominale »; a speaker (a device with a
+ *     route to `transducer`) without `acoustic` is a WARNING
  *  5. mains (C7, Task 32): a device with a `power-in` port carries the toggle
  *     `power` (label « Alimentation », default on); `isMainsSource` sits only on an
  *     OUT port that carries `mains-power`, and every verified `mains-power` OUT port
  *     has it (Bêta proposals are not checked here: they are not in the catalog)
  *
- * The catalog is passed RAW (the JSON as read from disk): zod strips unknown keys, and `acoustic` is not in the
- * zod Device until Task 35. `routing` is in the schema now, but is still read defensively as `unknown` so a
- * malformed value is reported with a JSON path instead of being trusted.
+ * The catalog may be passed typed (validate-catalog: it is parsed by zod first, and `Route` / `Acoustic` are strict, so a stray key
+ * already fails there) or raw (the tests build deliberately malformed values). `routing` and `acoustic` are therefore read defensively
+ * as `unknown`: a malformed value is reported with a JSON path instead of being trusted.
  */
+import { Acoustic, ROUTE_KEYS as ROUTE_KEY_LIST } from './schemas'
 import type { CatalogT } from './schemas'
 
 export interface CheckIssue {
@@ -29,11 +31,17 @@ export interface CheckIssue {
   message: string
 }
 
-const SOURCE_KINDS = ['datasheet', 'kb', 'nominal'] as const
-const NOMINAL_VALUES = [90, 60]
+/** The only nominal coverage (C12): 90 x 60, said as « valeur nominale ». */
+const NOMINAL_H_DEG = 90
+const NOMINAL_V_DEG = 60
+const NOMINAL_WORDING = 'valeur nominale'
 const ACOUSTIC_VALUES = ['coverage_h_deg', 'coverage_v_deg', 'sensitivity_db', 'max_spl_db'] as const
 
 type Port = CatalogT['devices'][number]['ports'][number]
+
+/** A speaker is a device with a route to the pseudo-target `transducer` (Task 33 data); read defensively, a malformed routing is checkRouting's to report. */
+const isSpeaker = (routing: unknown): boolean =>
+  Array.isArray(routing) && routing.some((r) => isRecord(r) && Array.isArray(r.to) && r.to.includes(TRANSDUCER))
 
 const isRecord = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v)
@@ -59,6 +67,7 @@ export function checkCatalog(catalog: CatalogT, opts: { modelIds: ReadonlySet<st
     const loose = d as Record<string, unknown>
     if (loose.routing !== undefined) checkRouting(at, d, loose.routing, error)
     if (loose.acoustic !== undefined) checkAcoustic(at, loose.acoustic, error)
+    else if (isSpeaker(loose.routing)) warning(`${at}.acoustic`, `${d.id} is a loudspeaker (a route feeds its transducer) but has no sourced acoustic data (coverage): nothing to draw or compute from`)
   }
   return issues
 }
@@ -81,7 +90,7 @@ function checkMains(at: string, device: CatalogT['devices'][number], error: (pat
   }
 }
 
-const ROUTE_KEYS = new Set(['from', 'to', 'channels', 'passive', 'when'])
+const ROUTE_KEYS = new Set(ROUTE_KEY_LIST)
 const CONTROL_SOURCE = 'control:'
 /** The pseudo-target of a loudspeaker route (P7): the drivers, not a port. */
 const TRANSDUCER = 'transducer'
@@ -148,32 +157,28 @@ function checkRouting(
   })
 }
 
+/**
+ * `acoustic` (C12, Task 35): the SHAPE is the zod `Acoustic` (a source on every value, both coverage angles, no unknown key); what
+ * zod cannot see is checked here. `nominal` is the PAIR 90 x 60 (coverage_h_deg = 90 AND coverage_v_deg = 60), only on a coverage angle,
+ * and its ref says « valeur nominale ». The rules run only when the shape is right, so a malformed value gets one error, not two.
+ */
 function checkAcoustic(at: string, acoustic: unknown, error: (path: string, message: string) => void): void {
   const a = `${at}.acoustic`
-  if (!isRecord(acoustic)) return error(a, 'acoustic must be an object')
-  if (acoustic.transducer !== undefined && typeof acoustic.transducer !== 'boolean')
-    error(`${a}.transducer`, 'transducer must be a boolean')
-
+  const parsed = Acoustic.safeParse(acoustic)
+  if (!parsed.success) {
+    for (const issue of parsed.error.issues) error([a, ...issue.path].join('.'), issue.message)
+    return
+  }
+  const ac = parsed.data
+  const angles = { coverage_h_deg: NOMINAL_H_DEG, coverage_v_deg: NOMINAL_V_DEG } as const
+  const pairIsNominal = ac.coverage_h_deg.value === NOMINAL_H_DEG && ac.coverage_v_deg.value === NOMINAL_V_DEG
   for (const key of ACOUSTIC_VALUES) {
-    const v = acoustic[key]
-    if (v === undefined) continue
+    const v = ac[key]
+    if (v === undefined || v.source.kind !== 'nominal') continue
     const p = `${a}.${key}`
-    if (!isRecord(v)) {
-      error(p, 'must be { value, source }')
-      continue
-    }
-    if (typeof v.value !== 'number' || !Number.isFinite(v.value)) error(`${p}.value`, 'value must be a finite number')
-    const s = v.source
-    if (!isRecord(s)) {
-      error(`${p}.source`, 'every acoustic value needs a source { kind, ref, retrieved }')
-      continue
-    }
-    if (!SOURCE_KINDS.includes(s.kind as (typeof SOURCE_KINDS)[number]))
-      error(`${p}.source.kind`, `kind must be one of ${SOURCE_KINDS.join(' | ')}`)
-    else if (s.kind === 'nominal' && !NOMINAL_VALUES.includes(v.value as number))
-      error(`${p}.source.kind`, `kind "nominal" is allowed only for ${NOMINAL_VALUES.join(' or ')}`)
-    if (typeof s.ref !== 'string' || s.ref === '') error(`${p}.source.ref`, 'ref must be a non-empty string')
-    if (typeof s.retrieved !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(s.retrieved))
-      error(`${p}.source.retrieved`, 'retrieved must be a YYYY-MM-DD date')
+    if (!(key in angles)) error(`${p}.source.kind`, `kind "nominal" exists only for the coverage angles (the pair ${NOMINAL_H_DEG} x ${NOMINAL_V_DEG}): ${key} needs a datasheet or kb source, or no value`)
+    else if (!pairIsNominal || v.value !== angles[key as keyof typeof angles])
+      error(`${p}.source.kind`, `kind "nominal" is allowed only for the coverage pair ${NOMINAL_H_DEG} x ${NOMINAL_V_DEG} (coverage_h_deg = ${NOMINAL_H_DEG} and coverage_v_deg = ${NOMINAL_V_DEG}); got ${ac.coverage_h_deg.value} x ${ac.coverage_v_deg.value}`)
+    if (!v.source.ref.includes(NOMINAL_WORDING)) error(`${p}.source.ref`, `a nominal value says « ${NOMINAL_WORDING} » in its ref`)
   }
 }

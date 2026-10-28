@@ -6,8 +6,8 @@ import { makeRegistry } from '../helpers'
 const base = makeRegistry().catalog
 const allModels: ReadonlySet<string> = new Set(base.devices.map((d) => d.id))
 const fresh = (): CatalogT => structuredClone(base)
-/** Fields the zod Device does not know yet (acoustic, Task 35) and deliberately malformed values, hence the loose view. */
-type LooseDevice = CatalogT['devices'][number] & Record<string, any>
+/** Deliberately malformed values (acoustic / routing are typed in the zod Device, but a test must be able to break them), hence the loose view. */
+type LooseDevice = Omit<CatalogT['devices'][number], 'acoustic' | 'routing'> & Record<string, any>
 const dev = (c: CatalogT, id: string) => c.devices.find((d) => d.id === id) as LooseDevice
 const errors = (c: CatalogT) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'error')
 
@@ -160,48 +160,124 @@ describe('checkCatalog, routing (Task 33, C8, P7)', () => {
   })
 })
 
-describe('checkCatalog, acoustic (optional)', () => {
-  const src = { kind: 'datasheet', ref: 'knowledge-base/equipment/x.json', retrieved: '2026-10-24' }
+describe('checkCatalog, acoustic (Task 35, C12)', () => {
+  const src = { kind: 'datasheet', ref: 'knowledge-base/equipment/x.json#x key_specs.coverage', retrieved: '2026-10-24' }
+  const nominal = { kind: 'nominal', ref: 'valeur nominale (pas de donnée constructeur dans la KB)', retrieved: '2026-10-24' }
   const good = (): Record<string, unknown> => ({
-    transducer: true,
     coverage_h_deg: { value: 90, source: src },
     coverage_v_deg: { value: 60, source: src },
   })
-
-  it('accepts a sourced block', () => {
+  const at = (field = '') => `devices["qsc-k12-2"].acoustic${field}`
+  const withAcoustic = (a: unknown): CatalogT => {
     const c = fresh()
-    dev(c, 'qsc-k12-2').acoustic = good()
-    expect(errors(c)).toEqual([])
+    dev(c, 'qsc-k12-2').acoustic = a
+    return c
+  }
+
+  it('the real catalog has an acoustic block on every speaker, with no issue at all (no warning either)', () => {
+    const speakers = fresh().devices.filter((d) => (d as LooseDevice).routing?.some((r: { to: string[] }) => r.to.includes('transducer')))
+    expect(speakers.map((d) => d.id).sort()).toEqual(['genelec-8030c', 'qsc-k12-2', 'yamaha-dbr12'])
+    for (const d of speakers) expect((d as LooseDevice).acoustic, d.id).toBeDefined()
+    expect(checkCatalog(fresh(), { modelIds: allModels })).toEqual([])
   })
 
-  it('errors when a value has no source', () => {
-    const c = fresh()
-    dev(c, 'qsc-k12-2').acoustic = { ...good(), coverage_h_deg: { value: 90 } }
-    expect(errors(c).map((i) => i.path)).toEqual(['devices["qsc-k12-2"].acoustic.coverage_h_deg.source'])
+  it('accepts a sourced block, with the optional fields', () => {
+    expect(errors(withAcoustic(good()))).toEqual([])
+    expect(errors(withAcoustic({ ...good(), max_spl_db: { value: 131, source: src }, sensitivity_db: { value: 98, source: src } }))).toEqual([])
+  })
+
+  it('errors when a value has no source (path of the missing source)', () => {
+    expect(errors(withAcoustic({ ...good(), coverage_h_deg: { value: 90 } })).map((i) => i.path)).toEqual([at('.coverage_h_deg.source')])
+    expect(errors(withAcoustic({ ...good(), max_spl_db: { value: 131 } })).map((i) => i.path)).toEqual([at('.max_spl_db.source')])
+  })
+
+  it('errors when a required coverage angle is missing, or acoustic is not an object', () => {
+    const noV: Record<string, unknown> = good()
+    delete noV.coverage_v_deg
+    expect(errors(withAcoustic(noV)).map((i) => i.path)).toEqual([at('.coverage_v_deg')])
+    expect(errors(withAcoustic('wide')).map((i) => i.path)).toEqual([at()])
+    expect(errors(withAcoustic(null)).map((i) => i.path)).toEqual([at()])
   })
 
   it('errors on an unknown source kind and a non-numeric value', () => {
-    const c = fresh()
-    dev(c, 'qsc-k12-2').acoustic = { ...good(), coverage_h_deg: { value: 'wide', source: { ...src, kind: 'memory' } } }
-    const e = errors(c).map((i) => i.path)
-    expect(e).toContain('devices["qsc-k12-2"].acoustic.coverage_h_deg.value')
-    expect(e).toContain('devices["qsc-k12-2"].acoustic.coverage_h_deg.source.kind')
+    const e = errors(withAcoustic({ ...good(), coverage_h_deg: { value: 'wide', source: { ...src, kind: 'memory' } } })).map((i) => i.path)
+    expect(e).toEqual([at('.coverage_h_deg.value'), at('.coverage_h_deg.source.kind')])
   })
 
-  it('allows kind nominal only for 90 or 60', () => {
-    const c = fresh()
-    dev(c, 'qsc-k12-2').acoustic = {
-      ...good(),
-      coverage_h_deg: { value: 90, source: { ...src, kind: 'nominal' } },
-      coverage_v_deg: { value: 75, source: { ...src, kind: 'nominal' } },
-    }
-    expect(errors(c).map((i) => i.path)).toEqual(['devices["qsc-k12-2"].acoustic.coverage_v_deg.source.kind'])
+  it('errors on a missing ref, a bad date, and a key the schema would silently drop (a typo, the old `transducer` flag)', () => {
+    const e = errors(withAcoustic({ ...good(), coverage_h_deg: { value: 90, source: { ...src, ref: '', retrieved: '24/10/2026' } }, max_spl: { value: 131, source: src }, transducer: true }))
+    expect(e.map((i) => i.path)).toEqual([at('.coverage_h_deg.source.ref'), at('.coverage_h_deg.source.retrieved'), at()])
+    expect(e[2].message).toMatch(/max_spl/)
   })
 
-  it('errors when transducer is not a boolean', () => {
-    const c = fresh()
-    dev(c, 'qsc-k12-2').acoustic = { ...good(), transducer: 'yes' }
-    expect(errors(c).map((i) => i.path)).toEqual(['devices["qsc-k12-2"].acoustic.transducer'])
+  describe('kind nominal is the PAIR 90 x 60 (coverage_h_deg = 90 AND coverage_v_deg = 60), with « valeur nominale »', () => {
+    const pair = (h: number, v: number, hKind = nominal, vKind = nominal) => ({ ...good(), coverage_h_deg: { value: h, source: hKind }, coverage_v_deg: { value: v, source: vKind } })
+
+    it('accepts 90 x 60 nominal', () => {
+      expect(errors(withAcoustic(pair(90, 60)))).toEqual([])
+    })
+    it('errors on a nominal pair that is not 90 x 60 (90 x 75): the pair is wrong, so each nominal angle is flagged', () => {
+      const e = errors(withAcoustic(pair(90, 75)))
+      expect(e.map((i) => i.path)).toEqual([at('.coverage_h_deg.source.kind'), at('.coverage_v_deg.source.kind')])
+      expect(e[0].message).toMatch(/90 x 75/)
+    })
+    it('errors on the SWAPPED pair 60 x 90: each value would pass a per-value test, the pair does not', () => {
+      expect(errors(withAcoustic(pair(60, 90))).map((i) => i.path)).toEqual([at('.coverage_h_deg.source.kind'), at('.coverage_v_deg.source.kind')])
+    })
+    it('errors when only one side is nominal and the other angle is not the nominal complement (90 nominal + 75 from the KB)', () => {
+      expect(errors(withAcoustic(pair(90, 75, nominal, { ...src, kind: 'kb' }))).map((i) => i.path)).toEqual([at('.coverage_h_deg.source.kind')])
+      expect(errors(withAcoustic(pair(90, 60, nominal, { ...src, kind: 'kb' }))), 'a 90 x 60 pair stays fine').toEqual([])
+    })
+    it('errors on nominal for max SPL or sensitivity (nominal exists only for the coverage pair), even with the value 90 or 60', () => {
+      for (const field of ['max_spl_db', 'sensitivity_db']) {
+        expect(errors(withAcoustic({ ...good(), [field]: { value: 90, source: nominal } })).map((i) => i.path), field).toEqual([at(`.${field}.source.kind`)])
+      }
+    })
+    it('errors when a nominal value does not say « valeur nominale » in its ref', () => {
+      const e = errors(withAcoustic(pair(90, 60, { ...nominal, ref: 'knowledge-base/equipment/x.json' })))
+      expect(e.map((i) => i.path)).toEqual([at('.coverage_h_deg.source.ref')])
+      expect(e[0].message).toMatch(/valeur nominale/)
+    })
+    it('a non-numeric value with kind nominal raises ONE error (the value), not a second one about the pair', () => {
+      expect(errors(withAcoustic(pair('wide' as unknown as number, 60))).map((i) => i.path)).toEqual([at('.coverage_h_deg.value')])
+    })
+    it('other kinds are not limited to 90 x 60 (K12.2 is 75 x 75)', () => {
+      expect(errors(withAcoustic({ coverage_h_deg: { value: 75, source: src }, coverage_v_deg: { value: 75, source: { ...src, kind: 'kb' } } }))).toEqual([])
+    })
+  })
+
+  describe('a speaker (a device with a `transducer` route) without acoustic is a WARNING', () => {
+    const warnings = (c: CatalogT) => checkCatalog(c, { modelIds: allModels }).filter((i) => i.level === 'warning')
+
+    it('warns for each of the real speakers once its acoustic is removed, and never errors', () => {
+      for (const id of ['qsc-k12-2', 'yamaha-dbr12', 'genelec-8030c']) {
+        const c = fresh()
+        delete dev(c, id).acoustic
+        expect(warnings(c).map((i) => i.path), id).toEqual([`devices["${id}"].acoustic`])
+        expect(warnings(c)[0].message, id).toMatch(/speaker.*acoustic|acoustic/)
+        expect(errors(c), id).toEqual([])
+      }
+    })
+    it('is derived from the routing, not from an id list: any device that feeds `transducer` is a speaker', () => {
+      const c = fresh()
+      ;(dev(c, 'yamaha-ql1').routing as unknown[]).push({ from: 'in-mic-1', to: ['transducer'] })
+      expect(warnings(c).map((i) => i.path)).toEqual(['devices["yamaha-ql1"].acoustic'])
+    })
+    it('a device that does not feed a transducer is not asked for acoustic (the console, a microphone)', () => {
+      expect(dev(fresh(), 'yamaha-ql1').acoustic).toBeUndefined()
+      expect(dev(fresh(), 'shure-sm58').acoustic).toBeUndefined()
+      expect(warnings(fresh())).toEqual([])
+    })
+    it('does not fall over on a malformed routing (the routing check reports it, the speaker test just says no)', () => {
+      const c = fresh()
+      dev(c, 'shure-sm58').routing = 'x'
+      expect(warnings(c)).toEqual([])
+      dev(c, 'shure-sm58').routing = ['x', { to: 'transducer' }, null]
+      expect(warnings(c)).toEqual([])
+    })
+    it('a speaker that has acoustic is not warned about', () => {
+      expect(warnings(fresh())).toEqual([])
+    })
   })
 })
 

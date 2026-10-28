@@ -17,8 +17,8 @@
  *  8. controls (ADR-0001): unique ids per device; enables.ports exist on the
  *     device and actually carry the gated flag
  *  9. pure checks in tools/catalogChecks.ts: unique port ids (error), optional
- *     routing / acoustic fields, and a missing public/assets/<id>.glb (WARNING
- *     only: the placeholder ships, so it never fails the gate)
+ *     routing / acoustic fields (nominal only as 90 x 60), a speaker without acoustic and a missing
+ *     public/assets/<id>.glb (WARNINGS only: the placeholder ships, so they never fail the gate)
  * 10. mains (C7, Task 32; in catalogChecks): every `power-in` device has the `power` toggle,
  *     `isMainsSource` only on a mains-power OUT port, and every such verified port has it
  */
@@ -46,8 +46,7 @@ function parseOrDie<T>(schema: z.ZodType<T>, data: unknown, file: string): T {
   return r.data
 }
 
-const rawCatalog = read('content/catalog.json')
-const catalog = parseOrDie(Catalog, rawCatalog, 'content/catalog.json')
+const catalog = parseOrDie(Catalog, read('content/catalog.json'), 'content/catalog.json')
 const LEVEL_IDS = ['a1', 'b1', 'c1', 'd1'] as const
 const levels = LEVEL_IDS.map((id) =>
   parseOrDie(Level, read(`content/levels/${id}.json`), `content/levels/${id}.json`),
@@ -66,16 +65,14 @@ assertUnique(catalog.signalTypes.map((s) => s.id), 'signalTypes.id')
 assertUnique(catalog.devices.map((d) => d.id), 'devices.id')
 assertUnique(catalog.rules.map((r) => r.id), 'rules.id')
 
-// Pure checks (duplicate port ids, optional routing/acoustic, missing .glb).
-// The raw catalog is passed, not the typed one: `acoustic` is not in the zod Device until Task 35, and zod strips
-// unknown keys, so the typed catalog would silently skip that check (and could not report a stray key in a route).
-// `routing` is in the schema since Task 33; the raw JSON keeps checkCatalog reading it defensively. Its shape
-// was validated just above. TODO(Task 35): once `acoustic` is in the schema, pass the typed `catalog` and drop the cast.
+// Pure checks (duplicate port ids, optional routing / acoustic, missing .glb, speakers without acoustic). The TYPED catalog is passed:
+// `Route` and `Acoustic` are strict in the zod schema, so a stray key in either already failed parseOrDie above, with its path (and
+// the checker still reports it itself, tested in tests/tools/catalogChecks.test.ts), which is why the raw-JSON cast is gone.
 const modelIds = new Set(
   readdirSync(resolve(root, 'public/assets')).filter((f) => f.endsWith('.glb')).map((f) => f.slice(0, -4)),
 )
 const warnings: string[] = []
-for (const i of checkCatalog(rawCatalog as typeof catalog, { modelIds }))
+for (const i of checkCatalog(catalog, { modelIds }))
   (i.level === 'error' ? errors : warnings).push(`${i.path}: ${i.message}`)
 
 const connectorIds = new Set(catalog.connectorTypes.map((c) => c.id))

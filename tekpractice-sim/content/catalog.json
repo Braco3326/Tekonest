@@ -155,7 +155,12 @@
       "routing": [
         { "from": "in-line-a", "to": ["transducer"] },
         { "from": "in-line-a", "to": ["thru-out-a"], "passive": true }
-      ]
+      ],
+      "acoustic": {
+        "coverage_h_deg": { "value": 75, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage « 75° nominal, axisymmetric »", "retrieved": "2026-10-22" } },
+        "coverage_v_deg": { "value": 75, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.coverage « 75° nominal, axisymmetric »", "retrieved": "2026-10-22" } },
+        "max_spl_db": { "value": 132, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#qsc-k12-2 key_specs.max_spl « 132 dB @ 1 m peak; 126 dB @ 1 m continuous »", "retrieved": "2026-10-22" } }
+      }
     },
     {
       "id": "yamaha-dbr12",
@@ -177,7 +182,12 @@
       "routing": [
         { "from": "in-line", "to": ["transducer"] },
         { "from": "in-line", "to": ["link-out"], "passive": true }
-      ]
+      ],
+      "acoustic": {
+        "coverage_h_deg": { "value": 90, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#yamaha-dbr12 key_specs.coverage « H90° x V60° Constant Directivity Horn »", "retrieved": "2026-10-22" } },
+        "coverage_v_deg": { "value": 60, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#yamaha-dbr12 key_specs.coverage « H90° x V60° Constant Directivity Horn »", "retrieved": "2026-10-22" } },
+        "max_spl_db": { "value": 131, "source": { "kind": "kb", "ref": "knowledge-base/equipment/loudspeakers.json#yamaha-dbr12 key_specs.max_spl « 131 dB SPL (Measured Maximum SPL (Peak) IEC noise@1m) »", "retrieved": "2026-10-22" } }
+      }
     },
     {
       "id": "km-210-9",
@@ -274,7 +284,11 @@
       ],
       "routing": [
         { "from": "in-analog", "to": ["transducer"] }
-      ]
+      ],
+      "acoustic": {
+        "coverage_h_deg": { "value": 90, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur dans la KB)", "retrieved": "2026-10-22" } },
+        "coverage_v_deg": { "value": 60, "source": { "kind": "nominal", "ref": "valeur nominale (pas de donnée constructeur dans la KB)", "retrieved": "2026-10-22" } }
+      }
     },
     {
       "id": "playout-pc",

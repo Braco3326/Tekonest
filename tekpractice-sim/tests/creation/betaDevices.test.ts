@@ -86,6 +86,19 @@ describe('parseProposals leaves unusable entries out, with the reason', () => {
     expect(r.skipped).toEqual([])
     expect(r.devices.map((d) => [d.id, d.routing])).toEqual([['p-bad', undefined], ['p-bad2', undefined]])
   })
+  it('and no acoustic data (Task 35, C12): coverage / SPL are sourced, verified values, so a proposal that carries acoustic registers without it', () => {
+    const src = { kind: 'datasheet', ref: 'x', retrieved: '2026-10-24' }
+    const acoustic = { coverage_h_deg: { value: 90, source: src }, coverage_v_deg: { value: 60, source: src } }
+    const [d] = parse([entry('p-a', { acoustic })]).devices
+    expect(d.id).toBe('p-a')
+    expect(d.acoustic).toBeUndefined()
+    expect('acoustic' in d).toBe(false)
+  })
+  it('a malformed acoustic neither blocks the proposal nor survives', () => {
+    const r = parse([entry('p-bad', { acoustic: 'wide' }), entry('p-bad2', { acoustic: { coverage_h_deg: { value: 90 } } })])
+    expect(r.skipped).toEqual([])
+    expect(r.devices.map((d) => [d.id, d.acoustic])).toEqual([['p-bad', undefined], ['p-bad2', undefined]])
+  })
   it('after registration the registry holds the proposal without routing (the signal path reads routing from the registry)', () => {
     const reg2 = makeRegistry()
     registerProposals(reg2, parseProposals({ devices: [entry('p-reg', { routing: [{ from: 'in-1', to: ['transducer'] }] })] }, reg2).devices)

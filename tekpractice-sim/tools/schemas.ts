@@ -54,7 +54,7 @@ export const Control = z.discriminatedUnion('type', [ToggleControl, EnumControl]
  * Read only by the pure signal-path module (Task 34); the engine never reads it and R1-R3 do not depend on it.
  * tools/catalogChecks.ts checks a route against the ports and controls of its device (the zod shape cannot see them).
  */
-export const Route = z.object({
+const RouteFields = z.object({
   from: z.string().min(1).describe(
     'Where the signal enters: an input (or bidir) port id of this device, or "control:<controlId>" for a source inside the device (e.g. "control:playback-usb").',
   ),
@@ -71,10 +71,42 @@ export const Route = z.object({
     control: z.string().min(1).describe('Id of a control of this device.'),
     equals: z.union([z.boolean(), z.string()]).describe('Value that control must have for the route to be live: a boolean for a toggle, one of the options for an enum.'),
   }).optional().describe('The route is live only while this control has this value (e.g. playback-usb on). Absent = always live.'),
-}).refine((r) => r.channels === undefined || r.channels.length === r.to.length, {
+}).strict() // a stray key (a typo, the old `source` / `enabledBy` shape) is an error with a path, not silently stripped
+/** The keys a route has (tools/catalogChecks.ts reports any other, with the same list). */
+export const ROUTE_KEYS: readonly string[] = Object.keys(RouteFields.shape)
+export const Route = RouteFields.refine((r) => r.channels === undefined || r.channels.length === r.to.length, {
   path: ['channels'],
   message: '`channels` must have exactly one entry per `to` target',
 })
+
+/**
+ * A value that carries its provenance (council C12): where it comes from (`source.ref`), how (`source.kind`) and when it was read.
+ * Zod requires the source on every value. tools/catalogChecks.ts adds what zod cannot see (`nominal` only as the 90 x 60 coverage pair).
+ */
+export const Sourced = <T extends z.ZodTypeAny>(v: T) => z.object({
+  value: v.describe('The value itself, copied from its source (never estimated).'),
+  source: z.object({
+    kind: z.enum(['datasheet', 'kb', 'nominal']).describe(
+      'datasheet = the manufacturer document; kb = the TekPractice knowledge base (knowledge-base/equipment); nominal = a stated default for a loudspeaker the KB gives no coverage for, allowed only as the 90 x 60 coverage pair.',
+    ),
+    ref: z.string().min(1).describe(
+      'Where to check it: the knowledge-base note path + entry id + field (and the quoted text when the value is copied from it), or the manufacturer document. For kind nominal: « valeur nominale » and why.',
+    ),
+    retrieved: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).describe('Date the source was read (YYYY-MM-DD): the date of the KB note for kind kb.'),
+  }).strict().describe('Provenance of the value (decision C12): every acoustic value has one.'),
+}).strict()
+
+/**
+ * The acoustic fields of a loudspeaker (C12): read by the coverage and level code (Tasks 36, 37), which must never show a value that has no source.
+ * Angles are in degrees, levels in dB. max_spl_db and sensitivity_db are omitted when the KB has no sourced value for them (a lower bound such as
+ * « > 104 dB » is not a value); the display of an estimated SPL (« ≈ dB SPL estimé ») only exists when they are present (S2).
+ */
+export const Acoustic = z.object({
+  coverage_h_deg: Sourced(z.number().positive()).describe('Horizontal coverage angle of the loudspeaker, in degrees.'),
+  coverage_v_deg: Sourced(z.number().positive()).describe('Vertical coverage angle of the loudspeaker, in degrees.'),
+  max_spl_db: Sourced(z.number()).optional().describe('Maximum SPL in dB at 1 m, as the source states it (peak or continuous: say which in source.ref). Omitted when the source gives no value.'),
+  sensitivity_db: Sourced(z.number()).optional().describe('Sensitivity in dB SPL (1 W, 1 m), as the source states it. Omitted when the source gives no value.'),
+}).strict()
 
 export const Device = z.object({
   id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'device id must be a kebab-case slug'),
@@ -89,6 +121,9 @@ export const Device = z.object({
   }),
   ports: z.array(Port),
   controls: z.array(Control).optional(),
+  acoustic: Acoustic.optional().describe(
+    'Sourced acoustic fields of a loudspeaker (C12): coverage, max SPL, sensitivity, each with its provenance. Verified data: a Bêta proposal never carries acoustic (parseProposals drops it).',
+  ),
   routing: z.array(Route).optional().describe(
     'Signal routes of the device (C8): consumed by the signal path only. Verified data: a Bêta proposal never carries routing (parseProposals drops it).',
   ),

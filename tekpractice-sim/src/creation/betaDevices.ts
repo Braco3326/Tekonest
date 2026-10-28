@@ -18,7 +18,8 @@
  * exactly as it reads a catalog device's (R1–R3 on connector / signal, R4–R8 on
  * the declared flags). Behaviour a proposal does not declare does not exist. The one flag it cannot declare is
  * `isMainsSource` (parseProposals drops it): a proposal never powers anything. Nor does it carry `routing` (Task 33):
- * a signal route is verified data, so a proposal is no signal source and no speaker (parseProposals drops it too).
+ * a signal route is verified data, so a proposal is no signal source and no speaker (parseProposals drops it too). Nor acoustic
+ * (Task 35): a coverage angle or a max SPL needs a source, and a proposal has none that was checked.
  */
 import { Device } from '../../tools/schemas'
 import type { DeviceT, Registry } from '../engine/CatalogLoader'
@@ -66,10 +67,12 @@ export function parseProposals(raw: unknown, registry: Registry): ParsedProposal
       skip('already a verified catalog device')
       continue
     }
-    // A proposal never carries a signal route (Task 33, C8): routes are verified data, read by the signal path for catalog gear
-    // only. Dropped BEFORE the schema runs, so a crafted or malformed `routing` neither survives nor takes the proposal down.
-    const { routing: _routing, ...declared } = entry
+    // A proposal never carries a signal route (Task 33, C8) nor acoustic data (Task 35, C12): both are verified, sourced data, read
+    // for catalog gear only. Dropped BEFORE the schema runs, so a crafted or malformed `routing` / `acoustic` neither survives nor
+    // takes the proposal down.
+    const { routing: _routing, acoustic: _acoustic, ...declared } = entry
     void _routing
+    void _acoustic
     const parsed = Device.safeParse(declared)
     if (!parsed.success) {
       const i = parsed.error.issues[0]
