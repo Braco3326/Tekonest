@@ -77,9 +77,11 @@ export function inventory(
     tab: tabFor(d),
     hasModel: opts.modelIds.has(d.id),
   }))
-  // A proposal never shadows a catalog device: one device, one tab.
+  // A proposal never shadows a catalog device: one device, one tab. The test is the CATALOG's own list, not
+  // `deviceById`: a proposal registered for placement (betaDevices.ts) lives in `deviceById` and stays in « Bêta ».
+  const catalogIds = new Set(registry.catalog.devices.map((d) => d.id))
   for (const p of opts.proposals) {
-    if (registry.deviceById.has(p.deviceId)) continue
+    if (catalogIds.has(p.deviceId)) continue
     items.push({
       deviceId: p.deviceId,
       label: p.label,

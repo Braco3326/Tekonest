@@ -416,6 +416,10 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-tree-root [aria-expanded='true'] > .cr-tree-item .cr-twisty svg { transform: rotate(90deg); }
 .cr-tree-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cr-tree-root [aria-level='1'] > .cr-tree-item .cr-tree-text { font-weight: 500; }
+/* « non vérifié » (Task 30): a Bêta device never looks verified. Muted ink on the panel, 1 px outline, square, no motion. */
+.cr-badge { display: inline-block; padding: 0 4px; border: 1px solid var(--cr-ink-muted); color: var(--cr-ink-muted); font-size: 11px; line-height: 16px; transition: none; }
+.cr-tree-badge { flex: 0 0 auto; }
+.cr .cr-props-unverified { margin: 0 0 8px; color: var(--cr-ink-muted); font-size: 12px; }
 .cr-tree-count { flex: 0 0 auto; padding: 0 4px; color: var(--cr-ink-muted); font-variant-numeric: tabular-nums; }
 .cr-tree-root [data-hidden='true'] > .cr-tree-item .cr-tree-text { color: var(--cr-ink-muted); text-decoration: line-through; }
 .cr-tree-empty { margin: 0; padding: 2px 8px 6px calc(28px + (var(--cr-tree-level, 1) - 1) * 14px); color: var(--cr-ink-muted); font-size: 12px; }

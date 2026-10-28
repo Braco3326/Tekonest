@@ -58,6 +58,9 @@ import { nextDevice } from './deviceCycle'
 import { mountCreationKeyboard } from './input/keyboard'
 import { bindingLabel, creationActionsFor, loadCreationBindings, type CreationAction } from './input/creationActions'
 import type { InventoryDrawer } from './shell/inventoryDrawer'
+import { isUnverified, parseProposals, proposalEntries, registerProposals, unknownDeviceIds } from './betaDevices'
+import type { DeviceT } from '../engine/CatalogLoader'
+import type { DesignState } from '../trials/trial'
 import { openPlaceDialog, openReplaceDialog } from './shell/placeDialog'
 import type { PlaceCard } from './shell/placePicker'
 import { mountShell } from './shell/layout'
@@ -171,6 +174,52 @@ export async function bootCreation(): Promise<void> {
   }
   const notes = mountNotes(document, shell.viewport)
 
+  // ── « Bêta » sheets (Task 30, S5): catalog proposals, never verified gear. The data is a lazy chunk (proposalsSource),
+  // fetched when the inventory drawer first opens or when a reopened project holds a device the catalog does not know.
+  // A proposal is registered (betaDevices.ts) only when it is chosen or reopened: the catalog list is never touched.
+  let betaDevices: readonly DeviceT[] = []
+  let betaLoad: Promise<readonly DeviceT[]> | null = null
+  /** Never rejects: a source that cannot load leaves the Bêta tab hidden (said in the console), and a later call retries. */
+  const loadBeta = (): Promise<readonly DeviceT[]> =>
+    (betaLoad ??= import('./proposalsSource').then(
+      ({ default: raw }) => {
+        const parsed = parseProposals(raw, registry)
+        if (parsed.skipped.length) console.warn('[creation] Bêta sheets left out', parsed.skipped)
+        return (betaDevices = parsed.devices)
+      },
+      (e: unknown) => {
+        console.warn('[creation] Bêta sheets unavailable: the tab stays hidden', e)
+        betaLoad = null
+        return betaDevices
+      }
+    ))
+  /** Make these proposals placeable (a no-op for a catalog device or an unloaded id). */
+  const registerBeta = (ids: readonly string[]): void => {
+    registerProposals(
+      registry,
+      betaDevices.filter((d) => ids.includes(d.id))
+    )
+  }
+  /**
+   * Before a saved design opens: fetch the Bêta sheets it needs (only when it holds a device the catalog does not know)
+   * and register them. Returns the device ids that stay unknown (their sheet is gone): the store drops those, and the
+   * learner is told (`noteMissing`), never silently.
+   */
+  const ensureBetaFor = async (design: DesignState): Promise<string[]> => {
+    const need = unknownDeviceIds(registry, design)
+    if (!need.length) return []
+    shell.setStatus('', COPY.inventory!.loadingBeta!, 'busy')
+    await loadBeta()
+    registerBeta(need)
+    showStatus() // the loading line is over (the caller says what happened next)
+    return unknownDeviceIds(registry, design)
+  }
+  const noteMissing = (ids: readonly string[]): void => {
+    if (!ids.length) return
+    const I = COPY.inventory!
+    notes.show({ id: 'missing-sheets', title: I.missingTitle!, body: I.missingBody!, items: [...ids] })
+  }
+
   // ── Status bar (Task 14, CA-15, C17): selection, snapping, autosave state, signal + the persistent error list.
   const ruleText = ruleTextFor(registry.catalog.rules as readonly RuleRow[])
   /** The rule events of the last store change (the count changes on store changes only). */
@@ -203,6 +252,7 @@ export async function bootCreation(): Promise<void> {
       ruleText,
       connections,
       // playbackReady: false until the signal path feeds it (Task 34): « Signal OK » only for a playable chain (L5).
+      // A Bêta device (isUnverified, betaDevices.ts) must never make a chain playable: that path stops at it. R1–R8 read its declared ports only.
       playbackReady: false,
     })
     statusBar.render(v)
@@ -417,6 +467,7 @@ export async function bootCreation(): Promise<void> {
       zones: zones(),
       design: store.design(),
       deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
+      isUnverified: (deviceId) => isUnverified(registry, deviceId),
       points: listeningPoints().map((p) => ({ id: p.id, label: p.label })),
     })
   const nodeLabel = (key: string): string => {
@@ -665,6 +716,7 @@ export async function bootCreation(): Promise<void> {
     showCanvas() // 'done' / 'same'
     showStatus()
     notes.dismiss('unavailable')
+    notes.dismiss('missing-sheets')
     if (result === 'done' && (isTemplate || mode === 'gear')) {
       const n = String(store.design().rig.instances.length)
       // The note is announced too (status bar, role="status"), not only shown.
@@ -700,7 +752,7 @@ export async function bootCreation(): Promise<void> {
     onChoose: (card, mode) => void pick(card, mode),
   })
   /** Boot (C16): reopen the last autosave directly (not undoable, no picker), else the picker; say what happened. */
-  const restore = (): boolean => {
+  const restore = async (): Promise<boolean> => {
     const loaded = loadAutosave(storage)
     if (loaded.status === 'blocked') {
       autosaveOn = false
@@ -724,6 +776,8 @@ export async function bootCreation(): Promise<void> {
       return false
     }
     if (loaded.status === 'empty' || loaded.data.design.roomId === null) return false
+    // A Bêta device of the last session needs its sheet first (fetched only then); a sheet that is gone is reported below.
+    const missing = await ensureBetaFor(loaded.data.design)
     const r = store.dispatch({ type: 'APPLY_DESIGN', design: loaded.data.design })
     // Reopening writes nothing (another tab with this project open must not hear a write).
     autosave.cancel()
@@ -738,6 +792,7 @@ export async function bootCreation(): Promise<void> {
         storageBlocked = true
       }
     }
+    noteMissing(missing)
     if (!r.ok) {
       notes.show({ id: 'storage', title: PJ.reset!, body: PJ.resetBody! })
       return false
@@ -755,7 +810,7 @@ export async function bootCreation(): Promise<void> {
   }
   refreshSignal()
   refreshAutosave()
-  if (!restore()) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
+  if (!(await restore())) picker.show({ closable: false, focus: false }) // first visit, or nothing to reopen
   // While the picker covers the workspace, « Aller à la vue 3D » lands on its highlighted card.
   document
     .querySelector<HTMLAnchorElement>('[data-testid="skip-link"]')
@@ -922,6 +977,7 @@ export async function bootCreation(): Promise<void> {
     refreshTitle()
     autosave.schedule()
     setInventory(false, { returnFocus: false })
+    notes.dismiss('missing-sheets')
     picker.show({ closable: canvasShown, focus: true })
   }
   /** « Ouvrir… »: the saved list; the chosen project replaces the rig as one undoable snapshot entry (C5), its name with it. */
@@ -936,6 +992,7 @@ export async function bootCreation(): Promise<void> {
     const failed = (): void =>
       shell.setStatus(placeNow(), PJ.openFailed!.replace('{name}', name), 'ready', true)
     if (!design || design.roomId === null) return failed()
+    const missing = await ensureBetaFor(design)
     const first = store.design().roomId === null
     // anything the store drops shows as « * » (the fingerprint is the stored design's)
     const after: ProjectState = {
@@ -948,6 +1005,7 @@ export async function bootCreation(): Promise<void> {
       after: { name } satisfies ProjectMeta,
     })
     if (!r.ok) return failed()
+    noteMissing(missing)
     if (first) history.clear() // the session starts at its first place (as placeController)
     setProject(after)
     refreshTitle()
@@ -1278,14 +1336,17 @@ export async function bootCreation(): Promise<void> {
   let drawerWanted = false
   const drawerOpen = (): boolean => (drawer ? drawer.isOpen : drawerWanted)
   /** Entrée / click on a device in the drawer: it follows the pointer until a click drops it (Task 24). */
-  const chooseDevice = (deviceId: string): void => placement.startPlacement(deviceId)
+  const chooseDevice = (deviceId: string): void => {
+    registerBeta([deviceId]) // a Bêta sheet becomes placeable only now (a catalog id is never touched)
+    placement.startPlacement(deviceId)
+  }
   const loadDrawer = (): Promise<InventoryDrawer> =>
-    (drawerLoad ??= import('./shell/inventoryDrawer').then(({ mountInventoryDrawer }) => {
+    (drawerLoad ??= Promise.all([import('./shell/inventoryDrawer'), loadBeta()]).then(([{ mountInventoryDrawer }]) => {
       drawer = mountInventoryDrawer({
         doc: document,
         parent: shell.viewport,
         registry,
-        proposals: () => [], // Task 30 wires the proposals
+        proposals: () => proposalEntries(betaDevices), // « Bêta » shows only if there are any
         onChoose: chooseDevice,
         returnFocus: () => canvas.focus(),
         isToggleKey: (e) => creationActionsFor(keys.bindings, e).includes('TOGGLE_INVENTORY'),

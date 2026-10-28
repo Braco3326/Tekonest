@@ -20,6 +20,7 @@ import type { Intent } from '../../ui/intents'
 import type { DesignState, Mount, Placement } from '../../trials/trial'
 import { COPY } from '../copy'
 import { cableText, portInfoOf } from '../cableStyle'
+import { isUnverified } from '../betaDevices'
 
 export type FieldId = 'name' | 'x' | 'y' | 'z' | 'yaw' | 'tilt' | 'mount'
 
@@ -68,6 +69,8 @@ export interface PropsView {
   fields: PropField[]
   controls: PropControl[]
   ports: PropPort[]
+  /** A proposed (Bêta) device (Task 30): the panel says « non vérifié » under the title. */
+  unverified: boolean
 }
 
 export interface FieldOpts {
@@ -187,7 +190,7 @@ export function propsView(design: DesignState, registry: Registry, instanceId: s
       state: to ? { kind: 'connected', to: { instance: to.instance, port: to.port }, toLabel } : { kind: 'free' },
     }
   })
-  return { title: device.label, deviceId: device.id, instanceId, fields, controls, ports }
+  return { title: device.label, deviceId: device.id, instanceId, fields, controls, ports, unverified: isUnverified(registry, device.id) }
 }
 
 /**

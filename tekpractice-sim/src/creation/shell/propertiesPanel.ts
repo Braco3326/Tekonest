@@ -334,6 +334,13 @@ export function mountPropertiesPanel(d: PropertiesPanelDeps): PropertiesPanel {
     const title = el('h3', 'cr-props-title', v.title)
     title.tabIndex = -1 // where focus lands when its control went away
     head.append(title)
+    if (v.unverified) {
+      // Never looks verified (S5): the same badge as the drawer, and the tooltip's sentence as visible text.
+      const mark = el('p', 'cr-props-unverified')
+      mark.dataset.testid = 'props-unverified'
+      mark.append(el('span', 'cr-badge', COPY.inventory!.badgeUnverified), d.doc.createTextNode(' ' + COPY.inventory!.tipUnverified))
+      head.append(mark)
+    }
     const ident = el('form', 'cr-props-section cr-props-ident')
     ident.addEventListener('submit', (e) => e.preventDefault())
     ident.appendChild(textField(v, 'name'))

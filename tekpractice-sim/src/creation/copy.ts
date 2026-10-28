@@ -501,8 +501,16 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     closeLabel: 'Fermer l’inventaire',
     /** Empty state when the drawer has no device. */
     empty: 'Aucun appareil disponible pour le moment.',
-    /** Badge on a proposed device (Bêta tab); proposals arrive with Task 30. */
+    /** Badge on a proposed device: in the Bêta tab, in the Projet tree and in Properties once it is placed (Task 30). */
     badgeUnverified: 'non vérifié',
+    /** Tooltip of a Bêta item, and the description of a placed one (Properties). */
+    tipUnverified: 'Fiche proposée, pas encore vérifiée : comportement approximatif.',
+    /** Note title when a reopened project has devices whose sheet is gone (a proposal no longer offered, an unknown device). */
+    missingTitle: 'Appareils non rechargés',
+    /** Note body; the device ids follow as a list. */
+    missingBody: 'La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés.',
+    /** Status bar while the Bêta sheets a saved project needs are fetched (reopening only). */
+    loadingBeta: 'Chargement des fiches Bêta…',
     /** Status bar while the drawer module loads (first open). */
     loading: 'Ouverture de l’inventaire…',
     /** Status bar if the drawer module fails to load. */

@@ -474,7 +474,11 @@ Tiroir d'inventaire (Task 23, CA-09) : Matériel › Inventaire (Espace, la vue 
 | `inventory.close` | Fermer | à valider (tekuxwriter) | Texte du bouton |
 | `inventory.closeLabel` | Fermer l’inventaire | à valider (tekuxwriter) | Nom accessible du bouton Fermer (contient le texte visible) |
 | `inventory.empty` | Aucun appareil disponible pour le moment. | à valider (tekuxwriter) | État vide d’un onglet sans appareil |
-| `inventory.badgeUnverified` | non vérifié | à valider (tekuxwriter) | Pastille sur un appareil proposé (onglet Bêta) ; cartes de proposition : Task 30 |
+| `inventory.badgeUnverified` | non vérifié | à valider (tekuxwriter) | Pastille sur un appareil proposé : onglet Bêta, arbre Projet et Propriétés une fois posé (Task 30) |
+| `inventory.tipUnverified` | Fiche proposée, pas encore vérifiée : comportement approximatif. | à valider (tekuxwriter) | Info-bulle d’un appareil Bêta (tiroir) et description de l’appareil posé (Propriétés) |
+| `inventory.missingTitle` | Appareils non rechargés | à valider (tekuxwriter) | Titre de la note quand un projet rouvert contient des appareils dont la fiche n’existe plus |
+| `inventory.missingBody` | La fiche de ces appareils n’existe plus (proposition Bêta retirée ou appareil inconnu) : ils n’ont pas été rechargés. | à valider (tekuxwriter) | Corps de la note ; les identifiants des appareils suivent en liste |
+| `inventory.loadingBeta` | Chargement des fiches Bêta… | à valider (tekuxwriter) | Barre d’état pendant le chargement des fiches Bêta dont un projet enregistré a besoin (réouverture seulement) |
 | `inventory.loading` | Ouverture de l’inventaire… | à valider (tekuxwriter) | Barre d’état pendant le chargement du tiroir (première ouverture) |
 | `inventory.loadFailed` | L’inventaire n’a pas pu s’ouvrir. Réessayez avec Espace ou le menu Matériel. | à valider (tekuxwriter) | Barre d’état si le module du tiroir ne se charge pas (hors ligne) |
 | `inventory.entry` | Ajouter {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique (Annuler / Rétablir) ; {device} = nom de l’appareil |

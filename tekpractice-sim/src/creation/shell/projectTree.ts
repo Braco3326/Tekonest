@@ -112,6 +112,16 @@ export function mountProjectTree(d: ProjectTreeDeps): ProjectTree {
       label.title = n.label // long cable names are cut with an ellipsis in the 200 px panel
       row.append(twisty, label)
       const ids = [labelId]
+      if (n.badge) {
+        // « non vérifié » (a Bêta device): text, so it is read with the row's name, not colour alone.
+        const badge = doc.createElement('span')
+        badge.className = 'cr-badge cr-tree-badge'
+        badge.id = `${labelId}-b`
+        badge.textContent = n.badge
+        badge.dataset.testid = 'tree-badge'
+        row.appendChild(badge)
+        ids.push(badge.id)
+      }
       if (n.children) {
         const count = doc.createElement('span')
         count.className = 'cr-tree-count'

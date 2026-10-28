@@ -20,6 +20,8 @@ export interface TreeNode {
   hideable: boolean
   /** A group with nothing in it yet says so (shown under the row, and its description). */
   emptyHint?: string
+  /** A mark after the label (Task 30: « non vérifié » on a Bêta device), read as part of the row's name. */
+  badge?: string
 }
 
 export interface TreeInput {
@@ -27,6 +29,8 @@ export interface TreeInput {
   zones: { id: string; kind: string }[]
   design: DesignState
   deviceLabel(deviceId: string): string
+  /** True for a proposed (Bêta) device: its row says « non vérifié ». Omitted = none is. */
+  isUnverified?(deviceId: string): boolean
   points: { id: string; label: string }[]
   /** French port name when the catalog has one; the port id otherwise. */
   portLabel?(deviceId: string, portId: string): string | undefined
@@ -78,6 +82,7 @@ export function buildTree(input: TreeInput): TreeNode[] {
         label: `${input.deviceLabel(i.deviceId)} (${i.instanceId})`,
         target: { instanceId: i.instanceId },
         hideable: true,
+        ...(input.isUnverified?.(i.deviceId) ? { badge: COPY.inventory!.badgeUnverified! } : {}),
       })),
     },
     {

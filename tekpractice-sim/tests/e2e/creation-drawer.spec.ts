@@ -127,13 +127,15 @@ test('tabs: a tablist with arrow keys (roving, wrapping, Home / End); the panel 
   await expect(page.getByTestId('inventory-close')).toBeFocused()
 })
 
-test('items are named buttons with an icon; no duplicate across the catalogue; a badge only when given', async ({ page }) => {
+test('items are named buttons with an icon; no duplicate across the catalogue; a badge on the Bêta items only', async ({ page }) => {
   await boot(page)
   await open(page)
   const tabs = page.getByRole('tablist').getByRole('tab')
   const names: string[] = []
   for (let i = 0; i < (await tabs.count()); i++) {
     await tabs.nth(i).click()
+    if ((await tabs.nth(i).getAttribute('data-tab')) === 'beta') continue // the proposals: tests/e2e/creation-beta.spec.ts
+    await expect(page.getByTestId('inventory-badge')).toHaveCount(0) // a verified tab has no badge
     const items = page.getByRole('tabpanel').getByTestId('inventory-item')
     for (let j = 0; j < (await items.count()); j++) {
       const it = items.nth(j)
@@ -144,7 +146,6 @@ test('items are named buttons with an icon; no duplicate across the catalogue; a
   }
   expect(names.length).toBe(24) // the catalogue
   expect(new Set(names).size).toBe(24)
-  await expect(page.getByTestId('inventory-badge')).toHaveCount(0) // no proposals yet (Task 30)
 })
 
 test('Enter or click on an item chooses the device (it then follows the pointer, Task 24), and the drawer closes', async ({ page }) => {

@@ -162,6 +162,13 @@ export function mountInventoryDrawer(d: InventoryDrawerDeps): InventoryDrawer {
         const badge = el(doc, 'span', 'cr-inv-badge', I().badgeUnverified)
         badge.dataset.testid = 'inventory-badge'
         text.appendChild(badge)
+        // A proposal never looks verified (S5): the tooltip says it is approximate, and screen readers get it as the description.
+        b.title = I().tipUnverified!
+        b.dataset.beta = 'true'
+        const tip = el(doc, 'span', 'cr-sr-only', I().tipUnverified)
+        tip.id = `cr-inv-tip-${at}`
+        b.setAttribute('aria-describedby', tip.id)
+        li.appendChild(tip)
       }
       b.append(icon(doc, it.hasModel), text)
       b.addEventListener('click', () => choose(it.deviceId))
