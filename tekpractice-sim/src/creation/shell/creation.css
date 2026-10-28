@@ -354,6 +354,36 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
 .cr-collapse svg { width: 12px; height: 12px; }
 .cr-panel-body { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 8px 0; }
 
+/* ── Cable legend (Task 27): the bottom of « Propriétés », never over the 3D view ───────────────────────────── */
+.cr-legend { flex: 0 0 auto; border-top: 1px solid var(--cr-panel-line); background: var(--cr-panel); }
+.cr-legend[hidden], .cr-legend-list[hidden] { display: none; }
+.cr[data-props='collapsed'] .cr-legend { display: none; }
+.cr .cr-legend-toggle {
+  display: flex;
+  width: 100%;
+  min-height: 28px; /* WCAG 2.5.8 */
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  text-align: left;
+  font: 500 11px/1 var(--cr-font-ui);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cr-ink-muted);
+  /* Cuts only: the legacy `button { transition: all }` would otherwise animate the focus ring. */
+  transition: none;
+}
+.cr .cr-legend-toggle:hover { color: var(--cr-ambre); background: var(--cr-nuit); }
+/* Inside the panel edge (it clips): 2 px Ambre + 1 px Nuit, as the tree rows. */
+.cr .cr-legend-toggle:focus-visible { outline: 2px solid var(--cr-ambre); outline-offset: -3px; box-shadow: inset 0 0 0 3px var(--cr-nuit); }
+.cr-legend-chevron { width: 12px; height: 12px; flex: none; }
+.cr-legend[data-open='false'] .cr-legend-chevron { transform: rotate(-90deg); }
+.cr-legend-list { list-style: none; margin: 0; padding: 4px 12px 10px; max-height: 168px; overflow: auto; }
+.cr-legend-item { display: flex; align-items: center; gap: 8px; min-height: 22px; font: 400 12px/1.3 var(--cr-font-ui); color: var(--cr-papier); }
+.cr-legend-swatch { width: 36px; height: 8px; flex: none; }
+.cr-legend-name { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.cr-legend-note { flex: none; color: var(--cr-ink-muted); font-size: 11px; }
+
 /* collapsed = a 32 px rail with its expand button and a vertical name */
 .cr[data-tree='collapsed'] .cr-tree .cr-panel-head,
 .cr[data-props='collapsed'] .cr-props .cr-panel-head { flex-direction: column-reverse; height: auto; padding: 0; border-bottom: 0; }

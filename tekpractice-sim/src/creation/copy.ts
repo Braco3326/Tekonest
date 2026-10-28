@@ -613,6 +613,19 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** Nom complet du bouton de la bulle. */
     offerName: 'Débrancher {port} de {other}',
   },
+  /** Câbles colorés par type de signal, légende et survol (Task 27, C18). */
+  cables: {
+    /** Titre visible du bloc légende (bas du panneau Propriétés), aussi nom accessible de la liste. */
+    legendTitle: 'Légende des câbles',
+    /** Nom accessible du bouton de la légende quand elle est dépliée (il la replie). */
+    legendCollapse: 'Replier la légende des câbles',
+    /** Nom accessible du bouton quand elle est repliée (il la déplie). */
+    legendExpand: 'Déplier la légende des câbles',
+    /** Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus). */
+    dashed: 'pointillés',
+    /** Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal. */
+    hover: '{a} → {b} · {signal}',
+  },
   /** Connectors (catalog `connectorTypes[].id`) as the hover label names them: faithful renderings of the catalog labels. */
   connector: {
     'xlr3-m': 'XLR3 mâle',

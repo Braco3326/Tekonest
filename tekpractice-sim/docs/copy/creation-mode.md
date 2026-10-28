@@ -563,6 +563,18 @@ Câbler au clic sur les prises de la scène (Task 26, CA-19, CA-20). Survoler un
 | `patch.offerUnplug` | Débrancher | à valider (tekuxwriter) | Texte visible du bouton de la bulle |
 | `patch.offerName` | Débrancher {port} de {other} | à valider (tekuxwriter) | Nom complet du bouton de la bulle |
 
+## cables
+
+Câbles colorés par type de signal (Task 27, C18). La couleur n’est jamais le seul repère : le secteur est tracé en pointillés, et la légende comme le texte au survol nomment le signal. La légende est un bloc repliable en bas du panneau Propriétés (jamais sur la vue 3D) ; elle ne liste que les types de signal présents. Survoler un câble le met en évidence et affiche « ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu) » (les noms de signal sont ceux de la section `signal`).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `cables.legendTitle` | Légende des câbles | à valider (tekuxwriter) | Titre visible du bloc légende (bas du panneau Propriétés), aussi nom accessible de la liste |
+| `cables.legendCollapse` | Replier la légende des câbles | à valider (tekuxwriter) | Nom accessible du bouton de la légende quand elle est dépliée (il la replie) |
+| `cables.legendExpand` | Déplier la légende des câbles | à valider (tekuxwriter) | Nom accessible du bouton quand elle est repliée (il la déplie) |
+| `cables.dashed` | pointillés | à valider (tekuxwriter) | Mention à côté d’un type de signal tracé en pointillés (le trait n’est pas le seul repère : la couleur non plus) |
+| `cables.hover` | {a} → {b} · {signal} | à valider (tekuxwriter) | Texte au survol d’un câble ; {a} / {b} = « appareil prise » de chaque bout, {signal} = type de signal |
+
 ## connector
 
 Noms français des connecteurs du catalogue (`connectorTypes[].id`), repris dans l’étiquette au survol d’une prise : rendus fidèles des libellés du catalogue, sans fait technique nouveau.

@@ -1,0 +1,125 @@
+/**
+ * Cable style by signal type (Task 27, C18). Keyed by the catalog's `signalTypes[].id` (content/catalog.json is the
+ * source of truth: a new signal type is a new row here, and `tests/creation/cableStyle.test.ts` fails until it has one).
+ *
+ * - Colours are distinct pairwise (simple RGB distance >= 60) and each reads at >= 3:1 on Nuit (WCAG 1.4.11), all
+ *   tested. They are kept clear of Papier (the hover outline) and Ambre (the selection).
+ * - Colour is never the only cue: `mains-power` is DASHED (the renderer draws dashes; the legend shows the stroke) and
+ *   every hover text and legend entry carries the French name of the signal.
+ * - The label of an entry is the French name already in `COPY.signal` (strings live in copy.ts only).
+ *
+ * Pure data and pure functions: no Babylon, no DOM. The shell never imports the engine; the scene host and the shell
+ * both read this module.
+ */
+import type { PortRef } from '../engine/types'
+import { COPY } from './copy'
+
+export interface SignalStyle {
+  /** '#RRGGBB'. */
+  color: string
+  /** The French name (COPY.signal). */
+  label: string
+  /** Drawn dashed (a second cue next to the colour). */
+  dash?: boolean
+}
+
+const label = (id: string): string => COPY.signal?.[id] ?? id
+
+/** In the catalog's order: analog, digital, control, power. */
+const COLORS: ReadonlyArray<readonly [id: string, color: string, dash?: true]> = [
+  ['mic-level', '#FBD724'],
+  ['line-level-pro', '#43DCFE'],
+  ['line-level-consumer', '#85DF19'],
+  ['instrument-hiz', '#97651C'],
+  ['speaker-level', '#FF6306'],
+  ['headphone-level', '#E457FF'],
+  ['aes3', '#05BAAA'],
+  ['spdif', '#7AF1A3'],
+  ['madi', '#1C74FC'],
+  ['aoip', '#FF9CB1'],
+  ['wordclock', '#6482AA'],
+  ['usb-audio', '#B0A96A'],
+  ['gpio-tally', '#C3D6F3'],
+  ['dmx512', '#E8328E'],
+  ['phantom-48v', '#7B41FE'],
+  ['mains-power', '#EB002A', true],
+]
+
+export const SIGNAL_STYLE: Record<string, SignalStyle> = Object.fromEntries(
+  COLORS.map(([id, color, dash]) => [id, { color, label: label(id), ...(dash ? { dash: true } : {}) }])
+)
+
+/** A signal the palette does not know (a catalog newer than this table): neutral, never one of the signal colours. */
+export const FALLBACK_COLOR = '#A39B91'
+
+export function cableColor(signalId: string): string {
+  return SIGNAL_STYLE[signalId]?.color ?? FALLBACK_COLOR
+}
+
+export function cableDash(signalId: string): boolean {
+  return SIGNAL_STYLE[signalId]?.dash === true
+}
+
+/** The French name of a signal for the hover text and the legend. */
+export function signalLabel(signalId: string): string {
+  return SIGNAL_STYLE[signalId]?.label ?? signalId
+}
+
+export interface PortInfo {
+  dir: 'in' | 'out' | 'bidir'
+  signal: string
+}
+
+/**
+ * The signal a connection carries: the one leaving its output port (whichever end is `a`); two bidirectional ports
+ * (or two inputs, refused elsewhere) read from `a`. An unknown end falls back to the known one; null when neither is known.
+ */
+export function connectionSignal(portOf: (ref: PortRef) => PortInfo | undefined, a: PortRef, b: PortRef): string | null {
+  const [pa, pb] = [portOf(a), portOf(b)]
+  if (pa?.dir === 'out') return pa.signal
+  if (pb?.dir === 'out') return pb.signal
+  return (pa ?? pb)?.signal ?? null
+}
+
+/** The signals on the scene, once each: the palette's order (the catalog's), then any the palette does not know. Nulls ignored. */
+export function presentSignals(signals: Iterable<string | null>): string[] {
+  const seen = new Set<string>()
+  for (const s of signals) if (s) seen.add(s)
+  const known = Object.keys(SIGNAL_STYLE).filter((id) => seen.has(id))
+  return [...known, ...[...seen].filter((id) => !(id in SIGNAL_STYLE))]
+}
+
+export interface LegendEntry {
+  id: string
+  label: string
+  color: string
+  dash: boolean
+}
+
+export function legendEntries(ids: readonly string[]): LegendEntry[] {
+  return ids.map((id) => ({ id, label: signalLabel(id), color: cableColor(id), dash: cableDash(id) }))
+}
+
+/** The direction and signal of any port of a design (`instances` = the rig's), through the catalog. Undefined when unknown. */
+export function portInfoOf(
+  registry: { deviceById: ReadonlyMap<string, { ports: ReadonlyArray<{ portId: string; dir: 'in' | 'out' | 'bidir'; signal: string }> }> },
+  instances: ReadonlyArray<{ instanceId: string; deviceId: string }>
+): (ref: PortRef) => PortInfo | undefined {
+  return (ref) => {
+    const deviceId = instances.find((i) => i.instanceId === ref.instance)?.deviceId
+    const p = deviceId ? registry.deviceById.get(deviceId)?.ports.find((q) => q.portId === ref.port) : undefined
+    return p ? { dir: p.dir, signal: p.signal } : undefined
+  }
+}
+
+/**
+ * The hover text of a cable: « ql1 out-main-l → k12-g in-line-a · Niveau ligne pro (+4 dBu) ». The output end comes
+ * first whichever way the connection is stored. Null when neither port is known (the cable is not in the design).
+ */
+export function cableText(portOf: (ref: PortRef) => PortInfo | undefined, a: PortRef, b: PortRef): string | null {
+  const signal = connectionSignal(portOf, a, b)
+  if (signal === null) return null
+  const [from, to] = portOf(a)?.dir !== 'out' && portOf(b)?.dir === 'out' ? [b, a] : [a, b]
+  const end = (r: PortRef): string => `${r.instance} ${r.port}`
+  return COPY.cables!.hover!.replace('{a}', end(from)).replace('{b}', end(to)).replace('{signal}', signalLabel(signal))
+}

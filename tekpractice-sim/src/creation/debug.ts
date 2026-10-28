@@ -86,6 +86,12 @@ export interface CreationDebug {
   listenerPoint(): string
   /** Task 24: the world centre of each drawn cable's mesh (a cable follows a moved device), in rig order; null for a cable not drawn. */
   cableCenters(): ([number, number, number] | null)[]
+  /** Task 27: the colour a drawn cable has ('#RRGGBB', read from its material); null when it is not drawn. */
+  cableColor(key: string): string | null
+  /** Task 27: the cable under the pointer (highlighted, its text shown), or null. */
+  cableHovered(): string | null
+  /** Task 27: a page point on this cable with no port and no device under it (a hover there is the cable's), or null. */
+  cableFreePoint(key: string): { x: number; y: number } | null
   /** Task 24: a device is following the pointer (placement ghost on screen). */
   placing(): boolean
   /** Task 24: `scene.transformNodes.length` (a ghost must not leave the glb's nodes behind). */

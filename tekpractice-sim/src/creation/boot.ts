@@ -36,6 +36,9 @@ import { createPlaceController, type PlaceResult } from './placeController'
 import { PlacementController } from './placementController'
 import { EditController } from './editController'
 import { PatchController } from './patchController'
+import { CableHoverController } from './cableHover'
+import { cableText, connectionSignal, legendEntries, portInfoOf, presentSignals } from './cableStyle'
+import { mountCableLegend } from './shell/cableLegend'
 import { mountPortLabels } from './shell/portLabel'
 import { mountToast } from './shell/toast'
 import { designFromRoomGear, unavailableList } from './templateGear'
@@ -506,6 +509,7 @@ export async function bootCreation(): Promise<void> {
     const ids = new Set(zones().map((z) => `zone:${z.id}`))
     const hidden = viewState.get().hidden.filter((k) => !k.startsWith('zone:') || ids.has(k))
     atPoint = null // a new camera: it stands on no point
+    cableHover.reset() // a hovered cable belongs to the old scene
     patch.reset() // a cable in hand, a pinned refusal or an offer belong to the old scene's ports
     toast.dismiss() // a message about the previous place's view does not carry over
     // Any other camera request (cube, menu, V, home, a quarter turn, re-pivot, device focus) leaves
@@ -1364,6 +1368,28 @@ export async function bootCreation(): Promise<void> {
     beforeDispatch: () => props.flush(),
   })
 
+  // ── Cables by signal type (Task 27, C18): the colour is the scene host's (the catalog's signal of each connection);
+  // the legend (bottom of Propriétés) lists the types present; hovering a cable highlights it and says what it joins.
+  // After the patch controller: a port under the pointer wins, and its label is never hidden from here.
+  const cableLegend = mountCableLegend(document, shell.props, shellBag)
+  const portInfoNow = () => portInfoOf(registry, store.design().rig.instances)
+  const refreshLegend = (): void => {
+    const portOf = portInfoNow()
+    cableLegend.set(legendEntries(presentSignals(store.design().rig.connections.map((c) => connectionSignal(portOf, c.a, c.b)))))
+  }
+  shellBag.add(store.subscribe(refreshLegend))
+  refreshLegend()
+  const cableHover = new CableHoverController(host, shellBag, {
+    ui: portLabels,
+    busy: () => placement.placing || placement.dragging,
+    deviceAt: (x, y) => pickDevice(host.scene, x, y) !== null,
+    describe: (key) => {
+      const c = store.design().rig.connections.find((k) => cableKey(k.a, k.b) === key)
+      return c ? cableText(portInfoNow(), c.a, c.b) : null
+    },
+    subscribe: (fn) => store.subscribe(fn),
+  })
+
   // Placing and moving devices (Task 24, CA-10, P20): after the picking above, so a drop is not also a click-to-select.
   const placement = new PlacementController(host, history, store, viewState, scheduler, shellBag, {
     deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
@@ -1655,6 +1681,15 @@ export async function bootCreation(): Promise<void> {
         const f = host.frameOfKey(`cable:${cableKey(c.a, c.b)}`)
         return f ? ([f.center.x, f.center.y, f.center.z] as [number, number, number]) : null
       }),
+    cableColor: (key) => host.cableColorOf(key),
+    cableHovered: () => cableHover.hovered,
+    cableFreePoint: (key) => {
+      // A page point on this cable where nothing else is under the pointer (no port, no device) and the cable is hit.
+      const r = canvas.getBoundingClientRect()
+      for (const p of host.cableSamples(key) ?? [])
+        if (host.cableAtPoint(p.x, p.y) === key && !host.portAtPoint(p.x, p.y) && pickDevice(host.scene, p.x, p.y) === null) return { x: r.left + p.x, y: r.top + p.y }
+      return null
+    },
     placing: () => placement.placing,
     transformNodeCount: () => host.scene?.transformNodes.length ?? 0,
     floorPoint: (x, y) => {

@@ -47,6 +47,8 @@ import { placeFromKey, placeKey, type PlaceRef } from './places'
 import { blankData, loadPlaceData, type PlaceData } from './placeData'
 import { CREATION_TOKENS } from '../design/creationTokens'
 import { PortProxies, type PortMark } from './portProxies'
+import { CABLE_HIT_PX, nearestCable, type Pt } from './cablePick'
+import { cableColor, cableDash, connectionSignal, portInfoOf, type PortInfo } from './cableStyle'
 import type { RoomTheme } from '../scene/RoomBuilder'
 import { CREATION_DEVICE_THEME, CREATION_ROOM_THEME } from './sceneTheme'
 import { ViewCubeWidget, type CubeHooks } from './viewCubeWidget'
@@ -420,6 +422,18 @@ export class SceneHost {
   private proxies: PortProxies | null = null
   /** The camera's view changed (set by the patch controller: its labels follow their port). */
   onPortViewChange: (() => void) | null = null
+  private viewListeners = new Set<() => void>()
+
+  /** The camera moved or the canvas was resized (other screen-anchored decor: the cable hover). Returns the remover. */
+  listenView(fn: () => void): () => void {
+    this.viewListeners.add(fn)
+    return () => void this.viewListeners.delete(fn)
+  }
+
+  private notifyView(): void {
+    this.onPortViewChange?.()
+    for (const fn of [...this.viewListeners]) fn()
+  }
 
   /** The port under a canvas point (CSS px, canvas-relative), proxies included; null in the walk view. */
   portAtPoint(x: number, y: number): PortRef | null {
@@ -432,7 +446,7 @@ export class SceneHost {
    */
   viewResized(): void {
     this.proxies?.refresh()
-    this.onPortViewChange?.()
+    this.notifyView()
   }
 
   /** A port's hit radius on screen (CSS px); 0 for an unknown port. */
@@ -457,6 +471,107 @@ export class SceneHost {
     const x = rect.left + (p.x / w) * rect.width
     const y = rect.top + (p.y / h) * rect.height
     return Number.isFinite(x) && Number.isFinite(y) ? { x, y } : null
+  }
+
+  // ── cables (Task 27, C18): coloured by signal, picked in screen space, one drawn lighter on hover ──
+
+  /** The direction and signal of a port of the design on screen. */
+  private portInfo = (ref: PortRef): PortInfo | undefined => portInfoOf(this.registry, this.applied?.rig.instances ?? [])(ref)
+
+  /** The signal a connection carries (the catalog's id), or null when a port is unknown. */
+  signalOf(a: PortRef, b: PortRef): string | null {
+    return connectionSignal(this.portInfo, a, b)
+  }
+
+  /** The colour a drawn cable has ('#RRGGBB', read from its material), or null when it is not drawn. */
+  cableColorOf(key: string): string | null {
+    return this.cables?.colorOf(key) ?? null
+  }
+
+  /** The cable drawn lighter (the hover), or null. */
+  hoveredCable(): string | null {
+    return this.cables?.highlighted ?? null
+  }
+
+  /** The key of the cable drawn with the Papier stroke right now (tests). */
+  strokedCable(): string | null {
+    const m = this.cableStroke
+    return m && !m.isDisposed() && this.highlight?.hasMesh(m) ? m.name.slice('cable:'.length) : null
+  }
+  private cableStroke: Mesh | null = null
+
+  /**
+   * The cable within `CABLE_HIT_PX` of a canvas point (CSS px, canvas-relative): the cables' drawn points are projected
+   * with the camera's own matrices and the nearest polyline wins. Null in the walk view and for hidden cables.
+   */
+  cableAtPoint(x: number, y: number): string | null {
+    const cables = this.cables
+    const project = this.canvasProjector()
+    if (!cables || !project || this.walking) return null
+    return nearestCable(
+      cables.paths().map(([id, path]) => [id, path.map(project)] as const),
+      { x, y },
+      CABLE_HIT_PX
+    )
+  }
+
+  /** Points along a drawn cable in canvas CSS px (its path points and the middles between them), for tests; null when not drawn. */
+  cableSamples(key: string): Pt[] | null {
+    const project = this.canvasProjector()
+    const path = this.cables?.paths().find(([id]) => id === key)?.[1]
+    if (!project || !path) return null
+    const pts = path.map(project)
+    const out: Pt[] = []
+    for (let i = 0; i < pts.length; i++) {
+      const p = pts[i]
+      const q = pts[i + 1]
+      if (p) out.push(p)
+      if (p && q) out.push({ x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 })
+    }
+    return out
+  }
+
+  /**
+   * World point -> canvas CSS px with the camera's OWN matrices (the scene's transform matrix is only refreshed by the
+   * next render); null behind the camera. Null itself when there is no camera or no size yet.
+   */
+  private canvasProjector(): ((p: { x: number; y: number; z: number }) => Pt | null) | null {
+    const camera = this._camera
+    if (!camera) return null
+    const w = this.engine.getRenderWidth()
+    const h = this.engine.getRenderHeight()
+    const rect = this.canvas.getBoundingClientRect()
+    if (w <= 0 || h <= 0 || rect.width <= 0 || rect.height <= 0) return null
+    const transform = camera.getViewMatrix().multiply(camera.getProjectionMatrix())
+    const viewport = camera.viewport.toGlobal(w, h)
+    const kx = rect.width / w
+    const ky = rect.height / h
+    return (p) => {
+      const q = Vector3.Project(new Vector3(p.x, p.y, p.z), Matrix.Identity(), transform, viewport)
+      // Depth outside [0, 1]: behind the camera or beyond the far plane.
+      return q.z >= 0 && q.z <= 1 && Number.isFinite(q.x) && Number.isFinite(q.y) ? { x: q.x * kx, y: q.y * ky } : null
+    }
+  }
+
+  /** Draw one cable lighter and outlined (the hover); null puts it back. One frame is asked. */
+  setHoveredCable(key: string | null): void {
+    this.cables?.setHighlighted(key)
+    this.syncCableStroke()
+    this.scheduler.invalidate()
+  }
+
+  /** The Papier stroke around the hovered cable (the device hover's own stroke colour); re-applied after `applyDecor` clears the layer. */
+  private syncCableStroke(): void {
+    const hl = this.highlight
+    const prev = this.cableStroke
+    const key = this.cables?.highlighted ?? null
+    const next = key !== null ? this._scene?.getMeshByName(`cable:${key}`) : null
+    if (prev && prev !== next && !prev.isDisposed()) hl?.removeMesh(prev)
+    this.cableStroke = null
+    if (hl && next instanceof Mesh) {
+      hl.addMesh(next, HOVER)
+      this.cableStroke = next
+    }
   }
 
   /** Restyle the markers: the hovered port and the patch glow (null, null puts everything back). */
@@ -594,6 +709,7 @@ export class SceneHost {
       else if (m.name.startsWith('room:zone:'))
         m.setEnabled(!this.hidden.has(`zone:${m.name.slice('room:zone:'.length)}`))
     }
+    this.syncCableStroke() // removeAllMeshes above dropped the hovered cable's stroke
     this.scheduler.invalidate()
   }
 
@@ -711,6 +827,7 @@ export class SceneHost {
     this._place = null
     this.orbitInput = null
     this.spawner = null
+    this.cableStroke = null // its mesh went with the scene
     this.proxies = null // its observer and materials went with `controllers`
     this.cables = null
     this.bag = null
@@ -807,9 +924,14 @@ export class SceneHost {
     this.proxies = new PortProxies(
       { scene, camera, canvas: this.canvas, instance: (id) => this.instances.get(id), instances: () => this.instances.values() },
       this.controllers,
-      () => this.onPortViewChange?.()
+      () => this.notifyView()
     )
-    this.cables = new CableRenderer(scene, undefined, { pulses: false })
+    this.cables = new CableRenderer(scene, undefined, {
+      pulses: false,
+      // C18: the colour (and the dash) of a cable is its signal's, read from the catalog's port definitions.
+      colorFor: (a, b) => Color3.FromHexString(cableColor(this.signalOf(a, b) ?? '')),
+      dashFor: (a, b) => cableDash(this.signalOf(a, b) ?? ''),
+    })
     // L7 (Task 18): a recalled view lands exactly, even during an orbit flick.
     this._rig = new CameraRig(camera, { stopInertiaOnFlight: true })
     attachRenderScheduler(this.engine, scene, camera, this.canvas, this.scheduler, bag)
@@ -923,7 +1045,7 @@ export class SceneHost {
         if (ok) {
           this.redrawCablesOf(new Set([p.instanceId]))
           this.proxies?.refresh() // the .glb moved the ports
-          this.onPortViewChange?.() // a label on screen follows its port
+          this.notifyView() // a label on screen follows its port
         }
         this.applyDecor() // the .glb body meshes take the outline / hidden state too
       })
@@ -958,7 +1080,10 @@ export class SceneHost {
   private drawCable(key: string, a: PortRef, b: PortRef): void {
     const pa = this.portWorld(a)
     const pb = this.portWorld(b)
-    if (pa && pb) this.cables?.addCable(key, pa, pb) // addCable replaces by key
+    if (pa && pb) {
+      this.cables?.addCable(key, pa, pb, [a, b]) // addCable replaces by key
+      if (this.cables?.highlighted === key) this.syncCableStroke() // a redrawn hovered cable is a new mesh
+    }
   }
 
   private redrawCablesOf(ids: Set<string>): void {

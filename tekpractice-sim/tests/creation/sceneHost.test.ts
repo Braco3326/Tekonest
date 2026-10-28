@@ -4,7 +4,8 @@
  * NullEngine + spy window/canvas, as tests/scene/dispose.test.ts.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { MeshBuilder, NullEngine, TransformNode, Vector3 } from '@babylonjs/core'
+import { Matrix, MeshBuilder, NullEngine, TransformNode, Vector3 } from '@babylonjs/core'
+import { SIGNAL_STYLE } from '../../src/creation/cableStyle'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { SceneHost } from '../../src/creation/sceneHost'
@@ -466,5 +467,125 @@ describe('SceneHost view decor (Task 9): selection outline and hidden objects', 
       expect(host.floorHeight(0, 0, 9)).not.toBe(9) // a room answers with its own floor
       host.dispose()
     })
+  })
+})
+
+describe('SceneHost cables (Task 27, C18): coloured by signal, hover, screen-space picking', () => {
+  const ROOM = 'room:concert-hall-medium'
+  const KEY = 'k12-g in-line-a|ql1 out-main-l'
+  const NAME = `cable:${KEY}`
+  const hexOf = (host: SceneHost, name: string): string => (host.scene!.getMeshByName(name)!.material as unknown as { diffuseColor: { toHexString(): string } }).diffuseColor.toHexString()
+  const withRect = (): void => {
+    ;(canvas as unknown as { getBoundingClientRect: () => unknown }).getBoundingClientRect = () => ({ left: 0, top: 0, width: 512, height: 256 })
+  }
+
+  it('a cable is drawn in the colour of its signal (the catalog port, not a table of cable names); the host reports the same colour', async () => {
+    const { host } = makeHost()
+    await host.load(placeFromKey(ROOM), rig(ROOM))
+    // ql1 out-main-l and k12-g in-line-a are both « line-level-pro » in the catalog
+    expect(host.signalOf({ instance: 'ql1', port: 'out-main-l' }, { instance: 'k12-g', port: 'in-line-a' })).toBe('line-level-pro')
+    expect(host.signalOf({ instance: 'k12-g', port: 'in-line-a' }, { instance: 'ql1', port: 'out-main-l' })).toBe('line-level-pro')
+    expect(hexOf(host, NAME)).toBe(SIGNAL_STYLE['line-level-pro']!.color)
+    expect(host.cableColorOf(KEY)).toBe(SIGNAL_STYLE['line-level-pro']!.color)
+    expect(host.cableColorOf('nope')).toBeNull()
+    host.dispose()
+  })
+
+  it('the colour follows a redraw (a device moves) and goes with the cable (undo)', async () => {
+    const { host } = makeHost()
+    const store = new CreationStore(registry, creationEvaluator(registry), rig(ROOM))
+    const history = new History(store)
+    store.subscribe(() => host.apply(store.design()))
+    await host.load(placeFromKey(ROOM), store.design())
+    history.do({ type: 'SET_POSE', instanceId: 'k12-g', position: [2, 0, -2], yawDeg: 0, tiltDeg: 0, mount: 'floor' })
+    expect(host.cableColorOf(KEY)).toBe(SIGNAL_STYLE['line-level-pro']!.color)
+    history.do({ type: 'UNPLUG', a: { instance: 'ql1', port: 'out-main-l' }, b: { instance: 'k12-g', port: 'in-line-a' } })
+    expect(host.cableColorOf(KEY)).toBeNull()
+    expect(cableMeshes(host)).toBe(0)
+    history.undo()
+    expect(host.cableColorOf(KEY)).toBe(SIGNAL_STYLE['line-level-pro']!.color)
+    host.dispose()
+  })
+
+  it('a mains-power cable is dashed (a second cue); a line cable is one plain tube', async () => {
+    const { host } = makeHost()
+    const d = rig(ROOM)
+    d.rig.connections.push({ a: { instance: 'ql1', port: 'power-in' }, b: { instance: 'k12-g', port: 'power-in' } })
+    await host.load(placeFromKey(ROOM), d)
+    const power = 'cable:k12-g power-in|ql1 power-in'
+    expect(host.cableColorOf('k12-g power-in|ql1 power-in')).toBe(SIGNAL_STYLE['mains-power']!.color)
+    expect(cableMeshes(host)).toBe(2) // one mesh per cable, dashes merged
+    const verts = (name: string) => host.scene!.getMeshByName(name)!.getTotalVertices()
+    const plain = verts(NAME)
+    // the dashed one is made of many short pieces: it has more vertices than a plain tube of a similar length
+    expect(verts(power)).toBeGreaterThan(plain)
+    host.dispose()
+  })
+
+  it('setHoveredCable lightens and outlines ONE cable, asks a frame, survives a decor change, and clears with null', async () => {
+    const { host, scheduler } = makeHost()
+    await host.load(placeFromKey(ROOM), rig(ROOM))
+    const invalidate = vi.spyOn(scheduler, 'invalidate')
+    const base = host.scene!.getMeshByName(NAME)!.material
+    host.setHoveredCable(KEY)
+    expect(invalidate).toHaveBeenCalled()
+    expect(host.hoveredCable()).toBe(KEY)
+    expect(host.strokedCable()).toBe(KEY)
+    expect(host.scene!.getMeshByName(NAME)!.material).not.toBe(base)
+    host.setSelected('ql1') // applyDecor clears the stroke layer: the cable's stroke is put back
+    expect(host.strokedCable()).toBe(KEY)
+    host.setHoveredCable(null)
+    expect(host.hoveredCable()).toBeNull()
+    expect(host.strokedCable()).toBeNull()
+    expect(host.scene!.getMeshByName(NAME)!.material).toBe(base)
+    host.dispose()
+  })
+
+  it('a place change drops the hover without touching the new scene', async () => {
+    const { host } = makeHost()
+    await host.load(placeFromKey(ROOM), rig(ROOM))
+    host.setHoveredCable(KEY)
+    await host.load(placeFromKey('blank'), emptyIn('blank'))
+    expect(host.hoveredCable()).toBeNull()
+    expect(host.strokedCable()).toBeNull()
+    host.dispose()
+  })
+
+  it('cableAtPoint finds the cable under a canvas point (screen space, within a few px) and nothing elsewhere', async () => {
+    withRect()
+    const { host, engine } = makeHost()
+    await host.load(placeFromKey(ROOM), rig(ROOM))
+    const cam = host.camera!
+    const w = engine.getRenderWidth()
+    const h = engine.getRenderHeight()
+    const mesh = host.scene!.getMeshByName(NAME)!
+    const pos = mesh.getVerticesData('position')!
+    const mid = Math.floor(pos.length / 6) * 3 // a vertex around the middle of the tube
+    const p = Vector3.Project(new Vector3(pos[mid]!, pos[mid + 1]!, pos[mid + 2]!), Matrix.Identity(), cam.getViewMatrix().multiply(cam.getProjectionMatrix()), cam.viewport.toGlobal(w, h))
+    const x = (p.x / w) * 512
+    const y = (p.y / h) * 256
+    expect(host.cableAtPoint(x, y)).toBe(KEY)
+    expect(host.cableAtPoint(x + 3, y + 3)).toBe(KEY) // a thin cable is hit within a few px
+    expect(host.cableAtPoint(x + 60, y + 60)).toBeNull()
+    host.setHidden([NAME])
+    expect(host.cableAtPoint(x, y)).toBeNull() // a hidden cable cannot be hovered
+    host.dispose()
+  })
+
+  it('listenView listeners are called on a view change and removed individually', async () => {
+    const { host } = makeHost()
+    await host.load(placeFromKey(ROOM), rig(ROOM))
+    const a = vi.fn()
+    const b = vi.fn()
+    const off = host.listenView(a)
+    host.listenView(b)
+    host.viewResized()
+    expect(a).toHaveBeenCalledTimes(1)
+    expect(b).toHaveBeenCalledTimes(1)
+    off()
+    host.viewResized()
+    expect(a).toHaveBeenCalledTimes(1)
+    expect(b).toHaveBeenCalledTimes(2)
+    host.dispose()
   })
 })
