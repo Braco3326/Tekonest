@@ -70,3 +70,41 @@ test("the header nav marks exactly the current page", () => {
     assert.deepEqual(marks, [href], `${href}: header nav marks ${JSON.stringify(marks)}`);
   }
 });
+
+const plain = (text) => text.replace(/ /g, " ");
+
+test("creer page content", () => {
+  const html = plain(page("creer.html"));
+  assert.match(html, /<h1[^>]*>Une expérience au service de votre projet\.<\/h1>/);
+  const families = [...html.matchAll(/<li class="family cadre">([\s\S]*?)<\/li>/g)].map((m) => m[1]);
+  assert.deepEqual(
+    families.map((f) => f.match(/<h3>(.*?)<\/h3>/)[1]),
+    ["Création sonore", "Prise de son", "Live", "Direction artistique, mixage et mastering"]
+  );
+  for (const f of families) assert.match(f, /<span class="status status--prep">En projet<\/span>/);
+  assert.match(html, /<a class="btn btn-primary" href="contact\.html">Parlez-nous de votre projet<\/a>/);
+  assert.match(html, /Ce n'est ni un devis ni un engagement/);
+});
+
+test("creer page makes no price or availability claim", () => {
+  assert.doesNotMatch(bodyText(plain(page("creer.html"))), /€|tarif|prix|gratuit|réserv/i);
+});
+
+test("organiser.html is gone and creer.html replaces it in the nav", () => {
+  assert.equal(existsSync(rootPath("organiser.html")), false);
+  assert.equal(existsSync(rootPath("src/pages/organiser.html")), false);
+  assert.ok(!NAV.some(([href]) => href === "organiser.html"));
+  assert.match(page("index.html"), /<li><a href="creer\.html">Créer avec nous<\/a><\/li>/);
+});
+
+test("old organiser links redirect", () => {
+  const redirects = page("_redirects");
+  assert.match(redirects, /^\/organiser \/creer\.html 301$/m);
+  assert.match(redirects, /^\/organiser\.html \/creer\.html 301$/m);
+});
+
+test("families grid is two columns above 800px", () => {
+  const css = page("assets/css/site.css");
+  assert.match(css, /\.families\s*\{[^}]*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(css, /@media \(max-width: 800px\)\s*\{\s*\.families\s*\{[^}]*grid-template-columns: 1fr/);
+});

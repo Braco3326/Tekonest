@@ -15,7 +15,7 @@ const FOOTER_DATE = "22 octobre 2026";
 
 export const NAV = [
   ["apprendre.html", "Se former"],
-  ["organiser.html", "Créer avec nous"],
+  ["creer.html", "Créer avec nous"],
   ["reseau.html", "Réseau"],
   ["histoire.html", "L'histoire"],
   ["contact.html", "Contact"],

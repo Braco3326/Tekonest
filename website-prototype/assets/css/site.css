@@ -144,6 +144,11 @@ h3 { font-size: var(--text-xl); letter-spacing: -0.015em; line-height: 1.15; }
 .preview-tekpractice .p-cable { position: absolute; left: calc(var(--space-5) + 9%); width: 52%; bottom: calc(var(--space-5) + 10px); height: 3px; border-radius: 2px; background: #2E5FE6; z-index: 0; }
 .product .endorse { font-size: var(--text-sm); color: var(--color-ink-2); }
 @media (max-width: 800px) { .products { grid-template-columns: 1fr; } }
+.families { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
+.family { position: relative; display: flex; flex-direction: column; }
+.family p { margin: 0; color: var(--color-ink-2); }
+.family .status { margin-top: auto; padding-top: var(--space-2); }
+@media (max-width: 800px) { .families { grid-template-columns: 1fr; } }
 
 /* ── Status board (honest "where we are") ── */
 .board { width: 100%; border-collapse: collapse; font-size: var(--text-base); }
@@ -233,8 +238,8 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 
 /* Cadre: double walnut filet offset 7px + amber corner piece */
 .doors--cadre { margin-top: 0; }
-.door.cadre { border-top: 0; padding: var(--space-6); background: var(--color-surface); border: 1px solid var(--noyer); outline: 1px solid var(--noyer); outline-offset: -8px; gap: var(--space-3); }
-.door.cadre::before { content: ""; position: absolute; top: 0; left: 0; width: 18px; height: 18px; background: var(--color-amber); clip-path: polygon(0 0, 100% 0, 0 100%); }
+.door.cadre, .family.cadre { border-top: 0; padding: var(--space-6); background: var(--color-surface); border: 1px solid var(--noyer); outline: 1px solid var(--noyer); outline-offset: -8px; gap: var(--space-3); }
+.door.cadre::before, .family.cadre::before { content: ""; position: absolute; top: 0; left: 0; width: 18px; height: 18px; background: var(--color-amber); clip-path: polygon(0 0, 100% 0, 0 100%); }
 .door.cadre:focus-within { outline: 3px solid var(--focus-color); outline-offset: 4px; }
 .door h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.375rem; line-height: 1.2; }
 .door h3 a { text-decoration: none; color: var(--color-ink); }
@@ -282,7 +287,7 @@ main > .section:last-child:not(.section--sunken), main > .branch-hero:last-child
 .btn-replay svg { width: 18px; height: 18px; fill: currentColor; }
 .btn-replay[aria-pressed="true"] { border-color: var(--color-amber); color: var(--color-amber); }
 .door-who { font-size: var(--text-sm); color: var(--color-ink-3); margin: 0; }
-.door.cadre::after { content: ""; position: absolute; bottom: 0; right: 0; width: 18px; height: 18px; background: var(--color-amber); clip-path: polygon(100% 0, 100% 100%, 0 100%); pointer-events: none; }
+.door.cadre::after, .family.cadre::after { content: ""; position: absolute; bottom: 0; right: 0; width: 18px; height: 18px; background: var(--color-amber); clip-path: polygon(100% 0, 100% 100%, 0 100%); pointer-events: none; }
 
 /* Direction: nest of light over the stage, médaillon bullets */
 .direction { min-height: 640px; }
