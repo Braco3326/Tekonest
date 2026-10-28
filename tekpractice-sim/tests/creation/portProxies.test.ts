@@ -102,6 +102,20 @@ describe('PortProxies on a real (headless) scene', () => {
     scene.dispose()
   })
 
+  it('a canvas that gets a little shorter (708 -> 694 px) never leaves a proxy under 12 px radius (the skip band is one-sided)', () => {
+    const { proxies, camera, inst, scene } = setup(20)
+    const canvas = (proxies as unknown as { host: { canvas: { clientHeight: number } } }).host.canvas
+    camera.getViewMatrix(true)
+    proxies.refresh()
+    canvas.clientHeight = 694 // a 2 % shrink: the old sphere would read 11.998 px
+    proxies.refresh()
+    for (const port of inst.portMarkers.keys()) expect(proxies.hitRadiusPx({ instance: 'ql1', port }), port).toBeGreaterThanOrEqual(12 - 1e-6)
+    canvas.clientHeight = 708 // and back: a rescale down within 2 % may be skipped (nothing to feel), the floor still holds
+    proxies.refresh()
+    for (const port of inst.portMarkers.keys()) expect(proxies.hitRadiusPx({ instance: 'ql1', port }), port).toBeGreaterThanOrEqual(12 - 1e-6)
+    scene.dispose()
+  })
+
   it('a camera view change rescales the proxies (an observer, no render loop): zoom out = a bigger world radius', () => {
     const { proxies, camera, inst, scene } = setup(5)
     camera.getViewMatrix(true)

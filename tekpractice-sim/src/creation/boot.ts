@@ -677,6 +677,7 @@ export async function bootCreation(): Promise<void> {
       canvasShown = true
       canvas.style.display = ''
       host.engine.resize()
+      host.viewResized() // a scene built while the canvas was hidden sized its port proxies for a 0 px viewport (refresh() returns early then)
       refreshAutosave()
     }
     if (!picker.isOpen) return

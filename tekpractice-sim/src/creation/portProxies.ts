@@ -130,8 +130,10 @@ export class PortProxies {
         // 2 % over the minimum: a hit radius is never a hair under 12 px through rounding.
         const world = Math.max(e.base * this.parentScale(inst.root), proxyRadius(d, camera.fov, h) * 1.02)
         const scale = world / (e.base * this.parentScale(inst.root))
-        // A rescale under 2 % changes nothing the learner can feel: skip the matrix work.
-        if (Math.abs(scale - s.scaling.x) > 0.02 * scale) {
+        // Skip the matrix work for a sphere that is already big enough and at most 2 % too big (nothing the learner can
+        // feel). One-sided: a sphere BELOW its target is always rescaled, or a small shrink of the canvas would leave it
+        // a hair under the 12 px floor.
+        if (s.scaling.x < scale || s.scaling.x > scale * 1.02) {
           s.scaling.setAll(scale)
           s.computeWorldMatrix(true)
         }

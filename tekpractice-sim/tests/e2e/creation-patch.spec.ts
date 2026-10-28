@@ -445,6 +445,32 @@ test('after a window resize (shrink AND grow) every port is still a >= 12 px rad
   }
 })
 
+test('the FIRST scene after a reload (placeholders only, no .glb re-anchor) has >= 12 px port targets with no camera move', async ({ page }) => {
+  await page.route('**/*.glb', (route) => route.abort()) // no model arrives to re-anchor and re-size the proxies: only the host can
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/')
+  await page.waitForFunction(() => !!window.__creation)
+  await page.evaluate(() => window.__creation!.choosePlace('room:concert-hall-medium'))
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
+  await page.evaluate(() => {
+    const c = window.__creation!
+    c.dispatch({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId: 'ql1', position: [0, 0, 8] })
+    c.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'sm58', position: [1, 0, 6] })
+  })
+  await page.waitForFunction(() => (localStorage.getItem('audio-sim/creation.v1') ?? '').includes('sm58')) // the autosave landed
+  await page.reload()
+  await page.waitForFunction(() => !!window.__creation)
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 2)
+  await expect.poll(() => page.evaluate(() => window.__creation!.modelsPending())).toBe(0)
+  await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
+  const radii = await page.evaluate(() => {
+    const c = window.__creation!
+    return c.design().rig.instances.flatMap((i) => c.devicePorts(i.instanceId).map((port) => ({ ref: `${i.instanceId}.${port}`, r: c.portHitRadiusPx({ instance: i.instanceId, port }) })))
+  })
+  expect(radii.length).toBeGreaterThan(5)
+  for (const { ref, r } of radii) expect(r, ref).toBeGreaterThanOrEqual(12 - 1e-6)
+})
+
 test('a place change drops the cable in hand and the labels; the new scene has its own >= 24 px targets', async ({ page }) => {
   await boot(page)
   await clickPort(page, K12_POWER)
