@@ -30,6 +30,7 @@
 .cr-connect-rejected-item { display: flex; flex-direction: column; gap: 2px; padding: 6px 10px; border-top: 1px solid var(--cr-panel-line); overflow-wrap: anywhere; }
 .cr-connect-rejected-name { color: var(--cr-ink-muted); font-size: 14px; }
 .cr-connect-reason { color: var(--cr-danger); font-size: 13px; }
+.cr-connect-teach { color: var(--cr-ink-muted); font-size: 13px; }
 @media (max-width: 480px) {
   .cr-connect { padding: 16px; }
   .cr-connect-list { max-height: 26vh; }

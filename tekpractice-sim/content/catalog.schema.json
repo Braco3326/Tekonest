@@ -298,6 +298,16 @@
               "teach": {
                 "type": "string",
                 "minLength": 1
+              },
+              "title_fr": {
+                "type": "string",
+                "minLength": 1,
+                "description": "French title / teaching text (C17): the only rule text Mode Création shows. `title` / `teach` stay English for the legacy UI."
+              },
+              "teach_fr": {
+                "type": "string",
+                "minLength": 1,
+                "description": "French title / teaching text (C17): the only rule text Mode Création shows. `title` / `teach` stay English for the legacy UI."
               }
             },
             "required": [
@@ -307,7 +317,9 @@
               "severity",
               "title",
               "check",
-              "teach"
+              "teach",
+              "title_fr",
+              "teach_fr"
             ],
             "additionalProperties": false
           }

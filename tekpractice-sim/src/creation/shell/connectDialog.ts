@@ -19,7 +19,7 @@ import type { PortRef } from '../../engine/types'
 import { COPY } from '../copy'
 import type { History } from '../history'
 import type { CreationStore } from '../store'
-import { ConnectSession, focusPlan, groupByDevice, type CloseReason, type RejectionTitle } from './connectModel'
+import { ConnectSession, focusPlan, groupByDevice, type CloseReason, type RejectionText } from './connectModel'
 import { connectorName, shortName, signalName } from './propertiesModel'
 import { modalButton, modalRow, openModal } from './modal'
 import './connectDialog.css'
@@ -31,7 +31,7 @@ export interface ConnectDialogDeps {
   /** « Appareil (id) · prise » (history entry, announcement). */
   portName(ref: PortRef): string
   /** The one place that turns a refusal into text (the status bar's). */
-  rejectionTitle: RejectionTitle
+  rejectionText: RejectionText
   /** A line for the status bar (announced politely). */
   announce(message: string): void
   undoLabel?(): string
@@ -83,7 +83,7 @@ export function createConnectDialog(d: ConnectDialogDeps): ConnectDialog {
       registry: d.registry,
       from,
       portName: d.portName,
-      rejectionTitle: d.rejectionTitle,
+      rejectionText: d.rejectionText,
       ...(d.beforeDispatch ? { beforeDispatch: d.beforeDispatch } : {}),
     })
     const id = `cr-connect-${++seq}`
@@ -232,6 +232,12 @@ export function createConnectDialog(d: ConnectDialogDeps): ConnectDialog {
               why.className = 'cr-connect-reason'
               why.textContent = e.reason
               li.append(name, why)
+              if (e.detail) {
+                const teach = document.createElement('span')
+                teach.className = 'cr-connect-teach'
+                teach.textContent = e.detail
+                li.append(teach)
+              }
               return li
             })
           )

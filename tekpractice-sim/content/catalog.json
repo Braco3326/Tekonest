@@ -451,50 +451,66 @@
     {
       "id": "R1", "slug": "connector-mate-mismatch", "module": "engine", "severity": "error",
       "title": "Connector mismatch",
+      "title_fr": "Connecteurs incompatibles",
       "check": "The two connectors must physically mate (connectorTypes.matesWith).",
-      "teach": "An XLR male mates an XLR female; a TT plug mates a TT jack. If it doesn't fit, it isn't the right cable — never force it."
+      "teach": "An XLR male mates an XLR female; a TT plug mates a TT jack. If it doesn't fit, it isn't the right cable — never force it.",
+      "teach_fr": "Un XLR mâle s’emboîte dans un XLR femelle ; une fiche TT s’emboîte dans un jack TT. Si ça ne rentre pas, ce n’est pas le bon câble : il ne faut jamais forcer."
     },
     {
       "id": "R2", "slug": "signal-mismatch", "module": "engine", "severity": "error",
       "title": "Signal type mismatch",
+      "title_fr": "Types de signal incompatibles",
       "check": "Source and destination signal types must be compatible: mic→mic-pre, line→line, digital→same digital format, pro (+4 dBu) vs consumer (-10 dBV) flagged.",
-      "teach": "A mic into a line input is 40 dB too quiet; line into a mic-pre clips; AES3 into an analog input is just noise; consumer gear into pro gear runs 12 dB low."
+      "teach": "A mic into a line input is 40 dB too quiet; line into a mic-pre clips; AES3 into an analog input is just noise; consumer gear into pro gear runs 12 dB low.",
+      "teach_fr": "Un micro sur une entrée ligne est trop faible de 40 dB ; une ligne sur un préampli micro sature ; de l’AES3 dans une entrée analogique ne donne que du bruit ; du matériel grand public relié à du matériel pro sort 12 dB plus bas."
     },
     {
       "id": "R3", "slug": "direction-mismatch", "module": "engine", "severity": "error",
       "title": "Direction mismatch",
+      "title_fr": "Sens de connexion incorrect",
       "check": "An output must feed an input (out→in). out→out and in→in are invalid; bidir ports accept either end.",
-      "teach": "Signal flows one way: source → destination. Two outputs fighting each other can damage gear."
+      "teach": "Signal flows one way: source → destination. Two outputs fighting each other can damage gear.",
+      "teach_fr": "Le signal circule dans un seul sens : source → destination. Deux sorties qui se battent peuvent endommager le matériel."
     },
     {
       "id": "R4", "slug": "phantom-power", "module": "logic/phantom", "severity": "error",
       "title": "Phantom power (+48 V)",
+      "title_fr": "Alimentation fantôme (+48 V)",
       "check": "A port flagged requiresPhantom must reach an input flagged providesPhantom with phantom enabled (error if missing). Warning if +48 V is enabled toward a ribbon/line source.",
-      "teach": "Condensers (U 87) are silent without +48 V. Dynamics (SM58, RE20) ignore it. Vintage ribbons can be damaged by it."
+      "teach": "Condensers (U 87) are silent without +48 V. Dynamics (SM58, RE20) ignore it. Vintage ribbons can be damaged by it.",
+      "teach_fr": "Les micros à condensateur (U 87) restent muets sans alimentation fantôme +48 V. Les micros dynamiques (SM58, RE20) l’ignorent. Les micros à ruban d’époque peuvent être endommagés par elle."
     },
     {
       "id": "R5", "slug": "on-air-tally", "module": "logic/gpio", "severity": "warning",
       "title": "ON-AIR tally light",
+      "title_fr": "Voyant ON-AIR (tally)",
       "check": "When a mic fader is open on a broadcast console, its GPIO tally output must drive an ON-AIR light (isOnAirTally chain complete).",
-      "teach": "The red light is a safety contract: open mic = ON-AIR lit, or someone will walk in talking during the news."
+      "teach": "The red light is a safety contract: open mic = ON-AIR lit, or someone will walk in talking during the news.",
+      "teach_fr": "Le voyant rouge est un contrat de sécurité : micro ouvert = ON-AIR allumé, sinon quelqu’un entrera en parlant pendant le journal."
     },
     {
       "id": "R6", "slug": "monitor-mute-open-mic", "module": "logic/gpio", "severity": "error",
       "title": "Monitor mute on open mic (feedback)",
+      "title_fr": "Coupure des écoutes sur micro ouvert (larsen)",
       "check": "Opening a mic in the same room as active monitor outputs (isMonitorOut) must mute those monitors, else feedback loop detected.",
-      "teach": "Studio speakers + open mic = larsen. Broadcast consoles mute the control-room monitors automatically when your mic is open."
+      "teach": "Studio speakers + open mic = larsen. Broadcast consoles mute the control-room monitors automatically when your mic is open.",
+      "teach_fr": "Enceintes de studio + micro ouvert = larsen. Les consoles de diffusion coupent automatiquement les écoutes de la régie quand un micro est ouvert."
     },
     {
       "id": "R7", "slug": "mix-minus-n1", "module": "logic/mixMinus", "severity": "error",
       "title": "Mix-minus / N-1 return echo",
+      "title_fr": "Mix-minus / N-1 : écho du retour",
       "check": "The feed sent to a remote codec must be the program MINUS the codec's own return (N-1). If the return is present in its own send, echo is detected.",
-      "teach": "Send a guest their own voice back and they hear themselves delayed — unusable. Every duplex needs an N-1 bus."
+      "teach": "Send a guest their own voice back and they hear themselves delayed — unusable. Every duplex needs an N-1 bus.",
+      "teach_fr": "Renvoyer à un invité sa propre voix, c’est la lui faire entendre en différé : inutilisable. Tout duplex a besoin d’un bus N-1."
     },
     {
       "id": "R8", "slug": "wordclock-sync", "module": "logic/clock", "severity": "error",
       "title": "Word clock master/slave & sample rate",
+      "title_fr": "Word clock maître/esclave et fréquence d’échantillonnage",
       "check": "Every digital audio connection needs exactly one clock master upstream; slaves lock to it. Two masters, no master, or mismatched sample rates on a link are errors.",
-      "teach": "Digital audio without a shared clock = clicks and pops. One master (OCX HD or the interface), everyone else slaves."
+      "teach": "Digital audio without a shared clock = clicks and pops. One master (OCX HD or the interface), everyone else slaves.",
+      "teach_fr": "Un audio numérique sans horloge commune = des clics et des craquements. Un seul maître (l’OCX HD ou l’interface), tous les autres en esclave."
     }
   ]
 }

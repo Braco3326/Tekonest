@@ -5,8 +5,8 @@
  *
  * - `candidates` lists every FREE port of every OTHER device, split by `store.canConnect` (a dry run): the compatible ones
  *   are choosable, the others are shown in an « Incompatibles » group with the rule that refuses them (teaching value).
- *   The reason text comes from the same function as the status bar's and the mouse path's (`rejectionTitle`), so one
- *   change (Task 29: the catalog's `title_fr`) updates all three.
+ *   The reason (the rule's `title_fr`) and its teaching line (`teach_fr`, Task 29) come from the same function as the
+ *   status bar's and the mouse path's (`rejectionText`, i.e. `rejectionOf` over `ruleTextFor`), so the three always agree.
  * - `ConnectSession` is the dialog without the DOM: the filter, the active option, and the one action. Its guards are
  *   the lessons of Tasks 23-27: a held key never repeats the action, a spent or stale session dispatches nothing, a
  *   target whose device left the rig is never sent, and a refusal is a message, never an exception.
@@ -31,14 +31,16 @@ export interface Candidate {
 export interface RejectedCandidate extends Candidate {
   /** Why this cable cannot go there: the refusing rule's title. */
   reason: string
+  /** What it teaches: the rule's teaching text ('' when the refusal has no rule text). */
+  detail: string
 }
 export interface Candidates {
   ok: Candidate[]
   rejected: RejectedCandidate[]
 }
 
-/** The text of a refusal (the status bar's and the mouse path's function). */
-export type RejectionTitle = (error: DispatchFail['error'], subjects: readonly PortRef[]) => string
+/** The text of a refusal (the status bar's and the mouse path's function): the rule's title and teaching text. */
+export type RejectionText = (error: DispatchFail['error'], subjects: readonly PortRef[]) => { title: string; detail: string }
 
 const fill = (s: string, vars: Record<string, string>): string => s.replace(/\{(\w+)\}/g, (m, k: string) => vars[k] ?? m)
 
@@ -46,15 +48,15 @@ export function candidates(
   store: Pick<CreationStore, 'canConnect' | 'connectionAt' | 'design'>,
   registry: Registry,
   from: PortRef,
-  rejectionTitle?: RejectionTitle
+  rejectionText?: RejectionText
 ): Candidates {
   const out: Candidates = { ok: [], rejected: [] }
   const design = store.design()
   const origin = design.rig.instances.find((i) => i.instanceId === from.instance)
   const originPort = origin && registry.deviceById.get(origin.deviceId)?.ports.find((p) => p.portId === from.port)
   if (!originPort || store.connectionAt(from) !== undefined) return out
-  const title: RejectionTitle =
-    rejectionTitle ?? ((error, subjects) => rejectionOf(error, subjects, ruleTextFor(registry.catalog.rules as readonly RuleRow[])).title)
+  const text: RejectionText =
+    rejectionText ?? ((error, subjects) => rejectionOf(error, subjects, ruleTextFor(registry.catalog.rules as readonly RuleRow[])))
   for (const inst of design.rig.instances) {
     if (inst.instanceId === from.instance) continue
     const device = registry.deviceById.get(inst.deviceId)
@@ -67,7 +69,10 @@ export function candidates(
       const entry: Candidate = { ref, label: `${heading} · ${port}`, device: heading, port }
       const r = store.canConnect(from, ref)
       if (r.ok) out.ok.push(entry)
-      else out.rejected.push({ ...entry, reason: title({ code: r.code, message: r.message, ...(r.ruleId ? { ruleId: r.ruleId } : {}) }, [from, ref]) })
+      else {
+        const t = text({ code: r.code, message: r.message, ...(r.ruleId ? { ruleId: r.ruleId } : {}) }, [from, ref])
+        out.rejected.push({ ...entry, reason: t.title, detail: t.detail })
+      }
     }
   }
   return out
@@ -114,7 +119,7 @@ export interface ConnectSessionDeps {
   from: PortRef
   /** « Appareil (id) · prise », for the history entry and the announcement. */
   portName(ref: PortRef): string
-  rejectionTitle: RejectionTitle
+  rejectionText: RejectionText
   /** Called just before the intent (the shell closes a stepper burst still open). */
   beforeDispatch?(): void
 }
@@ -131,7 +136,7 @@ export class ConnectSession {
 
   constructor(private readonly d: ConnectSessionDeps) {
     this.from = { instance: d.from.instance, port: d.from.port }
-    const c = candidates(d.store, d.registry, d.from, d.rejectionTitle)
+    const c = candidates(d.store, d.registry, d.from, d.rejectionText)
     this.ok = c.ok
     this.rejected = c.rejected
   }
@@ -210,7 +215,7 @@ export class ConnectSession {
       this.spent = true
       return { kind: 'connected', from: this.from, to: { instance: to.instance, port: to.port }, a, b }
     }
-    return { kind: 'refused', message: this.d.rejectionTitle(r.error, r.subjects) }
+    return { kind: 'refused', message: this.d.rejectionText(r.error, r.subjects).title }
   }
 }
 

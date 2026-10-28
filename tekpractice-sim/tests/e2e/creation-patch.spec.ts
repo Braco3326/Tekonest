@@ -6,6 +6,10 @@
  */
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
+import catalog from '../../content/catalog.json'
+
+/** Task 29 (CA-15): the rule texts are the catalog's French fields, pinned exactly. */
+const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
 test.use({ viewport: { width: 1366, height: 768 } })
 
 type Ref = { instance: string; port: string }
@@ -96,6 +100,8 @@ test('a refused connection (R3) is pinned at the second port as an alert and lis
   const alert = page.getByRole('alert').filter({ hasText: 'Sens de connexion incorrect' })
   await expect(alert).toBeVisible()
   await expect(page.getByTestId('port-error')).toHaveAttribute('role', 'alert')
+  await expect(page.getByTestId('port-error')).toHaveText(`Branchement refusé : ${RULE('R3').title_fr}`)
+  await expect(page.getByTestId('port-error')).not.toContainText(RULE('R3').title) // never the English title
   // pinned AT port B: the bubble sits just above the port, not far from it
   const port = await screenOf(page, MIC1)
   const box = (await alert.boundingBox())!
@@ -109,7 +115,8 @@ test('a refused connection (R3) is pinned at the second port as an alert and lis
   await page.getByTestId('signal-status').click()
   const rows = page.getByRole('dialog', { name: 'Erreurs et avertissements' }).locator('.cr-errlist-row')
   await expect(rows.first()).toHaveAttribute('data-severity', 'rejection')
-  await expect(rows.first()).toContainText('Sens de connexion incorrect')
+  await expect(rows.first()).toContainText(RULE('R3').title_fr)
+  await expect(rows.first()).toContainText(RULE('R3').teach_fr)
   await page.keyboard.press('Escape')
   expect(errors).toEqual([])
 })

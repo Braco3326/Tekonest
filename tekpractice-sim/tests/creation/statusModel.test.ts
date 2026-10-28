@@ -77,19 +77,9 @@ describe('ruleTextFor', () => {
     const t = ruleTextFor([{ id: 'R9', title: 'EN', teach: 'en', title_fr: 'FR', teach_fr: 'fr' }])
     expect(t('R9')).toEqual({ title: 'FR', detail: 'fr' })
   })
-  it('falls back to the French copy (no English in Mode Création) for R1–R8', () => {
+  it('reads title_fr / teach_fr of every real catalog rule, never the English (exact strings in ruleTexts.test.ts)', () => {
     const t = ruleTextFor(catalogJson.rules)
-    for (const id of ['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8']) {
-      const { title, detail } = t(id)
-      const en = catalogJson.rules.find((r) => r.id === id)!
-      expect(title, id).not.toBe(en.title)
-      expect(detail, id).not.toBe(en.teach)
-      expect(title.length, id).toBeGreaterThan(0)
-      expect(detail.length, id).toBeGreaterThan(0)
-    }
-  })
-  it('R3 keeps the catalog bidir clause (« bidir ports accept either end »)', () => {
-    expect(ruleTextFor(catalogJson.rules)('R3').detail).toMatch(/bidirectionnelle/)
+    for (const r of catalogJson.rules) expect(t(r.id), r.id).toEqual({ title: r.title_fr, detail: r.teach_fr })
   })
   it('an unknown rule still has a text (its id)', () => {
     expect(ruleTextFor([])('R42').title).toContain('R42')

@@ -70,6 +70,9 @@ export const Rule = z.object({
   title: z.string().min(1),
   check: z.string().min(1),
   teach: z.string().min(1),
+  /** French title / teaching text (C17): the only rule text Mode Création shows. `title` / `teach` stay English for the legacy UI. */
+  title_fr: z.string().min(1),
+  teach_fr: z.string().min(1),
 })
 
 export const Catalog = z.object({

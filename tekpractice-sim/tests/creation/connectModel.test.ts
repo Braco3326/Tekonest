@@ -2,7 +2,6 @@ import { describe, expect, it, vi } from 'vitest'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import type { PortRef } from '../../src/engine/types'
-import { COPY } from '../../src/creation/copy'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { History } from '../../src/creation/history'
 import { rejectionOf, ruleTextFor, type RuleRow } from '../../src/creation/shell/statusModel'
@@ -43,7 +42,7 @@ describe('candidates (Task 28): every free port of every OTHER instance, split b
     expect(power).toBeDefined()
     // the reason is the rule's title, through the one helper the status list uses
     expect(power!.reason).toBe(rejectionOf(store.canConnect(SM58, G_POWER) as never, [SM58, G_POWER], ruleText).title)
-    expect(power!.reason).toBe(COPY.rule!.R1Title)
+    expect(power!.reason).toBe(catalogJson.rules.find((r) => r.id === 'R1')!.title_fr)
   })
 
   it('never lists the origin device\'s own ports, nor an occupied port; ok and rejected never overlap', () => {
@@ -57,7 +56,7 @@ describe('candidates (Task 28): every free port of every OTHER instance, split b
     expect(c.ok.map((e) => key(e.ref))).toEqual(['k12-g.in-line-a', 'k12-d.in-line-a'])
     // an output goes to an input of the same level; out -> out and mains are listed as rejected
     expect(c.rejected.map((e) => key(e.ref))).toContain('k12-g.thru-out-a')
-    expect(c.rejected.find((e) => key(e.ref) === 'k12-g.thru-out-a')!.reason).toBe(COPY.rule!.R3Title)
+    expect(c.rejected.find((e) => key(e.ref) === 'k12-g.thru-out-a')!.reason).toBe(catalogJson.rules.find((r) => r.id === 'R3')!.title_fr)
   })
 
   it('a second cable: once k12-g in-line-a is taken it leaves the list', () => {
@@ -132,17 +131,17 @@ function session(over: { from?: PortRef; setup?: (r: ReturnType<typeof rig>) => 
   const r = rig()
   over.setup?.(r)
   const beforeDispatch = vi.fn()
-  const rejectionTitle = vi.fn((e: { code: string; ruleId?: string }) => `titre:${e.ruleId ?? e.code}`)
+  const rejectionText = vi.fn((e: { code: string; ruleId?: string }) => ({ title: `titre:${e.ruleId ?? e.code}`, detail: `detail:${e.ruleId ?? e.code}` }))
   const s = new ConnectSession({
     store: r.store,
     history: r.history,
     registry,
     from: over.from ?? QL_L,
     portName: (p) => `${p.instance} · ${p.port}`,
-    rejectionTitle,
+    rejectionText,
     beforeDispatch,
   })
-  return { ...r, s, beforeDispatch, rejectionTitle }
+  return { ...r, s, beforeDispatch, rejectionText }
 }
 
 describe('ConnectSession: the dialog\'s state, without the DOM', () => {
@@ -231,14 +230,14 @@ describe('ConnectSession: the dialog\'s state, without the DOM', () => {
   })
 
   it('a refusal is a message, never an exception: the cable is not made, the title comes from the one helper', () => {
-    const { s, store, rejectionTitle } = session()
+    const { s, store, rejectionText } = session()
     // Make the refusal real: the target is taken by another cable after the list was built (no store notice reached the session).
     store.dispatch({ type: 'CONNECT', a: QL_R, b: G_IN })
-    rejectionTitle.mockClear()
+    rejectionText.mockClear()
     const r = s.activate({ repeat: false })
     expect(r).toMatchObject({ kind: 'refused' })
     expect((r as { message: string }).message).toMatch(/^titre:/)
-    expect(rejectionTitle).toHaveBeenCalled()
+    expect(rejectionText).toHaveBeenCalled()
     expect(store.design().rig.connections).toHaveLength(1)
   })
 

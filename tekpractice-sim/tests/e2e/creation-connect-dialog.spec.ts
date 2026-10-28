@@ -5,6 +5,10 @@
  */
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
+import catalog from '../../content/catalog.json'
+
+/** Task 29 (CA-15): the rule texts are the catalog's French fields, pinned exactly. */
+const RULE = (id: string) => catalog.rules.find((r) => r.id === id)!
 test.use({ viewport: { width: 1366, height: 768 } })
 
 type Ref = { instance: string; port: string }
@@ -88,9 +92,11 @@ test('an incompatible port sits in the collapsed « Incompatibles » group with 
   await page.keyboard.press('Enter')
   await expect(toggle).toHaveAttribute('aria-expanded', 'true')
   const power = page.getByTestId('connect-rejected').getByRole('listitem').filter({ hasText: '(k12-g) · power-in' })
-  await expect(power).toContainText('Connecteurs incompatibles')
+  await expect(power.locator('.cr-connect-reason')).toHaveText(RULE('R1').title_fr)
+  await expect(power.locator('.cr-connect-teach')).toHaveText(RULE('R1').teach_fr)
   const thru = page.getByTestId('connect-rejected').getByRole('listitem').filter({ hasText: '(k12-g) · thru-out-a' })
-  await expect(thru).toContainText('Sens de connexion incorrect')
+  await expect(thru.locator('.cr-connect-reason')).toHaveText(RULE('R3').title_fr)
+  await expect(thru.locator('.cr-connect-teach')).toHaveText(RULE('R3').teach_fr)
   // never an option
   for (const o of await options.all()) await expect(o).not.toContainText('power-in')
   await expect(dialog(page).getByRole('option', { name: /power-in|thru-out-a/ })).toHaveCount(0)

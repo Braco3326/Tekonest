@@ -401,28 +401,6 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     pausedBlocked: 'Sauvegarde automatique impossible : le navigateur la bloque.',
     actionExport: 'Exporter…',
   },
-  /**
-   * Rule titles / descriptions in French until the catalog has `title_fr` / `teach_fr` (Task 29).
-   * Faithful renderings of catalog.json `rules[].title` / `rules[].check` — no new technical claim.
-   */
-  rule: {
-    R1Title: 'Connecteurs incompatibles',
-    R1Detail: 'Les deux connecteurs doivent pouvoir s’emboîter physiquement. Si ça ne rentre pas, ce n’est pas le bon câble : ne forcez jamais.',
-    R2Title: 'Types de signal incompatibles',
-    R2Detail: 'La source et la destination doivent transporter des signaux compatibles : micro vers préampli micro, ligne vers ligne, numérique vers le même format numérique.',
-    R3Title: 'Sens de connexion incorrect',
-    R3Detail: 'Une sortie doit être reliée à une entrée (sortie → entrée). Sortie vers sortie ou entrée vers entrée n’est pas valide. Une prise bidirectionnelle accepte l’un ou l’autre sens.',
-    R4Title: 'Alimentation fantôme (+48 V)',
-    R4Detail: 'Un appareil qui demande le +48 V doit arriver sur une entrée qui le fournit, avec le +48 V activé.',
-    R5Title: 'Voyant ON-AIR (tally)',
-    R5Detail: 'Quand un fader micro est ouvert sur une console de diffusion, sa sortie GPIO (tally) doit allumer un voyant ON-AIR.',
-    R6Title: 'Écoutes non coupées, micro ouvert (larsen)',
-    R6Detail: 'Ouvrir un micro dans la même pièce que des écoutes actives doit couper ces écoutes ; sinon une boucle de larsen est détectée.',
-    R7Title: 'Mix-minus (N-1) : écho du retour',
-    R7Detail: 'Le départ vers un codec distant doit être le programme moins le retour de ce codec (N-1). Si ce retour est dans son propre départ, il y a écho.',
-    R8Title: 'Word clock maître/esclave et fréquence d’échantillonnage',
-    R8Detail: 'Chaque liaison audio numérique a besoin d’une seule horloge maître en amont. Deux maîtres, aucun maître ou des fréquences différentes sur une liaison sont des erreurs.',
-  },
   /** The shell could not start (Phase 1 review): a persistent alert with the way out. */
   boot: {
     /** No WebGL on this computer / browser: the 3D view cannot start. */

@@ -1379,7 +1379,7 @@ export async function bootCreation(): Promise<void> {
     store,
     history,
     portName,
-    rejectionTitle: (error, subjects) => rejectionOf(error, subjects, ruleText).title,
+    rejectionText: (error, subjects) => rejectionOf(error, subjects, ruleText),
     announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
     undoLabel,
     beforeDispatch: () => props.flush(),

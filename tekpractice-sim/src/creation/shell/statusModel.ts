@@ -38,8 +38,8 @@ export interface Rejection {
 }
 
 /**
- * A rule as the status list shows it. `detail` (not `teach`): the catalog's `teach_fr` once Task 29 adds it,
- * until then a faithful French rendering of the catalog `check` (COPY.rule).
+ * A rule as Mode Création shows it: `title` = the catalog's `title_fr`, `detail` = its `teach_fr`.
+ * `ruleTextFor` is the ONE place that picks them; the status list, the pinned refusal and the « Connecter à… » reasons all read through it.
  */
 export type RuleText = (ruleId: string) => { title: string; detail: string }
 
@@ -96,7 +96,10 @@ export function statusView(input: {
   }
 }
 
-/** The catalog rule shape this reads (`title_fr` / `teach_fr` arrive in Task 29). */
+/**
+ * The catalog rule shape this reads. `title` / `teach` are the English fields the legacy UI shows: never read here.
+ * The French fields are optional in the type only so a malformed rule degrades to its id (validate-catalog requires them).
+ */
 export interface RuleRow {
   id: string
   title: string
@@ -106,16 +109,14 @@ export interface RuleRow {
 }
 
 /**
- * A rule's French text: the catalog's `title_fr` / `teach_fr` when present,
- * else the French copy (`COPY.rule`), else (never for R1–R8) the rule id.
- * Mode Création never shows the English catalog text.
+ * A rule's French text: the catalog's `title_fr` / `teach_fr`; a rule without them (never in a validated catalog)
+ * shows « Règle R9 » with no detail. Mode Création never shows the English catalog text.
  */
 export function ruleTextFor(rules: readonly RuleRow[]): RuleText {
   return (ruleId) => {
     const r = rules.find((x) => x.id === ruleId)
-    const R = COPY.rule ?? {}
-    const title = r?.title_fr || R[`${ruleId}Title`] || fill(S().unknownRule!, 'id', ruleId)
-    const detail = r?.teach_fr || R[`${ruleId}Detail`] || ''
+    const title = r?.title_fr || fill(S().unknownRule!, 'id', ruleId)
+    const detail = r?.teach_fr || ''
     return { title, detail }
   }
 }
