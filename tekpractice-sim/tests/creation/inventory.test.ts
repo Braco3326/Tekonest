@@ -28,7 +28,7 @@ describe('TAB_LABELS', () => {
 describe('tabFor', () => {
   it('maps every category value present in the catalog explicitly (no silent fallback)', () => {
     const categories = new Set([...registry.deviceById.values()].map((d) => d.realWorld.category))
-    expect(categories.size).toBe(15)
+    expect(categories.size).toBe(16) // 15 + « power-strip » (Task 32)
     for (const c of categories) expect(Object.keys(CATEGORY_TAB), c).toContain(c)
   })
 
@@ -48,6 +48,7 @@ describe('tabFor', () => {
     signaling: 'autres',
     cable: 'autres',
     patchbay: 'autres',
+    'power-strip': 'secteur',
   }
   for (const [category, tab] of Object.entries(expected)) {
     it(`category « ${category} » goes to « ${tab} »`, () => {
@@ -69,10 +70,11 @@ describe('tabFor', () => {
 })
 
 describe('inventory', () => {
-  it('lists each of the 24 catalog devices in exactly one tab', () => {
-    expect(allIds).toHaveLength(24)
+  it('lists each catalog device in exactly one tab (24 before Task 32, 25 with the power strip)', () => {
+    expect(allIds).toHaveLength(registry.catalog.devices.length)
+    expect(allIds).toHaveLength(25)
     const r = inventory(registry, none)
-    expect(r.items).toHaveLength(24)
+    expect(r.items).toHaveLength(allIds.length)
     for (const id of allIds) expect(r.items.filter((i) => i.deviceId === id), id).toHaveLength(1)
     for (const i of r.items) expect(r.tabs, i.deviceId).toContain(i.tab)
   })
@@ -85,18 +87,20 @@ describe('inventory', () => {
     expect(tabOf('yamaha-dbr12', r)).toBe('enceintes')
     expect(tabOf('genelec-8030c', r)).toBe('enceintes')
     expect(tabOf('playout-pc', r)).toBe('sources')
+    expect(tabOf('multiprise-secteur', r)).toBe('secteur')
   })
 
-  it('hides empty tabs: no mains or lighting device yet, no proposals', () => {
-    const { tabs } = inventory(registry, none)
-    expect(tabs).not.toContain('secteur')
+  it('shows « secteur » (the power strip, Task 32) and hides the tabs that are still empty: lighting, proposals', () => {
+    const { tabs, items } = inventory(registry, none)
+    expect(tabs).toContain('secteur')
+    expect(items.filter((i) => i.tab === 'secteur').map((i) => i.deviceId)).toEqual(['multiprise-secteur'])
     expect(tabs).not.toContain('eclairage')
     expect(tabs).not.toContain('beta')
   })
 
   it('keeps « autres » last and the other tabs in declaration order', () => {
     const { tabs } = inventory(registry, none)
-    expect(tabs).toEqual(['micros', 'consoles', 'enceintes', 'sources', 'reseau', 'autres'])
+    expect(tabs).toEqual(['micros', 'consoles', 'enceintes', 'sources', 'reseau', 'secteur', 'autres'])
     expect(tabs[tabs.length - 1]).toBe('autres')
   })
 
@@ -121,18 +125,18 @@ describe('inventory', () => {
   it('puts proposals only in « bêta », badged « non vérifié »', () => {
     const r = inventory(registry, {
       proposals: [
-        { deviceId: 'multiprise-secteur', label: 'Multiprise' },
+        { deviceId: 'rallonge-test', label: 'Rallonge' },
         { deviceId: 'projecteur-par', label: 'Projecteur PAR' },
       ],
-      modelIds: new Set([...allIds, 'multiprise-secteur']),
+      modelIds: new Set([...allIds, 'rallonge-test']),
     })
     const betas = r.items.filter((i) => i.tab === 'beta')
-    expect(betas.map((i) => i.deviceId)).toEqual(['multiprise-secteur', 'projecteur-par'])
+    expect(betas.map((i) => i.deviceId)).toEqual(['rallonge-test', 'projecteur-par'])
     for (const b of betas) expect(b.badge).toBe('non vérifié')
     expect(betas[0].hasModel).toBe(true)
     expect(betas[1].hasModel).toBe(false)
     expect(r.items.filter((i) => i.tab !== 'beta' && i.badge)).toEqual([])
-    expect(r.items).toHaveLength(26)
+    expect(r.items).toHaveLength(allIds.length + 2)
   })
 
   it('ignores a proposal whose id is already a catalog device (one tab per device)', () => {

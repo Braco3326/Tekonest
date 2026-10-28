@@ -188,6 +188,27 @@ test('controls: a toggle is a pressed button, an enum a select; both undoable', 
   expect(await page.evaluate(() => window.__creation!.design().rig.controls.hdio['sample-rate'])).toBe('96000')
 })
 
+test('« Alimentation » (Task 32): every active device has it on by default; the press is one undoable SET_CONTROL; a device with no power-in has none', async ({ page }) => {
+  await boot(page)
+  await select(page, 'k12-g')
+  const props = page.getByTestId('properties')
+  const power = props.getByRole('button', { name: 'Alimentation' })
+  await expect(power).toHaveAttribute('aria-pressed', 'true')
+  expect(await power.evaluate((e) => getComputedStyle(e).transitionProperty)).toBe('none')
+  const u0 = await undoSize(page)
+  await power.click()
+  await expect(power).toHaveAttribute('aria-pressed', 'false')
+  expect(await page.evaluate(() => window.__creation!.design().rig.controls['k12-g'].power)).toBe(false)
+  expect(await undoSize(page)).toBe(u0 + 1)
+  await page.evaluate(() => window.__creation!.undo())
+  await expect(power).toHaveAttribute('aria-pressed', 'true')
+  // a microphone has no mains inlet, so no switch for it
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'mic', position: [1, 0, 6] }))
+  await select(page, 'mic')
+  await expect(props.getByRole('heading', { name: 'Shure SM58' })).toBeVisible()
+  await expect(props.getByRole('button', { name: 'Alimentation' })).toHaveCount(0)
+})
+
 test('Connexions: each cable reads its signal and other end; « Débrancher » is an undoable UNPLUG', async ({ page }) => {
   await boot(page)
   await select(page, 'ql1')

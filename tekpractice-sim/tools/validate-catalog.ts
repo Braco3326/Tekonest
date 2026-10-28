@@ -19,6 +19,8 @@
  *  9. pure checks in tools/catalogChecks.ts: unique port ids (error), optional
  *     routing / acoustic fields, and a missing public/assets/<id>.glb (WARNING
  *     only: the placeholder ships, so it never fails the gate)
+ * 10. mains (C7, Task 32; in catalogChecks): every `power-in` device has the `power` toggle,
+ *     `isMainsSource` only on a mains-power OUT port, and every such verified port has it
  */
 import { readdirSync, readFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'

@@ -8,8 +8,10 @@ import { z } from 'zod'
 
 export const PortFlag = z.enum([
   'providesPhantom', 'requiresPhantom', 'isClockMaster', 'isClockSlave',
-  'isMicInput', 'isMonitorOut', 'isOnAirTally', 'isDantePrimary',
-])
+  'isMicInput', 'isMonitorOut', 'isOnAirTally', 'isDantePrimary', 'isMainsSource',
+]).describe(
+  'A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing.',
+)
 
 export const Port = z.object({
   portId: z.string().min(1),

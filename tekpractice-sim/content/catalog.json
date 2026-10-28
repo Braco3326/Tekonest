@@ -74,6 +74,9 @@
         { "portId": "out-mix-1",     "dir": "out",   "connector": "xlr3-m",   "signal": "line-level-pro", "flags": ["isMonitorOut"] },
         { "portId": "dante-primary", "dir": "bidir", "connector": "ethercon", "signal": "aoip",           "flags": ["isDantePrimary"] },
         { "portId": "power-in",      "dir": "in",    "connector": "iec-c14",  "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -92,6 +95,9 @@
         { "portId": "out-line-2",    "dir": "out",   "connector": "xlr3-m",   "signal": "line-level-pro" },
         { "portId": "dante-primary", "dir": "bidir", "connector": "ethercon", "signal": "aoip",           "flags": ["isDantePrimary"] },
         { "portId": "power-in",      "dir": "in",    "connector": "iec-c14",  "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -133,6 +139,9 @@
         { "portId": "in-line-a",  "dir": "in",  "connector": "xlr3-f",  "signal": "line-level-pro" },
         { "portId": "thru-out-a", "dir": "out", "connector": "xlr3-m",  "signal": "line-level-pro" },
         { "portId": "power-in",   "dir": "in",  "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -148,6 +157,9 @@
         { "portId": "in-line",  "dir": "in",  "connector": "xlr3-f",  "signal": "line-level-pro" },
         { "portId": "link-out", "dir": "out", "connector": "xlr3-m",  "signal": "line-level-pro" },
         { "portId": "power-in", "dir": "in",  "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -186,7 +198,8 @@
         { "id": "fader-in-mic-1", "type": "toggle", "label": "Mic 1 fader (channel open)", "default": true },
         { "id": "monitor-mute", "type": "toggle", "label": "CR monitor mute", "default": false },
         { "id": "route-in-mic-1-to-out-n1", "type": "toggle", "label": "Mic 1 -> N-1 bus", "default": false },
-        { "id": "route-in-line-1-to-out-n1", "type": "toggle", "label": "Line 1 (codec return) -> N-1 bus", "default": true }
+        { "id": "route-in-line-1-to-out-n1", "type": "toggle", "label": "Line 1 (codec return) -> N-1 bus", "default": true },
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -238,6 +251,9 @@
       "ports": [
         { "portId": "in-analog", "dir": "in", "connector": "xlr3-f",  "signal": "line-level-pro" },
         { "portId": "power-in",  "dir": "in", "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -253,6 +269,9 @@
         { "portId": "aoip",              "dir": "bidir", "connector": "rj45",     "signal": "aoip" },
         { "portId": "out-analog-consumer", "dir": "out", "connector": "trs-35mm", "signal": "line-level-consumer" },
         { "portId": "power-in",          "dir": "in",    "connector": "iec-c14",  "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
 
@@ -270,6 +289,9 @@
         { "portId": "out-return", "dir": "out",   "connector": "xlr3-m",  "signal": "line-level-pro" },
         { "portId": "ip",         "dir": "bidir", "connector": "rj45",    "signal": "aoip" },
         { "portId": "power-in",   "dir": "in",    "connector": "iec-c14", "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -315,7 +337,8 @@
         { "portId": "power-in", "dir": "in",    "connector": "iec-c14",  "signal": "mains-power" }
       ],
       "controls": [
-        { "id": "sample-rate", "type": "enum", "label": "Sample rate", "options": ["44100", "48000", "96000"], "defaultOption": "48000" }
+        { "id": "sample-rate", "type": "enum", "label": "Sample rate", "options": ["44100", "48000", "96000"], "defaultOption": "48000" },
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -337,7 +360,8 @@
         { "portId": "power-in",         "dir": "in",    "connector": "iec-c14",  "signal": "mains-power" }
       ],
       "controls": [
-        { "id": "sample-rate", "type": "enum", "label": "Sample rate", "options": ["44100", "48000", "96000"], "defaultOption": "48000" }
+        { "id": "sample-rate", "type": "enum", "label": "Sample rate", "options": ["44100", "48000", "96000"], "defaultOption": "48000" },
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -361,7 +385,8 @@
           "label": "+48V phantom",
           "default": false,
           "enables": { "flag": "providesPhantom", "ports": ["in-mic"] }
-        }
+        },
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -381,6 +406,9 @@
         { "portId": "out-main-r",    "dir": "out", "connector": "xlr3-m",      "signal": "line-level-pro", "flags": ["isMonitorOut"] },
         { "portId": "out-headphone", "dir": "out", "connector": "trs-quarter", "signal": "headphone-level" },
         { "portId": "power-in",      "dir": "in",  "connector": "iec-c14",     "signal": "mains-power" }
+      ],
+      "controls": [
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -427,7 +455,8 @@
         { "portId": "power-in",        "dir": "in",  "connector": "iec-c14", "signal": "mains-power" }
       ],
       "controls": [
-        { "id": "sample-rate", "type": "enum", "label": "Sample rate", "options": ["44100", "48000", "96000"], "defaultOption": "48000" }
+        { "id": "sample-rate", "type": "enum", "label": "Sample rate", "options": ["44100", "48000", "96000"], "defaultOption": "48000" },
+        { "id": "power", "type": "toggle", "label": "Alimentation", "default": true }
       ]
     },
     {
@@ -443,6 +472,22 @@
         { "portId": "in-db25",   "dir": "in",  "connector": "dsub25", "signal": "line-level-pro" },
         { "portId": "out-xlr-1", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" },
         { "portId": "out-xlr-2", "dir": "out", "connector": "xlr3-m", "signal": "line-level-pro" }
+      ]
+    },
+    {
+      "id": "multiprise-secteur",
+      "label": "Multiprise secteur",
+      "levels": [],
+      "realWorld": {
+        "brand": "Générique", "model": "Multiprise secteur", "category": "power-strip",
+        "typicalUse": "Distributes mains power from one supply to several devices",
+        "notes": "Generic device, not a real model (own work, no brand). Simplified: 4 outputs, each an IEC C13 so the C14 mains inlets of the catalog's active devices mate with it directly; no switch, fuse or cord is modelled."
+      },
+      "ports": [
+        { "portId": "out-1", "dir": "out", "connector": "iec-c13", "signal": "mains-power", "flags": ["isMainsSource"] },
+        { "portId": "out-2", "dir": "out", "connector": "iec-c13", "signal": "mains-power", "flags": ["isMainsSource"] },
+        { "portId": "out-3", "dir": "out", "connector": "iec-c13", "signal": "mains-power", "flags": ["isMainsSource"] },
+        { "portId": "out-4", "dir": "out", "connector": "iec-c13", "signal": "mains-power", "flags": ["isMainsSource"] }
       ]
     }
   ],

@@ -3,6 +3,7 @@
  * down on a place change, and the scene reconciled from the store (P15).
  * NullEngine + spy window/canvas, as tests/scene/dispose.test.ts.
  */
+import { readFileSync } from 'node:fs'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Matrix, Mesh, MeshBuilder, NullEngine, Scene, SceneLoader, TransformNode, Vector3 } from '@babylonjs/core'
 import { SIGNAL_STYLE } from '../../src/creation/cableStyle'
@@ -13,6 +14,8 @@ import { RenderScheduler } from '../../src/creation/renderScheduler'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { History } from '../../src/creation/history'
 import { placeFromKey } from '../../src/creation/places'
+import { Template } from '../../src/creation/templateSchema'
+import { templateToDesign } from '../../src/creation/templates'
 import { DisposableBag } from '../../src/util/disposable'
 import type { DesignState } from '../../src/trials/trial'
 import { CREATION_TOKENS, contrastRatio } from '../../src/design/creationTokens'
@@ -114,6 +117,23 @@ const emptyIn = (roomId: string | null): DesignState => ({ roomId, rig: { instan
 /** Babylon's Observable.remove is deferred to the next macrotask. */
 const settle = () => new Promise((r) => setTimeout(r, 0))
 const cableMeshes = (host: SceneHost) => host.scene!.meshes.filter((m) => m.name.startsWith('cable:')).length
+/** The number of separate connected pieces of triangles in a cable mesh: 1 for a continuous tube, many for a dashed run. */
+const cablePieces = (host: SceneHost, name: string): number => {
+  const idx = host.scene!.getMeshByName(name)!.getIndices()!
+  const parent = new Map<number, number>()
+  const find = (v: number): number => {
+    let r = v
+    while ((parent.get(r) ?? r) !== r) r = parent.get(r)!
+    parent.set(v, r)
+    return r
+  }
+  for (let t = 0; t < idx.length; t += 3) {
+    const [a, b, c] = [find(idx[t]!), find(idx[t + 1]!), find(idx[t + 2]!)]
+    parent.set(b, a)
+    parent.set(find(c), find(a))
+  }
+  return new Set([...new Set(idx)].map(find)).size
+}
 
 describe('SceneHost', () => {
   it('the blank room floor reads against the Nuit background, with a 1 m grid (Task 7)', async () => {
@@ -574,24 +594,31 @@ describe('SceneHost cables (Task 27, C18): coloured by signal, hover, screen-spa
     expect(host.cableColorOf('k12-g power-in|ql1 power-in')).toBe(SIGNAL_STYLE['mains-power']!.color)
     expect(cableMeshes(host)).toBe(2) // one mesh per cable, dashes merged
     // Gaps, not a vertex count: a continuous tube is ONE connected piece of triangles, a dashed one is many separate dashes
-    const pieces = (name: string): number => {
-      const idx = host.scene!.getMeshByName(name)!.getIndices()!
-      const parent = new Map<number, number>()
-      const find = (v: number): number => {
-        let r = v
-        while ((parent.get(r) ?? r) !== r) r = parent.get(r)!
-        parent.set(v, r)
-        return r
-      }
-      for (let t = 0; t < idx.length; t += 3) {
-        const [a, b, c] = [find(idx[t]!), find(idx[t + 1]!), find(idx[t + 2]!)]
-        parent.set(b, a)
-        parent.set(find(c), find(a))
-      }
-      return new Set([...new Set(idx)].map(find)).size
-    }
+    const pieces = (name: string): number => cablePieces(host, name)
     expect(pieces(NAME)).toBe(1) // the line cable is one continuous tube
     expect(pieces(power)).toBeGreaterThanOrEqual(10) // the mains cable is a run of separate dashes (cap 48, never fewer than 4)
+    host.dispose()
+  })
+
+  it('the powered reference rig (the real template: strip + three mains cables) draws its mains cables DASHED and its mic cable plain (Task 32: the cue is reachable by users)', async () => {
+    const { host } = makeHost()
+    const template = Template.parse(JSON.parse(readFileSync('content/templates/concert-simple-reference.json', 'utf8')))
+    await host.load(placeFromKey(ROOM), templateToDesign(template))
+    const mains = ['ql1 power-in|mains out-1', 'k12-g power-in|mains out-2', 'k12-d power-in|mains out-3']
+    // the cable key is the sorted pair of ends; find each mains cable by what it connects instead of guessing the order
+    const names = host.scene!.meshes.map((m) => m.name).filter((n) => n.startsWith('cable:'))
+    expect(names).toHaveLength(4) // 1 mic + 3 mains
+    const mic = names.filter((n) => n.includes('sm58'))
+    const power = names.filter((n) => n.includes('power-in'))
+    expect(mic).toHaveLength(1)
+    expect(power).toHaveLength(3)
+    for (const key of mains) {
+      const parts = key.split('|').sort()
+      expect(power.some((n) => n === `cable:${parts[0]}|${parts[1]}`), key).toBe(true)
+      expect(host.cableColorOf(parts.join('|'))).toBe(SIGNAL_STYLE['mains-power']!.color)
+    }
+    expect(cablePieces(host, mic[0]!)).toBe(1) // the mic cable: one continuous tube
+    for (const n of power) expect(cablePieces(host, n), n).toBeGreaterThanOrEqual(10) // each mains cable: a run of separate dashes
     host.dispose()
   })
 

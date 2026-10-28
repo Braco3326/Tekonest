@@ -4,10 +4,13 @@
  * arrow keys; an item (Entrée or click) chooses the device (Task 24: it then follows the pointer); the module is a lazy chunk requested on the first open only.
  * Screenshot on demand: $env:DRAWER_SCREENS = 'commit' → docs/creative/screens/task-23-drawer-1366.png
  */
+import { readFileSync } from 'node:fs'
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
 test.use({ viewport: { width: 1366, height: 768 } })
 
+/** The catalogue as the shell lists it: content/catalog.json is the source of truth (25 devices with the power strip, Task 32). */
+const CATALOG_IDS = (JSON.parse(readFileSync('content/catalog.json', 'utf8')) as { devices: { id: string }[] }).devices.map((d) => d.id)
 const PLACE = 'room:concert-hall-medium'
 const boot = async (page: Page): Promise<void> => {
   await page.goto('/')
@@ -127,6 +130,20 @@ test('tabs: a tablist with arrow keys (roving, wrapping, Home / End); the panel 
   await expect(page.getByTestId('inventory-close')).toBeFocused()
 })
 
+test('the « Secteur » tab exists (the power strip is in the catalogue) and holds only « Multiprise secteur », without a picture of its own', async ({ page }) => {
+  await boot(page)
+  await open(page)
+  const tabs = page.getByRole('tablist').getByRole('tab')
+  const labels = await tabs.allInnerTexts()
+  expect(labels).toEqual(['Micros', 'Consoles', 'Enceintes', 'Sources', 'Réseau', 'Secteur', 'Bêta', 'Autres'])
+  await page.getByRole('tab', { name: 'Secteur' }).click()
+  const items = page.getByRole('tabpanel').getByTestId('inventory-item')
+  await expect(items).toHaveCount(1)
+  await expect(items.first()).toHaveAttribute('data-device-id', 'multiprise-secteur')
+  await expect(items.first()).toContainText('Multiprise secteur')
+  await expect(items.first().locator('svg')).toHaveCount(1) // no thumbnail yet: the silhouette (ASSET_LOG.md)
+})
+
 test('items are named buttons with a decorative picture (the silhouette when a device has none); no duplicate across the catalogue; a badge on the Bêta items only', async ({ page }) => {
   await boot(page)
   await open(page)
@@ -145,8 +162,9 @@ test('items are named buttons with a decorative picture (the silhouette when a d
       names.push(await it.getAttribute('data-device-id') ?? '')
     }
   }
-  expect(names.length).toBe(24) // the catalogue
-  expect(new Set(names).size).toBe(24)
+  expect(names.length).toBe(CATALOG_IDS.length) // the catalogue
+  expect(new Set(names).size).toBe(CATALOG_IDS.length)
+  expect([...names].sort()).toEqual([...CATALOG_IDS].sort())
 })
 
 test('Enter or click on an item chooses the device (it then follows the pointer, Task 24), and the drawer closes', async ({ page }) => {
@@ -472,9 +490,9 @@ test('thumbnails: a catalog device shows its picture (decorative, lazy, loaded);
   await expect(img).toHaveAttribute('loading', 'lazy')
   await expect(ql.locator('svg')).toHaveCount(0)
   await expect.poll(() => img.evaluate((e) => (e as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
-  // only pictures of what the learner opened (the Micros tab, then the Consoles tab): never all 24
+  // only pictures of what the learner opened (the Micros tab, then the Consoles tab): never the whole catalogue
   expect(thumbs.length).toBeGreaterThan(0)
-  expect(thumbs.length).toBeLessThan(24)
+  expect(thumbs.length).toBeLessThan(CATALOG_IDS.length - 1)
   // a Bêta proposal has no picture: the silhouette
   await drawer(page).getByRole('tab', { name: 'Bêta' }).click()
   const beta = drawer(page).getByTestId('inventory-item').first()

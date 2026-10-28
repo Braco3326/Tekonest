@@ -18,12 +18,19 @@ const MIC_KEY = cableKey(SM58, MIC1)
 const LINE_KEY = cableKey(QL_OUT, K12_IN)
 
 /** The reference template ("Concert simple", one mic cable) on a settled camera. */
-const boot = async (page: Page): Promise<void> => {
+const boot = async (page: Page, o: { keepStrip?: boolean } = {}): Promise<void> => {
   await page.emulateMedia({ reducedMotion: 'reduce' }) // a camera cut: stable screen points
   await page.goto('/')
   await page.waitForFunction(() => !!window.__creation)
   await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
-  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 4)
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 5)
+  // Task 32: the template also holds its power strip `mains` and three mains cables. This spec is about the signal cables and
+  // needs the power-in ports free, so it takes the strip away (the powered rig is held by creation-keyboard-patch, the SceneHost
+  // test and the powered-rig test of creation-cables.spec.ts).
+  if (!o.keepStrip) {
+    await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'mains' }))
+    await page.waitForFunction(() => window.__creation!.design().rig.instances.length === 4)
+  }
   await expect.poll(() => page.evaluate(() => window.__creation!.cameraMoving())).toBe(false)
   await settle(page)
 }
@@ -58,6 +65,20 @@ test('the template mic cable is drawn in the mic colour and the legend names it 
   // the swatch carries the cable colour (a solid stroke: this signal is not dashed)
   const stroke = await items(page).first().locator('line').evaluate((l) => ({ stroke: l.getAttribute('stroke'), dash: l.getAttribute('stroke-dasharray') }))
   expect(stroke).toEqual({ stroke: SIGNAL_STYLE['mic-level']!.color, dash: null })
+})
+
+test('the powered reference rig: three mains cables in the mains colour, and the legend lists « Secteur 230 V » dashed (Task 32: reachable with verified gear)', async ({ page }) => {
+  await boot(page, { keepStrip: true })
+  const keys = [cableKey({ instance: 'mains', port: 'out-1' }, { instance: 'ql1', port: 'power-in' }), cableKey({ instance: 'mains', port: 'out-2' }, { instance: 'k12-g', port: 'power-in' }), cableKey({ instance: 'mains', port: 'out-3' }, { instance: 'k12-d', port: 'power-in' })]
+  for (const k of keys) expect(await page.evaluate((key) => window.__creation!.cableColor(key), k), k).toBe(SIGNAL_STYLE['mains-power']!.color)
+  await expect(items(page)).toHaveCount(2)
+  await expect(items(page).nth(0)).toHaveAttribute('data-signal', 'mic-level')
+  const power = items(page).nth(1)
+  await expect(power).toHaveAttribute('data-signal', 'mains-power')
+  await expect(power).toContainText('Secteur 230 V')
+  await expect(power).toContainText('pointillés')
+  expect(await power.locator('line').getAttribute('stroke-dasharray')).toMatch(/^\d+ \d+$/)
+  expect(await items(page).nth(0).locator('line').getAttribute('stroke-dasharray')).toBeNull()
 })
 
 test('the legend lists the signal types present: a second type appears with its own colour, and goes with undo', async ({ page }) => {

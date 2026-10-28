@@ -43,7 +43,7 @@ const TAB_ORDER: readonly InventoryTab[] = [
 
 /**
  * `realWorld.category` → tab, one line per value in content/catalog.json.
- * Nothing in the catalog is mains or lighting yet, so those tabs stay hidden.
+ * Mains is the generic power strip (Task 32); nothing in the catalog is lighting yet, so that tab stays hidden.
  */
 export const CATEGORY_TAB: Record<string, InventoryTab> = {
   microphone: 'micros',
@@ -61,6 +61,7 @@ export const CATEGORY_TAB: Record<string, InventoryTab> = {
   signaling: 'autres',
   cable: 'autres',
   patchbay: 'autres',
+  'power-strip': 'secteur',
 }
 
 export function tabFor(device: DeviceT): InventoryTab {

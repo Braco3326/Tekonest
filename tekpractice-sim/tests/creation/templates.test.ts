@@ -42,6 +42,22 @@ describe('content/templates', () => {
     expect(d.placements.find((p) => p.instanceId === 'k12-g')?.position_m).toEqual([6, 2.7, -7.5])
   })
 
+  it('« Concert simple »: the strip `mains` stands on the stage and powers QL1, K12-G, K12-D on out-1..out-3 (Task 32)', () => {
+    const t = Template.parse(JSON.parse(readFileSync(`${DIR}/concert-simple-reference.json`, 'utf8')))
+    expect(t.instances).toHaveLength(5)
+    expect(t.instances).toContainEqual({ instanceId: 'mains', deviceId: 'multiprise-secteur' })
+    expect(t.connections).toHaveLength(4)
+    expect(t.connections).toContainEqual({ a: { instance: 'sm58', port: 'out-xlr' }, b: { instance: 'ql1', port: 'in-mic-1' } })
+    const mains = t.connections.filter((c) => c.a.instance === 'mains' || c.b.instance === 'mains')
+    expect(mains).toHaveLength(3)
+    const cabled = new Map(mains.map((c): [string, { instance: string; port: string }] => (c.a.instance === 'mains' ? [c.a.port, c.b] : [c.b.port, c.a])))
+    expect(cabled.get('out-1')).toEqual({ instance: 'ql1', port: 'power-in' })
+    expect(cabled.get('out-2')).toEqual({ instance: 'k12-g', port: 'power-in' })
+    expect(cabled.get('out-3')).toEqual({ instance: 'k12-d', port: 'power-in' })
+    expect(t.placements.find((p) => p.instanceId === 'mains')!.position_m).toEqual([0, 1.3, -10])
+    expect(t.controls).toEqual({}) // every `power` is its catalog default (on): nothing to override
+  })
+
   it('loadTemplates returns every file', async () => {
     const all = await loadTemplates()
     expect(all.map((t) => t.id)).toContain('concert-simple-reference')

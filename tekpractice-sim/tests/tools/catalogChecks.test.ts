@@ -138,3 +138,58 @@ describe('checkCatalog, acoustic (optional)', () => {
     expect(errors(c).map((i) => i.path)).toEqual(['devices["qsc-k12-2"].acoustic.transducer'])
   })
 })
+
+describe('checkCatalog, mains (Task 32, C7)', () => {
+  const POWER: Record<string, unknown> = { id: 'power', type: 'toggle', label: 'Alimentation', default: true }
+  const powered = (c: CatalogT) => c.devices.filter((d) => d.ports.some((p) => p.portId === 'power-in'))
+
+  it('the real catalog passes: every power-in device has its power toggle, the strip is the only source', () => {
+    expect(powered(fresh()).length).toBeGreaterThanOrEqual(13)
+    expect(errors(fresh())).toEqual([])
+  })
+
+  it('errors on a power-in device that has no « power » control (the validator catches it, not a human)', () => {
+    const c = fresh()
+    const d = dev(c, 'qsc-k12-2')
+    d.controls = (d.controls ?? []).filter((x) => x.id !== 'power')
+    const e = errors(c)
+    expect(e).toHaveLength(1)
+    expect(e[0].path).toBe('devices["qsc-k12-2"].controls')
+    expect(e[0].message).toMatch(/power/)
+  })
+
+  it('errors on a power-in device whose « power » is an enum, mislabelled or off by default', () => {
+    const bads: Record<string, unknown>[] = [
+      { id: 'power', type: 'enum', label: 'Alimentation', options: ['on', 'off'], defaultOption: 'on' },
+      { ...POWER, label: 'Power' },
+      { ...POWER, default: false },
+    ]
+    for (const bad of bads) {
+      const c = fresh()
+      dev(c, 'yamaha-ql1').controls = [...(dev(c, 'yamaha-ql1').controls ?? []).filter((x) => x.id !== 'power'), bad] as LooseDevice['controls']
+      expect(errors(c).map((i) => i.path), JSON.stringify(bad)).toEqual(['devices["yamaha-ql1"].controls["power"]'])
+    }
+  })
+
+  it('a device without power-in is not asked for a power control (the strip, a microphone)', () => {
+    const c = fresh()
+    expect(dev(c, 'multiprise-secteur').controls ?? []).toEqual([])
+    expect(dev(c, 'shure-sm58').controls ?? []).toEqual([])
+    expect(errors(c)).toEqual([])
+  })
+
+  it('errors on isMainsSource on an input, or on a port that does not carry mains-power', () => {
+    const c = fresh()
+    dev(c, 'qsc-k12-2').ports.find((p) => p.portId === 'power-in')!.flags = ['isMainsSource']
+    dev(c, 'shure-sm58').ports[0].flags = ['isMainsSource']
+    expect(errors(c).map((i) => i.path)).toEqual(['devices["shure-sm58"].ports["out-xlr"]', 'devices["qsc-k12-2"].ports["power-in"]']) // catalog order
+  })
+
+  it('errors on a verified mains-power OUTPUT that is not flagged isMainsSource (a source nobody could tell)', () => {
+    const c = fresh()
+    const strip = dev(c, 'multiprise-secteur')
+    delete strip.ports[1].flags
+    const e = errors(c)
+    expect(e.map((i) => i.path)).toEqual(['devices["multiprise-secteur"].ports["out-2"]'])
+  })
+})

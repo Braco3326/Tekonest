@@ -101,6 +101,18 @@ describe('CreationStore edge cases', () => {
     const bad = s.dispatch({ type: 'SET_CONTROL', instance: 'q', control, value: 'nope' })
     expect(bad.ok).toBe(false)
   })
+  it('the « power » switch (Task 32, C7) is state like any control: on at spawn, SET_CONTROL turns it off with the previous value as inverse, and a power-less device refuses it', () => {
+    const s = store()
+    s.dispatch({ type: 'SPAWN', deviceId: 'qsc-k12-2', instanceId: 'k' })
+    s.dispatch({ type: 'SPAWN', deviceId: 'shure-sm58', instanceId: 'm' })
+    expect(s.snapshot().instances.find((i) => i.instanceId === 'k')!.controls.power).toBe(true)
+    const off = s.dispatch({ type: 'SET_CONTROL', instance: 'k', control: 'power', value: false })
+    expect(off.ok && off.inverse).toEqual([{ type: 'SET_CONTROL', instance: 'k', control: 'power', value: true }])
+    expect(s.snapshot().instances.find((i) => i.instanceId === 'k')!.controls.power).toBe(false)
+    expect(s.design().rig.controls.k.power).toBe(false)
+    const none = s.dispatch({ type: 'SET_CONTROL', instance: 'm', control: 'power', value: false })
+    expect(!none.ok && none.error.code).toBe('UNKNOWN_CONTROL')
+  })
   it('SET_POSE on a missing instance is UNKNOWN_INSTANCE; its inverse is the previous pose', () => {
     const s = store()
     const miss = s.dispatch({ type: 'SET_POSE', instanceId: 'x', position: [0, 0, 0], yawDeg: 0, tiltDeg: 0, mount: 'floor' })

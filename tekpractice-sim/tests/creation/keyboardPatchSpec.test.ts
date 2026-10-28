@@ -28,8 +28,18 @@ describe('creation-keyboard-patch.spec.ts is keyboard only', () => {
     expect(spec).not.toMatch(/choosePlace|requestPlace|dispatchEvent/)
   })
 
-  it('asserts the real count: the template\'s mic cable plus the two new signal cables = 3', () => {
-    expect(spec).toContain('toHaveLength(3)')
+  it('asserts the real counts: the template\'s 4 (mic + 3 power), 5 and 6 after the signal cables, 3 after Suppr on its strip, 6 once the new strip is cabled (Task 32)', () => {
     expect(spec).toContain("instance: 'sm58', port: 'out-xlr'")
+    const counts = [...spec.matchAll(/connections\)\.toHaveLength\((\d+)\)/g)].map((m) => Number(m[1]))
+    expect(counts).toEqual([4, 5, 6, 3, 6])
+  })
+
+  it('powers the rig by keys: Suppr on the template strip, Espace, type, Entrée twice, then « Connecter à… » out-1..3 to the three power-in', () => {
+    expect(spec).toContain("press('Delete')")
+    expect(spec).toContain("press('Space')")
+    expect(spec).toContain("type('multiprise')")
+    expect(spec.match(/press\('Enter'\)/g)!.length).toBeGreaterThanOrEqual(8)
+    expect(spec).toContain("['out-1', 'ql1'], ['out-2', 'k12-g'], ['out-3', 'k12-d']")
+    expect(spec).toContain('power-in')
   })
 })

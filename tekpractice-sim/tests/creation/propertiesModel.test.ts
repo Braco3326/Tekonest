@@ -57,9 +57,10 @@ describe('propsView', () => {
 
   it('controls come from the catalog (toggle and enum, with the live value)', () => {
     const d = design()
-    expect(view(d, 'ql1').controls).toEqual([])
-    expect(view(d, 'isa').controls).toEqual([{ id: 'phantom-48v', label: '+48V phantom', kind: 'toggle', value: false }])
-    expect(view(d, 'hdio').controls).toEqual([{ id: 'sample-rate', label: 'Sample rate', kind: 'enum', value: '48000', options: ['44100', '48000', '96000'] }])
+    // every active device carries the catalog's « Alimentation » (Task 32, C7), on by default; last, after its own switches
+    expect(view(d, 'ql1').controls).toEqual([{ id: 'power', label: 'Alimentation', kind: 'toggle', value: true }])
+    expect(view(d, 'isa').controls).toEqual([{ id: 'phantom-48v', label: '+48V phantom', kind: 'toggle', value: false }, { id: 'power', label: 'Alimentation', kind: 'toggle', value: true }])
+    expect(view(d, 'hdio').controls).toEqual([{ id: 'sample-rate', label: 'Sample rate', kind: 'enum', value: '48000', options: ['44100', '48000', '96000'] }, { id: 'power', label: 'Alimentation', kind: 'toggle', value: true }])
   })
 
   it('ports are listed with their state: free, or connected to « K12.2 (k12-g) · in-line-a »', () => {

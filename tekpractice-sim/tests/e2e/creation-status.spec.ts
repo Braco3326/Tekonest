@@ -12,7 +12,12 @@ const boot = async (page: Page): Promise<void> => {
   await page.goto('/')
   await page.waitForFunction(() => !!window.__creation)
   await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
-  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 4)
+  await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium' && window.__creation!.design().rig.instances.length === 5)
+  // Task 32: the template also holds its power strip `mains` and three mains cables. This spec is about the signal cables and
+  // needs the power-in ports free, so it takes the strip away (the powered rig is held by creation-keyboard-patch, the SceneHost
+  // test and the powered-rig test of creation-cables.spec.ts).
+  await page.evaluate(() => window.__creation!.dispatch({ type: 'REMOVE', instanceId: 'mains' }))
+  await page.waitForFunction(() => window.__creation!.design().rig.instances.length === 4)
 }
 const label = (page: Page) => page.getByTestId('signal-label')
 const expectCountMatchesEvents = async (page: Page): Promise<void> => {

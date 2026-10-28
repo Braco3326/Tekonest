@@ -95,11 +95,11 @@ test('the badge dialog: Esc cancels back to the card, nothing changes', async ({
   expect(await page.evaluate(() => window.__creation!.place())).toBeNull()
 })
 
-test('« Concert simple (référence) » loads 4 devices in concert-hall-medium; « G » is on screen-left (P14, ADR-0011)', async ({ page }) => {
+test('« Concert simple (référence) » loads 5 devices (4 + the power strip) in concert-hall-medium; « G » is on screen-left (P14, ADR-0011)', async ({ page }) => {
   await boot(page)
   await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
   await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
-  expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(4)
+  expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(5)
   await page.waitForFunction(() => !!window.__creation!.deviceScreen('k12-g') && !!window.__creation!.deviceScreen('k12-d'))
   // deviceScreen is in page CSS px: compare with the canvas centre on the page
   const mid = await page.locator('#renderCanvas').evaluate((c) => {
@@ -110,7 +110,7 @@ test('« Concert simple (référence) » loads 4 devices in concert-hall-medium;
   const dr = (await page.evaluate(() => window.__creation!.deviceScreen('k12-d')))!
   expect(g.x).toBeLessThan(mid)
   expect(dr.x).toBeGreaterThan(mid)
-  await expect(page.getByTestId('status-bar')).toContainText('Appareils installés : 4.')
+  await expect(page.getByTestId('status-bar')).toContainText('Appareils installés : 5.')
 })
 
 test('Lieu → « Choisir un lieu… » reopens the picker over the place; Fermer / Échap go back unchanged', async ({ page }) => {
@@ -157,8 +157,8 @@ test('a model over installed gear asks « Remplacer le matériel » first: Annul
   await page.getByTestId('template-grid').getByRole('option', { name: /Concert simple/ }).click()
   await page.getByRole('dialog', { name: 'Remplacer le matériel ?' }).getByRole('button', { name: 'Remplacer le matériel' }).click()
   await page.waitForFunction(() => window.__creation!.place() === 'room:concert-hall-medium')
-  expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(4)
-  await expect(page.locator('.cr-status-msg')).toContainText('Matériel remplacé. Appareils installés : 4. Ctrl+Z pour revenir en arrière.')
+  expect(await page.evaluate(() => window.__creation!.design().rig.instances.length)).toBe(5)
+  await expect(page.locator('.cr-status-msg')).toContainText('Matériel remplacé. Appareils installés : 5. Ctrl+Z pour revenir en arrière.')
   await page.evaluate(() => window.__creation!.undo())
   await page.waitForFunction(() => window.__creation!.place() === 'blank')
   expect(await page.evaluate(() => window.__creation!.design().rig.instances.map((i) => i.instanceId))).toEqual(['ql1'])

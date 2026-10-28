@@ -512,6 +512,8 @@ html.cr-mode #board2d, html.cr-mode #hud, html.cr-mode #dashboard { display: non
   border: 1px solid var(--cr-ink-muted);
   background: var(--cr-nuit);
   text-align: left;
+  /* Cuts only (Task 32: « Alimentation » is now on every active device): the legacy `button { transition: all }` would animate the press. */
+  transition: none;
 }
 .cr .cr-toggle:hover { border-color: var(--cr-papier); }
 .cr-toggle-state { flex: 0 0 auto; padding: 2px 6px; border: 1px solid var(--cr-ink-muted); color: var(--cr-ink-muted); font-size: 12px; }

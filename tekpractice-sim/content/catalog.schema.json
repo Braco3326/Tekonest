@@ -169,8 +169,10 @@
                           "isMicInput",
                           "isMonitorOut",
                           "isOnAirTally",
-                          "isDantePrimary"
-                        ]
+                          "isDantePrimary",
+                          "isMainsSource"
+                        ],
+                        "description": "A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing."
                       }
                     }
                   },
@@ -218,8 +220,10 @@
                             "isMicInput",
                             "isMonitorOut",
                             "isOnAirTally",
-                            "isDantePrimary"
-                          ]
+                            "isDantePrimary",
+                            "isMainsSource"
+                          ],
+                          "description": "A behaviour flag on a port that logic/* reads. isMainsSource (C7, Task 32): an output that really supplies mains; a mains-power output without it (a Bêta proposal) powers nothing."
                         },
                         "ports": {
                           "type": "array",

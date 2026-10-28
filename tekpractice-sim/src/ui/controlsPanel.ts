@@ -11,6 +11,16 @@ import type { Intent } from './intents'
 
 const ROUTE = /^route-(.+)-to-(.+)$/
 
+/**
+ * Controls the legacy panel does not show. `power` (« Alimentation », Task 32, C7) is Mode Création's: powered = power-in
+ * cabled to a mains source AND `power` on. Nothing in the legacy rules reads it, so a switch here would do nothing; hiding it
+ * keeps the legacy HUD as it was (the panel grew taller and the 390 px view cube overlapped it). The control still exists in the
+ * rig's state (P19).
+ */
+const CREATION_ONLY = new Set(['power'])
+export const legacyControls = <C extends { id: string }>(controls: readonly C[] | undefined): C[] =>
+  (controls ?? []).filter((c) => !CREATION_ONLY.has(c.id))
+
 export class ControlsPanel {
   private controls = new Map<string, HTMLButtonElement | HTMLSelectElement>() // "instance␟control" → element
 
@@ -23,11 +33,12 @@ export class ControlsPanel {
     const sections: string[] = []
     for (const inst of level.devices) {
       const device = registry.deviceById.get(inst.deviceId)
-      if (!device?.controls?.length) continue
+      const controls = legacyControls(device?.controls)
+      if (!device || !controls.length) continue
 
-      const toggles = device.controls.filter((c) => c.type === 'toggle' && !ROUTE.test(c.id))
-      const enums = device.controls.filter((c) => c.type === 'enum')
-      const routes = device.controls.filter((c) => c.type === 'toggle' && ROUTE.test(c.id))
+      const toggles = controls.filter((c) => c.type === 'toggle' && !ROUTE.test(c.id))
+      const enums = controls.filter((c) => c.type === 'enum')
+      const routes = controls.filter((c) => c.type === 'toggle' && ROUTE.test(c.id))
 
       let html = `<section class="cp-device"><h3>${device.label}</h3>`
       for (const ctl of toggles)

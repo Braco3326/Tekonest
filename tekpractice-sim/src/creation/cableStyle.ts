@@ -6,12 +6,12 @@
  *   and tritanopia, and each reads at >= 3:1 on Nuit and on the panel (WCAG 1.4.11), all tested. They are kept >= 60 from
  *   Papier (the hover outline) and Ambre (the selection).
  * - Cues other than colour, honestly: every legend entry carries the French name of the signal next to its stroke sample,
- *   and the hover text names it. `mains-power` is also DASHED, BUT THAT CUE IS REACHABLE ONLY THROUGH BÊTA DEVICES until
- *   Task 32: no CATALOG device sources mains (every catalog `mains-power` port is `power-in`), but the Bêta proposals
- *   `shure-axient-digital-ad4d` and `shure-ua845uwb` declare `mains-power` OUT ports, so since Task 30 a mains cable can be
- *   drawn between one of them and a power-in port. Task 32 adds a mains source to the catalog (`multiprise-secteur`). The dash
- *   code is unit-tested; do not count it as a delivered non-colour cue for verified gear. The other families rely on colour
- *   that is colour-blind separable (above) plus the legend and hover names (docs/CREATIVE-MODE-LOG.md L17, corrected by L23).
+ *   and the hover text names it. `mains-power` is also DASHED, and since Task 32 that cue
+ *   is REACHABLE FOR VERIFIED GEAR: the catalog's generic `multiprise-secteur` (out `mains-power`, flag `isMainsSource`) feeds
+ *   the reference rig through three mains cables, drawn dashed (a SceneHost test on the real template holds it). It was dormant
+ *   before Task 32, then reachable only through Bêta proposals (`shure-axient-digital-ad4d` and `shure-ua845uwb` declare
+ *   `mains-power` OUT ports without the flag; they still power nothing). The other families rely on colour that is
+ *   colour-blind separable (above) plus the legend and hover names (docs/CREATIVE-MODE-LOG.md L17, L23, L25).
  * - The label of an entry is the French name already in `COPY.signal` (strings live in copy.ts only).
  *
  * Pure data and pure functions: no Babylon, no DOM. The shell never imports the engine; the scene host and the shell

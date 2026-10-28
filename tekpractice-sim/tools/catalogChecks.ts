@@ -10,6 +10,10 @@
  *     directions are right, `enabledBy` is a control of the device
  *  4. optional `acoustic` (council C12) is validated when present: every
  *     value carries a source, `nominal` only for 90 / 60
+ *  5. mains (C7, Task 32): a device with a `power-in` port carries the toggle
+ *     `power` (label « Alimentation », default on); `isMainsSource` sits only on an
+ *     OUT port that carries `mains-power`, and every verified `mains-power` OUT port
+ *     has it (Bêta proposals are not checked here: they are not in the catalog)
  *
  * `routing` and `acoustic` are not in the zod Device yet, so they are read
  * defensively as `unknown` from the raw device object.
@@ -47,11 +51,31 @@ export function checkCatalog(catalog: CatalogT, opts: { modelIds: ReadonlySet<st
       seen.add(p.portId)
     }
 
+    checkMains(at, d, error)
+
     const loose = d as Record<string, unknown>
     if (loose.routing !== undefined) checkRouting(at, d, loose.routing, error)
     if (loose.acoustic !== undefined) checkAcoustic(at, loose.acoustic, error)
   }
   return issues
+}
+
+/** The label of the `power` toggle every device with a `power-in` carries (Task 32; French UI data, like the other labels). */
+const POWER_LABEL = 'Alimentation'
+
+function checkMains(at: string, device: CatalogT['devices'][number], error: (path: string, message: string) => void): void {
+  if (device.ports.some((p) => p.portId === 'power-in')) {
+    const power = (device.controls ?? []).find((c) => c.id === 'power')
+    if (!power) error(`${at}.controls`, `${device.id} has a power-in port: it needs a toggle control "power" (label "${POWER_LABEL}", default on)`)
+    else if (power.type !== 'toggle' || power.label !== POWER_LABEL || power.default !== true)
+      error(`${at}.controls["power"]`, `"power" must be a toggle labelled "${POWER_LABEL}" that is on by default`)
+  }
+  for (const p of device.ports) {
+    const flagged = (p.flags ?? []).includes('isMainsSource')
+    const mainsOut = p.dir === 'out' && p.signal === 'mains-power'
+    if (flagged && !mainsOut) error(`${at}.ports["${p.portId}"]`, 'isMainsSource belongs only to an output port that carries mains-power')
+    else if (mainsOut && !flagged) error(`${at}.ports["${p.portId}"]`, 'a verified mains-power output must be flagged isMainsSource')
+  }
 }
 
 function checkRouting(

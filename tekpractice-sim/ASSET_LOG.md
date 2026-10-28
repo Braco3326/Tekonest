@@ -77,3 +77,15 @@ pour une version modifiée (nous ne les modifions pas). Texte de la licence : `n
 Règle d'usage (Tasks 12 et 14b) : Tektur seulement pour les titres sans accent (marque, titre du projet,
 « Choisir un lieu ») ; tout titre qui porte du français accentué (« PROPRIÉTÉS », « Aucune sélection »,
 noms de lieux) est en IBM Plex Sans 500, car l'aigu de Tektur se lit comme un macron (« Ē ») aux petites tailles.
+
+## 2026-10-28 — Multiprise secteur générique (Task 32, décisions C7 / P18)
+
+Nouvel appareil du catalogue : `multiprise-secteur` (4 sorties IEC C13 `out-1..4`, drapeau `isMainsSource`). **Modèle 3D : pas généré.**
+Ni Blender ni ffmpeg sur le poste qui a fait la tâche ; la règle P18 du plan l'autorise : la **boîte provisoire** (placeholder) est
+livrée et l'appareil est déjà dans l'onglet « Secteur » du tiroir. `npm run validate:catalog` le dit par un avertissement
+(`no public/assets/multiprise-secteur.glb: the placeholder box ships`), pas par une erreur.
+
+À faire (tekdesigner, poste avec Blender) : une multiprise générique simple, œuvre propre sans marque, via `tools/blender/gen_asset.py`
+(même chaîne que les autres glb), export `public/assets/multiprise-secteur.glb` ≤ 200 Ko, et une vignette
+`public/assets/thumbs/multiprise-secteur.png` (sans elle le tiroir montre la silhouette ; `tests/creation/inventoryThumbs.test.ts`
+attend `thumbPath('multiprise-secteur') === null` tant qu'elle n'existe pas : à mettre à jour avec la vignette).
