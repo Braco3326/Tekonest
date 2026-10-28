@@ -48,6 +48,19 @@ describe('creation key map (Task 8, P3)', () => {
     expect(creationActionsFor(D, { code: 'KeyR', key: 'r' })).toEqual(['ROTATE_CW'])
     expect(creationActionsFor(D, { code: 'KeyR', key: 'R', shiftKey: true })).toEqual(['ROTATE_CCW'])
   })
+  it('Alt is the free modifier: Alt+R and Alt+Shift+R also rotate (1°); the labels stay R and Maj+R', () => {
+    expect(creationActionsFor(D, { code: 'KeyR', key: 'r', altKey: true })).toEqual(['ROTATE_CW'])
+    expect(creationActionsFor(D, { code: 'KeyR', key: 'R', altKey: true, shiftKey: true })).toEqual(['ROTATE_CCW'])
+    expect(bindingLabel(D, 'ROTATE_CW')).toBe('R')
+    expect(bindingLabel(D, 'ROTATE_CCW')).toBe('Maj+R')
+  })
+  it('Ctrl+D follows the labelled key (like Ctrl+Z), Suppr is the Delete key', () => {
+    expect(creationActionsFor(D, { code: 'KeyD', key: 'd', ctrlKey: true })).toEqual(['DUPLICATE'])
+    expect(creationActionsFor(D, { code: 'KeyE', key: 'd', ctrlKey: true })).toEqual(['DUPLICATE']) // another layout
+    expect(creationActionsFor(D, { code: 'KeyD', key: 'e', ctrlKey: true })).toEqual([])
+    expect(creationActionsFor(D, { code: 'Delete', key: 'Delete' })).toEqual(['DELETE'])
+    expect(bindingLabel(D, 'DUPLICATE')).toBe('Ctrl+D')
+  })
   it('Tab never maps to an action', () => {
     expect(creationActionsFor(D, { code: 'Tab', key: 'Tab' })).toEqual([])
     expect(creationActionsFor(D, { code: 'Tab', key: 'Tab', shiftKey: true })).toEqual([])

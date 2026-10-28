@@ -72,6 +72,9 @@ Noms de touches affichés à droite des entrées de menu (carte des touches, Tas
 | `menu.exportKept` | Exporter les données mises de côté… | validé | Task 13 (revue) : Projet ; télécharge en JSON les données illisibles gardées à part (rien n'est supprimé, N19) |
 | `menu.choosePlace` | Choisir un lieu… | validé | Lieu ; ouvre l'écran « Choisir un lieu » par-dessus le lieu affiché (Task 12) |
 | `menu.inventory` | Inventaire | à valider (tekuxwriter) | Matériel ; ouvre / ferme le tiroir (Espace, Task 23) ; remplace « Ouvrir l’inventaire » |
+| `menu.rotate` | Pivoter | à valider (tekuxwriter) | Matériel ; tourne l’appareil sélectionné de 15° (R, Task 25) ; grisé sans sélection |
+| `menu.duplicate` | Dupliquer | à valider (tekuxwriter) | Matériel ; copie l’appareil sélectionné à 0,5 m (Ctrl+D) ; grisé sans sélection |
+| `menu.delete` | Supprimer | à valider (tekuxwriter) | Matériel ; supprime l’appareil sélectionné et ses câbles (Suppr) ; annulable ; grisé sans sélection |
 | `menu.connectTo` | Connecter à… | validé | Câblage ; même libellé que l'action Propriétés « Connecter à… » (C10) |
 | `menu.play` | Écouter le morceau | validé | Écoute ; inactif tant que la lecture n'existe pas |
 | `menu.panelTree` | Panneau Projet | validé | Vue ; replie / déplie le panneau |
@@ -509,9 +512,33 @@ Pose et déplacement d'un appareil dans la vue 3D (Task 24, CA-10). Choisir un a
 | Key | Texte | Statut | Où / notes |
 |---|---|---|---|
 | `placement.entryMove` | Déplacer {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un glisser (Annuler / Rétablir) |
-| `placement.statusPlacing` | Cliquez pour poser {device} (Entrée : ici). Alt : libre. Échap : annuler. | à valider (tekuxwriter) | Barre d’état dès qu’un appareil est choisi (annoncé) |
+| `placement.statusPlacing` | Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt : libre. Échap : annuler. | à valider (tekuxwriter) | Barre d’état dès qu’un appareil est choisi (annoncé) |
 | `placement.statusPlaced` | Posé : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après la pose (annoncé) |
 | `placement.statusMoved` | Déplacé : {device}. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un glisser (annoncé) |
 | `placement.statusCancelled` | Pose annulée. | à valider (tekuxwriter) | Barre d’état après Échap pendant la pose (annoncé) |
 | `placement.statusMoveCancelled` | Déplacement annulé : {device} est resté en place. | à valider (tekuxwriter) | Barre d’état après Échap pendant un glisser (annoncé) |
 | `placement.statusRefused` | Impossible de poser {device}. | à valider (tekuxwriter) | Barre d’état si l’appareil ne peut pas être posé (annoncé) |
+
+## edit
+
+Pivoter, dupliquer et supprimer l'appareil sélectionné (Task 25, CA-11). R tourne de 15° (Maj+R en sens inverse, Alt+R et Alt+Maj+R de 1°) ; pendant une pose, R tourne le fantôme. Ctrl+D copie l'appareil à 0,5 m avec ses réglages (sans ses câbles) et sélectionne la copie. Suppr supprime l'appareil et ses câbles ; Ctrl+Z ramène les deux. Chaque action est une seule entrée d'historique. `{device}` = nom de l'appareil, `{undo}` = touche d'annulation, `{deg}` = orientation en degrés.
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `edit.entryRotate` | Pivoter {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’un pas de rotation (Annuler / Rétablir) |
+| `edit.entryDuplicate` | Dupliquer {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’une duplication |
+| `edit.entryDelete` | Supprimer {device} | à valider (tekuxwriter) | Libellé de l’entrée d’historique d’une suppression (l’appareil et ses câbles) |
+| `edit.statusRotated` | Pivoté : {device}, {deg}°. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après un pas de rotation (annoncé) |
+| `edit.statusGhostYaw` | Orientation : {deg}°. | à valider (tekuxwriter) | Barre d’état après R pendant une pose (annoncé) |
+| `edit.statusDuplicated` | Dupliqué : {device}. La copie est sélectionnée. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après Ctrl+D (annoncé) |
+| `edit.statusDeleted` | Supprimé : {device}, avec ses câbles. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après Suppr (annoncé) |
+| `edit.statusNoPose` | {device} n’a pas de position : impossible de le pivoter ou de le dupliquer. | à valider (tekuxwriter) | Barre d’état si l’appareil n’a pas de position enregistrée (annoncé) |
+| `edit.statusRefused` | Modification impossible pour {device}. | à valider (tekuxwriter) | Barre d’état si le rig refuse la modification (annoncé) |
+
+## feedback
+
+Retour sur un clic qui ne touche rien (Task 25, CA-12) : un message bref (`role="status"`, poli, 2,5 s), sans prendre le focus ; la sélection est levée. `{key}` = nom de la touche d'inventaire (Espace par défaut).
+
+| Key | Texte | Statut | Où / notes |
+|---|---|---|---|
+| `feedback.missed` | Rien ici : clique un appareil ou ouvre l’inventaire ({key}). | à valider (tekuxwriter) | Message bref après un clic sur le sol vide, le ciel ou un appareil masqué ; la sélection est levée |

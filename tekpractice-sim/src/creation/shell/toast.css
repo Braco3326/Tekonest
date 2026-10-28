@@ -1,0 +1,23 @@
+/*
+ * Missed-click toast (Task 25, CA-12): a short message at the bottom of the 3D view, above the drawer.
+ * Papier on the panel colour (same pair as the drawer), square, no motion at all (it appears and
+ * disappears), never in the way of a click. Not focusable, so it has no focus ring and no controls.
+ */
+.cr-toast {
+  position: absolute;
+  z-index: 3; /* above the inventory drawer (2) and the view cube's pointer layer (1) */
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  max-width: min(560px, calc(100% - 32px));
+  padding: 8px 14px;
+  background: var(--cr-panel);
+  color: var(--cr-papier);
+  border: 1px solid var(--cr-prune);
+  font: 400 13px/1.4 var(--cr-font-ui);
+  text-align: center;
+  pointer-events: none;
+  transition: none;
+}
+.cr-toast[hidden] { display: none; }

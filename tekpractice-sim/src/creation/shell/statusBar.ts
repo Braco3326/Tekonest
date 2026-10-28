@@ -163,7 +163,7 @@ export function mountStatusBar(d: StatusBarDeps): StatusBar {
   const render = (v: StatusView): void => {
     view = v
     setText(selection, v.selection)
-    // No snapping text until placement snapping exists.
+    // The snapping text is empty (hidden) unless a device is being placed or dragged (Task 24).
     setText(snapping, v.snapping)
     setHidden(snapping, v.snapping === '')
     setText(glyph, v.signal.kind === 'errors' ? GLYPH.error : GLYPH[v.signal.kind])

@@ -112,14 +112,17 @@ export function attachCanvasHover(
 }
 
 /**
- * A primary-button click on a device body selects it and flies to it.
+ * A primary-button click on a device body selects it and flies to it; a click that hits none
+ * (empty floor, sky, a hidden device) is a miss: `onMiss` gets the canvas point (Task 25, CA-12;
+ * the shell decides whether it counts, e.g. not while a device follows the pointer).
  * DOM listeners on the canvas (in `bag`), independent of the place's scene.
  */
 export function attachCanvasPicking(
   canvas: HTMLElement,
   bag: DisposableBag,
   pick: (x: number, y: number) => string | null,
-  sel: Selection
+  sel: Selection,
+  onMiss?: (x: number, y: number) => void
 ): void {
   let down: Press | null = null
   bag.listen(canvas, 'pointerdown', (e: PointerEvent) => {
@@ -132,5 +135,6 @@ export function attachCanvasPicking(
       return
     const id = pick(e.offsetX, e.offsetY)
     if (id) sel.select(id)
+    else onMiss?.(e.offsetX, e.offsetY)
   })
 }

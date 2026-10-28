@@ -2,7 +2,8 @@
  * Placement controller (Task 24, CA-10, P20, C5): put a device in the scene and move it.
  *
  * - `startPlacement(deviceId)`: a half-transparent ghost follows the pointer on the floor (0.25 m
- *   grid, Alt = free); a click drops it (`SPAWN`, one history entry); Échap cancels.
+ *   grid, Alt = free); R / Maj+R turn it (`rotateGhost`, Alt = 1°) and the drop uses that yaw;
+ *   a click drops it (`SPAWN`, one history entry); Échap cancels.
  * - A left-drag that STARTS on the already-selected device moves it: `history.begin`, a `SET_POSE`
  *   per snapped step (the history coalesces them), `commit` on release = ONE undo entry; Échap
  *   during the drag rolls it back and records nothing. Any other left-drag is the camera's orbit.
@@ -17,7 +18,7 @@ import type { DisposableBag } from '../util/disposable'
 import { floorPointAt } from '../scene/pivotPick'
 import { COPY } from './copy'
 import type { History } from './history'
-import { clampToRoom, snapPosition, type RoomBounds } from './placementMath'
+import { clampToRoom, rotateStep, snapPosition, type RoomBounds } from './placementMath'
 import type { RenderScheduler } from './renderScheduler'
 import { isClick, pickDevice } from './selection'
 import type { CreationStore } from './store'
@@ -135,6 +136,7 @@ export class PlacementController {
 
   startPlacement(deviceId: string): void {
     if (this.drag) return
+    this.yawDeg = 0 // each placement starts square; R turns it (rotateGhost)
     const seed = this.seedPoint()
     if (!seed || !this.host.showGhost(deviceId, seed, this.yawDeg)) {
       this.opts.announce?.(this.refused(deviceId))
@@ -145,6 +147,19 @@ export class PlacementController {
     this.press = null
     this.setSnap(false)
     this.opts.announce?.(COPY.placement!.statusPlacing!.replace('{device}', this.name(deviceId)))
+  }
+
+  /**
+   * R / Shift+R while a device follows the pointer (Alt = 1° instead of 15°): the ghost turns and the
+   * drop uses that yaw. Not a history entry (nothing is placed yet). False when nothing is being placed.
+   */
+  rotateGhost(dir: 1 | -1, free: boolean): boolean {
+    if (!this.placing || !this.at) return false
+    this.yawDeg = rotateStep(this.yawDeg, dir, free)
+    this.host.moveGhost(this.at, this.yawDeg)
+    this.scheduler.invalidate()
+    this.opts.announce?.(COPY.edit!.statusGhostYaw!.replace('{deg}', String(this.yawDeg)))
+    return true
   }
 
   /** Échap: the drag is rolled back, else the placement is dropped. False when there was neither. */

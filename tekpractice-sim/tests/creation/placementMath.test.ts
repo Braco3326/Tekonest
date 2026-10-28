@@ -3,6 +3,7 @@ import {
   SNAP_DEG,
   SNAP_M,
   clampToRoom,
+  duplicatePose,
   rotateStep,
   snapPosition,
   snapYaw,
@@ -64,7 +65,7 @@ describe('rotateStep', () => {
     expect(rotateStep(0, -1, false)).toBe(345)
     expect(rotateStep(345, 1, false)).toBe(0)
   })
-  it('free (Shift): ±1°, wrapping', () => {
+  it('free (Alt): ±1°, wrapping', () => {
     expect(rotateStep(10, 1, true)).toBe(11)
     expect(rotateStep(0, -1, true)).toBe(359)
     expect(rotateStep(359, 1, true)).toBe(0)
@@ -73,6 +74,27 @@ describe('rotateStep', () => {
     let y = 30
     for (let i = 0; i < 24; i++) y = rotateStep(y, 1, false)
     expect(y).toBe(30)
+  })
+})
+
+describe('duplicatePose (Task 25)', () => {
+  const pose = { position: [1, 0.2, 3] as [number, number, number], yawDeg: 30, tiltDeg: 10, mount: 'stand' as const }
+  it('moves 0.5 m along x, same yaw / tilt / mount / y / z', () => {
+    expect(duplicatePose(pose)).toEqual({ position: [1.5, 0.2, 3], yawDeg: 30, tiltDeg: 10, mount: 'stand' })
+  })
+  it('the copy lands on the 0.25 m grid, even from an off-grid original', () => {
+    expect(duplicatePose({ ...pose, position: [1.13, 0, 2.38] }).position).toEqual([1.75, 0, 2.5])
+  })
+  it('does not touch its input', () => {
+    const before = structuredClone(pose)
+    duplicatePose(pose)
+    expect(pose).toEqual(before)
+  })
+  it("at the room's far wall the copy goes to the other side, so it never hides the original", () => {
+    const room = { minX: -5, maxX: 5, minZ: -4, maxZ: 4 }
+    expect(duplicatePose({ ...pose, position: [4.75, 0, 0] }, room).position[0]).toBe(4.25)
+    expect(duplicatePose({ ...pose, position: [5, 0, 0] }, room).position[0]).toBe(4.5)
+    expect(duplicatePose({ ...pose, position: [1, 0, 0] }, room).position[0]).toBe(1.5)
   })
 })
 

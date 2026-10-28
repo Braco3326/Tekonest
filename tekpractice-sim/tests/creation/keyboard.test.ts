@@ -24,7 +24,7 @@ const el = (tagName: string, attrs: Record<string, string> = {}, inDialog = fals
   closest: (s: string) => (inDialog && s.includes('dialog') ? {} : null),
 })
 
-function key(init: { code: string; key: string; target: unknown; ctrlKey?: boolean; shiftKey?: boolean; repeat?: boolean }) {
+function key(init: { code: string; key: string; target: unknown; ctrlKey?: boolean; shiftKey?: boolean; altKey?: boolean; repeat?: boolean }) {
   const e = { altKey: false, metaKey: false, ctrlKey: false, shiftKey: false, isComposing: false, defaultPrevented: false, ...init, prevented: 0 }
   return Object.assign(e, {
     preventDefault() {
@@ -169,6 +169,55 @@ describe('creation keyboard (Task 8)', () => {
     pickerOpen = false
     win.fire(undo())
     expect(log).toEqual(['SAVE', 'UNDO'])
+  })
+  describe('edit keys (Task 25)', () => {
+    const editSetup = () => {
+      const s = setup()
+      for (const a of ['ROTATE_CW', 'ROTATE_CCW', 'DUPLICATE', 'DELETE'] as const) s.kb.onAction(a, () => void s.log.push(a))
+      return s
+    }
+    it('R / Shift+R / Alt+R / Alt+Shift+R rotate, from the canvas only', () => {
+      const { win, canvas, log } = editSetup()
+      const off = key({ code: 'KeyR', key: 'r', target: el('BUTTON') })
+      win.fire(off)
+      expect(off.prevented).toBe(0)
+      win.fire(key({ code: 'KeyR', key: 'r', target: canvas }))
+      win.fire(key({ code: 'KeyR', key: 'R', shiftKey: true, target: canvas }))
+      win.fire(key({ code: 'KeyR', key: 'r', altKey: true, target: canvas }))
+      win.fire(key({ code: 'KeyR', key: 'R', altKey: true, shiftKey: true, target: canvas }))
+      expect(log).toEqual(['ROTATE_CW', 'ROTATE_CCW', 'ROTATE_CW', 'ROTATE_CCW'])
+    })
+    it('Suppr deletes from the canvas only; Ctrl+D (QWERTY, AZERTY, any layout: the labelled key) duplicates from anywhere but a text field', () => {
+      const { win, canvas, log } = editSetup()
+      const offDel = key({ code: 'Delete', key: 'Delete', target: el('BUTTON') })
+      win.fire(offDel)
+      expect(offDel.prevented).toBe(0)
+      win.fire(key({ code: 'Delete', key: 'Delete', target: canvas }))
+      win.fire(key({ code: 'KeyD', key: 'd', ctrlKey: true, target: canvas })) // QWERTY and AZERTY
+      win.fire(key({ code: 'KeyE', key: 'd', ctrlKey: true, target: el('BUTTON') })) // Dvorak: the key printed D sits elsewhere
+      win.fire(key({ code: 'KeyD', key: 'e', ctrlKey: true, target: canvas })) // ... and the physical D is an E there
+      win.fire(key({ code: 'KeyD', key: 'd', ctrlKey: true, target: el('INPUT') }))
+      expect(log).toEqual(['DELETE', 'DUPLICATE', 'DUPLICATE'])
+    })
+    it('a held key (auto-repeat) never repeats Suppr, Ctrl+D or R: claimed, not acted on', () => {
+      const { win, canvas, log } = editSetup()
+      const keys = [
+        { code: 'Delete', key: 'Delete' },
+        { code: 'KeyD', key: 'd', ctrlKey: true },
+        { code: 'KeyR', key: 'r' },
+        { code: 'KeyR', key: 'R', shiftKey: true },
+        { code: 'KeyR', key: 'r', altKey: true },
+      ]
+      for (const k of keys) {
+        win.fire(key({ ...k, target: canvas }))
+        for (let i = 0; i < 4; i++) {
+          const rep = key({ ...k, target: canvas, repeat: true })
+          win.fire(rep)
+          expect(rep.prevented, k.code + ' repeat claimed').toBe(1) // no browser bookmark / back navigation either
+        }
+      }
+      expect(log).toEqual(['DELETE', 'DUPLICATE', 'ROTATE_CW', 'ROTATE_CCW', 'ROTATE_CW'])
+    })
   })
   it('the listener is released with the bag', () => {
     const { win, bag } = setup()

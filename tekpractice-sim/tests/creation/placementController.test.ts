@@ -5,6 +5,7 @@ import { CreationStore, creationEvaluator } from '../../src/creation/store'
 import { History } from '../../src/creation/history'
 import { ViewState } from '../../src/creation/viewState'
 import { PlacementController, type PlacementHost } from '../../src/creation/placementController'
+import { EditController } from '../../src/creation/editController'
 import { DisposableBag } from '../../src/util/disposable'
 
 const registry = loadCatalog(catalogJson)
@@ -35,18 +36,21 @@ function setup() {
   const history = new History(store)
   const viewState = new ViewState()
   const canvas = new FakeCanvas()
-  const ghost = { shown: null as null | { id: string; at: V3 }, moves: [] as V3[] }
+  const ghost = { shown: null as null | { id: string; at: V3; yaw: number }, moves: [] as V3[], yaws: [] as number[] }
   const host: PlacementHost = {
     canvasElement: canvas as unknown as HTMLElement,
     scene: null,
     camera: { target: { x: 1, y: 0, z: 2 } },
     walking: false,
     onGhostLost: null,
-    showGhost: (id, at) => {
-      ghost.shown = { id, at }
+    showGhost: (id, at, yaw) => {
+      ghost.shown = { id, at, yaw }
       return true
     },
-    moveGhost: (at) => void ghost.moves.push(at),
+    moveGhost: (at, yaw) => {
+      ghost.moves.push(at)
+      ghost.yaws.push(yaw)
+    },
     hideGhost: () => {
       ghost.shown = null
     },
@@ -429,5 +433,99 @@ describe('moving the selected device', () => {
     s.fire('pointermove', 300, 300)
     expect(s.scheduler.invalidate).not.toHaveBeenCalled()
     expect(pose(s)).toEqual([2, 0, 3])
+  })
+})
+
+describe('rotating the ghost (Task 25)', () => {
+  it('R / Shift+R turn the ghost by 15 deg, Alt by 1 deg; the drop uses that yaw', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    expect(s.ghost.shown?.yaw).toBe(0)
+    expect(s.ctrl.rotateGhost(1, false)).toBe(true)
+    expect(s.ghost.yaws.at(-1)).toBe(15)
+    s.ctrl.rotateGhost(1, false)
+    s.ctrl.rotateGhost(-1, false)
+    s.ctrl.rotateGhost(1, true)
+    expect(s.ghost.yaws.at(-1)).toBe(16)
+    expect(s.announce).toHaveBeenLastCalledWith('Orientation : 16°.')
+    s.fire('pointerdown', 113, 232)
+    s.fire('pointerup', 113, 232)
+    expect(s.store.design().placements[0].yawDeg).toBe(16)
+    expect(s.history.sizes.undo).toBe(1) // the turns before the drop are not history entries
+  })
+
+  it('the ghost moves with its yaw when the pointer moves, and Entrée drops with it', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.rotateGhost(-1, false)
+    s.fire('pointermove', 113, 232)
+    expect(s.ghost.yaws.at(-1)).toBe(345)
+    s.ctrl.confirm()
+    expect(s.store.design().placements[0].yawDeg).toBe(345)
+  })
+
+  it('does nothing when no device follows the pointer (the edit controller turns the selected device then)', () => {
+    const s = setup()
+    expect(s.ctrl.rotateGhost(1, false)).toBe(false)
+    expect(s.ghost.yaws).toEqual([])
+  })
+
+  it('a new placement starts at 0 again', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ctrl.rotateGhost(1, false)
+    s.ctrl.cancel()
+    s.ctrl.startPlacement('yamaha-ql1')
+    expect(s.ghost.shown?.yaw).toBe(0)
+  })
+
+  it('asks for a frame (the ghost turned)', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.scheduler.invalidate.mockClear()
+    s.ctrl.rotateGhost(1, false)
+    expect(s.scheduler.invalidate).toHaveBeenCalled()
+  })
+})
+
+describe('edit actions while a drag is open (Task 24 deferred finding)', () => {
+  it('Delete / Ctrl+D / R during a drag are ignored: the drag stays ONE « Déplacer » entry holding only SET_POSE', () => {
+    const s = setup()
+    s.spawn('ql1', [2, 0, 3])
+    s.viewState.set({ selection: 'ql1' })
+    s.under('ql1')
+    const edits = new EditController({
+      history: s.history,
+      store: s.store,
+      selection: () => s.viewState.get().selection,
+      blocked: () => s.ctrl.dragging,
+      deviceLabel: (id) => id,
+    })
+    s.fire('pointerdown', 200, 300)
+    s.fire('pointermove', 400, 300)
+    expect(s.ctrl.dragging).toBe(true)
+    expect(edits.remove()).toBe(false)
+    expect(edits.duplicate()).toBe(false)
+    expect(edits.rotate(1, false)).toBe(false)
+    expect(s.store.design().rig.instances).toHaveLength(1)
+    s.fire('pointerup', 400, 300)
+    expect(s.history.sizes.undo).toBe(2)
+    expect(s.history.undoLabel).toBe('Déplacer yamaha-ql1')
+    expect(s.history.peekUndo()!.forward.map((i) => i.type)).toEqual(['SET_POSE'])
+    // once the drag is over, the same edits work
+    expect(edits.rotate(1, false)).toBe(true)
+    expect(s.history.sizes.undo).toBe(3)
+  })
+
+  it('without the guard a delete would merge into the open drag (why the guard exists)', () => {
+    const s = setup()
+    s.spawn('ql1', [2, 0, 3])
+    s.viewState.set({ selection: 'ql1' })
+    s.under('ql1')
+    s.fire('pointerdown', 200, 300)
+    s.fire('pointermove', 400, 300)
+    s.history.do({ type: 'REMOVE', instanceId: 'ql1' }) // an unguarded delete
+    s.fire('pointerup', 400, 300)
+    expect(s.history.peekUndo()!.forward.map((i) => i.type)).toEqual(['SET_POSE', 'REMOVE'])
   })
 })

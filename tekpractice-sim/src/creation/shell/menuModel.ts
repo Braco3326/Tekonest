@@ -63,6 +63,8 @@ export interface MenuContext {
   historyLocked?(): boolean
   /** True while no view may change (no place on screen, or the place picker covers it): views, V, F, Alt+H are off. */
   viewLocked?(): boolean
+  /** A device is selected (Task 25): Pivoter / Dupliquer / Supprimer act on it, and are off without one. */
+  hasSelection?(): boolean
   /** True in the walk view (Task 19): « Marcher » is checked, the V picker is off. */
   walking?(): boolean
   /** The ear height (Task 19): which of the two Écoute radio items is checked. */
@@ -156,6 +158,12 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
   const inventoryBase = act('inventory', M.inventory!)
   const inventoryOn = (): boolean => viewFree() && inventoryBase.enabled()
   const inventory: MenuItem = { ...inventoryBase, enabled: inventoryOn, run: () => void (inventoryOn() && inventoryBase.run()), returnFocus: false }
+  // Matériel › Pivoter / Dupliquer / Supprimer (Task 25): on the selected device only; never under the place picker.
+  const edit = (id: string, label: string): MenuItem => {
+    const base = act(id, label)
+    const on = (): boolean => free() && !!ctx.hasSelection?.() && base.enabled()
+    return { ...base, enabled: on, run: () => void (on() && base.run()) }
+  }
   const walk: MenuItem = { ...cam('walk', W.menu!, true), kind: 'checkbox', checked: () => !!ctx.walking?.() }
   const ear = (id: string, label: string, h: 1.2 | 1.7): MenuItem => ({
     ...act(id, label),
@@ -173,7 +181,7 @@ export function buildMenus(ctx: MenuContext): MenuDef[] {
       label: M.lieu!,
       items: places.length ? places.map((p) => act(`place:${p.key}`, p.label)) : [act('choose-place', M.choosePlace!)],
     },
-    { id: 'materiel', label: M.materiel!, items: [inventory] },
+    { id: 'materiel', label: M.materiel!, items: [inventory, edit('rotate', M.rotate!), edit('duplicate', M.duplicate!), edit('delete', M.delete!)] },
     { id: 'cablage', label: M.cablage!, items: [act('connect-to', M.connectTo!)] },
     {
       id: 'ecoute',

@@ -301,3 +301,47 @@ describe('menu model (Task 7)', () => {
     expect(new Set(items.map((i) => i.id)).size).toBe(items.length)
   })
 })
+
+describe('Matériel › Pivoter, Dupliquer, Supprimer (Task 25)', () => {
+  const labels: Record<string, string> = { rotate: 'R', duplicate: 'Ctrl+D', delete: 'Suppr' }
+  const withKeys = (over: Partial<MenuContext> = {}): MenuContext =>
+    ctx({ bindingLabel: (a) => labels[a], actions: { rotate: () => {}, duplicate: () => {}, delete: () => {} }, ...over })
+  const materiel = (menus: ReturnType<typeof buildMenus>) => menus.find((m) => m.id === 'materiel')!.items
+
+  it('the menu lists Inventaire, Pivoter, Dupliquer, Supprimer, with their shortcuts', () => {
+    const items = materiel(buildMenus(withKeys({ hasSelection: () => true })))
+    expect(items.map((i) => i.label)).toEqual(['Inventaire', 'Pivoter', 'Dupliquer', 'Supprimer'])
+    expect(items.slice(1).map((i) => i.shortcut)).toEqual(['R', 'Ctrl+D', 'Suppr'])
+  })
+  it('disabled with no selection, enabled with one; running a disabled item does nothing', () => {
+    let selected = false
+    const ran: string[] = []
+    const menus = buildMenus(
+      withKeys({
+        hasSelection: () => selected,
+        actions: { rotate: () => void ran.push('rotate'), duplicate: () => void ran.push('duplicate'), delete: () => void ran.push('delete') },
+      })
+    )
+    for (const id of ['rotate', 'duplicate', 'delete']) {
+      expect(find(menus, id).enabled(), id).toBe(false)
+      find(menus, id).run()
+    }
+    expect(ran).toEqual([])
+    selected = true
+    for (const id of ['rotate', 'duplicate', 'delete']) {
+      expect(find(menus, id).enabled(), id).toBe(true)
+      find(menus, id).run()
+    }
+    expect(ran).toEqual(['rotate', 'duplicate', 'delete'])
+  })
+  it('off while the place picker covers the rig (history locked), and when the action is not registered', () => {
+    const locked = buildMenus(withKeys({ hasSelection: () => true, historyLocked: () => true }))
+    for (const id of ['rotate', 'duplicate', 'delete']) expect(find(locked, id).enabled(), id).toBe(false)
+    const bare = buildMenus(ctx({ hasSelection: () => true }))
+    for (const id of ['rotate', 'duplicate', 'delete']) expect(find(bare, id).enabled(), id).toBe(false)
+  })
+  it('without a hasSelection hook the items stay off', () => {
+    const menus = buildMenus(withKeys())
+    expect(find(menus, 'delete').enabled()).toBe(false)
+  })
+})

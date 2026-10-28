@@ -66,6 +66,9 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     exportKept: 'Exporter les données mises de côté…',
     choosePlace: 'Choisir un lieu…',
     inventory: 'Inventaire',
+    rotate: 'Pivoter',
+    duplicate: 'Dupliquer',
+    delete: 'Supprimer',
     connectTo: 'Connecter à…',
     play: 'Écouter le morceau',
     panelTree: 'Panneau Projet',
@@ -544,7 +547,7 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     /** History entry label of a drag. */
     entryMove: 'Déplacer {device}',
     /** Status bar once a device is chosen and follows the pointer (announced). */
-    statusPlacing: 'Cliquez pour poser {device} (Entrée : ici). Alt : libre. Échap : annuler.',
+    statusPlacing: 'Cliquez pour poser {device} (Entrée : ici). R : pivoter. Alt : libre. Échap : annuler.',
     /** Status bar after the drop (announced). */
     statusPlaced: 'Posé : {device}. {undo} pour annuler.',
     /** Status bar after a drag (announced). */
@@ -555,5 +558,30 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusMoveCancelled: 'Déplacement annulé : {device} est resté en place.',
     /** Status bar if the device cannot be placed (announced). */
     statusRefused: 'Impossible de poser {device}.',
+  },  /** Rotate, duplicate and delete the selected device (Task 25, CA-11). {device} = device name, {undo} = undo key label, {deg} = yaw in degrees. */
+  edit: {
+    /** History entry label of one rotation step. */
+    entryRotate: 'Pivoter {device}',
+    /** History entry label of a duplication. */
+    entryDuplicate: 'Dupliquer {device}',
+    /** History entry label of a deletion (the device and its cables). */
+    entryDelete: 'Supprimer {device}',
+    /** Status bar after a rotation step (announced). */
+    statusRotated: 'Pivoté : {device}, {deg}°. {undo} pour annuler.',
+    /** Status bar after R while a device follows the pointer (announced). */
+    statusGhostYaw: 'Orientation : {deg}°.',
+    /** Status bar after a duplication (announced); the copy is the selected device. */
+    statusDuplicated: 'Dupliqué : {device}. La copie est sélectionnée. {undo} pour annuler.',
+    /** Status bar after a deletion (announced). */
+    statusDeleted: 'Supprimé : {device}, avec ses câbles. {undo} pour annuler.',
+    /** Status bar when the device has no position to turn or copy (announced). */
+    statusNoPose: '{device} n’a pas de position : impossible de le pivoter ou de le dupliquer.',
+    /** Status bar when the edit was refused by the rig (announced). */
+    statusRefused: 'Modification impossible pour {device}.',
+  },
+  /** Feedback on a click that hit nothing (Task 25, CA-12). {key} = the inventory key label. */
+  feedback: {
+    /** Toast (`role="status"`, 2.5 s) after a click on the empty floor, the sky or a hidden device; the selection is cleared. */
+    missed: 'Rien ici : clique un appareil ou ouvre l’inventaire ({key}).',
   },
 }

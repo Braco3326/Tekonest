@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Vector3 } from '@babylonjs/core'
-import { attachCanvasHover, createSelection, isClick } from '../../src/creation/selection'
+import { attachCanvasHover, attachCanvasPicking, createSelection, isClick } from '../../src/creation/selection'
 import { ViewState } from '../../src/creation/viewState'
 import { DisposableBag } from '../../src/util/disposable'
 
@@ -66,5 +66,30 @@ describe('selection (Task 9): one selection state for tree, canvas and [ ]', () 
     expect(isClick({ x: 10, y: 10, t: 0 }, { x: 12, y: 11, t: 200 })).toBe(true)
     expect(isClick({ x: 10, y: 10, t: 0 }, { x: 30, y: 10, t: 200 })).toBe(false)
     expect(isClick({ x: 10, y: 10, t: 0 }, { x: 10, y: 10, t: 900 })).toBe(false)
+  })
+  it('a click that hits no device is a miss (onMiss with the point); a hit selects; drags, other buttons and unprimary pointers are neither (Task 25)', () => {
+    const fns = new Map<string, (e: unknown) => void>()
+    const canvas = { addEventListener: (t: string, fn: (e: unknown) => void) => void fns.set(t, fn), removeEventListener: (t: string) => void fns.delete(t) }
+    const { sel, selected } = fakes()
+    const misses: [number, number][] = []
+    const bag = new DisposableBag()
+    attachCanvasPicking(canvas as never, bag, (x) => (x > 50 ? 'ql1' : null), sel, (x, y) => void misses.push([x, y]))
+    const press = (x: number, y: number, up: { x?: number; y?: number; t?: number } = {}, extra: Record<string, unknown> = {}) => {
+      fns.get('pointerdown')!({ offsetX: x, offsetY: y, button: 0, isPrimary: true, timeStamp: 0, ...extra })
+      fns.get('pointerup')!({ offsetX: up.x ?? x, offsetY: up.y ?? y, button: 0, timeStamp: up.t ?? 100 })
+    }
+    press(10, 20) // empty floor / sky / hidden device: the pick says null
+    expect(misses).toEqual([[10, 20]])
+    expect(selected).toEqual([])
+    press(60, 5) // a device
+    expect(selected).toEqual(['ql1'])
+    expect(misses).toHaveLength(1)
+    press(10, 20, { x: 80, y: 20 }) // an orbit drag
+    press(10, 20, { t: 900 }) // a slow press
+    press(10, 20, {}, { button: 2 }) // right button
+    press(10, 20, {}, { isPrimary: false })
+    expect(misses).toHaveLength(1)
+    bag.dispose()
+    expect(fns.size).toBe(0)
   })
 })

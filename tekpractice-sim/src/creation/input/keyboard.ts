@@ -52,13 +52,21 @@ export const CANVAS_ONLY: ReadonlySet<CreationAction> = new Set<CreationAction>(
   'VIEW_ROT_LEFT', 'VIEW_ROT_RIGHT',
   // Space: the inventory drawer (Task 23) opens from the 3D view only; elsewhere Space stays the focused control's.
   'TOGGLE_INVENTORY',
+  // R / Maj+R: rotate (Task 25). Suppr deletes the selected device: only with the 3D view focused, where the selection is seen.
+  'ROTATE_CW', 'ROTATE_CCW', 'DELETE',
 ])
 
 /**
- * Toggles: a held key (auto-repeat) is claimed without acting. Otherwise Space held on the canvas
- * would close the inventory drawer, hand focus to the canvas and re-open it on the next repeat.
+ * Non-idempotent actions: a held key (auto-repeat) is claimed without acting. Space held on the canvas
+ * would otherwise close the inventory drawer, hand focus to the canvas and re-open it on the next repeat;
+ * a held Suppr or Ctrl+D would delete or copy over and over.
  */
-const NO_REPEAT: ReadonlySet<CreationAction> = new Set<CreationAction>(['TOGGLE_INVENTORY'])
+const NO_REPEAT: ReadonlySet<CreationAction> = new Set<CreationAction>([
+  'TOGGLE_INVENTORY',
+  // Edits (Task 25): a held Suppr / Ctrl+D / R is one edit, never a burst of undo entries. Claimed too, so the browser
+  // does not bookmark the page or navigate while the key is held.
+  'DUPLICATE', 'DELETE', 'ROTATE_CW', 'ROTATE_CCW',
+])
 
 const CHARACTER_CODE = /^(Key[A-Z]|Digit\d|Numpad\d|BracketLeft|BracketRight|Minus|Equal|Semicolon|Quote|Comma|Period|Slash|Backslash|Backquote|IntlBackslash)$/
 

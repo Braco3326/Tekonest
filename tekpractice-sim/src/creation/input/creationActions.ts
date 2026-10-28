@@ -32,8 +32,9 @@ export const DEFAULT_CREATION_BINDINGS: CreationBindings = {
   TOGGLE_HELP: ['KeyH'],
   VIEW_PICKER: ['KeyV'],
   WALK_TOGGLE: ['Shift+KeyV'],
-  ROTATE_CW: ['KeyR'],
-  ROTATE_CCW: ['Shift+KeyR'],
+  // R turns 15° (Maj+R the other way); Alt is the « free » modifier everywhere: Alt+R / Alt+Maj+R turn 1° (Task 25).
+  ROTATE_CW: ['KeyR', 'Alt+KeyR'],
+  ROTATE_CCW: ['Shift+KeyR', 'Alt+Shift+KeyR'],
   CAMERA_HOME: ['Alt+KeyH'],
   // Mode Création: the listening points by position (Task 20: 1 = Régie). The legacy's saved
   // views « Vue 1/2/3 » (same action names, legacy key map) do not exist in Mode Création.

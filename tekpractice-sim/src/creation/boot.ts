@@ -34,6 +34,8 @@ import { placeFromKey, placeKey } from './places'
 import { loadPlaceData } from './placeData'
 import { createPlaceController, type PlaceResult } from './placeController'
 import { PlacementController } from './placementController'
+import { EditController } from './editController'
+import { mountToast } from './shell/toast'
 import { designFromRoomGear, unavailableList } from './templateGear'
 import { loadTemplates, templateToDesign } from './templates'
 import { mountNotes } from './shell/notes'
@@ -502,6 +504,7 @@ export async function bootCreation(): Promise<void> {
     const ids = new Set(zones().map((z) => `zone:${z.id}`))
     const hidden = viewState.get().hidden.filter((k) => !k.startsWith('zone:') || ids.has(k))
     atPoint = null // a new camera: it stands on no point
+    toast.dismiss() // a message about the previous place's view does not carry over
     // Any other camera request (cube, menu, V, home, a quarter turn, re-pivot, device focus) leaves
     // the point, even while the point's own flight still runs (Task 21 review minor).
     if (host.rig)
@@ -772,11 +775,14 @@ export async function bootCreation(): Promise<void> {
     return true
   }
   // A stepper burst still open (600 ms) closes first, so it is the entry undone.
+  // Not while a drag is open (Task 25): the drag's entry is still open, and Ctrl+Z / Ctrl+Y must not touch the rig under it.
   keys.onAction('UNDO', () => {
+    if (placement.dragging) return true
     props.flush()
     return history.undo()
   })
   keys.onAction('REDO', () => {
+    if (placement.dragging) return true
     props.flush()
     return history.redo()
   })
@@ -1308,7 +1314,8 @@ export async function bootCreation(): Promise<void> {
     canvas,
     shellBag,
     (x, y) => (placement.placing ? null : pickDevice(host.scene, x, y)),
-    selection
+    selection,
+    (x, y) => missedClick(x, y)
   )
   // Hover (Task 14b): a thin Papier outline on the device under the pointer, never the Ambre selection.
   attachCanvasHover(
@@ -1330,12 +1337,60 @@ export async function bootCreation(): Promise<void> {
     },
     beforeDrag: () => props.flush(),
   })
+
+  // ── Edit the selected device (Task 25, CA-11): R / Maj+R (Alt = 1°), Ctrl+D, Suppr and Matériel › Pivoter /
+  // Dupliquer / Supprimer. Each is ONE history entry. While a drag is open every edit key is ignored: a delete
+  // would otherwise merge into the open « Déplacer » entry (Task 24 review).
+  const dragOpen = (): boolean => placement.dragging
+  const edits = new EditController({
+    history,
+    store,
+    selection: () => viewState.get().selection,
+    blocked: dragOpen,
+    roomBounds: () => host.roomBounds(),
+    deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
+    announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
+    undoLabel,
+    onDuplicated: (id) => selection.select(id, { fly: false }), // the copy is the selection; no camera flight
+  })
+  /** R / Maj+R: the ghost while a device follows the pointer, else the selected device. Alt = 1° (free). */
+  const rotateKey = (dir: 1 | -1, e: KeyboardEvent): boolean => {
+    if (dragOpen() || e.repeat) return true // claimed, ignored
+    if (placement.rotateGhost(dir, e.altKey)) return true
+    edits.rotate(dir, e.altKey)
+    return true
+  }
+  keys.onAction('ROTATE_CW', (e) => rotateKey(1, e))
+  keys.onAction('ROTATE_CCW', (e) => rotateKey(-1, e))
+  keys.onAction('DUPLICATE', (e) => {
+    if (dragOpen() || e.repeat) return true // Ctrl+D is never the browser's bookmark in Mode Création
+    edits.duplicate()
+    return true
+  })
+  keys.onAction('DELETE', (e) => {
+    if (dragOpen() || e.repeat) return true
+    edits.remove()
+    return true
+  })
+
+  // ── Missed clicks (Task 25, CA-12): a click on the empty floor, the sky or a hidden device says so and clears
+  // the selection. Not while a device follows the pointer (that click drops it), in the walk view, under the
+  // place picker, nor on a port (its click is the cabling's).
+  const toast = mountToast(document, shell.viewport, shellBag)
+  const missedClick = (x: number, y: number): void => {
+    if (placement.placing || host.walking || viewLocked() || portAt(host.scene, x, y)) return
+    if (viewState.get().selection !== null) viewState.set({ selection: null }) // not undoable; the toast speaks, not the status bar
+    toast.show(COPY.feedback!.missed!.replace('{key}', bindingLabel(keys.bindings, 'TOGGLE_INVENTORY') || COPY.keys!.space!))
+  }
   /** Menu item ids → the key map (the menus show the live labels). */
   const MENU_KEYS: Record<string, CreationAction | undefined> = {
     undo: 'UNDO',
     redo: 'REDO',
     save: 'SAVE',
     inventory: 'TOGGLE_INVENTORY',
+    rotate: 'ROTATE_CW',
+    duplicate: 'DUPLICATE',
+    delete: 'DELETE',
     shortcuts: 'TOGGLE_HELP',
     'frame-selection': 'FRAME_SELECTION',
     'camera-home': 'CAMERA_HOME',
@@ -1364,6 +1419,9 @@ export async function bootCreation(): Promise<void> {
       picker.show({ closable: canvasShown, focus: true })
     },
     inventory: () => setInventory(!drawerOpen()),
+    rotate: () => void (!dragOpen() && edits.rotate(1, false)),
+    duplicate: () => void (!dragOpen() && edits.duplicate()),
+    delete: () => void (!dragOpen() && edits.remove()),
     new: () => void newProject(),
     open: () => void openProject(),
     save: () => void save(false),
@@ -1418,6 +1476,7 @@ export async function bootCreation(): Promise<void> {
       actions,
       bindingLabel: menuShortcut,
       historyLocked: () => picker.isOpen, // Phase 1 review: « Annuler » never edits the rig under the picker
+      hasSelection: () => viewState.get().selection !== null,
       viewLocked,
       walking: () => host.walking,
       earHeight: () => viewState.get().earHeight,
