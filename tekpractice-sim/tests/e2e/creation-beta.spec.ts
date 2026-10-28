@@ -420,9 +420,9 @@ test('reload while the proposals request stalls: the workspace is not blank for 
   expect(await stored(page)).toBe(raw)
 })
 
-const UNAVAILABLE_OPEN = 'Fiches Bêta indisponibles (réseau). Le projet n’a pas été ouvert ; réessayez plus tard.'
+const UNAVAILABLE_OPEN = 'Fiches Bêta indisponibles (réseau). Le projet n’a pas été ouvert. Rechargez la page, puis rouvrez-le.'
 
-test('« Ouvrir… » while the Bêta sheets cannot be fetched says the project was NOT opened (not « reload the page »); a later successful open clears the note', async ({ page }) => {
+test('« Ouvrir… » while the Bêta sheets cannot be fetched says the project was NOT opened and to reload the page (a failed import may stay failed for this page: no « réessayez »); a later successful open clears the note', async ({ page }) => {
   await boot(page)
   await placeBeta(page, AMP.id)
   await page.locator('#renderCanvas').focus()
@@ -443,9 +443,9 @@ test('« Ouvrir… » while the Bêta sheets cannot be fetched says the project 
   await page.getByRole('menuitem', { name: 'Projet' }).click()
   await page.getByRole('menuitem', { name: /^Ouvrir/ }).click()
   await page.getByRole('button', { name: /Mon ampli/ }).click()
-  // the learner just tried to open a project: the note says it was not opened and to try again, not to reload
+  // the learner just tried to open a project: the note says it was not opened, and to reload the page (final review 7: never « réessayez plus tard »)
   await expect(note).toContainText(UNAVAILABLE_OPEN)
-  await expect(note).not.toContainText('Rechargez')
+  await expect(note).not.toContainText(/r[ée]essay/i)
   await expect(page.locator('.cr-status-msg')).toContainText(UNAVAILABLE_OPEN)
   expect((await design(page)).rig.instances).toEqual([])
   await expect(page.getByTestId('project-title')).not.toContainText('Mon ampli')

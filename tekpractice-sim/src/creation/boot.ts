@@ -187,7 +187,9 @@ export async function bootCreation(): Promise<void> {
   }
   /**
    * Never rejects. `failed` (offline, a rejected import, no answer within the delay) is told apart from a file that loaded
-   * and does not hold a sheet: a failure leaves the tab hidden and drops nothing, and a later call retries.
+   * and does not hold a sheet: a failure leaves the tab hidden and drops nothing. A later call asks again, but do not count on it:
+   * after an aborted dynamic-import request Chromium caches the failure for the document, so a second try in the same page can
+   * make no new request. Only a reload recovers, which is what the messages say (`inventory.unavailable*`, `inventory.loadFailed`).
    */
   const loadBeta = (): Promise<BetaLoad> =>
     (betaLoad ??= within(import('./proposalsSource'), betaTimeoutMs()).then((r): BetaLoad => {
@@ -1449,7 +1451,7 @@ export async function bootCreation(): Promise<void> {
       },
       (e) => {
         console.error('[creation] inventory failed to load', e)
-        drawerLoad = null // a retry may fetch again
+        drawerLoad = null // asked again on the next open, but a failed import may stay failed for this page: the message says to reload
         drawerWanted = false
         shell.setStatus(placeNow(), INV.loadFailed!, 'ready', true)
       }
