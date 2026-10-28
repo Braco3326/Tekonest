@@ -43,16 +43,17 @@
   function fill(ctx, pts, col) { if (MASK.on) return; poly(ctx, pts); ctx.fillStyle = col; ctx.fill(); }
 
   /* ---------- band strips: local coords, centre (0,0); each returns { base(ctx), cells: [{ k, pts, dir, draw(ctx) }] } ---------- */
-  function rope(L, t, seed) {
+  function rope(L, t, seed, hand) {
+    var ov = hand === 0 ? 0 : 0.5;                                                  // the two half-cells overlap in the panel so a reveal never leaves a hairline; tiles do not need it
     var n = Math.max(2, Math.round(L / (1.6 * t))), p = L / n, A = 0.27 * t, w = 0.2 * t;
     function y(x, ph) { return A * Math.sin(TAU * (x + L / 2) / p + ph); }
     function drawRange(ctx, x0, x1) {
       if (MASK.on) return;
       ctx.save(); ctx.beginPath(); ctx.rect(x0, -t / 2, x1 - x0, t); ctx.clip();
-      function strand(ph, col) { ctx.beginPath(); for (var x = -L / 2; x <= L / 2; x += 2) { x === -L / 2 ? ctx.moveTo(x, y(x, ph)) : ctx.lineTo(x, y(x, ph)); } ctx.strokeStyle = col; ctx.lineWidth = w; ctx.lineCap = "butt"; ctx.stroke(); }
+      function strand(ph, col) { ctx.beginPath(); for (var x = -L / 2 - 8; x <= L / 2 + 8; x += 2) { x === -L / 2 - 8 ? ctx.moveTo(x, y(x, ph)) : ctx.lineTo(x, y(x, ph)); } ctx.strokeStyle = col; ctx.lineWidth = w; ctx.lineCap = "butt"; ctx.stroke(); }   // runs past both ends; the clip cuts it square, so repeated tiles meet without a gap
       strand(0, pearl(0.15)); strand(Math.PI, pearl(0.62));
       for (var k = 0; k <= 2 * n; k++) {
-        var cx = -L / 2 + k * p / 2, ph = k % 2 === 0 ? 0 : Math.PI, col = k % 2 === 0 ? pearl(0.15) : pearl(0.62), a = Math.max(-L / 2, cx - 0.3 * p), b = Math.min(L / 2, cx + 0.3 * p);
+        var cx = -L / 2 + k * p / 2, ph = k % 2 === 0 ? 0 : Math.PI, col = k % 2 === 0 ? pearl(0.15) : pearl(0.62), a = cx - 0.3 * p, b = cx + 0.3 * p;
         [[w + 5, GROUND], [w, col]].forEach(function (s) { ctx.beginPath(); for (var x = a; x <= b; x += 1.5) { x === a ? ctx.moveTo(x, y(x, ph)) : ctx.lineTo(x, y(x, ph)); } ctx.strokeStyle = s[1]; ctx.lineWidth = s[0]; ctx.stroke(); });
       }
       ctx.restore();
@@ -60,20 +61,21 @@
     return {
       base: function (ctx) { if (!MASK.on) { ctx.fillStyle = GROUND; ctx.fillRect(-L / 2, -t / 2, L, t); } },
       cells: [
-        { k: 0, pts: rect(-L / 2, -t / 2, 0, t / 2), dir: [1, 0], draw: function (ctx) { drawRange(ctx, -L / 2, 0.5); } },
-        { k: 0, pts: rect(0, -t / 2, L / 2, t / 2), dir: [-1, 0], draw: function (ctx) { drawRange(ctx, -0.5, L / 2); } }
+        { k: 0, pts: rect(-L / 2, -t / 2, 0, t / 2), dir: [1, 0], draw: function (ctx) { drawRange(ctx, -L / 2, ov); } },
+        { k: 0, pts: rect(0, -t / 2, L / 2, t / 2), dir: [-1, 0], draw: function (ctx) { drawRange(ctx, -ov, L / 2); } }
       ]
     };
   }
   function rect(x0, y0, x1, y1) { return [[x0, y0], [x1, y0], [x1, y1], [x0, y1]]; }
-  function tri(L, t, seed) {
-    var reg = D.Registry(seed, 0.5), n = Math.max(2, Math.round(L / (0.95 * t))), u = L / n, top = -t / 2, bot = t / 2, x0 = -L / 2, i, cells = [];
+  function tri(L, t, seed, hand) {
+    var per = hand === 0, tk = function (i) { return per ? i % 2 : i; };
+    var reg = D.Registry(seed, hand === undefined ? 0.5 : hand), n = Math.max(2, Math.round(L / (0.95 * t))), u = L / n, top = -t / 2, bot = t / 2, x0 = -L / 2, i, cells = [];
     var V = function (key, x, y) { return reg.v(seed + key, x, y); };
     for (i = 0; i <= n; i++) {
       (function (i) {
         var a = V("t" + i, x0 + (i - 0.5) * u, top), b = V("t" + (i + 1), x0 + (i + 0.5) * u, top), c = V("b" + i, x0 + i * u, bot), pts;
         if (i === 0) pts = [V("t0e", x0, top), b, c]; else if (i === n) pts = [a, V("tne", x0 + n * u, top), V("bne", x0 + n * u, bot)]; else pts = [a, b, c];
-        cells.push({ k: Math.min(i, n - i), pts: pts, dir: [0, 1], draw: function (ctx) { wood(ctx, pts, "walnut", D.r01(seed, "w" + i, "t")); } });
+        cells.push({ k: Math.min(i, n - i), pts: pts, dir: [0, 1], draw: function (ctx) { wood(ctx, pts, "walnut", D.r01(seed, "w" + tk(i), "t")); } });
       })(i);
     }
     for (i = 0; i < n; i++) {
@@ -82,18 +84,19 @@
         var cx = x0 + (i + 0.5) * u, cy = bot - 0.40 * t, hw = 0.16 * u, hh = 0.20 * t;
         cells.push({ k: Math.min(i, n - 1 - i) + 0.4, pts: pts, dir: [0, 1], draw: function (ctx) {
           fill(ctx, pts, "#0F0C0D"); hair(ctx, inset(pts, 2.2), "#CFC6B8", 1.1);
-          slab(ctx, [[cx, cy - hh], [cx + hw, cy], [cx, cy + hh], [cx - hw, cy]], D.r01(seed, "d" + i, "t"));
+          slab(ctx, [[cx, cy - hh], [cx + hw, cy], [cx, cy + hh], [cx - hw, cy]], D.r01(seed, "d" + tk(i), "t"));
         } });
       })(i);
     }
     return { base: function (ctx) { if (!MASK.on) { ctx.fillStyle = GROUND; ctx.fillRect(-L / 2, -t / 2, L, t); } }, cells: cells };
   }
-  function saw(L, t, seed) {
-    var reg = D.Registry(seed, 0.5), n = Math.max(2, Math.round(L / (t * 0.667))), u = L / n, x0 = -L / 2, i, cells = [];
+  function saw(L, t, seed, hand) {
+    var per = hand === 0, tk = function (i) { return per ? i % 2 : i; };
+    var reg = D.Registry(seed, hand === undefined ? 0.5 : hand), n = Math.max(2, Math.round(L / (t * 0.667))), u = L / n, x0 = -L / 2, i, cells = [];
     for (i = 0; i < n; i++) {
       (function (i) {
         var pts = [reg.v(seed + "s" + i, x0 + i * u, -t / 2), reg.v(seed + "s" + (i + 1), x0 + (i + 1) * u, -t / 2), reg.v(seed + "a" + i, x0 + (i + 0.5) * u, t / 2 - 1)];
-        cells.push({ k: Math.min(i, n - 1 - i), pts: pts, dir: [0, 1], draw: function (ctx) { slab(ctx, pts, D.r01(seed, "s" + i, "t")); } });
+        cells.push({ k: Math.min(i, n - 1 - i), pts: pts, dir: [0, 1], draw: function (ctx) { slab(ctx, pts, D.r01(seed, "s" + tk(i), "t")); } });
       })(i);
     }
     return { base: function (ctx) { if (!MASK.on) { ctx.fillStyle = GROUND; ctx.fillRect(-L / 2, -t / 2, L, t); } }, cells: cells };
@@ -107,6 +110,20 @@
     slab(ctx, sq(Math.PI / 4).map(function (p) { return [p[0] * 0.52, p[1] * 0.52]; }), 0.25);
   }
   var STRIPS = { rope: rope, tri: tri, saw: saw };
+
+  /* the look of one field piece: double hairline strap, pearl slab or wood set inside its cell */
+  function drawFieldPiece(ctx, p) {
+    var o1 = inset(p.pts, 2.3), tone = p.tone;
+    if (p.role === "nacre") slab(ctx, inset(p.pts, 8), tone);
+    else if (p.role === "walnut" && p.layer === 0) { fill(ctx, inset(p.pts, 6.5), "#3A281C"); wood(ctx, inset(p.pts, 6.5), "walnut", tone); }
+    else if (p.layer === 1) { fill(ctx, o1, p.role === "prune" ? "#4B2036" : "#34241A"); wood(ctx, o1, p.role === "prune" ? "prune" : "walnut", tone); }
+    hair(ctx, o1, "#B9B0A2", 1.1);
+  }
+  /* the roundel: radii, the mark and its stroke, shared by the animated items and the static drawer */
+  function roundelSpec(r, mark) {
+    return { r: r, disc: r + 12, ring1: r + 9, ring2: r - 7, nest: g.Nest.build(0, 0, (r - 17) / 108),
+      NW: { w: Math.max(2.4, r * 0.03), weave: false, ground: GROUND, cols: [mark || "#F3EDE3"] } };
+  }
 
   /* ---------- the model ---------- */
   var BANDS = [
@@ -162,11 +179,7 @@
       var c = centroid(p.pts), dist = Math.hypot(c[0], c[1]), d = dist > 1e-6 ? [-c[0] / dist, -c[1] / dist] : [0, 1];
       add(prep({ layer: "field", key: Math.round(dist / 3), pts: p.pts, dir: d, draw: function (ctx) {
         ctx.save(); ctx.beginPath(); ctx.rect(-inner, -inner, 2 * inner, 2 * inner); ctx.clip();
-        var o1 = inset(p.pts, 2.3), tone = p.tone;
-        if (p.role === "nacre") slab(ctx, inset(p.pts, 8), tone);
-        else if (p.role === "walnut" && p.layer === 0) { fill(ctx, inset(p.pts, 6.5), "#3A281C"); wood(ctx, inset(p.pts, 6.5), "walnut", tone); }
-        else if (p.layer === 1) { fill(ctx, o1, p.role === "prune" ? "#4B2036" : "#34241A"); wood(ctx, o1, p.role === "prune" ? "prune" : "walnut", tone); }
-        hair(ctx, o1, "#B9B0A2", 1.1);
+        drawFieldPiece(ctx, p);
         ctx.restore();
       } }));
     });
@@ -193,11 +206,11 @@
     } });
 
     // the roundel and the mark
-    var r = 2.1 * S, nest = g.Nest.build(0, 0, (r - 17) / 108), NW = { w: Math.max(2.4, r * 0.03), weave: false, ground: GROUND, cols: [o.mark || "#F3EDE3"] };
-    add({ layer: "disc", custom: true, draw: function (ctx, p) { if (MASK.on) return; ctx.save(); ctx.beginPath(); ctx.arc(0, 0, (r + 12) * p, 0, TAU); ctx.clip(); ctx.fillStyle = GROUND; ctx.fillRect(-r - 20, -r - 20, 2 * r + 40, 2 * r + 40); ctx.restore(); } });
+    var r = 2.1 * S, rs = roundelSpec(r, o.mark), nest = rs.nest, NW = rs.NW;
+    add({ layer: "disc", custom: true, draw: function (ctx, p) { if (MASK.on) return; ctx.save(); ctx.beginPath(); ctx.arc(0, 0, rs.disc * p, 0, TAU); ctx.clip(); ctx.fillStyle = GROUND; ctx.fillRect(-r - 20, -r - 20, 2 * r + 40, 2 * r + 40); ctx.restore(); } });
     function ringArc(rad, col, w) { return function (ctx, p) { if (MASK.on || p <= 0) return; ctx.strokeStyle = col; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(0, 0, rad, -Math.PI / 2, -Math.PI / 2 + TAU * p); ctx.stroke(); }; }
-    add({ layer: "ring1", custom: true, draw: ringArc(r + 9, "#B9B0A2", 1.2) });
-    add({ layer: "ring2", custom: true, draw: ringArc(r - 7, "#B9B0A2", 1) });
+    add({ layer: "ring1", custom: true, draw: ringArc(rs.ring1, "#B9B0A2", 1.2) });
+    add({ layer: "ring2", custom: true, draw: ringArc(rs.ring2, "#B9B0A2", 1) });
     add({ layer: "wire", custom: true, draw: ringArc(r, WIRE, 2) });
     add({ layer: "mark", custom: true, draw: function (ctx, p, t, model) { if (MASK.on) return; var prog = []; for (var e = 0; e < 7; e++) prog.push(clamp((p * 1.45 - e * 0.07) / 0.55)); g.Nest.drawPartial(ctx, nest, NW, prog); } });
 
@@ -299,9 +312,33 @@
     sheen(ctx, model, softOut((t - 7.4) / 1.6));
     ctx.restore();
   }
+  /* static roundel at (cx, cy) with radius r: cut-out disc, hairline rings, gold wire and the mark as continuous loops */
+  function drawRoundel(ctx, cx, cy, r, opts) {
+    var rs = roundelSpec(r, opts && opts.mark);
+    ctx.save(); ctx.translate(cx, cy);
+    ctx.fillStyle = GROUND; ctx.beginPath(); ctx.arc(0, 0, rs.disc, 0, TAU); ctx.fill();
+    [[rs.ring1, "#B9B0A2", 1.2], [rs.ring2, "#B9B0A2", 1], [r, WIRE, 2]].forEach(function (ring) {
+      ctx.strokeStyle = ring[1]; ctx.lineWidth = ring[2]; ctx.beginPath(); ctx.arc(0, 0, ring[0], 0, TAU); ctx.stroke();
+    });
+    g.Nest.draw(ctx, rs.nest, rs.NW);
+    ctx.restore();
+  }
+  /* the 8-fold strapwork field on a cols x rows lattice of octagons with apothem S, in the panel's piece styling; the caller paints the ground */
+  function fieldTexture(ctx, x0, y0, cols, rows, S, opts) {
+    var K = D.buildKhatam((opts && opts.seed) || 1306, x0, y0, cols, rows, S, opts && opts.hand !== undefined ? opts.hand : 1.4);
+    K.pieces.forEach(function (p) { drawFieldPiece(ctx, p); });
+  }
+  /* one seamless repeating tile of a band: transparent ground, no hand irregularity, width two units. The strip is drawn two
+     units longer on each side and the canvas edge cuts it, so every piece is whole where it matters and repeats are exact. */
+  function tile(ctx, type, t) {
+    var unit = { rope: 1.6, tri: 0.95, saw: 0.667 }[type], u = Math.round(unit * t), w = 2 * u, strip = STRIPS[type](w + 4 * u, t, "tile" + type, 0);
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, w, t); ctx.clip();
+    ctx.translate(w / 2, t / 2); strip.cells.forEach(function (c) { c.draw(ctx); }); ctx.restore();
+    return { w: w, h: t };
+  }
   function drawPanel(ctx, cx, cy, W, o) { var m = schedule(build(W, o)); render(ctx, cx, cy, m, 1e9); return { S: m.S, field: m.inner, nest: m.nest }; }
 
   g.Panel = { build: function (W, o) { return schedule(build(W, o)); }, render: render, drawPanel: drawPanel, DURATION: DURATION, PLAN: PLAN, ease: ease,
-    strip: function (ctx, type, L, t, seed) { var s = STRIPS[type](L, t, seed); s.base(ctx); s.cells.forEach(function (c) { c.draw(ctx); }); },
-    maskOf: pearlMask, warm: warm, corner: cornerDraw, slab: slab, pearl: pearl, GROUND: GROUND };
+    strip: function (ctx, type, L, t, seed, hand) { var s = STRIPS[type](L, t, seed, hand); s.base(ctx); s.cells.forEach(function (c) { c.draw(ctx); }); },
+    maskOf: pearlMask, warm: warm, drawRoundel: drawRoundel, fieldTexture: fieldTexture, tile: tile, corner: cornerDraw, slab: slab, pearl: pearl, GROUND: GROUND };
 })(window);
