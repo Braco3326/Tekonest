@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le panneau se fait · marqueterie</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #131114; }
+  body { display: grid; place-items: center; overflow: hidden; }
+  canvas { width: min(100vw, 177.78vh); height: auto; aspect-ratio: 16 / 9; display: block; }
+  .bar { position: fixed; left: 12px; bottom: 10px; display: flex; gap: 8px; align-items: center; font: 13px system-ui, sans-serif; color: #8c8186; }
+  button { font: 13px system-ui, sans-serif; color: #F3EDE3; background: #131114; border: 1px solid #6B4A33; padding: 8px 12px; cursor: pointer; min-height: 36px; }
+  .bar[hidden] { display: none; }
+  button:focus-visible { outline: 3px solid #DD9349; outline-offset: 2px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080" role="img" aria-label="Un panneau de marqueterie se construit pièce par pièce : bois, bandes, champ de lanières, puis la marque Tekonest dans un médaillon."></canvas>
+<div class="bar" id="bar"><button id="pause" type="button" aria-pressed="false">Mettre en pause l'animation</button><button id="replay" type="button">Rejouer</button></div>
+<script src="lib/damas.js"></script>
+<script src="lib/nest.js"></script>
+<script src="lib/panel.js"></script>
+<script>
+/* « Le panneau se fait »: the making order of the panel, 10 s at 24 fps, deterministic (drawFrame(t) depends only on t).
+   Order: carcass, construction guides, wood margin and wire, bands laid from the corners toward the middle (all four sides land
+   together), field laid outside in, roundel cut, gold wire, the mark set last, a slow polish. Last second holds still.
+   Ease-out only. No glow, no particles, no spin, no text. Inspired by Damascene wood marquetry. */
+(function () {
+  var W = 1920, H = 1080, FPS = 24, ctx = document.getElementById("c").getContext("2d");
+  var model = Panel.build(980, { seed: 1306, hand: 1.4 }), DURATION = model.duration;
+  if (new URLSearchParams(location.search).get("t") === null) Panel.warm(model);          // bake finished looks before playing, so no frame hitches
+  function drawFrame(t, live) {
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = "#131114"; ctx.fillRect(0, 0, W, H);
+    Panel.render(ctx, W / 2, H / 2, model, t, { live: live });
+  }
+  window.drawFrame = drawFrame;
+  window.VISUAL = { id: "panel", width: W, height: H, fps: FPS, duration: DURATION };
+
+  var q = new URLSearchParams(location.search).get("t");
+  document.getElementById("bar").hidden = q !== null;
+  if (q !== null) { drawFrame(parseFloat(q)); return; }
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) { drawFrame(DURATION); document.getElementById("bar").hidden = true; return; }
+
+  var start = 0, elapsed = 0, running = true, raf = 0, pauseBtn = document.getElementById("pause");
+  function loop(now) {
+    if (!running) return;
+    if (!start) start = now - elapsed * 1000;
+    elapsed = (now - start) / 1000;
+    drawFrame(Math.min(elapsed, DURATION), true);
+    if (elapsed < DURATION) raf = requestAnimationFrame(loop);
+  }
+  function play() { cancelAnimationFrame(raf); running = true; start = 0; elapsed = 0; pauseBtn.setAttribute("aria-pressed", "false"); pauseBtn.textContent = "Mettre en pause l'animation"; raf = requestAnimationFrame(loop); }
+  pauseBtn.addEventListener("click", function () {
+    if (running) { running = false; cancelAnimationFrame(raf); pauseBtn.setAttribute("aria-pressed", "true"); pauseBtn.textContent = "Reprendre l'animation"; }
+    else { running = true; start = 0; pauseBtn.setAttribute("aria-pressed", "false"); pauseBtn.textContent = "Mettre en pause l'animation"; raf = requestAnimationFrame(loop); }
+  });
+  document.getElementById("replay").addEventListener("click", play);
+  play();
+})();
+</script>
+</body>
+</html>

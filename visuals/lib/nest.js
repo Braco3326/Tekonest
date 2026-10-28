@@ -73,5 +73,30 @@
     });
   }
 
-  g.Nest = { build: build, draw: draw };
+  /* The mark being set into the ground: prog[e] in [0,1] is how much of ellipse e is laid. A crossing's gap appears
+     once both strands have reached it. */
+  function drawPartial(ctx, nest, o, prog) {
+    var w = o.w, gap = o.gap === undefined ? w * 0.45 : o.gap, N = nest.N;
+    function trace(pts, from, to) {
+      ctx.beginPath();
+      for (var k = from; k <= to; k++) { var p = pts[((k % N) + N) % N]; k === from ? ctx.moveTo(p[0], p[1]) : ctx.lineTo(p[0], p[1]); }
+    }
+    ctx.lineJoin = "round"; ctx.lineCap = "butt";
+    nest.E.forEach(function (pts, e) {
+      var last = Math.floor(N * prog[e]);
+      if (last < 1) return;
+      trace(pts, 0, Math.min(N, last)); ctx.strokeStyle = o.cols[e % o.cols.length]; ctx.lineWidth = w; ctx.stroke();
+    });
+    nest.X.forEach(function (c) {
+      var la = N * prog[c.a], lb = N * prog[c.b];
+      if (c.pa > la || c.pb > lb) return;
+      var e = c.over, pos = e === c.a ? c.pa : c.pb, lim = e === c.a ? la : lb, pts = nest.E[e];
+      var arc = 2 * Math.PI * 91 * nest.sc / N, m = Math.ceil((w + 2 * gap) * 1.1 / arc) + 1;
+      var to = Math.min(Math.ceil(pos) + m, Math.floor(lim));
+      trace(pts, Math.floor(pos) - m, to); ctx.strokeStyle = o.ground; ctx.lineWidth = w + 2 * gap; ctx.stroke();
+      trace(pts, Math.floor(pos) - m + 1, Math.min(Math.ceil(pos) + m - 1, to)); ctx.strokeStyle = o.cols[e % o.cols.length]; ctx.lineWidth = w; ctx.stroke();
+    });
+  }
+
+  g.Nest = { build: build, draw: draw, drawPartial: drawPartial };
 })(window);
