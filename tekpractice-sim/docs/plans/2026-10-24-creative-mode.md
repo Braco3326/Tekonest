@@ -1800,7 +1800,7 @@ Brief §7 defaults (logged in `docs/CREATIVE-MODE-LOG.md`), inventory facts L1�
 ### Task 34: Pure signal path (`playbackReady`, reasons, Micro OK)
 
 - **Agent:** tekdeveloper. **Closes:** CA-03 (gate part). **Decisions:** C7, C8, C9.
-- **Files:** create `src/flow/signalPath.ts`; modify `src/creation/shell/statusModel.ts` (a « Lecture » line: « Lecture possible » or the first reason), `src/creation/shell/menuModel.ts` (Écoute › « Lecture » enabled iff `playbackReady`); tests `tests/flow/signalPath.test.ts`.
+- **Files:** create `src/flow/signalPath.ts`; modify `src/creation/shell/statusModel.ts` (a « Lecture » line: « Lecture possible » or the first reason), `src/creation/shell/menuModel.ts` (Écoute › « Lecture » enabled iff `playbackReady`); tests `tests/flow/signalPath.test.ts`. (écart : reporté à la Task 39, voir L27)
 - **Interfaces (produces):**
 
   ```ts
@@ -1907,7 +1907,7 @@ Brief §7 defaults (logged in `docs/CREATIVE-MODE-LOG.md`), inventory facts L1�
 
   Complete `peerOf` (the other end of the connection that touches the ref), `deviceOf`, `defaultOf` (catalog control default), `addFeed` (merge channels per speaker, sorted `L` before `R`), `fail(code, subjects?)` (playbackReady false, French `text_fr` from a `REASON_TEXT` table owned by tekuxwriter: « Aucune source de lecture dans le projet. », « La lecture console est coupée. », « La console n'est pas alimentée. », « Aucun chemin de la console jusqu'à une enceinte. », « Une enceinte reçoit le signal mais n'est pas alimentée. », « Une erreur de câblage bloque le chemin. »), and `micOk` (an SM58 `out-xlr` whose peer is a QL1 `isMicInput` port on a powered QL1 with no error event on either port; else a `micReasons` entry).
 - [ ] **Step 4: run green.** `npx vitest run tests/flow/signalPath.test.ts` → PASS.
-- [ ] **Step 5: wire the status** (status line « Lecture possible » / first reason; « Micro OK » indicator) and Écoute › Lecture enablement. `npx vitest run tests/creation` → green.
+- [ ] **Step 5: wire the status** (status line « Lecture possible » / first reason; « Micro OK » indicator) and Écoute › Lecture enablement. `npx vitest run tests/creation` → green. (écart : reporté à la Task 39, voir L27)
 - [ ] **Step 6: commit.** `feat(flow): pure signal path — playbackReady, reasons, Micro OK (CA-03)`.
 - **Acceptance:** the table of cases above passes; mute/fader never gate; passive loop-thru works unpowered.
 
