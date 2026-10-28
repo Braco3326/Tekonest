@@ -685,6 +685,26 @@ describe('SceneHost cables (Task 27, C18): coloured by signal, hover, screen-spa
     host.dispose()
   })
 
+  it('teardown drops the projected-cable cache itself (not just a different revision at the next hit)', async () => {
+    withRect()
+    const { host } = makeHost()
+    const cache = (): unknown => (host as unknown as { screenCache: unknown }).screenCache
+    await host.load(placeFromKey(ROOM), rig(ROOM))
+    const p = host.cableSamples(KEY)![0]!
+    expect(host.cableAtPoint(p.x, p.y)).toBe(KEY)
+    expect(cache(), 'filled by the hit').not.toBeNull()
+    host.dispose()
+    expect(cache()).toBeNull()
+    // and a place change drops it too
+    const other = makeHost()
+    await other.host.load(placeFromKey(ROOM), rig(ROOM))
+    other.host.cableAtPoint(p.x, p.y)
+    expect((other.host as unknown as { screenCache: unknown }).screenCache).not.toBeNull()
+    await other.host.load(placeFromKey('blank'), emptyIn('blank'))
+    expect((other.host as unknown as { screenCache: unknown }).screenCache).toBeNull()
+    other.host.dispose()
+  })
+
   it('cableAtPoint with no cable on the scene does no projection at all', async () => {
     withRect()
     const { host } = makeHost()
