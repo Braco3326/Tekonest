@@ -323,4 +323,80 @@ describe('PortProxies on a real (headless) scene', () => {
     expect(t.proxies.portAt(qx, qy)).toEqual({ instance: 'front', port: 'out-xlr' })
     t.scene.dispose()
   })
+
+  // ── Residual fixes R2 / R3: the ranking is precision-aware, and "tight" is decided per port ──────
+  /** Move `inst` so that its `port` sits on the picking ray through canvas (x, y), `depth` m from the eye. */
+  function pin(t: ReturnType<typeof setup>, inst: ReturnType<typeof setup>['inst'], port: string, x: number, y: number, depth: number): void {
+    for (const m of t.scene.meshes) m.computeWorldMatrix(true)
+    const ray = t.scene.createPickingRay(x, y, null, t.camera)
+    const want = ray.origin.add(ray.direction.scale(depth))
+    inst.root.position.addInPlace(want.subtract(inst.portMarkers.get(port)!.getAbsolutePosition()))
+    for (const m of t.scene.meshes) m.computeWorldMatrix(true)
+    t.proxies.refresh()
+    for (const m of t.scene.meshes) m.computeWorldMatrix(true)
+  }
+  /** Two mics (`front` / `rear`) in a scene looking at the QL1; the camera is 8 m out. */
+  function twoMics() {
+    const t = setup(8)
+    const front = new DeviceSpawner(t.scene, registry, CREATION_DEVICE_THEME).spawn('shure-sm58', new Vector3(40, 0, 0), 'front')
+    const rear = new DeviceSpawner(t.scene, registry, CREATION_DEVICE_THEME).spawn('shure-sm58', new Vector3(-40, 0, 0), 'rear')
+    t.instances.set('front', front)
+    t.instances.set('rear', rear)
+    t.scene.render()
+    t.camera.getViewMatrix(true)
+    return { ...t, front, rear }
+  }
+  const FRONT = { instance: 'front', port: 'out-xlr' }
+  const REAR = { instance: 'rear', port: 'out-xlr' }
+  const eyeDepth = (t: ReturnType<typeof setup>): number => Vector3.Distance(t.camera.position, t.camera.target)
+
+  it('R2: aimed at dead centre of a rear connector, a nearer port that is only grazed at 9 px does not take the click (12 px radius: cable in hand)', () => {
+    const t = twoMics()
+    const q = { x: 800, y: 300 } // empty space: the QL1 is at the screen centre
+    pin(t, t.rear, 'out-xlr', q.x, q.y, eyeDepth(t))
+    pin(t, t.front, 'out-xlr', q.x + 9, q.y, eyeDepth(t) - 2.5) // 2.5 m nearer, 9 px off the pointer
+    expect(t.proxies.portAt(q.x, q.y, true)).toEqual(REAR)
+    // the grazed port is still reachable where it is the one aimed at
+    expect(t.proxies.portAt(q.x + 9, q.y, true)).toEqual(FRONT)
+    t.scene.dispose()
+  })
+
+  it('R2: with nothing inside the tight radius the nearest port still wins (fallback), and when both are inside it the nearest wins', () => {
+    const t = twoMics()
+    const q = { x: 800, y: 300 }
+    pin(t, t.rear, 'out-xlr', q.x - 10, q.y, eyeDepth(t))
+    pin(t, t.front, 'out-xlr', q.x + 9, q.y, eyeDepth(t) - 2.5)
+    expect(t.proxies.portAt(q.x, q.y, true)).toEqual(FRONT) // 10 px and 9 px: both outside the 6 px, the nearer one wins
+    pin(t, t.rear, 'out-xlr', q.x, q.y, eyeDepth(t))
+    pin(t, t.front, 'out-xlr', q.x + 4, q.y, eyeDepth(t) - 2.5)
+    expect(t.proxies.portAt(q.x, q.y, true)).toEqual(FRONT) // 0 px and 4 px: both inside, the nearer one wins
+    t.scene.dispose()
+  })
+
+  it('R3: a port of the SELECTED device keeps the 12 px radius even where it projects over an UNSELECTED body behind it; an unselected one stays tight', () => {
+    const t = twoMics()
+    const s = screens(t)
+    // a point over the QL1's body, 40+ px from every QL1 port
+    let q: { x: number; y: number } | null = null
+    for (let y = 250; y < 480 && !q; y += 10)
+      for (let x = 350; x < 650 && !q; x += 10)
+        if (s.bodyAt(x, y) === 'ql1' && s.at.every((p) => Math.hypot(p.x - x, p.y - y) >= 40)) q = { x, y }
+    expect(q, 'a point over the QL1 body, away from its ports').not.toBeNull()
+    // park the rear mic far away, pin the front mic's connector 9 px from the point, 3 m in front of the body
+    pin(t, t.rear, 'out-xlr', 20, 20, 12)
+    let placed = false
+    for (const [dx, dy] of [[9, 0], [-9, 0], [0, 9], [0, -9]]) {
+      pin(t, t.front, 'out-xlr', q!.x + dx, q!.y + dy, eyeDepth(t) - 3)
+      if (s.bodyAt(q!.x, q!.y) === 'ql1') {
+        placed = true
+        break
+      }
+    }
+    expect(placed, 'the front mic does not hide the QL1 body at the point').toBe(true)
+    t.selected.id = 'front'
+    expect(t.proxies.portAt(q!.x, q!.y)).toEqual(FRONT) // selected: 12 px
+    t.selected.id = null
+    expect(t.proxies.portAt(q!.x, q!.y)).toBeNull() // unselected, over an unselected body: tight
+    t.scene.dispose()
+  })
 })

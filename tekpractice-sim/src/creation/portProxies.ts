@@ -4,10 +4,10 @@
  * them big enough to hit: at least 24 CSS px across (a 12 px radius) at ANY camera distance, so a
  * 2 px connector is as easy to click on a far view as on a close one.
  *
- * The FIRST-CLICK radius depends on the state (final review, controller ruling): over an UNSELECTED device body
- * with no cable in hand it is TIGHT (`TIGHT_PX` = 6 px, or the connector's own size when closer): the body is
- * the click's, the connector itself still patches. On the SELECTED device, while a cable is in hand, or off any
- * body (a connector that sticks out) it is the full 12 px. The 24 px-everywhere reading made the reference QL1
+ * The FIRST-CLICK radius depends on the state (final review, controller ruling): for a port of an UNSELECTED device,
+ * over an unselected device body, with no cable in hand it is TIGHT (`TIGHT_PX` = 6 px, or the connector's own size when
+ * closer): the body is the click's, the connector itself still patches. For a port of the SELECTED device, while a cable is
+ * in hand, or off any body (a connector that sticks out) it is the full 12 px. The 24 px-everywhere reading made the reference QL1
  * unselectable by clicking its body. The proxy spheres themselves always stay >= 12 px (`hitRadiusPx`).
  *
  * - No new meshes, no per-frame work: the spheres are rescaled by an observer on the camera's
@@ -15,7 +15,9 @@
  *   reconcile (a device spawned or moved). An idle page rescales nothing.
  * - The permanent in-scene port labels are hidden here (C18: labels on hover / focus only; the hover
  *   label is DOM, `shell/portLabel.ts`).
- * - Where far proxies overlap, the port whose centre is closest to the ray wins (`portAt`).
+ * - Where proxies overlap (`portAt`): a port inside the tight radius of the ray (aimed at) beats one that is only grazed;
+ *   among those, the nearest to the eye wins (ports at about the same depth: the closest to the ray); with none aimed at,
+ *   the nearest to the eye of all the ports reached.
  * - `mark` restyles the markers (hover, the click-to-patch glow): the marker grows to a few pixels so a
  *   2 px connector is visible, and goes back to its own material / size when the mark is lifted.
  *
@@ -157,9 +159,12 @@ export class PortProxies {
 
   /**
    * The port aimed at on a canvas point (CSS px, canvas-relative), or null. The state decides the radius: 12 px
-   * (the proxy), or TIGHT over an unselected body with no cable in hand (`inHand`). Among the ports reached, the
-   * NEAREST to the eye wins (a rear port never takes the click of a front one); ports at about the same depth
-   * compete on closeness to the ray.
+   * (the proxy), or TIGHT for a port of an UNSELECTED device over an unselected body with no cable in hand (`inHand`):
+   * decided per port, so a port of the selected device keeps 12 px wherever it projects. Ranking: a port inside the
+   * TIGHT radius of the ray (a connector aimed at) beats one that is only grazed, whatever its depth; among the
+   * ports of that class the NEAREST to the eye wins (a rear port never takes the click of a front one), ports at
+   * about the same depth compete on closeness to the ray. With no port inside the tight radius the same rule applies
+   * to every port reached.
    */
   portAt(x: number, y: number, inHand = false): PortRef | null {
     const { scene, camera, canvas } = this.host
@@ -168,9 +173,10 @@ export class PortProxies {
     const hits = scene.multiPick(x, y, (m: AbstractMesh) => m.metadata?.isPortMarker === true && m.isEnabled())
     if (!hits?.length) return null
     const ray = scene.createPickingRay(x, y, null, cam)
-    const tight = !inHand && this.overUnselectedBody(ray)
+    const overUnselected = !inHand && this.overUnselectedBody(ray)
+    const selected = this.host.selected?.() ?? null
     const h = canvas.clientHeight
-    const near: { ref: PortRef; d: number; depth: number }[] = []
+    const near: { ref: PortRef; d: number; depth: number; sharp: boolean }[] = []
     for (const hit of hits) {
       const mesh = hit.pickedMesh
       const ref = mesh?.metadata?.portRef as PortRef | undefined
@@ -178,16 +184,19 @@ export class PortProxies {
       const centre = mesh.getAbsolutePosition()
       const d = ray.direction.cross(centre.subtract(ray.origin)).length()
       const depth = Vector3.Distance(ray.origin, centre)
-      if (tight && d > this.tightWorld(depth, camera.fov, h)) continue
-      near.push({ ref: { instance: ref.instance, port: ref.port }, d, depth })
+      const sharp = d <= this.tightWorld(depth, camera.fov, h)
+      if (overUnselected && ref.instance !== selected && !sharp) continue
+      near.push({ ref: { instance: ref.instance, port: ref.port }, d, depth, sharp })
     }
     if (!near.length) return null
-    const front = Math.min(...near.map((c) => c.depth))
+    const aimed = near.filter((c) => c.sharp)
+    const pool = aimed.length ? aimed : near
+    const front = Math.min(...pool.map((c) => c.depth))
     // "Same layer": within the proxy's own world radius of the nearest (far views have big proxies), at least DEPTH_TIE_M.
     const tie = Math.max(DEPTH_TIE_M, proxyRadius(front, camera.fov, h))
     let best: PortRef | null = null
     let bestD = Infinity
-    for (const c of near) {
+    for (const c of pool) {
       if (c.depth > front + tie || c.d >= bestD) continue
       bestD = c.d
       best = c.ref
