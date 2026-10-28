@@ -1216,8 +1216,13 @@ export async function bootCreation(): Promise<void> {
     return true
   })
   keys.onAction('FRAME_SELECTION', (e) => {
-    // Entrée while a device follows the pointer drops it where it stands (the keyboard path).
-    if ((e.code === 'Enter' || e.code === 'NumpadEnter') && placement.confirm()) return true
+    // Entrée while a device follows the pointer drops it where it stands (the keyboard path). Only a fresh
+    // press: the Entrée that chose the device from the drawer may still be held, and its auto-repeats land
+    // here once the canvas has focus. While placing, Entrée never falls through to « frame the selection ».
+    if ((e.code === 'Enter' || e.code === 'NumpadEnter') && placement.placing) {
+      if (!e.repeat) placement.confirm()
+      return true
+    }
     if (viewState.get().selection !== null) leaveWalk() // framing is an orbit view
     return selection.frameSelection()
   })
@@ -1506,5 +1511,11 @@ export async function bootCreation(): Promise<void> {
         return f ? ([f.center.x, f.center.y, f.center.z] as [number, number, number]) : null
       }),
     placing: () => placement.placing,
+    transformNodeCount: () => host.scene?.transformNodes.length ?? 0,
+    floorPoint: (x, y) => {
+      const { scene, camera } = host
+      const r = canvas.getBoundingClientRect()
+      return scene && camera ? floorPointAt(scene, x - r.left, y - r.top, camera) : null
+    },
   }
 }

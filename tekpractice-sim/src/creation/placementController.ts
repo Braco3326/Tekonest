@@ -31,7 +31,8 @@ export interface PlacementHost {
   readonly scene: Scene | null
   readonly camera: { readonly target: { x: number; y: number; z: number } } | null
   readonly walking: boolean
-  readonly hasGhost: boolean
+  /** Called when the host took the ghost down by itself (a place change); the controller ends the placement. */
+  onGhostLost: (() => void) | null
   showGhost(deviceId: string, at: V3, yawDeg: number): boolean
   moveGhost(at: V3, yawDeg: number): void
   hideGhost(): void
@@ -109,15 +110,21 @@ export class PlacementController {
     bag.listen(canvas, 'pointermove', (e: PointerEvent) => this.onMove(e))
     bag.listen(canvas, 'pointerup', (e: PointerEvent) => this.onUp(e))
     bag.listen(canvas, 'pointercancel', (e: PointerEvent) => this.onPointerCancel(e))
+    // A release that never came as a pointerup (capture lost, window blurred): treated as the release it is.
+    bag.listen(canvas, 'lostpointercapture', (e: PointerEvent) => {
+      if (this.drag && e.pointerId === this.drag.pointerId) this.endDrag(false)
+    })
+    if (typeof window !== 'undefined') bag.listen(window, 'blur', () => this.endDrag(false))
+    host.onGhostLost = () => this.onHostLostGhost()
     bag.add(() => {
+      host.onGhostLost = null
       this.endDrag(true)
       this.endPlacement()
     })
   }
 
-  /** A device is following the pointer. False once a place change took the ghost down. */
+  /** A device is following the pointer (a pure read: the host tells us when a place change took its ghost). */
   get placing(): boolean {
-    if (this.deviceId !== null && !this.host.hasGhost) this.endPlacement()
     return this.deviceId !== null
   }
 
@@ -231,6 +238,7 @@ export class PlacementController {
     const d = this.drag
     if (d) {
       if (e.pointerId !== d.pointerId) return
+      if (e.buttons === 0) return this.endDrag(false) // the pointerup never came: a release
       this.setSnap(e.altKey)
       if (!d.armed && Math.hypot(e.offsetX - d.x, e.offsetY - d.y) <= DRAG_PX) return
       d.armed = true
@@ -283,6 +291,14 @@ export class PlacementController {
     const hit = this.floorPointAtPx(e.offsetX, e.offsetY)
     if (!hit) return
     this.drop(this.target(hit, e.altKey))
+  }
+
+  /** A place change took the ghost down: the placement is over, said in the status bar. */
+  private onHostLostGhost(): void {
+    if (this.deviceId === null) return
+    this.endPlacement()
+    // After the store change that caused the place change has had its own status line (« Prêt »): that line must not hide this one.
+    queueMicrotask(() => this.opts.announce?.(COPY.placement!.statusCancelled!))
   }
 
   private onPointerCancel(e: PointerEvent): void {

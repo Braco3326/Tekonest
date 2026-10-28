@@ -244,6 +244,76 @@ test('placing in orbit never switches to the walk view; an orbit drag during pla
   expect(await page.evaluate(() => window.__creation!.view())).toBe('orbit')
 })
 
+test('a drop at 30 % and at 70 % of the canvas width lands within 0.3 m of the floor point under the cursor (no wall clamp)', async ({ page }) => {
+  await boot(page)
+  const box = (await page.locator('#renderCanvas').boundingBox())!
+  for (const frac of [0.3, 0.7]) {
+    const px = box.x + box.width * frac
+    const py = box.y + box.height * 0.75
+    const under = await page.evaluate(([x, y]) => window.__creation!.floorPoint(x, y), [px, py])
+    expect(under, `a floor point at ${frac}`).not.toBeNull()
+    const before = (await design(page)).rig.instances.length
+    await choose(page, 'yamaha-ql1', 'Consoles')
+    await page.mouse.move(px - 20, py)
+    await page.mouse.move(px, py, { steps: 3 })
+    await page.mouse.click(px, py)
+    await expect.poll(async () => (await design(page)).rig.instances.length).toBe(before + 1)
+    const d = await design(page)
+    const [x, , z] = await poseOf(page, d.rig.instances[before].instanceId)
+    expect(Math.hypot(x - under![0], z - under![2]), `drop at ${frac}`).toBeLessThan(0.3)
+    expect(onGrid(x) && onGrid(z)).toBe(true)
+  }
+})
+
+test('choosing a device and cancelling leaves no transform node behind (the glb empties of the ghost go with it)', async ({ page }) => {
+  await boot(page)
+  const count = () => page.evaluate(() => window.__creation!.transformNodeCount())
+  const baseline = await count()
+  for (let i = 0; i < 3; i++) {
+    await choose(page, 'yamaha-ql1', 'Consoles')
+    // wait for the .glb to arrive (the ghost then owns more than its root node)
+    await expect.poll(count, { timeout: 15_000 }).toBeGreaterThan(baseline + 1)
+    await page.keyboard.press('Escape')
+    expect(await page.evaluate(() => window.__creation!.placing())).toBe(false)
+    expect(await count()).toBe(baseline)
+  }
+})
+
+test('a held Entrée that chose the device does not also drop it: repeats never confirm; a fresh Entrée does', async ({ page }) => {
+  await boot(page)
+  await page.locator('#renderCanvas').focus()
+  await page.keyboard.press('Space')
+  await expect(page.getByTestId('inventory-drawer')).toBeVisible()
+  const first = page.getByRole('tabpanel').getByTestId('inventory-item').first()
+  await page.keyboard.press('Tab')
+  await expect(first).toBeFocused()
+  await page.keyboard.down('Enter') // chooses; the drawer closes and the canvas takes focus
+  await expect(page.getByTestId('inventory-drawer')).toBeHidden()
+  await expect(page.locator('#renderCanvas')).toBeFocused()
+  await page.keyboard.down('Enter') // auto-repeat: down again while still held
+  await page.keyboard.down('Enter')
+  await page.keyboard.down('Enter') // an even number of keydowns in all
+  await page.keyboard.up('Enter')
+  await page.waitForTimeout(150)
+  expect(await page.evaluate(() => window.__creation!.placing())).toBe(true)
+  expect((await design(page)).rig.instances).toHaveLength(0)
+  await page.keyboard.press('Enter') // a deliberate press drops
+  await expect.poll(async () => (await design(page)).rig.instances.length).toBe(1)
+})
+
+test('a place change during placement ends it and says so (the placement line does not linger)', async ({ page }) => {
+  await boot(page)
+  await choose(page, 'yamaha-ql1', 'Consoles')
+  await expect(page.getByRole('status')).toContainText('Cliquez pour poser')
+  await page.evaluate(() => window.__creation!.choosePlace('blank'))
+  await page.waitForFunction(() => window.__creation!.place() === 'blank')
+  expect(await page.evaluate(() => window.__creation!.placing())).toBe(false)
+  await expect(page.getByRole('status')).toContainText('Pose annulée')
+  await expect(page.getByRole('status')).not.toContainText('Cliquez pour poser')
+  await expect(page.getByTestId('status-snapping')).toBeHidden()
+  expect((await design(page)).rig.instances).toHaveLength(0)
+})
+
 test('idle while placing and after a drop: no render in 2 s, no lease left', async ({ page }) => {
   await boot(page)
   await choose(page, 'yamaha-ql1', 'Consoles')

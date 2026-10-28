@@ -88,6 +88,10 @@ export interface CreationDebug {
   cableCenters(): ([number, number, number] | null)[]
   /** Task 24: a device is following the pointer (placement ghost on screen). */
   placing(): boolean
+  /** Task 24: `scene.transformNodes.length` (a ghost must not leave the glb's nodes behind). */
+  transformNodeCount(): number
+  /** Task 24: the raw floor point under a page point (CSS px), as the placement pick finds it; null off the floor. */
+  floorPoint(x: number, y: number): [number, number, number] | null
 }
 
 declare global {

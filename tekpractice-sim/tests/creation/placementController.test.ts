@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { CreationStore, creationEvaluator } from '../../src/creation/store'
@@ -8,6 +8,13 @@ import { PlacementController, type PlacementHost } from '../../src/creation/plac
 import { DisposableBag } from '../../src/util/disposable'
 
 const registry = loadCatalog(catalogJson)
+
+// The controller listens for the window losing focus: a stand-in window per test.
+const g = globalThis as Record<string, unknown>
+const realWindow = g.window
+afterEach(() => {
+  g.window = realWindow
+})
 
 type V3 = [number, number, number]
 
@@ -22,6 +29,8 @@ class FakeCanvas extends EventTarget {
 }
 
 function setup() {
+  const win = new EventTarget()
+  g.window = win
   const store = new CreationStore(registry, creationEvaluator(registry))
   const history = new History(store)
   const viewState = new ViewState()
@@ -32,9 +41,7 @@ function setup() {
     scene: null,
     camera: { target: { x: 1, y: 0, z: 2 } },
     walking: false,
-    get hasGhost() {
-      return ghost.shown !== null
-    },
+    onGhostLost: null,
     showGhost: (id, at) => {
       ghost.shown = { id, at }
       return true
@@ -86,6 +93,7 @@ function setup() {
       offsetY: y,
       button: 0,
       isPrimary: true,
+      buttons: 1,
       pointerId: 1,
       pointerType: 'mouse',
       altKey: false,
@@ -102,7 +110,7 @@ function setup() {
   }
   const spawn = (instanceId: string, position: V3) =>
     history.do({ type: 'SPAWN', deviceId: 'yamaha-ql1', instanceId, position, mount: 'floor' })
-  return { store, history, viewState, canvas, ghost, ctrl, fire, leases, scheduler, announce, onSnap, onClickSelected, onPlaced, bag, spawn, under: (id: string | null) => (deviceUnder = id) }
+  return { win, store, history, viewState, canvas, host, ghost, ctrl, fire, leases, scheduler, announce, onSnap, onClickSelected, onPlaced, bag, spawn, under: (id: string | null) => (deviceUnder = id) }
 }
 
 describe('placing', () => {
@@ -194,11 +202,50 @@ describe('placing', () => {
     expect(s.store.design().placements[0].position_m).toEqual([5, 0, 4])
   })
 
-  it('a place change that took the ghost down ends the placement', () => {
+  it('a place change (the host lost its ghost) ends the placement, announces it and clears the snapping text', async () => {
     const s = setup()
     s.ctrl.startPlacement('yamaha-ql1')
-    s.ghost.shown = null
+    s.announce.mockClear()
+    s.ghost.shown = null // what SceneHost.teardown does ...
+    s.host.onGhostLost?.() // ... before it calls back
     expect(s.ctrl.placing).toBe(false)
+    expect(s.onSnap).toHaveBeenLastCalledWith(null)
+    expect(s.announce).not.toHaveBeenCalled() // said a microtask later, after the shell's own status line of the change
+    await Promise.resolve()
+    expect(s.announce).toHaveBeenCalledWith('Pose annulée.')
+    s.announce.mockClear()
+    s.host.onGhostLost?.() // a second call (nothing placed) says nothing
+    await Promise.resolve()
+    expect(s.announce).not.toHaveBeenCalled()
+  })
+
+  it('reading `placing` changes nothing (a pure read)', () => {
+    const s = setup()
+    s.ctrl.startPlacement('yamaha-ql1')
+    s.ghost.shown = null // the ghost is gone but nobody told the controller yet
+    s.announce.mockClear()
+    s.onSnap.mockClear()
+    expect(s.ctrl.placing).toBe(true)
+    expect(s.announce).not.toHaveBeenCalled()
+    expect(s.onSnap).not.toHaveBeenCalled()
+  })
+
+  it('a drop 0.1 m inside a wall lands within one grid half-step of the hit (snap only, no wall margin)', () => {
+    for (const [px, py, want] of [
+      [490, 100, [5, 0, 1]], // x: 4.90 m, wall at 5
+      [-490, 100, [-5, 0, 1]],
+      [100, 390, [1, 0, 4]], // z: 3.90 m, wall at 4
+      [100, -390, [1, 0, -4]],
+    ] as [number, number, V3][]) {
+      const s = setup()
+      s.ctrl.startPlacement('yamaha-ql1')
+      s.fire('pointerdown', px, py)
+      s.fire('pointerup', px, py)
+      const got = s.store.design().placements[0].position_m
+      expect(got).toEqual(want)
+      expect(Math.abs(got[0] - px / 100)).toBeLessThanOrEqual(0.125)
+      expect(Math.abs(got[2] - py / 100)).toBeLessThanOrEqual(0.125)
+    }
   })
 })
 
@@ -336,6 +383,44 @@ describe('moving the selected device', () => {
     expect(s.history.inTransaction).toBe(false)
     s.fire('pointerdown', 200, 300)
     expect(s.history.inTransaction).toBe(false)
+  })
+
+  it('a move with no button down is a release: what moved is committed, the rest of the gesture does nothing', () => {
+    const s = ready()
+    s.fire('pointerdown', 200, 300)
+    s.fire('pointermove', 400, 300)
+    s.fire('pointermove', 500, 300, { buttons: 0 }) // the pointerup never came
+    expect(pose(s)).toEqual([4, 0, 3]) // not moved by the buttonless move
+    expect(s.history.inTransaction).toBe(false)
+    expect(s.history.sizes.undo).toBe(2)
+    expect(s.leases).toEqual([])
+    s.fire('pointermove', 600, 300)
+    expect(pose(s)).toEqual([4, 0, 3])
+  })
+
+  it('losing the pointer capture is a release (commit), like a pointerup', () => {
+    const s = ready()
+    s.fire('pointerdown', 200, 300)
+    s.fire('pointermove', 400, 300)
+    s.fire('lostpointercapture', 400, 300)
+    expect(s.history.inTransaction).toBe(false)
+    expect(s.history.sizes.undo).toBe(2)
+    expect(pose(s)).toEqual([4, 0, 3])
+    expect(s.leases).toEqual([])
+    s.fire('pointermove', 600, 300)
+    expect(pose(s)).toEqual([4, 0, 3])
+  })
+
+  it('the window losing focus mid-drag ends it as a release (commit); a lost capture of another pointer is ignored', () => {
+    const s = ready()
+    s.fire('pointerdown', 200, 300)
+    s.fire('pointermove', 400, 300)
+    s.fire('lostpointercapture', 400, 300, { pointerId: 7 })
+    expect(s.history.inTransaction).toBe(true)
+    s.win.dispatchEvent(new Event('blur'))
+    expect(s.history.inTransaction).toBe(false)
+    expect(s.history.sizes.undo).toBe(2)
+    expect(s.leases).toEqual([])
   })
 
   it('pointer moves with nothing placed or dragged do nothing (no frame asked)', () => {

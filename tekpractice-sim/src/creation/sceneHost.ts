@@ -332,6 +332,9 @@ export class SceneHost {
     return this._layout ? this._layout.floorAt(x, z) : fallback
   }
 
+  /** The place changed under a ghost (its meshes went with the scene): the placement controller ends the placement. */
+  onGhostLost: (() => void) | null = null
+
   /** A ghost is on screen (false after a place change took it down). */
   get hasGhost(): boolean {
     return this.ghost !== null
@@ -379,10 +382,14 @@ export class SceneHost {
     this.ghost = null
     // Not `g.dispose()`: that disposes every material, and the spawner shares its body, port and
     // contact-shadow materials / texture with the real devices. Only what the ghost owns goes.
+    // Collected first: disposing a mesh without recursion reparents its child nodes to nothing.
+    const nodes = g.root.getChildTransformNodes(false)
     for (const m of g.root.getChildMeshes(false)) {
       if (m.name.startsWith('shadow:')) m.material?.dispose(false, false) // its texture is shared
       m.dispose(true, !/^(box|port|shadow):/.test(m.name))
     }
+    // The glb's own transform nodes (its port empties) are not meshes: they go explicitly, never left in the scene.
+    for (const n of nodes) if (!n.isDisposed()) n.dispose(true, false)
     g.root.dispose(true, false)
     this.scheduler.invalidate()
   }
@@ -632,6 +639,7 @@ export class SceneHost {
   }
 
   private teardown(): void {
+    const hadGhost = this.ghost !== null
     this.ghost = null // its meshes go with the scene; its materials are shared with the spawner's
     this.controllers?.dispose()
     this.cables?.dispose()
@@ -658,6 +666,7 @@ export class SceneHost {
     this.highlight = null // disposed with its scene
     this._cube = null // disposed by `bag`
     this.strokeColor.clear()
+    if (hadGhost) this.onGhostLost?.()
   }
 
   private buildScene(data: PlaceData, buildRoom: RoomBuild | null): Scene {

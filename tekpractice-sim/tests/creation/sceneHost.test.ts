@@ -4,7 +4,7 @@
  * NullEngine + spy window/canvas, as tests/scene/dispose.test.ts.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { MeshBuilder, NullEngine, Vector3 } from '@babylonjs/core'
+import { MeshBuilder, NullEngine, TransformNode, Vector3 } from '@babylonjs/core'
 import catalogJson from '../../content/catalog.json'
 import { loadCatalog } from '../../src/engine/CatalogLoader'
 import { SceneHost } from '../../src/creation/sceneHost'
@@ -413,16 +413,45 @@ describe('SceneHost view decor (Task 9): selection outline and hidden objects', 
       host.dispose()
     })
 
-    it('a place change takes the ghost down; no place, an unknown device: no ghost', async () => {
+    it('hideGhost leaves no transform node behind, even the glb own empties nested under a mesh', async () => {
+      const { host } = makeHost()
+      await host.load(placeFromKey('blank'), emptyIn('blank'))
+      const scene = host.scene!
+      const nodes = scene.transformNodes.length
+      const meshes = scene.meshes.length
+      host.showGhost('yamaha-ql1', [0, 0, 0], 0)
+      // what a loaded .glb brings: a root mesh, port empties (transform nodes) under it and under the ghost root
+      const root = bodies(host)[0].parent as TransformNode
+      const glbRoot = MeshBuilder.CreateBox('glb:ghost-1', {}, scene)
+      glbRoot.parent = root
+      const empty = new TransformNode('port_out-1', scene)
+      empty.parent = glbRoot
+      new TransformNode('port_out-2', scene).parent = empty
+      new TransformNode('port_out-3', scene).parent = root
+      host.hideGhost()
+      expect(scene.transformNodes.length).toBe(nodes)
+      expect(scene.meshes.length).toBe(meshes)
+      host.dispose()
+    })
+
+    it('a place change takes the ghost down and tells the placement controller once; hideGhost by itself does not; no place, an unknown device: no ghost', async () => {
       const { host } = makeHost()
       expect(host.showGhost('yamaha-ql1', [0, 0, 0], 0)).toBe(false) // nothing on screen yet
       await host.load(placeFromKey('blank'), emptyIn('blank'))
       vi.spyOn(console, 'warn').mockImplementation(() => {})
       expect(host.showGhost('no-such-device', [0, 0, 0], 0)).toBe(false)
       expect(host.hasGhost).toBe(false)
+      const lost = vi.fn()
+      host.onGhostLost = lost
+      host.showGhost('yamaha-ql1', [0, 0, 0], 0)
+      host.hideGhost()
+      expect(lost).not.toHaveBeenCalled()
       host.showGhost('yamaha-ql1', [0, 0, 0], 0)
       await host.load(placeFromKey('room:concert-hall-medium'), emptyIn('room:concert-hall-medium'))
       expect(host.hasGhost).toBe(false)
+      expect(lost).toHaveBeenCalledTimes(1)
+      await host.load(placeFromKey('blank'), emptyIn('blank')) // no ghost: nothing to tell
+      expect(lost).toHaveBeenCalledTimes(1)
       host.dispose()
     })
 
