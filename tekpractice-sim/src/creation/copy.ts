@@ -576,6 +576,8 @@ export const COPY: { readonly [section: string]: Readonly<Record<string, string>
     statusDeleted: 'Supprimé : {device}, avec ses câbles. {undo} pour annuler.',
     /** Status bar when the device has no position to turn or copy (announced). */
     statusNoPose: '{device} n’a pas de position : impossible de le pivoter ou de le dupliquer.',
+    /** Status bar when Suppr / Ctrl+D is pressed while a device follows the pointer (announced); the selected device is left alone. */
+    statusWhilePlacing: 'Terminez ou annulez la pose d’abord (Échap).',
     /** Status bar when the edit was refused by the rig (announced). */
     statusRefused: 'Modification impossible pour {device}.',
   },

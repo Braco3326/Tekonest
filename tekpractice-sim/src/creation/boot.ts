@@ -1346,7 +1346,8 @@ export async function bootCreation(): Promise<void> {
     history,
     store,
     selection: () => viewState.get().selection,
-    blocked: dragOpen,
+    // A drag holds an open entry; a placement hides the selection behind the ghost (R goes to the ghost, see rotateKey).
+    blocked: () => dragOpen() || placement.placing,
     roomBounds: () => host.roomBounds(),
     deviceLabel: (deviceId) => registry.deviceById.get(deviceId)?.label ?? deviceId,
     announce: (message) => shell.setStatus(placeNow(), message, 'ready', true),
@@ -1362,13 +1363,19 @@ export async function bootCreation(): Promise<void> {
   }
   keys.onAction('ROTATE_CW', (e) => rotateKey(1, e))
   keys.onAction('ROTATE_CCW', (e) => rotateKey(-1, e))
+  /** Suppr / Ctrl+D while a device follows the pointer: the selected device is not what the learner is looking at, so it is left alone and the placement goes on (said, announced). */
+  const placingBlocksEdit = (): boolean => {
+    if (!placement.placing) return false
+    shell.setStatus(placeNow(), COPY.edit!.statusWhilePlacing!, 'ready', true)
+    return true
+  }
   keys.onAction('DUPLICATE', (e) => {
-    if (dragOpen() || e.repeat) return true // Ctrl+D is never the browser's bookmark in Mode Création
+    if (dragOpen() || e.repeat || placingBlocksEdit()) return true // Ctrl+D is never the browser's bookmark in Mode Création
     edits.duplicate()
     return true
   })
   keys.onAction('DELETE', (e) => {
-    if (dragOpen() || e.repeat) return true
+    if (dragOpen() || e.repeat || placingBlocksEdit()) return true
     edits.remove()
     return true
   })
@@ -1419,9 +1426,10 @@ export async function bootCreation(): Promise<void> {
       picker.show({ closable: canvasShown, focus: true })
     },
     inventory: () => setInventory(!drawerOpen()),
-    rotate: () => void (!dragOpen() && edits.rotate(1, false)),
-    duplicate: () => void (!dragOpen() && edits.duplicate()),
-    delete: () => void (!dragOpen() && edits.remove()),
+    // The menu items are off while placing (hasSelection below); the guards are for a menu that was open when the placement began.
+    rotate: () => void (!dragOpen() && !placingBlocksEdit() && edits.rotate(1, false)),
+    duplicate: () => void (!dragOpen() && !placingBlocksEdit() && edits.duplicate()),
+    delete: () => void (!dragOpen() && !placingBlocksEdit() && edits.remove()),
     new: () => void newProject(),
     open: () => void openProject(),
     save: () => void save(false),
@@ -1476,7 +1484,7 @@ export async function bootCreation(): Promise<void> {
       actions,
       bindingLabel: menuShortcut,
       historyLocked: () => picker.isOpen, // Phase 1 review: « Annuler » never edits the rig under the picker
-      hasSelection: () => viewState.get().selection !== null,
+      hasSelection: () => viewState.get().selection !== null && !placement.placing && !dragOpen(),
       viewLocked,
       walking: () => host.walking,
       earHeight: () => viewState.get().earHeight,

@@ -533,6 +533,7 @@ Pivoter, dupliquer et supprimer l'appareil sélectionné (Task 25, CA-11). R tou
 | `edit.statusDuplicated` | Dupliqué : {device}. La copie est sélectionnée. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après Ctrl+D (annoncé) |
 | `edit.statusDeleted` | Supprimé : {device}, avec ses câbles. {undo} pour annuler. | à valider (tekuxwriter) | Barre d’état après Suppr (annoncé) |
 | `edit.statusNoPose` | {device} n’a pas de position : impossible de le pivoter ou de le dupliquer. | à valider (tekuxwriter) | Barre d’état si l’appareil n’a pas de position enregistrée (annoncé) |
+| `edit.statusWhilePlacing` | Terminez ou annulez la pose d’abord (Échap). | à valider (tekuxwriter) | Barre d’état si Suppr ou Ctrl+D est pressé pendant une pose : l’appareil sélectionné n’est pas touché (annoncé) |
 | `edit.statusRefused` | Modification impossible pour {device}. | à valider (tekuxwriter) | Barre d’état si le rig refuse la modification (annoncé) |
 
 ## feedback
